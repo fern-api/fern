@@ -1,29 +1,25 @@
-import { GeneratorName } from "@fern-api/configuration-loader";
+import { GeneratorName } from '@fern-api/configuration-loader'
 
-import { IrVersions } from "../../ir-versions";
-import {
-    GeneratorWasNeverUpdatedToConsumeNewIR,
-    GeneratorWasNotCreatedYet,
-    IrMigration
-} from "../../types/IrMigration";
-import { getReferencedTypesForInlinedRequest } from "./getReferencedTypesForInlinedRequest";
+import { IrVersions } from '../../ir-versions'
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
+import { getReferencedTypesForInlinedRequest } from './getReferencedTypesForInlinedRequest'
 
 export const V3_TO_V2_MIGRATION: IrMigration<
     IrVersions.V3.ir.IntermediateRepresentation,
     IrVersions.V2.ir.IntermediateRepresentation
 > = {
-    laterVersion: "v3",
-    earlierVersion: "v2",
+    laterVersion: 'v3',
+    earlierVersion: 'v2',
     firstGeneratorVersionToConsumeNewIR: {
         [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_SDK]: "0.0.249",
-        [GeneratorName.TYPESCRIPT_EXPRESS]: "0.0.264",
+        [GeneratorName.TYPESCRIPT_SDK]: '0.0.249',
+        [GeneratorName.TYPESCRIPT_EXPRESS]: '0.0.264',
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_MODEL]: "0.0.134-3-g97d4964",
-        [GeneratorName.JAVA_SDK]: "0.0.134-3-g97d4964",
-        [GeneratorName.JAVA_SPRING]: "0.0.134-3-g97d4964",
+        [GeneratorName.JAVA_MODEL]: '0.0.134-3-g97d4964',
+        [GeneratorName.JAVA_SDK]: '0.0.134-3-g97d4964',
+        [GeneratorName.JAVA_SPRING]: '0.0.134-3-g97d4964',
         [GeneratorName.PYTHON_FASTAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_PYDANTIC]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.OPENAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -45,7 +41,7 @@ export const V3_TO_V2_MIGRATION: IrMigration<
     },
     jsonifyEarlierVersion: (ir) => ir,
     migrateBackwards: (v3): IrVersions.V2.ir.IntermediateRepresentation => {
-        const newTypes = [...v3.types];
+        const newTypes = [...v3.types]
 
         return {
             apiName: v3.apiName,
@@ -72,14 +68,14 @@ export const V3_TO_V2_MIGRATION: IrMigration<
                     pathParameters: httpService.pathParameters,
                     endpoints: httpService.endpoints.map((endpoint) =>
                         migrateEndpoint(httpService, endpoint, v3.types, (type) => {
-                            newTypes.push(type);
+                            newTypes.push(type)
                         })
                     )
                 }))
             }
-        };
+        }
     }
-};
+}
 
 function migrateEndpoint(
     v3Service: IrVersions.V3.services.http.HttpService,
@@ -103,7 +99,7 @@ function migrateEndpoint(
         errors: v3Endpoint.errors,
         errorsV2: v3Endpoint.errorsV2,
         auth: v3Endpoint.auth
-    };
+    }
 }
 
 function migrateRequest(
@@ -112,14 +108,14 @@ function migrateRequest(
     allTypes: IrVersions.V2.types.TypeDeclaration[],
     addType: (newType: IrVersions.V2.types.TypeDeclaration) => void
 ): IrVersions.V2.services.http.HttpRequest {
-    const v3Request = v3Endpoint.requestBody;
+    const v3Request = v3Endpoint.requestBody
 
     if (v3Request == null) {
         return {
             docs: undefined,
             type: IrVersions.V2.types.TypeReference.void(),
             typeV2: undefined
-        };
+        }
     }
     return IrVersions.V3.services.http.HttpRequestBody._visit<IrVersions.V2.services.http.HttpRequest>(v3Request, {
         reference: (reference) => ({
@@ -140,7 +136,7 @@ function migrateRequest(
                     screamingSnakeCase: inlinedRequestBody.name.unsafeName.screamingSnakeCase
                 },
                 nameV3: inlinedRequestBody.name
-            };
+            }
 
             const shape = IrVersions.V2.types.Type.object({
                 extends: inlinedRequestBody.extends,
@@ -160,7 +156,7 @@ function migrateRequest(
                         valueType: property.valueType
                     })
                 )
-            });
+            })
 
             addType({
                 docs: undefined,
@@ -169,18 +165,18 @@ function migrateRequest(
                 shape,
                 referencedTypes: getReferencedTypesForInlinedRequest({ inlinedRequest: inlinedRequestBody, allTypes }),
                 examples: []
-            });
+            })
 
-            const typeReference = IrVersions.V2.types.TypeReference.named(typeName);
+            const typeReference = IrVersions.V2.types.TypeReference.named(typeName)
 
             return {
                 docs: undefined,
                 type: typeReference,
                 typeV2: typeReference
-            };
+            }
         },
         _unknown: () => {
-            throw new Error("Unknown HttpRequestBody type: " + v3Request.type);
+            throw new Error('Unknown HttpRequestBody type: ' + v3Request.type)
         }
-    });
+    })
 }

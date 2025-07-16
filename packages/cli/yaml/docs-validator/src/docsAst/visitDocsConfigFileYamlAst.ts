@@ -1,27 +1,27 @@
-import { readFile } from "fs/promises";
-import yaml from "js-yaml";
+import { readFile } from 'fs/promises'
+import yaml from 'js-yaml'
 
-import { docsYml } from "@fern-api/configuration-loader";
-import { noop, visitObjectAsync } from "@fern-api/core-utils";
-import { NodePath } from "@fern-api/fern-definition-schema";
-import { AbsoluteFilePath, dirname, doesPathExist, resolve } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
-import { AbstractAPIWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import { docsYml } from '@fern-api/configuration-loader'
+import { noop, visitObjectAsync } from '@fern-api/core-utils'
+import { NodePath } from '@fern-api/fern-definition-schema'
+import { AbsoluteFilePath, dirname, doesPathExist, resolve } from '@fern-api/fs-utils'
+import { TaskContext } from '@fern-api/task-context'
+import { AbstractAPIWorkspace, FernWorkspace } from '@fern-api/workspace-loader'
 
-import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor";
-import { validateProductConfigFileSchema } from "./validateProductConfig";
-import { validateVersionConfigFileSchema } from "./validateVersionConfig";
-import { visitFilepath } from "./visitFilepath";
-import { visitNavigationAst } from "./visitNavigationAst";
+import { DocsConfigFileAstVisitor } from './DocsConfigFileAstVisitor'
+import { validateProductConfigFileSchema } from './validateProductConfig'
+import { validateVersionConfigFileSchema } from './validateVersionConfig'
+import { visitFilepath } from './visitFilepath'
+import { visitNavigationAst } from './visitNavigationAst'
 
 export declare namespace visitDocsConfigFileYamlAst {
     interface Args {
-        contents: docsYml.RawSchemas.DocsConfiguration;
-        visitor: Partial<DocsConfigFileAstVisitor>;
-        absoluteFilepathToConfiguration: AbsoluteFilePath;
-        absolutePathToFernFolder: AbsoluteFilePath;
-        context: TaskContext;
-        apiWorkspaces: AbstractAPIWorkspace<unknown>[];
+        contents: docsYml.RawSchemas.DocsConfiguration
+        visitor: Partial<DocsConfigFileAstVisitor>
+        absoluteFilepathToConfiguration: AbsoluteFilePath
+        absolutePathToFernFolder: AbsoluteFilePath
+        context: TaskContext
+        apiWorkspaces: AbstractAPIWorkspace<unknown>[]
     }
 }
 
@@ -38,7 +38,7 @@ export async function visitDocsConfigFileYamlAst({
             config: contents
         },
         []
-    );
+    )
     await visitObjectAsync(contents, {
         instances: noop,
         analytics: noop,
@@ -47,37 +47,37 @@ export async function visitDocsConfigFileYamlAst({
         announcement: noop,
         backgroundImage: async (background) => {
             if (background == null) {
-                return;
-            } else if (typeof background === "string") {
+                return
+            } else if (typeof background === 'string') {
                 await visitFilepath({
                     absoluteFilepathToConfiguration,
                     rawUnresolvedFilepath: background,
                     visitor,
-                    nodePath: ["background-image"]
-                });
+                    nodePath: ['background-image']
+                })
             } else {
                 if (background.dark != null) {
                     await visitFilepath({
                         absoluteFilepathToConfiguration,
                         rawUnresolvedFilepath: background.dark,
                         visitor,
-                        nodePath: ["background-image", "dark"]
-                    });
+                        nodePath: ['background-image', 'dark']
+                    })
                 }
                 if (background.light != null) {
                     await visitFilepath({
                         absoluteFilepathToConfiguration,
                         rawUnresolvedFilepath: background.light,
                         visitor,
-                        nodePath: ["background-image", "light"]
-                    });
+                        nodePath: ['background-image', 'light']
+                    })
                 }
             }
         },
         colors: noop,
         css: async (css) => {
             if (css == null) {
-                return;
+                return
             } else if (Array.isArray(css)) {
                 // multiple CSS files
                 await Promise.all(
@@ -86,40 +86,40 @@ export async function visitDocsConfigFileYamlAst({
                             absoluteFilepathToConfiguration,
                             rawUnresolvedFilepath: stylesheet,
                             visitor,
-                            nodePath: ["css", `${idx}`],
+                            nodePath: ['css', `${idx}`],
                             willBeUploaded: false
                         })
                     )
-                );
+                )
             } else {
                 await visitFilepath({
                     absoluteFilepathToConfiguration,
                     rawUnresolvedFilepath: css,
                     visitor,
-                    nodePath: ["css"],
+                    nodePath: ['css'],
                     willBeUploaded: false
-                });
+                })
             }
         },
         defaultLanguage: noop,
         experimental: noop,
         favicon: async (favicon) => {
             if (favicon == null) {
-                return;
+                return
             }
 
             await visitFilepath({
                 absoluteFilepathToConfiguration,
                 rawUnresolvedFilepath: favicon,
                 visitor,
-                nodePath: ["favicon"]
-            });
+                nodePath: ['favicon']
+            })
         },
         footerLinks: noop,
         integrations: noop,
         js: async (js) => {
             if (js == null) {
-                return;
+                return
             } else if (Array.isArray(js)) {
                 // multiple JS configs
                 await Promise.all(
@@ -128,18 +128,18 @@ export async function visitDocsConfigFileYamlAst({
                             absoluteFilepathToConfiguration,
                             visitor,
                             script,
-                            nodePath: ["js", `${idx}`]
+                            nodePath: ['js', `${idx}`]
                         })
                     )
-                );
+                )
             } else {
                 // single JS config
                 await visitScript({
                     absoluteFilepathToConfiguration,
                     visitor,
                     script: js,
-                    nodePath: ["js"]
-                });
+                    nodePath: ['js']
+                })
             }
         },
         landingPage: noop,
@@ -150,38 +150,38 @@ export async function visitDocsConfigFileYamlAst({
                     absoluteFilepathToConfiguration,
                     rawUnresolvedFilepath: contents.logo.dark,
                     visitor,
-                    nodePath: ["logo", "dark"]
-                });
+                    nodePath: ['logo', 'dark']
+                })
             }
             if (contents.logo?.light != null) {
                 await visitFilepath({
                     absoluteFilepathToConfiguration,
                     rawUnresolvedFilepath: contents.logo.light,
                     visitor,
-                    nodePath: ["logo", "light"]
-                });
+                    nodePath: ['logo', 'light']
+                })
             }
         },
         metadata: noop,
         navbarLinks: noop,
         navigation: async (navigation) => {
             if (navigation == null) {
-                return;
+                return
             }
 
             await visitNavigationAst({
                 absolutePathToFernFolder,
                 navigation,
                 visitor,
-                nodePath: ["navigation"],
+                nodePath: ['navigation'],
                 absoluteFilepathToConfiguration,
                 apiWorkspaces,
                 context
-            });
+            })
         },
         products: async (products) => {
             if (products == null) {
-                return;
+                return
             }
 
             await Promise.all(
@@ -190,11 +190,11 @@ export async function visitDocsConfigFileYamlAst({
                         absoluteFilepathToConfiguration,
                         rawUnresolvedFilepath: product.path,
                         visitor,
-                        nodePath: ["products", `${idx}`],
+                        nodePath: ['products', `${idx}`],
                         willBeUploaded: false
-                    });
-                    const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), product.path);
-                    const content = yaml.load((await readFile(absoluteFilepath)).toString());
+                    })
+                    const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), product.path)
+                    const content = yaml.load((await readFile(absoluteFilepath)).toString())
                     if (await doesPathExist(absoluteFilepath)) {
                         await visitor.productFile?.(
                             {
@@ -202,69 +202,69 @@ export async function visitDocsConfigFileYamlAst({
                                 content
                             },
                             [product.path]
-                        );
+                        )
                     }
-                    const parsedProductFile = await validateProductConfigFileSchema({ value: content });
-                    if (parsedProductFile.type === "success") {
+                    const parsedProductFile = await validateProductConfigFileSchema({ value: content })
+                    if (parsedProductFile.type === 'success') {
                         await visitNavigationAst({
                             absolutePathToFernFolder,
                             navigation: parsedProductFile.contents.navigation,
                             visitor,
-                            nodePath: ["navigation"],
+                            nodePath: ['navigation'],
                             absoluteFilepathToConfiguration: absoluteFilepath,
                             apiWorkspaces,
                             context
-                        });
+                        })
                     }
                 })
-            );
+            )
         },
         redirects: noop,
         tabs: noop,
         title: noop,
         typography: async (typography) => {
             if (typography == null) {
-                return;
+                return
             }
             await visitObjectAsync(typography, {
                 bodyFont: async (body) => {
                     if (body == null) {
-                        return;
+                        return
                     }
                     await visitFontConfig({
                         absoluteFilepathToConfiguration,
                         visitor,
                         font: body,
-                        nodePath: ["typography", "bodyFont"]
-                    });
+                        nodePath: ['typography', 'bodyFont']
+                    })
                 },
                 codeFont: async (code) => {
                     if (code == null) {
-                        return;
+                        return
                     }
                     await visitFontConfig({
                         absoluteFilepathToConfiguration,
                         visitor,
                         font: code,
-                        nodePath: ["typography", "codeFont"]
-                    });
+                        nodePath: ['typography', 'codeFont']
+                    })
                 },
                 headingsFont: async (headings) => {
                     if (headings == null) {
-                        return;
+                        return
                     }
                     await visitFontConfig({
                         absoluteFilepathToConfiguration,
                         visitor,
                         font: headings,
-                        nodePath: ["typography", "headingsFont"]
-                    });
+                        nodePath: ['typography', 'headingsFont']
+                    })
                 }
-            });
+            })
         },
         versions: async (versions) => {
             if (versions == null) {
-                return;
+                return
             }
 
             await Promise.all(
@@ -273,11 +273,11 @@ export async function visitDocsConfigFileYamlAst({
                         absoluteFilepathToConfiguration,
                         rawUnresolvedFilepath: version.path,
                         visitor,
-                        nodePath: ["versions", `${idx}`],
+                        nodePath: ['versions', `${idx}`],
                         willBeUploaded: false
-                    });
-                    const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), version.path);
-                    const content = yaml.load((await readFile(absoluteFilepath)).toString());
+                    })
+                    const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), version.path)
+                    const content = yaml.load((await readFile(absoluteFilepath)).toString())
                     if (await doesPathExist(absoluteFilepath)) {
                         await visitor.versionFile?.(
                             {
@@ -285,25 +285,25 @@ export async function visitDocsConfigFileYamlAst({
                                 content
                             },
                             [version.path]
-                        );
+                        )
                     }
-                    const parsedVersionFile = await validateVersionConfigFileSchema({ value: content });
-                    if (parsedVersionFile.type === "success") {
+                    const parsedVersionFile = await validateVersionConfigFileSchema({ value: content })
+                    if (parsedVersionFile.type === 'success') {
                         await visitNavigationAst({
                             absolutePathToFernFolder,
                             navigation: parsedVersionFile.contents.navigation,
                             visitor,
-                            nodePath: ["navigation"],
+                            nodePath: ['navigation'],
                             absoluteFilepathToConfiguration: absoluteFilepath,
                             apiWorkspaces,
                             context
-                        });
+                        })
                     }
                 })
-            );
+            )
         },
         roles: noop
-    });
+    })
 }
 
 async function visitFontConfig({
@@ -312,10 +312,10 @@ async function visitFontConfig({
     font,
     nodePath
 }: {
-    absoluteFilepathToConfiguration: AbsoluteFilePath;
-    visitor: Partial<DocsConfigFileAstVisitor>;
-    font: docsYml.RawSchemas.FontConfig;
-    nodePath: NodePath;
+    absoluteFilepathToConfiguration: AbsoluteFilePath
+    visitor: Partial<DocsConfigFileAstVisitor>
+    font: docsYml.RawSchemas.FontConfig
+    nodePath: NodePath
 }): Promise<void> {
     if (font.path != null) {
         await visitFilepath({
@@ -324,18 +324,18 @@ async function visitFontConfig({
             visitor,
             nodePath,
             willBeUploaded: true
-        });
+        })
     }
 
     for (const path of font.paths ?? []) {
-        if (typeof path === "string") {
+        if (typeof path === 'string') {
             await visitFilepath({
                 absoluteFilepathToConfiguration,
                 rawUnresolvedFilepath: path,
                 visitor,
                 nodePath,
                 willBeUploaded: true
-            });
+            })
         } else {
             await visitFilepath({
                 absoluteFilepathToConfiguration,
@@ -343,7 +343,7 @@ async function visitFontConfig({
                 visitor,
                 nodePath,
                 willBeUploaded: true
-            });
+            })
         }
     }
 }
@@ -354,12 +354,12 @@ async function visitScript({
     script,
     nodePath
 }: {
-    absoluteFilepathToConfiguration: AbsoluteFilePath;
-    visitor: Partial<DocsConfigFileAstVisitor>;
-    script: docsYml.RawSchemas.JsConfigOptions;
-    nodePath: NodePath;
+    absoluteFilepathToConfiguration: AbsoluteFilePath
+    visitor: Partial<DocsConfigFileAstVisitor>
+    script: docsYml.RawSchemas.JsConfigOptions
+    nodePath: NodePath
 }) {
-    const rawUnresolvedFilepath = typeof script === "string" ? script : "path" in script ? script.path : null;
+    const rawUnresolvedFilepath = typeof script === 'string' ? script : 'path' in script ? script.path : null
 
     if (rawUnresolvedFilepath) {
         await visitFilepath({
@@ -368,6 +368,6 @@ async function visitScript({
             visitor,
             nodePath,
             willBeUploaded: true
-        });
+        })
     }
 }

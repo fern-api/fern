@@ -58,4 +58,4 @@ errors:
   MovieDoesNotExistError:
     status-code: 404
     type: MovieId
-`;
+`

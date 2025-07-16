@@ -1,13 +1,13 @@
-import { assertNever } from "@fern-api/core-utils";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { Pagination } from "@fern-api/ir-sdk";
+import { assertNever } from '@fern-api/core-utils'
+import { RawSchemas } from '@fern-api/fern-definition-schema'
+import { Pagination } from '@fern-api/ir-sdk'
 
-import { FernFileContext } from "../../FernFileContext";
-import { PropertyResolver } from "../../resolvers/PropertyResolver";
-import { convertCursorPagination } from "./convertCursorPagination";
-import { convertCustomPagination } from "./convertCustomPagination";
-import { convertOffsetPagination } from "./convertOffsetPagination";
-import { getPaginationPropertyComponents } from "./convertPaginationUtils";
+import { FernFileContext } from '../../FernFileContext'
+import { PropertyResolver } from '../../resolvers/PropertyResolver'
+import { convertCursorPagination } from './convertCursorPagination'
+import { convertCustomPagination } from './convertCustomPagination'
+import { convertOffsetPagination } from './convertOffsetPagination'
+import { getPaginationPropertyComponents } from './convertPaginationUtils'
 
 export function convertPagination({
     propertyResolver,
@@ -15,42 +15,42 @@ export function convertPagination({
     endpointName,
     endpointSchema
 }: {
-    propertyResolver: PropertyResolver;
-    file: FernFileContext;
-    endpointName: string;
-    endpointSchema: RawSchemas.HttpEndpointSchema;
+    propertyResolver: PropertyResolver
+    file: FernFileContext
+    endpointName: string
+    endpointSchema: RawSchemas.HttpEndpointSchema
 }): Pagination | undefined {
     const endpointPagination =
-        typeof endpointSchema.pagination === "boolean" ? file.rootApiFile.pagination : endpointSchema.pagination;
+        typeof endpointSchema.pagination === 'boolean' ? file.rootApiFile.pagination : endpointSchema.pagination
     if (!endpointPagination) {
-        return undefined;
+        return undefined
     }
-    const paginationPropertyComponents = getPaginationPropertyComponents(endpointPagination);
+    const paginationPropertyComponents = getPaginationPropertyComponents(endpointPagination)
     switch (paginationPropertyComponents.type) {
-        case "cursor":
+        case 'cursor':
             return convertCursorPagination({
                 propertyResolver,
                 file,
                 endpointName,
                 endpointSchema,
                 paginationPropertyComponents
-            });
-        case "offset":
+            })
+        case 'offset':
             return convertOffsetPagination({
                 propertyResolver,
                 file,
                 endpointName,
                 endpointSchema,
                 paginationPropertyComponents
-            });
-        case "custom":
+            })
+        case 'custom':
             return convertCustomPagination({
                 propertyResolver,
                 file,
                 endpointName,
                 paginationPropertyComponents
-            });
+            })
         default:
-            assertNever(paginationPropertyComponents);
+            assertNever(paginationPropertyComponents)
     }
 }

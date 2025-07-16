@@ -1,5 +1,5 @@
-import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { HttpMethod } from "@fern-api/openapi-ir";
+import { RawSchemas } from '@fern-api/fern-definition-schema'
+import { HttpMethod } from '@fern-api/openapi-ir'
 
 export function convertToHttpMethod(httpMethod: HttpMethod): RawSchemas.HttpMethodSchema {
     return HttpMethod._visit<RawSchemas.HttpMethodSchema>(httpMethod, {
@@ -10,13 +10,13 @@ export function convertToHttpMethod(httpMethod: HttpMethod): RawSchemas.HttpMeth
         delete: () => RawSchemas.HttpMethodSchema.Delete,
         head: () => RawSchemas.HttpMethodSchema.Head,
         options: () => {
-            throw new Error("OPTIONS is unsupported");
+            throw new Error('OPTIONS is unsupported')
         },
         trace: () => {
-            throw new Error("TRACE is unsupported");
+            throw new Error('TRACE is unsupported')
         },
         _other: () => {
-            throw new Error("Unknown http method is unsupported");
+            throw new Error('Unknown http method is unsupported')
         }
-    });
+    })
 }

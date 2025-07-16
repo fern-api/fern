@@ -1,8 +1,8 @@
-import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { ExampleResolver, ExampleValidators, FernFileContext, TypeResolver } from "@fern-api/ir-generator";
+import { FernWorkspace } from '@fern-api/api-workspace-commons'
+import { RawSchemas } from '@fern-api/fern-definition-schema'
+import { ExampleResolver, ExampleValidators, FernFileContext, TypeResolver } from '@fern-api/ir-generator'
 
-import { RuleViolation } from "../../Rule";
+import { RuleViolation } from '../../Rule'
 
 export function validateExampleEndpointCallParameters<T>({
     allDeclarations = {},
@@ -14,19 +14,19 @@ export function validateExampleEndpointCallParameters<T>({
     getRawType,
     breadcrumbs
 }: {
-    allDeclarations: Record<string, T> | undefined;
-    examples: Record<string, RawSchemas.ExampleTypeReferenceSchema> | undefined;
-    parameterDisplayName: string;
-    typeResolver: TypeResolver;
-    exampleResolver: ExampleResolver;
-    workspace: FernWorkspace;
-    getRawType: (parameter: T) => { rawType: string; file: FernFileContext } | undefined;
-    breadcrumbs: string[];
+    allDeclarations: Record<string, T> | undefined
+    examples: Record<string, RawSchemas.ExampleTypeReferenceSchema> | undefined
+    parameterDisplayName: string
+    typeResolver: TypeResolver
+    exampleResolver: ExampleResolver
+    workspace: FernWorkspace
+    getRawType: (parameter: T) => { rawType: string; file: FernFileContext } | undefined
+    breadcrumbs: string[]
 }): RuleViolation[] {
-    const violations: RuleViolation[] = [];
+    const violations: RuleViolation[] = []
 
     const requiredParameters = Object.entries(allDeclarations).reduce<string[]>((acc, [key, parameter]) => {
-        const rawType = getRawType(parameter);
+        const rawType = getRawType(parameter)
 
         // if rawType is not defined, then variable couldn't be de-referenced.
         // this will be caught by another rule
@@ -34,41 +34,41 @@ export function validateExampleEndpointCallParameters<T>({
             const resolvedType = typeResolver.resolveType({
                 type: rawType.rawType,
                 file: rawType.file
-            });
+            })
 
             const isOptional =
                 (resolvedType != null &&
-                    resolvedType._type === "container" &&
-                    (resolvedType.container._type === "optional" || resolvedType.container._type === "nullable")) ||
-                resolvedType?._type === "unknown";
+                    resolvedType._type === 'container' &&
+                    (resolvedType.container._type === 'optional' || resolvedType.container._type === 'nullable')) ||
+                resolvedType?._type === 'unknown'
 
             if (!isOptional) {
-                acc.push(key);
+                acc.push(key)
             }
         }
 
-        return acc;
-    }, []);
+        return acc
+    }, [])
 
     for (const requiredKey of requiredParameters) {
         if (examples?.[requiredKey] == null) {
             violations.push({
-                severity: "fatal",
+                severity: 'fatal',
                 message: `Example is missing required ${parameterDisplayName} "${requiredKey}"`
-            });
+            })
         }
     }
 
     if (examples != null) {
         for (const [key, exampleParameter] of Object.entries(examples)) {
-            const expectedType = allDeclarations[key];
+            const expectedType = allDeclarations[key]
             if (expectedType == null) {
                 violations.push({
-                    severity: "fatal",
+                    severity: 'fatal',
                     message: `Unexpected ${parameterDisplayName} "${key}"`
-                });
+                })
             } else {
-                const rawType = getRawType(expectedType);
+                const rawType = getRawType(expectedType)
 
                 // if rawType is not defined, then variable couldn't be de-referenced.
                 // this will be caught by another rule
@@ -84,13 +84,13 @@ export function validateExampleEndpointCallParameters<T>({
                             breadcrumbs,
                             depth: 0
                         }).map((val): RuleViolation => {
-                            return { severity: "fatal", message: val.message };
+                            return { severity: 'fatal', message: val.message }
                         })
-                    );
+                    )
                 }
             }
         }
     }
 
-    return violations;
+    return violations
 }

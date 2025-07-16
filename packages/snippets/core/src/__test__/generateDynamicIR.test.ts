@@ -1,29 +1,29 @@
-import { OpenAPI } from "openapi-types";
+import { OpenAPI } from 'openapi-types'
 
-import { generateDynamicIR } from "../generateDynamicIR";
+import { generateDynamicIR } from '../generateDynamicIR'
 
-describe("generateDynamicIR", () => {
-    it("go", async () => {
+describe('generateDynamicIR', () => {
+    it('go', async () => {
         const openapi: OpenAPI.Document = {
-            openapi: "3.0.0",
+            openapi: '3.0.0',
             info: {
-                title: "Test API",
-                version: "1.0.0"
+                title: 'Test API',
+                version: '1.0.0'
             },
             paths: {
-                "/testdata": {
+                '/testdata': {
                     get: {
-                        summary: "Retrieve test data",
-                        operationId: "getTestData",
+                        summary: 'Retrieve test data',
+                        operationId: 'getTestData',
                         responses: {
-                            "200": {
-                                description: "Successful response",
+                            '200': {
+                                description: 'Successful response',
                                 content: {
-                                    "application/json": {
+                                    'application/json': {
                                         schema: {
-                                            type: "object",
+                                            type: 'object',
                                             properties: {
-                                                message: { type: "string" }
+                                                message: { type: 'string' }
                                             }
                                         }
                                     }
@@ -32,19 +32,19 @@ describe("generateDynamicIR", () => {
                         }
                     }
                 },
-                "/filtered": {
+                '/filtered': {
                     get: {
-                        summary: "This endpoint should be filtered out",
-                        operationId: "filtered",
+                        summary: 'This endpoint should be filtered out',
+                        operationId: 'filtered',
                         responses: {
-                            "200": {
-                                description: "Successful response",
+                            '200': {
+                                description: 'Successful response',
                                 content: {
-                                    "application/json": {
+                                    'application/json': {
                                         schema: {
-                                            type: "object",
+                                            type: 'object',
                                             properties: {
-                                                message: { type: "string" }
+                                                message: { type: 'string' }
                                             }
                                         }
                                     }
@@ -54,19 +54,19 @@ describe("generateDynamicIR", () => {
                     }
                 }
             }
-        };
+        }
         const ir = generateDynamicIR({
             spec: {
-                type: "openapi",
+                type: 'openapi',
                 openapi,
                 settings: {
                     filter: {
-                        endpoints: ["GET /testdata"]
+                        endpoints: ['GET /testdata']
                     }
                 }
             },
-            language: "go"
-        });
-        expect(ir).toMatchSnapshot();
-    });
-});
+            language: 'go'
+        })
+        expect(ir).toMatchSnapshot()
+    })
+})

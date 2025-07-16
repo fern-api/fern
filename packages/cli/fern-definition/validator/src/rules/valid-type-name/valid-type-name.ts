@@ -1,9 +1,9 @@
-import { Rule } from "../../Rule";
+import { Rule } from '../../Rule'
 
-const ALPHA_REGEX = /^[a-z]/i;
+const ALPHA_REGEX = /^[a-z]/i
 
 export const ValidTypeNameRule: Rule = {
-    name: "valid-type-name",
+    name: 'valid-type-name',
     create: () => {
         return {
             definitionFile: {
@@ -11,14 +11,14 @@ export const ValidTypeNameRule: Rule = {
                     if (!typeName.isInlined && !ALPHA_REGEX.test(typeName.name)) {
                         return [
                             {
-                                severity: "fatal",
-                                message: "Type name must begin with a letter"
+                                severity: 'fatal',
+                                message: 'Type name must begin with a letter'
                             }
-                        ];
+                        ]
                     }
-                    return [];
+                    return []
                 }
             }
-        };
+        }
     }
-};
+}

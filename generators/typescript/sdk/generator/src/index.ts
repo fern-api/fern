@@ -1,1 +1,1 @@
-export { SdkGenerator } from "./SdkGenerator";
+export { SdkGenerator } from './SdkGenerator'

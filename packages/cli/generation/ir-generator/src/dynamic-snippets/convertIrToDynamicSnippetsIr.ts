@@ -1,7 +1,7 @@
-import { generatorsYml } from "@fern-api/configuration";
-import { IntermediateRepresentation, dynamic } from "@fern-api/ir-sdk";
+import { generatorsYml } from '@fern-api/configuration'
+import { IntermediateRepresentation, dynamic } from '@fern-api/ir-sdk'
 
-import { DynamicSnippetsConverter } from "./DynamicSnippetsConverter";
+import { DynamicSnippetsConverter } from './DynamicSnippetsConverter'
 
 export function convertIrToDynamicSnippetsIr({
     ir,
@@ -10,12 +10,12 @@ export function convertIrToDynamicSnippetsIr({
     disableExamples,
     generatorConfig
 }: {
-    ir: IntermediateRepresentation;
-    generationLanguage?: generatorsYml.GenerationLanguage;
-    smartCasing?: boolean;
-    disableExamples?: boolean;
-    generatorConfig?: dynamic.GeneratorConfig;
+    ir: IntermediateRepresentation
+    generationLanguage?: generatorsYml.GenerationLanguage
+    smartCasing?: boolean
+    disableExamples?: boolean
+    generatorConfig?: dynamic.GeneratorConfig
 }): dynamic.DynamicIntermediateRepresentation {
-    const converter = new DynamicSnippetsConverter({ ir, generationLanguage, smartCasing, generatorConfig });
-    return converter.convert({ disableExamples });
+    const converter = new DynamicSnippetsConverter({ ir, generationLanguage, smartCasing, generatorConfig })
+    return converter.convert({ disableExamples })
 }

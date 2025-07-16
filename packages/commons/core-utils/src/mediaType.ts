@@ -1,4 +1,4 @@
-import WhatwgMIMEType from "whatwg-mimetype";
+import WhatwgMIMEType from 'whatwg-mimetype'
 
 // https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
 export class MediaType {
@@ -11,176 +11,176 @@ export class MediaType {
         private input: string
     ) {}
 
-    static APPLICATION_JSON = "application/json";
-    static APPLICATION_OCTET_STREAM = "application/octet-stream";
-    static MULTIPART_FORM_DATA = "multipart/form-data";
+    static APPLICATION_JSON = 'application/json'
+    static APPLICATION_OCTET_STREAM = 'application/octet-stream'
+    static MULTIPART_FORM_DATA = 'multipart/form-data'
 
     static parse(input: string | null | undefined): MediaType | null {
         if (input == null) {
-            return null;
+            return null
         }
-        const parsed = WhatwgMIMEType.parse(input);
+        const parsed = WhatwgMIMEType.parse(input)
         if (parsed == null) {
-            return null;
+            return null
         }
-        return new MediaType(parsed.type, parsed.subtype, parsed.essence, parsed.parameters, parsed, input);
+        return new MediaType(parsed.type, parsed.subtype, parsed.essence, parsed.parameters, parsed, input)
     }
 
     public toString(): string {
-        return this.input;
+        return this.input
     }
 
     /** Types */
 
     public isText(): boolean {
-        return this.type === "text";
+        return this.type === 'text'
     }
 
     public isImage(): boolean {
-        return this.type === "image";
+        return this.type === 'image'
     }
 
     public isAudio(): boolean {
-        return this.type === "audio";
+        return this.type === 'audio'
     }
 
     public isVideo(): boolean {
-        return this.type === "video";
+        return this.type === 'video'
     }
 
     public isFont(): boolean {
-        return this.type === "font";
+        return this.type === 'font'
     }
 
     public isMultipart(): boolean {
-        return this.type === "multipart";
+        return this.type === 'multipart'
     }
 
     public isApplication(): boolean {
-        return this.type === "application";
+        return this.type === 'application'
     }
 
     public isMessage(): boolean {
-        return this.type === "message";
+        return this.type === 'message'
     }
 
     public isModel(): boolean {
-        return this.type === "model";
+        return this.type === 'model'
     }
 
     /** Text */
 
     public isCSS(): boolean {
-        return this.isText() && this.subtype === "css";
+        return this.isText() && this.subtype === 'css'
     }
 
     public isCSV(): boolean {
-        return this.isText() && this.subtype === "csv";
+        return this.isText() && this.subtype === 'csv'
     }
 
     public isMarkdown(): boolean {
-        return this.isText() && this.subtype === "markdown";
+        return this.isText() && this.subtype === 'markdown'
     }
 
     public isPlainText(): boolean {
-        return this.isText() && this.subtype === "plain";
+        return this.isText() && this.subtype === 'plain'
     }
 
     /** Multipart */
 
     public isMultiPartFormData(): boolean {
-        return this.isMultipart() && this.subtype === "form-data";
+        return this.isMultipart() && this.subtype === 'form-data'
     }
 
     /** Application */
 
     public isJSON(): boolean {
-        return this.isApplication() && this.subtype.includes("json");
+        return this.isApplication() && this.subtype.includes('json')
     }
 
     public isURLEncoded(): boolean {
-        return this.isApplication() && this.subtype === "x-www-form-urlencoded";
+        return this.isApplication() && this.subtype === 'x-www-form-urlencoded'
     }
 
     public isOctetStream(): boolean {
-        return this.isApplication() && this.subtype === "octet-stream";
+        return this.isApplication() && this.subtype === 'octet-stream'
     }
 
     public isPDF(): boolean {
-        return this.isApplication() && this.subtype === "pdf";
+        return this.isApplication() && this.subtype === 'pdf'
     }
 
     public isZip(): boolean {
-        return this.isApplication() && this.subtype === "zip";
+        return this.isApplication() && this.subtype === 'zip'
     }
 
     public isGzip(): boolean {
-        return this.isApplication() && this.subtype === "gzip";
+        return this.isApplication() && this.subtype === 'gzip'
     }
 
     public isTar(): boolean {
-        return this.isApplication() && this.subtype === "tar";
+        return this.isApplication() && this.subtype === 'tar'
     }
 
     public isBrotli(): boolean {
-        return this.isApplication() && this.subtype === "br";
+        return this.isApplication() && this.subtype === 'br'
     }
 
     public isDeflate(): boolean {
-        return this.isApplication() && this.subtype === "deflate";
+        return this.isApplication() && this.subtype === 'deflate'
     }
 
     public isProtobuf(): boolean {
-        return this.isApplication() && this.subtype === "protobuf";
+        return this.isApplication() && this.subtype === 'protobuf'
     }
 
     /** Images */
 
     public isAvif(): boolean {
-        return this.isImage() && this.subtype === "avif";
+        return this.isImage() && this.subtype === 'avif'
     }
 
     public isWebP(): boolean {
-        return this.isImage() && this.subtype === "webp";
+        return this.isImage() && this.subtype === 'webp'
     }
 
     public isSVG(): boolean {
-        return this.isImage() && this.subtype === "svg+xml";
+        return this.isImage() && this.subtype === 'svg+xml'
     }
 
     public isPNG(): boolean {
-        return this.isImage() && this.subtype === "png";
+        return this.isImage() && this.subtype === 'png'
     }
 
     public isJPEG(): boolean {
-        return this.isImage() && this.subtype === "jpeg";
+        return this.isImage() && this.subtype === 'jpeg'
     }
 
     public isGIF(): boolean {
-        return this.isImage() && this.subtype === "gif";
+        return this.isImage() && this.subtype === 'gif'
     }
 
     /** Audio */
 
     public isMPEG(): boolean {
-        return this.isAudio() && this.subtype === "mpeg";
+        return this.isAudio() && this.subtype === 'mpeg'
     }
 
     public isWAV(): boolean {
-        return this.isAudio() && this.subtype === "wav";
+        return this.isAudio() && this.subtype === 'wav'
     }
 
     /** Mixed */
 
     public isHTML(): boolean {
-        return this.mimeType.isHTML();
+        return this.mimeType.isHTML()
     }
 
     public isXML(): boolean {
-        return this.mimeType.isXML();
+        return this.mimeType.isXML()
     }
 
     public isJavaScript(): boolean {
-        return this.mimeType.isJavaScript();
+        return this.mimeType.isJavaScript()
     }
 }

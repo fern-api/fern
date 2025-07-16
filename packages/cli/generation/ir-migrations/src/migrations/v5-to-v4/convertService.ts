@@ -1,23 +1,23 @@
-import { IrVersions } from "../../ir-versions";
-import { ErrorResolver } from "./ErrorResolver";
-import { convertDeclaredTypeName } from "./convertDeclaredTypeName";
-import { convertExampleTypeReference } from "./convertExampleTypeReference";
-import { convertFernFilepathV1, convertFernFilepathV2 } from "./convertFernFilepath";
-import { convertHeader } from "./convertHeader";
+import { IrVersions } from '../../ir-versions'
+import { ErrorResolver } from './ErrorResolver'
+import { convertDeclaredTypeName } from './convertDeclaredTypeName'
+import { convertExampleTypeReference } from './convertExampleTypeReference'
+import { convertFernFilepathV1, convertFernFilepathV2 } from './convertFernFilepath'
+import { convertHeader } from './convertHeader'
 import {
     convertNameAndWireValueToV1,
     convertNameAndWireValueToV2,
     convertNameToV1,
     convertNameToV2
-} from "./convertName";
-import { convertTypeReference } from "./convertTypeReference";
+} from './convertName'
+import { convertTypeReference } from './convertTypeReference'
 
 export function convertService({
     service,
     errorResolver
 }: {
-    service: IrVersions.V5.http.HttpService;
-    errorResolver: ErrorResolver;
+    service: IrVersions.V5.http.HttpService
+    errorResolver: ErrorResolver
 }): IrVersions.V4.services.http.HttpService {
     return {
         docs: service.docs,
@@ -29,7 +29,7 @@ export function convertService({
         endpoints: service.endpoints.map((endpoint) => convertEndpoint({ endpoint, errorResolver })),
         headers: service.headers.map((header) => convertHeader(header)),
         pathParameters: service.pathParameters.map((pathParameter) => convertPathParameter(pathParameter))
-    };
+    }
 }
 
 function convertDeclaredServiceName(
@@ -39,22 +39,22 @@ function convertDeclaredServiceName(
         name: serviceName.name.pascalCase.unsafeName,
         fernFilepath: convertFernFilepathV1(serviceName.fernFilepath),
         fernFilepathV2: convertFernFilepathV2(serviceName.fernFilepath)
-    };
+    }
 }
 
 function convertBasePathToString(basePath: IrVersions.V5.http.HttpPath): string {
     return basePath.parts.reduce(
         (stringifiedBasePath, part) => stringifiedBasePath + `{${part.pathParameter}}` + part.tail,
         basePath.head
-    );
+    )
 }
 
 function convertEndpoint({
     endpoint,
     errorResolver
 }: {
-    endpoint: IrVersions.V5.http.HttpEndpoint;
-    errorResolver: ErrorResolver;
+    endpoint: IrVersions.V5.http.HttpEndpoint
+    errorResolver: ErrorResolver
 }): IrVersions.V4.services.http.HttpEndpoint {
     return {
         docs: endpoint.docs,
@@ -75,7 +75,7 @@ function convertEndpoint({
         errorsV2: convertResponseErrorsV2({ responseErrors: endpoint.errors, errorResolver }),
         auth: endpoint.auth,
         examples: endpoint.examples.map((example) => convertExampleEndpointCall(example))
-    };
+    }
 }
 
 function convertPathParameter(
@@ -87,7 +87,7 @@ function convertPathParameter(
         name: convertNameToV1(pathParameter.name),
         nameV2: convertNameToV2(pathParameter.name),
         valueType: convertTypeReference(pathParameter.valueType)
-    };
+    }
 }
 
 function convertQueryParameter(
@@ -100,7 +100,7 @@ function convertQueryParameter(
         nameV2: convertNameAndWireValueToV2(queryParameter.name),
         valueType: convertTypeReference(queryParameter.valueType),
         allowMultiple: queryParameter.allowMultiple
-    };
+    }
 }
 
 function convertRequestBody(
@@ -123,9 +123,9 @@ function convertRequestBody(
                 requestBodyType: convertTypeReference(reference.requestBodyType)
             }),
         _unknown: () => {
-            throw new Error("Unknown HttpRequestBody type: " + requestBody.type);
+            throw new Error('Unknown HttpRequestBody type: ' + requestBody.type)
         }
-    });
+    })
 }
 
 function convertSdkRequest(sdkRequest: IrVersions.V5.http.SdkRequest): IrVersions.V4.services.http.SdkRequest {
@@ -145,20 +145,20 @@ function convertSdkRequest(sdkRequest: IrVersions.V5.http.SdkRequest): IrVersion
                         bodyKey: convertNameToV2(wrapper.bodyKey)
                     }),
                 _unknown: () => {
-                    throw new Error("Unknown SdkRequestShape type: " + sdkRequest.shape.type);
+                    throw new Error('Unknown SdkRequestShape type: ' + sdkRequest.shape.type)
                 }
             }
         )
-    };
+    }
 }
 
 function convertResponse(response: IrVersions.V5.http.HttpResponse): IrVersions.V4.services.http.HttpResponse {
-    const convertedType = response.type != null ? convertTypeReference(response.type) : undefined;
+    const convertedType = response.type != null ? convertTypeReference(response.type) : undefined
     return {
         docs: response.docs,
         type: convertedType ?? IrVersions.V4.types.TypeReference.void(),
         typeV2: convertedType
-    };
+    }
 }
 
 function convertResponseError(
@@ -167,65 +167,65 @@ function convertResponseError(
     return {
         docs: responseError.docs,
         error: convertDeclaredErrorName(responseError.error)
-    };
+    }
 }
 
 function convertResponseErrorsV2({
     responseErrors,
     errorResolver
 }: {
-    responseErrors: IrVersions.V5.http.ResponseErrors;
-    errorResolver: ErrorResolver;
+    responseErrors: IrVersions.V5.http.ResponseErrors
+    errorResolver: ErrorResolver
 }): IrVersions.V4.services.commons.ResponseErrorsV2 {
     return {
         discriminant: {
-            originalValue: "errorName",
-            camelCase: "errorName",
-            snakeCase: "error_name",
-            pascalCase: "ErrorName",
-            screamingSnakeCase: "ERROR_NAME",
-            wireValue: "errorName"
+            originalValue: 'errorName',
+            camelCase: 'errorName',
+            snakeCase: 'error_name',
+            pascalCase: 'ErrorName',
+            screamingSnakeCase: 'ERROR_NAME',
+            wireValue: 'errorName'
         },
         types: responseErrors.map((responseError) => convertResponseErrorV2({ responseError, errorResolver }))
-    };
+    }
 }
 
 function convertResponseErrorV2({
     responseError,
     errorResolver
 }: {
-    responseError: IrVersions.V5.http.ResponseError;
-    errorResolver: ErrorResolver;
+    responseError: IrVersions.V5.http.ResponseError
+    errorResolver: ErrorResolver
 }): IrVersions.V4.services.commons.ResponseErrorV2 {
-    const declaration = errorResolver.getDeclaration(responseError.error);
+    const declaration = errorResolver.getDeclaration(responseError.error)
     return {
         docs: responseError.docs,
         discriminantValue: convertNameAndWireValueToV1(declaration.discriminantValue),
         shape: convertResponseErrorShape({ responseError, declaration })
-    };
+    }
 }
 
 function convertResponseErrorShape({
     responseError,
     declaration
 }: {
-    responseError: IrVersions.V5.http.ResponseError;
-    declaration: IrVersions.V5.errors.ErrorDeclaration;
+    responseError: IrVersions.V5.http.ResponseError
+    declaration: IrVersions.V5.errors.ErrorDeclaration
 }): IrVersions.V4.services.commons.ResponseErrorShape {
     if (declaration.type == null) {
-        return IrVersions.V4.services.commons.ResponseErrorShape.noProperties();
+        return IrVersions.V4.services.commons.ResponseErrorShape.noProperties()
     }
     return IrVersions.V4.services.commons.ResponseErrorShape.singleProperty({
         name: {
-            originalValue: "content",
-            camelCase: "content",
-            snakeCase: "content",
-            pascalCase: "Content",
-            screamingSnakeCase: "CONTENT",
-            wireValue: "content"
+            originalValue: 'content',
+            camelCase: 'content',
+            snakeCase: 'content',
+            pascalCase: 'Content',
+            screamingSnakeCase: 'CONTENT',
+            wireValue: 'content'
         },
         error: convertDeclaredErrorName(responseError.error)
-    });
+    })
 }
 
 function convertDeclaredErrorName(
@@ -237,7 +237,7 @@ function convertDeclaredErrorName(
         nameV3: convertNameToV2(errorName.name),
         fernFilepath: convertFernFilepathV1(errorName.fernFilepath),
         fernFilepathV2: convertFernFilepathV2(errorName.fernFilepath)
-    };
+    }
 }
 
 function convertExampleEndpointCall(
@@ -257,7 +257,7 @@ function convertExampleEndpointCall(
         queryParameters: example.queryParameters.map((queryParameter) => convertExampleQueryParameter(queryParameter)),
         request: example.request != null ? convertExampleRequest(example.request) : undefined,
         response: convertExampleResponse(example.response)
-    };
+    }
 }
 
 function convertExamplePathParameter(
@@ -266,14 +266,14 @@ function convertExamplePathParameter(
     return {
         key: pathParameter.key,
         value: convertExampleTypeReference(pathParameter.value)
-    };
+    }
 }
 
 function convertExampleHeader(header: IrVersions.V5.http.ExampleHeader): IrVersions.V4.services.http.ExampleHeader {
     return {
         wireKey: header.wireKey,
         value: convertExampleTypeReference(header.value)
-    };
+    }
 }
 
 function convertExampleQueryParameter(
@@ -282,7 +282,7 @@ function convertExampleQueryParameter(
     return {
         wireKey: queryParameter.wireKey,
         value: convertExampleTypeReference(queryParameter.value)
-    };
+    }
 }
 
 function convertExampleRequest(
@@ -299,9 +299,9 @@ function convertExampleRequest(
         reference: (reference) =>
             IrVersions.V4.services.http.ExampleRequestBody.reference(convertExampleTypeReference(reference)),
         _unknown: () => {
-            throw new Error("Unknown ExampleRequestBody: " + request.type);
+            throw new Error('Unknown ExampleRequestBody: ' + request.type)
         }
-    });
+    })
 }
 
 function convertExampleInlinedRequestBodyProperty(
@@ -314,7 +314,7 @@ function convertExampleInlinedRequestBodyProperty(
             property.originalTypeDeclaration != null
                 ? convertDeclaredTypeName(property.originalTypeDeclaration)
                 : undefined
-    };
+    }
 }
 
 function convertExampleResponse(
@@ -331,7 +331,7 @@ function convertExampleResponse(
                 body: errorResponse.body != null ? convertExampleTypeReference(errorResponse.body) : undefined
             }),
         _unknown: () => {
-            throw new Error("Unknown ExampleResponse: " + response.type);
+            throw new Error('Unknown ExampleResponse: ' + response.type)
         }
-    });
+    })
 }

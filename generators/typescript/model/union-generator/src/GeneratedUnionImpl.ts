@@ -6,8 +6,8 @@ import {
     getTextOfTsNode,
     getWriterForMultiLineUnionType,
     maybeAddDocsStructure
-} from "@fern-typescript/commons";
-import { GeneratedUnion, ModelContext } from "@fern-typescript/contexts";
+} from '@fern-typescript/commons'
+import { GeneratedUnion, ModelContext } from '@fern-typescript/contexts'
 import {
     InterfaceDeclarationStructure,
     ModuleDeclarationStructure,
@@ -20,63 +20,63 @@ import {
     VariableStatementStructure,
     WriterFunction,
     ts
-} from "ts-morph";
+} from 'ts-morph'
 
-import { ObjectProperty } from "@fern-fern/ir-sdk/api";
+import { ObjectProperty } from '@fern-fern/ir-sdk/api'
 
-import { KnownSingleUnionType } from "./known-single-union-type/KnownSingleUnionType";
-import { ParsedSingleUnionType } from "./parsed-single-union-type/ParsedSingleUnionType";
+import { KnownSingleUnionType } from './known-single-union-type/KnownSingleUnionType'
+import { ParsedSingleUnionType } from './parsed-single-union-type/ParsedSingleUnionType'
 
 export declare namespace GeneratedUnionImpl {
     export interface Init<Context extends ModelContext> {
-        typeName: string;
-        discriminant: string;
-        getDocs: ((context: Context) => string | null | undefined) | undefined;
-        parsedSingleUnionTypes: KnownSingleUnionType<Context>[];
-        unknownSingleUnionType: ParsedSingleUnionType<Context>;
-        getReferenceToUnion: (context: Context) => Reference;
-        includeUtilsOnUnionMembers: boolean;
+        typeName: string
+        discriminant: string
+        getDocs: ((context: Context) => string | null | undefined) | undefined
+        parsedSingleUnionTypes: KnownSingleUnionType<Context>[]
+        unknownSingleUnionType: ParsedSingleUnionType<Context>
+        getReferenceToUnion: (context: Context) => Reference
+        includeUtilsOnUnionMembers: boolean
         /**
          * @default the value of includeUtilsOnUnionMembers
          */
-        includeConstBuilders?: boolean;
-        includeOtherInUnionTypes: boolean;
-        baseProperties?: ObjectProperty[];
-        includeSerdeLayer: boolean;
-        retainOriginalCasing: boolean;
-        noOptionalProperties: boolean;
-        inline: boolean;
-        enableInlineTypes: boolean;
+        includeConstBuilders?: boolean
+        includeOtherInUnionTypes: boolean
+        baseProperties?: ObjectProperty[]
+        includeSerdeLayer: boolean
+        retainOriginalCasing: boolean
+        noOptionalProperties: boolean
+        inline: boolean
+        enableInlineTypes: boolean
     }
 }
 
 export class GeneratedUnionImpl<Context extends ModelContext> implements GeneratedUnion<Context> {
-    public static readonly UTILS_INTERFACE_NAME = "_Utils";
-    public static readonly BASE_INTERFACE_NAME = "_Base";
-    public static readonly VISITOR_INTERFACE_NAME = "_Visitor";
-    public static readonly VISITOR_RETURN_TYPE = "_Result";
-    public static readonly VISITOR_PARAMETER_NAME = "visitor";
-    public static readonly VISITEE_PARAMETER_NAME = "value";
-    public static readonly UNKNOWN_VISITOR_KEY = "_other";
-    public static readonly VISIT_UTIL_PROPERTY_NAME = "_visit";
+    public static readonly UTILS_INTERFACE_NAME = '_Utils'
+    public static readonly BASE_INTERFACE_NAME = '_Base'
+    public static readonly VISITOR_INTERFACE_NAME = '_Visitor'
+    public static readonly VISITOR_RETURN_TYPE = '_Result'
+    public static readonly VISITOR_PARAMETER_NAME = 'visitor'
+    public static readonly VISITEE_PARAMETER_NAME = 'value'
+    public static readonly UNKNOWN_VISITOR_KEY = '_other'
+    public static readonly VISIT_UTIL_PROPERTY_NAME = '_visit'
 
-    public readonly getReferenceToUnion: (context: Context) => Reference;
-    public readonly discriminant: string;
-    public readonly visitPropertyName = GeneratedUnionImpl.VISIT_UTIL_PROPERTY_NAME;
+    public readonly getReferenceToUnion: (context: Context) => Reference
+    public readonly discriminant: string
+    public readonly visitPropertyName = GeneratedUnionImpl.VISIT_UTIL_PROPERTY_NAME
 
-    private getDocs: ((context: Context) => string | null | undefined) | undefined;
-    private typeName: string;
-    private parsedSingleUnionTypes: KnownSingleUnionType<Context>[];
-    private unknownSingleUnionType: ParsedSingleUnionType<Context>;
-    private includeUtilsOnUnionMembers: boolean;
-    private includeOtherInUnionTypes: boolean;
-    private baseProperties: ObjectProperty[];
-    private includeSerdeLayer: boolean;
-    private retainOriginalCasing: boolean;
-    private includeConstBuilders: boolean;
-    private noOptionalProperties: boolean;
-    private inline: boolean;
-    private enableInlineTypes: boolean;
+    private getDocs: ((context: Context) => string | null | undefined) | undefined
+    private typeName: string
+    private parsedSingleUnionTypes: KnownSingleUnionType<Context>[]
+    private unknownSingleUnionType: ParsedSingleUnionType<Context>
+    private includeUtilsOnUnionMembers: boolean
+    private includeOtherInUnionTypes: boolean
+    private baseProperties: ObjectProperty[]
+    private includeSerdeLayer: boolean
+    private retainOriginalCasing: boolean
+    private includeConstBuilders: boolean
+    private noOptionalProperties: boolean
+    private inline: boolean
+    private enableInlineTypes: boolean
 
     constructor({
         typeName,
@@ -95,21 +95,21 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         inline,
         enableInlineTypes
     }: GeneratedUnionImpl.Init<Context>) {
-        this.getReferenceToUnion = getReferenceToUnion;
-        this.discriminant = discriminant;
-        this.getDocs = getDocs;
-        this.typeName = typeName;
-        this.parsedSingleUnionTypes = parsedSingleUnionTypes;
-        this.unknownSingleUnionType = unknownSingleUnionType;
-        this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers;
-        this.includeOtherInUnionTypes = includeOtherInUnionTypes;
-        this.baseProperties = baseProperties;
-        this.includeSerdeLayer = includeSerdeLayer;
-        this.retainOriginalCasing = retainOriginalCasing;
-        this.includeConstBuilders = includeConstBuilders;
-        this.noOptionalProperties = noOptionalProperties;
-        this.inline = inline;
-        this.enableInlineTypes = enableInlineTypes;
+        this.getReferenceToUnion = getReferenceToUnion
+        this.discriminant = discriminant
+        this.getDocs = getDocs
+        this.typeName = typeName
+        this.parsedSingleUnionTypes = parsedSingleUnionTypes
+        this.unknownSingleUnionType = unknownSingleUnionType
+        this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers
+        this.includeOtherInUnionTypes = includeOtherInUnionTypes
+        this.baseProperties = baseProperties
+        this.includeSerdeLayer = includeSerdeLayer
+        this.retainOriginalCasing = retainOriginalCasing
+        this.includeConstBuilders = includeConstBuilders
+        this.noOptionalProperties = noOptionalProperties
+        this.inline = inline
+        this.enableInlineTypes = enableInlineTypes
     }
 
     public generateStatements(
@@ -118,15 +118,15 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         const statements: (string | WriterFunction | StatementStructures)[] = [
             this.generateTypeAlias(context),
             this.generateModule(context)
-        ];
+        ]
 
         if (this.includeConstBuilders) {
-            const consts = this.generateConst(context);
+            const consts = this.generateConst(context)
             if (consts) {
-                statements.push(consts);
+                statements.push(consts)
             }
         }
-        return statements;
+        return statements
     }
 
     public generateForInlineUnion(context: Context): ts.TypeNode {
@@ -136,11 +136,11 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                     singleUnionType.generateForInlineUnion(context, this)
                 )
             )
-        );
+        )
     }
 
     public getReferenceTo(context: Context): ts.TypeNode {
-        return this.getReferenceToUnion(context).getTypeNode();
+        return this.getReferenceToUnion(context).getTypeNode()
     }
 
     public build({
@@ -149,18 +149,18 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         nonDiscriminantProperties,
         context
     }: {
-        discriminantValueToBuild: string | number;
-        builderArgument: ts.Expression | undefined;
-        nonDiscriminantProperties: ts.ObjectLiteralElementLike[];
-        context: Context;
+        discriminantValueToBuild: string | number
+        builderArgument: ts.Expression | undefined
+        nonDiscriminantProperties: ts.ObjectLiteralElementLike[]
+        context: Context
     }): ts.Expression {
-        const singleUnionType = this.getSingleUnionType(discriminantValueToBuild);
+        const singleUnionType = this.getSingleUnionType(discriminantValueToBuild)
         if (this.includeUtilsOnUnionMembers) {
             return this.buildWithBuilder({
                 discriminantValueToBuild,
                 builderArgument,
                 context
-            });
+            })
         } else {
             return ts.factory.createObjectLiteralExpression(
                 [
@@ -171,7 +171,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                     ...nonDiscriminantProperties
                 ],
                 true
-            );
+            )
         }
     }
 
@@ -180,11 +180,11 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         builderArgument,
         context
     }: {
-        discriminantValueToBuild: string | number;
-        builderArgument: ts.Expression | undefined;
-        context: Context;
+        discriminantValueToBuild: string | number
+        builderArgument: ts.Expression | undefined
+        context: Context
     }): ts.Expression {
-        const singleUnionType = this.getSingleUnionType(discriminantValueToBuild);
+        const singleUnionType = this.getSingleUnionType(discriminantValueToBuild)
         return ts.factory.createCallExpression(
             ts.factory.createPropertyAccessExpression(
                 this.getReferenceToUnion(context).getExpression(),
@@ -192,7 +192,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
             ),
             undefined,
             builderArgument != null ? [builderArgument] : []
-        );
+        )
     }
 
     public buildFromExistingValue({
@@ -200,16 +200,16 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         existingValue,
         context
     }: {
-        discriminantValueToBuild: string | number;
-        existingValue: ts.Expression;
-        context: Context;
+        discriminantValueToBuild: string | number
+        existingValue: ts.Expression
+        context: Context
     }): ts.Expression {
-        const singleUnionType = this.getSingleUnionType(discriminantValueToBuild);
+        const singleUnionType = this.getSingleUnionType(discriminantValueToBuild)
         return this.buildSingleUnionTypeFromExistingValue({
             existingValue,
             context,
             singleUnionType
-        });
+        })
     }
 
     public buildUnknown({ existingValue, context }: { existingValue: ts.Expression; context: Context }): ts.Expression {
@@ -218,9 +218,9 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                 existingValue,
                 context,
                 singleUnionType: this.unknownSingleUnionType
-            });
+            })
         } else {
-            return ts.factory.createAsExpression(existingValue, this.getReferenceToUnion(context).getTypeNode());
+            return ts.factory.createAsExpression(existingValue, this.getReferenceToUnion(context).getTypeNode())
         }
     }
 
@@ -229,12 +229,12 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         context,
         existingValue
     }: {
-        singleUnionType: ParsedSingleUnionType<Context>;
-        context: Context;
-        existingValue: ts.Expression;
+        singleUnionType: ParsedSingleUnionType<Context>
+        context: Context
+        existingValue: ts.Expression
     }): ts.Expression {
         if (!this.includeConstBuilders) {
-            throw new Error("Cannot build single union type because builders were not generated");
+            throw new Error('Cannot build single union type because builders were not generated')
         }
         return ts.factory.createCallExpression(
             ts.factory.createPropertyAccessExpression(
@@ -243,26 +243,26 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
             ),
             undefined,
             singleUnionType.getBuilderArgsFromExistingValue(existingValue)
-        );
+        )
     }
 
     public getUnknownDiscriminantValueType(): ts.TypeNode {
-        return this.unknownSingleUnionType.getDiscriminantValueType();
+        return this.unknownSingleUnionType.getDiscriminantValueType()
     }
 
     public getBasePropertyKey(rawKey: string): string {
-        const baseProperty = this.baseProperties.find((property) => property.name.wireValue === rawKey);
+        const baseProperty = this.baseProperties.find((property) => property.name.wireValue === rawKey)
         if (baseProperty == null) {
-            throw new Error("No base property exists for key " + rawKey);
+            throw new Error('No base property exists for key ' + rawKey)
         }
-        return this._getBasePropertyKey(baseProperty);
+        return this._getBasePropertyKey(baseProperty)
     }
 
     private _getBasePropertyKey(baseProperty: ObjectProperty): string {
         if (this.includeSerdeLayer && !this.retainOriginalCasing) {
-            return baseProperty.name.name.camelCase.unsafeName;
+            return baseProperty.name.name.camelCase.unsafeName
         } else {
-            return baseProperty.name.wireValue;
+            return baseProperty.name.wireValue
         }
     }
 
@@ -281,9 +281,9 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                 }))
             ),
             isExported: true
-        };
-        maybeAddDocsStructure(typeAlias, this.getDocs?.(context));
-        return typeAlias;
+        }
+        maybeAddDocsStructure(typeAlias, this.getDocs?.(context))
+        return typeAlias
     }
 
     public getReferenceToSingleUnionType(
@@ -296,14 +296,14 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                     ts.factory.createIdentifier(this.typeName),
                     singleUnionType.getInterfaceName()
                 )
-            );
+            )
         }
         return ts.factory.createTypeReferenceNode(
             ts.factory.createQualifiedName(
                 this.getReferenceToUnion(context).getEntityName(),
                 singleUnionType.getInterfaceName()
             )
-        );
+        )
     }
 
     /**********
@@ -316,33 +316,33 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
             name: this.typeName,
             isExported: true,
             hasDeclareKeyword: false
-        };
-        const statements = [...this.getSingleUnionTypeInterfaces(context)];
+        }
+        const statements = [...this.getSingleUnionTypeInterfaces(context)]
         if (this.includeUtilsOnUnionMembers) {
-            statements.push(this.getUtilsInterface(context));
+            statements.push(this.getUtilsInterface(context))
         }
         if (this.includeUtilsOnUnionMembers || this.includeConstBuilders) {
-            statements.push(this.getVisitorInterface(context));
+            statements.push(this.getVisitorInterface(context))
         }
         if (this.hasBaseInterface()) {
-            statements.push(this.getBaseInterface(context));
+            statements.push(this.getBaseInterface(context))
         }
-        module.statements = statements;
-        return module;
+        module.statements = statements
+        return module
     }
 
     private getSingleUnionTypeInterfaces(context: Context): StatementStructures[] {
-        const statements: StatementStructures[] = [];
+        const statements: StatementStructures[] = []
         const interfaces = this.getAllSingleUnionTypesForAlias().map((singleUnionType) =>
             singleUnionType.getInterfaceDeclaration(context, this)
-        );
+        )
 
         for (const interface_ of interfaces) {
             if (this.hasBaseInterface()) {
-                interface_.extends.push(ts.factory.createTypeReferenceNode(GeneratedUnionImpl.BASE_INTERFACE_NAME));
+                interface_.extends.push(ts.factory.createTypeReferenceNode(GeneratedUnionImpl.BASE_INTERFACE_NAME))
             }
             if (this.includeUtilsOnUnionMembers) {
-                interface_.extends.push(ts.factory.createTypeReferenceNode(GeneratedUnionImpl.UTILS_INTERFACE_NAME));
+                interface_.extends.push(ts.factory.createTypeReferenceNode(GeneratedUnionImpl.UTILS_INTERFACE_NAME))
             }
         }
 
@@ -353,12 +353,12 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                 isExported: true,
                 extends: interface_.extends.map(getTextOfTsNode),
                 properties: interface_.properties
-            });
+            })
             if (interface_.module) {
-                statements.push(interface_.module);
+                statements.push(interface_.module)
             }
         }
-        return statements;
+        return statements
     }
 
     private getUtilsInterface(context: Context): InterfaceDeclarationStructure {
@@ -372,7 +372,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                 }
             ],
             isExported: true
-        };
+        }
     }
 
     private getBaseInterface(context: Context): InterfaceDeclarationStructure {
@@ -380,16 +380,16 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
             kind: StructureKind.Interface,
             name: GeneratedUnionImpl.BASE_INTERFACE_NAME,
             properties: this.baseProperties.map((property) => {
-                const type = context.type.getReferenceToType(property.valueType);
+                const type = context.type.getReferenceToType(property.valueType)
                 return {
                     name: getPropertyKey(this._getBasePropertyKey(property)),
                     docs: property.docs != null ? [property.docs] : undefined,
                     type: getTextOfTsNode(this.noOptionalProperties ? type.typeNode : type.typeNodeWithoutUndefined),
                     hasQuestionToken: !this.noOptionalProperties && type.isOptional
-                };
+                }
             }),
             isExported: true
-        };
+        }
     }
 
     private getVisitSignature(context: Context): ts.FunctionTypeNode {
@@ -416,7 +416,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                 ts.factory.createIdentifier(GeneratedUnionImpl.VISITOR_RETURN_TYPE),
                 undefined
             )
-        );
+        )
     }
 
     private getVisitorInterface(context: Context): InterfaceDeclarationStructure {
@@ -435,7 +435,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                 })
             ),
             isExported: true
-        };
+        }
     }
 
     public getReferenceToVisitorInterface(context: Context): ts.TypeNode {
@@ -445,7 +445,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                 GeneratedUnionImpl.VISITOR_INTERFACE_NAME
             ),
             [ts.factory.createTypeReferenceNode(GeneratedUnionImpl.VISITOR_RETURN_TYPE)]
-        );
+        )
     }
 
     /*********
@@ -453,13 +453,13 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
      *********/
 
     private generateConst(context: Context): VariableStatementStructure | undefined {
-        const writer = FernWriters.object.writer({ asConst: true });
+        const writer = FernWriters.object.writer({ asConst: true })
 
-        this.addBuilderProperties(context, writer);
-        this.addVisitProperty(context, writer);
+        this.addBuilderProperties(context, writer)
+        this.addVisitProperty(context, writer)
 
         if (writer.isEmpty) {
-            return;
+            return
         }
 
         return {
@@ -472,28 +472,28 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                 }
             ],
             isExported: true
-        };
+        }
     }
 
     private addBuilderProperties(context: Context, writer: ObjectWriter) {
         if (this.hasBaseInterface()) {
-            throw new Error("Cannot create builders because union has base properties");
+            throw new Error('Cannot create builders because union has base properties')
         }
 
         const singleUnionTypes = this.includeOtherInUnionTypes
             ? this.getAllSingleUnionTypesIncludingUnknown()
-            : this.parsedSingleUnionTypes;
+            : this.parsedSingleUnionTypes
         for (const singleUnionType of singleUnionTypes) {
             writer.addProperty({
                 key: singleUnionType.getBuilderName(),
                 value: getTextOfTsNode(singleUnionType.getBuilder(context, this))
-            });
-            writer.addNewLine();
+            })
+            writer.addNewLine()
         }
     }
 
     private addVisitProperty(context: Context, writer: ObjectWriter) {
-        const referenceToUnion = this.getReferenceToUnion(context);
+        const referenceToUnion = this.getReferenceToUnion(context)
         writer.addProperty({
             key: GeneratedUnionImpl.VISIT_UTIL_PROPERTY_NAME,
             value: getTextOfTsNode(
@@ -583,32 +583,32 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                     )
                 )
             )
-        });
+        })
     }
 
     private getAllSingleUnionTypesForAlias(): ParsedSingleUnionType<Context>[] {
-        const singleUnionTypes: ParsedSingleUnionType<Context>[] = [...this.parsedSingleUnionTypes];
+        const singleUnionTypes: ParsedSingleUnionType<Context>[] = [...this.parsedSingleUnionTypes]
         if (this.includeOtherInUnionTypes) {
-            singleUnionTypes.push(this.unknownSingleUnionType);
+            singleUnionTypes.push(this.unknownSingleUnionType)
         }
-        return singleUnionTypes;
+        return singleUnionTypes
     }
 
     private getAllSingleUnionTypesIncludingUnknown(): ParsedSingleUnionType<Context>[] {
-        return [...this.parsedSingleUnionTypes, this.unknownSingleUnionType];
+        return [...this.parsedSingleUnionTypes, this.unknownSingleUnionType]
     }
 
     private hasBaseInterface(): boolean {
-        return this.baseProperties.length > 0;
+        return this.baseProperties.length > 0
     }
 
     private getSingleUnionType(discriminantValue: string | number): KnownSingleUnionType<Context> {
         const singleUnionType = this.parsedSingleUnionTypes.find(
             (singleUnionType) => singleUnionType.getDiscriminantValue() === discriminantValue
-        );
+        )
         if (singleUnionType == null) {
-            throw new Error(`No single union type exists for discriminant value "${discriminantValue}"`);
+            throw new Error(`No single union type exists for discriminant value "${discriminantValue}"`)
         }
-        return singleUnionType;
+        return singleUnionType
     }
 }

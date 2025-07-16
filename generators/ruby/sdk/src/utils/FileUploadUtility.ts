@@ -13,33 +13,33 @@ import {
     StringClassReference,
     Variable,
     VariableType
-} from "@fern-api/ruby-codegen";
+} from '@fern-api/ruby-codegen'
 
 export class FileUploadUtility extends Class_ {
-    public convertToFaradayMultipart: Function_;
+    public convertToFaradayMultipart: Function_
     constructor(clientName: string) {
         const fileProperty = new Property({
-            name: "file_like",
-            documentation: "The file to be uploaded, or a string path to the file.",
+            name: 'file_like',
+            documentation: 'The file to be uploaded, or a string path to the file.',
             type: [StringClassReference, FileClassReference]
-        });
-        const fileVariable = fileProperty.toVariable(VariableType.LOCAL);
+        })
+        const fileVariable = fileProperty.toVariable(VariableType.LOCAL)
         const pathVariable = new Variable({
-            name: "path",
+            name: 'path',
             type: StringClassReference,
             variableType: VariableType.LOCAL
-        });
+        })
         const mimeTypeVariable = new Variable({
-            name: "mime_type",
+            name: 'mime_type',
             type: GenericClassReference,
             variableType: VariableType.LOCAL
-        });
+        })
         const faradayFilePartCr = new ClassReference({
-            name: "Faraday::Multipart::FilePart",
-            import_: new Import({ from: "faraday/multipart", isExternal: true })
-        });
+            name: 'Faraday::Multipart::FilePart',
+            import_: new Import({ from: 'faraday/multipart', isExternal: true })
+        })
         const convertToFaradayMultipart = new Function_({
-            name: "as_faraday_multipart",
+            name: 'as_faraday_multipart',
             isStatic: true,
             functionBody: [
                 // Get file path in conditional
@@ -47,10 +47,10 @@ export class FileUploadUtility extends Class_ {
                     if_: {
                         rightSide: new FunctionInvocation({
                             onObject: fileVariable,
-                            baseFunction: new Function_({ name: "is_a?", functionBody: [] }),
-                            arguments_: [new Argument({ value: "String", isNamed: false })]
+                            baseFunction: new Function_({ name: 'is_a?', functionBody: [] }),
+                            arguments_: [new Argument({ value: 'String', isNamed: false })]
                         }),
-                        operation: "!",
+                        operation: '!',
                         expressions: [
                             new Expression({
                                 leftSide: pathVariable,
@@ -72,10 +72,10 @@ export class FileUploadUtility extends Class_ {
                     leftSide: mimeTypeVariable,
                     rightSide: new FunctionInvocation({
                         onObject: new ClassReference({
-                            name: "MiniMime",
-                            import_: new Import({ from: "mini_mime", isExternal: true })
+                            name: 'MiniMime',
+                            import_: new Import({ from: 'mini_mime', isExternal: true })
                         }),
-                        baseFunction: new Function_({ name: "lookup_by_filename", functionBody: [] }),
+                        baseFunction: new Function_({ name: 'lookup_by_filename', functionBody: [] }),
                         arguments_: [new Argument({ value: pathVariable, isNamed: false })]
                     }),
                     isAssignment: true
@@ -85,9 +85,9 @@ export class FileUploadUtility extends Class_ {
                     if_: {
                         rightSide: new FunctionInvocation({
                             onObject: mimeTypeVariable,
-                            baseFunction: new Function_({ name: "nil?", functionBody: [] })
+                            baseFunction: new Function_({ name: 'nil?', functionBody: [] })
                         }),
-                        operation: "!",
+                        operation: '!',
                         expressions: [
                             new Expression({
                                 leftSide: mimeTypeVariable,
@@ -106,7 +106,7 @@ export class FileUploadUtility extends Class_ {
                 }),
                 new FunctionInvocation({
                     onObject: faradayFilePartCr,
-                    baseFunction: new Function_({ name: "new", functionBody: [] }),
+                    baseFunction: new Function_({ name: 'new', functionBody: [] }),
                     arguments_: [
                         new Argument({
                             value: fileVariable,
@@ -121,20 +121,20 @@ export class FileUploadUtility extends Class_ {
             ],
             parameters: [fileProperty.toParameter({})],
             returnValue: faradayFilePartCr
-        });
+        })
 
         super({
             classReference: new ClassReference({
-                name: "FileUtilities",
-                import_: new Import({ from: "core/file_utilities", isExternal: false }),
+                name: 'FileUtilities',
+                import_: new Import({ from: 'core/file_utilities', isExternal: false }),
                 moduleBreadcrumbs: [clientName]
             }),
             includeInitializer: false,
             properties: [],
-            documentation: "Utility class for managing files.",
+            documentation: 'Utility class for managing files.',
             functions: [convertToFaradayMultipart]
-        });
+        })
 
-        this.convertToFaradayMultipart = convertToFaradayMultipart;
+        this.convertToFaradayMultipart = convertToFaradayMultipart
     }
 }

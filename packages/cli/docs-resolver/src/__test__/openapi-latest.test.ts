@@ -1,25 +1,25 @@
-import { parseDocsConfiguration } from "@fern-api/configuration-loader";
-import { FernNavigation } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, resolve } from "@fern-api/fs-utils";
-import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
-import { createMockTaskContext } from "@fern-api/task-context";
-import { loadAPIWorkspace, loadDocsWorkspace } from "@fern-api/workspace-loader";
+import { parseDocsConfiguration } from '@fern-api/configuration-loader'
+import { FernNavigation } from '@fern-api/fdr-sdk'
+import { AbsoluteFilePath, resolve } from '@fern-api/fs-utils'
+import { OSSWorkspace } from '@fern-api/lazy-fern-workspace'
+import { createMockTaskContext } from '@fern-api/task-context'
+import { loadAPIWorkspace, loadDocsWorkspace } from '@fern-api/workspace-loader'
 
-import { ApiReferenceNodeConverterLatest } from "../ApiReferenceNodeConverterLatest";
-import { NodeIdGenerator } from "../NodeIdGenerator";
-import { generateFdrFromOpenApiWorkspace } from "../utils/generateFdrFromOpenApiWorkspace";
+import { ApiReferenceNodeConverterLatest } from '../ApiReferenceNodeConverterLatest'
+import { NodeIdGenerator } from '../NodeIdGenerator'
+import { generateFdrFromOpenApiWorkspace } from '../utils/generateFdrFromOpenApiWorkspace'
 
-const context = createMockTaskContext();
+const context = createMockTaskContext()
 
 // biome-ignore lint/suspicious/noSkippedTests: allow
-it.skip("converts to api reference latest node", async () => {
+it.skip('converts to api reference latest node', async () => {
     const docsWorkspace = await loadDocsWorkspace({
-        fernDirectory: resolve(AbsoluteFilePath.of(__dirname), "fixtures/openapi-latest/fern"),
+        fernDirectory: resolve(AbsoluteFilePath.of(__dirname), 'fixtures/openapi-latest/fern'),
         context
-    });
+    })
 
     if (docsWorkspace == null) {
-        throw new Error("Workspace is null");
+        throw new Error('Workspace is null')
     }
 
     const parsedDocsConfig = await parseDocsConfiguration({
@@ -27,41 +27,41 @@ it.skip("converts to api reference latest node", async () => {
         context,
         absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
         absoluteFilepathToDocsConfig: docsWorkspace.absoluteFilepathToDocsConfig
-    });
+    })
 
-    if (parsedDocsConfig.navigation.type !== "untabbed") {
-        throw new Error("Expected untabbed navigation");
+    if (parsedDocsConfig.navigation.type !== 'untabbed') {
+        throw new Error('Expected untabbed navigation')
     }
 
-    if (parsedDocsConfig.navigation.items[0]?.type !== "apiSection") {
-        throw new Error("Expected apiSection");
+    if (parsedDocsConfig.navigation.items[0]?.type !== 'apiSection') {
+        throw new Error('Expected apiSection')
     }
 
-    const apiSection = parsedDocsConfig.navigation.items[0];
+    const apiSection = parsedDocsConfig.navigation.items[0]
 
     const result = await loadAPIWorkspace({
-        absolutePathToWorkspace: resolve(AbsoluteFilePath.of(__dirname), "fixtures/openapi-latest/fern"),
+        absolutePathToWorkspace: resolve(AbsoluteFilePath.of(__dirname), 'fixtures/openapi-latest/fern'),
         context,
-        cliVersion: "0.0.0",
+        cliVersion: '0.0.0',
         workspaceName: undefined
-    });
+    })
 
     if (!result.didSucceed) {
-        throw new Error("API workspace failed to load");
+        throw new Error('API workspace failed to load')
     }
 
-    const apiWorkspace = result.workspace;
+    const apiWorkspace = result.workspace
 
     if (!(apiWorkspace instanceof OSSWorkspace)) {
-        throw new Error("Expected oss workspace");
+        throw new Error('Expected oss workspace')
     }
 
-    const slug = FernNavigation.V1.SlugGenerator.init("/base/path");
+    const slug = FernNavigation.V1.SlugGenerator.init('/base/path')
 
-    const api = await generateFdrFromOpenApiWorkspace(apiWorkspace, context);
+    const api = await generateFdrFromOpenApiWorkspace(apiWorkspace, context)
 
     if (api == null) {
-        throw new Error("API is null");
+        throw new Error('API is null')
     }
 
     const node = new ApiReferenceNodeConverterLatest(
@@ -75,7 +75,7 @@ it.skip("converts to api reference latest node", async () => {
         new Map(),
         new Map(),
         NodeIdGenerator.init()
-    ).get();
+    ).get()
 
-    expect(node).toMatchSnapshot();
-});
+    expect(node).toMatchSnapshot()
+})

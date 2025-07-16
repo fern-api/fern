@@ -1,22 +1,22 @@
-import { ts } from "ts-morph";
+import { ts } from 'ts-morph'
 
-import { GeneratedFile } from "../../commons/GeneratedFile";
-import { SdkContext } from "../SdkContext";
+import { GeneratedFile } from '../../commons/GeneratedFile'
+import { SdkContext } from '../SdkContext'
 
 export interface GeneratedGenericAPISdkError extends GeneratedFile<SdkContext> {
     build: (
         context: SdkContext,
         args: {
-            message: ts.Expression | undefined;
-            statusCode: ts.Expression | undefined;
-            responseBody: ts.Expression | undefined;
-            rawResponse: ts.Expression | undefined;
+            message: ts.Expression | undefined
+            statusCode: ts.Expression | undefined
+            responseBody: ts.Expression | undefined
+            rawResponse: ts.Expression | undefined
         }
-    ) => ts.NewExpression;
+    ) => ts.NewExpression
     buildConstructorArguments: (args: {
-        message: ts.Expression | undefined;
-        statusCode: ts.Expression | undefined;
-        responseBody: ts.Expression | undefined;
-        rawResponse: ts.Expression | undefined;
-    }) => ts.Expression[];
+        message: ts.Expression | undefined
+        statusCode: ts.Expression | undefined
+        responseBody: ts.Expression | undefined
+        rawResponse: ts.Expression | undefined
+    }) => ts.Expression[]
 }

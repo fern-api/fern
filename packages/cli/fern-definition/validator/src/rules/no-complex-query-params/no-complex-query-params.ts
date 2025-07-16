@@ -1,28 +1,28 @@
-import { ComplexQueryParamTypeDetector } from "../../ComplexQueryParamTypeDetector";
-import { Rule } from "../../Rule";
+import { ComplexQueryParamTypeDetector } from '../../ComplexQueryParamTypeDetector'
+import { Rule } from '../../Rule'
 
 export const NoComplexQueryParamsRule: Rule = {
-    name: "no-complex-query-params",
+    name: 'no-complex-query-params',
     create: ({ workspace }) => {
-        const complexTypeDetector = new ComplexQueryParamTypeDetector(workspace);
+        const complexTypeDetector = new ComplexQueryParamTypeDetector(workspace)
 
         return {
             definitionFile: {
                 queryParameter: ({ queryParameter }, ruleRunnerArgs) => {
-                    const type = typeof queryParameter === "string" ? queryParameter : queryParameter.type;
+                    const type = typeof queryParameter === 'string' ? queryParameter : queryParameter.type
 
-                    const isComplex = complexTypeDetector.isTypeComplex(type, ruleRunnerArgs);
+                    const isComplex = complexTypeDetector.isTypeComplex(type, ruleRunnerArgs)
                     if (isComplex != null && isComplex) {
                         return [
                             {
-                                severity: "fatal",
+                                severity: 'fatal',
                                 message: `${type} is not a valid type for a query parameter`
                             }
-                        ];
+                        ]
                     }
-                    return [];
+                    return []
                 }
             }
-        };
+        }
     }
-};
+}

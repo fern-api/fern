@@ -1,18 +1,18 @@
-import { writeFile } from "fs/promises";
+import { writeFile } from 'fs/promises'
 
-import { FERN_DIRECTORY, PROJECT_CONFIG_FILENAME } from "@fern-api/configuration";
-import { FernDocsBuilderImpl } from "@fern-api/docs-importer-commons";
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { FERN_DIRECTORY, PROJECT_CONFIG_FILENAME } from '@fern-api/configuration'
+import { FernDocsBuilderImpl } from '@fern-api/docs-importer-commons'
+import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
+import { TaskContext } from '@fern-api/task-context'
 
-import { MintlifyImporter } from "./MintlifyImporter";
+import { MintlifyImporter } from './MintlifyImporter'
 
 interface RunMintlifyMigrationParams {
-    absolutePathToMintJson: AbsoluteFilePath;
-    outputPath: AbsoluteFilePath;
-    taskContext: TaskContext;
-    versionOfCli: string;
-    organization: string;
+    absolutePathToMintJson: AbsoluteFilePath
+    outputPath: AbsoluteFilePath
+    taskContext: TaskContext
+    versionOfCli: string
+    organization: string
 }
 
 export async function runMintlifyMigration({
@@ -24,16 +24,16 @@ export async function runMintlifyMigration({
 }: RunMintlifyMigrationParams): Promise<void> {
     const mintlifyImporter = new MintlifyImporter({
         context: taskContext
-    });
+    })
 
-    const builder = new FernDocsBuilderImpl();
+    const builder = new FernDocsBuilderImpl()
 
     await mintlifyImporter.import({
         args: { absolutePathToMintJson },
         builder
-    });
+    })
 
-    await builder.build({ outputDirectory: outputPath });
+    await builder.build({ outputDirectory: outputPath })
 
     await writeFile(
         join(
@@ -49,5 +49,5 @@ export async function runMintlifyMigration({
             undefined,
             4
         )
-    );
+    )
 }

@@ -1,1 +1,1 @@
-export { convertIRtoJsonSchema } from "./convertIRtoJsonSchema";
+export { convertIRtoJsonSchema } from './convertIRtoJsonSchema'

@@ -1,4 +1,4 @@
-export type PackageDependencies = Record<DependencyType, Record<string, string>>;
+export type PackageDependencies = Record<DependencyType, Record<string, string>>
 
 export enum DependencyType {
     PROD,
@@ -11,7 +11,7 @@ export class DependencyManager {
         [DependencyType.PROD]: {},
         [DependencyType.DEV]: {},
         [DependencyType.PEER]: {}
-    };
+    }
 
     public addDependency(
         name: string,
@@ -20,18 +20,18 @@ export class DependencyManager {
     ): void {
         switch (type) {
             case DependencyType.DEV:
-                this.dependencies[DependencyType.DEV][name] = version;
-                return;
+                this.dependencies[DependencyType.DEV][name] = version
+                return
             case DependencyType.PEER:
-                this.dependencies[DependencyType.PEER][name] = version;
-                return;
+                this.dependencies[DependencyType.PEER][name] = version
+                return
             case DependencyType.PROD:
-                this.dependencies[DependencyType.PROD][name] = version;
-                return;
+                this.dependencies[DependencyType.PROD][name] = version
+                return
         }
     }
 
     public getDependencies(): PackageDependencies {
-        return this.dependencies;
+        return this.dependencies
     }
 }

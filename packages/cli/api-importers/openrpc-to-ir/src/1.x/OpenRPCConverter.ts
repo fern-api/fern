@@ -1,54 +1,54 @@
-import { MethodObject, OpenrpcDocument, ServerObject } from "@open-rpc/meta-schema";
+import { MethodObject, OpenrpcDocument, ServerObject } from '@open-rpc/meta-schema'
 
-import { HttpHeader, IntermediateRepresentation, PathParameter, QueryParameter } from "@fern-api/ir-sdk";
-import { AbstractSpecConverter, Converters, ServersConverter } from "@fern-api/v2-importer-commons";
+import { HttpHeader, IntermediateRepresentation, PathParameter, QueryParameter } from '@fern-api/ir-sdk'
+import { AbstractSpecConverter, Converters, ServersConverter } from '@fern-api/v2-importer-commons'
 
-import { OpenRPCConverterContext3_1 } from "./OpenRPCConverterContext3_1";
-import { ParameterConverter } from "./ParameterConverter";
-import { FernParametersExtension } from "./extensions/x-fern-parameters";
-import { MethodConverter } from "./methods/MethodConverter";
+import { OpenRPCConverterContext3_1 } from './OpenRPCConverterContext3_1'
+import { ParameterConverter } from './ParameterConverter'
+import { FernParametersExtension } from './extensions/x-fern-parameters'
+import { MethodConverter } from './methods/MethodConverter'
 
-export type BaseIntermediateRepresentation = Omit<IntermediateRepresentation, "apiName" | "constants">;
+export type BaseIntermediateRepresentation = Omit<IntermediateRepresentation, 'apiName' | 'constants'>
 
 export declare namespace OpenRPCConverter {
-    type Args = AbstractSpecConverter.Args<OpenRPCConverterContext3_1>;
+    type Args = AbstractSpecConverter.Args<OpenRPCConverterContext3_1>
 }
 
 export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterContext3_1, IntermediateRepresentation> {
     constructor({ context, breadcrumbs, audiences }: OpenRPCConverter.Args) {
-        super({ context, breadcrumbs, audiences });
+        super({ context, breadcrumbs, audiences })
     }
 
     public async convert(): Promise<IntermediateRepresentation> {
         this.context.spec = this.removeXFernIgnores({
             document: this.context.spec
-        }) as OpenrpcDocument;
+        }) as OpenrpcDocument
 
-        this.convertSchemas();
+        this.convertSchemas()
 
-        const { endpointLevelServers } = this.convertMethods();
+        const { endpointLevelServers } = this.convertMethods()
 
-        const { defaultUrl } = this.convertServers({ endpointLevelServers });
+        const { defaultUrl } = this.convertServers({ endpointLevelServers })
 
-        this.updateEndpointsWithDefaultUrl(defaultUrl);
+        this.updateEndpointsWithDefaultUrl(defaultUrl)
 
-        return this.finalizeIr();
+        return this.finalizeIr()
     }
 
     private convertServers({ endpointLevelServers }: { endpointLevelServers?: ServerObject[] }): {
-        defaultUrl: string | undefined;
+        defaultUrl: string | undefined
     } {
         const serversConverter = new ServersConverter({
             context: this.context,
-            breadcrumbs: ["servers"],
+            breadcrumbs: ['servers'],
             servers: this.context.spec.servers,
             endpointLevelServers
-        });
-        const convertedServers = serversConverter.convert();
-        this.addEnvironmentsToIr({ environmentConfig: convertedServers?.value });
+        })
+        const convertedServers = serversConverter.convert()
+        this.addEnvironmentsToIr({ environmentConfig: convertedServers?.value })
         return {
             defaultUrl: convertedServers?.defaultUrl
-        };
+        }
     }
 
     private convertSchemas(): void {
@@ -56,16 +56,16 @@ export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterCont
             const schemaConverter = new Converters.SchemaConverters.SchemaConverter({
                 context: this.context,
                 id,
-                breadcrumbs: ["components", "schemas", id],
+                breadcrumbs: ['components', 'schemas', id],
                 schema
-            });
-            const convertedSchema = schemaConverter.convert();
+            })
+            const convertedSchema = schemaConverter.convert()
             if (convertedSchema != null) {
-                this.addTypeToPackage(id);
+                this.addTypeToPackage(id)
                 this.addTypesToIr({
                     ...convertedSchema.inlinedTypes,
                     [id]: convertedSchema.convertedSchema
-                });
+                })
             }
         }
     }
@@ -73,19 +73,19 @@ export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterCont
     private convertMethods(): { endpointLevelServers?: ServerObject[] } {
         // Import the FernParametersExtension to handle custom parameters
 
-        const endpointLevelServers: ServerObject[] = [];
+        const endpointLevelServers: ServerObject[] = []
 
         const fernParametersExtension = new FernParametersExtension({
             context: this.context,
-            breadcrumbs: ["methods"],
+            breadcrumbs: ['methods'],
             operation: this.context.spec
-        });
+        })
 
-        const customParameters = fernParametersExtension.convert();
+        const customParameters = fernParametersExtension.convert()
         // Process custom parameters from x-fern-parameters extension
-        const pathParameters: PathParameter[] = [];
-        const queryParameters: QueryParameter[] = [];
-        const headers: HttpHeader[] = [];
+        const pathParameters: PathParameter[] = []
+        const queryParameters: QueryParameter[] = []
+        const headers: HttpHeader[] = []
 
         if (customParameters && customParameters.length > 0) {
             for (const [index, parameter] of customParameters.entries()) {
@@ -93,24 +93,24 @@ export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterCont
                     context: this.context,
                     breadcrumbs: [...this.breadcrumbs, `x-fern-parameters[${index}]`],
                     parameter
-                });
+                })
 
-                const convertedParameter = parameterConverter.convert();
+                const convertedParameter = parameterConverter.convert()
                 if (convertedParameter == null) {
-                    continue;
+                    continue
                 }
                 switch (convertedParameter.type) {
-                    case "path": {
-                        pathParameters.push(convertedParameter.parameter);
-                        break;
+                    case 'path': {
+                        pathParameters.push(convertedParameter.parameter)
+                        break
                     }
-                    case "query": {
-                        queryParameters.push(convertedParameter.parameter);
-                        break;
+                    case 'query': {
+                        queryParameters.push(convertedParameter.parameter)
+                        break
                     }
-                    case "header": {
-                        headers.push(convertedParameter.parameter);
-                        break;
+                    case 'header': {
+                        headers.push(convertedParameter.parameter)
+                        break
                     }
                 }
             }
@@ -119,38 +119,38 @@ export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterCont
         const group = this.context.getGroup({
             groupParts: [],
             namespace: this.context.namespace
-        });
+        })
 
         for (const method of this.context.spec.methods ?? []) {
             const resolvedMethod = this.context.resolveMaybeReference<MethodObject>({
                 schemaOrReference: method,
-                breadcrumbs: ["methods"]
-            });
+                breadcrumbs: ['methods']
+            })
             if (resolvedMethod == null) {
-                continue;
+                continue
             }
 
             const methodConverter = new MethodConverter({
                 context: this.context,
-                breadcrumbs: ["methods"],
+                breadcrumbs: ['methods'],
                 method: resolvedMethod,
                 pathParameters,
                 queryParameters,
                 headers,
                 topLevelServers: this.context.spec.servers
-            });
+            })
 
-            const convertedMethod = methodConverter.convert();
+            const convertedMethod = methodConverter.convert()
 
             if (convertedMethod != null) {
                 this.addEndpointToIr({
                     endpoint: convertedMethod.endpoint,
                     audiences: convertedMethod.audiences,
                     endpointGroup: group,
-                    serviceName: "service_root"
-                });
+                    serviceName: 'service_root'
+                })
 
-                this.addTypesToIr(convertedMethod.inlinedTypes);
+                this.addTypesToIr(convertedMethod.inlinedTypes)
 
                 if (convertedMethod.servers) {
                     for (const server of convertedMethod.servers) {
@@ -158,23 +158,23 @@ export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterCont
                             this.shouldAddServerToCollectedServers({
                                 server,
                                 currentServers: endpointLevelServers,
-                                specType: "openrpc"
+                                specType: 'openrpc'
                             })
                         ) {
-                            endpointLevelServers.push(this.maybeDeduplicateServerName(server));
+                            endpointLevelServers.push(this.maybeDeduplicateServerName(server))
                         }
                     }
                 }
             }
         }
 
-        return { endpointLevelServers };
+        return { endpointLevelServers }
     }
 
     private maybeDeduplicateServerName(server: ServerObject): ServerObject {
         const conflictingTopLevelServer = this.context.spec.servers?.find(
             (s) => s.name === server.name && s.url !== server.url
-        );
-        return conflictingTopLevelServer ? { ...server, name: server.url } : server;
+        )
+        return conflictingTopLevelServer ? { ...server, name: server.url } : server
     }
 }

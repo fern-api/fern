@@ -1,5 +1,5 @@
-import { z } from "zod";
+import { z } from 'zod'
 
-export const BaseSwiftCustomConfigSchema = z.object({});
+export const BaseSwiftCustomConfigSchema = z.object({})
 
-export type BaseSwiftCustomConfigSchema = z.infer<typeof BaseSwiftCustomConfigSchema>;
+export type BaseSwiftCustomConfigSchema = z.infer<typeof BaseSwiftCustomConfigSchema>

@@ -1,10 +1,10 @@
-import { OpenAPIV3 } from "openapi-types";
+import { OpenAPIV3 } from 'openapi-types'
 
-import { Availability } from "@fern-api/openapi-ir";
+import { Availability } from '@fern-api/openapi-ir'
 
-import { getExtension } from "../getExtension";
-import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions";
-import { isReferenceObject } from "./utils/isReferenceObject";
+import { getExtension } from '../getExtension'
+import { FernOpenAPIExtension } from '../openapi/v3/extensions/fernExtensions'
+import { isReferenceObject } from './utils/isReferenceObject'
 
 /**
  * Converts availability information from the OpenAPI schema to the OpenAPI IR.
@@ -16,21 +16,21 @@ export function convertAvailability(
 ): Availability | undefined {
     // Check X-Fern-Availability extension first
     switch (getExtension<string>(propertySchema, FernOpenAPIExtension.AVAILABILITY)) {
-        case "deprecated":
-            return Availability.Deprecated;
-        case "beta":
-            return Availability.Beta;
-        case "generally-available":
-            return Availability.GenerallyAvailable;
+        case 'deprecated':
+            return Availability.Deprecated
+        case 'beta':
+            return Availability.Beta
+        case 'generally-available':
+            return Availability.GenerallyAvailable
         default:
-            break;
+            break
     }
 
     // Check deprecated property next
     if (!isReferenceObject(propertySchema) && propertySchema.deprecated) {
-        return Availability.Deprecated;
+        return Availability.Deprecated
     }
 
     // return undefined if no availability information is found
-    return undefined;
+    return undefined
 }

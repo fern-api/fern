@@ -1,1 +1,1 @@
-export * from "./BaseSwiftCustomConfigSchema";
+export * from './BaseSwiftCustomConfigSchema'

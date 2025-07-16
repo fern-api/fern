@@ -1,22 +1,22 @@
-import { getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
-import { SdkContext } from "@fern-typescript/contexts";
-import { SingleUnionTypeGenerator } from "@fern-typescript/union-generator";
-import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
+import { getPropertyKey, getTextOfTsNode } from '@fern-typescript/commons'
+import { SdkContext } from '@fern-typescript/contexts'
+import { SingleUnionTypeGenerator } from '@fern-typescript/union-generator'
+import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from 'ts-morph'
 
 export declare namespace UnknownErrorSingleUnionTypeGenerator {
     export interface Init {
-        discriminant: string;
+        discriminant: string
     }
 }
 
 export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGenerator<SdkContext> {
-    private static readonly CONTENT_PROPERTY_NAME = "content";
-    private static readonly BUILDER_PARAMETER_NAME = "fetcherError";
+    private static readonly CONTENT_PROPERTY_NAME = 'content'
+    private static readonly BUILDER_PARAMETER_NAME = 'fetcherError'
 
-    private discriminant: string;
+    private discriminant: string
 
     constructor({ discriminant }: UnknownErrorSingleUnionTypeGenerator.Init) {
-        this.discriminant = discriminant;
+        this.discriminant = discriminant
     }
 
     public generateForInlineUnion(context: SdkContext): ts.TypeNode {
@@ -27,19 +27,19 @@ export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGene
                 undefined,
                 context.coreUtilities.fetcher.Fetcher.Error._getReferenceToType()
             )
-        ]);
+        ])
     }
 
     public getExtendsForInterface(): ts.TypeNode[] {
-        return [];
+        return []
     }
 
     public getDiscriminantPropertiesForInterface(): OptionalKind<PropertySignatureStructure>[] {
-        return [];
+        return []
     }
 
     public generateModule(): ModuleDeclarationStructure | undefined {
-        return undefined;
+        return undefined
     }
 
     public getNonDiscriminantPropertiesForInterface(context: SdkContext): OptionalKind<PropertySignatureStructure>[] {
@@ -48,19 +48,19 @@ export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGene
                 name: getPropertyKey(UnknownErrorSingleUnionTypeGenerator.CONTENT_PROPERTY_NAME),
                 type: getTextOfTsNode(context.coreUtilities.fetcher.Fetcher.Error._getReferenceToType())
             }
-        ];
+        ]
     }
 
     public getVisitorArguments({
         localReferenceToUnionValue
     }: {
-        localReferenceToUnionValue: ts.Expression;
+        localReferenceToUnionValue: ts.Expression
     }): ts.Expression[] {
-        return [localReferenceToUnionValue];
+        return [localReferenceToUnionValue]
     }
 
     public getVisitMethodParameterType(context: SdkContext): ts.TypeNode | undefined {
-        return context.coreUtilities.fetcher.Fetcher.Error._getReferenceToType();
+        return context.coreUtilities.fetcher.Fetcher.Error._getReferenceToType()
     }
 
     public getParametersForBuilder(context: SdkContext): ts.ParameterDeclaration[] {
@@ -73,23 +73,23 @@ export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGene
                 undefined,
                 context.coreUtilities.fetcher.Fetcher.Error._getReferenceToType()
             )
-        ];
+        ]
     }
 
     public getBuilderArgsFromExistingValue(existingValue: ts.Expression): ts.Expression[] {
-        return [existingValue];
+        return [existingValue]
     }
 
     public getNonDiscriminantPropertiesForBuilder(): ts.ObjectLiteralElementLike[] {
         return [
             ts.factory.createPropertyAssignment(
                 getPropertyKey(this.discriminant),
-                ts.factory.createIdentifier("undefined")
+                ts.factory.createIdentifier('undefined')
             ),
             ts.factory.createPropertyAssignment(
                 UnknownErrorSingleUnionTypeGenerator.CONTENT_PROPERTY_NAME,
                 ts.factory.createIdentifier(UnknownErrorSingleUnionTypeGenerator.BUILDER_PARAMETER_NAME)
             )
-        ];
+        ]
     }
 }

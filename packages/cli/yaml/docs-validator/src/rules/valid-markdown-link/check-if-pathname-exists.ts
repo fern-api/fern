@@ -1,8 +1,8 @@
-import { wrapWithHttps } from "@fern-api/docs-resolver";
-import { AbsoluteFilePath, RelativeFilePath, dirname, doesPathExist, join } from "@fern-api/fs-utils";
+import { wrapWithHttps } from '@fern-api/docs-resolver'
+import { AbsoluteFilePath, RelativeFilePath, dirname, doesPathExist, join } from '@fern-api/fs-utils'
 
-import { getRedirectForPath } from "./redirect-for-path";
-import { addLeadingSlash, removeLeadingSlash, removeTrailingSlash } from "./url-utils";
+import { getRedirectForPath } from './redirect-for-path'
+import { addLeadingSlash, removeLeadingSlash, removeTrailingSlash } from './url-utils'
 
 /**
  * Checks if the given path exists in the docs.
@@ -24,92 +24,92 @@ export async function checkIfPathnameExists({
     redirects = [],
     baseUrl
 }: {
-    pathname: string;
-    markdown: boolean;
-    absoluteFilepath?: AbsoluteFilePath;
-    workspaceAbsoluteFilePath: AbsoluteFilePath;
-    pageSlugs: Set<string>;
-    absoluteFilePathsToSlugs: Map<AbsoluteFilePath, string[]>;
+    pathname: string
+    markdown: boolean
+    absoluteFilepath?: AbsoluteFilePath
+    workspaceAbsoluteFilePath: AbsoluteFilePath
+    pageSlugs: Set<string>
+    absoluteFilePathsToSlugs: Map<AbsoluteFilePath, string[]>
     redirects?: {
-        source: string;
-        destination: string;
-        permanent?: boolean;
-    }[];
+        source: string
+        destination: string
+        permanent?: boolean
+    }[]
     baseUrl: {
-        domain: string;
-        basePath?: string;
-    };
+        domain: string
+        basePath?: string
+    }
 }): Promise<true | string[]> {
-    pathname = removeTrailingSlash(pathname);
-    const slugs = absoluteFilepath != null ? (absoluteFilePathsToSlugs.get(absoluteFilepath) ?? []) : [];
+    pathname = removeTrailingSlash(pathname)
+    const slugs = absoluteFilepath != null ? (absoluteFilePathsToSlugs.get(absoluteFilepath) ?? []) : []
 
     // base case: empty pathname is valid
-    if (pathname.trim() === "") {
-        return true;
+    if (pathname.trim() === '') {
+        return true
     }
 
-    pathname = withoutAnchors(pathname);
+    pathname = withoutAnchors(pathname)
 
     // if the pathname starts with `/`, it must either be a slug or a file in the current workspace
-    if (pathname.startsWith("/")) {
+    if (pathname.startsWith('/')) {
         // only check slugs if the file is expected to be a markdown file
-        let redirectedPath = withoutAnchors(withRedirects(pathname, baseUrl, redirects));
+        let redirectedPath = withoutAnchors(withRedirects(pathname, baseUrl, redirects))
         for (let redirectCount = 0; redirectCount < 5; ++redirectCount) {
-            const nextRedirectPath = withoutAnchors(withRedirects(redirectedPath, baseUrl, redirects));
+            const nextRedirectPath = withoutAnchors(withRedirects(redirectedPath, baseUrl, redirects))
             if (redirectedPath === nextRedirectPath) {
-                break;
+                break
             }
-            redirectedPath = nextRedirectPath;
+            redirectedPath = nextRedirectPath
         }
 
         if (markdown && pageSlugs.has(removeLeadingSlash(redirectedPath))) {
-            return true;
+            return true
         }
 
-        const absolutePath = join(workspaceAbsoluteFilePath, RelativeFilePath.of(removeLeadingSlash(pathname)));
+        const absolutePath = join(workspaceAbsoluteFilePath, RelativeFilePath.of(removeLeadingSlash(pathname)))
 
-        if (await doesPathExist(absolutePath, "file")) {
-            return true;
+        if (await doesPathExist(absolutePath, 'file')) {
+            return true
         }
 
-        return slugs.map((slug) => addLeadingSlash(slug));
+        return slugs.map((slug) => addLeadingSlash(slug))
     }
 
     if (absoluteFilepath != null) {
         // if the pathname does not start with a `/`, it is a relative path.
 
         // If pathname is `.` we'll check if the current directory exists.
-        if (pathname === ".") {
-            const currentDirPath = dirname(absoluteFilepath);
-            if (await doesPathExist(currentDirPath, "directory")) {
-                return true;
+        if (pathname === '.') {
+            const currentDirPath = dirname(absoluteFilepath)
+            if (await doesPathExist(currentDirPath, 'directory')) {
+                return true
             }
         }
 
         // We'll check if the pathname is a relativized path
-        const relativizedPathname = join(dirname(absoluteFilepath), RelativeFilePath.of(pathname));
+        const relativizedPathname = join(dirname(absoluteFilepath), RelativeFilePath.of(pathname))
 
-        if (await doesPathExist(relativizedPathname, "file")) {
-            return true;
+        if (await doesPathExist(relativizedPathname, 'file')) {
+            return true
         }
     }
 
     // if this file isn't expected to be a markdown file, we don't have to check the slugs
     if (!markdown) {
-        return slugs.map((slug) => addLeadingSlash(slug));
+        return slugs.map((slug) => addLeadingSlash(slug))
     }
 
     // if that fails, we need to check if the path exists against all of the slugs for the current file
-    const brokenSlugs: string[] = [];
+    const brokenSlugs: string[] = []
     for (const slug of slugs) {
-        const url = new URL(`/${slug}`, wrapWithHttps(baseUrl.domain));
-        const targetSlug = withRedirects(new URL(pathname, url).pathname, baseUrl, redirects);
+        const url = new URL(`/${slug}`, wrapWithHttps(baseUrl.domain))
+        const targetSlug = withRedirects(new URL(pathname, url).pathname, baseUrl, redirects)
         if (!pageSlugs.has(removeLeadingSlash(targetSlug))) {
-            brokenSlugs.push(slug);
+            brokenSlugs.push(slug)
         }
     }
 
-    return brokenSlugs.length > 0 ? brokenSlugs : true;
+    return brokenSlugs.length > 0 ? brokenSlugs : true
 }
 
 function withRedirects(
@@ -117,17 +117,17 @@ function withRedirects(
     baseUrl: { domain: string; basePath?: string },
     redirects: { source: string; destination: string; permanent?: boolean }[]
 ) {
-    const result = getRedirectForPath(pathname, baseUrl, redirects);
+    const result = getRedirectForPath(pathname, baseUrl, redirects)
     if (result == null) {
-        return pathname;
+        return pathname
     }
-    return result.redirect.destination;
+    return result.redirect.destination
 }
 
 function withoutAnchors(slug: string): string {
-    const hashIndex = slug.indexOf("#");
+    const hashIndex = slug.indexOf('#')
     if (hashIndex === -1) {
-        return slug;
+        return slug
     }
-    return slug.substring(0, hashIndex);
+    return slug.substring(0, hashIndex)
 }

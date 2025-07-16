@@ -1,1 +1,1 @@
-export { ExpressErrorSchemaGenerator } from "./ExpressErrorSchemaGenerator";
+export { ExpressErrorSchemaGenerator } from './ExpressErrorSchemaGenerator'

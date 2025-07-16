@@ -1,18 +1,18 @@
-import { DeclaredErrorName } from "@fern-api/ir-sdk";
-import { IdGenerator } from "@fern-api/ir-utils";
+import { DeclaredErrorName } from '@fern-api/ir-sdk'
+import { IdGenerator } from '@fern-api/ir-utils'
 
-import { FernFileContext } from "../FernFileContext";
-import { convertToFernFilepath } from "./convertToFernFilepath";
-import { parseReferenceToTypeName } from "./parseReferenceToTypeName";
+import { FernFileContext } from '../FernFileContext'
+import { convertToFernFilepath } from './convertToFernFilepath'
+import { parseReferenceToTypeName } from './parseReferenceToTypeName'
 
 export function parseErrorName({ errorName, file }: { errorName: string; file: FernFileContext }): DeclaredErrorName {
     const reference = parseReferenceToTypeName({
         reference: errorName,
         referencedIn: file.relativeFilepath,
         imports: file.imports
-    });
+    })
     if (reference == null) {
-        throw new Error("Failed to locate error " + errorName);
+        throw new Error('Failed to locate error ' + errorName)
     }
 
     const nameWithoutId = {
@@ -21,10 +21,10 @@ export function parseErrorName({ errorName, file }: { errorName: string; file: F
             relativeFilepath: reference.relativeFilepath,
             casingsGenerator: file.casingsGenerator
         })
-    };
+    }
 
     return {
         ...nameWithoutId,
         errorId: IdGenerator.generateErrorId(nameWithoutId)
-    };
+    }
 }

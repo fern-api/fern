@@ -1,21 +1,17 @@
-import { mapValues } from "lodash-es";
+import { mapValues } from 'lodash-es'
 
-import { GeneratorName } from "@fern-api/configuration-loader";
+import { GeneratorName } from '@fern-api/configuration-loader'
 
-import { IrSerialization } from "../../ir-serialization";
-import { IrVersions } from "../../ir-versions";
-import {
-    GeneratorWasNeverUpdatedToConsumeNewIR,
-    GeneratorWasNotCreatedYet,
-    IrMigration
-} from "../../types/IrMigration";
+import { IrSerialization } from '../../ir-serialization'
+import { IrVersions } from '../../ir-versions'
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
 
 export const V45_TO_V44_MIGRATION: IrMigration<
     IrVersions.V45.ir.IntermediateRepresentation,
     IrVersions.V44.ir.IntermediateRepresentation
 > = {
-    laterVersion: "v45",
-    earlierVersion: "v44",
+    laterVersion: 'v45',
+    earlierVersion: 'v44',
     firstGeneratorVersionToConsumeNewIR: {
         [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -47,7 +43,7 @@ export const V45_TO_V44_MIGRATION: IrMigration<
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V44.IntermediateRepresentation.jsonOrThrow(ir, {
-            unrecognizedObjectKeys: "strip",
+            unrecognizedObjectKeys: 'strip',
             skipValidation: true
         }),
     migrateBackwards: (v45): IrVersions.V44.ir.IntermediateRepresentation => {
@@ -64,10 +60,10 @@ export const V45_TO_V44_MIGRATION: IrMigration<
                                     return {
                                         ...objectProperty,
                                         valueType: convertTypeReference(objectProperty.valueType)
-                                    };
+                                    }
                                 }),
                                 types: union.types.map((singleUnionType) => convertSingleUnionType(singleUnionType))
-                            });
+                            })
                         },
                         enum: IrVersions.V44.types.Type.enum,
                         object: (object) => {
@@ -77,28 +73,28 @@ export const V45_TO_V44_MIGRATION: IrMigration<
                                     return {
                                         ...objectProperty,
                                         valueType: convertTypeReference(objectProperty.valueType)
-                                    };
+                                    }
                                 })
-                            });
+                            })
                         },
                         alias: (aliasTypeDeclaration) => {
                             return IrVersions.V44.types.Type.alias({
                                 aliasOf: convertTypeReference(aliasTypeDeclaration.aliasOf),
                                 resolvedType: convertResolvedType(aliasTypeDeclaration.resolvedType)
-                            });
+                            })
                         },
                         undiscriminatedUnion: (undiscriminatedUnion) => {
                             return IrVersions.V44.types.Type.undiscriminatedUnion(
                                 convertUndiscriminatedUnion(undiscriminatedUnion)
-                            );
+                            )
                         },
                         _other: () => {
-                            throw new Error("Encountered unknown shape");
+                            throw new Error('Encountered unknown shape')
                         }
                     })
-                };
+                }
             }
-        );
+        )
         return {
             ...v45,
             auth: convertAuth(v45.auth),
@@ -113,9 +109,9 @@ export const V45_TO_V44_MIGRATION: IrMigration<
             ),
             pathParameters: v45.pathParameters.map((pathParameter) => convertPathParameter(pathParameter)),
             variables: v45.variables.map((variable) => convertVariable(variable))
-        };
+        }
     }
-};
+}
 
 function convertWebsocketChannel(
     websocketChannel: IrVersions.V45.websocket.WebSocketChannel
@@ -128,7 +124,7 @@ function convertWebsocketChannel(
         ),
         pathParameters: websocketChannel.pathParameters.map((pathParameter) => convertPathParameter(pathParameter)),
         messages: websocketChannel.messages.map((message) => convertWebsocketMessage(message))
-    };
+    }
 }
 
 function convertWebsocketMessage(
@@ -137,33 +133,33 @@ function convertWebsocketMessage(
     return {
         ...websocketMessage,
         body: convertWebsocketMessageBody(websocketMessage.body)
-    };
+    }
 }
 
 function convertWebsocketMessageBody(
     body: IrVersions.V45.websocket.WebSocketMessageBody
 ): IrVersions.V44.websocket.WebSocketMessageBody {
     switch (body.type) {
-        case "inlinedBody":
+        case 'inlinedBody':
             return IrVersions.V44.websocket.WebSocketMessageBody.inlinedBody({
                 ...body,
                 properties: body.properties.map((property) => {
                     return {
                         ...property,
                         valueType: convertTypeReference(property.valueType)
-                    };
+                    }
                 })
-            });
-        case "reference":
+            })
+        case 'reference':
             return IrVersions.V44.websocket.WebSocketMessageBody.reference({
                 ...body,
                 bodyType: convertTypeReference(body.bodyType)
-            });
+            })
     }
 }
 
 function convertWebhookGroup(webhookGroup: IrVersions.V45.webhooks.WebhookGroup): IrVersions.V44.webhooks.WebhookGroup {
-    return webhookGroup.map((webhook) => convertWebhook(webhook));
+    return webhookGroup.map((webhook) => convertWebhook(webhook))
 }
 
 function convertWebhook(webhook: IrVersions.V45.webhooks.Webhook): IrVersions.V44.webhooks.Webhook {
@@ -171,28 +167,28 @@ function convertWebhook(webhook: IrVersions.V45.webhooks.Webhook): IrVersions.V4
         ...webhook,
         headers: webhook.headers.map((header) => convertHttpHeader(header)),
         payload: convertWebhookPayload(webhook.payload)
-    };
+    }
 }
 
 function convertWebhookPayload(
     payload: IrVersions.V45.webhooks.WebhookPayload
 ): IrVersions.V44.webhooks.WebhookPayload {
     switch (payload.type) {
-        case "reference":
+        case 'reference':
             return IrVersions.V44.webhooks.WebhookPayload.reference({
                 ...payload,
                 payloadType: convertTypeReference(payload.payloadType)
-            });
-        case "inlinedPayload":
+            })
+        case 'inlinedPayload':
             return IrVersions.V44.webhooks.WebhookPayload.inlinedPayload({
                 ...payload,
                 properties: payload.properties.map((property) => {
                     return {
                         ...property,
                         valueType: convertTypeReference(property.valueType)
-                    };
+                    }
                 })
-            });
+            })
     }
 }
 
@@ -201,24 +197,24 @@ function convertAuth(auth: IrVersions.V45.auth.ApiAuth): IrVersions.V44.auth.Api
         ...auth,
         schemes: auth.schemes.map((scheme) => {
             switch (scheme.type) {
-                case "basic":
-                    return IrVersions.V44.auth.AuthScheme.basic(scheme);
-                case "bearer":
-                    return IrVersions.V44.auth.AuthScheme.bearer(scheme);
-                case "header":
-                    return IrVersions.V44.auth.AuthScheme.header(convertHeader(scheme));
-                case "oauth":
-                    return IrVersions.V44.auth.AuthScheme.oauth(convertOAuth(scheme));
+                case 'basic':
+                    return IrVersions.V44.auth.AuthScheme.basic(scheme)
+                case 'bearer':
+                    return IrVersions.V44.auth.AuthScheme.bearer(scheme)
+                case 'header':
+                    return IrVersions.V44.auth.AuthScheme.header(convertHeader(scheme))
+                case 'oauth':
+                    return IrVersions.V44.auth.AuthScheme.oauth(convertOAuth(scheme))
             }
         })
-    };
+    }
 }
 
 function convertHeader(header: IrVersions.V45.auth.AuthScheme.Header): IrVersions.V44.auth.HeaderAuthScheme {
     return {
         ...header,
         valueType: convertTypeReference(header.valueType)
-    };
+    }
 }
 
 function convertOAuth(oauth: IrVersions.V45.auth.AuthScheme.Oauth): IrVersions.V44.auth.OAuthScheme {
@@ -232,7 +228,7 @@ function convertOAuth(oauth: IrVersions.V45.auth.AuthScheme.Oauth): IrVersions.V
                     ? convertOAuthRefreshEndpoint(oauth.configuration.refreshEndpoint)
                     : undefined
         })
-    };
+    }
 }
 
 function convertOAuthTokenEndpoint(
@@ -259,7 +255,7 @@ function convertOAuthTokenEndpoint(
                     ? convertResponseProperty(tokenEndpoint.responseProperties.refreshToken)
                     : undefined
         }
-    };
+    }
 }
 
 function convertOAuthRefreshEndpoint(
@@ -281,31 +277,31 @@ function convertOAuthRefreshEndpoint(
                     ? convertResponseProperty(refreshEndpoint.responseProperties.refreshToken)
                     : undefined
         }
-    };
+    }
 }
 
 function convertHttpHeader(header: IrVersions.V45.http.HttpHeader): IrVersions.V44.http.HttpHeader {
     return {
         ...header,
         valueType: convertTypeReference(header.valueType)
-    };
+    }
 }
 
 function convertTypeReference(typeReference: IrVersions.V45.types.TypeReference): IrVersions.V44.types.TypeReference {
     return IrVersions.V45.types.TypeReference._visit<IrVersions.V44.types.TypeReference>(typeReference, {
         container: (container) => IrVersions.V44.types.TypeReference.container(convertContainerType(container)),
         primitive: (primitiveType) => {
-            if (primitiveType.v1 === "BIG_INTEGER") {
-                return IrVersions.V44.types.TypeReference.primitive(IrVersions.V44.types.PrimitiveType.String);
+            if (primitiveType.v1 === 'BIG_INTEGER') {
+                return IrVersions.V44.types.TypeReference.primitive(IrVersions.V44.types.PrimitiveType.String)
             }
-            return IrVersions.V44.types.TypeReference.primitive(primitiveType.v1);
+            return IrVersions.V44.types.TypeReference.primitive(primitiveType.v1)
         },
         named: IrVersions.V44.types.TypeReference.named,
         unknown: IrVersions.V44.types.TypeReference.unknown,
         _other: () => {
-            throw new Error("Unknown type reference: " + typeReference.type);
+            throw new Error('Unknown type reference: ' + typeReference.type)
         }
-    });
+    })
 }
 
 function convertContainerType(container: IrVersions.V45.types.ContainerType): IrVersions.V44.types.ContainerType {
@@ -320,9 +316,9 @@ function convertContainerType(container: IrVersions.V45.types.ContainerType): Ir
             }),
         literal: IrVersions.V44.types.ContainerType.literal,
         _other: () => {
-            throw new Error("Unknown ContainerType: " + container.type);
+            throw new Error('Unknown ContainerType: ' + container.type)
         }
-    });
+    })
 }
 
 function convertSingleUnionType(
@@ -331,7 +327,7 @@ function convertSingleUnionType(
     return {
         ...singleUnionType,
         shape: convertSingleUnionTypeProperties(singleUnionType.shape)
-    };
+    }
 }
 
 function convertSingleUnionTypeProperties(
@@ -349,10 +345,10 @@ function convertSingleUnionTypeProperties(
                 }),
             noProperties: IrVersions.V44.types.SingleUnionTypeProperties.noProperties,
             _other: () => {
-                throw new Error(`Unknown SingleUnionTypeProperties: ${JSON.stringify(properties)}`);
+                throw new Error(`Unknown SingleUnionTypeProperties: ${JSON.stringify(properties)}`)
             }
         }
-    );
+    )
 }
 
 function convertResolvedType(
@@ -362,16 +358,16 @@ function convertResolvedType(
         container: (container) => IrVersions.V44.types.ResolvedTypeReference.container(convertContainerType(container)),
         named: IrVersions.V44.types.ResolvedTypeReference.named,
         primitive: (primitiveType) => {
-            if (primitiveType.v1 === "BIG_INTEGER") {
-                return IrVersions.V44.types.ResolvedTypeReference.primitive(IrVersions.V44.types.PrimitiveType.String);
+            if (primitiveType.v1 === 'BIG_INTEGER') {
+                return IrVersions.V44.types.ResolvedTypeReference.primitive(IrVersions.V44.types.PrimitiveType.String)
             }
-            return IrVersions.V44.types.ResolvedTypeReference.primitive(primitiveType.v1);
+            return IrVersions.V44.types.ResolvedTypeReference.primitive(primitiveType.v1)
         },
         unknown: IrVersions.V44.types.ResolvedTypeReference.unknown,
         _other: () => {
-            throw new Error("Unknown ResolvedTypeReference: " + resolvedType.type);
+            throw new Error('Unknown ResolvedTypeReference: ' + resolvedType.type)
         }
-    });
+    })
 }
 
 function convertUndiscriminatedUnion(
@@ -382,9 +378,9 @@ function convertUndiscriminatedUnion(
             return {
                 ...member,
                 type: convertTypeReference(member.type)
-            };
+            }
         })
-    };
+    }
 }
 
 function convertHttpService(service: IrVersions.V45.http.HttpService): IrVersions.V44.http.HttpService {
@@ -393,21 +389,21 @@ function convertHttpService(service: IrVersions.V45.http.HttpService): IrVersion
         pathParameters: service.pathParameters.map((pathParameter) => convertPathParameter(pathParameter)),
         headers: service.headers.map((header) => convertHttpHeader(header)),
         endpoints: service.endpoints.map((endpoint) => convertEndpoint(endpoint))
-    };
+    }
 }
 
 function convertPathParameter(pathParameter: IrVersions.V45.http.PathParameter): IrVersions.V44.http.PathParameter {
     return {
         ...pathParameter,
         valueType: convertTypeReference(pathParameter.valueType)
-    };
+    }
 }
 
 function convertVariable(variable: IrVersions.V45.VariableDeclaration): IrVersions.V44.VariableDeclaration {
     return {
         ...variable,
         type: convertTypeReference(variable.type)
-    };
+    }
 }
 
 function convertEndpoint(endpoint: IrVersions.V45.http.HttpEndpoint): IrVersions.V44.http.HttpEndpoint {
@@ -421,37 +417,37 @@ function convertEndpoint(endpoint: IrVersions.V45.http.HttpEndpoint): IrVersions
         response: endpoint.response != null ? convertHttpResponse(endpoint.response) : undefined,
         headers: endpoint.headers.map((header) => convertHttpHeader(header)),
         queryParameters: endpoint.queryParameters.map((queryParameter) => convertQueryParameter(queryParameter))
-    };
+    }
 }
 
 function convertHttpResponse(response: IrVersions.V45.http.HttpResponse): IrVersions.V44.http.HttpResponse {
     return {
         ...response,
         body: response.body != null ? convertResponseBody(response.body) : undefined
-    };
+    }
 }
 
 function convertResponseBody(responseBody: IrVersions.V45.http.HttpResponseBody): IrVersions.V44.http.HttpResponseBody {
     switch (responseBody.type) {
-        case "json":
-            return IrVersions.V44.http.HttpResponseBody.json(convertJsonResponse(responseBody.value));
-        case "fileDownload":
-            return IrVersions.V44.http.HttpResponseBody.fileDownload(responseBody);
-        case "text":
-            return IrVersions.V44.http.HttpResponseBody.text(responseBody);
-        case "streaming":
-            return IrVersions.V44.http.HttpResponseBody.streaming(convertStreamingResponse(responseBody.value));
+        case 'json':
+            return IrVersions.V44.http.HttpResponseBody.json(convertJsonResponse(responseBody.value))
+        case 'fileDownload':
+            return IrVersions.V44.http.HttpResponseBody.fileDownload(responseBody)
+        case 'text':
+            return IrVersions.V44.http.HttpResponseBody.text(responseBody)
+        case 'streaming':
+            return IrVersions.V44.http.HttpResponseBody.streaming(convertStreamingResponse(responseBody.value))
     }
 }
 
 function convertJsonResponse(jsonResponse: IrVersions.V45.http.JsonResponse): IrVersions.V44.http.JsonResponse {
     switch (jsonResponse.type) {
-        case "response":
+        case 'response':
             return IrVersions.V44.http.JsonResponse.response({
                 ...jsonResponse,
                 responseBodyType: convertTypeReference(jsonResponse.responseBodyType)
-            });
-        case "nestedPropertyAsResponse":
+            })
+        case 'nestedPropertyAsResponse':
             return IrVersions.V44.http.JsonResponse.nestedPropertyAsResponse({
                 ...jsonResponse,
                 responseBodyType: convertTypeReference(jsonResponse.responseBodyType),
@@ -459,7 +455,7 @@ function convertJsonResponse(jsonResponse: IrVersions.V45.http.JsonResponse): Ir
                     jsonResponse.responseProperty != null
                         ? convertObjectProperty(jsonResponse.responseProperty)
                         : undefined
-            });
+            })
     }
 }
 
@@ -467,27 +463,27 @@ function convertStreamingResponse(
     streamingResponse: IrVersions.V45.http.StreamingResponse
 ): IrVersions.V44.http.StreamingResponse {
     switch (streamingResponse.type) {
-        case "json":
+        case 'json':
             return IrVersions.V44.http.StreamingResponse.json({
                 ...streamingResponse,
                 payload: convertTypeReference(streamingResponse.payload)
-            });
-        case "text":
-            return IrVersions.V44.http.StreamingResponse.text(streamingResponse);
-        case "sse":
+            })
+        case 'text':
+            return IrVersions.V44.http.StreamingResponse.text(streamingResponse)
+        case 'sse':
             return IrVersions.V44.http.StreamingResponse.sse({
                 ...streamingResponse,
                 payload: convertTypeReference(streamingResponse.payload)
-            });
+            })
     }
 }
 
 function convertPagination(pagination: IrVersions.V45.http.Pagination): IrVersions.V44.http.Pagination {
     switch (pagination.type) {
-        case "cursor":
-            return IrVersions.V44.http.Pagination.cursor(convertCursorPagination(pagination));
-        case "offset":
-            return IrVersions.V44.http.Pagination.offset(convertOffsetPagination(pagination));
+        case 'cursor':
+            return IrVersions.V44.http.Pagination.cursor(convertCursorPagination(pagination))
+        case 'offset':
+            return IrVersions.V44.http.Pagination.offset(convertOffsetPagination(pagination))
     }
 }
 
@@ -499,7 +495,7 @@ function convertCursorPagination(
         page: convertQueryParameter(cursorPagination.page),
         next: convertResponseProperty(cursorPagination.next),
         results: convertResponseProperty(cursorPagination.results)
-    };
+    }
 }
 
 function convertOffsetPagination(
@@ -509,7 +505,7 @@ function convertOffsetPagination(
         ...offsetPagination,
         page: convertQueryParameter(offsetPagination.page),
         results: convertResponseProperty(offsetPagination.results)
-    };
+    }
 }
 
 function convertRequestProperty(
@@ -518,17 +514,17 @@ function convertRequestProperty(
     return {
         ...requestProperty,
         property: convertRequestPropertValue(requestProperty.property)
-    };
+    }
 }
 
 function convertRequestPropertValue(
     requestPropertyValue: IrVersions.V45.http.RequestPropertyValue
 ): IrVersions.V44.http.RequestPropertyValue {
     switch (requestPropertyValue.type) {
-        case "query":
-            return IrVersions.V44.RequestPropertyValue.query(convertQueryParameter(requestPropertyValue));
-        case "body":
-            return IrVersions.V44.RequestPropertyValue.body(convertObjectProperty(requestPropertyValue));
+        case 'query':
+            return IrVersions.V44.RequestPropertyValue.query(convertQueryParameter(requestPropertyValue))
+        case 'body':
+            return IrVersions.V44.RequestPropertyValue.body(convertObjectProperty(requestPropertyValue))
     }
 }
 
@@ -538,7 +534,7 @@ function convertResponseProperty(
     return {
         ...responseProperty,
         property: convertObjectProperty(responseProperty.property)
-    };
+    }
 }
 
 function convertObjectProperty(
@@ -547,21 +543,21 @@ function convertObjectProperty(
     return {
         ...objectProperty,
         valueType: convertTypeReference(objectProperty.valueType)
-    };
+    }
 }
 
 function convertQueryParameter(queryParameter: IrVersions.V45.http.QueryParameter): IrVersions.V44.http.QueryParameter {
     return {
         ...queryParameter,
         valueType: convertTypeReference(queryParameter.valueType)
-    };
+    }
 }
 
 function convertSdkRequest(sdkRequest: IrVersions.V45.http.SdkRequest): IrVersions.V44.http.SdkRequest {
     return {
         ...sdkRequest,
         shape: convertSdkRequestShape(sdkRequest.shape)
-    };
+    }
 }
 
 function convertSdkRequestShape(shape: IrVersions.V45.http.SdkRequestShape): IrVersions.V44.http.SdkRequestShape {
@@ -570,22 +566,22 @@ function convertSdkRequestShape(shape: IrVersions.V45.http.SdkRequestShape): IrV
             IrVersions.V44.http.SdkRequestShape.justRequestBody(convertSdkRequestBodyType(reference)),
         wrapper: IrVersions.V44.http.SdkRequestShape.wrapper,
         _other: () => {
-            throw new Error("Unknown SdkRequestShape: " + shape.type);
+            throw new Error('Unknown SdkRequestShape: ' + shape.type)
         }
-    });
+    })
 }
 
 function convertSdkRequestBodyType(
     shape: IrVersions.V45.http.SdkRequestBodyType
 ): IrVersions.V44.http.SdkRequestBodyType {
     switch (shape.type) {
-        case "bytes":
-            return IrVersions.V44.http.SdkRequestBodyType.bytes(shape);
-        case "typeReference":
+        case 'bytes':
+            return IrVersions.V44.http.SdkRequestBodyType.bytes(shape)
+        case 'typeReference':
             return IrVersions.V44.http.SdkRequestBodyType.typeReference({
                 ...shape,
                 requestBodyType: convertTypeReference(shape.requestBodyType)
-            });
+            })
     }
 }
 
@@ -609,33 +605,33 @@ function convertRequestBody(requestBody: IrVersions.V45.http.HttpRequestBody): I
                 ...fileUpload,
                 properties: fileUpload.properties.map((fileUploadRequestProperty) => {
                     switch (fileUploadRequestProperty.type) {
-                        case "bodyProperty":
+                        case 'bodyProperty':
                             return IrVersions.V44.http.FileUploadRequestProperty.bodyProperty({
                                 ...fileUploadRequestProperty,
                                 valueType: convertTypeReference(fileUploadRequestProperty.valueType)
-                            });
-                        case "file":
+                            })
+                        case 'file':
                             return IrVersions.V44.http.FileUploadRequestProperty.file(
                                 convertFileProperty(fileUploadRequestProperty.value)
-                            );
+                            )
                     }
                 })
             }),
         bytes: (bytes) => {
-            return IrVersions.V44.http.HttpRequestBody.bytes(bytes);
+            return IrVersions.V44.http.HttpRequestBody.bytes(bytes)
         },
         _other: () => {
-            throw new Error("Unknown HttpRequestBody: " + requestBody.type);
+            throw new Error('Unknown HttpRequestBody: ' + requestBody.type)
         }
-    });
+    })
 }
 
 function convertFileProperty(fileProperty: IrVersions.V45.http.FileProperty): IrVersions.V44.http.FileProperty {
     switch (fileProperty.type) {
-        case "file":
-            return IrVersions.V44.http.FileProperty.file(fileProperty);
-        case "fileArray":
-            return IrVersions.V44.http.FileProperty.fileArray(fileProperty);
+        case 'file':
+            return IrVersions.V44.http.FileProperty.file(fileProperty)
+        case 'fileArray':
+            return IrVersions.V44.http.FileProperty.fileArray(fileProperty)
     }
 }
 
@@ -645,5 +641,5 @@ function convertErrorDeclaration(
     return {
         ...error,
         type: error.type != null ? convertTypeReference(error.type) : undefined
-    };
+    }
 }

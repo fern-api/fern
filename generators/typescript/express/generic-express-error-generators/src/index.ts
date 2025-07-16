@@ -1,1 +1,1 @@
-export { GenericAPIExpressErrorGenerator } from "./GenericAPIExpressErrorGenerator";
+export { GenericAPIExpressErrorGenerator } from './GenericAPIExpressErrorGenerator'

@@ -1,38 +1,38 @@
-import { FileProperty, HttpHeader, PathParameter, QueryParameter } from "@fern-fern/ir-sdk/api";
+import { FileProperty, HttpHeader, PathParameter, QueryParameter } from '@fern-fern/ir-sdk/api'
 
 export interface RequestWrapperNonBodyProperty {
-    propertyName: string;
-    safeName: string;
+    propertyName: string
+    safeName: string
 }
 
 interface QueryParameterOriginalParameter {
-    type: "query";
-    parameter: QueryParameter;
+    type: 'query'
+    parameter: QueryParameter
 }
 
 interface PathParameterOriginalParameter {
-    type: "path";
-    parameter: PathParameter;
+    type: 'path'
+    parameter: PathParameter
 }
 
 interface HeaderOriginalParameter {
-    type: "header";
-    parameter: HttpHeader;
+    type: 'header'
+    parameter: HttpHeader
 }
 
 interface FileOriginalParameter {
-    type: "file";
-    parameter: FileProperty;
+    type: 'file'
+    parameter: FileProperty
 }
 
-type OriginalParameter<T extends "query" | "path" | "header" | "file"> = T extends "query"
+type OriginalParameter<T extends 'query' | 'path' | 'header' | 'file'> = T extends 'query'
     ? QueryParameterOriginalParameter
-    : T extends "path"
+    : T extends 'path'
       ? PathParameterOriginalParameter
-      : T extends "header"
+      : T extends 'header'
         ? HeaderOriginalParameter
-        : FileOriginalParameter;
+        : FileOriginalParameter
 
 export interface RequestWrapperNonBodyPropertyWithData extends RequestWrapperNonBodyProperty {
-    originalParameter?: OriginalParameter<"query" | "path" | "header" | "file">;
+    originalParameter?: OriginalParameter<'query' | 'path' | 'header' | 'file'>
 }

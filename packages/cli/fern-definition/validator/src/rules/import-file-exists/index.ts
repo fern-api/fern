@@ -1,1 +1,1 @@
-export { ImportFileExistsRule } from "./import-file-exists";
+export { ImportFileExistsRule } from './import-file-exists'

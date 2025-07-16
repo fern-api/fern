@@ -1,30 +1,30 @@
-import { docsYml } from "@fern-api/configuration-loader";
-import { noop, visitObjectAsync } from "@fern-api/core-utils";
-import { TaskContext } from "@fern-api/task-context";
-import { AbstractAPIWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import { docsYml } from '@fern-api/configuration-loader'
+import { noop, visitObjectAsync } from '@fern-api/core-utils'
+import { TaskContext } from '@fern-api/task-context'
+import { AbstractAPIWorkspace, FernWorkspace } from '@fern-api/workspace-loader'
 
 export type DocsConfigFileAstVisitor<R = void | Promise<void>> = {
-    [K in keyof DocsConfigFileAstNodeTypes]: DocsConfigFileAstNodeVisitor<K, R>;
-};
+    [K in keyof DocsConfigFileAstNodeTypes]: DocsConfigFileAstNodeVisitor<K, R>
+}
 
 export interface DocsConfigFileAstNodeTypes {
     apiSection: {
-        config: docsYml.RawSchemas.ApiReferenceConfiguration;
-        workspace: AbstractAPIWorkspace<unknown>;
-        context: TaskContext;
-    };
+        config: docsYml.RawSchemas.ApiReferenceConfiguration
+        workspace: AbstractAPIWorkspace<unknown>
+        context: TaskContext
+    }
 }
 
 export type DocsConfigFileAstNodeVisitor<K extends keyof DocsConfigFileAstNodeTypes, R = void | Promise<void>> = (
     node: DocsConfigFileAstNodeTypes[K]
-) => R;
+) => R
 
 export declare namespace visitNavigationAst {
     interface Args {
-        navigation: docsYml.RawSchemas.NavigationConfig;
-        visitor: Partial<DocsConfigFileAstVisitor>;
-        apiWorkspaces: AbstractAPIWorkspace<unknown>[];
-        context: TaskContext;
+        navigation: docsYml.RawSchemas.NavigationConfig
+        visitor: Partial<DocsConfigFileAstVisitor>
+        apiWorkspaces: AbstractAPIWorkspace<unknown>[]
+        context: TaskContext
     }
 }
 
@@ -45,12 +45,12 @@ export async function visitNavigationAst({
                                 visitor,
                                 apiWorkspaces,
                                 context
-                            });
+                            })
                         })
-                    );
+                    )
                 }
             })
-        );
+        )
     } else {
         await Promise.all(
             navigation.map(async (item) => {
@@ -59,9 +59,9 @@ export async function visitNavigationAst({
                     visitor,
                     apiWorkspaces,
                     context
-                });
+                })
             })
-        );
+        )
     }
 }
 async function visitNavigationItem({
@@ -70,10 +70,10 @@ async function visitNavigationItem({
     apiWorkspaces,
     context
 }: {
-    navigationItem: docsYml.RawSchemas.NavigationItem;
-    visitor: Partial<DocsConfigFileAstVisitor>;
-    apiWorkspaces: AbstractAPIWorkspace<unknown>[];
-    context: TaskContext;
+    navigationItem: docsYml.RawSchemas.NavigationItem
+    visitor: Partial<DocsConfigFileAstVisitor>
+    apiWorkspaces: AbstractAPIWorkspace<unknown>[]
+    context: TaskContext
 }): Promise<void> {
     await visitObjectAsync(navigationItem, {
         alphabetized: noop,
@@ -98,7 +98,7 @@ async function visitNavigationItem({
         openrpc: noop,
         contents: async (items: docsYml.RawSchemas.NavigationItem[] | undefined): Promise<void> => {
             if (items == null) {
-                return;
+                return
             }
             await Promise.all(
                 items.map(async (item) => {
@@ -107,22 +107,22 @@ async function visitNavigationItem({
                         visitor,
                         apiWorkspaces,
                         context
-                    });
+                    })
                 })
-            );
+            )
         },
         viewers: noop,
         orphaned: noop
-    });
+    })
 
     if (navigationItemIsApi(navigationItem)) {
-        const workspace = apiWorkspaces.find((workspace) => workspace.workspaceName === navigationItem.apiName);
+        const workspace = apiWorkspaces.find((workspace) => workspace.workspaceName === navigationItem.apiName)
         if (workspace != null) {
             await visitor.apiSection?.({
                 config: navigationItem,
                 workspace,
                 context
-            });
+            })
         }
     }
 }
@@ -131,11 +131,11 @@ function navigationItemIsApi(
     item: docsYml.RawSchemas.NavigationItem
 ): item is docsYml.RawSchemas.ApiReferenceConfiguration {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (item as docsYml.RawSchemas.ApiReferenceConfiguration).api != null;
+    return (item as docsYml.RawSchemas.ApiReferenceConfiguration).api != null
 }
 
 function navigationConfigIsTabbed(
     config: docsYml.RawSchemas.NavigationConfig
 ): config is docsYml.RawSchemas.TabbedNavigationConfig {
-    return (config as docsYml.RawSchemas.TabbedNavigationConfig)[0]?.tab != null;
+    return (config as docsYml.RawSchemas.TabbedNavigationConfig)[0]?.tab != null
 }

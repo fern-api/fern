@@ -1,30 +1,26 @@
-import { GeneratorName } from "@fern-api/configuration-loader";
-import { commons } from "@fern-api/ir-sdk";
+import { GeneratorName } from '@fern-api/configuration-loader'
+import { commons } from '@fern-api/ir-sdk'
 
-import { IrSerialization } from "../../ir-serialization";
-import { IrVersions } from "../../ir-versions";
-import {
-    GeneratorWasNeverUpdatedToConsumeNewIR,
-    GeneratorWasNotCreatedYet,
-    IrMigration
-} from "../../types/IrMigration";
+import { IrSerialization } from '../../ir-serialization'
+import { IrVersions } from '../../ir-versions'
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
 
 export const V29_TO_V28_MIGRATION: IrMigration<
     IrVersions.V29.ir.IntermediateRepresentation,
     IrVersions.V28.ir.IntermediateRepresentation
 > = {
-    laterVersion: "v29",
-    earlierVersion: "v28",
+    laterVersion: 'v29',
+    earlierVersion: 'v28',
     firstGeneratorVersionToConsumeNewIR: {
-        [GeneratorName.TYPESCRIPT_NODE_SDK]: "0.8.6-1-g3d8d8591",
-        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: "0.8.6-1-g3d8d8591",
+        [GeneratorName.TYPESCRIPT_NODE_SDK]: '0.8.6-1-g3d8d8591',
+        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: '0.8.6-1-g3d8d8591',
         [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_SDK]: "0.8.6-1-g3d8d8591",
-        [GeneratorName.TYPESCRIPT_EXPRESS]: "0.8.6-1-g3d8d8591",
+        [GeneratorName.TYPESCRIPT_SDK]: '0.8.6-1-g3d8d8591',
+        [GeneratorName.TYPESCRIPT_EXPRESS]: '0.8.6-1-g3d8d8591',
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_MODEL]: "0.5.14-1-ge4bcd98",
-        [GeneratorName.JAVA_SDK]: "0.5.14-1-ge4bcd98",
-        [GeneratorName.JAVA_SPRING]: "0.5.14-1-ge4bcd98",
+        [GeneratorName.JAVA_MODEL]: '0.5.14-1-ge4bcd98',
+        [GeneratorName.JAVA_SDK]: '0.5.14-1-ge4bcd98',
+        [GeneratorName.JAVA_SPRING]: '0.5.14-1-ge4bcd98',
         [GeneratorName.PYTHON_FASTAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_PYDANTIC]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -46,7 +42,7 @@ export const V29_TO_V28_MIGRATION: IrMigration<
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V28.IntermediateRepresentation.jsonOrThrow(ir, {
-            unrecognizedObjectKeys: "strip",
+            unrecognizedObjectKeys: 'strip',
             skipValidation: true
         }),
     migrateBackwards: (v29): IrVersions.V28.ir.IntermediateRepresentation => {
@@ -54,21 +50,21 @@ export const V29_TO_V28_MIGRATION: IrMigration<
             ...v29,
             types: Object.fromEntries(
                 Object.keys(v29.types).map((key) => {
-                    return [key, getV28TypeDeclarationFromId({ typeId: key, allTypes: v29.types })];
+                    return [key, getV28TypeDeclarationFromId({ typeId: key, allTypes: v29.types })]
                 })
             )
-        };
+        }
     }
-};
+}
 
 function getV28TypeDeclarationFromId({
     typeId,
     allTypes
 }: {
-    typeId: commons.TypeId;
-    allTypes: Record<IrVersions.V29.TypeId, IrVersions.V29.TypeDeclaration>;
+    typeId: commons.TypeId
+    allTypes: Record<IrVersions.V29.TypeId, IrVersions.V29.TypeDeclaration>
 }): IrVersions.V28.types.TypeDeclaration {
-    const typeDeclaration = getTypeDeclarationOrThrow({ typeId, allTypes });
+    const typeDeclaration = getTypeDeclarationOrThrow({ typeId, allTypes })
     return {
         availability: typeDeclaration.availability,
         docs: typeDeclaration.docs,
@@ -76,26 +72,26 @@ function getV28TypeDeclarationFromId({
         shape: typeDeclaration.shape,
         examples: typeDeclaration.examples,
         referencedTypes: Array.from(typeDeclaration.referencedTypes).map((referencedTypeId) => {
-            const referencedTypeDeclaration = getTypeDeclarationOrThrow({ typeId: referencedTypeId, allTypes });
+            const referencedTypeDeclaration = getTypeDeclarationOrThrow({ typeId: referencedTypeId, allTypes })
             return {
                 typeId: referencedTypeId,
                 fernFilepath: referencedTypeDeclaration.name.fernFilepath,
                 name: referencedTypeDeclaration.name.name
-            };
+            }
         })
-    };
+    }
 }
 
 function getTypeDeclarationOrThrow({
     typeId,
     allTypes
 }: {
-    typeId: commons.TypeId;
-    allTypes: Record<IrVersions.V29.TypeId, IrVersions.V29.TypeDeclaration>;
+    typeId: commons.TypeId
+    allTypes: Record<IrVersions.V29.TypeId, IrVersions.V29.TypeDeclaration>
 }): IrVersions.V29.TypeDeclaration {
-    const typeDeclaration = allTypes[typeId];
+    const typeDeclaration = allTypes[typeId]
     if (typeDeclaration == null) {
-        throw new Error(`Type definition for type id ${typeId} is undefined`);
+        throw new Error(`Type definition for type id ${typeId} is undefined`)
     }
-    return typeDeclaration;
+    return typeDeclaration
 }

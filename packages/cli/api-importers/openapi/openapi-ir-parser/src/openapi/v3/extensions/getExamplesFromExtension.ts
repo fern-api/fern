@@ -1,15 +1,15 @@
-import { OpenAPIV3 } from "openapi-types";
+import { OpenAPIV3 } from 'openapi-types'
 
-import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { EndpointExample } from "@fern-api/openapi-ir";
+import { RawSchemas } from '@fern-api/fern-definition-schema'
+import { EndpointExample } from '@fern-api/openapi-ir'
 
-import { getExtension, getExtensionAndValidate } from "../../../getExtension";
-import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
-import { OperationContext } from "../converters/contexts";
-import { RedoclyCodeSampleArraySchema, RedoclyCodeSampleSchema } from "../schemas/RedoclyCodeSampleSchema";
-import { OpenAPIExtension } from "./extensions";
-import { FernOpenAPIExtension } from "./fernExtensions";
-import { getRawReadmeCodeSamples } from "./getReadmeCodeSamples";
+import { getExtension, getExtensionAndValidate } from '../../../getExtension'
+import { AbstractOpenAPIV3ParserContext } from '../AbstractOpenAPIV3ParserContext'
+import { OperationContext } from '../converters/contexts'
+import { RedoclyCodeSampleArraySchema, RedoclyCodeSampleSchema } from '../schemas/RedoclyCodeSampleSchema'
+import { OpenAPIExtension } from './extensions'
+import { FernOpenAPIExtension } from './fernExtensions'
+import { getRawReadmeCodeSamples } from './getReadmeCodeSamples'
 
 export function getExamplesFromExtension(
     operationContext: OperationContext,
@@ -19,19 +19,19 @@ export function getExamplesFromExtension(
     const exampleEndpointCalls = getExtension<RawSchemas.ExampleEndpointCallSchema[]>(
         operationObject,
         FernOpenAPIExtension.EXAMPLES
-    );
+    )
 
     const validatedExampleEndpointCalls: RawSchemas.ExampleEndpointCallArraySchema = (
         exampleEndpointCalls ?? []
     ).filter((example) => {
-        const maybeFernExample = RawSchemas.serialization.ExampleEndpointCallSchema.parse(example);
+        const maybeFernExample = RawSchemas.serialization.ExampleEndpointCallSchema.parse(example)
         if (!maybeFernExample.ok) {
             context.logger.error(
                 `Failed to parse x-fern-example in ${operationContext.path}/${operationContext.method}`
-            );
+            )
         }
-        return maybeFernExample.ok;
-    });
+        return maybeFernExample.ok
+    })
 
     const redoclyCodeSamplesKebabCase =
         getExtensionAndValidate<RedoclyCodeSampleArraySchema>(
@@ -40,7 +40,7 @@ export function getExamplesFromExtension(
             RedoclyCodeSampleArraySchema,
             context.logger,
             [...operationContext.baseBreadcrumbs, `${operationContext.method} ${operationContext.path}`]
-        ) ?? [];
+        ) ?? []
 
     const redoclyCodeSamplesCamelCase =
         getExtensionAndValidate<RedoclyCodeSampleArraySchema>(
@@ -49,16 +49,16 @@ export function getExamplesFromExtension(
             RedoclyCodeSampleArraySchema,
             context.logger,
             [...operationContext.baseBreadcrumbs, `${operationContext.method} ${operationContext.path}`]
-        ) ?? [];
+        ) ?? []
 
     const redoclyCodeSamples: RedoclyCodeSampleSchema[] = [
         ...redoclyCodeSamplesCamelCase,
         ...redoclyCodeSamplesKebabCase
-    ];
+    ]
 
     if (redoclyCodeSamples.length > 0) {
         validatedExampleEndpointCalls.push({
-            "code-samples": redoclyCodeSamples.map(
+            'code-samples': redoclyCodeSamples.map(
                 (value): RawSchemas.ExampleCodeSampleSchema => ({
                     name: value.label ?? value.lang,
                     language: value.lang,
@@ -67,15 +67,15 @@ export function getExamplesFromExtension(
                     docs: undefined
                 })
             )
-        });
+        })
     }
 
-    const readmeCodeSamples = getRawReadmeCodeSamples(operationObject);
+    const readmeCodeSamples = getRawReadmeCodeSamples(operationObject)
     if (readmeCodeSamples.length > 0) {
         validatedExampleEndpointCalls.push({
-            "code-samples": readmeCodeSamples
-        });
+            'code-samples': readmeCodeSamples
+        })
     }
 
-    return validatedExampleEndpointCalls.map(EndpointExample.unknown);
+    return validatedExampleEndpointCalls.map(EndpointExample.unknown)
 }

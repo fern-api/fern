@@ -1,5 +1,5 @@
-import { BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast";
+import { BaseRubyCustomConfigSchema } from '@fern-api/ruby-ast'
 
-export const SdkCustomConfigSchema: typeof BaseRubyCustomConfigSchema = BaseRubyCustomConfigSchema;
+export const SdkCustomConfigSchema: typeof BaseRubyCustomConfigSchema = BaseRubyCustomConfigSchema
 
-export type SdkCustomConfigSchema = BaseRubyCustomConfigSchema;
+export type SdkCustomConfigSchema = BaseRubyCustomConfigSchema

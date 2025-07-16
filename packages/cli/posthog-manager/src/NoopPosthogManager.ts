@@ -1,4 +1,4 @@
-import { PosthogManager } from "./PosthogManager";
+import { PosthogManager } from './PosthogManager'
 
 export class NoopPosthogManager implements PosthogManager {
     async sendEvent(): Promise<void> {

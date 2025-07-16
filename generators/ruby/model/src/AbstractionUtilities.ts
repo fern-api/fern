@@ -7,7 +7,7 @@ import {
     Property,
     SerializableObject,
     UndiscriminatedUnion
-} from "@fern-api/ruby-codegen";
+} from '@fern-api/ruby-codegen'
 
 import {
     AliasTypeDeclaration,
@@ -19,16 +19,16 @@ import {
     TypeReference,
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
-} from "@fern-fern/ir-sdk/api";
+} from '@fern-fern/ir-sdk/api'
 
 export function generateAliasDefinitionFromTypeDeclaration(
     classReferenceFactory: ClassReferenceFactory,
     aliasTypeDeclaration: AliasTypeDeclaration,
     typeDeclaration: TypeDeclaration
 ): Expression {
-    const name = typeDeclaration.name.name.screamingSnakeCase.safeName;
-    const rightSide = classReferenceFactory.fromTypeReference(aliasTypeDeclaration.aliasOf);
-    return new Expression({ leftSide: name, rightSide, isAssignment: true, documentation: typeDeclaration.docs });
+    const name = typeDeclaration.name.name.screamingSnakeCase.safeName
+    const rightSide = classReferenceFactory.fromTypeReference(aliasTypeDeclaration.aliasOf)
+    return new Expression({ leftSide: name, rightSide, isAssignment: true, documentation: typeDeclaration.docs })
 }
 
 export function generateEnumDefinitionFromTypeDeclaration(
@@ -36,8 +36,8 @@ export function generateEnumDefinitionFromTypeDeclaration(
     enumTypeDeclaration: EnumTypeDeclaration,
     typeDeclaration: TypeDeclaration
 ): Class_ {
-    const classReference = classReferenceFactory.fromTypeDeclaration(typeDeclaration);
-    return new Enum({ enumTypeDeclaration, classReference, documentation: typeDeclaration.docs });
+    const classReference = classReferenceFactory.fromTypeDeclaration(typeDeclaration)
+    return new Enum({ enumTypeDeclaration, classReference, documentation: typeDeclaration.docs })
 }
 
 function isTypeOptional(typeReference: TypeReference): boolean {
@@ -50,13 +50,13 @@ function isTypeOptional(typeReference: TypeReference): boolean {
                 set: () => false,
                 literal: () => false,
                 _other: () => false
-            });
+            })
         },
         named: () => false,
         primitive: () => false,
         _other: () => false,
         unknown: () => false
-    });
+    })
 }
 
 export function generateSerializableObjectFromTypeDeclaration(
@@ -75,14 +75,14 @@ export function generateSerializableObjectFromTypeDeclaration(
                 wireValue: property.name.wireValue,
                 isOptional: isTypeOptional(property.valueType)
             })
-    );
+    )
 
-    const classReference = classReferenceFactory.fromDeclaredTypeName(typeDeclaration.name);
+    const classReference = classReferenceFactory.fromDeclaredTypeName(typeDeclaration.name)
     return new SerializableObject({
         classReference,
         properties,
         documentation: typeDeclaration.docs
-    });
+    })
 }
 
 export function generateUnionFromTypeDeclaration(
@@ -101,16 +101,16 @@ export function generateUnionFromTypeDeclaration(
                 wireValue: property.name.wireValue,
                 isOptional: isTypeOptional(property.valueType)
             })
-    );
+    )
     const namedSubclasses = unionTypeDeclaration.types.map((t) => {
         return {
             discriminantValue: t.discriminantValue,
             classReference: classReferenceFactory.classReferenceFromUnionType(t.shape),
             unionPropertiesType: t.shape
-        };
-    });
+        }
+    })
 
-    const classReference = classReferenceFactory.fromDeclaredTypeName(typeDeclaration.name);
+    const classReference = classReferenceFactory.fromDeclaredTypeName(typeDeclaration.name)
     return new DiscriminatedUnion({
         classReference,
         discriminantField: unionTypeDeclaration.discriminant.wireValue,
@@ -118,7 +118,7 @@ export function generateUnionFromTypeDeclaration(
         defaultSubclassReference: namedSubclasses[0]?.classReference,
         documentation: typeDeclaration.docs,
         properties
-    });
+    })
 }
 
 export function generateUndiscriminatedUnionFromTypeDeclaration(
@@ -128,8 +128,8 @@ export function generateUndiscriminatedUnionFromTypeDeclaration(
 ): UndiscriminatedUnion {
     const memberClasses = unionTypeDeclaration.members.map((member) =>
         classReferenceFactory.fromTypeReference(member.type)
-    );
+    )
 
-    const classReference = classReferenceFactory.fromDeclaredTypeName(typeDeclaration.name);
-    return new UndiscriminatedUnion({ memberClasses, classReference, documentation: typeDeclaration.docs });
+    const classReference = classReferenceFactory.fromDeclaredTypeName(typeDeclaration.name)
+    return new UndiscriminatedUnion({ memberClasses, classReference, documentation: typeDeclaration.docs })
 }

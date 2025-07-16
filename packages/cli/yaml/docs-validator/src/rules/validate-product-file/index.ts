@@ -1,1 +1,1 @@
-export { ValidateProductFileRule } from "./validate-product-file";
+export { ValidateProductFileRule } from './validate-product-file'

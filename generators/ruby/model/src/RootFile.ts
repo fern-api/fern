@@ -1,16 +1,16 @@
-import { AstNode, ClassReference, Import } from "@fern-api/ruby-codegen";
+import { AstNode, ClassReference, Import } from '@fern-api/ruby-codegen'
 
 // The root file is just a container of imports for easy access
 // to the different modules.
 export class RootFile extends AstNode {
-    classReferences: ClassReference[];
+    classReferences: ClassReference[]
     constructor(classReferences: ClassReference[]) {
-        super({ writeImports: true });
-        this.classReferences = classReferences;
+        super({ writeImports: true })
+        this.classReferences = classReferences
     }
 
     public writeInternal(_startingTabSpaces: number): void {
-        return;
+        return
     }
 
     public getImports(): Set<Import> {
@@ -18,6 +18,6 @@ export class RootFile extends AstNode {
             Array.from(this.classReferences.entries())
                 .map(([_, cr]) => cr.import_)
                 .filter((i) => i !== undefined) as Import[]
-        );
+        )
     }
 }

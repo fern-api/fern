@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod'
 
 export const ExpressCustomConfigSchema = z.strictObject({
     useBrandedStringAliases: z.optional(z.boolean()),
@@ -20,6 +20,6 @@ export const ExpressCustomConfigSchema = z.strictObject({
     includeOtherInUnionTypes: z.optional(z.boolean()),
     retainOriginalCasing: z.optional(z.boolean()),
     allowExtraFields: z.optional(z.boolean())
-});
+})
 
-export type ExpressCustomConfigSchema = z.infer<typeof ExpressCustomConfigSchema>;
+export type ExpressCustomConfigSchema = z.infer<typeof ExpressCustomConfigSchema>

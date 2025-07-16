@@ -1,50 +1,50 @@
-import { camelCase } from "lodash-es";
-import { OpenAPIV3_1 } from "openapi-types";
+import { camelCase } from 'lodash-es'
+import { OpenAPIV3_1 } from 'openapi-types'
 
-import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { FernIr, HttpEndpoint, HttpEndpointSource, HttpPath, HttpResponse } from "@fern-api/ir-sdk";
-import { constructHttpPath } from "@fern-api/ir-utils";
-import { AbstractConverter, ServersConverter } from "@fern-api/v2-importer-commons";
+import { RawSchemas } from '@fern-api/fern-definition-schema'
+import { FernIr, HttpEndpoint, HttpEndpointSource, HttpPath, HttpResponse } from '@fern-api/ir-sdk'
+import { constructHttpPath } from '@fern-api/ir-utils'
+import { AbstractConverter, ServersConverter } from '@fern-api/v2-importer-commons'
 
-import { FernExamplesExtension } from "../../../extensions/x-fern-examples";
-import { FernStreamingExtension } from "../../../extensions/x-fern-streaming";
-import { ResponseBodyConverter } from "../ResponseBodyConverter";
-import { ResponseErrorConverter } from "../ResponseErrorConverter";
-import { AbstractOperationConverter } from "./AbstractOperationConverter";
+import { FernExamplesExtension } from '../../../extensions/x-fern-examples'
+import { FernStreamingExtension } from '../../../extensions/x-fern-streaming'
+import { ResponseBodyConverter } from '../ResponseBodyConverter'
+import { ResponseErrorConverter } from '../ResponseErrorConverter'
+import { AbstractOperationConverter } from './AbstractOperationConverter'
 
 export declare namespace OperationConverter {
     export interface Args extends AbstractOperationConverter.Args {
-        idempotent: boolean | undefined;
-        idToAuthScheme?: Record<string, FernIr.AuthScheme>;
-        topLevelServers?: OpenAPIV3_1.ServerObject[];
-        streamingExtension: FernStreamingExtension.Output | undefined;
+        idempotent: boolean | undefined
+        idToAuthScheme?: Record<string, FernIr.AuthScheme>
+        topLevelServers?: OpenAPIV3_1.ServerObject[]
+        streamingExtension: FernStreamingExtension.Output | undefined
     }
 
     export interface Output extends AbstractOperationConverter.Output {
-        endpoint: HttpEndpoint;
-        streamEndpoint: HttpEndpoint | undefined;
-        audiences: string[];
-        errors: Record<FernIr.ErrorId, FernIr.ErrorDeclaration>;
-        servers?: OpenAPIV3_1.ServerObject[];
+        endpoint: HttpEndpoint
+        streamEndpoint: HttpEndpoint | undefined
+        audiences: string[]
+        errors: Record<FernIr.ErrorId, FernIr.ErrorDeclaration>
+        servers?: OpenAPIV3_1.ServerObject[]
     }
 
     export interface ConvertedResponseBody {
-        response: HttpResponse | undefined;
-        streamResponse: HttpResponse | undefined;
-        errors: ResponseErrorConverter.Output[];
-        examples?: Record<string, OpenAPIV3_1.ExampleObject>;
+        response: HttpResponse | undefined
+        streamResponse: HttpResponse | undefined
+        errors: ResponseErrorConverter.Output[]
+        examples?: Record<string, OpenAPIV3_1.ExampleObject>
     }
 
-    type BaseEndpoint = Omit<HttpEndpoint, "requestBody" | "response" | "name" | "docs" | "id" | "v2Examples">;
+    type BaseEndpoint = Omit<HttpEndpoint, 'requestBody' | 'response' | 'name' | 'docs' | 'id' | 'v2Examples'>
 }
 
 export class OperationConverter extends AbstractOperationConverter {
-    private readonly idempotent: boolean | undefined;
-    private readonly idToAuthScheme?: Record<string, FernIr.AuthScheme>;
-    private readonly topLevelServers?: OpenAPIV3_1.ServerObject[];
-    private readonly streamingExtension: FernStreamingExtension.Output | undefined;
+    private readonly idempotent: boolean | undefined
+    private readonly idToAuthScheme?: Record<string, FernIr.AuthScheme>
+    private readonly topLevelServers?: OpenAPIV3_1.ServerObject[]
+    private readonly streamingExtension: FernStreamingExtension.Output | undefined
 
-    private static readonly AUTHORIZATION_HEADER = "Authorization";
+    private static readonly AUTHORIZATION_HEADER = 'Authorization'
 
     constructor({
         context,
@@ -57,71 +57,71 @@ export class OperationConverter extends AbstractOperationConverter {
         topLevelServers,
         streamingExtension
     }: OperationConverter.Args) {
-        super({ context, breadcrumbs, operation, method, path });
-        this.idempotent = idempotent;
-        this.idToAuthScheme = idToAuthScheme;
-        this.topLevelServers = topLevelServers;
-        this.streamingExtension = streamingExtension;
+        super({ context, breadcrumbs, operation, method, path })
+        this.idempotent = idempotent
+        this.idToAuthScheme = idToAuthScheme
+        this.topLevelServers = topLevelServers
+        this.streamingExtension = streamingExtension
     }
 
     public convert(): OperationConverter.Output | undefined {
-        const httpMethod = this.convertHttpMethod();
+        const httpMethod = this.convertHttpMethod()
         if (httpMethod == null) {
-            return undefined;
+            return undefined
         }
 
         const { group, method } =
-            this.computeGroupNameAndLocationFromExtensions() ?? this.computeGroupNameFromTagAndOperationId();
-        const groupDisplayName = this.getGroupDisplayName(group);
+            this.computeGroupNameAndLocationFromExtensions() ?? this.computeGroupNameFromTagAndOperationId()
+        const groupDisplayName = this.getGroupDisplayName(group)
 
         const { headers, pathParameters, queryParameters } = this.convertParameters({
-            breadcrumbs: [...this.breadcrumbs, "parameters"]
-        });
+            breadcrumbs: [...this.breadcrumbs, 'parameters']
+        })
 
         const convertedRequestBody = this.convertRequestBody({
-            breadcrumbs: [...this.breadcrumbs, "requestBody"],
+            breadcrumbs: [...this.breadcrumbs, 'requestBody'],
             group,
             method,
             streamingExtension: this.streamingExtension
-        });
-        const requestBody = convertedRequestBody != null ? convertedRequestBody.requestBody : undefined;
-        const streamRequestBody = convertedRequestBody != null ? convertedRequestBody.streamRequestBody : undefined;
+        })
+        const requestBody = convertedRequestBody != null ? convertedRequestBody.requestBody : undefined
+        const streamRequestBody = convertedRequestBody != null ? convertedRequestBody.streamRequestBody : undefined
 
         const convertedResponseBody = this.convertResponseBody({
-            breadcrumbs: [...this.breadcrumbs, "responses"],
+            breadcrumbs: [...this.breadcrumbs, 'responses'],
             group,
             method,
             streamingExtension: this.streamingExtension
-        });
-        const response = convertedResponseBody != null ? convertedResponseBody.response : undefined;
-        const streamResponse = convertedResponseBody != null ? convertedResponseBody.streamResponse : undefined;
-        const convertedEndpointErrors = convertedResponseBody != null ? convertedResponseBody.errors : [];
-        const topLevelErrors: Record<FernIr.ErrorId, FernIr.ErrorDeclaration> = {};
-        const errors = convertedEndpointErrors.map((convertedError) => convertedError.error);
+        })
+        const response = convertedResponseBody != null ? convertedResponseBody.response : undefined
+        const streamResponse = convertedResponseBody != null ? convertedResponseBody.streamResponse : undefined
+        const convertedEndpointErrors = convertedResponseBody != null ? convertedResponseBody.errors : []
+        const topLevelErrors: Record<FernIr.ErrorId, FernIr.ErrorDeclaration> = {}
+        const errors = convertedEndpointErrors.map((convertedError) => convertedError.error)
 
-        const path = constructHttpPath(this.path);
-        const baseUrl = this.getEndpointBaseUrl();
-        const v2BaseUrls = this.getEndpointBaseUrls();
+        const path = constructHttpPath(this.path)
+        const baseUrl = this.getEndpointBaseUrl()
+        const v2BaseUrls = this.getEndpointBaseUrls()
         const fernExamples = this.convertExamples({
             httpPath: path,
             httpMethod,
             baseUrl
-        });
+        })
 
         const endpointLevelSecuritySchemes = new Set<string>(
             this.operation.security?.flatMap((securityRequirement) => Object.keys(securityRequirement)) ?? []
-        );
+        )
         // Convert security scheme IDs to HTTP headers and add them to existing headers
-        const securityHeaders = this.authSchemeToHeaders(Array.from(endpointLevelSecuritySchemes));
+        const securityHeaders = this.authSchemeToHeaders(Array.from(endpointLevelSecuritySchemes))
         if (securityHeaders.length > 0) {
-            headers.push(...securityHeaders);
+            headers.push(...securityHeaders)
         }
 
         for (const convertedError of convertedEndpointErrors) {
-            const responseError = convertedError.error;
-            const responseErrorType = convertedError.errorType;
-            const errorId = responseError.error.errorId;
-            const errorExamples = convertedError.examples;
+            const responseError = convertedError.error
+            const responseErrorType = convertedError.errorType
+            const errorId = responseError.error.errorId
+            const errorExamples = convertedError.examples
             topLevelErrors[errorId] = {
                 name: responseError.error,
                 displayName: convertedError.displayName,
@@ -138,14 +138,14 @@ export class OperationConverter extends AbstractOperationConverter {
                     userSpecifiedExamples: errorExamples ?? {},
                     autogeneratedExamples: {}
                 }
-            };
+            }
         }
 
         const audiences =
             this.context.getAudiences({
                 operation: this.operation,
                 breadcrumbs: this.breadcrumbs
-            }) ?? [];
+            }) ?? []
 
         const baseEndpoint: OperationConverter.BaseEndpoint = {
             displayName: this.operation.summary,
@@ -176,11 +176,11 @@ export class OperationConverter extends AbstractOperationConverter {
             transport: undefined,
             source: HttpEndpointSource.openapi(),
             audiences
-        };
+        }
 
-        const endpointGroupParts = this.context.namespace != null ? [this.context.namespace] : [];
-        const camelCasedGroup = group?.map((group) => camelCase(group));
-        endpointGroupParts.push(...(camelCasedGroup ?? []));
+        const endpointGroupParts = this.context.namespace != null ? [this.context.namespace] : []
+        const camelCasedGroup = group?.map((group) => camelCase(group))
+        endpointGroupParts.push(...(camelCasedGroup ?? []))
 
         return {
             audiences,
@@ -189,7 +189,7 @@ export class OperationConverter extends AbstractOperationConverter {
             errors: topLevelErrors,
             endpoint: {
                 ...baseEndpoint,
-                id: `endpoint_${endpointGroupParts.join("/")}.${method}`,
+                id: `endpoint_${endpointGroupParts.join('/')}.${method}`,
                 name: this.context.casingsGenerator.generateName(method),
                 requestBody,
                 response,
@@ -203,12 +203,12 @@ export class OperationConverter extends AbstractOperationConverter {
                 streamResponse != null && streamResponse.body != null
                     ? {
                           ...baseEndpoint,
-                          id: `endpoint_${endpointGroupParts.join("/")}.${method}_stream`,
+                          id: `endpoint_${endpointGroupParts.join('/')}.${method}_stream`,
                           name: this.context.casingsGenerator.generateName(`${method}_stream`),
                           requestBody: streamRequestBody,
                           response: streamResponse,
                           docs:
-                              this.streamingExtension?.type === "streamCondition"
+                              this.streamingExtension?.type === 'streamCondition'
                                   ? (this.streamingExtension.streamDescription ?? this.operation.description)
                                   : this.operation.description,
                           v2Examples: {
@@ -219,7 +219,7 @@ export class OperationConverter extends AbstractOperationConverter {
                     : undefined,
             inlinedTypes: this.inlinedTypes,
             servers: this.filterOutTopLevelServers(this.operation.servers ?? [])
-        };
+        }
     }
 
     protected convertResponseBody({
@@ -228,24 +228,24 @@ export class OperationConverter extends AbstractOperationConverter {
         method,
         streamingExtension
     }: {
-        breadcrumbs: string[];
-        group: string[] | undefined;
-        method: string;
-        streamingExtension: FernStreamingExtension.Output | undefined;
+        breadcrumbs: string[]
+        group: string[] | undefined
+        method: string
+        streamingExtension: FernStreamingExtension.Output | undefined
     }): OperationConverter.ConvertedResponseBody | undefined {
         if (this.operation.responses == null) {
-            return undefined;
+            return undefined
         }
 
-        let convertedResponseBody: OperationConverter.ConvertedResponseBody | undefined = undefined;
+        let convertedResponseBody: OperationConverter.ConvertedResponseBody | undefined = undefined
         // TODO: Our existing Parser will only parse the first successful response.
         // We'll need to update it to parse all successful responses.
-        let hasSuccessfulResponse = false;
+        let hasSuccessfulResponse = false
 
         for (const [statusCode, response] of Object.entries(this.operation.responses)) {
-            const statusCodeNum = parseInt(statusCode);
+            const statusCodeNum = parseInt(statusCode)
             if (isNaN(statusCodeNum) || statusCodeNum < 200 || (statusCodeNum >= 300 && statusCodeNum < 400)) {
-                continue;
+                continue
             }
             if (convertedResponseBody == null) {
                 convertedResponseBody = {
@@ -253,17 +253,17 @@ export class OperationConverter extends AbstractOperationConverter {
                     streamResponse: undefined,
                     errors: [],
                     examples: {}
-                };
+                }
             }
             // Convert Successful Responses (2xx)
             if (statusCodeNum >= 200 && statusCodeNum < 300 && !hasSuccessfulResponse) {
                 const resolvedResponse = this.context.resolveMaybeReference<OpenAPIV3_1.ResponseObject>({
                     schemaOrReference: response,
                     breadcrumbs: [...breadcrumbs, statusCode]
-                });
+                })
 
                 if (resolvedResponse == null) {
-                    continue;
+                    continue
                 }
 
                 const responseBodyConverter = new ResponseBodyConverter({
@@ -274,22 +274,22 @@ export class OperationConverter extends AbstractOperationConverter {
                     method,
                     statusCode,
                     streamingExtension
-                });
-                const converted = responseBodyConverter.convert();
+                })
+                const converted = responseBodyConverter.convert()
                 if (converted != null) {
-                    hasSuccessfulResponse = true;
+                    hasSuccessfulResponse = true
                     this.inlinedTypes = {
                         ...this.inlinedTypes,
                         ...converted.inlinedTypes
-                    };
+                    }
                     convertedResponseBody.response = {
                         statusCode: statusCodeNum,
                         body: converted.responseBody
-                    };
+                    }
                     convertedResponseBody.streamResponse = {
                         statusCode: statusCodeNum,
                         body: converted.streamResponseBody
-                    };
+                    }
                 }
             }
             // Convert Error Responses (4xx and 5xx)
@@ -297,10 +297,10 @@ export class OperationConverter extends AbstractOperationConverter {
                 const resolvedResponse = this.context.resolveMaybeReference<OpenAPIV3_1.ResponseObject>({
                     schemaOrReference: response,
                     breadcrumbs: [...breadcrumbs, statusCode]
-                });
+                })
 
                 if (resolvedResponse == null) {
-                    continue;
+                    continue
                 }
 
                 const responseErrorConverter = new ResponseErrorConverter({
@@ -311,19 +311,19 @@ export class OperationConverter extends AbstractOperationConverter {
                     method,
                     methodName: this.evaluateMethodNameFromOperation(),
                     statusCode: statusCodeNum
-                });
-                const converted = responseErrorConverter.convert();
+                })
+                const converted = responseErrorConverter.convert()
                 if (converted != null) {
                     this.inlinedTypes = {
                         ...this.inlinedTypes,
                         ...converted.inlinedTypes
-                    };
-                    convertedResponseBody.errors.push(converted);
+                    }
+                    convertedResponseBody.errors.push(converted)
                 }
             }
         }
 
-        return convertedResponseBody;
+        return convertedResponseBody
     }
 
     /**
@@ -332,50 +332,50 @@ export class OperationConverter extends AbstractOperationConverter {
      * @returns Array of HTTP headers derived from the security schemes
      */
     private authSchemeToHeaders(securitySchemeIds: string[]): FernIr.HttpHeader[] {
-        const headers: FernIr.HttpHeader[] = [];
+        const headers: FernIr.HttpHeader[] = []
 
         for (const id of securitySchemeIds) {
-            const authScheme = this.idToAuthScheme?.[id];
+            const authScheme = this.idToAuthScheme?.[id]
             if (authScheme == null) {
-                continue;
+                continue
             }
-            const baseHeader: Omit<FernIr.HttpHeader, "name"> = {
+            const baseHeader: Omit<FernIr.HttpHeader, 'name'> = {
                 valueType: AbstractConverter.STRING,
                 availability: undefined,
                 docs: undefined,
                 env: undefined,
                 v2Examples: undefined
-            };
+            }
 
             switch (authScheme.type) {
-                case "bearer":
+                case 'bearer':
                     headers.push({
                         name: {
                             name: this.context.casingsGenerator.generateName(OperationConverter.AUTHORIZATION_HEADER),
                             wireValue: OperationConverter.AUTHORIZATION_HEADER
                         },
                         ...baseHeader
-                    });
-                    break;
-                case "basic":
+                    })
+                    break
+                case 'basic':
                     headers.push({
                         name: {
                             name: this.context.casingsGenerator.generateName(OperationConverter.AUTHORIZATION_HEADER),
                             wireValue: OperationConverter.AUTHORIZATION_HEADER
                         },
                         ...baseHeader
-                    });
-                    break;
-                case "header":
+                    })
+                    break
+                case 'header':
                     headers.push({
                         name: authScheme.name,
                         ...baseHeader
-                    });
-                    break;
+                    })
+                    break
             }
         }
 
-        return headers;
+        return headers
     }
 
     private convertExamples({
@@ -383,29 +383,29 @@ export class OperationConverter extends AbstractOperationConverter {
         httpMethod,
         baseUrl
     }: {
-        httpPath: HttpPath;
-        httpMethod: FernIr.HttpMethod;
-        baseUrl: string | undefined;
+        httpPath: HttpPath
+        httpMethod: FernIr.HttpMethod
+        baseUrl: string | undefined
     }): {
-        examples: Record<string, FernIr.V2HttpEndpointExample>;
-        streamExamples: Record<string, FernIr.V2HttpEndpointExample>;
+        examples: Record<string, FernIr.V2HttpEndpointExample>
+        streamExamples: Record<string, FernIr.V2HttpEndpointExample>
     } {
         const fernExamplesExtension = new FernExamplesExtension({
             context: this.context,
             breadcrumbs: this.breadcrumbs,
             operation: this.operation as object
-        });
-        const fernExamples = fernExamplesExtension.convert();
+        })
+        const fernExamples = fernExamplesExtension.convert()
         if (fernExamples == null) {
-            return { examples: {}, streamExamples: {} };
+            return { examples: {}, streamExamples: {} }
         }
-        if (this.streamingExtension?.type === "streamCondition") {
-            return this.convertStreamConditionExamples({ httpPath, httpMethod, baseUrl, fernExamples });
+        if (this.streamingExtension?.type === 'streamCondition') {
+            return this.convertStreamConditionExamples({ httpPath, httpMethod, baseUrl, fernExamples })
         }
         return {
             examples: this.convertEndpointExamples({ httpPath, httpMethod, baseUrl, fernExamples }),
             streamExamples: {}
-        };
+        }
     }
 
     private convertStreamConditionExamples({
@@ -414,33 +414,33 @@ export class OperationConverter extends AbstractOperationConverter {
         baseUrl,
         fernExamples
     }: {
-        httpPath: HttpPath;
-        httpMethod: FernIr.HttpMethod;
-        baseUrl: string | undefined;
-        fernExamples: RawSchemas.ExampleEndpointCallArraySchema;
+        httpPath: HttpPath
+        httpMethod: FernIr.HttpMethod
+        baseUrl: string | undefined
+        fernExamples: RawSchemas.ExampleEndpointCallArraySchema
     }): {
-        examples: Record<string, FernIr.V2HttpEndpointExample>;
-        streamExamples: Record<string, FernIr.V2HttpEndpointExample>;
+        examples: Record<string, FernIr.V2HttpEndpointExample>
+        streamExamples: Record<string, FernIr.V2HttpEndpointExample>
     } {
         const filteredJsonExamples = fernExamples.filter(
-            (example) => !(example.response != null && "stream" in example.response)
-        );
+            (example) => !(example.response != null && 'stream' in example.response)
+        )
         const filteredStreamExamples = fernExamples.filter(
-            (example) => example.response != null && "stream" in example.response
-        );
+            (example) => example.response != null && 'stream' in example.response
+        )
         const examples = this.convertEndpointExamples({
             httpPath,
             httpMethod,
             baseUrl,
             fernExamples: filteredJsonExamples
-        });
+        })
         const streamExamples = this.convertEndpointExamples({
             httpPath,
             httpMethod,
             baseUrl,
             fernExamples: filteredStreamExamples
-        });
-        return { examples, streamExamples };
+        })
+        return { examples, streamExamples }
     }
 
     private convertEndpointExamples({
@@ -449,10 +449,10 @@ export class OperationConverter extends AbstractOperationConverter {
         baseUrl,
         fernExamples
     }: {
-        httpPath: HttpPath;
-        httpMethod: FernIr.HttpMethod;
-        baseUrl: string | undefined;
-        fernExamples: RawSchemas.ExampleEndpointCallArraySchema;
+        httpPath: HttpPath
+        httpMethod: FernIr.HttpMethod
+        baseUrl: string | undefined
+        fernExamples: RawSchemas.ExampleEndpointCallArraySchema
     }): Record<string, FernIr.V2HttpEndpointExample> {
         return Object.fromEntries(
             fernExamples.map((example, exampleIndex) => {
@@ -465,13 +465,13 @@ export class OperationConverter extends AbstractOperationConverter {
                                       docs: undefined,
                                       endpoint: {
                                           method: httpMethod,
-                                          path: this.buildExamplePath(httpPath, example["path-parameters"] ?? {})
+                                          path: this.buildExamplePath(httpPath, example['path-parameters'] ?? {})
                                       },
                                       baseUrl: undefined,
                                       environment: baseUrl,
                                       auth: undefined,
-                                      pathParameters: example["path-parameters"] ?? {},
-                                      queryParameters: example["query-parameters"] ?? {},
+                                      pathParameters: example['path-parameters'] ?? {},
+                                      queryParameters: example['query-parameters'] ?? {},
                                       headers: example.headers ?? {},
                                       requestBody: example.request
                                   }
@@ -484,79 +484,79 @@ export class OperationConverter extends AbstractOperationConverter {
                                       body: this.getExampleResponseBody({ example })
                                   }
                                 : undefined,
-                        codeSamples: example["code-samples"]?.map((codeSample) => {
+                        codeSamples: example['code-samples']?.map((codeSample) => {
                             const language =
-                                ("language" in codeSample ? codeSample.language : codeSample.sdk) ?? undefined;
+                                ('language' in codeSample ? codeSample.language : codeSample.sdk) ?? undefined
                             return {
                                 name: codeSample.name,
                                 docs: undefined,
                                 language,
                                 code: codeSample.code
-                            };
+                            }
                         })
                     }
-                ];
+                ]
             })
-        );
+        )
     }
 
     private getExampleName({
         example,
         exampleIndex
     }: {
-        example: RawSchemas.ExampleEndpointCallSchema;
-        exampleIndex: number;
+        example: RawSchemas.ExampleEndpointCallSchema
+        exampleIndex: number
     }): string {
-        return example.name ?? example["code-samples"]?.[0]?.name ?? `Example_${exampleIndex}`;
+        return example.name ?? example['code-samples']?.[0]?.name ?? `Example_${exampleIndex}`
     }
 
     private getExampleResponseBody({
         example
     }: {
-        example: RawSchemas.ExampleEndpointCallSchema;
+        example: RawSchemas.ExampleEndpointCallSchema
     }): FernIr.V2HttpEndpointResponseBody | undefined {
         if (example.response == null) {
-            return undefined;
+            return undefined
         }
-        if ("stream" in example.response) {
-            return FernIr.V2HttpEndpointResponseBody.stream(example.response.stream);
+        if ('stream' in example.response) {
+            return FernIr.V2HttpEndpointResponseBody.stream(example.response.stream)
         }
-        if ("body" in example.response) {
-            return FernIr.V2HttpEndpointResponseBody.json(example.response.body);
+        if ('body' in example.response) {
+            return FernIr.V2HttpEndpointResponseBody.json(example.response.body)
         }
-        return undefined;
+        return undefined
     }
 
     private getEndpointBaseUrl(): string | undefined {
-        const operationServer = this.operation.servers?.[0];
+        const operationServer = this.operation.servers?.[0]
         if (operationServer == null) {
-            return undefined;
+            return undefined
         }
-        const matchingTopLevelServer = this.topLevelServers?.find((server) => server.url === operationServer.url);
-        const serverToUse = matchingTopLevelServer ?? operationServer;
+        const matchingTopLevelServer = this.topLevelServers?.find((server) => server.url === operationServer.url)
+        const serverToUse = matchingTopLevelServer ?? operationServer
 
         return ServersConverter.getServerName({
             server: serverToUse,
             context: this.context
-        });
+        })
     }
 
     private getEndpointBaseUrls(): string[] | undefined {
-        const operationServers = this.operation.servers;
+        const operationServers = this.operation.servers
         if (operationServers == null) {
-            return undefined;
+            return undefined
         }
         const baseUrls = operationServers.map((server) => {
             const matchingTopLevelServer = this.topLevelServers?.find(
                 (topLevelServer) => topLevelServer.url === server.url
-            );
-            const serverToUse = matchingTopLevelServer ?? server;
+            )
+            const serverToUse = matchingTopLevelServer ?? server
             return ServersConverter.getServerName({
                 server: serverToUse,
                 context: this.context
-            });
-        });
-        return baseUrls;
+            })
+        })
+        return baseUrls
     }
 
     private buildExamplePath(httpPath: HttpPath, pathParameters: Record<string, unknown>): string {
@@ -564,29 +564,29 @@ export class OperationConverter extends AbstractOperationConverter {
             httpPath.head +
             httpPath.parts
                 .map((part) => {
-                    const pathParamValue = pathParameters[part.pathParameter]?.toString() ?? part.pathParameter;
-                    return `${pathParamValue}${part.tail}`;
+                    const pathParamValue = pathParameters[part.pathParameter]?.toString() ?? part.pathParameter
+                    return `${pathParamValue}${part.tail}`
                 })
-                .join("")
-        );
+                .join('')
+        )
     }
 
     private filterOutTopLevelServers(servers: OpenAPIV3_1.ServerObject[]): OpenAPIV3_1.ServerObject[] {
         return servers.filter(
             (server) => !this.topLevelServers?.some((topLevelServer) => topLevelServer.url === server.url)
-        );
+        )
     }
 
     private getGroupDisplayName(group: string[] | undefined): string | undefined {
-        let rawOperationTag = this.operation.tags?.[0];
+        let rawOperationTag = this.operation.tags?.[0]
         if (rawOperationTag != null) {
-            rawOperationTag = this.context.getDisplayNameForTag(rawOperationTag);
+            rawOperationTag = this.context.getDisplayNameForTag(rawOperationTag)
         }
-        const baseGroupName = group?.[group.length - 1];
+        const baseGroupName = group?.[group.length - 1]
         if (baseGroupName != null && rawOperationTag != null) {
-            const lowerCaseRawOperationTag = rawOperationTag.toLowerCase().replaceAll(" ", "");
-            return lowerCaseRawOperationTag === baseGroupName ? rawOperationTag : undefined;
+            const lowerCaseRawOperationTag = rawOperationTag.toLowerCase().replaceAll(' ', '')
+            return lowerCaseRawOperationTag === baseGroupName ? rawOperationTag : undefined
         }
-        return undefined;
+        return undefined
     }
 }

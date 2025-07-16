@@ -1,1 +1,1 @@
-export { validateOSSWorkspace } from "./validateOSSWorkspace";
+export { validateOSSWorkspace } from './validateOSSWorkspace'

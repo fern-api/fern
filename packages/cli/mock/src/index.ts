@@ -1,1 +1,1 @@
-export { MockServer } from "./runMockServer";
+export { MockServer } from './runMockServer'

@@ -3,17 +3,17 @@ import {
     ExamplePathParameter,
     ExampleQueryParameter,
     ExampleQueryParameterShape
-} from "@fern-api/ir-sdk";
-import { HttpHeader, PathParameter, QueryParameter, TypeDeclaration, TypeId } from "@fern-api/ir-sdk";
+} from '@fern-api/ir-sdk'
+import { HttpHeader, PathParameter, QueryParameter, TypeDeclaration, TypeId } from '@fern-api/ir-sdk'
 
-import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional";
-import { ExampleGenerationResult } from "./ExampleGenerationResult";
-import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
+import { isTypeReferenceOptional } from '../../utils/isTypeReferenceOptional'
+import { ExampleGenerationResult } from './ExampleGenerationResult'
+import { generateTypeReferenceExample } from './generateTypeReferenceExample'
 
 export interface GenerateParamsOptions {
-    typeDeclarations: Record<TypeId, TypeDeclaration>;
-    skipOptionalRequestProperties: boolean;
-    maxDepth?: number; // optional: let each function pass a default
+    typeDeclarations: Record<TypeId, TypeDeclaration>
+    skipOptionalRequestProperties: boolean
+    maxDepth?: number // optional: let each function pass a default
 }
 
 /**
@@ -23,7 +23,7 @@ export function generatePathParameterExamples(
     pathParameters: PathParameter[],
     options: GenerateParamsOptions
 ): ExampleGenerationResult<ExamplePathParameter[]> {
-    const result: ExamplePathParameter[] = [];
+    const result: ExamplePathParameter[] = []
 
     for (const p of pathParameters) {
         const generatedExample = generateTypeReferenceExample({
@@ -33,18 +33,18 @@ export function generatePathParameterExamples(
             typeDeclarations: options.typeDeclarations,
             typeReference: p.valueType,
             skipOptionalProperties: options.skipOptionalRequestProperties
-        });
-        if (generatedExample.type === "failure") {
-            return generatedExample; // short-circuit failure
+        })
+        if (generatedExample.type === 'failure') {
+            return generatedExample // short-circuit failure
         }
         result.push({
             name: p.name,
             value: generatedExample.example
-        });
+        })
     }
 
     // On success, return the array and no JSON example needed
-    return { type: "success", example: result, jsonExample: undefined };
+    return { type: 'success', example: result, jsonExample: undefined }
 }
 
 /**
@@ -54,7 +54,7 @@ export function generateHeaderExamples(
     headers: HttpHeader[],
     options: GenerateParamsOptions
 ): ExampleGenerationResult<ExampleHeader[]> {
-    const result: ExampleHeader[] = [];
+    const result: ExampleHeader[] = []
 
     for (const h of headers) {
         // If it's optional and skipOptionalRequestProperties=true, skip
@@ -65,7 +65,7 @@ export function generateHeaderExamples(
                 typeReference: h.valueType
             })
         ) {
-            continue;
+            continue
         }
 
         const generatedExample = generateTypeReferenceExample({
@@ -75,17 +75,17 @@ export function generateHeaderExamples(
             typeDeclarations: options.typeDeclarations,
             typeReference: h.valueType,
             skipOptionalProperties: options.skipOptionalRequestProperties
-        });
-        if (generatedExample.type === "failure") {
-            return generatedExample;
+        })
+        if (generatedExample.type === 'failure') {
+            return generatedExample
         }
         result.push({
             name: h.name,
             value: generatedExample.example
-        });
+        })
     }
 
-    return { type: "success", example: result, jsonExample: undefined };
+    return { type: 'success', example: result, jsonExample: undefined }
 }
 
 /**
@@ -95,7 +95,7 @@ export function generateQueryParameterExamples(
     queryParameters: QueryParameter[],
     options: GenerateParamsOptions
 ): ExampleGenerationResult<ExampleQueryParameter[]> {
-    const result: ExampleQueryParameter[] = [];
+    const result: ExampleQueryParameter[] = []
 
     for (const q of queryParameters) {
         // skip if optional & skipping optional
@@ -106,7 +106,7 @@ export function generateQueryParameterExamples(
                 typeReference: q.valueType
             })
         ) {
-            continue;
+            continue
         }
 
         const generatedExample = generateTypeReferenceExample({
@@ -116,18 +116,18 @@ export function generateQueryParameterExamples(
             typeDeclarations: options.typeDeclarations,
             typeReference: q.valueType,
             skipOptionalProperties: options.skipOptionalRequestProperties
-        });
+        })
 
-        if (generatedExample.type === "failure") {
-            return generatedExample;
+        if (generatedExample.type === 'failure') {
+            return generatedExample
         }
 
         result.push({
             name: q.name,
             shape: q.allowMultiple ? ExampleQueryParameterShape.exploded() : ExampleQueryParameterShape.single(),
             value: generatedExample.example
-        });
+        })
     }
 
-    return { type: "success", example: result, jsonExample: undefined };
+    return { type: 'success', example: result, jsonExample: undefined }
 }

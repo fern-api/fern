@@ -1,18 +1,18 @@
-import stripAnsi from "strip-ansi";
+import stripAnsi from 'strip-ansi'
 
 export function addPrefixToString({
     prefix,
     content,
     includePrefixOnAllLines = false
 }: {
-    prefix: string;
-    content: string;
+    prefix: string
+    content: string
     /**
      * if true, the prefix is included on all lines.
      * if false, all lines after the first are indented by the length of the prefix
      */
-    includePrefixOnAllLines?: boolean;
+    includePrefixOnAllLines?: boolean
 }): string {
-    const prefixLength = stripAnsi(prefix).length;
-    return `${prefix}${content.replaceAll("\n", `\n${includePrefixOnAllLines ? prefix : " ".repeat(prefixLength)}`)}`;
+    const prefixLength = stripAnsi(prefix).length
+    return `${prefix}${content.replaceAll('\n', `\n${includePrefixOnAllLines ? prefix : ' '.repeat(prefixLength)}`)}`
 }

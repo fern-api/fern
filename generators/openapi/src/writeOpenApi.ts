@@ -1,6 +1,6 @@
-import { writeFile } from "fs/promises";
-import yaml from "js-yaml";
-import path from "path";
+import { writeFile } from 'fs/promises'
+import yaml from 'js-yaml'
+import path from 'path'
 
 import {
     ExitStatusUpdate,
@@ -8,88 +8,86 @@ import {
     GeneratorUpdate,
     parseGeneratorConfig,
     parseIR
-} from "@fern-api/base-generator";
-import { mergeWithOverrides } from "@fern-api/core-utils";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+} from '@fern-api/base-generator'
+import { mergeWithOverrides } from '@fern-api/core-utils'
+import { AbsoluteFilePath } from '@fern-api/fs-utils'
 
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
+import { IntermediateRepresentation } from '@fern-fern/ir-sdk/api'
+import * as IrSerialization from '@fern-fern/ir-sdk/serialization'
 
-import { convertToOpenApi } from "./convertToOpenApi";
-import { getCustomConfig } from "./customConfig";
+import { convertToOpenApi } from './convertToOpenApi'
+import { getCustomConfig } from './customConfig'
 
-export type Mode = "stoplight" | "openapi";
+export type Mode = 'stoplight' | 'openapi'
 
 export async function writeOpenApi(mode: Mode, pathToConfig: string): Promise<void> {
     try {
-        const config = await parseGeneratorConfig(pathToConfig);
+        const config = await parseGeneratorConfig(pathToConfig)
 
-        const customConfig = getCustomConfig(config);
+        const customConfig = getCustomConfig(config)
 
-        const generatorLoggingClient = new GeneratorNotificationService(config.environment);
+        const generatorLoggingClient = new GeneratorNotificationService(config.environment)
 
         try {
             await generatorLoggingClient.sendUpdate(
                 GeneratorUpdate.init({
                     packagesToPublish: []
                 })
-            );
+            )
 
-            const ir = await loadIntermediateRepresentation(config.irFilepath);
+            const ir = await loadIntermediateRepresentation(config.irFilepath)
 
             let openapi = convertToOpenApi({
                 apiName: config.workspaceName,
                 ir,
                 mode
-            });
+            })
 
             if (openapi == null) {
-                throw new Error("Failed to convert IR to OpenAPI");
+                throw new Error('Failed to convert IR to OpenAPI')
             }
 
             // biome-ignore lint/suspicious/noConsole: allow console
-            console.log(`openapi before override ${JSON.stringify(openapi)}`);
+            console.log(`openapi before override ${JSON.stringify(openapi)}`)
 
             if (customConfig.customOverrides != null) {
                 openapi = mergeWithOverrides({
                     data: openapi,
                     overrides: customConfig.customOverrides
-                });
+                })
                 // biome-ignore lint/suspicious/noConsole: allow console
-                console.log(`openapi after override ${JSON.stringify(openapi)}`);
+                console.log(`openapi after override ${JSON.stringify(openapi)}`)
             }
 
-            let filename: string = customConfig.filename ?? "openapi.yml";
-            if (customConfig.format === "json") {
-                filename = path.join(config.output.path, replaceExtension(filename, "json"));
-                await writeFile(filename, JSON.stringify(openapi, undefined, 2));
+            let filename: string = customConfig.filename ?? 'openapi.yml'
+            if (customConfig.format === 'json') {
+                filename = path.join(config.output.path, replaceExtension(filename, 'json'))
+                await writeFile(filename, JSON.stringify(openapi, undefined, 2))
             } else {
                 filename =
-                    filename.endsWith("yml") || filename.endsWith("yaml")
-                        ? filename
-                        : replaceExtension(filename, "yml");
-                await writeFile(path.join(config.output.path, filename), yaml.dump(openapi));
+                    filename.endsWith('yml') || filename.endsWith('yaml') ? filename : replaceExtension(filename, 'yml')
+                await writeFile(path.join(config.output.path, filename), yaml.dump(openapi))
             }
-            await generatorLoggingClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful({})));
+            await generatorLoggingClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful({})))
         } catch (e) {
             if (e instanceof Error) {
                 // biome-ignore lint/suspicious/noConsole: allow console
-                console.log((e as Error)?.message);
+                console.log((e as Error)?.message)
                 // biome-ignore lint/suspicious/noConsole: allow console
-                console.log((e as Error)?.stack);
+                console.log((e as Error)?.stack)
             }
             await generatorLoggingClient.sendUpdate(
                 GeneratorUpdate.exitStatusUpdate(
                     ExitStatusUpdate.error({
-                        message: e instanceof Error ? e.message : "Encountered error"
+                        message: e instanceof Error ? e.message : 'Encountered error'
                     })
                 )
-            );
+            )
         }
     } catch (e) {
         // biome-ignore lint/suspicious/noConsole: allow console
-        console.log("Encountered error", e);
-        throw e;
+        console.log('Encountered error', e)
+        throw e
     }
 }
 
@@ -97,10 +95,10 @@ async function loadIntermediateRepresentation(pathToFile: string): Promise<Inter
     return await parseIR<IntermediateRepresentation>({
         absolutePathToIR: AbsoluteFilePath.of(pathToFile),
         parse: IrSerialization.IntermediateRepresentation.parse
-    });
+    })
 }
 
 function replaceExtension(filename: string, newExtension: string): string {
-    const baseName = filename.substring(0, filename.lastIndexOf("."));
-    return `${baseName}.${newExtension}`;
+    const baseName = filename.substring(0, filename.lastIndexOf('.'))
+    return `${baseName}.${newExtension}`
 }

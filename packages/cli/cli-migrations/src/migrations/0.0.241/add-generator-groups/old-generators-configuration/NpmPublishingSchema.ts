@@ -1,9 +1,9 @@
-import { z } from "zod";
+import { z } from 'zod'
 
-import { NpmRegistryOutputSchema } from "./NpmRegistryOutputSchema";
+import { NpmRegistryOutputSchema } from './NpmRegistryOutputSchema'
 
 export const NpmPublishingSchema = z.strictObject({
     npm: NpmRegistryOutputSchema
-});
+})
 
-export type NpmPublishingSchema = z.infer<typeof NpmPublishingSchema>;
+export type NpmPublishingSchema = z.infer<typeof NpmPublishingSchema>

@@ -1,1 +1,1 @@
-export * as python from "./python";
+export * as python from './python'

@@ -1,19 +1,19 @@
-import urlJoin from "url-join";
+import urlJoin from 'url-join'
 
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
-import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
+import { Endpoint } from '@fern-fern/generator-exec-sdk/api'
+import { HttpEndpoint } from '@fern-fern/ir-sdk/api'
 
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { RootClientGenerator } from "../../root-client/RootClientGenerator";
-import { SingleEndpointSnippet } from "./EndpointSnippetsGenerator";
+import { SdkGeneratorContext } from '../../SdkGeneratorContext'
+import { RootClientGenerator } from '../../root-client/RootClientGenerator'
+import { SingleEndpointSnippet } from './EndpointSnippetsGenerator'
 
 export class SnippetJsonGenerator {
-    private readonly context: SdkGeneratorContext;
-    private readonly rootClientGenerator: RootClientGenerator;
+    private readonly context: SdkGeneratorContext
+    private readonly rootClientGenerator: RootClientGenerator
     constructor({ context }: { context: SdkGeneratorContext }) {
-        this.context = context;
-        this.rootClientGenerator = new RootClientGenerator(context);
+        this.context = context
+        this.rootClientGenerator = new RootClientGenerator(context)
     }
 
     public async generate(): Promise<FernGeneratorExec.Snippets> {
@@ -25,40 +25,40 @@ export class SnippetJsonGenerator {
                 rootNamespace: this.context.getNamespace(),
                 customConfig: this.context.customConfig,
                 formatter: this.context.formatter
-            });
-        const rootClientImportList = rootClientSnippet.imports?.split("\n") ?? [];
+            })
+        const rootClientImportList = rootClientSnippet.imports?.split('\n') ?? []
 
         function getCsharpSnippet(endpointSnippet: SingleEndpointSnippet, isPager: boolean): string {
-            let snippet = "";
-            const snippetImportList = endpointSnippet.imports?.split("\n") ?? [];
+            let snippet = ''
+            const snippetImportList = endpointSnippet.imports?.split('\n') ?? []
             const uniqueOrderedImports = Array.from(new Set([...rootClientImportList, ...snippetImportList]))
-                .filter((importString) => importString !== "")
-                .sort();
-            snippet += `${uniqueOrderedImports.join("\n")}\n\nvar client = ${rootClientSnippet.body}`;
+                .filter((importString) => importString !== '')
+                .sort()
+            snippet += `${uniqueOrderedImports.join('\n')}\n\nvar client = ${rootClientSnippet.body}`
 
             if (isPager) {
-                snippet += "var pager = ";
+                snippet += 'var pager = '
             }
 
-            snippet += endpointSnippet.endpointCall;
+            snippet += endpointSnippet.endpointCall
 
             if (isPager) {
                 snippet += `\nawait foreach (var item in pager)
 {
     // do something with item
-}\n`;
+}\n`
             }
-            return snippet;
+            return snippet
         }
 
-        const isPaginationEnabled = this.context.config.generatePaginatedClients ?? false;
+        const isPaginationEnabled = this.context.config.generatePaginatedClients ?? false
         const endpoints: FernGeneratorExec.Endpoint[] = await Promise.all(
             Object.values(this.context.ir.services).flatMap((service) =>
                 service.endpoints.map(async (httpEndpoint) => {
-                    const isPager = isPaginationEnabled && httpEndpoint.pagination != null;
-                    const snippets = this.getSnippetsForEndpoint(httpEndpoint.id);
+                    const isPager = isPaginationEnabled && httpEndpoint.pagination != null
+                    const snippets = this.getSnippetsForEndpoint(httpEndpoint.id)
                     return snippets.map((endpointSnippet) => {
-                        const csharpSnippet = getCsharpSnippet(endpointSnippet, isPager);
+                        const csharpSnippet = getCsharpSnippet(endpointSnippet, isPager)
                         return {
                             exampleIdentifier: endpointSnippet?.exampleIdentifier,
                             id: {
@@ -69,40 +69,40 @@ export class SnippetJsonGenerator {
                             snippet: FernGeneratorExec.EndpointSnippet.csharp({
                                 client: csharpSnippet
                             })
-                        };
-                    });
+                        }
+                    })
                 })
             )
-        ).then((endpoints) => endpoints.flat());
+        ).then((endpoints) => endpoints.flat())
 
         return {
             types: {},
             endpoints
-        };
+        }
     }
 
     private getSnippetsForEndpoint(endpointId: string): SingleEndpointSnippet[] {
-        const snippetsForEndpoint = this.context.snippetGenerator.getSnippetsForEndpoint(endpointId);
+        const snippetsForEndpoint = this.context.snippetGenerator.getSnippetsForEndpoint(endpointId)
         if (snippetsForEndpoint == null) {
-            return [];
+            return []
         }
-        const { autogenerated, userSpecified } = snippetsForEndpoint;
-        return userSpecified.length > 0 ? [...userSpecified] : autogenerated[0] != null ? [autogenerated[0]] : [];
+        const { autogenerated, userSpecified } = snippetsForEndpoint
+        return userSpecified.length > 0 ? [...userSpecified] : autogenerated[0] != null ? [autogenerated[0]] : []
     }
 
     // copied from ts generator:
     // TODO(dsinghvi): HACKHACK Move this to IR
     private getFullPathForEndpoint(endpoint: HttpEndpoint): string {
-        let url = "";
+        let url = ''
         if (endpoint.fullPath.head.length > 0) {
-            url = urlJoin(url, endpoint.fullPath.head);
+            url = urlJoin(url, endpoint.fullPath.head)
         }
         for (const part of endpoint.fullPath.parts) {
-            url = urlJoin(url, "{" + part.pathParameter + "}");
+            url = urlJoin(url, '{' + part.pathParameter + '}')
             if (part.tail.length > 0) {
-                url = urlJoin(url, part.tail);
+                url = urlJoin(url, part.tail)
             }
         }
-        return url.startsWith("/") ? url : `/${url}`;
+        return url.startsWith('/') ? url : `/${url}`
     }
 }

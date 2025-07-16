@@ -1,18 +1,18 @@
-import { ts } from "ts-morph";
+import { ts } from 'ts-morph'
 
-import { BaseGeneratedType } from "./BaseGeneratedType";
+import { BaseGeneratedType } from './BaseGeneratedType'
 
-export type GeneratedAliasType<Context> = BrandedGeneratedAliasType<Context> | NotBrandedGeneratedAliasType<Context>;
+export type GeneratedAliasType<Context> = BrandedGeneratedAliasType<Context> | NotBrandedGeneratedAliasType<Context>
 
 export interface BrandedGeneratedAliasType<Context> extends BaseGeneratedAliasType<Context> {
-    isBranded: true;
-    getReferenceToCreator: (context: Context) => ts.Expression;
+    isBranded: true
+    getReferenceToCreator: (context: Context) => ts.Expression
 }
 
 export interface NotBrandedGeneratedAliasType<Context> extends BaseGeneratedAliasType<Context> {
-    isBranded: false;
+    isBranded: false
 }
 
 export interface BaseGeneratedAliasType<Context> extends BaseGeneratedType<Context> {
-    type: "alias";
+    type: 'alias'
 }

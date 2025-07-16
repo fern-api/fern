@@ -1,8 +1,8 @@
-import { go } from "@fern-api/go-ast";
+import { go } from '@fern-api/go-ast'
 
-import { HttpEndpoint, HttpService, SdkRequest } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, HttpService, SdkRequest } from '@fern-fern/ir-sdk/api'
 
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { SdkGeneratorContext } from '../../SdkGeneratorContext'
 
 export abstract class EndpointRequest {
     public constructor(
@@ -12,14 +12,14 @@ export abstract class EndpointRequest {
         protected readonly endpoint: HttpEndpoint
     ) {}
 
-    public abstract getRequestParameterType(): go.Type;
-    public abstract getRequestBodyBlock(): go.AstNode | undefined;
+    public abstract getRequestParameterType(): go.Type
+    public abstract getRequestBodyBlock(): go.AstNode | undefined
 
     public getRequestReference(): go.AstNode | undefined {
-        return go.codeblock(this.getRequestParameterName());
+        return go.codeblock(this.getRequestParameterName())
     }
 
     public getRequestParameterName(): string {
-        return this.context.getParameterName(this.sdkRequest.requestParameterName);
+        return this.context.getParameterName(this.sdkRequest.requestParameterName)
     }
 }

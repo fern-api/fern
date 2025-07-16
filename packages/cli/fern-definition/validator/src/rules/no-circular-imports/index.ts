@@ -1,1 +1,1 @@
-export { NoCircularImportsRule } from "./no-circular-imports";
+export { NoCircularImportsRule } from './no-circular-imports'

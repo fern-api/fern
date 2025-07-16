@@ -1,6 +1,6 @@
-import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { RawSchemas } from '@fern-api/fern-definition-schema'
 
-import { ExampleViolation } from "./exampleViolation";
+import { ExampleViolation } from './exampleViolation'
 
 export function getViolationsForMisshapenExample(
     example: RawSchemas.ExampleTypeReferenceSchema,
@@ -10,5 +10,5 @@ export function getViolationsForMisshapenExample(
         {
             message: `Expected example to be ${expectedTypeIncludingArticle}. Example is: ${JSON.stringify(example)}`
         }
-    ];
+    ]
 }

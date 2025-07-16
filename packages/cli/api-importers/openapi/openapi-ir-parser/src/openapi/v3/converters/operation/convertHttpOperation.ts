@@ -1,20 +1,20 @@
-import { OpenAPIV3 } from "openapi-types";
+import { OpenAPIV3 } from 'openapi-types'
 
-import { EndpointWithExample, PrimitiveSchemaValueWithExample, SchemaWithExample, Source } from "@fern-api/openapi-ir";
+import { EndpointWithExample, PrimitiveSchemaValueWithExample, SchemaWithExample, Source } from '@fern-api/openapi-ir'
 
-import { getExtension } from "../../../../getExtension";
-import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName";
-import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
-import { DummyOpenAPIV3ParserContext } from "../../DummyOpenAPIV3ParserContext";
-import { OpenAPIExtension } from "../../extensions/extensions";
-import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
-import { getExamplesFromExtension } from "../../extensions/getExamplesFromExtension";
-import { getFernAvailability } from "../../extensions/getFernAvailability";
-import { OperationContext } from "../contexts";
-import { convertServer } from "../convertServer";
-import { ConvertedParameters, convertParameters } from "../endpoint/convertParameters";
-import { convertRequest } from "../endpoint/convertRequest";
-import { convertResponse } from "../endpoint/convertResponse";
+import { getExtension } from '../../../../getExtension'
+import { getGeneratedTypeName } from '../../../../schema/utils/getSchemaName'
+import { AbstractOpenAPIV3ParserContext } from '../../AbstractOpenAPIV3ParserContext'
+import { DummyOpenAPIV3ParserContext } from '../../DummyOpenAPIV3ParserContext'
+import { OpenAPIExtension } from '../../extensions/extensions'
+import { FernOpenAPIExtension } from '../../extensions/fernExtensions'
+import { getExamplesFromExtension } from '../../extensions/getExamplesFromExtension'
+import { getFernAvailability } from '../../extensions/getFernAvailability'
+import { OperationContext } from '../contexts'
+import { convertServer } from '../convertServer'
+import { ConvertedParameters, convertParameters } from '../endpoint/convertParameters'
+import { convertRequest } from '../endpoint/convertRequest'
+import { convertResponse } from '../endpoint/convertResponse'
 
 export function convertHttpOperation({
     operationContext,
@@ -24,21 +24,21 @@ export function convertHttpOperation({
     streamFormat,
     source
 }: {
-    operationContext: OperationContext;
-    context: AbstractOpenAPIV3ParserContext;
-    responseStatusCode?: number;
-    suffix?: string;
-    streamFormat: "sse" | "json" | undefined;
-    source: Source;
+    operationContext: OperationContext
+    context: AbstractOpenAPIV3ParserContext
+    responseStatusCode?: number
+    suffix?: string
+    streamFormat: 'sse' | 'json' | undefined
+    source: Source
 }): EndpointWithExample {
-    const { document, operation, path, method, baseBreadcrumbs, sdkMethodName } = operationContext;
+    const { document, operation, path, method, baseBreadcrumbs, sdkMethodName } = operationContext
 
-    const idempotent = getExtension<boolean>(operation, FernOpenAPIExtension.IDEMPOTENT);
+    const idempotent = getExtension<boolean>(operation, FernOpenAPIExtension.IDEMPOTENT)
     const requestNameOverride = getExtension<string>(operation, [
         FernOpenAPIExtension.REQUEST_NAME_V1,
         FernOpenAPIExtension.REQUEST_NAME_V2
-    ]);
-    const requestBreadcrumbs = [...baseBreadcrumbs, "Request"];
+    ])
+    const requestBreadcrumbs = [...baseBreadcrumbs, 'Request']
     const convertedParameters = convertParameters({
         parameters: [...operationContext.pathItemParameters, ...operationContext.operationParameters],
         context,
@@ -46,22 +46,22 @@ export function convertHttpOperation({
         path,
         httpMethod: method,
         source
-    });
+    })
 
     // Parse path parameters from URL
-    const PATH_PARAM_REGEX = /{([^}]+)}/g;
-    const pathParams = [...path.matchAll(PATH_PARAM_REGEX)].map((match) => match[1]);
+    const PATH_PARAM_REGEX = /{([^}]+)}/g
+    const pathParams = [...path.matchAll(PATH_PARAM_REGEX)].map((match) => match[1])
 
     // Check if any path parameters are missing from convertedParameters
     const missingPathParams = pathParams.filter(
         (param) => !convertedParameters.pathParameters.some((p) => p.name === param)
-    );
+    )
 
     // Add missing path parameters
     if (missingPathParams.length > 0) {
         for (const param of missingPathParams) {
             convertedParameters.pathParameters.push({
-                name: param ?? "",
+                name: param ?? '',
                 variableReference: undefined,
                 parameterNameOverride: undefined,
                 availability: undefined,
@@ -76,7 +76,7 @@ export function convertHttpOperation({
                         pattern: undefined
                     }),
                     description: undefined,
-                    generatedName: "",
+                    generatedName: '',
                     nameOverride: undefined,
                     namespace: undefined,
                     groupName: undefined,
@@ -84,7 +84,7 @@ export function convertHttpOperation({
                     title: undefined
                 }),
                 description: undefined
-            });
+            })
         }
     }
 
@@ -104,24 +104,24 @@ export function convertHttpOperation({
                   source,
                   namespace: context.namespace
               })
-            : undefined;
+            : undefined
 
     // if request has query params or headers and body is not an object, then use `Body`
     if (
         endpointHasNonRequestBodyParameters({ context, convertedParameters }) &&
         convertedRequest != null &&
-        convertedRequest.type === "json" &&
-        convertedRequest.schema.type !== "object" &&
+        convertedRequest.type === 'json' &&
+        convertedRequest.schema.type !== 'object' &&
         operation.requestBody != null
     ) {
         convertedRequest = convertRequest({
             requestBody: operation.requestBody,
             document,
             context,
-            requestBreadcrumbs: [...requestBreadcrumbs, "Body"],
+            requestBreadcrumbs: [...requestBreadcrumbs, 'Body'],
             source,
             namespace: context.namespace
-        });
+        })
     } else if (operation.requestBody != null) {
         convertedRequest = convertRequest({
             requestBody: operation.requestBody,
@@ -130,10 +130,10 @@ export function convertHttpOperation({
             requestBreadcrumbs: [...requestBreadcrumbs],
             source,
             namespace: context.namespace
-        });
+        })
     }
 
-    const responseBreadcrumbs = [...baseBreadcrumbs, "Response"];
+    const responseBreadcrumbs = [...baseBreadcrumbs, 'Response']
 
     const convertedResponse = convertResponse({
         operationContext,
@@ -143,16 +143,16 @@ export function convertHttpOperation({
         responseBreadcrumbs,
         responseStatusCode,
         source
-    });
+    })
 
     // Fern doesn't support GET requests with bodies
-    if (operationContext.method === "GET") {
-        convertedRequest = undefined;
+    if (operationContext.method === 'GET') {
+        convertedRequest = undefined
     }
 
-    const availability = getFernAvailability(operation);
-    const examples = getExamplesFromExtension(operationContext, operation, context);
-    const serverName = getExtension<string>(operation, FernOpenAPIExtension.SERVER_NAME_V2);
+    const availability = getFernAvailability(operation)
+    const examples = getExamplesFromExtension(operationContext, operation, context)
+    const serverName = getExtension<string>(operation, FernOpenAPIExtension.SERVER_NAME_V2)
     return {
         summary: operation.summary,
         internal: getExtension<boolean>(operation, OpenAPIExtension.INTERNAL),
@@ -160,7 +160,7 @@ export function convertHttpOperation({
         audiences: getExtension<string[]>(operation, FernOpenAPIExtension.AUDIENCES) ?? [],
         operationId:
             operation.operationId != null && suffix != null
-                ? operation.operationId + "_" + suffix
+                ? operation.operationId + '_' + suffix
                 : operation.operationId,
         tags: context.resolveTagsToTagIds(operation.tags),
         namespace: context.namespace,
@@ -185,29 +185,29 @@ export function convertHttpOperation({
         examples,
         pagination: operationContext.pagination,
         source
-    };
+    }
 }
 
 function isEndpointAuthed(operation: OpenAPIV3.OperationObject, document: OpenAPIV3.Document): boolean {
     if (operation.security != null) {
-        return Object.keys(operation.security).length > 0;
+        return Object.keys(operation.security).length > 0
     }
     if (document.security != null) {
-        return Object.keys(document.security).length > 0;
+        return Object.keys(document.security).length > 0
     }
-    return false;
+    return false
 }
 
 function endpointHasNonRequestBodyParameters({
     context,
     convertedParameters
 }: {
-    context: AbstractOpenAPIV3ParserContext;
-    convertedParameters: ConvertedParameters;
+    context: AbstractOpenAPIV3ParserContext
+    convertedParameters: ConvertedParameters
 }): boolean {
     return (
         (context.options.inlinePathParameters && convertedParameters.pathParameters.length > 0) ||
         convertedParameters.queryParameters.length > 0 ||
         convertedParameters.headers.length > 0
-    );
+    )
 }

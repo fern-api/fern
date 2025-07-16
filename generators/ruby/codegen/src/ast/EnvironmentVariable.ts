@@ -1,16 +1,16 @@
-import { AstNode } from "./core/AstNode";
+import { AstNode } from './core/AstNode'
 
 export declare namespace EnvironmentVariable {
     export interface Init {
-        variableName: string;
+        variableName: string
     }
 }
 export class EnvironmentVariable extends AstNode {
-    public variableName: string;
+    public variableName: string
 
     constructor({ variableName }: EnvironmentVariable.Init) {
-        super({});
-        this.variableName = variableName;
+        super({})
+        this.variableName = variableName
     }
 
     public writeInternal(startingTabSpaces: number): void {
@@ -18,6 +18,6 @@ export class EnvironmentVariable extends AstNode {
             stringContent: this.variableName,
             templateString: 'ENV["%s"]',
             startingTabSpaces
-        });
+        })
     }
 }

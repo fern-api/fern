@@ -1,86 +1,86 @@
-import { confirm, input } from "@inquirer/prompts";
-import chalk from "chalk";
-import { maxBy } from "lodash-es";
+import { confirm, input } from '@inquirer/prompts'
+import chalk from 'chalk'
+import { maxBy } from 'lodash-es'
 
-import { LOG_LEVELS, LogLevel, createLogger } from "@fern-api/logger";
-import { getPosthogManager } from "@fern-api/posthog-manager";
-import { Project } from "@fern-api/project-loader";
-import { isVersionAhead } from "@fern-api/semver-utils";
-import { FernCliError, Finishable, PosthogEvent, Startable, TaskContext, TaskResult } from "@fern-api/task-context";
-import { Workspace } from "@fern-api/workspace-loader";
+import { LOG_LEVELS, LogLevel, createLogger } from '@fern-api/logger'
+import { getPosthogManager } from '@fern-api/posthog-manager'
+import { Project } from '@fern-api/project-loader'
+import { isVersionAhead } from '@fern-api/semver-utils'
+import { FernCliError, Finishable, PosthogEvent, Startable, TaskContext, TaskResult } from '@fern-api/task-context'
+import { Workspace } from '@fern-api/workspace-loader'
 
-import { CliEnvironment } from "./CliEnvironment";
-import { Log } from "./Log";
-import { TaskContextImpl } from "./TaskContextImpl";
-import { TtyAwareLogger } from "./TtyAwareLogger";
-import { logErrorMessage } from "./logErrorMessage";
-import { getFernUpgradeMessage } from "./upgrade-utils/getFernUpgradeMessage";
-import { FernGeneratorUpgradeInfo, getProjectGeneratorUpgrades } from "./upgrade-utils/getGeneratorVersions";
-import { getLatestVersionOfCli } from "./upgrade-utils/getLatestVersionOfCli";
+import { CliEnvironment } from './CliEnvironment'
+import { Log } from './Log'
+import { TaskContextImpl } from './TaskContextImpl'
+import { TtyAwareLogger } from './TtyAwareLogger'
+import { logErrorMessage } from './logErrorMessage'
+import { getFernUpgradeMessage } from './upgrade-utils/getFernUpgradeMessage'
+import { FernGeneratorUpgradeInfo, getProjectGeneratorUpgrades } from './upgrade-utils/getGeneratorVersions'
+import { getLatestVersionOfCli } from './upgrade-utils/getLatestVersionOfCli'
 
-const WORKSPACE_NAME_COLORS = ["#2E86AB", "#A23B72", "#F18F01", "#C73E1D", "#CCE2A3"];
+const WORKSPACE_NAME_COLORS = ['#2E86AB', '#A23B72', '#F18F01', '#C73E1D', '#CCE2A3']
 
 export interface FernCliUpgradeInfo {
-    isUpgradeAvailable: boolean;
-    latestVersion: string;
+    isUpgradeAvailable: boolean
+    latestVersion: string
 }
 
 export interface FernUpgradeInfo {
-    cliUpgradeInfo: FernCliUpgradeInfo | undefined;
-    generatorUpgradeInfo: FernGeneratorUpgradeInfo[];
+    cliUpgradeInfo: FernCliUpgradeInfo | undefined
+    generatorUpgradeInfo: FernGeneratorUpgradeInfo[]
 }
 
 export class CliContext {
-    public readonly environment: CliEnvironment;
+    public readonly environment: CliEnvironment
 
-    private didSucceed = true;
+    private didSucceed = true
 
-    private numTasks = 0;
-    private ttyAwareLogger: TtyAwareLogger;
+    private numTasks = 0
+    private ttyAwareLogger: TtyAwareLogger
 
-    private logLevel: LogLevel = LogLevel.Info;
-    private isLocal: boolean;
+    private logLevel: LogLevel = LogLevel.Info
+    private isLocal: boolean
 
     constructor(stdout: NodeJS.WriteStream, stderr: NodeJS.WriteStream, { isLocal }: { isLocal?: boolean }) {
-        this.ttyAwareLogger = new TtyAwareLogger(stdout, stderr);
-        this.isLocal = isLocal ?? false;
+        this.ttyAwareLogger = new TtyAwareLogger(stdout, stderr)
+        this.isLocal = isLocal ?? false
 
-        const packageName = this.getPackageName();
-        const packageVersion = this.getPackageVersion();
-        const cliName = this.getCliName();
+        const packageName = this.getPackageName()
+        const packageVersion = this.getPackageVersion()
+        const cliName = this.getCliName()
         if (packageName == null || packageVersion == null || cliName == null) {
-            this.exitProgram();
+            this.exitProgram()
         }
         this.environment = {
             packageName,
             packageVersion,
             cliName
-        };
+        }
     }
 
     private getPackageName() {
         if (process.env.CLI_PACKAGE_NAME == null) {
-            this.logger.error("CLI_PACKAGE_NAME is not defined");
+            this.logger.error('CLI_PACKAGE_NAME is not defined')
         }
-        return process.env.CLI_PACKAGE_NAME;
+        return process.env.CLI_PACKAGE_NAME
     }
 
     private getPackageVersion() {
         if (process.env.CLI_VERSION == null) {
-            this.logger.error("CLI_VERSION is not defined");
+            this.logger.error('CLI_VERSION is not defined')
         }
-        return process.env.CLI_VERSION;
+        return process.env.CLI_VERSION
     }
 
     private getCliName() {
         if (process.env.CLI_NAME == null) {
-            this.logger.error("CLI_NAME is not defined");
+            this.logger.error('CLI_NAME is not defined')
         }
-        return process.env.CLI_NAME;
+        return process.env.CLI_NAME
     }
 
     public setLogLevel(logLevel: LogLevel): void {
-        this.logLevel = logLevel;
+        this.logLevel = logLevel
     }
 
     public logDebugInfo(): void {
@@ -88,45 +88,45 @@ export class CliContext {
             `Running ${chalk.bold(`${this.environment.cliName}`)} (${this.environment.packageName}@${
                 this.environment.packageVersion
             })`
-        );
+        )
     }
 
     public failAndThrow(message?: string, error?: unknown): never {
-        this.failWithoutThrowing(message, error);
-        throw new FernCliError();
+        this.failWithoutThrowing(message, error)
+        throw new FernCliError()
     }
 
     public failWithoutThrowing(message?: string, error?: unknown): void {
-        this.didSucceed = false;
-        logErrorMessage({ message, error, logger: this.logger });
+        this.didSucceed = false
+        logErrorMessage({ message, error, logger: this.logger })
     }
 
     public async exit({ code }: { code?: number } = {}): Promise<never> {
         if (!this._suppressUpgradeMessage || !this.isLocal) {
-            await this.nudgeUpgradeIfAvailable();
+            await this.nudgeUpgradeIfAvailable()
         }
-        this.ttyAwareLogger.finish();
-        const posthogManager = await getPosthogManager();
-        await posthogManager.flush();
-        this.exitProgram({ code });
+        this.ttyAwareLogger.finish()
+        const posthogManager = await getPosthogManager()
+        await posthogManager.flush()
+        this.exitProgram({ code })
     }
 
     private async nudgeUpgradeIfAvailable() {
         try {
             const upgradeInfo = await Promise.race<[Promise<FernUpgradeInfo>, Promise<never>]>([
                 this.isUpgradeAvailable(),
-                new Promise((_resolve, reject) => setTimeout(() => reject("Request timed out"), 300))
-            ]);
+                new Promise((_resolve, reject) => setTimeout(() => reject('Request timed out'), 300))
+            ])
 
             let upgradeMessage = await getFernUpgradeMessage({
                 cliEnvironment: this.environment,
                 upgradeInfo
-            });
+            })
             if (upgradeMessage != null) {
-                if (!upgradeMessage.endsWith("\n")) {
-                    upgradeMessage += "\n";
+                if (!upgradeMessage.endsWith('\n')) {
+                    upgradeMessage += '\n'
                 }
-                this.stderr.info(upgradeMessage);
+                this.stderr.info(upgradeMessage)
             }
         } catch {
             // swallow error when failing to check for upgrade
@@ -135,87 +135,87 @@ export class CliContext {
 
     public async exitIfFailed(): Promise<void> {
         if (!this.didSucceed) {
-            await this.exit();
+            await this.exit()
         }
     }
 
     private exitProgram({ code }: { code?: number } = {}): never {
-        process.exit(code ?? (this.didSucceed ? 0 : 1));
+        process.exit(code ?? (this.didSucceed ? 0 : 1))
     }
 
-    private longestWorkspaceName: string | undefined;
+    private longestWorkspaceName: string | undefined
     public registerWorkspaces(workspaces: readonly Workspace[]): void {
         const longestWorkspaceName = maxBy(
-            workspaces.map((workspace) => (workspace.type === "docs" ? "docs" : (workspace.workspaceName ?? "api"))),
+            workspaces.map((workspace) => (workspace.type === 'docs' ? 'docs' : (workspace.workspaceName ?? 'api'))),
             (name) => name.length
-        );
+        )
         if (longestWorkspaceName != null) {
-            this.longestWorkspaceName = longestWorkspaceName;
+            this.longestWorkspaceName = longestWorkspaceName
         }
     }
 
-    private project: Project | undefined;
+    private project: Project | undefined
     public registerProject(project: Project): void {
-        this.project = project;
+        this.project = project
     }
 
     public runTask<T>(run: (context: TaskContext) => T | Promise<T>): Promise<T> {
-        return this.runTaskWithInit(this.constructTaskInit(), run);
+        return this.runTaskWithInit(this.constructTaskInit(), run)
     }
 
     public addTask(): Startable<TaskContext & Finishable> {
-        return this.addTaskWithInit(this.constructTaskInit());
+        return this.addTaskWithInit(this.constructTaskInit())
     }
 
     public async runTaskForWorkspace(
         workspace: Workspace,
         run: (context: TaskContext) => void | Promise<void>
     ): Promise<void> {
-        await this.runTaskWithInit(this.constructTaskInitForWorkspace(workspace), run);
+        await this.runTaskWithInit(this.constructTaskInitForWorkspace(workspace), run)
     }
 
     private addTaskWithInit(init: TaskContextImpl.Init): Startable<TaskContext & Finishable> {
-        const context = new TaskContextImpl(init);
-        this.ttyAwareLogger.registerTask(context);
-        return context;
+        const context = new TaskContextImpl(init)
+        this.ttyAwareLogger.registerTask(context)
+        return context
     }
 
-    private readonly USE_NODE_18_OR_ABOVE_MESSAGE = "The Fern CLI requires Node 18+ or above.";
+    private readonly USE_NODE_18_OR_ABOVE_MESSAGE = 'The Fern CLI requires Node 18+ or above.'
     private async runTaskWithInit<T>(
         init: TaskContextImpl.Init,
         run: (context: TaskContext) => T | Promise<T>
     ): Promise<T> {
-        const context = this.addTaskWithInit(init).start();
-        let result: T;
+        const context = this.addTaskWithInit(init).start()
+        let result: T
         try {
-            result = await run(context);
+            result = await run(context)
         } catch (error) {
-            if ((error as Error).message.includes("globalThis")) {
-                context.logger.error(this.USE_NODE_18_OR_ABOVE_MESSAGE);
-                context.failWithoutThrowing();
+            if ((error as Error).message.includes('globalThis')) {
+                context.logger.error(this.USE_NODE_18_OR_ABOVE_MESSAGE)
+                context.failWithoutThrowing()
             } else {
-                context.failWithoutThrowing(undefined, error);
+                context.failWithoutThrowing(undefined, error)
             }
-            throw new FernCliError();
+            throw new FernCliError()
         } finally {
-            context.finish();
+            context.finish()
         }
-        return result;
+        return result
     }
 
     public async instrumentPostHogEvent(event: PosthogEvent): Promise<void> {
         if (!this.isLocal) {
-            (await getPosthogManager()).sendEvent(event);
+            ;(await getPosthogManager()).sendEvent(event)
         }
     }
 
-    public readonly logger = createLogger((level, ...args) => this.log(level, ...args));
-    public readonly stderr = createLogger((level, ...args) => this.logStderr(level, ...args));
+    public readonly logger = createLogger((level, ...args) => this.log(level, ...args))
+    public readonly stderr = createLogger((level, ...args) => this.logStderr(level, ...args))
 
     private constructTaskInitForWorkspace(workspace: Workspace): TaskContextImpl.Init {
         const prefixWithoutPadding = wrapWorkspaceNameForPrefix(
-            workspace.type === "docs" ? "docs" : (workspace.workspaceName ?? "api")
-        );
+            workspace.type === 'docs' ? 'docs' : (workspace.workspaceName ?? 'api')
+        )
 
         // we want all the prefixes to be the same length, so use this.longestWorkspaceName
         // if it's defined. (+1 so there's a space after the prefix)
@@ -224,17 +224,17 @@ export class CliContext {
             (this.longestWorkspaceName != null
                 ? wrapWorkspaceNameForPrefix(this.longestWorkspaceName)
                 : prefixWithoutPadding
-            ).length;
+            ).length
 
-        const prefix = prefixWithoutPadding.padEnd(minLengthForPrefix);
+        const prefix = prefixWithoutPadding.padEnd(minLengthForPrefix)
 
         // biome-ignore lint/style/noNonNullAssertion: allow
-        const colorForWorkspace = WORKSPACE_NAME_COLORS[this.numTasks++ % WORKSPACE_NAME_COLORS.length]!;
-        const prefixWithColor = chalk.hex(colorForWorkspace)(prefix);
+        const colorForWorkspace = WORKSPACE_NAME_COLORS[this.numTasks++ % WORKSPACE_NAME_COLORS.length]!
+        const prefixWithColor = chalk.hex(colorForWorkspace)(prefix)
         return {
             ...this.constructTaskInit(),
             logPrefix: prefixWithColor
-        };
+        }
     }
 
     private constructTaskInit(): TaskContextImpl.Init {
@@ -243,14 +243,14 @@ export class CliContext {
             takeOverTerminal: (run) => this.ttyAwareLogger.takeOverTerminal(run),
             onResult: (result) => {
                 if (result === TaskResult.Failure) {
-                    this.didSucceed = false;
+                    this.didSucceed = false
                 }
             },
             instrumentPostHogEvent: async (event) => {
-                await this.instrumentPostHogEvent(event);
+                await this.instrumentPostHogEvent(event)
             },
             shouldBufferLogs: false
-        };
+        }
     }
 
     private log(level: LogLevel, ...parts: string[]) {
@@ -260,7 +260,7 @@ export class CliContext {
                 level,
                 time: new Date()
             }
-        ]);
+        ])
     }
 
     private logStderr(level: LogLevel, ...parts: string[]) {
@@ -273,60 +273,60 @@ export class CliContext {
                 }
             ],
             { stderr: true }
-        );
+        )
     }
 
     private logImmediately(logs: Log[], { stderr = false }: { stderr?: boolean } = {}): void {
-        const filtered = logs.filter((log) => LOG_LEVELS.indexOf(log.level) >= LOG_LEVELS.indexOf(this.logLevel));
+        const filtered = logs.filter((log) => LOG_LEVELS.indexOf(log.level) >= LOG_LEVELS.indexOf(this.logLevel))
         this.ttyAwareLogger.log(filtered, {
             includeDebugInfo: this.logLevel === LogLevel.Debug,
             stderr
-        });
+        })
     }
 
-    private _suppressUpgradeMessage = false;
+    private _suppressUpgradeMessage = false
     public suppressUpgradeMessage(): void {
-        this._suppressUpgradeMessage = true;
+        this._suppressUpgradeMessage = true
     }
 
-    private _isUpgradeAvailable: FernUpgradeInfo | undefined;
+    private _isUpgradeAvailable: FernUpgradeInfo | undefined
     public async isUpgradeAvailable({
         includePreReleases = false
     }: {
-        includePreReleases?: boolean;
+        includePreReleases?: boolean
     } = {}): Promise<FernUpgradeInfo> {
         if (this._isUpgradeAvailable == null) {
             // Check if the CLI is upgradable
-            this.logger.debug(`Checking if ${this.environment.packageName} upgrade is available...`);
+            this.logger.debug(`Checking if ${this.environment.packageName} upgrade is available...`)
 
             const latestPackageVersion = await getLatestVersionOfCli({
                 cliEnvironment: this.environment,
                 includePreReleases
-            });
-            const isUpgradeAvailable = isVersionAhead(latestPackageVersion, this.environment.packageVersion);
+            })
+            const isUpgradeAvailable = isVersionAhead(latestPackageVersion, this.environment.packageVersion)
 
             this.logger.debug(
                 `Latest version: ${latestPackageVersion}. ` +
-                    (isUpgradeAvailable ? "Upgrade available." : "No upgrade available.")
-            );
+                    (isUpgradeAvailable ? 'Upgrade available.' : 'No upgrade available.')
+            )
 
             const cliUpgrade: FernCliUpgradeInfo = {
                 isUpgradeAvailable,
                 latestVersion: latestPackageVersion
-            };
+            }
 
             // Check if the generators are upgradable
             const generatorUpgrades: FernGeneratorUpgradeInfo[] = await getProjectGeneratorUpgrades({
                 project: this.project,
                 cliContext: this
-            });
+            })
 
             this._isUpgradeAvailable = {
                 cliUpgradeInfo: cliUpgrade,
                 generatorUpgradeInfo: generatorUpgrades
-            };
+            }
         }
-        return this._isUpgradeAvailable;
+        return this._isUpgradeAvailable
     }
 
     /**
@@ -339,7 +339,7 @@ export class CliContext {
         return await confirm({
             message,
             default: defaultValue
-        });
+        })
     }
 
     /**
@@ -349,10 +349,10 @@ export class CliContext {
      * @returns Promise<string> representing the user's input
      */
     public async getInput(config: { message: string; default?: string }): Promise<string> {
-        return await input({ message: config.message, default: config.default });
+        return await input({ message: config.message, default: config.default })
     }
 }
 
 function wrapWorkspaceNameForPrefix(workspaceName: string): string {
-    return `[${workspaceName}]:`;
+    return `[${workspaceName}]:`
 }

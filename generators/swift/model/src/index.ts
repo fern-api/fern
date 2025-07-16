@@ -1,1 +1,1 @@
-export * from "./generateModels";
+export * from './generateModels'

@@ -1,9 +1,9 @@
-import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { Pagination } from "@fern-api/ir-sdk";
+import { RawSchemas } from '@fern-api/fern-definition-schema'
+import { Pagination } from '@fern-api/ir-sdk'
 
-import { FernFileContext } from "../../FernFileContext";
-import { PropertyResolver } from "../../resolvers/PropertyResolver";
-import { CursorPaginationPropertyComponents } from "./convertPaginationUtils";
+import { FernFileContext } from '../../FernFileContext'
+import { PropertyResolver } from '../../resolvers/PropertyResolver'
+import { CursorPaginationPropertyComponents } from './convertPaginationUtils'
 
 export function convertCursorPagination({
     propertyResolver,
@@ -12,11 +12,11 @@ export function convertCursorPagination({
     endpointSchema,
     paginationPropertyComponents
 }: {
-    propertyResolver: PropertyResolver;
-    file: FernFileContext;
-    endpointName: string;
-    endpointSchema: RawSchemas.HttpEndpointSchema;
-    paginationPropertyComponents: CursorPaginationPropertyComponents;
+    propertyResolver: PropertyResolver
+    file: FernFileContext
+    endpointName: string
+    endpointSchema: RawSchemas.HttpEndpointSchema
+    paginationPropertyComponents: CursorPaginationPropertyComponents
 }): Pagination | undefined {
     return Pagination.cursor({
         page: propertyResolver.resolveRequestPropertyOrThrow({
@@ -34,5 +34,5 @@ export function convertCursorPagination({
             endpoint: endpointName,
             propertyComponents: paginationPropertyComponents.results
         })
-    });
+    })
 }

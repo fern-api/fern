@@ -1,16 +1,16 @@
-import chalk from "chalk";
+import chalk from 'chalk'
 
-import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
+import { RawSchemas } from '@fern-api/fern-definition-schema'
+import { FernFileContext, ResolvedType, TypeResolver } from '@fern-api/ir-generator'
 
-import { RuleViolation } from "../../Rule";
+import { RuleViolation } from '../../Rule'
 import {
     maybeFileFromResolvedType,
     maybePrimitiveType,
     resolveResponseType,
     resolvedTypeHasProperty
-} from "../../utils/propertyValidatorUtils";
-import { validateRequestProperty, validateResponseProperty, validateResultsProperty } from "./validateUtils";
+} from '../../utils/propertyValidatorUtils'
+import { validateRequestProperty, validateResponseProperty, validateResultsProperty } from './validateUtils'
 
 export function validateCursorPagination({
     endpointId,
@@ -19,13 +19,13 @@ export function validateCursorPagination({
     file,
     cursorPagination
 }: {
-    endpointId: string;
-    endpoint: RawSchemas.HttpEndpointSchema;
-    typeResolver: TypeResolver;
-    file: FernFileContext;
-    cursorPagination: RawSchemas.CursorPaginationSchema;
+    endpointId: string
+    endpoint: RawSchemas.HttpEndpointSchema
+    typeResolver: TypeResolver
+    file: FernFileContext
+    cursorPagination: RawSchemas.CursorPaginationSchema
 }): RuleViolation[] {
-    const violations: RuleViolation[] = [];
+    const violations: RuleViolation[] = []
 
     violations.push(
         ...validateCursorProperty({
@@ -35,15 +35,15 @@ export function validateCursorPagination({
             file,
             cursorPagination
         })
-    );
+    )
 
-    const resolvedResponseType = resolveResponseType({ endpoint, typeResolver, file });
+    const resolvedResponseType = resolveResponseType({ endpoint, typeResolver, file })
     if (resolvedResponseType == null) {
         violations.push({
-            severity: "fatal",
+            severity: 'fatal',
             message: `Pagination configuration for endpoint ${chalk.bold(endpointId)} must define a response type.`
-        });
-        return violations;
+        })
+        return violations
     }
 
     violations.push(
@@ -54,7 +54,7 @@ export function validateCursorPagination({
             resolvedResponseType,
             nextProperty: cursorPagination.next_cursor
         })
-    );
+    )
 
     violations.push(
         ...validateResultsProperty({
@@ -64,9 +64,9 @@ export function validateCursorPagination({
             resolvedResponseType,
             resultsProperty: cursorPagination.results
         })
-    );
+    )
 
-    return violations;
+    return violations
 }
 
 function validateCursorProperty({
@@ -76,11 +76,11 @@ function validateCursorProperty({
     file,
     cursorPagination
 }: {
-    endpointId: string;
-    endpoint: RawSchemas.HttpEndpointSchema;
-    typeResolver: TypeResolver;
-    file: FernFileContext;
-    cursorPagination: RawSchemas.CursorPaginationSchema;
+    endpointId: string
+    endpoint: RawSchemas.HttpEndpointSchema
+    typeResolver: TypeResolver
+    file: FernFileContext
+    cursorPagination: RawSchemas.CursorPaginationSchema
 }): RuleViolation[] {
     return validateRequestProperty({
         endpointId,
@@ -89,10 +89,10 @@ function validateCursorProperty({
         file,
         requestProperty: cursorPagination.cursor,
         propertyValidator: {
-            propertyID: "cursor",
+            propertyID: 'cursor',
             validate: isValidCursorType
         }
-    });
+    })
 }
 
 function validateNextCursorProperty({
@@ -102,11 +102,11 @@ function validateNextCursorProperty({
     resolvedResponseType,
     nextProperty
 }: {
-    endpointId: string;
-    typeResolver: TypeResolver;
-    file: FernFileContext;
-    resolvedResponseType: ResolvedType;
-    nextProperty: string;
+    endpointId: string
+    typeResolver: TypeResolver
+    file: FernFileContext
+    resolvedResponseType: ResolvedType
+    nextProperty: string
 }): RuleViolation[] {
     return validateResponseProperty({
         endpointId,
@@ -115,10 +115,10 @@ function validateNextCursorProperty({
         resolvedResponseType,
         responseProperty: nextProperty,
         propertyValidator: {
-            propertyID: "next_cursor",
+            propertyID: 'next_cursor',
             validate: isValidCursorProperty
         }
-    });
+    })
 }
 
 function isValidCursorProperty({
@@ -127,10 +127,10 @@ function isValidCursorProperty({
     resolvedType,
     propertyComponents
 }: {
-    typeResolver: TypeResolver;
-    file: FernFileContext;
-    resolvedType: ResolvedType | undefined;
-    propertyComponents: string[];
+    typeResolver: TypeResolver
+    file: FernFileContext
+    resolvedType: ResolvedType | undefined
+    propertyComponents: string[]
 }): boolean {
     return resolvedTypeHasProperty({
         typeResolver,
@@ -138,13 +138,13 @@ function isValidCursorProperty({
         resolvedType,
         propertyComponents,
         validate: isValidCursorType
-    });
+    })
 }
 
 function isValidCursorType({ resolvedType }: { resolvedType: ResolvedType | undefined }): boolean {
-    const primitiveType = maybePrimitiveType(resolvedType);
+    const primitiveType = maybePrimitiveType(resolvedType)
     if (primitiveType == null) {
-        return false;
+        return false
     }
-    return primitiveType !== "BOOLEAN";
+    return primitiveType !== 'BOOLEAN'
 }

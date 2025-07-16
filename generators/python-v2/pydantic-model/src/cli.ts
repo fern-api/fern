@@ -1,7 +1,7 @@
-import { ModelGeneratorCLI } from "./ModelGeneratorCli";
+import { ModelGeneratorCLI } from './ModelGeneratorCli'
 
-void runCli();
+void runCli()
 
 export async function runCli(): Promise<void> {
-    await new ModelGeneratorCLI().run();
+    await new ModelGeneratorCLI().run()
 }

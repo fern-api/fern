@@ -1,8 +1,8 @@
-import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { FernGeneratorCli } from '@fern-fern/generator-cli-sdk'
+import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
 
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder";
+import { SdkGeneratorContext } from '../SdkGeneratorContext'
+import { ReadmeSnippetBuilder } from './ReadmeSnippetBuilder'
 
 export class ReadmeConfigBuilder {
     public build({
@@ -11,21 +11,21 @@ export class ReadmeConfigBuilder {
         featureConfig,
         endpointSnippets
     }: {
-        context: SdkGeneratorContext;
-        remote: FernGeneratorCli.Remote | undefined;
-        featureConfig: FernGeneratorCli.FeatureConfig;
-        endpointSnippets: FernGeneratorExec.Endpoint[];
+        context: SdkGeneratorContext
+        remote: FernGeneratorCli.Remote | undefined
+        featureConfig: FernGeneratorCli.FeatureConfig
+        endpointSnippets: FernGeneratorExec.Endpoint[]
     }): FernGeneratorCli.ReadmeConfig {
         const readmeSnippetBuilder = new ReadmeSnippetBuilder({
             context,
             endpointSnippets
-        });
-        const snippets = readmeSnippetBuilder.buildReadmeSnippets();
-        const features: FernGeneratorCli.ReadmeFeature[] = [];
+        })
+        const snippets = readmeSnippetBuilder.buildReadmeSnippets()
+        const features: FernGeneratorCli.ReadmeFeature[] = []
         for (const feature of featureConfig.features) {
-            const featureSnippets = snippets[feature.id];
+            const featureSnippets = snippets[feature.id]
             if (!featureSnippets) {
-                continue;
+                continue
             }
             features.push({
                 id: feature.id,
@@ -33,7 +33,7 @@ export class ReadmeConfigBuilder {
                 description: feature.description,
                 snippets: featureSnippets,
                 snippetsAreOptional: false
-            });
+            })
         }
         return {
             remote,
@@ -44,7 +44,7 @@ export class ReadmeConfigBuilder {
             introduction: context.ir.readmeConfig?.introduction,
             features,
             requirements: []
-        };
+        }
     }
 
     private getLanguageInfo({ context }: { context: SdkGeneratorContext }): FernGeneratorCli.LanguageInfo {
@@ -52,6 +52,6 @@ export class ReadmeConfigBuilder {
             publishInfo: {
                 packageName: context.getPackageId()
             }
-        });
+        })
     }
 }

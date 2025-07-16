@@ -1,52 +1,52 @@
-import { AbstractWriter } from "@fern-api/browser-compatible-base-generator";
+import { AbstractWriter } from '@fern-api/browser-compatible-base-generator'
 
-import { ClassReference } from "..";
-import { BaseCsharpCustomConfigSchema } from "../../custom-config";
+import { ClassReference } from '..'
+import { BaseCsharpCustomConfigSchema } from '../../custom-config'
 
-type Alias = string;
-type Namespace = string;
+type Alias = string
+type Namespace = string
 
-const IMPLICIT_NAMESPACES = new Set(["System"]);
+const IMPLICIT_NAMESPACES = new Set(['System'])
 
 function isNamespaceImplicit(namespace: string): boolean {
-    return IMPLICIT_NAMESPACES.has(namespace);
+    return IMPLICIT_NAMESPACES.has(namespace)
 }
 
 export declare namespace Writer {
     interface Args {
         /* The namespace that is being written to */
-        namespace: string;
+        namespace: string
         /* All base namespaces in the project */
-        allNamespaceSegments: Set<string>;
+        allNamespaceSegments: Set<string>
         /* The name of every type in the project mapped to the namespaces a type of that name belongs to */
-        allTypeClassReferences: Map<string, Set<Namespace>>;
+        allTypeClassReferences: Map<string, Set<Namespace>>
         /* The root namespace of the project */
-        rootNamespace: string;
+        rootNamespace: string
         /* Custom generator config */
-        customConfig: BaseCsharpCustomConfigSchema;
+        customConfig: BaseCsharpCustomConfigSchema
         /* Whether or not to skip writing imports */
-        skipImports?: boolean;
+        skipImports?: boolean
     }
 }
 
 export class Writer extends AbstractWriter {
     /* Import statements */
-    private references: Record<Namespace, ClassReference[]> = {};
+    private references: Record<Namespace, ClassReference[]> = {}
     /* The namespace that is being written to */
-    private namespace: string;
+    private namespace: string
     /* The set of namespace aliases */
-    private namespaceAliases: Record<Alias, Namespace> = {};
+    private namespaceAliases: Record<Alias, Namespace> = {}
     /* All base namespaces in the project */
-    private allNamespaceSegments: Set<string>;
+    private allNamespaceSegments: Set<string>
     /* The name of every type in the project mapped to the namespaces a type of that name belongs to */
-    private allTypeClassReferences: Map<string, Set<Namespace>>;
+    private allTypeClassReferences: Map<string, Set<Namespace>>
     /* The root namespace of the project */
-    private rootNamespace: string;
+    private rootNamespace: string
     /* Whether or not dictionary<string, object?> should be simplified to just objects */
-    private customConfig: BaseCsharpCustomConfigSchema;
+    private customConfig: BaseCsharpCustomConfigSchema
 
     /* Whether or not to skip writing imports */
-    public readonly skipImports: boolean;
+    public readonly skipImports: boolean
 
     constructor({
         namespace,
@@ -56,85 +56,85 @@ export class Writer extends AbstractWriter {
         customConfig,
         skipImports = false
     }: Writer.Args) {
-        super();
-        this.namespace = namespace;
-        this.allNamespaceSegments = allNamespaceSegments;
-        this.allTypeClassReferences = allTypeClassReferences;
-        this.rootNamespace = rootNamespace;
-        this.customConfig = customConfig;
-        this.skipImports = skipImports;
+        super()
+        this.namespace = namespace
+        this.allNamespaceSegments = allNamespaceSegments
+        this.allTypeClassReferences = allTypeClassReferences
+        this.rootNamespace = rootNamespace
+        this.customConfig = customConfig
+        this.skipImports = skipImports
     }
 
     public addReference(reference: ClassReference): void {
         if (reference.namespace == null) {
-            return;
+            return
         }
-        const namespace = this.references[reference.namespace];
+        const namespace = this.references[reference.namespace]
         if (namespace != null) {
-            namespace.push(reference);
+            namespace.push(reference)
         } else {
-            this.references[reference.namespace] = [reference];
+            this.references[reference.namespace] = [reference]
         }
     }
 
     public addNamespace(namespace: string): void {
-        const foundNamespace = this.references[namespace];
+        const foundNamespace = this.references[namespace]
         if (foundNamespace == null) {
-            this.references[namespace] = [];
+            this.references[namespace] = []
         }
     }
 
     public addNamespaceAlias(alias: string, namespace: string): string {
-        const set = new Set<Alias>(Object.values(this.namespaceAliases));
+        const set = new Set<Alias>(Object.values(this.namespaceAliases))
         while (set.has(alias)) {
-            alias = "_" + alias;
+            alias = '_' + alias
         }
-        this.namespaceAliases[alias] = namespace;
-        return alias;
+        this.namespaceAliases[alias] = namespace
+        return alias
     }
 
     public getAllTypeClassReferences(): Map<string, Set<Namespace>> {
-        return this.allTypeClassReferences;
+        return this.allTypeClassReferences
     }
 
     public getAllNamespaceSegments(): Set<string> {
-        return this.allNamespaceSegments;
+        return this.allNamespaceSegments
     }
 
     public getRootNamespace(): string {
-        return this.rootNamespace;
+        return this.rootNamespace
     }
 
     public getNamespace(): string {
-        return this.namespace;
+        return this.namespace
     }
 
     public getCustomConfig(): BaseCsharpCustomConfigSchema {
-        return this.customConfig;
+        return this.customConfig
     }
 
     public getSimplifyObjectDictionaries(): boolean {
-        return this.customConfig["simplify-object-dictionaries"] ?? false;
+        return this.customConfig['simplify-object-dictionaries'] ?? false
     }
 
     public toString(skipImports = false): string {
         if (!skipImports) {
-            const imports = this.stringifyImports();
+            const imports = this.stringifyImports()
             if (imports.length > 0) {
                 return `${imports}
-${this.buffer}`;
+${this.buffer}`
             }
         }
-        return this.buffer;
+        return this.buffer
     }
 
     public importsToString(): string | undefined {
-        const imports = this.stringifyImports();
-        return imports.length > 0 ? imports : undefined;
+        const imports = this.stringifyImports()
+        return imports.length > 0 ? imports : undefined
     }
 
     public isReadOnlyMemoryType(type: string): boolean {
-        return this.customConfig["read-only-memory-types"]?.includes(type) ?? false;
+        return this.customConfig['read-only-memory-types']?.includes(type) ?? false
     }
 
     /*******************************
@@ -142,10 +142,10 @@ ${this.buffer}`;
      *******************************/
 
     private stringifyImports(): string {
-        const referenceKeys = Object.keys(this.references);
-        const namespaceAliasEntries = Object.entries(this.namespaceAliases);
+        const referenceKeys = Object.keys(this.references)
+        const namespaceAliasEntries = Object.entries(this.namespaceAliases)
         if (referenceKeys.length === 0 && namespaceAliasEntries.length === 0) {
-            return "";
+            return ''
         }
 
         let result = referenceKeys
@@ -153,20 +153,20 @@ ${this.buffer}`;
             .filter((ns) => !this.isCurrentNamespace(ns))
             .filter((ns) => !isNamespaceImplicit(ns)) // System is implicitly imported
             .map((ref) => `using ${ref};`)
-            .join("\n");
+            .join('\n')
 
         if (result.length > 0) {
-            result += "\n";
+            result += '\n'
         }
 
         for (const [alias, namespace] of namespaceAliasEntries) {
-            result += `using ${alias} = ${namespace};\n`;
+            result += `using ${alias} = ${namespace};\n`
         }
 
-        return result;
+        return result
     }
 
     private isCurrentNamespace(namespace: string): boolean {
-        return namespace === this.namespace;
+        return namespace === this.namespace
     }
 }

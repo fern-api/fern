@@ -1,3 +1,3 @@
 export interface ExampleViolation {
-    message: string;
+    message: string
 }

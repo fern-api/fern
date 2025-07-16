@@ -1,1 +1,1 @@
-export { ValidExampleEndpointCallRule } from "./valid-example-endpoint-call";
+export { ValidExampleEndpointCallRule } from './valid-example-endpoint-call'

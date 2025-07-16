@@ -1,14 +1,14 @@
-import semver from "semver";
+import semver from 'semver'
 
-import { TaskContext } from "@fern-api/task-context";
+import { TaskContext } from '@fern-api/task-context'
 
-import { CliReleaseRequest } from "@fern-fern/generators-sdk/api/resources/generators";
+import { CliReleaseRequest } from '@fern-fern/generators-sdk/api/resources/generators'
 
-import { parseCliReleasesFile } from "./convertVersionsFileToReleases";
+import { parseCliReleasesFile } from './convertVersionsFileToReleases'
 
 export interface VersionFilePair {
-    latestChangelogPath: string;
-    previousChangelogPath: string;
+    latestChangelogPath: string
+    previousChangelogPath: string
 }
 
 // This function is just different enough from the equivalent in publishGenerator.ts that it's worth keeping them separate
@@ -21,29 +21,29 @@ export async function getNewCliVersion({
     versionFilePair,
     context
 }: {
-    versionFilePair: VersionFilePair;
-    context: TaskContext;
+    versionFilePair: VersionFilePair
+    context: TaskContext
 }): Promise<string | undefined> {
     // Our action performed on each generator release in the file is to
     // simply collect the version ID within a set for comparison later
     const collectVersions = (versionsSet: Set<string>) => {
         return async (release: CliReleaseRequest) => {
-            versionsSet.add(release.version);
-        };
-    };
+            versionsSet.add(release.version)
+        }
+    }
 
-    const latestVersionGeneratorReleasesVersions = new Set<string>();
+    const latestVersionGeneratorReleasesVersions = new Set<string>()
     await parseCliReleasesFile({
         changelogPath: versionFilePair.latestChangelogPath,
         context,
         action: collectVersions(latestVersionGeneratorReleasesVersions)
-    });
-    const previousVersionGeneratorReleaseVersions = new Set<string>();
+    })
+    const previousVersionGeneratorReleaseVersions = new Set<string>()
     await parseCliReleasesFile({
         changelogPath: versionFilePair.previousChangelogPath,
         context,
         action: collectVersions(previousVersionGeneratorReleaseVersions)
-    });
+    })
 
     // Get generator versions not in the previous version file
     //
@@ -51,7 +51,7 @@ export async function getNewCliVersion({
     // array for versions explicitly not in the previous versions set
     const newVersions = Array.from(latestVersionGeneratorReleasesVersions).filter(
         (item) => !previousVersionGeneratorReleaseVersions.has(item)
-    );
+    )
 
     // Sort the resultant array of new versions by semantic version and return the largest / "most recent"
     return (
@@ -62,5 +62,5 @@ export async function getNewCliVersion({
             // We negate the number to get the largest version first
             .sort((a, b) => -a.compare(b))[0]
             ?.toString()
-    );
+    )
 }

@@ -1,2 +1,2 @@
-export { type GeneratedVersion } from "./GeneratedVersion";
-export { type VersionContext } from "./VersionContext";
+export { type GeneratedVersion } from './GeneratedVersion'
+export { type VersionContext } from './VersionContext'

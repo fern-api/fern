@@ -1,55 +1,55 @@
-import { Argument, Arguments, isNamedArgument } from "@fern-api/browser-compatible-base-generator";
+import { Argument, Arguments, isNamedArgument } from '@fern-api/browser-compatible-base-generator'
 
-import { TypeLiteral } from "../TypeLiteral";
-import { Writer } from "../core/Writer";
+import { TypeLiteral } from '../TypeLiteral'
+import { Writer } from '../core/Writer'
 
 export function writeArguments({ writer, arguments_ }: { writer: Writer; arguments_: Arguments }): void {
-    const filteredArguments = filterNopArguments(arguments_);
+    const filteredArguments = filterNopArguments(arguments_)
     if (filteredArguments.length === 0) {
-        writer.write("()");
-        return;
+        writer.write('()')
+        return
     }
     const shouldWriteMultiline = filteredArguments.some((arg) => {
-        return arg instanceof TypeLiteral && !arg.shouldWriteInLine();
-    });
+        return arg instanceof TypeLiteral && !arg.shouldWriteInLine()
+    })
     if (shouldWriteMultiline) {
-        writeMultilineArguments({ writer, arguments_: filteredArguments });
-        return;
+        writeMultilineArguments({ writer, arguments_: filteredArguments })
+        return
     }
-    writer.write("(");
+    writer.write('(')
     filteredArguments.forEach((argument, index) => {
         if (index > 0) {
-            writer.write(", ");
+            writer.write(', ')
         }
-        writeArgument({ writer, argument });
-    });
-    writer.write(")");
+        writeArgument({ writer, argument })
+    })
+    writer.write(')')
 }
 
 function writeMultilineArguments({ writer, arguments_ }: { writer: Writer; arguments_: Argument[] }): void {
-    writer.writeLine("(");
-    writer.indent();
+    writer.writeLine('(')
+    writer.indent()
     arguments_.forEach((argument, index) => {
         if (index > 0) {
-            writer.writeLine(",");
+            writer.writeLine(',')
         }
-        writeArgument({ writer, argument });
-    });
-    writer.dedent();
+        writeArgument({ writer, argument })
+    })
+    writer.dedent()
     if (arguments_.length > 0) {
-        writer.newLine();
+        writer.newLine()
     }
-    writer.write(")");
+    writer.write(')')
 }
 
 function writeArgument({ writer, argument }: { writer: Writer; argument: Argument }): void {
     if (isNamedArgument(argument)) {
-        writer.writeNodeOrString(argument.assignment);
+        writer.writeNodeOrString(argument.assignment)
     } else {
-        argument.write(writer);
+        argument.write(writer)
     }
 }
 
 function filterNopArguments(arguments_: Argument[]): Argument[] {
-    return arguments_.filter((argument) => !(argument instanceof TypeLiteral && TypeLiteral.isNop(argument)));
+    return arguments_.filter((argument) => !(argument instanceof TypeLiteral && TypeLiteral.isNop(argument)))
 }

@@ -1,42 +1,42 @@
-import { ClassReference } from "./ClassReference";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
+import { ClassReference } from './ClassReference'
+import { AstNode } from './core/AstNode'
+import { Writer } from './core/Writer'
 
 export declare namespace Attribute {
     interface Args {
         /* Reference to the attribute class reference */
-        reference: ClassReference;
+        reference: ClassReference
         /* Arguments included in the attribute, if any */
-        arguments?: (string | AstNode)[];
+        arguments?: (string | AstNode)[]
     }
 }
 
 export class Attribute extends AstNode {
-    private reference: ClassReference;
-    private arguments: (string | AstNode)[];
+    private reference: ClassReference
+    private arguments: (string | AstNode)[]
 
     constructor(args: Attribute.Args) {
-        super();
-        this.reference = args.reference;
-        this.arguments = args.arguments ?? [];
+        super()
+        this.reference = args.reference
+        this.arguments = args.arguments ?? []
     }
 
     public write(writer: Writer): void {
-        writer.addReference(this.reference);
-        writer.write(`${this.reference.name}`);
+        writer.addReference(this.reference)
+        writer.write(`${this.reference.name}`)
         if (this.arguments.length > 0) {
-            writer.write("(");
+            writer.write('(')
             this.arguments.forEach((argument, index) => {
                 if (index > 0) {
-                    writer.write(",");
+                    writer.write(',')
                 }
-                if (typeof argument === "string") {
-                    writer.write(argument);
+                if (typeof argument === 'string') {
+                    writer.write(argument)
                 } else {
-                    argument.write(writer);
+                    argument.write(writer)
                 }
-            });
-            writer.write(")");
+            })
+            writer.write(')')
         }
     }
 }

@@ -1,82 +1,82 @@
-import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
-import { php } from "@fern-api/php-codegen";
+import { AbstractReadmeSnippetBuilder } from '@fern-api/base-generator'
+import { php } from '@fern-api/php-codegen'
 
-import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { EndpointId, FeatureId, FernFilepath, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { FernGeneratorCli } from '@fern-fern/generator-cli-sdk'
+import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
+import { EndpointId, FeatureId, FernFilepath, HttpEndpoint } from '@fern-fern/ir-sdk/api'
 
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SdkGeneratorContext } from '../SdkGeneratorContext'
 
 interface EndpointWithFilepath {
-    endpoint: HttpEndpoint;
-    fernFilepath: FernFilepath;
+    endpoint: HttpEndpoint
+    fernFilepath: FernFilepath
 }
 
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
-    private static EXCEPTION_HANDLING_FEATURE_ID: FernGeneratorCli.FeatureId = "EXCEPTION_HANDLING";
-    private static PAGINATION_FEATURE_ID: FernGeneratorCli.FeatureId = "PAGINATION";
+    private static EXCEPTION_HANDLING_FEATURE_ID: FernGeneratorCli.FeatureId = 'EXCEPTION_HANDLING'
+    private static PAGINATION_FEATURE_ID: FernGeneratorCli.FeatureId = 'PAGINATION'
 
-    private readonly context: SdkGeneratorContext;
-    private readonly endpoints: Record<EndpointId, EndpointWithFilepath> = {};
-    private readonly snippets: Record<EndpointId, string> = {};
-    private readonly defaultEndpointId: EndpointId;
-    private readonly isPaginationEnabled: boolean;
+    private readonly context: SdkGeneratorContext
+    private readonly endpoints: Record<EndpointId, EndpointWithFilepath> = {}
+    private readonly snippets: Record<EndpointId, string> = {}
+    private readonly defaultEndpointId: EndpointId
+    private readonly isPaginationEnabled: boolean
 
     constructor({
         context,
         endpointSnippets
     }: {
-        context: SdkGeneratorContext;
-        endpointSnippets: FernGeneratorExec.Endpoint[];
+        context: SdkGeneratorContext
+        endpointSnippets: FernGeneratorExec.Endpoint[]
     }) {
-        super({ endpointSnippets });
-        this.context = context;
-        this.isPaginationEnabled = context.config.generatePaginatedClients ?? false;
-        this.endpoints = this.buildEndpoints();
-        this.snippets = this.buildSnippets(endpointSnippets);
+        super({ endpointSnippets })
+        this.context = context
+        this.isPaginationEnabled = context.config.generatePaginatedClients ?? false
+        this.endpoints = this.buildEndpoints()
+        this.snippets = this.buildSnippets(endpointSnippets)
         this.defaultEndpointId =
             this.context.ir.readmeConfig?.defaultEndpoint != null
                 ? this.context.ir.readmeConfig.defaultEndpoint
-                : this.getDefaultEndpointId();
+                : this.getDefaultEndpointId()
     }
 
     public buildReadmeSnippets(): Record<FernGeneratorCli.FeatureId, string[]> {
-        const snippets: Record<FernGeneratorCli.FeatureId, string[]> = {};
-        snippets[FernGeneratorCli.StructuredFeatureId.Usage] = this.buildUsageSnippets();
-        snippets[FernGeneratorCli.StructuredFeatureId.Retries] = this.buildRetrySnippets();
-        snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutSnippets();
-        snippets[FernGeneratorCli.StructuredFeatureId.CustomClient] = this.buildCustomClientSnippets();
-        snippets[ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID] = this.buildExceptionHandlingSnippets();
+        const snippets: Record<FernGeneratorCli.FeatureId, string[]> = {}
+        snippets[FernGeneratorCli.StructuredFeatureId.Usage] = this.buildUsageSnippets()
+        snippets[FernGeneratorCli.StructuredFeatureId.Retries] = this.buildRetrySnippets()
+        snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutSnippets()
+        snippets[FernGeneratorCli.StructuredFeatureId.CustomClient] = this.buildCustomClientSnippets()
+        snippets[ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID] = this.buildExceptionHandlingSnippets()
         if (this.isPaginationEnabled) {
-            snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationSnippets();
+            snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationSnippets()
         }
-        return snippets;
+        return snippets
     }
 
     public buildReadmeAddendums(): Record<FernGeneratorCli.FeatureId, string> {
-        const addendums: Record<FernGeneratorCli.FeatureId, string | undefined> = {};
+        const addendums: Record<FernGeneratorCli.FeatureId, string | undefined> = {}
 
         if (this.isPaginationEnabled) {
-            addendums[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationAddendum();
+            addendums[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationAddendum()
         }
 
         return Object.fromEntries(
             Object.entries(addendums).filter(([_, value]) => value != null) as [FernGeneratorCli.FeatureId, string][]
-        );
+        )
     }
 
     private buildUsageSnippets(): string[] {
-        const usageEndpointIds = this.getEndpointIdsForFeature(FernGeneratorCli.StructuredFeatureId.Usage);
+        const usageEndpointIds = this.getEndpointIdsForFeature(FernGeneratorCli.StructuredFeatureId.Usage)
         if (usageEndpointIds != null) {
-            return usageEndpointIds.map((endpointId) => this.getSnippetForEndpointId(endpointId));
+            return usageEndpointIds.map((endpointId) => this.getSnippetForEndpointId(endpointId))
         }
-        return [this.getSnippetForEndpointId(this.defaultEndpointId)];
+        return [this.getSnippetForEndpointId(this.defaultEndpointId)]
     }
 
     private buildExceptionHandlingSnippets(): string[] {
         const exceptionHandlingEndpoints = this.getEndpointsForFeature(
             ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID
-        );
+        )
         return exceptionHandlingEndpoints.map((exceptionHandlingEndpoint) =>
             this.writeCode(`
 use ${this.context.getRootNamespace()}\\Exceptions\\${this.context.getBaseApiExceptionClassReference().name};
@@ -91,11 +91,11 @@ try {
     // Optionally, rethrow the exception or handle accordingly.
 }
 `)
-        );
+        )
     }
 
     private buildRetrySnippets(): string[] {
-        const retryEndpoints = this.getEndpointsForFeature(FernGeneratorCli.StructuredFeatureId.Retries);
+        const retryEndpoints = this.getEndpointsForFeature(FernGeneratorCli.StructuredFeatureId.Retries)
         return retryEndpoints.map((retryEndpoint) =>
             this.writeCode(`
 $response = ${this.getMethodCall(retryEndpoint)}(
@@ -105,11 +105,11 @@ $response = ${this.getMethodCall(retryEndpoint)}(
     ]
 );
 `)
-        );
+        )
     }
 
     private buildTimeoutSnippets(): string[] {
-        const timeoutEndpoints = this.getEndpointsForFeature(FernGeneratorCli.StructuredFeatureId.Timeouts);
+        const timeoutEndpoints = this.getEndpointsForFeature(FernGeneratorCli.StructuredFeatureId.Timeouts)
         return timeoutEndpoints.map((timeoutEndpoint) =>
             this.writeCode(`
 $response = ${this.getMethodCall(timeoutEndpoint)}(
@@ -119,7 +119,7 @@ $response = ${this.getMethodCall(timeoutEndpoint)}(
     ]
 );
 `)
-        );
+        )
     }
 
     private buildCustomClientSnippets(): string[] {
@@ -145,109 +145,109 @@ $customClient = new \\GuzzleHttp\\Client(['handler' => $handlerStack]);
 ${this.context.getClientVariableName()} = new ${this.context.getRootClientClassName()}(options: [
     '${this.context.getGuzzleClientOptionName()}' => $customClient
 ]);
-`);
-        return [snippet];
+`)
+        return [snippet]
     }
 
     private buildPaginationSnippets(): string[] {
         const explicitlyConfigured = this.getExplicitlyConfiguredSnippets(
             FernGeneratorCli.StructuredFeatureId.Pagination
-        );
+        )
         if (explicitlyConfigured != null) {
-            return explicitlyConfigured;
+            return explicitlyConfigured
         }
 
-        const paginationEndpoint = this.getEndpointWithPagination();
+        const paginationEndpoint = this.getEndpointWithPagination()
 
         if (paginationEndpoint === undefined) {
-            return [];
+            return []
         }
 
         const codeBlock = php.codeblock((writer) => {
             // Import statement
-            writer.write(`use ${this.context.getRootNamespace()}\\${this.context.getRootClientClassName()};\n\n`);
+            writer.write(`use ${this.context.getRootNamespace()}\\${this.context.getRootClientClassName()};\n\n`)
 
             // Here we'll build up the client instantiation
             const optionsArray = php.array({
                 entries: [php.codeblock((w) => w.write("'baseUrl' => 'https://api.example.com'"))]
-            });
+            })
 
             const clientClassReference = php.classReference({
                 name: this.context.getRootClientClassName(),
                 namespace: this.context.getRootNamespace()
-            });
+            })
 
             const clientInstantiation = php.instantiateClass({
                 classReference: clientClassReference,
                 arguments_: [php.codeblock((w) => w.write("'<token>'")), optionsArray],
                 multiline: true
-            });
+            })
 
             // Write variable assignment with the client instantiation
             writer.write(
-                "$client = " +
+                '$client = ' +
                     clientInstantiation.toString({
                         namespace: this.context.getRootNamespace(),
                         rootNamespace: this.context.getRootNamespace(),
                         customConfig: this.context.customConfig,
                         skipImports: true
                     }) +
-                    ";\n\n"
-            );
+                    ';\n\n'
+            )
 
             // Create variable for pagination result
-            writer.write("$items = ");
+            writer.write('$items = ')
 
             // Method invocation using the paginationEndpoint
-            const methodName = this.context.getEndpointMethodName(paginationEndpoint.endpoint);
-            const clientAccess = this.context.getAccessFromRootClient(paginationEndpoint.fernFilepath);
+            const methodName = this.context.getEndpointMethodName(paginationEndpoint.endpoint)
+            const clientAccess = this.context.getAccessFromRootClient(paginationEndpoint.fernFilepath)
 
             // Create a simple request argument with a limit parameter
             const requestArg = php.array({
                 entries: [
                     php.codeblock((w) => {
-                        w.write("'limit' => 10");
+                        w.write("'limit' => 10")
                     })
                 ]
-            });
+            })
 
             // Create the method invocation using the pagination endpoint
             const listMethodCall = php.invokeMethod({
                 method: methodName,
                 arguments_: [requestArg],
                 on: php.codeblock((w) => {
-                    w.write(clientAccess);
+                    w.write(clientAccess)
                 })
-            });
+            })
 
-            listMethodCall.write(writer);
-            writer.write(";\n\n");
+            listMethodCall.write(writer)
+            writer.write(';\n\n')
 
             // Foreach loop
-            writer.write("foreach ($items as $item) {\n");
-            writer.indent();
+            writer.write('foreach ($items as $item) {\n')
+            writer.indent()
 
             // Echo statement with sprintf
-            writer.write("var_dump($item);\n");
+            writer.write('var_dump($item);\n')
 
-            writer.dedent();
-            writer.write("}");
-        });
+            writer.dedent()
+            writer.write('}')
+        })
 
         const codeString = codeBlock.toString({
             namespace: this.context.getRootNamespace(),
             rootNamespace: this.context.getRootNamespace(),
             customConfig: this.context.customConfig,
             skipImports: true
-        });
+        })
 
-        return [this.writeCode(codeString)];
+        return [this.writeCode(codeString)]
     }
 
     private buildPaginationAddendum(): string | undefined {
-        const paginationEndpoint = this.getEndpointWithPagination();
+        const paginationEndpoint = this.getEndpointWithPagination()
         if (paginationEndpoint == null) {
-            return undefined;
+            return undefined
         }
 
         // This part can be generic across generations so we don't need to generate it using the AST.
@@ -260,102 +260,102 @@ foreach ($items->getPages() as $page) {
     }
 }
 \`\`\`
-`);
+`)
     }
 
     private getEndpointWithPagination(): EndpointWithFilepath | undefined {
         return this.filterEndpoint((endpointWithFilepath) => {
             if (endpointWithFilepath.endpoint.pagination != null) {
-                return endpointWithFilepath;
+                return endpointWithFilepath
             }
-            return undefined;
-        });
+            return undefined
+        })
     }
 
     private filterEndpoint<T>(transform: (endpoint: EndpointWithFilepath) => T | undefined): T | undefined {
         for (const endpointWithFilepath of Object.values(this.endpoints)) {
-            const result = transform(endpointWithFilepath);
+            const result = transform(endpointWithFilepath)
             if (result !== undefined) {
-                return result;
+                return result
             }
         }
-        return undefined;
+        return undefined
     }
 
     private getExplicitlyConfiguredSnippets(featureId: FeatureId): string[] | undefined {
-        const endpointIds = this.getEndpointIdsForFeature(featureId);
+        const endpointIds = this.getEndpointIdsForFeature(featureId)
         if (endpointIds != null) {
-            return endpointIds.map((endpointId) => this.getSnippetForEndpointId(endpointId)).filter((e) => e != null);
+            return endpointIds.map((endpointId) => this.getSnippetForEndpointId(endpointId)).filter((e) => e != null)
         }
-        return undefined;
+        return undefined
     }
 
     private buildEndpoints(): Record<EndpointId, EndpointWithFilepath> {
-        const endpoints: Record<EndpointId, EndpointWithFilepath> = {};
+        const endpoints: Record<EndpointId, EndpointWithFilepath> = {}
         for (const service of Object.values(this.context.ir.services)) {
             for (const endpoint of service.endpoints) {
                 endpoints[endpoint.id] = {
                     endpoint,
                     fernFilepath: service.name.fernFilepath
-                };
+                }
             }
         }
-        return endpoints;
+        return endpoints
     }
 
     private buildSnippets(endpointSnippets: FernGeneratorExec.Endpoint[]): Record<EndpointId, string> {
-        const snippets: Record<EndpointId, string> = {};
+        const snippets: Record<EndpointId, string> = {}
         for (const endpointSnippet of Object.values(endpointSnippets)) {
             if (endpointSnippet.id.identifierOverride == null) {
-                throw new Error("Internal error; snippets must define the endpoint id to generate README.md");
+                throw new Error('Internal error; snippets must define the endpoint id to generate README.md')
             }
-            snippets[endpointSnippet.id.identifierOverride] = this.getEndpointSnippetString(endpointSnippet);
+            snippets[endpointSnippet.id.identifierOverride] = this.getEndpointSnippetString(endpointSnippet)
         }
-        return snippets;
+        return snippets
     }
 
     private getSnippetForEndpointId(endpointId: EndpointId): string {
-        const snippet = this.snippets[endpointId];
+        const snippet = this.snippets[endpointId]
         if (snippet == null) {
-            throw new Error(`Internal error; missing snippet for endpoint ${endpointId}`);
+            throw new Error(`Internal error; missing snippet for endpoint ${endpointId}`)
         }
-        return snippet;
+        return snippet
     }
 
     private getEndpointsForFeature(featureId: FeatureId): EndpointWithFilepath[] {
-        const endpointIds = this.getEndpointIdsForFeature(featureId);
-        return endpointIds != null ? this.getEndpoints(endpointIds) : this.getEndpoints([this.defaultEndpointId]);
+        const endpointIds = this.getEndpointIdsForFeature(featureId)
+        return endpointIds != null ? this.getEndpoints(endpointIds) : this.getEndpoints([this.defaultEndpointId])
     }
 
     private getEndpointIdsForFeature(featureId: FeatureId): EndpointId[] | undefined {
-        return this.context.ir.readmeConfig?.features?.[this.getFeatureKey(featureId)];
+        return this.context.ir.readmeConfig?.features?.[this.getFeatureKey(featureId)]
     }
 
     private getEndpoints(endpointIds: EndpointId[]): EndpointWithFilepath[] {
         return endpointIds.map((endpointId) => {
-            const endpoint = this.endpoints[endpointId];
+            const endpoint = this.endpoints[endpointId]
             if (endpoint == null) {
-                throw new Error(`Internal error; missing endpoint ${endpointId}`);
+                throw new Error(`Internal error; missing endpoint ${endpointId}`)
             }
-            return endpoint;
-        });
+            return endpoint
+        })
     }
 
     private getEndpointSnippetString(endpoint: FernGeneratorExec.Endpoint): string {
         // Note: this is a shim since php snippets are not supported yet in FernGeneratorExec
-        if (endpoint.snippet.type !== "java") {
-            throw new Error(`Internal error; expected csharp snippet but got: ${endpoint.snippet.type}`);
+        if (endpoint.snippet.type !== 'java') {
+            throw new Error(`Internal error; expected csharp snippet but got: ${endpoint.snippet.type}`)
         }
-        return endpoint.snippet.syncClient;
+        return endpoint.snippet.syncClient
     }
 
     private getMethodCall(endpoint: EndpointWithFilepath): string {
         return `${this.context.getAccessFromRootClient(endpoint.fernFilepath)}->${this.context.getEndpointMethodName(
             endpoint.endpoint
-        )}`;
+        )}`
     }
 
     private writeCode(s: string): string {
-        return s.trim() + "\n";
+        return s.trim() + '\n'
     }
 }

@@ -3,7 +3,7 @@ import {
     isInlineRequestBody,
     parseBytesRequest,
     parseFileUploadRequest
-} from "@fern-api/fern-definition-schema";
+} from '@fern-api/fern-definition-schema'
 import {
     Availability,
     FileProperty,
@@ -12,47 +12,47 @@ import {
     HttpRequestBody,
     HttpRequestBodyReference,
     InlinedRequestBodyProperty
-} from "@fern-api/ir-sdk";
+} from '@fern-api/ir-sdk'
 
-import { FernFileContext } from "../../FernFileContext";
-import { parseTypeName } from "../../utils/parseTypeName";
-import { convertAvailability } from "../convertDeclaration";
-import { getExtensionsAsList, getPropertyName } from "../type-declarations/convertObjectTypeDeclaration";
+import { FernFileContext } from '../../FernFileContext'
+import { parseTypeName } from '../../utils/parseTypeName'
+import { convertAvailability } from '../convertDeclaration'
+import { getExtensionsAsList, getPropertyName } from '../type-declarations/convertObjectTypeDeclaration'
 
 export function convertHttpRequestBody({
     request,
     file
 }: {
-    request: string | RawSchemas.HttpRequestSchema | null | undefined;
-    file: FernFileContext;
+    request: string | RawSchemas.HttpRequestSchema | null | undefined
+    file: FernFileContext
 }): HttpRequestBody | undefined {
-    const bytesRequest = request != null ? parseBytesRequest(request) : undefined;
+    const bytesRequest = request != null ? parseBytesRequest(request) : undefined
     if (bytesRequest != null) {
         return HttpRequestBody.bytes({
             isOptional: bytesRequest.isOptional,
-            contentType: typeof request === "string" ? undefined : request?.["content-type"],
-            docs: typeof request === "string" ? undefined : request?.docs,
+            contentType: typeof request === 'string' ? undefined : request?.['content-type'],
+            docs: typeof request === 'string' ? undefined : request?.docs,
             v2Examples: undefined
-        });
+        })
     }
 
-    if (typeof request === "string") {
+    if (typeof request === 'string') {
         return HttpRequestBody.reference(
             convertReferenceHttpRequestBody({
                 requestBody: request,
                 file
             })
-        );
+        )
     }
 
     if (request?.body == null) {
-        return undefined;
+        return undefined
     }
 
-    const fileUploadRequest = parseFileUploadRequest(request);
+    const fileUploadRequest = parseFileUploadRequest(request)
     if (fileUploadRequest != null) {
         return HttpRequestBody.fileUpload({
-            contentType: request["content-type"],
+            contentType: request['content-type'],
             name: file.casingsGenerator.generateName(fileUploadRequest.name),
             properties: fileUploadRequest.properties.map((property) => {
                 if (property.isFile) {
@@ -67,7 +67,7 @@ export function convertHttpRequestBody({
                                 contentType: property.contentType,
                                 docs: property.docs
                             })
-                        );
+                        )
                     } else {
                         return FileUploadRequestProperty.file(
                             FileProperty.file({
@@ -79,7 +79,7 @@ export function convertHttpRequestBody({
                                 contentType: property.contentType,
                                 docs: property.docs
                             })
-                        );
+                        )
                     }
                 } else {
                     return FileUploadRequestProperty.bodyProperty({
@@ -92,17 +92,17 @@ export function convertHttpRequestBody({
                         }),
                         style: property.style ?? getMultipartPartEncodingFromContentType(property.contentType),
                         contentType: property.contentType
-                    });
+                    })
                 }
             }),
             docs: request.docs,
             v2Examples: undefined
-        });
+        })
     }
 
     if (isInlineRequestBody(request.body)) {
         if (request.name == null) {
-            throw new Error("Name is missing for inlined request");
+            throw new Error('Name is missing for inlined request')
         }
 
         return HttpRequestBody.inlinedRequestBody({
@@ -110,7 +110,7 @@ export function convertHttpRequestBody({
             extends: getExtensionsAsList(request.body.extends).map((extended) =>
                 parseTypeName({ typeName: extended, file })
             ),
-            contentType: request["content-type"],
+            contentType: request['content-type'],
             docs: request.docs,
             properties:
                 request.body.properties != null
@@ -118,41 +118,41 @@ export function convertHttpRequestBody({
                           convertInlinedRequestProperty({
                               propertyKey,
                               propertyDefinition,
-                              docs: typeof propertyDefinition !== "string" ? propertyDefinition.docs : undefined,
+                              docs: typeof propertyDefinition !== 'string' ? propertyDefinition.docs : undefined,
                               availability:
-                                  typeof propertyDefinition !== "string"
+                                  typeof propertyDefinition !== 'string'
                                       ? convertAvailability(propertyDefinition.availability)
                                       : undefined,
                               file
                           })
                       )
                     : [],
-            extraProperties: request.body["extra-properties"] ?? false,
+            extraProperties: request.body['extra-properties'] ?? false,
             extendedProperties: undefined,
             v2Examples: undefined
-        });
+        })
     }
 
     return HttpRequestBody.reference(
         convertReferenceHttpRequestBody({
             requestBody: request.body,
             file,
-            contentType: request["content-type"]
+            contentType: request['content-type']
         })
-    );
+    )
 }
 
 const CONTENT_TYPE_TO_ENCODING_MAP: Record<string, FileUploadBodyPropertyEncoding> = {
-    "application/json": "json"
-};
+    'application/json': 'json'
+}
 function getMultipartPartEncodingFromContentType(
     contentType: string | undefined
 ): FileUploadBodyPropertyEncoding | undefined {
     if (!contentType) {
-        return undefined;
+        return undefined
     }
-    const encoding = CONTENT_TYPE_TO_ENCODING_MAP[contentType];
-    return encoding;
+    const encoding = CONTENT_TYPE_TO_ENCODING_MAP[contentType]
+    return encoding
 }
 
 export function convertReferenceHttpRequestBody({
@@ -160,16 +160,16 @@ export function convertReferenceHttpRequestBody({
     file,
     contentType
 }: {
-    requestBody: RawSchemas.HttpReferencedRequestBodySchema | string;
-    file: FernFileContext;
-    contentType?: string;
+    requestBody: RawSchemas.HttpReferencedRequestBodySchema | string
+    file: FernFileContext
+    contentType?: string
 }): HttpRequestBodyReference {
     return {
-        docs: typeof requestBody !== "string" ? requestBody.docs : undefined,
+        docs: typeof requestBody !== 'string' ? requestBody.docs : undefined,
         requestBodyType: file.parseTypeReference(requestBody),
         contentType,
         v2Examples: undefined
-    };
+    }
 }
 
 function convertInlinedRequestProperty({
@@ -179,11 +179,11 @@ function convertInlinedRequestProperty({
     availability,
     file
 }: {
-    propertyKey: string;
-    propertyDefinition: RawSchemas.ObjectPropertySchema;
-    docs: string | undefined;
-    availability: Availability | undefined;
-    file: FernFileContext;
+    propertyKey: string
+    propertyDefinition: RawSchemas.ObjectPropertySchema
+    docs: string | undefined
+    availability: Availability | undefined
+    file: FernFileContext
 }): InlinedRequestBodyProperty {
     return {
         docs,
@@ -197,5 +197,5 @@ function convertInlinedRequestProperty({
             userSpecifiedExamples: {},
             autogeneratedExamples: {}
         }
-    };
+    }
 }

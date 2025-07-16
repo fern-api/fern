@@ -8,42 +8,42 @@ import {
     Method,
     Property,
     Struct
-} from "./ast";
+} from './ast'
 
 export function codeBlock(args: CodeBlock.Args): CodeBlock {
-    return new CodeBlock(args);
+    return new CodeBlock(args)
 }
 
 export function enumWithAssociatedValues(args: EnumWithAssociatedValues.Args): EnumWithAssociatedValues {
-    return new EnumWithAssociatedValues(args);
+    return new EnumWithAssociatedValues(args)
 }
 
 export function enumWithRawValues(args: EnumWithRawValues.Args): EnumWithRawValues {
-    return new EnumWithRawValues(args);
+    return new EnumWithRawValues(args)
 }
 
 export function functionArgument(args: FunctionArgument.Args): FunctionArgument {
-    return new FunctionArgument(args);
+    return new FunctionArgument(args)
 }
 
 export function functionParameter(args: FunctionParameter.Args): FunctionParameter {
-    return new FunctionParameter(args);
+    return new FunctionParameter(args)
 }
 
 export function initializer(args: Initializer.Args): Initializer {
-    return new Initializer(args);
+    return new Initializer(args)
 }
 
 export function method(args: Method.Args): Method {
-    return new Method(args);
+    return new Method(args)
 }
 
 export function property(args: Property.Args): Property {
-    return new Property(args);
+    return new Property(args)
 }
 
 export function struct(args: Struct.Args): Struct {
-    return new Struct(args);
+    return new Struct(args)
 }
 
-export * from "./ast";
+export * from './ast'

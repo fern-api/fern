@@ -1,14 +1,14 @@
-import yaml from "js-yaml";
-import { mapValues } from "lodash-es";
+import yaml from 'js-yaml'
+import { mapValues } from 'lodash-es'
 
-import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
-import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
-import { convert, getConvertOptions } from "@fern-api/openapi-ir-to-fern";
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/path-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { FERN_PACKAGE_MARKER_FILENAME } from '@fern-api/configuration'
+import { OpenApiIntermediateRepresentation } from '@fern-api/openapi-ir'
+import { convert, getConvertOptions } from '@fern-api/openapi-ir-to-fern'
+import { AbsoluteFilePath, RelativeFilePath } from '@fern-api/path-utils'
+import { TaskContext } from '@fern-api/task-context'
 
-import { FernDefinition } from "..";
-import { BaseOpenAPIWorkspace } from "./BaseOpenAPIWorkspace";
+import { FernDefinition } from '..'
+import { BaseOpenAPIWorkspace } from './BaseOpenAPIWorkspace'
 
 export class FernDefinitionConverter {
     constructor(private readonly args: BaseOpenAPIWorkspace.Args) {}
@@ -19,10 +19,10 @@ export class FernDefinitionConverter {
         settings,
         absoluteFilePath
     }: {
-        context: TaskContext;
-        ir: OpenApiIntermediateRepresentation;
-        settings?: BaseOpenAPIWorkspace.Settings;
-        absoluteFilePath?: AbsoluteFilePath;
+        context: TaskContext
+        ir: OpenApiIntermediateRepresentation
+        settings?: BaseOpenAPIWorkspace.Settings
+        absoluteFilePath?: AbsoluteFilePath
     }): FernDefinition {
         const definition = convert({
             taskContext: context,
@@ -56,12 +56,12 @@ export class FernDefinitionConverter {
                 this.args.generatorsConfiguration?.api?.headers != null
                     ? { ...this.args.generatorsConfiguration?.api }
                     : undefined
-        });
+        })
 
         return {
             absoluteFilePath: absoluteFilePath ?? this.args.absoluteFilePath,
             rootApiFile: {
-                defaultUrl: definition.rootApiFile["default-url"],
+                defaultUrl: definition.rootApiFile['default-url'],
                 contents: definition.rootApiFile,
                 rawContents: yaml.dump(definition.rootApiFile)
             },
@@ -79,6 +79,6 @@ export class FernDefinitionConverter {
             },
             packageMarkers: {},
             importedDefinitions: {}
-        };
+        }
     }
 }

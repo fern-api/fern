@@ -3,30 +3,30 @@ import {
     ExportedDirectory,
     PackageId,
     getExportedDirectoriesForFernFilepath
-} from "@fern-typescript/commons";
-import { PackageResolver } from "@fern-typescript/resolvers";
+} from '@fern-typescript/commons'
+import { PackageResolver } from '@fern-typescript/resolvers'
 
-import { entries } from "@fern-api/core-utils";
-import { RelativeFilePath, join } from "@fern-api/fs-utils";
+import { entries } from '@fern-api/core-utils'
+import { RelativeFilePath, join } from '@fern-api/fs-utils'
 
-import { FernFilepath } from "@fern-fern/ir-sdk/api";
+import { FernFilepath } from '@fern-fern/ir-sdk/api'
 
-import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
+import { AbstractDeclarationReferencer } from './AbstractDeclarationReferencer'
 
-const CLIENT_DIRECTORY = "client";
+const CLIENT_DIRECTORY = 'client'
 
 export declare namespace AbstractSdkClientClassDeclarationReferencer {
     export interface Init extends AbstractDeclarationReferencer.Init {
-        packageResolver: PackageResolver;
+        packageResolver: PackageResolver
     }
 }
 
 export abstract class AbstractSdkClientClassDeclarationReferencer<Name> extends AbstractDeclarationReferencer<Name> {
-    protected packageResolver: PackageResolver;
+    protected packageResolver: PackageResolver
 
     constructor({ packageResolver, ...superInit }: AbstractSdkClientClassDeclarationReferencer.Init) {
-        super(superInit);
-        this.packageResolver = packageResolver;
+        super(superInit)
+        this.packageResolver = packageResolver
     }
 
     protected getExportedDirectory(
@@ -52,12 +52,12 @@ export abstract class AbstractSdkClientClassDeclarationReferencer<Name> extends 
                 nameOnDisk: CLIENT_DIRECTORY,
                 exportDeclaration: { exportAll: true }
             }
-        ];
+        ]
     }
 
     private getFernFilepathFromName(name: Name): FernFilepath {
-        return this.packageResolver.resolvePackage(this.getPackageIdFromName(name)).fernFilepath;
+        return this.packageResolver.resolvePackage(this.getPackageIdFromName(name)).fernFilepath
     }
 
-    protected abstract getPackageIdFromName(name: Name): PackageId;
+    protected abstract getPackageIdFromName(name: Name): PackageId
 }

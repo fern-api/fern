@@ -1,2 +1,2 @@
-export { GoFile } from "./GoFile";
-export { GoProject } from "./GoProject";
+export { GoFile } from './GoFile'
+export { GoProject } from './GoProject'

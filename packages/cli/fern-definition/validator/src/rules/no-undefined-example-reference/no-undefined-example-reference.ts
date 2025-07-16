@@ -1,14 +1,14 @@
-import chalk from "chalk";
+import chalk from 'chalk'
 
-import { ExampleResolverImpl, TypeResolverImpl, constructFernFileContext } from "@fern-api/ir-generator";
+import { ExampleResolverImpl, TypeResolverImpl, constructFernFileContext } from '@fern-api/ir-generator'
 
-import { Rule } from "../../Rule";
-import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
+import { Rule } from '../../Rule'
+import { CASINGS_GENERATOR } from '../../utils/casingsGenerator'
 
 export const NoUndefinedExampleReferenceRule: Rule = {
-    name: "no-undefined-example-reference",
+    name: 'no-undefined-example-reference',
     create: ({ workspace }) => {
-        const exampleResolver = new ExampleResolverImpl(new TypeResolverImpl(workspace));
+        const exampleResolver = new ExampleResolverImpl(new TypeResolverImpl(workspace))
 
         return {
             definitionFile: {
@@ -16,14 +16,14 @@ export const NoUndefinedExampleReferenceRule: Rule = {
                     if (exampleResolver.parseExampleReference(exampleReference) == null) {
                         return [
                             {
-                                severity: "fatal",
+                                severity: 'fatal',
                                 message: `Example ${chalk.bold(
                                     exampleReference
                                 )} is malformed. Examples should be formatted like ${chalk.bold(
-                                    "$YourType.ExampleName"
+                                    '$YourType.ExampleName'
                                 )}`
                             }
-                        ];
+                        ]
                     }
 
                     const doesExist =
@@ -35,20 +35,20 @@ export const NoUndefinedExampleReferenceRule: Rule = {
                                 casingsGenerator: CASINGS_GENERATOR,
                                 rootApiFile: workspace.definition.rootApiFile.contents
                             })
-                        }) != null;
+                        }) != null
 
                     if (doesExist) {
-                        return [];
+                        return []
                     } else {
                         return [
                             {
-                                severity: "fatal",
+                                severity: 'fatal',
                                 message: `Example ${chalk.bold(exampleReference)} is not defined.`
                             }
-                        ];
+                        ]
                     }
                 }
             }
-        };
+        }
     }
-};
+}

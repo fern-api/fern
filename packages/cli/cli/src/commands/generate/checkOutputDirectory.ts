@@ -1,13 +1,13 @@
-import { readdir } from "fs/promises";
+import { readdir } from 'fs/promises'
 
-import { AbsoluteFilePath, doesPathExist, isCI } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist, isCI } from '@fern-api/fs-utils'
 
-import { CliContext } from "../../cli-context/CliContext";
-import { getOutputDirectories } from "../../persistence/output-directories/getOutputDirectories";
-import { storeOutputDirectories } from "../../persistence/output-directories/storeOutputDirectories";
+import { CliContext } from '../../cli-context/CliContext'
+import { getOutputDirectories } from '../../persistence/output-directories/getOutputDirectories'
+import { storeOutputDirectories } from '../../persistence/output-directories/storeOutputDirectories'
 
 export interface CheckOutputDirectoryResult {
-    shouldProceed: boolean;
+    shouldProceed: boolean
 }
 
 /**
@@ -24,47 +24,47 @@ export async function checkOutputDirectory(
     if (!outputPath || isCI() || force) {
         return {
             shouldProceed: true
-        };
+        }
     }
 
     // First check if this is already a saved output directory
-    const savedDirectories = await getOutputDirectories();
+    const savedDirectories = await getOutputDirectories()
     if (savedDirectories?.includes(outputPath)) {
         return {
             shouldProceed: true
-        };
+        }
     }
 
     // Check if directory exists and has files
-    const doesExist = await doesPathExist(outputPath);
+    const doesExist = await doesPathExist(outputPath)
     if (!doesExist) {
         return {
             shouldProceed: true
-        };
+        }
     }
 
-    const files = await readdir(outputPath);
+    const files = await readdir(outputPath)
     if (files.length === 0) {
         return {
             shouldProceed: true
-        };
+        }
     }
 
     // Prompt user for confirmation since directory has files
     const shouldOverwrite = await cliContext.confirmPrompt(
         `Directory ${outputPath} contains existing files that may be overwritten. Continue?`,
         false
-    );
+    )
 
     if (!shouldOverwrite) {
         return {
             shouldProceed: false
-        };
+        }
     }
 
-    await storeOutputDirectories([...(savedDirectories ?? []), outputPath]);
+    await storeOutputDirectories([...(savedDirectories ?? []), outputPath])
 
     return {
         shouldProceed: true
-    };
+    }
 }

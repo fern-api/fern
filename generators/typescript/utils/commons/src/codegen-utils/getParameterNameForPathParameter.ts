@@ -1,4 +1,4 @@
-import { ExamplePathParameter, Name, PathParameter } from "@fern-fern/ir-sdk/api";
+import { ExamplePathParameter, Name, PathParameter } from '@fern-fern/ir-sdk/api'
 
 /**
  * Determines the casing of the path parameter when used as a positional function parameter
@@ -7,13 +7,13 @@ export function getParameterNameForPositionalPathParameter({
     pathParameter,
     retainOriginalCasing
 }: {
-    pathParameter: PathParameter;
-    retainOriginalCasing: boolean;
+    pathParameter: PathParameter
+    retainOriginalCasing: boolean
 }): string {
     return getParameterNameForPathParameterInternalName({
         pathParameterName: pathParameter.name,
         retainOriginalCasing
-    });
+    })
 }
 
 /**
@@ -23,16 +23,16 @@ export function getParameterNameForRootPathParameter({
     pathParameter,
     retainOriginalCasing
 }: {
-    pathParameter: PathParameter;
-    retainOriginalCasing: boolean;
+    pathParameter: PathParameter
+    retainOriginalCasing: boolean
 }): string {
-    if (pathParameter.location !== "ROOT") {
-        throw new Error("pathParameter.location must be ROOT");
+    if (pathParameter.location !== 'ROOT') {
+        throw new Error('pathParameter.location must be ROOT')
     }
     return getParameterNameForPathParameterInternalName({
         pathParameterName: pathParameter.name,
         retainOriginalCasing
-    });
+    })
 }
 /**
  * Determines the casing of the root path parameter which is put into the client class options class
@@ -41,13 +41,13 @@ export function getParameterNameForRootExamplePathParameter({
     pathParameter,
     retainOriginalCasing
 }: {
-    pathParameter: ExamplePathParameter;
-    retainOriginalCasing: boolean;
+    pathParameter: ExamplePathParameter
+    retainOriginalCasing: boolean
 }): string {
     return getParameterNameForPathParameterInternalName({
         pathParameterName: pathParameter.name,
         retainOriginalCasing
-    });
+    })
 }
 
 /**
@@ -58,15 +58,15 @@ export function getParameterNameForPropertyPathParameter({
     retainOriginalCasing,
     includeSerdeLayer
 }: {
-    pathParameter: PathParameter;
-    retainOriginalCasing: boolean;
-    includeSerdeLayer: boolean;
+    pathParameter: PathParameter
+    retainOriginalCasing: boolean
+    includeSerdeLayer: boolean
 }): string {
     return getParameterNameForPropertyPathParameterName({
         pathParameterName: pathParameter.name,
         retainOriginalCasing,
         includeSerdeLayer
-    });
+    })
 }
 
 /**
@@ -77,25 +77,25 @@ export function getParameterNameForPropertyPathParameterName({
     retainOriginalCasing,
     includeSerdeLayer
 }: {
-    pathParameterName: Name;
-    retainOriginalCasing: boolean;
-    includeSerdeLayer: boolean;
+    pathParameterName: Name
+    retainOriginalCasing: boolean
+    includeSerdeLayer: boolean
 }): string {
     return getParameterNameForPathParameterInternalName({
         pathParameterName,
         retainOriginalCasing: retainOriginalCasing || !includeSerdeLayer
-    });
+    })
 }
 
 function getParameterNameForPathParameterInternalName({
     pathParameterName,
     retainOriginalCasing
 }: {
-    pathParameterName: Name;
-    retainOriginalCasing: boolean;
+    pathParameterName: Name
+    retainOriginalCasing: boolean
 }): string {
     if (retainOriginalCasing) {
-        return pathParameterName.originalName;
+        return pathParameterName.originalName
     }
-    return pathParameterName.camelCase.safeName;
+    return pathParameterName.camelCase.safeName
 }

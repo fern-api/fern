@@ -1,67 +1,67 @@
-import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
+import { AbstractReadmeSnippetBuilder } from '@fern-api/base-generator'
 
-import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { EndpointId, FeatureId, FernFilepath, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { FernGeneratorCli } from '@fern-fern/generator-cli-sdk'
+import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
+import { EndpointId, FeatureId, FernFilepath, HttpEndpoint } from '@fern-fern/ir-sdk/api'
 
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SdkGeneratorContext } from '../SdkGeneratorContext'
 
 interface EndpointWithFilepath {
-    endpoint: HttpEndpoint;
-    fernFilepath: FernFilepath;
+    endpoint: HttpEndpoint
+    fernFilepath: FernFilepath
 }
 
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
-    private static EXCEPTION_HANDLING_FEATURE_ID: FernGeneratorCli.FeatureId = "EXCEPTION_HANDLING";
+    private static EXCEPTION_HANDLING_FEATURE_ID: FernGeneratorCli.FeatureId = 'EXCEPTION_HANDLING'
 
-    private readonly context: SdkGeneratorContext;
-    private readonly endpoints: Record<EndpointId, EndpointWithFilepath> = {};
-    private readonly snippets: Record<EndpointId, string> = {};
-    private readonly defaultEndpointId: EndpointId;
-    private readonly requestOptionsName: string;
-    private readonly isPaginationEnabled: boolean;
+    private readonly context: SdkGeneratorContext
+    private readonly endpoints: Record<EndpointId, EndpointWithFilepath> = {}
+    private readonly snippets: Record<EndpointId, string> = {}
+    private readonly defaultEndpointId: EndpointId
+    private readonly requestOptionsName: string
+    private readonly isPaginationEnabled: boolean
 
     constructor({
         context,
         endpointSnippets
     }: {
-        context: SdkGeneratorContext;
-        endpointSnippets: FernGeneratorExec.Endpoint[];
+        context: SdkGeneratorContext
+        endpointSnippets: FernGeneratorExec.Endpoint[]
     }) {
-        super({ endpointSnippets });
-        this.context = context;
-        this.isPaginationEnabled = context.config.generatePaginatedClients ?? false;
-        this.endpoints = this.buildEndpoints();
-        this.snippets = this.buildSnippets(endpointSnippets);
+        super({ endpointSnippets })
+        this.context = context
+        this.isPaginationEnabled = context.config.generatePaginatedClients ?? false
+        this.endpoints = this.buildEndpoints()
+        this.snippets = this.buildSnippets(endpointSnippets)
         this.defaultEndpointId =
             this.context.ir.readmeConfig?.defaultEndpoint != null
                 ? this.context.ir.readmeConfig.defaultEndpoint
-                : this.getDefaultEndpointId();
-        this.requestOptionsName = this.context.getRequestOptionsClassReference().name;
+                : this.getDefaultEndpointId()
+        this.requestOptionsName = this.context.getRequestOptionsClassReference().name
     }
 
     public buildReadmeSnippets(): Record<FernGeneratorCli.FeatureId, string[]> {
-        const snippets: Record<FernGeneratorCli.FeatureId, string[]> = {};
-        snippets[FernGeneratorCli.StructuredFeatureId.Usage] = this.buildUsageSnippets();
-        snippets[FernGeneratorCli.StructuredFeatureId.Retries] = this.buildRetrySnippets();
-        snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutSnippets();
-        snippets[ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID] = this.buildExceptionHandlingSnippets();
+        const snippets: Record<FernGeneratorCli.FeatureId, string[]> = {}
+        snippets[FernGeneratorCli.StructuredFeatureId.Usage] = this.buildUsageSnippets()
+        snippets[FernGeneratorCli.StructuredFeatureId.Retries] = this.buildRetrySnippets()
+        snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutSnippets()
+        snippets[ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID] = this.buildExceptionHandlingSnippets()
         if (this.isPaginationEnabled) {
-            snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationSnippets();
+            snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationSnippets()
         }
-        return snippets;
+        return snippets
     }
 
     private buildUsageSnippets(): string[] {
-        const usageEndpointIds = this.getEndpointIdsForFeature(FernGeneratorCli.StructuredFeatureId.Usage);
+        const usageEndpointIds = this.getEndpointIdsForFeature(FernGeneratorCli.StructuredFeatureId.Usage)
         if (usageEndpointIds != null) {
-            return usageEndpointIds.map((endpointId) => this.getSnippetForEndpointId(endpointId));
+            return usageEndpointIds.map((endpointId) => this.getSnippetForEndpointId(endpointId))
         }
-        return [this.getSnippetForEndpointId(this.defaultEndpointId)];
+        return [this.getSnippetForEndpointId(this.defaultEndpointId)]
     }
 
     private buildRetrySnippets(): string[] {
-        const retryEndpoints = this.getEndpointsForFeature(FernGeneratorCli.StructuredFeatureId.Retries);
+        const retryEndpoints = this.getEndpointsForFeature(FernGeneratorCli.StructuredFeatureId.Retries)
         return retryEndpoints.map((retryEndpoint) =>
             this.writeCode(`
 var response = await ${this.getMethodCall(retryEndpoint)}(
@@ -71,11 +71,11 @@ var response = await ${this.getMethodCall(retryEndpoint)}(
     }
 );
 `)
-        );
+        )
     }
 
     private buildTimeoutSnippets(): string[] {
-        const timeoutEndpoints = this.getEndpointsForFeature(FernGeneratorCli.StructuredFeatureId.Timeouts);
+        const timeoutEndpoints = this.getEndpointsForFeature(FernGeneratorCli.StructuredFeatureId.Timeouts)
         return timeoutEndpoints.map((timeoutEndpoint) =>
             this.writeCode(`
 var response = await ${this.getMethodCall(timeoutEndpoint)}(
@@ -85,13 +85,13 @@ var response = await ${this.getMethodCall(timeoutEndpoint)}(
     }
 );
 `)
-        );
+        )
     }
 
     private buildExceptionHandlingSnippets(): string[] {
         const exceptionHandlingEndpoints = this.getEndpointsForFeature(
             ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID
-        );
+        )
         return exceptionHandlingEndpoints.map((exceptionHandlingEndpoint) =>
             this.writeCode(`
 using ${this.context.getNamespace()};
@@ -103,116 +103,116 @@ try {
     System.Console.WriteLine(e.StatusCode);
 }
 `)
-        );
+        )
     }
 
     private buildPaginationSnippets(): string[] {
         const explicitlyConfigured = this.getExplicitlyConfiguredSnippets(
             FernGeneratorCli.StructuredFeatureId.Pagination
-        );
+        )
         if (explicitlyConfigured != null) {
-            return explicitlyConfigured;
+            return explicitlyConfigured
         }
-        const paginationEndpoint = this.getEndpointWithPagination();
+        const paginationEndpoint = this.getEndpointWithPagination()
         if (paginationEndpoint != null) {
-            const snippet = this.getSnippetForEndpointId(paginationEndpoint.endpoint.id);
-            return snippet != null ? [snippet] : [];
+            const snippet = this.getSnippetForEndpointId(paginationEndpoint.endpoint.id)
+            return snippet != null ? [snippet] : []
         }
-        return [];
+        return []
     }
 
     private getEndpointWithPagination(): EndpointWithFilepath | undefined {
         return this.filterEndpoint((endpointWithFilepath) => {
             if (endpointWithFilepath.endpoint.pagination != null) {
-                return endpointWithFilepath;
+                return endpointWithFilepath
             }
-            return undefined;
-        });
+            return undefined
+        })
     }
 
     private filterEndpoint<T>(transform: (endpoint: EndpointWithFilepath) => T | undefined): T | undefined {
         for (const endpointWithFilepath of Object.values(this.endpoints)) {
-            const result = transform(endpointWithFilepath);
+            const result = transform(endpointWithFilepath)
             if (result !== undefined) {
-                return result;
+                return result
             }
         }
-        return undefined;
+        return undefined
     }
 
     private getExplicitlyConfiguredSnippets(featureId: FeatureId): string[] | undefined {
-        const endpointIds = this.getEndpointIdsForFeature(featureId);
+        const endpointIds = this.getEndpointIdsForFeature(featureId)
         if (endpointIds != null) {
-            return endpointIds.map((endpointId) => this.getSnippetForEndpointId(endpointId)).filter((e) => e != null);
+            return endpointIds.map((endpointId) => this.getSnippetForEndpointId(endpointId)).filter((e) => e != null)
         }
-        return undefined;
+        return undefined
     }
 
     private buildEndpoints(): Record<EndpointId, EndpointWithFilepath> {
-        const endpoints: Record<EndpointId, EndpointWithFilepath> = {};
+        const endpoints: Record<EndpointId, EndpointWithFilepath> = {}
         for (const service of Object.values(this.context.ir.services)) {
             for (const endpoint of service.endpoints) {
                 endpoints[endpoint.id] = {
                     endpoint,
                     fernFilepath: service.name.fernFilepath
-                };
+                }
             }
         }
-        return endpoints;
+        return endpoints
     }
 
     private buildSnippets(endpointSnippets: FernGeneratorExec.Endpoint[]): Record<EndpointId, string> {
-        const snippets: Record<EndpointId, string> = {};
+        const snippets: Record<EndpointId, string> = {}
         for (const endpointSnippet of Object.values(endpointSnippets)) {
             if (endpointSnippet.id.identifierOverride == null) {
-                throw new Error("Internal error; snippets must define the endpoint id to generate README.md");
+                throw new Error('Internal error; snippets must define the endpoint id to generate README.md')
             }
-            snippets[endpointSnippet.id.identifierOverride] = this.getEndpointSnippetString(endpointSnippet);
+            snippets[endpointSnippet.id.identifierOverride] = this.getEndpointSnippetString(endpointSnippet)
         }
-        return snippets;
+        return snippets
     }
 
     private getSnippetForEndpointId(endpointId: EndpointId): string {
-        const snippet = this.snippets[endpointId];
+        const snippet = this.snippets[endpointId]
         if (snippet == null) {
-            throw new Error(`Internal error; missing snippet for endpoint ${endpointId}`);
+            throw new Error(`Internal error; missing snippet for endpoint ${endpointId}`)
         }
-        return snippet;
+        return snippet
     }
 
     private getEndpointsForFeature(featureId: FeatureId): EndpointWithFilepath[] {
-        const endpointIds = this.getEndpointIdsForFeature(featureId);
-        return endpointIds != null ? this.getEndpoints(endpointIds) : this.getEndpoints([this.defaultEndpointId]);
+        const endpointIds = this.getEndpointIdsForFeature(featureId)
+        return endpointIds != null ? this.getEndpoints(endpointIds) : this.getEndpoints([this.defaultEndpointId])
     }
 
     private getEndpointIdsForFeature(featureId: FeatureId): EndpointId[] | undefined {
-        return this.context.ir.readmeConfig?.features?.[this.getFeatureKey(featureId)];
+        return this.context.ir.readmeConfig?.features?.[this.getFeatureKey(featureId)]
     }
 
     private getEndpoints(endpointIds: EndpointId[]): EndpointWithFilepath[] {
         return endpointIds.map((endpointId) => {
-            const endpoint = this.endpoints[endpointId];
+            const endpoint = this.endpoints[endpointId]
             if (endpoint == null) {
-                throw new Error(`Internal error; missing endpoint ${endpointId}`);
+                throw new Error(`Internal error; missing endpoint ${endpointId}`)
             }
-            return endpoint;
-        });
+            return endpoint
+        })
     }
 
     private getEndpointSnippetString(endpoint: FernGeneratorExec.Endpoint): string {
-        if (endpoint.snippet.type !== "csharp") {
-            throw new Error(`Internal error; expected csharp snippet but got: ${endpoint.snippet.type}`);
+        if (endpoint.snippet.type !== 'csharp') {
+            throw new Error(`Internal error; expected csharp snippet but got: ${endpoint.snippet.type}`)
         }
-        return endpoint.snippet.client;
+        return endpoint.snippet.client
     }
 
     private getMethodCall(endpoint: EndpointWithFilepath): string {
         return `${this.context.getAccessFromRootClient(endpoint.fernFilepath)}.${this.context.getEndpointMethodName(
             endpoint.endpoint
-        )}`;
+        )}`
     }
 
     private writeCode(s: string): string {
-        return s.trim() + "\n";
+        return s.trim() + '\n'
     }
 }

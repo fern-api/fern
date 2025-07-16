@@ -1,14 +1,14 @@
-import { OpenAPIV3 } from "openapi-types";
+import { OpenAPIV3 } from 'openapi-types'
 
-import { MediaType } from "@fern-api/core-utils";
+import { MediaType } from '@fern-api/core-utils'
 
-import { isReferenceObject } from "./isReferenceObject";
+import { isReferenceObject } from './isReferenceObject'
 
 export function getReferenceOccurrences(document: OpenAPIV3.Document): Record<string, number> {
-    const contentConflictsRemovedDocument = removeApplicationJsonAndMultipartConflictsFromDocument(document);
-    const occurrences: Record<string, number> = {};
-    getReferenceOccurrencesHelper({ obj: contentConflictsRemovedDocument, occurrences, breadcrumbs: [] });
-    return occurrences;
+    const contentConflictsRemovedDocument = removeApplicationJsonAndMultipartConflictsFromDocument(document)
+    const occurrences: Record<string, number> = {}
+    getReferenceOccurrencesHelper({ obj: contentConflictsRemovedDocument, occurrences, breadcrumbs: [] })
+    return occurrences
 }
 
 function getReferenceOccurrencesHelper({
@@ -17,12 +17,12 @@ function getReferenceOccurrencesHelper({
     breadcrumbs
 }: {
     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-    obj: any;
-    occurrences: Record<string, number>;
-    breadcrumbs: string[];
+    obj: any
+    occurrences: Record<string, number>
+    breadcrumbs: string[]
 }): void {
     if (obj == null) {
-        return;
+        return
     }
 
     if (Array.isArray(obj)) {
@@ -31,30 +31,30 @@ function getReferenceOccurrencesHelper({
                 obj: element,
                 occurrences,
                 breadcrumbs
-            });
+            })
         }
-        return;
+        return
     }
 
-    if (typeof obj !== "object") {
-        return;
+    if (typeof obj !== 'object') {
+        return
     }
 
-    if (obj.$ref != null && typeof obj.$ref === "string") {
-        const refProperty = obj.$ref;
+    if (obj.$ref != null && typeof obj.$ref === 'string') {
+        const refProperty = obj.$ref
         if (occurrences[refProperty] == null) {
-            occurrences[refProperty] = 1;
+            occurrences[refProperty] = 1
         } else {
-            occurrences[refProperty] += 1;
+            occurrences[refProperty] += 1
         }
-        return;
+        return
     }
     for (const key in obj) {
         getReferenceOccurrencesHelper({
             obj: obj[key],
             occurrences,
             breadcrumbs: [...breadcrumbs, key]
-        });
+        })
     }
 }
 
@@ -88,10 +88,10 @@ function removeApplicationJsonAndMultipartConflictsFromDocument(document: OpenAP
                                 ? removeApplicationJsonAndMultipartConflictsFromOperationObject(pathItem.delete)
                                 : undefined
                     }
-                ];
+                ]
             })
         )
-    };
+    }
 }
 
 function removeApplicationJsonAndMultipartConflictsFromOperationObject(
@@ -105,23 +105,23 @@ function removeApplicationJsonAndMultipartConflictsFromOperationObject(
                     ? operationObject.requestBody
                     : removeApplicationJsonAndMultipartConflictsFromRequestBody(operationObject.requestBody)
                 : undefined
-    };
+    }
 }
 
 function removeApplicationJsonAndMultipartConflictsFromRequestBody(
     requestBody: OpenAPIV3.RequestBodyObject
 ): OpenAPIV3.RequestBodyObject {
-    let jsonContent: OpenAPIV3.MediaTypeObject | undefined;
-    let multipartContent: OpenAPIV3.MediaTypeObject | undefined;
+    let jsonContent: OpenAPIV3.MediaTypeObject | undefined
+    let multipartContent: OpenAPIV3.MediaTypeObject | undefined
     for (const mediatype in requestBody.content) {
-        const mimetype = MediaType.parse(mediatype);
+        const mimetype = MediaType.parse(mediatype)
         if (mimetype == null) {
-            continue;
+            continue
         }
         if (mimetype.isJSON()) {
-            jsonContent = requestBody.content[mediatype];
+            jsonContent = requestBody.content[mediatype]
         } else if (mimetype.isMultipart()) {
-            multipartContent = requestBody.content[mediatype];
+            multipartContent = requestBody.content[mediatype]
         }
     }
     if (multipartContent != null && jsonContent != null) {
@@ -130,7 +130,7 @@ function removeApplicationJsonAndMultipartConflictsFromRequestBody(
             content: {
                 [MediaType.MULTIPART_FORM_DATA]: multipartContent
             }
-        };
+        }
     }
-    return requestBody;
+    return requestBody
 }

@@ -1,1 +1,1 @@
-export { AbstractGeneratedSchema } from "./AbstractGeneratedSchema";
+export { AbstractGeneratedSchema } from './AbstractGeneratedSchema'

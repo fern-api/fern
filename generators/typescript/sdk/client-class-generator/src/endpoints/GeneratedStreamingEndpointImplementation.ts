@@ -1,51 +1,51 @@
-import { Fetcher, GetReferenceOpts, PackageId } from "@fern-typescript/commons";
-import { GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
-import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
+import { Fetcher, GetReferenceOpts, PackageId } from '@fern-typescript/commons'
+import { GeneratedEndpointImplementation, SdkContext } from '@fern-typescript/contexts'
+import { OptionalKind, ParameterDeclarationStructure, ts } from 'ts-morph'
 
-import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { ExampleEndpointCall, HttpEndpoint } from '@fern-fern/ir-sdk/api'
 
-import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
-import { GeneratedEndpointRequest } from "../endpoint-request/GeneratedEndpointRequest";
-import { getReadableTypeNode } from "../getReadableTypeNode";
-import { GeneratedEndpointResponse } from "./default/endpoint-response/GeneratedEndpointResponse";
-import { buildUrl } from "./utils/buildUrl";
+import { GeneratedSdkClientClassImpl } from '../GeneratedSdkClientClassImpl'
+import { GeneratedEndpointRequest } from '../endpoint-request/GeneratedEndpointRequest'
+import { getReadableTypeNode } from '../getReadableTypeNode'
+import { GeneratedEndpointResponse } from './default/endpoint-response/GeneratedEndpointResponse'
+import { buildUrl } from './utils/buildUrl'
 import {
     getAbortSignalExpression,
     getMaxRetriesExpression,
     getRequestOptionsParameter,
     getTimeoutExpression
-} from "./utils/requestOptionsParameter";
+} from './utils/requestOptionsParameter'
 
 export declare namespace GeneratedStreamingEndpointImplementation {
     export interface Init {
-        packageId: PackageId;
-        endpoint: HttpEndpoint;
-        response: GeneratedEndpointResponse;
-        generatedSdkClientClass: GeneratedSdkClientClassImpl;
-        includeCredentialsOnCrossOriginRequests: boolean;
-        defaultTimeoutInSeconds: number | "infinity" | undefined;
-        request: GeneratedEndpointRequest;
-        includeSerdeLayer: boolean;
-        retainOriginalCasing: boolean;
-        omitUndefined: boolean;
-        streamType: "wrapper" | "web";
+        packageId: PackageId
+        endpoint: HttpEndpoint
+        response: GeneratedEndpointResponse
+        generatedSdkClientClass: GeneratedSdkClientClassImpl
+        includeCredentialsOnCrossOriginRequests: boolean
+        defaultTimeoutInSeconds: number | 'infinity' | undefined
+        request: GeneratedEndpointRequest
+        includeSerdeLayer: boolean
+        retainOriginalCasing: boolean
+        omitUndefined: boolean
+        streamType: 'wrapper' | 'web'
     }
 }
 
 export class GeneratedStreamingEndpointImplementation implements GeneratedEndpointImplementation {
-    public static DATA_PARAMETER_NAME = "data";
+    public static DATA_PARAMETER_NAME = 'data'
 
-    public readonly endpoint: HttpEndpoint;
+    public readonly endpoint: HttpEndpoint
 
-    public response: GeneratedEndpointResponse;
-    private generatedSdkClientClass: GeneratedSdkClientClassImpl;
-    private includeCredentialsOnCrossOriginRequests: boolean;
-    private defaultTimeoutInSeconds: number | "infinity" | undefined;
-    private request: GeneratedEndpointRequest;
-    private includeSerdeLayer: boolean;
-    private retainOriginalCasing: boolean;
-    private omitUndefined: boolean;
-    private streamType: "wrapper" | "web";
+    public response: GeneratedEndpointResponse
+    private generatedSdkClientClass: GeneratedSdkClientClassImpl
+    private includeCredentialsOnCrossOriginRequests: boolean
+    private defaultTimeoutInSeconds: number | 'infinity' | undefined
+    private request: GeneratedEndpointRequest
+    private includeSerdeLayer: boolean
+    private retainOriginalCasing: boolean
+    private omitUndefined: boolean
+    private streamType: 'wrapper' | 'web'
 
     constructor({
         endpoint,
@@ -59,35 +59,35 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         omitUndefined,
         streamType
     }: GeneratedStreamingEndpointImplementation.Init) {
-        this.endpoint = endpoint;
-        this.generatedSdkClientClass = generatedSdkClientClass;
-        this.includeCredentialsOnCrossOriginRequests = includeCredentialsOnCrossOriginRequests;
-        this.response = response;
-        this.defaultTimeoutInSeconds = defaultTimeoutInSeconds;
-        this.request = request;
-        this.includeSerdeLayer = includeSerdeLayer;
-        this.retainOriginalCasing = retainOriginalCasing;
-        this.omitUndefined = omitUndefined;
-        this.streamType = streamType;
+        this.endpoint = endpoint
+        this.generatedSdkClientClass = generatedSdkClientClass
+        this.includeCredentialsOnCrossOriginRequests = includeCredentialsOnCrossOriginRequests
+        this.response = response
+        this.defaultTimeoutInSeconds = defaultTimeoutInSeconds
+        this.request = request
+        this.includeSerdeLayer = includeSerdeLayer
+        this.retainOriginalCasing = retainOriginalCasing
+        this.omitUndefined = omitUndefined
+        this.streamType = streamType
     }
 
     public isPaginated(context: SdkContext): boolean {
-        return false;
+        return false
     }
 
     public getExample(args: {
-        context: SdkContext;
-        example: ExampleEndpointCall;
-        opts: GetReferenceOpts;
-        clientReference: ts.Identifier;
+        context: SdkContext
+        example: ExampleEndpointCall
+        opts: GetReferenceOpts
+        clientReference: ts.Identifier
     }): ts.Expression | undefined {
         const exampleParameters = this.request.getExampleEndpointParameters({
             context: args.context,
             example: args.example,
             opts: args.opts
-        });
+        })
         if (exampleParameters == null) {
-            return undefined;
+            return undefined
         }
         return ts.factory.createAwaitExpression(
             ts.factory.createCallExpression(
@@ -100,18 +100,18 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                 undefined,
                 exampleParameters
             )
-        );
+        )
     }
 
     public maybeLeverageInvocation({
         invocation,
         context
     }: {
-        invocation: ts.Expression;
-        context: SdkContext;
+        invocation: ts.Expression
+        context: SdkContext
     }): ts.Node[] {
-        const responseVariableName = "response";
-        const itemVariableName = "item";
+        const responseVariableName = 'response'
+        const itemVariableName = 'item'
         return [
             ts.factory.createVariableStatement(
                 undefined,
@@ -146,8 +146,8 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                         ts.factory.createExpressionStatement(
                             ts.factory.createCallExpression(
                                 ts.factory.createPropertyAccessExpression(
-                                    ts.factory.createIdentifier("console"),
-                                    ts.factory.createIdentifier("log")
+                                    ts.factory.createIdentifier('console'),
+                                    ts.factory.createIdentifier('log')
                                 ),
                                 undefined,
                                 [ts.factory.createIdentifier(itemVariableName)]
@@ -157,19 +157,19 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                     true
                 )
             )
-        ];
+        ]
     }
 
     public getOverloads(): GeneratedEndpointImplementation.EndpointSignature[] {
-        return [];
+        return []
     }
 
     public getSignature(context: SdkContext): GeneratedEndpointImplementation.EndpointSignature {
-        const returnType = this.response.getReturnType(context);
+        const returnType = this.response.getReturnType(context)
         return {
             parameters: this.getEndpointParameters(context),
             returnTypeWithoutPromise: returnType
-        };
+        }
     }
 
     private getEndpointParameters(context: SdkContext): OptionalKind<ParameterDeclarationStructure>[] {
@@ -178,11 +178,11 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
             getRequestOptionsParameter({
                 requestOptionsReference: this.generatedSdkClientClass.getReferenceToRequestOptions(this.endpoint)
             })
-        ];
+        ]
     }
 
     public getDocs(): string | undefined {
-        return this.endpoint.docs;
+        return this.endpoint.docs
     }
 
     public getStatements(context: SdkContext): ts.Statement[] {
@@ -190,15 +190,15 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
             ...this.getRequestBuilderStatements(context),
             ...this.invokeFetcher(context),
             ...this.response.getReturnResponseStatements(context)
-        ];
+        ]
     }
 
     public getRequestBuilderStatements(context: SdkContext): ts.Statement[] {
-        return this.request.getBuildRequestStatements(context);
+        return this.request.getBuildRequestStatements(context)
     }
 
     private getReferenceToBaseUrl(context: SdkContext): ts.Expression {
-        const baseUrl = this.generatedSdkClientClass.getBaseUrl(this.endpoint, context);
+        const baseUrl = this.generatedSdkClientClass.getBaseUrl(this.endpoint, context)
         const url = buildUrl({
             endpoint: this.endpoint,
             generatedClientClass: this.generatedSdkClientClass,
@@ -207,13 +207,13 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
             retainOriginalCasing: this.retainOriginalCasing,
             omitUndefined: this.omitUndefined,
             getReferenceToPathParameterVariableFromRequest: (pathParameter) => {
-                return this.request.getReferenceToPathParameter(pathParameter.name.originalName, context);
+                return this.request.getReferenceToPathParameter(pathParameter.name.originalName, context)
             }
-        });
+        })
         if (url != null) {
-            return context.coreUtilities.urlUtils.join._invoke([baseUrl, url]);
+            return context.coreUtilities.urlUtils.join._invoke([baseUrl, url])
         } else {
-            return baseUrl;
+            return baseUrl
         }
     }
 
@@ -238,9 +238,9 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                     this.generatedSdkClientClass
                 )
             }),
-            responseType: "sse",
+            responseType: 'sse',
             withCredentials: this.includeCredentialsOnCrossOriginRequests
-        };
+        }
 
         return [
             ts.factory.createVariableStatement(
@@ -264,18 +264,18 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                     ts.NodeFlags.Const
                 )
             )
-        ];
+        ]
     }
 
     public getReferenceToRequestBody(context: SdkContext): ts.Expression | undefined {
-        return this.request.getReferenceToRequestBody(context);
+        return this.request.getReferenceToRequestBody(context)
     }
 
     public getReferenceToPathParameter(pathParameterKey: string, context: SdkContext): ts.Expression {
-        return this.request.getReferenceToPathParameter(pathParameterKey, context);
+        return this.request.getReferenceToPathParameter(pathParameterKey, context)
     }
 
     public getReferenceToQueryParameter(queryParameterKey: string, context: SdkContext): ts.Expression {
-        return this.request.getReferenceToQueryParameter(queryParameterKey, context);
+        return this.request.getReferenceToQueryParameter(queryParameterKey, context)
     }
 }

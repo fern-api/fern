@@ -1,6 +1,6 @@
-import { assertNever, isNonNullish } from "@fern-api/core-utils";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { Logger } from "@fern-api/logger";
+import { assertNever, isNonNullish } from '@fern-api/core-utils'
+import { RawSchemas } from '@fern-api/fern-definition-schema'
+import { Logger } from '@fern-api/logger'
 import {
     CustomCodeSample,
     EndpointExample,
@@ -18,46 +18,46 @@ import {
     ResponseWithExample,
     SchemaWithExample,
     SupportedSdkLanguage
-} from "@fern-api/openapi-ir";
+} from '@fern-api/openapi-ir'
 
-import { ExampleTypeFactory } from "../../../schema/examples/ExampleTypeFactory";
-import { convertSchemaToSchemaWithExample } from "../../../schema/utils/convertSchemaToSchemaWithExample";
-import { isSchemaRequired } from "../../../schema/utils/isSchemaRequired";
-import { shouldSkipReadOnly } from "../../../utils/shouldSkipReadOnly";
-import { OpenAPIV3ParserContext } from "../OpenAPIV3ParserContext";
-import { hasIncompleteExample } from "../hasIncompleteExample";
+import { ExampleTypeFactory } from '../../../schema/examples/ExampleTypeFactory'
+import { convertSchemaToSchemaWithExample } from '../../../schema/utils/convertSchemaToSchemaWithExample'
+import { isSchemaRequired } from '../../../schema/utils/isSchemaRequired'
+import { shouldSkipReadOnly } from '../../../utils/shouldSkipReadOnly'
+import { OpenAPIV3ParserContext } from '../OpenAPIV3ParserContext'
+import { hasIncompleteExample } from '../hasIncompleteExample'
 
 export class ExampleEndpointFactory {
-    private exampleTypeFactory: ExampleTypeFactory;
-    private logger: Logger;
+    private exampleTypeFactory: ExampleTypeFactory
+    private logger: Logger
 
     constructor(
         private readonly schemas: Record<string, SchemaWithExample>,
         private readonly context: OpenAPIV3ParserContext,
         private readonly globalHeaders: GlobalHeader[]
     ) {
-        this.schemas = schemas;
-        this.exampleTypeFactory = new ExampleTypeFactory(schemas, context.nonRequestReferencedSchemas, context);
-        this.logger = context.logger;
+        this.schemas = schemas
+        this.exampleTypeFactory = new ExampleTypeFactory(schemas, context.nonRequestReferencedSchemas, context)
+        this.logger = context.logger
     }
 
     public buildEndpointExample(endpoint: EndpointWithExample): EndpointExample[] {
-        this.logger.debug(`Building endpoint example for ${endpoint.method.toUpperCase()} ${endpoint.path}`);
+        this.logger.debug(`Building endpoint example for ${endpoint.method.toUpperCase()} ${endpoint.path}`)
 
         // pares down the request/response to only multipart or json schemas.
         // other types are not supported in the builder.
-        const requestSchemaIdResponse = getRequestSchema(endpoint.request);
-        const responseSchemaIdResponse = getResponseSchema(endpoint.response);
+        const requestSchemaIdResponse = getRequestSchema(endpoint.request)
+        const responseSchemaIdResponse = getResponseSchema(endpoint.response)
 
-        if (requestSchemaIdResponse?.type === "unsupported" || responseSchemaIdResponse?.type === "unsupported") {
-            return [];
+        if (requestSchemaIdResponse?.type === 'unsupported' || responseSchemaIdResponse?.type === 'unsupported') {
+            return []
         }
 
         // build the request examples. if there are no examples, build an example from the schema.
         // if all the built examples are null, skip building, warn, and return undefined.
-        const requestExamples: [id: string | undefined, example: FernOpenapiIr.FullExample][] = [];
-        if (requestSchemaIdResponse != null && requestSchemaIdResponse.type === "present") {
-            const required = this.isSchemaRequired(requestSchemaIdResponse.schema);
+        const requestExamples: [id: string | undefined, example: FernOpenapiIr.FullExample][] = []
+        if (requestSchemaIdResponse != null && requestSchemaIdResponse.type === 'present') {
+            const required = this.isSchemaRequired(requestSchemaIdResponse.schema)
 
             if (requestSchemaIdResponse.examples.length === 0) {
                 const example = this.exampleTypeFactory.buildExample({
@@ -71,9 +71,9 @@ export class ExampleEndpointFactory {
                         // TODO(dsinghvi): Respect depth on request examples
                         // maxDepth: this.context.options.exampleGeneration?.request?.["max-depth"] ?? 0,
                     }
-                });
+                })
                 if (example != null) {
-                    requestExamples.push([undefined, example]);
+                    requestExamples.push([undefined, example])
                 }
             } else {
                 for (const { name: exampleId, value: rawExample } of requestSchemaIdResponse.examples) {
@@ -88,9 +88,9 @@ export class ExampleEndpointFactory {
                             // TODO(dsinghvi): Respect depth on request examples
                             // maxDepth: this.context.options.exampleGeneration?.request?.["max-depth"] ?? 0,
                         }
-                    });
+                    })
                     if (example != null) {
-                        requestExamples.push([exampleId, example]);
+                        requestExamples.push([exampleId, example])
                     }
                 }
             }
@@ -98,14 +98,14 @@ export class ExampleEndpointFactory {
             if (required && requestExamples.length === 0) {
                 this.logger.trace(
                     `Failed to generate required request example for ${endpoint.method.toUpperCase()} ${endpoint.path}`
-                );
-                return [];
+                )
+                return []
             }
         }
 
-        const responseExamples: [id: string | undefined, example: FernOpenapiIr.EndpointResponseExample][] = [];
-        if (responseSchemaIdResponse != null && responseSchemaIdResponse.type === "present") {
-            const required = this.isSchemaRequired(responseSchemaIdResponse.schema);
+        const responseExamples: [id: string | undefined, example: FernOpenapiIr.EndpointResponseExample][] = []
+        if (responseSchemaIdResponse != null && responseSchemaIdResponse.type === 'present') {
+            const required = this.isSchemaRequired(responseSchemaIdResponse.schema)
 
             if (responseSchemaIdResponse.examples.length === 0) {
                 const example = this.exampleTypeFactory.buildExample({
@@ -114,25 +114,25 @@ export class ExampleEndpointFactory {
                     exampleId: undefined,
                     example: undefined,
                     options: {
-                        maxDepth: this.context.options.exampleGeneration?.response?.["max-depth"] ?? 3,
+                        maxDepth: this.context.options.exampleGeneration?.response?.['max-depth'] ?? 3,
                         isParameter: false,
                         ignoreOptionals: false
                     }
-                });
+                })
                 if (example != null) {
-                    if (endpoint.response?.type === "json") {
-                        responseExamples.push([undefined, EndpointResponseExample.withoutStreaming(example)]);
+                    if (endpoint.response?.type === 'json') {
+                        responseExamples.push([undefined, EndpointResponseExample.withoutStreaming(example)])
                     } else if (
-                        endpoint.response?.type === "streamingJson" ||
-                        endpoint.response?.type === "streamingSse"
+                        endpoint.response?.type === 'streamingJson' ||
+                        endpoint.response?.type === 'streamingSse'
                     ) {
                         responseExamples.push([
                             undefined,
                             EndpointResponseExample.withStreaming({
-                                sse: endpoint.response?.type === "streamingSse",
+                                sse: endpoint.response?.type === 'streamingSse',
                                 events: [example]
                             })
-                        ]);
+                        ])
                     }
                 }
             } else {
@@ -143,25 +143,25 @@ export class ExampleEndpointFactory {
                         exampleId,
                         example: rawExample,
                         options: {
-                            maxDepth: this.context.options.exampleGeneration?.response?.["max-depth"] ?? 3,
+                            maxDepth: this.context.options.exampleGeneration?.response?.['max-depth'] ?? 3,
                             isParameter: false,
                             ignoreOptionals: false
                         }
-                    });
+                    })
                     if (example != null) {
-                        if (endpoint.response?.type === "json") {
-                            responseExamples.push([exampleId, EndpointResponseExample.withoutStreaming(example)]);
+                        if (endpoint.response?.type === 'json') {
+                            responseExamples.push([exampleId, EndpointResponseExample.withoutStreaming(example)])
                         } else if (
-                            endpoint.response?.type === "streamingJson" ||
-                            endpoint.response?.type === "streamingSse"
+                            endpoint.response?.type === 'streamingJson' ||
+                            endpoint.response?.type === 'streamingSse'
                         ) {
                             responseExamples.push([
                                 undefined,
                                 EndpointResponseExample.withStreaming({
-                                    sse: endpoint.response?.type === "streamingSse",
+                                    sse: endpoint.response?.type === 'streamingSse',
                                     events: [example]
                                 })
-                            ]);
+                            ])
                         }
                     }
                 }
@@ -170,14 +170,14 @@ export class ExampleEndpointFactory {
             if (required && responseExamples.length === 0) {
                 this.logger.trace(
                     `Failed to generate required response example for ${endpoint.method.toUpperCase()} ${endpoint.path}`
-                );
-                return [];
+                )
+                return []
             }
         }
 
-        const pathParameters: PathParameterExample[] = [];
+        const pathParameters: PathParameterExample[] = []
         for (const pathParameter of endpoint.pathParameters) {
-            const required = this.isSchemaRequired(pathParameter.schema);
+            const required = this.isSchemaRequired(pathParameter.schema)
             let example = this.exampleTypeFactory.buildExample({
                 schema: pathParameter.schema,
                 exampleId: undefined,
@@ -187,29 +187,29 @@ export class ExampleEndpointFactory {
                     isParameter: true,
                     ignoreOptionals: true
                 }
-            });
+            })
             if (example != null && !isExamplePrimitive(example)) {
                 this.logger.warn(
                     `Expected a primitive example but got ${example.type} for path parameter ${
                         pathParameter.name
                     } for ${endpoint.method.toUpperCase()} ${endpoint.path}`
-                );
-                example = undefined;
+                )
+                example = undefined
             }
             if (required && example == null) {
-                return [];
+                return []
             } else if (example != null) {
                 pathParameters.push({
                     name: pathParameter.name,
                     parameterNameOverride: pathParameter.parameterNameOverride,
                     value: example
-                });
+                })
             }
         }
 
-        const queryParameters: QueryParameterExample[] = [];
+        const queryParameters: QueryParameterExample[] = []
         for (const queryParameter of endpoint.queryParameters) {
-            const required = this.isSchemaRequired(queryParameter.schema);
+            const required = this.isSchemaRequired(queryParameter.schema)
             let example = this.exampleTypeFactory.buildExample({
                 schema: queryParameter.schema,
                 exampleId: undefined,
@@ -219,28 +219,28 @@ export class ExampleEndpointFactory {
                     isParameter: true,
                     ignoreOptionals: true
                 }
-            });
+            })
             if (example != null && !isExamplePrimitive(example)) {
                 this.logger.warn(
                     `Expected a primitive example but got ${example.type} for query parameter ${
                         queryParameter.name
                     } for ${endpoint.method.toUpperCase()} ${endpoint.path}`
-                );
-                example = undefined;
+                )
+                example = undefined
             }
             if (required && example == null) {
-                return [];
+                return []
             } else if (example != null) {
                 queryParameters.push({
                     name: queryParameter.name,
                     value: example
-                });
+                })
             }
         }
 
-        const headers: HeaderExample[] = [];
+        const headers: HeaderExample[] = []
         for (const header of endpoint.headers) {
-            const required = this.isSchemaRequired(header.schema);
+            const required = this.isSchemaRequired(header.schema)
             let example = this.exampleTypeFactory.buildExample({
                 schema: header.schema,
                 exampleId: undefined,
@@ -250,22 +250,22 @@ export class ExampleEndpointFactory {
                     isParameter: true,
                     ignoreOptionals: true
                 }
-            });
+            })
             if (example != null && !isExamplePrimitive(example)) {
                 this.logger.warn(
                     `Expected a primitive example but got ${example.type} for header ${
                         header.name
                     } for ${endpoint.method.toUpperCase()} ${endpoint.path}`
-                );
-                example = undefined;
+                )
+                example = undefined
             }
             if (required && example == null) {
-                return [];
+                return []
             } else if (example != null) {
                 headers.push({
                     name: header.name,
                     value: example
-                });
+                })
             }
         }
 
@@ -276,7 +276,7 @@ export class ExampleEndpointFactory {
                     ? convertSchemaToSchemaWithExample(globalHeader.schema)
                     : SchemaWithExample.primitive({
                           nameOverride: undefined,
-                          generatedName: "",
+                          generatedName: '',
                           title: undefined,
                           description: undefined,
                           availability: undefined,
@@ -290,7 +290,7 @@ export class ExampleEndpointFactory {
                               example: undefined,
                               format: undefined
                           })
-                      });
+                      })
 
             let example = this.exampleTypeFactory.buildExample({
                 schema,
@@ -301,56 +301,56 @@ export class ExampleEndpointFactory {
                     isParameter: true,
                     ignoreOptionals: true
                 }
-            });
+            })
 
             if (example != null && !isExamplePrimitive(example)) {
                 this.logger.warn(
                     `Expected a primitive example but got ${example.type} for global header ${
                         globalHeader.header
                     } for ${endpoint.method.toUpperCase()} ${endpoint.path}`
-                );
-                example = undefined;
+                )
+                example = undefined
             }
             if (example == null) {
-                return [];
+                return []
             } else if (example != null) {
                 headers.push({
                     name: globalHeader.header,
                     value: example
-                });
+                })
             }
         }
 
-        let requestResponsePairs: RequestResponsePair[] = [];
+        let requestResponsePairs: RequestResponsePair[] = []
         if (endpoint.request != null && endpoint.response != null) {
-            requestResponsePairs = consolidateRequestResponseExamples(requestExamples, responseExamples);
+            requestResponsePairs = consolidateRequestResponseExamples(requestExamples, responseExamples)
         } else if (endpoint.request != null) {
             requestResponsePairs = requestExamples.map(([id, example]) => {
-                return { id, request: example, response: undefined };
-            });
+                return { id, request: example, response: undefined }
+            })
         } else if (endpoint.response != null) {
             requestResponsePairs = responseExamples.map(([id, example]) => {
-                return { id, request: undefined, response: example };
-            });
+                return { id, request: undefined, response: example }
+            })
         }
 
         // Get all the code samples from incomplete examples
         const codeSamples = endpoint.examples
             .filter((ex) => hasIncompleteExample(ex))
             .flatMap((ex) => {
-                if (ex.type === "unknown") {
+                if (ex.type === 'unknown') {
                     if (ex.value != null) {
-                        const samples = (ex.value as RawSchemas.ExampleEndpointCallSchema)["code-samples"];
+                        const samples = (ex.value as RawSchemas.ExampleEndpointCallSchema)['code-samples']
                         if (samples != null) {
-                            return this.convertCodeSamples(samples);
+                            return this.convertCodeSamples(samples)
                         }
                     }
-                    return undefined;
+                    return undefined
                 } else {
-                    return ex.codeSamples;
+                    return ex.codeSamples
                 }
             })
-            .filter((ex): ex is CustomCodeSample => isNonNullish(ex));
+            .filter((ex): ex is CustomCodeSample => isNonNullish(ex))
 
         if (requestResponsePairs.length === 0) {
             return [
@@ -364,7 +364,7 @@ export class ExampleEndpointFactory {
                     response: undefined,
                     codeSamples
                 })
-            ];
+            ]
         }
 
         return requestResponsePairs.map(({ id: exampleName, request: requestExample, response: responseExample }) => {
@@ -377,46 +377,46 @@ export class ExampleEndpointFactory {
                 request: requestExample,
                 response: responseExample,
                 codeSamples
-            });
-        });
+            })
+        })
     }
 
     private convertCodeSamples(codeSamples: RawSchemas.ExampleCodeSampleSchema[]): CustomCodeSample[] {
         return codeSamples
             .map((codeSample) => {
-                if ("language" in codeSample) {
+                if ('language' in codeSample) {
                     return CustomCodeSample.language({
                         name: codeSample.name ?? undefined,
                         description: codeSample.docs ?? undefined,
                         language: codeSample.language,
                         code: codeSample.code,
                         install: codeSample.install ?? undefined
-                    });
+                    })
                 } else {
                     return CustomCodeSample.sdk({
                         name: codeSample.name ?? undefined,
                         description: codeSample.docs ?? undefined,
-                        sdk: codeSample.sdk === "c#" ? SupportedSdkLanguage.Csharp : codeSample.sdk,
+                        sdk: codeSample.sdk === 'c#' ? SupportedSdkLanguage.Csharp : codeSample.sdk,
                         code: codeSample.code
-                    });
+                    })
                 }
             })
-            .filter(isNonNullish);
+            .filter(isNonNullish)
     }
 
     private isSchemaRequired(schema: SchemaWithExample) {
-        return isSchemaRequired(this.getResolvedSchema(schema));
+        return isSchemaRequired(this.getResolvedSchema(schema))
     }
 
     private getResolvedSchema(schema: SchemaWithExample) {
-        return schema;
+        return schema
     }
 }
 
 interface RequestResponsePair {
-    id: string | undefined;
-    request: FernOpenapiIr.FullExample | undefined;
-    response: FernOpenapiIr.EndpointResponseExample | undefined;
+    id: string | undefined
+    request: FernOpenapiIr.FullExample | undefined
+    response: FernOpenapiIr.EndpointResponseExample | undefined
 }
 
 // if request has multiple examples and response has only 1 example, the response example will be repeated for each request example
@@ -428,86 +428,86 @@ function consolidateRequestResponseExamples(
     requestExamples: [id: string | undefined, example: FernOpenapiIr.FullExample][],
     responseExamples: [id: string | undefined, example: FernOpenapiIr.EndpointResponseExample][]
 ): RequestResponsePair[] {
-    const pairs: RequestResponsePair[] = [];
+    const pairs: RequestResponsePair[] = []
     if (requestExamples.length <= 1) {
-        const [requestId, requestExample] = requestExamples[0] ?? [];
+        const [requestId, requestExample] = requestExamples[0] ?? []
 
         if (responseExamples.length === 0) {
             pairs.push({
                 id: requestId,
                 request: requestExample,
                 response: undefined
-            });
-            return pairs;
+            })
+            return pairs
         } else {
             for (const [responseId, responseExample] of responseExamples) {
                 pairs.push({
                     id: responseId ?? requestId,
                     request: requestExample,
                     response: responseExample
-                });
+                })
             }
         }
-        return pairs;
+        return pairs
     }
 
     if (responseExamples.length <= 1) {
-        const [responseId, responseExample] = responseExamples[0] ?? [];
+        const [responseId, responseExample] = responseExamples[0] ?? []
 
         if (responseExamples.length === 0) {
             pairs.push({
                 id: responseId,
                 request: undefined,
                 response: responseExample
-            });
-            return pairs;
+            })
+            return pairs
         } else {
             for (const [requestId, requestExample] of requestExamples) {
                 pairs.push({
                     id: requestId ?? responseId,
                     request: requestExample,
                     response: responseExample
-                });
+                })
             }
         }
-        return pairs;
+        return pairs
     }
 
-    const visitedResponseIdx = new Set<number>();
+    const visitedResponseIdx = new Set<number>()
     for (const [requestId, requestExample] of requestExamples) {
         // If the request has no id, or response cannot be paired, pair the request with the first response example that has no id, falling back to the first response example
         const fallbackResponseExample =
-            responseExamples.find(([responseId]) => responseId == null)?.[1] ?? responseExamples[0]?.[1];
+            responseExamples.find(([responseId]) => responseId == null)?.[1] ?? responseExamples[0]?.[1]
 
         if (requestId == null) {
             if (fallbackResponseExample == null) {
-                continue;
+                continue
             }
             pairs.push({
                 id: undefined,
                 request: requestExample,
                 response: fallbackResponseExample
-            });
-            continue;
+            })
+            continue
         }
 
-        let paired = false;
+        let paired = false
         for (let idx = 0; idx < responseExamples.length; idx++) {
             // biome-ignore lint/style/noNonNullAssertion: allow
-            const [responseId, responseExample] = responseExamples[idx]!;
+            const [responseId, responseExample] = responseExamples[idx]!
             if (responseId == null || visitedResponseIdx.has(idx)) {
-                continue;
+                continue
             }
             if (requestId === responseId) {
                 pairs.push({
                     id: requestId,
                     request: requestExample,
                     response: responseExample
-                });
+                })
                 if (responseId != null) {
-                    visitedResponseIdx.add(idx);
+                    visitedResponseIdx.add(idx)
                 }
-                paired = true;
+                paired = true
             }
         }
 
@@ -516,130 +516,130 @@ function consolidateRequestResponseExamples(
                 id: requestId,
                 request: requestExample,
                 response: fallbackResponseExample
-            });
+            })
         }
     }
 
     for (let idx = 0; idx < responseExamples.length; idx++) {
         if (visitedResponseIdx.has(idx)) {
-            continue;
+            continue
         }
         // biome-ignore lint/style/noNonNullAssertion: allow
-        const [responseId, responseExample] = responseExamples[idx]!;
+        const [responseId, responseExample] = responseExamples[idx]!
 
-        const requestExample = requestExamples.find(([requestId]) => requestId == null)?.[1] ?? requestExamples[0]?.[1];
+        const requestExample = requestExamples.find(([requestId]) => requestId == null)?.[1] ?? requestExamples[0]?.[1]
 
         if (requestExample != null) {
             pairs.push({
                 id: responseId,
                 request: requestExample,
                 response: responseExample
-            });
+            })
         }
     }
 
-    return pairs;
+    return pairs
 }
 
 type SchemaIdResponse =
     | {
-          type: "present";
-          schema: SchemaWithExample;
+          type: 'present'
+          schema: SchemaWithExample
           // in a majority of cases, there should only be 1 or no example, and we
-          examples: NamedFullExample[];
+          examples: NamedFullExample[]
       }
-    | { type: "unsupported" };
+    | { type: 'unsupported' }
 
 function getRequestSchema(request: RequestWithExample | null | undefined): SchemaIdResponse | undefined {
     if (request == null) {
-        return undefined;
+        return undefined
     }
 
-    if (request.type === "multipart") {
+    if (request.type === 'multipart') {
         return {
-            type: "present",
+            type: 'present',
             schema: convertMultipartRequestToSchema(request),
             examples: []
-        };
+        }
     }
 
-    if (request.type === "json") {
-        return { type: "present", schema: request.schema, examples: request.fullExamples ?? [] };
+    if (request.type === 'json') {
+        return { type: 'present', schema: request.schema, examples: request.fullExamples ?? [] }
     }
 
-    return { type: "unsupported" };
+    return { type: 'unsupported' }
 }
 
 function getResponseSchema(response: ResponseWithExample | null | undefined): SchemaIdResponse | undefined {
     if (response == null) {
-        return undefined;
+        return undefined
     }
-    if (response.type !== "json" && response.type !== "streamingJson" && response.type !== "streamingSse") {
-        return { type: "unsupported" };
+    if (response.type !== 'json' && response.type !== 'streamingJson' && response.type !== 'streamingSse') {
+        return { type: 'unsupported' }
     }
-    return { type: "present", schema: response.schema, examples: response.fullExamples ?? [] };
+    return { type: 'present', schema: response.schema, examples: response.fullExamples ?? [] }
 }
 
 export function isExamplePrimitive(example: FullExample): boolean {
     switch (example.type) {
-        case "primitive":
-        case "enum":
-        case "literal":
-            return true;
-        case "unknown":
-            return isExamplePrimitive(example);
-        case "array":
-        case "object":
-        case "map":
-            return false;
-        case "oneOf":
+        case 'primitive':
+        case 'enum':
+        case 'literal':
+            return true
+        case 'unknown':
+            return isExamplePrimitive(example)
+        case 'array':
+        case 'object':
+        case 'map':
+            return false
+        case 'oneOf':
             switch (example.value.type) {
-                case "discriminated":
-                    return false;
-                case "undiscriminated":
-                    return isExamplePrimitive(example.value.value);
+                case 'discriminated':
+                    return false
+                case 'undiscriminated':
+                    return isExamplePrimitive(example.value.value)
                 default:
-                    return false;
+                    return false
             }
         default:
-            assertNever(example);
+            assertNever(example)
     }
 }
 
 export function getNameFromSchemaWithExample(schema: SchemaWithExample): string | undefined {
     switch (schema.type) {
-        case "primitive":
-        case "enum":
-        case "literal":
-        case "unknown":
-        case "array":
-        case "map":
-        case "optional":
-        case "nullable":
-        case "reference":
-            return undefined;
-        case "object":
-            return schema.fullExamples?.[0]?.name ?? undefined;
-        case "oneOf":
+        case 'primitive':
+        case 'enum':
+        case 'literal':
+        case 'unknown':
+        case 'array':
+        case 'map':
+        case 'optional':
+        case 'nullable':
+        case 'reference':
+            return undefined
+        case 'object':
+            return schema.fullExamples?.[0]?.name ?? undefined
+        case 'oneOf':
             switch (schema.value.type) {
-                case "discriminated":
-                    return undefined;
-                case "undiscriminated":
-                    return undefined;
+                case 'discriminated':
+                    return undefined
+                case 'undiscriminated':
+                    return undefined
                 default:
-                    return undefined;
+                    return undefined
             }
         default:
-            assertNever(schema);
+            assertNever(schema)
     }
 }
 function convertMultipartRequestToSchema(request: RequestWithExample.Multipart): FernOpenapiIr.SchemaWithExample {
     return SchemaWithExample.object({
         properties: request.properties
             .map((property) => {
-                if (property.schema.type === "file") {
+                if (property.schema.type === 'file') {
                     // TODO: Handle file property examples in the Fern Definition
-                    return null;
+                    return null
                 }
                 return {
                     key: property.key,
@@ -655,7 +655,7 @@ function convertMultipartRequestToSchema(request: RequestWithExample.Multipart):
                     readonly: undefined,
                     writeonly: undefined,
                     inline: undefined
-                };
+                }
             })
             .filter(isNonNullish),
         allOf: [],
@@ -663,7 +663,7 @@ function convertMultipartRequestToSchema(request: RequestWithExample.Multipart):
         fullExamples: undefined,
         description: request.description,
         nameOverride: undefined,
-        generatedName: "",
+        generatedName: '',
         title: undefined,
         namespace: undefined,
         groupName: undefined,
@@ -671,5 +671,5 @@ function convertMultipartRequestToSchema(request: RequestWithExample.Multipart):
         availability: undefined,
         source: request.source,
         inline: undefined
-    });
+    })
 }

@@ -1,25 +1,25 @@
-import { AbstractFormatter, File } from "@fern-api/base-generator";
-import { RelativeFilePath } from "@fern-api/fs-utils";
-import { BaseGoCustomConfigSchema, go } from "@fern-api/go-ast";
+import { AbstractFormatter, File } from '@fern-api/base-generator'
+import { RelativeFilePath } from '@fern-api/fs-utils'
+import { BaseGoCustomConfigSchema, go } from '@fern-api/go-ast'
 
 export declare namespace GoFile {
     interface Args {
         /* The node to be written to the Go source file */
-        node: go.AstNode;
+        node: go.AstNode
         /* Directory of the file */
-        directory: RelativeFilePath;
+        directory: RelativeFilePath
         /* Filename of the file */
-        filename: string;
+        filename: string
         /* The package name of the file */
-        packageName: string;
+        packageName: string
         /* The root import path of the module */
-        rootImportPath: string;
+        rootImportPath: string
         /* The import path of the file */
-        importPath: string;
+        importPath: string
         /* Custom generator config */
-        customConfig: BaseGoCustomConfigSchema;
+        customConfig: BaseGoCustomConfigSchema
         /* Optional formatter */
-        formatter?: AbstractFormatter;
+        formatter?: AbstractFormatter
     }
 }
 
@@ -44,6 +44,6 @@ export class GoFile extends File {
                 customConfig,
                 formatter
             })
-        );
+        )
     }
 }

@@ -1,1 +1,1 @@
-export * from "./SdkCustomConfigSchema";
+export * from './SdkCustomConfigSchema'

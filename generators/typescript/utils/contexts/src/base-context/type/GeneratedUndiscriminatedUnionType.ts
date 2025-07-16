@@ -1,5 +1,5 @@
-import { BaseGeneratedType } from "./BaseGeneratedType";
+import { BaseGeneratedType } from './BaseGeneratedType'
 
 export interface GeneratedUndiscriminatedUnionType<Context> extends BaseGeneratedType<Context> {
-    type: "undiscriminatedUnion";
+    type: 'undiscriminatedUnion'
 }

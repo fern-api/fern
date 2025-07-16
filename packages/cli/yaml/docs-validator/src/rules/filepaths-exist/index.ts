@@ -1,1 +1,1 @@
-export { FilepathsExistRule } from "./filepaths-exist";
+export { FilepathsExistRule } from './filepaths-exist'

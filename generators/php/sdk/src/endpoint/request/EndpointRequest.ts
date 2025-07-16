@@ -1,23 +1,23 @@
-import { assertNever } from "@fern-api/core-utils";
-import { php } from "@fern-api/php-codegen";
+import { assertNever } from '@fern-api/core-utils'
+import { php } from '@fern-api/php-codegen'
 
-import { FileUploadRequest, HttpEndpoint, HttpService, InlinedRequestBody, SdkRequest } from "@fern-fern/ir-sdk/api";
+import { FileUploadRequest, HttpEndpoint, HttpService, InlinedRequestBody, SdkRequest } from '@fern-fern/ir-sdk/api'
 
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { SdkGeneratorContext } from '../../SdkGeneratorContext'
 
 export interface QueryParameterCodeBlock {
-    code: php.CodeBlock;
-    queryParameterBagReference: string;
+    code: php.CodeBlock
+    queryParameterBagReference: string
 }
 
 export interface HeaderParameterCodeBlock {
-    code: php.CodeBlock;
-    headerParameterBagReference: string;
+    code: php.CodeBlock
+    headerParameterBagReference: string
 }
 
 export interface RequestBodyCodeBlock {
-    code?: php.CodeBlock;
-    requestBodyReference: php.CodeBlock;
+    code?: php.CodeBlock
+    requestBodyReference: php.CodeBlock
 }
 
 export abstract class EndpointRequest {
@@ -29,63 +29,63 @@ export abstract class EndpointRequest {
     ) {}
 
     public getRequestParameterName(): string {
-        return `$${this.context.getParameterName(this.sdkRequest.requestParameterName)}`;
+        return `$${this.context.getParameterName(this.sdkRequest.requestParameterName)}`
     }
 
     public shouldIncludeDefaultInitializer(): boolean {
-        if (this.sdkRequest.shape.type === "wrapper") {
+        if (this.sdkRequest.shape.type === 'wrapper') {
             if (
                 this.context.includePathParametersInWrappedRequest({
                     endpoint: this.endpoint,
                     wrapper: this.sdkRequest.shape
                 })
             ) {
-                return false;
+                return false
             }
         }
         for (const queryParameter of this.endpoint.queryParameters) {
             if (!this.context.isOptional(queryParameter.valueType)) {
-                return false;
+                return false
             }
         }
         for (const headerParameter of [...this.service.headers, ...this.endpoint.headers]) {
             if (!this.context.isOptional(headerParameter.valueType)) {
-                return false;
+                return false
             }
         }
-        const requestBody = this.endpoint.requestBody;
+        const requestBody = this.endpoint.requestBody
         if (requestBody != null) {
             switch (requestBody.type) {
-                case "inlinedRequestBody":
-                    return this.inlinedRequestBodyHasRequiredProperties(requestBody);
-                case "fileUpload":
-                    return this.fileUploadRequestBodyHasRequiredProperties(requestBody);
-                case "reference":
-                    return false;
-                case "bytes":
-                    return false;
+                case 'inlinedRequestBody':
+                    return this.inlinedRequestBodyHasRequiredProperties(requestBody)
+                case 'fileUpload':
+                    return this.fileUploadRequestBodyHasRequiredProperties(requestBody)
+                case 'reference':
+                    return false
+                case 'bytes':
+                    return false
                 default:
-                    assertNever(requestBody);
+                    assertNever(requestBody)
             }
         }
-        return true;
+        return true
     }
 
-    public abstract getRequestParameterType(): php.Type;
+    public abstract getRequestParameterType(): php.Type
 
-    public abstract getQueryParameterCodeBlock(): QueryParameterCodeBlock | undefined;
+    public abstract getQueryParameterCodeBlock(): QueryParameterCodeBlock | undefined
 
-    public abstract getHeaderParameterCodeBlock(): HeaderParameterCodeBlock | undefined;
+    public abstract getHeaderParameterCodeBlock(): HeaderParameterCodeBlock | undefined
 
-    public abstract getRequestBodyCodeBlock(): RequestBodyCodeBlock | undefined;
+    public abstract getRequestBodyCodeBlock(): RequestBodyCodeBlock | undefined
 
     protected serializeJsonRequest({ bodyArgument }: { bodyArgument: php.CodeBlock }): php.CodeBlock {
-        const requestParameterType = this.getRequestParameterType();
+        const requestParameterType = this.getRequestParameterType()
         return this.serializeJsonType({
             type: requestParameterType,
             bodyArgument,
             isOptional: requestParameterType.isOptional()
-        });
+        })
     }
 
     protected serializeJsonType({
@@ -93,51 +93,51 @@ export abstract class EndpointRequest {
         bodyArgument,
         isOptional
     }: {
-        type: php.Type;
-        bodyArgument: php.CodeBlock;
-        isOptional: boolean;
+        type: php.Type
+        bodyArgument: php.CodeBlock
+        isOptional: boolean
     }): php.CodeBlock {
-        const underlyingType = type.underlyingType();
-        const internalType = underlyingType.internalType;
+        const underlyingType = type.underlyingType()
+        const internalType = underlyingType.internalType
         switch (internalType.type) {
-            case "array":
-            case "map":
+            case 'array':
+            case 'map':
                 return this.serializeJsonRequestForArray({
                     bodyArgument,
                     type: underlyingType,
                     isOptional
-                });
-            case "date":
+                })
+            case 'date':
                 return this.serializeJsonRequestForDateTime({
                     bodyArgument,
-                    variant: "Date",
+                    variant: 'Date',
                     isOptional
-                });
-            case "dateTime":
+                })
+            case 'dateTime':
                 return this.serializeJsonRequestForDateTime({
                     bodyArgument,
-                    variant: "DateTime",
+                    variant: 'DateTime',
                     isOptional
-                });
-            case "union":
+                })
+            case 'union':
                 return this.serializeJsonForUnion({
                     bodyArgument,
                     types: internalType.types,
                     isOptional
-                });
-            case "reference":
-            case "int":
-            case "float":
-            case "string":
-            case "bool":
-            case "mixed":
-            case "object":
-            case "optional":
-            case "null":
-            case "typeDict":
-            case "enumString":
-            case "literal":
-                return bodyArgument;
+                })
+            case 'reference':
+            case 'int':
+            case 'float':
+            case 'string':
+            case 'bool':
+            case 'mixed':
+            case 'object':
+            case 'optional':
+            case 'null':
+            case 'typeDict':
+            case 'enumString':
+            case 'literal':
+                return bodyArgument
         }
     }
 
@@ -146,20 +146,20 @@ export abstract class EndpointRequest {
         type,
         isOptional
     }: {
-        bodyArgument: php.CodeBlock;
-        type: php.Type;
-        isOptional: boolean;
+        bodyArgument: php.CodeBlock
+        type: php.Type
+        isOptional: boolean
     }): php.CodeBlock {
         return this.serializeJsonRequestMethod({
             bodyArgument,
             methodInvocation: php.invokeMethod({
                 on: this.context.getJsonSerializerClassReference(),
-                method: "serializeArray",
+                method: 'serializeArray',
                 arguments_: [bodyArgument, this.context.phpAttributeMapper.getTypeAttributeArgument(type)],
                 static_: true
             }),
             isOptional
-        });
+        })
     }
 
     protected serializeJsonForUnion({
@@ -167,23 +167,23 @@ export abstract class EndpointRequest {
         types,
         isOptional
     }: {
-        bodyArgument: php.CodeBlock;
-        types: php.Type[];
-        isOptional: boolean;
+        bodyArgument: php.CodeBlock
+        types: php.Type[]
+        isOptional: boolean
     }): php.CodeBlock {
-        const unionTypeParameters = this.context.phpAttributeMapper.getUnionTypeParameters({ types, isOptional });
+        const unionTypeParameters = this.context.phpAttributeMapper.getUnionTypeParameters({ types, isOptional })
         // if deduping in getUnionTypeParameters results in one type, treat it like just that type
         if (unionTypeParameters.length === 1) {
             if (types[0] == null) {
-                throw new Error("Unexpected empty types");
+                throw new Error('Unexpected empty types')
             }
-            return this.serializeJsonType({ type: types[0], bodyArgument, isOptional });
+            return this.serializeJsonType({ type: types[0], bodyArgument, isOptional })
         }
         return this.serializeJsonRequestMethod({
             bodyArgument,
             methodInvocation: php.invokeMethod({
                 on: this.context.getJsonSerializerClassReference(),
-                method: "serializeUnion",
+                method: 'serializeUnion',
                 arguments_: [
                     bodyArgument,
                     this.context.phpAttributeMapper.getUnionTypeClassRepresentation(unionTypeParameters)
@@ -191,7 +191,7 @@ export abstract class EndpointRequest {
                 static_: true
             }),
             isOptional
-        });
+        })
     }
 
     private serializeJsonRequestForDateTime({
@@ -199,9 +199,9 @@ export abstract class EndpointRequest {
         variant,
         isOptional
     }: {
-        bodyArgument: php.CodeBlock;
-        variant: "Date" | "DateTime";
-        isOptional: boolean;
+        bodyArgument: php.CodeBlock
+        variant: 'Date' | 'DateTime'
+        isOptional: boolean
     }): php.CodeBlock {
         return this.serializeJsonRequestMethod({
             bodyArgument,
@@ -212,7 +212,7 @@ export abstract class EndpointRequest {
                 static_: true
             }),
             isOptional
-        });
+        })
     }
 
     private serializeJsonRequestMethod({
@@ -220,54 +220,54 @@ export abstract class EndpointRequest {
         methodInvocation,
         isOptional
     }: {
-        bodyArgument: php.CodeBlock;
-        methodInvocation: php.MethodInvocation;
-        isOptional: boolean;
+        bodyArgument: php.CodeBlock
+        methodInvocation: php.MethodInvocation
+        isOptional: boolean
     }): php.CodeBlock {
         return php.codeblock((writer) => {
             if (!isOptional) {
-                writer.writeNode(methodInvocation);
-                return;
+                writer.writeNode(methodInvocation)
+                return
             }
             writer.writeNode(
                 php.ternary({
                     condition: bodyArgument,
                     true_: methodInvocation,
-                    false_: php.codeblock("null")
+                    false_: php.codeblock('null')
                 })
-            );
-        });
+            )
+        })
     }
 
     private inlinedRequestBodyHasRequiredProperties(requestBody: InlinedRequestBody): boolean {
-        const properties = requestBody.properties;
+        const properties = requestBody.properties
         for (const property of [...properties, ...(requestBody.extendedProperties ?? [])]) {
             if (!this.context.isOptional(property.valueType)) {
-                return false;
+                return false
             }
         }
-        return true;
+        return true
     }
 
     private fileUploadRequestBodyHasRequiredProperties(requestBody: FileUploadRequest): boolean {
         for (const property of requestBody.properties) {
             switch (property.type) {
-                case "file": {
+                case 'file': {
                     if (!property.value.isOptional) {
-                        return false;
+                        return false
                     }
-                    break;
+                    break
                 }
-                case "bodyProperty": {
+                case 'bodyProperty': {
                     if (!this.context.isOptional(property.valueType)) {
-                        return false;
+                        return false
                     }
-                    break;
+                    break
                 }
                 default:
-                    assertNever(property);
+                    assertNever(property)
             }
         }
-        return true;
+        return true
     }
 }

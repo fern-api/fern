@@ -1,3 +1,3 @@
-import { ESCAPED_COMPONENTS } from "../constants.js";
+import { ESCAPED_COMPONENTS } from '../constants.js'
 
-export type EscapedComponent = (typeof ESCAPED_COMPONENTS)[number];
+export type EscapedComponent = (typeof ESCAPED_COMPONENTS)[number]

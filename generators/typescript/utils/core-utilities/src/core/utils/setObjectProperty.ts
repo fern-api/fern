@@ -10,34 +10,34 @@
  */
 export function setObjectProperty<T extends object>(object: T, path: string, value: any): T {
     if (object == null) {
-        return object;
+        return object
     }
 
-    const keys: string[] = path.split(".");
+    const keys: string[] = path.split('.')
     if (keys.length === 0) {
         // Invalid path; do nothing.
-        return object;
+        return object
     }
 
-    let current: Record<string, any> = object;
+    let current: Record<string, any> = object
     for (let i = 0; i < keys.length - 1; i++) {
-        const key = keys[i];
+        const key = keys[i]
         if (key == null) {
             // Unreachable.
-            continue;
+            continue
         }
-        if (!current[key] || typeof current[key] !== "object") {
-            current[key] = {};
+        if (!current[key] || typeof current[key] !== 'object') {
+            current[key] = {}
         }
-        current = current[key] as Record<string, any>;
+        current = current[key] as Record<string, any>
     }
 
-    const lastKey = keys[keys.length - 1];
+    const lastKey = keys[keys.length - 1]
     if (lastKey == null) {
         // Unreachable.
-        return object;
+        return object
     }
 
-    current[lastKey] = value;
-    return object;
+    current[lastKey] = value
+    return object
 }

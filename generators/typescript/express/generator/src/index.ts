@@ -1,1 +1,1 @@
-export { ExpressGenerator } from "./ExpressGenerator";
+export { ExpressGenerator } from './ExpressGenerator'

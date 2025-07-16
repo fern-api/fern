@@ -5,19 +5,19 @@ import {
     ObjectProperty,
     ObjectTypeDeclaration,
     TypeDeclaration
-} from "@fern-api/ir-sdk";
-import { LoggableFernCliError } from "@fern-api/task-context";
+} from '@fern-api/ir-sdk'
+import { LoggableFernCliError } from '@fern-api/task-context'
 
-import { getTypeDeclaration } from "../utils/getTypeDeclaration";
+import { getTypeDeclaration } from '../utils/getTypeDeclaration'
 
-type TypesAndServices = Pick<IntermediateRepresentation, "types" | "services">;
+type TypesAndServices = Pick<IntermediateRepresentation, 'types' | 'services'>
 
 export function addExtendedPropertiesToIr(ir: TypesAndServices): void {
     ir.types = Object.fromEntries(
         Object.entries(ir.types).map(([typeId, typeDeclaration]) => {
-            return [typeId, addExtendedPropertiesToType({ typeDeclaration, ir })];
+            return [typeId, addExtendedPropertiesToType({ typeDeclaration, ir })]
         })
-    );
+    )
     ir.services = Object.fromEntries(
         Object.entries(ir.services).map(([serviceId, serviceDeclaration]) => {
             return [
@@ -25,23 +25,23 @@ export function addExtendedPropertiesToIr(ir: TypesAndServices): void {
                 {
                     ...serviceDeclaration,
                     endpoints: serviceDeclaration.endpoints.map((endpoint) => {
-                        return addExtendedPropertiesToEndpoint({ endpoint, ir });
+                        return addExtendedPropertiesToEndpoint({ endpoint, ir })
                     })
                 }
-            ];
+            ]
         })
-    );
+    )
 }
 
 function addExtendedPropertiesToEndpoint({
     endpoint,
     ir
 }: {
-    endpoint: HttpEndpoint;
-    ir: TypesAndServices;
+    endpoint: HttpEndpoint
+    ir: TypesAndServices
 }): HttpEndpoint {
-    if (endpoint.requestBody?.type !== "inlinedRequestBody") {
-        return endpoint;
+    if (endpoint.requestBody?.type !== 'inlinedRequestBody') {
+        return endpoint
     }
     return {
         ...endpoint,
@@ -51,18 +51,18 @@ function addExtendedPropertiesToEndpoint({
                 getExtendedPropertiesForDeclaredTypeName(extended, ir)
             )
         }
-    };
+    }
 }
 
 function addExtendedPropertiesToType({
     typeDeclaration,
     ir
 }: {
-    typeDeclaration: TypeDeclaration;
-    ir: TypesAndServices;
+    typeDeclaration: TypeDeclaration
+    ir: TypesAndServices
 }): TypeDeclaration {
     switch (typeDeclaration.shape.type) {
-        case "object":
+        case 'object':
             return {
                 ...typeDeclaration,
                 shape: {
@@ -71,46 +71,46 @@ function addExtendedPropertiesToType({
                         getExtendedPropertiesForDeclaredTypeName(extended, ir)
                     )
                 }
-            };
+            }
     }
-    return typeDeclaration;
+    return typeDeclaration
 }
 
 function getExtendedPropertiesForDeclaredTypeName(
     declaredTypeName: DeclaredTypeName,
     ir: TypesAndServices
 ): ObjectProperty[] {
-    const objectTypeDeclaration = getObjectTypeDeclarationFromTypeId(declaredTypeName.typeId, ir);
-    return getAllPropertiesForObject({ objectTypeDeclaration, ir });
+    const objectTypeDeclaration = getObjectTypeDeclarationFromTypeId(declaredTypeName.typeId, ir)
+    return getAllPropertiesForObject({ objectTypeDeclaration, ir })
 }
 
 function getObjectTypeDeclarationFromTypeId(typeId: string, ir: TypesAndServices): ObjectTypeDeclaration {
-    const typeDeclaration = getTypeDeclaration(typeId, ir.types);
+    const typeDeclaration = getTypeDeclaration(typeId, ir.types)
     switch (typeDeclaration.shape.type) {
-        case "object":
-            return typeDeclaration.shape;
-        case "alias": {
-            if (typeDeclaration.shape.resolvedType.type === "named") {
-                return getObjectTypeDeclarationFromTypeId(typeDeclaration.shape.resolvedType.name.typeId, ir);
+        case 'object':
+            return typeDeclaration.shape
+        case 'alias': {
+            if (typeDeclaration.shape.resolvedType.type === 'named') {
+                return getObjectTypeDeclarationFromTypeId(typeDeclaration.shape.resolvedType.name.typeId, ir)
             }
         }
     }
 
     throw new LoggableFernCliError(
         `Unexpected error: ${typeId} is extended but has shape ${typeDeclaration.shape.type}`
-    );
+    )
 }
 
 function getAllPropertiesForObject({
     objectTypeDeclaration,
     ir
 }: {
-    objectTypeDeclaration: ObjectTypeDeclaration;
-    ir: TypesAndServices;
+    objectTypeDeclaration: ObjectTypeDeclaration
+    ir: TypesAndServices
 }): ObjectProperty[] {
     const extendedProperties = objectTypeDeclaration.extends.flatMap((extended) => {
-        const extendedObjectDeclaration = getObjectTypeDeclarationFromTypeId(extended.typeId, ir);
-        return getAllPropertiesForObject({ objectTypeDeclaration: extendedObjectDeclaration, ir });
-    });
-    return [...objectTypeDeclaration.properties, ...extendedProperties];
+        const extendedObjectDeclaration = getObjectTypeDeclarationFromTypeId(extended.typeId, ir)
+        return getAllPropertiesForObject({ objectTypeDeclaration: extendedObjectDeclaration, ir })
+    })
+    return [...objectTypeDeclaration.properties, ...extendedProperties]
 }

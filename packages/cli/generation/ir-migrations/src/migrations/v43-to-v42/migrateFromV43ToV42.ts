@@ -1,25 +1,21 @@
-import { GeneratorName } from "@fern-api/configuration-loader";
+import { GeneratorName } from '@fern-api/configuration-loader'
 
-import { IrSerialization } from "../../ir-serialization";
-import { IrVersions } from "../../ir-versions";
-import {
-    GeneratorWasNeverUpdatedToConsumeNewIR,
-    GeneratorWasNotCreatedYet,
-    IrMigration
-} from "../../types/IrMigration";
+import { IrSerialization } from '../../ir-serialization'
+import { IrVersions } from '../../ir-versions'
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
 
 export const V43_TO_V42_MIGRATION: IrMigration<
     IrVersions.V43.ir.IntermediateRepresentation,
     IrVersions.V42.ir.IntermediateRepresentation
 > = {
-    laterVersion: "v43",
-    earlierVersion: "v42",
+    laterVersion: 'v43',
+    earlierVersion: 'v42',
     firstGeneratorVersionToConsumeNewIR: {
-        [GeneratorName.TYPESCRIPT_NODE_SDK]: "0.17.0",
-        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: "0.17.0",
+        [GeneratorName.TYPESCRIPT_NODE_SDK]: '0.17.0',
+        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: '0.17.0',
         [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_SDK]: "0.17.0",
-        [GeneratorName.TYPESCRIPT_EXPRESS]: "0.13.0",
+        [GeneratorName.TYPESCRIPT_SDK]: '0.17.0',
+        [GeneratorName.TYPESCRIPT_EXPRESS]: '0.13.0',
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -45,7 +41,7 @@ export const V43_TO_V42_MIGRATION: IrMigration<
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V42.IntermediateRepresentation.jsonOrThrow(ir, {
-            unrecognizedObjectKeys: "strip",
+            unrecognizedObjectKeys: 'strip',
             skipValidation: true
         }),
     migrateBackwards: (V43, _context): IrVersions.V42.ir.IntermediateRepresentation => {
@@ -61,12 +57,12 @@ export const V43_TO_V42_MIGRATION: IrMigration<
                                 return {
                                     ...endpoint,
                                     response: endpoint.response?.body
-                                };
+                                }
                             })
                         }
-                    ];
+                    ]
                 })
             )
-        };
+        }
     }
-};
+}

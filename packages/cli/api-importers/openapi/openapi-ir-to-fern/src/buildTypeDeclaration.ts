@@ -1,5 +1,5 @@
-import { assertNever } from "@fern-api/core-utils";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { assertNever } from '@fern-api/core-utils'
+import { RawSchemas } from '@fern-api/fern-definition-schema'
 import {
     ArraySchema,
     CasingOverrides,
@@ -15,11 +15,11 @@ import {
     Schema,
     SchemaId,
     WithInline
-} from "@fern-api/openapi-ir";
-import { RelativeFilePath } from "@fern-api/path-utils";
+} from '@fern-api/openapi-ir'
+import { RelativeFilePath } from '@fern-api/path-utils'
 
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
-import { State } from "./State";
+import { OpenApiIrConverterContext } from './OpenApiIrConverterContext'
+import { State } from './State'
 import {
     buildArrayTypeReference,
     buildLiteralTypeReference,
@@ -30,15 +30,15 @@ import {
     buildReferenceTypeReference,
     buildTypeReference,
     buildUnknownTypeReference
-} from "./buildTypeReference";
-import { convertAvailability } from "./utils/convertAvailability";
-import { convertToEncodingSchema } from "./utils/convertToEncodingSchema";
-import { convertToSourceSchema } from "./utils/convertToSourceSchema";
-import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
+} from './buildTypeReference'
+import { convertAvailability } from './utils/convertAvailability'
+import { convertToEncodingSchema } from './utils/convertToEncodingSchema'
+import { convertToSourceSchema } from './utils/convertToSourceSchema'
+import { getTypeFromTypeReference } from './utils/getTypeFromTypeReference'
 
 export interface ConvertedTypeDeclaration {
-    name: string | undefined;
-    schema: RawSchemas.TypeDeclarationSchema;
+    name: string | undefined
+    schema: RawSchemas.TypeDeclarationSchema
 }
 
 export function buildTypeDeclaration({
@@ -48,88 +48,88 @@ export function buildTypeDeclaration({
     namespace,
     declarationDepth
 }: {
-    schema: Schema;
-    context: OpenApiIrConverterContext;
+    schema: Schema
+    context: OpenApiIrConverterContext
     /* The file the type declaration will be added to */
-    declarationFile: RelativeFilePath;
-    namespace: string | undefined;
-    declarationDepth: number;
+    declarationFile: RelativeFilePath
+    namespace: string | undefined
+    declarationDepth: number
 }): ConvertedTypeDeclaration {
-    let typeDeclaration: ConvertedTypeDeclaration;
+    let typeDeclaration: ConvertedTypeDeclaration
     switch (schema.type) {
-        case "primitive":
-            typeDeclaration = buildPrimitiveTypeDeclaration(schema);
-            break;
-        case "array":
+        case 'primitive':
+            typeDeclaration = buildPrimitiveTypeDeclaration(schema)
+            break
+        case 'array':
             typeDeclaration = buildArrayTypeDeclaration({
                 schema,
                 context,
                 declarationFile,
                 namespace,
                 declarationDepth
-            });
-            break;
-        case "map":
+            })
+            break
+        case 'map':
             typeDeclaration = buildMapTypeDeclaration({
                 schema,
                 context,
                 declarationFile,
                 namespace,
                 declarationDepth
-            });
-            break;
-        case "reference":
-            typeDeclaration = buildReferenceTypeDeclaration({ schema, context, declarationFile, namespace });
-            break;
-        case "unknown":
-            typeDeclaration = buildUnknownTypeDeclaration(schema.nameOverride, schema.generatedName);
-            break;
-        case "optional":
+            })
+            break
+        case 'reference':
+            typeDeclaration = buildReferenceTypeDeclaration({ schema, context, declarationFile, namespace })
+            break
+        case 'unknown':
+            typeDeclaration = buildUnknownTypeDeclaration(schema.nameOverride, schema.generatedName)
+            break
+        case 'optional':
             typeDeclaration = buildOptionalTypeDeclaration({
                 schema,
                 context,
                 declarationFile,
                 namespace,
                 declarationDepth
-            });
-            break;
-        case "nullable":
+            })
+            break
+        case 'nullable':
             typeDeclaration = buildNullableTypeDeclaration({
                 schema,
                 context,
                 declarationFile,
                 namespace,
                 declarationDepth
-            });
-            break;
-        case "enum":
-            typeDeclaration = buildEnumTypeDeclaration(schema, declarationDepth);
-            break;
-        case "literal":
-            typeDeclaration = buildLiteralTypeDeclaration(schema, schema.nameOverride, schema.generatedName);
-            break;
-        case "object":
+            })
+            break
+        case 'enum':
+            typeDeclaration = buildEnumTypeDeclaration(schema, declarationDepth)
+            break
+        case 'literal':
+            typeDeclaration = buildLiteralTypeDeclaration(schema, schema.nameOverride, schema.generatedName)
+            break
+        case 'object':
             typeDeclaration = buildObjectTypeDeclaration({
                 schema,
                 context,
                 declarationFile,
                 namespace,
                 declarationDepth
-            });
-            break;
-        case "oneOf":
+            })
+            break
+        case 'oneOf':
             typeDeclaration = buildOneOfTypeDeclaration({
                 schema: schema.value,
                 context,
                 declarationFile,
                 namespace,
                 declarationDepth
-            });
-            break;
+            })
+            break
         default:
-            assertNever(schema);
+            assertNever(schema)
     }
-    return typeDeclaration;
+    return typeDeclaration
 }
 
 export function buildObjectTypeDeclaration({
@@ -139,37 +139,37 @@ export function buildObjectTypeDeclaration({
     namespace,
     declarationDepth
 }: {
-    schema: ObjectSchema;
-    context: OpenApiIrConverterContext;
-    declarationFile: RelativeFilePath;
-    namespace: string | undefined;
-    declarationDepth: number;
+    schema: ObjectSchema
+    context: OpenApiIrConverterContext
+    declarationFile: RelativeFilePath
+    namespace: string | undefined
+    declarationDepth: number
 }): ConvertedTypeDeclaration {
     const shouldSkipReadonly =
         context.isInState(State.Request) &&
         context.respectReadonlySchemas &&
-        (context.getEndpointMethod() === "POST" ||
-            context.getEndpointMethod() === "PUT" ||
-            context.getEndpointMethod() === "PATCH");
+        (context.getEndpointMethod() === 'POST' ||
+            context.getEndpointMethod() === 'PUT' ||
+            context.getEndpointMethod() === 'PATCH')
 
-    let readOnlyPropertyPresent = false;
-    const properties: Record<string, RawSchemas.ObjectPropertySchema> = {};
-    const schemasToInline = new Set<SchemaId>();
+    let readOnlyPropertyPresent = false
+    const properties: Record<string, RawSchemas.ObjectPropertySchema> = {}
+    const schemasToInline = new Set<SchemaId>()
     for (const property of schema.properties) {
         if (property.readonly) {
-            readOnlyPropertyPresent = true;
+            readOnlyPropertyPresent = true
         }
 
         if (shouldSkipReadonly && property.readonly) {
-            continue;
+            continue
         }
 
         if (Object.keys(property.conflict).length > 0) {
             const parentHasIdentiticalProperty = Object.entries(property.conflict).every(([_, conflict]) => {
-                return !conflict.differentSchema;
-            });
+                return !conflict.differentSchema
+            })
             if (parentHasIdentiticalProperty) {
-                continue; // just use the parent property instead of redefining
+                continue // just use the parent property instead of redefining
             } else {
                 Object.entries(property.conflict).forEach(([schemaId]) => {
                     const parentSchemasToInline = getAllParentSchemasToInline({
@@ -177,11 +177,11 @@ export function buildObjectTypeDeclaration({
                         schemaId,
                         context,
                         namespace
-                    });
+                    })
                     parentSchemasToInline.forEach((schemaToInline) => {
-                        schemasToInline.add(schemaToInline);
-                    });
-                });
+                        schemasToInline.add(schemaToInline)
+                    })
+                })
             }
         }
         const typeReference = buildTypeReference({
@@ -190,37 +190,37 @@ export function buildObjectTypeDeclaration({
             fileContainingReference: declarationFile,
             namespace,
             declarationDepth: declarationDepth + 1
-        });
+        })
 
-        const audiences = property.audiences;
-        const name = property.nameOverride;
-        const availability = convertAvailability(property.availability);
-        const propertyAccess = getPropertyAccess(property);
+        const audiences = property.audiences
+        const name = property.nameOverride
+        const availability = convertAvailability(property.availability)
+        const propertyAccess = getPropertyAccess(property)
         properties[property.key] = convertPropertyTypeReferenceToTypeDefinition({
             typeReference,
             audiences,
             name,
             availability,
             propertyAccess
-        });
+        })
     }
-    const propertiesToSetToUnknown: Set<string> = new Set<string>();
+    const propertiesToSetToUnknown: Set<string> = new Set<string>()
 
     for (const allOfPropertyConflict of schema.allOfPropertyConflicts) {
-        allOfPropertyConflict.allOfSchemaIds.forEach((schemaId) => schemasToInline.add(schemaId));
+        allOfPropertyConflict.allOfSchemaIds.forEach((schemaId) => schemasToInline.add(schemaId))
         if (allOfPropertyConflict.conflictingTypeSignatures) {
-            propertiesToSetToUnknown.add(allOfPropertyConflict.propertyKey);
+            propertiesToSetToUnknown.add(allOfPropertyConflict.propertyKey)
         }
     }
 
-    const extendedSchemas: string[] = [];
+    const extendedSchemas: string[] = []
     for (const allOf of schema.allOf) {
-        const resolvedSchemaId = getSchemaIdOfResolvedType({ schema: allOf.schema, context, namespace });
+        const resolvedSchemaId = getSchemaIdOfResolvedType({ schema: allOf.schema, context, namespace })
         if (resolvedSchemaId == null) {
-            continue;
+            continue
         }
         if (schemasToInline.has(allOf.schema) || schemasToInline.has(resolvedSchemaId)) {
-            continue; // don't extend from schemas that need to be inlined
+            continue // don't extend from schemas that need to be inlined
         }
         const allOfTypeReference = buildTypeReference({
             schema: Schema.reference(allOf),
@@ -228,16 +228,16 @@ export function buildObjectTypeDeclaration({
             fileContainingReference: declarationFile,
             namespace,
             declarationDepth: declarationDepth + 1
-        });
-        extendedSchemas.push(getTypeFromTypeReference(allOfTypeReference));
+        })
+        extendedSchemas.push(getTypeFromTypeReference(allOfTypeReference))
     }
 
     for (const inlineSchemaId of schemasToInline) {
-        const inlinedSchemaPropertyInfo = getProperties(context, inlineSchemaId, namespace);
+        const inlinedSchemaPropertyInfo = getProperties(context, inlineSchemaId, namespace)
         for (const propertyToInline of inlinedSchemaPropertyInfo.properties) {
             if (properties[propertyToInline.key] == null) {
                 if (propertiesToSetToUnknown.has(propertyToInline.key)) {
-                    properties[propertyToInline.key] = "unknown";
+                    properties[propertyToInline.key] = 'unknown'
                 }
                 properties[propertyToInline.key] = buildTypeReference({
                     schema: propertyToInline.schema,
@@ -245,12 +245,12 @@ export function buildObjectTypeDeclaration({
                     fileContainingReference: declarationFile,
                     namespace,
                     declarationDepth: declarationDepth + 1
-                });
+                })
             }
         }
         for (const extendedSchema of inlinedSchemaPropertyInfo.allOf) {
             if (schemasToInline.has(extendedSchema.schema)) {
-                continue; // don't extend from schemas that need to be inlined
+                continue // don't extend from schemas that need to be inlined
             }
             const extendedSchemaTypeReference = buildTypeReference({
                 schema: Schema.reference(extendedSchema),
@@ -258,8 +258,8 @@ export function buildObjectTypeDeclaration({
                 fileContainingReference: declarationFile,
                 namespace,
                 declarationDepth: declarationDepth + 1
-            });
-            extendedSchemas.push(getTypeFromTypeReference(extendedSchemaTypeReference));
+            })
+            extendedSchemas.push(getTypeFromTypeReference(extendedSchemaTypeReference))
         }
     }
 
@@ -270,7 +270,7 @@ export function buildObjectTypeDeclaration({
                 if (startsWithNumber(propertyKey)) {
                     return [
                         propertyKey,
-                        typeof propertyDefinition === "string"
+                        typeof propertyDefinition === 'string'
                             ? {
                                   type: propertyDefinition,
                                   name: `_${propertyKey}`
@@ -279,32 +279,32 @@ export function buildObjectTypeDeclaration({
                                   ...propertyDefinition,
                                   name: `_${propertyKey}`
                               }
-                    ];
+                    ]
                 }
-                return [propertyKey, propertyDefinition];
+                return [propertyKey, propertyDefinition]
             })
         )
-    };
+    }
     if (extendedSchemas.length > 0) {
-        objectTypeDeclaration.extends = extendedSchemas;
+        objectTypeDeclaration.extends = extendedSchemas
     }
     if (schema.additionalProperties) {
-        objectTypeDeclaration["extra-properties"] = true;
+        objectTypeDeclaration['extra-properties'] = true
     }
     if (schema.availability != null) {
-        objectTypeDeclaration.availability = convertAvailability(schema.availability);
+        objectTypeDeclaration.availability = convertAvailability(schema.availability)
     }
     if (schema.source != null) {
-        objectTypeDeclaration.source = convertToSourceSchema(schema.source);
+        objectTypeDeclaration.source = convertToSourceSchema(schema.source)
     }
 
-    objectTypeDeclaration.inline = getInline(schema, declarationDepth);
+    objectTypeDeclaration.inline = getInline(schema, declarationDepth)
 
-    const name = schema.nameOverride ?? schema.generatedName;
+    const name = schema.nameOverride ?? schema.generatedName
     return {
         name: readOnlyPropertyPresent && context.respectReadonlySchemas && !shouldSkipReadonly ? `${name}Read` : name,
         schema: objectTypeDeclaration
-    };
+    }
 }
 
 function getAllParentSchemasToInline({
@@ -313,33 +313,33 @@ function getAllParentSchemasToInline({
     context,
     namespace
 }: {
-    property: string;
-    schemaId: SchemaId;
-    context: OpenApiIrConverterContext;
-    namespace: string | undefined;
+    property: string
+    schemaId: SchemaId
+    context: OpenApiIrConverterContext
+    namespace: string | undefined
 }): SchemaId[] {
-    const schema = context.getSchema(schemaId, namespace);
+    const schema = context.getSchema(schemaId, namespace)
     if (schema == null) {
-        return [];
+        return []
     }
-    if (schema.type === "reference") {
-        return getAllParentSchemasToInline({ property, schemaId: schema.schema, context, namespace });
+    if (schema.type === 'reference') {
+        return getAllParentSchemasToInline({ property, schemaId: schema.schema, context, namespace })
     }
-    if (schema.type === "object") {
-        const { properties, allOf } = getProperties(context, schemaId, namespace);
+    if (schema.type === 'object') {
+        const { properties, allOf } = getProperties(context, schemaId, namespace)
         const hasProperty = properties.some((p) => {
-            return p.key === property;
-        });
+            return p.key === property
+        })
         const parentSchemasToInline = [
             ...allOf.flatMap((parent) => {
-                return getAllParentSchemasToInline({ property, context, schemaId: parent.schema, namespace });
+                return getAllParentSchemasToInline({ property, context, schemaId: parent.schema, namespace })
             })
-        ];
+        ]
         if (hasProperty || parentSchemasToInline.length > 0) {
-            return [schemaId, ...parentSchemasToInline];
+            return [schemaId, ...parentSchemasToInline]
         }
     }
-    return [];
+    return []
 }
 
 function getProperties(
@@ -347,19 +347,19 @@ function getProperties(
     schemaId: SchemaId,
     namespace: string | undefined
 ): {
-    properties: ObjectProperty[];
-    allOf: ReferencedSchema[];
+    properties: ObjectProperty[]
+    allOf: ReferencedSchema[]
 } {
-    const schema = context.getSchema(schemaId, namespace);
+    const schema = context.getSchema(schemaId, namespace)
     if (schema == null) {
-        return { properties: [], allOf: [] };
+        return { properties: [], allOf: [] }
     }
-    if (schema.type === "object") {
-        return { properties: schema.properties, allOf: schema.allOf };
-    } else if (schema.type === "reference") {
-        return getProperties(context, schema.schema, namespace);
+    if (schema.type === 'object') {
+        return { properties: schema.properties, allOf: schema.allOf }
+    } else if (schema.type === 'reference') {
+        return getProperties(context, schema.schema, namespace)
     }
-    throw new Error(`Cannot getAllProperties for a non-object schema. schemaId=${schemaId}, type=${schema.type}`);
+    throw new Error(`Cannot getAllProperties for a non-object schema. schemaId=${schemaId}, type=${schema.type}`)
 }
 
 export function buildArrayTypeDeclaration({
@@ -369,11 +369,11 @@ export function buildArrayTypeDeclaration({
     namespace,
     declarationDepth
 }: {
-    schema: ArraySchema;
-    context: OpenApiIrConverterContext;
-    declarationFile: RelativeFilePath;
-    namespace: string | undefined;
-    declarationDepth: number;
+    schema: ArraySchema
+    context: OpenApiIrConverterContext
+    declarationFile: RelativeFilePath
+    namespace: string | undefined
+    declarationDepth: number
 }): ConvertedTypeDeclaration {
     return {
         name: schema.nameOverride ?? schema.generatedName,
@@ -385,7 +385,7 @@ export function buildArrayTypeDeclaration({
             namespace,
             declarationDepth
         })
-    };
+    }
 }
 
 export function buildMapTypeDeclaration({
@@ -395,11 +395,11 @@ export function buildMapTypeDeclaration({
     namespace,
     declarationDepth
 }: {
-    schema: MapSchema;
-    context: OpenApiIrConverterContext;
-    declarationFile: RelativeFilePath;
-    namespace: string | undefined;
-    declarationDepth: number;
+    schema: MapSchema
+    context: OpenApiIrConverterContext
+    declarationFile: RelativeFilePath
+    namespace: string | undefined
+    declarationDepth: number
 }): ConvertedTypeDeclaration {
     return {
         name: schema.nameOverride ?? schema.generatedName,
@@ -411,105 +411,105 @@ export function buildMapTypeDeclaration({
             namespace,
             declarationDepth
         })
-    };
+    }
 }
 
 export function buildPrimitiveTypeDeclaration(schema: PrimitiveSchema): ConvertedTypeDeclaration {
-    const typeReference = buildPrimitiveTypeReference(schema);
+    const typeReference = buildPrimitiveTypeReference(schema)
 
-    if (typeof typeReference === "string") {
+    if (typeof typeReference === 'string') {
         return {
             name: schema.nameOverride ?? schema.generatedName,
             schema: typeReference
-        };
+        }
     }
     // We don't want to include the default value in the type alias declaration.
-    const { default: _, ...rest } = typeReference;
+    const { default: _, ...rest } = typeReference
     return {
         name: schema.nameOverride ?? schema.generatedName,
         schema: {
             ...rest
         }
-    };
+    }
 }
 
 function isCasingEmpty(casing: CasingOverrides): boolean {
-    return casing.camel == null && casing.pascal == null && casing.screamingSnake == null && casing.snake == null;
+    return casing.camel == null && casing.pascal == null && casing.screamingSnake == null && casing.snake == null
 }
 
 export function buildEnumTypeDeclaration(schema: EnumSchema, declarationDepth: number): ConvertedTypeDeclaration {
     const enumSchema: RawSchemas.EnumSchema = {
         enum: schema.values.map((enumValue) => {
-            const name = enumValue.nameOverride ?? enumValue.generatedName;
-            const value = enumValue.value;
+            const name = enumValue.nameOverride ?? enumValue.generatedName
+            const value = enumValue.value
             if (
                 name === value &&
                 enumValue.description == null &&
                 (enumValue.casing == null || isCasingEmpty(enumValue.casing))
             ) {
-                return name;
+                return name
             }
 
             const enumValueDeclaration: RawSchemas.EnumValueSchema = {
                 value: enumValue.value
-            };
+            }
             if (name !== value) {
-                enumValueDeclaration.name = name;
+                enumValueDeclaration.name = name
             }
             if (enumValue.description != null) {
-                enumValueDeclaration.docs = enumValue.description;
+                enumValueDeclaration.docs = enumValue.description
             }
             if (enumValue.casing != null && !isCasingEmpty(enumValue.casing)) {
-                const casing: RawSchemas.CasingOverridesSchema = {};
-                let setCasing = false;
+                const casing: RawSchemas.CasingOverridesSchema = {}
+                let setCasing = false
                 if (enumValue.casing.camel != null) {
-                    casing.camel = enumValue.casing.camel;
-                    setCasing = true;
+                    casing.camel = enumValue.casing.camel
+                    setCasing = true
                 }
                 if (enumValue.casing.screamingSnake != null) {
-                    casing["screaming-snake"] = enumValue.casing.screamingSnake;
-                    setCasing = true;
+                    casing['screaming-snake'] = enumValue.casing.screamingSnake
+                    setCasing = true
                 }
                 if (enumValue.casing.snake != null) {
-                    casing.snake = enumValue.casing.snake;
-                    setCasing = true;
+                    casing.snake = enumValue.casing.snake
+                    setCasing = true
                 }
                 if (enumValue.casing.pascal != null) {
-                    casing.pascal = enumValue.casing.pascal;
-                    setCasing = true;
+                    casing.pascal = enumValue.casing.pascal
+                    setCasing = true
                 }
                 if (setCasing) {
-                    enumValueDeclaration.casing = casing;
+                    enumValueDeclaration.casing = casing
                 }
             }
-            return enumValueDeclaration;
+            return enumValueDeclaration
         })
-    };
+    }
     if (schema.description != null) {
-        enumSchema.docs = schema.description;
+        enumSchema.docs = schema.description
     }
     if (schema.default != null) {
-        enumSchema.default = schema.default.value;
+        enumSchema.default = schema.default.value
     }
-    enumSchema.inline = getInline(schema, declarationDepth);
-    const uniqueEnumName = new Set<string>();
+    enumSchema.inline = getInline(schema, declarationDepth)
+    const uniqueEnumName = new Set<string>()
     const uniqueEnumSchema: RawSchemas.EnumSchema = {
         ...enumSchema,
         enum: [],
         source: schema.source != null ? convertToSourceSchema(schema.source) : undefined
-    };
+    }
     for (const enumValue of enumSchema.enum) {
-        const name = typeof enumValue === "string" ? enumValue : (enumValue.name ?? enumValue.value);
+        const name = typeof enumValue === 'string' ? enumValue : (enumValue.name ?? enumValue.value)
         if (!uniqueEnumName.has(name.toLowerCase())) {
-            uniqueEnumSchema.enum.push(enumValue);
-            uniqueEnumName.add(name.toLowerCase());
+            uniqueEnumSchema.enum.push(enumValue)
+            uniqueEnumName.add(name.toLowerCase())
         } // TODO: log a warning if the name is not unique
     }
 
     return {
         name: schema.nameOverride ?? schema.generatedName,
         schema: uniqueEnumSchema
-    };
+    }
 }
 
 export function buildReferenceTypeDeclaration({
@@ -518,10 +518,10 @@ export function buildReferenceTypeDeclaration({
     declarationFile,
     namespace
 }: {
-    schema: ReferencedSchema;
-    context: OpenApiIrConverterContext;
-    declarationFile: RelativeFilePath;
-    namespace: string | undefined;
+    schema: ReferencedSchema
+    context: OpenApiIrConverterContext
+    declarationFile: RelativeFilePath
+    namespace: string | undefined
 }): ConvertedTypeDeclaration {
     return {
         name: schema.nameOverride ?? schema.generatedName,
@@ -531,7 +531,7 @@ export function buildReferenceTypeDeclaration({
             fileContainingReference: declarationFile,
             namespace
         })
-    };
+    }
 }
 
 export function buildNullableTypeDeclaration({
@@ -541,11 +541,11 @@ export function buildNullableTypeDeclaration({
     namespace,
     declarationDepth
 }: {
-    schema: OptionalSchema;
-    context: OpenApiIrConverterContext;
-    declarationFile: RelativeFilePath;
-    namespace: string | undefined;
-    declarationDepth: number;
+    schema: OptionalSchema
+    context: OpenApiIrConverterContext
+    declarationFile: RelativeFilePath
+    namespace: string | undefined
+    declarationDepth: number
 }): ConvertedTypeDeclaration {
     if (!context.respectNullableSchemas) {
         return buildOptionalTypeDeclaration({
@@ -554,7 +554,7 @@ export function buildNullableTypeDeclaration({
             declarationFile,
             namespace,
             declarationDepth
-        });
+        })
     }
 
     return {
@@ -567,7 +567,7 @@ export function buildNullableTypeDeclaration({
             namespace,
             declarationDepth
         })
-    };
+    }
 }
 
 export function buildOptionalTypeDeclaration({
@@ -577,11 +577,11 @@ export function buildOptionalTypeDeclaration({
     namespace,
     declarationDepth
 }: {
-    schema: OptionalSchema;
-    context: OpenApiIrConverterContext;
-    declarationFile: RelativeFilePath;
-    namespace: string | undefined;
-    declarationDepth: number;
+    schema: OptionalSchema
+    context: OpenApiIrConverterContext
+    declarationFile: RelativeFilePath
+    namespace: string | undefined
+    declarationDepth: number
 }): ConvertedTypeDeclaration {
     return {
         name: schema.nameOverride ?? schema.generatedName,
@@ -593,7 +593,7 @@ export function buildOptionalTypeDeclaration({
             namespace,
             declarationDepth
         })
-    };
+    }
 }
 
 export function buildUnknownTypeDeclaration(
@@ -603,7 +603,7 @@ export function buildUnknownTypeDeclaration(
     return {
         name: nameOverride ?? generatedName,
         schema: buildUnknownTypeReference()
-    };
+    }
 }
 
 export function buildLiteralTypeDeclaration(
@@ -614,7 +614,7 @@ export function buildLiteralTypeDeclaration(
     return {
         name: nameOverride ?? generatedName,
         schema: buildLiteralTypeReference(schema)
-    };
+    }
 }
 
 export function buildOneOfTypeDeclaration({
@@ -624,15 +624,15 @@ export function buildOneOfTypeDeclaration({
     namespace,
     declarationDepth
 }: {
-    schema: OneOfSchema;
-    context: OpenApiIrConverterContext;
-    declarationFile: RelativeFilePath;
-    namespace: string | undefined;
-    declarationDepth: number;
+    schema: OneOfSchema
+    context: OpenApiIrConverterContext
+    declarationFile: RelativeFilePath
+    namespace: string | undefined
+    declarationDepth: number
 }): ConvertedTypeDeclaration {
-    const encoding = schema.encoding != null ? convertToEncodingSchema(schema.encoding) : undefined;
-    if (schema.type === "discriminated") {
-        const baseProperties: Record<string, RawSchemas.ObjectPropertySchema> = {};
+    const encoding = schema.encoding != null ? convertToEncodingSchema(schema.encoding) : undefined
+    if (schema.type === 'discriminated') {
+        const baseProperties: Record<string, RawSchemas.ObjectPropertySchema> = {}
         for (const property of schema.commonProperties) {
             baseProperties[property.key] = buildTypeReference({
                 schema: property.schema,
@@ -640,9 +640,9 @@ export function buildOneOfTypeDeclaration({
                 context,
                 namespace,
                 declarationDepth: declarationDepth + 1
-            });
+            })
         }
-        const union: Record<string, RawSchemas.SingleUnionTypeSchema> = {};
+        const union: Record<string, RawSchemas.SingleUnionTypeSchema> = {}
         for (const [discriminantValue, subSchema] of Object.entries(schema.schemas)) {
             union[discriminantValue] = buildTypeReference({
                 schema: subSchema,
@@ -650,23 +650,23 @@ export function buildOneOfTypeDeclaration({
                 fileContainingReference: declarationFile,
                 namespace,
                 declarationDepth: declarationDepth + 1
-            });
+            })
         }
         return {
             name: schema.nameOverride ?? schema.generatedName,
             schema: {
                 discriminant: schema.discriminantProperty,
-                "base-properties": baseProperties,
+                'base-properties': baseProperties,
                 docs: schema.description ?? undefined,
                 availability: schema.availability != null ? convertAvailability(schema.availability) : undefined,
                 union,
                 encoding,
                 source: schema.source != null ? convertToSourceSchema(schema.source) : undefined
             }
-        };
+        }
     }
 
-    const union: RawSchemas.TypeReferenceSchema[] = [];
+    const union: RawSchemas.TypeReferenceSchema[] = []
     for (const subSchema of schema.schemas) {
         union.push(
             buildTypeReference({
@@ -676,7 +676,7 @@ export function buildOneOfTypeDeclaration({
                 namespace,
                 declarationDepth: declarationDepth + 1
             })
-        );
+        )
     }
     return {
         name: schema.nameOverride ?? schema.generatedName,
@@ -688,12 +688,12 @@ export function buildOneOfTypeDeclaration({
             source: schema.source != null ? convertToSourceSchema(schema.source) : undefined,
             inline: getInline(schema, declarationDepth)
         }
-    };
+    }
 }
 
-const STARTS_WITH_NUMBER = /^[0-9]/;
+const STARTS_WITH_NUMBER = /^[0-9]/
 function startsWithNumber(str: string): boolean {
-    return STARTS_WITH_NUMBER.test(str);
+    return STARTS_WITH_NUMBER.test(str)
 }
 
 function getSchemaIdOfResolvedType({
@@ -701,18 +701,18 @@ function getSchemaIdOfResolvedType({
     context,
     namespace
 }: {
-    schema: SchemaId;
-    context: OpenApiIrConverterContext;
-    namespace: string | undefined;
+    schema: SchemaId
+    context: OpenApiIrConverterContext
+    namespace: string | undefined
 }): SchemaId | undefined {
-    const resolvedSchema = context.getSchema(schema, namespace);
+    const resolvedSchema = context.getSchema(schema, namespace)
     if (resolvedSchema == null) {
-        return undefined;
+        return undefined
     }
-    if (resolvedSchema.type === "reference") {
-        return getSchemaIdOfResolvedType({ context, schema: resolvedSchema.schema, namespace });
+    if (resolvedSchema.type === 'reference') {
+        return getSchemaIdOfResolvedType({ context, schema: resolvedSchema.schema, namespace })
     }
-    return schema;
+    return schema
 }
 
 function convertPropertyTypeReferenceToTypeDefinition({
@@ -722,22 +722,22 @@ function convertPropertyTypeReferenceToTypeDefinition({
     availability,
     propertyAccess
 }: {
-    typeReference: RawSchemas.TypeReferenceSchema;
-    audiences: string[];
-    name?: string | undefined;
-    availability?: RawSchemas.AvailabilityUnionSchema;
-    propertyAccess?: RawSchemas.ObjectPropertyAccess | undefined;
+    typeReference: RawSchemas.TypeReferenceSchema
+    audiences: string[]
+    name?: string | undefined
+    availability?: RawSchemas.AvailabilityUnionSchema
+    propertyAccess?: RawSchemas.ObjectPropertyAccess | undefined
 }): RawSchemas.ObjectPropertySchema {
     if (audiences.length === 0 && name == null && availability == null && propertyAccess == null) {
-        return typeReference;
+        return typeReference
     } else {
         return {
-            ...(typeof typeReference === "string" ? { type: typeReference } : { ...typeReference }),
+            ...(typeof typeReference === 'string' ? { type: typeReference } : { ...typeReference }),
             ...(audiences.length > 0 ? { audiences } : {}),
             ...(name != null ? { name } : {}),
             ...(availability != null ? { availability } : {}),
             ...(propertyAccess != null ? { access: propertyAccess } : {})
-        };
+        }
     }
 }
 
@@ -749,20 +749,20 @@ function convertPropertyTypeReferenceToTypeDefinition({
  */
 function getInline(schema: WithInline, declarationDepth: number): boolean | undefined {
     if (schema.inline === true) {
-        return true;
+        return true
     }
-    return declarationDepth > 0 ? true : undefined;
+    return declarationDepth > 0 ? true : undefined
 }
 
 function getPropertyAccess(property: ObjectProperty): RawSchemas.ObjectPropertyAccess | undefined {
     if (property.readonly && property.writeonly) {
-        return undefined;
+        return undefined
     }
     if (property.readonly) {
-        return RawSchemas.ObjectPropertyAccess.ReadOnly;
+        return RawSchemas.ObjectPropertyAccess.ReadOnly
     }
     if (property.writeonly) {
-        return RawSchemas.ObjectPropertyAccess.WriteOnly;
+        return RawSchemas.ObjectPropertyAccess.WriteOnly
     }
-    return undefined;
+    return undefined
 }

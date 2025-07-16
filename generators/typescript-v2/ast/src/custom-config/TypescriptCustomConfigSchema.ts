@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod'
 
 // The full set of configuration options supported by the TypeScript SDK generator.
 export const TypescriptCustomConfigSchema = z.strictObject({
@@ -9,7 +9,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     bundle: z.optional(z.boolean()),
     allowCustomFetcher: z.optional(z.boolean()),
     shouldGenerateWebsocketClients: z.optional(z.boolean()),
-    defaultTimeoutInSeconds: z.optional(z.union([z.literal("infinity"), z.number()])),
+    defaultTimeoutInSeconds: z.optional(z.union([z.literal('infinity'), z.number()])),
     skipResponseValidation: z.optional(z.boolean()),
     extraDependencies: z.optional(z.record(z.string())),
     extraDevDependencies: z.optional(z.record(z.string())),
@@ -22,10 +22,10 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     publishToJsr: z.optional(z.boolean()),
     omitUndefined: z.optional(z.boolean()),
     useLegacyExports: z.optional(z.boolean()),
-    streamType: z.optional(z.enum(["wrapper", "web"])),
-    fileResponseType: z.optional(z.enum(["stream", "binary-response"])),
-    formDataSupport: z.optional(z.enum(["Node16", "Node18"])),
-    fetchSupport: z.optional(z.enum(["node-fetch", "native"])),
+    streamType: z.optional(z.enum(['wrapper', 'web'])),
+    fileResponseType: z.optional(z.enum(['stream', 'binary-response'])),
+    formDataSupport: z.optional(z.enum(['Node16', 'Node18'])),
+    fetchSupport: z.optional(z.enum(['node-fetch', 'native'])),
     packagePath: z.optional(z.string()),
     omitFernHeaders: z.optional(z.boolean()),
     useDefaultRequestParameterValues: z.optional(z.boolean()),
@@ -51,8 +51,8 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     noScripts: z.optional(z.boolean()),
 
     // deprecated
-    timeoutInSeconds: z.optional(z.union([z.literal("infinity"), z.number()])),
+    timeoutInSeconds: z.optional(z.union([z.literal('infinity'), z.number()])),
     includeApiReference: z.optional(z.boolean())
-});
+})
 
-export type TypescriptCustomConfigSchema = z.infer<typeof TypescriptCustomConfigSchema>;
+export type TypescriptCustomConfigSchema = z.infer<typeof TypescriptCustomConfigSchema>

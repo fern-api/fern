@@ -1,5 +1,5 @@
-import { GeneratedEnvironments } from "@fern-typescript/contexts";
-import { ts } from "ts-morph";
+import { GeneratedEnvironments } from '@fern-typescript/contexts'
+import { ts } from 'ts-morph'
 
 export class EmptyGeneratedEnvironmentsImpl implements GeneratedEnvironments {
     public writeToFile(): void {
@@ -7,22 +7,22 @@ export class EmptyGeneratedEnvironmentsImpl implements GeneratedEnvironments {
     }
 
     public hasDefaultEnvironment(): boolean {
-        return false;
+        return false
     }
 
     public getReferenceToDefaultEnvironment(): ts.Expression | undefined {
-        return undefined;
+        return undefined
     }
 
     public getTypeForUserSuppliedEnvironment(): ts.TypeNode {
-        return ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
+        return ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
     }
 
     public getReferenceToEnvironmentUrl({
         referenceToEnvironmentValue
     }: {
-        referenceToEnvironmentValue: ts.Expression;
+        referenceToEnvironmentValue: ts.Expression
     }): ts.Expression {
-        return referenceToEnvironmentValue;
+        return referenceToEnvironmentValue
     }
 }

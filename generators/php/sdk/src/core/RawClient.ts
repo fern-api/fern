@@ -1,30 +1,30 @@
-import { Arguments, NamedArgument } from "@fern-api/base-generator";
-import { php } from "@fern-api/php-codegen";
+import { Arguments, NamedArgument } from '@fern-api/base-generator'
+import { php } from '@fern-api/php-codegen'
 
-import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint } from '@fern-fern/ir-sdk/api'
 
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SdkGeneratorContext } from '../SdkGeneratorContext'
 
 export declare namespace RawClient {
     export interface SendRequestArgs {
         /** The endpoint for the endpoint */
-        endpoint: HttpEndpoint;
+        endpoint: HttpEndpoint
         /** The reference to the client variable */
-        clientReference: string;
+        clientReference: string
         /** The base URL used for the request */
-        baseUrl: php.AstNode;
+        baseUrl: php.AstNode
         /** The path parameter IDs to reference */
-        pathParameterReferences?: Record<string, string>;
+        pathParameterReferences?: Record<string, string>
         /** The reference to the header values */
-        headerBagReference?: string;
+        headerBagReference?: string
         /** The reference to the query values */
-        queryBagReference?: string;
+        queryBagReference?: string
         /** The reference to the request body */
-        bodyReference?: php.CodeBlock;
+        bodyReference?: php.CodeBlock
         /** The reference to the request body class */
-        requestTypeClassReference: php.ClassReference;
+        requestTypeClassReference: php.ClassReference
         /** The reference to the options argument */
-        optionsArgument?: php.AstNode;
+        optionsArgument?: php.AstNode
     }
 }
 
@@ -32,33 +32,33 @@ export declare namespace RawClient {
  * Utility class that helps make calls to the RawClient.
  */
 export class RawClient {
-    public static CLASS_NAME = "RawClient";
-    public static FIELD_NAME = "client";
-    public static SEND_REQUEST_METHOD_NAME = "sendRequest";
+    public static CLASS_NAME = 'RawClient'
+    public static FIELD_NAME = 'client'
+    public static SEND_REQUEST_METHOD_NAME = 'sendRequest'
 
-    private context: SdkGeneratorContext;
+    private context: SdkGeneratorContext
 
     public constructor(context: SdkGeneratorContext) {
-        this.context = context;
+        this.context = context
     }
 
     public getClassReference(): php.ClassReference {
         return php.classReference({
             name: RawClient.CLASS_NAME,
             namespace: this.context.getCoreClientNamespace()
-        });
+        })
     }
 
     public getFieldName(): string {
-        return RawClient.FIELD_NAME;
+        return RawClient.FIELD_NAME
     }
 
     public getField(): php.Field {
         return php.field({
-            access: "private",
+            access: 'private',
             name: `$${this.getFieldName()}`,
             type: php.Type.reference(this.context.rawClient.getClassReference())
-        });
+        })
     }
 
     public instantiate({ arguments_ }: { arguments_: Arguments }): php.ClassInstantiation {
@@ -66,17 +66,17 @@ export class RawClient {
             classReference: this.getClassReference(),
             arguments_,
             multiline: true
-        });
+        })
     }
 
     public sendRequest(args: RawClient.SendRequestArgs): php.AstNode {
         const arguments_: NamedArgument[] = [
             {
-                name: "baseUrl",
+                name: 'baseUrl',
                 assignment: args.baseUrl
             },
             {
-                name: "path",
+                name: 'path',
                 assignment: php.codeblock(
                     `"${this.getPathString({
                         endpoint: args.endpoint,
@@ -85,27 +85,27 @@ export class RawClient {
                 )
             },
             {
-                name: "method",
+                name: 'method',
                 assignment: this.context.getHttpMethod(args.endpoint.method)
             }
-        ];
+        ]
         if (args.headerBagReference != null) {
             arguments_.push({
-                name: "headers",
+                name: 'headers',
                 assignment: php.codeblock(args.headerBagReference)
-            });
+            })
         }
         if (args.queryBagReference != null) {
             arguments_.push({
-                name: "query",
+                name: 'query',
                 assignment: php.codeblock(args.queryBagReference)
-            });
+            })
         }
         if (args.bodyReference != null) {
             arguments_.push({
-                name: "body",
+                name: 'body',
                 assignment: args.bodyReference
-            });
+            })
         }
         return php.codeblock((writer) => {
             writer.writeNode(
@@ -118,31 +118,31 @@ export class RawClient {
                             arguments_,
                             multiline: true
                         }),
-                        args.optionsArgument ?? php.codeblock("[]")
+                        args.optionsArgument ?? php.codeblock('[]')
                     ],
                     multiline: true
                 })
-            );
-        });
+            )
+        })
     }
 
     private getPathString({
         endpoint,
         pathParameterReferences
     }: {
-        endpoint: HttpEndpoint;
-        pathParameterReferences: Record<string, string>;
+        endpoint: HttpEndpoint
+        pathParameterReferences: Record<string, string>
     }): string {
-        let path = endpoint.fullPath.head;
+        let path = endpoint.fullPath.head
         for (const part of endpoint.fullPath.parts) {
-            const reference = pathParameterReferences[part.pathParameter];
+            const reference = pathParameterReferences[part.pathParameter]
             if (reference == null) {
                 throw new Error(
                     `Failed to find request parameter for the endpoint ${endpoint.id} with path parameter ${part.pathParameter}`
-                );
+                )
             }
-            path += `{${reference}}${part.tail}`;
+            path += `{${reference}}${part.tail}`
         }
-        return path;
+        return path
     }
 }

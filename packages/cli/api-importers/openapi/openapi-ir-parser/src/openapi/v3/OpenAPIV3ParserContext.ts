@@ -1,25 +1,25 @@
-import { OpenAPIV3 } from "openapi-types";
+import { OpenAPIV3 } from 'openapi-types'
 
-import { SchemaId, Source } from "@fern-api/openapi-ir";
-import { TaskContext } from "@fern-api/task-context";
+import { SchemaId, Source } from '@fern-api/openapi-ir'
+import { TaskContext } from '@fern-api/task-context'
 
-import { ParseOpenAPIOptions } from "../../options";
-import { SchemaParserContext } from "../../schema/SchemaParserContext";
+import { ParseOpenAPIOptions } from '../../options'
+import { SchemaParserContext } from '../../schema/SchemaParserContext'
 import {
     AbstractOpenAPIV3ParserContext,
     DiscriminatedUnionMetadata,
     DiscriminatedUnionReference
-} from "./AbstractOpenAPIV3ParserContext";
-import { DummyOpenAPIV3ParserContext } from "./DummyOpenAPIV3ParserContext";
+} from './AbstractOpenAPIV3ParserContext'
+import { DummyOpenAPIV3ParserContext } from './DummyOpenAPIV3ParserContext'
 
 export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
-    public readonly nonRequestReferencedSchemas: Set<SchemaId> = new Set();
+    public readonly nonRequestReferencedSchemas: Set<SchemaId> = new Set()
 
-    private twoOrMoreRequestsReferencedSchemas: Set<SchemaId> = new Set();
-    private singleRequestReferencedSchemas: Set<SchemaId> = new Set();
-    private discriminatedUnionReferences: Record<string, DiscriminatedUnionReference> = {};
-    private discriminatedUnionMetadata: Record<string, DiscriminatedUnionMetadata> = {};
-    private schemasToExclude: Set<SchemaId> = new Set();
+    private twoOrMoreRequestsReferencedSchemas: Set<SchemaId> = new Set()
+    private singleRequestReferencedSchemas: Set<SchemaId> = new Set()
+    private discriminatedUnionReferences: Record<string, DiscriminatedUnionReference> = {}
+    private discriminatedUnionMetadata: Record<string, DiscriminatedUnionMetadata> = {}
+    private schemasToExclude: Set<SchemaId> = new Set()
 
     constructor({
         document,
@@ -29,12 +29,12 @@ export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
         source,
         namespace
     }: {
-        document: OpenAPIV3.Document;
-        taskContext: TaskContext;
-        authHeaders: Set<string>;
-        options: ParseOpenAPIOptions;
-        source: Source;
-        namespace?: string;
+        document: OpenAPIV3.Document
+        taskContext: TaskContext
+        authHeaders: Set<string>
+        options: ParseOpenAPIOptions
+        source: Source
+        namespace?: string
     }) {
         super({
             document,
@@ -43,7 +43,7 @@ export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
             options,
             source,
             namespace
-        });
+        })
     }
 
     public getDummy(): SchemaParserContext {
@@ -53,23 +53,23 @@ export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
             options: this.options,
             source: this.source,
             namespace: this.namespace
-        });
+        })
     }
 
     public markSchemaAsReferencedByNonRequest(schemaId: SchemaId): void {
-        this.nonRequestReferencedSchemas.add(schemaId);
+        this.nonRequestReferencedSchemas.add(schemaId)
     }
 
     public markSchemaAsReferencedByRequest(schemaId: SchemaId): void {
         if (this.singleRequestReferencedSchemas.has(schemaId)) {
-            this.twoOrMoreRequestsReferencedSchemas.add(schemaId);
+            this.twoOrMoreRequestsReferencedSchemas.add(schemaId)
         } else {
-            this.singleRequestReferencedSchemas.add(schemaId);
+            this.singleRequestReferencedSchemas.add(schemaId)
         }
     }
 
     public getReferencedSchemas(): Set<SchemaId> {
-        return new Set([...this.nonRequestReferencedSchemas, ...this.twoOrMoreRequestsReferencedSchemas]);
+        return new Set([...this.nonRequestReferencedSchemas, ...this.twoOrMoreRequestsReferencedSchemas])
     }
 
     public markReferencedByDiscriminatedUnion(
@@ -77,22 +77,22 @@ export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
         discriminant: string,
         times: number
     ): void {
-        const existingReference = this.discriminatedUnionReferences[schema.$ref];
+        const existingReference = this.discriminatedUnionReferences[schema.$ref]
         if (existingReference != null) {
-            existingReference.discriminants.add(discriminant);
-            existingReference.numReferences += times;
+            existingReference.discriminants.add(discriminant)
+            existingReference.numReferences += times
         } else {
             this.discriminatedUnionReferences[schema.$ref] = {
                 discriminants: new Set([discriminant]),
                 numReferences: times
-            };
+            }
         }
     }
 
     public getReferencesFromDiscriminatedUnion(
         schema: OpenAPIV3.ReferenceObject
     ): DiscriminatedUnionReference | undefined {
-        return this.discriminatedUnionReferences[schema.$ref];
+        return this.discriminatedUnionReferences[schema.$ref]
     }
 
     public markSchemaWithDiscriminantValue(
@@ -100,25 +100,25 @@ export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
         discriminant: string,
         discriminantValue: string
     ): void {
-        const existingMetadata = this.discriminatedUnionMetadata[schema.$ref];
+        const existingMetadata = this.discriminatedUnionMetadata[schema.$ref]
         if (existingMetadata != null) {
-            existingMetadata.discriminants.set(discriminant, discriminantValue);
+            existingMetadata.discriminants.set(discriminant, discriminantValue)
         } else {
             this.discriminatedUnionMetadata[schema.$ref] = {
                 discriminants: new Map([[discriminant, discriminantValue]])
-            };
+            }
         }
     }
 
     public getDiscriminatedUnionMetadata(schema: OpenAPIV3.ReferenceObject): DiscriminatedUnionMetadata | undefined {
-        return this.discriminatedUnionMetadata[schema.$ref];
+        return this.discriminatedUnionMetadata[schema.$ref]
     }
 
     public excludeSchema(schemaId: SchemaId): void {
-        this.schemasToExclude.add(schemaId);
+        this.schemasToExclude.add(schemaId)
     }
 
     public isSchemaExcluded(schemaId: SchemaId): boolean {
-        return this.schemasToExclude.has(schemaId);
+        return this.schemasToExclude.has(schemaId)
     }
 }

@@ -1,1 +1,1 @@
-export { convertHttpPathToExpressRoute } from "./convertHttpPathToExpressRoute";
+export { convertHttpPathToExpressRoute } from './convertHttpPathToExpressRoute'

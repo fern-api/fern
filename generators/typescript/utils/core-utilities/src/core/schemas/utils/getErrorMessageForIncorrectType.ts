@@ -1,25 +1,25 @@
 export function getErrorMessageForIncorrectType(value: unknown, expectedType: string): string {
-    return `Expected ${expectedType}. Received ${getTypeAsString(value)}.`;
+    return `Expected ${expectedType}. Received ${getTypeAsString(value)}.`
 }
 
 function getTypeAsString(value: unknown): string {
     if (Array.isArray(value)) {
-        return "list";
+        return 'list'
     }
     if (value === null) {
-        return "null";
+        return 'null'
     }
     if (value instanceof BigInt) {
-        return "BigInt";
+        return 'BigInt'
     }
     switch (typeof value) {
-        case "string":
-            return `"${value}"`;
-        case "bigint":
-        case "number":
-        case "boolean":
-        case "undefined":
-            return `${value}`;
+        case 'string':
+            return `"${value}"`
+        case 'bigint':
+        case 'number':
+        case 'boolean':
+        case 'undefined':
+            return `${value}`
     }
-    return typeof value;
+    return typeof value
 }

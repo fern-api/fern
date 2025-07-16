@@ -1,1 +1,1 @@
-export { ValidNavigationRule } from "./valid-navigation";
+export { ValidNavigationRule } from './valid-navigation'

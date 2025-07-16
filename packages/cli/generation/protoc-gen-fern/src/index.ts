@@ -1,1 +1,1 @@
-export { protocGenFern } from "./protoc-gen-fern";
+export { protocGenFern } from './protoc-gen-fern'

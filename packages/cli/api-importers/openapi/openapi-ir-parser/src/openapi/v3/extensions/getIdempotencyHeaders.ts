@@ -1,24 +1,24 @@
-import { OpenAPIV3 } from "openapi-types";
+import { OpenAPIV3 } from 'openapi-types'
 
-import { IdempotencyHeader } from "@fern-api/openapi-ir";
+import { IdempotencyHeader } from '@fern-api/openapi-ir'
 
-import { getExtension } from "../../../getExtension";
-import { FernOpenAPIExtension } from "./fernExtensions";
-import { getSchemaFromFernType } from "./getFernTypeExtension";
+import { getExtension } from '../../../getExtension'
+import { FernOpenAPIExtension } from './fernExtensions'
+import { getSchemaFromFernType } from './getFernTypeExtension'
 
 interface IdempotencyHeaderExtension {
-    header: string;
-    name: string | undefined;
-    env: string | undefined;
-    type: string | undefined;
+    header: string
+    name: string | undefined
+    env: string | undefined
+    type: string | undefined
 }
 
 export function getIdempotencyHeaders(document: OpenAPIV3.Document): IdempotencyHeader[] {
     const idempotencyHeaders = getExtension<IdempotencyHeaderExtension[]>(
         document,
         FernOpenAPIExtension.FERN_IDEMPOTENCY_HEADERS
-    );
-    const result: IdempotencyHeader[] = [];
+    )
+    const result: IdempotencyHeader[] = []
     for (const header of idempotencyHeaders ?? []) {
         result.push({
             ...header,
@@ -35,7 +35,7 @@ export function getIdempotencyHeaders(document: OpenAPIV3.Document): Idempotency
                           nameOverride: undefined
                       })
                     : undefined
-        });
+        })
     }
-    return result;
+    return result
 }

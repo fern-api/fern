@@ -1,20 +1,20 @@
-import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
-import { Zurg, getTextOfTsNode } from "@fern-typescript/commons";
-import { BaseContext, GeneratedEnumTypeSchema } from "@fern-typescript/contexts";
-import { ModuleDeclaration, ts } from "ts-morph";
+import { AbstractGeneratedSchema } from '@fern-typescript/abstract-schema-generator'
+import { Zurg, getTextOfTsNode } from '@fern-typescript/commons'
+import { BaseContext, GeneratedEnumTypeSchema } from '@fern-typescript/contexts'
+import { ModuleDeclaration, ts } from 'ts-morph'
 
-import { EnumTypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { EnumTypeDeclaration } from '@fern-fern/ir-sdk/api'
 
-import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema";
+import { AbstractGeneratedTypeSchema } from '../AbstractGeneratedTypeSchema'
 
 export class GeneratedEnumTypeSchemaImpl<Context extends BaseContext>
     extends AbstractGeneratedTypeSchema<EnumTypeDeclaration, Context>
     implements GeneratedEnumTypeSchema<Context>
 {
-    public readonly type = "enum";
+    public readonly type = 'enum'
 
     protected override buildSchema(context: Context): Zurg.Schema {
-        return context.coreUtilities.zurg.enum(this.shape.values.map((value) => value.name.wireValue));
+        return context.coreUtilities.zurg.enum(this.shape.values.map((value) => value.name.wireValue))
     }
 
     protected override generateRawTypeDeclaration(_context: Context, module: ModuleDeclaration): void {
@@ -28,6 +28,6 @@ export class GeneratedEnumTypeSchemaImpl<Context extends BaseContext>
                 )
             ),
             isExported: true
-        });
+        })
     }
 }

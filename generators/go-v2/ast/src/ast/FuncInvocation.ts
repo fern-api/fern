@@ -1,34 +1,34 @@
-import { GoTypeReference } from "./GoTypeReference";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
-import { writeArguments } from "./utils/writeArguments";
+import { GoTypeReference } from './GoTypeReference'
+import { AstNode } from './core/AstNode'
+import { Writer } from './core/Writer'
+import { writeArguments } from './utils/writeArguments'
 
 export declare namespace FuncInvocation {
     interface Args {
         /* The function to invoke */
-        func: GoTypeReference;
+        func: GoTypeReference
         /* The arguments passed to the method */
-        arguments_: AstNode[];
+        arguments_: AstNode[]
         /* Whether to write the invocation on multiple lines */
-        multiline?: boolean;
+        multiline?: boolean
     }
 }
 
 export class FuncInvocation extends AstNode {
-    private func: GoTypeReference;
-    private arguments_: AstNode[];
-    private multiline: boolean | undefined;
+    private func: GoTypeReference
+    private arguments_: AstNode[]
+    private multiline: boolean | undefined
 
     constructor({ func, arguments_, multiline = true }: FuncInvocation.Args) {
-        super();
+        super()
 
-        this.func = func;
-        this.arguments_ = arguments_;
-        this.multiline = multiline;
+        this.func = func
+        this.arguments_ = arguments_
+        this.multiline = multiline
     }
 
     public write(writer: Writer): void {
-        writer.writeNode(this.func);
-        writeArguments({ writer, arguments_: this.arguments_, multiline: this.multiline });
+        writer.writeNode(this.func)
+        writeArguments({ writer, arguments_: this.arguments_, multiline: this.multiline })
     }
 }

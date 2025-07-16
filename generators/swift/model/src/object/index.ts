@@ -1,1 +1,1 @@
-export * from "./ObjectGenerator";
+export * from './ObjectGenerator'

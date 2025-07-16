@@ -1,24 +1,20 @@
-import { GeneratorName } from "@fern-api/configuration-loader";
+import { GeneratorName } from '@fern-api/configuration-loader'
 
-import { IrVersions } from "../../ir-versions";
-import {
-    GeneratorWasNeverUpdatedToConsumeNewIR,
-    GeneratorWasNotCreatedYet,
-    IrMigration
-} from "../../types/IrMigration";
+import { IrVersions } from '../../ir-versions'
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
 
 export const V2_TO_V1_MIGRATION: IrMigration<
     IrVersions.V2.ir.IntermediateRepresentation,
     IrVersions.V1.ir.IntermediateRepresentation
 > = {
-    laterVersion: "v2",
-    earlierVersion: "v1",
+    laterVersion: 'v2',
+    earlierVersion: 'v1',
     firstGeneratorVersionToConsumeNewIR: {
         [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_SDK]: "0.0.246",
-        [GeneratorName.TYPESCRIPT_EXPRESS]: "0.0.264",
+        [GeneratorName.TYPESCRIPT_SDK]: '0.0.246',
+        [GeneratorName.TYPESCRIPT_EXPRESS]: '0.0.264',
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -79,6 +75,6 @@ export const V2_TO_V1_MIGRATION: IrMigration<
                     statusCode: error.statusCode
                 })
             )
-        };
+        }
     }
-};
+}

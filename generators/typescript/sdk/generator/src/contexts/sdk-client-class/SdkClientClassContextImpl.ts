@@ -1,28 +1,28 @@
-import { ExportsManager, ImportsManager, NpmPackage, PackageId, Reference } from "@fern-typescript/commons";
-import { GeneratedSdkClientClass, SdkClientClassContext } from "@fern-typescript/contexts";
-import { PackageResolver } from "@fern-typescript/resolvers";
-import { SdkClientClassGenerator } from "@fern-typescript/sdk-client-class-generator";
-import { SourceFile } from "ts-morph";
+import { ExportsManager, ImportsManager, NpmPackage, PackageId, Reference } from '@fern-typescript/commons'
+import { GeneratedSdkClientClass, SdkClientClassContext } from '@fern-typescript/contexts'
+import { PackageResolver } from '@fern-typescript/resolvers'
+import { SdkClientClassGenerator } from '@fern-typescript/sdk-client-class-generator'
+import { SourceFile } from 'ts-morph'
 
-import { SdkClientClassDeclarationReferencer } from "../../declaration-referencers/SdkClientClassDeclarationReferencer";
+import { SdkClientClassDeclarationReferencer } from '../../declaration-referencers/SdkClientClassDeclarationReferencer'
 
 export declare namespace SdkClientClassContextImpl {
     export interface Init {
-        sourceFile: SourceFile;
-        importsManager: ImportsManager;
-        exportsManager: ExportsManager;
-        sdkClientClassDeclarationReferencer: SdkClientClassDeclarationReferencer;
-        sdkClientClassGenerator: SdkClientClassGenerator;
-        packageResolver: PackageResolver;
+        sourceFile: SourceFile
+        importsManager: ImportsManager
+        exportsManager: ExportsManager
+        sdkClientClassDeclarationReferencer: SdkClientClassDeclarationReferencer
+        sdkClientClassGenerator: SdkClientClassGenerator
+        packageResolver: PackageResolver
     }
 }
 
 export class SdkClientClassContextImpl implements SdkClientClassContext {
-    public sourceFile: SourceFile;
-    public importsManager: ImportsManager;
-    public exportsManager: ExportsManager;
-    public sdkClientClassGenerator: SdkClientClassGenerator;
-    public sdkClientClassDeclarationReferencer: SdkClientClassDeclarationReferencer;
+    public sourceFile: SourceFile
+    public importsManager: ImportsManager
+    public exportsManager: ExportsManager
+    public sdkClientClassGenerator: SdkClientClassGenerator
+    public sdkClientClassDeclarationReferencer: SdkClientClassDeclarationReferencer
 
     constructor({
         sourceFile,
@@ -31,11 +31,11 @@ export class SdkClientClassContextImpl implements SdkClientClassContext {
         sdkClientClassGenerator,
         sdkClientClassDeclarationReferencer
     }: SdkClientClassContextImpl.Init) {
-        this.sourceFile = sourceFile;
-        this.importsManager = importsManager;
-        this.exportsManager = exportsManager;
-        this.sdkClientClassGenerator = sdkClientClassGenerator;
-        this.sdkClientClassDeclarationReferencer = sdkClientClassDeclarationReferencer;
+        this.sourceFile = sourceFile
+        this.importsManager = importsManager
+        this.exportsManager = exportsManager
+        this.sdkClientClassGenerator = sdkClientClassGenerator
+        this.sdkClientClassDeclarationReferencer = sdkClientClassDeclarationReferencer
     }
 
     public getGeneratedSdkClientClass(packageId: PackageId): GeneratedSdkClientClass {
@@ -44,7 +44,7 @@ export class SdkClientClassContextImpl implements SdkClientClassContext {
             importsManager: this.importsManager,
             packageId,
             serviceClassName: this.sdkClientClassDeclarationReferencer.getExportedName(packageId)
-        });
+        })
     }
 
     public getReferenceToClientClass(
@@ -57,15 +57,15 @@ export class SdkClientClassContextImpl implements SdkClientClassContext {
                 referencedIn: this.sourceFile,
                 importsManager: this.importsManager,
                 exportsManager: this.exportsManager,
-                importStrategy: { type: "fromPackage", packageName: npmPackage.packageName }
-            });
+                importStrategy: { type: 'fromPackage', packageName: npmPackage.packageName }
+            })
         }
         return this.sdkClientClassDeclarationReferencer.getReferenceToClient({
             name: packageId,
             referencedIn: this.sourceFile,
             importsManager: this.importsManager,
             exportsManager: this.exportsManager,
-            importStrategy: { type: "direct", alias: importAlias }
-        });
+            importStrategy: { type: 'direct', alias: importAlias }
+        })
     }
 }

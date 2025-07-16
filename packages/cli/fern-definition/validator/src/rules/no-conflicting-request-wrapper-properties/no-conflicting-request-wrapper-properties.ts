@@ -1,9 +1,9 @@
-import chalk from "chalk";
+import chalk from 'chalk'
 
-import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import { assertNever } from "@fern-api/core-utils";
-import { DefinitionFileSchema, RawSchemas, isInlineRequestBody } from "@fern-api/fern-definition-schema";
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { FernWorkspace } from '@fern-api/api-workspace-commons'
+import { assertNever } from '@fern-api/core-utils'
+import { DefinitionFileSchema, RawSchemas, isInlineRequestBody } from '@fern-api/fern-definition-schema'
+import { RelativeFilePath } from '@fern-api/fs-utils'
 import {
     DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER,
     ObjectPropertyWithPath,
@@ -14,13 +14,13 @@ import {
     getAllPropertiesForObject,
     getHeaderName,
     getQueryParameterName
-} from "@fern-api/ir-generator";
+} from '@fern-api/ir-generator'
 
-import { Rule, RuleViolation } from "../../Rule";
-import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
+import { Rule, RuleViolation } from '../../Rule'
+import { CASINGS_GENERATOR } from '../../utils/casingsGenerator'
 
 export const NoConflictingRequestWrapperPropertiesRule: Rule = {
-    name: "no-conflicting-request-wrapper-properties",
+    name: 'no-conflicting-request-wrapper-properties',
     create: ({ workspace }) => {
         return {
             definitionFile: {
@@ -31,65 +31,65 @@ export const NoConflictingRequestWrapperPropertiesRule: Rule = {
                         relativeFilepath,
                         definitionFile,
                         workspace
-                    });
+                    })
 
-                    const violations: RuleViolation[] = [];
+                    const violations: RuleViolation[] = []
                     for (const [name, propertiesWithName] of Object.entries(nameToProperties)) {
                         if (propertiesWithName.length <= 1) {
-                            continue;
+                            continue
                         }
                         violations.push({
-                            severity: "fatal",
+                            severity: 'fatal',
                             message:
                                 `Multiple request properties have the name ${chalk.bold(
                                     name
                                 )}. This is not suitable for code generation. Use the "name" property to deconflict.\n` +
                                 propertiesWithName
                                     .map((property) => `  - ${convertRequestWrapperPropertyToString(property)}`)
-                                    .join("\n")
-                        });
+                                    .join('\n')
+                        })
                     }
 
-                    return violations;
+                    return violations
                 }
             }
-        };
+        }
     }
-};
+}
 
 type RequestWrapperProperty =
     | ServiceHeaderRequestWrapperProperty
     | EndpointQueryParameterRequestWrapperProperty
     | EndpointHeaderRequestWrapperProperty
     | InlinedBodyRequestWrapperProperty
-    | ReferencedBodyRequestWrapperProperty;
+    | ReferencedBodyRequestWrapperProperty
 
 interface ServiceHeaderRequestWrapperProperty {
-    type: "service-header";
-    headerKey: string;
-    header: RawSchemas.HttpHeaderSchema;
+    type: 'service-header'
+    headerKey: string
+    header: RawSchemas.HttpHeaderSchema
 }
 
 interface EndpointQueryParameterRequestWrapperProperty {
-    type: "endpoint-query-parameter";
-    queryParameterKey: string;
-    queryParameter: RawSchemas.HttpQueryParameterSchema;
+    type: 'endpoint-query-parameter'
+    queryParameterKey: string
+    queryParameter: RawSchemas.HttpQueryParameterSchema
 }
 
 interface EndpointHeaderRequestWrapperProperty {
-    type: "endpoint-header";
-    headerKey: string;
-    header: RawSchemas.HttpHeaderSchema;
+    type: 'endpoint-header'
+    headerKey: string
+    header: RawSchemas.HttpHeaderSchema
 }
 
 interface InlinedBodyRequestWrapperProperty {
-    type: "inlined-body";
-    property: ObjectPropertyWithPath;
+    type: 'inlined-body'
+    property: ObjectPropertyWithPath
 }
 
 interface ReferencedBodyRequestWrapperProperty {
-    type: "referenced-body";
-    propertyName: string;
+    type: 'referenced-body'
+    propertyName: string
 }
 
 function getRequestWrapperPropertiesByName({
@@ -99,20 +99,20 @@ function getRequestWrapperPropertiesByName({
     definitionFile,
     workspace
 }: {
-    endpoint: RawSchemas.HttpEndpointSchema;
-    service: RawSchemas.HttpServiceSchema;
-    relativeFilepath: RelativeFilePath;
-    definitionFile: DefinitionFileSchema;
-    workspace: FernWorkspace;
+    endpoint: RawSchemas.HttpEndpointSchema
+    service: RawSchemas.HttpServiceSchema
+    relativeFilepath: RelativeFilePath
+    definitionFile: DefinitionFileSchema
+    workspace: FernWorkspace
 }): Record<string, RequestWrapperProperty[]> {
-    const nameToProperties: Record<string, RequestWrapperProperty[]> = {};
+    const nameToProperties: Record<string, RequestWrapperProperty[]> = {}
     const addProperty = (name: string, property: RequestWrapperProperty) => {
-        const propertiesForName = (nameToProperties[name] ??= []);
-        propertiesForName.push(property);
-    };
+        const propertiesForName = (nameToProperties[name] ??= [])
+        propertiesForName.push(property)
+    }
 
-    if (endpoint.request != null && typeof endpoint.request !== "string") {
-        const isBodyReferenced = endpoint.request.body != null && !isInlineRequestBody(endpoint.request.body);
+    if (endpoint.request != null && typeof endpoint.request !== 'string') {
+        const isBodyReferenced = endpoint.request.body != null && !isInlineRequestBody(endpoint.request.body)
         if (
             isBodyReferenced &&
             doesRequestHaveNonBodyProperties({
@@ -127,40 +127,40 @@ function getRequestWrapperPropertiesByName({
             })
         ) {
             addProperty(DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER, {
-                type: "referenced-body",
+                type: 'referenced-body',
                 propertyName: DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER
-            });
+            })
         }
     }
 
     if (service.headers != null) {
         for (const [headerKey, header] of Object.entries(service.headers)) {
             addProperty(getHeaderName({ headerKey, header }).name, {
-                type: "service-header",
+                type: 'service-header',
                 headerKey,
                 header
-            });
+            })
         }
     }
 
-    if (endpoint.request != null && typeof endpoint.request !== "string") {
+    if (endpoint.request != null && typeof endpoint.request !== 'string') {
         if (endpoint.request.headers != null) {
             for (const [headerKey, header] of Object.entries(endpoint.request.headers)) {
                 addProperty(getHeaderName({ headerKey, header }).name, {
-                    type: "endpoint-header",
+                    type: 'endpoint-header',
                     headerKey,
                     header
-                });
+                })
             }
         }
 
-        if (endpoint.request["query-parameters"] != null) {
-            for (const [queryParameterKey, queryParameter] of Object.entries(endpoint.request["query-parameters"])) {
+        if (endpoint.request['query-parameters'] != null) {
+            for (const [queryParameterKey, queryParameter] of Object.entries(endpoint.request['query-parameters'])) {
                 addProperty(getQueryParameterName({ queryParameterKey, queryParameter }).name, {
-                    type: "endpoint-query-parameter",
+                    type: 'endpoint-query-parameter',
                     queryParameterKey,
                     queryParameter
-                });
+                })
             }
         }
 
@@ -176,36 +176,36 @@ function getRequestWrapperPropertiesByName({
                 workspace,
                 typeResolver: new TypeResolverImpl(workspace),
                 smartCasing: false
-            });
+            })
 
             for (const property of allProperties) {
                 addProperty(property.name, {
-                    type: "inlined-body",
+                    type: 'inlined-body',
                     property
-                });
+                })
             }
         }
     }
 
-    return nameToProperties;
+    return nameToProperties
 }
 
 function convertRequestWrapperPropertyToString(property: RequestWrapperProperty): string {
     switch (property.type) {
-        case "service-header":
-            return `Service header "${property.headerKey}"`;
-        case "endpoint-header":
-            return `Endpoint header "${property.headerKey}"`;
-        case "endpoint-query-parameter":
-            return `Query Parameter "${property.queryParameterKey}"`;
-        case "inlined-body":
+        case 'service-header':
+            return `Service header "${property.headerKey}"`
+        case 'endpoint-header':
+            return `Endpoint header "${property.headerKey}"`
+        case 'endpoint-query-parameter':
+            return `Query Parameter "${property.queryParameterKey}"`
+        case 'inlined-body':
             return `Body property: ${convertObjectPropertyWithPathToString({
                 property: property.property,
-                prefixBreadcrumbs: ["<Request Body>"]
-            })}`;
-        case "referenced-body":
-            return `Body property "${property.propertyName}"`;
+                prefixBreadcrumbs: ['<Request Body>']
+            })}`
+        case 'referenced-body':
+            return `Body property "${property.propertyName}"`
         default:
-            assertNever(property);
+            assertNever(property)
     }
 }

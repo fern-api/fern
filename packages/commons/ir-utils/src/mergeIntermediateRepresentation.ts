@@ -1,5 +1,5 @@
-import { CasingsGenerator } from "@fern-api/casings-generator";
-import * as FernIr from "@fern-api/ir-sdk";
+import { CasingsGenerator } from '@fern-api/casings-generator'
+import * as FernIr from '@fern-api/ir-sdk'
 
 export function mergeIntermediateRepresentation(
     ir1: FernIr.IntermediateRepresentation,
@@ -10,8 +10,8 @@ export function mergeIntermediateRepresentation(
         ir1.environments,
         ir2.environments,
         casingsGenerator
-    );
-    const { services, websocketChannels } = mergeServicesAndChannels(ir1, ir2, changedBaseUrlIds1, changedBaseUrlIds2);
+    )
+    const { services, websocketChannels } = mergeServicesAndChannels(ir1, ir2, changedBaseUrlIds1, changedBaseUrlIds2)
 
     return {
         apiName: ir1.apiName,
@@ -78,17 +78,17 @@ export function mergeIntermediateRepresentation(
         dynamic: ir1.dynamic ?? ir2.dynamic,
         sdkConfig: ir1.sdkConfig ?? ir2.sdkConfig,
         audiences: [...(ir1.audiences ?? []), ...(ir2.audiences ?? [])]
-    };
+    }
 }
 
 function mergeSubpackages(
     subpackages1: Record<string, FernIr.Subpackage>,
     subpackages2: Record<string, FernIr.Subpackage>
 ): Record<string, FernIr.Subpackage> {
-    const mergedSubpackages: Record<string, FernIr.Subpackage> = subpackages1;
+    const mergedSubpackages: Record<string, FernIr.Subpackage> = subpackages1
     for (const [subpackageId, subpackage] of Object.entries(subpackages2)) {
         if (mergedSubpackages[subpackageId] == null) {
-            mergedSubpackages[subpackageId] = subpackage;
+            mergedSubpackages[subpackageId] = subpackage
         } else {
             mergedSubpackages[subpackageId] = {
                 name: subpackage.name,
@@ -107,10 +107,10 @@ function mergeSubpackages(
                 websocket: mergedSubpackages[subpackageId].websocket ?? subpackage.websocket,
                 errors: [...(mergedSubpackages[subpackageId].errors ?? []), ...(subpackage.errors ?? [])],
                 types: [...(mergedSubpackages[subpackageId].types ?? []), ...(subpackage.types ?? [])]
-            };
+            }
         }
     }
-    return mergedSubpackages;
+    return mergedSubpackages
 }
 
 /**
@@ -122,43 +122,43 @@ function mergeEnvironments(
     environmentConfig2: FernIr.EnvironmentsConfig | undefined,
     casingsGenerator: CasingsGenerator
 ): {
-    environments: FernIr.EnvironmentsConfig | undefined;
-    changedBaseUrlIds1: Record<string, string> | undefined;
-    changedBaseUrlIds2: Record<string, string> | undefined;
+    environments: FernIr.EnvironmentsConfig | undefined
+    changedBaseUrlIds1: Record<string, string> | undefined
+    changedBaseUrlIds2: Record<string, string> | undefined
 } {
     if (environmentConfig1 == null && environmentConfig2 == null) {
-        return { environments: undefined, changedBaseUrlIds1: undefined, changedBaseUrlIds2: undefined };
+        return { environments: undefined, changedBaseUrlIds1: undefined, changedBaseUrlIds2: undefined }
     }
     if (environmentConfig2 == null) {
         return {
             environments: environmentConfig1,
             changedBaseUrlIds1: undefined,
             changedBaseUrlIds2: undefined
-        };
+        }
     }
     if (environmentConfig1 == null) {
         return {
             environments: environmentConfig2,
             changedBaseUrlIds1: undefined,
             changedBaseUrlIds2: undefined
-        };
+        }
     }
     if (JSON.stringify(environmentConfig1) === JSON.stringify(environmentConfig2)) {
         return {
             environments: environmentConfig1,
             changedBaseUrlIds1: undefined,
             changedBaseUrlIds2: undefined
-        };
+        }
     }
 
-    const isWebsocketEnvironment1 = isWebsocketEnvironment(environmentConfig1);
-    const isWebsocketEnvironment2 = isWebsocketEnvironment(environmentConfig2);
+    const isWebsocketEnvironment1 = isWebsocketEnvironment(environmentConfig1)
+    const isWebsocketEnvironment2 = isWebsocketEnvironment(environmentConfig2)
 
     if (
         isWebsocketEnvironment1 &&
         isWebsocketEnvironment2 &&
-        environmentConfig1.environments.type === "singleBaseUrl" &&
-        environmentConfig2.environments.type === "singleBaseUrl"
+        environmentConfig1.environments.type === 'singleBaseUrl' &&
+        environmentConfig2.environments.type === 'singleBaseUrl'
     ) {
         return {
             environments: {
@@ -172,40 +172,40 @@ function mergeEnvironments(
             },
             changedBaseUrlIds1: undefined,
             changedBaseUrlIds2: undefined
-        };
+        }
     }
 
     const defaultEnvironment: FernIr.EnvironmentId | undefined = isWebsocketEnvironment1
         ? environmentConfig2.defaultEnvironment
-        : environmentConfig1.defaultEnvironment;
-    const environments1 = environmentConfig1.environments;
-    const environments2 = environmentConfig2.environments;
+        : environmentConfig1.defaultEnvironment
+    const environments1 = environmentConfig1.environments
+    const environments2 = environmentConfig2.environments
 
-    if (environments1.type === "singleBaseUrl" && environments2.type === "singleBaseUrl") {
-        const singleBaseUrlEnvironments1 = isWebsocketEnvironment1 ? environments2 : environments1;
-        const singleBaseUrlEnvironments2 = isWebsocketEnvironment1 ? environments1 : environments2;
+    if (environments1.type === 'singleBaseUrl' && environments2.type === 'singleBaseUrl') {
+        const singleBaseUrlEnvironments1 = isWebsocketEnvironment1 ? environments2 : environments1
+        const singleBaseUrlEnvironments2 = isWebsocketEnvironment1 ? environments1 : environments2
 
-        const changedBaseUrlIds1: Record<string, string> = {};
+        const changedBaseUrlIds1: Record<string, string> = {}
         const { deconflictedEnvironments2, changedBaseUrlIds2 } = deconflictSingleEnvironments(
             singleBaseUrlEnvironments1,
             singleBaseUrlEnvironments2,
             casingsGenerator
-        );
+        )
 
         if (singleBaseUrlEnvironments1.environments[0] == null) {
             return {
                 environments: environmentConfig2,
                 changedBaseUrlIds1: undefined,
                 changedBaseUrlIds2: undefined
-            };
+            }
         }
 
-        const environmentId = "Base";
-        const environmentName = casingsGenerator.generateName("Base");
+        const environmentId = 'Base'
+        const environmentName = casingsGenerator.generateName('Base')
 
         singleBaseUrlEnvironments1.environments.forEach((env) => {
-            changedBaseUrlIds1[env.id] = environmentId;
-        });
+            changedBaseUrlIds1[env.id] = environmentId
+        })
 
         return {
             environments: {
@@ -230,27 +230,27 @@ function mergeEnvironments(
             },
             changedBaseUrlIds1: isWebsocketEnvironment1 ? changedBaseUrlIds2 : changedBaseUrlIds1,
             changedBaseUrlIds2: isWebsocketEnvironment1 ? changedBaseUrlIds1 : changedBaseUrlIds2
-        };
+        }
     }
 
     if (
-        (environments1.type === "multipleBaseUrls" && environments2.type === "singleBaseUrl") ||
-        (environments1.type === "singleBaseUrl" && environments2.type === "multipleBaseUrls")
+        (environments1.type === 'multipleBaseUrls' && environments2.type === 'singleBaseUrl') ||
+        (environments1.type === 'singleBaseUrl' && environments2.type === 'multipleBaseUrls')
     ) {
         const singleBaseUrlEnvironment =
-            environments1.type === "singleBaseUrl"
+            environments1.type === 'singleBaseUrl'
                 ? (environments1 as FernIr.Environments.SingleBaseUrl)
-                : (environments2 as FernIr.Environments.SingleBaseUrl);
+                : (environments2 as FernIr.Environments.SingleBaseUrl)
         const multipleBaseUrlsEnvironment =
-            environments1.type === "multipleBaseUrls"
+            environments1.type === 'multipleBaseUrls'
                 ? (environments1 as FernIr.Environments.MultipleBaseUrls)
-                : (environments2 as FernIr.Environments.MultipleBaseUrls);
+                : (environments2 as FernIr.Environments.MultipleBaseUrls)
 
         const { deconflictedEnvironments1, changedBaseUrlIds1 } = deconflictHybridEnvironments(
             singleBaseUrlEnvironment,
             multipleBaseUrlsEnvironment,
             casingsGenerator
-        );
+        )
 
         return {
             environments: {
@@ -271,17 +271,17 @@ function mergeEnvironments(
                     }))
                 })
             },
-            changedBaseUrlIds1: environments1.type === "singleBaseUrl" ? changedBaseUrlIds1 : undefined,
-            changedBaseUrlIds2: environments1.type === "singleBaseUrl" ? undefined : changedBaseUrlIds1
-        };
+            changedBaseUrlIds1: environments1.type === 'singleBaseUrl' ? changedBaseUrlIds1 : undefined,
+            changedBaseUrlIds2: environments1.type === 'singleBaseUrl' ? undefined : changedBaseUrlIds1
+        }
     }
 
-    if (environments1.type === "multipleBaseUrls" && environments2.type === "multipleBaseUrls") {
+    if (environments1.type === 'multipleBaseUrls' && environments2.type === 'multipleBaseUrls') {
         const { deconflictedEnvironments, changedBaseUrlIds } = deconflictMultipleEnvironments(
             environments1,
             environments2,
             casingsGenerator
-        );
+        )
         return {
             environments: {
                 defaultEnvironment,
@@ -300,14 +300,14 @@ function mergeEnvironments(
             },
             changedBaseUrlIds1: undefined,
             changedBaseUrlIds2: changedBaseUrlIds
-        };
+        }
     }
 
     return {
         environments: environmentConfig1 ?? environmentConfig2,
         changedBaseUrlIds1: undefined,
         changedBaseUrlIds2: undefined
-    };
+    }
 }
 
 /**
@@ -326,16 +326,16 @@ function mergeServicesAndChannels(
             for (const service of Object.values(ir1.services)) {
                 for (const endpoint of Object.values(service.endpoints)) {
                     if (endpoint.baseUrl == key) {
-                        endpoint.baseUrl = value;
+                        endpoint.baseUrl = value
                     }
                     if (endpoint.v2BaseUrls?.includes(key)) {
-                        endpoint.v2BaseUrls = endpoint.v2BaseUrls.map((baseUrl) => (baseUrl === key ? value : baseUrl));
+                        endpoint.v2BaseUrls = endpoint.v2BaseUrls.map((baseUrl) => (baseUrl === key ? value : baseUrl))
                     }
                 }
             }
             for (const websocketChannel of Object.values(ir1.websocketChannels ?? {})) {
                 if (websocketChannel.baseUrl == key) {
-                    websocketChannel.baseUrl = value;
+                    websocketChannel.baseUrl = value
                 }
             }
         }
@@ -345,25 +345,25 @@ function mergeServicesAndChannels(
             for (const service of Object.values(ir2.services)) {
                 for (const endpoint of Object.values(service.endpoints)) {
                     if (endpoint.baseUrl == key) {
-                        endpoint.baseUrl = value;
+                        endpoint.baseUrl = value
                     }
                     if (endpoint.v2BaseUrls?.includes(key)) {
-                        endpoint.v2BaseUrls = endpoint.v2BaseUrls.map((baseUrl) => (baseUrl === key ? value : baseUrl));
+                        endpoint.v2BaseUrls = endpoint.v2BaseUrls.map((baseUrl) => (baseUrl === key ? value : baseUrl))
                     }
                 }
             }
             for (const websocketChannel of Object.values(ir2.websocketChannels ?? {})) {
                 if (websocketChannel.baseUrl == key) {
-                    websocketChannel.baseUrl = value;
+                    websocketChannel.baseUrl = value
                 }
             }
         }
     }
 
-    const mergedServices: Record<string, FernIr.HttpService> = ir1.services;
+    const mergedServices: Record<string, FernIr.HttpService> = ir1.services
     for (const [serviceId, service] of Object.entries(ir2.services)) {
         if (mergedServices[serviceId] == null) {
-            mergedServices[serviceId] = service;
+            mergedServices[serviceId] = service
         } else {
             mergedServices[serviceId] = {
                 availability: service.availability,
@@ -379,15 +379,15 @@ function mergeServicesAndChannels(
                 encoding: service.encoding,
                 transport: service.transport,
                 audiences: [...(mergedServices[serviceId].audiences ?? []), ...(service.audiences ?? [])]
-            };
+            }
         }
     }
 
     const websocketChannels = {
         ...(ir1.websocketChannels ?? {}),
         ...(ir2.websocketChannels ?? {})
-    };
-    return { services: mergedServices, websocketChannels };
+    }
+    return { services: mergedServices, websocketChannels }
 }
 
 /**
@@ -400,37 +400,37 @@ function deconflictSingleEnvironments(
     environments2: FernIr.Environments.SingleBaseUrl,
     casingsGenerator: CasingsGenerator
 ): { deconflictedEnvironments2: FernIr.Environments.SingleBaseUrl; changedBaseUrlIds2: Record<string, string> } {
-    const changedBaseUrlIds2: Record<string, string> = {};
-    const environment1Ids = new Set(environments1.environments.map((env) => env.id));
-    const environment1Names = new Set(environments1.environments.map((env) => env.name));
-    const environment1UrlToId = new Map(environments1.environments.map((env) => [env.url, env.id]));
+    const changedBaseUrlIds2: Record<string, string> = {}
+    const environment1Ids = new Set(environments1.environments.map((env) => env.id))
+    const environment1Names = new Set(environments1.environments.map((env) => env.name))
+    const environment1UrlToId = new Map(environments1.environments.map((env) => [env.url, env.id]))
 
     const deconflictedEnvironments = environments2.environments
         .filter((env) => {
-            const existingId = environment1UrlToId.get(env.url);
+            const existingId = environment1UrlToId.get(env.url)
             if (existingId != null) {
-                changedBaseUrlIds2[env.id] = existingId;
-                return false;
+                changedBaseUrlIds2[env.id] = existingId
+                return false
             }
-            return true;
+            return true
         })
         .map((env) => {
             if (environment1Ids.has(env.id) || environment1Names.has(env.name)) {
-                const newName = generateUniqueName(env.id, environment1Ids);
-                changedBaseUrlIds2[env.id] = newName;
+                const newName = generateUniqueName(env.id, environment1Ids)
+                changedBaseUrlIds2[env.id] = newName
                 return {
                     ...env,
                     id: newName,
                     name: casingsGenerator.generateName(newName)
-                };
+                }
             }
-            return env;
-        });
+            return env
+        })
 
     const deconflictedEnvironments2 = FernIr.Environments.singleBaseUrl({
         environments: deconflictedEnvironments
-    });
-    return { deconflictedEnvironments2, changedBaseUrlIds2 };
+    })
+    return { deconflictedEnvironments2, changedBaseUrlIds2 }
 }
 
 /**
@@ -442,25 +442,25 @@ function deconflictHybridEnvironments(
     environments2: FernIr.Environments.MultipleBaseUrls,
     casingsGenerator: CasingsGenerator
 ): { deconflictedEnvironments1: FernIr.Environments.SingleBaseUrl; changedBaseUrlIds1: Record<string, string> } {
-    const changedBaseUrlIds1: Record<string, string> = {};
-    const environment2Ids = new Set(environments2.baseUrls.map((baseUrl) => baseUrl.id));
-    const environment2Names = new Set(environments2.baseUrls.map((baseUrl) => baseUrl.name));
+    const changedBaseUrlIds1: Record<string, string> = {}
+    const environment2Ids = new Set(environments2.baseUrls.map((baseUrl) => baseUrl.id))
+    const environment2Names = new Set(environments2.baseUrls.map((baseUrl) => baseUrl.name))
     const deconflictedEnvironments = environments1.environments.map((env) => {
         if (environment2Ids.has(env.id) || environment2Names.has(env.name)) {
-            const newName = generateUniqueName(env.id, environment2Ids);
-            changedBaseUrlIds1[env.id] = newName;
+            const newName = generateUniqueName(env.id, environment2Ids)
+            changedBaseUrlIds1[env.id] = newName
             return {
                 ...env,
                 id: newName,
                 name: casingsGenerator.generateName(newName)
-            };
+            }
         }
-        return env;
-    });
+        return env
+    })
     const deconflictedEnvironments1 = FernIr.Environments.singleBaseUrl({
         environments: deconflictedEnvironments
-    });
-    return { deconflictedEnvironments1, changedBaseUrlIds1 };
+    })
+    return { deconflictedEnvironments1, changedBaseUrlIds1 }
 }
 
 /**
@@ -473,19 +473,19 @@ function deconflictMultipleEnvironments(
     environments2: FernIr.Environments.MultipleBaseUrls,
     casingsGenerator: CasingsGenerator
 ): { deconflictedEnvironments: FernIr.Environments.MultipleBaseUrls; changedBaseUrlIds: Record<string, string> } {
-    const changedBaseUrlIds: Record<string, string> = {};
+    const changedBaseUrlIds: Record<string, string> = {}
 
-    const environment1BaseUrlIds = new Set(environments1.baseUrls.map((baseUrl) => baseUrl.id));
-    const environment1BaseUrlNames = new Set(environments1.baseUrls.map((baseUrl) => baseUrl.name));
+    const environment1BaseUrlIds = new Set(environments1.baseUrls.map((baseUrl) => baseUrl.id))
+    const environment1BaseUrlNames = new Set(environments1.baseUrls.map((baseUrl) => baseUrl.name))
 
     const deconflictedBaseUrls = environments2.baseUrls.map((baseUrl) => {
         if (environment1BaseUrlIds.has(baseUrl.id) || environment1BaseUrlNames.has(baseUrl.name)) {
-            const newName = generateUniqueName(baseUrl.id, environment1BaseUrlIds);
-            changedBaseUrlIds[baseUrl.id] = newName;
-            return { ...baseUrl, id: newName, name: casingsGenerator.generateName(newName) };
+            const newName = generateUniqueName(baseUrl.id, environment1BaseUrlIds)
+            changedBaseUrlIds[baseUrl.id] = newName
+            return { ...baseUrl, id: newName, name: casingsGenerator.generateName(newName) }
         }
-        return baseUrl;
-    });
+        return baseUrl
+    })
 
     const deconflictedEnvironmentsList = environments2.environments.map((env) => {
         return {
@@ -493,36 +493,36 @@ function deconflictMultipleEnvironments(
             urls: Object.fromEntries(
                 Object.entries(env.urls).map(([key, value]) => [changedBaseUrlIds[key] ?? key, value])
             )
-        };
-    });
+        }
+    })
 
     const deconflictedEnvironments = FernIr.Environments.multipleBaseUrls({
         baseUrls: deconflictedBaseUrls,
         environments: deconflictedEnvironmentsList
-    });
+    })
 
-    return { deconflictedEnvironments, changedBaseUrlIds };
+    return { deconflictedEnvironments, changedBaseUrlIds }
 }
 
 function isWebsocketEnvironment(environment: FernIr.EnvironmentsConfig): boolean {
-    if (environment.environments.type === "singleBaseUrl") {
+    if (environment.environments.type === 'singleBaseUrl') {
         return environment.environments.environments.some(
-            (env) => env.url && (env.url.startsWith("ws://") || env.url.startsWith("wss://"))
-        );
-    } else if (environment.environments.type === "multipleBaseUrls") {
+            (env) => env.url && (env.url.startsWith('ws://') || env.url.startsWith('wss://'))
+        )
+    } else if (environment.environments.type === 'multipleBaseUrls') {
         return environment.environments.environments.some((env) =>
-            Object.values(env.urls).some((url) => url && (url.startsWith("ws://") || url.startsWith("wss://")))
-        );
+            Object.values(env.urls).some((url) => url && (url.startsWith('ws://') || url.startsWith('wss://')))
+        )
     }
-    return false;
+    return false
 }
 
 function generateUniqueName(id: string, existingIds: Set<string>): string {
-    let uniqueName = id;
-    let suffix = 1;
+    let uniqueName = id
+    let suffix = 1
     while (existingIds.has(uniqueName)) {
-        uniqueName = `${id}-${suffix}`;
-        suffix++;
+        uniqueName = `${id}-${suffix}`
+        suffix++
     }
-    return uniqueName;
+    return uniqueName
 }

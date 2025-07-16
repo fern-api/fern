@@ -1,20 +1,20 @@
-import { OpenAPIV3_1 } from "openapi-types";
+import { OpenAPIV3_1 } from 'openapi-types'
 
-import { Examples } from "@fern-api/core-utils";
+import { Examples } from '@fern-api/core-utils'
 
-import { APIError, AbstractConverter, AbstractConverterContext } from "..";
+import { APIError, AbstractConverter, AbstractConverterContext } from '..'
 
 export declare namespace ExampleConverter {
     export interface Args extends AbstractConverter.Args<AbstractConverterContext<object>> {
-        schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
-        example: unknown;
-        depth?: number;
-        exampleGenerationStrategy?: "request" | "response";
-        generateOptionalProperties?: boolean;
+        schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
+        example: unknown
+        depth?: number
+        exampleGenerationStrategy?: 'request' | 'response'
+        generateOptionalProperties?: boolean
     }
 
     export interface Output {
-        isValid: boolean;
+        isValid: boolean
         /**
          * Whether the example was coerced to the schema type.
          *
@@ -48,33 +48,33 @@ export declare namespace ExampleConverter {
          * In this case, the oneOf node will thus return the non-coerced example,
          * treating the example as a number.
          */
-        coerced: boolean;
-        validExample: unknown;
+        coerced: boolean
+        validExample: unknown
         /**
          * The errors that occurred during conversion.
          *
          * We can't collect errors along the way because for oneOf and anyOf, we don't know
          * which branch will be valid until we have converted all of them.
          */
-        errors: APIError[];
+        errors: APIError[]
     }
 }
 
 export class ExampleConverter extends AbstractConverter<AbstractConverterContext<object>, ExampleConverter.Output> {
-    protected readonly MAX_DEPTH = 12;
-    protected readonly EXAMPLE_STRING = Examples.STRING;
-    protected readonly EXAMPLE_NUMBER = Examples.DOUBLE;
-    protected readonly EXAMPLE_BOOLEAN = Examples.BOOLEAN;
-    protected readonly EXAMPLE_INTEGER = Examples.INT;
-    protected readonly EXAMPLE_DATE = Examples.DATE;
-    protected readonly EXAMPLE_DATE_TIME = Examples.DATE_TIME;
+    protected readonly MAX_DEPTH = 12
+    protected readonly EXAMPLE_STRING = Examples.STRING
+    protected readonly EXAMPLE_NUMBER = Examples.DOUBLE
+    protected readonly EXAMPLE_BOOLEAN = Examples.BOOLEAN
+    protected readonly EXAMPLE_INTEGER = Examples.INT
+    protected readonly EXAMPLE_DATE = Examples.DATE
+    protected readonly EXAMPLE_DATE_TIME = Examples.DATE_TIME
 
-    private readonly schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
-    private readonly example: unknown;
-    private readonly depth: number;
-    private readonly exampleGenerationStrategy: "request" | "response" | undefined;
-    private readonly generateOptionalProperties: boolean;
-    private readonly seenRefs: Set<string>;
+    private readonly schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
+    private readonly example: unknown
+    private readonly depth: number
+    private readonly exampleGenerationStrategy: 'request' | 'response' | undefined
+    private readonly generateOptionalProperties: boolean
+    private readonly seenRefs: Set<string>
 
     constructor({
         breadcrumbs,
@@ -86,13 +86,13 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         generateOptionalProperties = false,
         seenRefs = new Set<string>()
     }: ExampleConverter.Args & { seenRefs?: Set<string> }) {
-        super({ breadcrumbs, context });
-        this.example = example;
-        this.schema = schema;
-        this.depth = depth;
-        this.exampleGenerationStrategy = exampleGenerationStrategy;
-        this.generateOptionalProperties = generateOptionalProperties;
-        this.seenRefs = seenRefs;
+        super({ breadcrumbs, context })
+        this.example = example
+        this.schema = schema
+        this.depth = depth
+        this.exampleGenerationStrategy = exampleGenerationStrategy
+        this.generateOptionalProperties = generateOptionalProperties
+        this.seenRefs = seenRefs
     }
 
     public convert(): ExampleConverter.Output {
@@ -100,20 +100,20 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             return {
                 isValid: true,
                 coerced: false,
-                validExample: typeof this.example !== "undefined" ? this.example : {},
+                validExample: typeof this.example !== 'undefined' ? this.example : {},
                 errors: []
-            };
+            }
         }
 
         if (this.context.isReferenceObject(this.schema)) {
-            const ref = this.schema.$ref;
+            const ref = this.schema.$ref
             if (this.seenRefs.has(ref)) {
                 return {
                     isValid: true,
                     coerced: false,
                     validExample: this.example,
                     errors: []
-                };
+                }
             }
         }
 
@@ -121,7 +121,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             schemaOrReference: this.schema,
             breadcrumbs: this.breadcrumbs,
             skipErrorCollector: true
-        });
+        })
         if (resolvedSchema == null) {
             return {
                 isValid: false,
@@ -129,13 +129,13 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 validExample: null,
                 errors: [
                     {
-                        message: "Schema is not resolvable",
+                        message: 'Schema is not resolvable',
                         path: this.breadcrumbs
                     }
                 ]
-            };
+            }
         }
-        if (typeof resolvedSchema !== "object") {
+        if (typeof resolvedSchema !== 'object') {
             return {
                 isValid: false,
                 coerced: false,
@@ -146,78 +146,78 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                         path: this.breadcrumbs
                     }
                 ]
-            };
+            }
         }
-        if ("nullable" in resolvedSchema && resolvedSchema.nullable === true && this.example === null) {
+        if ('nullable' in resolvedSchema && resolvedSchema.nullable === true && this.example === null) {
             return {
                 isValid: true,
                 coerced: false,
                 validExample: this.example,
                 errors: []
-            };
+            }
         }
 
         if (Array.isArray(resolvedSchema.type)) {
             return this.convertSchemaTypeArray({
                 resolvedSchema
-            });
+            })
         }
 
-        if (resolvedSchema.type == "null") {
-            return this.convertNull();
+        if (resolvedSchema.type == 'null') {
+            return this.convertNull()
         }
 
-        if (resolvedSchema.type == "boolean") {
-            return this.convertBoolean();
+        if (resolvedSchema.type == 'boolean') {
+            return this.convertBoolean()
         }
 
         if (resolvedSchema.enum != null) {
-            return this.convertEnum(resolvedSchema);
+            return this.convertEnum(resolvedSchema)
         }
 
-        if (resolvedSchema.type == "number") {
-            return this.convertNumber();
+        if (resolvedSchema.type == 'number') {
+            return this.convertNumber()
         }
 
-        if (resolvedSchema.type == "string") {
-            return this.convertString();
+        if (resolvedSchema.type == 'string') {
+            return this.convertString()
         }
 
-        if (resolvedSchema.type == "integer") {
-            return this.convertInteger();
+        if (resolvedSchema.type == 'integer') {
+            return this.convertInteger()
         }
 
-        if (resolvedSchema.type == "array") {
+        if (resolvedSchema.type == 'array') {
             return this.convertArray({
                 resolvedSchema
-            });
+            })
         }
 
-        if ("oneOf" in resolvedSchema && resolvedSchema.oneOf != null) {
+        if ('oneOf' in resolvedSchema && resolvedSchema.oneOf != null) {
             return this.convertOneOf({
                 resolvedSchema
-            });
+            })
         }
 
-        if ("anyOf" in resolvedSchema && resolvedSchema.anyOf != null) {
+        if ('anyOf' in resolvedSchema && resolvedSchema.anyOf != null) {
             return this.convertAnyOf({
                 resolvedSchema
-            });
+            })
         }
 
-        if (resolvedSchema.type == "object" || resolvedSchema.properties != null || resolvedSchema.allOf != null) {
+        if (resolvedSchema.type == 'object' || resolvedSchema.properties != null || resolvedSchema.allOf != null) {
             return this.convertObject({
                 resolvedSchema
-            });
+            })
         }
 
-        if (typeof resolvedSchema === "object" && Object.keys(resolvedSchema).length === 0) {
+        if (typeof resolvedSchema === 'object' && Object.keys(resolvedSchema).length === 0) {
             return {
                 isValid: true,
                 coerced: false,
                 validExample: this.example,
                 errors: []
-            };
+            }
         }
 
         return {
@@ -230,11 +230,11 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                     path: this.breadcrumbs
                 }
             ]
-        };
+        }
     }
 
     private convertNull(): ExampleConverter.Output {
-        const isValid = this.example === null;
+        const isValid = this.example === null
         return isValid
             ? {
                   isValid,
@@ -252,18 +252,18 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                           path: this.breadcrumbs
                       }
                   ]
-              };
+              }
     }
 
     private convertBoolean(): ExampleConverter.Output {
-        const isValid = typeof this.example === "boolean";
+        const isValid = typeof this.example === 'boolean'
         if (isValid) {
             return {
                 isValid,
                 coerced: false,
                 validExample: this.example,
                 errors: []
-            };
+            }
         }
 
         const resolvedDefault = this.context.isReferenceObject(this.schema)
@@ -271,22 +271,22 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                   schemaOrReference: this.schema,
                   breadcrumbs: this.breadcrumbs
               })?.default
-            : this.schema.default;
+            : this.schema.default
 
         const resolvedConst = this.context.isReferenceObject(this.schema)
             ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
                   schemaOrReference: this.schema,
                   breadcrumbs: this.breadcrumbs
               })?.const
-            : this.schema.const;
+            : this.schema.const
 
-        if (typeof resolvedDefault === "boolean" || typeof resolvedConst === "boolean") {
+        if (typeof resolvedDefault === 'boolean' || typeof resolvedConst === 'boolean') {
             return {
                 isValid: true,
                 coerced: false,
                 validExample: resolvedConst ?? resolvedDefault,
                 errors: []
-            };
+            }
         }
 
         return {
@@ -299,18 +299,18 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                     path: this.breadcrumbs
                 }
             ]
-        };
+        }
     }
 
     private convertEnum(resolvedSchema: OpenAPIV3_1.SchemaObject): ExampleConverter.Output {
-        const isValid = resolvedSchema.enum?.includes(this.example) ?? false;
+        const isValid = resolvedSchema.enum?.includes(this.example) ?? false
         if (isValid) {
             return {
                 isValid,
                 coerced: false,
                 validExample: this.example,
                 errors: []
-            };
+            }
         }
 
         const resolvedDefault = this.context.isReferenceObject(this.schema)
@@ -319,7 +319,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                   breadcrumbs: this.breadcrumbs,
                   skipErrorCollector: true
               })?.default
-            : this.schema.default;
+            : this.schema.default
 
         if (resolvedDefault !== undefined && resolvedSchema.enum?.includes(resolvedDefault)) {
             return {
@@ -327,7 +327,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 coerced: false,
                 validExample: resolvedDefault,
                 errors: []
-            };
+            }
         }
 
         return {
@@ -340,27 +340,27 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                     path: this.breadcrumbs
                 }
             ]
-        };
+        }
     }
 
     private convertNumber(): ExampleConverter.Output {
-        if (typeof this.example === "number") {
+        if (typeof this.example === 'number') {
             return {
                 isValid: true,
                 coerced: false,
                 validExample: this.example,
                 errors: []
-            };
+            }
         }
 
-        const num = Number(this.example);
+        const num = Number(this.example)
         if (!isNaN(num)) {
             return {
                 isValid: true,
                 coerced: true,
                 validExample: num,
                 errors: []
-            };
+            }
         }
 
         const resolvedDefault = this.context.isReferenceObject(this.schema)
@@ -369,14 +369,14 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                   breadcrumbs: this.breadcrumbs,
                   skipErrorCollector: true
               })?.default
-            : this.schema.default;
-        if (typeof resolvedDefault === "number") {
+            : this.schema.default
+        if (typeof resolvedDefault === 'number') {
             return {
                 isValid: true,
                 coerced: false,
                 validExample: resolvedDefault,
                 errors: []
-            };
+            }
         }
 
         return {
@@ -389,27 +389,27 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                     path: this.breadcrumbs
                 }
             ]
-        };
+        }
     }
 
     private convertString(): ExampleConverter.Output {
-        if (typeof this.example === "string") {
+        if (typeof this.example === 'string') {
             return {
                 isValid: true,
                 coerced: false,
                 validExample: this.example,
                 errors: []
-            };
+            }
         }
 
-        if (typeof this.example !== "object" && !Array.isArray(this.example) && this.example != null) {
-            const stringValue = String(this.example);
+        if (typeof this.example !== 'object' && !Array.isArray(this.example) && this.example != null) {
+            const stringValue = String(this.example)
             return {
                 isValid: true,
                 coerced: true,
                 validExample: stringValue,
                 errors: []
-            };
+            }
         }
 
         const resolvedDefault = this.context.isReferenceObject(this.schema)
@@ -418,15 +418,15 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                   breadcrumbs: this.breadcrumbs,
                   skipErrorCollector: true
               })?.default
-            : this.schema.default;
+            : this.schema.default
 
-        if (typeof resolvedDefault === "string") {
+        if (typeof resolvedDefault === 'string') {
             return {
                 isValid: true,
                 coerced: false,
                 validExample: resolvedDefault,
                 errors: []
-            };
+            }
         }
 
         // Check for date formats and use appropriate examples
@@ -436,14 +436,14 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                   breadcrumbs: this.breadcrumbs,
                   skipErrorCollector: true
               })
-            : this.schema;
+            : this.schema
 
         const dateFallbackExample =
-            resolvedSchema?.format === "date"
+            resolvedSchema?.format === 'date'
                 ? this.EXAMPLE_DATE
-                : resolvedSchema?.format === "date-time"
+                : resolvedSchema?.format === 'date-time'
                   ? this.EXAMPLE_DATE_TIME
-                  : this.EXAMPLE_STRING;
+                  : this.EXAMPLE_STRING
 
         return {
             isValid: false,
@@ -455,28 +455,28 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                     path: this.breadcrumbs
                 }
             ]
-        };
+        }
     }
 
     private convertInteger(): ExampleConverter.Output {
-        if (typeof this.example === "number" && Number.isInteger(this.example)) {
+        if (typeof this.example === 'number' && Number.isInteger(this.example)) {
             return {
                 isValid: true,
                 coerced: false,
                 validExample: this.example,
                 errors: []
-            };
+            }
         }
 
-        if (typeof this.example === "string") {
-            const num = Number(this.example);
+        if (typeof this.example === 'string') {
+            const num = Number(this.example)
             if (!isNaN(num) && Number.isInteger(num)) {
                 return {
                     isValid: true,
                     coerced: true,
                     validExample: num,
                     errors: []
-                };
+                }
             }
         }
 
@@ -486,14 +486,14 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                   breadcrumbs: this.breadcrumbs,
                   skipErrorCollector: true
               })?.default
-            : this.schema.default;
-        if (typeof resolvedDefault === "number" && Number.isInteger(resolvedDefault)) {
+            : this.schema.default
+        if (typeof resolvedDefault === 'number' && Number.isInteger(resolvedDefault)) {
             return {
                 isValid: true,
                 coerced: false,
                 validExample: resolvedDefault,
                 errors: []
-            };
+            }
         }
 
         return {
@@ -506,22 +506,22 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                     path: this.breadcrumbs
                 }
             ]
-        };
+        }
     }
 
     private convertArray({ resolvedSchema }: { resolvedSchema: OpenAPIV3_1.SchemaObject }): ExampleConverter.Output {
-        if (resolvedSchema.type != "array") {
-            return { isValid: false, coerced: false, validExample: null, errors: [] };
+        if (resolvedSchema.type != 'array') {
+            return { isValid: false, coerced: false, validExample: null, errors: [] }
         }
         if (resolvedSchema.items == null) {
-            resolvedSchema.items = { type: "string" };
+            resolvedSchema.items = { type: 'string' }
         }
-        const usedFallbackExample = this.example == null;
-        const maybeExampleArray = this.example ?? resolvedSchema.example;
-        const exampleArray = Array.isArray(maybeExampleArray) ? maybeExampleArray : [maybeExampleArray];
+        const usedFallbackExample = this.example == null
+        const maybeExampleArray = this.example ?? resolvedSchema.example
+        const exampleArray = Array.isArray(maybeExampleArray) ? maybeExampleArray : [maybeExampleArray]
         const results = exampleArray.map((item) => {
             const exampleConverter = new ExampleConverter({
-                breadcrumbs: [...this.breadcrumbs, "items"],
+                breadcrumbs: [...this.breadcrumbs, 'items'],
                 context: this.context,
                 schema: resolvedSchema.items,
                 example: item,
@@ -529,67 +529,67 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 generateOptionalProperties: this.generateOptionalProperties,
                 exampleGenerationStrategy: this.exampleGenerationStrategy,
                 seenRefs: this.getMaybeUpdatedSeenRefs()
-            });
-            return exampleConverter.convert();
-        });
+            })
+            return exampleConverter.convert()
+        })
 
-        const isValid = results.every((result) => result?.isValid ?? false) && !usedFallbackExample;
+        const isValid = results.every((result) => result?.isValid ?? false) && !usedFallbackExample
 
         return {
             isValid,
             coerced: false,
             validExample: results.map((result) => result.validExample),
             errors: isValid ? [] : results.flatMap((result) => result.errors)
-        };
+        }
     }
 
     private convertObject({ resolvedSchema }: { resolvedSchema: OpenAPIV3_1.SchemaObject }): ExampleConverter.Output {
-        if (resolvedSchema.type == "object" && resolvedSchema.properties == null && resolvedSchema.allOf == null) {
-            return { isValid: true, coerced: false, validExample: this.example ?? {}, errors: [] };
+        if (resolvedSchema.type == 'object' && resolvedSchema.properties == null && resolvedSchema.allOf == null) {
+            return { isValid: true, coerced: false, validExample: this.example ?? {}, errors: [] }
         }
 
         const exampleObj =
-            typeof this.example !== "object" || this.example == null ? {} : (this.example as Record<string, unknown>);
+            typeof this.example !== 'object' || this.example == null ? {} : (this.example as Record<string, unknown>)
 
         const resultsByKey = Object.entries(resolvedSchema.properties ?? {}).map(([key, property]) => {
-            if (typeof property !== "object") {
-                return { key, result: { isValid: true, coerced: false, validExample: undefined, errors: [] } };
+            if (typeof property !== 'object') {
+                return { key, result: { isValid: true, coerced: false, validExample: undefined, errors: [] } }
             }
 
             if (this.isDeprecatedProperty(property)) {
-                const isOptionalProperty = !this.isRequiredProperty({ key, resolvedSchema });
+                const isOptionalProperty = !this.isRequiredProperty({ key, resolvedSchema })
                 if (isOptionalProperty) {
                     return {
                         key,
                         result: { isValid: true, coerced: false, validExample: undefined, errors: [] }
-                    };
+                    }
                 }
             }
 
             if (
-                "readOnly" in property &&
+                'readOnly' in property &&
                 property.readOnly === true &&
-                "writeOnly" in property &&
+                'writeOnly' in property &&
                 property.writeOnly === true
             ) {
-                return { key, result: { isValid: true, coerced: false, validExample: undefined, errors: [] } };
+                return { key, result: { isValid: true, coerced: false, validExample: undefined, errors: [] } }
             }
             // TODO: Do we want to collect an error when the request / response example does not respect the readOnly / writeOnly property?
-            if ("readOnly" in property && property.readOnly === true && this.exampleGenerationStrategy === "request") {
-                return { key, result: { isValid: true, coerced: false, validExample: undefined, errors: [] } };
+            if ('readOnly' in property && property.readOnly === true && this.exampleGenerationStrategy === 'request') {
+                return { key, result: { isValid: true, coerced: false, validExample: undefined, errors: [] } }
             }
             if (
-                "writeOnly" in property &&
+                'writeOnly' in property &&
                 property.writeOnly === true &&
-                this.exampleGenerationStrategy === "response"
+                this.exampleGenerationStrategy === 'response'
             ) {
-                return { key, result: { isValid: true, coerced: false, validExample: undefined, errors: [] } };
+                return { key, result: { isValid: true, coerced: false, validExample: undefined, errors: [] } }
             }
             const propertyIsOmittedFromExample =
                 !(key in exampleObj) ||
-                (!("nullable" in property) && exampleObj[key] == null) ||
-                ("nullable" in property && property.nullable === true && exampleObj[key] === undefined);
-            const propertyIsOptional = !resolvedSchema.required?.includes(key);
+                (!('nullable' in property) && exampleObj[key] == null) ||
+                ('nullable' in property && property.nullable === true && exampleObj[key] === undefined)
+            const propertyIsOptional = !resolvedSchema.required?.includes(key)
 
             if (propertyIsOmittedFromExample && propertyIsOptional) {
                 if (this.example === undefined && this.generateOptionalProperties) {
@@ -602,10 +602,10 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                         generateOptionalProperties: this.generateOptionalProperties,
                         exampleGenerationStrategy: this.exampleGenerationStrategy,
                         seenRefs: this.getMaybeUpdatedSeenRefs()
-                    });
-                    return { key, result: exampleConverter.convert() };
+                    })
+                    return { key, result: exampleConverter.convert() }
                 }
-                return { key, result: { isValid: true, coerced: false, validExample: undefined, errors: [] } };
+                return { key, result: { isValid: true, coerced: false, validExample: undefined, errors: [] } }
             } else {
                 const exampleConverter = new ExampleConverter({
                     breadcrumbs: [...this.breadcrumbs, key],
@@ -616,11 +616,11 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                     generateOptionalProperties: this.generateOptionalProperties,
                     exampleGenerationStrategy: this.exampleGenerationStrategy,
                     seenRefs: this.getMaybeUpdatedSeenRefs()
-                });
-                const result = exampleConverter.convert();
-                return { key, result };
+                })
+                const result = exampleConverter.convert()
+                return { key, result }
             }
-        });
+        })
 
         const allOfResults = (resolvedSchema.allOf ?? []).map((subSchema, index) => {
             const exampleConverter = new ExampleConverter({
@@ -632,49 +632,49 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 generateOptionalProperties: this.generateOptionalProperties,
                 exampleGenerationStrategy: this.exampleGenerationStrategy,
                 seenRefs: this.getMaybeUpdatedSeenRefs()
-            });
-            return exampleConverter.convert();
-        });
+            })
+            return exampleConverter.convert()
+        })
 
         const isValid =
-            resultsByKey.every((entry) => entry.result.isValid) && allOfResults.every((result) => result.isValid);
+            resultsByKey.every((entry) => entry.result.isValid) && allOfResults.every((result) => result.isValid)
 
         let example = Object.fromEntries(
             resultsByKey
                 .map(({ key, result }) => [key, result.validExample])
                 .filter(([_, value]) => value !== undefined)
-        );
+        )
 
         for (const result of allOfResults) {
-            if (typeof result.validExample === "object" && result.validExample !== null) {
-                const validExampleObj = result.validExample as Record<string, unknown>;
+            if (typeof result.validExample === 'object' && result.validExample !== null) {
+                const validExampleObj = result.validExample as Record<string, unknown>
                 example = {
                     ...example,
                     ...Object.fromEntries(Object.entries(validExampleObj).filter(([_, value]) => value !== undefined))
-                };
+                }
             }
         }
 
         // Handle additional properties
-        const additionalPropertiesResults: Array<{ key: string; result: ExampleConverter.Output }> = [];
+        const additionalPropertiesResults: Array<{ key: string; result: ExampleConverter.Output }> = []
         if (resolvedSchema.additionalProperties !== false) {
             const additionalPropertiesSchema: OpenAPIV3_1.SchemaObject =
-                typeof resolvedSchema.additionalProperties === "object"
+                typeof resolvedSchema.additionalProperties === 'object'
                     ? resolvedSchema.additionalProperties
                     : ({
                           oneOf: [
-                              { type: "string" },
-                              { type: "number" },
-                              { type: "boolean" },
-                              { type: "object" },
-                              { type: "array" }
+                              { type: 'string' },
+                              { type: 'number' },
+                              { type: 'boolean' },
+                              { type: 'object' },
+                              { type: 'array' }
                           ]
                           // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-                      } as any);
+                      } as any)
 
             // Find properties in the example that are not defined in the schema
-            const definedPropertyKeys = new Set(Object.keys(example ?? {}));
-            const additionalPropertyKeys = Object.keys(exampleObj).filter((key) => !definedPropertyKeys.has(key));
+            const definedPropertyKeys = new Set(Object.keys(example ?? {}))
+            const additionalPropertyKeys = Object.keys(exampleObj).filter((key) => !definedPropertyKeys.has(key))
 
             additionalPropertyKeys.forEach((key) => {
                 const exampleConverter = new ExampleConverter({
@@ -686,16 +686,16 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                     generateOptionalProperties: false,
                     exampleGenerationStrategy: this.exampleGenerationStrategy,
                     seenRefs: this.getMaybeUpdatedSeenRefs()
-                });
-                const result = exampleConverter.convert();
-                additionalPropertiesResults.push({ key, result });
-            });
+                })
+                const result = exampleConverter.convert()
+                additionalPropertiesResults.push({ key, result })
+            })
         }
 
         // Add additional properties to the example
         for (const { key, result } of additionalPropertiesResults) {
             if (result.validExample !== undefined && example[key] === undefined) {
-                example[key] = result.validExample;
+                example[key] = result.validExample
             }
         }
 
@@ -703,10 +703,10 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             const firstValidNonObject = allOfResults.find(
                 (result) =>
                     result.validExample !== undefined &&
-                    (typeof result.validExample !== "object" || result.validExample === null)
-            );
+                    (typeof result.validExample !== 'object' || result.validExample === null)
+            )
             if (firstValidNonObject) {
-                example = firstValidNonObject.validExample;
+                example = firstValidNonObject.validExample
             }
         }
 
@@ -718,16 +718,16 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 ...resultsByKey.flatMap(({ result }) => result.errors),
                 ...allOfResults.flatMap((result) => result.errors)
             ]
-        };
+        }
     }
 
     private convertSchemaTypeArray({
         resolvedSchema
     }: {
-        resolvedSchema: OpenAPIV3_1.SchemaObject;
+        resolvedSchema: OpenAPIV3_1.SchemaObject
     }): ExampleConverter.Output {
         if (!Array.isArray(resolvedSchema.type)) {
-            return { isValid: false, coerced: false, validExample: null, errors: [] };
+            return { isValid: false, coerced: false, validExample: null, errors: [] }
         }
         if (resolvedSchema.type.length === 1) {
             const exampleConverter = new ExampleConverter({
@@ -739,8 +739,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 generateOptionalProperties: this.generateOptionalProperties,
                 exampleGenerationStrategy: this.exampleGenerationStrategy,
                 seenRefs: this.getMaybeUpdatedSeenRefs()
-            });
-            return exampleConverter.convert();
+            })
+            return exampleConverter.convert()
         }
         const results = resolvedSchema.type.map((subSchema, index) => {
             const exampleConverter = new ExampleConverter({
@@ -752,26 +752,26 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 generateOptionalProperties: this.generateOptionalProperties,
                 exampleGenerationStrategy: this.exampleGenerationStrategy,
                 seenRefs: this.getMaybeUpdatedSeenRefs()
-            });
-            return exampleConverter.convert();
-        });
+            })
+            return exampleConverter.convert()
+        })
 
-        const isValid = results.some((result) => result?.isValid ?? false);
+        const isValid = results.some((result) => result?.isValid ?? false)
 
-        const validExample = results.find((result) => result.isValid)?.validExample;
-        const example = validExample ?? results[0]?.validExample ?? null;
+        const validExample = results.find((result) => result.isValid)?.validExample
+        const example = validExample ?? results[0]?.validExample ?? null
 
         return {
             isValid,
             coerced: false,
             validExample: example,
             errors: isValid ? [] : results.flatMap((result) => result?.errors ?? [])
-        };
+        }
     }
 
     private convertOneOf({ resolvedSchema }: { resolvedSchema: OpenAPIV3_1.SchemaObject }): ExampleConverter.Output {
-        if (!("oneOf" in resolvedSchema) || resolvedSchema.oneOf == null) {
-            return { isValid: false, coerced: false, validExample: null, errors: [] };
+        if (!('oneOf' in resolvedSchema) || resolvedSchema.oneOf == null) {
+            return { isValid: false, coerced: false, validExample: null, errors: [] }
         }
         const results = resolvedSchema.oneOf.map((subSchema, index) => {
             const exampleConverter = new ExampleConverter({
@@ -783,19 +783,19 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 generateOptionalProperties: this.generateOptionalProperties,
                 exampleGenerationStrategy: this.exampleGenerationStrategy,
                 seenRefs: this.getMaybeUpdatedSeenRefs()
-            });
-            return exampleConverter.convert();
-        });
+            })
+            return exampleConverter.convert()
+        })
 
-        const validResults = results.filter((result) => result.isValid);
-        const isValid = validResults.length > 0;
+        const validResults = results.filter((result) => result.isValid)
+        const isValid = validResults.length > 0
 
-        let validExample;
+        let validExample
         if (isValid) {
-            const nonCoercedResult = validResults.find((result) => !result.coerced);
-            validExample = nonCoercedResult?.validExample ?? validResults[0]?.validExample;
+            const nonCoercedResult = validResults.find((result) => !result.coerced)
+            validExample = nonCoercedResult?.validExample ?? validResults[0]?.validExample
         } else {
-            validExample = results[0]?.validExample;
+            validExample = results[0]?.validExample
         }
 
         return {
@@ -803,12 +803,12 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             coerced: false,
             validExample,
             errors: isValid ? [] : results.flatMap((result) => result.errors)
-        };
+        }
     }
 
     private convertAnyOf({ resolvedSchema }: { resolvedSchema: OpenAPIV3_1.SchemaObject }): ExampleConverter.Output {
-        if (!("anyOf" in resolvedSchema) || resolvedSchema.anyOf == null) {
-            return { isValid: false, coerced: false, validExample: null, errors: [] };
+        if (!('anyOf' in resolvedSchema) || resolvedSchema.anyOf == null) {
+            return { isValid: false, coerced: false, validExample: null, errors: [] }
         }
         const results = resolvedSchema.anyOf.map((subSchema, index) => {
             const exampleConverter = new ExampleConverter({
@@ -820,19 +820,19 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 generateOptionalProperties: this.generateOptionalProperties,
                 exampleGenerationStrategy: this.exampleGenerationStrategy,
                 seenRefs: this.getMaybeUpdatedSeenRefs()
-            });
-            return exampleConverter.convert();
-        });
+            })
+            return exampleConverter.convert()
+        })
 
-        const validResults = results.filter((result) => result.isValid);
-        const isValid = validResults.length > 0;
+        const validResults = results.filter((result) => result.isValid)
+        const isValid = validResults.length > 0
 
-        let validExample;
+        let validExample
         if (isValid) {
-            const nonCoercedResult = validResults.find((result) => !result.coerced);
-            validExample = nonCoercedResult?.validExample ?? validResults[0]?.validExample;
+            const nonCoercedResult = validResults.find((result) => !result.coerced)
+            validExample = nonCoercedResult?.validExample ?? validResults[0]?.validExample
         } else {
-            validExample = results[0]?.validExample;
+            validExample = results[0]?.validExample
         }
 
         return {
@@ -840,14 +840,14 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             coerced: false,
             validExample,
             errors: isValid ? [] : results.flatMap((result) => result.errors)
-        };
+        }
     }
     private getMaybeUpdatedSeenRefs() {
-        const newSeenRefs = new Set(this.seenRefs);
+        const newSeenRefs = new Set(this.seenRefs)
         if (this.context.isReferenceObject(this.schema)) {
-            newSeenRefs.add(this.schema.$ref);
+            newSeenRefs.add(this.schema.$ref)
         }
-        return newSeenRefs;
+        return newSeenRefs
     }
 
     private maybeResolveSchemaExample<Type>(
@@ -857,32 +857,32 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             schemaOrReference: schema,
             breadcrumbs: this.breadcrumbs,
             skipErrorCollector: true
-        });
+        })
         if (resolvedSchema == null) {
-            return undefined;
+            return undefined
         }
-        if ("example" in resolvedSchema) {
-            return resolvedSchema.example as Type;
+        if ('example' in resolvedSchema) {
+            return resolvedSchema.example as Type
         }
-        if ("examples" in resolvedSchema) {
-            return Object.values(resolvedSchema.examples ?? {})[0] as Type;
+        if ('examples' in resolvedSchema) {
+            return Object.values(resolvedSchema.examples ?? {})[0] as Type
         }
-        return undefined;
+        return undefined
     }
 
     private isDeprecatedProperty(
         property: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
-    ): property is OpenAPIV3_1.SchemaObject & { availability: "deprecated" } {
-        return property != null && "availability" in property && property.availability === "deprecated";
+    ): property is OpenAPIV3_1.SchemaObject & { availability: 'deprecated' } {
+        return property != null && 'availability' in property && property.availability === 'deprecated'
     }
 
     private isRequiredProperty({
         key,
         resolvedSchema
     }: {
-        key: string;
-        resolvedSchema: OpenAPIV3_1.SchemaObject;
+        key: string
+        resolvedSchema: OpenAPIV3_1.SchemaObject
     }): boolean {
-        return resolvedSchema.required?.includes(key) ?? false;
+        return resolvedSchema.required?.includes(key) ?? false
     }
 }

@@ -1,4 +1,4 @@
-import { mapValues } from "lodash-es";
+import { mapValues } from 'lodash-es'
 
 import {
     ErrorDeclaration,
@@ -14,14 +14,14 @@ import {
     TypeId,
     WebSocketChannelId,
     WebhookGroupId
-} from "@fern-api/ir-sdk";
-import { FilteredIr, IdGenerator } from "@fern-api/ir-utils";
+} from '@fern-api/ir-sdk'
+import { FilteredIr, IdGenerator } from '@fern-api/ir-utils'
 
-type UnprocessedPackage = Omit<Package, "hasEndpointsInTree">;
-type UnprocessedSubpackage = Omit<Subpackage, "hasEndpointsInTree">;
+type UnprocessedPackage = Omit<Package, 'hasEndpointsInTree'>
+type UnprocessedSubpackage = Omit<Subpackage, 'hasEndpointsInTree'>
 
 export class PackageTreeGenerator {
-    private subpackages: Record<SubpackageId, UnprocessedSubpackage> = {};
+    private subpackages: Record<SubpackageId, UnprocessedSubpackage> = {}
     private rootPackage: UnprocessedPackage = {
         docs: undefined,
         fernFilepath: {
@@ -36,68 +36,68 @@ export class PackageTreeGenerator {
         subpackages: [],
         webhooks: undefined,
         navigationConfig: undefined
-    };
+    }
 
     public addPackageRedirection({ from, to }: { from: FernFilepath; to: FernFilepath }): void {
-        const package_ = this.getPackageForFernFilepath(from);
+        const package_ = this.getPackageForFernFilepath(from)
         if (package_.navigationConfig != null) {
-            throw new Error("Found duplicate navigationConfig for package");
+            throw new Error('Found duplicate navigationConfig for package')
         }
         package_.navigationConfig = {
             pointsTo: IdGenerator.generateSubpackageId(to)
-        };
+        }
     }
 
     public addDocs(fernFilepath: FernFilepath, docs: string): void {
-        const package_ = this.getPackageForFernFilepath(fernFilepath);
+        const package_ = this.getPackageForFernFilepath(fernFilepath)
         if (package_.docs != null) {
-            throw new Error("Found duplicate docs for package");
+            throw new Error('Found duplicate docs for package')
         }
-        package_.docs = docs;
+        package_.docs = docs
     }
 
     public addSubpackage(fernFilepath: FernFilepath): void {
-        this.getPackageForFernFilepath(fernFilepath);
+        this.getPackageForFernFilepath(fernFilepath)
     }
 
     public addType(typeId: TypeId, type: TypeDeclaration): void {
-        this.getPackageForFernFilepath(type.name.fernFilepath).types.push(typeId);
+        this.getPackageForFernFilepath(type.name.fernFilepath).types.push(typeId)
     }
 
     public addError(errorId: ErrorId, error: ErrorDeclaration): void {
-        this.getPackageForFernFilepath(error.name.fernFilepath).errors.push(errorId);
+        this.getPackageForFernFilepath(error.name.fernFilepath).errors.push(errorId)
     }
 
     public addService(serviceId: ServiceId, service: HttpService): void {
-        const package_ = this.getPackageForFernFilepath(service.name.fernFilepath);
+        const package_ = this.getPackageForFernFilepath(service.name.fernFilepath)
         if (package_.service != null) {
-            throw new Error("Found duplicate service for " + serviceId);
+            throw new Error('Found duplicate service for ' + serviceId)
         }
-        package_.service = serviceId;
+        package_.service = serviceId
     }
 
     public addWebhookGroup(webhookGroupId: WebhookGroupId, fernFilepath: FernFilepath): void {
-        const package_ = this.getPackageForFernFilepath(fernFilepath);
+        const package_ = this.getPackageForFernFilepath(fernFilepath)
         if (package_.webhooks != null) {
-            throw new Error("Found duplicate webhook group for " + webhookGroupId);
+            throw new Error('Found duplicate webhook group for ' + webhookGroupId)
         }
-        package_.webhooks = webhookGroupId;
+        package_.webhooks = webhookGroupId
     }
 
     public addWebSocketChannel(websocketChannelId: WebSocketChannelId, fernFilepath: FernFilepath): void {
-        const package_ = this.getPackageForFernFilepath(fernFilepath);
+        const package_ = this.getPackageForFernFilepath(fernFilepath)
         if (package_.webhooks != null) {
-            throw new Error("Found duplicate webhook group for " + websocketChannelId);
+            throw new Error('Found duplicate webhook group for ' + websocketChannelId)
         }
-        package_.websocket = websocketChannelId;
+        package_.websocket = websocketChannelId
     }
 
-    public build(filteredIr: FilteredIr | undefined): Pick<IntermediateRepresentation, "subpackages" | "rootPackage"> {
+    public build(filteredIr: FilteredIr | undefined): Pick<IntermediateRepresentation, 'subpackages' | 'rootPackage'> {
         if (filteredIr != null) {
             Object.entries(this.subpackages).forEach(([subpackageId, subpackage]) => {
                 if (!filteredIr.hasSubpackageId(subpackageId)) {
                     // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
-                    delete this.subpackages[subpackageId];
+                    delete this.subpackages[subpackageId]
                 } else {
                     this.subpackages[subpackageId] = {
                         ...subpackage,
@@ -118,9 +118,9 @@ export class PackageTreeGenerator {
                         subpackages: subpackage.subpackages.filter((subpackageId) =>
                             filteredIr.hasSubpackageId(subpackageId)
                         )
-                    };
+                    }
                 }
-            });
+            })
 
             this.rootPackage = {
                 ...this.rootPackage,
@@ -136,9 +136,9 @@ export class PackageTreeGenerator {
                     filteredIr.hasSubpackageId(subpackageId)
                 ),
                 webhooks: this.rootPackage.webhooks != null ? this.rootPackage.webhooks : undefined
-            };
+            }
         }
-        const allSubpackagesWithEndpoints = new Set(this.getAllChildrenWithEndpoints(this.rootPackage));
+        const allSubpackagesWithEndpoints = new Set(this.getAllChildrenWithEndpoints(this.rootPackage))
         return {
             subpackages: mapValues(this.subpackages, (subpackage, subpackageId) => ({
                 ...subpackage,
@@ -148,45 +148,45 @@ export class PackageTreeGenerator {
                 ...this.rootPackage,
                 hasEndpointsInTree: allSubpackagesWithEndpoints.size > 0 || this.rootPackage.service != null
             }
-        };
+        }
     }
 
     public sortRootPackage(subpackagesInOrder: SubpackageId[]): void {
         if (!isEqualIgnoreOrder(this.rootPackage.subpackages, subpackagesInOrder)) {
-            throw new Error("Sorted subpackages differ from unsorted packages in root");
+            throw new Error('Sorted subpackages differ from unsorted packages in root')
         }
-        this.rootPackage.subpackages = subpackagesInOrder;
+        this.rootPackage.subpackages = subpackagesInOrder
     }
 
     public sortSubpackage(subpackageId: SubpackageId, subpackagesInOrder: SubpackageId[]): void {
-        const subpackage = this.subpackages[subpackageId];
+        const subpackage = this.subpackages[subpackageId]
         if (subpackage == null) {
-            throw new Error("Subpackage does not exist: " + subpackageId);
+            throw new Error('Subpackage does not exist: ' + subpackageId)
         }
         if (!isEqualIgnoreOrder(subpackage.subpackages, subpackagesInOrder)) {
-            throw new Error("Sorted subpackages differ from unsorted packages");
+            throw new Error('Sorted subpackages differ from unsorted packages')
         }
-        subpackage.subpackages = subpackagesInOrder;
+        subpackage.subpackages = subpackagesInOrder
     }
 
     private getAllSubpackagesWithEndpoints(root: SubpackageId): SubpackageId[] {
-        const subpackage = this.subpackages[root];
+        const subpackage = this.subpackages[root]
         if (subpackage == null) {
-            throw new Error("Subpackage does not exist: " + root);
+            throw new Error('Subpackage does not exist: ' + root)
         }
 
-        const subpackagesWithEndpoints = this.getAllChildrenWithEndpoints(subpackage);
+        const subpackagesWithEndpoints = this.getAllChildrenWithEndpoints(subpackage)
         if (subpackagesWithEndpoints.length > 0 || subpackage.service != null) {
-            subpackagesWithEndpoints.push(root);
+            subpackagesWithEndpoints.push(root)
         }
 
-        return subpackagesWithEndpoints;
+        return subpackagesWithEndpoints
     }
 
     private getAllChildrenWithEndpoints(package_: UnprocessedPackage): SubpackageId[] {
         return package_.subpackages.flatMap((child) => {
-            return [...this.getAllSubpackagesWithEndpoints(child)];
-        });
+            return [...this.getAllSubpackagesWithEndpoints(child)]
+        })
     }
 
     private getPackageForFernFilepath(
@@ -194,29 +194,29 @@ export class PackageTreeGenerator {
         index = 0,
         parent = this.rootPackage
     ): UnprocessedPackage {
-        const nextPart = fernFilepath.allParts[index];
+        const nextPart = fernFilepath.allParts[index]
         if (nextPart == null) {
-            return parent;
+            return parent
         }
         const subpackagesInParent = parent.subpackages.map((subpackageId) => {
-            const subpackage = this.subpackages[subpackageId];
+            const subpackage = this.subpackages[subpackageId]
             if (subpackage == null) {
-                throw new Error("Subpackage ID is invalid: " + subpackageId);
+                throw new Error('Subpackage ID is invalid: ' + subpackageId)
             }
-            return subpackage;
-        });
+            return subpackage
+        })
 
-        const nextIndex = index + 1;
+        const nextIndex = index + 1
         const fernFilepathForNextParent: FernFilepath = {
             allParts: fernFilepath.allParts.slice(0, nextIndex),
             packagePath: fernFilepath.packagePath.slice(0, nextIndex),
             file: nextIndex === fernFilepath.allParts.length ? fernFilepath.file : undefined
-        };
+        }
         let nextParent = subpackagesInParent.find(
             (subpackage) => subpackage.name.originalName === nextPart.originalName
-        );
+        )
         if (nextParent == null) {
-            const newParentId = IdGenerator.generateSubpackageId(fernFilepathForNextParent);
+            const newParentId = IdGenerator.generateSubpackageId(fernFilepathForNextParent)
             const newParent: UnprocessedSubpackage = {
                 docs: undefined,
                 fernFilepath: fernFilepathForNextParent,
@@ -228,27 +228,27 @@ export class PackageTreeGenerator {
                 navigationConfig: undefined,
                 webhooks: undefined,
                 websocket: undefined
-            };
-            this.subpackages[newParentId] = newParent;
-            parent.subpackages.push(newParentId);
-            nextParent = newParent;
+            }
+            this.subpackages[newParentId] = newParent
+            parent.subpackages.push(newParentId)
+            nextParent = newParent
         }
 
-        return this.getPackageForFernFilepath(fernFilepath, nextIndex, nextParent);
+        return this.getPackageForFernFilepath(fernFilepath, nextIndex, nextParent)
     }
 }
 
 function isEqualIgnoreOrder(a: string[], b: string[]) {
     if (a.length !== b.length) {
-        return false;
+        return false
     }
 
-    const aSet = new Set(a);
+    const aSet = new Set(a)
     for (const bElement of b) {
         if (!aSet.has(bElement)) {
-            return false;
+            return false
         }
     }
 
-    return true;
+    return true
 }

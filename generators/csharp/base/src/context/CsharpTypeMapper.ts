@@ -1,7 +1,7 @@
-import { assertNever } from "@fern-api/core-utils";
-import { BaseCsharpCustomConfigSchema, csharp } from "@fern-api/csharp-codegen";
+import { assertNever } from '@fern-api/core-utils'
+import { BaseCsharpCustomConfigSchema, csharp } from '@fern-api/csharp-codegen'
 
-import { FernIr } from "@fern-fern/ir-sdk";
+import { FernIr } from '@fern-fern/ir-sdk'
 import {
     ContainerType,
     DeclaredTypeName,
@@ -11,57 +11,57 @@ import {
     PrimitiveTypeV1,
     TypeId,
     TypeReference
-} from "@fern-fern/ir-sdk/api";
+} from '@fern-fern/ir-sdk/api'
 
-import { AbstractCsharpGeneratorContext } from "./AbstractCsharpGeneratorContext";
+import { AbstractCsharpGeneratorContext } from './AbstractCsharpGeneratorContext'
 
 export declare namespace CsharpTypeMapper {
     interface Args {
-        reference: TypeReference;
+        reference: TypeReference
         /* Defaults to false */
-        unboxOptionals?: boolean;
+        unboxOptionals?: boolean
         /* Defaults to false */
-        fullyQualified?: boolean;
+        fullyQualified?: boolean
     }
 }
 
 export class CsharpTypeMapper {
-    private context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
+    private context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>
 
     constructor(context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>) {
-        this.context = context;
+        this.context = context
     }
 
     public convert({ reference, unboxOptionals = false, fullyQualified = false }: CsharpTypeMapper.Args): csharp.Type {
         switch (reference.type) {
-            case "container":
+            case 'container':
                 return this.convertContainer({
                     container: reference.container,
                     unboxOptionals
-                });
-            case "named":
-                return this.convertNamed({ named: reference, fullyQualified });
-            case "primitive":
-                return this.convertPrimitive(reference);
-            case "unknown":
-                return csharp.Type.object();
+                })
+            case 'named':
+                return this.convertNamed({ named: reference, fullyQualified })
+            case 'primitive':
+                return this.convertPrimitive(reference)
+            case 'unknown':
+                return csharp.Type.object()
             default:
-                assertNever(reference);
+                assertNever(reference)
         }
     }
 
     public convertFromFileProperty({ property }: { property: FernIr.FileProperty }): csharp.Type {
         switch (property.type) {
-            case "file": {
-                const csharpType = csharp.Type.fileParam(this.context.getFileParamClassReference());
-                return property.isOptional ? csharp.Type.optional(csharpType) : csharpType;
+            case 'file': {
+                const csharpType = csharp.Type.fileParam(this.context.getFileParamClassReference())
+                return property.isOptional ? csharp.Type.optional(csharpType) : csharpType
             }
-            case "fileArray": {
-                const csharpType = csharp.Type.list(csharp.Type.fileParam(this.context.getFileParamClassReference()));
-                return property.isOptional ? csharp.Type.optional(csharpType) : csharpType;
+            case 'fileArray': {
+                const csharpType = csharp.Type.list(csharp.Type.fileParam(this.context.getFileParamClassReference()))
+                return property.isOptional ? csharp.Type.optional(csharpType) : csharpType
             }
             default:
-                assertNever(property);
+                assertNever(property)
         }
     }
 
@@ -69,47 +69,47 @@ export class CsharpTypeMapper {
         declaredTypeName: { typeId: TypeId; name: Name },
         { fullyQualified }: { fullyQualified?: boolean } = {}
     ): csharp.ClassReference {
-        const objectNamespace = this.context.getNamespaceForTypeId(declaredTypeName.typeId);
+        const objectNamespace = this.context.getNamespaceForTypeId(declaredTypeName.typeId)
         return csharp.classReference({
             name: this.context.getPascalCaseSafeName(declaredTypeName.name),
             namespace: objectNamespace,
             fullyQualified
-        });
+        })
     }
 
     private convertContainer({
         container,
         unboxOptionals
     }: {
-        container: ContainerType;
-        unboxOptionals: boolean;
+        container: ContainerType
+        unboxOptionals: boolean
     }): csharp.Type {
         switch (container.type) {
-            case "list":
-                return csharp.Type.list(this.convert({ reference: container.list, unboxOptionals: true }));
-            case "map": {
-                const key = this.convert({ reference: container.keyType });
-                const value = this.convert({ reference: container.valueType });
-                if (value.internalType.type === "object") {
+            case 'list':
+                return csharp.Type.list(this.convert({ reference: container.list, unboxOptionals: true }))
+            case 'map': {
+                const key = this.convert({ reference: container.keyType })
+                const value = this.convert({ reference: container.valueType })
+                if (value.internalType.type === 'object') {
                     // object map values should be nullable.
-                    return csharp.Type.map(key, csharp.Type.optional(value));
+                    return csharp.Type.map(key, csharp.Type.optional(value))
                 }
-                return csharp.Type.map(key, value);
+                return csharp.Type.map(key, value)
             }
-            case "set":
-                return csharp.Type.set(this.convert({ reference: container.set, unboxOptionals: true }));
-            case "optional":
+            case 'set':
+                return csharp.Type.set(this.convert({ reference: container.set, unboxOptionals: true }))
+            case 'optional':
                 return unboxOptionals
                     ? this.convert({ reference: container.optional, unboxOptionals })
-                    : csharp.Type.optional(this.convert({ reference: container.optional }));
-            case "nullable":
+                    : csharp.Type.optional(this.convert({ reference: container.optional }))
+            case 'nullable':
                 return unboxOptionals
                     ? this.convert({ reference: container.nullable, unboxOptionals })
-                    : csharp.Type.optional(this.convert({ reference: container.nullable }));
-            case "literal":
-                return this.convertLiteral({ literal: container.literal });
+                    : csharp.Type.optional(this.convert({ reference: container.nullable }))
+            case 'literal':
+                return this.convertLiteral({ literal: container.literal })
             default:
-                assertNever(container);
+                assertNever(container)
         }
     }
 
@@ -130,15 +130,15 @@ export class CsharpTypeMapper {
             base64: () => csharp.Type.string(),
             bigInteger: () => csharp.Type.string(),
             _other: () => csharp.Type.object()
-        });
+        })
     }
 
     private convertLiteral({ literal }: { literal: Literal }): csharp.Type {
         switch (literal.type) {
-            case "boolean":
-                return csharp.Type.boolean();
-            case "string":
-                return csharp.Type.string();
+            case 'boolean':
+                return csharp.Type.boolean()
+            case 'string':
+                return csharp.Type.string()
         }
     }
 
@@ -146,38 +146,38 @@ export class CsharpTypeMapper {
         named,
         fullyQualified
     }: {
-        named: DeclaredTypeName;
-        fullyQualified?: boolean;
+        named: DeclaredTypeName
+        fullyQualified?: boolean
     }): csharp.Type {
-        const objectClassReference = this.convertToClassReference(named, { fullyQualified });
+        const objectClassReference = this.convertToClassReference(named, { fullyQualified })
         if (this.context.protobufResolver.isWellKnownProtobufType(named.typeId)) {
             if (this.context.protobufResolver.isWellKnownAnyProtobufType(named.typeId)) {
-                return csharp.Type.object();
+                return csharp.Type.object()
             }
-            return csharp.Type.reference(objectClassReference);
+            return csharp.Type.reference(objectClassReference)
         }
-        const typeDeclaration = this.context.getTypeDeclarationOrThrow(named.typeId);
+        const typeDeclaration = this.context.getTypeDeclarationOrThrow(named.typeId)
         switch (typeDeclaration.shape.type) {
-            case "alias":
-                return this.convert({ reference: typeDeclaration.shape.aliasOf });
-            case "enum":
-                return csharp.Type.reference(objectClassReference);
-            case "object":
-                return csharp.Type.reference(objectClassReference);
-            case "union":
+            case 'alias':
+                return this.convert({ reference: typeDeclaration.shape.aliasOf })
+            case 'enum':
+                return csharp.Type.reference(objectClassReference)
+            case 'object':
+                return csharp.Type.reference(objectClassReference)
+            case 'union':
                 if (this.context.shouldGenerateDiscriminatedUnions()) {
-                    return csharp.Type.reference(objectClassReference);
+                    return csharp.Type.reference(objectClassReference)
                 }
-                return csharp.Type.object();
-            case "undiscriminatedUnion": {
+                return csharp.Type.object()
+            case 'undiscriminatedUnion': {
                 return csharp.Type.oneOf(
                     typeDeclaration.shape.members.map((member) => {
-                        return this.convert({ reference: member.type });
+                        return this.convert({ reference: member.type })
                     })
-                );
+                )
             }
             default:
-                assertNever(typeDeclaration.shape);
+                assertNever(typeDeclaration.shape)
         }
     }
 }

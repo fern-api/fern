@@ -1,20 +1,16 @@
-import { GeneratorName } from "@fern-api/configuration-loader";
-import { assertNever } from "@fern-api/core-utils";
+import { GeneratorName } from '@fern-api/configuration-loader'
+import { assertNever } from '@fern-api/core-utils'
 
-import { IrSerialization } from "../../ir-serialization";
-import { IrVersions } from "../../ir-versions";
-import {
-    GeneratorWasNeverUpdatedToConsumeNewIR,
-    GeneratorWasNotCreatedYet,
-    IrMigration
-} from "../../types/IrMigration";
+import { IrSerialization } from '../../ir-serialization'
+import { IrVersions } from '../../ir-versions'
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
 
 export const V42_TO_V41_MIGRATION: IrMigration<
     IrVersions.V42.ir.IntermediateRepresentation,
     IrVersions.V41.ir.IntermediateRepresentation
 > = {
-    laterVersion: "v42",
-    earlierVersion: "v41",
+    laterVersion: 'v42',
+    earlierVersion: 'v41',
     firstGeneratorVersionToConsumeNewIR: {
         [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -22,9 +18,9 @@ export const V42_TO_V41_MIGRATION: IrMigration<
         [GeneratorName.TYPESCRIPT_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.TYPESCRIPT_EXPRESS]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_MODEL]: "0.8.0-rc0",
-        [GeneratorName.JAVA_SDK]: "0.9.0-rc0",
-        [GeneratorName.JAVA_SPRING]: "0.8.0-rc0",
+        [GeneratorName.JAVA_MODEL]: '0.8.0-rc0',
+        [GeneratorName.JAVA_SDK]: '0.9.0-rc0',
+        [GeneratorName.JAVA_SPRING]: '0.8.0-rc0',
         [GeneratorName.PYTHON_FASTAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_PYDANTIC]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -46,7 +42,7 @@ export const V42_TO_V41_MIGRATION: IrMigration<
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V41.IntermediateRepresentation.jsonOrThrow(ir, {
-            unrecognizedObjectKeys: "strip",
+            unrecognizedObjectKeys: 'strip',
             skipValidation: true
         }),
     migrateBackwards: (V42, _context): IrVersions.V41.ir.IntermediateRepresentation => {
@@ -56,28 +52,28 @@ export const V42_TO_V41_MIGRATION: IrMigration<
                 ...V42.auth,
                 schemes: V42.auth.schemes.map((scheme) => convertAuthScheme(scheme))
             }
-        };
+        }
     }
-};
+}
 
 function convertAuthScheme(scheme: IrVersions.V42.AuthScheme): IrVersions.V41.AuthScheme {
     switch (scheme.type) {
-        case "basic":
-            return IrVersions.V41.AuthScheme.basic(scheme);
-        case "bearer":
-            return IrVersions.V41.AuthScheme.bearer(scheme);
-        case "header":
-            return IrVersions.V41.AuthScheme.header(scheme);
-        case "oauth":
-            return IrVersions.V41.AuthScheme.oauth(convertOAuthScheme(scheme));
+        case 'basic':
+            return IrVersions.V41.AuthScheme.basic(scheme)
+        case 'bearer':
+            return IrVersions.V41.AuthScheme.bearer(scheme)
+        case 'header':
+            return IrVersions.V41.AuthScheme.header(scheme)
+        case 'oauth':
+            return IrVersions.V41.AuthScheme.oauth(convertOAuthScheme(scheme))
         default:
-            assertNever(scheme);
+            assertNever(scheme)
     }
 }
 
 function convertOAuthScheme(scheme: IrVersions.V42.OAuthScheme): IrVersions.V41.OAuthScheme {
     switch (scheme.configuration.type) {
-        case "clientCredentials":
+        case 'clientCredentials':
             return {
                 ...scheme,
                 configuration: IrVersions.V41.OAuthConfiguration.clientCredentials({
@@ -94,8 +90,8 @@ function convertOAuthScheme(scheme: IrVersions.V42.OAuthScheme): IrVersions.V41.
                               }
                             : undefined
                 })
-            };
+            }
         default:
-            assertNever(scheme.configuration.type);
+            assertNever(scheme.configuration.type)
     }
 }

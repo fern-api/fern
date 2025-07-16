@@ -1,20 +1,16 @@
-import { mapValues } from "lodash-es";
+import { mapValues } from 'lodash-es'
 
-import { GeneratorName } from "@fern-api/configuration-loader";
+import { GeneratorName } from '@fern-api/configuration-loader'
 
-import { IrVersions } from "../../ir-versions";
-import {
-    GeneratorWasNeverUpdatedToConsumeNewIR,
-    GeneratorWasNotCreatedYet,
-    IrMigration
-} from "../../types/IrMigration";
+import { IrVersions } from '../../ir-versions'
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
 
 export const V22_TO_V21_MIGRATION: IrMigration<
     IrVersions.V22.ir.IntermediateRepresentation,
     IrVersions.V21.ir.IntermediateRepresentation
 > = {
-    laterVersion: "v22",
-    earlierVersion: "v21",
+    laterVersion: 'v22',
+    earlierVersion: 'v21',
     firstGeneratorVersionToConsumeNewIR: {
         [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -32,9 +28,9 @@ export const V22_TO_V21_MIGRATION: IrMigration<
         [GeneratorName.STOPLIGHT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.GO_FIBER]: "0.5.0-3-gac7ce7c",
-        [GeneratorName.GO_MODEL]: "0.0.14-8-g2fa39f7",
-        [GeneratorName.GO_SDK]: "0.0.14-8-g2fa39f7",
+        [GeneratorName.GO_FIBER]: '0.5.0-3-gac7ce7c',
+        [GeneratorName.GO_MODEL]: '0.0.14-8-g2fa39f7',
+        [GeneratorName.GO_SDK]: '0.0.14-8-g2fa39f7',
         [GeneratorName.RUBY_MODEL]: GeneratorWasNotCreatedYet,
         [GeneratorName.RUBY_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.CSHARP_MODEL]: GeneratorWasNotCreatedYet,
@@ -49,17 +45,17 @@ export const V22_TO_V21_MIGRATION: IrMigration<
         return {
             ...v22,
             services: mapValues(v22.services, (service) => {
-                return convertService(service);
+                return convertService(service)
             })
-        };
+        }
     }
-};
+}
 
 function convertService(service: IrVersions.V22.http.HttpService): IrVersions.V21.http.HttpService {
     return {
         ...service,
         endpoints: service.endpoints.map((endpoint) => convertEndpoint(endpoint))
-    };
+    }
 }
 
 function convertEndpoint(endpoint: IrVersions.V22.http.HttpEndpoint): IrVersions.V21.http.HttpEndpoint {
@@ -67,7 +63,7 @@ function convertEndpoint(endpoint: IrVersions.V22.http.HttpEndpoint): IrVersions
         ...endpoint,
         ...(endpoint.response != null
             ? IrVersions.V22.http.HttpResponse._visit<
-                  Pick<IrVersions.V21.http.HttpEndpoint, "response" | "streamingResponse" | "sdkResponse">
+                  Pick<IrVersions.V21.http.HttpEndpoint, 'response' | 'streamingResponse' | 'sdkResponse'>
               >(endpoint.response, {
                   json: (jsonResponse) => ({
                       response: IrVersions.V21.http.HttpResponse.json(jsonResponse),
@@ -85,7 +81,7 @@ function convertEndpoint(endpoint: IrVersions.V22.http.HttpEndpoint): IrVersions
                       sdkResponse: IrVersions.V21.http.SdkResponse.streaming(streamingResponse)
                   }),
                   _unknown: () => {
-                      throw new Error("Unknown HttpResponse: " + endpoint.response?.type);
+                      throw new Error('Unknown HttpResponse: ' + endpoint.response?.type)
                   }
               })
             : {
@@ -93,5 +89,5 @@ function convertEndpoint(endpoint: IrVersions.V22.http.HttpEndpoint): IrVersions
                   streamingResponse: undefined,
                   sdkResponse: undefined
               })
-    };
+    }
 }

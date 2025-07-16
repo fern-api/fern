@@ -1,9 +1,9 @@
-import { cp } from "fs/promises";
+import { cp } from 'fs/promises'
 
-import { AbstractGeneratorContext, getPackageName, getSdkVersion } from "@fern-api/base-generator";
-import { TypesGenerator } from "@fern-api/fern-ruby-model";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { loggingExeca } from "@fern-api/logging-execa";
+import { AbstractGeneratorContext, getPackageName, getSdkVersion } from '@fern-api/base-generator'
+import { TypesGenerator } from '@fern-api/fern-ruby-model'
+import { AbsoluteFilePath } from '@fern-api/fs-utils'
+import { loggingExeca } from '@fern-api/logging-execa'
 import {
     ClassReferenceFactory,
     Class_,
@@ -21,34 +21,34 @@ import {
     generateRubocopConfig,
     getClientName,
     getGemName
-} from "@fern-api/ruby-codegen";
-import { AbstractGeneratorCli } from "@fern-api/ruby-generator-cli";
+} from '@fern-api/ruby-codegen'
+import { AbstractGeneratorCli } from '@fern-api/ruby-generator-cli'
 
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { IntermediateRepresentation, ObjectProperty, TypeId } from "@fern-fern/ir-sdk/api";
+import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
+import { IntermediateRepresentation, ObjectProperty, TypeId } from '@fern-fern/ir-sdk/api'
 
-import { ClientsGenerator } from "./ClientsGenerator";
-import { RubySdkCustomConfigConsumed, parseCustomConfig } from "./CustomConfig";
+import { ClientsGenerator } from './ClientsGenerator'
+import { RubySdkCustomConfigConsumed, parseCustomConfig } from './CustomConfig'
 
 export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfigConsumed> {
-    generatedFiles: GeneratedFile[] = [];
-    generatedClasses: Map<TypeId, Class_> = new Map();
-    flattenedProperties: Map<TypeId, ObjectProperty[]> = new Map();
-    classReferenceFactory: ClassReferenceFactory | undefined;
-    locationGenerator: LocationGenerator | undefined;
+    generatedFiles: GeneratedFile[] = []
+    generatedClasses: Map<TypeId, Class_> = new Map()
+    flattenedProperties: Map<TypeId, ObjectProperty[]> = new Map()
+    classReferenceFactory: ClassReferenceFactory | undefined
+    locationGenerator: LocationGenerator | undefined
 
     protected parseCustomConfig(customConfig: unknown): RubySdkCustomConfigConsumed {
-        return parseCustomConfig(customConfig);
+        return parseCustomConfig(customConfig)
     }
 
     private generateRepositoryBoilerPlate(gemName: string, githubOutputMode: FernGeneratorExec.GithubOutputMode) {
-        this.generatedFiles.push(generateGitignore());
-        this.generatedFiles.push(generateReadme());
+        this.generatedFiles.push(generateGitignore())
+        this.generatedFiles.push(generateReadme())
 
-        const githubPublishInfo = githubOutputMode.publishInfo;
+        const githubPublishInfo = githubOutputMode.publishInfo
         if (githubPublishInfo) {
-            if (githubPublishInfo.type !== "rubygems") {
-                throw new Error(`Attempting to pass in a publish type that is not rubygems: ${githubPublishInfo.type}`);
+            if (githubPublishInfo.type !== 'rubygems') {
+                throw new Error(`Attempting to pass in a publish type that is not rubygems: ${githubPublishInfo.type}`)
             }
 
             this.generatedFiles.push(
@@ -57,7 +57,7 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
                     githubPublishInfo.registryUrl,
                     githubPublishInfo.apiKeyEnvironmentVariable
                 )
-            );
+            )
         }
     }
 
@@ -65,8 +65,8 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
         return Object.entries(ir.services)
             .flatMap(([_, service]) => service.endpoints)
             .some((endpoint) => {
-                return endpoint.requestBody?.type === "fileUpload";
-            });
+                return endpoint.requestBody?.type === 'fileUpload'
+            })
     }
 
     private generateRubyBoilerPlate(
@@ -77,13 +77,13 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
         customConfig: RubySdkCustomConfigConsumed,
         repoUrl?: string
     ) {
-        const sdkVersion = getSdkVersion(config);
+        const sdkVersion = getSdkVersion(config)
 
-        const boilerPlateFiles = [];
-        boilerPlateFiles.push(generateRubocopConfig());
+        const boilerPlateFiles = []
+        boilerPlateFiles.push(generateRubocopConfig())
         boilerPlateFiles.push(
             generateGemfile(ExternalDependency.convertDependencies(customConfig.extraDevDependencies ?? {}))
-        );
+        )
         boilerPlateFiles.push(
             generateGemspec(
                 clientName,
@@ -95,12 +95,12 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
                     intermediateRepresentation.sdkConfig.hasFileDownloadEndpoints,
                 true
             )
-        );
-        boilerPlateFiles.push(generateGemConfig(clientName, repoUrl));
-        boilerPlateFiles.push(...generateBasicTests(gemName, clientName));
-        boilerPlateFiles.push(generateBasicRakefile());
+        )
+        boilerPlateFiles.push(generateGemConfig(clientName, repoUrl))
+        boilerPlateFiles.push(...generateBasicTests(gemName, clientName))
+        boilerPlateFiles.push(generateBasicRakefile())
 
-        this.generatedFiles.push(...boilerPlateFiles);
+        this.generatedFiles.push(...boilerPlateFiles)
     }
 
     private generateTypes(
@@ -116,12 +116,12 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
             generatorContext,
             intermediateRepresentation,
             shouldFlattenModules: customConfig.flattenModuleStructure
-        });
-        this.generatedFiles.push(...Array.from(generatedTypes.generateFiles().values()));
-        this.generatedClasses = generatedTypes.getResolvedClasses();
-        this.flattenedProperties = generatedTypes.flattenedProperties;
-        this.locationGenerator = generatedTypes.locationGenerator;
-        this.classReferenceFactory = generatedTypes.classReferenceFactory;
+        })
+        this.generatedFiles.push(...Array.from(generatedTypes.generateFiles().values()))
+        this.generatedClasses = generatedTypes.getResolvedClasses()
+        this.flattenedProperties = generatedTypes.flattenedProperties
+        this.locationGenerator = generatedTypes.locationGenerator
+        this.classReferenceFactory = generatedTypes.classReferenceFactory
     }
 
     private generateClients(
@@ -132,7 +132,7 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
         intermediateRepresentation: IntermediateRepresentation,
         customConfig: RubySdkCustomConfigConsumed
     ) {
-        const sdkVersion = getSdkVersion(config);
+        const sdkVersion = getSdkVersion(config)
         const generatedClientFiles = new ClientsGenerator({
             gemName,
             clientName,
@@ -147,8 +147,8 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
             locationGenerator: this.locationGenerator,
             classReferenceFactory: this.classReferenceFactory,
             shouldFlattenModules: customConfig.flattenModuleStructure
-        }).generateFiles();
-        this.generatedFiles.push(...Array.from(generatedClientFiles.values()));
+        }).generateFiles()
+        this.generatedFiles.push(...Array.from(generatedClientFiles.values()))
     }
 
     private generateProject(
@@ -160,12 +160,12 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
         customConfig: RubySdkCustomConfigConsumed,
         repoUrl?: string
     ) {
-        generatorContext.logger.debug("[Ruby] Generating Ruby project boilerplate.");
-        this.generateRubyBoilerPlate(gemName, clientName, config, intermediateRepresentation, customConfig, repoUrl);
-        generatorContext.logger.debug("[Ruby] Generating Ruby classes.");
-        this.generateTypes(gemName, clientName, generatorContext, intermediateRepresentation, customConfig);
-        generatorContext.logger.debug("[Ruby] Generating HTTP client classes.");
-        this.generateClients(gemName, clientName, config, generatorContext, intermediateRepresentation, customConfig);
+        generatorContext.logger.debug('[Ruby] Generating Ruby project boilerplate.')
+        this.generateRubyBoilerPlate(gemName, clientName, config, intermediateRepresentation, customConfig, repoUrl)
+        generatorContext.logger.debug('[Ruby] Generating Ruby classes.')
+        this.generateTypes(gemName, clientName, generatorContext, intermediateRepresentation, customConfig)
+        generatorContext.logger.debug('[Ruby] Generating HTTP client classes.')
+        this.generateClients(gemName, clientName, config, generatorContext, intermediateRepresentation, customConfig)
     }
 
     protected async publishPackage(
@@ -174,7 +174,7 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
         _generatorContext: AbstractGeneratorContext,
         _intermediateRepresentation: IntermediateRepresentation
     ): Promise<void> {
-        throw new Error("Unimplemented Exception");
+        throw new Error('Unimplemented Exception')
     }
     protected async writeForGithub(
         config: FernGeneratorExec.GeneratorConfig,
@@ -188,15 +188,15 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
             intermediateRepresentation.apiName.pascalCase.safeName,
             customConfig.clientClassName,
             getPackageName(config)
-        );
+        )
         const clientName = getClientName(
             config.organization,
             intermediateRepresentation.apiName.pascalCase.safeName,
             customConfig.clientClassName
-        );
-        generatorContext.logger.debug("[Ruby] Generating repository boilerplate.");
-        this.generateRepositoryBoilerPlate(gemName, githubOutputMode);
-        generatorContext.logger.debug("[Ruby] Generating Ruby project.");
+        )
+        generatorContext.logger.debug('[Ruby] Generating repository boilerplate.')
+        this.generateRepositoryBoilerPlate(gemName, githubOutputMode)
+        generatorContext.logger.debug('[Ruby] Generating Ruby project.')
         this.generateProject(
             gemName,
             clientName,
@@ -205,37 +205,37 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
             intermediateRepresentation,
             customConfig,
             githubOutputMode.repoUrl
-        );
+        )
 
-        generatorContext.logger.debug("[Ruby] Writing files to disk.");
-        const outputDir = AbsoluteFilePath.of("/fern/ruby_output");
+        generatorContext.logger.debug('[Ruby] Writing files to disk.')
+        const outputDir = AbsoluteFilePath.of('/fern/ruby_output')
         for (const file of this.generatedFiles) {
-            generatorContext.logger.debug(`[Ruby] Writing file ${file.filename}.`);
-            await file.write(AbsoluteFilePath.of(outputDir));
-            generatorContext.logger.debug("[Ruby] Finished writing file.");
+            generatorContext.logger.debug(`[Ruby] Writing file ${file.filename}.`)
+            await file.write(AbsoluteFilePath.of(outputDir))
+            generatorContext.logger.debug('[Ruby] Finished writing file.')
         }
-        generatorContext.logger.debug("[Ruby] Done writing files to disk.");
+        generatorContext.logger.debug('[Ruby] Done writing files to disk.')
         // Run lint and generate lockfile
         try {
-            generatorContext.logger.debug("[Ruby] Running linting and formatting via Rubocop.");
-            await loggingExeca(generatorContext.logger, "rubocop", [
-                "--server",
-                "-A",
-                "--cache",
-                "true",
-                "--display-time",
+            generatorContext.logger.debug('[Ruby] Running linting and formatting via Rubocop.')
+            await loggingExeca(generatorContext.logger, 'rubocop', [
+                '--server',
+                '-A',
+                '--cache',
+                'true',
+                '--display-time',
                 outputDir
-            ]);
+            ])
         } catch {
             // NOOP, ignore warns
-            generatorContext.logger.debug("[Ruby] Could not run linting, step skipped.");
+            generatorContext.logger.debug('[Ruby] Could not run linting, step skipped.')
         }
 
-        generatorContext.logger.debug("[Ruby] Copying files to output directory.");
-        await cp(outputDir, AbsoluteFilePath.of(config.output.path), { recursive: true });
-        generatorContext.logger.debug("[Ruby] Done copying files to output directory.");
+        generatorContext.logger.debug('[Ruby] Copying files to output directory.')
+        await cp(outputDir, AbsoluteFilePath.of(config.output.path), { recursive: true })
+        generatorContext.logger.debug('[Ruby] Done copying files to output directory.')
 
-        return;
+        return
     }
     protected async writeForDownload(
         config: FernGeneratorExec.GeneratorConfig,
@@ -248,40 +248,40 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
             intermediateRepresentation.apiName.pascalCase.safeName,
             customConfig.clientClassName,
             getPackageName(config)
-        );
+        )
         const clientName = getClientName(
             config.organization,
             intermediateRepresentation.apiName.pascalCase.safeName,
             customConfig.clientClassName
-        );
-        generatorContext.logger.debug("[Ruby] Generating Ruby project.");
-        this.generateProject(gemName, clientName, config, generatorContext, intermediateRepresentation, customConfig);
+        )
+        generatorContext.logger.debug('[Ruby] Generating Ruby project.')
+        this.generateProject(gemName, clientName, config, generatorContext, intermediateRepresentation, customConfig)
 
-        generatorContext.logger.debug("[Ruby] Writing files to disk.");
-        const outputDir = AbsoluteFilePath.of("/fern/ruby_output");
+        generatorContext.logger.debug('[Ruby] Writing files to disk.')
+        const outputDir = AbsoluteFilePath.of('/fern/ruby_output')
         for (const file of this.generatedFiles) {
-            await file.write(AbsoluteFilePath.of(outputDir));
+            await file.write(AbsoluteFilePath.of(outputDir))
         }
-        generatorContext.logger.debug("[Ruby] Done writing files to disk.");
+        generatorContext.logger.debug('[Ruby] Done writing files to disk.')
         // Run lint and generate lockfile
         try {
-            generatorContext.logger.debug("[Ruby] Running linting and formatting via Rubocop.");
-            await loggingExeca(generatorContext.logger, "rubocop", [
-                "--server",
-                "-A",
-                "--cache",
-                "true",
-                "--display-time",
+            generatorContext.logger.debug('[Ruby] Running linting and formatting via Rubocop.')
+            await loggingExeca(generatorContext.logger, 'rubocop', [
+                '--server',
+                '-A',
+                '--cache',
+                'true',
+                '--display-time',
                 outputDir
-            ]);
+            ])
         } catch {
             // NOOP, ignore warns
-            generatorContext.logger.debug("[Ruby] Could not run linting, step skipped.");
+            generatorContext.logger.debug('[Ruby] Could not run linting, step skipped.')
         }
-        generatorContext.logger.debug("[Ruby] Copying files to output directory.");
-        await cp(outputDir, AbsoluteFilePath.of(config.output.path), { recursive: true });
-        generatorContext.logger.debug("[Ruby] Done copying files to output directory.");
+        generatorContext.logger.debug('[Ruby] Copying files to output directory.')
+        await cp(outputDir, AbsoluteFilePath.of(config.output.path), { recursive: true })
+        generatorContext.logger.debug('[Ruby] Done copying files to output directory.')
 
-        return;
+        return
     }
 }

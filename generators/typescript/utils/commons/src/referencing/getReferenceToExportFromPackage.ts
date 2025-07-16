@@ -1,15 +1,15 @@
-import { ts } from "ts-morph";
+import { ts } from 'ts-morph'
 
-import { ImportsManager } from "../imports-manager/ImportsManager";
-import { GetReferenceOpts, Reference } from "./Reference";
+import { ImportsManager } from '../imports-manager/ImportsManager'
+import { GetReferenceOpts, Reference } from './Reference'
 
 export declare namespace getReferenceToExportFromPackage {
     export interface Args {
-        importsManager: ImportsManager;
-        packageName: string;
-        namespaceImport?: string | undefined;
-        exportedName: string;
-        subImport?: string[];
+        importsManager: ImportsManager
+        packageName: string
+        namespaceImport?: string | undefined
+        exportedName: string
+        subImport?: string[]
     }
 }
 
@@ -21,8 +21,8 @@ export function getReferenceToExportFromPackage({
     subImport = []
 }: getReferenceToExportFromPackage.Args): Reference {
     const addImport = () => {
-        importsManager.addImport(packageName, { namedImports: [namespaceImport ?? exportedName] });
-    };
+        importsManager.addImport(packageName, { namedImports: [namespaceImport ?? exportedName] })
+    }
 
     const entityName =
         namespaceImport != null
@@ -33,7 +33,7 @@ export function getReferenceToExportFromPackage({
             : [...subImport].reduce<ts.EntityName>(
                   (acc, part) => ts.factory.createQualifiedName(acc, part),
                   ts.factory.createIdentifier(exportedName)
-              );
+              )
 
     const expression =
         namespaceImport != null
@@ -44,28 +44,28 @@ export function getReferenceToExportFromPackage({
             : [...subImport].reduce<ts.Expression>(
                   (acc, part) => ts.factory.createPropertyAccessExpression(acc, part),
                   ts.factory.createIdentifier(exportedName)
-              );
+              )
 
-    const typeNode = ts.factory.createTypeReferenceNode(entityName);
+    const typeNode = ts.factory.createTypeReferenceNode(entityName)
 
     return {
         getTypeNode: ({ isForComment = false }: GetReferenceOpts = {}) => {
             if (!isForComment) {
-                addImport();
+                addImport()
             }
-            return typeNode;
+            return typeNode
         },
         getEntityName: ({ isForComment = false }: GetReferenceOpts = {}) => {
             if (!isForComment) {
-                addImport();
+                addImport()
             }
-            return entityName;
+            return entityName
         },
         getExpression: ({ isForComment = false }: GetReferenceOpts = {}) => {
             if (!isForComment) {
-                addImport();
+                addImport()
             }
-            return expression;
+            return expression
         }
-    };
+    }
 }

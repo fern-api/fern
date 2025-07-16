@@ -1,1 +1,1 @@
-export { TypeScriptFormatter } from "./TypeScriptFormatter";
+export { TypeScriptFormatter } from './TypeScriptFormatter'

@@ -12,8 +12,7 @@
 		"attributePosition": "auto",
 		"bracketSameLine": false,
 		"bracketSpacing": true,
-		"expand": "auto",
-		"useEditorconfig": true
+		"expand": "auto"
 	},
 	"linter": {
 		"enabled": true,

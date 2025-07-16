@@ -1,31 +1,31 @@
-import { MintNavigationItem } from "../mintlify";
+import { MintNavigationItem } from '../mintlify'
 
 export declare namespace getTabForMintItem {
     interface Args {
-        mintItem: MintNavigationItem;
+        mintItem: MintNavigationItem
     }
 }
 
 export function getTabForMintItem({ mintItem }: getTabForMintItem.Args): string | undefined {
-    const firstPage = getFirstPage({ item: mintItem });
+    const firstPage = getFirstPage({ item: mintItem })
     if (firstPage == null) {
-        return undefined;
+        return undefined
     }
-    return getFirstUrlSegment({ path: firstPage });
+    return getFirstUrlSegment({ path: firstPage })
 }
 
 function getFirstPage({ item }: { item: MintNavigationItem }): string | undefined {
     for (const page of item.pages) {
-        if (typeof page === "string") {
-            return page;
+        if (typeof page === 'string') {
+            return page
         } else {
-            const firstPage = getFirstPage({ item: page });
+            const firstPage = getFirstPage({ item: page })
             if (firstPage != null) {
-                return firstPage;
+                return firstPage
             }
         }
     }
-    return undefined;
+    return undefined
 }
 
 /**
@@ -33,6 +33,6 @@ function getFirstPage({ item }: { item: MintNavigationItem }): string | undefine
  * then this function will return `reference`
  */
 function getFirstUrlSegment({ path }: { path: string }): string | undefined {
-    const segments = path.split("/");
-    return segments[0];
+    const segments = path.split('/')
+    return segments[0]
 }

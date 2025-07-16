@@ -1,20 +1,20 @@
-import { ExpressRegisterContext, GeneratedExpressRegister } from "@fern-typescript/contexts";
-import { ExpressRegisterGenerator } from "@fern-typescript/express-register-generator";
+import { ExpressRegisterContext, GeneratedExpressRegister } from '@fern-typescript/contexts'
+import { ExpressRegisterGenerator } from '@fern-typescript/express-register-generator'
 
 export declare namespace ExpressRegisterContextImpl {
     export interface Init {
-        expressRegisterGenerator: ExpressRegisterGenerator;
+        expressRegisterGenerator: ExpressRegisterGenerator
     }
 }
 
 export class ExpressRegisterContextImpl implements ExpressRegisterContext {
-    private expressRegisterGenerator: ExpressRegisterGenerator;
+    private expressRegisterGenerator: ExpressRegisterGenerator
 
     constructor({ expressRegisterGenerator }: ExpressRegisterContextImpl.Init) {
-        this.expressRegisterGenerator = expressRegisterGenerator;
+        this.expressRegisterGenerator = expressRegisterGenerator
     }
 
     public getGeneratedExpressRegister(): GeneratedExpressRegister | undefined {
-        return this.expressRegisterGenerator.generateRegisterFunction();
+        return this.expressRegisterGenerator.generateRegisterFunction()
     }
 }

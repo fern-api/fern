@@ -1,9 +1,9 @@
-import { mkdir, writeFile } from "fs/promises";
-import path from "path";
+import { mkdir, writeFile } from 'fs/promises'
+import path from 'path'
 
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath } from '@fern-api/fs-utils'
 
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
 
 export async function writeGitHubWorkflows({
     config,
@@ -12,26 +12,26 @@ export async function writeGitHubWorkflows({
     pathToProject,
     publishToJsr
 }: {
-    config: FernGeneratorExec.GeneratorConfig;
-    githubOutputMode: FernGeneratorExec.GithubOutputMode;
-    isPackagePrivate: boolean;
-    pathToProject: AbsoluteFilePath;
-    publishToJsr: boolean;
+    config: FernGeneratorExec.GeneratorConfig
+    githubOutputMode: FernGeneratorExec.GithubOutputMode
+    isPackagePrivate: boolean
+    pathToProject: AbsoluteFilePath
+    publishToJsr: boolean
 }): Promise<void> {
-    if (githubOutputMode.publishInfo != null && githubOutputMode.publishInfo.type !== "npm") {
+    if (githubOutputMode.publishInfo != null && githubOutputMode.publishInfo.type !== 'npm') {
         throw new Error(
             `Expected to receive npm publish info but received ${githubOutputMode.publishInfo.type} instead`
-        );
+        )
     }
     const workflowYaml = constructWorkflowYaml({
         publishInfo: githubOutputMode.publishInfo,
         isPackagePrivate,
         config,
         publishToJsr
-    });
-    const githubWorkflowsDir = path.join(pathToProject, ".github", "workflows");
-    await mkdir(githubWorkflowsDir, { recursive: true });
-    await writeFile(`${githubWorkflowsDir}/ci.yml`, workflowYaml);
+    })
+    const githubWorkflowsDir = path.join(pathToProject, '.github', 'workflows')
+    await mkdir(githubWorkflowsDir, { recursive: true })
+    await writeFile(`${githubWorkflowsDir}/ci.yml`, workflowYaml)
 }
 
 function constructWorkflowYaml({
@@ -40,10 +40,10 @@ function constructWorkflowYaml({
     isPackagePrivate,
     publishToJsr
 }: {
-    config: FernGeneratorExec.GeneratorConfig;
-    publishInfo: FernGeneratorExec.NpmGithubPublishInfo | undefined;
-    isPackagePrivate: boolean;
-    publishToJsr: boolean;
+    config: FernGeneratorExec.GeneratorConfig
+    publishInfo: FernGeneratorExec.NpmGithubPublishInfo | undefined
+    isPackagePrivate: boolean
+    publishToJsr: boolean
 }) {
     let workflowYaml = `name: ci
 
@@ -62,13 +62,13 @@ jobs:
 
       - name: Compile
         run: yarn && yarn build
-${getTestJob({ config })}`;
+${getTestJob({ config })}`
     // First condition is for resilience in the event that Fiddle isn't upgraded to include the new flag
     if (
         (publishInfo != null && publishInfo?.shouldGeneratePublishWorkflow == null) ||
         publishInfo?.shouldGeneratePublishWorkflow === true
     ) {
-        const access = isPackagePrivate ? "restricted" : "public";
+        const access = isPackagePrivate ? 'restricted' : 'public'
         workflowYaml += `
   publish:
     needs: [ compile, test ]
@@ -95,7 +95,7 @@ ${getTestJob({ config })}`;
             npm publish --access ${access}
           fi
         env:
-          NPM_TOKEN: \${{ secrets.${publishInfo.tokenEnvironmentVariable} }}`;
+          NPM_TOKEN: \${{ secrets.${publishInfo.tokenEnvironmentVariable} }}`
     }
 
     if (publishToJsr) {
@@ -122,10 +122,10 @@ ${getTestJob({ config })}`;
         run: yarn build
 
       - name: Publish to JSR
-        run: npx jsr publish`;
+        run: npx jsr publish`
     }
 
-    return workflowYaml;
+    return workflowYaml
 }
 
 function getTestJob({ config }: { config: FernGeneratorExec.GeneratorConfig }): string {
@@ -161,6 +161,6 @@ function getTestJob({ config }: { config: FernGeneratorExec.GeneratorConfig }): 
 
       - name: Compile
         run: yarn && yarn test    
-`;
+`
     // }
 }

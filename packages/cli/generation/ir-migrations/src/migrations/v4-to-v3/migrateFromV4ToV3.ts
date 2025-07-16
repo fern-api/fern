@@ -1,32 +1,28 @@
-import { GeneratorName } from "@fern-api/configuration-loader";
+import { GeneratorName } from '@fern-api/configuration-loader'
 
-import { IrVersions } from "../../ir-versions";
-import {
-    GeneratorWasNeverUpdatedToConsumeNewIR,
-    GeneratorWasNotCreatedYet,
-    IrMigration
-} from "../../types/IrMigration";
+import { IrVersions } from '../../ir-versions'
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
 
 export const V4_TO_V3_MIGRATION: IrMigration<
     IrVersions.V4.ir.IntermediateRepresentation,
     IrVersions.V3.ir.IntermediateRepresentation
 > = {
-    laterVersion: "v4",
-    earlierVersion: "v3",
+    laterVersion: 'v4',
+    earlierVersion: 'v3',
     firstGeneratorVersionToConsumeNewIR: {
         [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.TYPESCRIPT_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_EXPRESS]: "0.0.264",
+        [GeneratorName.TYPESCRIPT_EXPRESS]: '0.0.264',
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_SPRING]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_FASTAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_PYDANTIC]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.OPENAPI]: "0.0.11-4-g1c29f6c",
-        [GeneratorName.POSTMAN]: "0.0.32-rc0",
+        [GeneratorName.OPENAPI]: '0.0.11-4-g1c29f6c',
+        [GeneratorName.POSTMAN]: '0.0.32-rc0',
         [GeneratorName.STOPLIGHT]: GeneratorWasNotCreatedYet,
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNotCreatedYet,
         [GeneratorName.PYTHON_SDK]: GeneratorWasNotCreatedYet,
@@ -78,9 +74,9 @@ export const V4_TO_V3_MIGRATION: IrMigration<
                     }))
                 }))
             }
-        };
+        }
     }
-};
+}
 
 function convertExampleType(v4Example: IrVersions.V4.types.ExampleTypeShape): IrVersions.V3.types.ExampleType {
     return IrVersions.V4.types.ExampleTypeShape._visit<IrVersions.V3.types.ExampleType>(v4Example, {
@@ -89,9 +85,9 @@ function convertExampleType(v4Example: IrVersions.V4.types.ExampleTypeShape): Ir
         alias: (exampleAlias) => IrVersions.V3.types.ExampleType.alias(convertExampleAlias(exampleAlias)),
         enum: IrVersions.V3.types.ExampleType.enum,
         _unknown: () => {
-            throw new Error("Unknown ExampleTypeShape: " + v4Example.type);
+            throw new Error('Unknown ExampleTypeShape: ' + v4Example.type)
         }
-    });
+    })
 }
 
 function convertExampleObject(v4Example: IrVersions.V4.types.ExampleObjectType): IrVersions.V3.types.ExampleObjectType {
@@ -103,7 +99,7 @@ function convertExampleObject(v4Example: IrVersions.V4.types.ExampleObjectType):
                 originalTypeDeclaration: property.originalTypeDeclaration
             })
         )
-    };
+    }
 }
 
 function convertExampleTypeReference(
@@ -118,10 +114,10 @@ function convertExampleTypeReference(
             named: (namedExample) => IrVersions.V3.types.ExampleTypeReference.named(convertNamedExample(namedExample)),
             unknown: IrVersions.V3.types.ExampleTypeReference.unknown,
             _unknown: () => {
-                throw new Error("Unknown ExampleTypeReference: " + v4Example.shape.type);
+                throw new Error('Unknown ExampleTypeReference: ' + v4Example.shape.type)
             }
         }
-    );
+    )
 }
 
 function convertContainerExample(
@@ -143,16 +139,16 @@ function convertContainerExample(
                 }))
             ),
         _unknown: () => {
-            throw new Error("Unknown ExampleContainer: " + v4Example.type);
+            throw new Error('Unknown ExampleContainer: ' + v4Example.type)
         }
-    });
+    })
 }
 
 function convertNamedExample(v4Example: IrVersions.V4.types.ExampleNamedType): IrVersions.V3.types.ExampleNamedType {
     return {
         typeName: v4Example.typeName,
         shape: convertExampleType(v4Example.shape)
-    };
+    }
 }
 
 function convertExampleUnion(
@@ -174,17 +170,17 @@ function convertExampleUnion(
                         ),
                     noProperties: () => IrVersions.V3.types.ExampleSingleUnionTypeProperties.noProperties(),
                     _unknown: () => {
-                        throw new Error("Unknown ExampleSingleUnionTypeProperties: " + v4Example.properties.type);
+                        throw new Error('Unknown ExampleSingleUnionTypeProperties: ' + v4Example.properties.type)
                     }
                 }
             )
-    };
+    }
 }
 
 function convertExampleAlias(v4Example: IrVersions.V4.types.ExampleAliasType): IrVersions.V3.types.ExampleAliasType {
     return {
         value: convertExampleTypeReference(v4Example.value)
-    };
+    }
 }
 
 function convertExampleEndpointCall(
@@ -202,7 +198,7 @@ function convertExampleEndpointCall(
         queryParameters: example.queryParameters.map((queryParameter) => convertExampleQueryParameter(queryParameter)),
         request: example.request != null ? convertExampleRequest(example.request) : undefined,
         response: convertExampleResponse(example.response)
-    };
+    }
 }
 
 function convertExamplePathParameter(
@@ -211,7 +207,7 @@ function convertExamplePathParameter(
     return {
         key: pathParameter.key,
         value: convertExampleTypeReference(pathParameter.value)
-    };
+    }
 }
 
 function convertExampleHeader(
@@ -220,7 +216,7 @@ function convertExampleHeader(
     return {
         key: header.wireKey,
         value: convertExampleTypeReference(header.value)
-    };
+    }
 }
 
 function convertExampleQueryParameter(
@@ -229,7 +225,7 @@ function convertExampleQueryParameter(
     return {
         key: queryParameter.wireKey,
         value: convertExampleTypeReference(queryParameter.value)
-    };
+    }
 }
 
 function convertExampleRequest(
@@ -247,10 +243,10 @@ function convertExampleRequest(
             reference: (reference) =>
                 IrVersions.V3.services.http.ExampleRequestBody.reference(convertExampleTypeReference(reference)),
             _unknown: () => {
-                throw new Error("Unknown ExampleRequestBody: " + request.type);
+                throw new Error('Unknown ExampleRequestBody: ' + request.type)
             }
         }
-    );
+    )
 }
 
 function convertExampleInlinedRequestBodyProperty(
@@ -260,7 +256,7 @@ function convertExampleInlinedRequestBodyProperty(
         wireKey: property.wireKey,
         value: convertExampleTypeReference(property.value),
         originalTypeDeclaration: property.originalTypeDeclaration
-    };
+    }
 }
 
 function convertExampleResponse(
@@ -277,7 +273,7 @@ function convertExampleResponse(
                 body: errorResponse.body != null ? convertExampleTypeReference(errorResponse.body) : undefined
             }),
         _unknown: () => {
-            throw new Error("Unknown ExampleResponse: " + response.type);
+            throw new Error('Unknown ExampleResponse: ' + response.type)
         }
-    });
+    })
 }

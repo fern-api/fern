@@ -1,13 +1,13 @@
-import { dynamic } from "@fern-api/ir-sdk";
+import { dynamic } from '@fern-api/ir-sdk'
 
-export type EndpointSnippetRequest = Omit<dynamic.EndpointSnippetRequest, "baseUrl" | "endpoint"> & {
-    baseURL: string | undefined;
-    endpoint: EndpointLocation;
-};
+export type EndpointSnippetRequest = Omit<dynamic.EndpointSnippetRequest, 'baseUrl' | 'endpoint'> & {
+    baseURL: string | undefined
+    endpoint: EndpointLocation
+}
 
-export type EndpointLocation = Omit<dynamic.EndpointLocation, "method"> & {
-    method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
-};
+export type EndpointLocation = Omit<dynamic.EndpointLocation, 'method'> & {
+    method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
+}
 
 /**
  * The @fern-api/dynamic-ir-sdk doesn't include the serialization layer, so the casing
@@ -16,9 +16,9 @@ export type EndpointLocation = Omit<dynamic.EndpointLocation, "method"> & {
 export function convertDynamicEndpointSnippetRequest(
     request: dynamic.EndpointSnippetRequest
 ): EndpointSnippetRequest | undefined {
-    const method = request.endpoint.method;
-    if (method === "HEAD") {
-        return undefined;
+    const method = request.endpoint.method
+    if (method === 'HEAD') {
+        return undefined
     }
     return {
         ...request,
@@ -28,5 +28,5 @@ export function convertDynamicEndpointSnippetRequest(
             ...request.endpoint,
             method
         }
-    };
+    }
 }

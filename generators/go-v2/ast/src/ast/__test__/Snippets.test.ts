@@ -1,54 +1,54 @@
-import { Field } from "../Field";
-import { File } from "../File";
-import { Func } from "../Func";
-import { GoTypeReference } from "../GoTypeReference";
-import { Struct } from "../Struct";
-import { Type } from "../Type";
-import { TypeInstantiation } from "../TypeInstantiation";
-import { AstNode } from "../core/AstNode";
-import { GoFile } from "../core/GoFile";
+import { Field } from '../Field'
+import { File } from '../File'
+import { Func } from '../Func'
+import { GoTypeReference } from '../GoTypeReference'
+import { Struct } from '../Struct'
+import { Type } from '../Type'
+import { TypeInstantiation } from '../TypeInstantiation'
+import { AstNode } from '../core/AstNode'
+import { GoFile } from '../core/GoFile'
 
 interface TestCase {
-    description: string;
-    giveNode: AstNode;
+    description: string
+    giveNode: AstNode
 }
 
-describe("Snippets", () => {
+describe('Snippets', () => {
     const testCases: TestCase[] = [
         {
-            description: "any (null)",
+            description: 'any (null)',
             giveNode: TypeInstantiation.any(null)
         },
         {
-            description: "any (simple)",
-            giveNode: TypeInstantiation.any("Hello, world!")
+            description: 'any (simple)',
+            giveNode: TypeInstantiation.any('Hello, world!')
         },
         {
-            description: "any (JSON string)",
+            description: 'any (JSON string)',
             giveNode: TypeInstantiation.any('{"one": 1, "two": 2}')
         },
         {
-            description: "any (nested)",
+            description: 'any (nested)',
             giveNode: TypeInstantiation.any({
                 user: {
-                    name: "John Doe",
+                    name: 'John Doe',
                     age: 42,
                     active: false
                 }
             })
         },
         {
-            description: "any (list)",
+            description: 'any (list)',
             giveNode: TypeInstantiation.any({
-                organization: "acme",
+                organization: 'acme',
                 users: [
                     {
-                        name: "John Doe",
+                        name: 'John Doe',
                         age: 42,
                         active: false
                     },
                     {
-                        name: "Jane Doe",
+                        name: 'Jane Doe',
                         age: 41,
                         active: true
                     }
@@ -56,26 +56,26 @@ describe("Snippets", () => {
             })
         },
         {
-            description: "primitive (int)",
+            description: 'primitive (int)',
             giveNode: TypeInstantiation.int(42)
         },
         {
-            description: "primitive (float)",
+            description: 'primitive (float)',
             giveNode: TypeInstantiation.float64(42.1)
         },
         {
-            description: "primitive (bytes)",
-            giveNode: TypeInstantiation.bytes("去是伟大的!")
+            description: 'primitive (bytes)',
+            giveNode: TypeInstantiation.bytes('去是伟大的!')
         },
         {
-            description: "slice",
+            description: 'slice',
             giveNode: TypeInstantiation.slice({
                 valueType: Type.int(),
                 values: [TypeInstantiation.int(1), TypeInstantiation.int(2), TypeInstantiation.int(3)]
             })
         },
         {
-            description: "slice (w/ nop)",
+            description: 'slice (w/ nop)',
             giveNode: TypeInstantiation.slice({
                 valueType: Type.int(),
                 values: [
@@ -87,7 +87,7 @@ describe("Snippets", () => {
             })
         },
         {
-            description: "map (empty)",
+            description: 'map (empty)',
             giveNode: TypeInstantiation.map({
                 keyType: Type.string(),
                 valueType: Type.int(),
@@ -95,34 +95,34 @@ describe("Snippets", () => {
             })
         },
         {
-            description: "map (primitives)",
+            description: 'map (primitives)',
             giveNode: TypeInstantiation.map({
                 keyType: Type.string(),
                 valueType: Type.int(),
                 entries: [
                     {
-                        key: TypeInstantiation.string("one"),
+                        key: TypeInstantiation.string('one'),
                         value: TypeInstantiation.int(1)
                     },
                     {
-                        key: TypeInstantiation.string("two"),
+                        key: TypeInstantiation.string('two'),
                         value: TypeInstantiation.int(2)
                     }
                 ]
             })
         },
         {
-            description: "map (w/ nop)",
+            description: 'map (w/ nop)',
             giveNode: TypeInstantiation.map({
                 keyType: Type.string(),
                 valueType: Type.int(),
                 entries: [
                     {
-                        key: TypeInstantiation.string("one"),
+                        key: TypeInstantiation.string('one'),
                         value: TypeInstantiation.int(1)
                     },
                     {
-                        key: TypeInstantiation.string("two"),
+                        key: TypeInstantiation.string('two'),
                         value: TypeInstantiation.nop()
                     },
                     {
@@ -133,31 +133,31 @@ describe("Snippets", () => {
             })
         },
         {
-            description: "map (nested)",
+            description: 'map (nested)',
             giveNode: TypeInstantiation.map({
                 keyType: Type.string(),
                 valueType: Type.reference(USER_TYPE_REFERENCE),
                 entries: [
                     {
-                        key: TypeInstantiation.string("john"),
+                        key: TypeInstantiation.string('john'),
                         value: TypeInstantiation.struct({
                             typeReference: USER_TYPE_REFERENCE,
                             fields: [
                                 {
-                                    name: "Name",
-                                    value: TypeInstantiation.string("John Doe")
+                                    name: 'Name',
+                                    value: TypeInstantiation.string('John Doe')
                                 }
                             ]
                         })
                     },
                     {
-                        key: TypeInstantiation.string("jane"),
+                        key: TypeInstantiation.string('jane'),
                         value: TypeInstantiation.struct({
                             typeReference: USER_TYPE_REFERENCE,
                             fields: [
                                 {
-                                    name: "Name",
-                                    value: TypeInstantiation.string("Jane Doe")
+                                    name: 'Name',
+                                    value: TypeInstantiation.string('Jane Doe')
                                 }
                             ]
                         })
@@ -166,101 +166,101 @@ describe("Snippets", () => {
             })
         },
         {
-            description: "enum (optional)",
+            description: 'enum (optional)',
             giveNode: TypeInstantiation.optional(
                 TypeInstantiation.enum(
                     new GoTypeReference({
-                        name: "StatusDeactivated",
-                        importPath: "github.com/acme/acme-go"
+                        name: 'StatusDeactivated',
+                        importPath: 'github.com/acme/acme-go'
                     })
                 )
             )
         },
         {
-            description: "enum (required)",
+            description: 'enum (required)',
             giveNode: TypeInstantiation.enum(
                 new GoTypeReference({
-                    name: "StatusActivated",
-                    importPath: "github.com/acme/acme-go"
+                    name: 'StatusActivated',
+                    importPath: 'github.com/acme/acme-go'
                 })
             )
         },
         {
-            description: "struct (empty)",
+            description: 'struct (empty)',
             giveNode: TypeInstantiation.struct({
                 typeReference: USER_TYPE_REFERENCE,
                 fields: []
             })
         },
         {
-            description: "struct (primitives)",
+            description: 'struct (primitives)',
             giveNode: TypeInstantiation.struct({
                 typeReference: USER_TYPE_REFERENCE,
                 fields: [
                     {
-                        name: "Name",
-                        value: TypeInstantiation.string("John Doe")
+                        name: 'Name',
+                        value: TypeInstantiation.string('John Doe')
                     },
                     {
-                        name: "Age",
+                        name: 'Age',
                         value: TypeInstantiation.int(42)
                     },
                     {
-                        name: "Active",
+                        name: 'Active',
                         value: TypeInstantiation.optional(TypeInstantiation.bool(true))
                     }
                 ]
             })
         },
         {
-            description: "struct (w/ nop)",
+            description: 'struct (w/ nop)',
             giveNode: TypeInstantiation.struct({
                 typeReference: USER_TYPE_REFERENCE,
                 fields: [
                     {
-                        name: "Name",
-                        value: TypeInstantiation.string("John Doe")
+                        name: 'Name',
+                        value: TypeInstantiation.string('John Doe')
                     },
                     {
-                        name: "Age",
+                        name: 'Age',
                         value: TypeInstantiation.int(42)
                     },
                     {
-                        name: "Literal",
+                        name: 'Literal',
                         value: TypeInstantiation.nop()
                     }
                 ]
             })
         },
         {
-            description: "struct (nested)",
+            description: 'struct (nested)',
             giveNode: TypeInstantiation.struct({
                 typeReference: USER_TYPE_REFERENCE,
                 fields: [
                     {
-                        name: "Name",
-                        value: TypeInstantiation.string("John Doe")
+                        name: 'Name',
+                        value: TypeInstantiation.string('John Doe')
                     },
                     {
-                        name: "Address",
+                        name: 'Address',
                         value: TypeInstantiation.struct({
                             typeReference: new GoTypeReference({
-                                name: "Address",
-                                importPath: "github.com/acme/acme-go/billing"
+                                name: 'Address',
+                                importPath: 'github.com/acme/acme-go/billing'
                             }),
                             fields: [
                                 {
-                                    name: "ID",
-                                    value: TypeInstantiation.uuid("123e4567-e89b-12d3-a456-426614174000")
+                                    name: 'ID',
+                                    value: TypeInstantiation.uuid('123e4567-e89b-12d3-a456-426614174000')
                                 },
                                 {
-                                    name: "Street",
-                                    value: TypeInstantiation.string("123 Main St.")
+                                    name: 'Street',
+                                    value: TypeInstantiation.string('123 Main St.')
                                 },
                                 {
-                                    name: "CreatedAt",
+                                    name: 'CreatedAt',
                                     value: TypeInstantiation.optional(
-                                        TypeInstantiation.dateTime("1994-01-01T00:00:00Z")
+                                        TypeInstantiation.dateTime('1994-01-01T00:00:00Z')
                                     )
                                 }
                             ]
@@ -269,67 +269,67 @@ describe("Snippets", () => {
                 ]
             })
         }
-    ];
-    test.each(testCases)("$description", async ({ giveNode }) => {
+    ]
+    test.each(testCases)('$description', async ({ giveNode }) => {
         const file = new GoFile({
-            packageName: "example",
-            rootImportPath: "github.com/acme/acme-go",
-            importPath: "github.com/acme/consumer",
+            packageName: 'example',
+            rootImportPath: 'github.com/acme/acme-go',
+            importPath: 'github.com/acme/consumer',
             customConfig: {}
-        });
-        file.write("var value = ");
-        file.writeNode(giveNode);
+        })
+        file.write('var value = ')
+        file.writeNode(giveNode)
 
-        const content = await file.toStringAsync();
-        expect(content).toMatchSnapshot();
-    });
-});
+        const content = await file.toStringAsync()
+        expect(content).toMatchSnapshot()
+    })
+})
 
-describe("file", () => {
-    it("import collision", () => {
-        const file = new File();
+describe('file', () => {
+    it('import collision', () => {
+        const file = new File()
         const foo = new Struct({
-            name: "Foo",
-            importPath: "github.com/acme/acme-go"
-        });
+            name: 'Foo',
+            importPath: 'github.com/acme/acme-go'
+        })
         foo.addField(
             new Field({
-                name: "Name",
+                name: 'Name',
                 type: Type.reference(
                     new GoTypeReference({
-                        name: "Identifier",
-                        importPath: "github.com/acme/acme-go/common"
+                        name: 'Identifier',
+                        importPath: 'github.com/acme/acme-go/common'
                     })
                 )
             })
-        );
+        )
         const bar = new Struct({
-            name: "Bar",
-            importPath: "github.com/acme/acme-go"
-        });
+            name: 'Bar',
+            importPath: 'github.com/acme/acme-go'
+        })
         bar.addField(
             new Field({
-                name: "Name",
+                name: 'Name',
                 type: Type.reference(
                     new GoTypeReference({
-                        name: "Identifier",
-                        importPath: "github.com/acme/acme-go/nested/common"
+                        name: 'Identifier',
+                        importPath: 'github.com/acme/acme-go/nested/common'
                     })
                 )
             })
-        );
-        file.add(foo, bar);
+        )
+        file.add(foo, bar)
         const content = file.toString({
-            packageName: "example",
-            rootImportPath: "github.com/acme/acme-go",
-            importPath: "github.com/acme/consumer",
+            packageName: 'example',
+            rootImportPath: 'github.com/acme/acme-go',
+            importPath: 'github.com/acme/consumer',
             customConfig: {}
-        });
-        expect(content).toMatchSnapshot();
-    });
-});
+        })
+        expect(content).toMatchSnapshot()
+    })
+})
 
 const USER_TYPE_REFERENCE = new GoTypeReference({
-    name: "User",
-    importPath: "github.com/acme/acme-go"
-});
+    name: 'User',
+    importPath: 'github.com/acme/acme-go'
+})

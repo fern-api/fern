@@ -1,4 +1,4 @@
-import { isNonNullish } from "@fern-api/core-utils";
+import { isNonNullish } from '@fern-api/core-utils'
 import {
     ExampleContainer,
     ExampleEndpointCall,
@@ -17,15 +17,15 @@ import {
     ExampleTypeReference,
     ExampleTypeReferenceShape,
     ExampleTypeShape
-} from "@fern-api/ir-sdk";
-import { FilteredIr } from "@fern-api/ir-utils";
+} from '@fern-api/ir-sdk'
+import { FilteredIr } from '@fern-api/ir-utils'
 
 function filterExampleSingleUnionTypeProperties({
     filteredIr,
     singleUnionTypeProperties
 }: {
-    filteredIr: FilteredIr;
-    singleUnionTypeProperties: ExampleSingleUnionTypeProperties;
+    filteredIr: FilteredIr
+    singleUnionTypeProperties: ExampleSingleUnionTypeProperties
 }): ExampleSingleUnionTypeProperties | undefined {
     return singleUnionTypeProperties._visit<ExampleSingleUnionTypeProperties | undefined>({
         samePropertiesAsObject: (s) => {
@@ -42,30 +42,30 @@ function filterExampleSingleUnionTypeProperties({
                               .filter((p): p is ExampleObjectProperty => p.value !== undefined)
                       }
                   }
-                : undefined;
+                : undefined
             return filteredObject !== undefined
                 ? ExampleSingleUnionTypeProperties.samePropertiesAsObject(filteredObject)
-                : undefined;
+                : undefined
         },
         singleProperty: (s) => {
-            const filteredProperty = filterExampleTypeReference({ filteredIr, exampleTypeReference: s });
+            const filteredProperty = filterExampleTypeReference({ filteredIr, exampleTypeReference: s })
             return filteredProperty !== undefined
                 ? ExampleSingleUnionTypeProperties.singleProperty(filteredProperty)
-                : undefined;
+                : undefined
         },
         noProperties: () => singleUnionTypeProperties,
         _other: () => {
-            throw new Error("Received unknown type for example.");
+            throw new Error('Received unknown type for example.')
         }
-    });
+    })
 }
 
 function filterExampleTypeReference({
     filteredIr,
     exampleTypeReference
 }: {
-    filteredIr: FilteredIr;
-    exampleTypeReference: ExampleTypeReference;
+    filteredIr: FilteredIr
+    exampleTypeReference: ExampleTypeReference
 }): ExampleTypeReference | undefined {
     return exampleTypeReference.shape._visit<ExampleTypeReference | undefined>({
         primitive: () => exampleTypeReference,
@@ -97,7 +97,7 @@ function filterExampleTypeReference({
                     const filteredOptionalTypReference =
                         o.optional != null
                             ? filterExampleTypeReference({ filteredIr, exampleTypeReference: o.optional })
-                            : undefined;
+                            : undefined
                     return filteredOptionalTypReference != null
                         ? {
                               ...exampleTypeReference,
@@ -108,13 +108,13 @@ function filterExampleTypeReference({
                                   })
                               )
                           }
-                        : undefined;
+                        : undefined
                 },
                 nullable: (n) => {
                     const filteredNullableTypReference =
                         n.nullable != null
                             ? filterExampleTypeReference({ filteredIr, exampleTypeReference: n.nullable })
-                            : undefined;
+                            : undefined
                     return filteredNullableTypReference != null
                         ? {
                               ...exampleTypeReference,
@@ -125,7 +125,7 @@ function filterExampleTypeReference({
                                   })
                               )
                           }
-                        : undefined;
+                        : undefined
                 },
                 map: (m) => ({
                     ...exampleTypeReference,
@@ -137,14 +137,14 @@ function filterExampleTypeReference({
                                     const filteredKey = filterExampleTypeReference({
                                         filteredIr,
                                         exampleTypeReference: v.key
-                                    });
+                                    })
                                     const filteredValue = filterExampleTypeReference({
                                         filteredIr,
                                         exampleTypeReference: v.value
-                                    });
+                                    })
                                     return filteredKey !== undefined && filteredValue !== undefined
                                         ? { key: filteredKey, value: filteredValue }
-                                        : undefined;
+                                        : undefined
                                 })
                                 .filter((t): t is ExampleKeyValuePair => t !== undefined)
                         })
@@ -153,7 +153,7 @@ function filterExampleTypeReference({
                 // This is just a primitive, don't do anything
                 literal: () => exampleTypeReference,
                 _other: () => {
-                    throw new Error("Received unknown type for example.");
+                    throw new Error('Received unknown type for example.')
                 }
             }),
         // If the type is allowed filter it's properties and return
@@ -165,7 +165,7 @@ function filterExampleTypeReference({
                           const filteredAlias = filterExampleTypeReference({
                               filteredIr,
                               exampleTypeReference: a.value
-                          });
+                          })
                           return filteredAlias !== undefined
                               ? {
                                     ...exampleTypeReference,
@@ -174,7 +174,7 @@ function filterExampleTypeReference({
                                         shape: ExampleTypeShape.alias({ ...a, value: filteredAlias })
                                     })
                                 }
-                              : undefined;
+                              : undefined
                       },
                       enum: (e) => ({
                           ...exampleTypeReference,
@@ -205,7 +205,7 @@ function filterExampleTypeReference({
                           const filteredUnion = filterExampleSingleUnionTypeProperties({
                               filteredIr,
                               singleUnionTypeProperties: u.singleUnionType.shape
-                          });
+                          })
                           return filteredUnion !== undefined
                               ? {
                                     ...exampleTypeReference,
@@ -217,13 +217,13 @@ function filterExampleTypeReference({
                                         })
                                     })
                                 }
-                              : undefined;
+                              : undefined
                       },
                       undiscriminatedUnion: (u) => {
                           const filteredUnion = filterExampleTypeReference({
                               filteredIr,
                               exampleTypeReference: u.singleUnionType
-                          });
+                          })
                           return filteredUnion !== undefined
                               ? {
                                     ...exampleTypeReference,
@@ -235,87 +235,87 @@ function filterExampleTypeReference({
                                         })
                                     })
                                 }
-                              : undefined;
+                              : undefined
                       },
                       _other: () => {
-                          throw new Error("Received unknown type for example.");
+                          throw new Error('Received unknown type for example.')
                       }
                   })
                 : undefined,
         unknown: () => exampleTypeReference,
         _other: () => exampleTypeReference
-    });
+    })
 }
 
 function filterExamplePathParameters({
     filteredIr,
     pathParameters
 }: {
-    filteredIr: FilteredIr;
-    pathParameters: ExamplePathParameter[];
+    filteredIr: FilteredIr
+    pathParameters: ExamplePathParameter[]
 }): ExamplePathParameter[] {
     return pathParameters
         .map((param) => {
-            const filteredParam = filterExampleTypeReference({ filteredIr, exampleTypeReference: param.value });
+            const filteredParam = filterExampleTypeReference({ filteredIr, exampleTypeReference: param.value })
             return filteredParam !== undefined
                 ? {
                       ...param,
                       value: filteredParam
                   }
-                : undefined;
+                : undefined
         })
-        .filter((param): param is ExamplePathParameter => param !== undefined);
+        .filter((param): param is ExamplePathParameter => param !== undefined)
 }
 
 function filterExampleQueryParameters({
     filteredIr,
     queryParameters
 }: {
-    filteredIr: FilteredIr;
-    queryParameters: ExampleQueryParameter[];
+    filteredIr: FilteredIr
+    queryParameters: ExampleQueryParameter[]
 }): ExampleQueryParameter[] {
     return queryParameters
         .map((queryParameter) => {
             const filteredQueryParameter = filterExampleTypeReference({
                 filteredIr,
                 exampleTypeReference: queryParameter.value
-            });
+            })
             return filteredQueryParameter !== undefined
                 ? {
                       ...queryParameter,
                       value: filteredQueryParameter
                   }
-                : undefined;
+                : undefined
         })
-        .filter((queryParameter): queryParameter is ExampleQueryParameter => queryParameter !== undefined);
+        .filter((queryParameter): queryParameter is ExampleQueryParameter => queryParameter !== undefined)
 }
 
 function filterExampleHeader({
     filteredIr,
     headers
 }: {
-    filteredIr: FilteredIr;
-    headers: ExampleHeader[];
+    filteredIr: FilteredIr
+    headers: ExampleHeader[]
 }): ExampleHeader[] {
     return headers
         .map((header) => {
-            const filteredHeader = filterExampleTypeReference({ filteredIr, exampleTypeReference: header.value });
+            const filteredHeader = filterExampleTypeReference({ filteredIr, exampleTypeReference: header.value })
             return filteredHeader !== undefined
                 ? {
                       ...header,
                       value: filteredHeader
                   }
-                : undefined;
+                : undefined
         })
-        .filter((header): header is ExampleHeader => header !== undefined);
+        .filter((header): header is ExampleHeader => header !== undefined)
 }
 
 function filterExampleRequestBody({
     filteredIr,
     requestBody
 }: {
-    filteredIr: FilteredIr;
-    requestBody: ExampleRequestBody;
+    filteredIr: FilteredIr
+    requestBody: ExampleRequestBody
 }): ExampleRequestBody | undefined {
     return requestBody._visit<ExampleRequestBody | undefined>({
         inlinedRequestBody: (inlined) => {
@@ -331,33 +331,33 @@ function filterExampleRequestBody({
                         const filteredProperty = filterExampleTypeReference({
                             filteredIr,
                             exampleTypeReference: property.value
-                        });
+                        })
                         return filteredProperty !== undefined
                             ? {
                                   ...property,
                                   value: filteredProperty
                               }
-                            : undefined;
+                            : undefined
                     })
                     .filter((property): property is ExampleInlinedRequestBodyProperty => property !== undefined)
-            };
+            }
         },
         reference: (reference) => {
-            const filteredReference = filterExampleTypeReference({ filteredIr, exampleTypeReference: reference });
-            return filteredReference !== undefined ? ExampleRequestBody.reference(filteredReference) : undefined;
+            const filteredReference = filterExampleTypeReference({ filteredIr, exampleTypeReference: reference })
+            return filteredReference !== undefined ? ExampleRequestBody.reference(filteredReference) : undefined
         },
         _other: () => {
-            throw new Error("Received unknown type for example.");
+            throw new Error('Received unknown type for example.')
         }
-    });
+    })
 }
 
 function filterExampleResponse({
     filteredIr,
     response
 }: {
-    filteredIr: FilteredIr;
-    response: ExampleResponse;
+    filteredIr: FilteredIr
+    response: ExampleResponse
 }): ExampleResponse {
     return response._visit<ExampleResponse>({
         ok: (ok) =>
@@ -388,14 +388,14 @@ function filterExampleResponse({
                                     const filteredData = filterExampleTypeReference({
                                         filteredIr,
                                         exampleTypeReference: data
-                                    });
-                                    return filteredData !== undefined ? { event, data: filteredData } : undefined;
+                                    })
+                                    return filteredData !== undefined ? { event, data: filteredData } : undefined
                                 })
                                 .filter(isNonNullish)
                         )
                     ),
                 _other: ({ type }) => {
-                    throw new Error(`Received unknown type for OK example: ${type}`);
+                    throw new Error(`Received unknown type for OK example: ${type}`)
                 }
             }),
         error: ({ error, body }) =>
@@ -404,17 +404,17 @@ function filterExampleResponse({
                 body: body != null ? filterExampleTypeReference({ filteredIr, exampleTypeReference: body }) : undefined
             }),
         _other: ({ type }) => {
-            throw new Error(`Received unknown type for example: ${type}`);
+            throw new Error(`Received unknown type for example: ${type}`)
         }
-    });
+    })
 }
 
 export function filterEndpointExample({
     filteredIr,
     example
 }: {
-    filteredIr: FilteredIr;
-    example: ExampleEndpointCall;
+    filteredIr: FilteredIr
+    example: ExampleEndpointCall
 }): ExampleEndpointCall {
     return {
         ...example,
@@ -435,22 +435,22 @@ export function filterEndpointExample({
                 ? filterExampleRequestBody({ filteredIr, requestBody: example.request })
                 : undefined,
         response: filterExampleResponse({ filteredIr, response: example.response })
-    };
+    }
 }
 
 export function filterExampleType({
     filteredIr,
     exampleType
 }: {
-    filteredIr: FilteredIr;
-    exampleType: ExampleType;
+    filteredIr: FilteredIr
+    exampleType: ExampleType
 }): ExampleType | undefined {
     return exampleType.shape._visit<ExampleType | undefined>({
         alias: (a) => {
-            const filteredAlias = filterExampleTypeReference({ filteredIr, exampleTypeReference: a.value });
+            const filteredAlias = filterExampleTypeReference({ filteredIr, exampleTypeReference: a.value })
             return filteredAlias !== undefined
                 ? { ...exampleType, shape: ExampleTypeShape.alias({ ...a, value: filteredAlias }) }
-                : undefined;
+                : undefined
         },
         enum: () => exampleType,
         object: (o) => ({
@@ -470,7 +470,7 @@ export function filterExampleType({
             const filteredUnion = filterExampleSingleUnionTypeProperties({
                 filteredIr,
                 singleUnionTypeProperties: u.singleUnionType.shape
-            });
+            })
             return filteredUnion !== undefined
                 ? {
                       ...exampleType,
@@ -479,10 +479,10 @@ export function filterExampleType({
                           singleUnionType: { ...u.singleUnionType, shape: filteredUnion }
                       })
                   }
-                : undefined;
+                : undefined
         },
         undiscriminatedUnion: (u) => {
-            const filteredUnion = filterExampleTypeReference({ filteredIr, exampleTypeReference: u.singleUnionType });
+            const filteredUnion = filterExampleTypeReference({ filteredIr, exampleTypeReference: u.singleUnionType })
             return filteredUnion !== undefined
                 ? {
                       ...exampleType,
@@ -491,10 +491,10 @@ export function filterExampleType({
                           singleUnionType: filteredUnion
                       })
                   }
-                : undefined;
+                : undefined
         },
         _other: () => {
-            throw new Error("Received unknown type for example.");
+            throw new Error('Received unknown type for example.')
         }
-    });
+    })
 }

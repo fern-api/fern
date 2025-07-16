@@ -1,28 +1,28 @@
-import { Zurg, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
-import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
+import { Zurg, getPropertyKey, getTextOfTsNode } from '@fern-typescript/commons'
+import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from 'ts-morph'
 
-import { NameAndWireValue } from "@fern-fern/ir-sdk/api";
+import { NameAndWireValue } from '@fern-fern/ir-sdk/api'
 
-import { RawSingleUnionType } from "./RawSingleUnionType";
+import { RawSingleUnionType } from './RawSingleUnionType'
 
 export declare namespace AbstractRawSingleUnionType {
     export interface Init {
-        discriminant: NameAndWireValue;
-        discriminantValue: NameAndWireValue;
+        discriminant: NameAndWireValue
+        discriminantValue: NameAndWireValue
     }
 }
 
 export abstract class AbstractRawSingleUnionType<Context> implements RawSingleUnionType<Context> {
-    private discriminant: NameAndWireValue;
-    private discriminantValueWithAllCasings: NameAndWireValue;
+    private discriminant: NameAndWireValue
+    private discriminantValueWithAllCasings: NameAndWireValue
 
     constructor({ discriminant, discriminantValue }: AbstractRawSingleUnionType.Init) {
-        this.discriminant = discriminant;
-        this.discriminantValueWithAllCasings = discriminantValue;
+        this.discriminant = discriminant
+        this.discriminantValueWithAllCasings = discriminantValue
     }
 
     public get discriminantValue(): string {
-        return this.discriminantValueWithAllCasings.wireValue;
+        return this.discriminantValueWithAllCasings.wireValue
     }
 
     public generateInterface(context: Context): OptionalKind<InterfaceDeclarationStructure> {
@@ -37,23 +37,23 @@ export abstract class AbstractRawSingleUnionType<Context> implements RawSingleUn
                 ...this.getNonDiscriminantPropertiesForInterface(context)
             ],
             isExported: true
-        };
+        }
     }
 
     public getSchema(context: Context): Zurg.union.SingleUnionType {
         return {
             discriminantValue: this.discriminantValue,
             nonDiscriminantProperties: this.getNonDiscriminantPropertiesForSchema(context)
-        };
+        }
     }
 
-    protected abstract getExtends(context: Context): ts.TypeNode[];
+    protected abstract getExtends(context: Context): ts.TypeNode[]
 
     protected abstract getNonDiscriminantPropertiesForInterface(
         context: Context
-    ): OptionalKind<PropertySignatureStructure>[];
+    ): OptionalKind<PropertySignatureStructure>[]
 
     protected abstract getNonDiscriminantPropertiesForSchema(
         context: Context
-    ): Zurg.union.SingleUnionType["nonDiscriminantProperties"];
+    ): Zurg.union.SingleUnionType['nonDiscriminantProperties']
 }

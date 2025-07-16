@@ -1,6 +1,6 @@
-import { OpenAPIV3 } from "openapi-types";
+import { OpenAPIV3 } from 'openapi-types'
 
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever } from '@fern-api/core-utils'
 import {
     Availability,
     Encoding,
@@ -9,12 +9,12 @@ import {
     SchemaWithExample,
     SdkGroupName,
     Source
-} from "@fern-api/openapi-ir";
+} from '@fern-api/openapi-ir'
 
-import { ParseOpenAPIOptions } from "../options";
-import { SchemaParserContext } from "./SchemaParserContext";
-import { convertSchema } from "./convertSchemas";
-import { isReferenceObject } from "./utils/isReferenceObject";
+import { ParseOpenAPIOptions } from '../options'
+import { SchemaParserContext } from './SchemaParserContext'
+import { convertSchema } from './convertSchemas'
+import { isReferenceObject } from './utils/isReferenceObject'
 
 export function convertAdditionalProperties({
     nameOverride,
@@ -32,26 +32,26 @@ export function convertAdditionalProperties({
     encoding,
     source
 }: {
-    nameOverride: string | undefined;
-    generatedName: string;
-    title: string | undefined;
-    breadcrumbs: string[];
-    additionalProperties: undefined | boolean | OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
-    description: string | undefined;
-    availability: Availability | undefined;
-    wrapAsNullable: boolean;
-    context: SchemaParserContext;
-    namespace: string | undefined;
-    groupName: SdkGroupName | undefined;
-    example: unknown | undefined;
-    encoding: Encoding | undefined;
-    source: Source;
+    nameOverride: string | undefined
+    generatedName: string
+    title: string | undefined
+    breadcrumbs: string[]
+    additionalProperties: undefined | boolean | OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject
+    description: string | undefined
+    availability: Availability | undefined
+    wrapAsNullable: boolean
+    context: SchemaParserContext
+    namespace: string | undefined
+    groupName: SdkGroupName | undefined
+    example: unknown | undefined
+    encoding: Encoding | undefined
+    source: Source
 }): SchemaWithExample {
     if (additionalProperties === undefined) {
-        additionalProperties = context.options.additionalPropertiesDefaultsTo;
+        additionalProperties = context.options.additionalPropertiesDefaultsTo
     }
 
-    if (typeof additionalProperties === "boolean" || isAdditionalPropertiesAny(additionalProperties, context.options)) {
+    if (typeof additionalProperties === 'boolean' || isAdditionalPropertiesAny(additionalProperties, context.options)) {
         return wrapMap({
             nameOverride,
             generatedName,
@@ -90,7 +90,7 @@ export function convertAdditionalProperties({
             groupName,
             example,
             encoding
-        });
+        })
     }
     return wrapMap({
         nameOverride,
@@ -124,7 +124,7 @@ export function convertAdditionalProperties({
                 additionalProperties,
                 context.options.optionalAdditionalProperties ? wrapAsNullable : false,
                 context,
-                [...breadcrumbs, "Value"],
+                [...breadcrumbs, 'Value'],
                 source,
                 namespace,
                 undefined,
@@ -136,35 +136,35 @@ export function convertAdditionalProperties({
         groupName,
         example,
         encoding
-    });
+    })
 }
 
 function addInline(schema: SchemaWithExample): SchemaWithExample {
     switch (schema.type) {
-        case "array":
-        case "enum":
-        case "map":
-        case "object":
-            schema.inline = true;
-            break;
-        case "literal":
-        case "primitive":
-        case "reference":
-        case "unknown":
-            break;
-        case "nullable":
-        case "optional":
-            schema.inline = true;
-            schema.value = addInline(schema.value);
-            break;
-        case "oneOf":
-            schema.value.inline = true;
-            break;
+        case 'array':
+        case 'enum':
+        case 'map':
+        case 'object':
+            schema.inline = true
+            break
+        case 'literal':
+        case 'primitive':
+        case 'reference':
+        case 'unknown':
+            break
+        case 'nullable':
+        case 'optional':
+            schema.inline = true
+            schema.value = addInline(schema.value)
+            break
+        case 'oneOf':
+            schema.value.inline = true
+            break
         default:
-            assertNever(schema);
+            assertNever(schema)
     }
 
-    return schema;
+    return schema
 }
 
 export function wrapMap({
@@ -181,18 +181,18 @@ export function wrapMap({
     example,
     encoding
 }: {
-    nameOverride: string | undefined;
-    generatedName: string;
-    title: string | undefined;
-    keySchema: PrimitiveSchemaWithExample;
-    valueSchema: SchemaWithExample;
-    wrapAsNullable: boolean;
-    description: string | undefined;
-    availability: Availability | undefined;
-    namespace: string | undefined;
-    groupName: SdkGroupName | undefined;
-    example: unknown | undefined;
-    encoding: Encoding | undefined;
+    nameOverride: string | undefined
+    generatedName: string
+    title: string | undefined
+    keySchema: PrimitiveSchemaWithExample
+    valueSchema: SchemaWithExample
+    wrapAsNullable: boolean
+    description: string | undefined
+    availability: Availability | undefined
+    namespace: string | undefined
+    groupName: SdkGroupName | undefined
+    example: unknown | undefined
+    encoding: Encoding | undefined
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
@@ -218,7 +218,7 @@ export function wrapMap({
             namespace,
             groupName,
             inline: undefined
-        });
+        })
     }
     return SchemaWithExample.map({
         nameOverride,
@@ -233,7 +233,7 @@ export function wrapMap({
         encoding,
         example,
         inline: undefined
-    });
+    })
 }
 
 export function isAdditionalPropertiesAny(
@@ -241,10 +241,10 @@ export function isAdditionalPropertiesAny(
     options: ParseOpenAPIOptions
 ): boolean {
     if (additionalProperties == null) {
-        return options.additionalPropertiesDefaultsTo;
+        return options.additionalPropertiesDefaultsTo
     }
-    if (typeof additionalProperties === "boolean") {
-        return additionalProperties;
+    if (typeof additionalProperties === 'boolean') {
+        return additionalProperties
     }
-    return !isReferenceObject(additionalProperties) && Object.keys(additionalProperties).length === 0;
+    return !isReferenceObject(additionalProperties) && Object.keys(additionalProperties).length === 0
 }

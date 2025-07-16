@@ -3,16 +3,16 @@ import {
     ExampleValidators,
     TypeResolverImpl,
     constructFernFileContext
-} from "@fern-api/ir-generator";
+} from '@fern-api/ir-generator'
 
-import { Rule } from "../../Rule";
-import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
+import { Rule } from '../../Rule'
+import { CASINGS_GENERATOR } from '../../utils/casingsGenerator'
 
 export const ValidExampleTypeRule: Rule = {
-    name: "valid-example-type",
+    name: 'valid-example-type',
     create: ({ workspace }) => {
-        const typeResolver = new TypeResolverImpl(workspace);
-        const exampleResolver = new ExampleResolverImpl(typeResolver);
+        const typeResolver = new TypeResolverImpl(workspace)
+        const exampleResolver = new ExampleResolverImpl(typeResolver)
 
         return {
             definitionFile: {
@@ -35,15 +35,15 @@ export const ValidExampleTypeRule: Rule = {
                         workspace,
                         breadcrumbs: [],
                         depth: 0
-                    });
+                    })
                     return violations.map((violation) => {
                         return {
-                            severity: "fatal",
+                            severity: 'fatal',
                             message: violation.message
-                        };
-                    });
+                        }
+                    })
                 }
             }
-        };
+        }
     }
-};
+}

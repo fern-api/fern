@@ -1,1 +1,1 @@
-export { ValidPathParametersConfigurationRule } from "./valid-path-parameters-configuration";
+export { ValidPathParametersConfigurationRule } from './valid-path-parameters-configuration'

@@ -1,31 +1,31 @@
-import { readFile } from "fs/promises";
-import yaml from "js-yaml";
+import { readFile } from 'fs/promises'
+import yaml from 'js-yaml'
 
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
 
-import { LegacyGenerators } from ".";
+import { LegacyGenerators } from '.'
 
 export async function loadRawGeneratorsConfiguration({
     absolutePathToWorkspace
 }: {
-    absolutePathToWorkspace: AbsoluteFilePath;
+    absolutePathToWorkspace: AbsoluteFilePath
 }): Promise<LegacyGenerators.GeneratorsConfigurationSchema | undefined> {
-    const filepath = getAbsolutePathToGeneratorsConfiguration({ absolutePathToWorkspace });
-    const contentsStr = await readFile(filepath);
-    const contentsParsed = yaml.load(contentsStr.toString());
-    const result = await LegacyGenerators.GeneratorsConfigurationSchema.safeParseAsync(contentsParsed);
+    const filepath = getAbsolutePathToGeneratorsConfiguration({ absolutePathToWorkspace })
+    const contentsStr = await readFile(filepath)
+    const contentsParsed = yaml.load(contentsStr.toString())
+    const result = await LegacyGenerators.GeneratorsConfigurationSchema.safeParseAsync(contentsParsed)
     if (result.success) {
-        return result.data;
+        return result.data
     }
-    return undefined;
+    return undefined
 }
 
-const GENERATORS_YML = "generators.yml";
+const GENERATORS_YML = 'generators.yml'
 
 export function getAbsolutePathToGeneratorsConfiguration({
     absolutePathToWorkspace
 }: {
-    absolutePathToWorkspace: AbsoluteFilePath;
+    absolutePathToWorkspace: AbsoluteFilePath
 }): AbsoluteFilePath {
-    return join(absolutePathToWorkspace, RelativeFilePath.of(GENERATORS_YML));
+    return join(absolutePathToWorkspace, RelativeFilePath.of(GENERATORS_YML))
 }

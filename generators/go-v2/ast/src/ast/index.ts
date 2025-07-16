@@ -1,16 +1,16 @@
-export { CodeBlock } from "./CodeBlock";
-export { Writer } from "./core/Writer";
-export { Enum } from "./Enum";
-export { Field } from "./Field";
-export { File } from "././File";
-export { Func } from "./Func";
-export { FuncInvocation } from "./FuncInvocation";
-export { GoTypeReference } from "./GoTypeReference";
-export { Method } from "./Method";
-export { MethodInvocation } from "./MethodInvocation";
-export { Parameter } from "./Parameter";
-export { Pointer } from "./Pointer";
-export { Selector } from "./Selector";
-export { Struct } from "./Struct";
-export { Type } from "./Type";
-export { TypeInstantiation, type StructField } from "./TypeInstantiation";
+export { CodeBlock } from './CodeBlock'
+export { Writer } from './core/Writer'
+export { Enum } from './Enum'
+export { Field } from './Field'
+export { File } from '././File'
+export { Func } from './Func'
+export { FuncInvocation } from './FuncInvocation'
+export { GoTypeReference } from './GoTypeReference'
+export { Method } from './Method'
+export { MethodInvocation } from './MethodInvocation'
+export { Parameter } from './Parameter'
+export { Pointer } from './Pointer'
+export { Selector } from './Selector'
+export { Struct } from './Struct'
+export { Type } from './Type'
+export { TypeInstantiation, type StructField } from './TypeInstantiation'

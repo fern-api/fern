@@ -1,2 +1,2 @@
-export { PhpFile } from "./PhpFile";
-export { PhpProject } from "./PhpProject";
+export { PhpFile } from './PhpFile'
+export { PhpProject } from './PhpProject'

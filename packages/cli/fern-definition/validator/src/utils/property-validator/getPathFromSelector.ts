@@ -4,5 +4,5 @@
  * @returns the path of the selector ["id"] or ["name", "last"]
  */
 export function getPathFromSelector(selector: string): string[] {
-    return selector.split(".").slice(1);
+    return selector.split('.').slice(1)
 }

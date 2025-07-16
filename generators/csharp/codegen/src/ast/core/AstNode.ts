@@ -1,13 +1,13 @@
-import { AbstractAstNode, AbstractFormatter } from "@fern-api/browser-compatible-base-generator";
+import { AbstractAstNode, AbstractFormatter } from '@fern-api/browser-compatible-base-generator'
 
-import { BaseCsharpCustomConfigSchema } from "../../custom-config";
-import { Writer } from "./Writer";
+import { BaseCsharpCustomConfigSchema } from '../../custom-config'
+import { Writer } from './Writer'
 
-type Namespace = string;
+type Namespace = string
 
 export interface FormattedAstNodeSnippet {
-    imports: string | undefined;
-    body: string;
+    imports: string | undefined
+    body: string
 }
 
 export abstract class AstNode extends AbstractAstNode {
@@ -23,13 +23,13 @@ export abstract class AstNode extends AbstractAstNode {
         formatter,
         skipImports = false
     }: {
-        namespace: string;
-        allNamespaceSegments: Set<string>;
-        allTypeClassReferences: Map<string, Set<Namespace>>;
-        rootNamespace: string;
-        customConfig: BaseCsharpCustomConfigSchema;
-        formatter?: AbstractFormatter;
-        skipImports?: boolean;
+        namespace: string
+        allNamespaceSegments: Set<string>
+        allTypeClassReferences: Map<string, Set<Namespace>>
+        rootNamespace: string
+        customConfig: BaseCsharpCustomConfigSchema
+        formatter?: AbstractFormatter
+        skipImports?: boolean
     }): string {
         const writer = new Writer({
             namespace,
@@ -38,10 +38,10 @@ export abstract class AstNode extends AbstractAstNode {
             rootNamespace,
             customConfig,
             skipImports
-        });
-        this.write(writer);
-        const stringNode = writer.toString(skipImports);
-        return formatter != null ? formatter.formatSync(stringNode) : stringNode;
+        })
+        this.write(writer)
+        const stringNode = writer.toString(skipImports)
+        return formatter != null ? formatter.formatSync(stringNode) : stringNode
     }
     public toStringAsync({
         namespace,
@@ -52,13 +52,13 @@ export abstract class AstNode extends AbstractAstNode {
         formatter,
         skipImports = false
     }: {
-        namespace: string;
-        allNamespaceSegments: Set<string>;
-        allTypeClassReferences: Map<string, Set<Namespace>>;
-        rootNamespace: string;
-        customConfig: BaseCsharpCustomConfigSchema;
-        formatter?: AbstractFormatter;
-        skipImports?: boolean;
+        namespace: string
+        allNamespaceSegments: Set<string>
+        allTypeClassReferences: Map<string, Set<Namespace>>
+        rootNamespace: string
+        customConfig: BaseCsharpCustomConfigSchema
+        formatter?: AbstractFormatter
+        skipImports?: boolean
     }): Promise<string> {
         const writer = new Writer({
             namespace,
@@ -67,10 +67,10 @@ export abstract class AstNode extends AbstractAstNode {
             rootNamespace,
             customConfig,
             skipImports
-        });
-        this.write(writer);
-        const stringNode = writer.toString(skipImports);
-        return formatter != null ? formatter.format(stringNode) : Promise.resolve(stringNode);
+        })
+        this.write(writer)
+        const stringNode = writer.toString(skipImports)
+        return formatter != null ? formatter.format(stringNode) : Promise.resolve(stringNode)
     }
 
     public toFormattedSnippet({
@@ -81,26 +81,26 @@ export abstract class AstNode extends AbstractAstNode {
         formatter,
         skipImports = false
     }: {
-        allNamespaceSegments: Set<string>;
-        allTypeClassReferences: Map<string, Set<Namespace>>;
-        rootNamespace: string;
-        customConfig: BaseCsharpCustomConfigSchema;
-        formatter: AbstractFormatter;
-        skipImports: boolean;
+        allNamespaceSegments: Set<string>
+        allTypeClassReferences: Map<string, Set<Namespace>>
+        rootNamespace: string
+        customConfig: BaseCsharpCustomConfigSchema
+        formatter: AbstractFormatter
+        skipImports: boolean
     }): FormattedAstNodeSnippet {
         const writer = new Writer({
-            namespace: "",
+            namespace: '',
             allNamespaceSegments,
             allTypeClassReferences,
             rootNamespace,
             customConfig,
             skipImports
-        });
-        this.write(writer);
+        })
+        this.write(writer)
         return {
             imports: writer.importsToString(),
             body: formatter.formatSync(writer.buffer)
-        };
+        }
     }
 
     public async toFormattedSnippetAsync({
@@ -111,25 +111,25 @@ export abstract class AstNode extends AbstractAstNode {
         formatter,
         skipImports = false
     }: {
-        allNamespaceSegments: Set<string>;
-        allTypeClassReferences: Map<string, Set<Namespace>>;
-        rootNamespace: string;
-        customConfig: BaseCsharpCustomConfigSchema;
-        formatter: AbstractFormatter;
-        skipImports?: boolean;
+        allNamespaceSegments: Set<string>
+        allTypeClassReferences: Map<string, Set<Namespace>>
+        rootNamespace: string
+        customConfig: BaseCsharpCustomConfigSchema
+        formatter: AbstractFormatter
+        skipImports?: boolean
     }): Promise<FormattedAstNodeSnippet> {
         const writer = new Writer({
-            namespace: "",
+            namespace: '',
             allNamespaceSegments,
             allTypeClassReferences,
             rootNamespace,
             customConfig,
             skipImports
-        });
-        this.write(writer);
+        })
+        this.write(writer)
         return {
             imports: writer.importsToString(),
             body: await formatter.format(writer.buffer)
-        };
+        }
     }
 }

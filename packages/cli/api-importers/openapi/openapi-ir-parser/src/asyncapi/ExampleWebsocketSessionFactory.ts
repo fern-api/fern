@@ -6,32 +6,32 @@ import {
     WebsocketHandshakeWithExample,
     WebsocketMessageExample,
     WebsocketSessionExample
-} from "@fern-api/openapi-ir";
+} from '@fern-api/openapi-ir'
 
-import { isExamplePrimitive } from "../openapi/v3/converters/ExampleEndpointFactory";
-import { convertSchema } from "../schema/convertSchemas";
-import { ExampleTypeFactory } from "../schema/examples/ExampleTypeFactory";
-import { isReferenceObject } from "../schema/utils/isReferenceObject";
-import { isSchemaRequired } from "../schema/utils/isSchemaRequired";
-import { WebsocketSessionExampleExtension } from "./getFernExamples";
-import { AsyncAPIV2ParserContext } from "./v2/AsyncAPIV2ParserContext";
-import { AsyncAPIV3ParserContext } from "./v3/AsyncAPIV3ParserContext";
+import { isExamplePrimitive } from '../openapi/v3/converters/ExampleEndpointFactory'
+import { convertSchema } from '../schema/convertSchemas'
+import { ExampleTypeFactory } from '../schema/examples/ExampleTypeFactory'
+import { isReferenceObject } from '../schema/utils/isReferenceObject'
+import { isSchemaRequired } from '../schema/utils/isSchemaRequired'
+import { WebsocketSessionExampleExtension } from './getFernExamples'
+import { AsyncAPIV2ParserContext } from './v2/AsyncAPIV2ParserContext'
+import { AsyncAPIV3ParserContext } from './v3/AsyncAPIV3ParserContext'
 
 export interface SessionExampleBuilderInput {
-    type: string;
-    payload: SchemaWithExample;
+    type: string
+    payload: SchemaWithExample
 }
 
 export class ExampleWebsocketSessionFactory {
-    private exampleTypeFactory: ExampleTypeFactory;
-    private schemas: Record<string, SchemaWithExample>;
+    private exampleTypeFactory: ExampleTypeFactory
+    private schemas: Record<string, SchemaWithExample>
 
     constructor(
         schemas: Record<string, SchemaWithExample>,
         context: AsyncAPIV2ParserContext | AsyncAPIV3ParserContext
     ) {
-        this.exampleTypeFactory = new ExampleTypeFactory(schemas, new Set(), context);
-        this.schemas = schemas;
+        this.exampleTypeFactory = new ExampleTypeFactory(schemas, new Set(), context)
+        this.schemas = schemas
     }
 
     public buildWebsocketSessionExamplesForExtension({
@@ -41,19 +41,19 @@ export class ExampleWebsocketSessionFactory {
         source,
         namespace
     }: {
-        context: AsyncAPIV2ParserContext | AsyncAPIV3ParserContext;
-        extensionExamples: WebsocketSessionExampleExtension[];
-        handshake: WebsocketHandshakeWithExample;
-        source: Source;
-        namespace: string | undefined;
+        context: AsyncAPIV2ParserContext | AsyncAPIV3ParserContext
+        extensionExamples: WebsocketSessionExampleExtension[]
+        handshake: WebsocketHandshakeWithExample
+        source: Source
+        namespace: string | undefined
     }): WebsocketSessionExample[] {
-        const result: WebsocketSessionExample[] = [];
+        const result: WebsocketSessionExample[] = []
 
         for (const extensionExample of extensionExamples) {
-            const queryParameters: QueryParameterExample[] = [];
+            const queryParameters: QueryParameterExample[] = []
 
             for (const queryParameter of handshake.queryParameters) {
-                const required = this.isSchemaRequired(queryParameter.schema);
+                const required = this.isSchemaRequired(queryParameter.schema)
                 let example = this.exampleTypeFactory.buildExample({
                     schema: queryParameter.schema,
                     exampleId: undefined,
@@ -63,23 +63,23 @@ export class ExampleWebsocketSessionFactory {
                         isParameter: true,
                         ignoreOptionals: true
                     }
-                });
+                })
                 if (example != null && !isExamplePrimitive(example)) {
-                    example = undefined;
+                    example = undefined
                 }
                 if (required && example == null) {
-                    continue;
+                    continue
                 } else if (example != null) {
                     queryParameters.push({
                         name: queryParameter.name,
                         value: example
-                    });
+                    })
                 }
             }
 
-            const headers: HeaderExample[] = [];
+            const headers: HeaderExample[] = []
             for (const header of handshake.headers) {
-                const required = this.isSchemaRequired(header.schema);
+                const required = this.isSchemaRequired(header.schema)
                 let example = this.exampleTypeFactory.buildExample({
                     schema: header.schema,
                     exampleId: undefined,
@@ -89,27 +89,27 @@ export class ExampleWebsocketSessionFactory {
                         isParameter: true,
                         ignoreOptionals: true
                     }
-                });
+                })
                 if (example != null && !isExamplePrimitive(example)) {
-                    example = undefined;
+                    example = undefined
                 }
                 if (required && example == null) {
-                    continue;
+                    continue
                 } else if (example != null) {
                     headers.push({
                         name: header.name,
                         value: example
-                    });
+                    })
                 }
             }
 
-            const messages: WebsocketMessageExample[] = [];
+            const messages: WebsocketMessageExample[] = []
             for (const messageExample of extensionExample.messages) {
-                const messageRef = context.getExampleMessageReference(messageExample);
-                const messageSchema = context.resolveMessageReference({ $ref: messageRef });
+                const messageRef = context.getExampleMessageReference(messageExample)
+                const messageSchema = context.resolveMessageReference({ $ref: messageRef })
                 const resolvedSchema = isReferenceObject(messageSchema.payload)
                     ? context.resolveSchemaReference(messageSchema.payload)
-                    : messageSchema.payload;
+                    : messageSchema.payload
                 const example = this.exampleTypeFactory.buildExample({
                     schema: convertSchema(
                         resolvedSchema,
@@ -125,13 +125,13 @@ export class ExampleWebsocketSessionFactory {
                         isParameter: false,
                         ignoreOptionals: true
                     }
-                });
+                })
                 if (example != null) {
                     messages.push({
                         messageType: messageExample.type,
                         payload: example,
                         description: undefined
-                    });
+                    })
                 }
             }
 
@@ -141,18 +141,18 @@ export class ExampleWebsocketSessionFactory {
                 headers,
                 description: extensionExample.description,
                 messages
-            });
+            })
         }
 
-        return result;
+        return result
     }
 
     public buildWebsocketSessionExample({
         handshake,
         messages
     }: {
-        handshake: WebsocketHandshakeWithExample;
-        messages: SessionExampleBuilderInput[];
+        handshake: WebsocketHandshakeWithExample
+        messages: SessionExampleBuilderInput[]
     }): WebsocketSessionExample | undefined {
         const example: WebsocketSessionExample = {
             name: undefined,
@@ -160,11 +160,11 @@ export class ExampleWebsocketSessionFactory {
             headers: [],
             description: undefined,
             messages: []
-        };
+        }
 
-        const queryParameters: QueryParameterExample[] = [];
+        const queryParameters: QueryParameterExample[] = []
         for (const queryParameter of handshake.queryParameters) {
-            const required = this.isSchemaRequired(queryParameter.schema);
+            const required = this.isSchemaRequired(queryParameter.schema)
             let example = this.exampleTypeFactory.buildExample({
                 schema: queryParameter.schema,
                 exampleId: undefined,
@@ -174,23 +174,23 @@ export class ExampleWebsocketSessionFactory {
                     isParameter: true,
                     ignoreOptionals: true
                 }
-            });
+            })
             if (example != null && !isExamplePrimitive(example)) {
-                example = undefined;
+                example = undefined
             }
             if (required && example == null) {
-                return undefined;
+                return undefined
             } else if (example != null) {
                 queryParameters.push({
                     name: queryParameter.name,
                     value: example
-                });
+                })
             }
         }
 
-        const headers: HeaderExample[] = [];
+        const headers: HeaderExample[] = []
         for (const header of handshake.headers) {
-            const required = this.isSchemaRequired(header.schema);
+            const required = this.isSchemaRequired(header.schema)
             let example = this.exampleTypeFactory.buildExample({
                 schema: header.schema,
                 exampleId: undefined,
@@ -200,17 +200,17 @@ export class ExampleWebsocketSessionFactory {
                     isParameter: true,
                     ignoreOptionals: true
                 }
-            });
+            })
             if (example != null && !isExamplePrimitive(example)) {
-                example = undefined;
+                example = undefined
             }
             if (required && example == null) {
-                return undefined;
+                return undefined
             } else if (example != null) {
                 headers.push({
                     name: header.name,
                     value: example
-                });
+                })
             }
         }
 
@@ -223,31 +223,31 @@ export class ExampleWebsocketSessionFactory {
                     isParameter: false,
                     ignoreOptionals: true
                 }
-            });
+            })
             if (messageExample != null) {
                 example.messages.push({
                     messageType: message.type,
                     payload: messageExample,
                     description: undefined
-                });
+                })
             }
         }
 
-        return example;
+        return example
     }
 
     private isSchemaRequired(schema: SchemaWithExample): boolean {
-        return isSchemaRequired(this.getResolvedSchema(schema));
+        return isSchemaRequired(this.getResolvedSchema(schema))
     }
 
     private getResolvedSchema(schema: SchemaWithExample): SchemaWithExample {
-        while (schema.type === "reference") {
-            const resolvedSchema = this.schemas[schema.schema];
+        while (schema.type === 'reference') {
+            const resolvedSchema = this.schemas[schema.schema]
             if (resolvedSchema == null) {
-                throw new Error(`Unexpected error: Failed to resolve schema reference: ${schema.schema}`);
+                throw new Error(`Unexpected error: Failed to resolve schema reference: ${schema.schema}`)
             }
-            schema = resolvedSchema;
+            schema = resolvedSchema
         }
-        return schema;
+        return schema
     }
 }

@@ -1,8 +1,8 @@
-import axios from "axios";
-import { IncomingMessage, Server } from "http";
-import open from "open";
+import axios from 'axios'
+import { IncomingMessage, Server } from 'http'
+import open from 'open'
 
-import { createServer } from "./createServer";
+import { createServer } from './createServer'
 
 const SUCCESS_PAGE = `
 <!DOCTYPE html>
@@ -28,22 +28,22 @@ const SUCCESS_PAGE = `
   </body>
 
 </html>
-`;
+`
 
 export async function doAuth0LoginFlow({
     auth0Domain,
     auth0ClientId,
     audience
 }: {
-    auth0Domain: string;
-    auth0ClientId: string;
-    audience: string;
+    auth0Domain: string
+    auth0ClientId: string
+    audience: string
 }): Promise<string> {
-    const { origin, server } = await createServer();
-    const { code } = await getCode({ server, auth0Domain, auth0ClientId, origin, audience });
-    server.close();
-    const token = await getTokenFromCode({ auth0Domain, auth0ClientId, code, origin });
-    return token;
+    const { origin, server } = await createServer()
+    const { code } = await getCode({ server, auth0Domain, auth0ClientId, origin, audience })
+    server.close()
+    const token = await getTokenFromCode({ auth0Domain, auth0ClientId, code, origin })
+    return token
 }
 
 function getCode({
@@ -53,34 +53,34 @@ function getCode({
     origin,
     audience
 }: {
-    server: Server;
-    auth0Domain: string;
-    auth0ClientId: string;
-    origin: string;
-    audience: string;
+    server: Server
+    auth0Domain: string
+    auth0ClientId: string
+    origin: string
+    audience: string
 }) {
     return new Promise<{ code: string }>((resolve) => {
         // eslint-disable-next-line @typescript-eslint/no-misused-promises
-        server.addListener("request", async (request, response) => {
-            const code = parseCodeFromUrl(request, origin);
+        server.addListener('request', async (request, response) => {
+            const code = parseCodeFromUrl(request, origin)
             if (code == null) {
-                request.socket.end();
+                request.socket.end()
             } else {
-                response.end(SUCCESS_PAGE);
-                resolve({ code });
+                response.end(SUCCESS_PAGE)
+                resolve({ code })
             }
-        });
+        })
 
-        void open(constructAuth0Url({ auth0ClientId, auth0Domain, origin, audience }));
-    });
+        void open(constructAuth0Url({ auth0ClientId, auth0Domain, origin, audience }))
+    })
 }
 
 function parseCodeFromUrl(request: IncomingMessage, origin: string): string | undefined {
     if (request.url == null) {
-        return undefined;
+        return undefined
     }
-    const { searchParams } = new URL(request.url, origin);
-    return searchParams.get("code") ?? undefined;
+    const { searchParams } = new URL(request.url, origin)
+    return searchParams.get('code') ?? undefined
 }
 
 async function getTokenFromCode({
@@ -89,28 +89,28 @@ async function getTokenFromCode({
     code,
     origin
 }: {
-    auth0Domain: string;
-    auth0ClientId: string;
-    code: string;
-    origin: string;
+    auth0Domain: string
+    auth0ClientId: string
+    code: string
+    origin: string
 }): Promise<string> {
     const response = await axios.post(
         `https://${auth0Domain}/oauth/token`,
         new URLSearchParams({
-            grant_type: "authorization_code",
+            grant_type: 'authorization_code',
             client_id: auth0ClientId,
             code,
             redirect_uri: origin
         }).toString(),
         {
-            headers: { "Content-Type": "application/x-www-form-urlencoded" }
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
         }
-    );
-    const { access_token: token } = response.data;
+    )
+    const { access_token: token } = response.data
     if (token == null) {
-        throw new Error("Token is not defined");
+        throw new Error('Token is not defined')
     }
-    return token;
+    return token
 }
 
 function constructAuth0Url({
@@ -119,18 +119,18 @@ function constructAuth0Url({
     auth0ClientId,
     audience
 }: {
-    origin: string;
-    auth0Domain: string;
-    auth0ClientId: string;
-    audience: string;
+    origin: string
+    auth0Domain: string
+    auth0ClientId: string
+    audience: string
 }) {
     const queryParams = new URLSearchParams({
         client_id: auth0ClientId,
-        response_type: "code",
-        connection: "github",
-        scope: "openid profile email offline_access",
+        response_type: 'code',
+        connection: 'github',
+        scope: 'openid profile email offline_access',
         redirect_uri: origin,
         audience
-    });
-    return `https://${auth0Domain}/authorize?${queryParams.toString()}`;
+    })
+    return `https://${auth0Domain}/authorize?${queryParams.toString()}`
 }

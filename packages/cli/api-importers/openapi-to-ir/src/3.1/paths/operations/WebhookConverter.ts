@@ -1,74 +1,74 @@
-import { V2WebhookExample, Webhook, WebhookPayload } from "@fern-api/ir-sdk";
+import { V2WebhookExample, Webhook, WebhookPayload } from '@fern-api/ir-sdk'
 
-import { AbstractOperationConverter } from "./AbstractOperationConverter";
+import { AbstractOperationConverter } from './AbstractOperationConverter'
 
 export declare namespace WebhookConverter {
     export interface Output extends AbstractOperationConverter.Output {
-        webhook: Webhook;
-        audiences: string[];
+        webhook: Webhook
+        audiences: string[]
     }
 }
 
 export class WebhookConverter extends AbstractOperationConverter {
     constructor({ context, breadcrumbs, operation, method, path }: AbstractOperationConverter.Args) {
-        super({ context, breadcrumbs, operation, method, path });
+        super({ context, breadcrumbs, operation, method, path })
     }
 
     public convert(): WebhookConverter.Output | undefined {
         if (this.operation.requestBody == null) {
             this.context.errorCollector.collect({
-                message: "Skipping webhook because no request body present",
+                message: 'Skipping webhook because no request body present',
                 path: this.breadcrumbs
-            });
-            return undefined;
+            })
+            return undefined
         }
 
-        const httpMethod = this.convertHttpMethod();
+        const httpMethod = this.convertHttpMethod()
         if (httpMethod == null) {
-            return undefined;
+            return undefined
         }
 
-        if (httpMethod !== "POST" && httpMethod !== "GET") {
+        if (httpMethod !== 'POST' && httpMethod !== 'GET') {
             this.context.errorCollector.collect({
-                message: "Skipping webhook because non-POST or GET method",
+                message: 'Skipping webhook because non-POST or GET method',
                 path: this.breadcrumbs
-            });
-            return undefined;
+            })
+            return undefined
         }
 
         const { group, method } =
-            this.computeGroupNameAndLocationFromExtensions() ?? this.computeGroupNameFromTagAndOperationId();
+            this.computeGroupNameAndLocationFromExtensions() ?? this.computeGroupNameFromTagAndOperationId()
 
-        const payloadBreadcrumbs = [...this.breadcrumbs, "Payload"];
+        const payloadBreadcrumbs = [...this.breadcrumbs, 'Payload']
         const { headers } = this.convertParameters({
             breadcrumbs: payloadBreadcrumbs
-        });
+        })
 
         const convertedRequestBody = this.convertRequestBody({
             breadcrumbs: payloadBreadcrumbs,
             group,
             method,
             streamingExtension: undefined
-        });
+        })
         if (convertedRequestBody == null) {
-            return undefined;
+            return undefined
         }
-        const { requestBody } = convertedRequestBody;
+        const { requestBody } = convertedRequestBody
 
-        let payload: WebhookPayload;
-        if (requestBody.type === "inlinedRequestBody") {
+        let payload: WebhookPayload
+        if (requestBody.type === 'inlinedRequestBody') {
             payload = WebhookPayload.inlinedPayload({
                 name: requestBody.name,
                 extends: requestBody.extends,
                 properties: requestBody.properties
-            });
-        } else if (requestBody.type === "reference") {
+            })
+        } else if (requestBody.type === 'reference') {
             payload = WebhookPayload.reference({
                 payloadType: requestBody.requestBodyType,
                 docs: requestBody.docs
-            });
+            })
         } else {
-            return undefined;
+            return undefined
         }
 
         return {
@@ -79,7 +79,7 @@ export class WebhookConverter extends AbstractOperationConverter {
                 }) ?? [],
             group,
             webhook: {
-                id: `${group?.join(".") ?? ""}.${method}`,
+                id: `${group?.join('.') ?? ''}.${method}`,
                 name: this.context.casingsGenerator.generateName(method),
                 displayName: this.operation.summary,
                 method: httpMethod,
@@ -101,7 +101,7 @@ export class WebhookConverter extends AbstractOperationConverter {
                 }
             },
             inlinedTypes: this.inlinedTypes
-        };
+        }
     }
 
     private getWebhookV2ExamplesFromRequestBodyV2Examples(
@@ -115,8 +115,8 @@ export class WebhookConverter extends AbstractOperationConverter {
                         name: key,
                         payload: value
                     }
-                ];
+                ]
             })
-        );
+        )
     }
 }

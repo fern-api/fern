@@ -1,55 +1,55 @@
-import path from "path";
-import { Directory, SourceFile } from "ts-morph";
+import path from 'path'
+import { Directory, SourceFile } from 'ts-morph'
 
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { RelativeFilePath } from '@fern-api/fs-utils'
 
-import { ModuleSpecifier, getRelativePathAsModuleSpecifierTo } from "../referencing";
+import { ModuleSpecifier, getRelativePathAsModuleSpecifierTo } from '../referencing'
 
 export interface ExportedFilePath {
-    directories: ExportedDirectory[];
-    file: ExportedFilePathPart | undefined;
+    directories: ExportedDirectory[]
+    file: ExportedFilePathPart | undefined
     /**
      * @default "src"
      */
-    rootDir?: string;
+    rootDir?: string
 }
 
 export interface ExportedDirectory extends ExportedFilePathPart {
     // optionally export deeper items within this directory from the index.ts
-    subExports?: Record<RelativeFilePath, ExportDeclaration>;
+    subExports?: Record<RelativeFilePath, ExportDeclaration>
 }
 
 export interface ExportedFilePathPart {
-    nameOnDisk: string;
+    nameOnDisk: string
     // how the items in this file/directory are exported from the index.ts
-    exportDeclaration?: ExportDeclaration;
+    exportDeclaration?: ExportDeclaration
 }
 
 export interface ExportDeclaration {
-    exportAll?: boolean;
-    namespaceExport?: string;
-    namedExports?: string[];
+    exportAll?: boolean
+    namespaceExport?: string
+    namedExports?: string[]
     defaultExport?: {
-        recommendedImportName: string;
-    };
+        recommendedImportName: string
+    }
 }
 
 interface CombinedExportDeclarations {
-    exportAll: boolean;
-    namespaceExports: Set<string>;
-    namedExports: Set<string>;
+    exportAll: boolean
+    namespaceExports: Set<string>
+    namedExports: Set<string>
 }
 
-type PathToDirectory = string;
+type PathToDirectory = string
 
-const DEFAULT_PACKAGE_PATH = "src";
+const DEFAULT_PACKAGE_PATH = 'src'
 
 export class ExportsManager {
-    private exports: Record<PathToDirectory, Record<ModuleSpecifier, CombinedExportDeclarations>> = {};
-    public packagePath: string;
+    private exports: Record<PathToDirectory, Record<ModuleSpecifier, CombinedExportDeclarations>> = {}
+    public packagePath: string
 
     constructor({ packagePath = DEFAULT_PACKAGE_PATH }: { packagePath?: string } = {}) {
-        this.packagePath = packagePath;
+        this.packagePath = packagePath
     }
 
     public convertExportedFilePathToFilePath(
@@ -59,11 +59,11 @@ export class ExportsManager {
         const directoryPath = this.convertExportedDirectoryPathToFilePath(
             exportedFilePath.directories,
             exportedFilePath.rootDir || packagePath
-        );
+        )
         if (exportedFilePath.file == null) {
-            return directoryPath;
+            return directoryPath
         } else {
-            return path.join(directoryPath, exportedFilePath.file.nameOnDisk);
+            return path.join(directoryPath, exportedFilePath.file.nameOnDisk)
         }
     }
 
@@ -73,9 +73,9 @@ export class ExportsManager {
     ): string {
         return path.join(
             // within a ts-morph Project, we treat "/src" as the root of the project
-            "/" + packagePath,
+            '/' + packagePath,
             ...exportedDirectoryPath.map((directory) => RelativeFilePath.of(directory.nameOnDisk))
-        );
+        )
     }
 
     public addExport(
@@ -83,12 +83,12 @@ export class ExportsManager {
         exportDeclaration: ExportDeclaration | undefined,
         addExportTypeModifier?: boolean
     ): void {
-        const fromPath = typeof from === "string" ? from : from.getFilePath();
+        const fromPath = typeof from === 'string' ? from : from.getFilePath()
         if (path.extname(fromPath).length === 0) {
-            throw new Error("Cannot export from directory: " + fromPath);
+            throw new Error('Cannot export from directory: ' + fromPath)
         }
 
-        const pathToDirectory = path.dirname(fromPath);
+        const pathToDirectory = path.dirname(fromPath)
 
         this.addExportDeclarationForDirectory({
             directory: pathToDirectory,
@@ -98,22 +98,22 @@ export class ExportsManager {
             }),
             exportDeclaration,
             addExportTypeModifier
-        });
+        })
     }
 
     public addExportsForFilepath(filepath: ExportedFilePath, addExportTypeModifier?: boolean): void {
-        this.addExportsForDirectories(filepath.directories, addExportTypeModifier);
+        this.addExportsForDirectories(filepath.directories, addExportTypeModifier)
         this.addExport(
             this.convertExportedFilePathToFilePath(filepath),
             filepath.file?.exportDeclaration,
             addExportTypeModifier
-        );
+        )
     }
 
     public addExportsForDirectories(directories: ExportedDirectory[], addExportTypeModifier?: boolean): void {
-        let directoryFilepath = this.packagePath;
+        let directoryFilepath = this.packagePath
         for (const part of directories) {
-            const nextDirectoryPath = path.join(directoryFilepath, part.nameOnDisk);
+            const nextDirectoryPath = path.join(directoryFilepath, part.nameOnDisk)
             this.addExportDeclarationForDirectory({
                 directory: directoryFilepath,
                 moduleSpecifierToExport: getRelativePathAsModuleSpecifierTo({
@@ -122,7 +122,7 @@ export class ExportsManager {
                 }),
                 exportDeclaration: part.exportDeclaration,
                 addExportTypeModifier
-            });
+            })
 
             if (part.subExports != null) {
                 for (const [relativeFilePath, exportDeclaration] of Object.entries(part.subExports)) {
@@ -134,10 +134,10 @@ export class ExportsManager {
                         }),
                         exportDeclaration,
                         addExportTypeModifier
-                    });
+                    })
                 }
             }
-            directoryFilepath = nextDirectoryPath;
+            directoryFilepath = nextDirectoryPath
         }
     }
 
@@ -147,41 +147,41 @@ export class ExportsManager {
         exportDeclaration,
         addExportTypeModifier
     }: {
-        directory: Directory | PathToDirectory;
-        moduleSpecifierToExport: ModuleSpecifier;
-        exportDeclaration: ExportDeclaration | undefined;
-        addExportTypeModifier: boolean | undefined;
+        directory: Directory | PathToDirectory
+        moduleSpecifierToExport: ModuleSpecifier
+        exportDeclaration: ExportDeclaration | undefined
+        addExportTypeModifier: boolean | undefined
     }): void {
-        const pathToDirectory = typeof directory === "string" ? directory : directory.getPath();
-        const exportsForDirectory = (this.exports[pathToDirectory] ??= {});
+        const pathToDirectory = typeof directory === 'string' ? directory : directory.getPath()
+        const exportsForDirectory = (this.exports[pathToDirectory] ??= {})
 
         const exportsForModuleSpecifier = (exportsForDirectory[moduleSpecifierToExport] ??= {
             exportAll: false,
             namespaceExports: new Set(),
             namedExports: new Set()
-        });
+        })
 
         if (exportDeclaration == null) {
-            return;
+            return
         }
 
         if (exportDeclaration.exportAll != null) {
-            exportsForModuleSpecifier.exportAll ||= exportDeclaration.exportAll;
+            exportsForModuleSpecifier.exportAll ||= exportDeclaration.exportAll
         }
 
         if (exportDeclaration.namespaceExport != null) {
-            exportsForModuleSpecifier.namespaceExports.add(exportDeclaration.namespaceExport);
+            exportsForModuleSpecifier.namespaceExports.add(exportDeclaration.namespaceExport)
         }
         if (exportDeclaration.defaultExport != null) {
-            exportsForModuleSpecifier.namespaceExports.add("default");
+            exportsForModuleSpecifier.namespaceExports.add('default')
         }
 
         if (exportDeclaration.namedExports != null) {
             for (const namedExport of exportDeclaration.namedExports) {
                 if (addExportTypeModifier) {
-                    exportsForModuleSpecifier.namedExports.add("type " + namedExport);
+                    exportsForModuleSpecifier.namedExports.add('type ' + namedExport)
                 } else {
-                    exportsForModuleSpecifier.namedExports.add(namedExport);
+                    exportsForModuleSpecifier.namedExports.add(namedExport)
                 }
             }
         }
@@ -192,30 +192,30 @@ export class ExportsManager {
             const exportsFile = getExportsFileForDirectory({
                 pathToDirectory,
                 rootDirectory
-            });
+            })
 
             for (const [moduleSpecifier, combinedExportDeclarations] of Object.entries(moduleSpecifierToExports)) {
                 for (const namespaceExport of combinedExportDeclarations.namespaceExports) {
                     exportsFile.addExportDeclaration({
                         moduleSpecifier,
                         namespaceExport
-                    });
+                    })
                 }
 
                 if (combinedExportDeclarations.exportAll) {
                     exportsFile.addExportDeclaration({
                         moduleSpecifier
-                    });
+                    })
                 } else if (combinedExportDeclarations.namedExports.size > 0) {
                     exportsFile.addExportDeclaration({
                         moduleSpecifier,
                         namedExports: [...combinedExportDeclarations.namedExports]
-                    });
+                    })
                 }
             }
 
             if (exportsFile.getStatements().length === 0) {
-                exportsFile.addExportDeclaration({});
+                exportsFile.addExportDeclaration({})
             }
         }
     }
@@ -225,9 +225,9 @@ function getExportsFileForDirectory({
     pathToDirectory,
     rootDirectory
 }: {
-    pathToDirectory: PathToDirectory;
-    rootDirectory: Directory;
+    pathToDirectory: PathToDirectory
+    rootDirectory: Directory
 }): SourceFile {
-    const filepath = path.join(pathToDirectory, "index.ts");
-    return rootDirectory.getSourceFile(filepath) ?? rootDirectory.createSourceFile(filepath);
+    const filepath = path.join(pathToDirectory, 'index.ts')
+    return rootDirectory.getSourceFile(filepath) ?? rootDirectory.createSourceFile(filepath)
 }

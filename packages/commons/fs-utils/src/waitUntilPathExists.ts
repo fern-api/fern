@@ -1,17 +1,17 @@
-import { delay } from "@fern-api/core-utils";
+import { delay } from '@fern-api/core-utils'
 
-import { AbsoluteFilePath } from "./AbsoluteFilePath";
-import { doesPathExist } from "./doesPathExist";
+import { AbsoluteFilePath } from './AbsoluteFilePath'
+import { doesPathExist } from './doesPathExist'
 
 export async function waitUntilPathExists(filepath: AbsoluteFilePath, timeoutMs: number): Promise<boolean> {
-    const controller = new AbortController();
+    const controller = new AbortController()
     return Promise.race([
         waitUntilPathExistsWithExponentialBackoff({ filepath, controller }).then(() => true),
         delay(timeoutMs).then(() => {
-            controller.abort();
-            return false;
+            controller.abort()
+            return false
         })
-    ]);
+    ])
 }
 
 async function waitUntilPathExistsWithExponentialBackoff({
@@ -19,21 +19,21 @@ async function waitUntilPathExistsWithExponentialBackoff({
     controller,
     delayMs = 50
 }: {
-    filepath: AbsoluteFilePath;
-    controller: AbortController;
-    delayMs?: number;
+    filepath: AbsoluteFilePath
+    controller: AbortController
+    delayMs?: number
 }): Promise<void> {
     if (controller.signal.aborted) {
-        return;
+        return
     }
     if (await doesPathExist(filepath)) {
-        return;
+        return
     }
-    await delay(delayMs);
+    await delay(delayMs)
     return waitUntilPathExistsWithExponentialBackoff({
         filepath,
         controller,
         // exponential backoff
         delayMs: delayMs * 2
-    });
+    })
 }

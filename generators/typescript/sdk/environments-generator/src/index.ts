@@ -1,1 +1,1 @@
-export { EnvironmentsGenerator } from "./EnvironmentsGenerator";
+export { EnvironmentsGenerator } from './EnvironmentsGenerator'

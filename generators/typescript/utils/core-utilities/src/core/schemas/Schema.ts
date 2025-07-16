@@ -1,54 +1,54 @@
-import { SchemaUtils } from "./builders";
+import { SchemaUtils } from './builders'
 
-export type Schema<Raw = unknown, Parsed = unknown> = BaseSchema<Raw, Parsed> & SchemaUtils<Raw, Parsed>;
+export type Schema<Raw = unknown, Parsed = unknown> = BaseSchema<Raw, Parsed> & SchemaUtils<Raw, Parsed>
 
-export type inferRaw<S extends Schema> = S extends Schema<infer Raw, any> ? Raw : never;
-export type inferParsed<S extends Schema> = S extends Schema<any, infer Parsed> ? Parsed : never;
+export type inferRaw<S extends Schema> = S extends Schema<infer Raw, any> ? Raw : never
+export type inferParsed<S extends Schema> = S extends Schema<any, infer Parsed> ? Parsed : never
 
 export interface BaseSchema<Raw, Parsed> {
-    parse: (raw: unknown, opts?: SchemaOptions) => MaybeValid<Parsed>;
-    json: (parsed: unknown, opts?: SchemaOptions) => MaybeValid<Raw>;
-    getType: () => SchemaType | SchemaType;
+    parse: (raw: unknown, opts?: SchemaOptions) => MaybeValid<Parsed>
+    json: (parsed: unknown, opts?: SchemaOptions) => MaybeValid<Raw>
+    getType: () => SchemaType | SchemaType
 }
 
 export const SchemaType = {
-    BIGINT: "bigint",
-    DATE: "date",
-    ENUM: "enum",
-    LIST: "list",
-    STRING_LITERAL: "stringLiteral",
-    BOOLEAN_LITERAL: "booleanLiteral",
-    OBJECT: "object",
-    ANY: "any",
-    BOOLEAN: "boolean",
-    NUMBER: "number",
-    STRING: "string",
-    UNKNOWN: "unknown",
-    RECORD: "record",
-    SET: "set",
-    UNION: "union",
-    UNDISCRIMINATED_UNION: "undiscriminatedUnion",
-    NULLABLE: "nullable",
-    OPTIONAL: "optional",
-    OPTIONAL_NULLABLE: "optionalNullable"
-} as const;
-export type SchemaType = (typeof SchemaType)[keyof typeof SchemaType];
+    BIGINT: 'bigint',
+    DATE: 'date',
+    ENUM: 'enum',
+    LIST: 'list',
+    STRING_LITERAL: 'stringLiteral',
+    BOOLEAN_LITERAL: 'booleanLiteral',
+    OBJECT: 'object',
+    ANY: 'any',
+    BOOLEAN: 'boolean',
+    NUMBER: 'number',
+    STRING: 'string',
+    UNKNOWN: 'unknown',
+    RECORD: 'record',
+    SET: 'set',
+    UNION: 'union',
+    UNDISCRIMINATED_UNION: 'undiscriminatedUnion',
+    NULLABLE: 'nullable',
+    OPTIONAL: 'optional',
+    OPTIONAL_NULLABLE: 'optionalNullable'
+} as const
+export type SchemaType = (typeof SchemaType)[keyof typeof SchemaType]
 
-export type MaybeValid<T> = Valid<T> | Invalid;
+export type MaybeValid<T> = Valid<T> | Invalid
 
 export interface Valid<T> {
-    ok: true;
-    value: T;
+    ok: true
+    value: T
 }
 
 export interface Invalid {
-    ok: false;
-    errors: ValidationError[];
+    ok: false
+    errors: ValidationError[]
 }
 
 export interface ValidationError {
-    path: string[];
-    message: string;
+    path: string[]
+    message: string
 }
 
 export interface SchemaOptions {
@@ -57,7 +57,7 @@ export interface SchemaOptions {
      *
      * @default "fail"
      */
-    unrecognizedObjectKeys?: "fail" | "passthrough" | "strip";
+    unrecognizedObjectKeys?: 'fail' | 'passthrough' | 'strip'
 
     /**
      * whether to fail when an unrecognized discriminant value is
@@ -65,14 +65,14 @@ export interface SchemaOptions {
      *
      * @default false
      */
-    allowUnrecognizedUnionMembers?: boolean;
+    allowUnrecognizedUnionMembers?: boolean
 
     /**
      * whether to fail when an unrecognized enum value is encountered
      *
      * @default false
      */
-    allowUnrecognizedEnumValues?: boolean;
+    allowUnrecognizedEnumValues?: boolean
 
     /**
      * whether to allow data that doesn't conform to the schema.
@@ -84,7 +84,7 @@ export interface SchemaOptions {
      *
      * @default false
      */
-    skipValidation?: boolean;
+    skipValidation?: boolean
 
     /**
      * each validation failure contains a "path" property, which is
@@ -92,10 +92,10 @@ export interface SchemaOptions {
      * a prefix that is prepended to all the errors' paths. this can be
      * helpful for zurg's internal debug logging.
      */
-    breadcrumbsPrefix?: string[];
+    breadcrumbsPrefix?: string[]
 
     /**
      * whether to send 'null' for optional properties explicitly set to 'undefined'.
      */
-    omitUndefined?: boolean;
+    omitUndefined?: boolean
 }

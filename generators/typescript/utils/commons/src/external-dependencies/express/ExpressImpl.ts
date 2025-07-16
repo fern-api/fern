@@ -1,26 +1,26 @@
-import { ts } from "ts-morph";
+import { ts } from 'ts-morph'
 
-import { ExternalDependency } from "../ExternalDependency";
-import { Express, ExpressHttpVerb } from "./Express";
+import { ExternalDependency } from '../ExternalDependency'
+import { Express, ExpressHttpVerb } from './Express'
 
 export class ExpressImpl extends ExternalDependency implements Express {
-    protected override PACKAGE = { name: "express", version: "4.18.2" };
-    protected override TYPES_PACKAGE = { name: "@types/express", version: "4.17.16" };
+    protected override PACKAGE = { name: 'express', version: '4.18.2' }
+    protected override TYPES_PACKAGE = { name: '@types/express', version: '4.17.16' }
 
     public NextFunction = {
-        _getReferenceToType: this.withDefaultImport("express", (withImport, express) =>
+        _getReferenceToType: this.withDefaultImport('express', (withImport, express) =>
             withImport(() => {
                 return ts.factory.createTypeReferenceNode(
-                    ts.factory.createQualifiedName(ts.factory.createIdentifier(express), "NextFunction"),
+                    ts.factory.createQualifiedName(ts.factory.createIdentifier(express), 'NextFunction'),
                     []
-                );
+                )
             })
         )
-    };
+    }
 
     public Request = {
-        body: "body" as const,
-        _getReferenceToType: this.withDefaultImport("express", (withImport, express) =>
+        body: 'body' as const,
+        _getReferenceToType: this.withDefaultImport('express', (withImport, express) =>
             withImport(
                 ({
                     pathParameters,
@@ -28,32 +28,32 @@ export class ExpressImpl extends ExternalDependency implements Express {
                     response,
                     queryParameters
                 }: {
-                    pathParameters: ts.TypeNode | undefined;
-                    request: ts.TypeNode | undefined;
-                    response: ts.TypeNode | undefined;
-                    queryParameters: ts.TypeNode | undefined;
+                    pathParameters: ts.TypeNode | undefined
+                    request: ts.TypeNode | undefined
+                    response: ts.TypeNode | undefined
+                    queryParameters: ts.TypeNode | undefined
                 }) => {
                     return ts.factory.createTypeReferenceNode(
-                        ts.factory.createQualifiedName(ts.factory.createIdentifier(express), "Request"),
+                        ts.factory.createQualifiedName(ts.factory.createIdentifier(express), 'Request'),
                         [
                             pathParameters ?? ts.factory.createKeywordTypeNode(ts.SyntaxKind.NeverKeyword),
                             response ?? ts.factory.createKeywordTypeNode(ts.SyntaxKind.NeverKeyword),
                             request ?? ts.factory.createKeywordTypeNode(ts.SyntaxKind.NeverKeyword),
                             queryParameters ?? ts.factory.createKeywordTypeNode(ts.SyntaxKind.NeverKeyword)
                         ]
-                    );
+                    )
                 }
             )
         )
-    };
+    }
 
     public readonly Response = {
-        _getReferenceToType: this.withDefaultImport("express", (withImport, express) =>
+        _getReferenceToType: this.withDefaultImport('express', (withImport, express) =>
             withImport(() => {
                 return ts.factory.createTypeReferenceNode(
-                    ts.factory.createQualifiedName(ts.factory.createIdentifier(express), "Response"),
+                    ts.factory.createQualifiedName(ts.factory.createIdentifier(express), 'Response'),
                     []
-                );
+                )
             })
         ),
 
@@ -62,48 +62,48 @@ export class ExpressImpl extends ExternalDependency implements Express {
             valueToSend,
             status
         }: {
-            referenceToExpressResponse: ts.Expression;
-            valueToSend: ts.Expression;
-            status?: number;
+            referenceToExpressResponse: ts.Expression
+            valueToSend: ts.Expression
+            status?: number
         }): ts.Expression => {
             if (status != null) {
                 return ts.factory.createCallExpression(
                     ts.factory.createPropertyAccessExpression(
                         ts.factory.createCallExpression(
-                            ts.factory.createPropertyAccessExpression(referenceToExpressResponse, "status"),
+                            ts.factory.createPropertyAccessExpression(referenceToExpressResponse, 'status'),
                             undefined,
                             [ts.factory.createNumericLiteral(status)]
                         ),
-                        "json"
+                        'json'
                     ),
                     undefined,
                     [valueToSend]
-                );
+                )
             }
             return ts.factory.createCallExpression(
-                ts.factory.createPropertyAccessExpression(referenceToExpressResponse, "json"),
+                ts.factory.createPropertyAccessExpression(referenceToExpressResponse, 'json'),
                 undefined,
                 [valueToSend]
-            );
+            )
         },
 
         cookie: {
             _getBoundReference: ({
                 referenceToExpressResponse
             }: {
-                referenceToExpressResponse: ts.Expression;
+                referenceToExpressResponse: ts.Expression
             }): ts.Expression => {
                 return ts.factory.createCallExpression(
                     ts.factory.createPropertyAccessExpression(
                         ts.factory.createPropertyAccessExpression(
                             referenceToExpressResponse,
-                            ts.factory.createIdentifier("cookie")
+                            ts.factory.createIdentifier('cookie')
                         ),
-                        ts.factory.createIdentifier("bind")
+                        ts.factory.createIdentifier('bind')
                     ),
                     undefined,
                     [referenceToExpressResponse]
-                );
+                )
             }
         },
 
@@ -111,75 +111,75 @@ export class ExpressImpl extends ExternalDependency implements Express {
             referenceToExpressResponse,
             status
         }: {
-            referenceToExpressResponse: ts.Expression;
-            status: number;
+            referenceToExpressResponse: ts.Expression
+            status: number
         }): ts.Expression => {
             return ts.factory.createCallExpression(
-                ts.factory.createPropertyAccessExpression(referenceToExpressResponse, "status"),
+                ts.factory.createPropertyAccessExpression(referenceToExpressResponse, 'status'),
                 undefined,
                 [ts.factory.createNumericLiteral(status)]
-            );
+            )
         },
         sendStatus: ({
             referenceToExpressResponse,
             status
         }: {
-            referenceToExpressResponse: ts.Expression;
-            status: number;
+            referenceToExpressResponse: ts.Expression
+            status: number
         }): ts.Expression => {
             return ts.factory.createCallExpression(
-                ts.factory.createPropertyAccessExpression(referenceToExpressResponse, "sendStatus"),
+                ts.factory.createPropertyAccessExpression(referenceToExpressResponse, 'sendStatus'),
                 undefined,
                 [ts.factory.createNumericLiteral(status)]
-            );
+            )
         },
         locals: ({ referenceToExpressResponse }: { referenceToExpressResponse: ts.Expression }): ts.Expression => {
-            return ts.factory.createPropertyAccessExpression(referenceToExpressResponse, "locals");
+            return ts.factory.createPropertyAccessExpression(referenceToExpressResponse, 'locals')
         }
-    };
+    }
 
-    public readonly Express = this.withDefaultImport("express", (withImport, express) =>
+    public readonly Express = this.withDefaultImport('express', (withImport, express) =>
         withImport(() => {
             return ts.factory.createTypeReferenceNode(
-                ts.factory.createQualifiedName(ts.factory.createIdentifier(express), "Express")
-            );
+                ts.factory.createQualifiedName(ts.factory.createIdentifier(express), 'Express')
+            )
         })
-    );
+    )
 
-    public readonly RequestHandler = this.withDefaultImport("express", (withImport, express) =>
+    public readonly RequestHandler = this.withDefaultImport('express', (withImport, express) =>
         withImport(() => {
             return ts.factory.createTypeReferenceNode(
-                ts.factory.createQualifiedName(ts.factory.createIdentifier(express), "RequestHandler")
-            );
+                ts.factory.createQualifiedName(ts.factory.createIdentifier(express), 'RequestHandler')
+            )
         })
-    );
+    )
 
     public readonly Router = {
         use: ({
             referenceToRouter,
             handlers
         }: {
-            referenceToRouter: ts.Expression;
-            handlers: ts.Expression[];
+            referenceToRouter: ts.Expression
+            handlers: ts.Expression[]
         }): ts.Expression => {
             return ts.factory.createCallExpression(
-                ts.factory.createPropertyAccessExpression(referenceToRouter, ts.factory.createIdentifier("use")),
+                ts.factory.createPropertyAccessExpression(referenceToRouter, ts.factory.createIdentifier('use')),
                 undefined,
                 handlers
-            );
+            )
         },
 
-        _instantiate: this.withDefaultImport("express", (withImport, express) =>
+        _instantiate: this.withDefaultImport('express', (withImport, express) =>
             withImport(({ mergeParams }: { mergeParams?: boolean } = {}) => {
                 return ts.factory.createCallExpression(
-                    ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier(express), "Router"),
+                    ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier(express), 'Router'),
                     undefined,
                     mergeParams != null
                         ? [
                               ts.factory.createObjectLiteralExpression(
                                   [
                                       ts.factory.createPropertyAssignment(
-                                          ts.factory.createIdentifier("mergeParams"),
+                                          ts.factory.createIdentifier('mergeParams'),
                                           mergeParams ? ts.factory.createTrue() : ts.factory.createFalse()
                                       )
                                   ],
@@ -187,15 +187,15 @@ export class ExpressImpl extends ExternalDependency implements Express {
                               )
                           ]
                         : []
-                );
+                )
             })
         ),
 
-        _getReferenceToType: this.withDefaultImport("express", (withImport, express) =>
+        _getReferenceToType: this.withDefaultImport('express', (withImport, express) =>
             withImport(() => {
                 return ts.factory.createTypeReferenceNode(
-                    ts.factory.createQualifiedName(ts.factory.createIdentifier(express), "Router")
-                );
+                    ts.factory.createQualifiedName(ts.factory.createIdentifier(express), 'Router')
+                )
             })
         ),
 
@@ -205,18 +205,18 @@ export class ExpressImpl extends ExternalDependency implements Express {
             path,
             buildHandler
         }: {
-            referenceToRouter: ts.Expression;
-            method: ExpressHttpVerb;
-            path: string;
+            referenceToRouter: ts.Expression
+            method: ExpressHttpVerb
+            path: string
             buildHandler: (args: {
-                expressRequest: ts.Expression;
-                expressResponse: ts.Expression;
-                next: ts.Expression;
-            }) => ts.ConciseBody;
+                expressRequest: ts.Expression
+                expressResponse: ts.Expression
+                next: ts.Expression
+            }) => ts.ConciseBody
         }): ts.Statement => {
-            const REQUEST_PARAMETER_NAME = "req";
-            const RESPONSE_PARAMETER_NAME = "res";
-            const NEXT_PARAMETER_NAME = "next";
+            const REQUEST_PARAMETER_NAME = 'req'
+            const RESPONSE_PARAMETER_NAME = 'res'
+            const NEXT_PARAMETER_NAME = 'next'
 
             return ts.factory.createExpressionStatement(
                 ts.factory.createCallExpression(
@@ -257,9 +257,9 @@ export class ExpressImpl extends ExternalDependency implements Express {
                         )
                     ]
                 )
-            );
+            )
         }
-    };
+    }
 
     public readonly App = {
         use: ({
@@ -267,41 +267,41 @@ export class ExpressImpl extends ExternalDependency implements Express {
             path,
             router
         }: {
-            referenceToApp: ts.Expression;
-            path: ts.Expression;
-            router: ts.Expression;
+            referenceToApp: ts.Expression
+            path: ts.Expression
+            router: ts.Expression
         }): ts.Expression => {
             return ts.factory.createCallExpression(
-                ts.factory.createPropertyAccessExpression(referenceToApp, ts.factory.createIdentifier("use")),
+                ts.factory.createPropertyAccessExpression(referenceToApp, ts.factory.createIdentifier('use')),
                 undefined,
                 [path, router]
-            );
+            )
         }
-    };
+    }
 
-    public readonly json = this.withDefaultImport("express", (withImport, express) =>
+    public readonly json = this.withDefaultImport('express', (withImport, express) =>
         withImport(({ strict = true }: { strict?: boolean } = {}) => {
-            const options: ts.ObjectLiteralElementLike[] = [];
+            const options: ts.ObjectLiteralElementLike[] = []
 
             if (!strict) {
-                options.push(ts.factory.createPropertyAssignment("strict", ts.factory.createFalse()));
+                options.push(ts.factory.createPropertyAssignment('strict', ts.factory.createFalse()))
             }
 
             return ts.factory.createCallExpression(
-                ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier(express), "json"),
+                ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier(express), 'json'),
                 undefined,
                 options.length > 0 ? [ts.factory.createObjectLiteralExpression(options, true)] : undefined
-            );
+            )
         })
-    );
+    )
 
     public readonly CookieOptions = {
-        _getReferenceToType: this.withDefaultImport("express", (withImport, express) =>
+        _getReferenceToType: this.withDefaultImport('express', (withImport, express) =>
             withImport(() => {
                 return ts.factory.createTypeReferenceNode(
-                    ts.factory.createQualifiedName(ts.factory.createIdentifier(express), "CookieOptions")
-                );
+                    ts.factory.createQualifiedName(ts.factory.createIdentifier(express), 'CookieOptions')
+                )
             })
         )
-    };
+    }
 }

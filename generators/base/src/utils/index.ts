@@ -1,2 +1,2 @@
-export { parseGeneratorConfig } from "./parseGeneratorConfig";
-export { parseIR } from "./parseIR";
+export { parseGeneratorConfig } from './parseGeneratorConfig'
+export { parseIR } from './parseIR'

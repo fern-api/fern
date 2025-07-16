@@ -1,18 +1,18 @@
-import { mkdir, writeFile } from "fs/promises";
-import path from "path";
+import { mkdir, writeFile } from 'fs/promises'
+import path from 'path'
 
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
-import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
-import { dynamic } from "@fern-api/ir-sdk";
-import { TaskContext } from "@fern-api/task-context";
+import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
+import { DynamicSnippetsGenerator } from '@fern-api/go-dynamic-snippets'
+import { dynamic } from '@fern-api/ir-sdk'
+import { TaskContext } from '@fern-api/task-context'
 
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
 
-import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
-import { convertIr } from "../utils/convertIr";
+import { convertDynamicEndpointSnippetRequest } from '../utils/convertEndpointSnippetRequest'
+import { convertIr } from '../utils/convertIr'
 
 export class DynamicSnippetsGoTestGenerator {
-    private dynamicSnippetsGenerator: DynamicSnippetsGenerator;
+    private dynamicSnippetsGenerator: DynamicSnippetsGenerator
 
     constructor(
         private readonly context: TaskContext,
@@ -22,37 +22,37 @@ export class DynamicSnippetsGoTestGenerator {
         this.dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
             ir: convertIr(this.ir),
             config: this.generatorConfig
-        });
+        })
     }
 
     public async generateTests({
         outputDir,
         requests
     }: {
-        outputDir: AbsoluteFilePath;
-        requests: dynamic.EndpointSnippetRequest[];
+        outputDir: AbsoluteFilePath
+        requests: dynamic.EndpointSnippetRequest[]
     }): Promise<void> {
-        this.context.logger.debug("Generating dynamic snippet tests...");
+        this.context.logger.debug('Generating dynamic snippet tests...')
         for (const [idx, request] of requests.entries()) {
             try {
-                const convertedRequest = convertDynamicEndpointSnippetRequest(request);
+                const convertedRequest = convertDynamicEndpointSnippetRequest(request)
                 if (convertedRequest == null) {
-                    continue;
+                    continue
                 }
-                const response = await this.dynamicSnippetsGenerator.generate(convertedRequest);
-                const dynamicSnippetFilePath = this.getTestFilePath({ outputDir, idx });
-                await mkdir(path.dirname(dynamicSnippetFilePath), { recursive: true });
-                await writeFile(dynamicSnippetFilePath, response.snippet);
+                const response = await this.dynamicSnippetsGenerator.generate(convertedRequest)
+                const dynamicSnippetFilePath = this.getTestFilePath({ outputDir, idx })
+                await mkdir(path.dirname(dynamicSnippetFilePath), { recursive: true })
+                await writeFile(dynamicSnippetFilePath, response.snippet)
             } catch (error) {
                 this.context.logger.error(
                     `Failed to generate dynamic snippet for endpoint ${JSON.stringify(request.endpoint)}: ${error}`
-                );
+                )
             }
         }
-        this.context.logger.debug("Done generating dynamic snippet tests");
+        this.context.logger.debug('Done generating dynamic snippet tests')
     }
 
     private getTestFilePath({ outputDir, idx }: { outputDir: AbsoluteFilePath; idx: number }): AbsoluteFilePath {
-        return join(outputDir, RelativeFilePath.of(`dynamic-snippets/example${idx}/snippet.go`));
+        return join(outputDir, RelativeFilePath.of(`dynamic-snippets/example${idx}/snippet.go`))
     }
 }

@@ -1,1 +1,1 @@
-export { AbstractReadmeSnippetBuilder } from "./AbstractReadmeSnippetBuilder";
+export { AbstractReadmeSnippetBuilder } from './AbstractReadmeSnippetBuilder'

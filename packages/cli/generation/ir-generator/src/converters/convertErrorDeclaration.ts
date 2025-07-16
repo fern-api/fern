@@ -1,12 +1,12 @@
-import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { ErrorDeclaration, FernIr } from "@fern-api/ir-sdk";
+import { FernWorkspace } from '@fern-api/api-workspace-commons'
+import { RawSchemas } from '@fern-api/fern-definition-schema'
+import { ErrorDeclaration, FernIr } from '@fern-api/ir-sdk'
 
-import { FernFileContext } from "../FernFileContext";
-import { ExampleResolver } from "../resolvers/ExampleResolver";
-import { TypeResolver } from "../resolvers/TypeResolver";
-import { parseErrorName } from "../utils/parseErrorName";
-import { convertTypeReferenceExample } from "./type-declarations/convertExampleType";
+import { FernFileContext } from '../FernFileContext'
+import { ExampleResolver } from '../resolvers/ExampleResolver'
+import { TypeResolver } from '../resolvers/TypeResolver'
+import { parseErrorName } from '../utils/parseErrorName'
+import { convertTypeReferenceExample } from './type-declarations/convertExampleType'
 
 export function convertErrorDeclaration({
     errorName,
@@ -16,14 +16,14 @@ export function convertErrorDeclaration({
     exampleResolver,
     workspace
 }: {
-    errorName: string;
-    errorDeclaration: RawSchemas.ErrorDeclarationSchema;
-    file: FernFileContext;
-    typeResolver: TypeResolver;
-    exampleResolver: ExampleResolver;
-    workspace: FernWorkspace;
+    errorName: string
+    errorDeclaration: RawSchemas.ErrorDeclarationSchema
+    file: FernFileContext
+    typeResolver: TypeResolver
+    exampleResolver: ExampleResolver
+    workspace: FernWorkspace
 }): ErrorDeclaration {
-    const examples: FernIr.ExampleError[] = [];
+    const examples: FernIr.ExampleError[] = []
     if (errorDeclaration.type != null && errorDeclaration.examples != null) {
         for (const example of errorDeclaration.examples) {
             examples.push({
@@ -42,7 +42,7 @@ export function convertErrorDeclaration({
                     exampleResolver,
                     workspace
                 })
-            });
+            })
         }
     }
 
@@ -55,11 +55,11 @@ export function convertErrorDeclaration({
             wireValue: errorName,
             name: errorName
         }),
-        docs: typeof errorDeclaration !== "string" ? errorDeclaration.docs : undefined,
-        statusCode: errorDeclaration["status-code"],
+        docs: typeof errorDeclaration !== 'string' ? errorDeclaration.docs : undefined,
+        statusCode: errorDeclaration['status-code'],
         type: errorDeclaration.type != null ? file.parseTypeReference(errorDeclaration.type) : undefined,
         examples,
         v2Examples: undefined,
         displayName: undefined
-    };
+    }
 }

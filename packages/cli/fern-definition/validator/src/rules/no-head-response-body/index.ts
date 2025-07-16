@@ -1,1 +1,1 @@
-export { NoHeadResponseBodyRule } from "./no-head-response-body";
+export { NoHeadResponseBodyRule } from './no-head-response-body'

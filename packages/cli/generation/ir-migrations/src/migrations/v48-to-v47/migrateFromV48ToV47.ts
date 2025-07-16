@@ -1,26 +1,22 @@
-import { GeneratorName } from "@fern-api/configuration-loader";
-import { assertNever } from "@fern-api/core-utils";
+import { GeneratorName } from '@fern-api/configuration-loader'
+import { assertNever } from '@fern-api/core-utils'
 
-import { IrSerialization } from "../../ir-serialization";
-import { IrVersions } from "../../ir-versions";
-import {
-    GeneratorWasNeverUpdatedToConsumeNewIR,
-    GeneratorWasNotCreatedYet,
-    IrMigration
-} from "../../types/IrMigration";
+import { IrSerialization } from '../../ir-serialization'
+import { IrVersions } from '../../ir-versions'
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
 
 export const V48_TO_V47_MIGRATION: IrMigration<
     IrVersions.V48.ir.IntermediateRepresentation,
     IrVersions.V47.ir.IntermediateRepresentation
 > = {
-    laterVersion: "v48",
-    earlierVersion: "v47",
+    laterVersion: 'v48',
+    earlierVersion: 'v47',
     firstGeneratorVersionToConsumeNewIR: {
-        [GeneratorName.TYPESCRIPT_NODE_SDK]: "0.29.0",
-        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: "0.29.0",
+        [GeneratorName.TYPESCRIPT_NODE_SDK]: '0.29.0',
+        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: '0.29.0',
         [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_SDK]: "0.29.0",
-        [GeneratorName.TYPESCRIPT_EXPRESS]: "0.17.0",
+        [GeneratorName.TYPESCRIPT_SDK]: '0.29.0',
+        [GeneratorName.TYPESCRIPT_EXPRESS]: '0.17.0',
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -46,7 +42,7 @@ export const V48_TO_V47_MIGRATION: IrMigration<
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V47.IntermediateRepresentation.jsonOrThrow(ir, {
-            unrecognizedObjectKeys: "strip",
+            unrecognizedObjectKeys: 'strip',
             skipValidation: true
         }),
     migrateBackwards: (v48): IrVersions.V47.ir.IntermediateRepresentation => {
@@ -56,18 +52,18 @@ export const V48_TO_V47_MIGRATION: IrMigration<
                     const convertedEndpoint = {
                         ...endpoint,
                         pagination: endpoint.pagination != null ? convertPagination(endpoint.pagination) : undefined
-                    };
-                    return convertedEndpoint;
-                });
+                    }
+                    return convertedEndpoint
+                })
                 return [
                     serviceId,
                     {
                         ...service,
                         endpoints: convertedEndpoints
                     }
-                ];
+                ]
             })
-        );
+        )
         return {
             ...v48,
             sdkConfig: {
@@ -75,47 +71,47 @@ export const V48_TO_V47_MIGRATION: IrMigration<
                 hasPaginatedEndpoints: hasPaginatedEndpoints(services)
             },
             services
-        };
+        }
     }
-};
+}
 
 function hasPaginatedEndpoints(services: Record<string, IrVersions.V47.HttpService>): boolean {
     for (const service of Object.values(services)) {
         for (const endpoint of service.endpoints) {
             if (endpoint.pagination != null) {
-                return true;
+                return true
             }
         }
     }
-    return false;
+    return false
 }
 
 function convertPagination(pagination: IrVersions.V48.Pagination): IrVersions.V47.Pagination | undefined {
     switch (pagination.type) {
-        case "cursor": {
-            const cursorPagination = convertCursorPagination(pagination);
-            return cursorPagination != null ? IrVersions.V47.Pagination.cursor(cursorPagination) : undefined;
+        case 'cursor': {
+            const cursorPagination = convertCursorPagination(pagination)
+            return cursorPagination != null ? IrVersions.V47.Pagination.cursor(cursorPagination) : undefined
         }
-        case "offset": {
-            const offsetPagination = convertOffsetPagination(pagination);
-            return offsetPagination != null ? IrVersions.V47.Pagination.offset(offsetPagination) : undefined;
+        case 'offset': {
+            const offsetPagination = convertOffsetPagination(pagination)
+            return offsetPagination != null ? IrVersions.V47.Pagination.offset(offsetPagination) : undefined
         }
         default:
-            assertNever(pagination);
+            assertNever(pagination)
     }
 }
 
 function convertCursorPagination(
     pagination: IrVersions.V48.CursorPagination
 ): IrVersions.V47.CursorPagination | undefined {
-    const page = convertRequestPropertyToQueryParameter(pagination.page);
+    const page = convertRequestPropertyToQueryParameter(pagination.page)
     if (page == null) {
-        return undefined;
+        return undefined
     }
     return {
         ...pagination,
         page
-    };
+    }
 }
 
 function convertOffsetPagination(
@@ -123,27 +119,27 @@ function convertOffsetPagination(
 ): IrVersions.V47.OffsetPagination | undefined {
     if (pagination.step != null) {
         // If the step property is present, we can't convert this pagination.
-        return undefined;
+        return undefined
     }
-    const page = convertRequestPropertyToQueryParameter(pagination.page);
+    const page = convertRequestPropertyToQueryParameter(pagination.page)
     if (page == null) {
-        return undefined;
+        return undefined
     }
     return {
         ...pagination,
         page
-    };
+    }
 }
 
 function convertRequestPropertyToQueryParameter(
     requestProperty: IrVersions.V48.RequestProperty
 ): IrVersions.V47.QueryParameter | undefined {
     switch (requestProperty.property.type) {
-        case "query":
-            return requestProperty.property;
+        case 'query':
+            return requestProperty.property
     }
     // If the property is not a query parameter, there's nothing for us to
     // convert it into. We drop the pagination functionality entirely, and
     // instead just generate the standard list endpoint.
-    return undefined;
+    return undefined
 }

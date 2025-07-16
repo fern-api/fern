@@ -1,2 +1,2 @@
-export { RubyModelGeneratorCli } from "./GeneratorCli";
-export { TypesGenerator } from "./TypesGenerator";
+export { RubyModelGeneratorCli } from './GeneratorCli'
+export { TypesGenerator } from './TypesGenerator'

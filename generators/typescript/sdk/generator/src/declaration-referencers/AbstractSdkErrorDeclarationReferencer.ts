@@ -1,13 +1,13 @@
-import { ExportedFilePath, ExportsManager, ImportsManager, Reference } from "@fern-typescript/commons";
-import { SourceFile } from "ts-morph";
+import { ExportedFilePath, ExportsManager, ImportsManager, Reference } from '@fern-typescript/commons'
+import { SourceFile } from 'ts-morph'
 
-import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
+import { AbstractDeclarationReferencer } from './AbstractDeclarationReferencer'
 
-const ERRORS_DIRECTORY = "errors";
+const ERRORS_DIRECTORY = 'errors'
 
 export abstract class AbstractSdkErrorDeclarationReferencer extends AbstractDeclarationReferencer {
     public getExportedFilepath(): ExportedFilePath {
-        const exportedName = this.getExportedName();
+        const exportedName = this.getExportedName()
         return {
             directories: [
                 ...this.containingDirectory,
@@ -20,11 +20,11 @@ export abstract class AbstractSdkErrorDeclarationReferencer extends AbstractDecl
                 nameOnDisk: this.getFilename(),
                 exportDeclaration: { namedExports: [exportedName] }
             }
-        };
+        }
     }
 
     public getFilename(): string {
-        return `${this.getExportedName()}.ts`;
+        return `${this.getExportedName()}.ts`
     }
 
     public getReferenceToError({
@@ -32,9 +32,9 @@ export abstract class AbstractSdkErrorDeclarationReferencer extends AbstractDecl
         exportsManager,
         referencedIn
     }: {
-        importsManager: ImportsManager;
-        exportsManager: ExportsManager;
-        referencedIn: SourceFile;
+        importsManager: ImportsManager
+        exportsManager: ExportsManager
+        referencedIn: SourceFile
     }): Reference {
         return this.getReferenceTo(this.getExportedName(), {
             name: undefined as never,
@@ -42,11 +42,11 @@ export abstract class AbstractSdkErrorDeclarationReferencer extends AbstractDecl
             exportsManager,
             referencedIn,
             importStrategy: {
-                type: "fromRoot",
-                namespaceImport: "errors"
+                type: 'fromRoot',
+                namespaceImport: 'errors'
             }
-        });
+        })
     }
 
-    protected abstract getExportedName(): string;
+    protected abstract getExportedName(): string
 }

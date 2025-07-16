@@ -1,4 +1,4 @@
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
 
 export function getSdkVersion(config: FernGeneratorExec.GeneratorConfig): string | undefined {
     return config.output.mode._visit<string | undefined>({
@@ -6,7 +6,7 @@ export function getSdkVersion(config: FernGeneratorExec.GeneratorConfig): string
         downloadFiles: () => undefined,
         github: (gom: FernGeneratorExec.GithubOutputMode) => gom.version,
         _other: () => {
-            throw new Error("Unrecognized output mode.");
+            throw new Error('Unrecognized output mode.')
         }
-    });
+    })
 }

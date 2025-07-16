@@ -5,13 +5,13 @@ import {
     StructureKind,
     TypeAliasDeclarationStructure,
     WriterFunction
-} from "ts-morph";
+} from 'ts-morph'
 
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever } from '@fern-api/core-utils'
 
-import { DeclaredTypeName, MapType, NamedType, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
+import { DeclaredTypeName, MapType, NamedType, TypeDeclaration, TypeReference } from '@fern-fern/ir-sdk/api'
 
-import { InlineConsts } from "./inlineConsts";
+import { InlineConsts } from './inlineConsts'
 
 export function generateInlinePropertiesModule({
     generateStatements,
@@ -19,9 +19,9 @@ export function generateInlinePropertiesModule({
     parentTypeName,
     properties
 }: InlinePropertiesParams): ModuleDeclarationStructure | undefined {
-    const inlineProperties = getInlineProperties(properties, getTypeDeclaration);
+    const inlineProperties = getInlineProperties(properties, getTypeDeclaration)
     if (inlineProperties.length === 0) {
-        return;
+        return
     }
     return {
         kind: StructureKind.Module,
@@ -36,7 +36,7 @@ export function generateInlinePropertiesModule({
                     list: () => propertyListOrSetStatementGenerator(propertyName, typeDeclaration, generateStatements),
                     set: () => propertyListOrSetStatementGenerator(propertyName, typeDeclaration, generateStatements),
                     map: () => {
-                        const statements: StatementStructures[] = [];
+                        const statements: StatementStructures[] = []
                         const mapModule: ModuleDeclarationStructure = {
                             kind: StructureKind.Module,
                             declarationKind: ModuleDeclarationKind.Namespace,
@@ -44,19 +44,19 @@ export function generateInlinePropertiesModule({
                             hasDeclareKeyword: false,
                             name: propertyName,
                             statements: generateStatements(typeDeclaration.name, InlineConsts.MAP_VALUE_TYPE_NAME)
-                        };
+                        }
 
-                        statements.push(mapModule);
-                        return statements;
+                        statements.push(mapModule)
+                        return statements
                     },
                     other: () => {
                         throw new Error(`Only named, list, map, and set properties can be inlined.
-                              Property: ${JSON.stringify(propertyName)}`);
+                              Property: ${JSON.stringify(propertyName)}`)
                     }
-                });
+                })
             }
         )
-    };
+    }
 }
 
 function propertyListOrSetStatementGenerator(
@@ -64,14 +64,14 @@ function propertyListOrSetStatementGenerator(
     typeDeclaration: TypeDeclaration,
     generateStatements: GenerateStatements
 ) {
-    const statements: StatementStructures[] = [];
+    const statements: StatementStructures[] = []
     const listType: TypeAliasDeclarationStructure = {
         kind: StructureKind.TypeAlias,
         name: propertyName,
         type: `${propertyName}.${InlineConsts.LIST_ITEM_TYPE_NAME}[]`,
         isExported: true
-    };
-    statements.push(listType);
+    }
+    statements.push(listType)
 
     const listModule: ModuleDeclarationStructure = {
         kind: StructureKind.Module,
@@ -80,10 +80,10 @@ function propertyListOrSetStatementGenerator(
         hasDeclareKeyword: false,
         name: propertyName,
         statements: generateStatements(typeDeclaration.name, InlineConsts.LIST_ITEM_TYPE_NAME)
-    };
+    }
 
-    statements.push(listModule);
-    return statements;
+    statements.push(listModule)
+    return statements
 }
 
 export function generateInlineAliasModule({
@@ -96,22 +96,22 @@ export function generateInlineAliasModule({
         list: (itemType) => aliasListOrSetStatementGenerator(itemType, generateStatements, getTypeDeclaration),
         set: (itemType) => aliasListOrSetStatementGenerator(itemType, generateStatements, getTypeDeclaration),
         map: (mapType: MapType) => {
-            const namedType = getNamedType(mapType.valueType);
+            const namedType = getNamedType(mapType.valueType)
             if (!namedType) {
-                return undefined;
+                return undefined
             }
-            const typeDeclaration = getTypeDeclaration(namedType);
+            const typeDeclaration = getTypeDeclaration(namedType)
             if (!typeDeclaration.inline) {
-                return undefined;
+                return undefined
             }
 
-            return generateStatements(typeDeclaration.name, InlineConsts.MAP_VALUE_TYPE_NAME);
+            return generateStatements(typeDeclaration.name, InlineConsts.MAP_VALUE_TYPE_NAME)
         },
         named: () => undefined,
         other: () => undefined
-    });
+    })
     if (!inlineModuleStatements) {
-        return undefined;
+        return undefined
     }
     return {
         kind: StructureKind.Module,
@@ -120,7 +120,7 @@ export function generateInlineAliasModule({
         hasDeclareKeyword: false,
         declarationKind: ModuleDeclarationKind.Namespace,
         statements: inlineModuleStatements
-    };
+    }
 }
 
 function aliasListOrSetStatementGenerator(
@@ -128,16 +128,16 @@ function aliasListOrSetStatementGenerator(
     generateStatements: GenerateStatements,
     getTypeDeclaration: GetTypeDeclaration
 ): undefined | string | WriterFunction | (string | WriterFunction | StatementStructures)[] {
-    const namedType = getNamedType(listItemType);
+    const namedType = getNamedType(listItemType)
     if (!namedType) {
-        return undefined;
+        return undefined
     }
-    const typeDeclaration = getTypeDeclaration(namedType);
+    const typeDeclaration = getTypeDeclaration(namedType)
     if (!typeDeclaration.inline) {
-        return undefined;
+        return undefined
     }
 
-    return generateStatements(typeDeclaration.name, InlineConsts.LIST_ITEM_TYPE_NAME);
+    return generateStatements(typeDeclaration.name, InlineConsts.LIST_ITEM_TYPE_NAME)
 }
 
 function getInlineProperties(
@@ -146,65 +146,65 @@ function getInlineProperties(
 ): [string, TypeReference, TypeDeclaration][] {
     return properties
         .map(({ propertyName, typeReference }): [string, TypeReference, TypeDeclaration] | undefined => {
-            const declaration = getInlineTypeDeclaration(typeReference, getTypeDeclaration);
+            const declaration = getInlineTypeDeclaration(typeReference, getTypeDeclaration)
             if (!declaration) {
-                return undefined;
+                return undefined
             }
-            return [propertyName, typeReference, declaration];
+            return [propertyName, typeReference, declaration]
         })
-        .filter((x): x is [string, TypeReference, TypeDeclaration] => x !== undefined);
+        .filter((x): x is [string, TypeReference, TypeDeclaration] => x !== undefined)
 }
 
 function getInlineTypeDeclaration(
     typeReference: TypeReference,
     getTypeDeclaration: GetTypeDeclaration
 ): TypeDeclaration | undefined {
-    const namedType = getNamedType(typeReference);
+    const namedType = getNamedType(typeReference)
     if (!namedType) {
-        return undefined;
+        return undefined
     }
-    const typeDeclaration = getTypeDeclaration(namedType);
+    const typeDeclaration = getTypeDeclaration(namedType)
     if (!typeDeclaration.inline) {
-        return undefined;
+        return undefined
     }
 
-    return typeDeclaration;
+    return typeDeclaration
 }
 
 export interface InlinePropertiesParams {
-    generateStatements: GenerateStatements;
-    getTypeDeclaration: GetTypeDeclaration;
-    parentTypeName: string;
-    properties: Property[];
+    generateStatements: GenerateStatements
+    getTypeDeclaration: GetTypeDeclaration
+    parentTypeName: string
+    properties: Property[]
 }
 
 interface Property {
-    typeReference: TypeReference;
-    propertyName: string;
+    typeReference: TypeReference
+    propertyName: string
 }
 
 export interface InlineAliasParams {
-    generateStatements: GenerateStatements;
-    getTypeDeclaration: GetTypeDeclaration;
-    typeReference: TypeReference;
-    aliasTypeName: string;
+    generateStatements: GenerateStatements
+    getTypeDeclaration: GetTypeDeclaration
+    typeReference: TypeReference
+    aliasTypeName: string
 }
 
 type GenerateStatements = (
     typeName: DeclaredTypeName,
     typeNameOverride?: string
-) => string | WriterFunction | (string | WriterFunction | StatementStructures)[];
+) => string | WriterFunction | (string | WriterFunction | StatementStructures)[]
 
-type GetTypeDeclaration = (namedType: NamedType) => TypeDeclaration;
+type GetTypeDeclaration = (namedType: NamedType) => TypeDeclaration
 
 function generateTypeVisitor<TOut>(
     typeReference: TypeReference,
     visitor: {
-        named: (namedType: NamedType) => TOut;
-        list: (itemType: TypeReference) => TOut;
-        map: (mapType: MapType) => TOut;
-        set: (itemType: TypeReference) => TOut;
-        other: () => TOut;
+        named: (namedType: NamedType) => TOut
+        list: (itemType: TypeReference) => TOut
+        map: (mapType: MapType) => TOut
+        set: (itemType: TypeReference) => TOut
+        other: () => TOut
     }
 ): TOut {
     return typeReference._visit({
@@ -222,36 +222,36 @@ function generateTypeVisitor<TOut>(
                 _other: visitor.other
             }),
         _other: visitor.other
-    });
+    })
 }
 
 function getNamedType(typeReference: TypeReference): NamedType | undefined {
     switch (typeReference.type) {
-        case "named":
-            return typeReference;
-        case "container":
+        case 'named':
+            return typeReference
+        case 'container':
             switch (typeReference.container.type) {
-                case "nullable":
-                    return getNamedType(typeReference.container.nullable);
-                case "optional":
-                    return getNamedType(typeReference.container.optional);
-                case "list":
-                    return getNamedType(typeReference.container.list);
-                case "map":
-                    return getNamedType(typeReference.container.valueType);
-                case "set":
-                    return getNamedType(typeReference.container.set);
-                case "literal":
-                    return undefined;
+                case 'nullable':
+                    return getNamedType(typeReference.container.nullable)
+                case 'optional':
+                    return getNamedType(typeReference.container.optional)
+                case 'list':
+                    return getNamedType(typeReference.container.list)
+                case 'map':
+                    return getNamedType(typeReference.container.valueType)
+                case 'set':
+                    return getNamedType(typeReference.container.set)
+                case 'literal':
+                    return undefined
                 default:
-                    assertNever(typeReference.container);
+                    assertNever(typeReference.container)
             }
         // fallthrough
-        case "primitive":
-            return undefined;
-        case "unknown":
-            return undefined;
+        case 'primitive':
+            return undefined
+        case 'unknown':
+            return undefined
         default:
-            assertNever(typeReference);
+            assertNever(typeReference)
     }
 }

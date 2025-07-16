@@ -1,17 +1,17 @@
-import { IrVersions } from "../../ir-versions";
-import { TypeReferenceResolver } from "./TypeReferenceResolver";
-import { convertFernFilepathV1, convertFernFilepathV2 } from "./convertFernFilepath";
-import { convertNameAndWireValueToV2, convertNameToV1, convertNameToV2 } from "./convertName";
-import { convertTypeReference } from "./convertTypeReference";
+import { IrVersions } from '../../ir-versions'
+import { TypeReferenceResolver } from './TypeReferenceResolver'
+import { convertFernFilepathV1, convertFernFilepathV2 } from './convertFernFilepath'
+import { convertNameAndWireValueToV2, convertNameToV1, convertNameToV2 } from './convertName'
+import { convertTypeReference } from './convertTypeReference'
 
 export function convertErrorDeclaration({
     errorDeclaration,
     errorDiscriminationStrategy,
     typeReferenceResolver
 }: {
-    errorDeclaration: IrVersions.V5.errors.ErrorDeclaration;
-    errorDiscriminationStrategy: IrVersions.V5.ir.ErrorDiscriminationStrategy;
-    typeReferenceResolver: TypeReferenceResolver;
+    errorDeclaration: IrVersions.V5.errors.ErrorDeclaration
+    errorDiscriminationStrategy: IrVersions.V5.ir.ErrorDiscriminationStrategy
+    typeReferenceResolver: TypeReferenceResolver
 }): IrVersions.V4.errors.ErrorDeclaration {
     const typeV2 =
         errorDeclaration.type != null
@@ -19,7 +19,7 @@ export function convertErrorDeclaration({
                   aliasOf: convertTypeReference(errorDeclaration.type),
                   resolvedType: typeReferenceResolver.resolveTypeReference(errorDeclaration.type)
               })
-            : undefined;
+            : undefined
     return {
         docs: errorDeclaration.docs,
         name: {
@@ -40,7 +40,7 @@ export function convertErrorDeclaration({
                             convertNameAndWireValueToV2(property.contentProperty)
                         ),
                     _unknown: () => {
-                        throw new Error("Unknown ErrorDiscriminationStrategy: " + errorDiscriminationStrategy.type);
+                        throw new Error('Unknown ErrorDiscriminationStrategy: ' + errorDiscriminationStrategy.type)
                     }
                 }
             ),
@@ -57,5 +57,5 @@ export function convertErrorDeclaration({
             statusCode: errorDeclaration.statusCode
         },
         statusCode: errorDeclaration.statusCode
-    };
+    }
 }

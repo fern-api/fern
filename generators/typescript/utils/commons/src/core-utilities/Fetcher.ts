@@ -1,243 +1,243 @@
-import { ts } from "ts-morph";
+import { ts } from 'ts-morph'
 
-import { DependencyManager, DependencyType } from "../dependency-manager/DependencyManager";
-import { CoreUtility } from "./CoreUtility";
-import { MANIFEST as RuntimeManifest } from "./Runtime";
-import { MANIFEST as UrlManifest } from "./UrlUtils";
+import { DependencyManager, DependencyType } from '../dependency-manager/DependencyManager'
+import { CoreUtility } from './CoreUtility'
+import { MANIFEST as RuntimeManifest } from './Runtime'
+import { MANIFEST as UrlManifest } from './UrlUtils'
 
 export interface Fetcher {
     readonly Fetcher: {
         Args: {
-            _getReferenceToType: () => ts.TypeNode;
+            _getReferenceToType: () => ts.TypeNode
             properties: {
-                url: "url";
-                method: "method";
-                headers: "headers";
-                contentType: "contentType";
-                queryParameters: "queryParameters";
-                body: "body";
-                abortSignal: "abortSignal";
-                withCredentials: "withCredentials";
-                timeoutInSeconds: "timeoutInSeconds";
-                maxRetries: "maxRetries";
-                requestType: "requestType";
-                responseType: "responseType";
-                duplex: "duplex";
-                timeoutMs: "timeoutMs";
-            };
-        };
+                url: 'url'
+                method: 'method'
+                headers: 'headers'
+                contentType: 'contentType'
+                queryParameters: 'queryParameters'
+                body: 'body'
+                abortSignal: 'abortSignal'
+                withCredentials: 'withCredentials'
+                timeoutInSeconds: 'timeoutInSeconds'
+                maxRetries: 'maxRetries'
+                requestType: 'requestType'
+                responseType: 'responseType'
+                duplex: 'duplex'
+                timeoutMs: 'timeoutMs'
+            }
+        }
         Error: {
-            _getReferenceToType: () => ts.TypeNode;
-            reason: "reason";
-        };
+            _getReferenceToType: () => ts.TypeNode
+            reason: 'reason'
+        }
         FailedStatusCodeError: {
-            _getReferenceToType: () => ts.TypeNode;
-            _reasonLiteralValue: "status-code";
-            statusCode: "statusCode";
-            body: "body";
-        };
+            _getReferenceToType: () => ts.TypeNode
+            _reasonLiteralValue: 'status-code'
+            statusCode: 'statusCode'
+            body: 'body'
+        }
         NonJsonError: {
-            _getReferenceToType: () => ts.TypeNode;
-            _reasonLiteralValue: "non-json";
-            statusCode: "statusCode";
-            rawBody: "rawBody";
-        };
+            _getReferenceToType: () => ts.TypeNode
+            _reasonLiteralValue: 'non-json'
+            statusCode: 'statusCode'
+            rawBody: 'rawBody'
+        }
         TimeoutSdkError: {
-            _getReferenceToType: () => ts.TypeNode;
-            _reasonLiteralValue: "timeout";
-        };
+            _getReferenceToType: () => ts.TypeNode
+            _reasonLiteralValue: 'timeout'
+        }
         UnknownError: {
-            _getReferenceToType: () => ts.TypeNode;
-            _reasonLiteralValue: "unknown";
-            message: "errorMessage";
-        };
-    };
+            _getReferenceToType: () => ts.TypeNode
+            _reasonLiteralValue: 'unknown'
+            message: 'errorMessage'
+        }
+    }
 
     readonly fetcher: {
-        _getReferenceTo: () => ts.Expression;
+        _getReferenceTo: () => ts.Expression
         _invoke: (
             args: Fetcher.Args,
             { referenceToFetcher, cast }: { referenceToFetcher: ts.Expression; cast: ts.TypeNode | undefined }
-        ) => ts.Expression;
-    };
+        ) => ts.Expression
+    }
 
     readonly APIResponse: {
-        _getReferenceToType: (successType: ts.TypeNode, failureType: ts.TypeNode) => ts.TypeNode;
+        _getReferenceToType: (successType: ts.TypeNode, failureType: ts.TypeNode) => ts.TypeNode
 
-        ok: string;
+        ok: string
 
         SuccessfulResponse: {
             _build: (
                 body: ts.Expression,
                 headers?: ts.Expression,
                 rawResponse?: ts.Expression
-            ) => ts.ObjectLiteralExpression;
-            body: string;
-            headers: string;
-            rawResponse: string;
-        };
+            ) => ts.ObjectLiteralExpression
+            body: string
+            headers: string
+            rawResponse: string
+        }
 
         FailedResponse: {
-            _build: (error: ts.Expression, rawResponse: ts.Expression) => ts.ObjectLiteralExpression;
-            error: string;
-            rawResponse: string;
-        };
-    };
+            _build: (error: ts.Expression, rawResponse: ts.Expression) => ts.ObjectLiteralExpression
+            error: string
+            rawResponse: string
+        }
+    }
 
     readonly BinaryResponse: {
-        _getReferenceToType: () => ts.TypeNode;
-        getBinaryResponse: (response: ts.Expression) => ts.Expression;
-    };
+        _getReferenceToType: () => ts.TypeNode
+        getBinaryResponse: (response: ts.Expression) => ts.Expression
+    }
 
     readonly Supplier: {
-        _getReferenceToType: (suppliedType: ts.TypeNode) => ts.TypeNode;
-        get: (supplier: ts.Expression) => ts.Expression;
-    };
+        _getReferenceToType: (suppliedType: ts.TypeNode) => ts.TypeNode
+        get: (supplier: ts.Expression) => ts.Expression
+    }
 
     readonly getHeader: {
-        _invoke: (args: { referenceToResponseHeaders: ts.Expression; header: string }) => ts.Expression;
-    };
+        _invoke: (args: { referenceToResponseHeaders: ts.Expression; header: string }) => ts.Expression
+    }
 
     readonly FetchFunction: {
-        _getReferenceToType: () => ts.TypeNode;
-    };
+        _getReferenceToType: () => ts.TypeNode
+    }
 
     readonly RawResponse: {
         readonly RawResponse: {
-            _getReferenceToType: () => ts.TypeNode;
-        };
+            _getReferenceToType: () => ts.TypeNode
+        }
         readonly toRawResponse: {
-            _getReferenceToType: () => ts.TypeNode;
-        };
+            _getReferenceToType: () => ts.TypeNode
+        }
         readonly WithRawResponse: {
-            _getReferenceToType: (typeArg?: ts.TypeNode) => ts.TypeNode;
-        };
-    };
+            _getReferenceToType: (typeArg?: ts.TypeNode) => ts.TypeNode
+        }
+    }
 
     readonly HttpResponsePromise: {
-        _getReferenceToType: (typeArg?: ts.TypeNode) => ts.TypeNode;
-        fromPromise: (promise: ts.Expression) => ts.Expression;
-        interceptFunction: (fn: ts.Expression) => ts.Expression;
-    };
+        _getReferenceToType: (typeArg?: ts.TypeNode) => ts.TypeNode
+        fromPromise: (promise: ts.Expression) => ts.Expression
+        interceptFunction: (fn: ts.Expression) => ts.Expression
+    }
 }
 
 export declare namespace Fetcher {
     export interface Args {
-        url: ts.Expression;
-        method: ts.Expression;
-        headers: ts.Expression;
-        contentType?: string | ts.Expression;
-        queryParameters: ts.Expression | undefined;
-        body: ts.Expression | undefined;
-        abortSignal: ts.Expression | undefined;
-        withCredentials: boolean;
-        timeoutInSeconds: ts.Expression;
-        maxRetries?: ts.Expression;
-        requestType?: "json" | "file" | "bytes" | "other";
-        responseType?: "json" | "blob" | "sse" | "streaming" | "text" | "binary-response";
-        duplex?: ts.Expression;
+        url: ts.Expression
+        method: ts.Expression
+        headers: ts.Expression
+        contentType?: string | ts.Expression
+        queryParameters: ts.Expression | undefined
+        body: ts.Expression | undefined
+        abortSignal: ts.Expression | undefined
+        withCredentials: boolean
+        timeoutInSeconds: ts.Expression
+        maxRetries?: ts.Expression
+        requestType?: 'json' | 'file' | 'bytes' | 'other'
+        responseType?: 'json' | 'blob' | 'sse' | 'streaming' | 'text' | 'binary-response'
+        duplex?: ts.Expression
     }
 }
 
 export const MANIFEST: CoreUtility.Manifest = {
-    name: "fetcher",
-    pathInCoreUtilities: { nameOnDisk: "fetcher", exportDeclaration: { exportAll: true } },
+    name: 'fetcher',
+    pathInCoreUtilities: { nameOnDisk: 'fetcher', exportDeclaration: { exportAll: true } },
     addDependencies: (dependencyManager: DependencyManager, { formDataSupport, streamType, fetchSupport }): void => {
-        if (formDataSupport === "Node16") {
-            dependencyManager.addDependency("form-data", "^4.0.0");
-            dependencyManager.addDependency("formdata-node", "^6.0.3");
+        if (formDataSupport === 'Node16') {
+            dependencyManager.addDependency('form-data', '^4.0.0')
+            dependencyManager.addDependency('formdata-node', '^6.0.3')
         }
 
-        if (fetchSupport === "node-fetch") {
-            dependencyManager.addDependency("node-fetch", "^2.7.0");
-            dependencyManager.addDependency("@types/node-fetch", "^2.6.12", {
+        if (fetchSupport === 'node-fetch') {
+            dependencyManager.addDependency('node-fetch', '^2.7.0')
+            dependencyManager.addDependency('@types/node-fetch', '^2.6.12', {
                 type: DependencyType.DEV
-            });
+            })
         }
 
-        if (streamType === "wrapper") {
-            dependencyManager.addDependency("readable-stream", "^4.5.2");
+        if (streamType === 'wrapper') {
+            dependencyManager.addDependency('readable-stream', '^4.5.2')
         }
 
-        if (streamType === "wrapper") {
-            dependencyManager.addDependency("@types/readable-stream", "^4.0.18", {
+        if (streamType === 'wrapper') {
+            dependencyManager.addDependency('@types/readable-stream', '^4.0.18', {
                 type: DependencyType.DEV
-            });
+            })
         }
-        dependencyManager.addDependency("webpack", "^5.97.1", {
+        dependencyManager.addDependency('webpack', '^5.97.1', {
             type: DependencyType.DEV
-        });
-        dependencyManager.addDependency("ts-loader", "^9.5.1", {
+        })
+        dependencyManager.addDependency('ts-loader', '^9.5.1', {
             type: DependencyType.DEV
-        });
+        })
     },
     dependsOn: [RuntimeManifest, UrlManifest],
     getFilesPatterns: (options) => {
-        const ignore: string[] = [];
-        if (options.streamType !== "wrapper") {
-            ignore.push("src/core/fetcher/stream-wrappers/**", "tests/unit/fetcher/stream-wrappers/**");
+        const ignore: string[] = []
+        if (options.streamType !== 'wrapper') {
+            ignore.push('src/core/fetcher/stream-wrappers/**', 'tests/unit/fetcher/stream-wrappers/**')
         }
-        if (options.fetchSupport === "native") {
-            ignore.push("tests/unit/fetcher/getFetchFn.test.ts");
+        if (options.fetchSupport === 'native') {
+            ignore.push('tests/unit/fetcher/getFetchFn.test.ts')
         }
         return {
-            patterns: ["src/core/fetcher/**", "tests/unit/fetcher/**"],
+            patterns: ['src/core/fetcher/**', 'tests/unit/fetcher/**'],
             ignore
-        };
+        }
     }
-};
+}
 
 export class FetcherImpl extends CoreUtility implements Fetcher {
-    public readonly MANIFEST = MANIFEST;
-    public readonly Fetcher: Fetcher["Fetcher"] = {
+    public readonly MANIFEST = MANIFEST
+    public readonly Fetcher: Fetcher['Fetcher'] = {
         Args: {
             properties: {
-                url: "url",
-                method: "method",
-                headers: "headers",
-                contentType: "contentType",
-                queryParameters: "queryParameters",
-                maxRetries: "maxRetries",
-                body: "body",
-                timeoutMs: "timeoutMs",
-                withCredentials: "withCredentials",
-                requestType: "requestType",
-                responseType: "responseType",
-                abortSignal: "abortSignal",
-                duplex: "duplex",
-                timeoutInSeconds: "timeoutInSeconds"
+                url: 'url',
+                method: 'method',
+                headers: 'headers',
+                contentType: 'contentType',
+                queryParameters: 'queryParameters',
+                maxRetries: 'maxRetries',
+                body: 'body',
+                timeoutMs: 'timeoutMs',
+                withCredentials: 'withCredentials',
+                requestType: 'requestType',
+                responseType: 'responseType',
+                abortSignal: 'abortSignal',
+                duplex: 'duplex',
+                timeoutInSeconds: 'timeoutInSeconds'
             },
-            _getReferenceToType: this.getReferenceToTypeInFetcherModule("Args")
+            _getReferenceToType: this.getReferenceToTypeInFetcherModule('Args')
         },
         Error: {
-            _getReferenceToType: this.getReferenceToTypeInFetcherModule("Error"),
-            reason: "reason"
+            _getReferenceToType: this.getReferenceToTypeInFetcherModule('Error'),
+            reason: 'reason'
         },
         FailedStatusCodeError: {
-            _getReferenceToType: this.getReferenceToTypeInFetcherModule("FailedStatusCodeError"),
-            _reasonLiteralValue: "status-code",
-            statusCode: "statusCode",
-            body: "body"
+            _getReferenceToType: this.getReferenceToTypeInFetcherModule('FailedStatusCodeError'),
+            _reasonLiteralValue: 'status-code',
+            statusCode: 'statusCode',
+            body: 'body'
         },
         NonJsonError: {
-            _getReferenceToType: this.getReferenceToTypeInFetcherModule("NonJsonError"),
-            _reasonLiteralValue: "non-json",
-            statusCode: "statusCode",
-            rawBody: "rawBody"
+            _getReferenceToType: this.getReferenceToTypeInFetcherModule('NonJsonError'),
+            _reasonLiteralValue: 'non-json',
+            statusCode: 'statusCode',
+            rawBody: 'rawBody'
         },
         TimeoutSdkError: {
-            _getReferenceToType: this.getReferenceToTypeInFetcherModule("TimeoutSdkError"),
-            _reasonLiteralValue: "timeout"
+            _getReferenceToType: this.getReferenceToTypeInFetcherModule('TimeoutSdkError'),
+            _reasonLiteralValue: 'timeout'
         },
         UnknownError: {
-            _getReferenceToType: this.getReferenceToTypeInFetcherModule("UnknownError"),
-            _reasonLiteralValue: "unknown",
-            message: "errorMessage"
+            _getReferenceToType: this.getReferenceToTypeInFetcherModule('UnknownError'),
+            _reasonLiteralValue: 'unknown',
+            message: 'errorMessage'
         }
-    };
+    }
 
     public readonly fetcher = {
-        _getReferenceTo: this.withExportedName("fetcher", (fetcher) => () => fetcher.getExpression()),
+        _getReferenceTo: this.withExportedName('fetcher', (fetcher) => () => fetcher.getExpression()),
         _invoke: (
             args: Fetcher.Args,
             { referenceToFetcher, cast }: { referenceToFetcher: ts.Expression; cast: ts.TypeNode | undefined }
@@ -246,16 +246,16 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.url, args.url),
                 ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.method, args.method),
                 ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.headers, args.headers)
-            ];
+            ]
             if (args.contentType != null) {
                 properties.push(
                     ts.factory.createPropertyAssignment(
                         this.Fetcher.Args.properties.contentType,
-                        typeof args.contentType === "string"
+                        typeof args.contentType === 'string'
                             ? ts.factory.createStringLiteral(args.contentType)
                             : args.contentType
                     )
-                );
+                )
             }
             if (args.queryParameters != null) {
                 properties.push(
@@ -263,37 +263,37 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                         this.Fetcher.Args.properties.queryParameters,
                         args.queryParameters
                     )
-                );
+                )
             }
-            if (args.requestType != null && args.responseType !== "json") {
+            if (args.requestType != null && args.responseType !== 'json') {
                 properties.push(
                     ts.factory.createPropertyAssignment(
                         this.Fetcher.Args.properties.requestType,
                         ts.factory.createStringLiteral(args.requestType)
                     )
-                );
+                )
             }
             if (args.duplex != null) {
-                properties.push(ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.duplex, args.duplex));
+                properties.push(ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.duplex, args.duplex))
             }
             if (args.body != null) {
-                properties.push(ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.body, args.body));
+                properties.push(ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.body, args.body))
             }
-            if (args.responseType != null && args.responseType !== "json") {
+            if (args.responseType != null && args.responseType !== 'json') {
                 properties.push(
                     ts.factory.createPropertyAssignment(
                         this.Fetcher.Args.properties.responseType,
                         ts.factory.createStringLiteral(args.responseType)
                     )
-                );
+                )
             }
             properties.push(
                 ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.timeoutMs, args.timeoutInSeconds)
-            );
+            )
             if (args.maxRetries != null) {
                 properties.push(
                     ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.maxRetries, args.maxRetries)
-                );
+                )
             }
             if (args.withCredentials) {
                 properties.push(
@@ -301,30 +301,30 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                         this.Fetcher.Args.properties.withCredentials,
                         ts.factory.createTrue()
                     )
-                );
+                )
             }
             if (args.abortSignal) {
                 properties.push(
                     ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.abortSignal, args.abortSignal)
-                );
+                )
             }
 
             return ts.factory.createAwaitExpression(
                 ts.factory.createCallExpression(referenceToFetcher, cast != null ? [cast] : [], [
                     ts.factory.createObjectLiteralExpression(properties, true)
                 ])
-            );
+            )
         }
-    };
+    }
 
     public readonly APIResponse = {
         _getReferenceToType: this.withExportedName(
-            "APIResponse",
+            'APIResponse',
             (APIResponse) => (successResponse: ts.TypeNode, failureResponse: ts.TypeNode) =>
                 ts.factory.createTypeReferenceNode(APIResponse.getEntityName(), [successResponse, failureResponse])
         ),
 
-        ok: "ok",
+        ok: 'ok',
 
         SuccessfulResponse: {
             _build: (
@@ -355,9 +355,9 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                     ],
                     true
                 ),
-            body: "body",
-            headers: "headers",
-            rawResponse: "rawResponse"
+            body: 'body',
+            headers: 'headers',
+            rawResponse: 'rawResponse'
         },
 
         FailedResponse: {
@@ -370,146 +370,146 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                     ],
                     true
                 ),
-            error: "error",
-            rawResponse: "rawResponse"
+            error: 'error',
+            rawResponse: 'rawResponse'
         }
-    };
+    }
 
     public readonly BinaryResponse = {
         _getReferenceToType: this.withExportedName(
-            "BinaryResponse",
+            'BinaryResponse',
             (BinaryResponse) => () => BinaryResponse.getTypeNode()
         ),
         getBinaryResponse: this.withExportedName(
-            "getBinaryResponse",
+            'getBinaryResponse',
             (getBinaryResponse) => (response: ts.Expression) =>
                 ts.factory.createCallExpression(getBinaryResponse.getExpression(), undefined, [response])
         )
-    };
+    }
 
     public Supplier = {
-        _getReferenceToType: this.withExportedName("Supplier", (Supplier) => (suppliedType: ts.TypeNode) => {
-            return ts.factory.createTypeReferenceNode(Supplier.getEntityName(), [suppliedType]);
+        _getReferenceToType: this.withExportedName('Supplier', (Supplier) => (suppliedType: ts.TypeNode) => {
+            return ts.factory.createTypeReferenceNode(Supplier.getEntityName(), [suppliedType])
         }),
 
-        get: this.withExportedName("Supplier", (Supplier) => (supplier: ts.Expression) => {
+        get: this.withExportedName('Supplier', (Supplier) => (supplier: ts.Expression) => {
             return ts.factory.createAwaitExpression(
                 ts.factory.createCallExpression(
-                    ts.factory.createPropertyAccessExpression(Supplier.getExpression(), "get"),
+                    ts.factory.createPropertyAccessExpression(Supplier.getExpression(), 'get'),
                     undefined,
                     [supplier]
                 )
-            );
+            )
         })
-    };
+    }
 
     public Websocket = {
-        _getReferenceToType: this.withExportedName("Websocket", (Websocket) => (suppliedType: ts.TypeNode) => {
-            return ts.factory.createTypeReferenceNode(Websocket.getEntityName(), [suppliedType]);
+        _getReferenceToType: this.withExportedName('Websocket', (Websocket) => (suppliedType: ts.TypeNode) => {
+            return ts.factory.createTypeReferenceNode(Websocket.getEntityName(), [suppliedType])
         }),
 
-        get: this.withExportedName("Websocket", (Websocket) => (websocket: ts.Expression) => {
+        get: this.withExportedName('Websocket', (Websocket) => (websocket: ts.Expression) => {
             return ts.factory.createAwaitExpression(
                 ts.factory.createCallExpression(
-                    ts.factory.createPropertyAccessExpression(Websocket.getExpression(), "get"),
+                    ts.factory.createPropertyAccessExpression(Websocket.getExpression(), 'get'),
                     undefined,
                     [websocket]
                 )
-            );
+            )
         })
-    };
+    }
 
     public FetchFunction = {
         _getReferenceToType: this.withExportedName(
-            "FetchFunction",
+            'FetchFunction',
             (FetchFunction) => () => FetchFunction.getTypeNode()
         )
-    };
+    }
 
     public getHeader = {
         _invoke: this.withExportedName(
-            "getHeader",
+            'getHeader',
             (getHeader) =>
                 ({
                     referenceToResponseHeaders,
                     header
                 }: {
-                    referenceToResponseHeaders: ts.Expression;
-                    header: string;
+                    referenceToResponseHeaders: ts.Expression
+                    header: string
                 }) =>
                     ts.factory.createCallExpression(getHeader.getExpression(), undefined, [
                         referenceToResponseHeaders,
                         ts.factory.createStringLiteral(header)
                     ])
         )
-    };
+    }
 
     private getReferenceToTypeInFetcherModule(typeName: string) {
         return this.withExportedName(
-            "Fetcher",
+            'Fetcher',
             (Fetcher) => () =>
                 ts.factory.createTypeReferenceNode(ts.factory.createQualifiedName(Fetcher.getEntityName(), typeName))
-        );
+        )
     }
 
     public readonly RawResponse = {
         RawResponse: {
-            _getReferenceToType: this.withExportedName("RawResponse", (RawResponse) => () => RawResponse.getTypeNode())
+            _getReferenceToType: this.withExportedName('RawResponse', (RawResponse) => () => RawResponse.getTypeNode())
         },
         toRawResponse: {
             _getReferenceToType: this.withExportedName(
-                "toRawResponse",
+                'toRawResponse',
                 (RawResponse) => () => RawResponse.getTypeNode()
             )
         },
         WithRawResponse: {
             _getReferenceToType: (typeArg?: ts.TypeNode): ts.TypeNode => {
                 return this.withExportedName(
-                    "WithRawResponse",
+                    'WithRawResponse',
                     (RawResponse) => () =>
                         ts.factory.createTypeReferenceNode(RawResponse.getEntityName(), typeArg ? [typeArg] : undefined)
-                )();
+                )()
             }
         }
-    };
+    }
     public readonly HttpResponsePromise = {
         _getReferenceToType: (typeArg?: ts.TypeNode): ts.TypeNode => {
             return this.withExportedName(
-                "HttpResponsePromise",
+                'HttpResponsePromise',
                 (HttpResponsePromise) => () =>
                     ts.factory.createTypeReferenceNode(
                         HttpResponsePromise.getEntityName(),
                         typeArg ? [typeArg] : undefined
                     )
-            )();
+            )()
         },
         fromPromise: (promise: ts.Expression): ts.Expression => {
             return this.withExportedName(
-                "HttpResponsePromise",
+                'HttpResponsePromise',
                 (HttpResponsePromise) => () =>
                     ts.factory.createCallExpression(
                         ts.factory.createPropertyAccessExpression(
                             HttpResponsePromise.getExpression(),
-                            ts.factory.createIdentifier("fromPromise")
+                            ts.factory.createIdentifier('fromPromise')
                         ),
                         undefined,
                         [promise]
                     )
-            )();
+            )()
         },
         interceptFunction: (fn: ts.Expression): ts.Expression => {
             return this.withExportedName(
-                "HttpResponsePromise",
+                'HttpResponsePromise',
                 (HttpResponsePromise) => () =>
                     ts.factory.createCallExpression(
                         ts.factory.createPropertyAccessExpression(
                             HttpResponsePromise.getExpression(),
-                            ts.factory.createIdentifier("interceptFunction")
+                            ts.factory.createIdentifier('interceptFunction')
                         ),
                         undefined,
                         [fn]
                     )
-            )();
+            )()
         }
-    };
+    }
 }

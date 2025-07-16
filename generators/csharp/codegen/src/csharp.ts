@@ -23,115 +23,115 @@ import {
     Ternary,
     TestClass,
     TypeParameter
-} from "./ast";
-import { ReadOnlyMemory } from "./ast/ReadOnlymemory";
-import { XmlDocBlock } from "./ast/XmlDocBlock";
+} from './ast'
+import { ReadOnlyMemory } from './ast/ReadOnlymemory'
+import { XmlDocBlock } from './ast/XmlDocBlock'
 
 export function class_(args: Class.Args): Class {
-    return new Class(args);
+    return new Class(args)
 }
 
 export function testClass(args: TestClass.Args): TestClass {
-    return new TestClass(args);
+    return new TestClass(args)
 }
 
 export function annotation(args: Annotation.Args): Annotation {
-    return new Annotation(args);
+    return new Annotation(args)
 }
 
 export function classReference(args: ClassReference.Args): ClassReference {
-    return new ClassReference(args);
+    return new ClassReference(args)
 }
 
 export function instantiateClass(args: ClassInstantiation.Args): ClassInstantiation {
-    return new ClassInstantiation(args);
+    return new ClassInstantiation(args)
 }
 
 export function invokeMethod(args: MethodInvocation.Args): MethodInvocation {
-    return new MethodInvocation(args);
+    return new MethodInvocation(args)
 }
 
 export function coreClassReference(args: CoreClassReference.Args): CoreClassReference {
-    return new CoreClassReference(args);
+    return new CoreClassReference(args)
 }
 
 export function xmlDocBlock(arg: XmlDocBlock.Arg): XmlDocBlock {
-    return new XmlDocBlock(arg);
+    return new XmlDocBlock(arg)
 }
 
 export function codeblock(arg: CodeBlock.Arg): CodeBlock {
-    return new CodeBlock(arg);
+    return new CodeBlock(arg)
 }
 
 export function field(args: Field.Args): Field {
-    return new Field(args);
+    return new Field(args)
 }
 
 export function method(args: Method.Args): Method {
-    return new Method(args);
+    return new Method(args)
 }
 
 export function anonymousFunction(args: AnonymousFunction.Args): AnonymousFunction {
-    return new AnonymousFunction(args);
+    return new AnonymousFunction(args)
 }
 
 export function parameter(args: Parameter.Args): Parameter {
-    return new Parameter(args);
+    return new Parameter(args)
 }
 
 export function typeParameter(args: string | TypeParameter.Args): TypeParameter {
-    if (typeof args === "string") {
-        args = { name: args };
+    if (typeof args === 'string') {
+        args = { name: args }
     }
-    return new TypeParameter(args);
+    return new TypeParameter(args)
 }
 
 export function interface_(args: Interface.Args): Interface {
-    return new Interface(args);
+    return new Interface(args)
 }
 
 export function enum_(args: Enum.Args): Enum {
-    return new Enum(args);
+    return new Enum(args)
 }
 
 export function dictionary(args: Dictionary.Args): Dictionary {
-    return new Dictionary(args);
+    return new Dictionary(args)
 }
 
 export function list(args: List.Args): List {
-    return new List(args);
+    return new List(args)
 }
 
 export function readOnlyMemory(args: ReadOnlyMemory.Args): ReadOnlyMemory {
-    return new ReadOnlyMemory(args);
+    return new ReadOnlyMemory(args)
 }
 
 export function set(args: Set.Args): Set {
-    return new Set(args);
+    return new Set(args)
 }
 
 export function switch_(args: Switch.Args): Switch {
-    return new Switch(args);
+    return new Switch(args)
 }
 
 export function ternary(args: Ternary.Args): Ternary {
-    return new Ternary(args);
+    return new Ternary(args)
 }
 
 export function and(args: And.Args): And {
-    return new And(args);
+    return new And(args)
 }
 
 export function or(args: Or.Args): Or {
-    return new Or(args);
+    return new Or(args)
 }
 
 export function enumInstantiation(args: EnumInstantiation.Args): EnumInstantiation {
-    return new EnumInstantiation(args);
+    return new EnumInstantiation(args)
 }
 
 export function string_(args: String_.Args): String_ {
-    return new String_(args);
+    return new String_(args)
 }
 
 export {
@@ -159,6 +159,6 @@ export {
     VALID_READ_ONLY_MEMORY_TYPES,
     convertReadOnlyPrimitiveTypes,
     String_
-} from "./ast";
-export { type ConstructorField } from "./ast/TypeLiteral";
-export { AstNode } from "./ast/core/AstNode";
+} from './ast'
+export { type ConstructorField } from './ast/TypeLiteral'
+export { AstNode } from './ast/core/AstNode'

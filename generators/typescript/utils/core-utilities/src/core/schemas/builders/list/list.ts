@@ -1,7 +1,7 @@
-import { BaseSchema, MaybeValid, Schema, SchemaType, ValidationError } from "../../Schema";
-import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType";
-import { maybeSkipValidation } from "../../utils/maybeSkipValidation";
-import { getSchemaUtils } from "../schema-utils";
+import { BaseSchema, MaybeValid, Schema, SchemaType, ValidationError } from '../../Schema'
+import { getErrorMessageForIncorrectType } from '../../utils/getErrorMessageForIncorrectType'
+import { maybeSkipValidation } from '../../utils/maybeSkipValidation'
+import { getSchemaUtils } from '../schema-utils'
 
 export function list<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Raw[], Parsed[]> {
     const baseSchema: BaseSchema<Raw[], Parsed[]> = {
@@ -20,12 +20,12 @@ export function list<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Raw[], Pa
                 })
             ),
         getType: () => SchemaType.LIST
-    };
+    }
 
     return {
         ...maybeSkipValidation(baseSchema),
         ...getSchemaUtils(baseSchema)
-    };
+    }
 }
 
 function validateAndTransformArray<Raw, Parsed>(
@@ -37,14 +37,14 @@ function validateAndTransformArray<Raw, Parsed>(
             ok: false,
             errors: [
                 {
-                    message: getErrorMessageForIncorrectType(value, "list"),
+                    message: getErrorMessageForIncorrectType(value, 'list'),
                     path: []
                 }
             ]
-        };
+        }
     }
 
-    const maybeValidItems = value.map((item, index) => transformItem(item, index));
+    const maybeValidItems = value.map((item, index) => transformItem(item, index))
 
     return maybeValidItems.reduce<MaybeValid<Parsed[]>>(
         (acc, item) => {
@@ -52,22 +52,22 @@ function validateAndTransformArray<Raw, Parsed>(
                 return {
                     ok: true,
                     value: [...acc.value, item.value]
-                };
+                }
             }
 
-            const errors: ValidationError[] = [];
+            const errors: ValidationError[] = []
             if (!acc.ok) {
-                errors.push(...acc.errors);
+                errors.push(...acc.errors)
             }
             if (!item.ok) {
-                errors.push(...item.errors);
+                errors.push(...item.errors)
             }
 
             return {
                 ok: false,
                 errors
-            };
+            }
         },
         { ok: true, value: [] }
-    );
+    )
 }

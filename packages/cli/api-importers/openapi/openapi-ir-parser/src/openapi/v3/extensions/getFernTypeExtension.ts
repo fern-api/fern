@@ -1,17 +1,17 @@
-import { OpenAPIV3 } from "openapi-types";
+import { OpenAPIV3 } from 'openapi-types'
 
-import { assertNever } from "@fern-api/core-utils";
-import { recursivelyVisitRawTypeReference } from "@fern-api/fern-definition-schema";
+import { assertNever } from '@fern-api/core-utils'
+import { recursivelyVisitRawTypeReference } from '@fern-api/fern-definition-schema'
 import {
     Availability,
     LiteralSchemaValue,
     PrimitiveSchemaValueWithExample,
     SchemaWithExample,
     Source
-} from "@fern-api/openapi-ir";
+} from '@fern-api/openapi-ir'
 
-import { getExtension } from "../../../getExtension";
-import { FernOpenAPIExtension } from "./fernExtensions";
+import { getExtension } from '../../../getExtension'
+import { FernOpenAPIExtension } from './fernExtensions'
 
 export function getFernTypeExtension({
     nameOverride,
@@ -21,18 +21,18 @@ export function getFernTypeExtension({
     description,
     availability
 }: {
-    nameOverride: string | undefined;
-    generatedName: string;
-    title: string | undefined;
-    schema: OpenAPIV3.SchemaObject;
-    description: string | undefined;
-    availability: Availability | undefined;
+    nameOverride: string | undefined
+    generatedName: string
+    title: string | undefined
+    schema: OpenAPIV3.SchemaObject
+    description: string | undefined
+    availability: Availability | undefined
 }): SchemaWithExample | undefined {
-    const namespace = getExtension(schema, FernOpenAPIExtension.SDK_NAMESPACE);
-    const groupName = getExtension(schema, FernOpenAPIExtension.SDK_GROUP_NAME);
-    const fernType = getExtension<string>(schema, FernOpenAPIExtension.TYPE_DEFINITION);
+    const namespace = getExtension(schema, FernOpenAPIExtension.SDK_NAMESPACE)
+    const groupName = getExtension(schema, FernOpenAPIExtension.SDK_GROUP_NAME)
+    const fernType = getExtension<string>(schema, FernOpenAPIExtension.TYPE_DEFINITION)
     if (fernType == null) {
-        return;
+        return
     }
     return getSchemaFromFernType({
         fernType,
@@ -42,8 +42,8 @@ export function getFernTypeExtension({
         description,
         availability,
         namespace,
-        groupName: typeof groupName === "string" ? [groupName] : groupName
-    });
+        groupName: typeof groupName === 'string' ? [groupName] : groupName
+    })
 }
 
 export function getSchemaFromFernType({
@@ -56,14 +56,14 @@ export function getSchemaFromFernType({
     namespace,
     groupName
 }: {
-    fernType: string;
-    nameOverride: string | undefined;
-    generatedName: string;
-    title: string | undefined;
-    description: string | undefined;
-    availability: Availability | undefined;
-    namespace: string | undefined;
-    groupName: string[] | undefined;
+    fernType: string
+    nameOverride: string | undefined
+    generatedName: string
+    title: string | undefined
+    description: string | undefined
+    availability: Availability | undefined
+    namespace: string | undefined
+    groupName: string[] | undefined
 }): SchemaWithExample | undefined {
     return recursivelyVisitRawTypeReference<SchemaWithExample | undefined>({
         type: fernType,
@@ -72,7 +72,7 @@ export function getSchemaFromFernType({
         visitor: {
             primitive: (primitive) => {
                 switch (primitive.v1) {
-                    case "BASE_64":
+                    case 'BASE_64':
                         return SchemaWithExample.primitive({
                             nameOverride,
                             generatedName,
@@ -84,8 +84,8 @@ export function getSchemaFromFernType({
                             schema: PrimitiveSchemaValueWithExample.base64({
                                 example: undefined
                             })
-                        });
-                    case "BOOLEAN":
+                        })
+                    case 'BOOLEAN':
                         return SchemaWithExample.primitive({
                             nameOverride,
                             generatedName,
@@ -98,8 +98,8 @@ export function getSchemaFromFernType({
                                 default: undefined,
                                 example: undefined
                             })
-                        });
-                    case "DATE":
+                        })
+                    case 'DATE':
                         return SchemaWithExample.primitive({
                             nameOverride,
                             generatedName,
@@ -111,8 +111,8 @@ export function getSchemaFromFernType({
                             schema: PrimitiveSchemaValueWithExample.date({
                                 example: undefined
                             })
-                        });
-                    case "DATE_TIME":
+                        })
+                    case 'DATE_TIME':
                         return SchemaWithExample.primitive({
                             nameOverride,
                             generatedName,
@@ -124,8 +124,8 @@ export function getSchemaFromFernType({
                             schema: PrimitiveSchemaValueWithExample.datetime({
                                 example: undefined
                             })
-                        });
-                    case "FLOAT":
+                        })
+                    case 'FLOAT':
                         return SchemaWithExample.primitive({
                             nameOverride,
                             generatedName,
@@ -137,8 +137,8 @@ export function getSchemaFromFernType({
                             schema: PrimitiveSchemaValueWithExample.float({
                                 example: undefined
                             })
-                        });
-                    case "DOUBLE":
+                        })
+                    case 'DOUBLE':
                         return SchemaWithExample.primitive({
                             nameOverride,
                             generatedName,
@@ -156,8 +156,8 @@ export function getSchemaFromFernType({
                                 multipleOf: undefined,
                                 example: undefined
                             })
-                        });
-                    case "UINT":
+                        })
+                    case 'UINT':
                         return SchemaWithExample.primitive({
                             nameOverride,
                             generatedName,
@@ -170,8 +170,8 @@ export function getSchemaFromFernType({
                                 default: undefined,
                                 example: undefined
                             })
-                        });
-                    case "INTEGER":
+                        })
+                    case 'INTEGER':
                         return SchemaWithExample.primitive({
                             nameOverride,
                             generatedName,
@@ -189,8 +189,8 @@ export function getSchemaFromFernType({
                                 multipleOf: undefined,
                                 example: undefined
                             })
-                        });
-                    case "UINT_64":
+                        })
+                    case 'UINT_64':
                         return SchemaWithExample.primitive({
                             nameOverride,
                             generatedName,
@@ -203,8 +203,8 @@ export function getSchemaFromFernType({
                                 default: undefined,
                                 example: undefined
                             })
-                        });
-                    case "LONG":
+                        })
+                    case 'LONG':
                         return SchemaWithExample.primitive({
                             nameOverride,
                             generatedName,
@@ -217,10 +217,10 @@ export function getSchemaFromFernType({
                                 default: undefined,
                                 example: undefined
                             })
-                        });
-                    case "STRING":
-                    case "UUID":
-                    case "BIG_INTEGER":
+                        })
+                    case 'STRING':
+                    case 'UUID':
+                    case 'BIG_INTEGER':
                         return SchemaWithExample.primitive({
                             nameOverride,
                             generatedName,
@@ -237,9 +237,9 @@ export function getSchemaFromFernType({
                                 example: undefined,
                                 format: undefined
                             })
-                        });
+                        })
                     default:
-                        assertNever(primitive.v1);
+                        assertNever(primitive.v1)
                 }
             },
             unknown: () => {
@@ -252,10 +252,10 @@ export function getSchemaFromFernType({
                     availability,
                     namespace,
                     groupName
-                });
+                })
             },
             map: ({ keyType, valueType }) =>
-                keyType?.type === "primitive" && valueType != null
+                keyType?.type === 'primitive' && valueType != null
                     ? SchemaWithExample.map({
                           nameOverride,
                           generatedName,
@@ -338,7 +338,7 @@ export function getSchemaFromFernType({
                         string: (value) => LiteralSchemaValue.string(value),
                         boolean: (value) => LiteralSchemaValue.boolean(value),
                         _other: () => {
-                            throw new Error("Unexpected literal type");
+                            throw new Error('Unexpected literal type')
                         }
                     }),
                     description,
@@ -356,9 +356,9 @@ export function getSchemaFromFernType({
                     availability,
                     namespace,
                     groupName,
-                    source: Source.openapi({ file: "<memory>" })
-                });
+                    source: Source.openapi({ file: '<memory>' })
+                })
             }
         }
-    });
+    })
 }

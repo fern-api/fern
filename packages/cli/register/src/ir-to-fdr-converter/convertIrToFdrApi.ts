@@ -1,19 +1,19 @@
-import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { IntermediateRepresentation } from '@fern-api/ir-sdk'
 
-import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
+import { FernRegistry as FdrCjsSdk } from '@fern-fern/fdr-cjs-sdk'
 
-import { PlaygroundConfig, convertAuth } from "./convertAuth";
-import { convertIrAvailability, convertPackage } from "./convertPackage";
-import { convertTypeReference, convertTypeShape } from "./convertTypeShape";
+import { PlaygroundConfig, convertAuth } from './convertAuth'
+import { convertIrAvailability, convertPackage } from './convertPackage'
+import { convertTypeReference, convertTypeShape } from './convertTypeShape'
 
 export function convertIrToFdrApi({
     ir,
     snippetsConfig,
     playgroundConfig
 }: {
-    ir: IntermediateRepresentation;
-    snippetsConfig: FdrCjsSdk.api.v1.register.SnippetsConfig;
-    playgroundConfig?: PlaygroundConfig;
+    ir: IntermediateRepresentation
+    snippetsConfig: FdrCjsSdk.api.v1.register.SnippetsConfig
+    playgroundConfig?: PlaygroundConfig
 }): FdrCjsSdk.api.v1.register.ApiDefinition {
     const fdrApi: FdrCjsSdk.api.v1.register.ApiDefinition = {
         types: {},
@@ -30,7 +30,7 @@ export function convertIrToFdrApi({
             })
         ),
         navigation: undefined
-    };
+    }
 
     for (const [typeId, type] of Object.entries(ir.types)) {
         fdrApi.types[FdrCjsSdk.TypeId(typeId)] = {
@@ -39,19 +39,19 @@ export function convertIrToFdrApi({
             shape: convertTypeShape(type.shape),
             availability: convertIrAvailability(type.availability),
             displayName: type.name.displayName
-        };
+        }
     }
 
     for (const [subpackageId, subpackage] of Object.entries(ir.subpackages)) {
-        const service = subpackage.service != null ? ir.services[subpackage.service] : undefined;
+        const service = subpackage.service != null ? ir.services[subpackage.service] : undefined
         fdrApi.subpackages[FdrCjsSdk.api.v1.SubpackageId(subpackageId)] = {
             subpackageId: FdrCjsSdk.api.v1.SubpackageId(subpackageId),
             displayName: service?.displayName,
             name: subpackage.name.originalName,
             description: subpackage.docs ?? undefined,
             ...convertPackage(subpackage, ir)
-        };
+        }
     }
 
-    return fdrApi;
+    return fdrApi
 }

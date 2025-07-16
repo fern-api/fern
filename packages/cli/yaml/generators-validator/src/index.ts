@@ -1,1 +1,1 @@
-export { validateGeneratorsWorkspace } from "./validateGeneratorsWorkspace";
+export { validateGeneratorsWorkspace } from './validateGeneratorsWorkspace'

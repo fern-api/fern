@@ -1,5 +1,5 @@
-import { LogLevel } from "./LogLevel";
-import { Logger } from "./Logger";
+import { LogLevel } from './LogLevel'
+import { Logger } from './Logger'
 
 class LoggerImpl implements Logger {
     constructor(
@@ -8,44 +8,44 @@ class LoggerImpl implements Logger {
     ) {}
 
     public disable(): void {
-        this.enabled = false;
+        this.enabled = false
     }
 
     public enable(): void {
-        this.enabled = true;
+        this.enabled = true
     }
 
     public debug(...args: string[]): void {
         if (this.enabled) {
-            this.log(LogLevel.Debug, ...args);
+            this.log(LogLevel.Debug, ...args)
         }
     }
 
     public info(...args: string[]): void {
         if (this.enabled) {
-            this.log(LogLevel.Info, ...args);
+            this.log(LogLevel.Info, ...args)
         }
     }
 
     public warn(...args: string[]): void {
         if (this.enabled) {
-            this.log(LogLevel.Warn, ...args);
+            this.log(LogLevel.Warn, ...args)
         }
     }
 
     public error(...args: string[]): void {
         if (this.enabled) {
-            this.log(LogLevel.Error, ...args);
+            this.log(LogLevel.Error, ...args)
         }
     }
 
     public trace(...args: string[]): void {
         if (this.enabled) {
-            this.log(LogLevel.Trace, ...args);
+            this.log(LogLevel.Trace, ...args)
         }
     }
 }
 
 export function createLogger(log: (level: LogLevel, ...args: string[]) => void): Logger {
-    return new LoggerImpl(log);
+    return new LoggerImpl(log)
 }

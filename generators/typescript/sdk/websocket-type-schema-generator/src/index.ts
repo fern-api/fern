@@ -1,1 +1,1 @@
-export { WebsocketTypeSchemaGenerator } from "./WebsocketTypeSchemaGenerator";
+export { WebsocketTypeSchemaGenerator } from './WebsocketTypeSchemaGenerator'

@@ -1,120 +1,120 @@
-import { AbstractAstNode } from "@fern-api/browser-compatible-base-generator";
+import { AbstractAstNode } from '@fern-api/browser-compatible-base-generator'
 
-import { Writer } from "..";
-import { XmlDocBlock } from "../XmlDocBlock";
-import { AstNode } from "./AstNode";
+import { Writer } from '..'
+import { XmlDocBlock } from '../XmlDocBlock'
+import { AstNode } from './AstNode'
 
 export class XmlDocWriter {
-    private writer: Writer;
-    private wrotePrefixOnCurrentLine: boolean = false;
+    private writer: Writer
+    private wrotePrefixOnCurrentLine: boolean = false
     constructor(writer: Writer) {
-        this.writer = writer;
+        this.writer = writer
     }
 
     public write(text: string | XmlDocBlock): void {
-        if (typeof text === "string") {
-            this.writer.write(text);
-            return;
+        if (typeof text === 'string') {
+            this.writer.write(text)
+            return
         }
-        text.write(this.writer);
+        text.write(this.writer)
     }
 
     public writeWithEscaping(text: string | XmlDocBlock): void {
-        if (typeof text === "string") {
-            this.writer.write(this.escapeXmlDocContent(text));
-            return;
+        if (typeof text === 'string') {
+            this.writer.write(this.escapeXmlDocContent(text))
+            return
         }
-        text.write(this.writer);
+        text.write(this.writer)
     }
 
-    public writeLine(text = ""): void {
-        this.writePrefix();
-        this.writer.writeLine(text);
-        this.wrotePrefixOnCurrentLine = false;
+    public writeLine(text = ''): void {
+        this.writePrefix()
+        this.writer.writeLine(text)
+        this.wrotePrefixOnCurrentLine = false
     }
 
     public writeLineWithEscaping(text: string): void {
-        this.writePrefix();
-        this.writer.write(this.escapeXmlDocContent(text));
-        this.wrotePrefixOnCurrentLine = false;
+        this.writePrefix()
+        this.writer.write(this.escapeXmlDocContent(text))
+        this.wrotePrefixOnCurrentLine = false
     }
 
     public writeNewLineIfLastLineNot(): void {
-        this.writer.writeNewLineIfLastLineNot();
-        this.wrotePrefixOnCurrentLine = false;
+        this.writer.writeNewLineIfLastLineNot()
+        this.wrotePrefixOnCurrentLine = false
     }
 
     public writeNodeOrString(input: AbstractAstNode | string): void {
-        this.writer.writeNodeOrString(input);
+        this.writer.writeNodeOrString(input)
     }
 
     public writePrefix(): this {
         if (this.wrotePrefixOnCurrentLine) {
-            return this;
+            return this
         }
-        this.writer.write("/// ");
-        this.wrotePrefixOnCurrentLine = true;
-        return this;
+        this.writer.write('/// ')
+        this.wrotePrefixOnCurrentLine = true
+        return this
     }
 
     public writeOpenXmlNode(nodeName: string): void {
-        this.write(`<${nodeName}>`);
+        this.write(`<${nodeName}>`)
     }
 
     public writeCloseXmlNode(nodeName: string): void {
-        this.write(`</${nodeName}>`);
+        this.write(`</${nodeName}>`)
     }
 
     public writeNode(node: AstNode): void {
-        this.writer.writeNode(node);
+        this.writer.writeNode(node)
     }
 
     public writeXmlNode(nodeName: string, text: string): void {
-        this.writePrefix();
-        this.writeOpenXmlNode(nodeName);
-        this.writeLine(text);
-        this.writePrefix();
-        this.writeCloseXmlNode(nodeName);
+        this.writePrefix()
+        this.writeOpenXmlNode(nodeName)
+        this.writeLine(text)
+        this.writePrefix()
+        this.writeCloseXmlNode(nodeName)
     }
 
     public writeXmlNodeMultiline(nodeName: string, text: string): void {
-        this.writePrefix();
-        this.writeOpenXmlNode(nodeName);
-        this.writeLine();
-        this.writeMultiline(text);
-        this.writeLine();
-        this.writePrefix();
-        this.writeCloseXmlNode(nodeName);
+        this.writePrefix()
+        this.writeOpenXmlNode(nodeName)
+        this.writeLine()
+        this.writeMultiline(text)
+        this.writeLine()
+        this.writePrefix()
+        this.writeCloseXmlNode(nodeName)
     }
 
     public writeXmlNodeWithEscaping(nodeName: string, text: string): void {
-        this.writeOpenXmlNode(nodeName);
-        this.writeLineWithEscaping(text);
-        this.writeCloseXmlNode(nodeName);
+        this.writeOpenXmlNode(nodeName)
+        this.writeLineWithEscaping(text)
+        this.writeCloseXmlNode(nodeName)
     }
 
     public writeMultilineNodeWithEscaping(nodeName: string, text: string): void {
-        this.writeOpenXmlNode(nodeName);
-        this.writeLine();
-        this.writeMultilineWithEscaping(text);
-        this.writeLine();
-        this.writeCloseXmlNode(nodeName);
+        this.writeOpenXmlNode(nodeName)
+        this.writeLine()
+        this.writeMultilineWithEscaping(text)
+        this.writeLine()
+        this.writeCloseXmlNode(nodeName)
     }
 
     public writeMultiline(text: string): void {
         text.trim()
-            .split("\n")
+            .split('\n')
             .forEach((line) => {
-                this.writeLine(line);
-            });
+                this.writeLine(line)
+            })
     }
 
     public writeMultilineWithEscaping(text: string): void {
-        text = this.escapeXmlDocContent(text);
-        this.writeMultiline(text);
+        text = this.escapeXmlDocContent(text)
+        this.writeMultiline(text)
     }
 
     private escapeXmlDocContent(text: string): string {
-        return text.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+        return text.replaceAll('<', '&lt;').replaceAll('>', '&gt;')
     }
 }

@@ -1,43 +1,43 @@
-import { resolve } from "node:path";
+import { resolve } from 'node:path'
 
-import { FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { createSampleIr } from "@fern-api/test-utils";
+import { FernGeneratorExec, GeneratorNotificationService } from '@fern-api/base-generator'
+import { AbsoluteFilePath } from '@fern-api/fs-utils'
+import { createSampleIr } from '@fern-api/test-utils'
 
-import { ModelCustomConfigSchema } from "../../ModelCustomConfig";
-import { ModelGeneratorContext } from "../../ModelGeneratorContext";
+import { ModelCustomConfigSchema } from '../../ModelCustomConfig'
+import { ModelGeneratorContext } from '../../ModelGeneratorContext'
 
 export async function createSampleGeneratorContext(testDefinitionName: string): Promise<ModelGeneratorContext> {
-    const absolutePathToWorkspace = AbsoluteFilePath.of(resolve(__dirname, "../test-definitions", testDefinitionName));
-    const ir = await createSampleIr(absolutePathToWorkspace);
-    const generatorConfig = createSampleGeneratorConfig();
-    const customConfig: ModelCustomConfigSchema = {};
+    const absolutePathToWorkspace = AbsoluteFilePath.of(resolve(__dirname, '../test-definitions', testDefinitionName))
+    const ir = await createSampleIr(absolutePathToWorkspace)
+    const generatorConfig = createSampleGeneratorConfig()
+    const customConfig: ModelCustomConfigSchema = {}
     const notificationService = new GeneratorNotificationService({
-        type: "local",
+        type: 'local',
         _visit: (visitor) => visitor.local()
-    });
-    return new ModelGeneratorContext(ir, generatorConfig, customConfig, notificationService);
+    })
+    return new ModelGeneratorContext(ir, generatorConfig, customConfig, notificationService)
 }
 
 function createSampleGeneratorConfig(): FernGeneratorExec.config.GeneratorConfig {
     return {
         dryRun: false,
-        irFilepath: "ir.json",
+        irFilepath: 'ir.json',
         output: {
-            path: AbsoluteFilePath.of(__dirname) + "/output",
+            path: AbsoluteFilePath.of(__dirname) + '/output',
             mode: {
-                type: "downloadFiles",
+                type: 'downloadFiles',
                 _visit: (visitor) => visitor.downloadFiles()
             }
         },
-        workspaceName: "test",
-        organization: "test",
+        workspaceName: 'test',
+        organization: 'test',
         environment: {
-            type: "local",
+            type: 'local',
             _visit: (visitor) => visitor.local()
         },
         whitelabel: false,
         writeUnitTests: false,
         generateOauthClients: false
-    };
+    }
 }

@@ -1,21 +1,21 @@
-import { objectWithoutOptionalProperties, string, stringLiteral } from "../../../../src/core/schemas/builders";
-import { itSchema } from "../utils/itSchema";
+import { objectWithoutOptionalProperties, string, stringLiteral } from '../../../../src/core/schemas/builders'
+import { itSchema } from '../utils/itSchema'
 
-describe("objectWithoutOptionalProperties", () => {
+describe('objectWithoutOptionalProperties', () => {
     itSchema(
-        "all properties are required",
+        'all properties are required',
         objectWithoutOptionalProperties({
             foo: string(),
-            bar: stringLiteral("bar").optional()
+            bar: stringLiteral('bar').optional()
         }),
         {
             raw: {
-                foo: "hello"
+                foo: 'hello'
             },
             // @ts-expect-error
             parsed: {
-                foo: "hello"
+                foo: 'hello'
             }
         }
-    );
-});
+    )
+})

@@ -1,15 +1,15 @@
-export type BearerToken = string;
+export type BearerToken = string
 
-const BEARER_AUTH_HEADER_PREFIX = /^Bearer /i;
+const BEARER_AUTH_HEADER_PREFIX = /^Bearer /i
 
 export const BearerToken = {
     toAuthorizationHeader: (token: BearerToken | undefined): string | undefined => {
         if (token == null) {
-            return undefined;
+            return undefined
         }
-        return `Bearer ${token}`;
+        return `Bearer ${token}`
     },
     fromAuthorizationHeader: (header: string): BearerToken => {
-        return header.replace(BEARER_AUTH_HEADER_PREFIX, "").trim() as BearerToken;
+        return header.replace(BEARER_AUTH_HEADER_PREFIX, '').trim() as BearerToken
     }
-};
+}

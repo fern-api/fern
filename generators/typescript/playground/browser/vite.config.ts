@@ -1,6 +1,6 @@
-import react from "@vitejs/plugin-react";
-import { defineConfig } from "vite";
-import checker from "vite-plugin-checker";
+import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite'
+import checker from 'vite-plugin-checker'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -20,13 +20,13 @@ export default defineConfig({
             {
                 // this is required for the SCSS modules
                 find: /^~(.*)$/,
-                replacement: "$1"
+                replacement: '$1'
             }
         ]
     },
     css: {
         modules: {
-            generateScopedName: "[name]__[local]___[hash:base64:5]"
+            generateScopedName: '[name]__[local]___[hash:base64:5]'
         }
     }
-});
+})

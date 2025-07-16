@@ -1,4 +1,4 @@
-import { OpenAPIV3 } from "openapi-types";
+import { OpenAPIV3 } from 'openapi-types'
 
 import {
     HeaderWithExample,
@@ -11,26 +11,26 @@ import {
     WebsocketChannel,
     WebsocketMessageSchema,
     WebsocketSessionExample
-} from "@fern-api/openapi-ir";
+} from '@fern-api/openapi-ir'
 
-import { getExtension } from "../../getExtension";
-import { FernOpenAPIExtension } from "../../openapi/v3/extensions/fernExtensions";
-import { ParseOpenAPIOptions } from "../../options";
-import { convertAvailability } from "../../schema/convertAvailability";
-import { convertReferenceObject, convertSchema } from "../../schema/convertSchemas";
-import { UndiscriminatedOneOfPrefix, convertUndiscriminatedOneOf } from "../../schema/convertUndiscriminatedOneOf";
-import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema";
-import { isReferenceObject } from "../../schema/utils/isReferenceObject";
-import { getSchemas } from "../../utils/getSchemas";
-import { ExampleWebsocketSessionFactory, SessionExampleBuilderInput } from "../ExampleWebsocketSessionFactory";
-import { FernAsyncAPIExtension } from "../fernExtensions";
-import { WebsocketSessionExampleExtension, getFernExamples } from "../getFernExamples";
-import { ParseAsyncAPIOptions } from "../options";
-import { AsyncAPIIntermediateRepresentation } from "../parse";
-import { ServerContext } from "../sharedTypes";
-import { constructServerUrl, transformToValidPath } from "../sharedUtils";
-import { AsyncAPIV2 } from "../v2";
-import { AsyncAPIV2ParserContext } from "./AsyncAPIV2ParserContext";
+import { getExtension } from '../../getExtension'
+import { FernOpenAPIExtension } from '../../openapi/v3/extensions/fernExtensions'
+import { ParseOpenAPIOptions } from '../../options'
+import { convertAvailability } from '../../schema/convertAvailability'
+import { convertReferenceObject, convertSchema } from '../../schema/convertSchemas'
+import { UndiscriminatedOneOfPrefix, convertUndiscriminatedOneOf } from '../../schema/convertUndiscriminatedOneOf'
+import { convertSchemaWithExampleToSchema } from '../../schema/utils/convertSchemaWithExampleToSchema'
+import { isReferenceObject } from '../../schema/utils/isReferenceObject'
+import { getSchemas } from '../../utils/getSchemas'
+import { ExampleWebsocketSessionFactory, SessionExampleBuilderInput } from '../ExampleWebsocketSessionFactory'
+import { FernAsyncAPIExtension } from '../fernExtensions'
+import { WebsocketSessionExampleExtension, getFernExamples } from '../getFernExamples'
+import { ParseAsyncAPIOptions } from '../options'
+import { AsyncAPIIntermediateRepresentation } from '../parse'
+import { ServerContext } from '../sharedTypes'
+import { constructServerUrl, transformToValidPath } from '../sharedUtils'
+import { AsyncAPIV2 } from '../v2'
+import { AsyncAPIV2ParserContext } from './AsyncAPIV2ParserContext'
 
 export function parseAsyncAPIV2({
     context,
@@ -39,38 +39,38 @@ export function parseAsyncAPIV2({
     asyncApiOptions,
     document
 }: {
-    context: AsyncAPIV2ParserContext;
-    breadcrumbs: string[];
-    source: Source;
-    asyncApiOptions: ParseAsyncAPIOptions;
-    document: AsyncAPIV2.DocumentV2;
+    context: AsyncAPIV2ParserContext
+    breadcrumbs: string[]
+    source: Source
+    asyncApiOptions: ParseAsyncAPIOptions
+    document: AsyncAPIV2.DocumentV2
 }): AsyncAPIIntermediateRepresentation {
-    const schemas: Record<SchemaId, SchemaWithExample> = {};
-    const parsedChannels: Record<string, WebsocketChannel> = {};
+    const schemas: Record<SchemaId, SchemaWithExample> = {}
+    const parsedChannels: Record<string, WebsocketChannel> = {}
 
     for (const [schemaId, schema] of Object.entries(document.components?.schemas ?? {})) {
-        const convertedSchema = convertSchema(schema, false, context, [schemaId], source, context.namespace);
-        schemas[schemaId] = convertedSchema;
+        const convertedSchema = convertSchema(schema, false, context, [schemaId], source, context.namespace)
+        schemas[schemaId] = convertedSchema
     }
 
-    const exampleFactory = new ExampleWebsocketSessionFactory(schemas, context);
+    const exampleFactory = new ExampleWebsocketSessionFactory(schemas, context)
 
-    const servers: Record<string, ServerContext> = {};
+    const servers: Record<string, ServerContext> = {}
     for (const [serverId, server] of Object.entries(document.servers ?? {})) {
         servers[serverId] = {
             name: serverId,
             url: constructServerUrl(server.protocol, server.url)
-        };
+        }
     }
 
     for (const [channelPath, channel] of Object.entries(document.channels ?? {})) {
-        const shouldIgnore = getExtension<boolean>(channel, FernAsyncAPIExtension.IGNORE);
+        const shouldIgnore = getExtension<boolean>(channel, FernAsyncAPIExtension.IGNORE)
         if (shouldIgnore != null && shouldIgnore) {
-            context.logger.debug(`Channel ${channelPath} is marked with x-fern-ignore. Skipping.`);
-            continue;
+            context.logger.debug(`Channel ${channelPath} is marked with x-fern-ignore. Skipping.`)
+            continue
         }
 
-        const pathParameters: PathParameterWithExample[] = [];
+        const pathParameters: PathParameterWithExample[] = []
         if (channel.parameters != null) {
             for (const [name, parameter] of Object.entries(channel.parameters ?? {})) {
                 pathParameters.push({
@@ -91,7 +91,7 @@ export function parseAsyncAPIV2({
                                   }),
                                   description: undefined,
                                   availability: undefined,
-                                  generatedName: "",
+                                  generatedName: '',
                                   title: undefined,
                                   namespace: undefined,
                                   groupName: undefined,
@@ -100,18 +100,18 @@ export function parseAsyncAPIV2({
                     variableReference: undefined,
                     availability: convertAvailability(parameter),
                     source
-                });
+                })
             }
         }
 
-        const headers: HeaderWithExample[] = [];
-        const queryParameters: QueryParameterWithExample[] = [];
+        const headers: HeaderWithExample[] = []
+        const queryParameters: QueryParameterWithExample[] = []
         if (channel.bindings?.ws != null) {
             if (channel.bindings.ws.headers != null) {
-                const required = channel.bindings.ws.headers.required ?? [];
+                const required = channel.bindings.ws.headers.required ?? []
                 for (const [name, schema] of Object.entries(channel.bindings.ws.headers.properties ?? {})) {
                     if (isReferenceObject(schema)) {
-                        const resolvedSchema = context.resolveSchemaReference(schema);
+                        const resolvedSchema = context.resolveSchemaReference(schema)
                         headers.push({
                             name,
                             schema: convertReferenceObject(
@@ -128,8 +128,8 @@ export function parseAsyncAPIV2({
                             env: undefined,
                             availability: convertAvailability(resolvedSchema),
                             source
-                        });
-                        continue;
+                        })
+                        continue
                     }
                     headers.push({
                         name,
@@ -146,15 +146,15 @@ export function parseAsyncAPIV2({
                         env: undefined,
                         availability: convertAvailability(schema),
                         source
-                    });
+                    })
                 }
             }
 
             if (channel.bindings.ws.query != null) {
-                const required = channel.bindings.ws.query.required ?? [];
+                const required = channel.bindings.ws.query.required ?? []
                 for (const [name, schema] of Object.entries(channel.bindings.ws.query.properties ?? {})) {
                     if (isReferenceObject(schema)) {
-                        const resolvedSchema = context.resolveSchemaReference(schema);
+                        const resolvedSchema = context.resolveSchemaReference(schema)
                         queryParameters.push({
                             name,
                             schema: convertReferenceObject(
@@ -170,8 +170,8 @@ export function parseAsyncAPIV2({
                             parameterNameOverride: undefined,
                             availability: convertAvailability(resolvedSchema),
                             source
-                        });
-                        continue;
+                        })
+                        continue
                     }
                     queryParameters.push({
                         name,
@@ -187,61 +187,61 @@ export function parseAsyncAPIV2({
                         parameterNameOverride: undefined,
                         availability: convertAvailability(schema),
                         source
-                    });
+                    })
                 }
             }
         }
 
-        let publishSchema: SchemaWithExample | undefined = undefined;
+        let publishSchema: SchemaWithExample | undefined = undefined
         if (channel.publish != null) {
-            if ("oneOf" in channel.publish.message) {
+            if ('oneOf' in channel.publish.message) {
                 publishSchema = convertOneOfToSchema({
-                    generatedName: channel.publish.operationId ?? "PublishEvent",
+                    generatedName: channel.publish.operationId ?? 'PublishEvent',
                     event: channel.publish,
                     breadcrumbs,
                     context,
                     source,
                     options: context.options,
                     asyncApiOptions
-                });
+                })
             } else {
                 publishSchema = convertMessageToSchema({
-                    action: "Publish",
+                    action: 'Publish',
                     channelPath,
                     message: channel.publish.message as AsyncAPIV2.MessageV2,
                     context,
                     source
-                });
+                })
             }
         }
 
-        let subscribeSchema: SchemaWithExample | undefined = undefined;
+        let subscribeSchema: SchemaWithExample | undefined = undefined
         if (channel.subscribe != null) {
-            if ("oneOf" in channel.subscribe.message) {
+            if ('oneOf' in channel.subscribe.message) {
                 subscribeSchema = convertOneOfToSchema({
-                    generatedName: channel.subscribe.operationId ?? "SubscribeEvent",
+                    generatedName: channel.subscribe.operationId ?? 'SubscribeEvent',
                     event: channel.subscribe,
                     breadcrumbs,
                     context,
                     source,
                     options: context.options,
                     asyncApiOptions
-                });
+                })
             } else {
                 subscribeSchema = convertMessageToSchema({
-                    action: "Subscribe",
+                    action: 'Subscribe',
                     channelPath,
                     message: channel.subscribe.message as AsyncAPIV2.MessageV2,
                     context,
                     source
-                });
+                })
             }
         }
 
         if (headers.length > 0 || queryParameters.length > 0 || publishSchema != null || subscribeSchema != null) {
             // Reads the `x-fern-examples` extension from the channel
-            const fernExamples: WebsocketSessionExampleExtension[] = getFernExamples(channel);
-            let examples: WebsocketSessionExample[] = [];
+            const fernExamples: WebsocketSessionExampleExtension[] = getFernExamples(channel)
+            let examples: WebsocketSessionExample[] = []
             if (fernExamples.length > 0) {
                 examples = exampleFactory.buildWebsocketSessionExamplesForExtension({
                     context,
@@ -252,20 +252,20 @@ export function parseAsyncAPIV2({
                     },
                     source,
                     namespace: context.namespace
-                });
+                })
             } else {
-                const exampleBuilderInputs: SessionExampleBuilderInput[] = [];
+                const exampleBuilderInputs: SessionExampleBuilderInput[] = []
                 if (publishSchema != null) {
                     exampleBuilderInputs.push({
-                        type: "publish",
+                        type: 'publish',
                         payload: publishSchema
-                    });
+                    })
                 }
                 if (subscribeSchema != null) {
                     exampleBuilderInputs.push({
-                        type: "subscribe",
+                        type: 'subscribe',
                         payload: subscribeSchema
-                    });
+                    })
                 }
                 const autogenExample = exampleFactory.buildWebsocketSessionExample({
                     handshake: {
@@ -273,28 +273,28 @@ export function parseAsyncAPIV2({
                         queryParameters
                     },
                     messages: exampleBuilderInputs
-                });
+                })
                 if (autogenExample != null) {
-                    examples.push(autogenExample);
+                    examples.push(autogenExample)
                 }
             }
 
-            const address = getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_CHANNEL_ADDRESS);
-            const path = address != null ? address : transformToValidPath(channelPath);
-            const messages: WebsocketMessageSchema[] = [];
+            const address = getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_CHANNEL_ADDRESS)
+            const path = address != null ? address : transformToValidPath(channelPath)
+            const messages: WebsocketMessageSchema[] = []
             if (publishSchema != null) {
                 messages.push({
-                    origin: "client",
-                    name: "publish",
+                    origin: 'client',
+                    name: 'publish',
                     body: convertSchemaWithExampleToSchema(publishSchema)
-                });
+                })
             }
             if (subscribeSchema != null) {
                 messages.push({
-                    origin: "server",
-                    name: "subscribe",
+                    origin: 'server',
+                    name: 'subscribe',
                     body: convertSchemaWithExampleToSchema(subscribeSchema)
-                });
+                })
             }
             parsedChannels[channelPath] = {
                 audiences: getExtension<string[] | undefined>(channel, FernOpenAPIExtension.AUDIENCES) ?? [],
@@ -304,20 +304,20 @@ export function parseAsyncAPIV2({
                             ...header,
                             schema: convertSchemaWithExampleToSchema(header.schema),
                             env: header.env
-                        };
+                        }
                     }),
                     queryParameters: queryParameters.map((param) => {
                         return {
                             ...param,
                             schema: convertSchemaWithExampleToSchema(param.schema)
-                        };
+                        }
                     }),
                     pathParameters: pathParameters.map((param) => {
                         return {
                             ...param,
                             parameterNameOverride: undefined, // come back
                             schema: convertSchemaWithExampleToSchema(param.schema)
-                        };
+                        }
                     })
                 },
                 groupName: context.resolveGroupName([
@@ -332,7 +332,7 @@ export function parseAsyncAPIV2({
                 description: channel.description,
                 examples,
                 source
-            };
+            }
         }
     }
 
@@ -341,7 +341,7 @@ export function parseAsyncAPIV2({
         channels: parsedChannels != null ? parsedChannels : undefined,
         servers: Object.values(servers),
         basePath: getExtension<string | undefined>(document, FernAsyncAPIExtension.BASE_PATH)
-    };
+    }
 }
 
 function convertOneOfToSchema({
@@ -353,37 +353,37 @@ function convertOneOfToSchema({
     options,
     asyncApiOptions
 }: {
-    breadcrumbs: string[];
-    generatedName: string;
-    event: AsyncAPIV2.PublishEvent | AsyncAPIV2.SubscribeEvent;
-    context: AsyncAPIV2ParserContext;
-    source: Source;
-    options: ParseOpenAPIOptions;
-    asyncApiOptions: ParseAsyncAPIOptions;
+    breadcrumbs: string[]
+    generatedName: string
+    event: AsyncAPIV2.PublishEvent | AsyncAPIV2.SubscribeEvent
+    context: AsyncAPIV2ParserContext
+    source: Source
+    options: ParseOpenAPIOptions
+    asyncApiOptions: ParseAsyncAPIOptions
 }): SchemaWithExample | undefined {
-    if ("oneOf" in event.message && event.message.oneOf != null) {
-        const subtypes: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[] = [];
-        const prefixes: UndiscriminatedOneOfPrefix[] = [];
+    if ('oneOf' in event.message && event.message.oneOf != null) {
+        const subtypes: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[] = []
+        const prefixes: UndiscriminatedOneOfPrefix[] = []
         for (const schema of event.message.oneOf) {
-            let resolvedSchema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject;
-            let namePrefix: UndiscriminatedOneOfPrefix = { type: "notFound" };
+            let resolvedSchema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject
+            let namePrefix: UndiscriminatedOneOfPrefix = { type: 'notFound' }
             if (isReferenceObject(schema)) {
-                const resolvedMessage = context.resolveMessageReference(schema);
-                if (!isReferenceObject(resolvedMessage.payload) && asyncApiOptions.naming === "v2") {
-                    namePrefix = resolvedMessage.name ? { type: "name", name: resolvedMessage.name } : namePrefix;
+                const resolvedMessage = context.resolveMessageReference(schema)
+                if (!isReferenceObject(resolvedMessage.payload) && asyncApiOptions.naming === 'v2') {
+                    namePrefix = resolvedMessage.name ? { type: 'name', name: resolvedMessage.name } : namePrefix
                     resolvedSchema = {
                         ...resolvedMessage.payload,
                         title: resolvedMessage.name ?? resolvedMessage.payload.title,
                         description: resolvedMessage.name ?? resolvedMessage.payload.description
-                    };
+                    }
                 } else {
-                    resolvedSchema = resolvedMessage.payload;
+                    resolvedSchema = resolvedMessage.payload
                 }
             } else {
-                resolvedSchema = schema;
+                resolvedSchema = schema
             }
-            prefixes.push(namePrefix);
-            subtypes.push(resolvedSchema);
+            prefixes.push(namePrefix)
+            subtypes.push(resolvedSchema)
         }
         return convertUndiscriminatedOneOf({
             description: event.description ?? event.message.description,
@@ -399,10 +399,10 @@ function convertOneOfToSchema({
             encoding: undefined,
             source,
             namespace: context.namespace,
-            subtypePrefixOverrides: asyncApiOptions.naming === "v2" ? prefixes : []
-        });
+            subtypePrefixOverrides: asyncApiOptions.naming === 'v2' ? prefixes : []
+        })
     }
-    return undefined;
+    return undefined
 }
 
 function convertMessageToSchema({
@@ -412,18 +412,18 @@ function convertMessageToSchema({
     context,
     source
 }: {
-    action: "Publish" | "Subscribe";
-    channelPath: string;
-    message: AsyncAPIV2.MessageV2;
-    context: AsyncAPIV2ParserContext;
-    source: Source;
+    action: 'Publish' | 'Subscribe'
+    channelPath: string
+    message: AsyncAPIV2.MessageV2
+    context: AsyncAPIV2ParserContext
+    source: Source
 }): SchemaWithExample | undefined {
     if (message.payload != null) {
-        let resolvedSchema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject = message.payload;
+        let resolvedSchema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject = message.payload
         if (isReferenceObject(message.payload)) {
-            resolvedSchema = context.resolveSchemaReference(message.payload);
+            resolvedSchema = context.resolveSchemaReference(message.payload)
         }
-        return convertSchema(resolvedSchema, false, context, [channelPath, action], source, context.namespace);
+        return convertSchema(resolvedSchema, false, context, [channelPath, action], source, context.namespace)
     }
-    return undefined;
+    return undefined
 }

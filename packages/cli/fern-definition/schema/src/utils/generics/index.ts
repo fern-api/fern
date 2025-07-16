@@ -1,2 +1,2 @@
-export { parseGeneric } from "./parseGeneric";
-export { isGeneric } from "./isGeneric";
+export { parseGeneric } from './parseGeneric'
+export { isGeneric } from './isGeneric'

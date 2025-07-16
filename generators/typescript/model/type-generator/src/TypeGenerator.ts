@@ -1,4 +1,4 @@
-import { Reference } from "@fern-typescript/commons";
+import { Reference } from '@fern-typescript/commons'
 import {
     BaseContext,
     GeneratedAliasType,
@@ -7,7 +7,7 @@ import {
     GeneratedType,
     GeneratedUndiscriminatedUnionType,
     GeneratedUnionType
-} from "@fern-typescript/contexts";
+} from '@fern-typescript/contexts'
 
 import {
     EnumTypeDeclaration,
@@ -19,49 +19,49 @@ import {
     TypeReference,
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
-} from "@fern-fern/ir-sdk/api";
+} from '@fern-fern/ir-sdk/api'
 
-import { GeneratedAliasTypeImpl } from "./alias/GeneratedAliasTypeImpl";
-import { GeneratedBrandedStringAliasImpl } from "./alias/GeneratedBrandedStringAliasImpl";
-import { GeneratedEnumTypeImpl } from "./enum/GeneratedEnumTypeImpl";
-import { GeneratedObjectTypeImpl } from "./object/GeneratedObjectTypeImpl";
-import { GeneratedUndiscriminatedUnionTypeImpl } from "./undiscriminated-union/GeneratedUndiscriminatedUnionTypeImpl";
-import { GeneratedUnionTypeImpl } from "./union/GeneratedUnionTypeImpl";
+import { GeneratedAliasTypeImpl } from './alias/GeneratedAliasTypeImpl'
+import { GeneratedBrandedStringAliasImpl } from './alias/GeneratedBrandedStringAliasImpl'
+import { GeneratedEnumTypeImpl } from './enum/GeneratedEnumTypeImpl'
+import { GeneratedObjectTypeImpl } from './object/GeneratedObjectTypeImpl'
+import { GeneratedUndiscriminatedUnionTypeImpl } from './undiscriminated-union/GeneratedUndiscriminatedUnionTypeImpl'
+import { GeneratedUnionTypeImpl } from './union/GeneratedUnionTypeImpl'
 
 export declare namespace TypeGenerator {
     export interface Init {
-        useBrandedStringAliases: boolean;
-        includeUtilsOnUnionMembers: boolean;
-        includeOtherInUnionTypes: boolean;
-        includeSerdeLayer: boolean;
-        noOptionalProperties: boolean;
-        retainOriginalCasing: boolean;
-        enableInlineTypes: boolean;
+        useBrandedStringAliases: boolean
+        includeUtilsOnUnionMembers: boolean
+        includeOtherInUnionTypes: boolean
+        includeSerdeLayer: boolean
+        noOptionalProperties: boolean
+        retainOriginalCasing: boolean
+        enableInlineTypes: boolean
     }
 
     export namespace generateType {
         export interface Args<Context> {
-            typeName: string;
-            shape: Type;
-            examples: ExampleType[];
-            docs: string | undefined;
-            fernFilepath: FernFilepath;
-            getReferenceToSelf: (context: Context) => Reference;
-            includeSerdeLayer: boolean;
-            retainOriginalCasing: boolean;
-            inline: boolean;
+            typeName: string
+            shape: Type
+            examples: ExampleType[]
+            docs: string | undefined
+            fernFilepath: FernFilepath
+            getReferenceToSelf: (context: Context) => Reference
+            includeSerdeLayer: boolean
+            retainOriginalCasing: boolean
+            inline: boolean
         }
     }
 }
 
 export class TypeGenerator<Context extends BaseContext = BaseContext> {
-    private useBrandedStringAliases: boolean;
-    private includeUtilsOnUnionMembers: boolean;
-    private includeOtherInUnionTypes: boolean;
-    private includeSerdeLayer: boolean;
-    private noOptionalProperties: boolean;
-    private retainOriginalCasing: boolean;
-    private enableInlineTypes: boolean;
+    private useBrandedStringAliases: boolean
+    private includeUtilsOnUnionMembers: boolean
+    private includeOtherInUnionTypes: boolean
+    private includeSerdeLayer: boolean
+    private noOptionalProperties: boolean
+    private retainOriginalCasing: boolean
+    private enableInlineTypes: boolean
 
     constructor({
         useBrandedStringAliases,
@@ -72,13 +72,13 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
         retainOriginalCasing,
         enableInlineTypes
     }: TypeGenerator.Init) {
-        this.useBrandedStringAliases = useBrandedStringAliases;
-        this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers;
-        this.includeOtherInUnionTypes = includeOtherInUnionTypes;
-        this.includeSerdeLayer = includeSerdeLayer;
-        this.noOptionalProperties = noOptionalProperties;
-        this.retainOriginalCasing = retainOriginalCasing;
-        this.enableInlineTypes = enableInlineTypes;
+        this.useBrandedStringAliases = useBrandedStringAliases
+        this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers
+        this.includeOtherInUnionTypes = includeOtherInUnionTypes
+        this.includeSerdeLayer = includeSerdeLayer
+        this.noOptionalProperties = noOptionalProperties
+        this.retainOriginalCasing = retainOriginalCasing
+        this.enableInlineTypes = enableInlineTypes
     }
 
     public generateType({
@@ -115,9 +115,9 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
                     getReferenceToSelf
                 }),
             _other: () => {
-                throw new Error("Unknown type declaration shape: " + shape.type);
+                throw new Error('Unknown type declaration shape: ' + shape.type)
             }
-        });
+        })
     }
 
     private generateUndiscriminatedUnion({
@@ -128,12 +128,12 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
         fernFilepath,
         getReferenceToSelf
     }: {
-        typeName: string;
-        shape: UndiscriminatedUnionTypeDeclaration;
-        examples: ExampleType[];
-        docs: string | undefined;
-        fernFilepath: FernFilepath;
-        getReferenceToSelf: (context: Context) => Reference;
+        typeName: string
+        shape: UndiscriminatedUnionTypeDeclaration
+        examples: ExampleType[]
+        docs: string | undefined
+        fernFilepath: FernFilepath
+        getReferenceToSelf: (context: Context) => Reference
     }): GeneratedUndiscriminatedUnionType<Context> {
         return new GeneratedUndiscriminatedUnionTypeImpl({
             typeName,
@@ -146,7 +146,7 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
             noOptionalProperties: this.noOptionalProperties,
             retainOriginalCasing: this.retainOriginalCasing,
             enableInlineTypes: this.enableInlineTypes
-        });
+        })
     }
 
     private generateUnion({
@@ -158,13 +158,13 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
         getReferenceToSelf,
         inline
     }: {
-        typeName: string;
-        shape: UnionTypeDeclaration;
-        examples: ExampleType[];
-        docs: string | undefined;
-        fernFilepath: FernFilepath;
-        getReferenceToSelf: (context: Context) => Reference;
-        inline: boolean;
+        typeName: string
+        shape: UnionTypeDeclaration
+        examples: ExampleType[]
+        docs: string | undefined
+        fernFilepath: FernFilepath
+        getReferenceToSelf: (context: Context) => Reference
+        inline: boolean
     }): GeneratedUnionType<Context> {
         return new GeneratedUnionTypeImpl({
             typeName,
@@ -180,7 +180,7 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
             retainOriginalCasing: this.retainOriginalCasing,
             enableInlineTypes: this.enableInlineTypes,
             inline
-        });
+        })
     }
 
     private generateObject({
@@ -191,12 +191,12 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
         fernFilepath,
         getReferenceToSelf
     }: {
-        typeName: string;
-        shape: ObjectTypeDeclaration;
-        examples: ExampleType[];
-        docs: string | undefined;
-        fernFilepath: FernFilepath;
-        getReferenceToSelf: (context: Context) => Reference;
+        typeName: string
+        shape: ObjectTypeDeclaration
+        examples: ExampleType[]
+        docs: string | undefined
+        fernFilepath: FernFilepath
+        getReferenceToSelf: (context: Context) => Reference
     }): GeneratedObjectType<Context> {
         return new GeneratedObjectTypeImpl({
             typeName,
@@ -209,7 +209,7 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
             noOptionalProperties: this.noOptionalProperties,
             retainOriginalCasing: this.retainOriginalCasing,
             enableInlineTypes: this.enableInlineTypes
-        });
+        })
     }
 
     private generateEnum({
@@ -220,12 +220,12 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
         fernFilepath,
         getReferenceToSelf
     }: {
-        typeName: string;
-        shape: EnumTypeDeclaration;
-        examples: ExampleType[];
-        docs: string | undefined;
-        fernFilepath: FernFilepath;
-        getReferenceToSelf: (context: Context) => Reference;
+        typeName: string
+        shape: EnumTypeDeclaration
+        examples: ExampleType[]
+        docs: string | undefined
+        fernFilepath: FernFilepath
+        getReferenceToSelf: (context: Context) => Reference
     }): GeneratedEnumType<Context> {
         return new GeneratedEnumTypeImpl({
             typeName,
@@ -239,7 +239,7 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
             includeEnumUtils: this.includeUtilsOnUnionMembers,
             retainOriginalCasing: this.retainOriginalCasing,
             enableInlineTypes: this.enableInlineTypes
-        });
+        })
     }
 
     public generateAlias({
@@ -250,12 +250,12 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
         fernFilepath,
         getReferenceToSelf
     }: {
-        typeName: string;
-        aliasOf: TypeReference;
-        examples: ExampleType[];
-        docs: string | undefined;
-        fernFilepath: FernFilepath;
-        getReferenceToSelf: (context: Context) => Reference;
+        typeName: string
+        aliasOf: TypeReference
+        examples: ExampleType[]
+        docs: string | undefined
+        fernFilepath: FernFilepath
+        getReferenceToSelf: (context: Context) => Reference
     }): GeneratedAliasType<Context> {
         return this.useBrandedStringAliases && isTypeStringLike(aliasOf)
             ? new GeneratedBrandedStringAliasImpl({
@@ -281,13 +281,13 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
                   noOptionalProperties: this.noOptionalProperties,
                   retainOriginalCasing: this.retainOriginalCasing,
                   enableInlineTypes: this.enableInlineTypes
-              });
+              })
     }
 }
 
 function isTypeStringLike(type: TypeReference): boolean {
-    if (type.type !== "primitive") {
-        return false;
+    if (type.type !== 'primitive') {
+        return false
     }
     return PrimitiveTypeV1._visit(type.primitive.v1, {
         integer: () => false,
@@ -304,5 +304,5 @@ function isTypeStringLike(type: TypeReference): boolean {
         base64: () => true,
         bigInteger: () => true,
         _other: () => false
-    });
+    })
 }

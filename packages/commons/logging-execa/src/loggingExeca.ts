@@ -1,15 +1,15 @@
-import execa, { ExecaReturnValue } from "execa";
+import execa, { ExecaReturnValue } from 'execa'
 
-import { Logger } from "@fern-api/logger";
+import { Logger } from '@fern-api/logger'
 
 export declare namespace loggingExeca {
     export interface Options extends execa.Options {
-        doNotPipeOutput?: boolean;
-        secrets?: string[];
-        substitutions?: Record<string, string>;
+        doNotPipeOutput?: boolean
+        secrets?: string[]
+        substitutions?: Record<string, string>
     }
 
-    export type ReturnValue = ExecaReturnValue;
+    export type ReturnValue = ExecaReturnValue
 }
 
 // returns the current command being run by execa
@@ -18,22 +18,22 @@ export function runExeca(
     executable: string,
     args: string[] = [],
     { doNotPipeOutput = false, secrets = [], substitutions = {}, ...execaOptions }: loggingExeca.Options = {}
-): import("execa").ExecaChildProcess {
+): import('execa').ExecaChildProcess {
     const allSubstitutions = secrets.reduce(
         (acc, secret) => ({
             ...acc,
-            [secret]: "<redacted>"
+            [secret]: '<redacted>'
         }),
         substitutions
-    );
+    )
 
-    let logLine = [executable, ...args].join(" ");
+    let logLine = [executable, ...args].join(' ')
     for (const [substitutionKey, substitutionValue] of Object.entries(allSubstitutions)) {
-        logLine = logLine.replaceAll(substitutionKey, substitutionValue);
+        logLine = logLine.replaceAll(substitutionKey, substitutionValue)
     }
 
-    logger?.debug(`+ ${logLine}`);
-    return execa(executable, args, execaOptions);
+    logger?.debug(`+ ${logLine}`)
+    return execa(executable, args, execaOptions)
 }
 
 // finishes executing the command and returns the result
@@ -43,17 +43,17 @@ export async function loggingExeca(
     args: string[] = [],
     { doNotPipeOutput = false, secrets = [], substitutions = {}, ...execaOptions }: loggingExeca.Options = {}
 ): Promise<loggingExeca.ReturnValue> {
-    const command = runExeca(logger, executable, args, { doNotPipeOutput, secrets, substitutions, ...execaOptions });
+    const command = runExeca(logger, executable, args, { doNotPipeOutput, secrets, substitutions, ...execaOptions })
     if (!doNotPipeOutput) {
-        command.stdout?.pipe(process.stdout);
-        command.stderr?.pipe(process.stderr);
+        command.stdout?.pipe(process.stdout)
+        command.stderr?.pipe(process.stderr)
     }
-    const result = await command;
+    const result = await command
     if (result.stdout == null) {
-        result.stdout = "";
+        result.stdout = ''
     }
     if (result.stderr == null) {
-        result.stderr = "";
+        result.stderr = ''
     }
-    return result;
+    return result
 }

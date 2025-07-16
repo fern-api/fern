@@ -1,8 +1,8 @@
-import { Reference } from "@fern-typescript/commons";
+import { Reference } from '@fern-typescript/commons'
 
-import { GeneratedTimeoutSdkError } from "./GeneratedTimeoutSdkError";
+import { GeneratedTimeoutSdkError } from './GeneratedTimeoutSdkError'
 
 export interface TimeoutSdkErrorContext {
-    getReferenceToTimeoutSdkError: () => Reference;
-    getGeneratedTimeoutSdkError: () => GeneratedTimeoutSdkError;
+    getReferenceToTimeoutSdkError: () => Reference
+    getGeneratedTimeoutSdkError: () => GeneratedTimeoutSdkError
 }

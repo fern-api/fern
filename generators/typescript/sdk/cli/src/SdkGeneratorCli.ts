@@ -1,34 +1,34 @@
-import { AbstractGeneratorCli } from "@fern-typescript/abstract-generator-cli";
-import { NpmPackage, PersistedTypescriptProject, fixImportsForEsm, writeTemplateFiles } from "@fern-typescript/commons";
-import { GeneratorContext } from "@fern-typescript/contexts";
-import { SdkGenerator } from "@fern-typescript/sdk-generator";
+import { AbstractGeneratorCli } from '@fern-typescript/abstract-generator-cli'
+import { NpmPackage, PersistedTypescriptProject, fixImportsForEsm, writeTemplateFiles } from '@fern-typescript/commons'
+import { GeneratorContext } from '@fern-typescript/contexts'
+import { SdkGenerator } from '@fern-typescript/sdk-generator'
 
-import { FernGeneratorExec } from "@fern-api/base-generator";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { getNamespaceExport } from "@fern-api/typescript-base";
+import { FernGeneratorExec } from '@fern-api/base-generator'
+import { AbsoluteFilePath } from '@fern-api/fs-utils'
+import { getNamespaceExport } from '@fern-api/typescript-base'
 
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { IntermediateRepresentation } from '@fern-fern/ir-sdk/api'
 
-import { SdkCustomConfig } from "./custom-config/SdkCustomConfig";
-import { SdkCustomConfigSchema } from "./custom-config/schema/SdkCustomConfigSchema";
+import { SdkCustomConfig } from './custom-config/SdkCustomConfig'
+import { SdkCustomConfigSchema } from './custom-config/schema/SdkCustomConfigSchema'
 
 export declare namespace SdkGeneratorCli {
     export interface Init {
-        configOverrides?: Partial<SdkCustomConfig>;
+        configOverrides?: Partial<SdkCustomConfig>
     }
 }
 
 export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
-    private configOverrides: Partial<SdkCustomConfig>;
+    private configOverrides: Partial<SdkCustomConfig>
 
     constructor({ configOverrides }: SdkGeneratorCli.Init = {}) {
-        super();
-        this.configOverrides = configOverrides ?? {};
+        super()
+        this.configOverrides = configOverrides ?? {}
     }
 
     protected parseCustomConfig(customConfig: unknown): SdkCustomConfig {
-        const parsed = customConfig != null ? SdkCustomConfigSchema.parse(customConfig) : undefined;
-        const noSerdeLayer = parsed?.noSerdeLayer ?? true;
+        const parsed = customConfig != null ? SdkCustomConfigSchema.parse(customConfig) : undefined
+        const noSerdeLayer = parsed?.noSerdeLayer ?? true
         return {
             useBrandedStringAliases: parsed?.useBrandedStringAliases ?? false,
             outputSourceFiles: parsed?.outputSourceFiles ?? true,
@@ -67,14 +67,14 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             noScripts: parsed?.noScripts ?? false,
             useBigInt: parsed?.useBigInt ?? false,
             useLegacyExports: parsed?.useLegacyExports ?? false,
-            streamType: parsed?.streamType ?? "web",
-            fileResponseType: parsed?.fileResponseType ?? "binary-response",
-            formDataSupport: parsed?.formDataSupport ?? "Node18",
-            fetchSupport: parsed?.fetchSupport ?? "native",
+            streamType: parsed?.streamType ?? 'web',
+            fileResponseType: parsed?.fileResponseType ?? 'binary-response',
+            formDataSupport: parsed?.formDataSupport ?? 'Node18',
+            fetchSupport: parsed?.fetchSupport ?? 'native',
             packagePath: parsed?.packagePath,
             omitFernHeaders: parsed?.omitFernHeaders ?? false,
             useDefaultRequestParameterValues: parsed?.useDefaultRequestParameterValues ?? false
-        };
+        }
     }
 
     protected async generateTypescriptProject({
@@ -84,19 +84,19 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         generatorContext,
         intermediateRepresentation
     }: {
-        config: FernGeneratorExec.GeneratorConfig;
-        customConfig: SdkCustomConfig;
-        npmPackage: NpmPackage;
-        generatorContext: GeneratorContext;
-        intermediateRepresentation: IntermediateRepresentation;
+        config: FernGeneratorExec.GeneratorConfig
+        customConfig: SdkCustomConfig
+        npmPackage: NpmPackage
+        generatorContext: GeneratorContext
+        intermediateRepresentation: IntermediateRepresentation
     }): Promise<PersistedTypescriptProject> {
-        const customConfig = this.customConfigWithOverrides(_customConfig);
-        const useLegacyExports = customConfig.useLegacyExports ?? false;
+        const customConfig = this.customConfigWithOverrides(_customConfig)
+        const useLegacyExports = customConfig.useLegacyExports ?? false
         const namespaceExport = getNamespaceExport({
             organization: config.organization,
             workspaceName: config.workspaceName,
             namespaceExport: customConfig.namespaceExport
-        });
+        })
         const sdkGenerator = new SdkGenerator({
             namespaceExport,
             intermediateRepresentation,
@@ -157,26 +157,26 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 enableInlineTypes: customConfig.enableInlineTypes ?? true,
                 useLegacyExports,
                 generateWireTests: customConfig.generateWireTests ?? false,
-                streamType: customConfig.streamType ?? "web",
-                fileResponseType: customConfig.fileResponseType ?? "binary-response",
-                formDataSupport: customConfig.formDataSupport ?? "Node18",
-                fetchSupport: customConfig.fetchSupport ?? "native",
+                streamType: customConfig.streamType ?? 'web',
+                fileResponseType: customConfig.fileResponseType ?? 'binary-response',
+                formDataSupport: customConfig.formDataSupport ?? 'Node18',
+                fetchSupport: customConfig.fetchSupport ?? 'native',
                 packagePath: customConfig.packagePath,
                 omitFernHeaders: customConfig.omitFernHeaders ?? false,
                 useDefaultRequestParameterValues: customConfig.useDefaultRequestParameterValues ?? false
             }
-        });
-        const typescriptProject = await sdkGenerator.generate();
-        const persistedTypescriptProject = await typescriptProject.persist();
-        const rootDirectory = persistedTypescriptProject.getRootDirectory();
+        })
+        const typescriptProject = await sdkGenerator.generate()
+        const persistedTypescriptProject = await typescriptProject.persist()
+        const rootDirectory = persistedTypescriptProject.getRootDirectory()
         await sdkGenerator.copyCoreUtilities({
             pathToSrc: persistedTypescriptProject.getSrcDirectory(),
             pathToRoot: rootDirectory
-        });
-        await writeTemplateFiles(rootDirectory, this.getTemplateVariables(customConfig));
-        await this.postProcess(persistedTypescriptProject, customConfig);
+        })
+        await writeTemplateFiles(rootDirectory, this.getTemplateVariables(customConfig))
+        await this.postProcess(persistedTypescriptProject, customConfig)
 
-        return persistedTypescriptProject;
+        return persistedTypescriptProject
     }
 
     private getTemplateVariables(customConfig: SdkCustomConfig): Record<string, unknown> {
@@ -185,67 +185,67 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             fileResponseType: customConfig.fileResponseType,
             formDataSupport: customConfig.formDataSupport,
             fetchSupport: customConfig.fetchSupport
-        };
+        }
     }
 
     private async postProcess(
         persistedTypescriptProject: PersistedTypescriptProject,
         _customConfig: SdkCustomConfig
     ): Promise<void> {
-        const customConfig = this.customConfigWithOverrides(_customConfig);
+        const customConfig = this.customConfigWithOverrides(_customConfig)
         if (customConfig.useLegacyExports === false) {
-            await fixImportsForEsm(persistedTypescriptProject.getRootDirectory());
+            await fixImportsForEsm(persistedTypescriptProject.getRootDirectory())
         }
     }
 
     protected isPackagePrivate(_customConfig: SdkCustomConfig): boolean {
-        const customConfig = this.customConfigWithOverrides(_customConfig);
-        return customConfig.isPackagePrivate;
+        const customConfig = this.customConfigWithOverrides(_customConfig)
+        return customConfig.isPackagePrivate
     }
 
     protected outputSourceFiles(_customConfig: SdkCustomConfig): boolean {
-        const customConfig = this.customConfigWithOverrides(_customConfig);
-        return customConfig.outputSourceFiles;
+        const customConfig = this.customConfigWithOverrides(_customConfig)
+        return customConfig.outputSourceFiles
     }
 
     protected shouldTolerateRepublish(_customConfig: SdkCustomConfig): boolean {
-        const customConfig = this.customConfigWithOverrides(_customConfig);
-        return customConfig.tolerateRepublish;
+        const customConfig = this.customConfigWithOverrides(_customConfig)
+        return customConfig.tolerateRepublish
     }
 
     protected publishToJsr(_customConfig: SdkCustomConfig): boolean {
-        const customConfig = this.customConfigWithOverrides(_customConfig);
-        return customConfig.publishToJsr ?? false;
+        const customConfig = this.customConfigWithOverrides(_customConfig)
+        return customConfig.publishToJsr ?? false
     }
 
-    protected executionEnvironment(config: FernGeneratorExec.GeneratorConfig): "local" | "dev" | "prod" {
-        return config.environment.type === "local"
-            ? "local"
-            : config.environment.coordinatorUrlV2.endsWith("dev2.buildwithfern.com")
-              ? "dev"
-              : "prod";
+    protected executionEnvironment(config: FernGeneratorExec.GeneratorConfig): 'local' | 'dev' | 'prod' {
+        return config.environment.type === 'local'
+            ? 'local'
+            : config.environment.coordinatorUrlV2.endsWith('dev2.buildwithfern.com')
+              ? 'dev'
+              : 'prod'
     }
 
     private customConfigWithOverrides(customConfig: SdkCustomConfig): SdkCustomConfig {
-        return { ...customConfig, ...this.configOverrides };
+        return { ...customConfig, ...this.configOverrides }
     }
 
     private shouldGenerateJestTests({
         ir,
         config
     }: {
-        ir: IntermediateRepresentation;
-        config: FernGeneratorExec.GeneratorConfig;
+        ir: IntermediateRepresentation
+        config: FernGeneratorExec.GeneratorConfig
     }): boolean {
-        const hasGitHubOutputMode = config.output.mode.type === "github";
-        const publishConfig = ir.publishConfig;
+        const hasGitHubOutputMode = config.output.mode.type === 'github'
+        const publishConfig = ir.publishConfig
         switch (publishConfig?.type) {
-            case "filesystem":
-                return publishConfig.generateFullProject || hasGitHubOutputMode;
-            case "github":
-            case "direct":
+            case 'filesystem':
+                return publishConfig.generateFullProject || hasGitHubOutputMode
+            case 'github':
+            case 'direct':
             default:
-                return hasGitHubOutputMode;
+                return hasGitHubOutputMode
         }
     }
 }

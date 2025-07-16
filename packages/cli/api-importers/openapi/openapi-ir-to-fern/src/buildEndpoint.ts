@@ -1,29 +1,29 @@
-import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
-import { MediaType, assertNever } from "@fern-api/core-utils";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { Endpoint, EndpointExample, Request, Schema, SchemaId } from "@fern-api/openapi-ir";
-import { RelativeFilePath } from "@fern-api/path-utils";
+import { FERN_PACKAGE_MARKER_FILENAME } from '@fern-api/configuration'
+import { MediaType, assertNever } from '@fern-api/core-utils'
+import { RawSchemas } from '@fern-api/fern-definition-schema'
+import { Endpoint, EndpointExample, Request, Schema, SchemaId } from '@fern-api/openapi-ir'
+import { RelativeFilePath } from '@fern-api/path-utils'
 
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
-import { State } from "./State";
-import { buildEndpointExample } from "./buildEndpointExample";
-import { ERROR_DECLARATIONS_FILENAME, EXTERNAL_AUDIENCE } from "./buildFernDefinition";
-import { buildHeader } from "./buildHeader";
-import { buildPathParameter } from "./buildPathParameter";
-import { buildQueryParameter } from "./buildQueryParameter";
-import { buildTypeReference } from "./buildTypeReference";
-import { convertAvailability } from "./utils/convertAvailability";
-import { convertFullExample } from "./utils/convertFullExample";
-import { resolveLocationWithNamespace } from "./utils/convertSdkGroupName";
-import { convertToHttpMethod } from "./utils/convertToHttpMethod";
-import { convertToSourceSchema } from "./utils/convertToSourceSchema";
-import { getEndpointNamespace } from "./utils/getNamespaceFromGroup";
-import { getDocsFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
-import { isWriteMethod } from "./utils/isWriteMethod";
+import { OpenApiIrConverterContext } from './OpenApiIrConverterContext'
+import { State } from './State'
+import { buildEndpointExample } from './buildEndpointExample'
+import { ERROR_DECLARATIONS_FILENAME, EXTERNAL_AUDIENCE } from './buildFernDefinition'
+import { buildHeader } from './buildHeader'
+import { buildPathParameter } from './buildPathParameter'
+import { buildQueryParameter } from './buildQueryParameter'
+import { buildTypeReference } from './buildTypeReference'
+import { convertAvailability } from './utils/convertAvailability'
+import { convertFullExample } from './utils/convertFullExample'
+import { resolveLocationWithNamespace } from './utils/convertSdkGroupName'
+import { convertToHttpMethod } from './utils/convertToHttpMethod'
+import { convertToSourceSchema } from './utils/convertToSourceSchema'
+import { getEndpointNamespace } from './utils/getNamespaceFromGroup'
+import { getDocsFromTypeReference, getTypeFromTypeReference } from './utils/getTypeFromTypeReference'
+import { isWriteMethod } from './utils/isWriteMethod'
 
 export interface ConvertedEndpoint {
-    value: RawSchemas.HttpEndpointSchema;
-    schemaIdsToExclude: string[];
+    value: RawSchemas.HttpEndpointSchema
+    schemaIdsToExclude: string[]
 }
 
 export function buildEndpoint({
@@ -31,76 +31,76 @@ export function buildEndpoint({
     declarationFile,
     context
 }: {
-    context: OpenApiIrConverterContext;
-    declarationFile: RelativeFilePath;
-    endpoint: Endpoint;
+    context: OpenApiIrConverterContext
+    declarationFile: RelativeFilePath
+    endpoint: Endpoint
 }): ConvertedEndpoint {
-    const { nonRequestReferencedSchemas } = context.ir;
+    const { nonRequestReferencedSchemas } = context.ir
 
-    let schemaIdsToExclude: string[] = [];
+    let schemaIdsToExclude: string[] = []
 
-    const names = new Set<string>();
+    const names = new Set<string>()
 
-    let path = endpoint.path;
+    let path = endpoint.path
 
-    const maybeEndpointNamespace = getEndpointNamespace(endpoint.sdkName, endpoint.namespace);
+    const maybeEndpointNamespace = getEndpointNamespace(endpoint.sdkName, endpoint.namespace)
 
-    const pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> = {};
+    const pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> = {}
     for (const pathParameter of endpoint.pathParameters) {
         if (pathParameter.parameterNameOverride) {
-            path = path.replace(pathParameter.name, pathParameter.parameterNameOverride);
+            path = path.replace(pathParameter.name, pathParameter.parameterNameOverride)
         }
         pathParameters[pathParameter.parameterNameOverride ?? pathParameter.name] = buildPathParameter({
             pathParameter,
             context,
             fileContainingReference: declarationFile,
             namespace: maybeEndpointNamespace
-        });
-        names.add(pathParameter.name);
+        })
+        names.add(pathParameter.name)
     }
 
-    const queryParameters: Record<string, RawSchemas.HttpQueryParameterSchema> = {};
+    const queryParameters: Record<string, RawSchemas.HttpQueryParameterSchema> = {}
     for (const queryParameter of endpoint.queryParameters) {
         const convertedQueryParameter = buildQueryParameter({
             queryParameter,
             context,
             fileContainingReference: declarationFile,
             namespace: maybeEndpointNamespace
-        });
+        })
         if (convertedQueryParameter == null) {
             // TODO(dsinghvi): HACKHACK we are just excluding certain query params from the SDK
-            continue;
+            continue
         }
-        queryParameters[queryParameter.name] = convertedQueryParameter;
-        names.add(queryParameter.name);
+        queryParameters[queryParameter.name] = convertedQueryParameter
+        names.add(queryParameter.name)
     }
 
-    let pagination: RawSchemas.PaginationSchema | undefined = undefined;
+    let pagination: RawSchemas.PaginationSchema | undefined = undefined
     if (endpoint.pagination != null) {
         switch (endpoint.pagination.type) {
-            case "cursor":
+            case 'cursor':
                 pagination = {
                     cursor: endpoint.pagination.cursor,
                     next_cursor: endpoint.pagination.nextCursor,
                     results: endpoint.pagination.results
-                };
-                break;
-            case "offset":
+                }
+                break
+            case 'offset':
                 pagination = {
                     offset: endpoint.pagination.offset,
                     step: endpoint.pagination.step,
                     results: endpoint.pagination.results,
-                    "has-next-page": endpoint.pagination.hasNextPage
-                };
-                break;
-            case "custom":
+                    'has-next-page': endpoint.pagination.hasNextPage
+                }
+                break
+            case 'custom':
                 pagination = {
-                    type: "custom",
+                    type: 'custom',
                     results: endpoint.pagination.results
-                };
-                break;
+                }
+                break
             default:
-                assertNever(endpoint.pagination);
+                assertNever(endpoint.pagination)
         }
     }
 
@@ -111,41 +111,41 @@ export function buildEndpoint({
         docs: endpoint.description ?? undefined,
         pagination,
         source: endpoint.source != null ? convertToSourceSchema(endpoint.source) : undefined
-    };
+    }
 
     if (
         !endpointRequestSupportsInlinedPathParameters({ context, request: endpoint.request }) &&
         Object.keys(pathParameters).length > 0
     ) {
-        convertedEndpoint["path-parameters"] = pathParameters;
+        convertedEndpoint['path-parameters'] = pathParameters
     }
 
     if (endpoint.summary != null) {
-        convertedEndpoint["display-name"] = endpoint.summary;
+        convertedEndpoint['display-name'] = endpoint.summary
     }
 
-    const headers: Record<string, RawSchemas.HttpHeaderSchema> = {};
-    const alreadyUsedHeaders = context.builder.getGlobalHeaderNames();
-    const authHeaderName = context.builder.getAuthHeaderName();
+    const headers: Record<string, RawSchemas.HttpHeaderSchema> = {}
+    const alreadyUsedHeaders = context.builder.getGlobalHeaderNames()
+    const authHeaderName = context.builder.getAuthHeaderName()
     if (authHeaderName != null) {
-        alreadyUsedHeaders.add(authHeaderName);
+        alreadyUsedHeaders.add(authHeaderName)
     }
     const endpointSpecificHeaders = endpoint.headers.filter((header) => {
-        return !alreadyUsedHeaders.has(header.name);
-    });
+        return !alreadyUsedHeaders.has(header.name)
+    })
     for (const header of endpointSpecificHeaders) {
         const headerSchema = buildHeader({
             header,
             context,
             fileContainingReference: declarationFile,
             namespace: maybeEndpointNamespace
-        });
-        headers[header.name] = headerSchema;
-        names.add(typeof headerSchema === "string" ? header.name : (headerSchema.name ?? header.name));
+        })
+        headers[header.name] = headerSchema
+        names.add(typeof headerSchema === 'string' ? header.name : (headerSchema.name ?? header.name))
     }
 
     if (endpoint.request != null) {
-        context.setInState(State.Request);
+        context.setInState(State.Request)
         const convertedRequest = getRequest({
             endpoint,
             context,
@@ -160,32 +160,32 @@ export function buildEndpoint({
             headers: Object.keys(headers).length > 0 ? headers : undefined,
             usedNames: names,
             namespace: maybeEndpointNamespace
-        });
-        convertedEndpoint.request = convertedRequest.value;
-        schemaIdsToExclude = [...schemaIdsToExclude, ...(convertedRequest.schemaIdsToExclude ?? [])];
-        context.unsetInState(State.Request);
+        })
+        convertedEndpoint.request = convertedRequest.value
+        schemaIdsToExclude = [...schemaIdsToExclude, ...(convertedRequest.schemaIdsToExclude ?? [])]
+        context.unsetInState(State.Request)
     } else {
-        const hasPathParams = context.inlinePathParameters && Object.keys(pathParameters).length > 0;
-        const hasQueryParams = Object.keys(queryParameters).length > 0;
-        const hasHeaders = Object.keys(headers).length > 0;
+        const hasPathParams = context.inlinePathParameters && Object.keys(pathParameters).length > 0
+        const hasQueryParams = Object.keys(queryParameters).length > 0
+        const hasHeaders = Object.keys(headers).length > 0
 
-        const convertedRequest: RawSchemas.HttpRequestSchema = {};
+        const convertedRequest: RawSchemas.HttpRequestSchema = {}
 
         if (hasPathParams || hasQueryParams || hasHeaders) {
-            convertedRequest.name = endpoint.requestNameOverride ?? endpoint.generatedRequestName;
+            convertedRequest.name = endpoint.requestNameOverride ?? endpoint.generatedRequestName
         }
         if (hasPathParams) {
-            convertedRequest["path-parameters"] = pathParameters;
+            convertedRequest['path-parameters'] = pathParameters
         }
         if (hasQueryParams) {
-            convertedRequest["query-parameters"] = queryParameters;
+            convertedRequest['query-parameters'] = queryParameters
         }
         if (hasHeaders) {
-            convertedRequest.headers = headers;
+            convertedRequest.headers = headers
         }
 
         if (Object.keys(convertedRequest).length > 0) {
-            convertedEndpoint.request = convertedRequest;
+            convertedEndpoint.request = convertedRequest
         }
     }
 
@@ -198,16 +198,16 @@ export function buildEndpoint({
                     fileContainingReference: declarationFile,
                     namespace: maybeEndpointNamespace,
                     declarationDepth: 0
-                });
+                })
                 convertedEndpoint.response = {
                     docs: jsonResponse.description ?? undefined,
                     type: getTypeFromTypeReference(responseTypeReference)
-                };
+                }
                 if (jsonResponse.statusCode != null) {
-                    convertedEndpoint.response["status-code"] = jsonResponse.statusCode;
+                    convertedEndpoint.response['status-code'] = jsonResponse.statusCode
                 }
                 if (jsonResponse.responseProperty != null) {
-                    convertedEndpoint.response.property = jsonResponse.responseProperty;
+                    convertedEndpoint.response.property = jsonResponse.responseProperty
                 }
             },
             streamingJson: (jsonResponse) => {
@@ -217,12 +217,12 @@ export function buildEndpoint({
                     fileContainingReference: declarationFile,
                     namespace: maybeEndpointNamespace,
                     declarationDepth: 0
-                });
-                convertedEndpoint["response-stream"] = {
+                })
+                convertedEndpoint['response-stream'] = {
                     docs: jsonResponse.description ?? undefined,
                     type: getTypeFromTypeReference(responseTypeReference),
-                    format: "json"
-                };
+                    format: 'json'
+                }
             },
             streamingSse: (jsonResponse) => {
                 const responseTypeReference = buildTypeReference({
@@ -231,89 +231,89 @@ export function buildEndpoint({
                     fileContainingReference: declarationFile,
                     namespace: maybeEndpointNamespace,
                     declarationDepth: 0
-                });
-                convertedEndpoint["response-stream"] = {
+                })
+                convertedEndpoint['response-stream'] = {
                     docs: jsonResponse.description ?? undefined,
                     type: getTypeFromTypeReference(responseTypeReference),
-                    format: "sse"
-                };
+                    format: 'sse'
+                }
             },
             file: (fileResponse) => {
                 convertedEndpoint.response = {
                     docs: fileResponse.description ?? undefined,
-                    type: "file",
-                    "status-code": fileResponse.statusCode
-                };
+                    type: 'file',
+                    'status-code': fileResponse.statusCode
+                }
             },
             bytes: (bytesResponse) => {
                 convertedEndpoint.response = {
                     docs: bytesResponse.description ?? undefined,
-                    type: "bytes",
-                    "status-code": bytesResponse.statusCode
-                };
+                    type: 'bytes',
+                    'status-code': bytesResponse.statusCode
+                }
             },
             streamingText: (textResponse) => {
-                convertedEndpoint["response-stream"] = {
+                convertedEndpoint['response-stream'] = {
                     docs: textResponse.description ?? undefined,
-                    type: "text"
-                };
+                    type: 'text'
+                }
             },
             text: (textResponse) => {
                 convertedEndpoint.response = {
                     docs: textResponse.description ?? undefined,
-                    type: "text",
-                    "status-code": textResponse.statusCode
-                };
+                    type: 'text',
+                    'status-code': textResponse.statusCode
+                }
             },
             _other: () => {
-                throw new Error("Unrecognized Response type: " + endpoint.response?.type);
+                throw new Error('Unrecognized Response type: ' + endpoint.response?.type)
             }
-        });
+        })
     }
 
-    if (context.builder.getEnvironmentType() === "multi") {
-        const defaultServer = context.getDefaultServerName();
-        const serverOverride = endpoint.servers[0];
+    if (context.builder.getEnvironmentType() === 'multi') {
+        const defaultServer = context.getDefaultServerName()
+        const serverOverride = endpoint.servers[0]
         if (serverOverride == null) {
             if (defaultServer != null) {
-                convertedEndpoint.url = defaultServer;
+                convertedEndpoint.url = defaultServer
             }
         } else {
-            convertedEndpoint.url = serverOverride.name ?? undefined;
+            convertedEndpoint.url = serverOverride.name ?? undefined
         }
     }
 
     if (endpoint.idempotent) {
-        convertedEndpoint.idempotent = true;
+        convertedEndpoint.idempotent = true
     }
 
     if (endpoint.availability != null) {
-        convertedEndpoint.availability = convertAvailability(endpoint.availability);
+        convertedEndpoint.availability = convertAvailability(endpoint.availability)
     }
 
     Object.entries(endpoint.errors).forEach(([statusCode, httpError]) => {
-        let errorName = httpError.generatedName;
-        const fileContainingReference = RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME);
+        let errorName = httpError.generatedName
+        const fileContainingReference = RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME)
         if (context.builder.enableUniqueErrorsPerEndpoint) {
-            errorName = `${endpoint.generatedRequestName}${httpError.generatedName}`;
+            errorName = `${endpoint.generatedRequestName}${httpError.generatedName}`
             if (httpError.schema != null) {
-                if (httpError.schema.type !== "reference" && httpError.schema.type !== "oneOf") {
-                    httpError.schema.generatedName = `${endpoint.generatedRequestName}${httpError.schema.generatedName}`;
-                } else if (httpError.schema.type === "oneOf") {
-                    httpError.schema.value.generatedName = `${endpoint.generatedRequestName}${httpError.schema.value.generatedName}`;
+                if (httpError.schema.type !== 'reference' && httpError.schema.type !== 'oneOf') {
+                    httpError.schema.generatedName = `${endpoint.generatedRequestName}${httpError.schema.generatedName}`
+                } else if (httpError.schema.type === 'oneOf') {
+                    httpError.schema.value.generatedName = `${endpoint.generatedRequestName}${httpError.schema.value.generatedName}`
                 }
             }
             // fileContainingReference = declarationFile;
         }
 
         const errorDeclaration: RawSchemas.ErrorDeclarationSchema = {
-            "status-code": parseInt(statusCode)
-        };
+            'status-code': parseInt(statusCode)
+        }
 
         const errorDeclarationFile = resolveLocationWithNamespace({
             location: ERROR_DECLARATIONS_FILENAME,
             namespaceOverride: maybeEndpointNamespace
-        });
+        })
 
         if (httpError.schema != null) {
             const typeReference = buildTypeReference({
@@ -323,85 +323,85 @@ export function buildEndpoint({
                 declarationFile: errorDeclarationFile,
                 namespace: maybeEndpointNamespace,
                 declarationDepth: 0
-            });
-            errorDeclaration.type = getTypeFromTypeReference(typeReference);
-            errorDeclaration.docs = httpError.description;
+            })
+            errorDeclaration.type = getTypeFromTypeReference(typeReference)
+            errorDeclaration.docs = httpError.description
         }
 
         context.builder.addError(errorDeclarationFile, {
             name: errorName,
             schema: context.isErrorUnknownSchema(parseInt(statusCode))
-                ? { ...errorDeclaration, type: "unknown" }
+                ? { ...errorDeclaration, type: 'unknown' }
                 : errorDeclaration
-        });
+        })
 
         if (convertedEndpoint.errors == null) {
-            convertedEndpoint.errors = [];
+            convertedEndpoint.errors = []
         }
         const prefix = context.builder.addImport({
             file: declarationFile,
             fileToImport: errorDeclarationFile
-        });
-        convertedEndpoint.errors.push(prefix != null ? `${prefix}.${errorName}` : errorName);
+        })
+        convertedEndpoint.errors.push(prefix != null ? `${prefix}.${errorName}` : errorName)
 
-        const errorTypeReference = errorDeclaration.type;
+        const errorTypeReference = errorDeclaration.type
         if (errorTypeReference != null) {
             httpError.examples?.forEach((example) => {
                 const convertedExample: RawSchemas.ExampleTypeSchema = {
                     value: convertFullExample(example.example),
                     name: example.name,
                     docs: example.description
-                };
+                }
 
                 context.builder.addErrorExample(errorDeclarationFile, {
                     name: errorName,
                     example: convertedExample
-                });
-            });
+                })
+            })
         }
-    });
+    })
 
     if (endpoint.examples.length > 0) {
         convertedEndpoint.examples = convertEndpointExamples({
             endpointExamples: endpoint.examples,
             context
-        });
+        })
     }
 
     // if any internal endpoints exist, then set the audience to external if this endpoint is not internal
     if (context.ir.hasEndpointsMarkedInternal && (endpoint.internal == null || !endpoint.internal)) {
-        convertedEndpoint.audiences = [EXTERNAL_AUDIENCE, ...endpoint.audiences];
+        convertedEndpoint.audiences = [EXTERNAL_AUDIENCE, ...endpoint.audiences]
     } else if (endpoint.audiences.length > 0) {
-        convertedEndpoint.audiences = endpoint.audiences;
+        convertedEndpoint.audiences = endpoint.audiences
     }
 
     return {
         value: convertedEndpoint,
         schemaIdsToExclude
-    };
+    }
 }
 
 function convertEndpointExamples({
     endpointExamples,
     context
 }: {
-    endpointExamples: EndpointExample[];
-    context: OpenApiIrConverterContext;
+    endpointExamples: EndpointExample[]
+    context: OpenApiIrConverterContext
 }): RawSchemas.ExampleEndpointCallSchema[] {
     return endpointExamples.map((endpointExample) => {
         try {
-            return buildEndpointExample({ endpointExample, context });
+            return buildEndpointExample({ endpointExample, context })
         } catch (e) {
             // biome-ignore lint/suspicious/noConsole: allow console
-            console.error(`Error building endpoint example: ${e}`);
-            throw e;
+            console.error(`Error building endpoint example: ${e}`)
+            throw e
         }
-    });
+    })
 }
 
 interface ConvertedRequest {
-    value: RawSchemas.HttpRequestSchema;
-    schemaIdsToExclude?: string[];
+    value: RawSchemas.HttpRequestSchema
+    schemaIdsToExclude?: string[]
 }
 
 function getRequest({
@@ -418,27 +418,27 @@ function getRequest({
     usedNames,
     namespace
 }: {
-    endpoint: Endpoint;
-    declarationFile: RelativeFilePath;
-    context: OpenApiIrConverterContext;
-    request: Request;
-    requestNameOverride?: string;
-    generatedRequestName: string;
-    pathParameters?: Record<string, RawSchemas.HttpPathParameterSchema>;
-    queryParameters?: Record<string, RawSchemas.HttpQueryParameterSchema>;
-    nonRequestReferencedSchemas: SchemaId[];
-    headers?: Record<string, RawSchemas.HttpHeaderSchema>;
-    usedNames: Set<string>;
-    namespace: string | undefined;
+    endpoint: Endpoint
+    declarationFile: RelativeFilePath
+    context: OpenApiIrConverterContext
+    request: Request
+    requestNameOverride?: string
+    generatedRequestName: string
+    pathParameters?: Record<string, RawSchemas.HttpPathParameterSchema>
+    queryParameters?: Record<string, RawSchemas.HttpQueryParameterSchema>
+    nonRequestReferencedSchemas: SchemaId[]
+    headers?: Record<string, RawSchemas.HttpHeaderSchema>
+    usedNames: Set<string>
+    namespace: string | undefined
 }): ConvertedRequest {
-    if (request.type === "json") {
-        const maybeSchemaId = request.schema.type === "reference" ? request.schema.schema : undefined;
+    if (request.type === 'json') {
+        const maybeSchemaId = request.schema.type === 'reference' ? request.schema.schema : undefined
         const resolvedSchema =
-            request.schema.type === "reference" ? context.getSchema(request.schema.schema, namespace) : request.schema;
+            request.schema.type === 'reference' ? context.getSchema(request.schema.schema, namespace) : request.schema
         // the request body is referenced if it is not an object or if other parts of the spec
         // refer to the same type
         if (
-            resolvedSchema?.type !== "object" ||
+            resolvedSchema?.type !== 'object' ||
             (maybeSchemaId != null && nonRequestReferencedSchemas.includes(maybeSchemaId))
         ) {
             const requestTypeReference = buildTypeReference({
@@ -447,52 +447,52 @@ function getRequest({
                 context,
                 namespace,
                 declarationDepth: 0
-            });
+            })
             const convertedRequest: ConvertedRequest = {
                 schemaIdsToExclude: [],
                 value: {
                     body: requestTypeReference
                 }
-            };
+            }
 
-            const hasPathParams = Object.keys(pathParameters ?? {}).length > 0;
-            const hasQueryParams = Object.keys(queryParameters ?? {}).length > 0;
-            const hasHeaders = Object.keys(headers ?? {}).length > 0;
+            const hasPathParams = Object.keys(pathParameters ?? {}).length > 0
+            const hasQueryParams = Object.keys(queryParameters ?? {}).length > 0
+            const hasHeaders = Object.keys(headers ?? {}).length > 0
 
             if (hasPathParams) {
-                convertedRequest.value["path-parameters"] = pathParameters;
+                convertedRequest.value['path-parameters'] = pathParameters
             }
             if (hasQueryParams) {
-                convertedRequest.value["query-parameters"] = queryParameters;
+                convertedRequest.value['query-parameters'] = queryParameters
             }
             if (hasHeaders) {
-                convertedRequest.value.headers = headers;
+                convertedRequest.value.headers = headers
             }
             if (hasPathParams || hasQueryParams || hasHeaders) {
-                convertedRequest.value.name = requestNameOverride ?? generatedRequestName;
+                convertedRequest.value.name = requestNameOverride ?? generatedRequestName
             }
 
             if (request.contentType != null) {
-                convertedRequest.value["content-type"] = request.contentType;
+                convertedRequest.value['content-type'] = request.contentType
             }
 
             if (request.description != null) {
-                convertedRequest.value.docs = request.description;
+                convertedRequest.value.docs = request.description
             }
 
-            return convertedRequest;
+            return convertedRequest
         }
         const properties = Object.fromEntries(
             resolvedSchema.properties
                 .filter((property) => {
                     if (property.readonly == null) {
-                        return true;
+                        return true
                     }
-                    const writeEndpoint = isWriteMethod(endpoint.method);
+                    const writeEndpoint = isWriteMethod(endpoint.method)
                     if (writeEndpoint && property.readonly) {
-                        return false;
+                        return false
                     }
-                    return true;
+                    return true
                 })
                 .map((property) => {
                     const propertyTypeReference = buildTypeReference({
@@ -501,13 +501,13 @@ function getRequest({
                         context,
                         namespace,
                         declarationDepth: 1 // 1 level deep for request body properties
-                    });
+                    })
 
                     // TODO: clean up conditional logic
-                    const name = property.nameOverride ?? property.key;
-                    const availability = convertAvailability(property.availability);
+                    const name = property.nameOverride ?? property.key
+                    const availability = convertAvailability(property.availability)
                     if (!usedNames.has(name) && property.audiences.length <= 0) {
-                        usedNames.add(name);
+                        usedNames.add(name)
                         if (property.nameOverride != null) {
                             return [
                                 property.key,
@@ -517,42 +517,42 @@ function getRequest({
                                     name: property.nameOverride,
                                     availability
                                 }
-                            ];
+                            ]
                         }
                         return [
                             property.key,
                             availability
                                 ? {
-                                      ...(typeof propertyTypeReference === "string"
+                                      ...(typeof propertyTypeReference === 'string'
                                           ? { type: propertyTypeReference }
                                           : propertyTypeReference),
                                       availability
                                   }
                                 : propertyTypeReference
-                        ];
+                        ]
                     }
 
                     const typeReference: RawSchemas.ObjectPropertySchema = {
                         type: getTypeFromTypeReference(propertyTypeReference),
                         docs: getDocsFromTypeReference(propertyTypeReference)
-                    };
+                    }
 
                     if (usedNames.has(name)) {
-                        typeReference.name = property.generatedName;
+                        typeReference.name = property.generatedName
                     }
 
                     if (property.audiences.length > 0) {
-                        typeReference.audiences = property.audiences;
+                        typeReference.audiences = property.audiences
                     }
 
                     if (availability != null) {
-                        typeReference.availability = availability;
+                        typeReference.availability = availability
                     }
 
-                    usedNames.add(name);
-                    return [property.key, typeReference];
+                    usedNames.add(name)
+                    return [property.key, typeReference]
                 })
-        );
+        )
         const extendedSchemas: string[] = resolvedSchema.allOf
             .map((referencedSchema) => {
                 const allOfTypeReference = buildTypeReference({
@@ -561,69 +561,69 @@ function getRequest({
                     context,
                     namespace,
                     declarationDepth: 0
-                });
-                return getTypeFromTypeReference(allOfTypeReference);
+                })
+                return getTypeFromTypeReference(allOfTypeReference)
             })
-            .filter((schema) => schema !== "unknown");
+            .filter((schema) => schema !== 'unknown')
 
         const requestBodySchema: RawSchemas.HttpRequestBodySchema = {
             properties
-        };
+        }
         if (extendedSchemas.length > 0) {
-            requestBodySchema.extends = extendedSchemas;
+            requestBodySchema.extends = extendedSchemas
         }
         if (request.additionalProperties) {
-            requestBodySchema["extra-properties"] = true;
+            requestBodySchema['extra-properties'] = true
         }
 
         const convertedRequestValue: RawSchemas.HttpRequestSchema = {
             name: requestNameOverride ?? resolvedSchema.nameOverride ?? resolvedSchema.generatedName,
-            "path-parameters": pathParameters,
-            "query-parameters": queryParameters,
+            'path-parameters': pathParameters,
+            'query-parameters': queryParameters,
             headers,
             body: requestBodySchema
-        };
+        }
         if (request.contentType != null) {
-            convertedRequestValue["content-type"] = request.contentType;
+            convertedRequestValue['content-type'] = request.contentType
         }
         if (request.description != null) {
-            convertedRequestValue.docs = request.description;
+            convertedRequestValue.docs = request.description
         }
         return {
             schemaIdsToExclude: maybeSchemaId != null ? [maybeSchemaId] : [],
             value: convertedRequestValue
-        };
-    } else if (request.type === "octetStream") {
+        }
+    } else if (request.type === 'octetStream') {
         return {
             schemaIdsToExclude: [],
             value: {
-                body: "bytes",
-                "content-type": MediaType.APPLICATION_OCTET_STREAM,
-                "query-parameters": queryParameters,
+                body: 'bytes',
+                'content-type': MediaType.APPLICATION_OCTET_STREAM,
+                'query-parameters': queryParameters,
                 ...(request.description ? { docs: request.description } : {})
             }
-        };
-    } else if (request.type === "multipart") {
+        }
+    } else if (request.type === 'multipart') {
         // multipart
         const properties = Object.fromEntries(
             request.properties.map((property) => {
-                if (property.schema.type === "file") {
-                    let fileType = property.schema.isArray ? "list<file>" : "file";
-                    fileType = property.schema.isOptional ? `optional<${fileType}>` : fileType;
+                if (property.schema.type === 'file') {
+                    let fileType = property.schema.isArray ? 'list<file>' : 'file'
+                    fileType = property.schema.isOptional ? `optional<${fileType}>` : fileType
                     if (property.description != null || property.contentType != null) {
                         const propertyTypeReference: RawSchemas.HttpInlineRequestBodyPropertySchema = {
                             type: fileType
-                        };
+                        }
                         if (property.description != null) {
-                            propertyTypeReference.docs = property.description;
+                            propertyTypeReference.docs = property.description
                         }
                         if (property.contentType != null) {
-                            const contentType = property.contentType.split(",")[0];
-                            propertyTypeReference["content-type"] = contentType;
+                            const contentType = property.contentType.split(',')[0]
+                            propertyTypeReference['content-type'] = contentType
                         }
-                        return [property.key, propertyTypeReference];
+                        return [property.key, propertyTypeReference]
                     }
-                    return [property.key, fileType];
+                    return [property.key, fileType]
                 } else {
                     let propertyTypeReference: RawSchemas.HttpInlineRequestBodyPropertySchema = buildTypeReference({
                         schema: property.schema.value,
@@ -631,48 +631,48 @@ function getRequest({
                         context,
                         namespace,
                         declarationDepth: 1 // 1 level deep for request body properties
-                    });
+                    })
 
                     if (property.contentType || property.exploded || property.encoding) {
                         const propertySchema: RawSchemas.HttpInlineRequestBodyPropertySchema =
-                            typeof propertyTypeReference === "string"
+                            typeof propertyTypeReference === 'string'
                                 ? { type: propertyTypeReference }
-                                : propertyTypeReference;
+                                : propertyTypeReference
 
                         if (property.contentType != null) {
-                            propertySchema["content-type"] = property.contentType;
+                            propertySchema['content-type'] = property.contentType
                         }
 
-                        if (property.encoding === "form") {
-                            propertySchema.style = "form";
-                        } else if (property.encoding === "json") {
-                            propertySchema.style = "json";
+                        if (property.encoding === 'form') {
+                            propertySchema.style = 'form'
+                        } else if (property.encoding === 'json') {
+                            propertySchema.style = 'json'
                         } else if (property.exploded) {
-                            propertySchema.style = "exploded";
+                            propertySchema.style = 'exploded'
                         }
 
-                        propertyTypeReference = propertySchema;
+                        propertyTypeReference = propertySchema
                     }
-                    return [property.key, propertyTypeReference];
+                    return [property.key, propertyTypeReference]
                 }
             })
-        );
+        )
         return {
             schemaIdsToExclude: request.name == null ? [] : [request.name],
             value: {
                 name: requestNameOverride ?? request.name ?? generatedRequestName,
-                "path-parameters": pathParameters,
-                "query-parameters": queryParameters,
+                'path-parameters': pathParameters,
+                'query-parameters': queryParameters,
                 headers,
                 body: {
                     properties
                 },
-                "content-type": MediaType.MULTIPART_FORM_DATA,
+                'content-type': MediaType.MULTIPART_FORM_DATA,
                 ...(request.description ? { docs: request.description } : {})
             }
-        };
+        }
     } else {
-        assertNever(request);
+        assertNever(request)
     }
 }
 
@@ -680,25 +680,25 @@ function endpointRequestSupportsInlinedPathParameters({
     context,
     request
 }: {
-    context: OpenApiIrConverterContext;
-    request: Request | undefined;
+    context: OpenApiIrConverterContext
+    request: Request | undefined
 }): boolean {
     if (!context.inlinePathParameters) {
-        return false;
+        return false
     }
     if (request == null) {
-        return true;
+        return true
     }
     switch (request.type) {
-        case "octetStream":
+        case 'octetStream':
             // octet-stream requests do not support named request wrappers,
             // so we can't inline path parameters for them.
-            return false;
-        case "multipart":
-            return true;
-        case "json":
-            return true;
+            return false
+        case 'multipart':
+            return true
+        case 'json':
+            return true
         default:
-            assertNever(request);
+            assertNever(request)
     }
 }

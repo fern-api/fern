@@ -4,4 +4,4 @@ export {
     type ExportedFilePath,
     type ExportedDirectory,
     type ExportedFilePathPart
-} from "./ExportsManager";
+} from './ExportsManager'

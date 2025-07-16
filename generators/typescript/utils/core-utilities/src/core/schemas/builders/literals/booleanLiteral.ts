@@ -1,6 +1,6 @@
-import { Schema, SchemaType } from "../../Schema";
-import { createIdentitySchemaCreator } from "../../utils/createIdentitySchemaCreator";
-import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType";
+import { Schema, SchemaType } from '../../Schema'
+import { createIdentitySchemaCreator } from '../../utils/createIdentitySchemaCreator'
+import { getErrorMessageForIncorrectType } from '../../utils/getErrorMessageForIncorrectType'
 
 export function booleanLiteral<V extends boolean>(literal: V): Schema<V, V> {
     const schemaCreator = createIdentitySchemaCreator(
@@ -10,7 +10,7 @@ export function booleanLiteral<V extends boolean>(literal: V): Schema<V, V> {
                 return {
                     ok: true,
                     value: literal
-                };
+                }
             } else {
                 return {
                     ok: false,
@@ -20,10 +20,10 @@ export function booleanLiteral<V extends boolean>(literal: V): Schema<V, V> {
                             message: getErrorMessageForIncorrectType(value, `${literal.toString()}`)
                         }
                     ]
-                };
+                }
             }
         }
-    );
+    )
 
-    return schemaCreator();
+    return schemaCreator()
 }

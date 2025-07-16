@@ -1,4 +1,4 @@
-import { anySignal, getTimeoutSignal } from "./signals";
+import { anySignal, getTimeoutSignal } from './signals'
 
 export const makeRequest = async (
     fetchFn: (url: string, init: RequestInit) => Promise<Response>,
@@ -9,36 +9,36 @@ export const makeRequest = async (
     timeoutMs?: number,
     abortSignal?: AbortSignal,
     withCredentials?: boolean,
-    duplex?: "half"
+    duplex?: 'half'
 ): Promise<Response> => {
-    const signals: AbortSignal[] = [];
+    const signals: AbortSignal[] = []
 
     // Add timeout signal
-    let timeoutAbortId: NodeJS.Timeout | undefined = undefined;
+    let timeoutAbortId: NodeJS.Timeout | undefined = undefined
     if (timeoutMs != null) {
-        const { signal, abortId } = getTimeoutSignal(timeoutMs);
-        timeoutAbortId = abortId;
-        signals.push(signal);
+        const { signal, abortId } = getTimeoutSignal(timeoutMs)
+        timeoutAbortId = abortId
+        signals.push(signal)
     }
 
     // Add arbitrary signal
     if (abortSignal != null) {
-        signals.push(abortSignal);
+        signals.push(abortSignal)
     }
-    let newSignals = anySignal(signals);
+    let newSignals = anySignal(signals)
     const response = await fetchFn(url, {
         method: method,
         headers,
         body: requestBody,
         signal: newSignals,
-        credentials: withCredentials ? "include" : undefined,
+        credentials: withCredentials ? 'include' : undefined,
         // @ts-ignore
         duplex
-    });
+    })
 
     if (timeoutAbortId != null) {
-        clearTimeout(timeoutAbortId);
+        clearTimeout(timeoutAbortId)
     }
 
-    return response;
-};
+    return response
+}

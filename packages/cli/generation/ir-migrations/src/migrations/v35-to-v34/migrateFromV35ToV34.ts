@@ -1,19 +1,15 @@
-import { GeneratorName } from "@fern-api/configuration-loader";
+import { GeneratorName } from '@fern-api/configuration-loader'
 
-import { IrSerialization } from "../../ir-serialization";
-import { IrVersions } from "../../ir-versions";
-import {
-    GeneratorWasNeverUpdatedToConsumeNewIR,
-    GeneratorWasNotCreatedYet,
-    IrMigration
-} from "../../types/IrMigration";
+import { IrSerialization } from '../../ir-serialization'
+import { IrVersions } from '../../ir-versions'
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
 
 export const V35_TO_V34_MIGRATION: IrMigration<
     IrVersions.V35.ir.IntermediateRepresentation,
     IrVersions.V34.ir.IntermediateRepresentation
 > = {
-    laterVersion: "v35",
-    earlierVersion: "v34",
+    laterVersion: 'v35',
+    earlierVersion: 'v34',
     firstGeneratorVersionToConsumeNewIR: {
         [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -31,9 +27,9 @@ export const V35_TO_V34_MIGRATION: IrMigration<
         [GeneratorName.STOPLIGHT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.GO_FIBER]: "0.18.0",
-        [GeneratorName.GO_MODEL]: "0.18.0",
-        [GeneratorName.GO_SDK]: "0.18.0",
+        [GeneratorName.GO_FIBER]: '0.18.0',
+        [GeneratorName.GO_MODEL]: '0.18.0',
+        [GeneratorName.GO_SDK]: '0.18.0',
         [GeneratorName.RUBY_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.RUBY_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.CSHARP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -45,7 +41,7 @@ export const V35_TO_V34_MIGRATION: IrMigration<
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V34.IntermediateRepresentation.jsonOrThrow(ir, {
-            unrecognizedObjectKeys: "strip",
+            unrecognizedObjectKeys: 'strip',
             skipValidation: true
         }),
     migrateBackwards: (V35): IrVersions.V34.ir.IntermediateRepresentation => {
@@ -81,6 +77,6 @@ export const V35_TO_V34_MIGRATION: IrMigration<
                     }
                 ])
             )
-        };
+        }
     }
-};
+}

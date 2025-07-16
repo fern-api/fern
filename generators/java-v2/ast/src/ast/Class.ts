@@ -1,51 +1,51 @@
-import { Access } from "./Access";
-import { Method } from "./Method";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
+import { Access } from './Access'
+import { Method } from './Method'
+import { AstNode } from './core/AstNode'
+import { Writer } from './core/Writer'
 
 export declare namespace Class {
     interface Args {
         /* The name of the class */
-        name: string;
+        name: string
         /* The access level of the class */
-        access: Access;
+        access: Access
     }
 }
 
 export class Class extends AstNode {
-    public readonly name: string;
-    public readonly access: Access;
+    public readonly name: string
+    public readonly access: Access
 
-    private methods: Method[] = [];
+    private methods: Method[] = []
 
     constructor({ name, access }: Class.Args) {
-        super();
+        super()
 
-        this.name = name;
-        this.access = access;
+        this.name = name
+        this.access = access
     }
 
     public write(writer: Writer): void {
-        writer.write(`${this.access} class ${this.name}`);
+        writer.write(`${this.access} class ${this.name}`)
         if (this.isEmpty()) {
-            writer.writeLine(" {}");
-            return;
+            writer.writeLine(' {}')
+            return
         }
-        writer.writeLine(" {");
-        writer.indent();
+        writer.writeLine(' {')
+        writer.indent()
         for (const method of this.methods) {
-            writer.writeNode(method);
-            writer.newLine();
+            writer.writeNode(method)
+            writer.newLine()
         }
-        writer.dedent();
-        writer.write("}");
+        writer.dedent()
+        writer.write('}')
     }
 
     public addMethod(method: Method): void {
-        this.methods.push(method);
+        this.methods.push(method)
     }
 
     private isEmpty(): boolean {
-        return this.methods.length === 0;
+        return this.methods.length === 0
     }
 }

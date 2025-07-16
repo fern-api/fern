@@ -1,22 +1,22 @@
-import { AbstractFormatter, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
-import { AbstractCsharpGeneratorContext, AsIsFiles } from "@fern-api/csharp-base";
-import { CsharpFormatter } from "@fern-api/csharp-formatter";
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { AbstractFormatter, FernGeneratorExec, GeneratorNotificationService } from '@fern-api/base-generator'
+import { AbstractCsharpGeneratorContext, AsIsFiles } from '@fern-api/csharp-base'
+import { CsharpFormatter } from '@fern-api/csharp-formatter'
+import { RelativeFilePath } from '@fern-api/fs-utils'
 
-import { FernFilepath, IntermediateRepresentation, TypeId, WellKnownProtobufType } from "@fern-fern/ir-sdk/api";
+import { FernFilepath, IntermediateRepresentation, TypeId, WellKnownProtobufType } from '@fern-fern/ir-sdk/api'
 
-import { ModelCustomConfigSchema } from "./ModelCustomConfig";
+import { ModelCustomConfigSchema } from './ModelCustomConfig'
 
 export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelCustomConfigSchema> {
-    public readonly formatter: AbstractFormatter;
+    public readonly formatter: AbstractFormatter
     public constructor(
         ir: IntermediateRepresentation,
         config: FernGeneratorExec.config.GeneratorConfig,
         customConfig: ModelCustomConfigSchema,
         generatorNotificationService: GeneratorNotificationService
     ) {
-        super(ir, config, customConfig, generatorNotificationService);
-        this.formatter = new CsharpFormatter();
+        super(ir, config, customConfig, generatorNotificationService)
+        this.formatter = new CsharpFormatter()
     }
 
     /**
@@ -27,26 +27,26 @@ export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelC
      * @returns
      */
     public getDirectoryForTypeId(typeId: TypeId): RelativeFilePath {
-        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
+        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId)
         return RelativeFilePath.of(
-            [...typeDeclaration.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName)].join("/")
-        );
+            [...typeDeclaration.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName)].join('/')
+        )
     }
 
     public getNamespaceForTypeId(typeId: TypeId): string {
-        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
+        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId)
         return [
             this.getNamespace(),
             ...typeDeclaration.name.fernFilepath.packagePath.map((path) => path.pascalCase.safeName)
-        ].join(".");
+        ].join('.')
     }
 
     public getRawAsIsFiles(): string[] {
-        return [AsIsFiles.EditorConfig, AsIsFiles.GitIgnore];
+        return [AsIsFiles.EditorConfig, AsIsFiles.GitIgnore]
     }
 
     public getCoreAsIsFiles(): string[] {
-        const files = [AsIsFiles.Constants];
+        const files = [AsIsFiles.Constants]
 
         // JSON stuff
         files.push(
@@ -58,21 +58,21 @@ export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelC
                 AsIsFiles.Json.JsonConfiguration,
                 AsIsFiles.Json.OneOfSerializer
             ]
-        );
+        )
 
         if (this.isForwardCompatibleEnumsEnabled()) {
-            files.push(AsIsFiles.Json.StringEnumSerializer);
-            files.push(AsIsFiles.StringEnum);
-            files.push(AsIsFiles.StringEnumExtensions);
+            files.push(AsIsFiles.Json.StringEnumSerializer)
+            files.push(AsIsFiles.StringEnum)
+            files.push(AsIsFiles.StringEnumExtensions)
         } else {
-            files.push(AsIsFiles.Json.EnumSerializer);
+            files.push(AsIsFiles.Json.EnumSerializer)
         }
 
-        const resolvedProtoAnyType = this.protobufResolver.resolveWellKnownProtobufType(WellKnownProtobufType.any());
+        const resolvedProtoAnyType = this.protobufResolver.resolveWellKnownProtobufType(WellKnownProtobufType.any())
         if (resolvedProtoAnyType != null) {
-            files.push(AsIsFiles.ProtoAnyMapper);
+            files.push(AsIsFiles.ProtoAnyMapper)
         }
-        return files;
+        return files
     }
 
     public getCoreTestAsIsFiles(): string[] {
@@ -81,44 +81,44 @@ export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelC
             AsIsFiles.Test.Json.DateTimeJsonTests,
             AsIsFiles.Test.Json.JsonAccessAttributeTests,
             AsIsFiles.Test.Json.OneOfSerializerTests
-        ];
+        ]
         if (this.generateNewAdditionalProperties()) {
-            files.push(AsIsFiles.Test.Json.AdditionalPropertiesTests);
+            files.push(AsIsFiles.Test.Json.AdditionalPropertiesTests)
         }
         if (this.isForwardCompatibleEnumsEnabled()) {
-            files.push(AsIsFiles.Test.Json.StringEnumSerializerTests);
+            files.push(AsIsFiles.Test.Json.StringEnumSerializerTests)
         } else {
-            files.push(AsIsFiles.Test.Json.EnumSerializerTests);
+            files.push(AsIsFiles.Test.Json.EnumSerializerTests)
         }
 
-        return files;
+        return files
     }
 
     public getPublicCoreAsIsFiles(): string[] {
-        const files = [AsIsFiles.FileParameter];
+        const files = [AsIsFiles.FileParameter]
         if (this.generateNewAdditionalProperties()) {
-            files.push(AsIsFiles.Json.AdditionalProperties);
+            files.push(AsIsFiles.Json.AdditionalProperties)
         }
-        return files;
+        return files
     }
 
     public getPublicCoreTestAsIsFiles(): string[] {
-        return [];
+        return []
     }
 
     public getAsIsTestUtils(): string[] {
-        return Object.values(AsIsFiles.Test.Utils);
+        return Object.values(AsIsFiles.Test.Utils)
     }
 
     public getExtraDependencies(): Record<string, string> {
-        return {};
+        return {}
     }
 
     override getChildNamespaceSegments(fernFilepath: FernFilepath): string[] {
-        return fernFilepath.packagePath.map((segmentName) => segmentName.pascalCase.safeName);
+        return fernFilepath.packagePath.map((segmentName) => segmentName.pascalCase.safeName)
     }
 
     public shouldCreateCustomPagination(): boolean {
-        return false;
+        return false
     }
 }

@@ -1,25 +1,25 @@
-import { getRequestBody } from "@fern-api/fern-definition-schema";
+import { getRequestBody } from '@fern-api/fern-definition-schema'
 
-import { Rule } from "../../Rule";
+import { Rule } from '../../Rule'
 
 export const NoGetRequestBodyRule: Rule = {
-    name: "no-get-request-body",
+    name: 'no-get-request-body',
     create: () => {
         return {
             definitionFile: {
                 httpEndpoint: ({ endpoint }) => {
-                    const method = endpoint.method;
-                    if ((method === "GET" || method === "HEAD") && getRequestBody(endpoint) != null) {
+                    const method = endpoint.method
+                    if ((method === 'GET' || method === 'HEAD') && getRequestBody(endpoint) != null) {
                         return [
                             {
-                                severity: "fatal",
+                                severity: 'fatal',
                                 message: `Endpoint is a ${method}, so it cannot have a request body.`
                             }
-                        ];
+                        ]
                     }
-                    return [];
+                    return []
                 }
             }
-        };
+        }
     }
-};
+}

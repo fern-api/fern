@@ -1,24 +1,24 @@
-import { AbsoluteFilePath, streamObjectFromFile } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, streamObjectFromFile } from '@fern-api/fs-utils'
 
 export declare namespace parseIR {
     export interface Args<IntermediateRepresentation> {
-        absolutePathToIR: AbsoluteFilePath;
-        parse: (raw: unknown, opts?: SchemaOptions) => MaybePromise<MaybeValid<IntermediateRepresentation>>;
+        absolutePathToIR: AbsoluteFilePath
+        parse: (raw: unknown, opts?: SchemaOptions) => MaybePromise<MaybeValid<IntermediateRepresentation>>
     }
 
     /* Copy some types across the IR SDKs */
-    export type MaybePromise<T> = T | Promise<T>;
+    export type MaybePromise<T> = T | Promise<T>
 
-    export type MaybeValid<T> = Valid<T> | Invalid;
+    export type MaybeValid<T> = Valid<T> | Invalid
 
     export interface Valid<T> {
-        ok: true;
-        value: T;
+        ok: true
+        value: T
     }
 
     export interface Invalid {
-        ok: false;
-        errors: unknown[];
+        ok: false
+        errors: unknown[]
     }
 
     interface SchemaOptions {
@@ -27,20 +27,20 @@ export declare namespace parseIR {
          *
          * @default "fail"
          */
-        unrecognizedObjectKeys?: "fail" | "passthrough" | "strip";
+        unrecognizedObjectKeys?: 'fail' | 'passthrough' | 'strip'
         /**
          * whether to fail when an unrecognized discriminant value is
          * encountered in a union
          *
          * @default false
          */
-        allowUnrecognizedUnionMembers?: boolean;
+        allowUnrecognizedUnionMembers?: boolean
         /**
          * whether to fail when an unrecognized enum value is encountered
          *
          * @default false
          */
-        allowUnrecognizedEnumValues?: boolean;
+        allowUnrecognizedEnumValues?: boolean
         /**
          * whether to allow data that doesn't conform to the schema.
          * invalid data is passed through without transformation.
@@ -51,32 +51,32 @@ export declare namespace parseIR {
          *
          * @default false
          */
-        skipValidation?: boolean;
+        skipValidation?: boolean
         /**
          * each validation failure contains a "path" property, which is
          * the breadcrumbs to the offending node in the JSON. you can supply
          * a prefix that is prepended to all the errors' paths. this can be
          * helpful for zurg's internal debug logging.
          */
-        breadcrumbsPrefix?: string[];
+        breadcrumbsPrefix?: string[]
     }
 }
 
 export async function parseIR<IR>({ absolutePathToIR, parse }: parseIR.Args<IR>): Promise<IR> {
-    const irJson = await streamObjectFromFile(absolutePathToIR);
+    const irJson = await streamObjectFromFile(absolutePathToIR)
     // biome-ignore lint/suspicious/noConsole: allow console
-    console.log(`Parsed ${absolutePathToIR}`);
+    console.log(`Parsed ${absolutePathToIR}`)
     const parsedIR = await parse(irJson, {
-        unrecognizedObjectKeys: "passthrough",
+        unrecognizedObjectKeys: 'passthrough',
         allowUnrecognizedEnumValues: true,
         allowUnrecognizedUnionMembers: true
-    });
+    })
 
     if (!parsedIR.ok) {
         // biome-ignore lint/suspicious/noConsole: allow console
-        console.log(`Failed to parse ${absolutePathToIR}`);
-        throw new Error(`Failed to parse IR: ${JSON.stringify(parsedIR.errors, null, 4)}`);
+        console.log(`Failed to parse ${absolutePathToIR}`)
+        throw new Error(`Failed to parse IR: ${JSON.stringify(parsedIR.errors, null, 4)}`)
     }
 
-    return parsedIR.value;
+    return parsedIR.value
 }

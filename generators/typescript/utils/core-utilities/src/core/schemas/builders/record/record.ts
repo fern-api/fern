@@ -1,10 +1,10 @@
-import { MaybeValid, Schema, SchemaType, ValidationError } from "../../Schema";
-import { entries } from "../../utils/entries";
-import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType";
-import { isPlainObject } from "../../utils/isPlainObject";
-import { maybeSkipValidation } from "../../utils/maybeSkipValidation";
-import { getSchemaUtils } from "../schema-utils";
-import { BaseRecordSchema, RecordSchema } from "./types";
+import { MaybeValid, Schema, SchemaType, ValidationError } from '../../Schema'
+import { entries } from '../../utils/entries'
+import { getErrorMessageForIncorrectType } from '../../utils/getErrorMessageForIncorrectType'
+import { isPlainObject } from '../../utils/isPlainObject'
+import { maybeSkipValidation } from '../../utils/maybeSkipValidation'
+import { getSchemaUtils } from '../schema-utils'
+import { BaseRecordSchema, RecordSchema } from './types'
 
 export function record<RawKey extends string | number, RawValue, ParsedValue, ParsedKey extends string | number>(
     keySchema: Schema<RawKey, ParsedKey>,
@@ -26,7 +26,7 @@ export function record<RawKey extends string | number, RawValue, ParsedValue, Pa
                         breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key}`]
                     }),
                 breadcrumbsPrefix: opts?.breadcrumbsPrefix
-            });
+            })
         },
         json: (parsed, opts) => {
             return validateAndTransformRecord({
@@ -43,15 +43,15 @@ export function record<RawKey extends string | number, RawValue, ParsedValue, Pa
                         breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key}`]
                     }),
                 breadcrumbsPrefix: opts?.breadcrumbsPrefix
-            });
+            })
         },
         getType: () => SchemaType.RECORD
-    };
+    }
 
     return {
         ...maybeSkipValidation(baseSchema),
         ...getSchemaUtils(baseSchema)
-    };
+    }
 }
 
 function validateAndTransformRecord<TransformedKey extends string | number, TransformedValue>({
@@ -61,11 +61,11 @@ function validateAndTransformRecord<TransformedKey extends string | number, Tran
     transformValue,
     breadcrumbsPrefix = []
 }: {
-    value: unknown;
-    isKeyNumeric: boolean;
-    transformKey: (key: string | number) => MaybeValid<TransformedKey>;
-    transformValue: (value: unknown, key: string | number) => MaybeValid<TransformedValue>;
-    breadcrumbsPrefix: string[] | undefined;
+    value: unknown
+    isKeyNumeric: boolean
+    transformKey: (key: string | number) => MaybeValid<TransformedKey>
+    transformValue: (value: unknown, key: string | number) => MaybeValid<TransformedValue>
+    breadcrumbsPrefix: string[] | undefined
 }): MaybeValid<Record<TransformedKey, TransformedValue>> {
     if (!isPlainObject(value)) {
         return {
@@ -73,30 +73,30 @@ function validateAndTransformRecord<TransformedKey extends string | number, Tran
             errors: [
                 {
                     path: breadcrumbsPrefix,
-                    message: getErrorMessageForIncorrectType(value, "object")
+                    message: getErrorMessageForIncorrectType(value, 'object')
                 }
             ]
-        };
+        }
     }
 
     return entries(value).reduce<MaybeValid<Record<TransformedKey, TransformedValue>>>(
         (accPromise, [stringKey, value]) => {
             if (value === undefined) {
-                return accPromise;
+                return accPromise
             }
 
-            const acc = accPromise;
+            const acc = accPromise
 
-            let key: string | number = stringKey;
+            let key: string | number = stringKey
             if (isKeyNumeric) {
-                const numberKey = stringKey.length > 0 ? Number(stringKey) : NaN;
+                const numberKey = stringKey.length > 0 ? Number(stringKey) : NaN
                 if (!isNaN(numberKey)) {
-                    key = numberKey;
+                    key = numberKey
                 }
             }
-            const transformedKey = transformKey(key);
+            const transformedKey = transformKey(key)
 
-            const transformedValue = transformValue(value, key);
+            const transformedValue = transformValue(value, key)
 
             if (acc.ok && transformedKey.ok && transformedValue.ok) {
                 return {
@@ -105,25 +105,25 @@ function validateAndTransformRecord<TransformedKey extends string | number, Tran
                         ...acc.value,
                         [transformedKey.value]: transformedValue.value
                     }
-                };
+                }
             }
 
-            const errors: ValidationError[] = [];
+            const errors: ValidationError[] = []
             if (!acc.ok) {
-                errors.push(...acc.errors);
+                errors.push(...acc.errors)
             }
             if (!transformedKey.ok) {
-                errors.push(...transformedKey.errors);
+                errors.push(...transformedKey.errors)
             }
             if (!transformedValue.ok) {
-                errors.push(...transformedValue.errors);
+                errors.push(...transformedValue.errors)
             }
 
             return {
                 ok: false,
                 errors
-            };
+            }
         },
         { ok: true, value: {} as Record<TransformedKey, TransformedValue> }
-    );
+    )
 }

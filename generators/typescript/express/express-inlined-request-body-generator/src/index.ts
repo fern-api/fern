@@ -1,1 +1,1 @@
-export { ExpressInlinedRequestBodyGenerator } from "./ExpressInlinedRequestBodyGenerator";
+export { ExpressInlinedRequestBodyGenerator } from './ExpressInlinedRequestBodyGenerator'

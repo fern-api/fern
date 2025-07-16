@@ -6,27 +6,27 @@ import {
     Reference,
     getReferenceToExportFromPackage,
     getReferenceToExportViaNamespaceImport
-} from "@fern-typescript/commons";
-import { SourceFile } from "ts-morph";
+} from '@fern-typescript/commons'
+import { SourceFile } from 'ts-morph'
 
-import { EnvironmentsConfig, MultipleBaseUrlsEnvironments, SingleBaseUrlEnvironments } from "@fern-fern/ir-sdk/api";
+import { EnvironmentsConfig, MultipleBaseUrlsEnvironments, SingleBaseUrlEnvironments } from '@fern-fern/ir-sdk/api'
 
-import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
+import { AbstractDeclarationReferencer } from './AbstractDeclarationReferencer'
 
 export declare namespace EnvironmentsDeclarationReferencer {
     export interface Init extends AbstractDeclarationReferencer.Init {
-        npmPackage: NpmPackage | undefined;
-        environmentsConfig: EnvironmentsConfig | undefined;
-        relativePackagePath: string;
-        relativeTestPath: string;
+        npmPackage: NpmPackage | undefined
+        environmentsConfig: EnvironmentsConfig | undefined
+        relativePackagePath: string
+        relativeTestPath: string
     }
 }
 
 export class EnvironmentsDeclarationReferencer extends AbstractDeclarationReferencer {
-    private npmPackage: NpmPackage | undefined;
-    private environmentsConfig: EnvironmentsConfig | undefined;
-    private readonly relativePackagePath: string;
-    private readonly relativeTestPath: string;
+    private npmPackage: NpmPackage | undefined
+    private environmentsConfig: EnvironmentsConfig | undefined
+    private readonly relativePackagePath: string
+    private readonly relativeTestPath: string
 
     constructor({
         npmPackage,
@@ -35,17 +35,17 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
         relativeTestPath,
         ...superInit
     }: EnvironmentsDeclarationReferencer.Init) {
-        super(superInit);
-        this.npmPackage = npmPackage;
-        this.environmentsConfig = environmentsConfig;
-        this.relativePackagePath = relativePackagePath;
-        this.relativeTestPath = relativeTestPath;
+        super(superInit)
+        this.npmPackage = npmPackage
+        this.environmentsConfig = environmentsConfig
+        this.relativePackagePath = relativePackagePath
+        this.relativeTestPath = relativeTestPath
     }
 
     public getExportedFilepath(): ExportedFilePath {
-        const namedExports = [this.getExportedNameOfEnvironmentsEnum()];
-        if (this.environmentsConfig?.environments.type === "multipleBaseUrls") {
-            namedExports.push(this.getExportedNameOfEnvironmentUrls());
+        const namedExports = [this.getExportedNameOfEnvironmentsEnum()]
+        if (this.environmentsConfig?.environments.type === 'multipleBaseUrls') {
+            namedExports.push(this.getExportedNameOfEnvironmentUrls())
         }
 
         return {
@@ -56,33 +56,33 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
                     namedExports
                 }
             }
-        };
+        }
     }
 
     public getFilename(): string {
-        return "environments.ts";
+        return 'environments.ts'
     }
 
     public getExportedNameOfEnvironmentsEnum(): string {
-        return `${this.namespaceExport}Environment`;
+        return `${this.namespaceExport}Environment`
     }
 
     public getExportedNameOfEnvironmentUrls(): string {
-        return `${this.namespaceExport}EnvironmentUrls`;
+        return `${this.namespaceExport}EnvironmentUrls`
     }
 
     public getExportedNameOfFirstEnvironmentEnum(): { namepaceImport: string; exportedName: string } | undefined {
         if (this.environmentsConfig == null) {
-            return undefined;
+            return undefined
         }
-        const maybeFirstEnvironmentName = this.getFirstEnvironmentName(this.environmentsConfig);
+        const maybeFirstEnvironmentName = this.getFirstEnvironmentName(this.environmentsConfig)
         if (maybeFirstEnvironmentName == null) {
-            return undefined;
+            return undefined
         }
         return {
             namepaceImport: this.getExportedNameOfEnvironmentsEnum(),
             exportedName: maybeFirstEnvironmentName
-        };
+        }
     }
 
     public getReferenceToEnvironmentsEnum({
@@ -90,16 +90,16 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
         exportsManager,
         sourceFile
     }: {
-        importsManager: ImportsManager;
-        exportsManager: ExportsManager;
-        sourceFile: SourceFile;
+        importsManager: ImportsManager
+        exportsManager: ExportsManager
+        sourceFile: SourceFile
     }): Reference {
         return this.getReferenceToExport({
             importsManager,
             exportsManager,
             sourceFile,
             exportedName: this.getExportedNameOfEnvironmentsEnum()
-        });
+        })
     }
 
     public getReferenceToFirstEnvironmentEnum({
@@ -107,13 +107,13 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
         exportsManager,
         sourceFile
     }: {
-        importsManager: ImportsManager;
-        exportsManager: ExportsManager;
-        sourceFile: SourceFile;
+        importsManager: ImportsManager
+        exportsManager: ExportsManager
+        sourceFile: SourceFile
     }): Reference | undefined {
-        const firstEnvironmentEnum = this.getExportedNameOfFirstEnvironmentEnum();
+        const firstEnvironmentEnum = this.getExportedNameOfFirstEnvironmentEnum()
         if (firstEnvironmentEnum == null) {
-            return undefined;
+            return undefined
         }
         if (this.npmPackage != null) {
             return this.getReferenceToPackageExport({
@@ -122,17 +122,17 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
                 exportedName: firstEnvironmentEnum.exportedName,
                 namespaceImport: firstEnvironmentEnum.namepaceImport,
                 npmPackage: this.npmPackage
-            });
+            })
         }
         return getReferenceToExportViaNamespaceImport({
             exportedName: firstEnvironmentEnum.exportedName,
             filepathToNamespaceImport: this.getExportedFilepath(),
             filepathInsideNamespaceImport: undefined,
-            namespaceImport: "environments",
+            namespaceImport: 'environments',
             importsManager,
             exportsManager,
             referencedIn: sourceFile
-        });
+        })
     }
 
     public getReferenceToEnvironmentUrls({
@@ -140,16 +140,16 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
         exportsManager,
         sourceFile
     }: {
-        importsManager: ImportsManager;
-        exportsManager: ExportsManager;
-        sourceFile: SourceFile;
+        importsManager: ImportsManager
+        exportsManager: ExportsManager
+        sourceFile: SourceFile
     }): Reference {
         return this.getReferenceToExport({
             importsManager,
             exportsManager,
             sourceFile,
             exportedName: this.getExportedNameOfEnvironmentUrls()
-        });
+        })
     }
 
     private getReferenceToPackageExport({
@@ -159,18 +159,18 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
         namespaceImport,
         npmPackage
     }: {
-        importsManager: ImportsManager;
-        exportsManager: ExportsManager;
-        exportedName: string;
-        namespaceImport: string;
-        npmPackage: NpmPackage;
+        importsManager: ImportsManager
+        exportsManager: ExportsManager
+        exportedName: string
+        namespaceImport: string
+        npmPackage: NpmPackage
     }): Reference {
         return getReferenceToExportFromPackage({
             packageName: npmPackage.packageName,
             exportedName,
             namespaceImport,
             importsManager
-        });
+        })
     }
 
     private getReferenceToExport({
@@ -179,28 +179,28 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
         sourceFile,
         exportedName
     }: {
-        importsManager: ImportsManager;
-        exportsManager: ExportsManager;
-        sourceFile: SourceFile;
-        exportedName: string;
+        importsManager: ImportsManager
+        exportsManager: ExportsManager
+        sourceFile: SourceFile
+        exportedName: string
     }): Reference {
         return getReferenceToExportViaNamespaceImport({
             exportedName,
             filepathToNamespaceImport: this.getExportedFilepath(),
             filepathInsideNamespaceImport: undefined,
-            namespaceImport: "environments",
+            namespaceImport: 'environments',
             importsManager,
             exportsManager,
             referencedIn: sourceFile
-        });
+        })
     }
 
     private getFirstEnvironmentName(environmentsConfig: EnvironmentsConfig): string | undefined {
         switch (environmentsConfig.environments.type) {
-            case "singleBaseUrl":
-                return this.getFirstEnvironmentNameFromSingleEnvironment(environmentsConfig.environments);
-            case "multipleBaseUrls":
-                return this.getFirstEnvironmentNameFromMultiEnvironment(environmentsConfig.environments);
+            case 'singleBaseUrl':
+                return this.getFirstEnvironmentNameFromSingleEnvironment(environmentsConfig.environments)
+            case 'multipleBaseUrls':
+                return this.getFirstEnvironmentNameFromMultiEnvironment(environmentsConfig.environments)
         }
     }
 
@@ -208,17 +208,17 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
         singleBaseUrlEnvironments: SingleBaseUrlEnvironments
     ): string | undefined {
         for (const environment of singleBaseUrlEnvironments.environments) {
-            return environment.name.pascalCase.unsafeName;
+            return environment.name.pascalCase.unsafeName
         }
-        return undefined;
+        return undefined
     }
 
     private getFirstEnvironmentNameFromMultiEnvironment(
         multiBaseUrlsEnvironments: MultipleBaseUrlsEnvironments
     ): string | undefined {
         for (const environment of multiBaseUrlsEnvironments.environments) {
-            return environment.name.pascalCase.unsafeName;
+            return environment.name.pascalCase.unsafeName
         }
-        return undefined;
+        return undefined
     }
 }

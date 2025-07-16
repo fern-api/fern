@@ -1,18 +1,14 @@
-import { GeneratorName } from "@fern-api/configuration-loader";
+import { GeneratorName } from '@fern-api/configuration-loader'
 
-import { IrVersions } from "../../ir-versions";
-import {
-    GeneratorWasNeverUpdatedToConsumeNewIR,
-    GeneratorWasNotCreatedYet,
-    IrMigration
-} from "../../types/IrMigration";
+import { IrVersions } from '../../ir-versions'
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
 
 export const V17_TO_V16_MIGRATION: IrMigration<
     IrVersions.V17.ir.IntermediateRepresentation,
     IrVersions.V16.ir.IntermediateRepresentation
 > = {
-    laterVersion: "v17",
-    earlierVersion: "v16",
+    laterVersion: 'v17',
+    earlierVersion: 'v16',
     firstGeneratorVersionToConsumeNewIR: {
         [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNotCreatedYet,
@@ -45,21 +41,21 @@ export const V17_TO_V16_MIGRATION: IrMigration<
     jsonifyEarlierVersion: (ir) => ir,
     migrateBackwards: (v17, { taskContext, targetGenerator }): IrVersions.V16.ir.IntermediateRepresentation => {
         for (const [typeName, typeDeclaration] of Object.entries(v17.types)) {
-            if (typeDeclaration.shape._type === "union" && typeDeclaration.shape.extends.length > 0) {
+            if (typeDeclaration.shape._type === 'union' && typeDeclaration.shape.extends.length > 0) {
                 return taskContext.failAndThrow(
                     targetGenerator != null
                         ? `Generator ${targetGenerator.name}@${targetGenerator.version}` +
                               ` does not support union types with extensions. See ${typeName} in file ${typeDeclaration.name.fernFilepath.allParts.join(
-                                  "/"
+                                  '/'
                               )}.` +
                               ` If you'd like to use this feature, please upgrade ${targetGenerator.name}` +
-                              " to a compatible version."
-                        : "Cannot backwards-migrate IR because this IR contains union types with extensions."
-                );
+                              ' to a compatible version.'
+                        : 'Cannot backwards-migrate IR because this IR contains union types with extensions.'
+                )
             }
         }
         return {
             ...v17
-        };
+        }
     }
-};
+}

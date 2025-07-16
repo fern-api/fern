@@ -1,86 +1,86 @@
-import { readFile } from "fs/promises";
-import yaml from "js-yaml";
-import path from "path";
+import { readFile } from 'fs/promises'
+import yaml from 'js-yaml'
+import path from 'path'
 
-import { generatorsYml } from "@fern-api/configuration";
-import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { generatorsYml } from '@fern-api/configuration'
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from '@fern-api/fs-utils'
+import { TaskContext } from '@fern-api/task-context'
 
-import { convertGeneratorsConfiguration } from "./convertGeneratorsConfiguration";
+import { convertGeneratorsConfiguration } from './convertGeneratorsConfiguration'
 
 export async function loadRawGeneratorsConfiguration({
     absolutePathToWorkspace,
     context
 }: {
-    absolutePathToWorkspace: AbsoluteFilePath;
-    context: TaskContext;
+    absolutePathToWorkspace: AbsoluteFilePath
+    context: TaskContext
 }): Promise<generatorsYml.GeneratorsConfigurationSchema | undefined> {
-    const filepath = await getPathToGeneratorsConfiguration({ absolutePathToWorkspace });
+    const filepath = await getPathToGeneratorsConfiguration({ absolutePathToWorkspace })
     if (filepath == null) {
-        return undefined;
+        return undefined
     }
 
-    const contentsStr = await readFile(filepath);
+    const contentsStr = await readFile(filepath)
     try {
-        const contentsParsed = yaml.load(contentsStr.toString());
+        const contentsParsed = yaml.load(contentsStr.toString())
         const parsed = generatorsYml.serialization.GeneratorsConfigurationSchema.parse(contentsParsed, {
             allowUnrecognizedEnumValues: false,
-            unrecognizedObjectKeys: "fail",
+            unrecognizedObjectKeys: 'fail',
             allowUnrecognizedUnionMembers: false,
             skipValidation: false,
             breadcrumbsPrefix: undefined,
             omitUndefined: false
-        });
+        })
         if (parsed.ok) {
-            return parsed.value;
+            return parsed.value
         }
         // TODO: improve error message
-        throw new Error(parsed.errors.map((e) => e.message).join("\n"));
+        throw new Error(parsed.errors.map((e) => e.message).join('\n'))
     } catch (e) {
         if (e instanceof yaml.YAMLException) {
-            context.failAndThrow(`Failed to parse ${path.relative(process.cwd(), filepath)}: ${e.reason}`);
+            context.failAndThrow(`Failed to parse ${path.relative(process.cwd(), filepath)}: ${e.reason}`)
         } else {
-            throw e;
+            throw e
         }
     }
-    return undefined;
+    return undefined
 }
 
 export async function loadGeneratorsConfiguration({
     absolutePathToWorkspace,
     context
 }: {
-    absolutePathToWorkspace: AbsoluteFilePath;
-    context: TaskContext;
+    absolutePathToWorkspace: AbsoluteFilePath
+    context: TaskContext
 }): Promise<generatorsYml.GeneratorsConfiguration | undefined> {
-    const rawGeneratorsConfiguration = await loadRawGeneratorsConfiguration({ absolutePathToWorkspace, context });
+    const rawGeneratorsConfiguration = await loadRawGeneratorsConfiguration({ absolutePathToWorkspace, context })
     if (rawGeneratorsConfiguration == null) {
-        return undefined;
+        return undefined
     }
-    const filepath = await getPathToGeneratorsConfiguration({ absolutePathToWorkspace });
+    const filepath = await getPathToGeneratorsConfiguration({ absolutePathToWorkspace })
     if (filepath == null) {
-        return undefined;
+        return undefined
     }
     return convertGeneratorsConfiguration({
         absolutePathToGeneratorsConfiguration: filepath,
         rawGeneratorsConfiguration,
         context
-    });
+    })
 }
 
 export async function getPathToGeneratorsConfiguration({
     absolutePathToWorkspace
 }: {
-    absolutePathToWorkspace: AbsoluteFilePath;
+    absolutePathToWorkspace: AbsoluteFilePath
 }): Promise<AbsoluteFilePath | undefined> {
-    const ymlPath = join(absolutePathToWorkspace, RelativeFilePath.of("generators.yml"));
-    const yamlPath = join(absolutePathToWorkspace, RelativeFilePath.of("generators.yaml"));
+    const ymlPath = join(absolutePathToWorkspace, RelativeFilePath.of('generators.yml'))
+    const yamlPath = join(absolutePathToWorkspace, RelativeFilePath.of('generators.yaml'))
 
     if (await doesPathExist(ymlPath)) {
-        return ymlPath;
+        return ymlPath
     }
     if (await doesPathExist(yamlPath)) {
-        return yamlPath;
+        return yamlPath
     }
-    return undefined;
+    return undefined
 }

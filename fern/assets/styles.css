@@ -1,36 +1,38 @@
 * {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -o-font-smoothing: antialiased;
-  -webkit-appearance: none;
-  appearance: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -o-font-smoothing: antialiased;
+    -webkit-appearance: none;
+    appearance: none;
 }
 
 .motivation p {
-  max-width: unset !important;
+    max-width: unset !important;
 }
 
 .showcase h2 {
-  margin-bottom: 0.25em;
+    margin-bottom: 0.25em;
 }
 
 :is(.dark) .showcase .logo-icon {
-  filter: invert(1);
-  margin-top: 0px;
-  margin-bottom: 0px;
+    filter: invert(1);
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 .logo-icon {
-  margin-right: 10px;
+    margin-right: 10px;
 }
 
-.fern-header, .fern-header-tabs { 
-  backdrop-filter: blur(0.5rem);
-  background-color: transparent !important;
+.fern-header,
+.fern-header-tabs {
+    backdrop-filter: blur(0.5rem);
+    background-color: transparent !important;
 }
 
-:is(.dark) .fern-header, :is(.dark) .fern-header-tabs {
-  background-color: transparent !important;
+:is(.dark) .fern-header,
+:is(.dark) .fern-header-tabs {
+    background-color: transparent !important;
 }
 
 /* Custom styline for code blocks to match Fern site */

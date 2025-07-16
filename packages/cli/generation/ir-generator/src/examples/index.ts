@@ -1,3 +1,3 @@
-export { validateObjectExample } from "./validateObjectExample";
-export { validateTypeExample } from "./validateTypeExample";
-export { validateTypeReferenceExample } from "./validateTypeReferenceExample";
+export { validateObjectExample } from './validateObjectExample'
+export { validateTypeExample } from './validateTypeExample'
+export { validateTypeReferenceExample } from './validateTypeReferenceExample'

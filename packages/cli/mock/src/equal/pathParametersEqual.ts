@@ -1,14 +1,14 @@
-import { Request } from "express";
-import { isEqualWith } from "lodash-es";
+import { Request } from 'express'
+import { isEqualWith } from 'lodash-es'
 
-import { ExampleEndpointCall } from "@fern-api/ir-sdk";
+import { ExampleEndpointCall } from '@fern-api/ir-sdk'
 
-import { EqualResponse } from "./EqualRequestResponse";
+import { EqualResponse } from './EqualRequestResponse'
 
 export declare namespace pathParametersEqual {
     interface Args {
-        request: Request;
-        example: ExampleEndpointCall;
+        request: Request
+        example: ExampleEndpointCall
     }
 }
 
@@ -18,23 +18,23 @@ export function pathParametersEqual({ request, example }: pathParametersEqual.Ar
         ...example.servicePathParameters,
         ...example.endpointPathParameters
     ]) {
-        const requestPathParameter = request.params[examplePathParameter.name.originalName];
+        const requestPathParameter = request.params[examplePathParameter.name.originalName]
         if (
             !isEqualWith(
                 requestPathParameter,
-                typeof examplePathParameter.value.jsonExample === "string"
+                typeof examplePathParameter.value.jsonExample === 'string'
                     ? examplePathParameter.value.jsonExample
                     : JSON.stringify(examplePathParameter.value.jsonExample)
             )
         ) {
             return {
-                type: "notEqual",
+                type: 'notEqual',
                 parameter: [examplePathParameter.name.originalName],
                 actualValue: requestPathParameter,
                 expectedValue: examplePathParameter.value.jsonExample,
-                location: "path"
-            };
+                location: 'path'
+            }
         }
     }
-    return { type: "equal" };
+    return { type: 'equal' }
 }

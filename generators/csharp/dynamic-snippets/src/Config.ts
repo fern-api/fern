@@ -11,5 +11,5 @@ export interface Config {
     //         ...
     //     }
     // }
-    fullStyleClassName?: string;
+    fullStyleClassName?: string
 }

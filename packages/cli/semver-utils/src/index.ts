@@ -1,4 +1,4 @@
-export { isVersionAhead } from "./isVersionAhead";
+export { isVersionAhead } from './isVersionAhead'
 export {
     parseVersion,
     type BaseVersion,
@@ -7,4 +7,4 @@ export {
     type PostReleaseCommit,
     type Release,
     type ReleaseCandidate
-} from "./parseVersion";
+} from './parseVersion'

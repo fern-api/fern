@@ -1,11 +1,11 @@
-import { AbstractGeneratorCli, parseIR } from "@fern-api/base-generator";
-import { BaseCsharpCustomConfigSchema } from "@fern-api/csharp-codegen";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbstractGeneratorCli, parseIR } from '@fern-api/base-generator'
+import { BaseCsharpCustomConfigSchema } from '@fern-api/csharp-codegen'
+import { AbsoluteFilePath } from '@fern-api/fs-utils'
 
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
+import { IntermediateRepresentation } from '@fern-fern/ir-sdk/api'
+import * as IrSerialization from '@fern-fern/ir-sdk/serialization'
 
-import { AbstractCsharpGeneratorContext } from "../context/AbstractCsharpGeneratorContext";
+import { AbstractCsharpGeneratorContext } from '../context/AbstractCsharpGeneratorContext'
 
 export abstract class AbstractCsharpGeneratorCli<
     CustomConfig extends BaseCsharpCustomConfigSchema,
@@ -20,6 +20,6 @@ export abstract class AbstractCsharpGeneratorCli<
         return await parseIR<IntermediateRepresentation>({
             absolutePathToIR: AbsoluteFilePath.of(irFilepath),
             parse: IrSerialization.IntermediateRepresentation.parse
-        });
+        })
     }
 }

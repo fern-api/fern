@@ -1,25 +1,25 @@
-import { readFile, readdir } from "fs/promises";
+import { readFile, readdir } from 'fs/promises'
 
-import { docsYml } from "@fern-api/configuration-loader";
-import { noop, visitObjectAsync } from "@fern-api/core-utils";
-import { parseImagePaths } from "@fern-api/docs-markdown-utils";
-import { NodePath } from "@fern-api/fern-definition-schema";
-import { AbsoluteFilePath, dirname, doesPathExist, relative, resolve } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
-import { AbstractAPIWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import { docsYml } from '@fern-api/configuration-loader'
+import { noop, visitObjectAsync } from '@fern-api/core-utils'
+import { parseImagePaths } from '@fern-api/docs-markdown-utils'
+import { NodePath } from '@fern-api/fern-definition-schema'
+import { AbsoluteFilePath, dirname, doesPathExist, relative, resolve } from '@fern-api/fs-utils'
+import { TaskContext } from '@fern-api/task-context'
+import { AbstractAPIWorkspace, FernWorkspace } from '@fern-api/workspace-loader'
 
-import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor";
-import { visitFilepath } from "./visitFilepath";
+import { DocsConfigFileAstVisitor } from './DocsConfigFileAstVisitor'
+import { visitFilepath } from './visitFilepath'
 
 export declare namespace visitNavigationAst {
     interface Args {
-        absolutePathToFernFolder: AbsoluteFilePath;
-        navigation: docsYml.RawSchemas.NavigationConfig;
-        visitor: Partial<DocsConfigFileAstVisitor>;
-        nodePath: NodePath;
-        absoluteFilepathToConfiguration: AbsoluteFilePath;
-        apiWorkspaces: AbstractAPIWorkspace<unknown>[];
-        context: TaskContext;
+        absolutePathToFernFolder: AbsoluteFilePath
+        navigation: docsYml.RawSchemas.NavigationConfig
+        visitor: Partial<DocsConfigFileAstVisitor>
+        nodePath: NodePath
+        absoluteFilepathToConfiguration: AbsoluteFilePath
+        apiWorkspaces: AbstractAPIWorkspace<unknown>[]
+        context: TaskContext
     }
 }
 
@@ -42,16 +42,16 @@ export async function visitNavigationAst({
                                 absolutePathToFernFolder,
                                 navigationItem: item,
                                 visitor,
-                                nodePath: [...nodePath, `${tabIdx}`, "layout", `${itemIdx}`],
+                                nodePath: [...nodePath, `${tabIdx}`, 'layout', `${itemIdx}`],
                                 absoluteFilepathToConfiguration,
                                 apiWorkspaces,
                                 context
-                            });
+                            })
                         })
-                    );
+                    )
                 }
             })
-        );
+        )
     } else {
         await Promise.all(
             navigation.map(async (item, itemIdx) => {
@@ -63,9 +63,9 @@ export async function visitNavigationAst({
                     absoluteFilepathToConfiguration,
                     apiWorkspaces,
                     context
-                });
+                })
             })
-        );
+        )
     }
 }
 async function visitNavigationItem({
@@ -77,13 +77,13 @@ async function visitNavigationItem({
     apiWorkspaces,
     context
 }: {
-    absolutePathToFernFolder: AbsoluteFilePath;
-    navigationItem: docsYml.RawSchemas.NavigationItem;
-    visitor: Partial<DocsConfigFileAstVisitor>;
-    nodePath: NodePath;
-    absoluteFilepathToConfiguration: AbsoluteFilePath;
-    apiWorkspaces: AbstractAPIWorkspace<unknown>[];
-    context: TaskContext;
+    absolutePathToFernFolder: AbsoluteFilePath
+    navigationItem: docsYml.RawSchemas.NavigationItem
+    visitor: Partial<DocsConfigFileAstVisitor>
+    nodePath: NodePath
+    absoluteFilepathToConfiguration: AbsoluteFilePath
+    apiWorkspaces: AbstractAPIWorkspace<unknown>[]
+    context: TaskContext
 }): Promise<void> {
     await visitObjectAsync(navigationItem, {
         alphabetized: noop,
@@ -92,16 +92,16 @@ async function visitNavigationItem({
         audiences: noop,
         openrpc: async (path: string | undefined): Promise<void> => {
             if (path == null) {
-                return;
+                return
             }
 
             await visitFilepath({
                 absoluteFilepathToConfiguration,
                 rawUnresolvedFilepath: path,
                 visitor,
-                nodePath: [...nodePath, "openrpc"],
+                nodePath: [...nodePath, 'openrpc'],
                 willBeUploaded: false
-            });
+            })
         },
         displayErrors: noop,
         snippets: noop,
@@ -118,21 +118,21 @@ async function visitNavigationItem({
         featureFlag: noop,
         path: async (path: string | undefined): Promise<void> => {
             if (path == null) {
-                return;
+                return
             }
 
             await visitFilepath({
                 absoluteFilepathToConfiguration,
                 rawUnresolvedFilepath: path,
                 visitor,
-                nodePath: [...nodePath, "path"],
+                nodePath: [...nodePath, 'path'],
                 willBeUploaded: false
-            });
+            })
         },
         page: noop,
         contents: async (items: docsYml.RawSchemas.NavigationItem[] | undefined): Promise<void> => {
             if (items == null) {
-                return;
+                return
             }
             await Promise.all(
                 items.map(async (item, idx) => {
@@ -140,26 +140,26 @@ async function visitNavigationItem({
                         absolutePathToFernFolder,
                         navigationItem: item,
                         visitor,
-                        nodePath: [...nodePath, "contents", `${idx}`],
+                        nodePath: [...nodePath, 'contents', `${idx}`],
                         absoluteFilepathToConfiguration,
                         apiWorkspaces,
                         context
-                    });
+                    })
                 })
-            );
+            )
         },
-        viewers: async (viewers: docsYml.RawSchemas.WithPermissions["viewers"]): Promise<void> => {
+        viewers: async (viewers: docsYml.RawSchemas.WithPermissions['viewers']): Promise<void> => {
             if (viewers != null && viewers.length > 0) {
-                await visitor.permissions?.({ viewers }, [...nodePath, "viewers"]);
+                await visitor.permissions?.({ viewers }, [...nodePath, 'viewers'])
             }
         },
         orphaned: noop
-    });
+    })
 
     if (navigationItemIsPage(navigationItem)) {
-        const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), navigationItem.path);
+        const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), navigationItem.path)
         if (await doesPathExist(absoluteFilepath)) {
-            const content = (await readFile(absoluteFilepath)).toString();
+            const content = (await readFile(absoluteFilepath)).toString()
             await visitor.markdownPage?.(
                 {
                     title: navigationItem.page,
@@ -167,13 +167,13 @@ async function visitNavigationItem({
                     absoluteFilepath
                 },
                 [...nodePath, navigationItem.path]
-            );
+            )
 
             try {
                 const { filepaths } = parseImagePaths(content, {
                     absolutePathToFernFolder,
                     absolutePathToMarkdownFile: absoluteFilepath
-                });
+                })
 
                 // visit each media filepath in each markdown file
                 for (const filepath of filepaths) {
@@ -184,7 +184,7 @@ async function visitNavigationItem({
                             willBeUploaded: true
                         },
                         [...nodePath, navigationItem.path]
-                    );
+                    )
                 }
                 // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
             } catch (err) {}
@@ -192,7 +192,7 @@ async function visitNavigationItem({
     }
 
     if (navigationItemIsApi(navigationItem)) {
-        const workspace = apiWorkspaces.find((workspace) => workspace.workspaceName === navigationItem.apiName);
+        const workspace = apiWorkspaces.find((workspace) => workspace.workspaceName === navigationItem.apiName)
         if (workspace != null) {
             await visitor.apiSection?.(
                 {
@@ -200,26 +200,26 @@ async function visitNavigationItem({
                     workspace,
                     context
                 },
-                [...nodePath, "api"]
-            );
+                [...nodePath, 'api']
+            )
         }
     }
 
     if (navigationItemIsChangelog(navigationItem)) {
-        const changelogDir = resolve(dirname(absoluteFilepathToConfiguration), navigationItem.changelog);
-        context.logger.trace(`Starting changelog processing for directory: ${changelogDir}`);
+        const changelogDir = resolve(dirname(absoluteFilepathToConfiguration), navigationItem.changelog)
+        context.logger.trace(`Starting changelog processing for directory: ${changelogDir}`)
 
         if (await doesPathExist(changelogDir)) {
-            const files = await readdir(changelogDir);
-            context.logger.trace(`Validating ${files.length} files in changelog directory ${changelogDir}`);
+            const files = await readdir(changelogDir)
+            context.logger.trace(`Validating ${files.length} files in changelog directory ${changelogDir}`)
 
             await Promise.all(
                 files
-                    .filter((file) => file.endsWith(".md") || file.endsWith(".mdx"))
+                    .filter((file) => file.endsWith('.md') || file.endsWith('.mdx'))
                     .map(async (file) => {
-                        const absoluteFilepath = resolve(changelogDir, file);
-                        const content = (await readFile(absoluteFilepath)).toString();
-                        context.logger.trace(`Validating markdown file: ${absoluteFilepath}`);
+                        const absoluteFilepath = resolve(changelogDir, file)
+                        const content = (await readFile(absoluteFilepath)).toString()
+                        context.logger.trace(`Validating markdown file: ${absoluteFilepath}`)
 
                         await visitor.markdownPage?.(
                             {
@@ -227,12 +227,12 @@ async function visitNavigationItem({
                                 content,
                                 absoluteFilepath
                             },
-                            [...nodePath, "changelog", file]
-                        );
+                            [...nodePath, 'changelog', file]
+                        )
                     })
-            );
+            )
         } else {
-            context.logger.trace(`Changelog directory does not exist: ${changelogDir}`);
+            context.logger.trace(`Changelog directory does not exist: ${changelogDir}`)
         }
     }
 }
@@ -241,23 +241,23 @@ function navigationItemIsChangelog(
     item: docsYml.RawSchemas.NavigationItem
 ): item is docsYml.RawSchemas.ChangelogConfiguration {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (item as docsYml.RawSchemas.ChangelogConfiguration)?.changelog != null;
+    return (item as docsYml.RawSchemas.ChangelogConfiguration)?.changelog != null
 }
 
 function navigationItemIsPage(item: docsYml.RawSchemas.NavigationItem): item is docsYml.RawSchemas.PageConfiguration {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (item as docsYml.RawSchemas.PageConfiguration)?.page != null;
+    return (item as docsYml.RawSchemas.PageConfiguration)?.page != null
 }
 
 function navigationItemIsApi(
     item: docsYml.RawSchemas.NavigationItem
 ): item is docsYml.RawSchemas.ApiReferenceConfiguration {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (item as docsYml.RawSchemas.ApiReferenceConfiguration)?.api != null;
+    return (item as docsYml.RawSchemas.ApiReferenceConfiguration)?.api != null
 }
 
 function navigationConfigIsTabbed(
     config: docsYml.RawSchemas.NavigationConfig
 ): config is docsYml.RawSchemas.TabbedNavigationConfig {
-    return (config as docsYml.RawSchemas.TabbedNavigationConfig)[0]?.tab != null;
+    return (config as docsYml.RawSchemas.TabbedNavigationConfig)[0]?.tab != null
 }

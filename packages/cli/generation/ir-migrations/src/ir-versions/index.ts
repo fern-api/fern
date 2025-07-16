@@ -1,1 +1,1 @@
-export * as IrVersions from "./IrVersions";
+export * as IrVersions from './IrVersions'

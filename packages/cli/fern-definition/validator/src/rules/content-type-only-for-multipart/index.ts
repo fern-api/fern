@@ -1,1 +1,1 @@
-export { ContentTypeOnlyForMultipartRule } from "./content-type-only-for-multipart";
+export { ContentTypeOnlyForMultipartRule } from './content-type-only-for-multipart'

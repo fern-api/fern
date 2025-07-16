@@ -1,19 +1,19 @@
-import { csharp } from "@fern-api/csharp-codegen";
+import { csharp } from '@fern-api/csharp-codegen'
 
-import { FernIr } from "@fern-fern/ir-sdk";
+import { FernIr } from '@fern-fern/ir-sdk'
 
-import { ModelGeneratorContext } from "./ModelGeneratorContext";
+import { ModelGeneratorContext } from './ModelGeneratorContext'
 
 export function generateFields({
     properties,
     className,
     context
 }: {
-    properties: (FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty)[];
-    className: string;
-    context: ModelGeneratorContext;
+    properties: (FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty)[]
+    className: string
+    context: ModelGeneratorContext
 }): csharp.Field[] {
-    return properties.map((property) => generateField({ property, className, context }));
+    return properties.map((property) => generateField({ property, className, context }))
 }
 
 export function generateField({
@@ -22,21 +22,21 @@ export function generateField({
     context,
     jsonProperty = true
 }: {
-    property: FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty;
-    className: string;
-    context: ModelGeneratorContext;
-    jsonProperty?: boolean;
+    property: FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty
+    className: string
+    context: ModelGeneratorContext
+    jsonProperty?: boolean
 }): csharp.Field {
-    const fieldType = context.csharpTypeMapper.convert({ reference: property.valueType });
+    const fieldType = context.csharpTypeMapper.convert({ reference: property.valueType })
     const maybeLiteralInitializer = context.getLiteralInitializerFromTypeReference({
         typeReference: property.valueType
-    });
-    const fieldAttributes = [];
+    })
+    const fieldAttributes = []
     if (jsonProperty) {
-        if ("propertyAccess" in property && property.propertyAccess) {
-            fieldAttributes.push(context.createJsonAccessAttribute(property.propertyAccess));
+        if ('propertyAccess' in property && property.propertyAccess) {
+            fieldAttributes.push(context.createJsonAccessAttribute(property.propertyAccess))
         }
-        fieldAttributes.push(context.createJsonPropertyNameAttribute(property.name.wireValue));
+        fieldAttributes.push(context.createJsonPropertyNameAttribute(property.name.wireValue))
     }
 
     return csharp.field({
@@ -49,7 +49,7 @@ export function generateField({
         useRequired: true,
         initializer: maybeLiteralInitializer,
         annotations: fieldAttributes
-    });
+    })
 }
 
 export function generateFieldForFileProperty({
@@ -57,11 +57,11 @@ export function generateFieldForFileProperty({
     className,
     context
 }: {
-    property: FernIr.FileProperty;
-    className: string;
-    context: ModelGeneratorContext;
+    property: FernIr.FileProperty
+    className: string
+    context: ModelGeneratorContext
 }): csharp.Field {
-    const fieldType = context.csharpTypeMapper.convertFromFileProperty({ property });
+    const fieldType = context.csharpTypeMapper.convertFromFileProperty({ property })
 
     return csharp.field({
         name: getPropertyName({ className, objectProperty: property.key, context }),
@@ -70,7 +70,7 @@ export function generateFieldForFileProperty({
         get: true,
         set: true,
         useRequired: !property.isOptional
-    });
+    })
 }
 
 /**
@@ -81,13 +81,13 @@ function getPropertyName({
     objectProperty,
     context
 }: {
-    className: string;
-    objectProperty: FernIr.NameAndWireValue;
-    context: ModelGeneratorContext;
+    className: string
+    objectProperty: FernIr.NameAndWireValue
+    context: ModelGeneratorContext
 }): string {
-    const propertyName = context.getPascalCaseSafeName(objectProperty.name);
+    const propertyName = context.getPascalCaseSafeName(objectProperty.name)
     if (propertyName === className) {
-        return `${propertyName}_`;
+        return `${propertyName}_`
     }
-    return propertyName;
+    return propertyName
 }

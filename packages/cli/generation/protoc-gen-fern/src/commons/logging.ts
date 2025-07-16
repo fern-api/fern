@@ -1,44 +1,44 @@
-import { LogLevel } from "@fern-api/logger";
+import { LogLevel } from '@fern-api/logger'
 
 export class Logger {
-    private enabled = true;
+    private enabled = true
 
     private write(level: string, ...messages: string[]): void {
         if (!this.enabled) {
-            return;
+            return
         }
-        process.stderr.write(`[${level}] ${messages.join(" ")}\n`);
+        process.stderr.write(`[${level}] ${messages.join(' ')}\n`)
     }
 
     disable(): void {
-        this.enabled = false;
+        this.enabled = false
     }
 
     enable(): void {
-        this.enabled = true;
+        this.enabled = true
     }
 
     trace(...args: string[]): void {
-        this.write(LogLevel.Trace, ...args);
+        this.write(LogLevel.Trace, ...args)
     }
 
     debug(...args: string[]): void {
-        this.write(LogLevel.Debug, ...args);
+        this.write(LogLevel.Debug, ...args)
     }
 
     info(...args: string[]): void {
-        this.write(LogLevel.Info, ...args);
+        this.write(LogLevel.Info, ...args)
     }
 
     warn(...args: string[]): void {
-        this.write(LogLevel.Warn, ...args);
+        this.write(LogLevel.Warn, ...args)
     }
 
     error(...args: string[]): void {
-        this.write(LogLevel.Error, ...args);
+        this.write(LogLevel.Error, ...args)
     }
 
     log(level: LogLevel, ...args: string[]): void {
-        this.write(level, ...args);
+        this.write(level, ...args)
     }
 }

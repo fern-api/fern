@@ -1,1 +1,1 @@
-export { ExpressEndpointTypeSchemasGenerator } from "./ExpressEndpointTypeSchemasGenerator";
+export { ExpressEndpointTypeSchemasGenerator } from './ExpressEndpointTypeSchemasGenerator'

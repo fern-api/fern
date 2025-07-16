@@ -1,35 +1,35 @@
-import { ExportsManager, ImportsManager, Reference, Zurg } from "@fern-typescript/commons";
-import { CoreUtilities } from "@fern-typescript/commons/src/core-utilities/CoreUtilities";
-import { GeneratedSdkErrorSchema, SdkErrorSchemaContext } from "@fern-typescript/contexts";
-import { ErrorResolver } from "@fern-typescript/resolvers";
-import { SdkErrorSchemaGenerator } from "@fern-typescript/sdk-error-schema-generator";
-import { SourceFile } from "ts-morph";
+import { ExportsManager, ImportsManager, Reference, Zurg } from '@fern-typescript/commons'
+import { CoreUtilities } from '@fern-typescript/commons/src/core-utilities/CoreUtilities'
+import { GeneratedSdkErrorSchema, SdkErrorSchemaContext } from '@fern-typescript/contexts'
+import { ErrorResolver } from '@fern-typescript/resolvers'
+import { SdkErrorSchemaGenerator } from '@fern-typescript/sdk-error-schema-generator'
+import { SourceFile } from 'ts-morph'
 
-import { DeclaredErrorName } from "@fern-fern/ir-sdk/api";
+import { DeclaredErrorName } from '@fern-fern/ir-sdk/api'
 
-import { SdkErrorDeclarationReferencer } from "../../declaration-referencers/SdkErrorDeclarationReferencer";
-import { getSchemaImportStrategy } from "../getSchemaImportStrategy";
+import { SdkErrorDeclarationReferencer } from '../../declaration-referencers/SdkErrorDeclarationReferencer'
+import { getSchemaImportStrategy } from '../getSchemaImportStrategy'
 
 export declare namespace SdkErrorSchemaContextImpl {
     export interface Init {
-        sourceFile: SourceFile;
-        coreUtilities: CoreUtilities;
-        importsManager: ImportsManager;
-        exportsManager: ExportsManager;
-        sdkErrorSchemaDeclarationReferencer: SdkErrorDeclarationReferencer;
-        sdkErrorSchemaGenerator: SdkErrorSchemaGenerator;
-        errorResolver: ErrorResolver;
+        sourceFile: SourceFile
+        coreUtilities: CoreUtilities
+        importsManager: ImportsManager
+        exportsManager: ExportsManager
+        sdkErrorSchemaDeclarationReferencer: SdkErrorDeclarationReferencer
+        sdkErrorSchemaGenerator: SdkErrorSchemaGenerator
+        errorResolver: ErrorResolver
     }
 }
 
 export class SdkErrorSchemaContextImpl implements SdkErrorSchemaContext {
-    private sourceFile: SourceFile;
-    private coreUtilities: CoreUtilities;
-    private importsManager: ImportsManager;
-    private exportsManager: ExportsManager;
-    private sdkErrorSchemaDeclarationReferencer: SdkErrorDeclarationReferencer;
-    private sdkErrorSchemaGenerator: SdkErrorSchemaGenerator;
-    private errorResolver: ErrorResolver;
+    private sourceFile: SourceFile
+    private coreUtilities: CoreUtilities
+    private importsManager: ImportsManager
+    private exportsManager: ExportsManager
+    private sdkErrorSchemaDeclarationReferencer: SdkErrorDeclarationReferencer
+    private sdkErrorSchemaGenerator: SdkErrorSchemaGenerator
+    private errorResolver: ErrorResolver
 
     constructor({
         sourceFile,
@@ -40,13 +40,13 @@ export class SdkErrorSchemaContextImpl implements SdkErrorSchemaContext {
         sdkErrorSchemaGenerator,
         errorResolver
     }: SdkErrorSchemaContextImpl.Init) {
-        this.sourceFile = sourceFile;
-        this.coreUtilities = coreUtilities;
-        this.importsManager = importsManager;
-        this.exportsManager = exportsManager;
-        this.sdkErrorSchemaDeclarationReferencer = sdkErrorSchemaDeclarationReferencer;
-        this.sdkErrorSchemaGenerator = sdkErrorSchemaGenerator;
-        this.errorResolver = errorResolver;
+        this.sourceFile = sourceFile
+        this.coreUtilities = coreUtilities
+        this.importsManager = importsManager
+        this.exportsManager = exportsManager
+        this.sdkErrorSchemaDeclarationReferencer = sdkErrorSchemaDeclarationReferencer
+        this.sdkErrorSchemaGenerator = sdkErrorSchemaGenerator
+        this.errorResolver = errorResolver
     }
 
     public getSchemaOfError(errorName: DeclaredErrorName): Zurg.Schema {
@@ -62,16 +62,16 @@ export class SdkErrorSchemaContextImpl implements SdkErrorSchemaContext {
                 exportsManager: this.exportsManager,
                 referencedIn: this.sourceFile
             })
-            .getExpression();
+            .getExpression()
 
-        return this.coreUtilities.zurg.lazy(this.coreUtilities.zurg.Schema._fromExpression(referenceToSchema));
+        return this.coreUtilities.zurg.lazy(this.coreUtilities.zurg.Schema._fromExpression(referenceToSchema))
     }
 
     public getGeneratedSdkErrorSchema(errorName: DeclaredErrorName): GeneratedSdkErrorSchema | undefined {
         return this.sdkErrorSchemaGenerator.generateSdkErrorSchema({
             errorDeclaration: this.errorResolver.getErrorDeclarationFromName(errorName),
             errorName: this.sdkErrorSchemaDeclarationReferencer.getExportedName(errorName)
-        });
+        })
     }
 
     public getReferenceToSdkErrorSchema(errorName: DeclaredErrorName): Reference {
@@ -81,6 +81,6 @@ export class SdkErrorSchemaContextImpl implements SdkErrorSchemaContext {
             referencedIn: this.sourceFile,
             importsManager: this.importsManager,
             exportsManager: this.exportsManager
-        });
+        })
     }
 }

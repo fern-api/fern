@@ -1,30 +1,30 @@
-import { AccessLevel } from "./AccessLevel";
-import type { EnumWithRawValues } from "./EnumWithRawValues";
-import { Initializer } from "./Initializer";
-import { Method } from "./Method";
-import { Property } from "./Property";
-import { AstNode, Writer } from "./core";
+import { AccessLevel } from './AccessLevel'
+import type { EnumWithRawValues } from './EnumWithRawValues'
+import { Initializer } from './Initializer'
+import { Method } from './Method'
+import { Property } from './Property'
+import { AstNode, Writer } from './core'
 
 export declare namespace Struct {
     interface Args {
-        name: string;
-        accessLevel?: AccessLevel;
-        conformances?: string[];
-        properties: Property[];
-        initializers?: Initializer[];
-        nestedTypes?: (Struct | EnumWithRawValues)[];
-        methods?: Method[];
+        name: string
+        accessLevel?: AccessLevel
+        conformances?: string[]
+        properties: Property[]
+        initializers?: Initializer[]
+        nestedTypes?: (Struct | EnumWithRawValues)[]
+        methods?: Method[]
     }
 }
 
 export class Struct extends AstNode {
-    public readonly name: string;
-    public readonly accessLevel?: AccessLevel;
-    public readonly conformances?: string[];
-    public readonly properties: Property[];
-    public readonly initializers?: Initializer[];
-    public readonly nestedTypes?: (Struct | EnumWithRawValues)[];
-    public readonly methods?: Method[];
+    public readonly name: string
+    public readonly accessLevel?: AccessLevel
+    public readonly conformances?: string[]
+    public readonly properties: Property[]
+    public readonly initializers?: Initializer[]
+    public readonly nestedTypes?: (Struct | EnumWithRawValues)[]
+    public readonly methods?: Method[]
 
     public constructor({
         accessLevel,
@@ -35,68 +35,68 @@ export class Struct extends AstNode {
         nestedTypes,
         methods
     }: Struct.Args) {
-        super();
-        this.name = name;
-        this.accessLevel = accessLevel;
-        this.conformances = conformances;
-        this.properties = properties;
-        this.initializers = initializers;
-        this.nestedTypes = nestedTypes;
-        this.methods = methods;
+        super()
+        this.name = name
+        this.accessLevel = accessLevel
+        this.conformances = conformances
+        this.properties = properties
+        this.initializers = initializers
+        this.nestedTypes = nestedTypes
+        this.methods = methods
     }
 
     public write(writer: Writer): void {
         if (this.accessLevel != null) {
-            writer.write(this.accessLevel);
-            writer.write(" ");
+            writer.write(this.accessLevel)
+            writer.write(' ')
         }
-        writer.write(`struct ${this.name}`);
+        writer.write(`struct ${this.name}`)
         this.conformances?.forEach((conformance, index) => {
             if (index === 0) {
-                writer.write(": ");
+                writer.write(': ')
             } else if (index > 0) {
-                writer.write(", ");
+                writer.write(', ')
             }
-            writer.write(conformance);
-        });
-        writer.write(" {");
-        writer.newLine();
-        writer.indent();
+            writer.write(conformance)
+        })
+        writer.write(' {')
+        writer.newLine()
+        writer.indent()
         this.properties.forEach((property) => {
-            property.write(writer);
-            writer.newLine();
-        });
+            property.write(writer)
+            writer.newLine()
+        })
         if (this.initializers) {
-            writer.newLine();
+            writer.newLine()
             this.initializers.forEach((initializer, initializerIdx) => {
                 if (initializerIdx > 0) {
-                    writer.newLine();
+                    writer.newLine()
                 }
-                initializer.write(writer);
-                writer.newLine();
-            });
+                initializer.write(writer)
+                writer.newLine()
+            })
         }
         if (this.nestedTypes) {
-            writer.newLine();
+            writer.newLine()
             this.nestedTypes.forEach((nestedType, nestedTypeIdx) => {
                 if (nestedTypeIdx > 0) {
-                    writer.newLine();
+                    writer.newLine()
                 }
-                nestedType.write(writer);
-                writer.newLine();
-            });
+                nestedType.write(writer)
+                writer.newLine()
+            })
         }
         if (this.methods) {
-            writer.newLine();
+            writer.newLine()
             this.methods.forEach((method, methodIdx) => {
                 if (methodIdx > 0) {
-                    writer.newLine();
+                    writer.newLine()
                 }
-                method.write(writer);
-                writer.newLine();
-            });
+                method.write(writer)
+                writer.newLine()
+            })
         }
-        writer.dedent();
-        writer.write("}");
+        writer.dedent()
+        writer.write('}')
     }
 }

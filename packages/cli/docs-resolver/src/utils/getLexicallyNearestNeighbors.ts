@@ -1,5 +1,5 @@
-import levenshtein from "fast-levenshtein";
-import { Heap } from "heap-js";
+import levenshtein from 'fast-levenshtein'
+import { Heap } from 'heap-js'
 
 /**
  * Returns the numNeighbors nearest lexical neighbors to the target string from the set of neighbors.
@@ -14,27 +14,27 @@ export function getLexicallyNearestNeighbors(
     threshold?: number
 ): Array<string> {
     if (numNeighbors <= 0) {
-        return [];
+        return []
     }
-    const norm = normalize ?? ((s: string) => s);
+    const norm = normalize ?? ((s: string) => s)
     // Max-heap: worst neighbor at the top
-    const maxHeap = new Heap<{ neighbor: string; distance: number }>(maxHeapComparator);
+    const maxHeap = new Heap<{ neighbor: string; distance: number }>(maxHeapComparator)
     for (const neighbor of neighbors) {
-        const distance = levenshtein.get(norm(target), norm(neighbor));
+        const distance = levenshtein.get(norm(target), norm(neighbor))
 
         if (threshold != null && distance > threshold) {
-            continue;
+            continue
         }
 
-        maxHeap.push({ neighbor, distance });
+        maxHeap.push({ neighbor, distance })
         if (maxHeap.size() > numNeighbors) {
-            maxHeap.pop(); // Remove the worst
+            maxHeap.pop() // Remove the worst
         }
     }
 
     return heapToSortedArray(maxHeap)
         .reverse()
-        .map((item) => item.neighbor);
+        .map((item) => item.neighbor)
 }
 
 /**
@@ -46,18 +46,18 @@ function maxHeapComparator(
     b: { neighbor: string; distance: number }
 ): number {
     if (a.distance !== b.distance) {
-        return b.distance - a.distance;
+        return b.distance - a.distance
     }
-    return b.neighbor.localeCompare(a.neighbor);
+    return b.neighbor.localeCompare(a.neighbor)
 }
 
 function heapToSortedArray<T>(heap: Heap<T>) {
-    const result: Array<T> = [];
+    const result: Array<T> = []
     while (heap.size() > 0) {
-        const item = heap.pop();
+        const item = heap.pop()
         if (item) {
-            result.push(item);
+            result.push(item)
         }
     }
-    return result;
+    return result
 }

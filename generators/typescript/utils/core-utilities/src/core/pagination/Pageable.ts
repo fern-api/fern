@@ -1,18 +1,18 @@
-import { RawResponse } from "../fetcher";
-import { Page } from "./Page";
+import { RawResponse } from '../fetcher'
+import { Page } from './Page'
 
 export declare namespace Pageable {
     interface Args<Response, Item> {
-        response: Response;
-        rawResponse: RawResponse;
-        hasNextPage: (response: Response) => boolean;
-        getItems: (response: Response) => Item[];
-        loadPage: (response: Response) => Promise<Response>;
+        response: Response
+        rawResponse: RawResponse
+        hasNextPage: (response: Response) => boolean
+        getItems: (response: Response) => Item[]
+        loadPage: (response: Response) => Promise<Response>
     }
 }
 
 export class Pageable<R, T> extends Page<T> {
     constructor(args: Pageable.Args<R, T>) {
-        super(args as any);
+        super(args as any)
     }
 }

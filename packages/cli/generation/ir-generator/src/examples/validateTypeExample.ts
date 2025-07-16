@@ -1,15 +1,15 @@
-import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import { RawSchemas, visitRawTypeDeclaration } from "@fern-api/fern-definition-schema";
+import { FernWorkspace } from '@fern-api/api-workspace-commons'
+import { RawSchemas, visitRawTypeDeclaration } from '@fern-api/fern-definition-schema'
 
-import { FernFileContext } from "../FernFileContext";
-import { ExampleResolver } from "../resolvers/ExampleResolver";
-import { TypeResolver } from "../resolvers/TypeResolver";
-import { ExampleViolation } from "./exampleViolation";
-import { validateAliasExample } from "./validateAliasExample";
-import { validateEnumExample } from "./validateEnumExample";
-import { validateObjectExample } from "./validateObjectExample";
-import { validateUndiscriminatedUnionExample } from "./validateUndiscriminatedUnionExample";
-import { validateUnionExample } from "./validateUnionExample";
+import { FernFileContext } from '../FernFileContext'
+import { ExampleResolver } from '../resolvers/ExampleResolver'
+import { TypeResolver } from '../resolvers/TypeResolver'
+import { ExampleViolation } from './exampleViolation'
+import { validateAliasExample } from './validateAliasExample'
+import { validateEnumExample } from './validateEnumExample'
+import { validateObjectExample } from './validateObjectExample'
+import { validateUndiscriminatedUnionExample } from './validateUndiscriminatedUnionExample'
+import { validateUnionExample } from './validateUnionExample'
 
 export function validateTypeExample({
     typeName,
@@ -22,15 +22,15 @@ export function validateTypeExample({
     breadcrumbs,
     depth
 }: {
-    typeName: string;
-    typeDeclaration: RawSchemas.TypeDeclarationSchema;
-    file: FernFileContext;
-    typeResolver: TypeResolver;
-    exampleResolver: ExampleResolver;
-    example: RawSchemas.ExampleTypeValueSchema;
-    workspace: FernWorkspace;
-    breadcrumbs: string[];
-    depth: number;
+    typeName: string
+    typeDeclaration: RawSchemas.TypeDeclarationSchema
+    file: FernFileContext
+    typeResolver: TypeResolver
+    exampleResolver: ExampleResolver
+    example: RawSchemas.ExampleTypeValueSchema
+    workspace: FernWorkspace
+    breadcrumbs: string[]
+    depth: number
 }): ExampleViolation[] {
     return visitRawTypeDeclaration(typeDeclaration, {
         alias: (rawAlias) => {
@@ -43,14 +43,14 @@ export function validateTypeExample({
                 workspace,
                 breadcrumbs,
                 depth
-            });
+            })
         },
         enum: (rawEnum) => {
             return validateEnumExample({
                 rawEnum,
                 example,
                 breadcrumbs
-            });
+            })
         },
         object: (rawObject) => {
             return validateObjectExample({
@@ -64,7 +64,7 @@ export function validateTypeExample({
                 workspace,
                 breadcrumbs,
                 depth
-            });
+            })
         },
         discriminatedUnion: (rawUnion) => {
             return validateUnionExample({
@@ -77,7 +77,7 @@ export function validateTypeExample({
                 workspace,
                 breadcrumbs,
                 depth
-            });
+            })
         },
         undiscriminatedUnion: (rawUnion) => {
             return validateUndiscriminatedUnionExample({
@@ -89,7 +89,7 @@ export function validateTypeExample({
                 workspace,
                 breadcrumbs,
                 depth
-            });
+            })
         }
-    });
+    })
 }

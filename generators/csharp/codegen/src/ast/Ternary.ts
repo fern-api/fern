@@ -1,22 +1,22 @@
-import { Ternary as CommonTernary } from "@fern-api/browser-compatible-base-generator";
+import { Ternary as CommonTernary } from '@fern-api/browser-compatible-base-generator'
 
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
+import { AstNode } from './core/AstNode'
+import { Writer } from './core/Writer'
 
 export declare namespace Ternary {
-    type Args = CommonTernary.Args;
+    type Args = CommonTernary.Args
 }
 
 export class Ternary extends AstNode {
-    private args: Ternary.Args;
+    private args: Ternary.Args
 
     public constructor(args: Ternary.Args) {
-        super();
-        this.args = args;
+        super()
+        this.args = args
     }
 
     public write(writer: Writer): void {
-        const commonTernary = new CommonTernary(this.args);
-        return commonTernary.write(writer);
+        const commonTernary = new CommonTernary(this.args)
+        return commonTernary.write(writer)
     }
 }

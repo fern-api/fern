@@ -1,6 +1,6 @@
-import { FernWriters, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
-import { GeneratedEnvironments, SdkContext } from "@fern-typescript/contexts";
-import { VariableDeclarationKind, ts } from "ts-morph";
+import { FernWriters, getPropertyKey, getTextOfTsNode } from '@fern-typescript/commons'
+import { GeneratedEnvironments, SdkContext } from '@fern-typescript/contexts'
+import { VariableDeclarationKind, ts } from 'ts-morph'
 
 import {
     EnvironmentBaseUrlId,
@@ -8,22 +8,22 @@ import {
     EnvironmentId,
     MultipleBaseUrlsEnvironment,
     MultipleBaseUrlsEnvironments
-} from "@fern-fern/ir-sdk/api";
+} from '@fern-fern/ir-sdk/api'
 
 export declare namespace GeneratedMultipleUrlsEnvironmentsImpl {
     export interface Init {
-        environmentEnumName: string;
-        environmentUrlsTypeName: string;
-        defaultEnvironmentId: EnvironmentId | undefined;
-        environments: MultipleBaseUrlsEnvironments;
+        environmentEnumName: string
+        environmentUrlsTypeName: string
+        defaultEnvironmentId: EnvironmentId | undefined
+        environments: MultipleBaseUrlsEnvironments
     }
 }
 
 export class GeneratedMultipleUrlsEnvironmentsImpl implements GeneratedEnvironments {
-    private environmentEnumName: string;
-    private environmentUrlsTypeName: string;
-    private environments: MultipleBaseUrlsEnvironments;
-    private defaultEnvironmentId: EnvironmentId | undefined;
+    private environmentEnumName: string
+    private environmentUrlsTypeName: string
+    private environments: MultipleBaseUrlsEnvironments
+    private defaultEnvironmentId: EnvironmentId | undefined
 
     constructor({
         environments,
@@ -31,10 +31,10 @@ export class GeneratedMultipleUrlsEnvironmentsImpl implements GeneratedEnvironme
         environmentUrlsTypeName,
         defaultEnvironmentId
     }: GeneratedMultipleUrlsEnvironmentsImpl.Init) {
-        this.environments = environments;
-        this.environmentEnumName = environmentEnumName;
-        this.environmentUrlsTypeName = environmentUrlsTypeName;
-        this.defaultEnvironmentId = defaultEnvironmentId;
+        this.environments = environments
+        this.environmentEnumName = environmentEnumName
+        this.environmentUrlsTypeName = environmentUrlsTypeName
+        this.defaultEnvironmentId = defaultEnvironmentId
     }
 
     public writeToFile(context: SdkContext): void {
@@ -42,34 +42,34 @@ export class GeneratedMultipleUrlsEnvironmentsImpl implements GeneratedEnvironme
             name: this.environmentUrlsTypeName,
             properties: this.environments.baseUrls.map((baseUrl) => ({
                 name: getPropertyKey(this.getNameOfBaseUrl(baseUrl)),
-                type: "string"
+                type: 'string'
             })),
             isExported: true
-        });
+        })
 
-        const objectWriter = FernWriters.object.writer({ asConst: true });
+        const objectWriter = FernWriters.object.writer({ asConst: true })
         for (const environment of this.environments.environments) {
             objectWriter.addProperty({
                 key: this.getNameOfEnvironment(environment),
                 value: getTextOfTsNode(
                     ts.factory.createObjectLiteralExpression(
                         this.environments.baseUrls.map((baseUrl) => {
-                            const url = environment.urls[baseUrl.id];
+                            const url = environment.urls[baseUrl.id]
                             if (url == null) {
                                 throw new Error(
                                     `No URL defined for ${environment.name.originalName}.${baseUrl.name.originalName}`
-                                );
+                                )
                             }
                             return ts.factory.createPropertyAssignment(
                                 getPropertyKey(this.getNameOfBaseUrl(baseUrl)),
                                 ts.factory.createStringLiteral(url)
-                            );
+                            )
                         }),
                         true
                     )
                 ),
                 docs: environment.docs ?? undefined
-            });
+            })
         }
 
         context.sourceFile.addVariableStatement({
@@ -81,7 +81,7 @@ export class GeneratedMultipleUrlsEnvironmentsImpl implements GeneratedEnvironme
                     initializer: objectWriter.toFunction()
                 }
             ]
-        });
+        })
 
         context.sourceFile.addTypeAlias({
             name: this.environmentEnumName,
@@ -98,59 +98,59 @@ export class GeneratedMultipleUrlsEnvironmentsImpl implements GeneratedEnvironme
                     )
                 )
             )
-        });
+        })
     }
 
     public getReferenceToDefaultEnvironment(context: SdkContext): ts.Expression | undefined {
         if (this.defaultEnvironmentId == null) {
-            return undefined;
+            return undefined
         }
         const defaultEnvironment = this.environments.environments.find(
             (environment) => environment.id === this.defaultEnvironmentId
-        );
+        )
         if (defaultEnvironment == null) {
-            throw new Error("Default environment does not exist");
+            throw new Error('Default environment does not exist')
         }
 
         return ts.factory.createPropertyAccessExpression(
             context.environments.getReferenceToEnvironmentsEnum().getExpression(),
             this.getNameOfEnvironment(defaultEnvironment)
-        );
+        )
     }
 
     public getTypeForUserSuppliedEnvironment(context: SdkContext): ts.TypeNode {
         return ts.factory.createUnionTypeNode([
             context.environments.getReferenceToEnvironmentsEnum().getTypeNode(),
             context.environments.getReferenceToEnvironmentUrls().getTypeNode()
-        ]);
+        ])
     }
 
     public hasDefaultEnvironment(): boolean {
-        return this.defaultEnvironmentId != null;
+        return this.defaultEnvironmentId != null
     }
 
     public getReferenceToEnvironmentUrl({
         referenceToEnvironmentValue,
         baseUrlId
     }: {
-        referenceToEnvironmentValue: ts.Expression;
-        baseUrlId: EnvironmentBaseUrlId | undefined;
+        referenceToEnvironmentValue: ts.Expression
+        baseUrlId: EnvironmentBaseUrlId | undefined
     }): ts.Expression {
         if (baseUrlId == null) {
-            throw new Error("Cannot get reference to multiple environment URL because baseUrlId is not defined");
+            throw new Error('Cannot get reference to multiple environment URL because baseUrlId is not defined')
         }
-        const baseUrl = this.environments.baseUrls.find((otherBaseUrl) => otherBaseUrl.id === baseUrlId);
+        const baseUrl = this.environments.baseUrls.find((otherBaseUrl) => otherBaseUrl.id === baseUrlId)
         if (baseUrl == null) {
-            throw new Error(`Cannot get reference to multiple environment URL because ${baseUrlId} is not defined`);
+            throw new Error(`Cannot get reference to multiple environment URL because ${baseUrlId} is not defined`)
         }
-        return ts.factory.createPropertyAccessExpression(referenceToEnvironmentValue, this.getNameOfBaseUrl(baseUrl));
+        return ts.factory.createPropertyAccessExpression(referenceToEnvironmentValue, this.getNameOfBaseUrl(baseUrl))
     }
 
     private getNameOfEnvironment(environment: MultipleBaseUrlsEnvironment): string {
-        return environment.name.pascalCase.unsafeName;
+        return environment.name.pascalCase.unsafeName
     }
 
     private getNameOfBaseUrl(baseUrl: EnvironmentBaseUrlWithId): string {
-        return baseUrl.name.camelCase.unsafeName;
+        return baseUrl.name.camelCase.unsafeName
     }
 }

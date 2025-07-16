@@ -1,22 +1,22 @@
-import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
-import { Zurg, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
-import { GeneratedObjectTypeSchema, ModelContext } from "@fern-typescript/contexts";
-import { ModuleDeclaration, ts } from "ts-morph";
+import { AbstractGeneratedSchema } from '@fern-typescript/abstract-schema-generator'
+import { Zurg, getPropertyKey, getTextOfTsNode } from '@fern-typescript/commons'
+import { GeneratedObjectTypeSchema, ModelContext } from '@fern-typescript/contexts'
+import { ModuleDeclaration, ts } from 'ts-morph'
 
-import { ObjectTypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { ObjectTypeDeclaration } from '@fern-fern/ir-sdk/api'
 
-import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema";
+import { AbstractGeneratedTypeSchema } from '../AbstractGeneratedTypeSchema'
 
 export class GeneratedObjectTypeSchemaImpl<Context extends ModelContext>
     extends AbstractGeneratedTypeSchema<ObjectTypeDeclaration, Context>
     implements GeneratedObjectTypeSchema<Context>
 {
-    public readonly type = "object";
+    public readonly type = 'object'
 
     protected override buildSchema(context: Context): Zurg.Schema {
-        const generatedType = this.getGeneratedType();
-        if (generatedType.type !== "object") {
-            throw new Error("Type is not an object: " + this.typeName);
+        const generatedType = this.getGeneratedType()
+        if (generatedType.type !== 'object') {
+            throw new Error('Type is not an object: ' + this.typeName)
         }
 
         const properties = this.shape.properties.map(
@@ -27,23 +27,23 @@ export class GeneratedObjectTypeSchemaImpl<Context extends ModelContext>
                 },
                 value: context.typeSchema.getSchemaOfTypeReference(property.valueType)
             })
-        );
+        )
 
         let schema = (
             this.noOptionalProperties
                 ? context.coreUtilities.zurg.objectWithoutOptionalProperties
                 : context.coreUtilities.zurg.object
-        )(properties);
+        )(properties)
 
         for (const extension of this.shape.extends) {
-            schema = schema.extend(context.typeSchema.getSchemaOfNamedType(extension, { isGeneratingSchema: true }));
+            schema = schema.extend(context.typeSchema.getSchemaOfNamedType(extension, { isGeneratingSchema: true }))
         }
 
         if (this.shape.extraProperties) {
-            schema = schema.passthrough();
+            schema = schema.passthrough()
         }
 
-        return schema;
+        return schema
     }
 
     protected override generateRawTypeDeclaration(context: Context, module: ModuleDeclaration): void {
@@ -54,24 +54,24 @@ export class GeneratedObjectTypeSchemaImpl<Context extends ModelContext>
             ),
             properties: [
                 ...this.shape.properties.map((property) => {
-                    const type = context.typeSchema.getReferenceToRawType(property.valueType);
+                    const type = context.typeSchema.getReferenceToRawType(property.valueType)
                     return {
                         name: getPropertyKey(property.name.wireValue),
                         type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                         hasQuestionToken: type.isOptional
-                    };
+                    }
                 }),
                 ...(this.shape.extraProperties
                     ? [
                           {
-                              name: "[key: string]",
-                              type: "any"
+                              name: '[key: string]',
+                              type: 'any'
                           }
                       ]
                     : [])
             ],
             isExported: true
-        });
+        })
     }
 
     protected override getReferenceToSchemaType({
@@ -79,10 +79,10 @@ export class GeneratedObjectTypeSchemaImpl<Context extends ModelContext>
         rawShape,
         parsedShape
     }: {
-        context: Context;
-        rawShape: ts.TypeNode;
-        parsedShape: ts.TypeNode;
+        context: Context
+        rawShape: ts.TypeNode
+        parsedShape: ts.TypeNode
     }): ts.TypeNode {
-        return context.coreUtilities.zurg.ObjectSchema._getReferenceToType({ rawShape, parsedShape });
+        return context.coreUtilities.zurg.ObjectSchema._getReferenceToType({ rawShape, parsedShape })
     }
 }

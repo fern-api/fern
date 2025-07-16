@@ -1,11 +1,11 @@
-import { Values } from "@fern-api/core-utils";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { AbsoluteFilePath } from "@fern-api/path-utils";
+import { Values } from '@fern-api/core-utils'
+import { RawSchemas } from '@fern-api/fern-definition-schema'
+import { AbsoluteFilePath } from '@fern-api/path-utils'
 
-import { FernFiddle } from "@fern-fern/fiddle-sdk";
+import { FernFiddle } from '@fern-fern/fiddle-sdk'
 
-import { generatorsYml } from "..";
-import { Audiences } from "../commons";
+import { generatorsYml } from '..'
+import { Audiences } from '../commons'
 import {
     ApiDefinitionSettingsSchema,
     GeneratorInvocationSchema,
@@ -13,152 +13,152 @@ import {
     OpenApiFilterSchema,
     OpenRpcSpecSchema,
     ReadmeSchema
-} from "./schemas";
+} from './schemas'
 
 export interface GeneratorsConfiguration {
-    api?: APIDefinition;
-    defaultGroup: string | undefined;
-    reviewers: Reviewers | undefined;
-    groups: GeneratorGroup[];
-    whitelabel: FernFiddle.WhitelabelConfig | undefined;
+    api?: APIDefinition
+    defaultGroup: string | undefined
+    reviewers: Reviewers | undefined
+    groups: GeneratorGroup[]
+    whitelabel: FernFiddle.WhitelabelConfig | undefined
 
-    rawConfiguration: GeneratorsConfigurationSchema;
-    absolutePathToConfiguration: AbsoluteFilePath;
+    rawConfiguration: GeneratorsConfigurationSchema
+    absolutePathToConfiguration: AbsoluteFilePath
 }
 
-export type APIDefinition = SingleNamespaceAPIDefinition | MultiNamespaceAPIDefinition | ConjureAPIDefinition;
+export type APIDefinition = SingleNamespaceAPIDefinition | MultiNamespaceAPIDefinition | ConjureAPIDefinition
 
 export interface SingleNamespaceAPIDefinition
     extends RawSchemas.WithEnvironmentsSchema,
         RawSchemas.WithAuthSchema,
         RawSchemas.WithHeadersSchema {
-    type: "singleNamespace";
-    definitions: APIDefinitionLocation[];
+    type: 'singleNamespace'
+    definitions: APIDefinitionLocation[]
 }
 
 export interface MultiNamespaceAPIDefinition
     extends RawSchemas.WithEnvironmentsSchema,
         RawSchemas.WithAuthSchema,
         RawSchemas.WithHeadersSchema {
-    type: "multiNamespace";
-    rootDefinitions: APIDefinitionLocation[] | undefined;
-    definitions: Record<string, APIDefinitionLocation[]>;
+    type: 'multiNamespace'
+    rootDefinitions: APIDefinitionLocation[] | undefined
+    definitions: Record<string, APIDefinitionLocation[]>
 }
 
 export interface ConjureAPIDefinition
     extends RawSchemas.WithEnvironmentsSchema,
         RawSchemas.WithAuthSchema,
         RawSchemas.WithHeadersSchema {
-    type: "conjure";
-    pathToConjureDefinition: string;
+    type: 'conjure'
+    pathToConjureDefinition: string
 }
 
 export interface APIDefinitionSettings {
-    shouldUseTitleAsName: boolean | undefined;
-    shouldUseUndiscriminatedUnionsWithLiterals: boolean | undefined;
-    shouldUseIdiomaticRequestNames: boolean | undefined;
-    asyncApiMessageNaming: "v1" | "v2" | undefined;
-    shouldUseOptionalAdditionalProperties: boolean | undefined;
-    coerceEnumsToLiterals: boolean | undefined;
-    objectQueryParameters: boolean | undefined;
-    respectReadonlySchemas: boolean | undefined;
-    respectNullableSchemas: boolean | undefined;
-    onlyIncludeReferencedSchemas: boolean | undefined;
-    inlinePathParameters: boolean | undefined;
-    useBytesForBinaryResponse: boolean | undefined;
-    respectForwardCompatibleEnums: boolean | undefined;
-    filter: OpenApiFilterSchema | undefined;
-    defaultFormParameterEncoding: "form" | "json" | undefined;
-    exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
-    additionalPropertiesDefaultsTo: boolean | undefined;
-    typeDatesAsStrings: boolean | undefined;
-    preserveSingleSchemaOneOf: boolean | undefined;
+    shouldUseTitleAsName: boolean | undefined
+    shouldUseUndiscriminatedUnionsWithLiterals: boolean | undefined
+    shouldUseIdiomaticRequestNames: boolean | undefined
+    asyncApiMessageNaming: 'v1' | 'v2' | undefined
+    shouldUseOptionalAdditionalProperties: boolean | undefined
+    coerceEnumsToLiterals: boolean | undefined
+    objectQueryParameters: boolean | undefined
+    respectReadonlySchemas: boolean | undefined
+    respectNullableSchemas: boolean | undefined
+    onlyIncludeReferencedSchemas: boolean | undefined
+    inlinePathParameters: boolean | undefined
+    useBytesForBinaryResponse: boolean | undefined
+    respectForwardCompatibleEnums: boolean | undefined
+    filter: OpenApiFilterSchema | undefined
+    defaultFormParameterEncoding: 'form' | 'json' | undefined
+    exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined
+    additionalPropertiesDefaultsTo: boolean | undefined
+    typeDatesAsStrings: boolean | undefined
+    preserveSingleSchemaOneOf: boolean | undefined
 }
 
 export interface APIDefinitionLocation {
-    schema: APIDefinitionSchema;
-    origin: string | undefined;
-    overrides: string | undefined;
-    audiences: string[] | undefined;
-    settings: APIDefinitionSettings | undefined;
+    schema: APIDefinitionSchema
+    origin: string | undefined
+    overrides: string | undefined
+    audiences: string[] | undefined
+    settings: APIDefinitionSettings | undefined
 }
 
-export type APIDefinitionSchema = ProtoAPIDefinitionSchema | OSSAPIDefinitionSchema | OpenRPCDefinitionSchema;
+export type APIDefinitionSchema = ProtoAPIDefinitionSchema | OSSAPIDefinitionSchema | OpenRPCDefinitionSchema
 
 export interface ProtoAPIDefinitionSchema {
-    type: "protobuf";
-    root: string;
-    target: string;
-    localGeneration: boolean;
+    type: 'protobuf'
+    root: string
+    target: string
+    localGeneration: boolean
 }
 
 export interface OSSAPIDefinitionSchema {
-    type: "oss";
-    path: string;
+    type: 'oss'
+    path: string
 }
 
 export interface OpenRPCDefinitionSchema {
-    type: "openrpc";
-    path: string;
+    type: 'openrpc'
+    path: string
 }
 
 export interface GeneratorGroup {
-    groupName: string;
-    audiences: Audiences;
-    generators: GeneratorInvocation[];
-    reviewers: Reviewers | undefined;
+    groupName: string
+    audiences: Audiences
+    generators: GeneratorInvocation[]
+    reviewers: Reviewers | undefined
 }
 
 export interface Reviewer {
-    name: string;
+    name: string
 }
 
 export interface Reviewers {
-    teams?: Reviewer[] | undefined;
-    users?: Reviewer[] | undefined;
+    teams?: Reviewer[] | undefined
+    users?: Reviewer[] | undefined
 }
 
 export interface GeneratorInvocation {
-    raw?: GeneratorInvocationSchema;
+    raw?: GeneratorInvocationSchema
 
-    name: string;
-    irVersionOverride: string | undefined;
-    version: string;
-    config: unknown;
+    name: string
+    irVersionOverride: string | undefined
+    version: string
+    config: unknown
     // Note this also includes a reviewers block for PR mode, it's from fiddle
     // and the same schema
-    outputMode: FernFiddle.remoteGen.OutputMode;
-    absolutePathToLocalOutput: AbsoluteFilePath | undefined;
-    absolutePathToLocalSnippets: AbsoluteFilePath | undefined;
-    keywords: string[] | undefined;
-    smartCasing: boolean;
-    disableExamples: boolean;
-    language: GenerationLanguage | undefined;
-    publishMetadata: FernFiddle.remoteGen.PublishingMetadata | undefined;
-    readme: ReadmeSchema | undefined;
-    settings: ApiDefinitionSettingsSchema | undefined;
+    outputMode: FernFiddle.remoteGen.OutputMode
+    absolutePathToLocalOutput: AbsoluteFilePath | undefined
+    absolutePathToLocalSnippets: AbsoluteFilePath | undefined
+    keywords: string[] | undefined
+    smartCasing: boolean
+    disableExamples: boolean
+    language: GenerationLanguage | undefined
+    publishMetadata: FernFiddle.remoteGen.PublishingMetadata | undefined
+    readme: ReadmeSchema | undefined
+    settings: ApiDefinitionSettingsSchema | undefined
 }
 
 export const GenerationLanguage = {
-    TYPESCRIPT: "typescript",
-    JAVA: "java",
-    PYTHON: "python",
-    GO: "go",
-    RUBY: "ruby",
-    CSHARP: "csharp",
-    SWIFT: "swift",
-    PHP: "php"
-} as const;
+    TYPESCRIPT: 'typescript',
+    JAVA: 'java',
+    PYTHON: 'python',
+    GO: 'go',
+    RUBY: 'ruby',
+    CSHARP: 'csharp',
+    SWIFT: 'swift',
+    PHP: 'php'
+} as const
 
-export type GenerationLanguage = Values<typeof GenerationLanguage>;
+export type GenerationLanguage = Values<typeof GenerationLanguage>
 
 export function getPackageName({
     generatorInvocation
 }: {
-    generatorInvocation: GeneratorInvocation;
+    generatorInvocation: GeneratorInvocation
 }): string | undefined {
-    if (generatorInvocation.language === "go") {
-        return getGoPackageName(generatorInvocation);
+    if (generatorInvocation.language === 'go') {
+        return getGoPackageName(generatorInvocation)
     }
     return generatorInvocation.outputMode._visit<string | undefined>({
         downloadFiles: () => undefined,
@@ -185,7 +185,7 @@ export function getPackageName({
         publish: () => undefined,
         publishV2: () => undefined,
         _other: () => undefined
-    });
+    })
 }
 
 /**
@@ -200,5 +200,5 @@ function getGoPackageName(generatorInvocation: GeneratorInvocation): string | un
         publish: () => undefined,
         publishV2: () => undefined,
         _other: () => undefined
-    });
+    })
 }

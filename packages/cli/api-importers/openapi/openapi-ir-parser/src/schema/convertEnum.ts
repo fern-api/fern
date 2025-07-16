@@ -5,11 +5,11 @@ import {
     SdkGroupName,
     Source,
     generateEnumNameFromValue
-} from "@fern-api/openapi-ir";
-import { VALID_ENUM_NAME_REGEX } from "@fern-api/openapi-ir";
+} from '@fern-api/openapi-ir'
+import { VALID_ENUM_NAME_REGEX } from '@fern-api/openapi-ir'
 
-import { FernEnumConfig } from "../openapi/v3/extensions/getFernEnum";
-import { SchemaParserContext } from "./SchemaParserContext";
+import { FernEnumConfig } from '../openapi/v3/extensions/getFernEnum'
+import { SchemaParserContext } from './SchemaParserContext'
 
 export function convertEnum({
     nameOverride,
@@ -28,36 +28,36 @@ export function convertEnum({
     source,
     inline
 }: {
-    nameOverride: string | undefined;
-    generatedName: string;
-    title: string | undefined;
-    fernEnum: FernEnumConfig | undefined;
-    enumVarNames: string[] | undefined;
-    enumValues: string[];
-    _default: string | undefined;
-    description: string | undefined;
-    availability: Availability | undefined;
-    wrapAsNullable: boolean;
-    namespace: string | undefined;
-    groupName: SdkGroupName | undefined;
-    context: SchemaParserContext | undefined;
-    source: Source;
-    inline: boolean | undefined;
+    nameOverride: string | undefined
+    generatedName: string
+    title: string | undefined
+    fernEnum: FernEnumConfig | undefined
+    enumVarNames: string[] | undefined
+    enumValues: string[]
+    _default: string | undefined
+    description: string | undefined
+    availability: Availability | undefined
+    wrapAsNullable: boolean
+    namespace: string | undefined
+    groupName: SdkGroupName | undefined
+    context: SchemaParserContext | undefined
+    source: Source
+    inline: boolean | undefined
 }): SchemaWithExample {
-    const strippedEnumVarNames = stripCommonPrefix(enumVarNames ?? []);
-    const uniqueValues = new Set(enumValues);
+    const strippedEnumVarNames = stripCommonPrefix(enumVarNames ?? [])
+    const uniqueValues = new Set(enumValues)
     const values = Array.from(uniqueValues).map((value, index): EnumValue => {
-        const fernEnumValue = fernEnum?.[value];
-        const enumVarName = strippedEnumVarNames[index];
-        const valueIsValidName = VALID_ENUM_NAME_REGEX.test(value);
-        let nameOverride = fernEnumValue?.name ?? enumVarName;
-        const generatedName = valueIsValidName ? value : generateEnumNameFromValue(value);
+        const fernEnumValue = fernEnum?.[value]
+        const enumVarName = strippedEnumVarNames[index]
+        const valueIsValidName = VALID_ENUM_NAME_REGEX.test(value)
+        let nameOverride = fernEnumValue?.name ?? enumVarName
+        const generatedName = valueIsValidName ? value : generateEnumNameFromValue(value)
 
         if (nameOverride != null && !VALID_ENUM_NAME_REGEX.test(nameOverride)) {
             context?.logger.warn(
                 `Enum name override ${nameOverride} is not a valid name. Falling back on ${generatedName}.`
-            );
-            nameOverride = undefined;
+            )
+            nameOverride = undefined
         }
 
         return {
@@ -72,9 +72,9 @@ export function convertEnum({
                 screamingSnake: fernEnumValue?.casing?.screamingSnake ?? undefined,
                 camel: fernEnumValue?.casing?.camel ?? undefined
             }
-        };
-    });
-    const _defaultEnumValue = _default != null ? values.find((value) => value.value === _default) : undefined;
+        }
+    })
+    const _defaultEnumValue = _default != null ? values.find((value) => value.value === _default) : undefined
     return wrapEnum({
         wrapAsNullable,
         nameOverride,
@@ -88,7 +88,7 @@ export function convertEnum({
         groupName,
         source,
         inline
-    });
+    })
 }
 
 export function wrapEnum({
@@ -105,18 +105,18 @@ export function wrapEnum({
     source,
     inline
 }: {
-    wrapAsNullable: boolean;
-    nameOverride: string | undefined;
-    generatedName: string;
-    title: string | undefined;
-    values: EnumValue[];
-    _default: EnumValue | undefined;
-    description: string | undefined;
-    availability: Availability | undefined;
-    namespace: string | undefined;
-    groupName: SdkGroupName | undefined;
-    source: Source;
-    inline: boolean | undefined;
+    wrapAsNullable: boolean
+    nameOverride: string | undefined
+    generatedName: string
+    title: string | undefined
+    values: EnumValue[]
+    _default: EnumValue | undefined
+    description: string | undefined
+    availability: Availability | undefined
+    namespace: string | undefined
+    groupName: SdkGroupName | undefined
+    source: Source
+    inline: boolean | undefined
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
@@ -142,7 +142,7 @@ export function wrapEnum({
             namespace,
             groupName,
             inline
-        });
+        })
     }
     return SchemaWithExample.enum({
         nameOverride,
@@ -157,22 +157,22 @@ export function wrapEnum({
         groupName,
         source,
         inline
-    });
+    })
 }
 
 function stripCommonPrefix(names: string[]): string[] {
     if (names.length <= 1 || names[0] == null) {
-        return names;
+        return names
     }
 
-    const nameZero = names[0];
+    const nameZero = names[0]
 
-    let i = 0;
+    let i = 0
     // while all words have the same character at position i, increment i
     while (nameZero[i] != null && names.every((name) => name[i] === nameZero[i])) {
-        i++;
+        i++
     }
 
     // prefix is the substring from the beginning to the last successfully checked i
-    return names.map((name) => name.substring(i));
+    return names.map((name) => name.substring(i))
 }

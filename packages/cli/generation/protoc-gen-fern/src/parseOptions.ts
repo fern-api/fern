@@ -3,5 +3,5 @@ export interface Options {
 }
 
 export function parseOptions(parameter: string): Options {
-    return {};
+    return {}
 }

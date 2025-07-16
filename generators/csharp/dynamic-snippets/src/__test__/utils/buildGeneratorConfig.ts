@@ -1,41 +1,43 @@
-import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
-import { BaseCsharpCustomConfigSchema } from "@fern-api/csharp-codegen";
+import { FernGeneratorExec } from '@fern-api/browser-compatible-base-generator'
+import { BaseCsharpCustomConfigSchema } from '@fern-api/csharp-codegen'
 
 const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
     dryRun: false,
-    irFilepath: "<placeholder>",
+    irFilepath: '<placeholder>',
     output: {
-        path: "<placeholder>",
+        path: '<placeholder>',
         mode: FernGeneratorExec.OutputMode.github({
-            version: "v1.0.0",
-            repoUrl: "https://github.com/acme/acme-dotnet"
+            version: 'v1.0.0',
+            repoUrl: 'https://github.com/acme/acme-dotnet'
         })
     },
-    organization: "acme",
-    workspaceName: "acme",
+    organization: 'acme',
+    workspaceName: 'acme',
     environment: FernGeneratorExec.GeneratorEnvironment.local(),
     whitelabel: false,
     writeUnitTests: false,
     generateOauthClients: false,
     customConfig: {
-        namespace: "Acme",
-        "client-class-name": "AcmeClient",
-        "base-exception-class-name": "AcmeException",
-        "base-api-exception-class-name": "AcmeApiException",
-        "environment-class-name": "AcmeEnvironment",
-        "explicit-namespaces": true,
-        "inline-path-parameters": true
+        namespace: 'Acme',
+        'client-class-name': 'AcmeClient',
+        'base-exception-class-name': 'AcmeException',
+        'base-api-exception-class-name': 'AcmeApiException',
+        'environment-class-name': 'AcmeEnvironment',
+        'explicit-namespaces': true,
+        'inline-path-parameters': true
     } as BaseCsharpCustomConfigSchema
-};
+}
 
 export function buildGeneratorConfig({
     customConfig
-}: { customConfig?: Partial<BaseCsharpCustomConfigSchema> } = {}): FernGeneratorExec.GeneratorConfig {
+}: {
+    customConfig?: Partial<BaseCsharpCustomConfigSchema>
+} = {}): FernGeneratorExec.GeneratorConfig {
     return {
         ...DEFAULT_CONFIG,
         customConfig: {
             ...(DEFAULT_CONFIG.customConfig as BaseCsharpCustomConfigSchema),
             ...customConfig
         }
-    };
+    }
 }

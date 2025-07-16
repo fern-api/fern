@@ -1,8 +1,8 @@
-import { APIV1Read, SDKSnippetHolder, convertAPIDefinitionToDb, convertDbAPIDefinitionToRead } from "@fern-api/fdr-sdk";
-import { IntermediateRepresentation } from "@fern-api/ir-sdk";
-import { convertIrToFdrApi } from "@fern-api/register";
+import { APIV1Read, SDKSnippetHolder, convertAPIDefinitionToDb, convertDbAPIDefinitionToRead } from '@fern-api/fdr-sdk'
+import { IntermediateRepresentation } from '@fern-api/ir-sdk'
+import { convertIrToFdrApi } from '@fern-api/register'
 
-import { PlaygroundConfig } from "../DocsDefinitionResolver";
+import { PlaygroundConfig } from '../DocsDefinitionResolver'
 
 const EMPTY_SNIPPET_HOLDER = new SDKSnippetHolder({
     snippetsBySdkId: {},
@@ -10,7 +10,7 @@ const EMPTY_SNIPPET_HOLDER = new SDKSnippetHolder({
     snippetTemplatesByEndpoint: {},
     snippetsBySdkIdAndEndpointId: {},
     snippetTemplatesByEndpointId: {}
-});
+})
 
 export function convertIrToApiDefinition(
     ir: IntermediateRepresentation,
@@ -35,5 +35,5 @@ export function convertIrToApiDefinition(
             APIV1Read.ApiDefinitionId(apiDefinitionId),
             EMPTY_SNIPPET_HOLDER
         )
-    );
+    )
 }

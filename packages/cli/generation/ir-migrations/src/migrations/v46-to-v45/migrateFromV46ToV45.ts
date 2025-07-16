@@ -1,36 +1,32 @@
-import { GeneratorName } from "@fern-api/configuration-loader";
+import { GeneratorName } from '@fern-api/configuration-loader'
 
-import { IrSerialization } from "../../ir-serialization";
-import { IrVersions } from "../../ir-versions";
-import {
-    GeneratorWasNeverUpdatedToConsumeNewIR,
-    GeneratorWasNotCreatedYet,
-    IrMigration
-} from "../../types/IrMigration";
+import { IrSerialization } from '../../ir-serialization'
+import { IrVersions } from '../../ir-versions'
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
 
 export const V46_TO_V45_MIGRATION: IrMigration<
     IrVersions.V46.ir.IntermediateRepresentation,
     IrVersions.V45.ir.IntermediateRepresentation
 > = {
-    laterVersion: "v46",
-    earlierVersion: "v45",
+    laterVersion: 'v46',
+    earlierVersion: 'v45',
     firstGeneratorVersionToConsumeNewIR: {
-        [GeneratorName.TYPESCRIPT_NODE_SDK]: "0.21.0",
-        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: "0.21.0",
+        [GeneratorName.TYPESCRIPT_NODE_SDK]: '0.21.0',
+        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: '0.21.0',
         [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_SDK]: "0.21.0",
-        [GeneratorName.TYPESCRIPT_EXPRESS]: "0.16.0",
+        [GeneratorName.TYPESCRIPT_SDK]: '0.21.0',
+        [GeneratorName.TYPESCRIPT_EXPRESS]: '0.16.0',
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_MODEL]: "0.9.0",
-        [GeneratorName.JAVA_SDK]: "0.10.0",
-        [GeneratorName.JAVA_SPRING]: "0.9.0",
-        [GeneratorName.PYTHON_FASTAPI]: "0.10.1",
-        [GeneratorName.PYTHON_PYDANTIC]: "0.9.1",
+        [GeneratorName.JAVA_MODEL]: '0.9.0',
+        [GeneratorName.JAVA_SDK]: '0.10.0',
+        [GeneratorName.JAVA_SPRING]: '0.9.0',
+        [GeneratorName.PYTHON_FASTAPI]: '0.10.1',
+        [GeneratorName.PYTHON_PYDANTIC]: '0.9.1',
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.OPENAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.STOPLIGHT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.PYTHON_SDK]: "2.9.9",
+        [GeneratorName.PYTHON_SDK]: '2.9.9',
         [GeneratorName.GO_FIBER]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -45,7 +41,7 @@ export const V46_TO_V45_MIGRATION: IrMigration<
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V45.IntermediateRepresentation.jsonOrThrow(ir, {
-            unrecognizedObjectKeys: "strip",
+            unrecognizedObjectKeys: 'strip',
             skipValidation: true
         }),
     migrateBackwards: (v46): IrVersions.V45.ir.IntermediateRepresentation => {
@@ -93,9 +89,9 @@ export const V46_TO_V45_MIGRATION: IrMigration<
                     }
                 ])
             )
-        };
+        }
     }
-};
+}
 
 function convertExampleTypeReference(v46ETR: IrVersions.V46.ExampleTypeReference): IrVersions.V45.ExampleTypeReference {
     return v46ETR.shape._visit<IrVersions.V45.ExampleTypeReference>({
@@ -137,12 +133,12 @@ function convertExampleTypeReference(v46ETR: IrVersions.V46.ExampleTypeReference
                             date: (date) => IrVersions.V45.ExamplePrimitive.date(date),
                             uuid: (uuid) => IrVersions.V45.ExamplePrimitive.uuid(uuid),
                             _other: (value) => {
-                                throw new Error(`Unexpected value: ${JSON.stringify(value)}`);
+                                throw new Error(`Unexpected value: ${JSON.stringify(value)}`)
                             }
                         })
                     ),
                 _other: (value) => {
-                    throw new Error(`Unexpected value: ${JSON.stringify(value)}`);
+                    throw new Error(`Unexpected value: ${JSON.stringify(value)}`)
                 }
             })
         }),
@@ -166,16 +162,16 @@ function convertExampleTypeReference(v46ETR: IrVersions.V46.ExampleTypeReference
                     date: (date) => IrVersions.V45.ExamplePrimitive.date(date),
                     uuid: (uuid) => IrVersions.V45.ExamplePrimitive.uuid(uuid),
                     _other: (value) => {
-                        throw new Error(`Unexpected value: ${JSON.stringify(value)}`);
+                        throw new Error(`Unexpected value: ${JSON.stringify(value)}`)
                     }
                 })
             )
         }),
         unknown: (value) => ({ ...v46ETR, shape: IrVersions.V45.ExampleTypeReferenceShape.unknown(value) }),
         _other: (value) => {
-            throw new Error(`Unexpected value: ${JSON.stringify(value)}`);
+            throw new Error(`Unexpected value: ${JSON.stringify(value)}`)
         }
-    });
+    })
 }
 
 function convertExampleObjectType(v46EOT: IrVersions.V46.ExampleObjectType): IrVersions.V45.ExampleObjectType {
@@ -185,17 +181,17 @@ function convertExampleObjectType(v46EOT: IrVersions.V46.ExampleObjectType): IrV
             ...property,
             value: convertExampleTypeReference(property.value)
         }))
-    };
+    }
 }
 
 function convertExampleTypeShape(v46ETS: IrVersions.V46.ExampleTypeShape): IrVersions.V45.ExampleTypeShape {
-    if (v46ETS.type === "alias") {
+    if (v46ETS.type === 'alias') {
         return IrVersions.V45.ExampleTypeShape.alias({
             value: convertExampleTypeReference(v46ETS.value)
-        });
-    } else if (v46ETS.type === "object") {
-        return IrVersions.V45.ExampleTypeShape.object(convertExampleObjectType(v46ETS));
-    } else if (v46ETS.type === "union") {
+        })
+    } else if (v46ETS.type === 'object') {
+        return IrVersions.V45.ExampleTypeShape.object(convertExampleObjectType(v46ETS))
+    } else if (v46ETS.type === 'union') {
         return IrVersions.V45.ExampleTypeShape.union({
             ...v46ETS,
             singleUnionType: {
@@ -210,39 +206,39 @@ function convertExampleTypeShape(v46ETS: IrVersions.V46.ExampleTypeShape): IrVer
                         IrVersions.V45.ExampleSingleUnionTypeProperties.singleProperty(convertExampleTypeReference(sp)),
                     noProperties: () => IrVersions.V45.ExampleSingleUnionTypeProperties.noProperties(),
                     _other: (value) => {
-                        throw new Error(`Unexpected value: ${JSON.stringify(value)}`);
+                        throw new Error(`Unexpected value: ${JSON.stringify(value)}`)
                     }
                 })
             }
-        });
-    } else if (v46ETS.type === "undiscriminatedUnion") {
+        })
+    } else if (v46ETS.type === 'undiscriminatedUnion') {
         return IrVersions.V45.ExampleTypeShape.undiscriminatedUnion({
             ...v46ETS,
             singleUnionType: convertExampleTypeReference(v46ETS.singleUnionType)
-        });
+        })
     }
-    return IrVersions.V45.ExampleTypeShape.enum(v46ETS);
+    return IrVersions.V45.ExampleTypeShape.enum(v46ETS)
 }
 
 function convertExampleTypes(v46ETs: IrVersions.V46.ExampleType[]): IrVersions.V45.ExampleType[] {
     return v46ETs.map((et) => ({
         ...et,
         shape: convertExampleTypeShape(et.shape)
-    }));
+    }))
 }
 
 function convertPathParameters(v46PPs: IrVersions.V46.ExamplePathParameter[]): IrVersions.V45.ExamplePathParameter[] {
     return v46PPs.map((pp) => ({
         ...pp,
         value: convertExampleTypeReference(pp.value)
-    }));
+    }))
 }
 
 function convertHeaders(v46Hs: IrVersions.V46.ExampleHeader[]): IrVersions.V45.ExampleHeader[] {
     return v46Hs.map((h) => ({
         ...h,
         value: convertExampleTypeReference(h.value)
-    }));
+    }))
 }
 
 function convertQueryParameters(
@@ -251,7 +247,7 @@ function convertQueryParameters(
     return v46QPs.map((qp) => ({
         ...qp,
         value: convertExampleTypeReference(qp.value)
-    }));
+    }))
 }
 
 function convertEndpointExamples(v46ETs: IrVersions.V46.HttpEndpointExample[]): IrVersions.V45.HttpEndpointExample[] {
@@ -275,7 +271,7 @@ function convertEndpointExamples(v46ETs: IrVersions.V46.HttpEndpointExample[]): 
                     }),
                 reference: (value) => IrVersions.V45.ExampleRequestBody.reference(convertExampleTypeReference(value)),
                 _other: (value) => {
-                    throw new Error(`Unexpected value: ${JSON.stringify(value)}`);
+                    throw new Error(`Unexpected value: ${JSON.stringify(value)}`)
                 }
             }),
             response: et.response._visit<IrVersions.V45.ExampleResponse>({
@@ -295,7 +291,7 @@ function convertEndpointExamples(v46ETs: IrVersions.V46.HttpEndpointExample[]): 
                                     value.map((v) => ({ ...v, data: convertExampleTypeReference(v.data) }))
                                 ),
                             _other: (value) => {
-                                throw new Error(`Unexpected value: ${JSON.stringify(value)}`);
+                                throw new Error(`Unexpected value: ${JSON.stringify(value)}`)
                             }
                         })
                     ),
@@ -305,18 +301,18 @@ function convertEndpointExamples(v46ETs: IrVersions.V46.HttpEndpointExample[]): 
                         body: value.body != null ? convertExampleTypeReference(value.body) : undefined
                     }),
                 _other: (value) => {
-                    throw new Error(`Unexpected value: ${JSON.stringify(value)}`);
+                    throw new Error(`Unexpected value: ${JSON.stringify(value)}`)
                 }
             })
-        };
+        }
         return et._visit<IrVersions.V45.HttpEndpointExample>({
             userProvided: () => IrVersions.V45.HttpEndpointExample.userProvided(bones),
             generated: () => IrVersions.V45.HttpEndpointExample.generated(bones),
             _other: (value) => {
-                throw new Error(`Unexpected value: ${JSON.stringify(value)}`);
+                throw new Error(`Unexpected value: ${JSON.stringify(value)}`)
             }
-        });
-    });
+        })
+    })
 }
 
 function convertWebsocketExamples(
@@ -341,9 +337,9 @@ function convertWebsocketExamples(
                 reference: (value) =>
                     IrVersions.V45.ExampleWebSocketMessageBody.reference(convertExampleTypeReference(value)),
                 _other: (value) => {
-                    throw new Error(`Unexpected value: ${JSON.stringify(value)}`);
+                    throw new Error(`Unexpected value: ${JSON.stringify(value)}`)
                 }
             })
         }))
-    }));
+    }))
 }

@@ -1,21 +1,17 @@
-import { mapValues } from "lodash-es";
+import { mapValues } from 'lodash-es'
 
-import { GeneratorName } from "@fern-api/configuration-loader";
+import { GeneratorName } from '@fern-api/configuration-loader'
 
-import { IrSerialization } from "../../ir-serialization";
-import { IrVersions } from "../../ir-versions";
-import {
-    GeneratorWasNeverUpdatedToConsumeNewIR,
-    GeneratorWasNotCreatedYet,
-    IrMigration
-} from "../../types/IrMigration";
+import { IrSerialization } from '../../ir-serialization'
+import { IrVersions } from '../../ir-versions'
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
 
 export const V54_TO_V53_MIGRATION: IrMigration<
     IrVersions.V54.ir.IntermediateRepresentation,
     IrVersions.V53.ir.IntermediateRepresentation
 > = {
-    laterVersion: "v54",
-    earlierVersion: "v53",
+    laterVersion: 'v54',
+    earlierVersion: 'v53',
     firstGeneratorVersionToConsumeNewIR: {
         [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -47,7 +43,7 @@ export const V54_TO_V53_MIGRATION: IrMigration<
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V53.IntermediateRepresentation.jsonOrThrow(ir, {
-            unrecognizedObjectKeys: "strip",
+            unrecognizedObjectKeys: 'strip',
             skipValidation: true
         }),
     migrateBackwards: (v54): IrVersions.V53.ir.IntermediateRepresentation => {
@@ -60,25 +56,25 @@ export const V54_TO_V53_MIGRATION: IrMigration<
                     response: convertHttpResponse(endpoint.response)
                 }))
             }))
-        };
+        }
     }
-};
+}
 
 function convertHttpResponse(
     response: IrVersions.V54.HttpResponse | undefined
 ): IrVersions.V53.HttpResponse | undefined {
     if (response == null) {
-        return undefined;
+        return undefined
     }
 
     return {
         statusCode: response.statusCode,
         body:
-            response.body?.type === "bytes"
+            response.body?.type === 'bytes'
                 ? IrVersions.V53.HttpResponseBody.fileDownload({
                       docs: undefined
                   })
                 : // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                   (response.body as any)
-    };
+    }
 }

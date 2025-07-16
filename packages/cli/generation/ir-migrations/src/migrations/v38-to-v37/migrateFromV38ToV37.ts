@@ -1,36 +1,32 @@
-import { GeneratorName } from "@fern-api/configuration-loader";
+import { GeneratorName } from '@fern-api/configuration-loader'
 
-import { IrSerialization } from "../../ir-serialization";
-import { IrVersions } from "../../ir-versions";
-import {
-    GeneratorWasNeverUpdatedToConsumeNewIR,
-    GeneratorWasNotCreatedYet,
-    IrMigration
-} from "../../types/IrMigration";
+import { IrSerialization } from '../../ir-serialization'
+import { IrVersions } from '../../ir-versions'
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
 
 export const V38_TO_V37_MIGRATION: IrMigration<
     IrVersions.V38.ir.IntermediateRepresentation,
     IrVersions.V37.ir.IntermediateRepresentation
 > = {
-    laterVersion: "v38",
-    earlierVersion: "v37",
+    laterVersion: 'v38',
+    earlierVersion: 'v37',
     firstGeneratorVersionToConsumeNewIR: {
-        [GeneratorName.TYPESCRIPT_NODE_SDK]: "0.15.0-rc0",
-        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: "0.15.0-rc0",
+        [GeneratorName.TYPESCRIPT_NODE_SDK]: '0.15.0-rc0',
+        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: '0.15.0-rc0',
         [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_SDK]: "0.15.0-rc0",
-        [GeneratorName.TYPESCRIPT_EXPRESS]: "0.12.0-rc0",
+        [GeneratorName.TYPESCRIPT_SDK]: '0.15.0-rc0',
+        [GeneratorName.TYPESCRIPT_EXPRESS]: '0.12.0-rc0',
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_SPRING]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.PYTHON_FASTAPI]: "0.9.0-rc0",
-        [GeneratorName.PYTHON_PYDANTIC]: "0.9.0-rc0",
+        [GeneratorName.PYTHON_FASTAPI]: '0.9.0-rc0',
+        [GeneratorName.PYTHON_PYDANTIC]: '0.9.0-rc0',
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.OPENAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.STOPLIGHT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.PYTHON_SDK]: "1.2.0-rc0",
+        [GeneratorName.PYTHON_SDK]: '1.2.0-rc0',
         [GeneratorName.GO_FIBER]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -45,7 +41,7 @@ export const V38_TO_V37_MIGRATION: IrMigration<
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V37.IntermediateRepresentation.jsonOrThrow(ir, {
-            unrecognizedObjectKeys: "strip",
+            unrecognizedObjectKeys: 'strip',
             skipValidation: true
         }),
     migrateBackwards: (V38, _context): IrVersions.V37.ir.IntermediateRepresentation => {
@@ -85,11 +81,11 @@ export const V38_TO_V37_MIGRATION: IrMigration<
                                     text: (text) => IrVersions.V37.HttpResponse.text(text),
                                     _other: () => undefined
                                 })
-                            };
+                            }
                         })
                     }
                 ])
             )
-        };
+        }
     }
-};
+}

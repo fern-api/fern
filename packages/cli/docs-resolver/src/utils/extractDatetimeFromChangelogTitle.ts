@@ -1,15 +1,15 @@
 export function extractDatetimeFromChangelogTitle(filename: string): Date | undefined {
-    const filenameWithoutExtension = filename.split(".")[0];
+    const filenameWithoutExtension = filename.split('.')[0]
     if (filenameWithoutExtension == null) {
-        return undefined;
+        return undefined
     }
-    const dateRegex = /(^\d{1,4})-(\d{1,2})-(\d{1,4})/;
-    const match = dateRegex.exec(filenameWithoutExtension)?.[0];
+    const dateRegex = /(^\d{1,4})-(\d{1,2})-(\d{1,4})/
+    const match = dateRegex.exec(filenameWithoutExtension)?.[0]
     if (match != null) {
         try {
-            return new Date(match);
+            return new Date(match)
             // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
         } catch (error) {}
     }
-    return undefined;
+    return undefined
 }

@@ -1,9 +1,9 @@
-import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { Pagination } from "@fern-api/ir-sdk";
+import { RawSchemas } from '@fern-api/fern-definition-schema'
+import { Pagination } from '@fern-api/ir-sdk'
 
-import { FernFileContext } from "../../FernFileContext";
-import { PropertyResolver } from "../../resolvers/PropertyResolver";
-import { OffsetPaginationPropertyComponents } from "./convertPaginationUtils";
+import { FernFileContext } from '../../FernFileContext'
+import { PropertyResolver } from '../../resolvers/PropertyResolver'
+import { OffsetPaginationPropertyComponents } from './convertPaginationUtils'
 
 export function convertOffsetPagination({
     propertyResolver,
@@ -12,11 +12,11 @@ export function convertOffsetPagination({
     endpointSchema,
     paginationPropertyComponents
 }: {
-    propertyResolver: PropertyResolver;
-    file: FernFileContext;
-    endpointName: string;
-    endpointSchema: RawSchemas.HttpEndpointSchema;
-    paginationPropertyComponents: OffsetPaginationPropertyComponents;
+    propertyResolver: PropertyResolver
+    file: FernFileContext
+    endpointName: string
+    endpointSchema: RawSchemas.HttpEndpointSchema
+    paginationPropertyComponents: OffsetPaginationPropertyComponents
 }): Pagination | undefined {
     return Pagination.offset({
         page: propertyResolver.resolveRequestPropertyOrThrow({
@@ -45,5 +45,5 @@ export function convertOffsetPagination({
                       propertyComponents: paginationPropertyComponents.hasNextPage
                   })
                 : undefined
-    });
+    })
 }

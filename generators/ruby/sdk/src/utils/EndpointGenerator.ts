@@ -27,7 +27,7 @@ import {
     Variable,
     VariableType,
     VoidClassReference
-} from "@fern-api/ruby-codegen";
+} from '@fern-api/ruby-codegen'
 
 import {
     BytesRequest,
@@ -42,37 +42,37 @@ import {
     JsonResponseBodyWithProperty,
     TypeId,
     TypeReference
-} from "@fern-fern/ir-sdk/api";
+} from '@fern-fern/ir-sdk/api'
 
-import { FileUploadUtility } from "./FileUploadUtility";
-import { IdempotencyRequestOptions } from "./IdempotencyRequestOptionsClass";
-import { RequestOptions } from "./RequestOptionsClass";
-import { isTypeOptional } from "./TypeUtilities";
+import { FileUploadUtility } from './FileUploadUtility'
+import { IdempotencyRequestOptions } from './IdempotencyRequestOptionsClass'
+import { RequestOptions } from './RequestOptionsClass'
+import { isTypeOptional } from './TypeUtilities'
 
 export class EndpointGenerator {
-    public endpointHasExamples: boolean;
+    public endpointHasExamples: boolean
 
-    private endpoint: HttpEndpoint;
-    private blockArg: string;
-    private requestOptions: RequestOptions;
-    private crf: ClassReferenceFactory;
-    private eg: ExampleGenerator;
-    private requestOptionsVariable: Variable;
+    private endpoint: HttpEndpoint
+    private blockArg: string
+    private requestOptions: RequestOptions
+    private crf: ClassReferenceFactory
+    private eg: ExampleGenerator
+    private requestOptionsVariable: Variable
 
-    private pathParametersAsProperties: Property[];
-    private queryParametersAsProperties: Property[];
-    private headersAsProperties: Property[];
-    private bodyAsProperties: Property[];
+    private pathParametersAsProperties: Property[]
+    private queryParametersAsProperties: Property[]
+    private headersAsProperties: Property[]
+    private bodyAsProperties: Property[]
 
-    private pathLiteralsAsProperties: Map<string, LiteralClassReference>;
-    private queryLiteralsAsProperties: Map<string, LiteralClassReference>;
-    private headersLiteralsAsProperties: Map<string, LiteralClassReference>;
-    private bodyLiteralsAsProperties: Map<string, LiteralClassReference>;
+    private pathLiteralsAsProperties: Map<string, LiteralClassReference>
+    private queryLiteralsAsProperties: Map<string, LiteralClassReference>
+    private headersLiteralsAsProperties: Map<string, LiteralClassReference>
+    private bodyLiteralsAsProperties: Map<string, LiteralClassReference>
 
-    private streamProcessingBlock: Parameter | undefined;
-    private fileUploadUtility: FileUploadUtility;
+    private streamProcessingBlock: Parameter | undefined
+    private fileUploadUtility: FileUploadUtility
 
-    public example: ExampleEndpointCall | undefined;
+    public example: ExampleEndpointCall | undefined
 
     constructor(
         endpoint: HttpEndpoint,
@@ -83,31 +83,31 @@ export class EndpointGenerator {
         generatedClasses: Map<TypeId, Class_>,
         fileUploadUtility: FileUploadUtility
     ) {
-        this.endpoint = endpoint;
-        this.example = endpoint.examples[0];
-        this.endpointHasExamples = this.example !== undefined;
-        this.eg = eg;
-        this.blockArg = "req";
-        this.requestOptions = requestOptions;
-        this.crf = crf;
+        this.endpoint = endpoint
+        this.example = endpoint.examples[0]
+        this.endpointHasExamples = this.example !== undefined
+        this.eg = eg
+        this.blockArg = 'req'
+        this.requestOptions = requestOptions
+        this.crf = crf
 
-        this.requestOptionsVariable = requestOptionsVariable;
+        this.requestOptionsVariable = requestOptionsVariable
 
         const pathParameterExamples = (this.example?.rootPathParameters ?? [])
             .concat(this.example?.servicePathParameters ?? [])
-            .concat(this.example?.endpointPathParameters ?? []);
-        this.pathParametersAsProperties = [];
-        this.pathLiteralsAsProperties = new Map();
+            .concat(this.example?.endpointPathParameters ?? [])
+        this.pathParametersAsProperties = []
+        this.pathLiteralsAsProperties = new Map()
         this.endpoint.allPathParameters.forEach((pp) => {
             if (this.referenceIsLiteral(pp.valueType)) {
                 this.pathLiteralsAsProperties.set(
                     pp.name.snakeCase.safeName,
                     crf.fromTypeReference(pp.valueType) as LiteralClassReference
-                );
+                )
             } else {
                 const ppEx = this.eg.convertExampleTypeReference(
                     pathParameterExamples.find((param) => pp.name.originalName === param.name.originalName)?.value
-                );
+                )
                 this.pathParametersAsProperties.push(
                     new Property({
                         name: pp.name.snakeCase.safeName,
@@ -116,22 +116,22 @@ export class EndpointGenerator {
                         documentation: pp.docs,
                         example: ppEx
                     })
-                );
+                )
             }
-        });
+        })
 
-        this.queryParametersAsProperties = [];
-        this.queryLiteralsAsProperties = new Map();
+        this.queryParametersAsProperties = []
+        this.queryLiteralsAsProperties = new Map()
         this.endpoint.queryParameters.forEach((qp) => {
             if (this.referenceIsLiteral(qp.valueType)) {
                 this.queryLiteralsAsProperties.set(
                     qp.name.wireValue,
                     crf.fromTypeReference(qp.valueType) as LiteralClassReference
-                );
+                )
             } else {
                 const qpEx = this.eg.convertExampleTypeReference(
                     this.example?.queryParameters.find((param) => qp.name.wireValue === param.name.wireValue)?.value
-                );
+                )
 
                 this.queryParametersAsProperties.push(
                     new Property({
@@ -142,23 +142,23 @@ export class EndpointGenerator {
                         documentation: qp.docs,
                         example: qpEx
                     })
-                );
+                )
             }
-        });
+        })
 
-        this.headersAsProperties = [];
-        this.headersLiteralsAsProperties = new Map();
-        const headerExamples = (this.example?.serviceHeaders ?? []).concat(this.example?.endpointHeaders ?? []);
+        this.headersAsProperties = []
+        this.headersLiteralsAsProperties = new Map()
+        const headerExamples = (this.example?.serviceHeaders ?? []).concat(this.example?.endpointHeaders ?? [])
         this.endpoint.headers.forEach((header) => {
             if (this.referenceIsLiteral(header.valueType)) {
                 this.headersLiteralsAsProperties.set(
                     header.name.wireValue,
                     crf.fromTypeReference(header.valueType) as LiteralClassReference
-                );
+                )
             } else {
                 const headerEx = this.eg.convertExampleTypeReference(
                     headerExamples.find((he) => header.name.wireValue === he.name.wireValue)?.value
-                );
+                )
                 this.headersAsProperties.push(
                     new Property({
                         name: header.name.name.snakeCase.safeName,
@@ -167,26 +167,26 @@ export class EndpointGenerator {
                         isOptional: isTypeOptional(header.valueType),
                         example: headerEx
                     })
-                );
+                )
             }
-        });
+        })
 
-        const defaultBodyParameterName = "body";
-        this.bodyAsProperties = [];
-        this.bodyLiteralsAsProperties = new Map();
+        const defaultBodyParameterName = 'body'
+        this.bodyAsProperties = []
+        this.bodyLiteralsAsProperties = new Map()
         this.endpoint.requestBody?._visit({
             inlinedRequestBody: (irb: InlinedRequestBody) => {
                 const properties: Property[] = irb.extends
                     .flatMap((dtn) => generatedClasses.get(dtn.typeId)?.properties)
-                    .filter((p) => p !== undefined) as Property[];
+                    .filter((p) => p !== undefined) as Property[]
                 const exampleRequestProperties =
-                    this.example?.request?.type === "inlinedRequestBody" ? this.example.request.properties : undefined;
+                    this.example?.request?.type === 'inlinedRequestBody' ? this.example.request.properties : undefined
                 const allProperties = [
                     ...properties,
                     ...irb.properties.map((prop) => {
                         const requestEx = this.eg.convertExampleTypeReference(
                             exampleRequestProperties?.find((erp) => prop.name.wireValue === erp.name.wireValue)?.value
-                        );
+                        )
                         return new Property({
                             name: prop.name.name.snakeCase.safeName,
                             wireValue: prop.name.wireValue,
@@ -194,24 +194,24 @@ export class EndpointGenerator {
                             isOptional: isTypeOptional(prop.valueType),
                             documentation: prop instanceof Property ? prop.documentation : prop.docs,
                             example: requestEx
-                        });
+                        })
                     })
-                ];
+                ]
 
                 allProperties.forEach((prop) => {
                     if (prop.type.length === 1 && prop.type[0] instanceof LiteralClassReference) {
                         if (prop.wireValue != null) {
-                            this.bodyLiteralsAsProperties.set(prop.wireValue, prop.type[0] as LiteralClassReference);
+                            this.bodyLiteralsAsProperties.set(prop.wireValue, prop.type[0] as LiteralClassReference)
                         }
                     } else {
-                        this.bodyAsProperties.push(prop);
+                        this.bodyAsProperties.push(prop)
                     }
-                });
+                })
             },
             reference: (rbr: HttpRequestBodyReference) => {
                 const requestEx = this.eg.convertExampleTypeReference(
-                    this.example?.request?.type === "reference" ? this.example.request : undefined
-                );
+                    this.example?.request?.type === 'reference' ? this.example.request : undefined
+                )
                 if (!this.referenceIsLiteral(rbr.requestBodyType)) {
                     this.bodyAsProperties.push(
                         new Property({
@@ -223,12 +223,12 @@ export class EndpointGenerator {
                             documentation: rbr.docs,
                             example: requestEx
                         })
-                    );
+                    )
                 } else {
                     this.bodyLiteralsAsProperties.set(
                         this.endpoint.sdkRequest?.requestParameterName.snakeCase.safeName ?? defaultBodyParameterName,
                         crf.fromTypeReference(rbr.requestBodyType) as LiteralClassReference
-                    );
+                    )
                 }
             },
             fileUpload: (fur: FileUploadRequest) => {
@@ -241,7 +241,7 @@ export class EndpointGenerator {
                                     isOptional: fp.isOptional,
                                     wireValue: fp.key.wireValue,
                                     type: [StringClassReference, FileClassReference],
-                                    example: "my_file.txt"
+                                    example: 'my_file.txt'
                                 }),
                             // TODO: add examples for fileUpload parameters
                             bodyProperty: (prop: InlinedRequestBodyProperty) =>
@@ -253,11 +253,11 @@ export class EndpointGenerator {
                                     documentation: prop.docs
                                 }),
                             _other: () => {
-                                throw new Error("Unknown file upload property type.");
+                                throw new Error('Unknown file upload property type.')
                             }
                         })
-                    );
-                });
+                    )
+                })
             },
             bytes: (br: BytesRequest) => {
                 this.bodyAsProperties.push(
@@ -267,35 +267,35 @@ export class EndpointGenerator {
                             defaultBodyParameterName,
                         type: [B64StringClassReference, FileClassReference],
                         isOptional: br.isOptional,
-                        documentation: "Base64 encoded bytes, or an IO object (e.g. Faraday::UploadIO, etc.)"
+                        documentation: 'Base64 encoded bytes, or an IO object (e.g. Faraday::UploadIO, etc.)'
                     })
-                );
+                )
             },
             _other: () => {
-                throw new Error("Unknown request body type.");
+                throw new Error('Unknown request body type.')
             }
-        });
+        })
 
         // Remove reserved properties from the function signature
         this.bodyAsProperties = this.bodyAsProperties.filter(
             (prop) => !SerializableObject.INTERNAL_FIELDS.includes(prop.name)
-        );
+        )
 
         this.streamProcessingBlock = this.isStreamingResponse()
             ? new Parameter({
-                  name: "on_data",
+                  name: 'on_data',
                   type: GenericClassReference,
                   isBlock: true,
                   documentation:
-                      "[chunk, overall_received_bytes, env] Leverage the Faraday on_data callback which will receive tuples of strings, the sum of characters received so far, and the response environment. The latter will allow access to the response status, headers and reason, as well as the request info."
+                      '[chunk, overall_received_bytes, env] Leverage the Faraday on_data callback which will receive tuples of strings, the sum of characters received so far, and the response environment. The latter will allow access to the response status, headers and reason, as well as the request info.'
               })
-            : undefined;
+            : undefined
 
-        this.fileUploadUtility = fileUploadUtility;
+        this.fileUploadUtility = fileUploadUtility
     }
 
     private referenceIsLiteral(typeReference: TypeReference): boolean {
-        return typeReference.type === "container" && typeReference.container.type === "literal";
+        return typeReference.type === 'container' && typeReference.container.type === 'literal'
     }
 
     public getEndpointParameters(): Parameter[] {
@@ -314,23 +314,21 @@ export class EndpointGenerator {
                 type: this.requestOptionsVariable.type,
                 isOptional: true
             })
-        ];
+        ]
         if (this.streamProcessingBlock !== undefined) {
-            params.push(this.streamProcessingBlock);
+            params.push(this.streamProcessingBlock)
         }
-        return params;
+        return params
     }
 
     public getFaradayHeaders(requestClientVariable: Variable): AstNode[] {
-        const headerArg = `${this.blockArg}.headers`;
-        const additionalHeadersProperty = this.requestOptions.getAdditionalHeaderProperties(
-            this.requestOptionsVariable
-        );
-        const idempotencyHeaders = [];
+        const headerArg = `${this.blockArg}.headers`
+        const additionalHeadersProperty = this.requestOptions.getAdditionalHeaderProperties(this.requestOptionsVariable)
+        const idempotencyHeaders = []
         if (this.requestOptions instanceof IdempotencyRequestOptions) {
             idempotencyHeaders.push(
                 ...this.requestOptions.getIdempotencyHeadersProperties(this.requestOptionsVariable, headerArg)
-            );
+            )
         }
 
         const literalHeaders = new Map(
@@ -338,10 +336,10 @@ export class EndpointGenerator {
                 `"${key}"`,
                 value.getLiteralValue()
             ])
-        );
+        )
         const inputHeaders = new Map(
             this.headersAsProperties.map((header) => [`"${header.wireValue}"`, header.toVariable(VariableType.LOCAL)])
-        );
+        )
         return [
             ...idempotencyHeaders,
             new Expression({
@@ -353,30 +351,30 @@ export class EndpointGenerator {
                     ]),
                     // Expand the existing headers hash, then the additionalheaders params
                     additionalHashes: [
-                        { value: "req.headers", defaultValue: "{}" },
+                        { value: 'req.headers', defaultValue: '{}' },
                         { value: `${requestClientVariable.write({})}.get_headers` },
-                        { value: additionalHeadersProperty, defaultValue: "{}" }
+                        { value: additionalHeadersProperty, defaultValue: '{}' }
                     ],
                     shouldCompact: true,
                     stringifyValues: false
                 }),
                 isAssignment: true
             })
-        ];
+        ]
     }
 
     public getFaradayParameters(): AstNode | undefined {
-        const additionalQueryProperty = this.requestOptions.getAdditionalQueryProperties(this.requestOptionsVariable);
+        const additionalQueryProperty = this.requestOptions.getAdditionalQueryProperties(this.requestOptionsVariable)
 
         const literalQueryParams = new Map(
             Array.from(this.queryLiteralsAsProperties.entries()).map(([key, value]) => [
                 `"${key}"`,
                 value.getLiteralValue()
             ])
-        );
+        )
         const inputQueryParams = new Map(
             this.queryParametersAsProperties.map((qp) => [`"${qp.wireValue}"`, qp.toVariable(VariableType.LOCAL)])
-        );
+        )
 
         return this.queryParametersAsProperties.length > 0
             ? new Expression({
@@ -386,7 +384,7 @@ export class EndpointGenerator {
                           ...Array.from(literalQueryParams.entries()),
                           ...Array.from(inputQueryParams.entries())
                       ]),
-                      additionalHashes: [{ value: additionalQueryProperty, defaultValue: "{}" }],
+                      additionalHashes: [{ value: additionalQueryProperty, defaultValue: '{}' }],
                       shouldCompact: true,
                       stringifyValues: false
                   }),
@@ -398,16 +396,16 @@ export class EndpointGenerator {
                       leftSide: new FunctionInvocation({
                           onObject: this.requestOptionsVariable,
                           baseFunction: new Function_({
-                              name: "nil?",
+                              name: 'nil?',
                               functionBody: []
                           }),
                           optionalSafeCall: false
                       }),
-                      operation: "||",
+                      operation: '||',
                       rightSide: new FunctionInvocation({
                           onObject: additionalQueryProperty,
                           baseFunction: new Function_({
-                              name: "nil?",
+                              name: 'nil?',
                               functionBody: []
                           }),
                           optionalSafeCall: false
@@ -416,7 +414,7 @@ export class EndpointGenerator {
                           new Expression({
                               leftSide: `${this.blockArg}.params`,
                               rightSide: new HashInstance({
-                                  additionalHashes: [{ value: additionalQueryProperty, defaultValue: "{}" }],
+                                  additionalHashes: [{ value: additionalQueryProperty, defaultValue: '{}' }],
                                   shouldCompact: true,
                                   stringifyValues: false
                               }),
@@ -424,35 +422,35 @@ export class EndpointGenerator {
                           })
                       ]
                   }
-              });
+              })
     }
 
     private getFaradayBodyForReference(additionalBodyProperty: string): AstNode[] {
-        const prop = this.bodyAsProperties[0];
+        const prop = this.bodyAsProperties[0]
         if (prop === undefined) {
-            throw new Error("No body properties found.");
+            throw new Error('No body properties found.')
         }
 
         const referenceBodyHash = new HashInstance({
             additionalHashes: [
-                { value: prop.name, defaultValue: "{}" },
-                { value: additionalBodyProperty, defaultValue: "{}" }
+                { value: prop.name, defaultValue: '{}' },
+                { value: additionalBodyProperty, defaultValue: '{}' }
             ],
             shouldCompact: true
-        });
+        })
         return [
             new Expression({
                 leftSide: `${this.blockArg}.body`,
                 rightSide: referenceBodyHash,
                 isAssignment: true
             })
-        ];
+        ]
     }
 
     private getFaradayBodyForBytes(): AstNode[] {
-        const prop = this.bodyAsProperties[0];
+        const prop = this.bodyAsProperties[0]
         if (prop === undefined) {
-            throw new Error("No body properties found.");
+            throw new Error('No body properties found.')
         }
 
         return [
@@ -461,11 +459,11 @@ export class EndpointGenerator {
                 rightSide: prop.name,
                 isAssignment: true
             })
-        ];
+        ]
     }
 
     public getFaradayBody(): AstNode[] | undefined {
-        const additionalBodyProperty = this.requestOptions.getAdditionalBodyProperties(this.requestOptionsVariable);
+        const additionalBodyProperty = this.requestOptions.getAdditionalBodyProperties(this.requestOptionsVariable)
         if (this.endpoint.requestBody !== undefined) {
             return this.endpoint.requestBody._visit<AstNode[]>({
                 inlinedRequestBody: () => {
@@ -474,29 +472,29 @@ export class EndpointGenerator {
                             `"${key}"`,
                             value.getLiteralValue()
                         ])
-                    );
+                    )
                     const inputBodyParams = new Map(
                         this.bodyAsProperties.map((prop) => [
                             prop.wireValue ?? prop.name,
                             prop.toVariable(VariableType.LOCAL)
                         ])
-                    );
+                    )
                     const inlineHash = new HashInstance({
                         contents: new Map<string, string | AstNode>([
                             ...Array.from(literalBodyParams.entries()),
                             ...Array.from(inputBodyParams.entries())
                         ]),
-                        additionalHashes: [{ value: additionalBodyProperty, defaultValue: "{}" }],
+                        additionalHashes: [{ value: additionalBodyProperty, defaultValue: '{}' }],
                         shouldCompact: true,
                         stringifyValues: false
-                    });
+                    })
                     return [
                         new Expression({
                             leftSide: `${this.blockArg}.body`,
                             rightSide: inlineHash,
                             isAssignment: true
                         })
-                    ];
+                    ]
                 },
                 // Our inputs are hashes, so pass that in
                 reference: () => this.getFaradayBodyForReference(additionalBodyProperty),
@@ -511,11 +509,11 @@ export class EndpointGenerator {
                                         new Argument({
                                             value: prop.toVariable(VariableType.LOCAL),
                                             isNamed: true,
-                                            name: "file_like"
+                                            name: 'file_like'
                                         })
                                     ]
-                                });
-                                const isFileReference = prop.type.some((cr) => cr === FileClassReference);
+                                })
+                                const isFileReference = prop.type.some((cr) => cr === FileClassReference)
                                 if (isFileReference) {
                                     return [
                                         prop.wireValue ?? prop.name,
@@ -525,24 +523,24 @@ export class EndpointGenerator {
                                                       leftSide: new FunctionInvocation({
                                                           onObject: prop.toVariable(VariableType.LOCAL),
                                                           baseFunction: new Function_({
-                                                              name: "nil?",
+                                                              name: 'nil?',
                                                               functionBody: []
                                                           }),
                                                           optionalSafeCall: false
                                                       }),
-                                                      operation: "!",
+                                                      operation: '!',
                                                       expressions: [func]
                                                   }
                                               })
                                             : func
-                                    ];
+                                    ]
                                 }
-                                return [prop.wireValue ?? prop.name, prop.toVariable(VariableType.LOCAL)];
+                                return [prop.wireValue ?? prop.name, prop.toVariable(VariableType.LOCAL)]
                             })
                         ),
-                        additionalHashes: [{ value: additionalBodyProperty, defaultValue: "{}" }],
+                        additionalHashes: [{ value: additionalBodyProperty, defaultValue: '{}' }],
                         shouldCompact: true
-                    });
+                    })
 
                     return [
                         new Expression({
@@ -550,22 +548,22 @@ export class EndpointGenerator {
                             rightSide: inlineHash,
                             isAssignment: true
                         })
-                    ];
+                    ]
                 },
                 bytes: (br: BytesRequest) => {
                     return [
                         new Expression({
                             leftSide: `${this.blockArg}.headers['Content-Type']`,
-                            rightSide: `"${br.contentType ?? "application/octet-stream"}"`,
+                            rightSide: `"${br.contentType ?? 'application/octet-stream'}"`,
                             isAssignment: true
                         }),
                         ...this.getFaradayBodyForBytes()
-                    ];
+                    ]
                 },
                 _other: () => {
-                    throw new Error("Unknown request body type.");
+                    throw new Error('Unknown request body type.')
                 }
-            });
+            })
         } else {
             return [
                 new ConditionalStatement({
@@ -574,16 +572,16 @@ export class EndpointGenerator {
                         leftSide: new FunctionInvocation({
                             onObject: this.requestOptionsVariable,
                             baseFunction: new Function_({
-                                name: "nil?",
+                                name: 'nil?',
                                 functionBody: []
                             }),
                             optionalSafeCall: false
                         }),
-                        operation: "||",
+                        operation: '||',
                         rightSide: new FunctionInvocation({
                             onObject: additionalBodyProperty,
                             baseFunction: new Function_({
-                                name: "nil?",
+                                name: 'nil?',
                                 functionBody: []
                             }),
                             optionalSafeCall: false
@@ -592,7 +590,7 @@ export class EndpointGenerator {
                             new Expression({
                                 leftSide: `${this.blockArg}.body`,
                                 rightSide: new HashInstance({
-                                    additionalHashes: [{ value: additionalBodyProperty, defaultValue: "{}" }],
+                                    additionalHashes: [{ value: additionalBodyProperty, defaultValue: '{}' }],
                                     shouldCompact: true,
                                     stringifyValues: false
                                 }),
@@ -601,7 +599,7 @@ export class EndpointGenerator {
                         ]
                     }
                 })
-            ];
+            ]
         }
     }
 
@@ -619,9 +617,9 @@ export class EndpointGenerator {
                             rightSide: new FunctionInvocation({
                                 // TODO: Do this field access on the client better
                                 onObject: `${this.requestOptionsVariable.write({})}&.${prop.name}`,
-                                baseFunction: new Function_({ name: "nil?", functionBody: [] })
+                                baseFunction: new Function_({ name: 'nil?', functionBody: [] })
                             }),
-                            operation: "!",
+                            operation: '!',
                             expressions: [
                                 new Expression({
                                     leftSide: `${this.blockArg}.headers["${prop.wireValue ?? prop.name}"]`,
@@ -633,7 +631,7 @@ export class EndpointGenerator {
                     })
             ),
             ...this.getFaradayHeaders(requestClientVariable)
-        ];
+        ]
 
         if (this.isStreamingResponse() && this.streamProcessingBlock !== undefined) {
             expressions.push(
@@ -642,33 +640,33 @@ export class EndpointGenerator {
                     rightSide: this.streamProcessingBlock.toVariable().write({}),
                     isAssignment: true
                 })
-            );
+            )
         }
 
-        const parameters = this.getFaradayParameters();
+        const parameters = this.getFaradayParameters()
         if (parameters !== undefined) {
-            expressions.push(parameters);
+            expressions.push(parameters)
         }
 
-        const body = this.getFaradayBody();
+        const body = this.getFaradayBody()
         if (body !== undefined) {
-            expressions.push(...body);
+            expressions.push(...body)
         }
         const getUrlParams = shouldOverwriteUrl
             ? `environment: ${this.endpoint.baseUrl}, request_options: ${this.requestOptionsVariable.name}`
-            : `request_options: ${this.requestOptionsVariable.name}`;
+            : `request_options: ${this.requestOptionsVariable.name}`
         const url = new Expression({
             leftSide: `${this.blockArg}.url`,
             rightSide: `"#{${requestClientVariable.write({})}.get_url(${getUrlParams})}/${path}"`,
             isAssignment: false
-        });
+        })
         if (url !== undefined) {
-            expressions.push(url);
+            expressions.push(url)
         }
         return {
             arguments: this.blockArg,
             expressions
-        };
+        }
     }
 
     private isStreamingResponse(): boolean {
@@ -679,10 +677,10 @@ export class EndpointGenerator {
                 streaming: () => true,
                 text: () => false,
                 _other: () => {
-                    throw new Error("Unknown response type.");
+                    throw new Error('Unknown response type.')
                 }
             }) ?? false
-        );
+        )
     }
 
     public getResponseType(): ClassReference {
@@ -693,10 +691,10 @@ export class EndpointGenerator {
                 streaming: () => VoidClassReference,
                 text: () => StringClassReference,
                 _other: () => {
-                    throw new Error("Unknown response type.");
+                    throw new Error('Unknown response type.')
                 }
             }) ?? VoidClassReference
-        );
+        )
     }
 
     public getResponseExpressions(responseVariable: Variable): AstNode[] | undefined {
@@ -704,10 +702,10 @@ export class EndpointGenerator {
             name: `${responseVariable.name}.body`,
             type: GenericClassReference,
             variableType: VariableType.LOCAL
-        });
+        })
         return this.endpoint.response?._visit<AstNode[]>({
             json: (jr: JsonResponse) => {
-                const responseCr = this.crf.fromTypeReference(jr.responseBodyType);
+                const responseCr = this.crf.fromTypeReference(jr.responseBodyType)
                 return jr._visit<AstNode[]>({
                     response: () => {
                         const hasFromJson =
@@ -720,22 +718,22 @@ export class EndpointGenerator {
                                 (responseCr.aliasOf instanceof ArrayReference ||
                                     responseCr.aliasOf instanceof HashReference ||
                                     responseCr.aliasOf instanceof DateReference)
-                            );
+                            )
                         if (hasFromJson) {
-                            return [responseCr.fromJson(responseVariableBody) ?? responseVariableBody];
+                            return [responseCr.fromJson(responseVariableBody) ?? responseVariableBody]
                         }
 
                         const parsedJsonVariable = new Variable({
-                            name: "parsed_json",
+                            name: 'parsed_json',
                             type: GenericClassReference,
                             variableType: VariableType.LOCAL
-                        });
+                        })
                         return [
                             new Expression({
                                 leftSide: parsedJsonVariable,
                                 rightSide: new FunctionInvocation({
                                     onObject: JsonClassReference,
-                                    baseFunction: new Function_({ name: "parse", functionBody: [] }),
+                                    baseFunction: new Function_({ name: 'parse', functionBody: [] }),
                                     arguments_: [
                                         new Argument({
                                             value: responseVariableBody,
@@ -746,22 +744,22 @@ export class EndpointGenerator {
                                 isAssignment: true
                             }),
                             responseCr.fromJson(parsedJsonVariable) ?? parsedJsonVariable
-                        ];
+                        ]
                     },
                     nestedPropertyAsResponse: (jrbwp: JsonResponseBodyWithProperty) => {
                         if (jrbwp.responseProperty !== undefined) {
                             // Turn to struct, then get the field, then reconvert to JSON (to_json)
                             const nestedResponseValueVariable = new Variable({
-                                name: "nested_response_json",
+                                name: 'nested_response_json',
                                 type: GenericClassReference,
                                 variableType: VariableType.LOCAL
-                            });
+                            })
                             const parsingExpressions = [
                                 new Expression({
-                                    leftSide: "parsed_json",
+                                    leftSide: 'parsed_json',
                                     rightSide: new FunctionInvocation({
                                         onObject: JsonClassReference,
-                                        baseFunction: new Function_({ name: "parse", functionBody: [] }),
+                                        baseFunction: new Function_({ name: 'parse', functionBody: [] }),
                                         arguments_: [
                                             new Argument({
                                                 value: responseVariableBody,
@@ -771,7 +769,7 @@ export class EndpointGenerator {
                                     }),
                                     isAssignment: true
                                 })
-                            ];
+                            ]
                             const hasFromJson =
                                 responseCr.fromJson(nestedResponseValueVariable) !== undefined &&
                                 !(responseCr instanceof ArrayReference) &&
@@ -782,7 +780,7 @@ export class EndpointGenerator {
                                     (responseCr.aliasOf instanceof ArrayReference ||
                                         responseCr.aliasOf instanceof HashReference ||
                                         responseCr.aliasOf instanceof DateReference)
-                                );
+                                )
 
                             if (hasFromJson) {
                                 parsingExpressions.push(
@@ -791,30 +789,30 @@ export class EndpointGenerator {
                                         rightSide: `parsed_json["${jrbwp.responseProperty.name.wireValue}"].to_json`,
                                         isAssignment: true
                                     })
-                                );
+                                )
                             }
                             return [
                                 ...parsingExpressions,
                                 responseCr.fromJson(nestedResponseValueVariable) ?? nestedResponseValueVariable
-                            ];
+                            ]
                         } else {
-                            return [responseCr.fromJson(responseVariableBody) ?? responseVariableBody];
+                            return [responseCr.fromJson(responseVariableBody) ?? responseVariableBody]
                         }
                     },
                     _other: () => {
-                        throw new Error("Unknown response type.");
+                        throw new Error('Unknown response type.')
                     }
-                });
+                })
             },
             fileDownload: () => [],
             streaming: () => {
-                throw new Error("Streaming not yet supported.");
+                throw new Error('Streaming not yet supported.')
             },
             text: () => [responseVariableBody],
             _other: () => {
-                throw new Error("Unknown response type.");
+                throw new Error('Unknown response type.')
             }
-        });
+        })
     }
 
     // TODO: log this skipping
@@ -827,6 +825,6 @@ export class EndpointGenerator {
                 text: () => false,
                 _other: () => false
             }) ?? false
-        );
+        )
     }
 }

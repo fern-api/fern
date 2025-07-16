@@ -1,23 +1,23 @@
-import { csharp } from "@fern-api/csharp-codegen";
+import { csharp } from '@fern-api/csharp-codegen'
 
-import { HttpEndpoint, SdkRequest } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, SdkRequest } from '@fern-fern/ir-sdk/api'
 
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { RawClient } from "../http/RawClient";
+import { SdkGeneratorContext } from '../../SdkGeneratorContext'
+import { RawClient } from '../http/RawClient'
 
 export interface QueryParameterCodeBlock {
-    code: csharp.CodeBlock;
-    queryParameterBagReference: string;
+    code: csharp.CodeBlock
+    queryParameterBagReference: string
 }
 
 export interface HeaderParameterCodeBlock {
-    code: csharp.CodeBlock;
-    headerParameterBagReference: string;
+    code: csharp.CodeBlock
+    headerParameterBagReference: string
 }
 
 export interface RequestBodyCodeBlock {
-    code?: csharp.CodeBlock;
-    requestBodyReference: string;
+    code?: csharp.CodeBlock
+    requestBodyReference: string
 }
 
 export abstract class EndpointRequest {
@@ -28,20 +28,20 @@ export abstract class EndpointRequest {
     ) {}
 
     public getParameterName(): string {
-        return this.sdkRequest.requestParameterName.camelCase.safeName;
+        return this.sdkRequest.requestParameterName.camelCase.safeName
     }
 
     public getRequestBodyVariableName(): string {
-        return "requestBody";
+        return 'requestBody'
     }
 
-    public abstract getParameterType(): csharp.Type;
+    public abstract getParameterType(): csharp.Type
 
-    public abstract getQueryParameterCodeBlock(): QueryParameterCodeBlock | undefined;
+    public abstract getQueryParameterCodeBlock(): QueryParameterCodeBlock | undefined
 
-    public abstract getHeaderParameterCodeBlock(): HeaderParameterCodeBlock | undefined;
+    public abstract getHeaderParameterCodeBlock(): HeaderParameterCodeBlock | undefined
 
-    public abstract getRequestBodyCodeBlock(): RequestBodyCodeBlock | undefined;
+    public abstract getRequestBodyCodeBlock(): RequestBodyCodeBlock | undefined
 
-    public abstract getRequestType(): RawClient.RequestBodyType | undefined;
+    public abstract getRequestType(): RawClient.RequestBodyType | undefined
 }

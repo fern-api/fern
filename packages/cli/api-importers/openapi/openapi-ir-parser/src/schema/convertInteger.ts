@@ -1,6 +1,6 @@
-import { Availability, PrimitiveSchemaValueWithExample, SchemaWithExample, SdkGroupName } from "@fern-api/openapi-ir";
+import { Availability, PrimitiveSchemaValueWithExample, SchemaWithExample, SdkGroupName } from '@fern-api/openapi-ir'
 
-import { wrapPrimitive } from "./convertSchemas";
+import { wrapPrimitive } from './convertSchemas'
 
 export function convertInteger({
     nameOverride,
@@ -20,24 +20,24 @@ export function convertInteger({
     namespace,
     groupName
 }: {
-    nameOverride: string | undefined;
-    generatedName: string;
-    title: string | undefined;
-    format: string | undefined;
-    _default: number | undefined;
-    minimum: number | undefined;
-    maximum: number | undefined;
-    exclusiveMinimum: boolean | undefined;
-    exclusiveMaximum: boolean | undefined;
-    multipleOf: number | undefined;
-    description: string | undefined;
-    availability: Availability | undefined;
-    wrapAsNullable: boolean;
-    example: number | undefined;
-    namespace: string | undefined;
-    groupName: SdkGroupName | undefined;
+    nameOverride: string | undefined
+    generatedName: string
+    title: string | undefined
+    format: string | undefined
+    _default: number | undefined
+    minimum: number | undefined
+    maximum: number | undefined
+    exclusiveMinimum: boolean | undefined
+    exclusiveMaximum: boolean | undefined
+    multipleOf: number | undefined
+    description: string | undefined
+    availability: Availability | undefined
+    wrapAsNullable: boolean
+    example: number | undefined
+    namespace: string | undefined
+    groupName: SdkGroupName | undefined
 }): SchemaWithExample {
-    if (format === "int64") {
+    if (format === 'int64') {
         return wrapPrimitive({
             nameOverride,
             generatedName,
@@ -51,8 +51,8 @@ export function convertInteger({
             availability,
             namespace,
             groupName
-        });
-    } else if (format === "uint32") {
+        })
+    } else if (format === 'uint32') {
         return wrapPrimitive({
             nameOverride,
             generatedName,
@@ -66,8 +66,8 @@ export function convertInteger({
             availability,
             namespace,
             groupName
-        });
-    } else if (format === "uint64") {
+        })
+    } else if (format === 'uint64') {
         return wrapPrimitive({
             nameOverride,
             generatedName,
@@ -81,7 +81,7 @@ export function convertInteger({
             availability,
             namespace,
             groupName
-        });
+        })
     }
     return wrapPrimitive({
         nameOverride,
@@ -101,5 +101,5 @@ export function convertInteger({
         availability,
         namespace,
         groupName
-    });
+    })
 }

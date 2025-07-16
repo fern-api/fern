@@ -1,14 +1,14 @@
-import { mkdir, readdir, rm } from "fs/promises";
-import moment from "moment";
+import { mkdir, readdir, rm } from 'fs/promises'
+import moment from 'moment'
 
-import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from '@fern-api/fs-utils'
+import { TaskContext } from '@fern-api/task-context'
 
-import { FernRegistryClient } from "@fern-fern/generators-sdk";
+import { FernRegistryClient } from '@fern-fern/generators-sdk'
 
-import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
-import { parseGeneratorReleasesFile } from "../../utils/convertVersionsFileToReleases";
-import { writeChangelogEntries, writeChangelogsToFile } from "./writeChangelogEntries";
+import { GeneratorWorkspace } from '../../loadGeneratorWorkspaces'
+import { parseGeneratorReleasesFile } from '../../utils/convertVersionsFileToReleases'
+import { writeChangelogEntries, writeChangelogsToFile } from './writeChangelogEntries'
 
 export async function generateGeneratorChangelog({
     context,
@@ -17,95 +17,95 @@ export async function generateGeneratorChangelog({
     fdrClient,
     cleanOutputDirectory
 }: {
-    context: TaskContext;
-    generator: GeneratorWorkspace;
-    outputPath: string | undefined;
-    fdrClient: FernRegistryClient;
-    cleanOutputDirectory: boolean;
+    context: TaskContext
+    generator: GeneratorWorkspace
+    outputPath: string | undefined
+    fdrClient: FernRegistryClient
+    cleanOutputDirectory: boolean
 }): Promise<void> {
     const resolvedOutputPath =
         outputPath == null
             ? AbsoluteFilePath.of(process.cwd())
-            : outputPath.startsWith("/")
+            : outputPath.startsWith('/')
               ? AbsoluteFilePath.of(outputPath)
-              : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(outputPath));
+              : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(outputPath))
 
-    await mkdir(resolvedOutputPath, { recursive: true });
+    await mkdir(resolvedOutputPath, { recursive: true })
 
     if (cleanOutputDirectory) {
-        const files = await readdir(resolvedOutputPath, { withFileTypes: true });
+        const files = await readdir(resolvedOutputPath, { withFileTypes: true })
         for (const file of files) {
-            const filePath = join(resolvedOutputPath, RelativeFilePath.of(file.name));
+            const filePath = join(resolvedOutputPath, RelativeFilePath.of(file.name))
             if (file.isDirectory()) {
                 // This shouldn't happen, but let's skip if it does to be safe
-                continue;
+                continue
             } else {
-                await rm(filePath);
+                await rm(filePath)
             }
         }
     }
 
-    const generatorConfig = generator.workspaceConfig;
+    const generatorConfig = generator.workspaceConfig
     if (generatorConfig.changelogLocation == null) {
         context.logger.error(
             `No changelog location specified, unable to generate changelog. To register releases for generator ${generator.workspaceName}, specify a changelog location at: \`changelogLocation\`.`
-        );
-        return;
+        )
+        return
     }
 
     const absolutePathToChangelogLocation = join(
         generator.absolutePathToWorkspace,
         RelativeFilePath.of(generatorConfig.changelogLocation)
-    );
+    )
     if (!(await doesPathExist(absolutePathToChangelogLocation))) {
         context.logger.error(
             `Specified changelog location (${absolutePathToChangelogLocation}) not found, stopping changelog generation.`
-        );
-        return;
+        )
+        return
     }
 
     // Here we'll collect the changelogs so they're keyed by date, the map is essentially Release Date -> Version -> Changelog string
-    const writtenVersions = new Map<string, Map<string, string>>();
-    const generatorId = generator.workspaceName;
+    const writtenVersions = new Map<string, Map<string, string>>()
+    const generatorId = generator.workspaceName
     await parseGeneratorReleasesFile({
         generatorId,
         changelogPath: absolutePathToChangelogLocation,
         context,
         action: async (release) => {
-            let createdAt: string | undefined | Date = release.createdAt;
+            let createdAt: string | undefined | Date = release.createdAt
             if (release.isYanked != null) {
                 context.logger.error(
                     `Release ${release.version} for generator ${generatorId} has been yanked, skipping this release.`
-                );
-                return;
+                )
+                return
             }
 
             if (createdAt == null) {
                 const releaseRequest = await fdrClient.generators.versions.getGeneratorRelease(
                     generatorId,
                     release.version
-                );
+                )
                 if (!releaseRequest.ok || releaseRequest.body.createdAt == null) {
                     context.logger.error(
                         `Release ${release.version} for generator ${generatorId} does not have a createdAt value, and could not retrieve one from FDR, defaulting to today...`
-                    );
+                    )
                     // This will typically happen if you've added a new release to the versions file and haven't yet registered it with FDR yet
-                    createdAt = new Date();
+                    createdAt = new Date()
                 } else {
-                    createdAt = releaseRequest.body.createdAt;
+                    createdAt = releaseRequest.body.createdAt
                 }
             }
-            createdAt = moment(createdAt).format("YYYY-MM-DD");
+            createdAt = moment(createdAt).format('YYYY-MM-DD')
 
             if (!writtenVersions.has(createdAt)) {
-                writtenVersions.set(createdAt, new Map());
+                writtenVersions.set(createdAt, new Map())
             }
 
             writtenVersions
                 .get(createdAt)!
-                .set(release.version, writeChangelogEntries(release.version, release.changelogEntry));
+                .set(release.version, writeChangelogEntries(release.version, release.changelogEntry))
         }
-    });
+    })
 
-    await writeChangelogsToFile(resolvedOutputPath, writtenVersions);
+    await writeChangelogsToFile(resolvedOutputPath, writtenVersions)
 }

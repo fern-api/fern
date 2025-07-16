@@ -1,26 +1,26 @@
-import type { Node as EstreeNode } from "estree";
-import { walk } from "estree-walker";
-import grayMatter from "gray-matter";
-import { fromMarkdown } from "mdast-util-from-markdown";
-import { mdxFromMarkdown } from "mdast-util-mdx";
-import { mdx } from "micromark-extension-mdx";
-import { isAbsolute } from "path";
-import { CONTINUE, SKIP, visit } from "unist-util-visit";
-import { z } from "zod";
+import type { Node as EstreeNode } from 'estree'
+import { walk } from 'estree-walker'
+import grayMatter from 'gray-matter'
+import { fromMarkdown } from 'mdast-util-from-markdown'
+import { mdxFromMarkdown } from 'mdast-util-mdx'
+import { mdx } from 'micromark-extension-mdx'
+import { isAbsolute } from 'path'
+import { CONTINUE, SKIP, visit } from 'unist-util-visit'
+import { z } from 'zod'
 
-import { AbsoluteFilePath, RelativeFilePath, dirname, resolve } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { AbsoluteFilePath, RelativeFilePath, dirname, resolve } from '@fern-api/fs-utils'
+import { TaskContext } from '@fern-api/task-context'
 
-import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
+import { FernRegistry as CjsFdrSdk } from '@fern-fern/fdr-cjs-sdk'
 
-import { extractAttributeValueLiteral, extractSingleLiteral } from "./extract-literals";
-import { isMdxExpression, isMdxJsxAttribute, isMdxJsxElement, isMdxJsxExpressionAttribute } from "./is-mdx-element";
-import { parseMarkdownToTree } from "./parseMarkdownToTree";
-import { walkEstreeJsxAttributes } from "./walk-estree-jsx-attributes";
+import { extractAttributeValueLiteral, extractSingleLiteral } from './extract-literals'
+import { isMdxExpression, isMdxJsxAttribute, isMdxJsxElement, isMdxJsxExpressionAttribute } from './is-mdx-element'
+import { parseMarkdownToTree } from './parseMarkdownToTree'
+import { walkEstreeJsxAttributes } from './walk-estree-jsx-attributes'
 
 interface AbsolutePathMetadata {
-    absolutePathToMarkdownFile: AbsoluteFilePath;
-    absolutePathToFernFolder: AbsoluteFilePath;
+    absolutePathToMarkdownFile: AbsoluteFilePath
+    absolutePathToFernFolder: AbsoluteFilePath
 }
 
 /**
@@ -33,104 +33,104 @@ export function parseImagePaths(
     markdown: string,
     metadata: AbsolutePathMetadata
 ): {
-    filepaths: AbsoluteFilePath[];
-    markdown: string;
+    filepaths: AbsoluteFilePath[]
+    markdown: string
 } {
     // Don't remove {}! https://github.com/jonschlinkert/gray-matter/issues/43#issuecomment-318258919
-    const { content, data } = grayMatter(markdown, {});
-    let replacedContent = content;
+    const { content, data } = grayMatter(markdown, {})
+    let replacedContent = content
 
-    const filepaths = new Set<AbsoluteFilePath>();
+    const filepaths = new Set<AbsoluteFilePath>()
 
     function mapImage(image: string | undefined) {
-        const resolvedPath = resolvePath(image, metadata);
+        const resolvedPath = resolvePath(image, metadata)
         if (image && resolvedPath != null) {
-            filepaths.add(resolvedPath);
-            return resolvedPath;
+            filepaths.add(resolvedPath)
+            return resolvedPath
         }
-        return;
+        return
     }
 
-    visitFrontmatterImages(data, ["image", "og:image", "og:logo", "twitter:image"], mapImage);
-    replaceFrontmatterImagesforLogo(data, mapImage);
+    visitFrontmatterImages(data, ['image', 'og:image', 'og:logo', 'twitter:image'], mapImage)
+    replaceFrontmatterImagesforLogo(data, mapImage)
 
-    const tree = parseMarkdownToTree(content);
+    const tree = parseMarkdownToTree(content)
 
-    let offset = 0;
+    let offset = 0
 
     visit(tree, (node) => {
         if (node.position == null) {
-            return;
+            return
         }
-        const { start, length } = getPosition(content, node.position);
-        const original = replacedContent.slice(start + offset, start + offset + length);
-        let replaced = original;
+        const { start, length } = getPosition(content, node.position)
+        const original = replacedContent.slice(start + offset, start + offset + length)
+        let replaced = original
 
-        if (node.type === "image") {
-            const src = trimAnchor(node.url);
-            const resolvedPath = resolvePath(src, metadata);
+        if (node.type === 'image') {
+            const src = trimAnchor(node.url)
+            const resolvedPath = resolvePath(src, metadata)
             if (src != null && resolvedPath != null) {
-                filepaths.add(resolvedPath);
-                replaced = replaced.replaceAll(src, resolvedPath);
+                filepaths.add(resolvedPath)
+                replaced = replaced.replaceAll(src, resolvedPath)
             }
         }
 
         function walkEstreeForSrc(estree: EstreeNode) {
             walkEstreeJsxAttributes(estree, {
                 src: (attr) => {
-                    const src = trimAnchor(extractSingleLiteral(attr.value));
-                    const resolvedPath = resolvePath(src, metadata);
+                    const src = trimAnchor(extractSingleLiteral(attr.value))
+                    const resolvedPath = resolvePath(src, metadata)
                     if (src && resolvedPath) {
-                        filepaths.add(resolvedPath);
-                        replaced = replaced.replaceAll(src, resolvedPath);
+                        filepaths.add(resolvedPath)
+                        replaced = replaced.replaceAll(src, resolvedPath)
                     }
-                    return;
+                    return
                 }
-            });
+            })
         }
 
         if (isMdxJsxElement(node)) {
-            const srcAttr = node.attributes.filter(isMdxJsxAttribute).find((attr) => attr.name === "src");
-            const src = trimAnchor(extractAttributeValueLiteral(srcAttr?.value));
+            const srcAttr = node.attributes.filter(isMdxJsxAttribute).find((attr) => attr.name === 'src')
+            const src = trimAnchor(extractAttributeValueLiteral(srcAttr?.value))
 
             if (srcAttr && src) {
-                const resolvedPath = resolvePath(src, metadata);
+                const resolvedPath = resolvePath(src, metadata)
                 if (resolvedPath != null) {
-                    filepaths.add(resolvedPath);
-                    replaced = replaced.replaceAll(src, resolvedPath);
+                    filepaths.add(resolvedPath)
+                    replaced = replaced.replaceAll(src, resolvedPath)
                 }
             }
 
             node.attributes.forEach((attr) => {
                 if (
                     isMdxJsxAttribute(attr) &&
-                    typeof attr.value !== "string" &&
+                    typeof attr.value !== 'string' &&
                     attr.value != null &&
                     attr.value.data?.estree
                 ) {
-                    walkEstreeForSrc(attr.value.data.estree);
+                    walkEstreeForSrc(attr.value.data.estree)
                 } else if (isMdxJsxExpressionAttribute(attr) && attr.data?.estree) {
-                    walkEstreeForSrc(attr.data.estree);
+                    walkEstreeForSrc(attr.data.estree)
                 }
-            });
+            })
         }
 
         if (isMdxExpression(node) && node.data?.estree) {
-            walkEstreeForSrc(node.data.estree);
+            walkEstreeForSrc(node.data.estree)
         }
 
         if (replaced === original && filepaths.size === 0) {
-            return;
+            return
         }
 
         replacedContent =
-            replacedContent.slice(0, start + offset) + replaced + replacedContent.slice(start + offset + length);
-        offset += replaced.length - length;
+            replacedContent.slice(0, start + offset) + replaced + replacedContent.slice(start + offset + length)
+        offset += replaced.length - length
 
-        return CONTINUE;
-    });
+        return CONTINUE
+    })
 
-    return { filepaths: [...filepaths], markdown: grayMatter.stringify(replacedContent, data) };
+    return { filepaths: [...filepaths], markdown: grayMatter.stringify(replacedContent, data) }
 }
 
 function resolvePath(
@@ -138,54 +138,54 @@ function resolvePath(
     { absolutePathToFernFolder, absolutePathToMarkdownFile }: AbsolutePathMetadata
 ): AbsoluteFilePath | undefined {
     if (pathToImage == null || isExternalUrl(pathToImage) || isDataUrl(pathToImage)) {
-        return undefined;
+        return undefined
     }
 
     const filepath = resolve(
-        pathToImage.startsWith("/") ? absolutePathToFernFolder : dirname(absolutePathToMarkdownFile),
-        RelativeFilePath.of(pathToImage.replace(/^\//, ""))
-    );
+        pathToImage.startsWith('/') ? absolutePathToFernFolder : dirname(absolutePathToMarkdownFile),
+        RelativeFilePath.of(pathToImage.replace(/^\//, ''))
+    )
 
-    return filepath;
+    return filepath
 }
 
 function isExternalUrl(url: string): boolean {
-    return /^(https?:)?\/\//.test(url);
+    return /^(https?:)?\/\//.test(url)
 }
 
 function isDataUrl(url: string): boolean {
-    return url.startsWith("data:");
+    return url.startsWith('data:')
 }
 
 export type ReplacedHref =
-    | { type: "replace"; slug: string; href: string }
-    | { type: "missing-reference"; path: string; href: string };
+    | { type: 'replace'; slug: string; href: string }
+    | { type: 'missing-reference'; path: string; href: string }
 
 export function getReplacedHref({
     href,
     metadata,
     markdownFilesToPathName
 }: {
-    href: string | undefined;
-    metadata: AbsolutePathMetadata;
-    markdownFilesToPathName: Record<AbsoluteFilePath, string>;
+    href: string | undefined
+    metadata: AbsolutePathMetadata
+    markdownFilesToPathName: Record<AbsoluteFilePath, string>
 }): ReplacedHref | undefined {
     if (href == null) {
-        return;
+        return
     }
-    if (href.endsWith(".md") || href.endsWith(".mdx")) {
-        const absoluteFilePath = resolvePath(href, metadata);
+    if (href.endsWith('.md') || href.endsWith('.mdx')) {
+        const absoluteFilePath = resolvePath(href, metadata)
         if (absoluteFilePath != null) {
-            const slug = markdownFilesToPathName[absoluteFilePath];
+            const slug = markdownFilesToPathName[absoluteFilePath]
             if (slug != null) {
-                const normalizeSlug = slug.startsWith("/") ? slug : "/" + slug;
-                return { type: "replace", slug: normalizeSlug, href };
+                const normalizeSlug = slug.startsWith('/') ? slug : '/' + slug
+                return { type: 'replace', slug: normalizeSlug, href }
             } else {
-                return { type: "missing-reference", path: absoluteFilePath, href };
+                return { type: 'missing-reference', path: absoluteFilePath, href }
             }
         }
     }
-    return undefined;
+    return undefined
 }
 
 /**
@@ -199,57 +199,57 @@ export function replaceImagePathsAndUrls(
     metadata: AbsolutePathMetadata,
     _context: TaskContext
 ): string {
-    const { content, data } = grayMatter(markdown, {});
-    let replacedContent = content;
+    const { content, data } = grayMatter(markdown, {})
+    let replacedContent = content
 
-    const tree = parseMarkdownToTree(content);
+    const tree = parseMarkdownToTree(content)
 
-    let offset = 0;
+    let offset = 0
 
     function mapImage(image: string | undefined) {
         if (image == null || isExternalUrl(image) || isDataUrl(image)) {
-            return undefined;
+            return undefined
         }
 
         // Handle absolute path
         if (isAbsolute(image)) {
-            const absolutePath = AbsoluteFilePath.of(image);
-            const fileId = fileIdsMap.get(absolutePath);
-            return fileId ? `file:${fileId}` : undefined;
+            const absolutePath = AbsoluteFilePath.of(image)
+            const fileId = fileIdsMap.get(absolutePath)
+            return fileId ? `file:${fileId}` : undefined
         }
 
         // Handle relative path
-        const resolvedPath = resolvePath(image, metadata);
+        const resolvedPath = resolvePath(image, metadata)
         if (resolvedPath) {
-            const fileId = fileIdsMap.get(resolvedPath);
-            return fileId ? `file:${fileId}` : undefined;
+            const fileId = fileIdsMap.get(resolvedPath)
+            return fileId ? `file:${fileId}` : undefined
         }
 
-        return undefined;
+        return undefined
     }
 
-    visitFrontmatterImages(data, ["image", "og:image", "og:logo", "twitter:image"], mapImage);
-    replaceFrontmatterImagesforLogo(data, mapImage);
+    visitFrontmatterImages(data, ['image', 'og:image', 'og:logo', 'twitter:image'], mapImage)
+    replaceFrontmatterImagesforLogo(data, mapImage)
 
     visit(tree, (node) => {
         if (node.position == null) {
-            return;
+            return
         }
-        const { start, length } = getPosition(content, node.position);
-        const original = replacedContent.slice(start + offset, start + offset + length);
-        let replaced = original;
+        const { start, length } = getPosition(content, node.position)
+        const original = replacedContent.slice(start + offset, start + offset + length)
+        let replaced = original
 
         function replaceSrc(src: string | undefined) {
-            const imageSrc = mapImage(src);
+            const imageSrc = mapImage(src)
             if (src && imageSrc) {
-                replaced = replaced.replace(src, imageSrc);
+                replaced = replaced.replace(src, imageSrc)
             }
         }
 
         function replaceHref(href: string | undefined) {
-            const replacedHref = getReplacedHref({ href, markdownFilesToPathName, metadata });
-            if (href != null && replacedHref != null && replacedHref.type === "replace") {
-                replaced = replaced.replace(href, replacedHref.slug);
+            const replacedHref = getReplacedHref({ href, markdownFilesToPathName, metadata })
+            if (href != null && replacedHref != null && replacedHref.type === 'replace') {
+                replaced = replaced.replace(href, replacedHref.slug)
             }
         }
 
@@ -257,89 +257,89 @@ export function replaceImagePathsAndUrls(
             walkEstreeJsxAttributes(estree, {
                 src: (attr) => replaceSrc(trimAnchor(extractSingleLiteral(attr.value))),
                 href: (attr) => replaceHref(trimAnchor(extractSingleLiteral(attr.value)))
-            });
+            })
         }
 
-        if (node.type === "image") {
-            const src = trimAnchor(node.url);
-            replaceSrc(trimAnchor(src));
+        if (node.type === 'image') {
+            const src = trimAnchor(node.url)
+            replaceSrc(trimAnchor(src))
         }
 
-        if (node.type === "link") {
-            replaceHref(trimAnchor(node.url));
+        if (node.type === 'link') {
+            replaceHref(trimAnchor(node.url))
         }
 
         if (isMdxJsxElement(node)) {
-            const srcAttr = node.attributes.filter(isMdxJsxAttribute).find((attr) => attr.name === "src");
-            replaceSrc(trimAnchor(extractAttributeValueLiteral(srcAttr?.value)));
+            const srcAttr = node.attributes.filter(isMdxJsxAttribute).find((attr) => attr.name === 'src')
+            replaceSrc(trimAnchor(extractAttributeValueLiteral(srcAttr?.value)))
 
-            const hrefAttr = node.attributes.find((attr) => attr.type === "mdxJsxAttribute" && attr.name === "href");
-            replaceHref(trimAnchor(extractAttributeValueLiteral(hrefAttr?.value)));
+            const hrefAttr = node.attributes.find((attr) => attr.type === 'mdxJsxAttribute' && attr.name === 'href')
+            replaceHref(trimAnchor(extractAttributeValueLiteral(hrefAttr?.value)))
 
             node.attributes.forEach((attr) => {
                 if (
                     isMdxJsxAttribute(attr) &&
-                    typeof attr.value !== "string" &&
+                    typeof attr.value !== 'string' &&
                     attr.value != null &&
                     attr.value.data?.estree
                 ) {
-                    walkEstreeForSrcAndHref(attr.value.data.estree);
+                    walkEstreeForSrcAndHref(attr.value.data.estree)
                 } else if (isMdxJsxExpressionAttribute(attr) && attr.data?.estree) {
-                    walkEstreeForSrcAndHref(attr.data.estree);
+                    walkEstreeForSrcAndHref(attr.data.estree)
                 }
-            });
+            })
         }
 
         if (isMdxExpression(node) && node.data?.estree) {
-            walkEstreeForSrcAndHref(node.data.estree);
+            walkEstreeForSrcAndHref(node.data.estree)
         }
 
         if (replaced === original) {
-            return;
+            return
         }
 
         replacedContent =
-            replacedContent.slice(0, start + offset) + replaced + replacedContent.slice(start + offset + length);
-        offset += replaced.length - length;
+            replacedContent.slice(0, start + offset) + replaced + replacedContent.slice(start + offset + length)
+        offset += replaced.length - length
 
-        return CONTINUE;
-    });
+        return CONTINUE
+    })
 
-    return grayMatter.stringify(replacedContent, data);
+    return grayMatter.stringify(replacedContent, data)
 }
 
 function getPosition(
     markdown: string,
     position: { start: { line: number; column: number }; end: { line: number; column: number } }
 ) {
-    const lines = markdown.split("\n");
-    let start = position.start.column - 1;
+    const lines = markdown.split('\n')
+    let start = position.start.column - 1
     for (let i = 0; i < position.start.line - 1; i++) {
-        const line = lines[i];
+        const line = lines[i]
         if (line == null) {
-            break;
+            break
         }
-        start += line.length + 1;
+        start += line.length + 1
     }
 
-    let length = 0 - position.start.column + position.end.column;
+    let length = 0 - position.start.column + position.end.column
 
     for (let i = position.start.line - 1; i < position.end.line - 1; i++) {
-        const line = lines[i];
+        const line = lines[i]
         if (line == null) {
-            break;
+            break
         }
-        length += line.length + 1;
+        length += line.length + 1
     }
 
-    return { start, length };
+    return { start, length }
 }
 
 export function trimAnchor(text: unknown): string | undefined {
-    if (typeof text !== "string") {
-        return undefined;
+    if (typeof text !== 'string') {
+        return undefined
     }
-    return text.replace(/#.*$/, "");
+    return text.replace(/#.*$/, '')
 }
 
 function visitFrontmatterImages(
@@ -348,27 +348,27 @@ function visitFrontmatterImages(
     mapImage: (image: string | undefined) => string | undefined
 ) {
     for (const key of keys) {
-        const value = data[key];
+        const value = data[key]
         if (value != null) {
             // realtime validation, this also assumes there can be other stuff in the object, but we only care about the valid keys
-            if (typeof value === "object") {
-                if (value.type === "fileId") {
+            if (typeof value === 'object') {
+                if (value.type === 'fileId') {
                     data[key] = {
-                        type: "fileId",
+                        type: 'fileId',
                         value: CjsFdrSdk.FileId(mapImage(value.value) ?? value.value)
-                    };
+                    }
                 }
-            } else if (typeof value === "string") {
-                const mappedImage = mapImage(value);
+            } else if (typeof value === 'string') {
+                const mappedImage = mapImage(value)
                 data[key] = mappedImage
                     ? {
-                          type: "fileId",
+                          type: 'fileId',
                           value: CjsFdrSdk.FileId(mappedImage)
                       }
                     : {
-                          type: "url",
+                          type: 'url',
                           value: CjsFdrSdk.Url(value)
-                      };
+                      }
             }
             // else do nothing
         }
@@ -381,22 +381,22 @@ const LogoOverrideFrontmatterSchema = z.union([
         light: z.string().optional(),
         dark: z.string().optional()
     })
-]);
+])
 
 export function convertImageToFileIdOrUrl(
     value: string,
     mapImage: (image: string | undefined) => string | undefined
 ): CjsFdrSdk.docs.latest.FileIdOrUrl {
-    const mappedImage = mapImage(value);
+    const mappedImage = mapImage(value)
     return mappedImage
         ? {
-              type: "fileId",
+              type: 'fileId',
               value: CjsFdrSdk.FileId(mappedImage)
           }
         : {
-              type: "url",
+              type: 'url',
               value: CjsFdrSdk.Url(value)
-          };
+          }
 }
 
 function replaceFrontmatterImagesforLogo(
@@ -404,20 +404,20 @@ function replaceFrontmatterImagesforLogo(
     data: Record<string, any>,
     mapImage: (image: string | undefined) => string | undefined
 ) {
-    const parsedValue = LogoOverrideFrontmatterSchema.safeParse(data.logo);
+    const parsedValue = LogoOverrideFrontmatterSchema.safeParse(data.logo)
     if (!parsedValue.success) {
-        return;
+        return
     }
-    const parsedFrontmatterLogo = parsedValue.data;
+    const parsedFrontmatterLogo = parsedValue.data
 
-    if (typeof parsedFrontmatterLogo === "string") {
-        data.logo = convertImageToFileIdOrUrl(parsedFrontmatterLogo, mapImage);
+    if (typeof parsedFrontmatterLogo === 'string') {
+        data.logo = convertImageToFileIdOrUrl(parsedFrontmatterLogo, mapImage)
     } else {
         if (parsedFrontmatterLogo.light != null) {
-            data.logo.light = convertImageToFileIdOrUrl(parsedFrontmatterLogo.light, mapImage);
+            data.logo.light = convertImageToFileIdOrUrl(parsedFrontmatterLogo.light, mapImage)
         }
         if (parsedFrontmatterLogo.dark != null) {
-            data.logo.dark = convertImageToFileIdOrUrl(parsedFrontmatterLogo.dark, mapImage);
+            data.logo.dark = convertImageToFileIdOrUrl(parsedFrontmatterLogo.dark, mapImage)
         }
     }
 }

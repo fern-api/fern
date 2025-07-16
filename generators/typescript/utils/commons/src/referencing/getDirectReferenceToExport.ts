@@ -1,9 +1,9 @@
-import { SourceFile, ts } from "ts-morph";
+import { SourceFile, ts } from 'ts-morph'
 
-import { ExportedFilePath, ExportsManager } from "../exports-manager";
-import { ImportsManager } from "../imports-manager/ImportsManager";
-import { GetReferenceOpts, Reference } from "./Reference";
-import { getRelativePathAsModuleSpecifierTo } from "./getRelativePathAsModuleSpecifierTo";
+import { ExportedFilePath, ExportsManager } from '../exports-manager'
+import { ImportsManager } from '../imports-manager/ImportsManager'
+import { GetReferenceOpts, Reference } from './Reference'
+import { getRelativePathAsModuleSpecifierTo } from './getRelativePathAsModuleSpecifierTo'
 
 export function getDirectReferenceToExport({
     exportedName,
@@ -14,18 +14,18 @@ export function getDirectReferenceToExport({
     importAlias,
     subImport = []
 }: {
-    exportedName: string;
-    exportedFromPath: ExportedFilePath;
-    importsManager: ImportsManager;
-    exportsManager: ExportsManager;
-    referencedIn: SourceFile;
-    importAlias: string | undefined;
-    subImport?: string[];
+    exportedName: string
+    exportedFromPath: ExportedFilePath
+    importsManager: ImportsManager
+    exportsManager: ExportsManager
+    referencedIn: SourceFile
+    importAlias: string | undefined
+    subImport?: string[]
 }): Reference {
     const moduleSpecifier = getRelativePathAsModuleSpecifierTo({
         from: referencedIn,
         to: exportsManager.convertExportedFilePathToFilePath(exportedFromPath)
-    });
+    })
 
     const addImport = () => {
         importsManager.addImport(moduleSpecifier, {
@@ -35,34 +35,34 @@ export function getDirectReferenceToExport({
                     alias: importAlias !== exportedName ? importAlias : undefined
                 }
             ]
-        });
-    };
+        })
+    }
 
-    const importedName = importAlias ?? exportedName;
+    const importedName = importAlias ?? exportedName
 
     const entityName = subImport.reduce<ts.EntityName>(
         (acc, subImport) => ts.factory.createQualifiedName(acc, subImport),
         ts.factory.createIdentifier(importedName)
-    );
+    )
 
     return {
         getTypeNode: ({ isForComment = false }: GetReferenceOpts = {}) => {
             if (!isForComment) {
-                addImport();
+                addImport()
             }
-            return ts.factory.createTypeReferenceNode(entityName);
+            return ts.factory.createTypeReferenceNode(entityName)
         },
         getEntityName: ({ isForComment = false }: GetReferenceOpts = {}) => {
             if (!isForComment) {
-                addImport();
+                addImport()
             }
-            return entityName;
+            return entityName
         },
         getExpression: ({ isForComment = false }: GetReferenceOpts = {}) => {
             if (!isForComment) {
-                addImport();
+                addImport()
             }
-            return ts.factory.createIdentifier(importedName);
+            return ts.factory.createIdentifier(importedName)
         }
-    };
+    }
 }

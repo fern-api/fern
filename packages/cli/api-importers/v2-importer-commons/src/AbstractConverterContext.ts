@@ -1,11 +1,11 @@
-import yaml from "js-yaml";
-import { camelCase } from "lodash-es";
-import { OpenAPIV3_1 } from "openapi-types";
+import yaml from 'js-yaml'
+import { camelCase } from 'lodash-es'
+import { OpenAPIV3_1 } from 'openapi-types'
 
-import { OpenAPISettings } from "@fern-api/api-workspace-commons";
-import { CasingsGenerator, constructCasingsGenerator } from "@fern-api/casings-generator";
-import { generatorsYml } from "@fern-api/configuration";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { OpenAPISettings } from '@fern-api/api-workspace-commons'
+import { CasingsGenerator, constructCasingsGenerator } from '@fern-api/casings-generator'
+import { generatorsYml } from '@fern-api/configuration'
+import { RawSchemas } from '@fern-api/fern-definition-schema'
 import {
     Availability,
     AvailabilityStatus,
@@ -15,31 +15,31 @@ import {
     ObjectPropertyAccess,
     TypeId,
     TypeReference
-} from "@fern-api/ir-sdk";
-import { ExampleGenerationArgs } from "@fern-api/ir-utils";
-import { Logger } from "@fern-api/logger";
+} from '@fern-api/ir-sdk'
+import { ExampleGenerationArgs } from '@fern-api/ir-utils'
+import { Logger } from '@fern-api/logger'
 
-import { Extensions } from ".";
-import { APIErrorLevel, ErrorCollector } from "./ErrorCollector";
-import { SchemaConverter } from "./converters/schema/SchemaConverter";
+import { Extensions } from '.'
+import { APIErrorLevel, ErrorCollector } from './ErrorCollector'
+import { SchemaConverter } from './converters/schema/SchemaConverter'
 
-export type DisplayNameOverrideSource = "schema_identifier" | "discriminator_key" | "reference_identifier";
+export type DisplayNameOverrideSource = 'schema_identifier' | 'discriminator_key' | 'reference_identifier'
 
 export declare namespace Spec {
     export interface Args<T> {
-        spec: T;
-        settings: OpenAPISettings;
-        errorCollector: ErrorCollector;
-        logger: Logger;
-        generationLanguage: generatorsYml.GenerationLanguage | undefined;
-        smartCasing: boolean;
-        namespace?: string;
-        exampleGenerationArgs: ExampleGenerationArgs;
-        authOverrides?: RawSchemas.WithAuthSchema;
-        environmentOverrides?: RawSchemas.WithEnvironmentsSchema;
-        globalHeaderOverrides?: RawSchemas.WithHeadersSchema;
-        enableUniqueErrorsPerEndpoint: boolean;
-        generateV1Examples: boolean;
+        spec: T
+        settings: OpenAPISettings
+        errorCollector: ErrorCollector
+        logger: Logger
+        generationLanguage: generatorsYml.GenerationLanguage | undefined
+        smartCasing: boolean
+        namespace?: string
+        exampleGenerationArgs: ExampleGenerationArgs
+        authOverrides?: RawSchemas.WithAuthSchema
+        environmentOverrides?: RawSchemas.WithEnvironmentsSchema
+        globalHeaderOverrides?: RawSchemas.WithHeadersSchema
+        enableUniqueErrorsPerEndpoint: boolean
+        generateV1Examples: boolean
     }
 }
 
@@ -48,43 +48,43 @@ export declare namespace Spec {
  * @template Spec The OpenAPI specification type
  */
 export abstract class AbstractConverterContext<Spec extends object> {
-    public spec: Spec;
-    public readonly settings: OpenAPISettings;
-    public readonly errorCollector: ErrorCollector;
-    public readonly logger: Logger;
-    public readonly generationLanguage: generatorsYml.GenerationLanguage | undefined;
-    public readonly smartCasing: boolean;
-    public readonly casingsGenerator: CasingsGenerator;
-    public readonly namespace?: string;
-    public readonly exampleGenerationArgs: ExampleGenerationArgs;
-    public readonly authOverrides?: RawSchemas.WithAuthSchema;
-    public readonly environmentOverrides?: RawSchemas.WithEnvironmentsSchema;
-    public readonly globalHeaderOverrides?: RawSchemas.WithHeadersSchema;
-    public readonly enableUniqueErrorsPerEndpoint: boolean;
-    public readonly generateV1Examples: boolean;
+    public spec: Spec
+    public readonly settings: OpenAPISettings
+    public readonly errorCollector: ErrorCollector
+    public readonly logger: Logger
+    public readonly generationLanguage: generatorsYml.GenerationLanguage | undefined
+    public readonly smartCasing: boolean
+    public readonly casingsGenerator: CasingsGenerator
+    public readonly namespace?: string
+    public readonly exampleGenerationArgs: ExampleGenerationArgs
+    public readonly authOverrides?: RawSchemas.WithAuthSchema
+    public readonly environmentOverrides?: RawSchemas.WithEnvironmentsSchema
+    public readonly globalHeaderOverrides?: RawSchemas.WithHeadersSchema
+    public readonly enableUniqueErrorsPerEndpoint: boolean
+    public readonly generateV1Examples: boolean
 
     constructor(protected readonly args: Spec.Args<Spec>) {
-        this.spec = args.spec;
-        this.settings = args.settings;
-        this.errorCollector = args.errorCollector;
-        this.logger = args.logger;
-        this.generationLanguage = args.generationLanguage;
-        this.smartCasing = args.smartCasing;
-        this.namespace = args.namespace;
+        this.spec = args.spec
+        this.settings = args.settings
+        this.errorCollector = args.errorCollector
+        this.logger = args.logger
+        this.generationLanguage = args.generationLanguage
+        this.smartCasing = args.smartCasing
+        this.namespace = args.namespace
         this.casingsGenerator = constructCasingsGenerator({
             generationLanguage: args.generationLanguage,
             keywords: undefined,
             smartCasing: args.smartCasing
-        });
-        this.exampleGenerationArgs = args.exampleGenerationArgs;
-        this.authOverrides = args.authOverrides;
-        this.environmentOverrides = args.environmentOverrides;
-        this.globalHeaderOverrides = args.globalHeaderOverrides;
-        this.enableUniqueErrorsPerEndpoint = args.enableUniqueErrorsPerEndpoint;
-        this.generateV1Examples = args.generateV1Examples;
+        })
+        this.exampleGenerationArgs = args.exampleGenerationArgs
+        this.authOverrides = args.authOverrides
+        this.environmentOverrides = args.environmentOverrides
+        this.globalHeaderOverrides = args.globalHeaderOverrides
+        this.enableUniqueErrorsPerEndpoint = args.enableUniqueErrorsPerEndpoint
+        this.generateV1Examples = args.generateV1Examples
     }
 
-    private static BREADCRUMBS_TO_IGNORE = ["properties", "allOf", "anyOf"];
+    private static BREADCRUMBS_TO_IGNORE = ['properties', 'allOf', 'anyOf']
 
     public abstract convertReferenceToTypeReference({
         reference,
@@ -92,13 +92,13 @@ export abstract class AbstractConverterContext<Spec extends object> {
         displayNameOverride,
         displayNameOverrideSource
     }: {
-        reference: OpenAPIV3_1.ReferenceObject;
-        breadcrumbs?: string[];
-        displayNameOverride?: string | undefined;
-        displayNameOverrideSource?: DisplayNameOverrideSource;
+        reference: OpenAPIV3_1.ReferenceObject
+        breadcrumbs?: string[]
+        displayNameOverride?: string | undefined
+        displayNameOverrideSource?: DisplayNameOverrideSource
     }):
         | { ok: true; reference: TypeReference; inlinedTypes?: Record<string, SchemaConverter.ConvertedSchema> }
-        | { ok: false };
+        | { ok: false }
 
     /**
      * Converts breadcrumbs into a schema name or type id
@@ -109,50 +109,50 @@ export abstract class AbstractConverterContext<Spec extends object> {
         const filteredBreadcrumbs = breadcrumbs.filter((crumb, index) => {
             // Ignore numeric indices
             if (/^\d+$/.test(crumb)) {
-                return false;
+                return false
             }
 
             // Ignore 'properties' and 'allOf' anywhere
             if (AbstractConverterContext.BREADCRUMBS_TO_IGNORE.includes(crumb)) {
-                return false;
+                return false
             }
 
             // Ignore 'components' if first crumb
-            if (index === 0 && crumb === "components") {
-                return false;
+            if (index === 0 && crumb === 'components') {
+                return false
             }
 
             // Ignore 'schemas' if second crumb
-            if (index === 1 && crumb === "schemas") {
-                return false;
+            if (index === 1 && crumb === 'schemas') {
+                return false
             }
 
             // Ignore path-related crumbs
-            if (breadcrumbs[0] === "paths") {
+            if (breadcrumbs[0] === 'paths') {
                 // Ignore 'paths' if first crumb
                 if (index === 0) {
-                    return false;
+                    return false
                 }
                 // Ignore HTTP methods if second crumb
-                if (index === 1 && ["get", "post", "put", "delete", "patch"].includes(crumb)) {
-                    return false;
+                if (index === 1 && ['get', 'post', 'put', 'delete', 'patch'].includes(crumb)) {
+                    return false
                 }
                 // Ignore 'parameters' if third crumb after HTTP method
                 if (
                     index === 2 &&
                     breadcrumbs[1] != null &&
-                    ["get", "post", "put", "delete", "patch"].includes(breadcrumbs[1]) &&
-                    crumb === "parameters"
+                    ['get', 'post', 'put', 'delete', 'patch'].includes(breadcrumbs[1]) &&
+                    crumb === 'parameters'
                 ) {
-                    return false;
+                    return false
                 }
             }
 
-            return true;
-        });
+            return true
+        })
 
-        const camelCased = camelCase(filteredBreadcrumbs.join("_"));
-        return camelCased.charAt(0).toUpperCase() + camelCased.slice(1);
+        const camelCased = camelCase(filteredBreadcrumbs.join('_'))
+        return camelCased.charAt(0).toUpperCase() + camelCased.slice(1)
     }
 
     /**
@@ -161,13 +161,13 @@ export abstract class AbstractConverterContext<Spec extends object> {
      * @returns FernFilepath object
      */
     public createFernFilepath(args: { name?: string } = {}): FernFilepath {
-        const packagePath = this.namespace != null ? [this.casingsGenerator.generateName(this.namespace)] : [];
-        const file = args.name != null ? this.casingsGenerator.generateName(args.name) : undefined;
+        const packagePath = this.namespace != null ? [this.casingsGenerator.generateName(this.namespace)] : []
+        const file = args.name != null ? this.casingsGenerator.generateName(args.name) : undefined
         return {
             allParts: file ? [...packagePath, file] : packagePath,
             packagePath,
             file
-        };
+        }
     }
 
     /**
@@ -180,30 +180,30 @@ export abstract class AbstractConverterContext<Spec extends object> {
         breadcrumbs,
         skipErrorCollector
     }: {
-        reference: OpenAPIV3_1.ReferenceObject;
-        breadcrumbs?: string[];
-        skipErrorCollector?: boolean;
+        reference: OpenAPIV3_1.ReferenceObject
+        breadcrumbs?: string[]
+        skipErrorCollector?: boolean
     }): { resolved: true; value: T } | { resolved: false } {
-        let resolvedReference: unknown = this.spec;
+        let resolvedReference: unknown = this.spec
 
         const keys = reference.$ref
-            .replace(/^(?:(?:https?:\/\/)?|#?\/?)?/, "")
-            .split("/")
-            .map((key) => key.replace(/~1/g, "/"));
+            .replace(/^(?:(?:https?:\/\/)?|#?\/?)?/, '')
+            .split('/')
+            .map((key) => key.replace(/~1/g, '/'))
 
         for (const key of keys) {
-            if (typeof resolvedReference !== "object" || resolvedReference == null) {
+            if (typeof resolvedReference !== 'object' || resolvedReference == null) {
                 if (!skipErrorCollector) {
                     this.errorCollector.collect({
                         level: APIErrorLevel.ERROR,
                         message: this.getErrorMessageForMissingRef({ reference }),
                         path: breadcrumbs
-                    });
+                    })
                 }
-                return { resolved: false };
+                return { resolved: false }
             }
             // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-            resolvedReference = (resolvedReference as any)[key];
+            resolvedReference = (resolvedReference as any)[key]
         }
 
         if (resolvedReference == null) {
@@ -212,26 +212,26 @@ export abstract class AbstractConverterContext<Spec extends object> {
                     level: APIErrorLevel.ERROR,
                     message: this.getErrorMessageForMissingRef({ reference }),
                     path: breadcrumbs
-                });
+                })
             }
-            return { resolved: false };
+            return { resolved: false }
         }
 
-        return { resolved: true, value: resolvedReference as unknown as T };
+        return { resolved: true, value: resolvedReference as unknown as T }
     }
 
     private getErrorMessageForMissingRef({ reference }: { reference: OpenAPIV3_1.ReferenceObject }): string {
         // Check if the reference is to a schema in components/schemas
-        const refPath = reference.$ref.replace(/^(?:(?:https?:\/\/)?|#?\/?)?/, "").split("/");
+        const refPath = reference.$ref.replace(/^(?:(?:https?:\/\/)?|#?\/?)?/, '').split('/')
 
         // Check if the reference follows the pattern components/schemas/<schema>
-        if (refPath.length >= 3 && refPath[0] === "components" && refPath[1] === "schemas") {
-            const schemaName = refPath[2];
-            return `Schema ${schemaName} does not exist`;
+        if (refPath.length >= 3 && refPath[0] === 'components' && refPath[1] === 'schemas') {
+            const schemaName = refPath[2]
+            return `Schema ${schemaName} does not exist`
         }
 
         // Default error message
-        return `${reference.$ref} does not exist`;
+        return `${reference.$ref} does not exist`
     }
 
     /**
@@ -240,86 +240,86 @@ export abstract class AbstractConverterContext<Spec extends object> {
      * @returns Object containing ok status and resolved reference if successful
      */
     public async resolveMaybeExternalReference<T>(reference: {
-        $ref: string;
+        $ref: string
     }): Promise<{ resolved: true; value: T } | { resolved: false }> {
-        let resolvedReference: unknown = this.spec;
-        let referencePath: string | undefined;
-        let isExternalRef: boolean = false;
-        let externalDoc: unknown | null = null;
-        let baseUrl: string | undefined;
+        let resolvedReference: unknown = this.spec
+        let referencePath: string | undefined
+        let isExternalRef: boolean = false
+        let externalDoc: unknown | null = null
+        let baseUrl: string | undefined
 
         if (this.isExternalReference(reference.$ref)) {
-            isExternalRef = true;
-            const splitReference = reference.$ref.split("#");
-            const url = splitReference[0];
-            referencePath = splitReference[1];
+            isExternalRef = true
+            const splitReference = reference.$ref.split('#')
+            const url = splitReference[0]
+            referencePath = splitReference[1]
 
             if (!url) {
-                return { resolved: false };
+                return { resolved: false }
             }
-            baseUrl = url;
+            baseUrl = url
 
-            const response = await fetch(url);
+            const response = await fetch(url)
 
             if (!response.ok) {
-                return { resolved: false };
+                return { resolved: false }
             }
             try {
-                const responseText = await response.text();
+                const responseText = await response.text()
                 try {
-                    externalDoc = JSON.parse(responseText);
-                    resolvedReference = externalDoc;
+                    externalDoc = JSON.parse(responseText)
+                    resolvedReference = externalDoc
                 } catch {
-                    externalDoc = yaml.load(responseText);
-                    resolvedReference = externalDoc;
+                    externalDoc = yaml.load(responseText)
+                    resolvedReference = externalDoc
                 }
                 if (resolvedReference == null) {
-                    return { resolved: false };
+                    return { resolved: false }
                 }
             } catch (error) {
-                return { resolved: false };
+                return { resolved: false }
             }
 
             if (!referencePath) {
-                return { resolved: true, value: resolvedReference as T };
+                return { resolved: true, value: resolvedReference as T }
             }
         }
 
-        const maybeReferenceString = referencePath ?? reference.$ref;
-        if (maybeReferenceString == null || typeof maybeReferenceString !== "string") {
-            return { resolved: false };
+        const maybeReferenceString = referencePath ?? reference.$ref
+        if (maybeReferenceString == null || typeof maybeReferenceString !== 'string') {
+            return { resolved: false }
         }
 
         const keys = maybeReferenceString
-            .replace(/^(?:(?:https?:\/\/)?|#?\/?)?/, "")
-            .split("/")
-            .map((key) => key.replace(/~1/g, "/"));
+            .replace(/^(?:(?:https?:\/\/)?|#?\/?)?/, '')
+            .split('/')
+            .map((key) => key.replace(/~1/g, '/'))
 
         for (const key of keys) {
-            if (typeof resolvedReference !== "object" || resolvedReference == null) {
-                return { resolved: false };
+            if (typeof resolvedReference !== 'object' || resolvedReference == null) {
+                return { resolved: false }
             }
             // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-            resolvedReference = (resolvedReference as any)[key];
+            resolvedReference = (resolvedReference as any)[key]
         }
 
         if (resolvedReference == null) {
-            return { resolved: false };
+            return { resolved: false }
         }
 
-        if (isExternalRef && typeof resolvedReference === "object" && resolvedReference !== null) {
-            const visitedRefs = new Set<string>();
-            visitedRefs.add(reference.$ref);
+        if (isExternalRef && typeof resolvedReference === 'object' && resolvedReference !== null) {
+            const visitedRefs = new Set<string>()
+            visitedRefs.add(reference.$ref)
 
             resolvedReference = await this.resolveNestedExternalReferences(
                 resolvedReference,
                 externalDoc,
                 visitedRefs,
                 baseUrl
-            );
+            )
         }
 
-        return { resolved: true, value: resolvedReference as unknown as T };
+        return { resolved: true, value: resolvedReference as unknown as T }
     }
 
     /**
@@ -334,49 +334,49 @@ export abstract class AbstractConverterContext<Spec extends object> {
         visitedRefs: Set<string>,
         baseUrl: string | undefined
     ): Promise<unknown> {
-        if (obj === null || typeof obj !== "object") {
-            return obj;
+        if (obj === null || typeof obj !== 'object') {
+            return obj
         }
 
         if (Array.isArray(obj)) {
-            const result = [];
+            const result = []
             for (const item of obj) {
-                result.push(await this.resolveNestedExternalReferences(item, rootDoc, visitedRefs, baseUrl));
+                result.push(await this.resolveNestedExternalReferences(item, rootDoc, visitedRefs, baseUrl))
             }
-            return result;
+            return result
         }
 
         if (this.isReferenceObject(obj)) {
-            const refValue = obj.$ref;
+            const refValue = obj.$ref
             if (this.isExternalReference(refValue)) {
                 if (visitedRefs.has(refValue)) {
-                    return obj;
+                    return obj
                 }
-                visitedRefs.add(refValue);
-                const refResult = await this.resolveMaybeExternalReference({ $ref: refValue });
-                visitedRefs.delete(refValue);
+                visitedRefs.add(refValue)
+                const refResult = await this.resolveMaybeExternalReference({ $ref: refValue })
+                visitedRefs.delete(refValue)
                 if (refResult.resolved) {
-                    return refResult.value;
+                    return refResult.value
                 }
             } else {
-                const fullRef = `${baseUrl}${refValue}`;
+                const fullRef = `${baseUrl}${refValue}`
                 if (visitedRefs.has(fullRef)) {
-                    return obj;
+                    return obj
                 }
-                visitedRefs.add(fullRef);
+                visitedRefs.add(fullRef)
 
-                let tempRef = rootDoc;
+                let tempRef = rootDoc
                 const refPath = refValue
                     .substring(2) // Remove leading "#/"
-                    .split("/")
-                    .map((seg) => seg.replace(/~1/g, "/").replace(/~0/g, "~"));
+                    .split('/')
+                    .map((seg) => seg.replace(/~1/g, '/').replace(/~0/g, '~'))
 
                 for (const segment of refPath) {
-                    if (typeof tempRef !== "object" || tempRef === null) {
+                    if (typeof tempRef !== 'object' || tempRef === null) {
                         // Cannot resolve fully — keep the original ref
-                        return obj;
+                        return obj
                     }
-                    tempRef = (tempRef as Record<string, unknown>)[segment];
+                    tempRef = (tempRef as Record<string, unknown>)[segment]
                 }
 
                 if (tempRef !== undefined && tempRef !== null) {
@@ -385,51 +385,51 @@ export abstract class AbstractConverterContext<Spec extends object> {
                         rootDoc,
                         visitedRefs,
                         baseUrl
-                    );
-                    visitedRefs.delete(refValue);
-                    return resolvedNested;
+                    )
+                    visitedRefs.delete(refValue)
+                    return resolvedNested
                 }
-                visitedRefs.delete(refValue);
+                visitedRefs.delete(refValue)
             }
-            return obj;
+            return obj
         }
 
         // Regular object with properties — recursively resolve each property
-        const result: Record<string, unknown> = {};
+        const result: Record<string, unknown> = {}
         for (const [key, value] of Object.entries(obj)) {
-            if (typeof value === "object" && value !== null) {
-                result[key] = await this.resolveNestedExternalReferences(value, rootDoc, visitedRefs, baseUrl);
+            if (typeof value === 'object' && value !== null) {
+                result[key] = await this.resolveNestedExternalReferences(value, rootDoc, visitedRefs, baseUrl)
             } else {
-                result[key] = value;
+                result[key] = value
             }
         }
 
-        return result;
+        return result
     }
 
     public getExamplesFromSchema({
         schema,
         breadcrumbs
     }: {
-        schema: OpenAPIV3_1.SchemaObject | undefined;
-        breadcrumbs: string[];
+        schema: OpenAPIV3_1.SchemaObject | undefined
+        breadcrumbs: string[]
     }): unknown[] {
         if (schema == null) {
-            return [];
+            return []
         }
-        const examples: unknown[] = schema.example != null ? [schema.example] : [];
+        const examples: unknown[] = schema.example != null ? [schema.example] : []
 
         if (schema.examples != null) {
             if (Array.isArray(schema.examples)) {
-                examples.push(...schema.examples);
+                examples.push(...schema.examples)
             } else {
                 this.errorCollector.collect({
-                    message: "Received non-array schema examples",
+                    message: 'Received non-array schema examples',
                     path: breadcrumbs
-                });
+                })
             }
         }
-        return examples;
+        return examples
     }
 
     public getNamedExamplesFromMediaTypeObject({
@@ -437,25 +437,25 @@ export abstract class AbstractConverterContext<Spec extends object> {
         breadcrumbs,
         defaultExampleName
     }: {
-        mediaTypeObject: OpenAPIV3_1.MediaTypeObject | undefined;
-        breadcrumbs: string[];
-        defaultExampleName?: string;
+        mediaTypeObject: OpenAPIV3_1.MediaTypeObject | undefined
+        breadcrumbs: string[]
+        defaultExampleName?: string
     }): Array<[string, unknown]> {
         if (mediaTypeObject == null) {
-            return [];
+            return []
         }
-        const examples: Array<[string, unknown]> = [];
+        const examples: Array<[string, unknown]> = []
         if (mediaTypeObject.example != null) {
             const exampleName = this.generateUniqueName({
-                prefix: defaultExampleName ?? `${breadcrumbs.join("_")}_example`,
+                prefix: defaultExampleName ?? `${breadcrumbs.join('_')}_example`,
                 existingNames: []
-            });
-            examples.push([exampleName, mediaTypeObject.example]);
+            })
+            examples.push([exampleName, mediaTypeObject.example])
         }
         if (mediaTypeObject.examples != null) {
-            examples.push(...Object.entries(mediaTypeObject.examples));
+            examples.push(...Object.entries(mediaTypeObject.examples))
         }
-        return examples;
+        return examples
     }
 
     public resolveMaybeReference<T>({
@@ -463,89 +463,89 @@ export abstract class AbstractConverterContext<Spec extends object> {
         breadcrumbs,
         skipErrorCollector
     }: {
-        schemaOrReference: OpenAPIV3_1.ReferenceObject | T;
-        breadcrumbs: string[];
-        skipErrorCollector?: boolean;
+        schemaOrReference: OpenAPIV3_1.ReferenceObject | T
+        breadcrumbs: string[]
+        skipErrorCollector?: boolean
     }): T | undefined {
         if (this.isReferenceObject(schemaOrReference)) {
             const resolved = this.resolveReference<T>({
                 reference: schemaOrReference,
                 breadcrumbs,
                 skipErrorCollector
-            });
+            })
             if (!resolved.resolved) {
-                return undefined;
+                return undefined
             }
-            return resolved.value;
+            return resolved.value
         }
-        return schemaOrReference;
+        return schemaOrReference
     }
 
     public resolveExample(example: unknown): unknown {
         if (!this.isReferenceObject(example)) {
-            return example;
+            return example
         }
-        const resolved = this.resolveReference({ reference: example });
-        return resolved.resolved ? this.returnExampleValue(resolved.value) : undefined;
+        const resolved = this.resolveReference({ reference: example })
+        return resolved.resolved ? this.returnExampleValue(resolved.value) : undefined
     }
 
     public resolveExampleWithValue(example: unknown): unknown {
         if (!this.isReferenceObject(example)) {
-            return this.returnExampleValue(example);
+            return this.returnExampleValue(example)
         }
-        const resolved = this.resolveReference({ reference: example });
-        return resolved.resolved ? this.returnExampleValue(resolved.value) : undefined;
+        const resolved = this.resolveReference({ reference: example })
+        return resolved.resolved ? this.returnExampleValue(resolved.value) : undefined
     }
 
     public returnExampleValue(example: unknown): unknown {
-        return this.isExampleWithValue(example) ? example.value : example;
+        return this.isExampleWithValue(example) ? example.value : example
     }
 
     public getPropertyAccess(
         schemaOrReference: OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.SchemaObject
     ): ObjectPropertyAccess | undefined {
-        let schema = schemaOrReference;
+        let schema = schemaOrReference
 
         while (this.isReferenceObject(schema)) {
-            const resolved = this.resolveReference<OpenAPIV3_1.SchemaObject>({ reference: schema });
+            const resolved = this.resolveReference<OpenAPIV3_1.SchemaObject>({ reference: schema })
             if (!resolved.resolved) {
-                return undefined;
+                return undefined
             }
-            schema = resolved.value;
+            schema = resolved.value
         }
 
         if (schema.readOnly && schema.writeOnly) {
-            return undefined;
+            return undefined
         }
 
         if (schema.readOnly) {
-            return ObjectPropertyAccess.ReadOnly;
+            return ObjectPropertyAccess.ReadOnly
         }
 
         if (schema.writeOnly) {
-            return ObjectPropertyAccess.WriteOnly;
+            return ObjectPropertyAccess.WriteOnly
         }
 
-        return undefined;
+        return undefined
     }
 
     public getAudiences({
         operation,
         breadcrumbs
     }: {
-        operation: object;
-        breadcrumbs: string[];
+        operation: object
+        breadcrumbs: string[]
     }): string[] | undefined {
         const audiencesExtension = new Extensions.AudienceExtension({
             operation,
             breadcrumbs,
             context: this
-        });
-        const converted = audiencesExtension.convert();
+        })
+        const converted = audiencesExtension.convert()
         if (converted == null) {
-            return undefined;
+            return undefined
         }
-        return converted.audiences;
+        return converted.audiences
     }
 
     public getAvailability({
@@ -556,46 +556,46 @@ export abstract class AbstractConverterContext<Spec extends object> {
             | OpenAPIV3_1.ReferenceObject
             | OpenAPIV3_1.SchemaObject
             | OpenAPIV3_1.OperationObject
-            | OpenAPIV3_1.ParameterObject;
-        breadcrumbs: string[];
+            | OpenAPIV3_1.ParameterObject
+        breadcrumbs: string[]
     }): Availability | undefined {
         while (this.isReferenceObject(node)) {
-            const resolved = this.resolveReference<OpenAPIV3_1.SchemaObject>({ reference: node });
+            const resolved = this.resolveReference<OpenAPIV3_1.SchemaObject>({ reference: node })
             if (!resolved.resolved) {
-                return undefined;
+                return undefined
             }
-            node = resolved.value;
+            node = resolved.value
         }
 
         const availabilityExtension = new Extensions.FernAvailabilityExtension({
             node,
             breadcrumbs,
             context: this
-        });
-        const availability = availabilityExtension.convert();
+        })
+        const availability = availabilityExtension.convert()
         if (availability != null) {
             return {
                 status: availability,
                 message: undefined
-            };
+            }
         }
 
         if (node.deprecated === true) {
             return {
                 status: AvailabilityStatus.Deprecated,
                 message: undefined
-            };
+            }
         }
 
-        return undefined;
+        return undefined
     }
 
     public getTypeIdFromSchemaReference(reference: OpenAPIV3_1.ReferenceObject): string | undefined {
-        const schemaMatch = reference.$ref.match(/\/schemas\/(.+)$/);
+        const schemaMatch = reference.$ref.match(/\/schemas\/(.+)$/)
         if (!schemaMatch || !schemaMatch[1]) {
-            return undefined;
+            return undefined
         }
-        return schemaMatch[1];
+        return schemaMatch[1]
     }
 
     public createNamedTypeReference(id: string, displayName?: string | undefined): TypeReference {
@@ -610,14 +610,14 @@ export abstract class AbstractConverterContext<Spec extends object> {
             displayName,
             default: undefined,
             inline: false
-        });
+        })
     }
 
     public typeReferenceToDeclaredTypeName(typeReference: TypeReference): DeclaredTypeName | undefined {
-        if (typeReference.type !== "named") {
-            return undefined;
+        if (typeReference.type !== 'named') {
+            return undefined
         }
-        const typeId = typeReference.typeId;
+        const typeId = typeReference.typeId
         return {
             typeId,
             fernFilepath: {
@@ -627,57 +627,57 @@ export abstract class AbstractConverterContext<Spec extends object> {
             },
             name: this.casingsGenerator.generateName(typeId),
             displayName: typeReference.displayName
-        };
+        }
     }
 
     public removeSchemaFromInlinedTypes({
         id,
         inlinedTypes
     }: {
-        id: string;
-        inlinedTypes: Record<TypeId, SchemaConverter.ConvertedSchema>;
+        id: string
+        inlinedTypes: Record<TypeId, SchemaConverter.ConvertedSchema>
     }): Record<TypeId, SchemaConverter.ConvertedSchema> {
-        return Object.fromEntries(Object.entries(inlinedTypes).filter(([key]) => key !== id));
+        return Object.fromEntries(Object.entries(inlinedTypes).filter(([key]) => key !== id))
     }
 
     public static maybeTrimPrefix(value: string, prefix: string): string {
         if (value.startsWith(prefix)) {
-            return value.slice(prefix.length);
+            return value.slice(prefix.length)
         }
-        return value;
+        return value
     }
 
     public generateUniqueName({ prefix, existingNames }: { prefix: string; existingNames: string[] }): string {
         if (!existingNames.includes(prefix)) {
-            return prefix;
+            return prefix
         }
-        let i = 0;
+        let i = 0
         while (existingNames.includes(`${prefix}_${i}`)) {
-            i++;
+            i++
         }
-        return `${prefix}_${i}`;
+        return `${prefix}_${i}`
     }
 
     public isReferenceObject(value: unknown): value is OpenAPIV3_1.ReferenceObject {
-        return typeof value === "object" && value !== null && "$ref" in value;
+        return typeof value === 'object' && value !== null && '$ref' in value
     }
 
     public isExternalReference($ref: string): boolean {
-        return typeof $ref === "string" && ($ref.startsWith("http://") || $ref.startsWith("https://"));
+        return typeof $ref === 'string' && ($ref.startsWith('http://') || $ref.startsWith('https://'))
     }
 
     public isReferenceObjectWithIdentifier(
         value: unknown
     ): value is OpenAPIV3_1.ReferenceObject & { title?: string; name?: string; messageId?: string } {
-        return this.isReferenceObject(value) && ("title" in value || "name" in value || "messageId" in value);
+        return this.isReferenceObject(value) && ('title' in value || 'name' in value || 'messageId' in value)
     }
 
     public isExampleWithSummary(example: unknown): example is { summary: string } {
-        return typeof example === "object" && example != null && "summary" in example;
+        return typeof example === 'object' && example != null && 'summary' in example
     }
 
     public isExampleWithValue(example: unknown): example is { value: unknown } {
-        return typeof example === "object" && example != null && "value" in example;
+        return typeof example === 'object' && example != null && 'value' in example
     }
 
     /**
@@ -686,25 +686,25 @@ export abstract class AbstractConverterContext<Spec extends object> {
     public isOptional(
         valueType: TypeReference
     ): valueType is TypeReference.Container & { container: ContainerType.Optional } {
-        return valueType.type === "container" && valueType.container.type === "optional";
+        return valueType.type === 'container' && valueType.container.type === 'optional'
     }
 
     public isNullable(
         valueType: TypeReference
     ): valueType is TypeReference.Container & { container: ContainerType.Nullable } {
-        return valueType.type === "container" && valueType.container.type === "nullable";
+        return valueType.type === 'container' && valueType.container.type === 'nullable'
     }
 
     public isList(valueType: TypeReference): valueType is TypeReference.Container & { container: ContainerType.List } {
-        return valueType.type === "container" && valueType.container.type === "list";
+        return valueType.type === 'container' && valueType.container.type === 'list'
     }
 
     public isFile(valueType: TypeReference): boolean {
         return (
-            valueType.type === "primitive" &&
-            valueType.primitive.v2?.type === "string" &&
-            valueType.primitive.v2.validation?.format === "binary"
-        );
+            valueType.type === 'primitive' &&
+            valueType.primitive.v2?.type === 'string' &&
+            valueType.primitive.v2.validation?.format === 'binary'
+        )
     }
 
     /**
@@ -712,45 +712,45 @@ export abstract class AbstractConverterContext<Spec extends object> {
      */
 
     public getAsString(value: unknown): string | undefined {
-        if (typeof value === "string") {
-            return value;
+        if (typeof value === 'string') {
+            return value
         }
-        return undefined;
+        return undefined
     }
 
     public getAsInteger(value: unknown): number | undefined {
-        if (typeof value === "number" && Number.isInteger(value)) {
-            return value;
+        if (typeof value === 'number' && Number.isInteger(value)) {
+            return value
         }
-        return undefined;
+        return undefined
     }
 
     public getAsNumber(value: unknown): number | undefined {
-        if (typeof value === "number") {
-            return value;
+        if (typeof value === 'number') {
+            return value
         }
-        return undefined;
+        return undefined
     }
 
     public getAsBoolean(value: unknown): boolean | undefined {
-        if (typeof value === "boolean") {
-            return value;
+        if (typeof value === 'boolean') {
+            return value
         }
-        return undefined;
+        return undefined
     }
 
     public getAsArray(value: unknown): unknown[] | undefined {
         if (Array.isArray(value)) {
-            return value;
+            return value
         }
-        return undefined;
+        return undefined
     }
 
     public getAsObject(value: unknown): Record<string, unknown> | undefined {
-        if (typeof value === "object" && value !== null && !Array.isArray(value)) {
-            return value as Record<string, unknown>;
+        if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+            return value as Record<string, unknown>
         }
-        return undefined;
+        return undefined
     }
 
     /**
@@ -760,15 +760,15 @@ export abstract class AbstractConverterContext<Spec extends object> {
      * @returns A dot-separated string representation of the group
      */
     public getGroup({ groupParts, namespace }: { groupParts: string[] | undefined; namespace?: string }): string[] {
-        const group = [];
+        const group = []
         if (namespace != null) {
-            group.push(namespace);
+            group.push(namespace)
         }
-        group.push(...(groupParts ?? []));
-        return group;
+        group.push(...(groupParts ?? []))
+        return group
     }
 
     public isObjectSchemaType(schema: OpenAPIV3_1.SchemaObject): boolean {
-        return schema.type === "object" || schema.properties != null;
+        return schema.type === 'object' || schema.properties != null
     }
 }

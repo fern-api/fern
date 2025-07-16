@@ -1,26 +1,26 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { RelativeFilePath } from '@fern-api/fs-utils'
 
-import { FernFilepath, Name } from "@fern-fern/ir-sdk/api";
+import { FernFilepath, Name } from '@fern-fern/ir-sdk/api'
 
-import { ExportDeclaration } from "../exports-manager";
-import { ExportedDirectory } from "../exports-manager";
+import { ExportDeclaration } from '../exports-manager'
+import { ExportedDirectory } from '../exports-manager'
 
 export function getExportedDirectoriesForFernFilepath({
     fernFilepath,
     subExports
 }: {
-    fernFilepath: FernFilepath;
-    subExports?: Record<RelativeFilePath, ExportDeclaration>;
+    fernFilepath: FernFilepath
+    subExports?: Record<RelativeFilePath, ExportDeclaration>
 }): ExportedDirectory[] {
     const directories = [
         ...fernFilepath.packagePath.flatMap((fernFilepathPart) =>
             getExportedDirectoriesForFernFilepathPart(fernFilepathPart)
         )
-    ];
+    ]
     if (fernFilepath.file != null) {
-        directories.push(...getExportedDirectoriesForFernFilepathPart(fernFilepath.file, { subExports }));
+        directories.push(...getExportedDirectoriesForFernFilepathPart(fernFilepath.file, { subExports }))
     }
-    return directories;
+    return directories
 }
 
 function getExportedDirectoriesForFernFilepathPart(
@@ -29,7 +29,7 @@ function getExportedDirectoriesForFernFilepathPart(
 ): ExportedDirectory[] {
     return [
         {
-            nameOnDisk: "resources",
+            nameOnDisk: 'resources',
             exportDeclaration: { exportAll: true }
         },
         {
@@ -37,5 +37,5 @@ function getExportedDirectoriesForFernFilepathPart(
             exportDeclaration: { namespaceExport: fernFilepathPart.camelCase.safeName },
             subExports
         }
-    ];
+    ]
 }

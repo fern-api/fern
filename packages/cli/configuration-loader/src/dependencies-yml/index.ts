@@ -1,1 +1,1 @@
-export { loadDependenciesConfiguration } from "./loadDependenciesConfiguration";
+export { loadDependenciesConfiguration } from './loadDependenciesConfiguration'

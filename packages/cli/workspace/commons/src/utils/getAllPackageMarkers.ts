@@ -1,15 +1,15 @@
-import { mapKeys } from "lodash-es";
+import { mapKeys } from 'lodash-es'
 
-import { entries } from "@fern-api/core-utils";
-import { PackageMarkerFileSchema } from "@fern-api/fern-definition-schema";
-import { RelativeFilePath, join } from "@fern-api/path-utils";
+import { entries } from '@fern-api/core-utils'
+import { PackageMarkerFileSchema } from '@fern-api/fern-definition-schema'
+import { RelativeFilePath, join } from '@fern-api/path-utils'
 
-import { FernDefinition } from "../AbstractAPIWorkspace";
-import { ParsedFernFile } from "../FernFile";
+import { FernDefinition } from '../AbstractAPIWorkspace'
+import { ParsedFernFile } from '../FernFile'
 
 export declare namespace getAllPackageMarkers {
     interface Opts {
-        defaultURL?: string;
+        defaultURL?: string
     }
 }
 
@@ -20,7 +20,7 @@ export function getAllPackageMarkers(
     return {
         ...Object.fromEntries(
             entries(definition.packageMarkers).map(([path, file]) => {
-                return [path, { ...file, defaultUrl: opts.defaultURL }];
+                return [path, { ...file, defaultUrl: opts.defaultURL }]
             })
         ),
         ...entries(definition.importedDefinitions).reduce((acc, [pathToImportedDefinition, definition]) => {
@@ -29,7 +29,7 @@ export function getAllPackageMarkers(
                 ...mapKeys(getAllPackageMarkers(definition.definition, { defaultURL: definition.url }), (_file, path) =>
                     join(pathToImportedDefinition, RelativeFilePath.of(path))
                 )
-            };
+            }
         }, {})
-    };
+    }
 }

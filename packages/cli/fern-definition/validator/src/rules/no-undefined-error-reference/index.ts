@@ -1,1 +1,1 @@
-export { NoUndefinedErrorReferenceRule } from "./no-undefined-error-reference";
+export { NoUndefinedErrorReferenceRule } from './no-undefined-error-reference'

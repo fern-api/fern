@@ -1,21 +1,17 @@
-import { mapValues } from "lodash-es";
+import { mapValues } from 'lodash-es'
 
-import { GeneratorName } from "@fern-api/configuration-loader";
+import { GeneratorName } from '@fern-api/configuration-loader'
 
-import { IrMigrationContext } from "../../IrMigrationContext";
-import { IrVersions } from "../../ir-versions";
-import {
-    GeneratorWasNeverUpdatedToConsumeNewIR,
-    GeneratorWasNotCreatedYet,
-    IrMigration
-} from "../../types/IrMigration";
+import { IrMigrationContext } from '../../IrMigrationContext'
+import { IrVersions } from '../../ir-versions'
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
 
 export const V21_TO_V20_MIGRATION: IrMigration<
     IrVersions.V21.ir.IntermediateRepresentation,
     IrVersions.V20.ir.IntermediateRepresentation
 > = {
-    laterVersion: "v21",
-    earlierVersion: "v20",
+    laterVersion: 'v21',
+    earlierVersion: 'v20',
     firstGeneratorVersionToConsumeNewIR: {
         [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -50,11 +46,11 @@ export const V21_TO_V20_MIGRATION: IrMigration<
         return {
             ...v21,
             services: mapValues(v21.services, (service) => {
-                return convertService(service, context);
+                return convertService(service, context)
             })
-        };
+        }
     }
-};
+}
 
 function convertService(
     service: IrVersions.V21.http.HttpService,
@@ -63,7 +59,7 @@ function convertService(
     return {
         ...service,
         endpoints: service.endpoints.map((endpoint) => convertEndpoint(endpoint, context))
-    };
+    }
 }
 
 function convertEndpoint(
@@ -77,7 +73,7 @@ function convertEndpoint(
                 ? convertStreamingResponse(endpoint.streamingResponse, context)
                 : undefined,
         sdkResponse: endpoint.sdkResponse != null ? convertSdkResponse(endpoint.sdkResponse, context) : undefined
-    };
+    }
 }
 
 function convertStreamingResponse(
@@ -91,18 +87,18 @@ function convertStreamingResponse(
                 return taskContext.failAndThrow(
                     targetGenerator != null
                         ? `Generator ${targetGenerator.name}@${targetGenerator.version}` +
-                              " does not support streaming text responses." +
+                              ' does not support streaming text responses.' +
                               ` If you'd like to use this feature, please upgrade ${targetGenerator.name}` +
-                              " to a compatible version."
-                        : "Cannot backwards-migrate IR because this IR contains streaming text responses."
-                );
+                              ' to a compatible version.'
+                        : 'Cannot backwards-migrate IR because this IR contains streaming text responses.'
+                )
             },
             _unknown: () => {
-                throw new Error("Unknown StreamingResponseChunkType: " + response.dataEventType.type);
+                throw new Error('Unknown StreamingResponseChunkType: ' + response.dataEventType.type)
             }
         }),
         terminator: response.terminator
-    };
+    }
 }
 
 function convertSdkResponse(
@@ -121,7 +117,7 @@ function convertSdkResponse(
             }),
         json: IrVersions.V20.http.SdkResponse.json,
         _unknown: () => {
-            throw new Error("Unknown SdkResponse: " + sdkResponse.type);
+            throw new Error('Unknown SdkResponse: ' + sdkResponse.type)
         }
-    });
+    })
 }

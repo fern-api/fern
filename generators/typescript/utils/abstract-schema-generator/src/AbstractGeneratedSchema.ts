@@ -1,20 +1,20 @@
-import { Reference, Zurg, getTextOfTsNode } from "@fern-typescript/commons";
-import { BaseContext } from "@fern-typescript/contexts";
-import { ModuleDeclaration, VariableDeclarationKind, ts } from "ts-morph";
+import { Reference, Zurg, getTextOfTsNode } from '@fern-typescript/commons'
+import { BaseContext } from '@fern-typescript/contexts'
+import { ModuleDeclaration, VariableDeclarationKind, ts } from 'ts-morph'
 
 export declare namespace AbstractGeneratedSchema {
     export interface Init {
-        typeName: string;
+        typeName: string
     }
 }
 
 export abstract class AbstractGeneratedSchema<Context extends BaseContext> {
-    protected static RAW_TYPE_NAME = "Raw";
+    protected static RAW_TYPE_NAME = 'Raw'
 
-    protected typeName: string;
+    protected typeName: string
 
     constructor({ typeName }: AbstractGeneratedSchema.Init) {
-        this.typeName = typeName;
+        this.typeName = typeName
     }
 
     public writeSchemaToFile(context: Context): void {
@@ -34,13 +34,13 @@ export abstract class AbstractGeneratedSchema<Context extends BaseContext> {
                     initializer: getTextOfTsNode(this.buildSchema(context).toExpression())
                 }
             ]
-        });
+        })
 
-        this.generateModule(context);
+        this.generateModule(context)
     }
 
     public getReferenceToZurgSchema(context: Context): Zurg.Schema {
-        return context.coreUtilities.zurg.Schema._fromExpression(this.getReferenceToSchema(context).getExpression());
+        return context.coreUtilities.zurg.Schema._fromExpression(this.getReferenceToSchema(context).getExpression())
     }
 
     public getReferenceToRawShape(context: Context): ts.TypeNode {
@@ -49,7 +49,7 @@ export abstract class AbstractGeneratedSchema<Context extends BaseContext> {
                 this.getReferenceToSchema(context).getEntityName(),
                 AbstractGeneratedSchema.RAW_TYPE_NAME
             )
-        );
+        )
     }
 
     protected getReferenceToSchemaType({
@@ -57,11 +57,11 @@ export abstract class AbstractGeneratedSchema<Context extends BaseContext> {
         rawShape,
         parsedShape
     }: {
-        context: Context;
-        rawShape: ts.TypeNode;
-        parsedShape: ts.TypeNode;
+        context: Context
+        rawShape: ts.TypeNode
+        parsedShape: ts.TypeNode
     }): ts.TypeNode {
-        return context.coreUtilities.zurg.Schema._getReferenceToType({ rawShape, parsedShape });
+        return context.coreUtilities.zurg.Schema._getReferenceToType({ rawShape, parsedShape })
     }
 
     protected generateModule(context: Context): void {
@@ -69,16 +69,16 @@ export abstract class AbstractGeneratedSchema<Context extends BaseContext> {
             name: this.getModuleName(),
             isExported: true,
             hasDeclareKeyword: true
-        });
-        this.generateRawTypeDeclaration(context, module);
+        })
+        this.generateRawTypeDeclaration(context, module)
     }
 
-    protected abstract getReferenceToSchema(context: Context): Reference;
-    protected abstract generateRawTypeDeclaration(context: Context, module: ModuleDeclaration): void;
-    protected abstract getReferenceToParsedShape(context: Context): ts.TypeNode;
-    protected abstract buildSchema(context: Context): Zurg.Schema;
+    protected abstract getReferenceToSchema(context: Context): Reference
+    protected abstract generateRawTypeDeclaration(context: Context, module: ModuleDeclaration): void
+    protected abstract getReferenceToParsedShape(context: Context): ts.TypeNode
+    protected abstract buildSchema(context: Context): Zurg.Schema
 
     protected getModuleName(): string {
-        return this.typeName;
+        return this.typeName
     }
 }

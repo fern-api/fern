@@ -1,35 +1,35 @@
-import type { Dictionary, NumericDictionary, PartialObject, PropertyName, ValueKeyIteratee } from "lodash";
-import { isNull, isPlainObject, mergeWith, omitBy } from "lodash-es";
+import type { Dictionary, NumericDictionary, PartialObject, PropertyName, ValueKeyIteratee } from 'lodash'
+import { isNull, isPlainObject, mergeWith, omitBy } from 'lodash-es'
 
 type AncestorOmissionCriteria = {
-    ancestorKeys: string[];
-    allowOmissionCursor: boolean;
-};
+    ancestorKeys: string[]
+    allowOmissionCursor: boolean
+}
 
 export function mergeWithOverrides<T extends object>({
     data,
     overrides,
     allowNullKeys
 }: {
-    data: T;
-    overrides: object;
-    allowNullKeys?: string[];
+    data: T
+    overrides: object
+    allowNullKeys?: string[]
 }): T {
     const merged = mergeWith(data, mergeWith, overrides, (obj, src) =>
         Array.isArray(obj) && Array.isArray(src)
-            ? src.every((element) => typeof element === "object") && obj.every((element) => typeof element === "object")
+            ? src.every((element) => typeof element === 'object') && obj.every((element) => typeof element === 'object')
                 ? // nested arrays of objects are merged
                   undefined
                 : // nested arrays of primitives are replaced
                   [...src]
             : undefined
-    ) as T;
+    ) as T
     // Remove any nullified values
     const filtered = omitDeepBy(merged, isNull, {
         ancestorKeys: allowNullKeys ?? [],
         allowOmissionCursor: false
-    });
-    return filtered as T;
+    })
+    return filtered as T
 }
 
 // This is essentially lodash's omitBy, but actually running through your object tree.
@@ -39,17 +39,17 @@ interface OmitDeepBy {
         object: Dictionary<T> | null | undefined,
         predicate?: ValueKeyIteratee<T>,
         ancestorOmissionCriteria?: AncestorOmissionCriteria
-    ): Dictionary<T>;
+    ): Dictionary<T>
     <T>(
         object: NumericDictionary<T> | null | undefined,
         predicate?: ValueKeyIteratee<T>,
         ancestorOmissionCriteria?: AncestorOmissionCriteria
-    ): NumericDictionary<T>;
+    ): NumericDictionary<T>
     <T extends object>(
         object: T | null | undefined,
         predicate: ValueKeyIteratee<T[keyof T]>,
         ancestorOmissionCriteria?: AncestorOmissionCriteria
-    ): PartialObject<T>;
+    ): PartialObject<T>
 }
 
 export const omitDeepBy: OmitDeepBy = (
@@ -61,11 +61,11 @@ export const omitDeepBy: OmitDeepBy = (
 ): any => {
     function omitByDeepByOnOwnProps(object: unknown) {
         if (Array.isArray(object)) {
-            return object.map((element) => omitDeepBy(element, cb, ancestorOmissionCriteria));
+            return object.map((element) => omitDeepBy(element, cb, ancestorOmissionCriteria))
         }
 
         if (isPlainObject(object)) {
-            const temp: Record<string, unknown> = {};
+            const temp: Record<string, unknown> = {}
             // biome-ignore lint/suspicious/noExplicitAny: allow
             for (const [key, value] of Object.entries<Record<string, PropertyName | object>>(object as any)) {
                 temp[key] = omitDeepBy(
@@ -79,18 +79,18 @@ export const omitDeepBy: OmitDeepBy = (
                               allowOmissionCursor: true
                           }
                         : ancestorOmissionCriteria
-                );
+                )
             }
 
             if (ancestorOmissionCriteria == null || !ancestorOmissionCriteria?.allowOmissionCursor) {
-                return omitBy(temp, cb);
+                return omitBy(temp, cb)
             }
 
-            return temp;
+            return temp
         }
 
-        return object;
+        return object
     }
 
-    return omitByDeepByOnOwnProps(object);
-};
+    return omitByDeepByOnOwnProps(object)
+}

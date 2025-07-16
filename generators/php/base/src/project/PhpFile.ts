@@ -1,23 +1,23 @@
-import path from "path";
+import path from 'path'
 
-import { File } from "@fern-api/base-generator";
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-import { BasePhpCustomConfigSchema, php } from "@fern-api/php-codegen";
+import { File } from '@fern-api/base-generator'
+import { AbsoluteFilePath, RelativeFilePath } from '@fern-api/fs-utils'
+import { BasePhpCustomConfigSchema, php } from '@fern-api/php-codegen'
 
-import { FernFilepath } from "@fern-fern/ir-sdk/api";
+import { FernFilepath } from '@fern-fern/ir-sdk/api'
 
-export type Namespace = string;
+export type Namespace = string
 
 export declare namespace PhpFile {
     interface Args {
         /* The class to be written to the PHP File */
-        clazz: php.Class | php.DataClass | php.Trait | php.Enum;
+        clazz: php.Class | php.DataClass | php.Trait | php.Enum
         /* Directory of the filepath */
-        directory: RelativeFilePath;
+        directory: RelativeFilePath
         /* The root namespace of the project. Can be pulled directly from context. */
-        rootNamespace: string;
+        rootNamespace: string
         /* Custom generator config */
-        customConfig: BasePhpCustomConfigSchema;
+        customConfig: BasePhpCustomConfigSchema
     }
 }
 
@@ -31,15 +31,15 @@ export class PhpFile extends File {
                 rootNamespace,
                 customConfig
             })
-        );
+        )
     }
 
     public async tryWrite(directoryPrefix: AbsoluteFilePath): Promise<void> {
-        await this.write(directoryPrefix);
+        await this.write(directoryPrefix)
     }
 
     public static getFilePathFromFernFilePath(fernFilePath: FernFilepath): RelativeFilePath {
-        return RelativeFilePath.of(path.join(...fernFilePath.allParts.map((part) => part.pascalCase.safeName)));
+        return RelativeFilePath.of(path.join(...fernFilePath.allParts.map((part) => part.pascalCase.safeName)))
     }
 }
 
@@ -48,16 +48,16 @@ function phpFileContent({
     rootNamespace,
     customConfig
 }: {
-    clazz: php.Class | php.DataClass | php.Trait | php.Enum;
-    rootNamespace: string;
-    customConfig: BasePhpCustomConfigSchema;
+    clazz: php.Class | php.DataClass | php.Trait | php.Enum
+    rootNamespace: string
+    customConfig: BasePhpCustomConfigSchema
 }): string {
     return (
-        "<?php\n\n" +
+        '<?php\n\n' +
         clazz.toString({
             namespace: clazz.namespace,
             rootNamespace,
             customConfig
         })
-    );
+    )
 }

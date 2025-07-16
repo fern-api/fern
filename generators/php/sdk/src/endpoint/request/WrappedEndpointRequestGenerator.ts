@@ -1,7 +1,7 @@
-import { assertNever } from "@fern-api/core-utils";
-import { RelativeFilePath, join } from "@fern-api/fs-utils";
-import { FileGenerator, FileLocation, PhpFile } from "@fern-api/php-base";
-import { php } from "@fern-api/php-codegen";
+import { assertNever } from '@fern-api/core-utils'
+import { RelativeFilePath, join } from '@fern-api/fs-utils'
+import { FileGenerator, FileLocation, PhpFile } from '@fern-api/php-base'
+import { php } from '@fern-api/php-codegen'
 
 import {
     FileProperty,
@@ -11,17 +11,17 @@ import {
     QueryParameter,
     SdkRequestWrapper,
     ServiceId
-} from "@fern-fern/ir-sdk/api";
+} from '@fern-fern/ir-sdk/api'
 
-import { SdkCustomConfigSchema } from "../../SdkCustomConfig";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { SdkCustomConfigSchema } from '../../SdkCustomConfig'
+import { SdkGeneratorContext } from '../../SdkGeneratorContext'
 
 export declare namespace WrappedEndpointRequestGenerator {
     export interface Args {
-        serviceId: ServiceId;
-        wrapper: SdkRequestWrapper;
-        context: SdkGeneratorContext;
-        endpoint: HttpEndpoint;
+        serviceId: ServiceId
+        wrapper: SdkRequestWrapper
+        context: SdkGeneratorContext
+        endpoint: HttpEndpoint
     }
 }
 
@@ -30,37 +30,37 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
     SdkCustomConfigSchema,
     SdkGeneratorContext
 > {
-    private wrapper: SdkRequestWrapper;
-    private serviceId: ServiceId;
-    private endpoint: HttpEndpoint;
-    private classReference: php.ClassReference;
-    private location: FileLocation;
+    private wrapper: SdkRequestWrapper
+    private serviceId: ServiceId
+    private endpoint: HttpEndpoint
+    private classReference: php.ClassReference
+    private location: FileLocation
 
     public constructor({ wrapper, context, serviceId, endpoint }: WrappedEndpointRequestGenerator.Args) {
-        super(context);
-        this.wrapper = wrapper;
-        this.serviceId = serviceId;
-        this.endpoint = endpoint;
-        this.classReference = this.context.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName);
-        this.location = this.context.getLocationForWrappedRequest(this.serviceId);
+        super(context)
+        this.wrapper = wrapper
+        this.serviceId = serviceId
+        this.endpoint = endpoint
+        this.classReference = this.context.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName)
+        this.location = this.context.getLocationForWrappedRequest(this.serviceId)
     }
 
     protected doGenerate(): PhpFile {
         const clazz = php.dataClass({
             ...this.classReference,
             parentClassReference: this.context.getJsonSerializableTypeClassReference()
-        });
+        })
 
-        const service = this.context.getHttpServiceOrThrow(this.serviceId);
+        const service = this.context.getHttpServiceOrThrow(this.serviceId)
         const { includeGetters, includeSetters } = {
             includeGetters: this.context.shouldGenerateGetterMethods(),
             includeSetters: this.context.shouldGenerateSetterMethods()
-        };
+        }
 
         const includePathParameters = this.context.includePathParametersInWrappedRequest({
             endpoint: this.endpoint,
             wrapper: this.wrapper
-        });
+        })
         if (includePathParameters) {
             for (const pathParameter of this.endpoint.allPathParameters) {
                 this.addFieldWithMethods({
@@ -74,7 +74,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
                     }),
                     includeGetters,
                     includeSetters
-                });
+                })
             }
         }
 
@@ -90,7 +90,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
                 }),
                 includeGetters,
                 includeSetters
-            });
+            })
         }
 
         for (const header of [...service.headers, ...this.endpoint.headers]) {
@@ -105,7 +105,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
                 }),
                 includeGetters,
                 includeSetters
-            });
+            })
         }
 
         this.endpoint.requestBody?._visit({
@@ -121,7 +121,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
                     }),
                     includeGetters,
                     includeSetters
-                });
+                })
             },
             inlinedRequestBody: (request) => {
                 for (const property of request.properties) {
@@ -131,86 +131,86 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
                         field: this.inlinePropertyToField({ property }),
                         includeGetters,
                         includeSetters
-                    });
+                    })
                 }
                 for (const property of request.extendedProperties ?? []) {
-                    clazz.addField(this.inlinePropertyToField({ property, inherited: true }));
+                    clazz.addField(this.inlinePropertyToField({ property, inherited: true }))
                 }
                 for (const declaredTypeName of request.extends) {
-                    clazz.addTrait(this.context.phpTypeMapper.convertToTraitClassReference(declaredTypeName));
+                    clazz.addTrait(this.context.phpTypeMapper.convertToTraitClassReference(declaredTypeName))
                 }
             },
             fileUpload: (fileUpload) => {
                 for (const property of fileUpload.properties) {
                     switch (property.type) {
-                        case "file": {
+                        case 'file': {
                             this.addFieldWithMethods({
                                 clazz,
                                 name: property.value.key.name,
                                 field: this.filePropertyToField(property.value),
                                 includeGetters,
                                 includeSetters
-                            });
-                            break;
+                            })
+                            break
                         }
-                        case "bodyProperty": {
+                        case 'bodyProperty': {
                             this.addFieldWithMethods({
                                 clazz,
                                 name: property.name.name,
                                 field: this.inlinePropertyToField({ property }),
                                 includeGetters,
                                 includeSetters
-                            });
-                            break;
+                            })
+                            break
                         }
                         default: {
-                            assertNever(property);
+                            assertNever(property)
                         }
                     }
                 }
             },
             bytes: () => undefined,
             _other: () => undefined
-        });
+        })
 
         return new PhpFile({
             clazz,
             directory: this.location.directory,
             rootNamespace: this.context.getRootNamespace(),
             customConfig: this.context.customConfig
-        });
+        })
     }
 
     private filePropertyToField(fileProperty: FileProperty): php.Field {
-        let type;
+        let type
         switch (fileProperty.type) {
-            case "file": {
-                type = php.Type.reference(this.context.getFileClassReference());
-                break;
+            case 'file': {
+                type = php.Type.reference(this.context.getFileClassReference())
+                break
             }
-            case "fileArray": {
-                type = php.Type.array(php.Type.reference(this.context.getFileClassReference()));
-                break;
+            case 'fileArray': {
+                type = php.Type.array(php.Type.reference(this.context.getFileClassReference()))
+                break
             }
             default: {
-                assertNever(fileProperty);
+                assertNever(fileProperty)
             }
         }
         return php.field({
             name: this.context.getPropertyName(fileProperty.key.name),
             type: fileProperty.isOptional ? php.Type.optional(type) : type,
             access: this.context.getPropertyAccess()
-        });
+        })
     }
 
     private inlinePropertyToField({
         property,
         inherited
     }: {
-        property: InlinedRequestBodyProperty;
-        inherited?: boolean;
+        property: InlinedRequestBodyProperty
+        inherited?: boolean
     }): php.Field {
-        const convertedType = this.context.phpTypeMapper.convert({ reference: property.valueType });
+        const convertedType = this.context.phpTypeMapper.convert({ reference: property.valueType })
         return php.field({
             type: convertedType,
             name: this.context.getPropertyName(property.name.name),
@@ -221,7 +221,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
                 property
             }),
             inherited
-        });
+        })
     }
 
     private getQueryParameterType(query: QueryParameter): php.Type {
@@ -233,15 +233,15 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
                             reference: this.context.dereferenceOptional(query.valueType)
                         })
                     )
-                );
+                )
             }
             return php.Type.array(
                 this.context.phpTypeMapper.convert({
                     reference: query.valueType
                 })
-            );
+            )
         }
-        return this.context.phpTypeMapper.convert({ reference: query.valueType });
+        return this.context.phpTypeMapper.convert({ reference: query.valueType })
     }
 
     private addFieldWithMethods({
@@ -251,26 +251,26 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
         includeGetters,
         includeSetters
     }: {
-        clazz: php.DataClass;
-        name: Name;
-        field: php.Field;
-        includeGetters: boolean;
-        includeSetters: boolean;
+        clazz: php.DataClass
+        name: Name
+        field: php.Field
+        includeGetters: boolean
+        includeSetters: boolean
     }): void {
         if (includeGetters) {
-            clazz.addMethod(this.context.getGetterMethod({ name, field }));
+            clazz.addMethod(this.context.getGetterMethod({ name, field }))
         }
         if (includeSetters) {
-            clazz.addMethod(this.context.getSetterMethod({ name, field }));
+            clazz.addMethod(this.context.getSetterMethod({ name, field }))
         }
-        clazz.addField(field);
+        clazz.addField(field)
     }
 
     protected getFilepath(): RelativeFilePath {
         return join(
             this.context.project.filepaths.getSourceDirectory(),
             this.location.directory,
-            RelativeFilePath.of(this.classReference.name + ".php")
-        );
+            RelativeFilePath.of(this.classReference.name + '.php')
+        )
     }
 }

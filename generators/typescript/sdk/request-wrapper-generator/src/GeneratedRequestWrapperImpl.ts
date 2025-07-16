@@ -7,17 +7,17 @@ import {
     getPropertyKey,
     getTextOfTsNode,
     maybeAddDocsNode
-} from "@fern-typescript/commons";
+} from '@fern-typescript/commons'
 import {
     GeneratedRequestWrapper,
     GeneratedRequestWrapperExample,
     RequestWrapperNonBodyProperty,
     RequestWrapperNonBodyPropertyWithData,
     SdkContext
-} from "@fern-typescript/contexts";
-import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
+} from '@fern-typescript/contexts'
+import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from 'ts-morph'
 
-import { noop } from "@fern-api/core-utils";
+import { noop } from '@fern-api/core-utils'
 
 import {
     ExampleEndpointCall,
@@ -35,38 +35,38 @@ import {
     PathParameter,
     QueryParameter,
     TypeReference
-} from "@fern-fern/ir-sdk/api";
+} from '@fern-fern/ir-sdk/api'
 
-import { RequestWrapperExampleGenerator } from "./RequestWrapperExampleGenerator";
+import { RequestWrapperExampleGenerator } from './RequestWrapperExampleGenerator'
 
 export declare namespace GeneratedRequestWrapperImpl {
     export interface Init {
-        service: HttpService;
-        endpoint: HttpEndpoint;
-        wrapperName: string;
-        packageId: PackageId;
-        includeSerdeLayer: boolean;
-        retainOriginalCasing: boolean;
-        inlineFileProperties: boolean;
-        enableInlineTypes: boolean;
-        shouldInlinePathParameters: boolean;
-        formDataSupport: "Node16" | "Node18";
+        service: HttpService
+        endpoint: HttpEndpoint
+        wrapperName: string
+        packageId: PackageId
+        includeSerdeLayer: boolean
+        retainOriginalCasing: boolean
+        inlineFileProperties: boolean
+        enableInlineTypes: boolean
+        shouldInlinePathParameters: boolean
+        formDataSupport: 'Node16' | 'Node18'
     }
 }
 
-const EXAMPLE_PREFIX = "    ";
+const EXAMPLE_PREFIX = '    '
 
 export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
-    private service: HttpService;
-    private endpoint: HttpEndpoint;
-    private wrapperName: string;
-    private packageId: PackageId;
-    protected includeSerdeLayer: boolean;
-    protected retainOriginalCasing: boolean;
-    protected inlineFileProperties: boolean;
-    private enableInlineTypes: boolean;
-    private _shouldInlinePathParameters: boolean;
-    private readonly formDataSupport: "Node16" | "Node18";
+    private service: HttpService
+    private endpoint: HttpEndpoint
+    private wrapperName: string
+    private packageId: PackageId
+    protected includeSerdeLayer: boolean
+    protected retainOriginalCasing: boolean
+    protected inlineFileProperties: boolean
+    private enableInlineTypes: boolean
+    private _shouldInlinePathParameters: boolean
+    private readonly formDataSupport: 'Node16' | 'Node18'
 
     constructor({
         service,
@@ -80,61 +80,61 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         shouldInlinePathParameters,
         formDataSupport
     }: GeneratedRequestWrapperImpl.Init) {
-        this.service = service;
-        this.endpoint = endpoint;
-        this.wrapperName = wrapperName;
-        this.packageId = packageId;
-        this.includeSerdeLayer = includeSerdeLayer;
-        this.retainOriginalCasing = retainOriginalCasing;
-        this.inlineFileProperties = inlineFileProperties;
-        this.enableInlineTypes = enableInlineTypes;
-        this._shouldInlinePathParameters = shouldInlinePathParameters;
-        this.formDataSupport = formDataSupport;
+        this.service = service
+        this.endpoint = endpoint
+        this.wrapperName = wrapperName
+        this.packageId = packageId
+        this.includeSerdeLayer = includeSerdeLayer
+        this.retainOriginalCasing = retainOriginalCasing
+        this.inlineFileProperties = inlineFileProperties
+        this.enableInlineTypes = enableInlineTypes
+        this._shouldInlinePathParameters = shouldInlinePathParameters
+        this.formDataSupport = formDataSupport
     }
 
     public shouldInlinePathParameters(): boolean {
-        return this._shouldInlinePathParameters;
+        return this._shouldInlinePathParameters
     }
 
     private getPathParamsForRequestWrapper(): PathParameter[] {
         if (!this.shouldInlinePathParameters()) {
-            return [];
+            return []
         }
-        const sdkRequest = this.endpoint.sdkRequest;
+        const sdkRequest = this.endpoint.sdkRequest
         if (!sdkRequest) {
-            return [];
+            return []
         }
         switch (sdkRequest.shape.type) {
-            case "justRequestBody":
-                return [];
-            case "wrapper":
-                return [...this.service.pathParameters, ...this.endpoint.pathParameters];
+            case 'justRequestBody':
+                return []
+            case 'wrapper':
+                return [...this.service.pathParameters, ...this.endpoint.pathParameters]
         }
     }
 
     public writeToFile(context: SdkContext): void {
-        const docs = this.getDocs(context);
+        const docs = this.getDocs(context)
 
         const requestInterface = context.sourceFile.addInterface({
             name: this.wrapperName,
             isExported: true,
             docs: docs != null ? [docs] : []
-        });
+        })
 
         for (const pathParameter of this.getPathParamsForRequestWrapper()) {
-            const type = context.type.getReferenceToType(pathParameter.valueType);
-            const hasDefaultValue = this.hasDefaultValue(pathParameter.valueType, context);
+            const type = context.type.getReferenceToType(pathParameter.valueType)
+            const hasDefaultValue = this.hasDefaultValue(pathParameter.valueType, context)
             const property = requestInterface.addProperty({
                 name: getPropertyKey(this.getPropertyNameOfPathParameter(pathParameter).propertyName),
                 type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                 hasQuestionToken: type.isOptional || hasDefaultValue
-            });
-            maybeAddDocsNode(property, pathParameter.docs);
+            })
+            maybeAddDocsNode(property, pathParameter.docs)
         }
 
         for (const queryParameter of this.getAllQueryParameters()) {
-            const type = context.type.getReferenceToType(queryParameter.valueType);
-            const hasDefaultValue = this.hasDefaultValue(queryParameter.valueType, context);
+            const type = context.type.getReferenceToType(queryParameter.valueType)
+            const hasDefaultValue = this.hasDefaultValue(queryParameter.valueType, context)
             const property = requestInterface.addProperty({
                 name: getPropertyKey(this.getPropertyNameOfQueryParameter(queryParameter).propertyName),
                 type: getTextOfTsNode(
@@ -146,18 +146,18 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                         : type.typeNodeWithoutUndefined
                 ),
                 hasQuestionToken: type.isOptional || hasDefaultValue
-            });
-            maybeAddDocsNode(property, queryParameter.docs);
+            })
+            maybeAddDocsNode(property, queryParameter.docs)
         }
         for (const header of this.getAllNonLiteralHeaders(context)) {
-            const type = context.type.getReferenceToType(header.valueType);
-            const hasDefaultValue = this.hasDefaultValue(header.valueType, context);
+            const type = context.type.getReferenceToType(header.valueType)
+            const hasDefaultValue = this.hasDefaultValue(header.valueType, context)
             const property = requestInterface.addProperty({
                 name: getPropertyKey(this.getPropertyNameOfNonLiteralHeader(header).propertyName),
                 type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                 hasQuestionToken: type.isOptional || hasDefaultValue
-            });
-            maybeAddDocsNode(property, header.docs);
+            })
+            maybeAddDocsNode(property, header.docs)
         }
         if (this.endpoint.requestBody != null) {
             HttpRequestBody._visit(this.endpoint.requestBody, {
@@ -166,85 +166,85 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                         inlinedRequestBody,
                         context
                     })) {
-                        requestInterface.addProperty(this.getInlineProperty(inlinedRequestBody, property, context));
+                        requestInterface.addProperty(this.getInlineProperty(inlinedRequestBody, property, context))
                     }
-                    const iModule = this.generateModule(inlinedRequestBody, context);
+                    const iModule = this.generateModule(inlinedRequestBody, context)
                     if (iModule) {
-                        context.sourceFile.addModule(iModule);
+                        context.sourceFile.addModule(iModule)
                     }
                     for (const extension of inlinedRequestBody.extends) {
                         requestInterface.addExtends(
                             getTextOfTsNode(context.type.getReferenceToNamedType(extension).getTypeNode())
-                        );
+                        )
                     }
                 },
                 reference: (referenceToRequestBody) => {
-                    const type = context.type.getReferenceToType(referenceToRequestBody.requestBodyType);
+                    const type = context.type.getReferenceToType(referenceToRequestBody.requestBodyType)
                     const property = requestInterface.addProperty({
                         name: this.getReferencedBodyPropertyName(),
                         type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                         hasQuestionToken: type.isOptional
-                    });
-                    maybeAddDocsNode(property, referenceToRequestBody.docs);
+                    })
+                    maybeAddDocsNode(property, referenceToRequestBody.docs)
                 },
                 fileUpload: (fileUploadRequest) => {
                     for (const property of fileUploadRequest.properties) {
                         FileUploadRequestProperty._visit(property, {
                             file: (fileProperty) => {
                                 if (!this.inlineFileProperties) {
-                                    return;
+                                    return
                                 }
                                 requestInterface.addProperty({
                                     name: this.getPropertyNameOfFileParameterFromName(fileProperty.key).propertyName,
                                     type: getTextOfTsNode(this.getFileParameterType(fileProperty, context)),
                                     hasQuestionToken: fileProperty.isOptional
-                                });
+                                })
                             },
                             bodyProperty: (inlinedProperty) => {
                                 requestInterface.addProperty(
                                     this.getInlineProperty(fileUploadRequest, inlinedProperty, context)
-                                );
+                                )
                             },
                             _other: () => {
-                                throw new Error("Unknown FileUploadRequestProperty: " + property.type);
+                                throw new Error('Unknown FileUploadRequestProperty: ' + property.type)
                             }
-                        });
+                        })
                     }
                 },
                 bytes: () => {
                     // noop
                 },
                 _other: () => {
-                    throw new Error("Unknown HttpRequestBody: " + this.endpoint.requestBody?.type);
+                    throw new Error('Unknown HttpRequestBody: ' + this.endpoint.requestBody?.type)
                 }
-            });
+            })
         }
     }
 
     public generateExample(example: ExampleEndpointCall): GeneratedRequestWrapperExample {
-        const exampleGenerator = new RequestWrapperExampleGenerator();
+        const exampleGenerator = new RequestWrapperExampleGenerator()
         return exampleGenerator.generateExample({
             bodyPropertyName: this.getReferencedBodyPropertyName(),
             example,
             packageId: this.packageId,
             endpointName: this.endpoint.name,
             requestBody: this.endpoint.requestBody
-        });
+        })
     }
 
     private getDocs(context: SdkContext): string | undefined {
-        const groups: string[] = [];
+        const groups: string[] = []
 
         for (const example of getExampleEndpointCalls(this.endpoint)) {
-            const generatedExample = this.generateExample(example);
-            const exampleStr = "@example\n" + getTextOfTsNode(generatedExample.build(context, { isForComment: true }));
-            groups.push(exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`));
+            const generatedExample = this.generateExample(example)
+            const exampleStr = '@example\n' + getTextOfTsNode(generatedExample.build(context, { isForComment: true }))
+            groups.push(exampleStr.replaceAll('\n', `\n${EXAMPLE_PREFIX}`))
         }
 
         if (groups.length === 0) {
-            return undefined;
+            return undefined
         }
-        return groups.join("\n\n");
+        return groups.join('\n\n')
     }
 
     private getInlineProperty(
@@ -252,13 +252,13 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         property: InlinedRequestBodyProperty,
         context: SdkContext
     ): OptionalKind<PropertySignatureStructure> {
-        const type = this.getTypeForBodyProperty(requestBody, property, context);
+        const type = this.getTypeForBodyProperty(requestBody, property, context)
         return {
             name: getPropertyKey(this.getInlinedRequestBodyPropertyKey(property)),
             type: getTextOfTsNode(type.typeNodeWithoutUndefined),
             hasQuestionToken: type.isOptional,
             docs: property.docs != null ? [property.docs] : undefined
-        };
+        }
     }
 
     private getTypeForBodyProperty(
@@ -266,9 +266,9 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         property: InlinedRequestBodyProperty,
         context: SdkContext
     ): TypeReferenceNode {
-        const propParentTypeName = requestBody.name.pascalCase.safeName;
-        const propName = property.name.name.pascalCase.safeName;
-        return context.type.getReferenceToInlinePropertyType(property.valueType, propParentTypeName, propName);
+        const propParentTypeName = requestBody.name.pascalCase.safeName
+        const propName = property.name.name.pascalCase.safeName
+        return context.type.getReferenceToInlinePropertyType(property.valueType, propParentTypeName, propName)
     }
 
     private generateModule(
@@ -276,7 +276,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         context: SdkContext
     ): ModuleDeclarationStructure | undefined {
         if (!this.enableInlineTypes) {
-            return undefined;
+            return undefined
         }
 
         return generateInlinePropertiesModule({
@@ -288,11 +288,11 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             generateStatements: (typeName, typeNameOverride) =>
                 context.type.getGeneratedType(typeName, typeNameOverride).generateStatements(context),
             getTypeDeclaration: (namedType) => context.type.getTypeDeclaration(namedType)
-        });
+        })
     }
 
     public areBodyPropertiesInlined(): boolean {
-        return this.endpoint.requestBody != null && this.endpoint.requestBody.type === "inlinedRequestBody";
+        return this.endpoint.requestBody != null && this.endpoint.requestBody.type === 'inlinedRequestBody'
     }
 
     public withQueryParameter({
@@ -302,21 +302,21 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         queryParamSetter,
         queryParamItemSetter
     }: {
-        queryParameter: QueryParameter;
-        referenceToQueryParameterProperty: ts.Expression;
-        context: SdkContext;
-        queryParamSetter: (referenceToQueryParameter: ts.Expression) => ts.Statement[];
-        queryParamItemSetter: (referenceToQueryParameter: ts.Expression) => ts.Statement[];
+        queryParameter: QueryParameter
+        referenceToQueryParameterProperty: ts.Expression
+        context: SdkContext
+        queryParamSetter: (referenceToQueryParameter: ts.Expression) => ts.Statement[]
+        queryParamItemSetter: (referenceToQueryParameter: ts.Expression) => ts.Statement[]
     }): ts.Statement[] {
-        let statements: ts.Statement[];
+        let statements: ts.Statement[]
 
         if (queryParameter.allowMultiple) {
             statements = [
                 ts.factory.createIfStatement(
                     ts.factory.createCallExpression(
                         ts.factory.createPropertyAccessExpression(
-                            ts.factory.createIdentifier("Array"),
-                            ts.factory.createIdentifier("isArray")
+                            ts.factory.createIdentifier('Array'),
+                            ts.factory.createIdentifier('isArray')
                         ),
                         undefined,
                         [referenceToQueryParameterProperty]
@@ -324,15 +324,15 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                     ts.factory.createBlock(queryParamItemSetter(referenceToQueryParameterProperty), true),
                     ts.factory.createBlock(queryParamSetter(referenceToQueryParameterProperty), true)
                 )
-            ];
+            ]
         } else {
-            statements = queryParamSetter(referenceToQueryParameterProperty);
+            statements = queryParamSetter(referenceToQueryParameterProperty)
         }
 
-        const isQueryParamOptional = context.type.isOptional(queryParameter.valueType);
-        const isQueryParamNullable = context.type.isNullable(queryParameter.valueType);
+        const isQueryParamOptional = context.type.isOptional(queryParameter.valueType)
+        const isQueryParamNullable = context.type.isNullable(queryParameter.valueType)
         if (!isQueryParamNullable && !isQueryParamOptional) {
-            return statements;
+            return statements
         }
         if (isQueryParamNullable) {
             return [
@@ -340,11 +340,11 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                     ts.factory.createBinaryExpression(
                         referenceToQueryParameterProperty,
                         ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsEqualsToken),
-                        ts.factory.createIdentifier("undefined")
+                        ts.factory.createIdentifier('undefined')
                     ),
                     ts.factory.createBlock(statements)
                 )
-            ];
+            ]
         }
         return [
             ts.factory.createIfStatement(
@@ -355,15 +355,15 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 ),
                 ts.factory.createBlock(statements)
             )
-        ];
+        ]
     }
 
-    #areBodyPropertiesOptional: boolean | undefined;
+    #areBodyPropertiesOptional: boolean | undefined
     public areAllPropertiesOptional(context: SdkContext): boolean {
         if (this.#areBodyPropertiesOptional == null) {
-            this.#areBodyPropertiesOptional = this.expensivelyComputeIfAllPropertiesAreOptional(context);
+            this.#areBodyPropertiesOptional = this.expensivelyComputeIfAllPropertiesAreOptional(context)
         }
-        return this.#areBodyPropertiesOptional;
+        return this.#areBodyPropertiesOptional
     }
 
     public getNonBodyKeys(context: SdkContext): RequestWrapperNonBodyProperty[] {
@@ -375,16 +375,16 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 this.getPropertyNameOfQueryParameter(queryParameter)
             ),
             ...this.getAllNonLiteralHeaders(context).map((header) => this.getPropertyNameOfNonLiteralHeader(header))
-        ];
+        ]
         if (!this.inlineFileProperties) {
-            return properties;
+            return properties
         }
         return [
             ...this.getAllFileUploadProperties().map((fileProperty) =>
                 this.getPropertyNameOfFileParameter(fileProperty)
             ),
             ...properties
-        ];
+        ]
     }
 
     public getNonBodyKeysWithData(context: SdkContext): RequestWrapperNonBodyPropertyWithData[] {
@@ -392,63 +392,63 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             ...this.getPathParamsForRequestWrapper().map((pathParameter) => ({
                 ...this.getPropertyNameOfPathParameter(pathParameter),
                 originalParameter: {
-                    type: "path" as const,
+                    type: 'path' as const,
                     parameter: pathParameter
                 }
             })),
             ...this.getAllQueryParameters().map((queryParameter) => ({
                 ...this.getPropertyNameOfQueryParameter(queryParameter),
                 originalParameter: {
-                    type: "query" as const,
+                    type: 'query' as const,
                     parameter: queryParameter
                 }
             })),
             ...this.getAllNonLiteralHeaders(context).map((header) => ({
                 ...this.getPropertyNameOfNonLiteralHeader(header),
                 originalParameter: {
-                    type: "header" as const,
+                    type: 'header' as const,
                     parameter: header
                 }
             }))
-        ];
+        ]
         if (!this.inlineFileProperties) {
-            return properties;
+            return properties
         }
         return [
             ...this.getAllFileUploadProperties().map((fileProperty) => ({
                 ...this.getPropertyNameOfFileParameter(fileProperty),
                 originalParameter: {
-                    type: "file" as const,
+                    type: 'file' as const,
                     parameter: fileProperty
                 }
             })),
             ...properties
-        ];
+        ]
     }
 
     public getInlinedRequestBodyPropertyKey(property: InlinedRequestBodyProperty): string {
-        return this.getInlinedRequestBodyPropertyKeyFromName(property.name);
+        return this.getInlinedRequestBodyPropertyKeyFromName(property.name)
     }
 
     public getInlinedRequestBodyPropertyKeyFromName(name: NameAndWireValue): string {
-        return this.includeSerdeLayer && !this.retainOriginalCasing ? name.name.camelCase.unsafeName : name.wireValue;
+        return this.includeSerdeLayer && !this.retainOriginalCasing ? name.name.camelCase.unsafeName : name.wireValue
     }
 
     private expensivelyComputeIfAllPropertiesAreOptional(context: SdkContext): boolean {
         for (const pathParameter of this.getPathParamsForRequestWrapper()) {
             if (!this.isTypeOptional(pathParameter.valueType, context)) {
-                return false;
+                return false
             }
         }
 
         for (const queryParameter of this.getAllQueryParameters()) {
             if (!this.isTypeOptional(queryParameter.valueType, context)) {
-                return false;
+                return false
             }
         }
         for (const header of this.getAllNonLiteralHeaders(context)) {
             if (!this.isTypeOptional(header.valueType, context)) {
-                return false;
+                return false
             }
         }
         if (this.endpoint.requestBody != null) {
@@ -457,72 +457,70 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 inlinedRequestBody: (inlinedRequestBody) => {
                     for (const property of inlinedRequestBody.properties) {
                         if (!this.isTypeOptional(property.valueType, context)) {
-                            return false;
+                            return false
                         }
                     }
                     for (let extension of inlinedRequestBody.extends) {
-                        const typeDeclaration = context.type.getTypeDeclaration(extension);
-                        if (typeDeclaration.shape.type === "alias" && typeDeclaration.shape.aliasOf.type === "named") {
+                        const typeDeclaration = context.type.getTypeDeclaration(extension)
+                        if (typeDeclaration.shape.type === 'alias' && typeDeclaration.shape.aliasOf.type === 'named') {
                             extension = {
                                 ...typeDeclaration.shape.aliasOf
-                            };
+                            }
                         }
-                        const generatedType = context.type.getGeneratedType(extension);
-                        if (generatedType.type !== "object") {
-                            throw new Error("Inlined request extends a non-object");
+                        const generatedType = context.type.getGeneratedType(extension)
+                        if (generatedType.type !== 'object') {
+                            throw new Error('Inlined request extends a non-object')
                         }
-                        const propertiesFromExtension = generatedType.getAllPropertiesIncludingExtensions(context);
+                        const propertiesFromExtension = generatedType.getAllPropertiesIncludingExtensions(context)
                         for (const property of propertiesFromExtension) {
                             if (!this.isTypeOptional(property.type, context)) {
-                                return false;
+                                return false
                             }
                         }
                     }
-                    return true;
+                    return true
                 },
                 fileUpload: (fileUploadRequest) => {
                     for (const property of fileUploadRequest.properties) {
                         const isPropertyRequired = FileUploadRequestProperty._visit(property, {
                             file: (fileProperty) => {
                                 if (!this.inlineFileProperties) {
-                                    return false;
+                                    return false
                                 }
-                                return !fileProperty.isOptional;
+                                return !fileProperty.isOptional
                             },
                             bodyProperty: ({ valueType }) => !this.isTypeOptional(valueType, context),
                             _other: () => {
-                                throw new Error(
-                                    "Unknown FileUploadRequestProperty: " + this.endpoint.requestBody?.type
-                                );
+                                throw new Error('Unknown FileUploadRequestProperty: ' + this.endpoint.requestBody?.type)
                             }
-                        });
+                        })
                         if (isPropertyRequired) {
-                            return false;
+                            return false
                         }
                     }
-                    return true;
+                    return true
                 },
                 bytes: () => {
-                    throw new Error("bytes is not supported");
+                    throw new Error('bytes is not supported')
                 },
                 _other: () => {
-                    throw new Error("Unknown HttpRequestBody: " + this.endpoint.requestBody?.type);
+                    throw new Error('Unknown HttpRequestBody: ' + this.endpoint.requestBody?.type)
                 }
-            });
+            })
             if (!areBodyPropertiesOptional) {
-                return false;
+                return false
             }
         }
-        return true;
+        return true
     }
 
     private isTypeOptional(typeReference: TypeReference, context: SdkContext): boolean {
-        const resolvedType = context.type.resolveTypeReference(typeReference);
-        return resolvedType.type === "container" && resolvedType.container.type === "optional";
+        const resolvedType = context.type.resolveTypeReference(typeReference)
+        return resolvedType.type === 'container' && resolvedType.container.type === 'optional'
     }
 
     public getPropertyNameOfFileParameter(fileProperty: FileProperty): RequestWrapperNonBodyProperty {
-        return this.getPropertyNameOfFileParameterFromName(fileProperty.key);
+        return this.getPropertyNameOfFileParameterFromName(fileProperty.key)
     }
 
     public getPropertyNameOfFileParameterFromName(name: NameAndWireValue): RequestWrapperNonBodyProperty {
@@ -530,11 +528,11 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             safeName: name.name.camelCase.safeName,
             propertyName:
                 this.includeSerdeLayer && !this.retainOriginalCasing ? name.name.camelCase.unsafeName : name.wireValue
-        };
+        }
     }
 
     public getPropertyNameOfQueryParameter(queryParameter: QueryParameter): RequestWrapperNonBodyProperty {
-        return this.getPropertyNameOfQueryParameterFromName(queryParameter.name);
+        return this.getPropertyNameOfQueryParameterFromName(queryParameter.name)
     }
 
     public getPropertyNameOfQueryParameterFromName(name: NameAndWireValue): RequestWrapperNonBodyProperty {
@@ -542,11 +540,11 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             safeName: name.name.camelCase.safeName,
             propertyName:
                 this.includeSerdeLayer && !this.retainOriginalCasing ? name.name.camelCase.unsafeName : name.wireValue
-        };
+        }
     }
 
     public getPropertyNameOfPathParameter(pathParameter: PathParameter): RequestWrapperNonBodyProperty {
-        return this.getPropertyNameOfPathParameterFromName(pathParameter.name);
+        return this.getPropertyNameOfPathParameterFromName(pathParameter.name)
     }
 
     public getPropertyNameOfPathParameterFromName(name: Name): RequestWrapperNonBodyProperty {
@@ -557,11 +555,11 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 retainOriginalCasing: this.retainOriginalCasing,
                 pathParameterName: name
             })
-        };
+        }
     }
 
     public getPropertyNameOfNonLiteralHeader(header: HttpHeader): RequestWrapperNonBodyProperty {
-        return this.getPropertyNameOfNonLiteralHeaderFromName(header.name);
+        return this.getPropertyNameOfNonLiteralHeaderFromName(header.name)
     }
 
     public getPropertyNameOfNonLiteralHeaderFromName(name: NameAndWireValue): RequestWrapperNonBodyProperty {
@@ -569,80 +567,80 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             safeName: name.name.camelCase.safeName,
             propertyName:
                 this.includeSerdeLayer && !this.retainOriginalCasing ? name.name.camelCase.unsafeName : name.wireValue
-        };
+        }
     }
 
     public getAllPathParameters(): PathParameter[] {
-        return this.endpoint.allPathParameters;
+        return this.endpoint.allPathParameters
     }
 
     public getAllQueryParameters(): QueryParameter[] {
-        return this.endpoint.queryParameters;
+        return this.endpoint.queryParameters
     }
 
     public getAllFileUploadProperties(): FileProperty[] {
-        if (this.endpoint.requestBody == null || this.endpoint.requestBody.type !== "fileUpload") {
-            return [];
+        if (this.endpoint.requestBody == null || this.endpoint.requestBody.type !== 'fileUpload') {
+            return []
         }
-        const fileProperties: FileProperty[] = [];
+        const fileProperties: FileProperty[] = []
         for (const property of this.endpoint.requestBody.properties) {
             FileUploadRequestProperty._visit(property, {
                 file: (fileProperty) => {
-                    fileProperties.push(fileProperty);
+                    fileProperties.push(fileProperty)
                 },
                 bodyProperty: noop,
                 _other: () => {
-                    throw new Error("Unknown FileUploadRequestProperty: " + this.endpoint.requestBody?.type);
+                    throw new Error('Unknown FileUploadRequestProperty: ' + this.endpoint.requestBody?.type)
                 }
-            });
+            })
         }
-        return fileProperties;
+        return fileProperties
     }
 
     private getAllNonLiteralPropertiesFromInlinedRequest({
         context,
         inlinedRequestBody
     }: {
-        context: SdkContext;
-        inlinedRequestBody: InlinedRequestBody;
+        context: SdkContext
+        inlinedRequestBody: InlinedRequestBody
     }): InlinedRequestBodyProperty[] {
         return inlinedRequestBody.properties.filter((property) => {
-            const resolvedType = context.type.resolveTypeReference(property.valueType);
-            const isLiteral = resolvedType.type === "container" && resolvedType.container.type === "literal";
-            return !isLiteral;
-        });
+            const resolvedType = context.type.resolveTypeReference(property.valueType)
+            const isLiteral = resolvedType.type === 'container' && resolvedType.container.type === 'literal'
+            return !isLiteral
+        })
     }
 
     private getAllNonLiteralHeaders(context: SdkContext): HttpHeader[] {
         return [...this.service.headers, ...this.endpoint.headers].filter((header) => {
-            const resolvedType = context.type.resolveTypeReference(header.valueType);
-            const isLiteral = resolvedType.type === "container" && resolvedType.container.type === "literal";
-            return !isLiteral;
-        });
+            const resolvedType = context.type.resolveTypeReference(header.valueType)
+            const isLiteral = resolvedType.type === 'container' && resolvedType.container.type === 'literal'
+            return !isLiteral
+        })
     }
 
     public getReferencedBodyPropertyName(): string {
         if (this.endpoint.sdkRequest == null) {
-            throw new Error("Request body is defined but sdkRequest is null");
+            throw new Error('Request body is defined but sdkRequest is null')
         }
-        if (this.endpoint.sdkRequest.shape.type !== "wrapper") {
-            throw new Error("Request body is defined but sdkRequest is not a wrapper");
+        if (this.endpoint.sdkRequest.shape.type !== 'wrapper') {
+            throw new Error('Request body is defined but sdkRequest is not a wrapper')
         }
         return this.retainOriginalCasing
             ? this.endpoint.sdkRequest.shape.bodyKey.originalName
-            : this.endpoint.sdkRequest.shape.bodyKey.camelCase.unsafeName;
+            : this.endpoint.sdkRequest.shape.bodyKey.camelCase.unsafeName
     }
 
     private getFileParameterType(property: FileProperty, context: SdkContext): ts.TypeNode {
-        const types: ts.TypeNode[] = [];
+        const types: ts.TypeNode[] = []
 
-        if (this.formDataSupport === "Node16") {
+        if (this.formDataSupport === 'Node16') {
             types.push(
                 this.maybeWrapFileArray({
                     property,
-                    value: ts.factory.createTypeReferenceNode("File")
+                    value: ts.factory.createTypeReferenceNode('File')
                 })
-            );
+            )
             types.push(
                 this.maybeWrapFileArray({
                     property,
@@ -650,34 +648,34 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 }),
                 this.maybeWrapFileArray({
                     property,
-                    value: ts.factory.createTypeReferenceNode("Blob")
+                    value: ts.factory.createTypeReferenceNode('Blob')
                 })
-            );
+            )
         } else {
             types.push(
                 this.maybeWrapFileArray({
                     property,
                     value: context.coreUtilities.fileUtils.FileLike._getReferenceToType()
                 })
-            );
+            )
         }
 
         if (property.isOptional) {
-            types.push(ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword));
+            types.push(ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword))
         }
 
-        return ts.factory.createUnionTypeNode(types);
+        return ts.factory.createUnionTypeNode(types)
     }
 
     private maybeWrapFileArray({ property, value }: { property: FileProperty; value: ts.TypeNode }): ts.TypeNode {
-        return property.type === "fileArray" ? ts.factory.createArrayTypeNode(value) : value;
+        return property.type === 'fileArray' ? ts.factory.createArrayTypeNode(value) : value
     }
 
     private hasDefaultValue(typeReference: TypeReference, context: SdkContext): boolean {
-        const hasDefaultValue = context.type.hasDefaultValue(typeReference);
+        const hasDefaultValue = context.type.hasDefaultValue(typeReference)
         const useDefaultValues = (context.config.customConfig as { useDefaultRequestParameterValues?: boolean })
-            ?.useDefaultRequestParameterValues;
+            ?.useDefaultRequestParameterValues
 
-        return hasDefaultValue && Boolean(useDefaultValues);
+        return hasDefaultValue && Boolean(useDefaultValues)
     }
 }

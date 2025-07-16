@@ -1,18 +1,18 @@
-import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { csharp } from "@fern-api/csharp-codegen";
-import { RelativeFilePath, join } from "@fern-api/fs-utils";
+import { CSharpFile, FileGenerator } from '@fern-api/csharp-base'
+import { csharp } from '@fern-api/csharp-codegen'
+import { RelativeFilePath, join } from '@fern-api/fs-utils'
 
-import { ModelCustomConfigSchema } from "../ModelCustomConfig";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { ModelCustomConfigSchema } from '../ModelCustomConfig'
+import { ModelGeneratorContext } from '../ModelGeneratorContext'
 
-const DEFAULT_VERSION = "0.0.0";
+const DEFAULT_VERSION = '0.0.0'
 
 export class VersionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
-    private classReference: csharp.ClassReference;
+    private classReference: csharp.ClassReference
 
     constructor(context: ModelGeneratorContext) {
-        super(context);
-        this.classReference = this.context.getVersionClassReference();
+        super(context)
+        this.classReference = this.context.getVersionClassReference()
     }
 
     public doGenerate(): CSharpFile {
@@ -21,7 +21,7 @@ export class VersionGenerator extends FileGenerator<CSharpFile, ModelCustomConfi
             partial: false,
             access: csharp.Access.Internal,
             annotations: [this.context.getSerializableAttribute()]
-        });
+        })
 
         class_.addField(
             csharp.field({
@@ -31,7 +31,7 @@ export class VersionGenerator extends FileGenerator<CSharpFile, ModelCustomConfi
                 const_: true,
                 initializer: csharp.codeblock(csharp.string_({ string: this.context.version ?? DEFAULT_VERSION }))
             })
-        );
+        )
 
         return new CSharpFile({
             clazz: class_,
@@ -40,13 +40,13 @@ export class VersionGenerator extends FileGenerator<CSharpFile, ModelCustomConfi
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
             namespace: this.context.getPublicCoreNamespace(),
             customConfig: this.context.customConfig
-        });
+        })
     }
 
     protected getFilepath(): RelativeFilePath {
         return join(
             this.context.project.filepaths.getPublicCoreFilesDirectory(),
-            RelativeFilePath.of(this.classReference.name + ".cs")
-        );
+            RelativeFilePath.of(this.classReference.name + '.cs')
+        )
     }
 }

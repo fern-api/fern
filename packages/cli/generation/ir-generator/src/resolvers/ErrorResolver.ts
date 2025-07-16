@@ -1,18 +1,18 @@
-import { FernWorkspace, getDefinitionFile } from "@fern-api/api-workspace-commons";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { FernWorkspace, getDefinitionFile } from '@fern-api/api-workspace-commons'
+import { RawSchemas } from '@fern-api/fern-definition-schema'
 
-import { FernFileContext, constructFernFileContext } from "../FernFileContext";
-import { parseReferenceToTypeName } from "../utils/parseReferenceToTypeName";
+import { FernFileContext, constructFernFileContext } from '../FernFileContext'
+import { parseReferenceToTypeName } from '../utils/parseReferenceToTypeName'
 
 export interface ErrorResolver {
     getDeclarationOrThrow(
         referenceToError: string,
         file: FernFileContext
-    ): { declaration: RawSchemas.ErrorDeclarationSchema; file: FernFileContext };
+    ): { declaration: RawSchemas.ErrorDeclarationSchema; file: FernFileContext }
     getDeclaration(
         referenceToError: string,
         file: FernFileContext
-    ): { declaration: RawSchemas.ErrorDeclarationSchema; file: FernFileContext } | undefined;
+    ): { declaration: RawSchemas.ErrorDeclarationSchema; file: FernFileContext } | undefined
 }
 
 export class ErrorResolverImpl implements ErrorResolver {
@@ -22,11 +22,11 @@ export class ErrorResolverImpl implements ErrorResolver {
         referenceToError: string,
         file: FernFileContext
     ): { declaration: RawSchemas.ErrorDeclarationSchema; file: FernFileContext } {
-        const declaration = this.getDeclaration(referenceToError, file);
+        const declaration = this.getDeclaration(referenceToError, file)
         if (declaration == null) {
-            throw new Error("Error does not exist: " + referenceToError);
+            throw new Error('Error does not exist: ' + referenceToError)
         }
-        return declaration;
+        return declaration
     }
 
     public getDeclaration(
@@ -37,20 +37,20 @@ export class ErrorResolverImpl implements ErrorResolver {
             reference: referenceToError,
             referencedIn: file.relativeFilepath,
             imports: file.imports
-        });
+        })
 
         if (parsedReference == null) {
-            return undefined;
+            return undefined
         }
 
-        const definitionFile = getDefinitionFile(this.workspace, parsedReference.relativeFilepath);
+        const definitionFile = getDefinitionFile(this.workspace, parsedReference.relativeFilepath)
         if (definitionFile == null) {
-            return undefined;
+            return undefined
         }
 
-        const declaration = definitionFile.errors?.[parsedReference.typeName];
+        const declaration = definitionFile.errors?.[parsedReference.typeName]
         if (declaration == null) {
-            return undefined;
+            return undefined
         }
 
         return {
@@ -61,6 +61,6 @@ export class ErrorResolverImpl implements ErrorResolver {
                 casingsGenerator: file.casingsGenerator,
                 rootApiFile: this.workspace.definition.rootApiFile.contents
             })
-        };
+        }
     }
 }

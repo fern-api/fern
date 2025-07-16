@@ -1,22 +1,22 @@
-import { readdir } from "fs/promises";
-import path from "path";
+import { readdir } from 'fs/promises'
+import path from 'path'
 
 export async function getAllFilesInDirectory(dir: string): Promise<string[]> {
-    const files = await readdir(dir, { withFileTypes: true });
+    const files = await readdir(dir, { withFileTypes: true })
     const filePromises = files.map(async (file) => {
-        const filePath = path.join(dir, file.name);
+        const filePath = path.join(dir, file.name)
 
         if (file.isDirectory()) {
-            return getAllFilesInDirectory(filePath);
+            return getAllFilesInDirectory(filePath)
         }
 
-        if (file.isSymbolicLink() || file.name.startsWith(".")) {
-            return [];
+        if (file.isSymbolicLink() || file.name.startsWith('.')) {
+            return []
         }
 
-        return filePath;
-    });
+        return filePath
+    })
 
-    const nestedFiles = await Promise.all(filePromises);
-    return nestedFiles.flat();
+    const nestedFiles = await Promise.all(filePromises)
+    return nestedFiles.flat()
 }
