@@ -47,7 +47,7 @@ public class JavaV2Adapter {
             log(execClient, "Awaiting java v2 generator");
             // Print the logs from the v2 process to System.out
             try (BufferedReader stdOut = new BufferedReader(new InputStreamReader(v2.getInputStream()));
-                 BufferedReader stdErr = new BufferedReader(new InputStreamReader(v2.getErrorStream()))) {
+                    BufferedReader stdErr = new BufferedReader(new InputStreamReader(v2.getErrorStream()))) {
                 String line;
                 while ((line = stdOut.readLine()) != null) {
                     System.out.println("[Java V2 STDOUT] " + line);
@@ -82,4 +82,3 @@ public class JavaV2Adapter {
                 LogUpdate.builder().level(LogLevel.DEBUG).message(message).build()));
     }
 }
-

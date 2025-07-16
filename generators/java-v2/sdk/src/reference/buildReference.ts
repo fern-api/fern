@@ -139,16 +139,55 @@ function getReturnValue({
     endpoint: HttpEndpoint;
 }): { text: string } | undefined {
     const returnType = context.getReturnTypeForEndpoint(endpoint);
-    const returnTypeString = returnType.toString({
-        packageName: context.getCorePackageName(),
-        customConfig: context.customConfig
-    });
+    const returnTypeString = getSimpleTypeName(returnType, context);
     if (returnTypeString === "void") {
         return undefined;
     }
     return {
         text: returnTypeString
     };
+}
+
+function getSimpleTypeName(returnType: unknown, context: SdkGeneratorContext): string {
+    // Get the full type string to check if it's void
+    const fullTypeString = (
+        returnType as { toString: (args: { packageName: string; customConfig: unknown }) => string }
+    ).toString({
+        packageName: context.getCorePackageName(),
+        customConfig: context.customConfig
+    });
+
+    if (fullTypeString === "void") {
+        return "void";
+    }
+
+    // Extract just the class name without package/imports
+    const lines = fullTypeString.split("\n");
+
+    // Find the actual type declaration (skip package and import lines)
+    for (const line of lines) {
+        const trimmedLine = line.trim();
+
+        // Skip empty lines, package statements, and import statements
+        if (!trimmedLine || trimmedLine.startsWith("package ") || trimmedLine.startsWith("import ")) {
+            continue;
+        }
+
+        // This should be the actual type - return it as is
+        return trimmedLine;
+    }
+
+    // Fallback: try to extract the last meaningful identifier
+    // Look for patterns like "SomeClass" or "Optional<SomeClass>"
+    const cleanedString = fullTypeString.replace(/package\s+[^;]+;/g, "").replace(/import\s+[^;]+;/g, "");
+    const typeMatch = cleanedString.match(/([A-Z][a-zA-Z0-9_]*(?:<[^>]+>)?)/);
+    if (typeMatch && typeMatch[1]) {
+        return typeMatch[1];
+    }
+
+    // Final fallback: return the full string but log a warning
+    context.logger.warn(`Could not extract simple type name from: ${fullTypeString}`);
+    return fullTypeString;
 }
 
 function getEndpointParameters({
@@ -193,14 +232,18 @@ function getEndpointParameters({
     return parameters;
 }
 
-function getJavaTypeString({ context, typeReference }: { context: SdkGeneratorContext; typeReference: TypeReference }): string {
+function getJavaTypeString({
+    context,
+    typeReference
+}: {
+    context: SdkGeneratorContext;
+    typeReference: TypeReference;
+}): string {
     // This would ideally use the Java type mapper from the context
     // For now, we'll provide basic type mapping
     try {
-        return context.javaTypeMapper.convert({ reference: typeReference }).toString({
-            packageName: context.getCorePackageName(),
-            customConfig: context.customConfig
-        });
+        const javaType = context.javaTypeMapper.convert({ reference: typeReference });
+        return getSimpleTypeName(javaType, context);
     } catch {
         return "Object";
     }
