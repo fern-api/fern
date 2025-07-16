@@ -21,3 +21,4 @@ export * from "./ResponseType.js";
 export * from "./Test.js";
 export * from "./Entity.js";
 export * from "./BigEntity.js";
+export * from "./CronJob.js";

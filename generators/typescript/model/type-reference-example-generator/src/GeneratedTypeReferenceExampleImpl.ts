@@ -48,7 +48,12 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
         return ExampleTypeReferenceShape._visit(example.shape, {
             primitive: (primitiveExample) =>
                 ExamplePrimitive._visit<ts.Expression>(primitiveExample, {
-                    string: (stringExample) => ts.factory.createStringLiteral(stringExample.original),
+                    string: (stringExample) => {
+                        if (opts.isForComment || opts.isForTypeDeclarationComment) {
+                            return ts.factory.createStringLiteral(escapeStringForComment(stringExample.original));
+                        }
+                        return ts.factory.createStringLiteral(stringExample.original);
+                    },
                     integer: (integerExample) => ts.factory.createNumericLiteral(integerExample),
                     double: (doubleExample) => ts.factory.createNumericLiteral(doubleExample),
                     long: (longExample) => {
@@ -130,7 +135,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                         exampleItem != null
                             ? this.buildExample({
                                   example: {
-                                      jsonExample: this.getJsonExampleForPrimitive(exampleItem.literal),
+                                      jsonExample: this.getJsonExampleForPrimitive(exampleItem.literal, opts),
                                       shape: ExampleTypeReferenceShape.primitive(exampleItem.literal)
                                   },
                                   context,
@@ -146,7 +151,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                 return context.type.getGeneratedType(typeName).buildExample(example, context, opts);
             },
             unknown: (value) => {
-                const parsed = ts.parseJsonText("example.json", JSON.stringify(value, undefined, 4)).statements[0];
+                const parsed = ts.parseJsonText("example.json", escapeStringForComment(JSON.stringify(value, undefined, 4))).statements[0];
                 if (parsed == null) {
                     throw new Error("Could not parse unknown example");
                 }
@@ -158,9 +163,12 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
         });
     }
 
-    private getJsonExampleForPrimitive(primitiveExample: ExamplePrimitive): unknown {
+    private getJsonExampleForPrimitive(primitiveExample: ExamplePrimitive, opts: GetReferenceOpts): unknown {
         switch (primitiveExample.type) {
             case "string":
+                if (opts.isForComment || opts.isForTypeDeclarationComment) {
+                    return `"${escapeStringForComment(primitiveExample.string.original)}"`;
+                }
                 return `"${primitiveExample.string.original}"`;
             case "integer":
                 return primitiveExample.integer;
@@ -289,4 +297,13 @@ function createBigIntLiteral(value: string | number): ts.Expression {
     return ts.factory.createCallExpression(ts.factory.createIdentifier("BigInt"), undefined, [
         ts.factory.createStringLiteral(value.toString())
     ]);
+}
+const stringsToEscape = {
+    "*/": "* /"
+};
+function escapeStringForComment(str: string): string {
+    for (const [original, escaped] of Object.entries(stringsToEscape)) {
+        str = str.replaceAll(original, escaped);
+    }
+    return str;
 }
