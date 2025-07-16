@@ -114,36 +114,39 @@ export async function downloadBundle({
     const dir = await tmp.dir({ prefix: "fern" });
     const absoluteDirectoryToTmpDir = AbsoluteFilePath.of(dir.path);
 
-    const docsBundleUrl = new URL(key, bucketUrl).href;
-    logger.debug(`Downloading docs preview bundle from ${docsBundleUrl}`);
+    // const docsBundleUrl = new URL(key, bucketUrl).href;
+    // logger.debug(`Downloading docs preview bundle from ${docsBundleUrl}`);
     // download docs bundle
     try {
-        logger.debug("Fetching docs bundle zip response");
-        const docsBundleZipResponse = await fetch(docsBundleUrl);
-        if (!docsBundleZipResponse.ok) {
-            logger.error(`Failed to download docs preview bundle. Status code: ${docsBundleZipResponse.status}`);
-            return {
-                type: "failure"
-            };
-        }
-        logger.debug("Joining output zip path");
-        const outputZipPath = join(
-            absoluteDirectoryToTmpDir,
-            RelativeFilePath.of(tryTar ? "output.tar.gz" : "output.zip")
-        );
+        // logger.debug("Fetching docs bundle zip response");
+        // const docsBundleZipResponse = await fetch(docsBundleUrl);
+        // if (!docsBundleZipResponse.ok) {
+        //     logger.error(`Failed to download docs preview bundle. Status code: ${docsBundleZipResponse.status}`);
+        //     return {
+        //         type: "failure"
+        //     };
+        // }
+        // logger.debug("Joining output zip path");
+        // const outputZipPath = join(
+        //     absoluteDirectoryToTmpDir,
+        //     RelativeFilePath.of(tryTar ? "output.tar.gz" : "output.zip")
+        // );
 
-        if (docsBundleZipResponse.body == null) {
-            logger.debug("Docs bundle zip response body is null");
-            return {
-                type: "failure"
-            };
-        }
+        // if (docsBundleZipResponse.body == null) {
+        //     logger.debug("Docs bundle zip response body is null");
+        //     return {
+        //         type: "failure"
+        //     };
+        // }
 
-        logger.debug("Converting docs bundle zip response to buffer");
-        const nodeBuffer = Buffer.from(await docsBundleZipResponse.arrayBuffer());
-        logger.debug("Writing docs bundle zip to file");
-        await writeFile(outputZipPath, new Uint8Array(nodeBuffer));
-        logger.debug(`Wrote ${tryTar ? "output.tar.gz" : "output.zip"} to ${outputZipPath}`);
+        // logger.debug("Converting docs bundle zip response to buffer");
+        // const nodeBuffer = Buffer.from(await docsBundleZipResponse.arrayBuffer());
+        // logger.debug("Writing docs bundle zip to file");
+        // await writeFile(outputZipPath, new Uint8Array(nodeBuffer));
+        // logger.debug(`Wrote ${tryTar ? "output.tar.gz" : "output.zip"} to ${outputZipPath}`);
+        const outputZipPath = "C:\\Users\\cathe\\git\\fern-platform\\docs_bundle.tar.gz";
+        logger.debug(`outputZipPath: ${outputZipPath}`);
+        
 
         logger.debug("Getting path to preview folder");
         const absolutePathToPreviewFolder = getPathToPreviewFolder({ app });
