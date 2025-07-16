@@ -87,9 +87,9 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
                                       breadcrumbs: [...this.breadcrumbs, "content", contentType, "examples"],
                                       skipErrorCollector: true
                                   });
-                                  return resolved.resolved ? [key, resolved.value] : null;
+                                  return resolved.resolved ? [key, resolved.value.value ?? resolved.value] : null;
                               }
-                              return [key, example];
+                              return [key, example.value ?? example];
                           })
                           .filter((entry): entry is [string, OpenAPIV3_1.ExampleObject] => entry != null)
                   )
