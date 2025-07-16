@@ -1,25 +1,25 @@
-import { RawSchemas } from "@fern-api/fern-definition-schema"
-import { TypeResolverImpl, constructFernFileContext } from "@fern-api/ir-generator"
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { TypeResolverImpl, constructFernFileContext } from "@fern-api/ir-generator";
 
-import { Rule } from "../../Rule"
-import { CASINGS_GENERATOR } from "../../utils/casingsGenerator"
-import { validateCursorPagination } from "./validateCursorPagination"
-import { validateCustomPagination } from "./validateCustomPagination"
-import { validateOffsetPagination } from "./validateOffsetPagination"
+import { Rule } from "../../Rule";
+import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
+import { validateCursorPagination } from "./validateCursorPagination";
+import { validateCustomPagination } from "./validateCustomPagination";
+import { validateOffsetPagination } from "./validateOffsetPagination";
 
 export const ValidPaginationRule: Rule = {
     name: "valid-pagination",
     create: ({ workspace }) => {
-        const typeResolver = new TypeResolverImpl(workspace)
-        const defaultPagination = workspace.definition.rootApiFile.contents.pagination
+        const typeResolver = new TypeResolverImpl(workspace);
+        const defaultPagination = workspace.definition.rootApiFile.contents.pagination;
 
         return {
             definitionFile: {
                 httpEndpoint: ({ endpointId, endpoint }, { relativeFilepath, contents: definitionFile }) => {
                     const endpointPagination =
-                        typeof endpoint.pagination === "boolean" ? defaultPagination : endpoint.pagination
+                        typeof endpoint.pagination === "boolean" ? defaultPagination : endpoint.pagination;
                     if (!endpointPagination) {
-                        return []
+                        return [];
                     }
 
                     const file = constructFernFileContext({
@@ -27,7 +27,7 @@ export const ValidPaginationRule: Rule = {
                         definitionFile,
                         casingsGenerator: CASINGS_GENERATOR,
                         rootApiFile: workspace.definition.rootApiFile.contents
-                    })
+                    });
 
                     if (isRawCursorPaginationSchema(endpointPagination)) {
                         return validateCursorPagination({
@@ -36,7 +36,7 @@ export const ValidPaginationRule: Rule = {
                             typeResolver,
                             file,
                             cursorPagination: endpointPagination
-                        })
+                        });
                     } else if (isRawOffsetPaginationSchema(endpointPagination)) {
                         return validateOffsetPagination({
                             endpointId,
@@ -44,7 +44,7 @@ export const ValidPaginationRule: Rule = {
                             typeResolver,
                             file,
                             offsetPagination: endpointPagination
-                        })
+                        });
                     } else if (isRawCustomPaginationSchema(endpointPagination)) {
                         return validateCustomPagination({
                             endpointId,
@@ -52,19 +52,19 @@ export const ValidPaginationRule: Rule = {
                             typeResolver,
                             file,
                             customPagination: endpointPagination
-                        })
+                        });
                     }
-                    throw new Error("Invalid pagination schema")
+                    throw new Error("Invalid pagination schema");
                 }
             }
-        }
+        };
     }
-}
+};
 
 function isRawOffsetPaginationSchema(
     rawPaginationSchema: RawSchemas.PaginationSchema
 ): rawPaginationSchema is RawSchemas.OffsetPaginationSchema {
-    return (rawPaginationSchema as RawSchemas.OffsetPaginationSchema).offset != null
+    return (rawPaginationSchema as RawSchemas.OffsetPaginationSchema).offset != null;
 }
 
 function isRawCursorPaginationSchema(
@@ -74,11 +74,11 @@ function isRawCursorPaginationSchema(
         (rawPaginationSchema as RawSchemas.CursorPaginationSchema).cursor != null &&
         (rawPaginationSchema as RawSchemas.CursorPaginationSchema).next_cursor != null &&
         (rawPaginationSchema as RawSchemas.CursorPaginationSchema).results != null
-    )
+    );
 }
 
 function isRawCustomPaginationSchema(
     rawPaginationSchema: RawSchemas.PaginationSchema
 ): rawPaginationSchema is RawSchemas.CustomPaginationSchema {
-    return "type" in rawPaginationSchema && rawPaginationSchema.type === "custom"
+    return "type" in rawPaginationSchema && rawPaginationSchema.type === "custom";
 }

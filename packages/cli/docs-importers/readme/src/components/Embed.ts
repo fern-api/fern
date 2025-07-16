@@ -1,8 +1,8 @@
-import type { Element } from "hast"
-import { CONTINUE, visit } from "unist-util-visit"
+import type { Element } from "hast";
+import { CONTINUE, visit } from "unist-util-visit";
 
-import { assertIsDefined, assertIsNumber } from "../assert"
-import type { HastNode, HastNodeIndex, HastNodeParent } from "../types/hastTypes"
+import { assertIsDefined, assertIsNumber } from "../assert";
+import type { HastNode, HastNodeIndex, HastNodeParent } from "../types/hastTypes";
 
 export function scrapeEmbed(node: HastNode, index: HastNodeIndex, parent: HastNodeParent): Element | undefined {
     if (
@@ -10,37 +10,37 @@ export function scrapeEmbed(node: HastNode, index: HastNodeIndex, parent: HastNo
         !node.properties.className ||
         !(node.properties.className as Array<string>).includes("embed")
     ) {
-        return undefined
+        return undefined;
     }
 
-    assertIsNumber(index)
-    assertIsDefined(parent)
+    assertIsNumber(index);
+    assertIsDefined(parent);
 
     if (parent == null) {
-        return undefined
+        return undefined;
     }
 
-    let embedSrc: string | undefined
+    let embedSrc: string | undefined;
     visit(node, "element", function (child) {
         if (child.tagName !== "iframe") {
-            return CONTINUE
+            return CONTINUE;
         }
-        const src = child.properties.src as string
+        const src = child.properties.src as string;
         if (!src) {
-            return CONTINUE
+            return CONTINUE;
         }
 
-        const urlMatch = src.match(/src=([^&]+)/)
+        const urlMatch = src.match(/src=([^&]+)/);
         if (urlMatch?.[1]) {
-            embedSrc = decodeURIComponent(urlMatch[1])
+            embedSrc = decodeURIComponent(urlMatch[1]);
         } else {
-            embedSrc = src
+            embedSrc = src;
         }
-        return CONTINUE
-    })
+        return CONTINUE;
+    });
 
     if (!embedSrc) {
-        return undefined
+        return undefined;
     }
 
     const newNode: Element = {
@@ -50,7 +50,7 @@ export function scrapeEmbed(node: HastNode, index: HastNodeIndex, parent: HastNo
             url: embedSrc
         },
         children: []
-    }
+    };
 
-    return newNode
+    return newNode;
 }

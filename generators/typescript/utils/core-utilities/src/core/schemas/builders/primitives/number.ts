@@ -1,6 +1,6 @@
-import { SchemaType } from "../../Schema"
-import { createIdentitySchemaCreator } from "../../utils/createIdentitySchemaCreator"
-import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType"
+import { SchemaType } from "../../Schema";
+import { createIdentitySchemaCreator } from "../../utils/createIdentitySchemaCreator";
+import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType";
 
 export const number = createIdentitySchemaCreator<number>(
     SchemaType.NUMBER,
@@ -9,7 +9,7 @@ export const number = createIdentitySchemaCreator<number>(
             return {
                 ok: true,
                 value
-            }
+            };
         } else {
             return {
                 ok: false,
@@ -19,7 +19,7 @@ export const number = createIdentitySchemaCreator<number>(
                         message: getErrorMessageForIncorrectType(value, "number")
                     }
                 ]
-            }
+            };
         }
     }
-)
+);

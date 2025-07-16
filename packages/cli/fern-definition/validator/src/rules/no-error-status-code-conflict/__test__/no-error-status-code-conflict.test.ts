@@ -1,7 +1,7 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule"
-import { NoErrorStatusCodeConflictRule } from "../no-error-status-code-conflict"
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { NoErrorStatusCodeConflictRule } from "../no-error-status-code-conflict";
 
 describe("no-duplicate-declarations", () => {
     it("simple", async () => {
@@ -12,7 +12,7 @@ describe("no-duplicate-declarations", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
             )
-        })
+        });
         expect(violations).toEqual([
             {
                 severity: "fatal",
@@ -26,6 +26,6 @@ describe("no-duplicate-declarations", () => {
                 nodePath: ["service", "endpoints", "update"],
                 message: "Multiple errors have status-code 403: E, F"
             }
-        ])
-    })
-})
+        ]);
+    });
+});

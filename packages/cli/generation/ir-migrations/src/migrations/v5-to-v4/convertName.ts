@@ -1,4 +1,4 @@
-import { IrVersions } from "../../ir-versions"
+import { IrVersions } from "../../ir-versions";
 
 export function convertNameToV1(name: IrVersions.V5.commons.Name): IrVersions.V4.commons.StringWithAllCasings {
     return {
@@ -7,7 +7,7 @@ export function convertNameToV1(name: IrVersions.V5.commons.Name): IrVersions.V4
         pascalCase: name.pascalCase.unsafeName,
         snakeCase: name.snakeCase.unsafeName,
         screamingSnakeCase: name.screamingSnakeCase.unsafeName
-    }
+    };
 }
 
 export function convertNameAndWireValueToV1(
@@ -16,7 +16,7 @@ export function convertNameAndWireValueToV1(
     return {
         ...convertNameToV1(name.name),
         wireValue: name.wireValue
-    }
+    };
 }
 
 export function convertNameToV2(name: IrVersions.V5.commons.Name): IrVersions.V4.commons.Name {
@@ -35,7 +35,7 @@ export function convertNameToV2(name: IrVersions.V5.commons.Name): IrVersions.V4
             snakeCase: name.snakeCase.unsafeName,
             screamingSnakeCase: name.screamingSnakeCase.unsafeName
         }
-    }
+    };
 }
 
 export function convertNameAndWireValueToV2(
@@ -44,5 +44,5 @@ export function convertNameAndWireValueToV2(
     return {
         wireValue: name.wireValue,
         name: convertNameToV2(name.name)
-    }
+    };
 }

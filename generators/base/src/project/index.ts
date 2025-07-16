@@ -1,2 +1,2 @@
-export { AbstractProject } from "./AbstractProject"
-export { File } from "./File"
+export { AbstractProject } from "./AbstractProject";
+export { File } from "./File";

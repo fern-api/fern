@@ -1,8 +1,8 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { ValidationViolation } from "../../../ValidationViolation"
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule"
-import { ValidServiceUrlsRule } from "../valid-service-url"
+import { ValidationViolation } from "../../../ValidationViolation";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { ValidServiceUrlsRule } from "../valid-service-url";
 
 describe("valid-service-urls", () => {
     it("single-environment-url", async () => {
@@ -13,7 +13,7 @@ describe("valid-service-urls", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("single-environment-url")
             )
-        })
+        });
         const expectedViolations: ValidationViolation[] = [
             {
                 message: '"url" cannot be configured unless you specify multiple URLs for each environment in api.yml',
@@ -21,10 +21,10 @@ describe("valid-service-urls", () => {
                 relativeFilepath: RelativeFilePath.of("with-url.yml"),
                 severity: "fatal"
             }
-        ]
+        ];
 
-        expect(violations).toEqual(expectedViolations)
-    })
+        expect(violations).toEqual(expectedViolations);
+    });
 
     it("multiple-environment-urls", async () => {
         const violations = await getViolationsForRule({
@@ -34,7 +34,7 @@ describe("valid-service-urls", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("multiple-environment-urls")
             )
-        })
+        });
 
         const expectedViolations: ValidationViolation[] = [
             {
@@ -55,8 +55,8 @@ describe("valid-service-urls", () => {
                 relativeFilepath: RelativeFilePath.of("without-url.yml"),
                 severity: "fatal"
             }
-        ]
+        ];
 
-        expect(violations).toEqual(expectedViolations)
-    })
-})
+        expect(violations).toEqual(expectedViolations);
+    });
+});

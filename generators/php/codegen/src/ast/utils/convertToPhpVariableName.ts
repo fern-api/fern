@@ -4,7 +4,7 @@
  */
 export function convertToPhpVariableName(name: string): string {
     if (name.startsWith("$")) {
-        return name
+        return name;
     }
-    return `$${name}`
+    return `$${name}`;
 }

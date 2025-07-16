@@ -5,8 +5,8 @@ import {
     getPropertyKey,
     getTextOfTsNode,
     maybeAddDocsStructure
-} from "@fern-typescript/commons"
-import { BaseContext, GeneratedObjectType } from "@fern-typescript/contexts"
+} from "@fern-typescript/commons";
+import { BaseContext, GeneratedObjectType } from "@fern-typescript/contexts";
 import {
     InterfaceDeclarationStructure,
     ModuleDeclarationStructure,
@@ -15,58 +15,60 @@ import {
     StructureKind,
     WriterFunction,
     ts
-} from "ts-morph"
+} from "ts-morph";
 
-import { ExampleTypeShape, ObjectProperty, ObjectTypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api"
+import { ExampleTypeShape, ObjectProperty, ObjectTypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 
-import { AbstractGeneratedType } from "../AbstractGeneratedType"
+import { AbstractGeneratedType } from "../AbstractGeneratedType";
 
 interface Property {
-    name: string
-    type: ts.TypeNode
-    hasQuestionToken: boolean
-    docs: string | undefined
-    irProperty: ObjectProperty | undefined
+    name: string;
+    type: ts.TypeNode;
+    hasQuestionToken: boolean;
+    docs: string | undefined;
+    irProperty: ObjectProperty | undefined;
 }
 
 export class GeneratedObjectTypeImpl<Context extends BaseContext>
     extends AbstractGeneratedType<ObjectTypeDeclaration, Context>
     implements GeneratedObjectType<Context>
 {
-    private readonly allObjectProperties: ObjectProperty[]
-    public readonly type = "object"
+    private readonly allObjectProperties: ObjectProperty[];
+    public readonly type = "object";
     constructor(init: AbstractGeneratedType.Init<ObjectTypeDeclaration, Context>) {
-        super(init)
-        this.allObjectProperties = [...this.shape.properties, ...(this.shape.extendedProperties ?? [])]
+        super(init);
+        this.allObjectProperties = [...this.shape.properties, ...(this.shape.extendedProperties ?? [])];
     }
 
     public generateStatements(
         context: Context
     ): string | WriterFunction | (string | WriterFunction | StatementStructures)[] {
-        const statements: (string | WriterFunction | StatementStructures)[] = [this.generateInterface(context)]
-        const iModule = this.generateModule(context)
+        const statements: (string | WriterFunction | StatementStructures)[] = [this.generateInterface(context)];
+        const iModule = this.generateModule(context);
         if (iModule) {
-            statements.push(iModule)
+            statements.push(iModule);
         }
-        return statements
+        return statements;
     }
 
     public generateForInlineUnion(context: Context): ts.TypeNode {
         return ts.factory.createTypeLiteralNode(
             this.generatePropertiesInternal(context).map(({ name, type, hasQuestionToken, docs, irProperty }) => {
-                let propertyValue: ts.TypeNode = type
+                let propertyValue: ts.TypeNode = type;
                 if (irProperty) {
-                    const inlineUnionRef = context.type.getReferenceToTypeForInlineUnion(irProperty.valueType)
-                    propertyValue = hasQuestionToken ? inlineUnionRef.typeNode : inlineUnionRef.typeNodeWithoutUndefined
+                    const inlineUnionRef = context.type.getReferenceToTypeForInlineUnion(irProperty.valueType);
+                    propertyValue = hasQuestionToken
+                        ? inlineUnionRef.typeNode
+                        : inlineUnionRef.typeNodeWithoutUndefined;
                 }
                 return ts.factory.createPropertySignature(
                     undefined,
                     ts.factory.createIdentifier(getPropertyKey(name)),
                     hasQuestionToken ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
                     propertyValue
-                )
+                );
             })
-        )
+        );
     }
 
     public generateProperties(context: Context): PropertySignatureStructure[] {
@@ -77,24 +79,24 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                 type: getTextOfTsNode(type),
                 hasQuestionToken,
                 docs: docs != null ? [{ description: docs }] : undefined
-            }
+            };
 
-            return propertyNode
-        })
+            return propertyNode;
+        });
     }
 
     private generatePropertiesInternal(context: Context): Property[] {
         const props = this.shape.properties.map((property) => {
-            const value = this.getTypeForObjectProperty(context, property)
+            const value = this.getTypeForObjectProperty(context, property);
             const propertyNode: Property = {
                 name: getPropertyKey(this.getPropertyKeyFromProperty(property)),
                 type: this.noOptionalProperties ? value.typeNode : value.typeNodeWithoutUndefined,
                 hasQuestionToken: !this.noOptionalProperties && value.isOptional,
                 docs: property.docs,
                 irProperty: property
-            }
-            return propertyNode
-        })
+            };
+            return propertyNode;
+        });
         if (this.shape.extraProperties) {
             props.push({
                 name: "[key: string]", // This is the simpler way to add an index signature
@@ -102,9 +104,9 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                 hasQuestionToken: false,
                 docs: "Accepts any additional properties",
                 irProperty: undefined
-            })
+            });
         }
-        return props
+        return props;
     }
 
     public generateInterface(context: Context): InterfaceDeclarationStructure {
@@ -113,15 +115,15 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
             name: this.typeName,
             properties: [...this.generateProperties(context)],
             isExported: true
-        }
+        };
 
-        maybeAddDocsStructure(interfaceNode, this.getDocs(context))
-        const iExtends = []
+        maybeAddDocsStructure(interfaceNode, this.getDocs(context));
+        const iExtends = [];
         for (const extension of this.shape.extends) {
-            iExtends.push(getTextOfTsNode(context.type.getReferenceToNamedType(extension).getTypeNode()))
+            iExtends.push(getTextOfTsNode(context.type.getReferenceToNamedType(extension).getTypeNode()));
         }
-        interfaceNode.extends = iExtends
-        return interfaceNode
+        interfaceNode.extends = iExtends;
+        return interfaceNode;
     }
 
     private getTypeForObjectProperty(context: Context, property: ObjectProperty): TypeReferenceNode {
@@ -129,31 +131,31 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
             property.valueType,
             this.typeName,
             property.name.name.pascalCase.safeName
-        )
+        );
     }
 
     public getPropertyKey({ propertyWireKey }: { propertyWireKey: string }): string {
-        const property = this.allObjectProperties.find((property) => property.name.wireValue === propertyWireKey)
+        const property = this.allObjectProperties.find((property) => property.name.wireValue === propertyWireKey);
         if (property == null) {
-            throw new Error("Property does not exist: " + propertyWireKey)
+            throw new Error("Property does not exist: " + propertyWireKey);
         }
-        return this.getPropertyKeyFromProperty(property)
+        return this.getPropertyKeyFromProperty(property);
     }
 
     private getPropertyKeyFromProperty(property: ObjectProperty): string {
         if (this.includeSerdeLayer && !this.retainOriginalCasing) {
-            return property.name.name.camelCase.unsafeName
+            return property.name.name.camelCase.unsafeName;
         } else {
-            return property.name.wireValue
+            return property.name.wireValue;
         }
     }
 
     public buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {
         if (example.type !== "object") {
-            throw new Error("Example is not for an object")
+            throw new Error("Example is not for an object");
         }
 
-        return ts.factory.createObjectLiteralExpression(this.buildExampleProperties(example, context, opts), true)
+        return ts.factory.createObjectLiteralExpression(this.buildExampleProperties(example, context, opts), true);
     }
 
     public buildExampleProperties(
@@ -162,11 +164,11 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
         opts: GetReferenceOpts
     ): ts.ObjectLiteralElementLike[] {
         if (example.type !== "object") {
-            throw new Error("Example is not for an object")
+            throw new Error("Example is not for an object");
         }
 
         return example.properties.map((property) => {
-            const originalTypeForProperty = context.type.getGeneratedType(property.originalTypeDeclaration)
+            const originalTypeForProperty = context.type.getGeneratedType(property.originalTypeDeclaration);
             if (originalTypeForProperty.type === "union") {
                 const propertyKey = originalTypeForProperty.getSinglePropertyKey({
                     name: property.name,
@@ -175,21 +177,21 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                         default: undefined,
                         inline: undefined
                     })
-                })
+                });
                 return ts.factory.createPropertyAssignment(
                     getPropertyKey(propertyKey),
                     context.type.getGeneratedExample(property.value).build(context, opts)
-                )
+                );
             }
             if (originalTypeForProperty.type !== "object") {
-                throw new Error("Property does not come from an object")
+                throw new Error("Property does not come from an object");
             }
-            const key = originalTypeForProperty.getPropertyKey({ propertyWireKey: property.name.wireValue })
+            const key = originalTypeForProperty.getPropertyKey({ propertyWireKey: property.name.wireValue });
             return ts.factory.createPropertyAssignment(
                 getPropertyKey(key),
                 context.type.getGeneratedExample(property.value).build(context, opts)
-            )
-        })
+            );
+        });
     }
 
     public getAllPropertiesIncludingExtensions(
@@ -202,18 +204,18 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                 type: property.valueType
             })),
             ...this.shape.extends.flatMap((extension) => {
-                const generatedType = context.type.getGeneratedType(extension)
+                const generatedType = context.type.getGeneratedType(extension);
                 if (generatedType.type !== "object") {
-                    throw new Error("Type extends non-object")
+                    throw new Error("Type extends non-object");
                 }
-                return generatedType.getAllPropertiesIncludingExtensions(context)
+                return generatedType.getAllPropertiesIncludingExtensions(context);
             })
-        ]
+        ];
     }
 
     public generateModule(context: Context): ModuleDeclarationStructure | undefined {
         if (!this.enableInlineTypes) {
-            return undefined
+            return undefined;
         }
         return generateInlinePropertiesModule({
             parentTypeName: this.typeName,
@@ -224,6 +226,6 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
             generateStatements: (typeName, typeNameOverride) =>
                 context.type.getGeneratedType(typeName, typeNameOverride).generateStatements(context),
             getTypeDeclaration: (namedType) => context.type.getTypeDeclaration(namedType)
-        })
+        });
     }
 }

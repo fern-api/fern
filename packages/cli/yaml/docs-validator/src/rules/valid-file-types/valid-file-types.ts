@@ -1,11 +1,11 @@
-import chardet from "chardet"
-import { type MimeType, fileTypeFromBuffer } from "file-type"
-import { readFile } from "fs/promises"
-import path from "path"
+import chardet from "chardet";
+import { type MimeType, fileTypeFromBuffer } from "file-type";
+import { readFile } from "fs/promises";
+import path from "path";
 
-import { doesPathExist } from "@fern-api/fs-utils"
+import { doesPathExist } from "@fern-api/fs-utils";
 
-import { Rule, RuleViolation } from "../../Rule"
+import { Rule, RuleViolation } from "../../Rule";
 
 const ALLOWED_FILE_TYPES = new Set<MimeType>([
     // image files
@@ -32,7 +32,7 @@ const ALLOWED_FILE_TYPES = new Set<MimeType>([
     "font/woff2",
     "font/otf",
     "font/ttf"
-])
+]);
 
 // allowed text encodings
 const ALLOWED_ENCODINGS = new Set([
@@ -70,7 +70,7 @@ const ALLOWED_ENCODINGS = new Set([
     "GB2312", // Chinese Simplified
     "GB18030", // Chinese government standard
     "KOI8-R" // Russian
-])
+]);
 
 export const ValidFileTypes: Rule = {
     name: "valid-file-types",
@@ -78,51 +78,51 @@ export const ValidFileTypes: Rule = {
         return {
             filepath: async ({ absoluteFilepath, willBeUploaded }) => {
                 if (!willBeUploaded) {
-                    return []
+                    return [];
                 }
 
-                const doesExist = await doesPathExist(absoluteFilepath)
+                const doesExist = await doesPathExist(absoluteFilepath);
                 if (doesExist) {
-                    return getViolationsForFile(absoluteFilepath)
+                    return getViolationsForFile(absoluteFilepath);
                 }
 
-                return []
+                return [];
             }
-        }
+        };
     }
-}
+};
 
 export const getViolationsForFile = async (absoluteFilepath: string): Promise<RuleViolation[]> => {
-    const file = new Uint8Array(await readFile(absoluteFilepath))
+    const file = new Uint8Array(await readFile(absoluteFilepath));
 
     // otherwise, check the file type
-    const fileType = await fileTypeFromBuffer(file)
+    const fileType = await fileTypeFromBuffer(file);
     if (fileType != null) {
         if (ALLOWED_FILE_TYPES.has(fileType.mime)) {
-            return []
+            return [];
         } else {
             return [
                 {
                     severity: "fatal",
                     message: `The file type of ${fileType.mime} is not allowed: ${absoluteFilepath}`
                 }
-            ]
+            ];
         }
     }
 
-    let extension = path.extname(absoluteFilepath).toLowerCase()
+    let extension = path.extname(absoluteFilepath).toLowerCase();
     if (extension.startsWith(".")) {
-        extension = extension.substring(1)
+        extension = extension.substring(1);
     }
     // if `fileType` is undefined, its type can't be parsed because it's likely a text file
-    const encoding = chardet.detect(file)
+    const encoding = chardet.detect(file);
     if (encoding == null) {
         return [
             {
                 severity: "fatal",
                 message: `The encoding of the file could not be detected: ${absoluteFilepath}`
             }
-        ]
+        ];
     }
 
     if (!ALLOWED_ENCODINGS.has(encoding.toUpperCase())) {
@@ -131,8 +131,8 @@ export const getViolationsForFile = async (absoluteFilepath: string): Promise<Ru
                 severity: "fatal",
                 message: `The encoding of ${encoding} is not allowed: ${absoluteFilepath}`
             }
-        ]
+        ];
     }
 
-    return []
-}
+    return [];
+};

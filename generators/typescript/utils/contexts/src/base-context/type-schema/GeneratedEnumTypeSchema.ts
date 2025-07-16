@@ -1,5 +1,5 @@
-import { BaseGeneratedTypeSchema } from "./BaseGeneratedTypeSchema"
+import { BaseGeneratedTypeSchema } from "./BaseGeneratedTypeSchema";
 
 export interface GeneratedEnumTypeSchema<Context> extends BaseGeneratedTypeSchema<Context> {
-    type: "enum"
+    type: "enum";
 }

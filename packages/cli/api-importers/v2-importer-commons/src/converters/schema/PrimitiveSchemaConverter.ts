@@ -1,4 +1,4 @@
-import { OpenAPIV3_1 } from "openapi-types"
+import { OpenAPIV3_1 } from "openapi-types";
 
 import {
     ContainerType,
@@ -8,30 +8,30 @@ import {
     PrimitiveTypeV2,
     StringValidationRules,
     TypeReference
-} from "@fern-api/ir-sdk"
+} from "@fern-api/ir-sdk";
 
-import { AbstractConverter, AbstractConverterContext } from "../.."
+import { AbstractConverter, AbstractConverterContext } from "../..";
 
 export declare namespace PrimitiveSchemaConverter {
     export interface Args extends AbstractConverter.AbstractArgs {
-        schema: OpenAPIV3_1.SchemaObject
+        schema: OpenAPIV3_1.SchemaObject;
     }
 }
 
 export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverterContext<object>, TypeReference> {
-    private readonly schema: OpenAPIV3_1.SchemaObject
+    private readonly schema: OpenAPIV3_1.SchemaObject;
 
     constructor({ context, breadcrumbs, schema }: PrimitiveSchemaConverter.Args) {
-        super({ context, breadcrumbs })
-        this.schema = schema
+        super({ context, breadcrumbs });
+        this.schema = schema;
     }
 
     public convert(): TypeReference | undefined {
         switch (this.schema.type) {
             case "string": {
-                const stringConst = this.context.getAsString(this.schema.const)
+                const stringConst = this.context.getAsString(this.schema.const);
                 if (stringConst != null) {
-                    return TypeReference.container(ContainerType.literal(Literal.string(stringConst)))
+                    return TypeReference.container(ContainerType.literal(Literal.string(stringConst)));
                 }
 
                 if (this.context.settings.typeDatesAsStrings === false) {
@@ -39,12 +39,12 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                         return TypeReference.primitive({
                             v1: PrimitiveTypeV1.Date,
                             v2: PrimitiveTypeV2.date({})
-                        })
+                        });
                     } else if (this.schema.format === "date-time") {
                         return TypeReference.primitive({
                             v1: PrimitiveTypeV1.DateTime,
                             v2: PrimitiveTypeV2.dateTime({})
-                        })
+                        });
                     }
                 }
 
@@ -54,7 +54,7 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                         default: this.context.getAsString(this.schema.default),
                         validation: this.getStringValidation(this.schema)
                     })
-                })
+                });
             }
             case "number": {
                 switch (this.schema.format) {
@@ -65,7 +65,7 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                                 default: this.context.getAsNumber(this.schema.default),
                                 validation: this.getNumberValidation(this.schema)
                             })
-                        })
+                        });
                     }
                     case "float": {
                         return TypeReference.primitive({
@@ -74,7 +74,7 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                                 default: this.context.getAsNumber(this.schema.default),
                                 validation: this.getNumberValidation(this.schema)
                             })
-                        })
+                        });
                     }
                     case "int32":
                         return TypeReference.primitive({
@@ -83,7 +83,7 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                                 default: this.context.getAsNumber(this.schema.default),
                                 validation: this.getNumberValidation(this.schema)
                             })
-                        })
+                        });
                     case "int64":
                         return TypeReference.primitive({
                             v1: "LONG",
@@ -91,7 +91,7 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                                 default: this.context.getAsNumber(this.schema.default)
                                 // TODO: add validation here
                             })
-                        })
+                        });
                     case "uint32":
                         return TypeReference.primitive({
                             v1: "UINT",
@@ -99,7 +99,7 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                                 default: this.context.getAsNumber(this.schema.default),
                                 validation: this.getNumberValidation(this.schema)
                             })
-                        })
+                        });
                     case "uint64":
                         return TypeReference.primitive({
                             v1: "UINT_64",
@@ -107,7 +107,7 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                                 default: this.context.getAsNumber(this.schema.default),
                                 validation: this.getNumberValidation(this.schema)
                             })
-                        })
+                        });
                     default:
                         return TypeReference.primitive({
                             v1: "DOUBLE",
@@ -115,7 +115,7 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                                 default: this.context.getAsNumber(this.schema.default),
                                 validation: this.getNumberValidation(this.schema)
                             })
-                        })
+                        });
                 }
             }
             case "integer":
@@ -127,7 +127,7 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                                 default: this.context.getAsNumber(this.schema.default),
                                 validation: this.getNumberValidation(this.schema)
                             })
-                        })
+                        });
                     case "float":
                         return TypeReference.primitive({
                             v1: "FLOAT",
@@ -135,7 +135,7 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                                 default: this.context.getAsNumber(this.schema.default),
                                 validation: this.getNumberValidation(this.schema)
                             })
-                        })
+                        });
                     case "int32":
                         return TypeReference.primitive({
                             v1: "INTEGER",
@@ -143,7 +143,7 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                                 default: this.context.getAsNumber(this.schema.default),
                                 validation: this.getNumberValidation(this.schema)
                             })
-                        })
+                        });
                     case "int64":
                         return TypeReference.primitive({
                             v1: "LONG",
@@ -151,7 +151,7 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                                 default: this.context.getAsNumber(this.schema.default)
                                 // TODO: add validation here
                             })
-                        })
+                        });
                     case "uint32":
                         return TypeReference.primitive({
                             v1: "UINT",
@@ -159,7 +159,7 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                                 default: this.context.getAsNumber(this.schema.default),
                                 validation: this.getNumberValidation(this.schema)
                             })
-                        })
+                        });
                     case "uint64":
                         return TypeReference.primitive({
                             v1: "UINT_64",
@@ -167,7 +167,7 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                                 default: this.context.getAsNumber(this.schema.default),
                                 validation: this.getNumberValidation(this.schema)
                             })
-                        })
+                        });
                     default:
                         return TypeReference.primitive({
                             v1: "INTEGER",
@@ -175,22 +175,22 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                                 default: this.context.getAsNumber(this.schema.default),
                                 validation: this.getNumberValidation(this.schema)
                             })
-                        })
+                        });
                 }
             case "boolean": {
-                const booleanConst = this.context.getAsBoolean(this.schema.const)
+                const booleanConst = this.context.getAsBoolean(this.schema.const);
                 if (booleanConst != null) {
-                    return TypeReference.container(ContainerType.literal(Literal.boolean(booleanConst)))
+                    return TypeReference.container(ContainerType.literal(Literal.boolean(booleanConst)));
                 }
                 return TypeReference.primitive({
                     v1: "BOOLEAN",
                     v2: PrimitiveTypeV2.boolean({
                         default: this.schema.default as boolean | undefined
                     })
-                })
+                });
             }
             default:
-                return undefined
+                return undefined;
         }
     }
 
@@ -201,7 +201,7 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
             exclusiveMax: typeof schema.exclusiveMaximum === "boolean" ? schema.exclusiveMaximum : undefined,
             exclusiveMin: typeof schema.exclusiveMinimum === "boolean" ? schema.exclusiveMinimum : undefined,
             multipleOf: schema.multipleOf
-        }
+        };
     }
 
     private getStringValidation(schema: OpenAPIV3_1.SchemaObject): StringValidationRules | undefined {
@@ -210,6 +210,6 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
             maxLength: schema.maxLength,
             pattern: schema.pattern,
             format: schema.format
-        }
+        };
     }
 }

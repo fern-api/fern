@@ -1,9 +1,9 @@
-import { Plugin } from "@redocly/openapi-core/lib/config"
-import { NodeType } from "@redocly/openapi-core/lib/types"
+import { Plugin } from "@redocly/openapi-core/lib/config";
+import { NodeType } from "@redocly/openapi-core/lib/types";
 
-import { Values } from "@fern-api/core-utils"
+import { Values } from "@fern-api/core-utils";
 
-import { TypedExtensionId } from "./id"
+import { TypedExtensionId } from "./id";
 
 export const XFernStreaming: NodeType = {
     properties: {
@@ -13,7 +13,7 @@ export const XFernStreaming: NodeType = {
     },
     required: ["stream-condition", "response", "response-stream"],
     extensionsPrefix: "x-"
-}
+};
 
 export const FERN_TYPE_EXTENSIONS: Plugin = {
     id: "",
@@ -29,10 +29,10 @@ export const FERN_TYPE_EXTENSIONS: Plugin = {
                         "x-fern-streaming": "XFernStreaming"
                     }
                 }
-            }
+            };
         }
     }
-}
+};
 
 export const FernOpenAPIExtension = {
     SOURCE: TypedExtensionId.of<string>("source"),
@@ -482,6 +482,6 @@ export const FernOpenAPIExtension = {
      *    - $ref: components/schemas/Square
      */
     IS_DISCRIMINATED: "x-fern-discriminated"
-} as const
+} as const;
 
-export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>
+export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>;

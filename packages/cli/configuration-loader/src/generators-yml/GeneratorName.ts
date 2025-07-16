@@ -26,6 +26,6 @@ export const GeneratorName = {
     STOPLIGHT: "fernapi/fern-stoplight",
     POSTMAN: "fernapi/fern-postman",
     OPENAPI_PYTHON_CLIENT: "fernapi/openapi-python-client"
-} as const
+} as const;
 
-export type GeneratorName = (typeof GeneratorName)[keyof typeof GeneratorName]
+export type GeneratorName = (typeof GeneratorName)[keyof typeof GeneratorName];

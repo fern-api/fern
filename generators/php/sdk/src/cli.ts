@@ -1,8 +1,8 @@
-import { SdkGeneratorCLI } from "./SdkGeneratorCli"
+import { SdkGeneratorCLI } from "./SdkGeneratorCli";
 
-void runCli()
+void runCli();
 
 export async function runCli(): Promise<void> {
-    const cli = new SdkGeneratorCLI()
-    await cli.run()
+    const cli = new SdkGeneratorCLI();
+    await cli.run();
 }

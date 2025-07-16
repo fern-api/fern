@@ -1,1 +1,1 @@
-export { ValidStreamConditionRule } from "./valid-stream-condition"
+export { ValidStreamConditionRule } from "./valid-stream-condition";

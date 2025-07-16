@@ -1,31 +1,31 @@
-import { Reference, getTextOfTsNode } from "@fern-typescript/commons"
-import { SdkContext } from "@fern-typescript/contexts"
-import { ClassDeclarationStructure, Scope, ts } from "ts-morph"
+import { Reference, getTextOfTsNode } from "@fern-typescript/commons";
+import { SdkContext } from "@fern-typescript/contexts";
+import { ClassDeclarationStructure, Scope, ts } from "ts-morph";
 
-import { SetRequired } from "@fern-api/core-utils"
+import { SetRequired } from "@fern-api/core-utils";
 
-import { Subpackage, SubpackageId } from "@fern-fern/ir-sdk/api"
+import { Subpackage, SubpackageId } from "@fern-fern/ir-sdk/api";
 
-import { GeneratedSdkClientClassImpl } from "./GeneratedSdkClientClassImpl"
-import { OAuthTokenProviderGenerator } from "./oauth-generator/OAuthTokenProviderGenerator"
+import { GeneratedSdkClientClassImpl } from "./GeneratedSdkClientClassImpl";
+import { OAuthTokenProviderGenerator } from "./oauth-generator/OAuthTokenProviderGenerator";
 
 export declare namespace GeneratedWrappedService {
     interface Init {
-        wrapperService: GeneratedSdkClientClassImpl
-        wrappedSubpackageId: SubpackageId
-        wrappedSubpackage: Subpackage
+        wrapperService: GeneratedSdkClientClassImpl;
+        wrappedSubpackageId: SubpackageId;
+        wrappedSubpackage: Subpackage;
     }
 }
 
 export class GeneratedWrappedService {
-    private wrapperService: GeneratedSdkClientClassImpl
-    private wrappedSubpackageId: SubpackageId
-    private wrappedSubpackage: Subpackage
+    private wrapperService: GeneratedSdkClientClassImpl;
+    private wrappedSubpackageId: SubpackageId;
+    private wrappedSubpackage: Subpackage;
 
     constructor({ wrapperService, wrappedSubpackageId, wrappedSubpackage }: GeneratedWrappedService.Init) {
-        this.wrapperService = wrapperService
-        this.wrappedSubpackageId = wrappedSubpackageId
-        this.wrappedSubpackage = wrappedSubpackage
+        this.wrapperService = wrapperService;
+        this.wrappedSubpackageId = wrappedSubpackageId;
+        this.wrappedSubpackage = wrappedSubpackage;
     }
 
     public addToServiceClass({
@@ -33,15 +33,15 @@ export class GeneratedWrappedService {
         class_,
         context
     }: {
-        isRoot: boolean
-        class_: SetRequired<ClassDeclarationStructure, "properties" | "ctors" | "methods" | "getAccessors">
-        context: SdkContext
+        isRoot: boolean;
+        class_: SetRequired<ClassDeclarationStructure, "properties" | "ctors" | "methods" | "getAccessors">;
+        context: SdkContext;
     }): void {
-        const referenceToWrapped = this.getReferenceToWrappedService(class_, context)
+        const referenceToWrapped = this.getReferenceToWrappedService(class_, context);
         const generatedWrappedService = context.sdkClientClass.getGeneratedSdkClientClass({
             isRoot: false,
             subpackageId: this.wrappedSubpackageId
-        })
+        });
 
         class_.properties.push({
             name: this.getCachedMemberName(),
@@ -52,7 +52,7 @@ export class GeneratedWrappedService {
                     ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
                 ])
             )
-        })
+        });
 
         if (isRoot && context.generateOAuthClients) {
             class_.getAccessors.push({
@@ -113,8 +113,8 @@ export class GeneratedWrappedService {
                         )
                     )
                 ]
-            })
-            return
+            });
+            return;
         }
         class_.getAccessors.push({
             name: this.getGetterName(),
@@ -139,20 +139,20 @@ export class GeneratedWrappedService {
                     )
                 )
             ]
-        })
+        });
     }
 
     private getCachedMemberName(): string {
-        return `_${this.getGetterName()}`
+        return `_${this.getGetterName()}`;
     }
 
     private getGetterName(): string {
         const lastFernFilepathPart =
-            this.wrappedSubpackage.fernFilepath.allParts[this.wrappedSubpackage.fernFilepath.allParts.length - 1]
+            this.wrappedSubpackage.fernFilepath.allParts[this.wrappedSubpackage.fernFilepath.allParts.length - 1];
         if (lastFernFilepathPart == null) {
-            throw new Error("Cannot generate wrapped service because FernFilepath is empty")
+            throw new Error("Cannot generate wrapped service because FernFilepath is empty");
         }
-        return lastFernFilepathPart.camelCase.unsafeName
+        return lastFernFilepathPart.camelCase.unsafeName;
     }
 
     private getReferenceToWrappedService(
@@ -162,23 +162,23 @@ export class GeneratedWrappedService {
         const reference = context.sdkClientClass.getReferenceToClientClass({
             isRoot: false,
             subpackageId: this.wrappedSubpackageId
-        })
+        });
         const wrappedServiceClassName = getTextOfTsNode(
             reference.getTypeNode({
                 // we don't want to add the import unnecessarily
                 isForComment: true
             })
-        )
+        );
 
         if (wrappedServiceClassName !== serviceClass.name) {
-            return reference
+            return reference;
         } else {
             return context.sdkClientClass.getReferenceToClientClass(
                 { isRoot: false, subpackageId: this.wrappedSubpackageId },
                 {
                     importAlias: `${wrappedServiceClassName}_`
                 }
-            )
+            );
         }
     }
 }

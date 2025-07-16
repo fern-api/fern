@@ -1,28 +1,28 @@
-import { OpenAPIV3 } from "openapi-types"
+import { OpenAPIV3 } from "openapi-types";
 
-import { EnumSchema, SecurityScheme, Source } from "@fern-api/openapi-ir"
+import { EnumSchema, SecurityScheme, Source } from "@fern-api/openapi-ir";
 
-import { getExtension } from "../../../getExtension"
-import { convertEnum } from "../../../schema/convertEnum"
-import { convertSchemaWithExampleToSchema } from "../../../schema/utils/convertSchemaWithExampleToSchema"
-import { isReferenceObject } from "../../../schema/utils/isReferenceObject"
-import { OpenAPIExtension } from "../extensions/extensions"
-import { FernOpenAPIExtension } from "../extensions/fernExtensions"
-import { getBasicSecuritySchemeNames } from "../extensions/getBasicSecuritySchemeNames"
+import { getExtension } from "../../../getExtension";
+import { convertEnum } from "../../../schema/convertEnum";
+import { convertSchemaWithExampleToSchema } from "../../../schema/utils/convertSchemaWithExampleToSchema";
+import { isReferenceObject } from "../../../schema/utils/isReferenceObject";
+import { OpenAPIExtension } from "../extensions/extensions";
+import { FernOpenAPIExtension } from "../extensions/fernExtensions";
+import { getBasicSecuritySchemeNames } from "../extensions/getBasicSecuritySchemeNames";
 import {
     HeaderSecuritySchemeNames,
     SecuritySchemeNames,
     getBasicSecuritySchemeNameAndEnvvar
-} from "../extensions/getSecuritySchemeNameAndEnvvars"
+} from "../extensions/getSecuritySchemeNameAndEnvvars";
 
 export function convertSecurityScheme(
     securityScheme: OpenAPIV3.SecuritySchemeObject | OpenAPIV3.ReferenceObject,
     source: Source
 ): SecurityScheme | undefined {
     if (isReferenceObject(securityScheme)) {
-        throw new Error(`Converting referenced security schemes is unsupported: ${JSON.stringify(securityScheme)}`)
+        throw new Error(`Converting referenced security schemes is unsupported: ${JSON.stringify(securityScheme)}`);
     }
-    return convertSecuritySchemeHelper(securityScheme, source)
+    return convertSecuritySchemeHelper(securityScheme, source);
 }
 
 function convertSecuritySchemeHelper(
@@ -30,29 +30,29 @@ function convertSecuritySchemeHelper(
     source: Source
 ): SecurityScheme | undefined {
     if (securityScheme.type === "apiKey" && securityScheme.in === "header") {
-        const bearerFormat = getExtension<string>(securityScheme, OpenAPIExtension.BEARER_FORMAT)
+        const bearerFormat = getExtension<string>(securityScheme, OpenAPIExtension.BEARER_FORMAT);
         const headerNames = getExtension<HeaderSecuritySchemeNames>(
             securityScheme,
             FernOpenAPIExtension.FERN_HEADER_AUTH
-        )
+        );
         return SecurityScheme.header({
             headerName: securityScheme.name,
             prefix: bearerFormat != null ? "Bearer" : headerNames?.prefix,
             headerVariableName:
                 headerNames?.name ?? getExtension<string>(securityScheme, FernOpenAPIExtension.HEADER_VARIABLE_NAME),
             headerEnvVar: headerNames?.env
-        })
+        });
     } else if (securityScheme.type === "http" && securityScheme.scheme === "bearer") {
-        const bearerNames = getExtension<SecuritySchemeNames>(securityScheme, FernOpenAPIExtension.FERN_BEARER_TOKEN)
+        const bearerNames = getExtension<SecuritySchemeNames>(securityScheme, FernOpenAPIExtension.FERN_BEARER_TOKEN);
         return SecurityScheme.bearer({
             tokenVariableName:
                 bearerNames?.name ??
                 getExtension<string>(securityScheme, FernOpenAPIExtension.BEARER_TOKEN_VARIABLE_NAME),
             tokenEnvVar: bearerNames?.env
-        })
+        });
     } else if (securityScheme.type === "http" && securityScheme.scheme === "basic") {
-        const basicSecuritySchemeNamingAndEnvvar = getBasicSecuritySchemeNameAndEnvvar(securityScheme)
-        const basicSecuritySchemeNaming = getBasicSecuritySchemeNames(securityScheme)
+        const basicSecuritySchemeNamingAndEnvvar = getBasicSecuritySchemeNameAndEnvvar(securityScheme);
+        const basicSecuritySchemeNaming = getBasicSecuritySchemeNames(securityScheme);
         return SecurityScheme.basic({
             usernameVariableName:
                 basicSecuritySchemeNamingAndEnvvar?.username?.name ?? basicSecuritySchemeNaming.usernameVariable,
@@ -60,18 +60,18 @@ function convertSecuritySchemeHelper(
             passwordVariableName:
                 basicSecuritySchemeNamingAndEnvvar?.password?.name ?? basicSecuritySchemeNaming.passwordVariable,
             passwordEnvVar: basicSecuritySchemeNamingAndEnvvar?.password?.env
-        })
+        });
     } else if (securityScheme.type === "openIdConnect") {
         return SecurityScheme.bearer({
             tokenVariableName: undefined,
             tokenEnvVar: undefined
-        })
+        });
     } else if (securityScheme.type === "oauth2") {
         return SecurityScheme.oauth({
             scopesEnum: getScopes(securityScheme, source)
-        })
+        });
     }
-    return undefined
+    return undefined;
 }
 
 function getScopes(oauthSecurityScheme: OpenAPIV3.OAuth2SecurityScheme, source: Source): EnumSchema | undefined {
@@ -79,7 +79,7 @@ function getScopes(oauthSecurityScheme: OpenAPIV3.OAuth2SecurityScheme, source: 
         oauthSecurityScheme.flows.authorizationCode?.scopes ??
         oauthSecurityScheme.flows.clientCredentials?.scopes ??
         oauthSecurityScheme.flows.implicit?.scopes ??
-        oauthSecurityScheme.flows.password?.scopes
+        oauthSecurityScheme.flows.password?.scopes;
     if (scopes != null) {
         const schemaWithExample = convertEnum({
             nameOverride: undefined,
@@ -93,7 +93,7 @@ function getScopes(oauthSecurityScheme: OpenAPIV3.OAuth2SecurityScheme, source: 
                         {
                             description
                         }
-                    ]
+                    ];
                 })
             ),
             _default: undefined,
@@ -106,11 +106,11 @@ function getScopes(oauthSecurityScheme: OpenAPIV3.OAuth2SecurityScheme, source: 
             context: undefined,
             source,
             inline: undefined
-        })
-        const schema = convertSchemaWithExampleToSchema(schemaWithExample)
+        });
+        const schema = convertSchemaWithExampleToSchema(schemaWithExample);
         if (schema.type === "enum") {
-            return schema
+            return schema;
         }
     }
-    return undefined
+    return undefined;
 }

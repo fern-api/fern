@@ -1,53 +1,53 @@
-import { readFile, writeFile } from "fs/promises"
-import YAML from "yaml"
+import { readFile, writeFile } from "fs/promises";
+import YAML from "yaml";
 
-import { AbsoluteFilePath } from "@fern-api/fs-utils"
-import { TaskContext } from "@fern-api/task-context"
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { TaskContext } from "@fern-api/task-context";
 
-import { Migration } from "../../../types/Migration"
-import { getAllYamlFiles } from "./getAllYamlFiles"
+import { Migration } from "../../../types/Migration";
+import { getAllYamlFiles } from "./getAllYamlFiles";
 
 export const migration: Migration = {
     name: "add-value-key-to-type-examples",
     summary: "Add the 'value' key to type examples, so they can be named and documented",
     run: async ({ context }) => {
-        const yamlFiles = await getAllYamlFiles(context)
+        const yamlFiles = await getAllYamlFiles(context);
         for (const filepath of yamlFiles) {
             try {
-                await migrateYamlFile(filepath, context)
+                await migrateYamlFile(filepath, context);
             } catch (error) {
-                context.failWithoutThrowing(`Failed to migrate ${filepath}`, error)
+                context.failWithoutThrowing(`Failed to migrate ${filepath}`, error);
             }
         }
     }
-}
+};
 
 async function migrateYamlFile(filepath: AbsoluteFilePath, context: TaskContext): Promise<void> {
-    const contents = await readFile(filepath)
-    const parsedDocument = YAML.parseDocument(contents.toString())
-    const types = parsedDocument.get("types")
+    const contents = await readFile(filepath);
+    const parsedDocument = YAML.parseDocument(contents.toString());
+    const types = parsedDocument.get("types");
     if (types == null) {
-        return
+        return;
     }
     if (!YAML.isMap(types)) {
-        throw new Error("'types' is not a map")
+        throw new Error("'types' is not a map");
     }
     for (const type of types.items) {
         if (!YAML.isMap(type.value)) {
-            continue
+            continue;
         }
-        const examples = type.value.get("examples")
+        const examples = type.value.get("examples");
         if (examples == null) {
-            continue
+            continue;
         }
         if (!YAML.isSeq(examples)) {
-            context.failWithoutThrowing("'examples' are not a list")
-            continue
+            context.failWithoutThrowing("'examples' are not a list");
+            continue;
         }
         for (let i = 0; i < examples.items.length; i++) {
-            const value = examples.get(i, true)
-            examples.set(i, { value })
+            const value = examples.get(i, true);
+            examples.set(i, { value });
         }
     }
-    await writeFile(filepath, parsedDocument.toString())
+    await writeFile(filepath, parsedDocument.toString());
 }

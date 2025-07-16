@@ -1,11 +1,11 @@
-import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator"
-import { TypescriptCustomConfigSchema } from "@fern-api/typescript-ast"
+import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
+import { TypescriptCustomConfigSchema } from "@fern-api/typescript-ast";
 
 const NPM_CONFIG = {
     packageName: "acme",
     registryUrl: "https://registry.npmjs.org",
     token: "dummy"
-}
+};
 
 const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
     dryRun: false,
@@ -37,12 +37,12 @@ const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
         inlinePathParameters: true,
         useBigInt: true
     } as TypescriptCustomConfigSchema
-}
+};
 
 export function buildGeneratorConfig({
     customConfig
 }: {
-    customConfig?: Partial<TypescriptCustomConfigSchema>
+    customConfig?: Partial<TypescriptCustomConfigSchema>;
 } = {}): FernGeneratorExec.GeneratorConfig {
     return {
         ...DEFAULT_CONFIG,
@@ -50,5 +50,5 @@ export function buildGeneratorConfig({
             ...(DEFAULT_CONFIG.customConfig as TypescriptCustomConfigSchema),
             ...customConfig
         }
-    }
+    };
 }

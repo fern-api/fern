@@ -1,14 +1,14 @@
-import { getParameterNameForPositionalPathParameter } from "@fern-typescript/commons"
-import { SdkContext } from "@fern-typescript/contexts"
-import { ts } from "ts-morph"
+import { getParameterNameForPositionalPathParameter } from "@fern-typescript/commons";
+import { SdkContext } from "@fern-typescript/contexts";
+import { ts } from "ts-morph";
 
-import { assertNever } from "@fern-api/core-utils"
+import { assertNever } from "@fern-api/core-utils";
 
-import { HttpPath, PathParameter, PathParameterLocation, SdkRequest } from "@fern-fern/ir-sdk/api"
+import { HttpPath, PathParameter, PathParameterLocation, SdkRequest } from "@fern-fern/ir-sdk/api";
 
-import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl"
+import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl";
 
-export type GetReferenceToPathParameterVariableFromRequest = (pathParameter: PathParameter) => ts.Expression
+export type GetReferenceToPathParameterVariableFromRequest = (pathParameter: PathParameter) => ts.Expression;
 
 export function buildUrl({
     endpoint,
@@ -20,32 +20,32 @@ export function buildUrl({
     getReferenceToPathParameterVariableFromRequest
 }: {
     endpoint: {
-        sdkRequest: SdkRequest | undefined
-        fullPath: HttpPath
-        allPathParameters: PathParameter[]
-        path: HttpPath
-    }
-    generatedClientClass: GeneratedSdkClientClassImpl
-    context: SdkContext
-    includeSerdeLayer: boolean
-    retainOriginalCasing: boolean
-    omitUndefined: boolean
-    getReferenceToPathParameterVariableFromRequest: GetReferenceToPathParameterVariableFromRequest
+        sdkRequest: SdkRequest | undefined;
+        fullPath: HttpPath;
+        allPathParameters: PathParameter[];
+        path: HttpPath;
+    };
+    generatedClientClass: GeneratedSdkClientClassImpl;
+    context: SdkContext;
+    includeSerdeLayer: boolean;
+    retainOriginalCasing: boolean;
+    omitUndefined: boolean;
+    getReferenceToPathParameterVariableFromRequest: GetReferenceToPathParameterVariableFromRequest;
 }): ts.Expression | undefined {
     if (endpoint.allPathParameters.length === 0) {
         if (endpoint.fullPath.head.length === 0) {
-            return undefined
+            return undefined;
         }
-        return ts.factory.createStringLiteral(endpoint.fullPath.head)
+        return ts.factory.createStringLiteral(endpoint.fullPath.head);
     }
     return ts.factory.createTemplateExpression(
         ts.factory.createTemplateHead(endpoint.fullPath.head),
         endpoint.fullPath.parts.map((part, index) => {
             const pathParameter = endpoint.allPathParameters.find(
                 (param) => param.name.originalName === part.pathParameter
-            )
+            );
             if (pathParameter == null) {
-                throw new Error("Could not locate path parameter: " + part.pathParameter)
+                throw new Error("Could not locate path parameter: " + part.pathParameter);
             }
 
             let referenceToPathParameterValue = getReferenceToPathParameter({
@@ -54,7 +54,7 @@ export function buildUrl({
                 retainOriginalCasing,
                 shouldInlinePathParameters: context.requestWrapper.shouldInlinePathParameters(endpoint.sdkRequest),
                 getReferenceToPathParameterVariableFromRequest
-            })
+            });
 
             if (includeSerdeLayer && pathParameter.valueType.type === "named") {
                 referenceToPathParameterValue = context.typeSchema
@@ -68,7 +68,7 @@ export function buildUrl({
                         skipValidation: false,
                         breadcrumbsPrefix: [],
                         omitUndefined
-                    })
+                    });
             }
 
             return ts.factory.createTemplateSpan(
@@ -78,9 +78,9 @@ export function buildUrl({
                 index === endpoint.fullPath.parts.length - 1
                     ? ts.factory.createTemplateTail(part.tail)
                     : ts.factory.createTemplateMiddle(part.tail)
-            )
+            );
         })
-    )
+    );
 }
 
 function getReferenceToPathParameter({
@@ -90,31 +90,31 @@ function getReferenceToPathParameter({
     shouldInlinePathParameters,
     getReferenceToPathParameterVariableFromRequest
 }: {
-    pathParameter: PathParameter
-    generatedClientClass: GeneratedSdkClientClassImpl
-    retainOriginalCasing: boolean
-    shouldInlinePathParameters: boolean
-    getReferenceToPathParameterVariableFromRequest: GetReferenceToPathParameterVariableFromRequest
+    pathParameter: PathParameter;
+    generatedClientClass: GeneratedSdkClientClassImpl;
+    retainOriginalCasing: boolean;
+    shouldInlinePathParameters: boolean;
+    getReferenceToPathParameterVariableFromRequest: GetReferenceToPathParameterVariableFromRequest;
 }): ts.Expression {
     if (pathParameter.variable != null) {
-        return generatedClientClass.getReferenceToVariable(pathParameter.variable)
+        return generatedClientClass.getReferenceToVariable(pathParameter.variable);
     }
     switch (pathParameter.location) {
         case PathParameterLocation.Service:
         case PathParameterLocation.Endpoint: {
             if (shouldInlinePathParameters) {
-                return getReferenceToPathParameterVariableFromRequest(pathParameter)
+                return getReferenceToPathParameterVariableFromRequest(pathParameter);
             } else {
                 const pathParamName = getParameterNameForPositionalPathParameter({
                     pathParameter,
                     retainOriginalCasing
-                })
-                return ts.factory.createIdentifier(pathParamName)
+                });
+                return ts.factory.createIdentifier(pathParamName);
             }
         }
         case PathParameterLocation.Root:
-            return generatedClientClass.getReferenceToRootPathParameter(pathParameter)
+            return generatedClientClass.getReferenceToRootPathParameter(pathParameter);
         default:
-            assertNever(pathParameter.location)
+            assertNever(pathParameter.location);
     }
 }

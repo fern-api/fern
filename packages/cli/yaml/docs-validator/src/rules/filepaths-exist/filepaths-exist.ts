@@ -1,6 +1,6 @@
-import { doesPathExist } from "@fern-api/fs-utils"
+import { doesPathExist } from "@fern-api/fs-utils";
 
-import { Rule } from "../../Rule"
+import { Rule } from "../../Rule";
 
 export const FilepathsExistRule: Rule = {
     name: "filepaths-exist",
@@ -13,10 +13,10 @@ export const FilepathsExistRule: Rule = {
                             severity: "fatal",
                             message: `Path ${value} does not exist`
                         }
-                    ]
+                    ];
                 }
-                return []
+                return [];
             }
-        }
+        };
     }
-}
+};

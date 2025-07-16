@@ -6,5 +6,5 @@ export function isCI(): boolean {
             process.env.CIRCLECI === "true" || // CircleCI
             process.env.JENKINS_URL === "true" || // Jenkins
             process.env.TRAVIS === "true" // Travis CI
-    )
+    );
 }

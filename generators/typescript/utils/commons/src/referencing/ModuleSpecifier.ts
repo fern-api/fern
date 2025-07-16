@@ -1,1 +1,1 @@
-export type ModuleSpecifier = string
+export type ModuleSpecifier = string;

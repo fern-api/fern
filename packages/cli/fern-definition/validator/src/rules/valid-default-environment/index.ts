@@ -1,1 +1,1 @@
-export { ValidDefaultEnvironmentRule } from "./valid-default-environment"
+export { ValidDefaultEnvironmentRule } from "./valid-default-environment";

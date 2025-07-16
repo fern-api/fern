@@ -1,1 +1,1 @@
-export { type Stream } from "./Stream"
+export { type Stream } from "./Stream";

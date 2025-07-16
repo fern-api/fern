@@ -5,10 +5,10 @@ export function discriminant<RawDiscriminant extends string, ParsedDiscriminant 
     return {
         parsedDiscriminant,
         rawDiscriminant
-    }
+    };
 }
 
 export interface Discriminant<RawDiscriminant extends string, ParsedDiscriminant extends string> {
-    parsedDiscriminant: ParsedDiscriminant
-    rawDiscriminant: RawDiscriminant
+    parsedDiscriminant: ParsedDiscriminant;
+    rawDiscriminant: RawDiscriminant;
 }

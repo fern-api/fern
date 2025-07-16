@@ -1,6 +1,6 @@
-import { OpenAPIV3 } from "openapi-types"
+import { OpenAPIV3 } from "openapi-types";
 
-import { ApiAuth, AuthScheme, AuthSchemesRequirement } from "@fern-fern/ir-sdk/api"
+import { ApiAuth, AuthScheme, AuthSchemesRequirement } from "@fern-fern/ir-sdk/api";
 
 export function constructEndpointSecurity(apiAuth: ApiAuth): OpenAPIV3.SecurityRequirementObject[] {
     return AuthSchemesRequirement._visit<OpenAPIV3.SecurityRequirementObject[]>(apiAuth.requirement, {
@@ -13,20 +13,20 @@ export function constructEndpointSecurity(apiAuth: ApiAuth): OpenAPIV3.SecurityR
                     }),
                     {}
                 )
-            ]
+            ];
         },
         any: () =>
             apiAuth.schemes.map((scheme) => ({
                 [getNameForAuthScheme(scheme)]: []
             })),
         _other: () => {
-            throw new Error("Unknown auth scheme requiremen: " + apiAuth.requirement)
+            throw new Error("Unknown auth scheme requiremen: " + apiAuth.requirement);
         }
-    })
+    });
 }
 
 export function constructSecuritySchemes(apiAuth: ApiAuth): Record<string, OpenAPIV3.SecuritySchemeObject> {
-    const securitySchemes: Record<string, OpenAPIV3.SecuritySchemeObject> = {}
+    const securitySchemes: Record<string, OpenAPIV3.SecuritySchemeObject> = {};
 
     for (const scheme of apiAuth.schemes) {
         securitySchemes[getNameForAuthScheme(scheme)] = AuthScheme._visit<OpenAPIV3.SecuritySchemeObject>(scheme, {
@@ -48,12 +48,12 @@ export function constructSecuritySchemes(apiAuth: ApiAuth): Record<string, OpenA
                 scheme: "bearer"
             }),
             _other: () => {
-                throw new Error("Unknown auth scheme: " + scheme.type)
+                throw new Error("Unknown auth scheme: " + scheme.type);
             }
-        })
+        });
     }
 
-    return securitySchemes
+    return securitySchemes;
 }
 
 function getNameForAuthScheme(authScheme: AuthScheme): string {
@@ -63,7 +63,7 @@ function getNameForAuthScheme(authScheme: AuthScheme): string {
         oauth: () => "BearerAuth",
         header: (header) => `${header.name.name.pascalCase.unsafeName}Auth`,
         _other: () => {
-            throw new Error("Unknown auth scheme: " + authScheme.type)
+            throw new Error("Unknown auth scheme: " + authScheme.type);
         }
-    })
+    });
 }

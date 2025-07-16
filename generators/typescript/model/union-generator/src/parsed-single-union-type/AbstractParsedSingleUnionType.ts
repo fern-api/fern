@@ -1,29 +1,29 @@
-import { getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons"
-import { ModelContext } from "@fern-typescript/contexts"
-import { ts } from "ts-morph"
+import { getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
+import { ModelContext } from "@fern-typescript/contexts";
+import { ts } from "ts-morph";
 
-import { GeneratedUnionImpl } from "../GeneratedUnionImpl"
-import { SingleUnionTypeGenerator } from "../single-union-type-generator/SingleUnionTypeGenerator"
-import { ParsedSingleUnionType } from "./ParsedSingleUnionType"
+import { GeneratedUnionImpl } from "../GeneratedUnionImpl";
+import { SingleUnionTypeGenerator } from "../single-union-type-generator/SingleUnionTypeGenerator";
+import { ParsedSingleUnionType } from "./ParsedSingleUnionType";
 
 export declare namespace AbstractParsedSingleUnionType {
     export interface Init<Context extends ModelContext> {
-        singleUnionType: SingleUnionTypeGenerator<Context>
-        includeUtilsOnUnionMembers: boolean
+        singleUnionType: SingleUnionTypeGenerator<Context>;
+        includeUtilsOnUnionMembers: boolean;
     }
 }
 
 export abstract class AbstractParsedSingleUnionType<Context extends ModelContext>
     implements ParsedSingleUnionType<Context>
 {
-    private static VISITOR_PARAMETER_NAME = "visitor"
+    private static VISITOR_PARAMETER_NAME = "visitor";
 
-    protected singleUnionType: SingleUnionTypeGenerator<Context>
-    private includeUtilsOnUnionMembers: boolean
+    protected singleUnionType: SingleUnionTypeGenerator<Context>;
+    private includeUtilsOnUnionMembers: boolean;
 
     constructor({ singleUnionType, includeUtilsOnUnionMembers }: AbstractParsedSingleUnionType.Init<Context>) {
-        this.singleUnionType = singleUnionType
-        this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers
+        this.singleUnionType = singleUnionType;
+        this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers;
     }
 
     public getInterfaceDeclaration(
@@ -42,15 +42,15 @@ export abstract class AbstractParsedSingleUnionType<Context extends ModelContext
                 ...this.singleUnionType.getNonDiscriminantPropertiesForInterface(context)
             ],
             module: this.singleUnionType.generateModule(context)
-        }
+        };
     }
 
     public generateForInlineUnion(context: Context, generatedUnion: GeneratedUnionImpl<Context>): ts.TypeNode {
-        return this.singleUnionType.generateForInlineUnion(context)
+        return this.singleUnionType.generateForInlineUnion(context);
     }
 
     public getBuilder(context: Context, generatedUnion: GeneratedUnionImpl<Context>): ts.ArrowFunction {
-        const referenceToBuiltType = generatedUnion.getReferenceToSingleUnionType(this, context)
+        const referenceToBuiltType = generatedUnion.getReferenceToSingleUnionType(this, context);
 
         return ts.factory.createArrowFunction(
             undefined,
@@ -129,17 +129,17 @@ export abstract class AbstractParsedSingleUnionType<Context extends ModelContext
                 ],
                 true
             )
-        )
+        );
     }
 
     public getBuilderArgsFromExistingValue(existingValue: ts.Expression): ts.Expression[] {
-        return this.singleUnionType.getBuilderArgsFromExistingValue(existingValue)
+        return this.singleUnionType.getBuilderArgsFromExistingValue(existingValue);
     }
 
     public getVisitMethod({
         localReferenceToUnionValue
     }: {
-        localReferenceToUnionValue: ts.Expression
+        localReferenceToUnionValue: ts.Expression;
     }): ts.ArrowFunction {
         return ts.factory.createArrowFunction(
             undefined,
@@ -162,13 +162,13 @@ export abstract class AbstractParsedSingleUnionType<Context extends ModelContext
                 undefined,
                 this.singleUnionType.getVisitorArguments({ localReferenceToUnionValue })
             )
-        )
+        );
     }
 
     public getVisitMethodSignature(context: Context, generatedUnion: GeneratedUnionImpl<Context>): ts.FunctionTypeNode {
         const parameterType = this.singleUnionType.getVisitMethodParameterType(context, {
             discriminant: generatedUnion.discriminant
-        })
+        });
         return ts.factory.createFunctionTypeNode(
             undefined,
             parameterType != null
@@ -184,45 +184,45 @@ export abstract class AbstractParsedSingleUnionType<Context extends ModelContext
                   ]
                 : [],
             ts.factory.createTypeReferenceNode(ts.factory.createIdentifier(GeneratedUnionImpl.VISITOR_RETURN_TYPE))
-        )
+        );
     }
 
     public invokeVisitMethod({
         localReferenceToUnionValue,
         localReferenceToVisitor
     }: {
-        localReferenceToUnionValue: ts.Expression
-        localReferenceToVisitor: ts.Expression
+        localReferenceToUnionValue: ts.Expression;
+        localReferenceToVisitor: ts.Expression;
     }): ts.Expression {
         return ts.factory.createCallExpression(
             ts.factory.createPropertyAccessExpression(localReferenceToVisitor, this.getVisitorKey()),
             undefined,
             this.singleUnionType.getVisitorArguments({ localReferenceToUnionValue })
-        )
+        );
     }
 
-    public abstract getDiscriminantValueType(): ts.TypeNode
+    public abstract getDiscriminantValueType(): ts.TypeNode;
 
     public getDiscriminantValueOrThrow(): string | number {
-        const discriminantValue = this.getDiscriminantValue()
+        const discriminantValue = this.getDiscriminantValue();
         if (discriminantValue == null) {
-            throw new Error("Discriminant value is not defined")
+            throw new Error("Discriminant value is not defined");
         }
-        return discriminantValue
+        return discriminantValue;
     }
 
     protected abstract getNonVisitProperties({
         context,
         generatedUnion
     }: {
-        context: Context
-        generatedUnion: GeneratedUnionImpl<Context>
-    }): ts.ObjectLiteralElementLike[]
+        context: Context;
+        generatedUnion: GeneratedUnionImpl<Context>;
+    }): ts.ObjectLiteralElementLike[];
 
-    public abstract getDocs(): string | null | undefined
-    public abstract getDiscriminantValue(): string | number | undefined
-    public abstract getDiscriminantValueAsExpression(): ts.Expression
-    public abstract getInterfaceName(): string
-    public abstract getBuilderName(): string
-    public abstract getVisitorKey(): string
+    public abstract getDocs(): string | null | undefined;
+    public abstract getDiscriminantValue(): string | number | undefined;
+    public abstract getDiscriminantValueAsExpression(): ts.Expression;
+    public abstract getInterfaceName(): string;
+    public abstract getBuilderName(): string;
+    public abstract getVisitorKey(): string;
 }

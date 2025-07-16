@@ -1,63 +1,63 @@
-import { csharp } from ".."
-import { Access } from "./Access"
-import { Annotation } from "./Annotation"
-import { ClassReference } from "./ClassReference"
-import { AstNode } from "./core/AstNode"
-import { Writer } from "./core/Writer"
-import { ENUM_MEMBER } from "./dependencies/System"
+import { csharp } from "..";
+import { Access } from "./Access";
+import { Annotation } from "./Annotation";
+import { ClassReference } from "./ClassReference";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
+import { ENUM_MEMBER } from "./dependencies/System";
 
 export declare namespace Enum {
     interface Args {
         /* The name of the C# enum */
-        name: string
+        name: string;
         /* The namespace of the C# enum*/
-        namespace: string
+        namespace: string;
         /* The access level of the C# enum */
-        access: Access
+        access: Access;
         /* Enum declaration annotations */
-        annotations?: Annotation[]
+        annotations?: Annotation[];
     }
 
     interface Member {
         /* The name of the enum field */
-        name: string
+        name: string;
         /* The value of the enum field */
-        value: string
+        value: string;
     }
 
     interface _Member {
         /* The name of the enum field */
-        name: string
+        name: string;
         /* The value of the enum field */
-        value: Annotation
+        value: Annotation;
     }
 }
 
 export class Enum extends AstNode {
-    public readonly name: string
-    public readonly namespace: string
-    public readonly access: Access
-    public readonly reference: ClassReference
+    public readonly name: string;
+    public readonly namespace: string;
+    public readonly access: Access;
+    public readonly reference: ClassReference;
 
-    private annotations: Annotation[]
-    private fields: Enum._Member[] = []
+    private annotations: Annotation[];
+    private fields: Enum._Member[] = [];
 
     constructor({ name, namespace, access, annotations }: Enum.Args) {
-        super()
-        this.name = name
-        this.namespace = namespace
-        this.access = access
+        super();
+        this.name = name;
+        this.namespace = namespace;
+        this.access = access;
 
-        this.annotations = annotations ?? []
+        this.annotations = annotations ?? [];
 
         this.reference = new ClassReference({
             name: this.name,
             namespace: this.namespace
-        })
+        });
     }
 
     public getNamespace(): string {
-        return this.namespace
+        return this.namespace;
     }
 
     public addMember(field: Enum.Member): void {
@@ -66,38 +66,38 @@ export class Enum extends AstNode {
             value: new Annotation({
                 reference: ENUM_MEMBER,
                 argument: csharp.codeblock((writer) => {
-                    writer.write("Value = ")
-                    writer.writeNode(csharp.string_({ string: field.value }))
+                    writer.write("Value = ");
+                    writer.writeNode(csharp.string_({ string: field.value }));
                 })
             })
-        })
+        });
     }
 
     public write(writer: Writer): void {
-        writer.writeLine(`namespace ${this.namespace};`)
-        writer.newLine()
+        writer.writeLine(`namespace ${this.namespace};`);
+        writer.newLine();
 
         for (const annotation of this.annotations) {
-            annotation.write(writer)
+            annotation.write(writer);
         }
-        writer.writeNewLineIfLastLineNot()
+        writer.writeNewLineIfLastLineNot();
 
-        writer.write(`${this.access} `)
-        writer.write("enum ")
-        writer.writeLine(`${this.name}`)
-        writer.writeLine("{")
+        writer.write(`${this.access} `);
+        writer.write("enum ");
+        writer.writeLine(`${this.name}`);
+        writer.writeLine("{");
 
-        writer.indent()
+        writer.indent();
         this.fields.forEach((field, index) => {
-            field.value.write(writer)
-            writer.write(field.name)
+            field.value.write(writer);
+            writer.write(field.name);
             if (index < this.fields.length - 1) {
-                writer.writeLine(",")
-                writer.newLine()
+                writer.writeLine(",");
+                writer.newLine();
             }
-        })
-        writer.writeNewLineIfLastLineNot()
-        writer.dedent()
-        writer.writeLine("}")
+        });
+        writer.writeNewLineIfLastLineNot();
+        writer.dedent();
+        writer.writeLine("}");
     }
 }

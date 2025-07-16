@@ -1,32 +1,32 @@
-import { AstNode } from "./core/AstNode"
-import { Writer } from "./core/Writer"
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
 
 export declare namespace MethodArgument {
     interface Args {
         /* If a kwarg, then the name of the parameter that this is a keyword argument for */
-        name?: string
+        name?: string;
         /* The value of the argument */
-        value: AstNode
+        value: AstNode;
     }
 }
 
 export class MethodArgument extends AstNode {
-    public readonly name: string | undefined
-    public readonly value: AstNode
+    public readonly name: string | undefined;
+    public readonly value: AstNode;
 
     constructor({ name, value }: MethodArgument.Args) {
-        super()
-        this.name = name
-        this.value = value
+        super();
+        this.name = name;
+        this.value = value;
 
-        this.inheritReferences(this.value)
+        this.inheritReferences(this.value);
     }
 
     public write(writer: Writer): void {
         if (this.name !== undefined) {
-            writer.write(this.name)
-            writer.write("=")
+            writer.write(this.name);
+            writer.write("=");
         }
-        this.value.write(writer)
+        this.value.write(writer);
     }
 }

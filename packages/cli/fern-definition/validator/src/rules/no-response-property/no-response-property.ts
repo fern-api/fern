@@ -1,61 +1,61 @@
-import { assertNever } from "@fern-api/core-utils"
-import { RawSchemas, parseRawFileType, parseRawTextType } from "@fern-api/fern-definition-schema"
+import { assertNever } from "@fern-api/core-utils";
+import { RawSchemas, parseRawFileType, parseRawTextType } from "@fern-api/fern-definition-schema";
 import {
     FernFileContext,
     ResolvedType,
     TypeResolver,
     TypeResolverImpl,
     constructFernFileContext
-} from "@fern-api/ir-generator"
+} from "@fern-api/ir-generator";
 
-import { Rule, RuleViolation } from "../../Rule"
-import { CASINGS_GENERATOR } from "../../utils/casingsGenerator"
+import { Rule, RuleViolation } from "../../Rule";
+import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 
 export const NoResponsePropertyRule: Rule = {
     name: "no-response-property",
     create: ({ workspace }) => {
-        const typeResolver = new TypeResolverImpl(workspace)
+        const typeResolver = new TypeResolverImpl(workspace);
         return {
             definitionFile: {
                 httpEndpoint: ({ endpoint }, { relativeFilepath, contents }) => {
-                    const { response } = endpoint
+                    const { response } = endpoint;
                     if (response == null) {
-                        return []
+                        return [];
                     }
-                    const responseType = typeof response === "string" ? response : response.type
+                    const responseType = typeof response === "string" ? response : response.type;
                     if (responseType == null) {
-                        return []
+                        return [];
                     }
                     if (parseRawFileType(responseType) != null) {
-                        return []
+                        return [];
                     } else if (parseRawTextType(responseType) != null) {
-                        return []
+                        return [];
                     }
-                    const responseProperty = typeof response !== "string" ? response.property : undefined
+                    const responseProperty = typeof response !== "string" ? response.property : undefined;
                     if (responseProperty == null) {
-                        return []
+                        return [];
                     }
                     const file = constructFernFileContext({
                         relativeFilepath,
                         definitionFile: contents,
                         rootApiFile: workspace.definition.rootApiFile.contents,
                         casingsGenerator: CASINGS_GENERATOR
-                    })
-                    const responseTypeReference = typeof response !== "string" ? response.type : response
+                    });
+                    const responseTypeReference = typeof response !== "string" ? response.type : response;
                     if (responseTypeReference == null) {
-                        return []
+                        return [];
                     }
                     const resolvedType = typeResolver.resolveTypeOrThrow({
                         type: responseTypeReference,
                         file
-                    })
-                    const result = resolvedTypeHasProperty(resolvedType, responseProperty, file, typeResolver)
-                    return resultToRuleViolations(result, responseProperty)
+                    });
+                    const result = resolvedTypeHasProperty(resolvedType, responseProperty, file, typeResolver);
+                    return resultToRuleViolations(result, responseProperty);
                 }
             }
-        }
+        };
     }
-}
+};
 
 enum Result {
     ContainsProperty,
@@ -66,21 +66,21 @@ enum Result {
 function resultToRuleViolations(result: Result, responseProperty: string): RuleViolation[] {
     switch (result) {
         case Result.ContainsProperty:
-            return []
+            return [];
         case Result.DoesNotContainProperty:
             return [
                 {
                     severity: "fatal",
                     message: `Response does not have a property named ${responseProperty}.`
                 }
-            ]
+            ];
         case Result.IsNotObject:
             return [
                 {
                     severity: "fatal",
                     message: "Response must be an object in order to return a property as a response."
                 }
-            ]
+            ];
     }
 }
 
@@ -93,22 +93,22 @@ function resolvedTypeHasProperty(
     switch (resolvedType._type) {
         case "container":
             if (resolvedType.container._type !== "optional" && resolvedType.container._type !== "nullable") {
-                return Result.IsNotObject
+                return Result.IsNotObject;
             }
-            return resolvedTypeHasProperty(resolvedType.container.itemType, property, file, typeResolver)
+            return resolvedTypeHasProperty(resolvedType.container.itemType, property, file, typeResolver);
         case "named":
             if (!isRawObjectDefinition(resolvedType.declaration)) {
-                return Result.IsNotObject
+                return Result.IsNotObject;
             }
             if (rawObjectSchemaHasProperty(resolvedType.declaration, property, file, typeResolver)) {
-                return Result.ContainsProperty
+                return Result.ContainsProperty;
             }
-            return Result.DoesNotContainProperty
+            return Result.DoesNotContainProperty;
         case "primitive":
         case "unknown":
-            return Result.IsNotObject
+            return Result.IsNotObject;
         default:
-            assertNever(resolvedType)
+            assertNever(resolvedType);
     }
 }
 
@@ -118,8 +118,8 @@ function rawObjectSchemaHasProperty(
     file: FernFileContext,
     typeResolver: TypeResolver
 ): boolean {
-    const properties = getAllPropertiesForRawObjectSchema(objectSchema, file, typeResolver)
-    return properties.has(property)
+    const properties = getAllPropertiesForRawObjectSchema(objectSchema, file, typeResolver);
+    return properties.has(property);
 }
 
 function getAllPropertiesForRawObjectSchema(
@@ -127,25 +127,25 @@ function getAllPropertiesForRawObjectSchema(
     file: FernFileContext,
     typeResolver: TypeResolver
 ): Set<string> {
-    let extendedTypes: string[] = []
+    let extendedTypes: string[] = [];
     if (typeof objectSchema.extends === "string") {
-        extendedTypes = [objectSchema.extends]
+        extendedTypes = [objectSchema.extends];
     } else if (Array.isArray(objectSchema.extends)) {
-        extendedTypes = objectSchema.extends
+        extendedTypes = objectSchema.extends;
     }
 
-    const properties = new Set<string>()
+    const properties = new Set<string>();
     for (const extendedType of extendedTypes) {
         for (const extendedProperty of getAllPropertiesForExtendedType(extendedType, file, typeResolver)) {
-            properties.add(extendedProperty)
+            properties.add(extendedProperty);
         }
     }
 
     for (const propertyKey of Object.keys(objectSchema.properties ?? {})) {
-        properties.add(propertyKey)
+        properties.add(propertyKey);
     }
 
-    return properties
+    return properties;
 }
 
 function getAllPropertiesForExtendedType(
@@ -156,24 +156,24 @@ function getAllPropertiesForExtendedType(
     const resolvedType = typeResolver.resolveNamedTypeOrThrow({
         referenceToNamedType: extendedType,
         file
-    })
+    });
     if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
-        return getAllPropertiesForRawObjectSchema(resolvedType.declaration, file, typeResolver)
+        return getAllPropertiesForRawObjectSchema(resolvedType.declaration, file, typeResolver);
     }
     // Unreachable; extended types must be named objects. This should be handled
     // by another rule, so we just return an empty set.
-    return new Set<string>()
+    return new Set<string>();
 }
 
 type NamedDeclaration =
     | RawSchemas.ObjectSchema
     | RawSchemas.DiscriminatedUnionSchema
     | RawSchemas.UndiscriminatedUnionSchema
-    | RawSchemas.EnumSchema
+    | RawSchemas.EnumSchema;
 
 function isRawObjectDefinition(namedDeclaration: NamedDeclaration): namedDeclaration is RawSchemas.ObjectSchema {
     return (
         (namedDeclaration as RawSchemas.ObjectSchema).extends != null ||
         (namedDeclaration as RawSchemas.ObjectSchema).properties != null
-    )
+    );
 }

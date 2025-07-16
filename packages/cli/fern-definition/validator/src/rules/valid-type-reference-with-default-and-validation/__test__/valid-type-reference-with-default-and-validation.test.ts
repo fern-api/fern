@@ -1,7 +1,7 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule"
-import { ValidTypeReferenceWithDefaultAndValidationRule } from "../valid-type-reference-with-default-and-validation"
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { ValidTypeReferenceWithDefaultAndValidationRule } from "../valid-type-reference-with-default-and-validation";
 
 describe("valid-default-and-validation-type-reference", () => {
     it("simple", async () => {
@@ -12,10 +12,10 @@ describe("valid-default-and-validation-type-reference", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
             )
-        })
+        });
 
-        expect(violations).toEqual([])
-    })
+        expect(violations).toEqual([]);
+    });
 
     it("invalid", async () => {
         const violations = await getViolationsForRule({
@@ -25,7 +25,7 @@ describe("valid-default-and-validation-type-reference", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("invalid")
             )
-        })
+        });
 
         expect(violations).toEqual([
             {
@@ -88,6 +88,6 @@ describe("valid-default-and-validation-type-reference", () => {
                 relativeFilepath: "__package__.yml",
                 severity: "fatal"
             }
-        ])
-    })
-})
+        ]);
+    });
+});

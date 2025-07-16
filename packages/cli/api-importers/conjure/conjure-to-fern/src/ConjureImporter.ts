@@ -1,24 +1,24 @@
-import { ConjureAuthDefinitionType, DefinitionFile } from "@fern-api/conjure-sdk"
-import { parseEndpointLocator, removeSuffix } from "@fern-api/core-utils"
-import { RawSchemas } from "@fern-api/fern-definition-schema"
-import { AbsoluteFilePath, RelativeFilePath, dirname, getFilename, join, relativize } from "@fern-api/fs-utils"
-import { APIDefinitionImporter, FernDefinitionBuilderImpl, HttpServiceInfo } from "@fern-api/importer-commons"
+import { ConjureAuthDefinitionType, DefinitionFile } from "@fern-api/conjure-sdk";
+import { parseEndpointLocator, removeSuffix } from "@fern-api/core-utils";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { AbsoluteFilePath, RelativeFilePath, dirname, getFilename, join, relativize } from "@fern-api/fs-utils";
+import { APIDefinitionImporter, FernDefinitionBuilderImpl, HttpServiceInfo } from "@fern-api/importer-commons";
 
-import { listConjureFiles } from "./utils/listConjureFiles"
-import { visitConjureTypeDeclaration } from "./utils/visitConjureTypeDeclaration"
+import { listConjureFiles } from "./utils/listConjureFiles";
+import { visitConjureTypeDeclaration } from "./utils/visitConjureTypeDeclaration";
 
 export declare namespace ConjureImporter {
     interface Args {
-        absolutePathToConjureFolder: AbsoluteFilePath
-        authOverrides?: RawSchemas.WithAuthSchema
-        environmentOverrides?: RawSchemas.WithEnvironmentsSchema
-        globalHeaderOverrides?: RawSchemas.WithHeadersSchema
+        absolutePathToConjureFolder: AbsoluteFilePath;
+        authOverrides?: RawSchemas.WithAuthSchema;
+        environmentOverrides?: RawSchemas.WithEnvironmentsSchema;
+        globalHeaderOverrides?: RawSchemas.WithHeadersSchema;
     }
 }
 
 export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args> {
-    private fernDefinitionBuilder = new FernDefinitionBuilderImpl(false)
-    private conjureFilepathToFernFilepath: Record<RelativeFilePath, RelativeFilePath> = {}
+    private fernDefinitionBuilder = new FernDefinitionBuilderImpl(false);
+    private conjureFilepathToFernFilepath: Record<RelativeFilePath, RelativeFilePath> = {};
 
     public async import({
         absolutePathToConjureFolder,
@@ -31,10 +31,10 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                 this.fernDefinitionBuilder.addAuthScheme({
                     name,
                     schema: declaration
-                })
+                });
             }
             if (authOverrides.auth != null) {
-                this.fernDefinitionBuilder.setAuth(authOverrides.auth)
+                this.fernDefinitionBuilder.setAuth(authOverrides.auth);
             }
         }
 
@@ -45,39 +45,39 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                 this.fernDefinitionBuilder.addEnvironment({
                     name: environment,
                     schema: environmentDeclaration
-                })
+                });
             }
             if (environmentOverrides["default-environment"] != null) {
-                this.fernDefinitionBuilder.setDefaultEnvironment(environmentOverrides["default-environment"])
+                this.fernDefinitionBuilder.setDefaultEnvironment(environmentOverrides["default-environment"]);
             }
             if (environmentOverrides["default-url"] != null) {
-                this.fernDefinitionBuilder.setDefaultUrl(environmentOverrides["default-url"])
+                this.fernDefinitionBuilder.setDefaultUrl(environmentOverrides["default-url"]);
             }
         }
 
         await visitAllConjureDefinitionFiles(absolutePathToConjureFolder, (absoluteFilepath, filepath, definition) => {
             for (const [serviceName, _] of Object.entries(definition.services ?? {})) {
-                const unsuffixedServiceName = removeSuffix({ value: serviceName, suffix: "Service" })
+                const unsuffixedServiceName = removeSuffix({ value: serviceName, suffix: "Service" });
                 this.conjureFilepathToFernFilepath[filepath] = RelativeFilePath.of(
                     `${unsuffixedServiceName}/__package__.yml`
-                )
-                return
+                );
+                return;
             }
 
-            const filename = getFilename(filepath)
-            const filenameWithoutExtension = filename?.split(".")[0]
+            const filename = getFilename(filepath);
+            const filenameWithoutExtension = filename?.split(".")[0];
             if (filenameWithoutExtension != null) {
                 this.conjureFilepathToFernFilepath[filepath] = RelativeFilePath.of(
                     `${filenameWithoutExtension}/__package__.yml`
-                )
+                );
             }
-        })
+        });
 
         await visitAllConjureDefinitionFiles(absolutePathToConjureFolder, (absoluteFilepath, filepath, definition) => {
             if (definition.services == null || Object.keys(definition.services ?? {}).length === 0) {
-                const fernFilePath = this.conjureFilepathToFernFilepath[filepath]
+                const fernFilePath = this.conjureFilepathToFernFilepath[filepath];
                 if (fernFilePath == null) {
-                    throw new Error(`Failed to find corresponding fern filepath for conjure file ${filepath}`)
+                    throw new Error(`Failed to find corresponding fern filepath for conjure file ${filepath}`);
                 }
 
                 for (const [import_, importedFilepath] of Object.entries(definition.types?.conjureImports ?? {})) {
@@ -85,119 +85,119 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                         absoluteFilePathToConjureFile: absoluteFilepath,
                         absoluteFilePathToConjureFolder: absolutePathToConjureFolder,
                         importFilePath: RelativeFilePath.of(importedFilepath)
-                    })
+                    });
                     this.fernDefinitionBuilder.addImport({
                         file: fernFilePath,
                         fileToImport: RelativeFilePath.of(fernFileToImport),
                         alias: import_
-                    })
+                    });
                 }
-                this.importAllTypes({ conjureFile: definition, fernFilePath })
+                this.importAllTypes({ conjureFile: definition, fernFilePath });
 
-                return
+                return;
             }
 
             for (const [serviceName, serviceDeclaration] of Object.entries(definition.services)) {
-                const unsuffixedServiceName = removeSuffix({ value: serviceName, suffix: "Service" })
-                const fernFilePath = RelativeFilePath.of(`${unsuffixedServiceName}/__package__.yml`)
+                const unsuffixedServiceName = removeSuffix({ value: serviceName, suffix: "Service" });
+                const fernFilePath = RelativeFilePath.of(`${unsuffixedServiceName}/__package__.yml`);
 
-                const httpServiceInfo: HttpServiceInfo = {}
+                const httpServiceInfo: HttpServiceInfo = {};
                 if (serviceDeclaration.basePath != null) {
-                    httpServiceInfo["base-path"] = serviceDeclaration.basePath
+                    httpServiceInfo["base-path"] = serviceDeclaration.basePath;
                 }
                 if (serviceDeclaration.docs != null) {
-                    httpServiceInfo.docs = serviceDeclaration.docs
+                    httpServiceInfo.docs = serviceDeclaration.docs;
                 }
-                this.fernDefinitionBuilder.setServiceInfo(fernFilePath, httpServiceInfo)
+                this.fernDefinitionBuilder.setServiceInfo(fernFilePath, httpServiceInfo);
 
-                this.importAllTypes({ conjureFile: definition, fernFilePath })
+                this.importAllTypes({ conjureFile: definition, fernFilePath });
 
                 for (const [import_, importedFilepath] of Object.entries(definition.types?.conjureImports ?? {})) {
                     const fernFileToImport = this.getFernFileToImport({
                         absoluteFilePathToConjureFile: absoluteFilepath,
                         absoluteFilePathToConjureFolder: absolutePathToConjureFolder,
                         importFilePath: RelativeFilePath.of(importedFilepath)
-                    })
+                    });
                     this.fernDefinitionBuilder.addImport({
                         file: fernFilePath,
                         fileToImport: RelativeFilePath.of(fernFileToImport),
                         alias: import_
-                    })
+                    });
                 }
 
                 for (const [endpointName, endpointDeclaration] of Object.entries(serviceDeclaration.endpoints ?? {})) {
-                    const endpointLocator = parseEndpointLocator(endpointDeclaration.http)
+                    const endpointLocator = parseEndpointLocator(endpointDeclaration.http);
 
                     if (endpointLocator.type === "failure") {
-                        this.context?.logger.error(`Failed to parse ${endpointDeclaration.http}. Skipping.`)
-                        continue
+                        this.context?.logger.error(`Failed to parse ${endpointDeclaration.http}. Skipping.`);
+                        continue;
                     }
 
-                    const auth = endpointDeclaration.auth ?? serviceDeclaration.defaultAuth
+                    const auth = endpointDeclaration.auth ?? serviceDeclaration.defaultAuth;
 
                     const endpoint: RawSchemas.HttpEndpointSchema = {
                         auth: auth === ConjureAuthDefinitionType.None ? false : true,
                         path: endpointLocator.path,
                         method: endpointLocator.method,
                         response: endpointDeclaration.returns === "binary" ? "file" : endpointDeclaration.returns
-                    }
+                    };
 
                     if (endpointDeclaration.docs != null) {
-                        endpoint.docs = endpointDeclaration.docs
+                        endpoint.docs = endpointDeclaration.docs;
                     }
 
-                    const pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> = {}
+                    const pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> = {};
                     if (endpointDeclaration.args != null) {
                         for (const pathParameter of endpointLocator.pathParameters) {
-                            const pathParameterType = endpointDeclaration.args[pathParameter]
+                            const pathParameterType = endpointDeclaration.args[pathParameter];
                             if (pathParameterType == null) {
                                 throw new Error(
                                     `Failed to find path parameter ${pathParameter} in ${endpointDeclaration.http}`
-                                )
+                                );
                             }
                             pathParameters[pathParameter] =
                                 typeof pathParameterType === "string"
                                     ? pathParameterType
                                     : // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-                                      { type: pathParameterType.type as any }
+                                      { type: pathParameterType.type as any };
                         }
                     }
 
                     if (Object.entries(pathParameters).length > 0) {
-                        endpoint["path-parameters"] = pathParameters
+                        endpoint["path-parameters"] = pathParameters;
                     }
 
                     for (const [arg, argDeclaration] of Object.entries(endpointDeclaration.args ?? {})) {
                         if (pathParameters[arg] != null) {
-                            continue
+                            continue;
                         }
                         if (typeof argDeclaration === "string") {
                             if (!endpoint.request) {
-                                endpoint.request = {}
+                                endpoint.request = {};
                             } else if (typeof endpoint.request === "string") {
-                                endpoint.request = { body: endpoint.request }
+                                endpoint.request = { body: endpoint.request };
                             }
-                            endpoint.request.body = argDeclaration === "binary" ? "bytes" : argDeclaration
+                            endpoint.request.body = argDeclaration === "binary" ? "bytes" : argDeclaration;
                         } else {
                             switch (argDeclaration.paramType) {
                                 case "body":
                                     endpoint.request = {
                                         body: argDeclaration.type === "binary" ? "bytes" : argDeclaration.type
-                                    }
-                                    break
+                                    };
+                                    break;
                                 case "query": {
                                     if (endpoint.request == null) {
-                                        endpoint.request = { "query-parameters": { [arg]: argDeclaration.type } }
+                                        endpoint.request = { "query-parameters": { [arg]: argDeclaration.type } };
                                     } else if (
                                         typeof endpoint.request !== "string" &&
                                         endpoint.request?.["query-parameters"] == null
                                     ) {
-                                        endpoint.request["query-parameters"] = { [arg]: argDeclaration.type }
+                                        endpoint.request["query-parameters"] = { [arg]: argDeclaration.type };
                                     } else if (
                                         typeof endpoint.request !== "string" &&
                                         endpoint.request?.["query-parameters"] != null
                                     ) {
-                                        endpoint.request["query-parameters"][arg] = argDeclaration.type
+                                        endpoint.request["query-parameters"][arg] = argDeclaration.type;
                                     }
                                 }
                             }
@@ -209,26 +209,26 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                         typeof endpoint.request !== "string" &&
                         endpoint.request?.["query-parameters"] != null
                     ) {
-                        endpoint.request.name = `${endpointName}Request`
+                        endpoint.request.name = `${endpointName}Request`;
                     }
 
                     this.fernDefinitionBuilder.addEndpoint(fernFilePath, {
                         name: endpointName,
                         schema: endpoint,
                         source: undefined
-                    })
+                    });
                 }
             }
-        })
-        return this.fernDefinitionBuilder.build()
+        });
+        return this.fernDefinitionBuilder.build();
     }
 
     private importAllTypes({
         conjureFile,
         fernFilePath
     }: {
-        conjureFile: DefinitionFile
-        fernFilePath: RelativeFilePath
+        conjureFile: DefinitionFile;
+        fernFilePath: RelativeFilePath;
     }): void {
         for (const [typeName, typeDeclaration] of Object.entries(conjureFile.types?.definitions?.objects ?? {})) {
             visitConjureTypeDeclaration(typeDeclaration, {
@@ -239,7 +239,7 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                             type: value.alias,
                             docs: value.docs
                         }
-                    })
+                    });
                 },
                 object: (value) => {
                     this.fernDefinitionBuilder.addType(fernFilePath, {
@@ -247,7 +247,7 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                         schema: {
                             properties: value.fields
                         }
-                    })
+                    });
                 },
                 enum: (value) => {
                     this.fernDefinitionBuilder.addType(fernFilePath, {
@@ -255,7 +255,7 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                         schema: {
                             enum: value.values
                         }
-                    })
+                    });
                 },
                 union: (value) => {
                     this.fernDefinitionBuilder.addType(fernFilePath, {
@@ -270,13 +270,13 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                                             docs: typeof type === "string" ? undefined : type.docs,
                                             key
                                         }
-                                    ]
+                                    ];
                                 })
                             )
                         }
-                    })
+                    });
                 }
-            })
+            });
         }
     }
 
@@ -285,25 +285,25 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
         importFilePath,
         absoluteFilePathToConjureFolder
     }: {
-        absoluteFilePathToConjureFile: AbsoluteFilePath
-        importFilePath: RelativeFilePath
-        absoluteFilePathToConjureFolder: AbsoluteFilePath
+        absoluteFilePathToConjureFile: AbsoluteFilePath;
+        importFilePath: RelativeFilePath;
+        absoluteFilePathToConjureFolder: AbsoluteFilePath;
     }): RelativeFilePath {
         const absoluteFilePathToImportedFile = join(
             dirname(absoluteFilePathToConjureFile),
             RelativeFilePath.of(importFilePath)
-        )
+        );
         const relativeFilePathToImportedFile = relativize(
             absoluteFilePathToConjureFolder,
             absoluteFilePathToImportedFile
-        )
-        const correspondingFernFilePath = this.conjureFilepathToFernFilepath[relativeFilePathToImportedFile]
+        );
+        const correspondingFernFilePath = this.conjureFilepathToFernFilepath[relativeFilePathToImportedFile];
         if (correspondingFernFilePath == null) {
             throw new Error(
                 `Failed to find corresponding fern filepath for conjure file ${relativeFilePathToImportedFile}`
-            )
+            );
         }
-        return correspondingFernFilePath
+        return correspondingFernFilePath;
     }
 }
 
@@ -316,6 +316,6 @@ export async function visitAllConjureDefinitionFiles(
     ) => void | Promise<void>
 ): Promise<void> {
     for (const conjureFile of await listConjureFiles(absolutePathToConjureFolder, "{yml,yaml}")) {
-        await visitor(conjureFile.absoluteFilepath, conjureFile.relativeFilepath, conjureFile.fileContents)
+        await visitor(conjureFile.absoluteFilepath, conjureFile.relativeFilepath, conjureFile.fileContents);
     }
 }

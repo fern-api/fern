@@ -1,20 +1,20 @@
-import { FernContainerRegex } from "./visitRawTypeReference"
+import { FernContainerRegex } from "./visitRawTypeReference";
 
 export interface RawBytesType {
-    isOptional: boolean
+    isOptional: boolean;
 }
 
-export const BYTES_TYPE = "bytes"
+export const BYTES_TYPE = "bytes";
 
 export function parseRawBytesType(typeReference: string): RawBytesType | undefined {
     if (typeReference === BYTES_TYPE) {
-        return { isOptional: false }
+        return { isOptional: false };
     }
 
-    const optionalMatch = typeReference.match(FernContainerRegex.OPTIONAL)
+    const optionalMatch = typeReference.match(FernContainerRegex.OPTIONAL);
     if (optionalMatch?.[1] === BYTES_TYPE) {
-        return { isOptional: true }
+        return { isOptional: true };
     }
 
-    return undefined
+    return undefined;
 }

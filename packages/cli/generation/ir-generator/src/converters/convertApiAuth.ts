@@ -1,11 +1,11 @@
-import { RawSchemas, visitRawApiAuth, visitRawAuthSchemeDeclaration } from "@fern-api/fern-definition-schema"
-import { ApiAuth, AuthScheme, AuthSchemesRequirement, OAuthConfiguration } from "@fern-api/ir-sdk"
+import { RawSchemas, visitRawApiAuth, visitRawAuthSchemeDeclaration } from "@fern-api/fern-definition-schema";
+import { ApiAuth, AuthScheme, AuthSchemesRequirement, OAuthConfiguration } from "@fern-api/ir-sdk";
 
-import { FernFileContext } from "../FernFileContext"
-import { EndpointResolver } from "../resolvers/EndpointResolver"
-import { PropertyResolver } from "../resolvers/PropertyResolver"
-import { convertOAuthClientCredentials } from "./convertOAuthClientCredentials"
-import { getRefreshTokenEndpoint, getTokenEndpoint } from "./convertOAuthUtils"
+import { FernFileContext } from "../FernFileContext";
+import { EndpointResolver } from "../resolvers/EndpointResolver";
+import { PropertyResolver } from "../resolvers/PropertyResolver";
+import { convertOAuthClientCredentials } from "./convertOAuthClientCredentials";
+import { getRefreshTokenEndpoint, getTokenEndpoint } from "./convertOAuthUtils";
 
 export function convertApiAuth({
     rawApiFileSchema,
@@ -13,20 +13,20 @@ export function convertApiAuth({
     propertyResolver,
     endpointResolver
 }: {
-    rawApiFileSchema: RawSchemas.WithAuthSchema
-    file: FernFileContext
-    propertyResolver: PropertyResolver
-    endpointResolver: EndpointResolver
+    rawApiFileSchema: RawSchemas.WithAuthSchema;
+    file: FernFileContext;
+    propertyResolver: PropertyResolver;
+    endpointResolver: EndpointResolver;
 }): ApiAuth {
     if (rawApiFileSchema.auth == null) {
         return {
             docs: undefined,
             requirement: AuthSchemesRequirement.All,
             schemes: []
-        }
+        };
     }
 
-    const docs = typeof rawApiFileSchema.auth !== "string" ? rawApiFileSchema.auth.docs : undefined
+    const docs = typeof rawApiFileSchema.auth !== "string" ? rawApiFileSchema.auth.docs : undefined;
     return visitRawApiAuth<ApiAuth>(rawApiFileSchema.auth, {
         single: (authScheme) => {
             const schemaReference = convertSchemeReference({
@@ -35,12 +35,12 @@ export function convertApiAuth({
                 file,
                 propertyResolver,
                 endpointResolver
-            })
+            });
             return {
                 docs,
                 requirement: AuthSchemesRequirement.All,
                 schemes: [schemaReference]
-            }
+            };
         },
         any: ({ any }) => ({
             docs,
@@ -55,7 +55,7 @@ export function convertApiAuth({
                 })
             )
         })
-    })
+    });
 }
 
 function convertSchemeReference({
@@ -65,16 +65,16 @@ function convertSchemeReference({
     propertyResolver,
     endpointResolver
 }: {
-    reference: RawSchemas.AuthSchemeReferenceSchema | string
-    authSchemeDeclarations: Record<string, RawSchemas.AuthSchemeDeclarationSchema> | undefined
-    file: FernFileContext
-    propertyResolver: PropertyResolver
-    endpointResolver: EndpointResolver
+    reference: RawSchemas.AuthSchemeReferenceSchema | string;
+    authSchemeDeclarations: Record<string, RawSchemas.AuthSchemeDeclarationSchema> | undefined;
+    file: FernFileContext;
+    propertyResolver: PropertyResolver;
+    endpointResolver: EndpointResolver;
 }): AuthScheme {
     const convertNamedAuthSchemeReference = (reference: string, docs: string | undefined) => {
-        const declaration = authSchemeDeclarations?.[reference]
+        const declaration = authSchemeDeclarations?.[reference];
         if (declaration == null) {
-            throw new Error("Unknown auth scheme: " + reference)
+            throw new Error("Unknown auth scheme: " + reference);
         }
         return visitRawAuthSchemeDeclaration<AuthScheme>(declaration, {
             header: (rawHeader) =>
@@ -108,10 +108,10 @@ function convertSchemeReference({
                     propertyResolver,
                     endpointResolver
                 })
-        })
-    }
+        });
+    };
 
-    const scheme = typeof reference === "string" ? reference : reference.scheme
+    const scheme = typeof reference === "string" ? reference : reference.scheme;
 
     switch (scheme) {
         case "bearer":
@@ -119,13 +119,13 @@ function convertSchemeReference({
                 file,
                 docs: undefined,
                 rawScheme: undefined
-            })
+            });
         case "basic":
             return generateBasicAuth({
                 file,
                 docs: undefined,
                 rawScheme: undefined
-            })
+            });
         case "oauth":
             return generateOAuth({
                 file,
@@ -133,9 +133,9 @@ function convertSchemeReference({
                 rawScheme: undefined,
                 propertyResolver,
                 endpointResolver
-            })
+            });
         default:
-            return convertNamedAuthSchemeReference(scheme, typeof reference !== "string" ? reference.docs : undefined)
+            return convertNamedAuthSchemeReference(scheme, typeof reference !== "string" ? reference.docs : undefined);
     }
 }
 
@@ -144,15 +144,15 @@ function generateBearerAuth({
     docs,
     rawScheme
 }: {
-    file: FernFileContext
-    docs: string | undefined
-    rawScheme: RawSchemas.BearerAuthSchemeSchema | undefined
+    file: FernFileContext;
+    docs: string | undefined;
+    rawScheme: RawSchemas.BearerAuthSchemeSchema | undefined;
 }): AuthScheme.Bearer {
     return AuthScheme.bearer({
         docs,
         token: file.casingsGenerator.generateName(rawScheme?.token?.name ?? "token"),
         tokenEnvVar: rawScheme?.token?.env
-    })
+    });
 }
 
 function generateBasicAuth({
@@ -160,9 +160,9 @@ function generateBasicAuth({
     docs,
     rawScheme
 }: {
-    file: FernFileContext
-    docs: string | undefined
-    rawScheme: RawSchemas.BasicAuthSchemeSchema | undefined
+    file: FernFileContext;
+    docs: string | undefined;
+    rawScheme: RawSchemas.BasicAuthSchemeSchema | undefined;
 }): AuthScheme.Basic {
     return AuthScheme.basic({
         docs,
@@ -170,7 +170,7 @@ function generateBasicAuth({
         usernameEnvVar: rawScheme?.username?.env,
         password: file.casingsGenerator.generateName(rawScheme?.password?.name ?? "password"),
         passwordEnvVar: rawScheme?.password?.env
-    })
+    });
 }
 
 function generateOAuth({
@@ -180,11 +180,11 @@ function generateOAuth({
     propertyResolver,
     endpointResolver
 }: {
-    file: FernFileContext
-    docs: string | undefined
-    rawScheme: RawSchemas.OAuthSchemeSchema | undefined
-    propertyResolver: PropertyResolver
-    endpointResolver: EndpointResolver
+    file: FernFileContext;
+    docs: string | undefined;
+    rawScheme: RawSchemas.OAuthSchemeSchema | undefined;
+    propertyResolver: PropertyResolver;
+    endpointResolver: EndpointResolver;
 }): AuthScheme.Oauth {
     switch (rawScheme?.type) {
         case "client-credentials":
@@ -200,8 +200,8 @@ function generateOAuth({
                         refreshTokenEndpoint: getRefreshTokenEndpoint(rawScheme)
                     })
                 )
-            })
+            });
         default:
-            throw new Error(`Unknown OAuth type: '${rawScheme?.type}'`)
+            throw new Error(`Unknown OAuth type: '${rawScheme?.type}'`);
     }
 }

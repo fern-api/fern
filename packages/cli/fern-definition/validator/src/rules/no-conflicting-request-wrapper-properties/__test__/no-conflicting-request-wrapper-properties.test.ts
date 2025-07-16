@@ -1,7 +1,7 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule"
-import { NoConflictingRequestWrapperPropertiesRule } from "../no-conflicting-request-wrapper-properties"
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { NoConflictingRequestWrapperPropertiesRule } from "../no-conflicting-request-wrapper-properties";
 
 describe("no-conflicting-request-wrapper-properties", () => {
     it("simple", async () => {
@@ -12,7 +12,7 @@ describe("no-conflicting-request-wrapper-properties", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
             )
-        })
+        });
 
         expect(violations).toEqual([
             {
@@ -55,6 +55,6 @@ describe("no-conflicting-request-wrapper-properties", () => {
                 relativeFilepath: RelativeFilePath.of("body-property-key.yml"),
                 severity: "fatal"
             }
-        ])
-    })
-})
+        ]);
+    });
+});

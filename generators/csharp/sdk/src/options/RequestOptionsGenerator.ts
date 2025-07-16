@@ -1,20 +1,20 @@
-import { CSharpFile, FileGenerator } from "@fern-api/csharp-base"
-import { csharp } from "@fern-api/csharp-codegen"
-import { RelativeFilePath, join } from "@fern-api/fs-utils"
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
+import { csharp } from "@fern-api/csharp-codegen";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { SdkCustomConfigSchema } from "../SdkCustomConfig"
-import { SdkGeneratorContext } from "../SdkGeneratorContext"
-import { BaseOptionsGenerator } from "./BaseOptionsGenerator"
+import { SdkCustomConfigSchema } from "../SdkCustomConfig";
+import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { BaseOptionsGenerator } from "./BaseOptionsGenerator";
 
-export const REQUEST_OPTIONS_CLASS_NAME = "RequestOptions"
+export const REQUEST_OPTIONS_CLASS_NAME = "RequestOptions";
 
 export class RequestOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
-    private baseOptionsGenerator: BaseOptionsGenerator
+    private baseOptionsGenerator: BaseOptionsGenerator;
 
     constructor(context: SdkGeneratorContext, baseOptionsGenerator: BaseOptionsGenerator) {
-        super(context)
+        super(context);
 
-        this.baseOptionsGenerator = baseOptionsGenerator
+        this.baseOptionsGenerator = baseOptionsGenerator;
     }
 
     public doGenerate(): CSharpFile {
@@ -24,8 +24,8 @@ export class RequestOptionsGenerator extends FileGenerator<CSharpFile, SdkCustom
             access: csharp.Access.Public,
             interfaceReferences: [this.context.getRequestOptionsInterfaceReference()],
             annotations: [this.context.getSerializableAttribute()]
-        })
-        class_.addFields(this.baseOptionsGenerator.getRequestOptionFields())
+        });
+        class_.addFields(this.baseOptionsGenerator.getRequestOptionFields());
         return new CSharpFile({
             clazz: class_,
             directory: this.context.getPublicCoreDirectory(),
@@ -33,13 +33,13 @@ export class RequestOptionsGenerator extends FileGenerator<CSharpFile, SdkCustom
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
             namespace: this.context.getPublicCoreNamespace(),
             customConfig: this.context.customConfig
-        })
+        });
     }
 
     protected getFilepath(): RelativeFilePath {
         return join(
             this.context.project.filepaths.getPublicCoreFilesDirectory(),
             RelativeFilePath.of(`${REQUEST_OPTIONS_CLASS_NAME}.cs`)
-        )
+        );
     }
 }

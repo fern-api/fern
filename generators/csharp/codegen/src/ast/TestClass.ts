@@ -1,48 +1,48 @@
-import { Access } from "./Access"
-import { Annotation } from "./Annotation"
-import { Class } from "./Class"
-import { ClassReference } from "./ClassReference"
-import { CodeBlock } from "./CodeBlock"
-import { Method } from "./Method"
-import { AstNode } from "./core/AstNode"
-import { Writer } from "./core/Writer"
+import { Access } from "./Access";
+import { Annotation } from "./Annotation";
+import { Class } from "./Class";
+import { ClassReference } from "./ClassReference";
+import { CodeBlock } from "./CodeBlock";
+import { Method } from "./Method";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
 
 export declare namespace TestClass {
     interface Args {
         /* The name of the C# class */
-        name: string
+        name: string;
         /* The namespace of the C# class*/
-        namespace: string
+        namespace: string;
         /* The class to inherit from if any */
-        parentClassReference?: ClassReference
+        parentClassReference?: ClassReference;
     }
 
     interface TestMethod {
         /* The name of the C# test method */
-        name: string
+        name: string;
         /* The body of the test method */
-        body: CodeBlock
+        body: CodeBlock;
         /* Whether the method is sync or async */
-        isAsync: boolean
+        isAsync: boolean;
     }
 }
 
 export class TestClass extends AstNode {
-    public readonly name: string
-    public readonly namespace: string
-    public readonly parentClassReference: ClassReference | undefined
+    public readonly name: string;
+    public readonly namespace: string;
+    public readonly parentClassReference: ClassReference | undefined;
 
-    private testMethods: TestClass.TestMethod[] = []
+    private testMethods: TestClass.TestMethod[] = [];
 
     constructor({ name, namespace, parentClassReference }: TestClass.Args) {
-        super()
-        this.name = name
-        this.namespace = namespace
-        this.parentClassReference = parentClassReference
+        super();
+        this.name = name;
+        this.namespace = namespace;
+        this.parentClassReference = parentClassReference;
     }
 
     public write(writer: Writer): void {
-        writer.writeNode(this.getClass())
+        writer.writeNode(this.getClass());
     }
 
     public getClass(): Class {
@@ -56,7 +56,7 @@ export class TestClass extends AstNode {
                 })
             ],
             parentClassReference: this.parentClassReference
-        })
+        });
         for (const testMethod of this.testMethods) {
             _class.addMethod(
                 new Method({
@@ -71,12 +71,12 @@ export class TestClass extends AstNode {
                         })
                     ]
                 })
-            )
+            );
         }
-        return _class
+        return _class;
     }
 
     public addTestMethod(testMethod: TestClass.TestMethod): void {
-        this.testMethods.push(testMethod)
+        this.testMethods.push(testMethod);
     }
 }

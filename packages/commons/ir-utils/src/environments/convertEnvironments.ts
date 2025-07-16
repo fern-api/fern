@@ -1,7 +1,7 @@
-import { mapValues } from "lodash-es"
+import { mapValues } from "lodash-es";
 
-import { CasingsGenerator } from "@fern-api/casings-generator"
-import { RawSchemas, visitRawEnvironmentDeclaration } from "@fern-api/fern-definition-schema"
+import { CasingsGenerator } from "@fern-api/casings-generator";
+import { RawSchemas, visitRawEnvironmentDeclaration } from "@fern-api/fern-definition-schema";
 import {
     Environments,
     EnvironmentsConfig,
@@ -9,21 +9,21 @@ import {
     MultipleBaseUrlsEnvironments,
     SingleBaseUrlEnvironment,
     SingleBaseUrlEnvironments
-} from "@fern-api/ir-sdk"
+} from "@fern-api/ir-sdk";
 
 export function convertEnvironments({
     rawApiFileSchema: { "default-environment": defaultEnvironment, environments },
     casingsGenerator
 }: {
-    rawApiFileSchema: RawSchemas.WithEnvironmentsSchema
-    casingsGenerator: CasingsGenerator
+    rawApiFileSchema: RawSchemas.WithEnvironmentsSchema;
+    casingsGenerator: CasingsGenerator;
 }): { environmentsConfig: EnvironmentsConfig; audiences: Record<string, string[]> } | undefined {
     if (environments == null) {
-        return undefined
+        return undefined;
     }
-    const firstEnvironment = Object.values(environments)[0]
+    const firstEnvironment = Object.values(environments)[0];
     if (firstEnvironment == null) {
-        return undefined
+        return undefined;
     }
 
     return {
@@ -53,15 +53,15 @@ export function convertEnvironments({
                 ])
             )
         }
-    }
+    };
 }
 
 function convertSingleBaseUrlEnvironments({
     environments,
     casingsGenerator
 }: {
-    environments: Record<string, RawSchemas.EnvironmentSchema>
-    casingsGenerator: CasingsGenerator
+    environments: Record<string, RawSchemas.EnvironmentSchema>;
+    casingsGenerator: CasingsGenerator;
 }): SingleBaseUrlEnvironments {
     return {
         environments: Object.entries(environments).map(
@@ -78,11 +78,11 @@ function convertSingleBaseUrlEnvironments({
                         )
                     }),
                     multipleBaseUrls: () => {
-                        throw new Error(`Environment ${environmentName} has multiple base URLs`)
+                        throw new Error(`Environment ${environmentName} has multiple base URLs`);
                     }
                 })
         )
-    }
+    };
 }
 
 function convertMultipleBaseUrlEnvironments({
@@ -90,9 +90,9 @@ function convertMultipleBaseUrlEnvironments({
     environments,
     casingsGenerator
 }: {
-    baseUrls: string[]
-    environments: Record<string, RawSchemas.EnvironmentSchema>
-    casingsGenerator: CasingsGenerator
+    baseUrls: string[];
+    environments: Record<string, RawSchemas.EnvironmentSchema>;
+    casingsGenerator: CasingsGenerator;
 }): MultipleBaseUrlsEnvironments {
     return {
         baseUrls: baseUrls.map((baseUrl) => ({
@@ -109,13 +109,13 @@ function convertMultipleBaseUrlEnvironments({
                         urls: mapValues(multipleBaseUrlsEnvironment.urls, (url) => removeTrailingSlash(url))
                     }),
                     singleBaseUrl: () => {
-                        throw new Error(`Environment ${environmentName} does not have multiple base URLs`)
+                        throw new Error(`Environment ${environmentName} does not have multiple base URLs`);
                     }
                 })
         )
-    }
+    };
 }
 
 function removeTrailingSlash(url: string): string {
-    return url.endsWith("/") ? url.slice(0, -1) : url
+    return url.endsWith("/") ? url.slice(0, -1) : url;
 }

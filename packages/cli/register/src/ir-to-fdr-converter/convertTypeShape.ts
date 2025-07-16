@@ -1,8 +1,8 @@
-import { FernIr as Ir, TypeReference } from "@fern-api/ir-sdk"
+import { FernIr as Ir, TypeReference } from "@fern-api/ir-sdk";
 
-import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk"
+import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
 
-import { convertIrAvailability } from "./convertPackage"
+import { convertIrAvailability } from "./convertPackage";
 
 export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.register.TypeShape {
     return irType._visit<FdrCjsSdk.api.v1.register.TypeShape>({
@@ -10,7 +10,7 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
             return {
                 type: "alias",
                 value: convertTypeReference(alias.aliasOf)
-            }
+            };
         },
         enum: (enum_) => {
             return {
@@ -23,7 +23,7 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
                         availability: convertIrAvailability(value.availability)
                     })
                 )
-            }
+            };
         },
         object: (object) => {
             return {
@@ -39,7 +39,7 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
                     })
                 ),
                 extraProperties: convertExtraProperties(object.extraProperties)
-            }
+            };
         },
         union: (union) => {
             const baseProperties: FdrCjsSdk.api.v1.register.ObjectProperty[] = union.baseProperties.map(
@@ -50,9 +50,9 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
                         availability: convertIrAvailability(baseProperty.availability),
                         description: baseProperty.docs,
                         propertyAccess: baseProperty.propertyAccess
-                    }
+                    };
                 }
-            )
+            );
             return {
                 type: "discriminatedUnion",
                 discriminant: union.discriminant.wireValue,
@@ -97,13 +97,13 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
                                     _other: () => {
                                         throw new Error(
                                             "Unknown SingleUnionTypeProperties: " + variant.shape.propertiesType
-                                        )
+                                        );
                                     }
                                 }
                             )
-                    }
+                    };
                 })
-            }
+            };
         },
         undiscriminatedUnion: (union) => {
             return {
@@ -115,14 +115,14 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
                         type: convertTypeReference(variant.type),
                         availability: undefined,
                         displayName: variant.type.type === "named" ? variant.type.displayName : undefined
-                    }
+                    };
                 })
-            }
+            };
         },
         _other: () => {
-            throw new Error("Unknown Type shape: " + irType.type)
+            throw new Error("Unknown Type shape: " + irType.type);
         }
-    })
+    });
 }
 
 export function convertTypeReference(irTypeReference: Ir.types.TypeReference): FdrCjsSdk.api.v1.register.TypeReference {
@@ -133,33 +133,33 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                     return {
                         type: "list",
                         itemType: convertTypeReference(itemType)
-                    }
+                    };
                 },
                 map: ({ keyType, valueType }) => {
                     return {
                         type: "map",
                         keyType: convertTypeReference(keyType),
                         valueType: convertTypeReference(valueType)
-                    }
+                    };
                 },
                 optional: (itemType) => {
                     return {
                         type: "optional",
                         itemType: convertTypeReference(itemType),
                         defaultValue: undefined
-                    }
+                    };
                 },
                 nullable: (itemType) => {
                     return {
                         type: "nullable",
                         itemType: convertTypeReference(itemType)
-                    }
+                    };
                 },
                 set: (itemType) => {
                     return {
                         type: "set",
                         itemType: convertTypeReference(itemType)
-                    }
+                    };
                 },
                 literal: (literal) => {
                     return Ir.types.Literal._visit<FdrCjsSdk.api.v1.register.TypeReference>(literal, {
@@ -170,7 +170,7 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                                     type: "booleanLiteral",
                                     value: booleanLiteral
                                 }
-                            }
+                            };
                         },
                         string: (stringLiteral) => {
                             return {
@@ -179,42 +179,42 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                                     type: "stringLiteral",
                                     value: stringLiteral
                                 }
-                            }
+                            };
                         },
                         _other: () => {
-                            throw new Error("Unknown literal type: " + literal.type)
+                            throw new Error("Unknown literal type: " + literal.type);
                         }
-                    })
+                    });
                 },
                 _other: () => {
-                    throw new Error("Unknown container reference: " + container.type)
+                    throw new Error("Unknown container reference: " + container.type);
                 }
-            })
+            });
         },
         named: (name) => {
             return {
                 type: "id",
                 value: FdrCjsSdk.TypeId(name.typeId),
                 default: undefined
-            }
+            };
         },
         primitive: (primitive) => {
             return {
                 type: "primitive",
                 value: Ir.types.PrimitiveTypeV1._visit<FdrCjsSdk.api.v1.register.PrimitiveType>(primitive.v1, {
                     integer: () => {
-                        return convertInteger(primitive.v2)
+                        return convertInteger(primitive.v2);
                     },
                     float: () => {
                         // TODO: Add support for float types in FDR. We render them as double for now
                         // (they have the same JSON representation).
-                        return convertDouble(primitive.v2)
+                        return convertDouble(primitive.v2);
                     },
                     double: () => {
-                        return convertDouble(primitive.v2)
+                        return convertDouble(primitive.v2);
                     },
                     string: () => {
-                        return convertString(primitive.v2)
+                        return convertString(primitive.v2);
                     },
                     long: () => {
                         return {
@@ -222,75 +222,75 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                             default: primitive.v2?.type === "long" ? primitive.v2.default : undefined,
                             minimum: undefined,
                             maximum: undefined
-                        }
+                        };
                     },
                     boolean: () => {
                         return {
                             type: "boolean",
                             default: primitive.v2?.type === "boolean" ? primitive.v2.default : undefined
-                        }
+                        };
                     },
                     dateTime: () => {
                         return {
                             type: "datetime",
                             default: undefined
-                        }
+                        };
                     },
                     date: () => {
                         return {
                             type: "date",
                             default: undefined
-                        }
+                        };
                     },
                     uuid: () => {
                         return {
                             type: "uuid",
                             default: undefined
-                        }
+                        };
                     },
                     base64: () => {
                         return {
                             type: "base64",
                             mimeType: undefined,
                             default: undefined
-                        }
+                        };
                     },
                     bigInteger: () => {
                         return {
                             type: "bigInteger",
                             default: primitive.v2?.type === "bigInteger" ? primitive.v2.default : undefined
-                        }
+                        };
                     },
                     uint: () => {
                         return {
                             type: "uint"
-                        }
+                        };
                     },
                     uint64: () => {
                         return {
                             type: "uint64"
-                        }
+                        };
                     },
                     _other: () => {
-                        throw new Error("Unknown primitive: " + primitive.v1)
+                        throw new Error("Unknown primitive: " + primitive.v1);
                     }
                 })
-            }
+            };
         },
         unknown: () => {
             return {
                 type: "unknown"
-            }
+            };
         },
         _other: () => {
-            throw new Error("Unknown Type reference: " + irTypeReference.type)
+            throw new Error("Unknown Type reference: " + irTypeReference.type);
         }
-    })
+    });
 }
 
 function convertString(primitive: Ir.PrimitiveTypeV2 | undefined): FdrCjsSdk.api.v1.register.PrimitiveType {
     const rules: Ir.StringValidationRules | undefined =
-        primitive != null && primitive.type === "string" ? primitive.validation : undefined
+        primitive != null && primitive.type === "string" ? primitive.validation : undefined;
     return {
         type: "string",
         format: rules != null ? rules.format : undefined,
@@ -298,43 +298,43 @@ function convertString(primitive: Ir.PrimitiveTypeV2 | undefined): FdrCjsSdk.api
         minLength: rules != null ? rules.minLength : undefined,
         maxLength: rules != null ? rules.maxLength : undefined,
         default: primitive != null && primitive.type === "string" ? primitive.default : undefined
-    }
+    };
 }
 
 function convertInteger(primitive: Ir.PrimitiveTypeV2 | undefined): FdrCjsSdk.api.v1.register.PrimitiveType {
     const rules: Ir.IntegerValidationRules | undefined =
-        primitive != null && primitive.type === "integer" ? primitive.validation : undefined
+        primitive != null && primitive.type === "integer" ? primitive.validation : undefined;
     return {
         type: "integer",
         minimum: rules != null ? rules.min : undefined,
         maximum: rules != null ? rules.max : undefined,
         default: primitive != null && primitive.type === "integer" ? primitive.default : undefined
-    }
+    };
 }
 
 function convertDouble(primitive: Ir.PrimitiveTypeV2 | undefined): FdrCjsSdk.api.v1.register.PrimitiveType {
     const rules: Ir.DoubleValidationRules | undefined =
-        primitive != null && primitive.type === "double" ? primitive.validation : undefined
+        primitive != null && primitive.type === "double" ? primitive.validation : undefined;
     return {
         type: "double",
         minimum: rules != null ? rules.min : undefined,
         maximum: rules != null ? rules.max : undefined,
         default: primitive != null && primitive.type === "double" ? primitive.default : undefined
-    }
+    };
 }
 
 function convertExtraProperties(
     extraProperties: boolean | string | Ir.types.TypeReference
 ): FdrCjsSdk.api.v1.register.TypeReference | undefined {
     if (typeof extraProperties === "boolean") {
-        return extraProperties ? TypeReference.unknown() : undefined
+        return extraProperties ? TypeReference.unknown() : undefined;
     } else if (typeof extraProperties === "string") {
         return {
             type: "id",
             value: FdrCjsSdk.TypeId(extraProperties),
             default: undefined
-        }
+        };
     } else {
-        return convertTypeReference(extraProperties)
+        return convertTypeReference(extraProperties);
     }
 }

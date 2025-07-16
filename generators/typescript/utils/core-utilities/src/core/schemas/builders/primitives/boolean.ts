@@ -1,6 +1,6 @@
-import { SchemaType } from "../../Schema"
-import { createIdentitySchemaCreator } from "../../utils/createIdentitySchemaCreator"
-import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType"
+import { SchemaType } from "../../Schema";
+import { createIdentitySchemaCreator } from "../../utils/createIdentitySchemaCreator";
+import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType";
 
 export const boolean = createIdentitySchemaCreator<boolean>(
     SchemaType.BOOLEAN,
@@ -9,7 +9,7 @@ export const boolean = createIdentitySchemaCreator<boolean>(
             return {
                 ok: true,
                 value
-            }
+            };
         } else {
             return {
                 ok: false,
@@ -19,7 +19,7 @@ export const boolean = createIdentitySchemaCreator<boolean>(
                         message: getErrorMessageForIncorrectType(value, "boolean")
                     }
                 ]
-            }
+            };
         }
     }
-)
+);

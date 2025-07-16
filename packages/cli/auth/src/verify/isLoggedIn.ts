@@ -1,20 +1,20 @@
-import { assertNever } from "@fern-api/core-utils"
+import { assertNever } from "@fern-api/core-utils";
 
-import { getToken } from "../persistence/getToken"
-import { verifyAccessToken } from "./verifyAccessToken"
-import { verifyJwt } from "./verifyJwt"
+import { getToken } from "../persistence/getToken";
+import { verifyAccessToken } from "./verifyAccessToken";
+import { verifyJwt } from "./verifyJwt";
 
 export async function isLoggedIn(): Promise<boolean> {
-    const token = await getToken()
+    const token = await getToken();
     if (token == null) {
-        return false
+        return false;
     }
     switch (token.type) {
         case "organization":
-            return verifyAccessToken(token)
+            return verifyAccessToken(token);
         case "user":
-            return verifyJwt(token)
+            return verifyJwt(token);
         default:
-            assertNever(token)
+            assertNever(token);
     }
 }

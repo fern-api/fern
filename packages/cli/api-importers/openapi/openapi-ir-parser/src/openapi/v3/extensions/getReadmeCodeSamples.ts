@@ -1,49 +1,49 @@
-import { OpenAPIV3 } from "openapi-types"
+import { OpenAPIV3 } from "openapi-types";
 
-import { isPlainObject } from "@fern-api/core-utils"
-import { RawSchemas } from "@fern-api/fern-definition-schema"
-import { CustomCodeSample } from "@fern-api/openapi-ir"
+import { isPlainObject } from "@fern-api/core-utils";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { CustomCodeSample } from "@fern-api/openapi-ir";
 
-import { getExtension } from "../../../getExtension"
-import { ReadmeOpenAPIExtension } from "./readmeExtensions"
+import { getExtension } from "../../../getExtension";
+import { ReadmeOpenAPIExtension } from "./readmeExtensions";
 
 // https://docs.readme.com/main/docs/openapi-extensions#custom-code-samples
 interface ReadmeCodeSample {
-    language: string
-    code: string
-    name?: string
-    install?: string
+    language: string;
+    code: string;
+    name?: string;
+    install?: string;
 }
 
 function isReadMeCodeSamples(maybeCodeSamples: unknown): maybeCodeSamples is ReadmeCodeSample[] {
     if (!Array.isArray(maybeCodeSamples)) {
-        return false
+        return false;
     }
     for (const maybeCodeSample of maybeCodeSamples) {
         if (!isPlainObject(maybeCodeSample)) {
-            return false
+            return false;
         }
         if (typeof maybeCodeSample.language !== "string" || typeof maybeCodeSample.code !== "string") {
-            return false
+            return false;
         }
     }
-    return true
+    return true;
 }
 
 export function getReadmeCodeSamples(operationObject: OpenAPIV3.OperationObject): CustomCodeSample[] {
-    const readme = getExtension<unknown>(operationObject, ReadmeOpenAPIExtension.README_EXT)
+    const readme = getExtension<unknown>(operationObject, ReadmeOpenAPIExtension.README_EXT);
 
     if (!isPlainObject(readme)) {
-        return []
+        return [];
     }
 
-    const readmeCodeSamples = readme["code-samples"]
+    const readmeCodeSamples = readme["code-samples"];
 
     if (!isReadMeCodeSamples(readmeCodeSamples)) {
-        return []
+        return [];
     }
 
-    const customCodeSamples: CustomCodeSample[] = []
+    const customCodeSamples: CustomCodeSample[] = [];
     for (const codeSample of readmeCodeSamples) {
         customCodeSamples.push(
             CustomCodeSample.language({
@@ -53,27 +53,27 @@ export function getReadmeCodeSamples(operationObject: OpenAPIV3.OperationObject)
                 install: codeSample.install,
                 description: undefined
             })
-        )
+        );
     }
-    return customCodeSamples
+    return customCodeSamples;
 }
 
 export function getRawReadmeCodeSamples(
     operationObject: OpenAPIV3.OperationObject
 ): RawSchemas.ExampleCodeSampleSchema[] {
-    const readme = getExtension<unknown>(operationObject, ReadmeOpenAPIExtension.README_EXT)
+    const readme = getExtension<unknown>(operationObject, ReadmeOpenAPIExtension.README_EXT);
 
     if (!isPlainObject(readme)) {
-        return []
+        return [];
     }
 
-    const readmeCodeSamples = readme["code-samples"]
+    const readmeCodeSamples = readme["code-samples"];
 
     if (!isReadMeCodeSamples(readmeCodeSamples)) {
-        return []
+        return [];
     }
 
-    const customCodeSamples: RawSchemas.ExampleCodeSampleSchema[] = []
+    const customCodeSamples: RawSchemas.ExampleCodeSampleSchema[] = [];
     for (const codeSample of readmeCodeSamples) {
         customCodeSamples.push({
             name: codeSample.name,
@@ -81,7 +81,7 @@ export function getRawReadmeCodeSamples(
             code: codeSample.code,
             install: codeSample.install,
             docs: undefined
-        })
+        });
     }
-    return customCodeSamples
+    return customCodeSamples;
 }

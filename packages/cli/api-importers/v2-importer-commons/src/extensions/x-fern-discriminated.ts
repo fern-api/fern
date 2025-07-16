@@ -1,30 +1,30 @@
-import { AbstractExtension } from "../AbstractExtension"
+import { AbstractExtension } from "../AbstractExtension";
 
 export declare namespace FernDiscriminatedExtension {
     export interface Args extends AbstractExtension.Args {
-        node: unknown
+        node: unknown;
     }
 }
 
 export class FernDiscriminatedExtension extends AbstractExtension<boolean | undefined> {
-    private readonly node: unknown
-    public readonly key = "x-fern-discriminated"
+    private readonly node: unknown;
+    public readonly key = "x-fern-discriminated";
 
     constructor({ breadcrumbs, node, context }: FernDiscriminatedExtension.Args) {
-        super({ breadcrumbs, context })
-        this.node = node
+        super({ breadcrumbs, context });
+        this.node = node;
     }
 
     public convert(): boolean | undefined {
-        const extensionValue = this.getExtensionValue(this.node)
+        const extensionValue = this.getExtensionValue(this.node);
         if (extensionValue == null) {
-            return undefined
+            return undefined;
         }
 
         if (typeof extensionValue !== "boolean") {
-            return undefined
+            return undefined;
         }
 
-        return extensionValue
+        return extensionValue;
     }
 }

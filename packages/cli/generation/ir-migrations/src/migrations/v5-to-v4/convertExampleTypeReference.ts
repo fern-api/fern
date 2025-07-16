@@ -1,5 +1,5 @@
-import { IrVersions } from "../../ir-versions"
-import { convertDeclaredTypeName } from "./convertDeclaredTypeName"
+import { IrVersions } from "../../ir-versions";
+import { convertDeclaredTypeName } from "./convertDeclaredTypeName";
 
 export function convertExampleTypeReference(
     example: IrVersions.V5.types.ExampleTypeReference
@@ -7,7 +7,7 @@ export function convertExampleTypeReference(
     return {
         jsonExample: example.jsonExample,
         shape: convertExampleTypeReferenceShape(example.shape)
-    }
+    };
 }
 
 function convertExampleTypeReferenceShape(
@@ -22,17 +22,17 @@ function convertExampleTypeReferenceShape(
             unknown: IrVersions.V4.types.ExampleTypeReferenceShape.unknown,
             named: (named) => IrVersions.V4.types.ExampleTypeReferenceShape.named(convertExampleNamedType(named)),
             _unknown: () => {
-                throw new Error("Unknown ExampleTypeReferenceShape: " + example.type)
+                throw new Error("Unknown ExampleTypeReferenceShape: " + example.type);
             }
         }
-    )
+    );
 }
 
 function convertExampleNamedType(example: IrVersions.V5.types.ExampleNamedType): IrVersions.V4.types.ExampleNamedType {
     return {
         typeName: convertDeclaredTypeName(example.typeName),
         shape: convertExampleTypeShape(example.shape)
-    }
+    };
 }
 
 function convertExampleContainer(example: IrVersions.V5.types.ExampleContainer): IrVersions.V4.types.ExampleContainer {
@@ -51,9 +51,9 @@ function convertExampleContainer(example: IrVersions.V5.types.ExampleContainer):
                 }))
             ),
         _unknown: () => {
-            throw new Error("Unknown ExampleContainer: " + example.type)
+            throw new Error("Unknown ExampleContainer: " + example.type);
         }
-    })
+    });
 }
 
 export function convertExampleTypeShape(
@@ -93,7 +93,7 @@ export function convertExampleTypeShape(
                             _unknown: () => {
                                 throw new Error(
                                     "Unknown ExampleSingleUnionTypeProperties: " + unionExample.properties.type
-                                )
+                                );
                             }
                         }
                     )
@@ -103,7 +103,7 @@ export function convertExampleTypeShape(
                 wireValue: enumExample.wireValue
             }),
         _unknown: () => {
-            throw new Error("Unknown ExampleTypeShape: " + example.type)
+            throw new Error("Unknown ExampleTypeShape: " + example.type);
         }
-    })
+    });
 }

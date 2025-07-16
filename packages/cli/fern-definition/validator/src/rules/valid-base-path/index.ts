@@ -1,1 +1,1 @@
-export { ValidBasePathRule } from "./valid-base-path"
+export { ValidBasePathRule } from "./valid-base-path";

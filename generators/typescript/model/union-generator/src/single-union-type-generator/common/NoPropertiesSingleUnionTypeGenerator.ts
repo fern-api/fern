@@ -1,45 +1,45 @@
-import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph"
+import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
-import { SingleUnionTypeGenerator } from "../SingleUnionTypeGenerator"
+import { SingleUnionTypeGenerator } from "../SingleUnionTypeGenerator";
 
 export class NoPropertiesSingleUnionTypeGenerator<Context> implements SingleUnionTypeGenerator<Context> {
     public generateForInlineUnion(context: Context): ts.TypeNode {
-        return ts.factory.createTypeLiteralNode([])
+        return ts.factory.createTypeLiteralNode([]);
     }
 
     public getExtendsForInterface(): ts.TypeNode[] {
-        return []
+        return [];
     }
 
     public getDiscriminantPropertiesForInterface(context: Context): OptionalKind<PropertySignatureStructure>[] {
-        return []
+        return [];
     }
 
     public generateModule(context: Context): ModuleDeclarationStructure | undefined {
-        return undefined
+        return undefined;
     }
 
     public getNonDiscriminantPropertiesForInterface(): OptionalKind<PropertySignatureStructure>[] {
-        return []
+        return [];
     }
 
     public getParametersForBuilder(): ts.ParameterDeclaration[] {
-        return []
+        return [];
     }
 
     public getNonDiscriminantPropertiesForBuilder(): ts.ObjectLiteralElementLike[] {
-        return []
+        return [];
     }
 
     public getVisitMethodParameterType(): ts.TypeNode | undefined {
-        return undefined
+        return undefined;
     }
 
     public getVisitorArguments(): ts.Expression[] {
-        return []
+        return [];
     }
 
     public getBuilderArgsFromExistingValue(): ts.Expression[] {
-        return []
+        return [];
     }
 }

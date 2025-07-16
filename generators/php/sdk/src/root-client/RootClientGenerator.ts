@@ -1,7 +1,7 @@
-import { assertNever } from "@fern-api/core-utils"
-import { RelativeFilePath, join } from "@fern-api/fs-utils"
-import { FileGenerator, PhpFile } from "@fern-api/php-base"
-import { php } from "@fern-api/php-codegen"
+import { assertNever } from "@fern-api/core-utils";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
+import { FileGenerator, PhpFile } from "@fern-api/php-base";
+import { php } from "@fern-api/php-codegen";
 
 import {
     AuthScheme,
@@ -11,65 +11,65 @@ import {
     PrimitiveTypeV1,
     Subpackage,
     TypeReference
-} from "@fern-fern/ir-sdk/api"
+} from "@fern-fern/ir-sdk/api";
 
-import { SdkCustomConfigSchema } from "../SdkCustomConfig"
-import { SdkGeneratorContext } from "../SdkGeneratorContext"
+import { SdkCustomConfigSchema } from "../SdkCustomConfig";
+import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 interface ConstructorParameters {
-    all: ConstructorParameter[]
-    required: ConstructorParameter[]
-    optional: ConstructorParameter[]
-    literal: LiteralParameter[]
+    all: ConstructorParameter[];
+    required: ConstructorParameter[];
+    optional: ConstructorParameter[];
+    literal: LiteralParameter[];
 }
 
 interface ConstructorParameter {
-    name: string
-    isOptional: boolean
-    typeReference: TypeReference
-    docs?: string
-    header?: HeaderInfo
-    environmentVariable?: string
+    name: string;
+    isOptional: boolean;
+    typeReference: TypeReference;
+    docs?: string;
+    header?: HeaderInfo;
+    environmentVariable?: string;
 }
 
 interface LiteralParameter {
-    name: string
-    value: Literal
-    docs?: string
-    header?: HeaderInfo
-    environmentVariable?: string
+    name: string;
+    value: Literal;
+    docs?: string;
+    header?: HeaderInfo;
+    environmentVariable?: string;
 }
 
 interface HeaderInfo {
-    name: string
-    prefix?: string
+    name: string;
+    prefix?: string;
 }
 
 const STRING_TYPE_REFERENCE = TypeReference.primitive({
     v1: PrimitiveTypeV1.String,
     v2: undefined
-})
+});
 
 const BEARER_HEADER_INFO: HeaderInfo = {
     name: "Authorization",
     prefix: "Bearer"
-}
+};
 
-const GET_FROM_ENV_OR_THROW = "getFromEnvOrThrow"
+const GET_FROM_ENV_OR_THROW = "getFromEnvOrThrow";
 
 export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     protected getFilepath(): RelativeFilePath {
-        return join(RelativeFilePath.of(this.context.getRootClientClassName() + ".php"))
+        return join(RelativeFilePath.of(this.context.getRootClientClassName() + ".php"));
     }
 
     public doGenerate(): PhpFile {
         const class_ = php.class_({
             name: this.context.getRootClientClassName(),
             namespace: this.context.getRootNamespace()
-        })
+        });
 
         if (!this.context.ir.rootPackage.hasEndpointsInTree) {
-            return this.newRootClientFile(class_)
+            return this.newRootClientFile(class_);
         }
 
         class_.addField(
@@ -78,50 +78,50 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 access: "private",
                 type: this.context.getClientOptionsType()
             })
-        )
-        class_.addField(this.context.rawClient.getField())
+        );
+        class_.addField(this.context.rawClient.getField());
 
-        const subpackages = this.getRootSubpackages()
-        const constructorParameters = this.getConstructorParameters()
+        const subpackages = this.getRootSubpackages();
+        const constructorParameters = this.getConstructorParameters();
         class_.addConstructor(
             this.getConstructorMethod({
                 constructorParameters,
                 subpackages
             })
-        )
+        );
 
         for (const subpackage of subpackages) {
-            class_.addField(this.context.getSubpackageField(subpackage))
+            class_.addField(this.context.getSubpackageField(subpackage));
         }
 
-        const rootServiceId = this.context.ir.rootPackage.service
+        const rootServiceId = this.context.ir.rootPackage.service;
         if (rootServiceId != null) {
-            const service = this.context.getHttpServiceOrThrow(rootServiceId)
+            const service = this.context.getHttpServiceOrThrow(rootServiceId);
             for (const endpoint of service.endpoints) {
                 const methods = this.context.endpointGenerator.generate({
                     serviceId: rootServiceId,
                     service,
                     endpoint
-                })
-                class_.addMethods(methods)
+                });
+                class_.addMethods(methods);
             }
         }
 
         if (constructorParameters.optional.some((parameter) => parameter.environmentVariable != null)) {
-            class_.addMethod(this.getFromEnvOrThrowMethod())
+            class_.addMethod(this.getFromEnvOrThrowMethod());
         }
 
-        return this.newRootClientFile(class_)
+        return this.newRootClientFile(class_);
     }
 
     private getConstructorMethod({
         constructorParameters,
         subpackages
     }: {
-        constructorParameters: ConstructorParameters
-        subpackages: Subpackage[]
+        constructorParameters: ConstructorParameters;
+        subpackages: Subpackage[];
     }): php.Class.Constructor {
-        const parameters: php.Parameter[] = []
+        const parameters: php.Parameter[] = [];
         for (const param of [...constructorParameters.required, ...constructorParameters.optional]) {
             parameters.push(
                 php.parameter({
@@ -129,7 +129,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     type: this.context.phpTypeMapper.convert({ reference: param.typeReference }),
                     docs: param.docs
                 })
-            )
+            );
         }
         for (const param of constructorParameters.literal) {
             parameters.push(
@@ -138,7 +138,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     type: this.getLiteralRootClientParameterType({ literal: param.value }),
                     docs: param.docs
                 })
-            )
+            );
         }
 
         parameters.push(
@@ -147,15 +147,15 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 type: php.Type.optional(this.context.getClientOptionsType()),
                 initializer: php.codeblock("null")
             })
-        )
+        );
 
-        const headerEntries: php.Map.Entry[] = []
+        const headerEntries: php.Map.Entry[] = [];
         for (const param of constructorParameters.required) {
             if (param.header != null) {
                 headerEntries.push({
                     key: php.codeblock(`'${param.header.name}'`),
                     value: this.getHeaderValue({ prefix: param.header.prefix, parameterName: param.name })
-                })
+                });
             }
         }
         for (const param of constructorParameters.optional) {
@@ -164,7 +164,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 headerEntries.push({
                     key: php.codeblock(`'${param.header.name}'`),
                     value: this.getHeaderValue({ prefix: param.header.prefix, parameterName: param.name })
-                })
+                });
             }
         }
 
@@ -173,43 +173,43 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 headerEntries.push({
                     key: php.codeblock(`'${param.header.name}'`),
                     value: php.codeblock(this.context.getLiteralAsString(param.value))
-                })
+                });
             }
         }
 
-        const platformHeaders = this.context.ir.sdkConfig.platformHeaders
+        const platformHeaders = this.context.ir.sdkConfig.platformHeaders;
         headerEntries.push({
             key: php.codeblock(`'${platformHeaders.language}'`),
             value: php.codeblock("'PHP'")
-        })
+        });
         headerEntries.push({
             key: php.codeblock(`'${platformHeaders.sdkName}'`),
             value: php.codeblock(`'${this.context.getRootNamespace()}'`)
-        })
+        });
         if (this.context.version != null) {
             headerEntries.push({
                 key: php.codeblock(`'${platformHeaders.sdkVersion}'`),
                 value: php.codeblock(`'${this.context.version}'`)
-            })
+            });
         }
-        const userAgent = this.context.getUserAgent()
+        const userAgent = this.context.getUserAgent();
         if (userAgent != null) {
             headerEntries.push({
                 key: php.codeblock(`'${userAgent.header}'`),
                 value: php.codeblock(`'${userAgent.value}'`)
-            })
+            });
         }
         const headers = php.map({
             entries: headerEntries,
             multiline: true
-        })
+        });
         return {
             access: "public",
             parameters,
             body: php.codeblock((writer) => {
                 for (const param of constructorParameters.optional) {
                     if (param.environmentVariable != null) {
-                        writer.write(`$${param.name} ??= `)
+                        writer.write(`$${param.name} ??= `);
                         writer.writeNodeStatement(
                             php.invokeMethod({
                                 method: `$this->${GET_FROM_ENV_OR_THROW}`,
@@ -220,44 +220,44 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                                     )
                                 ]
                             })
-                        )
+                        );
                     }
                 }
 
-                writer.write("$defaultHeaders = ")
-                writer.writeNodeStatement(headers)
+                writer.write("$defaultHeaders = ");
+                writer.writeNodeStatement(headers);
                 for (const param of constructorParameters.optional) {
                     if (param.header != null && param.environmentVariable == null) {
-                        writer.controlFlow("if", php.codeblock(`$${param.name} != null`))
-                        writer.write(`$defaultHeaders['${param.header.name}'] = `)
+                        writer.controlFlow("if", php.codeblock(`$${param.name} != null`));
+                        writer.write(`$defaultHeaders['${param.header.name}'] = `);
                         writer.writeNodeStatement(
                             this.getHeaderValue({ prefix: param.header.prefix, parameterName: param.name })
-                        )
-                        writer.endControlFlow()
+                        );
+                        writer.endControlFlow();
                     }
                 }
                 for (const param of constructorParameters.literal) {
                     if (param.header != null) {
-                        writer.controlFlow("if", php.codeblock(`$${param.name} != null`))
-                        writer.write(`$defaultHeaders['${param.header.name}'] = `)
+                        writer.controlFlow("if", php.codeblock(`$${param.name} != null`));
+                        writer.write(`$defaultHeaders['${param.header.name}'] = `);
                         writer.writeNodeStatement(
                             this.getHeaderValue({ prefix: param.header.prefix, parameterName: param.name })
-                        )
-                        writer.endControlFlow()
+                        );
+                        writer.endControlFlow();
                     }
                 }
-                writer.writeLine()
+                writer.writeLine();
 
                 writer.writeNodeStatement(
                     php.codeblock((writer) => {
-                        writer.write(`$this->${this.context.getClientOptionsName()} = `)
-                        writer.writeNode(php.variable(this.context.getClientOptionsName()))
-                        writer.write(" ?? []")
+                        writer.write(`$this->${this.context.getClientOptionsName()} = `);
+                        writer.writeNode(php.variable(this.context.getClientOptionsName()));
+                        writer.write(" ?? []");
                     })
-                )
+                );
                 writer.write(
                     `$this->${this.context.getClientOptionsName()}['${this.context.getHeadersOptionName()}'] = `
-                )
+                );
                 writer.writeNodeStatement(
                     php.invokeMethod({
                         method: "array_merge",
@@ -269,30 +269,30 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                         ],
                         multiline: true
                     })
-                )
-                writer.writeLine()
+                );
+                writer.writeLine();
 
-                writer.write("$this->client = ")
+                writer.write("$this->client = ");
                 writer.writeNodeStatement(
                     this.context.rawClient.instantiate({
                         arguments_: [
                             {
                                 name: "options",
                                 assignment: php.codeblock((writer) => {
-                                    const clientOptions = `$this->${this.context.getClientOptionsName()}`
-                                    writer.write(clientOptions)
+                                    const clientOptions = `$this->${this.context.getClientOptionsName()}`;
+                                    writer.write(clientOptions);
                                 })
                             }
                         ]
                     })
-                )
+                );
 
                 if (subpackages.length > 0) {
-                    writer.writeLine()
+                    writer.writeLine();
                 }
 
                 for (const subpackage of subpackages) {
-                    writer.write(`$this->${subpackage.name.camelCase.safeName} = `)
+                    writer.write(`$this->${subpackage.name.camelCase.safeName} = `);
                     writer.writeNodeStatement(
                         php.instantiateClass({
                             classReference: this.context.getSubpackageClassReference(subpackage),
@@ -301,10 +301,10 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                                 php.codeblock(`$this->${this.context.getClientOptionsName()}`)
                             ]
                         })
-                    )
+                    );
                 }
             })
-        }
+        };
     }
 
     private getFromEnvOrThrowMethod(): php.Method {
@@ -323,34 +323,34 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 })
             ],
             body: php.codeblock((writer) => {
-                writer.writeTextStatement("$value = getenv($env)")
-                writer.write("return $value ? (string) $value : throw new ")
-                writer.writeNode(this.context.getExceptionClassReference())
-                writer.writeTextStatement("($message)")
+                writer.writeTextStatement("$value = getenv($env)");
+                writer.write("return $value ? (string) $value : throw new ");
+                writer.writeNode(this.context.getExceptionClassReference());
+                writer.writeTextStatement("($message)");
             })
-        })
+        });
     }
 
     private getConstructorParameters(): ConstructorParameters {
-        const allParameters: ConstructorParameter[] = []
-        const requiredParameters: ConstructorParameter[] = []
-        const optionalParameters: ConstructorParameter[] = []
-        const literalParameters: LiteralParameter[] = []
+        const allParameters: ConstructorParameter[] = [];
+        const requiredParameters: ConstructorParameter[] = [];
+        const optionalParameters: ConstructorParameter[] = [];
+        const literalParameters: LiteralParameter[] = [];
 
         for (const scheme of this.context.ir.auth.schemes) {
-            allParameters.push(...this.getParameterForAuthScheme(scheme))
+            allParameters.push(...this.getParameterForAuthScheme(scheme));
         }
 
         for (const header of this.context.ir.headers) {
-            allParameters.push(this.getParameterForHeader(header))
+            allParameters.push(this.getParameterForHeader(header));
         }
 
         for (const param of allParameters) {
             if (param.isOptional || param.environmentVariable != null) {
-                optionalParameters.push(param)
-                continue
+                optionalParameters.push(param);
+                continue;
             }
-            const literal = this.context.maybeLiteral(param.typeReference)
+            const literal = this.context.maybeLiteral(param.typeReference);
             if (literal != null) {
                 literalParameters.push({
                     name: param.name,
@@ -358,10 +358,10 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     docs: param.docs,
                     header: param.header,
                     environmentVariable: param.environmentVariable
-                })
-                continue
+                });
+                continue;
             }
-            requiredParameters.push(param)
+            requiredParameters.push(param);
         }
 
         return {
@@ -369,14 +369,14 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             required: requiredParameters,
             optional: optionalParameters,
             literal: literalParameters
-        }
+        };
     }
 
     private getParameterForAuthScheme(scheme: AuthScheme): ConstructorParameter[] {
-        const isOptional = !this.context.ir.sdkConfig.isAuthMandatory
+        const isOptional = !this.context.ir.sdkConfig.isAuthMandatory;
         switch (scheme.type) {
             case "bearer": {
-                const name = this.context.getParameterName(scheme.token)
+                const name = this.context.getParameterName(scheme.token);
                 return [
                     {
                         name,
@@ -390,11 +390,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                         }),
                         environmentVariable: scheme.tokenEnvVar
                     }
-                ]
+                ];
             }
             case "basic": {
-                const username = this.context.getParameterName(scheme.username)
-                const password = this.context.getParameterName(scheme.password)
+                const username = this.context.getParameterName(scheme.username);
+                const password = this.context.getParameterName(scheme.password);
                 return [
                     {
                         name: username,
@@ -418,10 +418,10 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                         }),
                         environmentVariable: scheme.passwordEnvVar
                     }
-                ]
+                ];
             }
             case "header": {
-                const name = this.context.getParameterName(scheme.name.name)
+                const name = this.context.getParameterName(scheme.name.name);
                 return [
                     {
                         name,
@@ -438,14 +438,14 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                         }),
                         environmentVariable: scheme.headerEnvVar
                     }
-                ]
+                ];
             }
             case "oauth": {
                 // Fallback to the default bearer token scheme if the user hasn't already configured it.
                 if (this.context.ir.auth.schemes.some((s) => s.type === "bearer")) {
-                    return []
+                    return [];
                 }
-                const name = "token"
+                const name = "token";
                 return [
                     {
                         name,
@@ -454,10 +454,10 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                         header: BEARER_HEADER_INFO,
                         typeReference: STRING_TYPE_REFERENCE
                     }
-                ]
+                ];
             }
             default:
-                assertNever(scheme)
+                assertNever(scheme);
         }
     }
 
@@ -470,17 +470,17 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             docs: header.docs,
             isOptional: this.context.isOptional(header.valueType),
             typeReference: header.valueType
-        }
+        };
     }
 
     private getHeaderValue({
         prefix,
         parameterName
     }: {
-        prefix: string | undefined
-        parameterName: string
+        prefix: string | undefined;
+        parameterName: string;
     }): php.CodeBlock {
-        return php.codeblock(prefix != null ? `"${prefix} $${parameterName}"` : `$${parameterName}`)
+        return php.codeblock(prefix != null ? `"${prefix} $${parameterName}"` : `$${parameterName}`);
     }
 
     private getAuthParameterTypeReference({
@@ -488,38 +488,38 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         envVar,
         isOptional
     }: {
-        typeReference: TypeReference
-        envVar: string | undefined
-        isOptional: boolean
+        typeReference: TypeReference;
+        envVar: string | undefined;
+        isOptional: boolean;
     }): TypeReference {
         // If the parameter is backed by an environment variable,
         // it should be treated as optional.
         return envVar != null || isOptional
             ? TypeReference.container(ContainerType.optional(typeReference))
-            : typeReference
+            : typeReference;
     }
 
     private getLiteralRootClientParameterType({ literal }: { literal: Literal }): php.Type {
         switch (literal.type) {
             case "string":
-                return php.Type.optional(php.Type.string())
+                return php.Type.optional(php.Type.string());
             case "boolean":
-                return php.Type.optional(php.Type.bool())
+                return php.Type.optional(php.Type.bool());
             default:
-                assertNever(literal)
+                assertNever(literal);
         }
     }
 
     private getAuthParameterDocs({ docs, name }: { docs: string | undefined; name: string }): string {
-        return docs ?? `The ${name} to use for authentication.`
+        return docs ?? `The ${name} to use for authentication.`;
     }
 
     private getRootSubpackages(): Subpackage[] {
         return this.context.ir.rootPackage.subpackages
             .map((subpackageId) => {
-                return this.context.getSubpackageOrThrow(subpackageId)
+                return this.context.getSubpackageOrThrow(subpackageId);
             })
-            .filter((subpackage) => this.context.shouldGenerateSubpackageClient(subpackage))
+            .filter((subpackage) => this.context.shouldGenerateSubpackageClient(subpackage));
     }
 
     private newRootClientFile(class_: php.Class): PhpFile {
@@ -528,6 +528,6 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             directory: RelativeFilePath.of(""),
             rootNamespace: this.context.getRootNamespace(),
             customConfig: this.context.customConfig
-        })
+        });
     }
 }

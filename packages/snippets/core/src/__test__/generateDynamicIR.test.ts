@@ -1,6 +1,6 @@
-import { OpenAPI } from "openapi-types"
+import { OpenAPI } from "openapi-types";
 
-import { generateDynamicIR } from "../generateDynamicIR"
+import { generateDynamicIR } from "../generateDynamicIR";
 
 describe("generateDynamicIR", () => {
     it("go", async () => {
@@ -54,7 +54,7 @@ describe("generateDynamicIR", () => {
                     }
                 }
             }
-        }
+        };
         const ir = generateDynamicIR({
             spec: {
                 type: "openapi",
@@ -66,7 +66,7 @@ describe("generateDynamicIR", () => {
                 }
             },
             language: "go"
-        })
-        expect(ir).toMatchSnapshot()
-    })
-})
+        });
+        expect(ir).toMatchSnapshot();
+    });
+});

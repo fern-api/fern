@@ -1,7 +1,7 @@
-import { AbstractAstNode, AbstractFormatter } from "@fern-api/browser-compatible-base-generator"
+import { AbstractAstNode, AbstractFormatter } from "@fern-api/browser-compatible-base-generator";
 
-import { BaseGoCustomConfigSchema } from "../../custom-config/BaseGoCustomConfigSchema"
-import { GoFile } from "./GoFile"
+import { BaseGoCustomConfigSchema } from "../../custom-config/BaseGoCustomConfigSchema";
+import { GoFile } from "./GoFile";
 
 export abstract class AstNode extends AbstractAstNode {
     /**
@@ -14,11 +14,11 @@ export abstract class AstNode extends AbstractAstNode {
         customConfig,
         formatter
     }: {
-        packageName: string
-        rootImportPath: string
-        importPath: string
-        customConfig: BaseGoCustomConfigSchema
-        formatter?: AbstractFormatter
+        packageName: string;
+        rootImportPath: string;
+        importPath: string;
+        customConfig: BaseGoCustomConfigSchema;
+        formatter?: AbstractFormatter;
     }): Promise<string> {
         const file = new GoFile({
             packageName,
@@ -26,9 +26,9 @@ export abstract class AstNode extends AbstractAstNode {
             importPath,
             customConfig,
             formatter
-        })
-        this.write(file)
-        return file.toStringAsync()
+        });
+        this.write(file);
+        return file.toStringAsync();
     }
 
     /**
@@ -41,11 +41,11 @@ export abstract class AstNode extends AbstractAstNode {
         customConfig,
         formatter
     }: {
-        packageName: string
-        rootImportPath: string
-        importPath: string
-        customConfig: BaseGoCustomConfigSchema
-        formatter?: AbstractFormatter
+        packageName: string;
+        rootImportPath: string;
+        importPath: string;
+        customConfig: BaseGoCustomConfigSchema;
+        formatter?: AbstractFormatter;
     }): string {
         const file = new GoFile({
             packageName,
@@ -53,8 +53,8 @@ export abstract class AstNode extends AbstractAstNode {
             importPath,
             customConfig,
             formatter
-        })
-        this.write(file)
-        return file.toString()
+        });
+        this.write(file);
+        return file.toString();
     }
 }

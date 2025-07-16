@@ -1,6 +1,6 @@
-import { CSharpFile, FileGenerator } from "@fern-api/csharp-base"
-import { csharp } from "@fern-api/csharp-codegen"
-import { RelativeFilePath, join } from "@fern-api/fs-utils"
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
+import { csharp } from "@fern-api/csharp-codegen";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import {
     ExampleObjectType,
@@ -8,34 +8,34 @@ import {
     ObjectProperty,
     ObjectTypeDeclaration,
     TypeDeclaration
-} from "@fern-fern/ir-sdk/api"
+} from "@fern-fern/ir-sdk/api";
 
-import { ModelCustomConfigSchema } from "../ModelCustomConfig"
-import { ModelGeneratorContext } from "../ModelGeneratorContext"
-import { generateFields } from "../generateFields"
-import { ExampleGenerator } from "../snippets/ExampleGenerator"
+import { ModelCustomConfigSchema } from "../ModelCustomConfig";
+import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { generateFields } from "../generateFields";
+import { ExampleGenerator } from "../snippets/ExampleGenerator";
 
 export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
-    private readonly typeDeclaration: TypeDeclaration
-    private readonly classReference: csharp.ClassReference
-    private readonly exampleGenerator: ExampleGenerator
+    private readonly typeDeclaration: TypeDeclaration;
+    private readonly classReference: csharp.ClassReference;
+    private readonly exampleGenerator: ExampleGenerator;
     constructor(
         context: ModelGeneratorContext,
         typeDeclaration: TypeDeclaration,
         private readonly objectDeclaration: ObjectTypeDeclaration
     ) {
-        super(context)
-        this.typeDeclaration = typeDeclaration
-        this.classReference = this.context.csharpTypeMapper.convertToClassReference(this.typeDeclaration.name)
-        this.exampleGenerator = new ExampleGenerator(context)
+        super(context);
+        this.typeDeclaration = typeDeclaration;
+        this.classReference = this.context.csharpTypeMapper.convertToClassReference(this.typeDeclaration.name);
+        this.exampleGenerator = new ExampleGenerator(context);
     }
 
     public doGenerate(): CSharpFile {
-        const interfaces = []
+        const interfaces = [];
         if (this.context.generateNewAdditionalProperties()) {
-            interfaces.push(this.context.getIJsonOnDeserializedInterfaceReference())
+            interfaces.push(this.context.getIJsonOnDeserializedInterfaceReference());
             if (this.objectDeclaration.extraProperties) {
-                interfaces.push(this.context.getIJsonOnSerializingInterfaceReference())
+                interfaces.push(this.context.getIJsonOnSerializingInterfaceReference());
             }
         }
 
@@ -46,22 +46,22 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
             type: csharp.Class.ClassType.Record,
             interfaceReferences: interfaces,
             annotations: [this.context.getSerializableAttribute()]
-        })
-        const properties = [...this.objectDeclaration.properties, ...(this.objectDeclaration.extendedProperties ?? [])]
-        class_.addFields(generateFields({ properties, className: this.classReference.name, context: this.context }))
+        });
+        const properties = [...this.objectDeclaration.properties, ...(this.objectDeclaration.extendedProperties ?? [])];
+        class_.addFields(generateFields({ properties, className: this.classReference.name, context: this.context }));
 
-        this.addExtensionDataField(class_)
-        this.addAdditionalPropertiesProperty(class_)
-        this.addOnDeserialized(class_)
-        this.addOnSerializing(class_)
+        this.addExtensionDataField(class_);
+        this.addAdditionalPropertiesProperty(class_);
+        this.addOnDeserialized(class_);
+        this.addOnSerializing(class_);
 
-        class_.addMethod(this.context.getToStringMethod())
+        class_.addMethod(this.context.getToStringMethod());
 
         if (this.shouldAddProtobufMappers(this.typeDeclaration)) {
             this.addProtobufMappers({
                 class_,
                 properties
-            })
+            });
         }
 
         return new CSharpFile({
@@ -71,7 +71,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
             namespace: this.context.getNamespace(),
             customConfig: this.context.customConfig
-        })
+        });
     }
 
     private addExtensionDataField(class_: csharp.Class): void {
@@ -95,7 +95,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
                         ? csharp.codeblock("new Dictionary<string, object?>()")
                         : csharp.codeblock("new Dictionary<string, JsonElement>()")
                 })
-            )
+            );
         }
     }
 
@@ -113,7 +113,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
                     set: this.objectDeclaration.extraProperties ? true : csharp.Access.Private,
                     initializer: csharp.codeblock("new()")
                 })
-            )
+            );
         } else {
             class_.addField(
                 csharp.field({
@@ -129,7 +129,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
                     get: csharp.Access.Public,
                     initializer: csharp.codeblock("new Dictionary<string, JsonElement>()")
                 })
-            )
+            );
         }
     }
 
@@ -144,7 +144,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
                         bodyType: csharp.Method.BodyType.Expression,
                         body: csharp.codeblock("AdditionalProperties.CopyToExtensionData(_extensionData)")
                     })
-                )
+                );
             }
         }
     }
@@ -159,7 +159,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
                     bodyType: csharp.Method.BodyType.Expression,
                     body: csharp.codeblock("AdditionalProperties.CopyFromExtensionData(_extensionData)")
                 })
-            )
+            );
         }
     }
 
@@ -167,33 +167,33 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
         exampleObject,
         parseDatetimes
     }: {
-        exampleObject: ExampleObjectType
-        parseDatetimes: boolean
+        exampleObject: ExampleObjectType;
+        parseDatetimes: boolean;
     }): csharp.CodeBlock {
         const args = exampleObject.properties.map((exampleProperty) => {
             const propertyName = this.getPropertyName({
                 className: this.classReference.name,
                 objectProperty: exampleProperty.name
-            })
+            });
             const assignment = this.exampleGenerator.getSnippetForTypeReference({
                 exampleTypeReference: exampleProperty.value,
                 parseDatetimes
-            })
+            });
             // todo: considering filtering out "assignments" are are actually just null so that null properties
             // are completely excluded from object initializers
-            return { name: propertyName, assignment }
-        })
+            return { name: propertyName, assignment };
+        });
         const instantiateClass = csharp.instantiateClass({
             classReference: this.classReference,
             arguments_: args
-        })
-        return csharp.codeblock((writer) => writer.writeNode(instantiateClass))
+        });
+        return csharp.codeblock((writer) => writer.writeNode(instantiateClass));
     }
 
     private addProtobufMappers({ class_, properties }: { class_: csharp.Class; properties: ObjectProperty[] }): void {
         const protobufClassReference = this.context.protobufResolver.getProtobufClassReferenceOrThrow(
             this.typeDeclaration.name.typeId
-        )
+        );
         const protoProperties = properties.map((property) => {
             return {
                 propertyName: this.getPropertyName({
@@ -201,22 +201,22 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
                     objectProperty: property.name
                 }),
                 typeReference: property.valueType
-            }
-        })
+            };
+        });
         class_.addMethod(
             this.context.csharpProtobufTypeMapper.toProtoMethod({
                 classReference: this.classReference,
                 protobufClassReference,
                 properties: protoProperties
             })
-        )
+        );
         class_.addMethod(
             this.context.csharpProtobufTypeMapper.fromProtoMethod({
                 classReference: this.classReference,
                 protobufClassReference,
                 properties: protoProperties
             })
-        )
+        );
     }
 
     /**
@@ -226,24 +226,24 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
         className,
         objectProperty
     }: {
-        className: string
-        objectProperty: NameAndWireValue
+        className: string;
+        objectProperty: NameAndWireValue;
     }): string {
-        const propertyName = this.context.getPascalCaseSafeName(objectProperty.name)
+        const propertyName = this.context.getPascalCaseSafeName(objectProperty.name);
         if (propertyName === className) {
-            return `${propertyName}_`
+            return `${propertyName}_`;
         }
-        return propertyName
+        return propertyName;
     }
 
     private shouldAddProtobufMappers(typeDeclaration: TypeDeclaration): boolean {
-        return typeDeclaration.encoding?.proto != null
+        return typeDeclaration.encoding?.proto != null;
     }
 
     protected getFilepath(): RelativeFilePath {
         return join(
             this.context.project.filepaths.getSourceFileDirectory(),
             RelativeFilePath.of(this.classReference.name + ".cs")
-        )
+        );
     }
 }

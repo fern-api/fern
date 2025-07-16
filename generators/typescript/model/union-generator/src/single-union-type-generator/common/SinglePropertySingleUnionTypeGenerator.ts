@@ -1,28 +1,28 @@
-import { TypeReferenceNode, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons"
-import { ModelContext } from "@fern-typescript/contexts"
-import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph"
+import { TypeReferenceNode, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
+import { ModelContext } from "@fern-typescript/contexts";
+import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
-import { SingleUnionTypeGenerator } from "../SingleUnionTypeGenerator"
+import { SingleUnionTypeGenerator } from "../SingleUnionTypeGenerator";
 
 export declare namespace SinglePropertySingleUnionTypeGenerator {
     export interface Init<Context> {
-        propertyName: string
-        getReferenceToPropertyType: (context: Context) => TypeReferenceNode
-        getReferenceToPropertyTypeForInlineUnion: (context: Context) => TypeReferenceNode
-        noOptionalProperties: boolean
-        enableInlineTypes: boolean
+        propertyName: string;
+        getReferenceToPropertyType: (context: Context) => TypeReferenceNode;
+        getReferenceToPropertyTypeForInlineUnion: (context: Context) => TypeReferenceNode;
+        noOptionalProperties: boolean;
+        enableInlineTypes: boolean;
     }
 }
 
 export class SinglePropertySingleUnionTypeGenerator<Context extends ModelContext>
     implements SingleUnionTypeGenerator<Context>
 {
-    private static BUILDER_PARAMETER_NAME = "value"
+    private static BUILDER_PARAMETER_NAME = "value";
 
-    private propertyName: string
-    private getReferenceToPropertyType: (context: Context) => TypeReferenceNode
-    private getReferenceToPropertyTypeForInlineUnion: (context: Context) => TypeReferenceNode
-    private noOptionalProperties: boolean
+    private propertyName: string;
+    private getReferenceToPropertyType: (context: Context) => TypeReferenceNode;
+    private getReferenceToPropertyTypeForInlineUnion: (context: Context) => TypeReferenceNode;
+    private noOptionalProperties: boolean;
 
     constructor({
         propertyName,
@@ -30,15 +30,15 @@ export class SinglePropertySingleUnionTypeGenerator<Context extends ModelContext
         getReferenceToPropertyTypeForInlineUnion,
         noOptionalProperties
     }: SinglePropertySingleUnionTypeGenerator.Init<Context>) {
-        this.propertyName = propertyName
-        this.getReferenceToPropertyType = getReferenceToPropertyType
-        this.getReferenceToPropertyTypeForInlineUnion = getReferenceToPropertyTypeForInlineUnion
-        this.noOptionalProperties = noOptionalProperties
+        this.propertyName = propertyName;
+        this.getReferenceToPropertyType = getReferenceToPropertyType;
+        this.getReferenceToPropertyTypeForInlineUnion = getReferenceToPropertyTypeForInlineUnion;
+        this.noOptionalProperties = noOptionalProperties;
     }
 
     public generateForInlineUnion(context: Context): ts.TypeNode {
-        const typeReference = this.getReferenceToPropertyTypeForInlineUnion(context)
-        const hasOptionalToken = !this.noOptionalProperties && typeReference.isOptional
+        const typeReference = this.getReferenceToPropertyTypeForInlineUnion(context);
+        const hasOptionalToken = !this.noOptionalProperties && typeReference.isOptional;
         return ts.factory.createTypeLiteralNode([
             ts.factory.createPropertySignature(
                 undefined,
@@ -46,34 +46,34 @@ export class SinglePropertySingleUnionTypeGenerator<Context extends ModelContext
                 hasOptionalToken ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
                 this.noOptionalProperties ? typeReference.typeNode : typeReference.typeNodeWithoutUndefined
             )
-        ])
+        ]);
     }
 
     public getExtendsForInterface(): ts.TypeNode[] {
-        return []
+        return [];
     }
 
     public getDiscriminantPropertiesForInterface(context: Context): OptionalKind<PropertySignatureStructure>[] {
-        return []
+        return [];
     }
 
     public generateModule(context: Context): ModuleDeclarationStructure | undefined {
-        return undefined
+        return undefined;
     }
 
     public getNonDiscriminantPropertiesForInterface(context: Context): OptionalKind<PropertySignatureStructure>[] {
-        const type = this.getReferenceToPropertyType(context)
+        const type = this.getReferenceToPropertyType(context);
         return [
             {
                 name: getPropertyKey(this.propertyName),
                 type: getTextOfTsNode(this.noOptionalProperties ? type.typeNode : type.typeNodeWithoutUndefined),
                 hasQuestionToken: !this.noOptionalProperties && type.isOptional
             }
-        ]
+        ];
     }
 
     public getParametersForBuilder(context: Context): ts.ParameterDeclaration[] {
-        const type = this.getReferenceToPropertyType(context)
+        const type = this.getReferenceToPropertyType(context);
         return [
             ts.factory.createParameterDeclaration(
                 undefined,
@@ -83,7 +83,7 @@ export class SinglePropertySingleUnionTypeGenerator<Context extends ModelContext
                 type.isOptional ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
                 type.typeNodeWithoutUndefined
             )
-        ]
+        ];
     }
 
     public getNonDiscriminantPropertiesForBuilder(): ts.ObjectLiteralElementLike[] {
@@ -92,22 +92,22 @@ export class SinglePropertySingleUnionTypeGenerator<Context extends ModelContext
                 getPropertyKey(this.propertyName),
                 ts.factory.createIdentifier(SinglePropertySingleUnionTypeGenerator.BUILDER_PARAMETER_NAME)
             )
-        ]
+        ];
     }
 
     public getVisitMethodParameterType(context: Context): ts.TypeNode {
-        return this.getReferenceToPropertyType(context).typeNode
+        return this.getReferenceToPropertyType(context).typeNode;
     }
 
     public getVisitorArguments({
         localReferenceToUnionValue
     }: {
-        localReferenceToUnionValue: ts.Expression
+        localReferenceToUnionValue: ts.Expression;
     }): ts.Expression[] {
-        return [ts.factory.createPropertyAccessExpression(localReferenceToUnionValue, this.propertyName)]
+        return [ts.factory.createPropertyAccessExpression(localReferenceToUnionValue, this.propertyName)];
     }
 
     public getBuilderArgsFromExistingValue(existingValue: ts.Expression): ts.Expression[] {
-        return [ts.factory.createPropertyAccessExpression(existingValue, this.propertyName)]
+        return [ts.factory.createPropertyAccessExpression(existingValue, this.propertyName)];
     }
 }

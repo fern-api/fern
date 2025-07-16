@@ -1,23 +1,23 @@
-import { ZodError } from "zod"
+import { ZodError } from "zod";
 
-import { validateAgainstJsonSchema } from "@fern-api/core-utils"
-import { RelativeFilePath } from "@fern-api/fs-utils"
+import { validateAgainstJsonSchema } from "@fern-api/core-utils";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 
-import { ConjureWorkspace } from "../ConjureWorkspace"
-import { LazyFernWorkspace } from "../LazyFernWorkspace"
-import { OSSWorkspace } from "../OSSWorkspace"
+import { ConjureWorkspace } from "../ConjureWorkspace";
+import { LazyFernWorkspace } from "../LazyFernWorkspace";
+import { OSSWorkspace } from "../OSSWorkspace";
 
 export declare namespace WorkspaceLoader {
-    export type Result = SuccessfulResult | FailedResult
+    export type Result = SuccessfulResult | FailedResult;
 
     export interface SuccessfulResult {
-        didSucceed: true
-        workspace: LazyFernWorkspace | OSSWorkspace | ConjureWorkspace
+        didSucceed: true;
+        workspace: LazyFernWorkspace | OSSWorkspace | ConjureWorkspace;
     }
 
     export interface FailedResult {
-        didSucceed: false
-        failures: Record<RelativeFilePath, Failure>
+        didSucceed: false;
+        failures: Record<RelativeFilePath, Failure>;
     }
 
     export type Failure =
@@ -26,29 +26,29 @@ export declare namespace WorkspaceLoader {
         | MissingFileFailure
         | StructureValidationFailure
         | DependencyFailure
-        | JsonSchemaValidationFailure
+        | JsonSchemaValidationFailure;
 
     export interface FileReadFailure {
-        type: WorkspaceLoaderFailureType.FILE_READ
-        error: unknown
+        type: WorkspaceLoaderFailureType.FILE_READ;
+        error: unknown;
     }
 
     export interface FileParseFailure {
-        type: WorkspaceLoaderFailureType.FILE_PARSE
-        error: unknown
+        type: WorkspaceLoaderFailureType.FILE_PARSE;
+        error: unknown;
     }
 
     export interface MissingFileFailure {
-        type: WorkspaceLoaderFailureType.FILE_MISSING
+        type: WorkspaceLoaderFailureType.FILE_MISSING;
     }
 
     export interface MisconfiguredDirectoryFailure {
-        type: WorkspaceLoaderFailureType.MISCONFIGURED_DIRECTORY
+        type: WorkspaceLoaderFailureType.MISCONFIGURED_DIRECTORY;
     }
 
     export interface StructureValidationFailure {
-        type: WorkspaceLoaderFailureType.STRUCTURE_VALIDATION
-        error: ZodError
+        type: WorkspaceLoaderFailureType.STRUCTURE_VALIDATION;
+        error: ZodError;
     }
 
     export type DependencyFailure =
@@ -56,31 +56,31 @@ export declare namespace WorkspaceLoader {
         | FailedToLoadDependencyFailure
         | ExportPackageHasDefinitionsFailure
         | ExportingPackageMarkerHasOtherKeysFailure
-        | MisconfiguredDirectoryFailure
+        | MisconfiguredDirectoryFailure;
 
     export interface DependencyNotListedFailure {
-        type: WorkspaceLoaderFailureType.DEPENDENCY_NOT_LISTED
-        dependencyName: string
+        type: WorkspaceLoaderFailureType.DEPENDENCY_NOT_LISTED;
+        dependencyName: string;
     }
 
     export interface FailedToLoadDependencyFailure {
-        type: WorkspaceLoaderFailureType.FAILED_TO_LOAD_DEPENDENCY
-        dependencyName: string
+        type: WorkspaceLoaderFailureType.FAILED_TO_LOAD_DEPENDENCY;
+        dependencyName: string;
     }
 
     export interface ExportPackageHasDefinitionsFailure {
-        type: WorkspaceLoaderFailureType.EXPORT_PACKAGE_HAS_DEFINITIONS
-        pathToPackage: RelativeFilePath
+        type: WorkspaceLoaderFailureType.EXPORT_PACKAGE_HAS_DEFINITIONS;
+        pathToPackage: RelativeFilePath;
     }
 
     export interface ExportingPackageMarkerHasOtherKeysFailure {
-        type: WorkspaceLoaderFailureType.EXPORTING_PACKAGE_MARKER_OTHER_KEYS
-        pathOfPackageMarker: RelativeFilePath
+        type: WorkspaceLoaderFailureType.EXPORTING_PACKAGE_MARKER_OTHER_KEYS;
+        pathOfPackageMarker: RelativeFilePath;
     }
 
     export interface JsonSchemaValidationFailure {
-        type: WorkspaceLoaderFailureType.JSONSCHEMA_VALIDATION
-        error: validateAgainstJsonSchema.ValidationFailure
+        type: WorkspaceLoaderFailureType.JSONSCHEMA_VALIDATION;
+        error: validateAgainstJsonSchema.ValidationFailure;
     }
 }
 

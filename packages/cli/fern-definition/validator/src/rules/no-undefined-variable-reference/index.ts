@@ -1,1 +1,1 @@
-export { NoUndefinedVariableReferenceRule } from "./no-undefined-variable-reference"
+export { NoUndefinedVariableReferenceRule } from "./no-undefined-variable-reference";

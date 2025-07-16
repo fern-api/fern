@@ -1,4 +1,4 @@
-import { HttpEndpointSchema } from "../schemas"
+import { HttpEndpointSchema } from "../schemas";
 
 export function isSimpleStreamResponseSchema(endpoint: HttpEndpointSchema): boolean {
     return (
@@ -6,5 +6,5 @@ export function isSimpleStreamResponseSchema(endpoint: HttpEndpointSchema): bool
         (typeof endpoint["response-stream"] === "string" ||
             endpoint["response-stream"].format == null ||
             endpoint["response-stream"].format === "json")
-    )
+    );
 }

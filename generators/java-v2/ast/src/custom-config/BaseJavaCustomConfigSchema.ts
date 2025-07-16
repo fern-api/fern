@@ -1,4 +1,4 @@
-import { z } from "zod"
+import { z } from "zod";
 
 export const BaseJavaCustomConfigSchema = z.object({
     // Influences dynamic snippets.
@@ -21,6 +21,6 @@ export const BaseJavaCustomConfigSchema = z.object({
 
     // Deprecated.
     "wrapped-aliases": z.boolean().optional()
-})
+});
 
-export type BaseJavaCustomConfigSchema = z.infer<typeof BaseJavaCustomConfigSchema>
+export type BaseJavaCustomConfigSchema = z.infer<typeof BaseJavaCustomConfigSchema>;

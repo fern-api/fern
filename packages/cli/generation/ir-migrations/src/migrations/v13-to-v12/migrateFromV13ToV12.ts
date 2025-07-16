@@ -1,9 +1,13 @@
-import { mapValues } from "lodash-es"
+import { mapValues } from "lodash-es";
 
-import { GeneratorName } from "@fern-api/configuration-loader"
+import { GeneratorName } from "@fern-api/configuration-loader";
 
-import { IrVersions } from "../../ir-versions"
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
+import { IrVersions } from "../../ir-versions";
+import {
+    GeneratorWasNeverUpdatedToConsumeNewIR,
+    GeneratorWasNotCreatedYet,
+    IrMigration
+} from "../../types/IrMigration";
 
 export const V13_TO_V12_MIGRATION: IrMigration<
     IrVersions.V13.ir.IntermediateRepresentation,
@@ -49,7 +53,7 @@ export const V13_TO_V12_MIGRATION: IrMigration<
                     return {
                         ...type,
                         shape: type.shape
-                    }
+                    };
                 }
                 return {
                     ...type,
@@ -57,21 +61,21 @@ export const V13_TO_V12_MIGRATION: IrMigration<
                         docs: undefined,
                         members: type.shape.members
                     })
-                }
+                };
             }),
             auth: {
                 ...v13.auth,
                 schemes: v13.auth.schemes.map((scheme) => {
                     if (scheme._type !== "header") {
-                        return scheme
+                        return scheme;
                     }
                     return {
                         ...scheme,
                         name: scheme.name.name,
                         header: scheme.name.wireValue
-                    }
+                    };
                 })
             }
-        }
+        };
     }
-}
+};

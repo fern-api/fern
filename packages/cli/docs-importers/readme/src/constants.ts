@@ -7,7 +7,7 @@ export const defaultColors = {
         dark: undefined,
         light: undefined
     }
-}
+};
 
 export const ESCAPED_COMPONENTS = [
     "Accordion",
@@ -27,4 +27,4 @@ export const ESCAPED_COMPONENTS = [
     "Tabs",
     "Tab",
     "Tooltip"
-] as const
+] as const;

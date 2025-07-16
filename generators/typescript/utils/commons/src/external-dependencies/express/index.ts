@@ -1,1 +1,1 @@
-export { type Express, type ExpressHttpVerb } from "./Express"
+export { type Express, type ExpressHttpVerb } from "./Express";

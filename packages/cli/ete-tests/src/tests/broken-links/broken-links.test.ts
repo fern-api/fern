@@ -1,16 +1,16 @@
-import stripAnsi from "strip-ansi"
+import stripAnsi from "strip-ansi";
 
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { runFernCli } from "../../utils/runFernCli"
+import { runFernCli } from "../../utils/runFernCli";
 
-const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"))
+const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 describe("fern docs broken-links", () => {
     it("simple broken links", async () => {
         const { stdout } = await runFernCli(["docs", "broken-links"], {
             cwd: join(fixturesDir, RelativeFilePath.of("simple")),
             reject: false
-        })
+        });
         expect(
             stripAnsi(stdout)
                 // The expected stdout for the "simple" fixture includes
@@ -18,6 +18,6 @@ describe("fern docs broken-links", () => {
                 // So, we truncate the last 15 characters to remove the
                 // variable part of the output.
                 .slice(0, -15)
-        ).toMatchSnapshot()
-    }, 20_000)
-})
+        ).toMatchSnapshot();
+    }, 20_000);
+});

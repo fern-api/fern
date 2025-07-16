@@ -1,4 +1,4 @@
-import { z } from "zod"
+import { z } from "zod";
 
 export const PypiOutputLocationSchema = z.strictObject({
     location: z.literal("pypi"),
@@ -7,6 +7,6 @@ export const PypiOutputLocationSchema = z.strictObject({
     token: z.optional(z.string()),
     username: z.optional(z.string()),
     password: z.optional(z.string())
-})
+});
 
-export type PostmanOutputLocationSchema = z.infer<typeof PypiOutputLocationSchema>
+export type PostmanOutputLocationSchema = z.infer<typeof PypiOutputLocationSchema>;

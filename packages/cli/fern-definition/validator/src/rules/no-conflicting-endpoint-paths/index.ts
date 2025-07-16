@@ -1,1 +1,1 @@
-export { NoConflictingEndpointPathsRule } from "./no-conflicting-endpoint-paths"
+export { NoConflictingEndpointPathsRule } from "./no-conflicting-endpoint-paths";

@@ -1,9 +1,9 @@
-import { AbstractGeneratorCli, parseIR } from "@fern-api/base-generator"
-import { AbsoluteFilePath } from "@fern-api/fs-utils"
-import { AbstractRubyGeneratorContext, BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast"
+import { AbstractGeneratorCli, parseIR } from "@fern-api/base-generator";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbstractRubyGeneratorContext, BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast";
 
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api"
-import * as IrSerialization from "@fern-fern/ir-sdk/serialization"
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 
 export abstract class AbstractRubyGeneratorCli<
     CustomConfig extends BaseRubyCustomConfigSchema,
@@ -18,6 +18,6 @@ export abstract class AbstractRubyGeneratorCli<
         return await parseIR<IntermediateRepresentation>({
             absolutePathToIR: AbsoluteFilePath.of(irFilepath),
             parse: IrSerialization.IntermediateRepresentation.parse
-        })
+        });
     }
 }

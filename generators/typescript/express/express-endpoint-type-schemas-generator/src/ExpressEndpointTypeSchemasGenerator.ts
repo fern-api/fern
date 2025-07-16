@@ -1,32 +1,32 @@
-import { PackageId } from "@fern-typescript/commons"
-import { GeneratedExpressEndpointTypeSchemas } from "@fern-typescript/contexts"
+import { PackageId } from "@fern-typescript/commons";
+import { GeneratedExpressEndpointTypeSchemas } from "@fern-typescript/contexts";
 
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api"
+import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
 
-import { GeneratedExpressEndpointTypeSchemasImpl } from "./GeneratedExpressEndpointTypeSchemasImpl"
+import { GeneratedExpressEndpointTypeSchemasImpl } from "./GeneratedExpressEndpointTypeSchemasImpl";
 
 export declare namespace ExpressEndpointTypeSchemasGenerator {
     export interface Init {
-        includeSerdeLayer: boolean
-        allowExtraFields: boolean
-        skipRequestValidation: boolean
-        skipResponseValidation: boolean
+        includeSerdeLayer: boolean;
+        allowExtraFields: boolean;
+        skipRequestValidation: boolean;
+        skipResponseValidation: boolean;
     }
 
     export namespace generateEndpointTypeSchemas {
         export interface Args {
-            packageId: PackageId
-            service: HttpService
-            endpoint: HttpEndpoint
+            packageId: PackageId;
+            service: HttpService;
+            endpoint: HttpEndpoint;
         }
     }
 }
 
 export class ExpressEndpointTypeSchemasGenerator {
-    private includeSerdeLayer: boolean
-    private allowExtraFields: boolean
-    private skipRequestValidation: boolean
-    private skipResponseValidation: boolean
+    private includeSerdeLayer: boolean;
+    private allowExtraFields: boolean;
+    private skipRequestValidation: boolean;
+    private skipResponseValidation: boolean;
 
     constructor({
         includeSerdeLayer,
@@ -34,10 +34,10 @@ export class ExpressEndpointTypeSchemasGenerator {
         skipRequestValidation,
         skipResponseValidation
     }: ExpressEndpointTypeSchemasGenerator.Init) {
-        this.includeSerdeLayer = includeSerdeLayer
-        this.allowExtraFields = allowExtraFields
-        this.skipRequestValidation = skipRequestValidation
-        this.skipResponseValidation = skipResponseValidation
+        this.includeSerdeLayer = includeSerdeLayer;
+        this.allowExtraFields = allowExtraFields;
+        this.skipRequestValidation = skipRequestValidation;
+        this.skipResponseValidation = skipResponseValidation;
     }
 
     public generateEndpointTypeSchemas({
@@ -53,6 +53,6 @@ export class ExpressEndpointTypeSchemasGenerator {
             allowExtraFields: this.allowExtraFields,
             skipRequestValidation: this.skipRequestValidation,
             skipResponseValidation: this.skipResponseValidation
-        })
+        });
     }
 }

@@ -1,9 +1,13 @@
-import { upperFirst } from "lodash-es"
+import { upperFirst } from "lodash-es";
 
-import { GeneratorName } from "@fern-api/configuration-loader"
+import { GeneratorName } from "@fern-api/configuration-loader";
 
-import { IrVersions } from "../../ir-versions"
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
+import { IrVersions } from "../../ir-versions";
+import {
+    GeneratorWasNeverUpdatedToConsumeNewIR,
+    GeneratorWasNotCreatedYet,
+    IrMigration
+} from "../../types/IrMigration";
 
 export const V7_TO_V6_MIGRATION: IrMigration<
     IrVersions.V7.ir.IntermediateRepresentation,
@@ -45,16 +49,16 @@ export const V7_TO_V6_MIGRATION: IrMigration<
         return {
             ...v7,
             services: v7.services.map((service) => {
-                const lastFernFilepathPart = service.name.fernFilepath[service.name.fernFilepath.length - 1]
+                const lastFernFilepathPart = service.name.fernFilepath[service.name.fernFilepath.length - 1];
 
                 const originalName =
-                    lastFernFilepathPart != null ? `${lastFernFilepathPart.pascalCase.safeName}Service` : "Service"
+                    lastFernFilepathPart != null ? `${lastFernFilepathPart.pascalCase.safeName}Service` : "Service";
                 const camelCase =
-                    lastFernFilepathPart != null ? `${lastFernFilepathPart.camelCase.unsafeName}Service` : "Service"
+                    lastFernFilepathPart != null ? `${lastFernFilepathPart.camelCase.unsafeName}Service` : "Service";
                 const snakeCase =
-                    lastFernFilepathPart != null ? `${lastFernFilepathPart.snakeCase.unsafeName}_service` : "service"
-                const screamingSnakeCase = snakeCase.toUpperCase()
-                const pascalCase = upperFirst(camelCase)
+                    lastFernFilepathPart != null ? `${lastFernFilepathPart.snakeCase.unsafeName}_service` : "service";
+                const screamingSnakeCase = snakeCase.toUpperCase();
+                const pascalCase = upperFirst(camelCase);
 
                 return {
                     ...service,
@@ -80,8 +84,8 @@ export const V7_TO_V6_MIGRATION: IrMigration<
                         },
                         fernFilepath: service.name.fernFilepath
                     }
-                }
+                };
             })
-        }
+        };
     }
-}
+};

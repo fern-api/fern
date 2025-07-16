@@ -1,54 +1,54 @@
-import { python } from ".."
-import { Writer } from "../core/Writer"
+import { python } from "..";
+import { Writer } from "../core/Writer";
 
 describe("class", () => {
-    let writer: Writer
+    let writer: Writer;
 
     beforeEach(() => {
-        writer = new Writer()
-    })
+        writer = new Writer();
+    });
 
     it("basic", async () => {
         const clazz = python.class_({
             name: "Car"
-        })
-        clazz.write(writer)
-        expect(writer.toString()).toMatchSnapshot()
-    })
+        });
+        clazz.write(writer);
+        expect(writer.toString()).toMatchSnapshot();
+    });
 
     it("fields with annotation and initializer", async () => {
         const clazz = python.class_({
             name: "Car"
-        })
-        clazz.add(python.field({ name: "color", type: python.Type.str(), initializer: python.codeBlock("'red'") }))
+        });
+        clazz.add(python.field({ name: "color", type: python.Type.str(), initializer: python.codeBlock("'red'") }));
         clazz.add(
             python.field({
                 name: "partNameById",
                 type: python.Type.dict(python.Type.int(), python.Type.str()),
                 initializer: python.codeBlock("{}")
             })
-        )
-        clazz.write(writer)
-        expect(writer.toString()).toMatchSnapshot()
-    })
+        );
+        clazz.write(writer);
+        expect(writer.toString()).toMatchSnapshot();
+    });
 
     it("inherits from one parent class", async () => {
         const clazz = python.class_({
             name: "ElectricCar",
             extends_: [python.reference({ name: "Car" })]
-        })
-        clazz.write(writer)
-        expect(writer.toString()).toMatchSnapshot()
-    })
+        });
+        clazz.write(writer);
+        expect(writer.toString()).toMatchSnapshot();
+    });
 
     it("inherits from two parent classes", async () => {
         const clazz = python.class_({
             name: "HybridCar",
             extends_: [python.reference({ name: "ElectricCar" }), python.reference({ name: "GasCar" })]
-        })
-        clazz.write(writer)
-        expect(writer.toString()).toMatchSnapshot()
-    })
+        });
+        clazz.write(writer);
+        expect(writer.toString()).toMatchSnapshot();
+    });
 
     it("inherits from a parent class imported from another module", async () => {
         const clazz = python.class_({
@@ -59,10 +59,10 @@ describe("class", () => {
                     modulePath: ["vehicles", "base"]
                 })
             ]
-        })
-        clazz.write(writer)
-        expect(writer.toString()).toMatchSnapshot()
-    })
+        });
+        clazz.write(writer);
+        expect(writer.toString()).toMatchSnapshot();
+    });
 
     it("class with a decorator", async () => {
         const clazz = python.class_({
@@ -72,38 +72,38 @@ describe("class", () => {
                     callable: python.reference({ name: "dataclass", modulePath: ["dataclasses"] })
                 })
             ]
-        })
-        clazz.write(writer)
-        expect(writer.toString()).toMatchSnapshot()
-        expect(clazz.getReferences().length).toBe(1)
-    })
+        });
+        clazz.write(writer);
+        expect(writer.toString()).toMatchSnapshot();
+        expect(clazz.getReferences().length).toBe(1);
+    });
 
     it("should generate a class with local classes", async () => {
         const clazz = python.class_({
             name: "OuterClass"
-        })
+        });
 
         const parentClassRef = python.reference({
             name: "ParentClass",
             modulePath: ["some_module"]
-        })
+        });
 
         const innerClassDef = python.class_({
             name: "InnerClass",
             extends_: [parentClassRef]
-        })
+        });
         const innerMethod = python.method({
             name: "inner_method",
             parameters: [python.parameter({ name: "self", type: python.Type.str() })]
-        })
-        innerMethod.addStatement(python.codeBlock('return "Inner method called"'))
-        innerClassDef.add(innerMethod)
+        });
+        innerMethod.addStatement(python.codeBlock('return "Inner method called"'));
+        innerClassDef.add(innerMethod);
 
-        clazz.add(innerClassDef)
+        clazz.add(innerClassDef);
 
-        clazz.write(writer)
-        expect(writer.toString()).toMatchSnapshot()
-    })
+        clazz.write(writer);
+        expect(writer.toString()).toMatchSnapshot();
+    });
 
     it("class with generic parent reference", async () => {
         const clazz = python.class_({
@@ -120,45 +120,45 @@ describe("class", () => {
                     ]
                 })
             ]
-        })
-        clazz.write(writer)
-        expect(writer.toString()).toMatchSnapshot()
+        });
+        clazz.write(writer);
+        expect(writer.toString()).toMatchSnapshot();
 
-        expect(clazz.getReferences().length).toBe(2)
-    })
+        expect(clazz.getReferences().length).toBe(2);
+    });
 
     it("class with various forms of multi-line strings", async () => {
         const clazz = python.class_({
             name: "MyClass"
-        })
+        });
         clazz.add(
             python.field({
                 name: "has_newline_chars__basic",
                 type: python.Type.str(),
                 initializer: python.TypeInstantiation.str("Hello,\nWorld!", { multiline: true })
             })
-        )
+        );
         clazz.add(
             python.field({
                 name: "has_no_newline_chars__basic",
                 type: python.Type.str(),
                 initializer: python.TypeInstantiation.str("Hello, World!", { multiline: true })
             })
-        )
+        );
         clazz.add(
             python.field({
                 name: "has_newline_chars__start_on_new_line",
                 type: python.Type.str(),
                 initializer: python.TypeInstantiation.str("Hello,\nWorld!", { multiline: true, startOnNewLine: true })
             })
-        )
+        );
         clazz.add(
             python.field({
                 name: "has_newline_chars__end_with_new_line",
                 type: python.Type.str(),
                 initializer: python.TypeInstantiation.str("Hello,\nWorld!", { multiline: true, endWithNewLine: true })
             })
-        )
+        );
         clazz.add(
             python.field({
                 name: "has_newline_chars__start_and_end_with_new_line",
@@ -169,27 +169,27 @@ describe("class", () => {
                     endWithNewLine: true
                 })
             })
-        )
+        );
 
-        clazz.write(writer)
-        expect(writer.toString()).toMatchSnapshot()
-    })
+        clazz.write(writer);
+        expect(writer.toString()).toMatchSnapshot();
+    });
 
     it("Renders docs correctly", async () => {
         const clazz = python.class_({
             name: "MyClass",
             docs: "This is a class"
-        })
-        clazz.write(writer)
-        expect(writer.toString()).toMatchSnapshot()
-    })
+        });
+        clazz.write(writer);
+        expect(writer.toString()).toMatchSnapshot();
+    });
 
     it("Renders docs with multi-line strings correctly", async () => {
         const clazz = python.class_({
             name: "MyClass",
             docs: "This is a class.\nI'm on a new line.\nSo am I."
-        })
-        clazz.write(writer)
-        expect(writer.toString()).toMatchSnapshot()
-    })
-})
+        });
+        clazz.write(writer);
+        expect(writer.toString()).toMatchSnapshot();
+    });
+});

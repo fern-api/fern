@@ -10,8 +10,8 @@ export const toJson = (
     replacer?: (this: unknown, key: string, value: unknown) => unknown,
     space?: string | number
 ): string => {
-    return JSON.stringify(value, replacer, space)
-}
+    return JSON.stringify(value, replacer, space);
+};
 
 /**
  * Parse JSON string to object, array, or other type
@@ -23,5 +23,5 @@ export function fromJson<T = unknown>(
     text: string,
     reviver?: (this: unknown, key: string, value: unknown) => unknown
 ): T {
-    return JSON.parse(text, reviver)
+    return JSON.parse(text, reviver);
 }

@@ -1,7 +1,7 @@
-import { AbstractCsharpGeneratorContext } from "@fern-api/csharp-base"
-import { csharp } from "@fern-api/csharp-codegen"
+import { AbstractCsharpGeneratorContext } from "@fern-api/csharp-base";
+import { csharp } from "@fern-api/csharp-codegen";
 
-import { UndiscriminatedUnionTypeDeclaration } from "@fern-fern/ir-sdk/api"
+import { UndiscriminatedUnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 /**
  * Returns a C# annotation used to deserialize and serialize OneOf references.
@@ -15,9 +15,9 @@ export function getUndiscriminatedUnionSerializerAnnotation({
     isList
 }: {
     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-    context: AbstractCsharpGeneratorContext<any>
-    undiscriminatedUnionDeclaration: UndiscriminatedUnionTypeDeclaration
-    isList: boolean
+    context: AbstractCsharpGeneratorContext<any>;
+    undiscriminatedUnionDeclaration: UndiscriminatedUnionTypeDeclaration;
+    isList: boolean;
 }): csharp.Annotation {
     if (isList) {
         return csharp.annotation({
@@ -26,15 +26,15 @@ export function getUndiscriminatedUnionSerializerAnnotation({
                 namespace: "System.Text.Json.Serialization"
             }),
             argument: csharp.codeblock((writer) => {
-                writer.write("typeof(")
+                writer.write("typeof(");
 
-                const oneOf = getOneOf({ context, undiscriminatedUnionDeclaration })
-                const oneOfSerializer = getOneOfSerializer({ context, undiscriminatedUnionDeclaration })
-                const collectionSerializer = context.getCollectionItemSerializerReference(oneOf, oneOfSerializer)
-                writer.writeNode(collectionSerializer)
-                writer.write(")")
+                const oneOf = getOneOf({ context, undiscriminatedUnionDeclaration });
+                const oneOfSerializer = getOneOfSerializer({ context, undiscriminatedUnionDeclaration });
+                const collectionSerializer = context.getCollectionItemSerializerReference(oneOf, oneOfSerializer);
+                writer.writeNode(collectionSerializer);
+                writer.write(")");
             })
-        })
+        });
     }
     return csharp.annotation({
         reference: csharp.classReference({
@@ -42,12 +42,12 @@ export function getUndiscriminatedUnionSerializerAnnotation({
             namespace: "System.Text.Json.Serialization"
         }),
         argument: csharp.codeblock((writer) => {
-            writer.write("typeof(")
-            const oneOfSerializer = getOneOfSerializer({ context, undiscriminatedUnionDeclaration })
-            writer.writeNode(oneOfSerializer)
-            writer.write(")")
+            writer.write("typeof(");
+            const oneOfSerializer = getOneOfSerializer({ context, undiscriminatedUnionDeclaration });
+            writer.writeNode(oneOfSerializer);
+            writer.write(")");
         })
-    })
+    });
 }
 
 function getOneOfSerializer({
@@ -55,11 +55,11 @@ function getOneOfSerializer({
     undiscriminatedUnionDeclaration
 }: {
     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-    context: AbstractCsharpGeneratorContext<any>
-    undiscriminatedUnionDeclaration: UndiscriminatedUnionTypeDeclaration
+    context: AbstractCsharpGeneratorContext<any>;
+    undiscriminatedUnionDeclaration: UndiscriminatedUnionTypeDeclaration;
 }): csharp.ClassReference {
-    const oneOf = getOneOf({ context, undiscriminatedUnionDeclaration })
-    return context.getOneOfSerializerClassReference(oneOf)
+    const oneOf = getOneOf({ context, undiscriminatedUnionDeclaration });
+    return context.getOneOfSerializerClassReference(oneOf);
 }
 
 function getOneOf({
@@ -67,12 +67,12 @@ function getOneOf({
     undiscriminatedUnionDeclaration
 }: {
     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-    context: AbstractCsharpGeneratorContext<any>
-    undiscriminatedUnionDeclaration: UndiscriminatedUnionTypeDeclaration
+    context: AbstractCsharpGeneratorContext<any>;
+    undiscriminatedUnionDeclaration: UndiscriminatedUnionTypeDeclaration;
 }): csharp.ClassReference {
     return context.getOneOfClassReference(
         undiscriminatedUnionDeclaration.members.map((member) => {
-            return context.csharpTypeMapper.convert({ reference: member.type, unboxOptionals: true })
+            return context.csharpTypeMapper.convert({ reference: member.type, unboxOptionals: true });
         })
-    )
+    );
 }

@@ -1,7 +1,7 @@
-import { PackageId, Stream, getFullPathForEndpoint, getTextOfTsNode } from "@fern-typescript/commons"
-import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts"
-import { ErrorResolver } from "@fern-typescript/resolvers"
-import { ts } from "ts-morph"
+import { PackageId, Stream, getFullPathForEndpoint, getTextOfTsNode } from "@fern-typescript/commons";
+import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
+import { ErrorResolver } from "@fern-typescript/resolvers";
+import { ts } from "ts-morph";
 
 import {
     ContainerType,
@@ -17,56 +17,56 @@ import {
     PrimitiveTypeV2,
     ResponseError,
     TypeReference
-} from "@fern-fern/ir-sdk/api"
+} from "@fern-fern/ir-sdk/api";
 
-import { GeneratedSdkClientClassImpl } from "../../../GeneratedSdkClientClassImpl"
-import { GeneratedStreamingEndpointImplementation } from "../../GeneratedStreamingEndpointImplementation"
-import { getAbortSignalExpression } from "../../utils/requestOptionsParameter"
-import { GeneratedEndpointResponse, PaginationResponseInfo } from "./GeneratedEndpointResponse"
+import { GeneratedSdkClientClassImpl } from "../../../GeneratedSdkClientClassImpl";
+import { GeneratedStreamingEndpointImplementation } from "../../GeneratedStreamingEndpointImplementation";
+import { getAbortSignalExpression } from "../../utils/requestOptionsParameter";
+import { GeneratedEndpointResponse, PaginationResponseInfo } from "./GeneratedEndpointResponse";
 import {
     CONTENT_LENGTH_RESPONSE_KEY,
     CONTENT_LENGTH_VARIABLE_NAME,
     CONTENT_TYPE_RESPONSE_KEY,
     READABLE_RESPONSE_KEY,
     getSuccessReturnType
-} from "./getSuccessReturnType"
+} from "./getSuccessReturnType";
 
 export declare namespace GeneratedThrowingEndpointResponse {
     export interface Init {
-        packageId: PackageId
-        endpoint: HttpEndpoint
+        packageId: PackageId;
+        endpoint: HttpEndpoint;
         response:
             | HttpResponseBody.Json
             | HttpResponseBody.FileDownload
             | HttpResponseBody.Streaming
             | HttpResponseBody.Text
-            | undefined
-        errorDiscriminationStrategy: ErrorDiscriminationStrategy
-        errorResolver: ErrorResolver
-        includeContentHeadersOnResponse: boolean
-        clientClass: GeneratedSdkClientClassImpl
-        streamType: "wrapper" | "web"
-        fileResponseType: "stream" | "binary-response"
+            | undefined;
+        errorDiscriminationStrategy: ErrorDiscriminationStrategy;
+        errorResolver: ErrorResolver;
+        includeContentHeadersOnResponse: boolean;
+        clientClass: GeneratedSdkClientClassImpl;
+        streamType: "wrapper" | "web";
+        fileResponseType: "stream" | "binary-response";
     }
 }
 
 export class GeneratedThrowingEndpointResponse implements GeneratedEndpointResponse {
-    public static readonly RESPONSE_VARIABLE_NAME = "_response"
+    public static readonly RESPONSE_VARIABLE_NAME = "_response";
 
-    private packageId: PackageId
-    private endpoint: HttpEndpoint
+    private packageId: PackageId;
+    private endpoint: HttpEndpoint;
     private response:
         | HttpResponseBody.Json
         | HttpResponseBody.FileDownload
         | HttpResponseBody.Streaming
         | HttpResponseBody.Text
-        | undefined
-    private errorDiscriminationStrategy: ErrorDiscriminationStrategy
-    private errorResolver: ErrorResolver
-    private includeContentHeadersOnResponse: boolean
-    private clientClass: GeneratedSdkClientClassImpl
-    private streamType: "wrapper" | "web"
-    private readonly fileResponseType: "stream" | "binary-response"
+        | undefined;
+    private errorDiscriminationStrategy: ErrorDiscriminationStrategy;
+    private errorResolver: ErrorResolver;
+    private includeContentHeadersOnResponse: boolean;
+    private clientClass: GeneratedSdkClientClassImpl;
+    private streamType: "wrapper" | "web";
+    private readonly fileResponseType: "stream" | "binary-response";
 
     constructor({
         packageId,
@@ -79,28 +79,28 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         streamType,
         fileResponseType
     }: GeneratedThrowingEndpointResponse.Init) {
-        this.packageId = packageId
-        this.endpoint = endpoint
-        this.response = response
-        this.errorDiscriminationStrategy = errorDiscriminationStrategy
-        this.errorResolver = errorResolver
-        this.includeContentHeadersOnResponse = includeContentHeadersOnResponse
-        this.clientClass = clientClass
-        this.streamType = streamType
-        this.fileResponseType = fileResponseType
+        this.packageId = packageId;
+        this.endpoint = endpoint;
+        this.response = response;
+        this.errorDiscriminationStrategy = errorDiscriminationStrategy;
+        this.errorResolver = errorResolver;
+        this.includeContentHeadersOnResponse = includeContentHeadersOnResponse;
+        this.clientClass = clientClass;
+        this.streamType = streamType;
+        this.fileResponseType = fileResponseType;
     }
 
     private getItemTypeFromListOrOptionalList(typeReference: TypeReference): TypeReference | undefined {
         if (typeReference.type === "container" && typeReference.container.type === "list") {
-            return typeReference.container.list
+            return typeReference.container.list;
         }
         if (typeReference.type === "container" && typeReference.container.type === "optional") {
-            return this.getItemTypeFromListOrOptionalList(typeReference.container.optional)
+            return this.getItemTypeFromListOrOptionalList(typeReference.container.optional);
         }
         if (typeReference.type === "container" && typeReference.container.type === "nullable") {
-            return this.getItemTypeFromListOrOptionalList(typeReference.container.nullable)
+            return this.getItemTypeFromListOrOptionalList(typeReference.container.nullable);
         }
-        return undefined
+        return undefined;
     }
 
     public getPaginationInfo(context: SdkContext): PaginationResponseInfo | undefined {
@@ -108,7 +108,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             includeContentHeadersOnResponse: this.includeContentHeadersOnResponse,
             streamType: this.streamType,
             fileResponseType: this.fileResponseType
-        })
+        });
 
         if (this.endpoint.pagination != null) {
             switch (this.endpoint.pagination.type) {
@@ -117,17 +117,17 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                         context,
                         cursor: this.endpoint.pagination,
                         successReturnType
-                    })
+                    });
                 case "offset":
                     return this.getOffsetPaginationInfo({
                         context,
                         offset: this.endpoint.pagination,
                         successReturnType
-                    })
+                    });
             }
         }
 
-        return undefined
+        return undefined;
     }
 
     private getCursorPaginationInfo({
@@ -135,72 +135,72 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         cursor,
         successReturnType
     }: {
-        context: SdkContext
-        cursor: CursorPagination
-        successReturnType: ts.TypeNode
+        context: SdkContext;
+        cursor: CursorPagination;
+        successReturnType: ts.TypeNode;
     }): PaginationResponseInfo | undefined {
-        const itemValueType = cursor.results.property.valueType
+        const itemValueType = cursor.results.property.valueType;
 
-        const itemTypeReference = this.getItemTypeFromListOrOptionalList(itemValueType)
+        const itemTypeReference = this.getItemTypeFromListOrOptionalList(itemValueType);
         if (itemTypeReference == null) {
-            return undefined
+            return undefined;
         }
 
-        const itemType = context.type.getReferenceToType(itemTypeReference).typeNode
+        const itemType = context.type.getReferenceToType(itemTypeReference).typeNode;
 
         // hasNextPage checks if next property is not null
-        const nextProperty = this.getNameFromWireValue({ name: cursor.next.property.name, context })
+        const nextProperty = this.getNameFromWireValue({ name: cursor.next.property.name, context });
         const nextPropertyPath = [
             "response",
             ...(cursor.next.propertyPath ?? []).map((name) => this.getName({ name, context }))
-        ].join("?.")
+        ].join("?.");
         const nextPropertyAccess = ts.factory.createPropertyAccessChain(
             ts.factory.createIdentifier(nextPropertyPath),
             ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
             ts.factory.createIdentifier(nextProperty)
-        )
+        );
 
         const nextPropertyIsNonNull = ts.factory.createBinaryExpression(
             nextPropertyAccess,
             ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
             ts.factory.createNull()
-        )
+        );
 
         const nextPropertyIsStringType = ts.factory.createBinaryExpression(
             ts.factory.createTypeOfExpression(nextPropertyAccess),
             ts.factory.createToken(ts.SyntaxKind.EqualsEqualsEqualsToken),
             ts.factory.createStringLiteral("string")
-        )
+        );
 
         const nextPropertyIsEmptyString = ts.factory.createBinaryExpression(
             nextPropertyAccess,
             ts.factory.createToken(ts.SyntaxKind.EqualsEqualsEqualsToken),
             ts.factory.createStringLiteral("")
-        )
+        );
 
         const nextPropertyIsStringAndEmpty = ts.factory.createBinaryExpression(
             nextPropertyIsStringType,
             ts.factory.createToken(ts.SyntaxKind.AmpersandAmpersandToken),
             nextPropertyIsEmptyString
-        )
+        );
 
         const nextPropertyIsNotEmptyString = ts.factory.createPrefixUnaryExpression(
             ts.SyntaxKind.ExclamationToken,
             nextPropertyIsStringAndEmpty
-        )
+        );
 
         const hasNextPage = ts.factory.createBinaryExpression(
             nextPropertyIsNonNull,
             ts.factory.createToken(ts.SyntaxKind.AmpersandAmpersandToken),
             nextPropertyIsNotEmptyString
-        )
+        );
 
         // getItems gets the items
-        const itemsProperty = this.getNameFromWireValue({ name: cursor.results.property.name, context })
+        const itemsProperty = this.getNameFromWireValue({ name: cursor.results.property.name, context });
         const itemsPropertyPath = [
             "response",
             ...(cursor.results.propertyPath ?? []).map((name) => this.getName({ name, context }))
-        ].join("?.")
+        ].join("?.");
         const getItems = ts.factory.createBinaryExpression(
             ts.factory.createPropertyAccessChain(
                 ts.factory.createIdentifier(itemsPropertyPath),
@@ -209,14 +209,14 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             ),
             ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
             ts.factory.createArrayLiteralExpression([], false)
-        )
+        );
 
         // loadPage
-        const pageProperty = this.getNameFromWireValue({ name: cursor.page.property.name, context })
+        const pageProperty = this.getNameFromWireValue({ name: cursor.page.property.name, context });
         const pagePropertyPathForSet = [
             ...(cursor.page.propertyPath ?? []).map((name) => this.getName({ name, context })),
             pageProperty
-        ].join(".")
+        ].join(".");
         const loadPage = [
             ts.factory.createReturnStatement(
                 ts.factory.createCallExpression(ts.factory.createIdentifier("list"), undefined, [
@@ -227,7 +227,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                     })
                 ])
             )
-        ]
+        ];
 
         return {
             type: "cursor",
@@ -236,7 +236,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             hasNextPage,
             getItems,
             loadPage
-        }
+        };
     }
 
     private getOffsetPaginationInfo({
@@ -244,35 +244,35 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         offset,
         successReturnType
     }: {
-        context: SdkContext
-        offset: OffsetPagination
-        successReturnType: ts.TypeNode
+        context: SdkContext;
+        offset: OffsetPagination;
+        successReturnType: ts.TypeNode;
     }): PaginationResponseInfo | undefined {
-        const itemValueType = offset.results.property.valueType
+        const itemValueType = offset.results.property.valueType;
 
-        const itemTypeReference = this.getItemTypeFromListOrOptionalList(itemValueType)
+        const itemTypeReference = this.getItemTypeFromListOrOptionalList(itemValueType);
         if (itemTypeReference == null) {
-            return undefined
+            return undefined;
         }
 
-        const itemType = context.type.getReferenceToType(itemTypeReference).typeNode
+        const itemType = context.type.getReferenceToType(itemTypeReference).typeNode;
 
         // initializeOffset uses the offset property if set
-        const pageProperty = this.getNameFromWireValue({ name: offset.page.property.name, context })
-        const pagePropertyDefault = this.getDefaultPaginationValue({ type: offset.page.property.valueType })
+        const pageProperty = this.getNameFromWireValue({ name: offset.page.property.name, context });
+        const pagePropertyDefault = this.getDefaultPaginationValue({ type: offset.page.property.valueType });
         const pagePropertyPath = [
             "request",
             ...(offset.page.propertyPath ?? []).map((name) => this.getName({ name, context }))
-        ].join("?.")
+        ].join("?.");
         const pagePropertyPathForSet = [
             ...(offset.page.propertyPath ?? []).map((name) => this.getName({ name, context })),
             pageProperty
-        ].join(".")
+        ].join(".");
         const pagePropertyAccess = ts.factory.createPropertyAccessChain(
             ts.factory.createIdentifier(pagePropertyPath),
             ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
             ts.factory.createIdentifier(pageProperty)
-        )
+        );
         const initializeOffset = ts.factory.createVariableStatement(
             undefined,
             ts.factory.createVariableDeclarationList(
@@ -296,21 +296,21 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                 ],
                 ts.NodeFlags.Let
             )
-        )
+        );
 
         // hasNextPage checks if the items are not empty
-        const itemsProperty = this.getNameFromWireValue({ name: offset.results.property.name, context })
+        const itemsProperty = this.getNameFromWireValue({ name: offset.results.property.name, context });
         const itemsPropertyPathComponents = [
             "response",
             ...(offset.results.propertyPath ?? []).map((name) => this.getName({ name, context }))
-        ]
-        const itemsPropertyPath = itemsPropertyPathComponents.join("?.")
-        const itemsPropertyPathWithoutOptional = itemsPropertyPathComponents.join(".")
+        ];
+        const itemsPropertyPath = itemsPropertyPathComponents.join("?.");
+        const itemsPropertyPathWithoutOptional = itemsPropertyPathComponents.join(".");
         const itemsPropertyAccess = ts.factory.createPropertyAccessChain(
             ts.factory.createIdentifier(itemsPropertyPath),
             ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
             ts.factory.createIdentifier(itemsProperty)
-        )
+        );
         let hasNextPage: ts.Expression = ts.factory.createBinaryExpression(
             ts.factory.createPropertyAccessExpression(
                 ts.factory.createParenthesizedExpression(
@@ -324,23 +324,23 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             ),
             ts.factory.createToken(ts.SyntaxKind.GreaterThanToken),
             ts.factory.createNumericLiteral("0")
-        )
+        );
         if (offset.hasNextPage != null) {
             const hasNextPagePropertyComponents = [
                 "response",
                 ...(offset.hasNextPage.propertyPath ?? []).map((name) => this.getName({ name, context }))
-            ]
-            const hasNextPageProperty = this.getNameFromWireValue({ name: offset.hasNextPage.property.name, context })
+            ];
+            const hasNextPageProperty = this.getNameFromWireValue({ name: offset.hasNextPage.property.name, context });
             const hasNextPagePropertyAccess = ts.factory.createPropertyAccessChain(
                 ts.factory.createIdentifier(hasNextPagePropertyComponents.join("?.")),
                 ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
                 ts.factory.createIdentifier(hasNextPageProperty)
-            )
+            );
             hasNextPage = ts.factory.createBinaryExpression(
                 hasNextPagePropertyAccess,
                 ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
                 hasNextPage
-            )
+            );
         }
 
         // getItems gets the items
@@ -352,7 +352,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             ),
             ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
             ts.factory.createArrayLiteralExpression([], false)
-        )
+        );
 
         // loadPage
         const incrementOffset =
@@ -386,7 +386,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                           ts.factory.createToken(ts.SyntaxKind.PlusEqualsToken),
                           ts.factory.createNumericLiteral("1")
                       )
-                  )
+                  );
         const callEndpoint = ts.factory.createReturnStatement(
             ts.factory.createCallExpression(ts.factory.createIdentifier("list"), undefined, [
                 context.coreUtilities.utils.setObjectProperty._invoke({
@@ -395,8 +395,8 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                     value: ts.factory.createIdentifier("_offset")
                 })
             ])
-        )
-        const loadPage = [incrementOffset, callEndpoint]
+        );
+        const loadPage = [incrementOffset, callEndpoint];
 
         return {
             type: offset.step != null ? "offset-step" : "offset",
@@ -406,25 +406,25 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             hasNextPage,
             getItems,
             loadPage
-        }
+        };
     }
 
     private getName({ name, context }: { name: Name; context: SdkContext }): string {
-        return context.retainOriginalCasing || !context.includeSerdeLayer ? name.originalName : name.camelCase.safeName
+        return context.retainOriginalCasing || !context.includeSerdeLayer ? name.originalName : name.camelCase.safeName;
     }
 
     private getNameFromWireValue({ name, context }: { name: NameAndWireValue; context: SdkContext }): string {
         return context.retainOriginalCasing || !context.includeSerdeLayer
             ? name.wireValue
-            : name.name.camelCase.safeName
+            : name.name.camelCase.safeName;
     }
 
     private getDefaultPaginationValue({ type }: { type: TypeReference }): string {
-        let defaultValue: string | undefined
+        let defaultValue: string | undefined;
 
         TypeReference._visit(type, {
             primitive: (primitiveType) => {
-                const maybeV2Scheme = primitiveType.v2
+                const maybeV2Scheme = primitiveType.v2;
                 if (maybeV2Scheme != null) {
                     defaultValue = PrimitiveTypeV2._visit(maybeV2Scheme, {
                         integer: (it) => (it.default != null ? String(it.default) : undefined),
@@ -441,7 +441,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                         base64: () => undefined,
                         float: () => undefined,
                         _other: () => undefined
-                    })
+                    });
                 }
             },
             container: (containerType) => {
@@ -453,24 +453,24 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                     optional: (optionalType) => this.getDefaultPaginationValue({ type: optionalType }),
                     map: () => undefined,
                     _other: () => undefined
-                })
+                });
             },
             named: () => undefined,
             unknown: () => undefined,
             _other: () => undefined
-        })
+        });
 
-        return defaultValue != null ? defaultValue : "1"
+        return defaultValue != null ? defaultValue : "1";
     }
 
     public getResponseVariableName(): string {
-        return GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME
+        return GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME;
     }
 
     public getNamesOfThrownExceptions(context: SdkContext): string[] {
         return this.endpoint.errors.map((error) =>
             getTextOfTsNode(context.sdkError.getReferenceToError(error.error).getExpression())
-        )
+        );
     }
 
     public getReturnType(context: SdkContext): ts.TypeNode {
@@ -478,11 +478,11 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             includeContentHeadersOnResponse: this.includeContentHeadersOnResponse,
             streamType: this.streamType,
             fileResponseType: this.fileResponseType
-        })
+        });
     }
 
     public getReturnResponseStatements(context: SdkContext): ts.Statement[] {
-        return [this.getReturnResponseIfOk(context), ...this.getReturnFailedResponse(context)]
+        return [this.getReturnResponseIfOk(context), ...this.getReturnFailedResponse(context)];
     }
 
     private getReturnResponseIfOk(context: SdkContext): ts.Statement {
@@ -492,11 +492,11 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                 ts.factory.createIdentifier("ok")
             ),
             ts.factory.createBlock(this.getReturnStatementsForOkResponse(context), true)
-        )
+        );
     }
 
     private getReturnStatementsForOkResponseBody(context: SdkContext): ts.Statement[] {
-        const generatedEndpointTypeSchemas = this.getGeneratedEndpointTypeSchemas(context)
+        const generatedEndpointTypeSchemas = this.getGeneratedEndpointTypeSchemas(context);
         if (this.includeContentHeadersOnResponse && this.response?.type === "fileDownload") {
             return [
                 ts.factory.createVariableStatement(
@@ -574,7 +574,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                         false
                     )
                 )
-            ]
+            ];
         } else if (this.response?.type === "streaming") {
             const eventShape = this.response.value._visit<Stream.MessageEventShape | Stream.SSEEventShape>({
                 sse: (sse) => ({
@@ -587,12 +587,12 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                 }),
 
                 text: () => {
-                    throw new Error("Text response type is not supported for streaming responses")
+                    throw new Error("Text response type is not supported for streaming responses");
                 },
                 _other: ({ type }) => {
-                    throw new Error(`Unknown response type: ${type}`)
+                    throw new Error(`Unknown response type: ${type}`);
                 }
-            })
+            });
             return [
                 ts.factory.createReturnStatement(
                     ts.factory.createObjectLiteralExpression(
@@ -683,7 +683,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                         false
                     )
                 )
-            ]
+            ];
         }
         const deserializeToResponse = generatedEndpointTypeSchemas.deserializeResponse(
             ts.factory.createPropertyAccessExpression(
@@ -691,7 +691,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                 context.coreUtilities.fetcher.APIResponse.SuccessfulResponse.body
             ),
             context
-        )
+        );
         return [
             ts.factory.createReturnStatement(
                 ts.factory.createObjectLiteralExpression(
@@ -708,7 +708,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                     false
                 )
             )
-        ]
+        ];
     }
 
     private getReferenceToResponseHeaders(context: SdkContext): ts.Expression {
@@ -719,24 +719,24 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             ),
             ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
             ts.factory.createObjectLiteralExpression([], false)
-        )
+        );
     }
 
     private getReferenceToRawResponse(context: SdkContext): ts.Expression {
         return ts.factory.createPropertyAccessExpression(
             ts.factory.createIdentifier(GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
             ts.factory.createIdentifier(context.coreUtilities.fetcher.APIResponse.SuccessfulResponse.rawResponse)
-        )
+        );
     }
 
     private getReturnFailedResponse(context: SdkContext): ts.Statement[] {
-        return [...this.getThrowsForStatusCodeErrors(context), ...this.getThrowsForNonStatusCodeErrors(context)]
+        return [...this.getThrowsForStatusCodeErrors(context), ...this.getThrowsForNonStatusCodeErrors(context)];
     }
 
     private getThrowsForStatusCodeErrors(context: SdkContext): ts.Statement[] {
-        const referenceToError = this.getReferenceToError(context)
-        const referenceToErrorBody = this.getReferenceToErrorBody(context)
-        const referenceToRawResponse = this.getReferenceToRawResponse(context)
+        const referenceToError = this.getReferenceToError(context);
+        const referenceToErrorBody = this.getReferenceToErrorBody(context);
+        const referenceToRawResponse = this.getReferenceToRawResponse(context);
 
         const defaultThrow = ts.factory.createThrowStatement(
             context.genericAPISdkError.getGeneratedGenericAPISdkError().build(context, {
@@ -751,7 +751,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                 ),
                 rawResponse: referenceToRawResponse
             })
-        )
+        );
 
         return [
             ts.factory.createIfStatement(
@@ -771,13 +771,13 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                             ? this.getSwitchStatementForErrors({
                                   context,
                                   generateCaseBody: (error) => {
-                                      const generatedSdkError = context.sdkError.getGeneratedSdkError(error.error)
+                                      const generatedSdkError = context.sdkError.getGeneratedSdkError(error.error);
                                       if (generatedSdkError?.type !== "class") {
-                                          throw new Error("Cannot throw error because it's not a class")
+                                          throw new Error("Cannot throw error because it's not a class");
                                       }
                                       const generatedSdkErrorSchema = context.sdkErrorSchema.getGeneratedSdkErrorSchema(
                                           error.error
-                                      )
+                                      );
                                       return [
                                           ts.factory.createThrowStatement(
                                               generatedSdkError.build(context, {
@@ -790,7 +790,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                                   referenceToRawResponse
                                               })
                                           )
-                                      ]
+                                      ];
                                   },
                                   defaultBody: [defaultThrow]
                               })
@@ -799,7 +799,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                     true
                 )
             )
-        ]
+        ];
     }
 
     private getSwitchStatementForErrors({
@@ -807,9 +807,9 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         generateCaseBody,
         defaultBody
     }: {
-        context: SdkContext
-        generateCaseBody: (responseError: ResponseError) => ts.Statement[]
-        defaultBody: ts.Statement[]
+        context: SdkContext;
+        generateCaseBody: (responseError: ResponseError) => ts.Statement[];
+        defaultBody: ts.Statement[];
     }) {
         return ErrorDiscriminationStrategy._visit(this.errorDiscriminationStrategy, {
             property: (propertyErrorDiscriminationStrategy) =>
@@ -826,9 +826,9 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                     defaultBody
                 }),
             _other: () => {
-                throw new Error("Unknown ErrorDiscriminationStrategy: " + this.errorDiscriminationStrategy.type)
+                throw new Error("Unknown ErrorDiscriminationStrategy: " + this.errorDiscriminationStrategy.type);
             }
-        })
+        });
     }
 
     private getSwitchStatementForPropertyDiscriminatedErrors({
@@ -837,10 +837,10 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         generateCaseBody,
         defaultBody
     }: {
-        context: SdkContext
-        propertyErrorDiscriminationStrategy: ErrorDiscriminationByPropertyStrategy
-        generateCaseBody: (responseError: ResponseError) => ts.Statement[]
-        defaultBody: ts.Statement[]
+        context: SdkContext;
+        propertyErrorDiscriminationStrategy: ErrorDiscriminationByPropertyStrategy;
+        generateCaseBody: (responseError: ResponseError) => ts.Statement[];
+        defaultBody: ts.Statement[];
     }) {
         return ts.factory.createSwitchStatement(
             ts.factory.createElementAccessChain(
@@ -862,7 +862,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                 ),
                 ts.factory.createDefaultClause(defaultBody)
             ])
-        )
+        );
     }
 
     private getSwitchStatementForStatusCodeDiscriminatedErrors({
@@ -870,9 +870,9 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         generateCaseBody,
         defaultBody
     }: {
-        context: SdkContext
-        generateCaseBody: (responseError: ResponseError) => ts.Statement[]
-        defaultBody: ts.Statement[]
+        context: SdkContext;
+        generateCaseBody: (responseError: ResponseError) => ts.Statement[];
+        defaultBody: ts.Statement[];
     }) {
         return ts.factory.createSwitchStatement(
             ts.factory.createPropertyAccessExpression(
@@ -881,20 +881,20 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             ),
             ts.factory.createCaseBlock([
                 ...this.endpoint.errors.map((error) => {
-                    const errorDeclaration = this.errorResolver.getErrorDeclarationFromName(error.error)
+                    const errorDeclaration = this.errorResolver.getErrorDeclarationFromName(error.error);
                     return ts.factory.createCaseClause(
                         ts.factory.createNumericLiteral(errorDeclaration.statusCode),
                         generateCaseBody(error)
-                    )
+                    );
                 }),
                 ts.factory.createDefaultClause(defaultBody)
             ])
-        )
+        );
     }
 
     private getThrowsForNonStatusCodeErrors(context: SdkContext): ts.Statement[] {
-        const referenceToError = this.getReferenceToError(context)
-        const referenceToRawResponse = this.getReferenceToRawResponse(context)
+        const referenceToError = this.getReferenceToError(context);
+        const referenceToRawResponse = this.getReferenceToRawResponse(context);
         return [
             ts.factory.createSwitchStatement(
                 ts.factory.createPropertyAccessExpression(
@@ -960,16 +960,16 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                     )
                 ])
             )
-        ]
+        ];
     }
 
     private getGeneratedEndpointTypeSchemas(context: SdkContext): GeneratedSdkEndpointTypeSchemas {
-        return context.sdkEndpointTypeSchemas.getGeneratedEndpointTypeSchemas(this.packageId, this.endpoint.name)
+        return context.sdkEndpointTypeSchemas.getGeneratedEndpointTypeSchemas(this.packageId, this.endpoint.name);
     }
 
     private getReturnStatementsForOkResponse(context: SdkContext): ts.Statement[] {
         if (this.endpoint.response?.body != null) {
-            return this.getReturnStatementsForOkResponseBody(context)
+            return this.getReturnStatementsForOkResponseBody(context);
         }
 
         const dataInitializer =
@@ -981,7 +981,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                       ),
                       "headers"
                   )
-                : ts.factory.createIdentifier("undefined")
+                : ts.factory.createIdentifier("undefined");
 
         return [
             ts.factory.createReturnStatement(
@@ -999,20 +999,20 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                     false
                 )
             )
-        ]
+        ];
     }
 
     private getReferenceToError(context: SdkContext): ts.Expression {
         return ts.factory.createPropertyAccessExpression(
             ts.factory.createIdentifier(GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
             context.coreUtilities.fetcher.APIResponse.FailedResponse.error
-        )
+        );
     }
 
     private getReferenceToErrorBody(context: SdkContext): ts.Expression {
         return ts.factory.createPropertyAccessExpression(
             this.getReferenceToError(context),
             context.coreUtilities.fetcher.Fetcher.FailedStatusCodeError.body
-        )
+        );
     }
 }

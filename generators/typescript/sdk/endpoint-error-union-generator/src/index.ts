@@ -1,1 +1,1 @@
-export { EndpointErrorUnionGenerator } from "./EndpointErrorUnionGenerator"
+export { EndpointErrorUnionGenerator } from "./EndpointErrorUnionGenerator";

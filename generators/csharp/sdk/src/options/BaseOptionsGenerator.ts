@@ -1,12 +1,12 @@
-import { assertNever } from "@fern-api/core-utils"
-import { csharp } from "@fern-api/csharp-codegen"
+import { assertNever } from "@fern-api/core-utils";
+import { csharp } from "@fern-api/csharp-codegen";
 
-import { HttpHeader, Literal } from "@fern-fern/ir-sdk/api"
+import { HttpHeader, Literal } from "@fern-fern/ir-sdk/api";
 
-import { SdkGeneratorContext } from "../SdkGeneratorContext"
+import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
-export const BASE_URL_FIELD_NAME = "BaseUrl"
-export const BASE_URL_SUMMARY = "The Base URL for the API."
+export const BASE_URL_FIELD_NAME = "BaseUrl";
+export const BASE_URL_SUMMARY = "The Base URL for the API.";
 const BASE_URL_FIELD = csharp.field({
     access: csharp.Access.Public,
     name: BASE_URL_FIELD_NAME,
@@ -14,23 +14,23 @@ const BASE_URL_FIELD = csharp.field({
     init: true,
     type: csharp.Type.optional(csharp.Type.string()),
     summary: BASE_URL_SUMMARY
-})
+});
 
 export interface OptionArgs {
-    optional: boolean
-    includeInitializer: boolean
+    optional: boolean;
+    includeInitializer: boolean;
 }
 export interface HttpHeadersFieldOptionArgs {
-    optional: boolean
-    includeInitializer: boolean
-    interfaceReference?: csharp.ClassReference
+    optional: boolean;
+    includeInitializer: boolean;
+    interfaceReference?: csharp.ClassReference;
 }
 
 export class BaseOptionsGenerator {
-    private context: SdkGeneratorContext
+    private context: SdkGeneratorContext;
 
     constructor(context: SdkGeneratorContext) {
-        this.context = context
+        this.context = context;
     }
 
     public getHttpClientField({ optional, includeInitializer }: OptionArgs): csharp.Field {
@@ -39,7 +39,7 @@ export class BaseOptionsGenerator {
                 name: "HttpClient",
                 namespace: "System.Net.Http"
             })
-        )
+        );
         return csharp.field({
             access: csharp.Access.Public,
             name: "HttpClient",
@@ -48,7 +48,7 @@ export class BaseOptionsGenerator {
             type: optional ? csharp.Type.optional(type) : type,
             initializer: includeInitializer ? csharp.codeblock("new HttpClient()") : undefined,
             summary: "The http client used to make requests."
-        })
+        });
     }
 
     public getHttpHeadersField({
@@ -56,7 +56,7 @@ export class BaseOptionsGenerator {
         includeInitializer,
         interfaceReference
     }: HttpHeadersFieldOptionArgs): csharp.Field {
-        const headersReference = csharp.Type.reference(this.context.getHeadersClassReference())
+        const headersReference = csharp.Type.reference(this.context.getHeadersClassReference());
         return csharp.field({
             // Classes implementing internal interface field cannot have an access modifier
             access: !interfaceReference ? csharp.Access.Internal : undefined,
@@ -67,11 +67,11 @@ export class BaseOptionsGenerator {
             initializer: includeInitializer ? csharp.codeblock("new()") : undefined,
             summary: "The http headers sent with the request.",
             interfaceReference
-        })
+        });
     }
 
     public getMaxRetriesField({ optional, includeInitializer }: OptionArgs): csharp.Field {
-        const type = csharp.Type.integer()
+        const type = csharp.Type.integer();
         return csharp.field({
             access: csharp.Access.Public,
             name: "MaxRetries",
@@ -80,7 +80,7 @@ export class BaseOptionsGenerator {
             type: optional ? csharp.Type.optional(type) : type,
             initializer: includeInitializer ? csharp.codeblock("2") : undefined,
             summary: "The http client used to make requests."
-        })
+        });
     }
 
     public getTimeoutField({ optional, includeInitializer }: OptionArgs): csharp.Field {
@@ -89,7 +89,7 @@ export class BaseOptionsGenerator {
                 name: "TimeSpan",
                 namespace: "System"
             })
-        )
+        );
         return csharp.field({
             access: csharp.Access.Public,
             name: "Timeout",
@@ -98,15 +98,15 @@ export class BaseOptionsGenerator {
             type: optional ? csharp.Type.optional(type) : type,
             initializer: includeInitializer ? csharp.codeblock("TimeSpan.FromSeconds(30)") : undefined,
             summary: "The timeout for the request."
-        })
+        });
     }
 
     public getAdditionalHeadersField({
         summary,
         includeInitializer
     }: {
-        summary: string
-        includeInitializer: boolean
+        summary: string;
+        includeInitializer: boolean;
     }): csharp.Field {
         const type = csharp.Type.reference(
             csharp.classReference({
@@ -121,7 +121,7 @@ export class BaseOptionsGenerator {
                     )
                 ]
             })
-        )
+        );
         return csharp.field({
             access: csharp.Access.Public,
             name: "AdditionalHeaders",
@@ -130,18 +130,18 @@ export class BaseOptionsGenerator {
             type,
             initializer: includeInitializer ? csharp.codeblock("[]") : undefined,
             summary
-        })
+        });
     }
 
     public maybeGetLiteralHeaderField({
         header,
         options
     }: {
-        header: HttpHeader
-        options: OptionArgs
+        header: HttpHeader;
+        options: OptionArgs;
     }): csharp.Field | undefined {
         if (header.valueType.type !== "container" || header.valueType.container.type !== "literal") {
-            return undefined
+            return undefined;
         }
         return csharp.field({
             access: csharp.Access.Public,
@@ -151,14 +151,14 @@ export class BaseOptionsGenerator {
             type: this.getLiteralRootClientParameterType({ literal: header.valueType.container.literal }),
             summary: header.docs,
             initializer: options.includeInitializer ? csharp.codeblock("null") : undefined
-        })
+        });
     }
 
     public getRequestOptionFields(): csharp.Field[] {
         const optionArgs: OptionArgs = {
             optional: true,
             includeInitializer: false
-        }
+        };
         return [
             BASE_URL_FIELD,
             this.getHttpClientField(optionArgs),
@@ -180,14 +180,14 @@ export class BaseOptionsGenerator {
             }),
             this.getBodyPropertiesField(optionArgs),
             ...this.getLiteralHeaderOptions(optionArgs)
-        ]
+        ];
     }
 
     public getRequestOptionInterfaceFields(): csharp.Field[] {
         const optionArgs: OptionArgs = {
             optional: true,
             includeInitializer: false
-        }
+        };
         return [
             BASE_URL_FIELD,
             this.getHttpClientField(optionArgs),
@@ -201,7 +201,7 @@ export class BaseOptionsGenerator {
             this.getTimeoutField(optionArgs),
             this.getQueryParametersField({ optional: false, includeInitializer: false }),
             this.getBodyPropertiesField(optionArgs)
-        ]
+        ];
     }
 
     public getIdempotentRequestOptionFields(): csharp.Field[] {
@@ -214,28 +214,28 @@ export class BaseOptionsGenerator {
                 type: this.context.csharpTypeMapper.convert({ reference: header.valueType }),
                 summary: header.docs
             })
-        )
+        );
     }
 
     public getLiteralHeaderOptions(optionArgs: OptionArgs): csharp.Field[] {
-        const fields: csharp.Field[] = []
+        const fields: csharp.Field[] = [];
         for (const header of this.context.ir.headers) {
-            const field = this.maybeGetLiteralHeaderField({ header, options: optionArgs })
+            const field = this.maybeGetLiteralHeaderField({ header, options: optionArgs });
             if (field != null) {
-                fields.push(field)
+                fields.push(field);
             }
         }
-        return fields
+        return fields;
     }
 
     private getLiteralRootClientParameterType({ literal }: { literal: Literal }): csharp.Type {
         switch (literal.type) {
             case "string":
-                return csharp.Type.optional(csharp.Type.string())
+                return csharp.Type.optional(csharp.Type.string());
             case "boolean":
-                return csharp.Type.optional(csharp.Type.boolean())
+                return csharp.Type.optional(csharp.Type.boolean());
             default:
-                assertNever(literal)
+                assertNever(literal);
         }
     }
 
@@ -250,10 +250,10 @@ export class BaseOptionsGenerator {
             skipDefaultInitializer: true,
             initializer: includeInitializer
                 ? csharp.codeblock((writer) => {
-                      writer.writeNode(this.context.getEnumerableEmptyKeyValuePairsInitializer())
+                      writer.writeNode(this.context.getEnumerableEmptyKeyValuePairsInitializer());
                   })
                 : undefined
-        })
+        });
     }
 
     private getBodyPropertiesField({ includeInitializer }: OptionArgs): csharp.Field {
@@ -265,6 +265,6 @@ export class BaseOptionsGenerator {
             get: true,
             init: true,
             initializer: includeInitializer ? csharp.codeblock("null") : undefined
-        })
+        });
     }
 }

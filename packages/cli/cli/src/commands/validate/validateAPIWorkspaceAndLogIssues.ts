@@ -1,13 +1,13 @@
-import validatePackageName from "validate-npm-package-name"
+import validatePackageName from "validate-npm-package-name";
 
-import { FernWorkspace } from "@fern-api/api-workspace-commons"
-import { validateFernWorkspace } from "@fern-api/fern-definition-validator"
-import { validateGeneratorsWorkspace } from "@fern-api/generators-validator"
-import { OSSWorkspace } from "@fern-api/lazy-fern-workspace"
-import { validateOSSWorkspace } from "@fern-api/oss-validator"
-import { TaskContext } from "@fern-api/task-context"
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
+import { validateFernWorkspace } from "@fern-api/fern-definition-validator";
+import { validateGeneratorsWorkspace } from "@fern-api/generators-validator";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
+import { validateOSSWorkspace } from "@fern-api/oss-validator";
+import { TaskContext } from "@fern-api/task-context";
 
-import { logViolations } from "./logViolations"
+import { logViolations } from "./logViolations";
 
 export async function validateAPIWorkspaceWithoutExiting({
     workspace,
@@ -16,29 +16,29 @@ export async function validateAPIWorkspaceWithoutExiting({
     logSummary = true,
     ossWorkspace
 }: {
-    workspace: FernWorkspace
-    context: TaskContext
-    logWarnings: boolean
-    logSummary?: boolean
-    ossWorkspace?: OSSWorkspace
+    workspace: FernWorkspace;
+    context: TaskContext;
+    logWarnings: boolean;
+    logSummary?: boolean;
+    ossWorkspace?: OSSWorkspace;
 }): Promise<{ hasErrors: boolean }> {
-    const startTime = performance.now()
-    const apiViolations = validateFernWorkspace(workspace, context.logger)
-    const generatorViolations = await validateGeneratorsWorkspace(workspace, context.logger)
-    const violations = [...apiViolations, ...generatorViolations]
+    const startTime = performance.now();
+    const apiViolations = validateFernWorkspace(workspace, context.logger);
+    const generatorViolations = await validateGeneratorsWorkspace(workspace, context.logger);
+    const violations = [...apiViolations, ...generatorViolations];
     if (ossWorkspace) {
-        violations.concat(await validateOSSWorkspace(ossWorkspace, context))
+        violations.concat(await validateOSSWorkspace(ossWorkspace, context));
     }
-    const elapsedMillis = performance.now() - startTime
+    const elapsedMillis = performance.now() - startTime;
     const { hasErrors } = logViolations({
         violations,
         context,
         logWarnings,
         logSummary,
         elapsedMillis
-    })
+    });
 
-    return { hasErrors }
+    return { hasErrors };
 }
 
 export async function validateAPIWorkspaceAndLogIssues({
@@ -47,13 +47,13 @@ export async function validateAPIWorkspaceAndLogIssues({
     logWarnings,
     ossWorkspace
 }: {
-    workspace: FernWorkspace
-    context: TaskContext
-    logWarnings: boolean
-    ossWorkspace?: OSSWorkspace
+    workspace: FernWorkspace;
+    context: TaskContext;
+    logWarnings: boolean;
+    ossWorkspace?: OSSWorkspace;
 }): Promise<void> {
     if (!validatePackageName(workspace.definition.rootApiFile.contents.name).validForNewPackages) {
-        context.failAndThrow("API name is not valid.")
+        context.failAndThrow("API name is not valid.");
     }
 
     const { hasErrors } = await validateAPIWorkspaceWithoutExiting({
@@ -61,9 +61,9 @@ export async function validateAPIWorkspaceAndLogIssues({
         context,
         logWarnings,
         ossWorkspace
-    })
+    });
 
     if (hasErrors) {
-        context.failAndThrow()
+        context.failAndThrow();
     }
 }

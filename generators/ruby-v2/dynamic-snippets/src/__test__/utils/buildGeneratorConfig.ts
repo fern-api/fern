@@ -1,5 +1,5 @@
-import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator"
-import { BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast"
+import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
+import { BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast";
 
 const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
     dryRun: false,
@@ -18,12 +18,12 @@ const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
     writeUnitTests: false,
     generateOauthClients: false,
     customConfig: {} as BaseRubyCustomConfigSchema
-}
+};
 
 export function buildGeneratorConfig({
     customConfig
 }: {
-    customConfig?: Partial<BaseRubyCustomConfigSchema>
+    customConfig?: Partial<BaseRubyCustomConfigSchema>;
 } = {}): FernGeneratorExec.GeneratorConfig {
     return {
         ...DEFAULT_CONFIG,
@@ -31,5 +31,5 @@ export function buildGeneratorConfig({
             ...(DEFAULT_CONFIG.customConfig as BaseRubyCustomConfigSchema),
             ...customConfig
         }
-    }
+    };
 }

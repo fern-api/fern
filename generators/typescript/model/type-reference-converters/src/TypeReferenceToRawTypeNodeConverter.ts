@@ -1,20 +1,20 @@
-import { TypeReferenceNode } from "@fern-typescript/commons"
-import { ts } from "ts-morph"
+import { TypeReferenceNode } from "@fern-typescript/commons";
+import { ts } from "ts-morph";
 
-import { TypeReference } from "@fern-fern/ir-sdk/api"
+import { TypeReference } from "@fern-fern/ir-sdk/api";
 
-import { ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter"
-import { AbstractTypeReferenceToTypeNodeConverter } from "./AbstractTypeReferenceToTypeNodeConverter"
+import { ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter";
+import { AbstractTypeReferenceToTypeNodeConverter } from "./AbstractTypeReferenceToTypeNodeConverter";
 
 export class TypeReferenceToRawTypeNodeConverter extends AbstractTypeReferenceToTypeNodeConverter {
     protected override set(itemType: TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
         return this.generateNonOptionalTypeReferenceNode(
             ts.factory.createArrayTypeNode(this.convert({ ...params, typeReference: itemType }).typeNode)
-        )
+        );
     }
 
     protected override optional(itemType: TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
-        const referencedToValueType = this.convert({ ...params, typeReference: itemType }).typeNode
+        const referencedToValueType = this.convert({ ...params, typeReference: itemType }).typeNode;
         return {
             isOptional: true,
             typeNode: ts.factory.createUnionTypeNode([
@@ -26,7 +26,7 @@ export class TypeReferenceToRawTypeNodeConverter extends AbstractTypeReferenceTo
                 referencedToValueType,
                 ts.factory.createLiteralTypeNode(ts.factory.createNull())
             ])
-        }
+        };
     }
 
     protected override nullable(itemType: TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {
@@ -35,11 +35,11 @@ export class TypeReferenceToRawTypeNodeConverter extends AbstractTypeReferenceTo
                 this.convert({ ...params, typeReference: itemType }).typeNode,
                 ts.factory.createLiteralTypeNode(ts.factory.createNull())
             ])
-        )
+        );
     }
 
     protected override dateTime(): TypeReferenceNode {
-        return this.string()
+        return this.string();
     }
 
     protected override bigInteger(): TypeReferenceNode {
@@ -49,15 +49,15 @@ export class TypeReferenceToRawTypeNodeConverter extends AbstractTypeReferenceTo
                     ts.factory.createKeywordTypeNode(ts.SyntaxKind.BigIntKeyword),
                     ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)
                 ])
-            )
+            );
         }
-        return this.generateNonOptionalTypeReferenceNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword))
+        return this.generateNonOptionalTypeReferenceNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword));
     }
 
     protected override long(): TypeReferenceNode {
         if (this.useBigInt) {
-            return this.bigInteger()
+            return this.bigInteger();
         }
-        return this.number()
+        return this.number();
     }
 }

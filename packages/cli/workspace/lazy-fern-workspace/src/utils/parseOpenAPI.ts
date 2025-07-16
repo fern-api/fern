@@ -1,19 +1,19 @@
-import { Source, bundle } from "@redocly/openapi-core"
-import { OpenAPI } from "openapi-types"
+import { Source, bundle } from "@redocly/openapi-core";
+import { OpenAPI } from "openapi-types";
 
-import { DEFAULT_OPENAPI_BUNDLE_OPTIONS } from "@fern-api/api-workspace-commons"
-import { AbsoluteFilePath } from "@fern-api/fs-utils"
+import { DEFAULT_OPENAPI_BUNDLE_OPTIONS } from "@fern-api/api-workspace-commons";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 
-import { OpenAPIRefResolver } from "../loaders/OpenAPIRefResolver"
+import { OpenAPIRefResolver } from "../loaders/OpenAPIRefResolver";
 
 export async function parseOpenAPI({
     absolutePathToOpenAPI,
     absolutePathToOpenAPIOverrides,
     parsed
 }: {
-    absolutePathToOpenAPI: AbsoluteFilePath
-    absolutePathToOpenAPIOverrides?: AbsoluteFilePath
-    parsed?: OpenAPI.Document
+    absolutePathToOpenAPI: AbsoluteFilePath;
+    absolutePathToOpenAPIOverrides?: AbsoluteFilePath;
+    parsed?: OpenAPI.Document;
 }): Promise<OpenAPI.Document> {
     const result =
         parsed != null
@@ -29,6 +29,6 @@ export async function parseOpenAPI({
                   ...DEFAULT_OPENAPI_BUNDLE_OPTIONS,
                   ref: absolutePathToOpenAPI,
                   externalRefResolver: new OpenAPIRefResolver(absolutePathToOpenAPIOverrides)
-              })
-    return result.bundle.parsed
+              });
+    return result.bundle.parsed;
 }

@@ -1,28 +1,28 @@
-import * as fs from "fs"
-import { readFile } from "fs/promises"
-import yaml from "js-yaml"
-import SourceMap from "js-yaml-source-map"
-import path from "path"
-import YAML from "yaml"
+import * as fs from "fs";
+import { readFile } from "fs/promises";
+import yaml from "js-yaml";
+import SourceMap from "js-yaml-source-map";
+import path from "path";
+import YAML from "yaml";
 
-import { formatLog } from "@fern-api/cli-logger"
-import { RelativeFilePath } from "@fern-api/fs-utils"
-import { LogLevel } from "@fern-api/logger"
+import { formatLog } from "@fern-api/cli-logger";
+import { RelativeFilePath } from "@fern-api/fs-utils";
+import { LogLevel } from "@fern-api/logger";
 
 interface APIErrorLoggingArgs {
     /* Defaults to false */
-    logWarnings?: boolean
+    logWarnings?: boolean;
 }
 
 export interface APIError {
     /** Defaults to warning */
-    level?: APIErrorLevel
+    level?: APIErrorLevel;
     /** The error message */
-    message: string
+    message: string;
     /** JSON path to where the error occurred */
-    path?: string[]
+    path?: string[];
 
-    resolution?: string
+    resolution?: string;
 }
 
 export enum APIErrorLevel {
@@ -35,46 +35,46 @@ export enum APIErrorLevel {
  */
 export interface ErrorStatistics {
     /** Number of errors collected */
-    numErrors: number
+    numErrors: number;
     /** Number of warnings collected */
-    numWarnings: number
+    numWarnings: number;
 }
 
 export class ErrorCollector {
-    private errors: APIError[] = []
-    private readonly logger: { log: (level: LogLevel, ...args: string[]) => void }
-    private readonly breadcrumbToLineNumberMapper: BreadcrumbToLineNumber | undefined
+    private errors: APIError[] = [];
+    private readonly logger: { log: (level: LogLevel, ...args: string[]) => void };
+    private readonly breadcrumbToLineNumberMapper: BreadcrumbToLineNumber | undefined;
 
-    public readonly relativeFilepathToSpec?: string
+    public readonly relativeFilepathToSpec?: string;
 
     constructor({
         logger,
         relativeFilepathToSpec
     }: {
-        logger: { log: (level: LogLevel, ...args: string[]) => void }
-        relativeFilepathToSpec?: string
+        logger: { log: (level: LogLevel, ...args: string[]) => void };
+        relativeFilepathToSpec?: string;
     }) {
-        this.logger = logger
-        this.relativeFilepathToSpec = relativeFilepathToSpec
+        this.logger = logger;
+        this.relativeFilepathToSpec = relativeFilepathToSpec;
         // If a relative filepath is provided, try to read and parse it
         if (relativeFilepathToSpec) {
             this.breadcrumbToLineNumberMapper = new BreadcrumbToLineNumber({
                 logger,
                 relativePathToFile: RelativeFilePath.of(relativeFilepathToSpec)
-            })
+            });
         }
     }
 
     public collect(error: APIError): void {
-        this.errors.push(error)
+        this.errors.push(error);
     }
 
     public getErrors(): APIError[] {
-        return this.errors
+        return this.errors;
     }
 
     public hasErrors(): boolean {
-        return this.errors.length > 0
+        return this.errors.length > 0;
     }
 
     /**
@@ -83,25 +83,25 @@ export class ErrorCollector {
      * @returns The number of duplicate errors removed
      */
     public dedupe(): number {
-        const uniqueErrors: APIError[] = []
-        const seen = new Set<string>()
-        let duplicatesRemoved = 0
+        const uniqueErrors: APIError[] = [];
+        const seen = new Set<string>();
+        let duplicatesRemoved = 0;
 
         for (const error of this.errors) {
             // Create a unique key for each error based on message, level, and path
-            const pathString = error.path ? error.path.join("->") : ""
-            const errorKey = `${error.message}|${error.level || APIErrorLevel.WARNING}|${pathString}`
+            const pathString = error.path ? error.path.join("->") : "";
+            const errorKey = `${error.message}|${error.level || APIErrorLevel.WARNING}|${pathString}`;
 
             if (!seen.has(errorKey)) {
-                seen.add(errorKey)
-                uniqueErrors.push(error)
+                seen.add(errorKey);
+                uniqueErrors.push(error);
             } else {
-                duplicatesRemoved++
+                duplicatesRemoved++;
             }
         }
 
-        this.errors = uniqueErrors
-        return duplicatesRemoved
+        this.errors = uniqueErrors;
+        return duplicatesRemoved;
     }
 
     /**
@@ -109,41 +109,41 @@ export class ErrorCollector {
      * @returns Object containing counts of errors and warnings
      */
     public getErrorStats(): ErrorStatistics {
-        this.dedupe()
+        this.dedupe();
 
-        let numErrors = 0
-        let numWarnings = 0
+        let numErrors = 0;
+        let numWarnings = 0;
 
         for (const error of this.errors) {
             if (error.level === APIErrorLevel.ERROR) {
-                numErrors++
+                numErrors++;
             } else {
                 // Count as warning if level is explicitly WARNING or if level is undefined (defaults to warning)
-                numWarnings++
+                numWarnings++;
             }
         }
 
-        return { numErrors, numWarnings }
+        return { numErrors, numWarnings };
     }
 
     public async logErrors({ logWarnings }: APIErrorLoggingArgs): Promise<void> {
-        this.dedupe()
+        this.dedupe();
 
         for (const error of this.errors) {
             if (error.level === APIErrorLevel.WARNING && !logWarnings) {
-                continue
+                continue;
             }
             switch (error.level) {
                 case APIErrorLevel.ERROR:
-                    this.logger.log(LogLevel.Error, error.message)
+                    this.logger.log(LogLevel.Error, error.message);
                     if (error.path && error.path.length > 0) {
-                        const sourceLocation = await this.breadcrumbToLineNumberMapper?.getSourceLocation(error.path)
+                        const sourceLocation = await this.breadcrumbToLineNumberMapper?.getSourceLocation(error.path);
                         const locationInfo = sourceLocation
                             ? `${this.relativeFilepathToSpec}:${sourceLocation.line}:${sourceLocation.column}`
-                            : error.path.join(" -> ")
-                        this.logger.log(LogLevel.Error, `\t- at location (${locationInfo})`)
+                            : error.path.join(" -> ");
+                        this.logger.log(LogLevel.Error, `\t- at location (${locationInfo})`);
                     }
-                    break
+                    break;
             }
         }
     }
@@ -151,26 +151,26 @@ export class ErrorCollector {
 
 export declare namespace BreadcrumbToLineNumber {
     interface Args {
-        relativePathToFile: RelativeFilePath
-        logger: { log: (level: LogLevel, ...args: string[]) => void }
+        relativePathToFile: RelativeFilePath;
+        logger: { log: (level: LogLevel, ...args: string[]) => void };
     }
 
     interface SourceLocation {
-        line: number
-        column: number
-        position: number
+        line: number;
+        column: number;
+        position: number;
     }
 }
 
 class BreadcrumbToLineNumber {
-    private readonly logger: { log: (level: LogLevel, ...args: string[]) => void }
-    private readonly relativePathToFile: RelativeFilePath
-    private readonly map = new SourceMap()
-    private initialized = false
+    private readonly logger: { log: (level: LogLevel, ...args: string[]) => void };
+    private readonly relativePathToFile: RelativeFilePath;
+    private readonly map = new SourceMap();
+    private initialized = false;
 
     constructor({ relativePathToFile, logger }: BreadcrumbToLineNumber.Args) {
-        this.relativePathToFile = relativePathToFile
-        this.logger = logger
+        this.relativePathToFile = relativePathToFile;
+        this.logger = logger;
     }
 
     /**
@@ -179,18 +179,18 @@ class BreadcrumbToLineNumber {
      */
     public async initialize(): Promise<void> {
         if (this.initialized) {
-            return
+            return;
         }
 
         try {
-            const fileContent = await readFile(this.relativePathToFile, "utf-8")
-            yaml.load(fileContent, { listener: this.map.listen() })
-            this.initialized = true
+            const fileContent = await readFile(this.relativePathToFile, "utf-8");
+            yaml.load(fileContent, { listener: this.map.listen() });
+            this.initialized = true;
         } catch (error) {
             this.logger.log(
                 LogLevel.Warn,
                 `Failed to initialize line number mapping for ${this.relativePathToFile}: ${JSON.stringify(error)}`
-            )
+            );
         }
     }
 
@@ -201,11 +201,11 @@ class BreadcrumbToLineNumber {
      */
     public async getSourceLocation(breadcrumbs: string[]): Promise<BreadcrumbToLineNumber.SourceLocation | undefined> {
         if (!this.initialized) {
-            await this.initialize()
+            await this.initialize();
         }
 
-        const location = this.map.lookup(breadcrumbs)
+        const location = this.map.lookup(breadcrumbs);
 
-        return location
+        return location;
     }
 }

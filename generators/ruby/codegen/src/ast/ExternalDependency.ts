@@ -1,31 +1,31 @@
-import { ExtraDependenciesSchema } from "../BaseGeneratorConfig"
-import { AstNode } from "./core/AstNode"
+import { ExtraDependenciesSchema } from "../BaseGeneratorConfig";
+import { AstNode } from "./core/AstNode";
 
 interface Version {
-    version: string
-    specifier: string
+    version: string;
+    specifier: string;
 }
 export declare namespace ExternalDependency {
     export interface Init extends AstNode.Init {
-        lowerBound?: Version
-        upperBound?: Version
-        packageName: string
+        lowerBound?: Version;
+        upperBound?: Version;
+        packageName: string;
     }
 }
 export class ExternalDependency extends AstNode {
-    public lowerBound: Version | undefined
-    public upperBound: Version | undefined
-    public packageName: string
+    public lowerBound: Version | undefined;
+    public upperBound: Version | undefined;
+    public packageName: string;
 
     constructor({ lowerBound, upperBound, packageName, ...rest }: ExternalDependency.Init) {
-        super(rest)
-        this.lowerBound = lowerBound
-        this.upperBound = upperBound
-        this.packageName = packageName
+        super(rest);
+        this.lowerBound = lowerBound;
+        this.upperBound = upperBound;
+        this.packageName = packageName;
     }
 
     public static convertDependencies(dependency: ExtraDependenciesSchema): ExternalDependency[] {
-        const dependencies = []
+        const dependencies = [];
         for (const [key, value] of Object.entries(dependency)) {
             if (typeof value === "string") {
                 dependencies.push(
@@ -36,7 +36,7 @@ export class ExternalDependency extends AstNode {
                             specifier: "~>"
                         }
                     })
-                )
+                );
             } else {
                 dependencies.push(
                     new ExternalDependency({
@@ -56,36 +56,36 @@ export class ExternalDependency extends AstNode {
                                   }
                                 : undefined
                     })
-                )
+                );
             }
         }
-        return dependencies
+        return dependencies;
     }
 
     public writeInternal(startingTabSpaces: number): void {
         this.addText({
             stringContent: `"${this.packageName}"`,
             startingTabSpaces
-        })
+        });
         this.addText({
             stringContent: this.lowerBound?.specifier,
             templateString: ', "%s',
             appendToLastString: true
-        })
+        });
         this.addText({
             stringContent: this.lowerBound?.version,
             templateString: ' %s"',
             appendToLastString: true
-        })
+        });
         this.addText({
             stringContent: this.upperBound?.specifier,
             templateString: ', "%s',
             appendToLastString: true
-        })
+        });
         this.addText({
             stringContent: this.upperBound?.version,
             templateString: ' %s"',
             appendToLastString: true
-        })
+        });
     }
 }

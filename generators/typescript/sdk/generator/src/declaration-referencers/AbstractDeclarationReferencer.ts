@@ -5,33 +5,33 @@ import {
     getDirectReferenceToExport,
     getReferenceToExportFromPackage,
     getReferenceToExportFromRoot
-} from "@fern-typescript/commons"
+} from "@fern-typescript/commons";
 
-import { assertNever } from "@fern-api/core-utils"
+import { assertNever } from "@fern-api/core-utils";
 
-import { DeclarationReferencer } from "./DeclarationReferencer"
+import { DeclarationReferencer } from "./DeclarationReferencer";
 
 export declare namespace AbstractDeclarationReferencer {
     export interface Init {
-        namespaceExport: string
-        containingDirectory: ExportedDirectory[]
+        namespaceExport: string;
+        containingDirectory: ExportedDirectory[];
     }
 }
 
 export abstract class AbstractDeclarationReferencer<Name = never> implements DeclarationReferencer<Name> {
-    public readonly namespaceExport: string
-    protected containingDirectory: ExportedDirectory[]
+    public readonly namespaceExport: string;
+    protected containingDirectory: ExportedDirectory[];
 
     constructor({ namespaceExport, containingDirectory }: AbstractDeclarationReferencer.Init) {
-        this.namespaceExport = namespaceExport
-        this.containingDirectory = containingDirectory
+        this.namespaceExport = namespaceExport;
+        this.containingDirectory = containingDirectory;
     }
 
-    public abstract getExportedFilepath(name: Name): ExportedFilePath
-    public abstract getFilename(name: Name): string
+    public abstract getExportedFilepath(name: Name): ExportedFilePath;
+    public abstract getFilename(name: Name): string;
 
     protected getExportedFilepathForReference(name: Name): ExportedFilePath {
-        return this.getExportedFilepath(name)
+        return this.getExportedFilepath(name);
     }
 
     protected getReferenceTo(
@@ -55,7 +55,7 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
                     exportsManager,
                     referencedIn,
                     subImport
-                })
+                });
             case "fromRoot":
                 return getReferenceToExportFromRoot({
                     exportedName,
@@ -66,7 +66,7 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
                     namespaceImport: importStrategy.namespaceImport,
                     useDynamicImport: importStrategy.useDynamicImport,
                     subImport
-                })
+                });
             case "fromPackage":
                 return getReferenceToExportFromPackage({
                     importsManager,
@@ -74,9 +74,9 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
                     packageName: importStrategy.packageName,
                     exportedName,
                     subImport
-                })
+                });
             default:
-                assertNever(importStrategy)
+                assertNever(importStrategy);
         }
     }
 }

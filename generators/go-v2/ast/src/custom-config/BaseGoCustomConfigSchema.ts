@@ -1,6 +1,6 @@
-import { z } from "zod"
+import { z } from "zod";
 
-import { ModuleConfigSchema } from "./ModuleConfigSchema"
+import { ModuleConfigSchema } from "./ModuleConfigSchema";
 
 export const BaseGoCustomConfigSchema = z.object({
     module: ModuleConfigSchema.optional(),
@@ -18,6 +18,6 @@ export const BaseGoCustomConfigSchema = z.object({
     packageLayout: z.enum(["flat", "nested"]).optional(),
     union: z.enum(["v0", "v1"]).optional(),
     useReaderForBytesRequest: z.boolean().optional()
-})
+});
 
-export type BaseGoCustomConfigSchema = z.infer<typeof BaseGoCustomConfigSchema>
+export type BaseGoCustomConfigSchema = z.infer<typeof BaseGoCustomConfigSchema>;

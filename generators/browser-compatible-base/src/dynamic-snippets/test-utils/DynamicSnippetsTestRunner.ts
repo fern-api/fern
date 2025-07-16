@@ -1,50 +1,50 @@
-import { FernIr } from "@fern-api/dynamic-ir-sdk"
-import { AbsoluteFilePath, join } from "@fern-api/path-utils"
+import { FernIr } from "@fern-api/dynamic-ir-sdk";
+import { AbsoluteFilePath, join } from "@fern-api/path-utils";
 
 const DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY = AbsoluteFilePath.of(
     `${__dirname}/../../../../../packages/cli/generation/ir-generator-tests/src/dynamic-snippets/__test__/test-definitions`
-)
+);
 
 // eslint-disable-next-line jest/no-export
 export namespace DynamicSnippetsTestRunner {
     // eslint-disable-next-line jest/no-export
     export interface Args {
-        buildGenerator: ({ irFilepath }: { irFilepath: AbsoluteFilePath }) => Generator
+        buildGenerator: ({ irFilepath }: { irFilepath: AbsoluteFilePath }) => Generator;
     }
 
     // eslint-disable-next-line jest/no-export
     export interface TestSuite {
-        fixture: string
-        generator: Generator
-        testCases: TestCase[]
+        fixture: string;
+        generator: Generator;
+        testCases: TestCase[];
     }
 
     interface Generator {
-        generate: (request: FernIr.dynamic.EndpointSnippetRequest) => Promise<FernIr.dynamic.EndpointSnippetResponse>
+        generate: (request: FernIr.dynamic.EndpointSnippetRequest) => Promise<FernIr.dynamic.EndpointSnippetResponse>;
     }
 
     interface TestCase {
-        description: string
-        giveRequest: FernIr.dynamic.EndpointSnippetRequest
+        description: string;
+        giveRequest: FernIr.dynamic.EndpointSnippetRequest;
     }
 }
 
 // eslint-disable-next-line jest/no-export
 export class DynamicSnippetsTestRunner {
     public runTests(args: DynamicSnippetsTestRunner.Args): void {
-        this.runExamplesTests(args)
-        this.runExhaustiveTests(args)
-        this.runFileUploadTests(args)
-        this.runImdbTests(args)
-        this.runMultiUrlEnvironmentTests(args)
-        this.runNullableTests(args)
-        this.runSingleUrlEnvironmentDefaultTests(args)
+        this.runExamplesTests(args);
+        this.runExhaustiveTests(args);
+        this.runFileUploadTests(args);
+        this.runImdbTests(args);
+        this.runMultiUrlEnvironmentTests(args);
+        this.runNullableTests(args);
+        this.runSingleUrlEnvironmentDefaultTests(args);
     }
 
     private runExamplesTests(args: DynamicSnippetsTestRunner.Args): void {
         const generator = args.buildGenerator({
             irFilepath: AbsoluteFilePath.of(join(DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY, "examples.json"))
-        })
+        });
         this.runDynamicSnippetTests({
             fixture: "examples",
             generator,
@@ -212,13 +212,13 @@ export class DynamicSnippetsTestRunner {
                     }
                 }
             ]
-        })
+        });
     }
 
     private runExhaustiveTests(args: DynamicSnippetsTestRunner.Args): void {
         const generator = args.buildGenerator({
             irFilepath: AbsoluteFilePath.of(join(DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY, "exhaustive.json"))
-        })
+        });
         this.runDynamicSnippetTests({
             fixture: "exhaustive",
             generator,
@@ -336,13 +336,13 @@ export class DynamicSnippetsTestRunner {
                     }
                 }
             ]
-        })
+        });
     }
 
     private runFileUploadTests(args: DynamicSnippetsTestRunner.Args): void {
         const generator = args.buildGenerator({
             irFilepath: AbsoluteFilePath.of(join(DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY, "file-upload.json"))
-        })
+        });
         this.runDynamicSnippetTests({
             fixture: "file-upload",
             generator,
@@ -406,13 +406,13 @@ export class DynamicSnippetsTestRunner {
                     }
                 }
             ]
-        })
+        });
     }
 
     private runImdbTests(args: DynamicSnippetsTestRunner.Args): void {
         const generator = args.buildGenerator({
             irFilepath: AbsoluteFilePath.of(join(DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY, "imdb.json"))
-        })
+        });
         this.runDynamicSnippetTests({
             fixture: "imdb",
             generator,
@@ -461,13 +461,13 @@ export class DynamicSnippetsTestRunner {
                     }
                 }
             ]
-        })
+        });
     }
 
     private runMultiUrlEnvironmentTests(args: DynamicSnippetsTestRunner.Args): void {
         const generator = args.buildGenerator({
             irFilepath: AbsoluteFilePath.of(join(DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY, "multi-url-environment.json"))
-        })
+        });
         this.runDynamicSnippetTests({
             fixture: "multi-url-environment",
             generator,
@@ -583,13 +583,13 @@ export class DynamicSnippetsTestRunner {
                     }
                 }
             ]
-        })
+        });
     }
 
     private runNullableTests(args: DynamicSnippetsTestRunner.Args): void {
         const generator = args.buildGenerator({
             irFilepath: AbsoluteFilePath.of(join(DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY, "nullable.json"))
-        })
+        });
         this.runDynamicSnippetTests({
             fixture: "nullable",
             generator,
@@ -659,7 +659,7 @@ export class DynamicSnippetsTestRunner {
                     }
                 }
             ]
-        })
+        });
     }
 
     private runSingleUrlEnvironmentDefaultTests(args: DynamicSnippetsTestRunner.Args): void {
@@ -667,7 +667,7 @@ export class DynamicSnippetsTestRunner {
             irFilepath: AbsoluteFilePath.of(
                 join(DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY, "single-url-environment-default.json")
             )
-        })
+        });
         this.runDynamicSnippetTests({
             fixture: "single-url-environment-default",
             generator,
@@ -768,22 +768,22 @@ export class DynamicSnippetsTestRunner {
                     }
                 }
             ]
-        })
+        });
     }
 
     private runDynamicSnippetTests(testSuite: DynamicSnippetsTestRunner.TestSuite) {
         describe(testSuite.fixture, () => {
             test.each(testSuite.testCases)("$description", async ({ giveRequest }) => {
-                const response = await testSuite.generator.generate(giveRequest)
-                expect(formatResult(response)).toMatchSnapshot()
-            })
-        })
+                const response = await testSuite.generator.generate(giveRequest);
+                expect(formatResult(response)).toMatchSnapshot();
+            });
+        });
     }
 }
 
 function formatResult(response: FernIr.dynamic.EndpointSnippetResponse): string {
     if (response.errors != null) {
-        return JSON.stringify(response.errors, null, 2)
+        return JSON.stringify(response.errors, null, 2);
     }
-    return response.snippet
+    return response.snippet;
 }

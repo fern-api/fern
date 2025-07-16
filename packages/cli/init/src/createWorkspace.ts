@@ -1,5 +1,5 @@
-import { mkdir, writeFile } from "fs/promises"
-import yaml from "js-yaml"
+import { mkdir, writeFile } from "fs/promises";
+import yaml from "js-yaml";
 
 import {
     DEFAULT_GROUP_NAME,
@@ -9,35 +9,35 @@ import {
     ROOT_API_FILENAME,
     generatorsYml,
     getLatestGeneratorVersion
-} from "@fern-api/configuration-loader"
-import { formatDefinitionFile } from "@fern-api/fern-definition-formatter"
-import { RootApiFileSchema } from "@fern-api/fern-definition-schema"
-import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join, relative } from "@fern-api/fs-utils"
-import { TaskContext } from "@fern-api/task-context"
+} from "@fern-api/configuration-loader";
+import { formatDefinitionFile } from "@fern-api/fern-definition-formatter";
+import { RootApiFileSchema } from "@fern-api/fern-definition-schema";
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join, relative } from "@fern-api/fs-utils";
+import { TaskContext } from "@fern-api/task-context";
 
-import { SAMPLE_IMDB_API } from "./sampleImdbApi"
+import { SAMPLE_IMDB_API } from "./sampleImdbApi";
 
 export async function createFernWorkspace({
     directoryOfWorkspace,
     cliVersion,
     context
 }: {
-    directoryOfWorkspace: AbsoluteFilePath
-    cliVersion: string
-    context: TaskContext
+    directoryOfWorkspace: AbsoluteFilePath;
+    cliVersion: string;
+    context: TaskContext;
 }): Promise<void> {
     if (!(await doesPathExist(directoryOfWorkspace))) {
-        await mkdir(directoryOfWorkspace)
+        await mkdir(directoryOfWorkspace);
     }
     await writeGeneratorsConfiguration({
         filepath: join(directoryOfWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)),
         cliVersion,
         context
-    })
-    const directoryOfDefinition = join(directoryOfWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY))
+    });
+    const directoryOfDefinition = join(directoryOfWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY));
     await writeSampleApiDefinition({
         directoryOfDefinition
-    })
+    });
 }
 
 export async function createOpenAPIWorkspace({
@@ -46,13 +46,13 @@ export async function createOpenAPIWorkspace({
     cliVersion,
     context
 }: {
-    directoryOfWorkspace: AbsoluteFilePath
-    openAPIFilePath: AbsoluteFilePath
-    cliVersion: string
-    context: TaskContext
+    directoryOfWorkspace: AbsoluteFilePath;
+    openAPIFilePath: AbsoluteFilePath;
+    cliVersion: string;
+    context: TaskContext;
 }): Promise<void> {
     if (!(await doesPathExist(directoryOfWorkspace))) {
-        await mkdir(directoryOfWorkspace)
+        await mkdir(directoryOfWorkspace);
     }
     await writeGeneratorsConfiguration({
         filepath: join(directoryOfWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)),
@@ -61,7 +61,7 @@ export async function createOpenAPIWorkspace({
         apiConfiguration: {
             specs: [{ openapi: relative(directoryOfWorkspace, openAPIFilePath) }]
         }
-    })
+    });
 }
 
 async function getDefaultGeneratorsConfiguration({
@@ -69,27 +69,27 @@ async function getDefaultGeneratorsConfiguration({
     context,
     apiConfiguration
 }: {
-    cliVersion: string
-    context: TaskContext
-    apiConfiguration?: generatorsYml.ApiConfigurationSchema
+    cliVersion: string;
+    context: TaskContext;
+    apiConfiguration?: generatorsYml.ApiConfigurationSchema;
 }): Promise<generatorsYml.GeneratorsConfigurationSchema> {
-    const defaultGeneratorName = "fernapi/fern-typescript-sdk"
-    const fallbackInvocation = GENERATOR_INVOCATIONS[defaultGeneratorName]
+    const defaultGeneratorName = "fernapi/fern-typescript-sdk";
+    const fallbackInvocation = GENERATOR_INVOCATIONS[defaultGeneratorName];
 
-    let version = fallbackInvocation.version
+    let version = fallbackInvocation.version;
     const versionFromDB = await getLatestGeneratorVersion({
         cliVersion,
         generatorName: defaultGeneratorName,
         channel: undefined
-    })
+    });
 
     if (versionFromDB != null) {
         // Version found from FDR, using it
-        version = versionFromDB
+        version = versionFromDB;
     } else {
         context.logger.debug(
             `Failed to get latest version for ${defaultGeneratorName} that is compatible with CLI ${cliVersion}, falling back to preset version ${version}`
-        )
+        );
     }
     const config: generatorsYml.GeneratorsConfigurationSchema = {
         "default-group": DEFAULT_GROUP_NAME,
@@ -104,11 +104,11 @@ async function getDefaultGeneratorsConfiguration({
                 ]
             }
         }
-    }
+    };
     if (apiConfiguration != null) {
-        config.api = apiConfiguration
+        config.api = apiConfiguration;
     }
-    return config
+    return config;
 }
 
 async function writeGeneratorsConfiguration({
@@ -117,10 +117,10 @@ async function writeGeneratorsConfiguration({
     context,
     apiConfiguration
 }: {
-    filepath: AbsoluteFilePath
-    cliVersion: string
-    context: TaskContext
-    apiConfiguration?: generatorsYml.ApiConfigurationV2Schema
+    filepath: AbsoluteFilePath;
+    cliVersion: string;
+    context: TaskContext;
+    apiConfiguration?: generatorsYml.ApiConfigurationV2Schema;
 }): Promise<void> {
     await writeFile(
         filepath,
@@ -128,15 +128,15 @@ async function writeGeneratorsConfiguration({
             yaml.dump(await getDefaultGeneratorsConfiguration({ cliVersion, context, apiConfiguration }), {
                 sortKeys: (a, b) => {
                     if (a === "api") {
-                        return -1
+                        return -1;
                     }
                     if (b === "api") {
-                        return 1
+                        return 1;
                     }
-                    return a.localeCompare(b)
+                    return a.localeCompare(b);
                 }
             })
-    )
+    );
 }
 
 const ROOT_API: RootApiFileSchema = {
@@ -144,21 +144,21 @@ const ROOT_API: RootApiFileSchema = {
     "error-discrimination": {
         strategy: "status-code"
     }
-}
+};
 
 async function writeSampleApiDefinition({
     directoryOfDefinition
 }: {
-    directoryOfDefinition: AbsoluteFilePath
+    directoryOfDefinition: AbsoluteFilePath;
 }): Promise<void> {
-    await mkdir(directoryOfDefinition)
-    await writeFile(join(directoryOfDefinition, RelativeFilePath.of(ROOT_API_FILENAME)), yaml.dump(ROOT_API))
+    await mkdir(directoryOfDefinition);
+    await writeFile(join(directoryOfDefinition, RelativeFilePath.of(ROOT_API_FILENAME)), yaml.dump(ROOT_API));
 
-    const absoluteFilepathToImdbYaml = join(directoryOfDefinition, RelativeFilePath.of("imdb.yml"))
+    const absoluteFilepathToImdbYaml = join(directoryOfDefinition, RelativeFilePath.of("imdb.yml"));
     await writeFile(
         absoluteFilepathToImdbYaml,
         await formatDefinitionFile({
             fileContents: SAMPLE_IMDB_API
         })
-    )
+    );
 }

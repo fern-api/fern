@@ -1,2 +1,2 @@
-export { RubyFile } from "./RubyFile"
-export { RubyProject } from "./RubyProject"
+export { RubyFile } from "./RubyFile";
+export { RubyProject } from "./RubyProject";

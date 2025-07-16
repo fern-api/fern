@@ -1,4 +1,4 @@
-import { OpenAPIV3 } from "openapi-types"
+import { OpenAPIV3 } from "openapi-types";
 
 export function isReferenceObject(
     parameter:
@@ -9,5 +9,5 @@ export function isReferenceObject(
         | OpenAPIV3.SecuritySchemeObject
 ): parameter is OpenAPIV3.ReferenceObject {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (parameter as OpenAPIV3.ReferenceObject).$ref != null
+    return (parameter as OpenAPIV3.ReferenceObject).$ref != null;
 }

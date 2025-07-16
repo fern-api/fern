@@ -1,5 +1,5 @@
-import { objectWithoutOptionalProperties, string, stringLiteral } from "../../../../src/core/schemas/builders"
-import { itSchema } from "../utils/itSchema"
+import { objectWithoutOptionalProperties, string, stringLiteral } from "../../../../src/core/schemas/builders";
+import { itSchema } from "../utils/itSchema";
 
 describe("objectWithoutOptionalProperties", () => {
     itSchema(
@@ -17,5 +17,5 @@ describe("objectWithoutOptionalProperties", () => {
                 foo: "hello"
             }
         }
-    )
-})
+    );
+});

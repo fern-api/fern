@@ -1,10 +1,10 @@
-import type { Element } from "hast"
-import { visit } from "unist-util-visit"
+import type { Element } from "hast";
+import { visit } from "unist-util-visit";
 
 export function unifiedRemoveTableOfContents(): (node: Element) => void {
     return function (node: Element): void {
-        return removeTableOfContents(node)
-    }
+        return removeTableOfContents(node);
+    };
 }
 
 export function removeTableOfContents(node: Element): void {
@@ -17,7 +17,7 @@ export function removeTableOfContents(node: Element): void {
             parent &&
             typeof index === "number"
         ) {
-            parent.children.splice(index, 1)
+            parent.children.splice(index, 1);
         }
-    })
+    });
 }

@@ -1,1 +1,1 @@
-export { SdkErrorSchemaGenerator } from "./SdkErrorSchemaGenerator"
+export { SdkErrorSchemaGenerator } from "./SdkErrorSchemaGenerator";

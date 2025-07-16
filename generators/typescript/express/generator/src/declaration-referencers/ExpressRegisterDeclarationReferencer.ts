@@ -1,6 +1,6 @@
-import { ExportedFilePath } from "@fern-typescript/commons"
+import { ExportedFilePath } from "@fern-typescript/commons";
 
-import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer"
+import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
 
 export class ExpressRegisterDeclarationReferencer extends AbstractDeclarationReferencer {
     public getExportedFilepath(): ExportedFilePath {
@@ -12,14 +12,14 @@ export class ExpressRegisterDeclarationReferencer extends AbstractDeclarationRef
                     namedExports: [this.getRegisterFunctionName()]
                 }
             }
-        }
+        };
     }
 
     public getFilename(): string {
-        return `${this.getRegisterFunctionName()}.ts`
+        return `${this.getRegisterFunctionName()}.ts`;
     }
 
     public getRegisterFunctionName(): string {
-        return "register"
+        return "register";
     }
 }

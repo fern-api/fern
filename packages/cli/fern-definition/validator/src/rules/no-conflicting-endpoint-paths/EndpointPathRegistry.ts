@@ -1,20 +1,20 @@
-import { RawSchemas } from "@fern-api/fern-definition-schema"
-import { RelativeFilePath } from "@fern-api/fs-utils"
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 
-import { getFullEndpointPath } from "./getFullEndpointPath"
+import { getFullEndpointPath } from "./getFullEndpointPath";
 
 export interface EndpointReference {
-    relativeFilepath: RelativeFilePath
-    service: RawSchemas.HttpServiceSchema
-    endpoint: RawSchemas.HttpEndpointSchema
-    endpointId: string
+    relativeFilepath: RelativeFilePath;
+    service: RawSchemas.HttpServiceSchema;
+    endpoint: RawSchemas.HttpEndpointSchema;
+    endpointId: string;
 }
 
 export class EndpointPathRegistry {
-    private root = new EndpointPathTreeNode()
+    private root = new EndpointPathTreeNode();
 
     public registerEndpoint(endpointReference: EndpointReference): void {
-        this.root.insert(this.getPathPartsForEndpoint(endpointReference), endpointReference)
+        this.root.insert(this.getPathPartsForEndpoint(endpointReference), endpointReference);
     }
 
     public getConflictingEndpoints(endpointReference: EndpointReference): EndpointReference[] {
@@ -23,9 +23,11 @@ export class EndpointPathRegistry {
             .filter((matchingEndpoint) => {
                 const isEqualToQueryEndpoint =
                     matchingEndpoint.relativeFilepath === endpointReference.relativeFilepath &&
-                    matchingEndpoint.endpointId === endpointReference.endpointId
-                return !isEqualToQueryEndpoint && matchingEndpoint.endpoint.method === endpointReference.endpoint.method
-            })
+                    matchingEndpoint.endpointId === endpointReference.endpointId;
+                return (
+                    !isEqualToQueryEndpoint && matchingEndpoint.endpoint.method === endpointReference.endpoint.method
+                );
+            });
     }
 
     private getPathPartsForEndpoint(endpointReference: EndpointReference): PathPart[] {
@@ -34,59 +36,59 @@ export class EndpointPathRegistry {
             endpoint: endpointReference.endpoint
         })
             .split("/")
-            .filter((part) => part.length > 0)
+            .filter((part) => part.length > 0);
     }
 }
 
-type PathPart = string
+type PathPart = string;
 
 class EndpointPathTreeNode {
-    private childPaths: Record<PathPart, EndpointPathTreeNode> = {}
-    private childPathParam: EndpointPathTreeNode | undefined
-    private endpointsThatEndWithThisNode: EndpointReference[] = []
+    private childPaths: Record<PathPart, EndpointPathTreeNode> = {};
+    private childPathParam: EndpointPathTreeNode | undefined;
+    private endpointsThatEndWithThisNode: EndpointReference[] = [];
 
     public insert(paths: PathPart[], endpointReference: EndpointReference): void {
-        const [firstPath, ...remainingPaths] = paths
+        const [firstPath, ...remainingPaths] = paths;
         if (firstPath == null) {
-            this.endpointsThatEndWithThisNode.push(endpointReference)
-            return
+            this.endpointsThatEndWithThisNode.push(endpointReference);
+            return;
         }
 
         const nextNode = this.isPathParam(firstPath)
             ? (this.childPathParam ??= new EndpointPathTreeNode())
-            : (this.childPaths[firstPath] ??= new EndpointPathTreeNode())
+            : (this.childPaths[firstPath] ??= new EndpointPathTreeNode());
 
-        nextNode.insert(remainingPaths, endpointReference)
+        nextNode.insert(remainingPaths, endpointReference);
     }
 
     public getMatchingEndpoints(paths: PathPart[]): EndpointReference[] {
-        const [firstPath, ...remainingPaths] = paths
+        const [firstPath, ...remainingPaths] = paths;
 
         if (firstPath == null) {
-            return this.endpointsThatEndWithThisNode
+            return this.endpointsThatEndWithThisNode;
         }
 
-        const matchingEndpoints: EndpointReference[] = []
+        const matchingEndpoints: EndpointReference[] = [];
 
         if (this.isPathParam(firstPath)) {
             matchingEndpoints.push(
                 ...Object.values(this.childPaths).flatMap((childNode) => childNode.getMatchingEndpoints(remainingPaths))
-            )
+            );
         } else {
-            const childPath = this.childPaths[firstPath]
+            const childPath = this.childPaths[firstPath];
             if (childPath != null) {
-                matchingEndpoints.push(...childPath.getMatchingEndpoints(remainingPaths))
+                matchingEndpoints.push(...childPath.getMatchingEndpoints(remainingPaths));
             }
         }
 
         if (this.childPathParam != null) {
-            matchingEndpoints.push(...this.childPathParam.getMatchingEndpoints(remainingPaths))
+            matchingEndpoints.push(...this.childPathParam.getMatchingEndpoints(remainingPaths));
         }
 
-        return matchingEndpoints
+        return matchingEndpoints;
     }
 
     private isPathParam(pathPart: string): boolean {
-        return pathPart.startsWith("{") && pathPart.endsWith("}")
+        return pathPart.startsWith("{") && pathPart.endsWith("}");
     }
 }

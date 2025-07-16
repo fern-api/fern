@@ -1,6 +1,6 @@
-import { Availability, PrimitiveSchemaValueWithExample, SchemaWithExample, SdkGroupName } from "@fern-api/openapi-ir"
+import { Availability, PrimitiveSchemaValueWithExample, SchemaWithExample, SdkGroupName } from "@fern-api/openapi-ir";
 
-import { wrapPrimitive } from "./convertSchemas"
+import { wrapPrimitive } from "./convertSchemas";
 
 export function convertNumber({
     nameOverride,
@@ -20,22 +20,22 @@ export function convertNumber({
     namespace,
     groupName
 }: {
-    nameOverride: string | undefined
-    generatedName: string
-    title: string | undefined
-    format: string | undefined
-    _default: number | undefined
-    minimum: number | undefined
-    maximum: number | undefined
-    exclusiveMinimum: boolean | undefined
-    exclusiveMaximum: boolean | undefined
-    multipleOf: number | undefined
-    description: string | undefined
-    availability: Availability | undefined
-    wrapAsNullable: boolean
-    example: number | undefined
-    namespace: string | undefined
-    groupName: SdkGroupName | undefined
+    nameOverride: string | undefined;
+    generatedName: string;
+    title: string | undefined;
+    format: string | undefined;
+    _default: number | undefined;
+    minimum: number | undefined;
+    maximum: number | undefined;
+    exclusiveMinimum: boolean | undefined;
+    exclusiveMaximum: boolean | undefined;
+    multipleOf: number | undefined;
+    description: string | undefined;
+    availability: Availability | undefined;
+    wrapAsNullable: boolean;
+    example: number | undefined;
+    namespace: string | undefined;
+    groupName: SdkGroupName | undefined;
 }): SchemaWithExample {
     if (format == null || format === "double") {
         return wrapPrimitive({
@@ -56,7 +56,7 @@ export function convertNumber({
             availability,
             namespace,
             groupName
-        })
+        });
     } else if (format === "float") {
         return wrapPrimitive({
             nameOverride,
@@ -70,7 +70,7 @@ export function convertNumber({
             availability,
             namespace,
             groupName
-        })
+        });
     } else if (format === "int32") {
         return wrapPrimitive({
             nameOverride,
@@ -90,7 +90,7 @@ export function convertNumber({
             availability,
             namespace,
             groupName
-        })
+        });
     } else if (format === "int64") {
         return wrapPrimitive({
             nameOverride,
@@ -105,7 +105,7 @@ export function convertNumber({
             availability,
             namespace,
             groupName
-        })
+        });
     } else if (format === "uint32") {
         return wrapPrimitive({
             nameOverride,
@@ -120,7 +120,7 @@ export function convertNumber({
             availability,
             namespace,
             groupName
-        })
+        });
     } else if (format === "uint64") {
         return wrapPrimitive({
             nameOverride,
@@ -135,7 +135,7 @@ export function convertNumber({
             availability,
             namespace,
             groupName
-        })
+        });
     } else if (format === "time-delta") {
         return wrapPrimitive({
             nameOverride,
@@ -149,7 +149,7 @@ export function convertNumber({
             availability,
             namespace,
             groupName
-        })
+        });
     }
     return wrapPrimitive({
         nameOverride,
@@ -163,5 +163,5 @@ export function convertNumber({
         availability,
         namespace,
         groupName
-    })
+    });
 }

@@ -1,1 +1,1 @@
-export { NoMissingAuthRule } from "./no-missing-auth"
+export { NoMissingAuthRule } from "./no-missing-auth";

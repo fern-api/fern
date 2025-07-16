@@ -1,8 +1,8 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { ValidationViolation } from "../../../ValidationViolation"
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule"
-import { MatchingEnvironmentUrlsRule } from "../matching-environment-urls"
+import { ValidationViolation } from "../../../ValidationViolation";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { MatchingEnvironmentUrlsRule } from "../matching-environment-urls";
 
 describe("matching-environment-urls", () => {
     it("matching-urls", async () => {
@@ -13,9 +13,9 @@ describe("matching-environment-urls", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("matching-urls")
             )
-        })
-        expect(violations).toEqual([])
-    })
+        });
+        expect(violations).toEqual([]);
+    });
 
     it("not-matching-urls", async () => {
         const violations = await getViolationsForRule({
@@ -25,7 +25,7 @@ describe("matching-environment-urls", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("not-matching-urls")
             )
-        })
+        });
 
         const expectedViolations: ValidationViolation[] = [
             {
@@ -58,8 +58,8 @@ describe("matching-environment-urls", () => {
                 relativeFilepath: RelativeFilePath.of("api.yml"),
                 severity: "fatal"
             }
-        ]
+        ];
 
-        expect(violations).toEqual(expectedViolations)
-    })
-})
+        expect(violations).toEqual(expectedViolations);
+    });
+});

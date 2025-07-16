@@ -1,7 +1,7 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule"
-import { NoGetRequestBodyRule } from "../no-get-request-body"
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { NoGetRequestBodyRule } from "../no-get-request-body";
 
 describe("no-get-request-body", () => {
     it("simple", async () => {
@@ -12,7 +12,7 @@ describe("no-get-request-body", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
             )
-        })
+        });
 
         expect(violations).toEqual([
             {
@@ -33,6 +33,6 @@ describe("no-get-request-body", () => {
                 relativeFilepath: RelativeFilePath.of("a.yml"),
                 severity: "fatal"
             }
-        ])
-    })
-})
+        ]);
+    });
+});

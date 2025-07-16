@@ -1,12 +1,12 @@
-import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration"
-import { RawSchemas } from "@fern-api/fern-definition-schema"
-import { QueryParameter, Schema, VALID_ENUM_NAME_REGEX, generateEnumNameFromValue } from "@fern-api/openapi-ir"
-import { RelativeFilePath } from "@fern-api/path-utils"
+import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { QueryParameter, Schema, VALID_ENUM_NAME_REGEX, generateEnumNameFromValue } from "@fern-api/openapi-ir";
+import { RelativeFilePath } from "@fern-api/path-utils";
 
-import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext"
-import { buildTypeReference } from "./buildTypeReference"
-import { convertAvailability } from "./utils/convertAvailability"
-import { getDefaultFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference"
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { buildTypeReference } from "./buildTypeReference";
+import { convertAvailability } from "./utils/convertAvailability";
+import { getDefaultFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
 export function buildQueryParameter({
     queryParameter,
@@ -14,58 +14,58 @@ export function buildQueryParameter({
     fileContainingReference,
     namespace
 }: {
-    queryParameter: QueryParameter
-    context: OpenApiIrConverterContext
-    fileContainingReference: RelativeFilePath
-    namespace: string | undefined
+    queryParameter: QueryParameter;
+    context: OpenApiIrConverterContext;
+    fileContainingReference: RelativeFilePath;
+    namespace: string | undefined;
 }): RawSchemas.HttpQueryParameterSchema | undefined {
     const typeReference = getQueryParameterTypeReference({
         schema: queryParameter.schema,
         context,
         fileContainingReference,
         namespace
-    })
+    });
     if (typeReference == null) {
-        return undefined
+        return undefined;
     }
 
-    let queryParameterType = getTypeFromTypeReference(typeReference.value)
-    const queryParameterDefault = getDefaultFromTypeReference(typeReference.value)
+    let queryParameterType = getTypeFromTypeReference(typeReference.value);
+    const queryParameterDefault = getDefaultFromTypeReference(typeReference.value);
 
     // we can assume unknown-typed query parameters are strings by default
     if (queryParameterType === "unknown") {
-        queryParameterType = "string"
+        queryParameterType = "string";
     } else if (queryParameterType === "optional<unknown>") {
-        queryParameterType = "optional<string>"
+        queryParameterType = "optional<string>";
     }
 
     const queryParameterSchema: RawSchemas.HttpQueryParameterSchema = {
         type: queryParameterType
-    }
+    };
 
     if (queryParameterDefault != null) {
-        queryParameterSchema.default = queryParameterDefault
+        queryParameterSchema.default = queryParameterDefault;
     }
 
     if (typeReference.allowMultiple) {
-        queryParameterSchema["allow-multiple"] = true
+        queryParameterSchema["allow-multiple"] = true;
     }
 
     if (queryParameter.description != null) {
-        queryParameterSchema.docs = queryParameter.description
+        queryParameterSchema.docs = queryParameter.description;
     }
 
     if (queryParameter.parameterNameOverride != null) {
-        queryParameterSchema.name = queryParameter.parameterNameOverride
+        queryParameterSchema.name = queryParameter.parameterNameOverride;
     }
 
     if (queryParameter.availability != null) {
-        queryParameterSchema.availability = convertAvailability(queryParameter.availability)
+        queryParameterSchema.availability = convertAvailability(queryParameter.availability);
     }
 
     if (isRawTypeReferenceDetailedSchema(typeReference.value)) {
         if (typeReference.value.validation !== undefined) {
-            queryParameterSchema.validation = typeReference.value.validation
+            queryParameterSchema.validation = typeReference.value.validation;
         }
     }
 
@@ -77,15 +77,15 @@ export function buildQueryParameter({
         queryParameterSchema.availability == null &&
         queryParameterSchema.validation == null
     ) {
-        return queryParameterType
+        return queryParameterType;
     }
 
-    return queryParameterSchema
+    return queryParameterSchema;
 }
 
 interface QueryParameterTypeReference {
-    value: RawSchemas.TypeReferenceSchema
-    allowMultiple: boolean
+    value: RawSchemas.TypeReferenceSchema;
+    allowMultiple: boolean;
 }
 
 // TODO(dsinghvi): list query parameters are automatically converted to exploded=true,
@@ -96,15 +96,15 @@ function getQueryParameterTypeReference({
     fileContainingReference,
     namespace
 }: {
-    schema: Schema
-    context: OpenApiIrConverterContext
-    fileContainingReference: RelativeFilePath
-    namespace: string | undefined
+    schema: Schema;
+    context: OpenApiIrConverterContext;
+    fileContainingReference: RelativeFilePath;
+    namespace: string | undefined;
 }): QueryParameterTypeReference | undefined {
     if (schema.type === "reference") {
-        const resolvedSchema = context.getSchema(schema.schema, namespace)
+        const resolvedSchema = context.getSchema(schema.schema, namespace);
         if (resolvedSchema == null) {
-            return undefined
+            return undefined;
         } else if (resolvedSchema.type === "array") {
             return {
                 value: buildTypeReference({
@@ -126,23 +126,23 @@ function getQueryParameterTypeReference({
                     declarationDepth: 0
                 }),
                 allowMultiple: true
-            }
+            };
         } else if (resolvedSchema.type === "oneOf" && resolvedSchema.value.type === "undiscriminated") {
             // Try to generated enum from literal values
-            const potentialEnumValues: (string | RawSchemas.EnumValueSchema)[] = []
-            let foundPrimitiveString = false
+            const potentialEnumValues: (string | RawSchemas.EnumValueSchema)[] = [];
+            let foundPrimitiveString = false;
             for (const [_, schema] of Object.entries(resolvedSchema.value.schemas)) {
                 if (schema.type === "primitive" && schema.schema.type === "string") {
-                    foundPrimitiveString = true
+                    foundPrimitiveString = true;
                 }
                 if (schema.type === "literal" && schema.value.type === "string") {
                     if (VALID_ENUM_NAME_REGEX.test(schema.value.value)) {
-                        potentialEnumValues.push(schema.value.value)
+                        potentialEnumValues.push(schema.value.value);
                     } else {
                         potentialEnumValues.push({
                             value: schema.value.value,
                             name: generateEnumNameFromValue(schema.value.value)
-                        })
+                        });
                     }
                 }
             }
@@ -151,7 +151,7 @@ function getQueryParameterTypeReference({
                 context.builder.addType(fileContainingReference, {
                     name: schema.generatedName,
                     schema: { enum: potentialEnumValues }
-                })
+                });
                 if (foundPrimitiveString && context.respectForwardCompatibleEnums) {
                     context.builder.addType(fileContainingReference, {
                         name: `${schema.generatedName}OrString`,
@@ -166,21 +166,21 @@ function getQueryParameterTypeReference({
                                 }
                             ]
                         }
-                    })
+                    });
                     return {
                         value: `${schema.generatedName}OrString`,
                         allowMultiple: false
-                    }
+                    };
                 } else {
                     return {
                         value: schema.generatedName,
                         allowMultiple: false
-                    }
+                    };
                 }
             }
 
             if (resolvedSchema.value.schemas.length === 2) {
-                const [firstSchema, secondSchema] = resolvedSchema.value.schemas
+                const [firstSchema, secondSchema] = resolvedSchema.value.schemas;
                 if (
                     firstSchema != null &&
                     secondSchema != null &&
@@ -205,7 +205,7 @@ function getQueryParameterTypeReference({
                             declarationDepth: 0
                         }),
                         allowMultiple: true
-                    }
+                    };
                 }
                 if (
                     firstSchema != null &&
@@ -231,7 +231,7 @@ function getQueryParameterTypeReference({
                             declarationDepth: 0
                         }),
                         allowMultiple: true
-                    }
+                    };
                 }
             }
 
@@ -242,7 +242,7 @@ function getQueryParameterTypeReference({
                     context,
                     fileContainingReference,
                     namespace
-                })
+                });
             }
         } else if (context.objectQueryParameters) {
             return {
@@ -255,15 +255,15 @@ function getQueryParameterTypeReference({
                     declarationDepth: 0
                 }),
                 allowMultiple: false
-            }
+            };
         }
     }
 
     if (schema.type === "optional" || schema.type === "nullable") {
         if (schema.value.type === "reference") {
-            const resolvedSchema = context.getSchema(schema.value.schema, namespace)
+            const resolvedSchema = context.getSchema(schema.value.schema, namespace);
             if (resolvedSchema == null) {
-                return undefined
+                return undefined;
             } else if (resolvedSchema.type === "array") {
                 return {
                     value: buildTypeReference({
@@ -285,7 +285,7 @@ function getQueryParameterTypeReference({
                         declarationDepth: 0
                     }),
                     allowMultiple: true
-                }
+                };
             } else if (context.objectQueryParameters) {
                 return {
                     value: buildTypeReference({
@@ -297,7 +297,7 @@ function getQueryParameterTypeReference({
                         declarationDepth: 0
                     }),
                     allowMultiple: false
-                }
+                };
             }
         }
         if (schema.value.type === "array") {
@@ -320,23 +320,23 @@ function getQueryParameterTypeReference({
                     declarationDepth: 0
                 }),
                 allowMultiple: true
-            }
+            };
         } else if (schema.value.type === "oneOf" && schema.value.value.type === "undiscriminated") {
             // Try to generated enum from literal values
-            const potentialEnumValues: (string | RawSchemas.EnumValueSchema)[] = []
-            let foundPrimitiveString = false
+            const potentialEnumValues: (string | RawSchemas.EnumValueSchema)[] = [];
+            let foundPrimitiveString = false;
             for (const [_, oneOfSchema] of Object.entries(schema.value.value.schemas)) {
                 if (oneOfSchema.type === "primitive" && oneOfSchema.schema.type === "string") {
-                    foundPrimitiveString = true
+                    foundPrimitiveString = true;
                 }
                 if (oneOfSchema.type === "literal" && oneOfSchema.value.type === "string") {
                     if (VALID_ENUM_NAME_REGEX.test(oneOfSchema.value.value)) {
-                        potentialEnumValues.push(oneOfSchema.value.value)
+                        potentialEnumValues.push(oneOfSchema.value.value);
                     } else {
                         potentialEnumValues.push({
                             value: oneOfSchema.value.value,
                             name: generateEnumNameFromValue(oneOfSchema.value.value)
-                        })
+                        });
                     }
                 }
             }
@@ -345,7 +345,7 @@ function getQueryParameterTypeReference({
                 context.builder.addType(fileContainingReference, {
                     name: schema.generatedName,
                     schema: { enum: potentialEnumValues }
-                })
+                });
                 if (foundPrimitiveString && context.respectForwardCompatibleEnums) {
                     context.builder.addType(fileContainingReference, {
                         name: `${schema.generatedName}OrString`,
@@ -360,21 +360,21 @@ function getQueryParameterTypeReference({
                                 }
                             ]
                         }
-                    })
+                    });
                     return {
                         value: `optional<${schema.value.value.generatedName}OrString>`,
                         allowMultiple: false
-                    }
+                    };
                 } else {
                     return {
                         value: `optional<${schema.value.value.generatedName}>`,
                         allowMultiple: false
-                    }
+                    };
                 }
             }
 
             if (schema.value.value.schemas.length === 2) {
-                const [firstSchema, secondSchema] = schema.value.value.schemas
+                const [firstSchema, secondSchema] = schema.value.value.schemas;
                 if (
                     firstSchema != null &&
                     secondSchema != null &&
@@ -399,7 +399,7 @@ function getQueryParameterTypeReference({
                             declarationDepth: 0
                         }),
                         allowMultiple: true
-                    }
+                    };
                 }
                 if (
                     firstSchema != null &&
@@ -425,7 +425,7 @@ function getQueryParameterTypeReference({
                             declarationDepth: 0
                         }),
                         allowMultiple: true
-                    }
+                    };
                 }
             }
 
@@ -446,7 +446,7 @@ function getQueryParameterTypeReference({
                     context,
                     fileContainingReference,
                     namespace
-                })
+                });
             }
         } else if (schema.value.type === "object") {
             if (context.objectQueryParameters) {
@@ -460,9 +460,9 @@ function getQueryParameterTypeReference({
                         declarationDepth: 0
                     }),
                     allowMultiple: false
-                }
+                };
             }
-            return undefined
+            return undefined;
         }
         return {
             value: buildTypeReference({
@@ -473,7 +473,7 @@ function getQueryParameterTypeReference({
                 declarationDepth: 0
             }),
             allowMultiple: false
-        }
+        };
     }
 
     if (schema.type === "array") {
@@ -496,7 +496,7 @@ function getQueryParameterTypeReference({
                 declarationDepth: 0
             }),
             allowMultiple: true
-        }
+        };
     } else {
         return {
             value: buildTypeReference({
@@ -507,7 +507,7 @@ function getQueryParameterTypeReference({
                 declarationDepth: 0
             }),
             allowMultiple: false
-        }
+        };
     }
 }
 
@@ -517,11 +517,11 @@ function hasSamePrimitiveValueType({ array, primitive }: { array: Schema; primit
         array.value.type === "primitive" &&
         primitive?.type === "primitive" &&
         array.value.schema.type === primitive.schema.type
-    )
+    );
 }
 
 function isRawTypeReferenceDetailedSchema(
     rawTypeReference: RawSchemas.TypeReferenceSchema
 ): rawTypeReference is RawSchemas.TypeReferenceDetailedSchema {
-    return (rawTypeReference as RawSchemas.TypeReferenceDetailedSchema).type != null
+    return (rawTypeReference as RawSchemas.TypeReferenceDetailedSchema).type != null;
 }

@@ -1,24 +1,24 @@
-import { readFile } from "fs/promises"
-import grayMatter from "gray-matter"
+import { readFile } from "fs/promises";
+import grayMatter from "gray-matter";
 
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils"
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { FernRegistry as CjsFdrSdk, FernRegistry } from "@fern-fern/fdr-cjs-sdk"
+import { FernRegistry as CjsFdrSdk, FernRegistry } from "@fern-fern/fdr-cjs-sdk";
 
-import { ParsedFrontmatter } from "../types/parsedFrontmatter"
+import { ParsedFrontmatter } from "../types/parsedFrontmatter";
 
 export declare namespace convertMarkdown {
     interface Args {
-        absoluteFilepathToMarkdown: AbsoluteFilePath
-        relativeFilepathFromRoot: RelativeFilePath
+        absoluteFilepathToMarkdown: AbsoluteFilePath;
+        relativeFilepathFromRoot: RelativeFilePath;
     }
 
     interface Return {
-        mintlifyFrontmatter: ParsedFrontmatter
-        relativeFilepathFromRoot: RelativeFilePath
-        frontmatter: CjsFdrSdk.docs.latest.Frontmatter
-        sidebarTitle: string | undefined
-        content: string
+        mintlifyFrontmatter: ParsedFrontmatter;
+        relativeFilepathFromRoot: RelativeFilePath;
+        frontmatter: CjsFdrSdk.docs.latest.Frontmatter;
+        sidebarTitle: string | undefined;
+        content: string;
     }
 }
 
@@ -26,10 +26,10 @@ export async function convertMarkdown({
     absoluteFilepathToMarkdown,
     relativeFilepathFromRoot
 }: convertMarkdown.Args): Promise<convertMarkdown.Return> {
-    const text = await readFile(absoluteFilepathToMarkdown, "utf-8")
-    const { data, content } = parseFrontmatter(text)
-    const slug = relativeFilepathFromRoot.replace(/\.(md|mdx)$/, "")
-    const transformedContent = markReferencedAssets({ content })
+    const text = await readFile(absoluteFilepathToMarkdown, "utf-8");
+    const { data, content } = parseFrontmatter(text);
+    const slug = relativeFilepathFromRoot.replace(/\.(md|mdx)$/, "");
+    const transformedContent = markReferencedAssets({ content });
     return {
         mintlifyFrontmatter: data,
         relativeFilepathFromRoot,
@@ -78,16 +78,16 @@ export async function convertMarkdown({
             keywords: undefined
         },
         content: transformedContent
-    }
+    };
 }
 
 function parseFrontmatter(mdContent: string): { data: ParsedFrontmatter; content: string } {
-    const { data, content } = grayMatter(mdContent)
-    return { data: data as ParsedFrontmatter, content }
+    const { data, content } = grayMatter(mdContent);
+    return { data: data as ParsedFrontmatter, content };
 }
 
 function isExternalUrl(url: string): boolean {
-    return url.startsWith("http:") || url.startsWith("https:") || url.startsWith("mailto:") || url.startsWith("tel:")
+    return url.startsWith("http:") || url.startsWith("https:") || url.startsWith("mailto:") || url.startsWith("tel:");
 }
 
 function markReferencedAssets({ content }: { content: string }): string {
@@ -95,16 +95,16 @@ function markReferencedAssets({ content }: { content: string }): string {
         /src=["']([^"']+)["']/g,
         (original: string, srcPath: string): string => {
             if (isExternalUrl(srcPath)) {
-                return original
+                return original;
             }
 
             if (srcPath.startsWith("/")) {
-                const relativePath = RelativeFilePath.of(srcPath.substring(1))
-                return `src="${relativePath}"`
+                const relativePath = RelativeFilePath.of(srcPath.substring(1));
+                return `src="${relativePath}"`;
             }
 
-            return original
+            return original;
         }
-    )
-    return transformedContent
+    );
+    return transformedContent;
 }

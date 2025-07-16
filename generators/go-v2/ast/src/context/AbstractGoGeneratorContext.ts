@@ -2,9 +2,9 @@ import {
     AbstractGeneratorContext,
     FernGeneratorExec,
     GeneratorNotificationService
-} from "@fern-api/browser-compatible-base-generator"
-import { assertNever } from "@fern-api/core-utils"
-import { RelativeFilePath } from "@fern-api/path-utils"
+} from "@fern-api/browser-compatible-base-generator";
+import { assertNever } from "@fern-api/core-utils";
+import { RelativeFilePath } from "@fern-api/path-utils";
 
 import {
     ErrorDeclaration,
@@ -21,28 +21,28 @@ import {
     TypeDeclaration,
     TypeId,
     TypeReference
-} from "@fern-fern/ir-sdk/api"
+} from "@fern-fern/ir-sdk/api";
 
-import { go } from ".."
-import { IoReaderTypeReference, TimeTypeReference, UuidTypeReference } from "../ast/Type"
-import { BaseGoCustomConfigSchema } from "../custom-config/BaseGoCustomConfigSchema"
-import { resolveRootImportPath } from "../custom-config/resolveRootImportPath"
-import { GoTypeMapper } from "./GoTypeMapper"
-import { GoValueFormatter } from "./GoValueFormatter"
-import { GoZeroValueMapper } from "./GoZeroValueMapper"
+import { go } from "..";
+import { IoReaderTypeReference, TimeTypeReference, UuidTypeReference } from "../ast/Type";
+import { BaseGoCustomConfigSchema } from "../custom-config/BaseGoCustomConfigSchema";
+import { resolveRootImportPath } from "../custom-config/resolveRootImportPath";
+import { GoTypeMapper } from "./GoTypeMapper";
+import { GoValueFormatter } from "./GoValueFormatter";
+import { GoZeroValueMapper } from "./GoZeroValueMapper";
 
 export interface FileLocation {
-    importPath: string
-    directory: RelativeFilePath
+    importPath: string;
+    directory: RelativeFilePath;
 }
 
 export abstract class AbstractGoGeneratorContext<
     CustomConfig extends BaseGoCustomConfigSchema
 > extends AbstractGeneratorContext {
-    private rootImportPath: string
-    public readonly goTypeMapper: GoTypeMapper
-    public readonly goValueFormatter: GoValueFormatter
-    public readonly goZeroValueMapper: GoZeroValueMapper
+    private rootImportPath: string;
+    public readonly goTypeMapper: GoTypeMapper;
+    public readonly goValueFormatter: GoValueFormatter;
+    public readonly goZeroValueMapper: GoZeroValueMapper;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
@@ -50,152 +50,152 @@ export abstract class AbstractGoGeneratorContext<
         public readonly customConfig: CustomConfig,
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
-        super(config, generatorNotificationService)
-        this.goTypeMapper = new GoTypeMapper(this)
-        this.goValueFormatter = new GoValueFormatter(this)
-        this.goZeroValueMapper = new GoZeroValueMapper(this)
+        super(config, generatorNotificationService);
+        this.goTypeMapper = new GoTypeMapper(this);
+        this.goValueFormatter = new GoValueFormatter(this);
+        this.goZeroValueMapper = new GoZeroValueMapper(this);
         this.rootImportPath = resolveRootImportPath({
             config: this.config,
             customConfig: this.customConfig
-        })
+        });
     }
 
     public getHttpServiceOrThrow(serviceId: ServiceId): HttpService {
-        const service = this.ir.services[serviceId]
+        const service = this.ir.services[serviceId];
         if (service == null) {
-            throw new Error(`Service with id ${serviceId} not found`)
+            throw new Error(`Service with id ${serviceId} not found`);
         }
-        return service
+        return service;
     }
 
     public getSubpackageOrThrow(subpackageId: SubpackageId): Subpackage {
-        const subpackage = this.ir.subpackages[subpackageId]
+        const subpackage = this.ir.subpackages[subpackageId];
         if (subpackage == null) {
-            throw new Error(`Subpackage with id ${subpackageId} not found`)
+            throw new Error(`Subpackage with id ${subpackageId} not found`);
         }
-        return subpackage
+        return subpackage;
     }
 
     public getErrorDeclarationOrThrow(errorId: ErrorId): ErrorDeclaration {
-        const errorDeclaration = this.ir.errors[errorId]
+        const errorDeclaration = this.ir.errors[errorId];
         if (errorDeclaration == null) {
-            throw new Error(`Error declaration with id ${errorId} not found`)
+            throw new Error(`Error declaration with id ${errorId} not found`);
         }
-        return errorDeclaration
+        return errorDeclaration;
     }
 
     public getClassName(name: Name): string {
-        return name.pascalCase.unsafeName
+        return name.pascalCase.unsafeName;
     }
 
     public getPackageName(name: Name): string {
-        return name.snakeCase.unsafeName.toLowerCase()
+        return name.snakeCase.unsafeName.toLowerCase();
     }
 
     public getFilename(name: Name): string {
-        return name.snakeCase.unsafeName
+        return name.snakeCase.unsafeName;
     }
 
     public getRootImportPath(): string {
-        return this.rootImportPath
+        return this.rootImportPath;
     }
 
     public getRootPackageName(): string {
         if (this.customConfig.packageName != null) {
-            return this.customConfig.packageName
+            return this.customConfig.packageName;
         }
-        return this.ir.apiName.camelCase.safeName.toLowerCase()
+        return this.ir.apiName.camelCase.safeName.toLowerCase();
     }
 
     public getCoreImportPath(): string {
-        return `${this.rootImportPath}/core`
+        return `${this.rootImportPath}/core`;
     }
 
     public getInternalImportPath(): string {
-        return `${this.rootImportPath}/internal`
+        return `${this.rootImportPath}/internal`;
     }
 
     public getOptionImportPath(): string {
-        return `${this.rootImportPath}/option`
+        return `${this.rootImportPath}/option`;
     }
 
     public getFieldName(name: Name): string {
-        return name.pascalCase.unsafeName
+        return name.pascalCase.unsafeName;
     }
 
     public getParameterName(name: Name): string {
-        return name.camelCase.safeName
+        return name.camelCase.safeName;
     }
 
     public maybeUnwrapIterable(typeReference: TypeReference): TypeReference | undefined {
         switch (typeReference.type) {
             case "container": {
-                const container = typeReference.container
+                const container = typeReference.container;
                 switch (container.type) {
                     case "list":
-                        return container.list
+                        return container.list;
                     case "set":
-                        return container.set
+                        return container.set;
                     case "optional":
-                        return this.maybeUnwrapIterable(container.optional)
+                        return this.maybeUnwrapIterable(container.optional);
                     case "nullable":
-                        return this.maybeUnwrapIterable(container.nullable)
+                        return this.maybeUnwrapIterable(container.nullable);
                     case "literal":
                     case "map":
-                        return undefined
+                        return undefined;
                     default:
-                        assertNever(container)
+                        assertNever(container);
                 }
-                break
+                break;
             }
             case "named": {
-                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId).shape
+                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId).shape;
                 switch (typeDeclaration.type) {
                     case "alias":
-                        return this.maybeUnwrapIterable(typeDeclaration.aliasOf)
+                        return this.maybeUnwrapIterable(typeDeclaration.aliasOf);
                     case "enum":
                     case "object":
                     case "union":
                     case "undiscriminatedUnion":
-                        return undefined
+                        return undefined;
                     default:
-                        assertNever(typeDeclaration)
+                        assertNever(typeDeclaration);
                 }
-                break
+                break;
             }
             case "primitive":
             case "unknown":
-                return undefined
+                return undefined;
             default:
-                assertNever(typeReference)
+                assertNever(typeReference);
         }
     }
 
     public maybeUnwrapOptionalOrNullable(typeReference: TypeReference): TypeReference | undefined {
         switch (typeReference.type) {
             case "container": {
-                const container = typeReference.container
+                const container = typeReference.container;
                 switch (container.type) {
                     case "optional":
-                        return container.optional
+                        return container.optional;
                     case "nullable":
-                        return container.nullable
+                        return container.nullable;
                     case "list":
                     case "set":
                     case "literal":
                     case "map":
-                        return undefined
+                        return undefined;
                     default:
-                        assertNever(container)
+                        assertNever(container);
                 }
-                break
+                break;
             }
             case "named":
             case "primitive":
             case "unknown":
-                return undefined
+                return undefined;
             default:
-                assertNever(typeReference)
+                assertNever(typeReference);
         }
     }
 
@@ -209,66 +209,66 @@ export abstract class AbstractGoGeneratorContext<
     public needsOptionalDereference(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
             case "named": {
-                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId).shape
+                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId).shape;
                 switch (typeDeclaration.type) {
                     case "alias":
-                        return this.needsOptionalDereference(typeDeclaration.aliasOf)
+                        return this.needsOptionalDereference(typeDeclaration.aliasOf);
                     case "enum":
-                        return true
+                        return true;
                     case "object":
                     case "union":
                     case "undiscriminatedUnion":
-                        return false
+                        return false;
                     default:
-                        assertNever(typeDeclaration)
+                        assertNever(typeDeclaration);
                 }
-                break
+                break;
             }
             case "primitive":
-                return true
+                return true;
             case "container":
             case "unknown":
-                return false
+                return false;
             default:
-                assertNever(typeReference)
+                assertNever(typeReference);
         }
     }
 
     public getLiteralAsString(literal: Literal): string {
-        return literal.type === "string" ? `"${literal.string}"` : literal.boolean ? '"true"' : '"false"'
+        return literal.type === "string" ? `"${literal.string}"` : literal.boolean ? '"true"' : '"false"';
     }
 
     public getContextTypeReference(): go.TypeReference {
         return go.typeReference({
             name: "Context",
             importPath: "context"
-        })
+        });
     }
 
     public getZeroTime(): go.TypeInstantiation {
         return go.TypeInstantiation.struct({
             typeReference: TimeTypeReference,
             fields: []
-        })
+        });
     }
 
     public getZeroUuid(): go.TypeInstantiation {
         return go.TypeInstantiation.struct({
             typeReference: UuidTypeReference,
             fields: []
-        })
+        });
     }
 
     public getUuidTypeReference(): go.TypeReference {
-        return UuidTypeReference
+        return UuidTypeReference;
     }
 
     public getTimeTypeReference(): go.TypeReference {
-        return TimeTypeReference
+        return TimeTypeReference;
     }
 
     public getIoReaderTypeReference(): go.TypeReference {
-        return IoReaderTypeReference
+        return IoReaderTypeReference;
     }
 
     public isOptional(typeReference: TypeReference): boolean {
@@ -276,23 +276,23 @@ export abstract class AbstractGoGeneratorContext<
             case "container":
                 switch (typeReference.container.type) {
                     case "optional":
-                        return true
+                        return true;
                     case "nullable":
-                        return this.isOptional(typeReference.container.nullable)
+                        return this.isOptional(typeReference.container.nullable);
                 }
-                return false
+                return false;
             case "named": {
-                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId)
+                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
                 if (typeDeclaration.shape.type === "alias") {
-                    return this.isOptional(typeDeclaration.shape.aliasOf)
+                    return this.isOptional(typeDeclaration.shape.aliasOf);
                 }
-                return false
+                return false;
             }
             case "primitive":
             case "unknown":
-                return false
+                return false;
             default:
-                assertNever(typeReference)
+                assertNever(typeReference);
         }
     }
 
@@ -301,23 +301,23 @@ export abstract class AbstractGoGeneratorContext<
             case "container":
                 switch (typeReference.container.type) {
                     case "nullable":
-                        return true
+                        return true;
                     case "optional":
-                        return this.isNullable(typeReference.container.optional)
+                        return this.isNullable(typeReference.container.optional);
                 }
-                return false
+                return false;
             case "named": {
-                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId)
+                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
                 if (typeDeclaration.shape.type === "alias") {
-                    return this.isNullable(typeDeclaration.shape.aliasOf)
+                    return this.isNullable(typeDeclaration.shape.aliasOf);
                 }
-                return false
+                return false;
             }
             case "primitive":
             case "unknown":
-                return false
+                return false;
             default:
-                assertNever(typeReference)
+                assertNever(typeReference);
         }
     }
 
@@ -326,128 +326,128 @@ export abstract class AbstractGoGeneratorContext<
             case "container":
                 switch (typeReference.container.type) {
                     case "optional":
-                        return this.isEnum(typeReference.container.optional)
+                        return this.isEnum(typeReference.container.optional);
                     case "nullable":
-                        return this.isEnum(typeReference.container.nullable)
+                        return this.isEnum(typeReference.container.nullable);
                 }
-                return false
+                return false;
             case "named": {
-                const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId)
-                return this.typeDeclarationIsEnum(declaration)
+                const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                return this.typeDeclarationIsEnum(declaration);
             }
             case "primitive":
             case "unknown":
-                return false
+                return false;
             default:
-                assertNever(typeReference)
+                assertNever(typeReference);
         }
     }
 
     public typeDeclarationIsEnum(declaration: TypeDeclaration): boolean {
         if (declaration.shape.type === "alias") {
-            return this.isEnum(declaration.shape.aliasOf)
+            return this.isEnum(declaration.shape.aliasOf);
         }
-        return declaration.shape.type === "enum"
+        return declaration.shape.type === "enum";
     }
 
     public isDate(typeReference: TypeReference): boolean {
-        return this.isPrimitive({ typeReference, primitive: PrimitiveTypeV1.Date })
+        return this.isPrimitive({ typeReference, primitive: PrimitiveTypeV1.Date });
     }
 
     public isDateTime(typeReference: TypeReference): boolean {
-        return this.isPrimitive({ typeReference, primitive: PrimitiveTypeV1.DateTime })
+        return this.isPrimitive({ typeReference, primitive: PrimitiveTypeV1.DateTime });
     }
 
     public isPrimitive({
         typeReference,
         primitive
     }: {
-        typeReference: TypeReference
-        primitive: PrimitiveTypeV1
+        typeReference: TypeReference;
+        primitive: PrimitiveTypeV1;
     }): boolean {
-        return this.maybePrimitive(typeReference) === primitive
+        return this.maybePrimitive(typeReference) === primitive;
     }
 
     public maybePrimitive(typeReference: TypeReference): PrimitiveTypeV1 | undefined {
         switch (typeReference.type) {
             case "container": {
-                const container = typeReference.container
+                const container = typeReference.container;
                 switch (container.type) {
                     case "optional":
-                        return this.maybePrimitive(container.optional)
+                        return this.maybePrimitive(container.optional);
                     case "nullable":
-                        return this.maybePrimitive(container.nullable)
+                        return this.maybePrimitive(container.nullable);
                     case "list":
                     case "set":
                     case "literal":
                     case "map":
-                        return undefined
+                        return undefined;
                     default:
-                        assertNever(container)
+                        assertNever(container);
                 }
-                break
+                break;
             }
             case "named": {
-                const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId)
+                const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
                 if (declaration.shape.type === "alias") {
-                    return this.maybePrimitive(declaration.shape.aliasOf)
+                    return this.maybePrimitive(declaration.shape.aliasOf);
                 }
-                return undefined
+                return undefined;
             }
             case "primitive": {
-                return typeReference.primitive.v1
+                return typeReference.primitive.v1;
             }
             case "unknown": {
-                return undefined
+                return undefined;
             }
             default:
-                assertNever(typeReference)
+                assertNever(typeReference);
         }
     }
 
     public maybeLiteral(typeReference: TypeReference): Literal | undefined {
         if (typeReference.type === "container" && typeReference.container.type === "literal") {
-            return typeReference.container.literal
+            return typeReference.container.literal;
         }
-        return undefined
+        return undefined;
     }
 
     public getTypeDeclarationOrThrow(typeId: TypeId): TypeDeclaration {
-        const typeDeclaration = this.getTypeDeclaration(typeId)
+        const typeDeclaration = this.getTypeDeclaration(typeId);
         if (typeDeclaration == null) {
-            throw new Error(`Type declaration with id ${typeId} not found`)
+            throw new Error(`Type declaration with id ${typeId} not found`);
         }
-        return typeDeclaration
+        return typeDeclaration;
     }
 
     public getTypeDeclaration(typeId: TypeId): TypeDeclaration | undefined {
-        return this.ir.types[typeId]
+        return this.ir.types[typeId];
     }
 
     public getLocationForTypeId(typeId: TypeId): FileLocation {
-        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId)
-        return this.getPackageLocation(typeDeclaration.name.fernFilepath)
+        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
+        return this.getPackageLocation(typeDeclaration.name.fernFilepath);
     }
 
     public getLocationForErrorId(errorId: ErrorId): FileLocation {
-        const errorDeclaration = this.getErrorDeclarationOrThrow(errorId)
-        return this.getPackageLocation(errorDeclaration.name.fernFilepath)
+        const errorDeclaration = this.getErrorDeclarationOrThrow(errorId);
+        return this.getPackageLocation(errorDeclaration.name.fernFilepath);
     }
 
     protected getFileLocation(filepath: FernFilepath, suffix?: string): FileLocation {
-        return this.getLocation(filepath.allParts, suffix)
+        return this.getLocation(filepath.allParts, suffix);
     }
 
     protected getPackageLocation(filepath: FernFilepath, suffix?: string): FileLocation {
-        return this.getLocation(filepath.packagePath, suffix)
+        return this.getLocation(filepath.packagePath, suffix);
     }
 
     private getLocation(names: Name[], suffix?: string): FileLocation {
-        let parts = names.map((name) => name.camelCase.safeName.toLowerCase())
-        parts = suffix != null ? [...parts, suffix] : parts
+        let parts = names.map((name) => name.camelCase.safeName.toLowerCase());
+        parts = suffix != null ? [...parts, suffix] : parts;
         return {
             importPath: [this.getRootImportPath(), ...parts].join("/"),
             directory: RelativeFilePath.of(parts.join("/"))
-        }
+        };
     }
 }

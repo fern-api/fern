@@ -1,19 +1,19 @@
-import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator"
-import { Reference, Zurg, getSchemaOptions, getTextOfTsNode } from "@fern-typescript/commons"
-import { ExpressContext, GeneratedExpressErrorSchema } from "@fern-typescript/contexts"
-import { ModuleDeclaration, ts } from "ts-morph"
+import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
+import { Reference, Zurg, getSchemaOptions, getTextOfTsNode } from "@fern-typescript/commons";
+import { ExpressContext, GeneratedExpressErrorSchema } from "@fern-typescript/contexts";
+import { ModuleDeclaration, ts } from "ts-morph";
 
-import { assertNever } from "@fern-api/core-utils"
+import { assertNever } from "@fern-api/core-utils";
 
-import { ErrorDeclaration, TypeReference } from "@fern-fern/ir-sdk/api"
+import { ErrorDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 
 export declare namespace GeneratedExpressErrorSchemaImpl {
     export interface Init {
-        errorName: string
-        errorDeclaration: ErrorDeclaration
-        type: TypeReference
-        includeSerdeLayer: boolean
-        allowExtraFields: boolean
+        errorName: string;
+        errorDeclaration: ErrorDeclaration;
+        type: TypeReference;
+        includeSerdeLayer: boolean;
+        allowExtraFields: boolean;
     }
 }
 
@@ -21,10 +21,10 @@ export class GeneratedExpressErrorSchemaImpl
     extends AbstractGeneratedSchema<ExpressContext>
     implements GeneratedExpressErrorSchema
 {
-    private errorDeclaration: ErrorDeclaration
-    private type: TypeReference
-    private includeSerdeLayer: boolean
-    private allowExtraFields: boolean
+    private errorDeclaration: ErrorDeclaration;
+    private type: TypeReference;
+    private includeSerdeLayer: boolean;
+    private allowExtraFields: boolean;
 
     constructor({
         errorName,
@@ -33,11 +33,11 @@ export class GeneratedExpressErrorSchemaImpl
         includeSerdeLayer,
         allowExtraFields
     }: GeneratedExpressErrorSchemaImpl.Init) {
-        super({ typeName: errorName })
-        this.errorDeclaration = errorDeclaration
-        this.type = type
-        this.includeSerdeLayer = includeSerdeLayer
-        this.allowExtraFields = allowExtraFields
+        super({ typeName: errorName });
+        this.errorDeclaration = errorDeclaration;
+        this.type = type;
+        this.includeSerdeLayer = includeSerdeLayer;
+        this.allowExtraFields = allowExtraFields;
     }
 
     public writeToFile(context: ExpressContext): void {
@@ -47,16 +47,16 @@ export class GeneratedExpressErrorSchemaImpl
         switch (this.type.type) {
             case "primitive":
             case "container":
-                this.writeSchemaToFile(context)
-                break
+                this.writeSchemaToFile(context);
+                break;
             // named requests bodies are not generated - consumers should
             // (de)serialize the named type directly.
             // unknown request bodies don't need to be serialized.
             case "named":
             case "unknown":
-                break
+                break;
             default:
-                assertNever(this.type)
+                assertNever(this.type);
         }
     }
 
@@ -65,7 +65,7 @@ export class GeneratedExpressErrorSchemaImpl
         { referenceToBody }: { referenceToBody: ts.Expression }
     ): ts.Expression {
         if (!this.includeSerdeLayer) {
-            return referenceToBody
+            return referenceToBody;
         }
 
         switch (this.type.type) {
@@ -77,9 +77,9 @@ export class GeneratedExpressErrorSchemaImpl
                             allowExtraFields: this.allowExtraFields,
                             omitUndefined: false
                         })
-                    })
+                    });
             case "unknown":
-                return referenceToBody
+                return referenceToBody;
             case "primitive":
             case "container":
                 return this.getReferenceToZurgSchema(context).jsonOrThrow(referenceToBody, {
@@ -87,14 +87,14 @@ export class GeneratedExpressErrorSchemaImpl
                         allowExtraFields: this.allowExtraFields,
                         omitUndefined: false
                     })
-                })
+                });
             default:
-                assertNever(this.type)
+                assertNever(this.type);
         }
     }
 
     protected getReferenceToSchema(context: ExpressContext): Reference {
-        return context.expressErrorSchema.getReferenceToExpressErrorSchema(this.errorDeclaration.name)
+        return context.expressErrorSchema.getReferenceToExpressErrorSchema(this.errorDeclaration.name);
     }
 
     protected generateRawTypeDeclaration(context: ExpressContext, module: ModuleDeclaration): void {
@@ -102,14 +102,14 @@ export class GeneratedExpressErrorSchemaImpl
             name: AbstractGeneratedSchema.RAW_TYPE_NAME,
             type: getTextOfTsNode(context.typeSchema.getReferenceToRawType(this.type).typeNode),
             isExported: true
-        })
+        });
     }
 
     protected getReferenceToParsedShape(context: ExpressContext): ts.TypeNode {
-        return context.type.getReferenceToType(this.type).typeNode
+        return context.type.getReferenceToType(this.type).typeNode;
     }
 
     protected buildSchema(context: ExpressContext): Zurg.Schema {
-        return context.typeSchema.getSchemaOfTypeReference(this.type)
+        return context.typeSchema.getSchemaOfTypeReference(this.type);
     }
 }

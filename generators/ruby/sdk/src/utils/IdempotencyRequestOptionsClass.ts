@@ -6,22 +6,22 @@ import {
     Function_,
     Property,
     Variable
-} from "@fern-api/ruby-codegen"
+} from "@fern-api/ruby-codegen";
 
-import { HttpHeader } from "@fern-fern/ir-sdk/api"
+import { HttpHeader } from "@fern-fern/ir-sdk/api";
 
-import { RequestOptions } from "./RequestOptionsClass"
+import { RequestOptions } from "./RequestOptionsClass";
 
 export declare namespace IdempotencyRequestOptions {
     export interface Init extends RequestOptions.Init {
-        crf: ClassReferenceFactory
-        idempotencyHeaders: HttpHeader[]
+        crf: ClassReferenceFactory;
+        idempotencyHeaders: HttpHeader[];
     }
 }
 
 // TODO: Implement this, also figure out the best way to handle the headerGenerator concept
 export class IdempotencyRequestOptions extends RequestOptions {
-    public idempotencyHeaderProperties: Property[]
+    public idempotencyHeaderProperties: Property[];
 
     constructor({ idempotencyHeaders, crf, ...rest }: IdempotencyRequestOptions.Init) {
         const idempotencyHeaderProperties = idempotencyHeaders.map(
@@ -33,14 +33,14 @@ export class IdempotencyRequestOptions extends RequestOptions {
                     isOptional: true,
                     documentation: header.docs
                 })
-        )
+        );
         super({
             nameOverride: "IdempotencyRequestOptions",
             ...rest,
             additionalProperties: idempotencyHeaderProperties
-        })
+        });
 
-        this.idempotencyHeaderProperties = idempotencyHeaderProperties
+        this.idempotencyHeaderProperties = idempotencyHeaderProperties;
     }
 
     public getIdempotencyHeadersProperties(
@@ -66,6 +66,6 @@ export class IdempotencyRequestOptions extends RequestOptions {
                         ]
                     }
                 })
-        )
+        );
     }
 }

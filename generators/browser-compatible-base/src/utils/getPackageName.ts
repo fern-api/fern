@@ -1,4 +1,4 @@
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
 export function getPackageName(config: FernGeneratorExec.GeneratorConfig): string | undefined {
     return config.output.mode._visit<string | undefined>({
@@ -24,7 +24,7 @@ export function getPackageName(config: FernGeneratorExec.GeneratorConfig): strin
                 _other: () => undefined
             }),
         _other: () => {
-            throw new Error("Unrecognized output mode.")
+            throw new Error("Unrecognized output mode.");
         }
-    })
+    });
 }

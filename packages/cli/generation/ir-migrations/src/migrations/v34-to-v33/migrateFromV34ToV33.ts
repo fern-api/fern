@@ -1,10 +1,14 @@
-import { GeneratorName } from "@fern-api/configuration-loader"
+import { GeneratorName } from "@fern-api/configuration-loader";
 
-import { FernIrV33 } from "@fern-fern/ir-v33-sdk"
+import { FernIrV33 } from "@fern-fern/ir-v33-sdk";
 
-import { IrSerialization } from "../../ir-serialization"
-import { IrVersions } from "../../ir-versions"
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
+import { IrSerialization } from "../../ir-serialization";
+import { IrVersions } from "../../ir-versions";
+import {
+    GeneratorWasNeverUpdatedToConsumeNewIR,
+    GeneratorWasNotCreatedYet,
+    IrMigration
+} from "../../types/IrMigration";
 
 export const V34_TO_V33_MIGRATION: IrMigration<
     IrVersions.V34.ir.IntermediateRepresentation,
@@ -66,14 +70,14 @@ export const V34_TO_V33_MIGRATION: IrMigration<
                                             if (property.type === "file" && property.value.type === "fileArray") {
                                                 context.taskContext.logger.warn(
                                                     `${endpoint.method} ${endpoint.fullPath.head} accepts a list of files however the ${context.targetGenerator?.name}@${context.targetGenerator?.version} only supports accepting a single file. File an [issue](https://github.com/fern-api/fern/issues) to add request for file arrays in ${context.targetGenerator?.name}@${context.targetGenerator?.version}!`
-                                                )
+                                                );
                                             }
                                             if (property.type === "file") {
                                                 return FernIrV33.FileUploadRequestProperty.file({
                                                     ...property.value
-                                                })
+                                                });
                                             } else {
-                                                return property
+                                                return property;
                                             }
                                         })
                                     }),
@@ -84,6 +88,6 @@ export const V34_TO_V33_MIGRATION: IrMigration<
                     }
                 ])
             )
-        }
+        };
     }
-}
+};

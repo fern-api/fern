@@ -1,24 +1,24 @@
-import { getTextOfTsNode } from "@fern-typescript/commons"
-import { BaseContext } from "@fern-typescript/contexts"
+import { getTextOfTsNode } from "@fern-typescript/commons";
+import { BaseContext } from "@fern-typescript/contexts";
 import {
     ClassDeclaration,
     OptionalKind,
     ParameterDeclarationStructure,
     PropertyDeclarationStructure,
     ts
-} from "ts-morph"
+} from "ts-morph";
 
 export declare namespace AbstractErrorClassGenerator {
     export interface Init {
-        errorClassName: string
+        errorClassName: string;
     }
 }
 
 export abstract class AbstractErrorClassGenerator<Context extends BaseContext> {
-    protected errorClassName: string
+    protected errorClassName: string;
 
     constructor({ errorClassName }: AbstractErrorClassGenerator.Init) {
-        this.errorClassName = errorClassName
+        this.errorClassName = errorClassName;
     }
 
     protected writeToSourceFile(context: Context): void {
@@ -28,7 +28,7 @@ export abstract class AbstractErrorClassGenerator<Context extends BaseContext> {
             isExported: true,
             extends: getTextOfTsNode(this.getBaseClass(context)),
             properties: this.getClassProperties(context)
-        })
+        });
 
         class_.addConstructor({
             parameters: this.getConstructorParameters(context),
@@ -58,19 +58,19 @@ export abstract class AbstractErrorClassGenerator<Context extends BaseContext> {
                 ),
                 ...this.getConstructorStatements(context)
             ].map(getTextOfTsNode)
-        })
+        });
 
-        this.addToClass(class_, context)
+        this.addToClass(class_, context);
     }
 
     protected getBaseClass(_context: Context): ts.TypeNode {
-        return ts.factory.createTypeReferenceNode("Error")
+        return ts.factory.createTypeReferenceNode("Error");
     }
 
-    protected abstract getClassProperties(context: Context): OptionalKind<PropertyDeclarationStructure>[]
-    protected abstract getConstructorParameters(context: Context): OptionalKind<ParameterDeclarationStructure>[]
-    protected abstract getSuperArguments(context: Context): ts.Expression[]
-    protected abstract getConstructorStatements(context: Context): ts.Statement[]
-    protected abstract addToClass(class_: ClassDeclaration, context: Context): void
-    protected abstract isAbstract(): boolean
+    protected abstract getClassProperties(context: Context): OptionalKind<PropertyDeclarationStructure>[];
+    protected abstract getConstructorParameters(context: Context): OptionalKind<ParameterDeclarationStructure>[];
+    protected abstract getSuperArguments(context: Context): ts.Expression[];
+    protected abstract getConstructorStatements(context: Context): ts.Statement[];
+    protected abstract addToClass(class_: ClassDeclaration, context: Context): void;
+    protected abstract isAbstract(): boolean;
 }

@@ -1,6 +1,6 @@
-import { FdrAPI, FernNavigation } from "@fern-api/fdr-sdk"
+import { FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 
-import { getApiLatestToNavigationNodeUrlSlug } from "../utils/getApiLatestToNavigationNodeUrlSlug"
+import { getApiLatestToNavigationNodeUrlSlug } from "../utils/getApiLatestToNavigationNodeUrlSlug";
 
 it.skip("generates slug for endpoint", () => {
     const endpoint: FdrAPI.api.latest.endpoint.EndpointDefinition = {
@@ -30,14 +30,14 @@ it.skip("generates slug for endpoint", () => {
         snippetTemplates: undefined,
         protocol: undefined,
         availability: undefined
-    }
+    };
     expect(
         getApiLatestToNavigationNodeUrlSlug({
             item: endpoint,
             parentSlug: FernNavigation.V1.SlugGenerator.init("")
         })
-    ).toBe("api-service/create")
-})
+    ).toBe("api-service/create");
+});
 
 it.skip("generates slug for websocket", () => {
     const websocket: FdrAPI.api.latest.websocket.WebSocketChannel = {
@@ -61,14 +61,14 @@ it.skip("generates slug for websocket", () => {
         examples: [],
         availability: undefined,
         description: undefined
-    }
+    };
     expect(
         getApiLatestToNavigationNodeUrlSlug({
             item: websocket,
             parentSlug: FernNavigation.V1.SlugGenerator.init("")
         })
-    ).toBe("realtime/stream")
-})
+    ).toBe("realtime/stream");
+});
 
 it.skip("generates slug for webhook", () => {
     const webhook: FdrAPI.api.latest.webhook.WebhookDefinition = {
@@ -83,11 +83,11 @@ it.skip("generates slug for webhook", () => {
         headers: [],
         payloads: [],
         description: undefined
-    }
+    };
     expect(
         getApiLatestToNavigationNodeUrlSlug({
             item: webhook,
             parentSlug: FernNavigation.V1.SlugGenerator.init("")
         })
-    ).toBe("webhooks/completed")
-})
+    ).toBe("webhooks/completed");
+});

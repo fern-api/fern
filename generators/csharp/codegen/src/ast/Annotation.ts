@@ -1,39 +1,39 @@
-import { ClassReference } from "./ClassReference"
-import { AstNode } from "./core/AstNode"
-import { Writer } from "./core/Writer"
+import { ClassReference } from "./ClassReference";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
 
 export declare namespace Annotation {
     interface Args {
         /* Reference to the annotation */
-        reference: ClassReference
+        reference: ClassReference;
 
-        argument?: string | AstNode
+        argument?: string | AstNode;
     }
 }
 
 export class Annotation extends AstNode {
-    private reference: ClassReference
-    private argument?: string | AstNode
+    private reference: ClassReference;
+    private argument?: string | AstNode;
 
     constructor(args: Annotation.Args) {
-        super()
-        this.reference = args.reference
-        this.argument = args.argument
+        super();
+        this.reference = args.reference;
+        this.argument = args.argument;
     }
 
     public write(writer: Writer): void {
-        writer.addReference(this.reference)
-        writer.write("[")
-        this.reference.writeAsAttribute(writer)
+        writer.addReference(this.reference);
+        writer.write("[");
+        this.reference.writeAsAttribute(writer);
         if (this.argument != null) {
-            writer.write("(")
+            writer.write("(");
             if (typeof this.argument === "string") {
-                writer.write(this.argument)
+                writer.write(this.argument);
             } else {
-                this.argument.write(writer)
+                this.argument.write(writer);
             }
-            writer.write(")")
+            writer.write(")");
         }
-        writer.write("]")
+        writer.write("]");
     }
 }

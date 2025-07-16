@@ -4,24 +4,24 @@ import {
     TypeDeclaration,
     TypeId,
     TypeReference
-} from "@fern-api/ir-sdk"
+} from "@fern-api/ir-sdk";
 
-import { ExampleGenerationResult } from "./ExampleGenerationResult"
-import { generateContainerExample, generateEmptyContainerExample } from "./generateContainerExample"
-import { generatePrimitiveExample } from "./generatePrimitiveExample"
-import { generateTypeDeclarationExample } from "./generateTypeDeclarationExample"
+import { ExampleGenerationResult } from "./ExampleGenerationResult";
+import { generateContainerExample, generateEmptyContainerExample } from "./generateContainerExample";
+import { generatePrimitiveExample } from "./generatePrimitiveExample";
+import { generateTypeDeclarationExample } from "./generateTypeDeclarationExample";
 
 export declare namespace generateTypeReferenceExample {
     interface Args {
         /* The field name that the example is being generated for*/
-        fieldName?: string
-        typeReference: TypeReference
-        typeDeclarations: Record<TypeId, TypeDeclaration>
+        fieldName?: string;
+        typeReference: TypeReference;
+        typeDeclarations: Record<TypeId, TypeDeclaration>;
 
-        maxDepth: number
-        currentDepth: number
+        maxDepth: number;
+        currentDepth: number;
 
-        skipOptionalProperties: boolean
+        skipOptionalProperties: boolean;
     }
 }
 
@@ -34,13 +34,13 @@ export function generateTypeReferenceExample({
     skipOptionalProperties
 }: generateTypeReferenceExample.Args): ExampleGenerationResult<ExampleTypeReference> {
     if (currentDepth > maxDepth) {
-        return { type: "failure", message: "Exceeded max depth" }
+        return { type: "failure", message: "Exceeded max depth" };
     }
     switch (typeReference.type) {
         case "named": {
-            const typeDeclaration = typeDeclarations[typeReference.typeId]
+            const typeDeclaration = typeDeclarations[typeReference.typeId];
             if (typeDeclaration == null) {
-                return { type: "failure", message: `Failed to find type declaration with id ${typeReference.typeId}` }
+                return { type: "failure", message: `Failed to find type declaration with id ${typeReference.typeId}` };
             }
             const generatedExample = generateTypeDeclarationExample({
                 fieldName,
@@ -49,14 +49,14 @@ export function generateTypeReferenceExample({
                 maxDepth,
                 currentDepth,
                 skipOptionalProperties
-            })
+            });
             if (generatedExample == null) {
-                return { type: "failure", message: "Failed to generate example for type declaration" }
+                return { type: "failure", message: "Failed to generate example for type declaration" };
             }
             if (generatedExample.type === "failure") {
-                return generatedExample
+                return generatedExample;
             }
-            const { example, jsonExample } = generatedExample
+            const { example, jsonExample } = generatedExample;
             return {
                 type: "success",
                 example: {
@@ -67,7 +67,7 @@ export function generateTypeReferenceExample({
                     })
                 },
                 jsonExample
-            }
+            };
         }
         case "container": {
             const generatedExample = generateContainerExample({
@@ -77,11 +77,11 @@ export function generateTypeReferenceExample({
                 maxDepth,
                 currentDepth,
                 skipOptionalProperties
-            })
+            });
             if (generatedExample.type === "failure") {
                 const { example, jsonExample } = generateEmptyContainerExample({
                     containerType: typeReference.container
-                })
+                });
                 return {
                     type: "success",
                     example: {
@@ -89,9 +89,9 @@ export function generateTypeReferenceExample({
                         shape: ExampleTypeReferenceShape.container(example)
                     },
                     jsonExample
-                }
+                };
             }
-            const { example, jsonExample } = generatedExample
+            const { example, jsonExample } = generatedExample;
             return {
                 type: "success",
                 example: {
@@ -99,13 +99,13 @@ export function generateTypeReferenceExample({
                     shape: ExampleTypeReferenceShape.container(example)
                 },
                 jsonExample
-            }
+            };
         }
         case "primitive": {
             const { jsonExample, example } = generatePrimitiveExample({
                 fieldName,
                 primitiveType: typeReference.primitive
-            })
+            });
             return {
                 type: "success",
                 example: {
@@ -113,10 +113,10 @@ export function generateTypeReferenceExample({
                     shape: ExampleTypeReferenceShape.primitive(example)
                 },
                 jsonExample
-            }
+            };
         }
         case "unknown": {
-            const jsonExample = { key: "value" }
+            const jsonExample = { key: "value" };
             return {
                 type: "success",
                 example: {
@@ -124,7 +124,7 @@ export function generateTypeReferenceExample({
                     shape: ExampleTypeReferenceShape.unknown(jsonExample)
                 },
                 jsonExample
-            }
+            };
         }
     }
 }

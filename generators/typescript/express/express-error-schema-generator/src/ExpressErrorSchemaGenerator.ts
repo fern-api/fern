@@ -1,30 +1,30 @@
-import { GeneratedExpressErrorSchema } from "@fern-typescript/contexts"
+import { GeneratedExpressErrorSchema } from "@fern-typescript/contexts";
 
-import { ErrorDeclaration } from "@fern-fern/ir-sdk/api"
+import { ErrorDeclaration } from "@fern-fern/ir-sdk/api";
 
-import { GeneratedExpressErrorSchemaImpl } from "./GeneratedExpressErrorSchemaImpl"
+import { GeneratedExpressErrorSchemaImpl } from "./GeneratedExpressErrorSchemaImpl";
 
 export declare namespace ExpressErrorSchemaGenerator {
     export interface Init {
-        includeSerdeLayer: boolean
-        allowExtraFields: boolean
+        includeSerdeLayer: boolean;
+        allowExtraFields: boolean;
     }
 
     export namespace generateError {
         export interface Args {
-            errorName: string
-            errorDeclaration: ErrorDeclaration
+            errorName: string;
+            errorDeclaration: ErrorDeclaration;
         }
     }
 }
 
 export class ExpressErrorSchemaGenerator {
-    private includeSerdeLayer: boolean
-    private allowExtraFields: boolean
+    private includeSerdeLayer: boolean;
+    private allowExtraFields: boolean;
 
     constructor({ includeSerdeLayer, allowExtraFields }: ExpressErrorSchemaGenerator.Init) {
-        this.includeSerdeLayer = includeSerdeLayer
-        this.allowExtraFields = allowExtraFields
+        this.includeSerdeLayer = includeSerdeLayer;
+        this.allowExtraFields = allowExtraFields;
     }
 
     public generateExpressErrorSchema({
@@ -32,7 +32,7 @@ export class ExpressErrorSchemaGenerator {
         errorName
     }: ExpressErrorSchemaGenerator.generateError.Args): GeneratedExpressErrorSchema | undefined {
         if (errorDeclaration.type == null) {
-            return undefined
+            return undefined;
         }
         return new GeneratedExpressErrorSchemaImpl({
             errorDeclaration,
@@ -40,6 +40,6 @@ export class ExpressErrorSchemaGenerator {
             errorName,
             includeSerdeLayer: this.includeSerdeLayer,
             allowExtraFields: this.allowExtraFields
-        })
+        });
     }
 }

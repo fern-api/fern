@@ -3,6 +3,6 @@ export const Access = {
     Private: "private",
     Protected: "protected",
     Internal: "internal"
-} as const
+} as const;
 
-export type Access = (typeof Access)[keyof typeof Access]
+export type Access = (typeof Access)[keyof typeof Access];

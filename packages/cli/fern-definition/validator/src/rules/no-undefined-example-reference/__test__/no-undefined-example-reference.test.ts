@@ -1,7 +1,7 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule"
-import { NoUndefinedExampleReferenceRule } from "../no-undefined-example-reference"
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { NoUndefinedExampleReferenceRule } from "../no-undefined-example-reference";
 
 describe("no-undefined-example-reference", () => {
     it("simple", async () => {
@@ -12,7 +12,7 @@ describe("no-undefined-example-reference", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
             )
-        })
+        });
 
         expect(violations).toEqual([
             {
@@ -55,6 +55,6 @@ describe("no-undefined-example-reference", () => {
                 relativeFilepath: RelativeFilePath.of("folder/nested.yml"),
                 severity: "fatal"
             }
-        ])
-    })
-})
+        ]);
+    });
+});

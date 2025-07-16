@@ -1,7 +1,7 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule"
-import { NoMissingRequestNameRule } from "../no-missing-request-name"
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { NoMissingRequestNameRule } from "../no-missing-request-name";
 
 describe("no-missing-request-name", () => {
     it("simple", async () => {
@@ -12,7 +12,7 @@ describe("no-missing-request-name", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
             )
-        })
+        });
 
         expect(violations).toEqual([
             {
@@ -40,6 +40,6 @@ describe("no-missing-request-name", () => {
                 relativeFilepath: RelativeFilePath.of("service-without-names.yml"),
                 severity: "fatal"
             }
-        ])
-    })
-})
+        ]);
+    });
+});

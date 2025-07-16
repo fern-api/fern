@@ -1,8 +1,8 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { ValidationViolation } from "../../../ValidationViolation"
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule"
-import { ValidBasePathRule } from "../valid-base-path"
+import { ValidationViolation } from "../../../ValidationViolation";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { ValidBasePathRule } from "../valid-base-path";
 
 describe("valid-base-path", () => {
     it("simple", async () => {
@@ -13,7 +13,7 @@ describe("valid-base-path", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
             )
-        })
+        });
 
         const expectedViolations: ValidationViolation[] = [
             {
@@ -22,8 +22,8 @@ describe("valid-base-path", () => {
                 relativeFilepath: RelativeFilePath.of("no-leading-slash.yml"),
                 severity: "fatal"
             }
-        ]
+        ];
 
-        expect(violations).toEqual(expectedViolations)
-    })
-})
+        expect(violations).toEqual(expectedViolations);
+    });
+});

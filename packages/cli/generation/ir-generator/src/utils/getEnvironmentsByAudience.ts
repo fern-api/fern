@@ -1,5 +1,5 @@
-import { RawSchemas } from "@fern-api/fern-definition-schema"
-import { AudienceId } from "@fern-api/ir-utils"
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { AudienceId } from "@fern-api/ir-utils";
 
 export function getAudienceForEnvironment(
     environmentId: string,
@@ -13,9 +13,9 @@ export function getAudienceForEnvironment(
     if (rawEnvironments) {
         for (const [envId, environment] of Object.entries(rawEnvironments)) {
             if (typeof environment !== "string" && envId === environmentId) {
-                return environment.audiences
+                return environment.audiences;
             }
         }
     }
-    return undefined
+    return undefined;
 }

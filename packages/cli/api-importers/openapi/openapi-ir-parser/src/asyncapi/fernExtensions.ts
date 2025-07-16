@@ -1,4 +1,4 @@
-import { Values } from "@fern-api/core-utils"
+import { Values } from "@fern-api/core-utils";
 
 export const FernAsyncAPIExtension = {
     /**
@@ -90,6 +90,6 @@ export const FernAsyncAPIExtension = {
      *     x-fern-ignore: true
      */
     IGNORE: "x-fern-ignore"
-} as const
+} as const;
 
-export type FernAsyncAPIExtension = Values<typeof FernAsyncAPIExtension>
+export type FernAsyncAPIExtension = Values<typeof FernAsyncAPIExtension>;

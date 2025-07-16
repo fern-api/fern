@@ -1,17 +1,17 @@
-import { OpenAPIV3_1 } from "openapi-types"
+import { OpenAPIV3_1 } from "openapi-types";
 
-import { Type } from "@fern-api/ir-sdk"
+import { Type } from "@fern-api/ir-sdk";
 
-import { AbstractConverter, AbstractConverterContext, FernEnumConfig } from "../.."
+import { AbstractConverter, AbstractConverterContext, FernEnumConfig } from "../..";
 
 export declare namespace EnumSchemaConverter {
     export interface Args extends AbstractConverter.AbstractArgs {
-        schema: OpenAPIV3_1.SchemaObject
-        maybeFernEnum: FernEnumConfig | undefined
+        schema: OpenAPIV3_1.SchemaObject;
+        maybeFernEnum: FernEnumConfig | undefined;
     }
 
     export interface Output {
-        type: Type
+        type: Type;
     }
 }
 
@@ -19,25 +19,25 @@ export class EnumSchemaConverter extends AbstractConverter<
     AbstractConverterContext<object>,
     EnumSchemaConverter.Output
 > {
-    private readonly schema: OpenAPIV3_1.SchemaObject
-    private readonly maybeFernEnum: FernEnumConfig | undefined
+    private readonly schema: OpenAPIV3_1.SchemaObject;
+    private readonly maybeFernEnum: FernEnumConfig | undefined;
 
     constructor({ context, breadcrumbs, schema, maybeFernEnum }: EnumSchemaConverter.Args) {
-        super({ context, breadcrumbs })
-        this.schema = schema
-        this.maybeFernEnum = maybeFernEnum
+        super({ context, breadcrumbs });
+        this.schema = schema;
+        this.maybeFernEnum = maybeFernEnum;
     }
 
     public convert(): EnumSchemaConverter.Output | undefined {
         if (!this.schema.enum) {
-            return undefined
+            return undefined;
         }
 
-        const enumValues = this.schema.enum.filter((value) => typeof value === "string" || typeof value === "number")
+        const enumValues = this.schema.enum.filter((value) => typeof value === "string" || typeof value === "number");
         const values = enumValues.map((value) => {
-            const stringValue = value.toString()
-            const fernEnumValue = this.maybeFernEnum?.[stringValue]
-            const name = fernEnumValue?.name ?? stringValue
+            const stringValue = value.toString();
+            const fernEnumValue = this.maybeFernEnum?.[stringValue];
+            const name = fernEnumValue?.name ?? stringValue;
 
             return {
                 name: this.context.casingsGenerator.generateNameAndWireValue({
@@ -47,23 +47,23 @@ export class EnumSchemaConverter extends AbstractConverter<
                 docs: fernEnumValue?.description,
                 availability: undefined,
                 casing: fernEnumValue?.casing
-            }
-        })
+            };
+        });
 
         if (values.length === 0) {
             this.context.errorCollector.collect({
                 message: `Received enum schema with no valid values: ${JSON.stringify(this.schema)}`,
                 path: this.breadcrumbs
-            })
-            return undefined
+            });
+            return undefined;
         }
 
-        const default_ = this.context.getAsString(this.schema.default)
+        const default_ = this.context.getAsString(this.schema.default);
         return {
             type: Type.enum({
                 default: default_ != null ? values.find((v) => v.name.wireValue === default_) : undefined,
                 values
             })
-        }
+        };
     }
 }

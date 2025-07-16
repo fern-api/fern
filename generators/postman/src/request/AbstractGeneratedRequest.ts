@@ -6,7 +6,7 @@ import {
     HttpService,
     IntermediateRepresentation,
     TypeDeclaration
-} from "@fern-fern/ir-sdk/api"
+} from "@fern-fern/ir-sdk/api";
 import {
     PostmanHeader,
     PostmanMethod,
@@ -14,51 +14,51 @@ import {
     PostmanRequest,
     PostmanRequestBodyMode,
     PostmanUrlVariable
-} from "@fern-fern/postman-sdk/api"
+} from "@fern-fern/postman-sdk/api";
 
-import { ORIGIN_VARIABLE_NAME, getReferenceToVariable } from "../utils"
-import { GeneratedRequest } from "./GeneratedRequest"
+import { ORIGIN_VARIABLE_NAME, getReferenceToVariable } from "../utils";
+import { GeneratedRequest } from "./GeneratedRequest";
 
 export declare namespace AbstractGeneratedRequest {
     export interface Init {
-        ir: IntermediateRepresentation
-        authHeaders: PostmanHeader[]
-        httpService: HttpService
-        httpEndpoint: HttpEndpoint
-        allTypes: TypeDeclaration[]
+        ir: IntermediateRepresentation;
+        authHeaders: PostmanHeader[];
+        httpService: HttpService;
+        httpEndpoint: HttpEndpoint;
+        allTypes: TypeDeclaration[];
     }
 }
 
 export abstract class AbstractGeneratedRequest implements GeneratedRequest {
-    protected ir: IntermediateRepresentation
-    protected authHeaders: PostmanHeader[]
-    protected httpService: HttpService
-    protected httpEndpoint: HttpEndpoint
-    protected allTypes: TypeDeclaration[]
+    protected ir: IntermediateRepresentation;
+    protected authHeaders: PostmanHeader[];
+    protected httpService: HttpService;
+    protected httpEndpoint: HttpEndpoint;
+    protected allTypes: TypeDeclaration[];
 
     constructor({ authHeaders, httpEndpoint, httpService, allTypes, ir }: AbstractGeneratedRequest.Init) {
-        this.ir = ir
-        this.authHeaders = authHeaders
-        this.httpService = httpService
-        this.httpEndpoint = httpEndpoint
-        this.allTypes = allTypes
+        this.ir = ir;
+        this.authHeaders = authHeaders;
+        this.httpService = httpService;
+        this.httpEndpoint = httpEndpoint;
+        this.allTypes = allTypes;
     }
 
     public get(): PostmanRequest {
-        const hostArr = [getReferenceToVariable(ORIGIN_VARIABLE_NAME)]
+        const hostArr = [getReferenceToVariable(ORIGIN_VARIABLE_NAME)];
         const pathArr = [
             ...(this.ir.basePath != null ? this.getPathArray(this.ir.basePath) : []),
             ...this.getPathArray(this.httpService.basePath),
             ...this.getPathArray(this.httpEndpoint.path)
-        ]
-        const queryParams = this.getQueryParams()
+        ];
+        const queryParams = this.getQueryParams();
 
-        let rawUrl = [...hostArr, ...pathArr].join("/")
+        let rawUrl = [...hostArr, ...pathArr].join("/");
         if (queryParams.length > 0) {
-            rawUrl += "?" + new URLSearchParams(queryParams.map((param) => [param.key, param.value])).toString()
+            rawUrl += "?" + new URLSearchParams(queryParams.map((param) => [param.key, param.value])).toString();
         }
 
-        const requestBody = this.getRequestBody()
+        const requestBody = this.getRequestBody();
 
         return {
             description: this.httpEndpoint.docs ?? undefined,
@@ -84,17 +84,17 @@ export abstract class AbstractGeneratedRequest implements GeneratedRequest {
                               }
                           }
                       }
-        }
+        };
     }
 
     protected convertHeader({ header, value }: { header: HttpHeader; value?: unknown }): PostmanHeader {
-        const valueOrDefault = value ?? `YOUR_${header.name.name.screamingSnakeCase.unsafeName}`
+        const valueOrDefault = value ?? `YOUR_${header.name.name.screamingSnakeCase.unsafeName}`;
         return {
             key: header.name.wireValue,
             description: header.docs ?? undefined,
             type: "text",
             value: valueOrDefault != null ? JSON.stringify(valueOrDefault) : ""
-        }
+        };
     }
 
     private convertHttpMethod(httpMethod: HttpMethod): PostmanMethod {
@@ -105,29 +105,29 @@ export abstract class AbstractGeneratedRequest implements GeneratedRequest {
             patch: () => PostmanMethod.Patch,
             delete: () => PostmanMethod.Delete,
             _other: () => {
-                throw new Error("Unexpected httpMethod: " + httpMethod)
+                throw new Error("Unexpected httpMethod: " + httpMethod);
             }
-        })
+        });
     }
 
     private getPathArray(path: HttpPath): string[] {
-        const urlParts: string[] = []
+        const urlParts: string[] = [];
         if (path.head !== "/") {
-            this.splitPathString(path.head).forEach((splitPart) => urlParts.push(splitPart))
+            this.splitPathString(path.head).forEach((splitPart) => urlParts.push(splitPart));
         }
         path.parts.forEach((part) => {
-            urlParts.push(`:${part.pathParameter}`)
-            this.splitPathString(part.tail).forEach((splitPart) => urlParts.push(splitPart))
-        })
-        return urlParts
+            urlParts.push(`:${part.pathParameter}`);
+            this.splitPathString(part.tail).forEach((splitPart) => urlParts.push(splitPart));
+        });
+        return urlParts;
     }
 
     private splitPathString(path: string): string[] {
-        return path.split("/").filter((val) => val.length > 0 && val !== "/")
+        return path.split("/").filter((val) => val.length > 0 && val !== "/");
     }
 
-    protected abstract getQueryParams(): PostmanUrlVariable[]
-    protected abstract getPathParams(): PostmanUrlVariable[]
-    protected abstract getHeaders(): PostmanHeader[]
-    protected abstract getRequestBody(): unknown
+    protected abstract getQueryParams(): PostmanUrlVariable[];
+    protected abstract getPathParams(): PostmanUrlVariable[];
+    protected abstract getHeaders(): PostmanHeader[];
+    protected abstract getRequestBody(): unknown;
 }

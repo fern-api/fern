@@ -1,11 +1,11 @@
-import chalk from "chalk"
+import chalk from "chalk";
 
-import { RawSchemas } from "@fern-api/fern-definition-schema"
-import { FernFileContext, TypeResolver } from "@fern-api/ir-generator"
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { FernFileContext, TypeResolver } from "@fern-api/ir-generator";
 
-import { RuleViolation } from "../../Rule"
-import { maybeFileFromResolvedType, resolveResponseType } from "../../utils/propertyValidatorUtils"
-import { validateResultsProperty } from "./validateUtils"
+import { RuleViolation } from "../../Rule";
+import { maybeFileFromResolvedType, resolveResponseType } from "../../utils/propertyValidatorUtils";
+import { validateResultsProperty } from "./validateUtils";
 
 export function validateCustomPagination({
     endpointId,
@@ -14,21 +14,21 @@ export function validateCustomPagination({
     file,
     customPagination
 }: {
-    endpointId: string
-    endpoint: RawSchemas.HttpEndpointSchema
-    typeResolver: TypeResolver
-    file: FernFileContext
-    customPagination: RawSchemas.CustomPaginationSchema
+    endpointId: string;
+    endpoint: RawSchemas.HttpEndpointSchema;
+    typeResolver: TypeResolver;
+    file: FernFileContext;
+    customPagination: RawSchemas.CustomPaginationSchema;
 }): RuleViolation[] {
-    const violations: RuleViolation[] = []
+    const violations: RuleViolation[] = [];
 
-    const resolvedResponseType = resolveResponseType({ endpoint, typeResolver, file })
+    const resolvedResponseType = resolveResponseType({ endpoint, typeResolver, file });
     if (resolvedResponseType == null) {
         violations.push({
             severity: "fatal",
             message: `Pagination configuration for endpoint ${chalk.bold(endpointId)} must define a response type.`
-        })
-        return violations
+        });
+        return violations;
     }
 
     violations.push(
@@ -39,7 +39,7 @@ export function validateCustomPagination({
             resolvedResponseType,
             resultsProperty: customPagination.results
         })
-    )
+    );
 
-    return violations
+    return violations;
 }

@@ -1,9 +1,9 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { createMigrationTester } from "../../../__test__/utils/createMigrationTester"
-import { V29_TO_V28_MIGRATION } from "../migrateFromV29ToV28"
+import { createMigrationTester } from "../../../__test__/utils/createMigrationTester";
+import { V29_TO_V28_MIGRATION } from "../migrateFromV29ToV28";
 
-const runMigration = createMigrationTester(V29_TO_V28_MIGRATION)
+const runMigration = createMigrationTester(V29_TO_V28_MIGRATION);
 
 const expectedReferenceTypes = [
     {
@@ -71,15 +71,15 @@ const expectedReferenceTypes = [
         },
         typeId: "type_types:Wheel"
     }
-]
+];
 
 describe("migrateFromV29ToV28", () => {
     it("snapshot", async () => {
-        const pathToFixture = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/simple"))
+        const pathToFixture = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/simple"));
         const migrated = await runMigration({
             pathToFixture
-        })
-        expect(migrated.ir.types["type_types:Car"]?.referencedTypes).toEqual(expectedReferenceTypes)
-        expect(await migrated.jsonify()).toMatchSnapshot()
-    })
-})
+        });
+        expect(migrated.ir.types["type_types:Car"]?.referencedTypes).toEqual(expectedReferenceTypes);
+        expect(await migrated.jsonify()).toMatchSnapshot();
+    });
+});

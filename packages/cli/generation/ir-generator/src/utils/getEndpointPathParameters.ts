@@ -1,4 +1,4 @@
-import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 
 export function getEndpointPathParameters(
     endpoint: RawSchemas.HttpEndpointSchema
@@ -7,5 +7,5 @@ export function getEndpointPathParameters(
         ? endpoint.request?.["path-parameters"]
         : endpoint["path-parameters"] != null
           ? endpoint["path-parameters"]
-          : {}
+          : {};
 }

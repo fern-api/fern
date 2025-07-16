@@ -1,41 +1,41 @@
-import { OpenAPISpec, ProtobufSpec, Spec } from "@fern-api/api-workspace-commons"
+import { OpenAPISpec, ProtobufSpec, Spec } from "@fern-api/api-workspace-commons";
 import {
     DEFINITION_DIRECTORY,
     OPENAPI_DIRECTORY,
     generatorsYml,
     loadGeneratorsConfiguration
-} from "@fern-api/configuration-loader"
-import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils"
+} from "@fern-api/configuration-loader";
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
 import {
     ConjureWorkspace,
     LazyFernWorkspace,
     OSSWorkspace,
     WorkspaceLoader,
     WorkspaceLoaderFailureType
-} from "@fern-api/lazy-fern-workspace"
-import { TaskContext } from "@fern-api/task-context"
+} from "@fern-api/lazy-fern-workspace";
+import { TaskContext } from "@fern-api/task-context";
 
-import { loadAPIChangelog } from "./loadAPIChangelog"
+import { loadAPIChangelog } from "./loadAPIChangelog";
 
 export async function loadSingleNamespaceAPIWorkspace({
     absolutePathToWorkspace,
     namespace,
     definitions
 }: {
-    absolutePathToWorkspace: AbsoluteFilePath
-    namespace: string | undefined
-    definitions: generatorsYml.APIDefinitionLocation[]
+    absolutePathToWorkspace: AbsoluteFilePath;
+    namespace: string | undefined;
+    definitions: generatorsYml.APIDefinitionLocation[];
 }): Promise<Spec[] | WorkspaceLoader.Result> {
-    const specs: Spec[] = []
+    const specs: Spec[] = [];
 
     for (const definition of definitions) {
         const absoluteFilepathToOverrides =
             definition.overrides != null
                 ? join(absolutePathToWorkspace, RelativeFilePath.of(definition.overrides))
-                : undefined
+                : undefined;
         if (definition.schema.type === "protobuf") {
-            const relativeFilepathToProtobufRoot = RelativeFilePath.of(definition.schema.root)
-            const absoluteFilepathToProtobufRoot = join(absolutePathToWorkspace, relativeFilepathToProtobufRoot)
+            const relativeFilepathToProtobufRoot = RelativeFilePath.of(definition.schema.root);
+            const absoluteFilepathToProtobufRoot = join(absolutePathToWorkspace, relativeFilepathToProtobufRoot);
             if (!(await doesPathExist(absoluteFilepathToProtobufRoot))) {
                 return {
                     didSucceed: false,
@@ -44,14 +44,14 @@ export async function loadSingleNamespaceAPIWorkspace({
                             type: WorkspaceLoaderFailureType.FILE_MISSING
                         }
                     }
-                }
+                };
             }
 
             // if the target is empty, don't specify a target because we are using 'strategy: all' from the root
             const absoluteFilepathToTarget: AbsoluteFilePath | undefined =
                 definition.schema.target.length === 0
                     ? undefined
-                    : join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.target))
+                    : join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.target));
 
             if (absoluteFilepathToTarget != null) {
                 if (!(await doesPathExist(absoluteFilepathToTarget))) {
@@ -62,7 +62,7 @@ export async function loadSingleNamespaceAPIWorkspace({
                                 type: WorkspaceLoaderFailureType.FILE_MISSING
                             }
                         }
-                    }
+                    };
                 }
             }
 
@@ -99,23 +99,23 @@ export async function loadSingleNamespaceAPIWorkspace({
                     typeDatesAsStrings: definition.settings?.typeDatesAsStrings ?? true,
                     preserveSingleSchemaOneOf: definition.settings?.preserveSingleSchemaOneOf ?? false
                 }
-            })
-            continue
+            });
+            continue;
         }
 
         if (definition.schema.type === "openrpc") {
-            const relativeFilepathToOpenRpc = RelativeFilePath.of(definition.schema.path)
-            const absoluteFilepathToOpenRpc = join(absolutePathToWorkspace, relativeFilepathToOpenRpc)
+            const relativeFilepathToOpenRpc = RelativeFilePath.of(definition.schema.path);
+            const absoluteFilepathToOpenRpc = join(absolutePathToWorkspace, relativeFilepathToOpenRpc);
             specs.push({
                 type: "openrpc",
                 absoluteFilepath: absoluteFilepathToOpenRpc,
                 absoluteFilepathToOverrides,
                 namespace
-            })
-            continue
+            });
+            continue;
         }
 
-        const absoluteFilepath = join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.path))
+        const absoluteFilepath = join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.path));
         if (!(await doesPathExist(absoluteFilepath))) {
             return {
                 didSucceed: false,
@@ -124,7 +124,7 @@ export async function loadSingleNamespaceAPIWorkspace({
                         type: WorkspaceLoaderFailureType.FILE_MISSING
                     }
                 }
-            }
+            };
         }
         if (
             definition.overrides != null &&
@@ -138,7 +138,7 @@ export async function loadSingleNamespaceAPIWorkspace({
                         type: WorkspaceLoaderFailureType.FILE_MISSING
                     }
                 }
-            }
+            };
         }
         specs.push({
             type: "openapi",
@@ -175,10 +175,10 @@ export async function loadSingleNamespaceAPIWorkspace({
                 file: absoluteFilepath
             },
             namespace
-        })
+        });
     }
 
-    return specs
+    return specs;
 }
 
 export async function loadAPIWorkspace({
@@ -187,19 +187,19 @@ export async function loadAPIWorkspace({
     cliVersion,
     workspaceName
 }: {
-    absolutePathToWorkspace: AbsoluteFilePath
-    context: TaskContext
-    cliVersion: string
-    workspaceName: string | undefined
+    absolutePathToWorkspace: AbsoluteFilePath;
+    context: TaskContext;
+    cliVersion: string;
+    workspaceName: string | undefined;
 }): Promise<WorkspaceLoader.Result> {
     const generatorsConfiguration = await loadGeneratorsConfiguration({
         absolutePathToWorkspace,
         context
-    })
+    });
 
-    let changelog = undefined
+    let changelog = undefined;
     try {
-        changelog = await loadAPIChangelog({ absolutePathToWorkspace })
+        changelog = await loadAPIChangelog({ absolutePathToWorkspace });
         // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
     } catch (err) {}
 
@@ -215,7 +215,7 @@ export async function loadAPIWorkspace({
                 context,
                 relativePathToConjureDirectory: RelativeFilePath.of(generatorsConfiguration.api.pathToConjureDefinition)
             })
-        }
+        };
     }
 
     if (
@@ -224,29 +224,29 @@ export async function loadAPIWorkspace({
             generatorsConfiguration.api.definitions.length > 0) ||
             generatorsConfiguration.api.type === "multiNamespace")
     ) {
-        const specs: Spec[] = []
+        const specs: Spec[] = [];
 
         if (generatorsConfiguration.api.type === "singleNamespace") {
             const maybeSpecs = await loadSingleNamespaceAPIWorkspace({
                 absolutePathToWorkspace,
                 namespace: undefined,
                 definitions: generatorsConfiguration.api.definitions
-            })
+            });
             if (!Array.isArray(maybeSpecs)) {
-                return maybeSpecs
+                return maybeSpecs;
             }
-            specs.push(...maybeSpecs)
+            specs.push(...maybeSpecs);
         } else {
             for (const [namespace, definitions] of Object.entries(generatorsConfiguration.api.definitions)) {
                 const maybeSpecs = await loadSingleNamespaceAPIWorkspace({
                     absolutePathToWorkspace,
                     namespace,
                     definitions
-                })
+                });
                 if (!Array.isArray(maybeSpecs)) {
-                    return maybeSpecs
+                    return maybeSpecs;
                 }
-                specs.push(...maybeSpecs)
+                specs.push(...maybeSpecs);
             }
 
             if (generatorsConfiguration.api.rootDefinitions != null) {
@@ -254,11 +254,11 @@ export async function loadAPIWorkspace({
                     absolutePathToWorkspace,
                     namespace: undefined,
                     definitions: generatorsConfiguration.api.rootDefinitions
-                })
+                });
                 if (!Array.isArray(maybeRootSpecs)) {
-                    return maybeRootSpecs
+                    return maybeRootSpecs;
                 }
-                specs.push(...maybeRootSpecs)
+                specs.push(...maybeRootSpecs);
             }
         }
 
@@ -267,12 +267,12 @@ export async function loadAPIWorkspace({
             workspace: new OSSWorkspace({
                 specs: specs.filter((spec) => {
                     if (spec.type === "openrpc") {
-                        return false
+                        return false;
                     }
                     if (spec.type === "protobuf") {
-                        return false
+                        return false;
                     }
-                    return true
+                    return true;
                 }) as (OpenAPISpec | ProtobufSpec)[],
                 allSpecs: specs,
                 workspaceName,
@@ -281,7 +281,7 @@ export async function loadAPIWorkspace({
                 changelog,
                 cliVersion
             })
-        }
+        };
     }
 
     if (await doesPathExist(join(absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY)))) {
@@ -293,12 +293,12 @@ export async function loadAPIWorkspace({
             context,
             cliVersion,
             loadAPIWorkspace
-        })
+        });
 
         return {
             didSucceed: true,
             workspace: fernWorkspace
-        }
+        };
     }
 
     return {
@@ -308,5 +308,5 @@ export async function loadAPIWorkspace({
                 type: WorkspaceLoaderFailureType.MISCONFIGURED_DIRECTORY
             }
         }
-    }
+    };
 }

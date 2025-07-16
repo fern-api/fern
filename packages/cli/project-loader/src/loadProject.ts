@@ -1,7 +1,7 @@
-import chalk from "chalk"
-import { readdir } from "fs/promises"
+import chalk from "chalk";
+import { readdir } from "fs/promises";
 
-import { AbstractAPIWorkspace } from "@fern-api/api-workspace-commons"
+import { AbstractAPIWorkspace } from "@fern-api/api-workspace-commons";
 import {
     APIS_DIRECTORY,
     ASYNCAPI_DIRECTORY,
@@ -13,38 +13,38 @@ import {
     generatorsYml,
     getFernDirectory,
     loadProjectConfig
-} from "@fern-api/configuration-loader"
-import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils"
-import { TaskContext } from "@fern-api/task-context"
-import { handleFailedWorkspaceParserResult, loadAPIWorkspace, loadDocsWorkspace } from "@fern-api/workspace-loader"
+} from "@fern-api/configuration-loader";
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
+import { TaskContext } from "@fern-api/task-context";
+import { handleFailedWorkspaceParserResult, loadAPIWorkspace, loadDocsWorkspace } from "@fern-api/workspace-loader";
 
-import { Project } from "./Project"
+import { Project } from "./Project";
 
 export declare namespace loadProject {
     export interface Args {
-        cliName: string
-        cliVersion: string
-        commandLineApiWorkspace: string | undefined
+        cliName: string;
+        cliVersion: string;
+        commandLineApiWorkspace: string | undefined;
         /**
          * if false and commandLineWorkspace it not defined,
          * loadProject will cause the CLI to fail
          */
-        defaultToAllApiWorkspaces: boolean
-        context: TaskContext
-        nameOverride?: string
-        sdkLanguage?: generatorsYml.GenerationLanguage
-        preserveSchemaIds?: boolean
+        defaultToAllApiWorkspaces: boolean;
+        context: TaskContext;
+        nameOverride?: string;
+        sdkLanguage?: generatorsYml.GenerationLanguage;
+        preserveSchemaIds?: boolean;
     }
 
     export interface LoadProjectFromDirectoryArgs extends Args {
-        absolutePathToFernDirectory: AbsoluteFilePath
+        absolutePathToFernDirectory: AbsoluteFilePath;
     }
 }
 
 export async function loadProject({ context, nameOverride, ...args }: loadProject.Args): Promise<Project> {
-    const fernDirectory = await getFernDirectory(nameOverride)
+    const fernDirectory = await getFernDirectory(nameOverride);
     if (fernDirectory == null) {
-        return context.failAndThrow(`Directory "${nameOverride ?? FERN_DIRECTORY}" not found.`)
+        return context.failAndThrow(`Directory "${nameOverride ?? FERN_DIRECTORY}" not found.`);
     }
 
     return await loadProjectFromDirectory({
@@ -52,7 +52,7 @@ export async function loadProject({ context, nameOverride, ...args }: loadProjec
         context,
         nameOverride,
         ...args
-    })
+    });
 }
 
 export async function loadProjectFromDirectory({
@@ -63,7 +63,7 @@ export async function loadProjectFromDirectory({
     defaultToAllApiWorkspaces,
     context
 }: loadProject.LoadProjectFromDirectoryArgs): Promise<Project> {
-    let apiWorkspaces: AbstractAPIWorkspace<unknown>[] = []
+    let apiWorkspaces: AbstractAPIWorkspace<unknown>[] = [];
 
     if (
         (await doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(APIS_DIRECTORY)))) ||
@@ -81,7 +81,7 @@ export async function loadProjectFromDirectory({
             context,
             commandLineApiWorkspace,
             defaultToAllApiWorkspaces
-        })
+        });
     }
 
     return {
@@ -90,11 +90,11 @@ export async function loadProjectFromDirectory({
         docsWorkspaces: await loadDocsWorkspace({ fernDirectory: absolutePathToFernDirectory, context }),
         loadAPIWorkspace: (name: string | undefined): AbstractAPIWorkspace<unknown> | undefined => {
             if (name == null) {
-                return apiWorkspaces[0]
+                return apiWorkspaces[0];
             }
-            return apiWorkspaces.find((workspace) => workspace.workspaceName === name)
+            return apiWorkspaces.find((workspace) => workspace.workspaceName === name);
         }
-    }
+    };
 }
 
 export async function loadApis({
@@ -105,55 +105,55 @@ export async function loadApis({
     commandLineApiWorkspace,
     defaultToAllApiWorkspaces
 }: {
-    cliName: string
-    fernDirectory: AbsoluteFilePath
-    context: TaskContext
-    cliVersion: string
-    commandLineApiWorkspace: string | undefined
-    defaultToAllApiWorkspaces: boolean
+    cliName: string;
+    fernDirectory: AbsoluteFilePath;
+    context: TaskContext;
+    cliVersion: string;
+    commandLineApiWorkspace: string | undefined;
+    defaultToAllApiWorkspaces: boolean;
 }): Promise<AbstractAPIWorkspace<unknown>[]> {
-    const apisDirectory = join(fernDirectory, RelativeFilePath.of(APIS_DIRECTORY))
-    const apisDirectoryExists = await doesPathExist(apisDirectory)
+    const apisDirectory = join(fernDirectory, RelativeFilePath.of(APIS_DIRECTORY));
+    const apisDirectoryExists = await doesPathExist(apisDirectory);
     if (apisDirectoryExists) {
-        const apiDirectoryContents = await readdir(apisDirectory, { withFileTypes: true })
+        const apiDirectoryContents = await readdir(apisDirectory, { withFileTypes: true });
 
         const apiWorkspaceDirectoryNames = apiDirectoryContents.reduce<string[]>((all, item) => {
             if (item.isDirectory()) {
-                all.push(item.name)
+                all.push(item.name);
             }
-            return all
-        }, [])
+            return all;
+        }, []);
 
         if (commandLineApiWorkspace != null) {
             if (!apiWorkspaceDirectoryNames.includes(commandLineApiWorkspace)) {
-                return context.failAndThrow("API does not exist: " + commandLineApiWorkspace)
+                return context.failAndThrow("API does not exist: " + commandLineApiWorkspace);
             }
         } else if (apiWorkspaceDirectoryNames.length === 0) {
-            return context.failAndThrow("No APIs found.")
+            return context.failAndThrow("No APIs found.");
         } else if (apiWorkspaceDirectoryNames.length > 1 && !defaultToAllApiWorkspaces) {
-            let message = "There are multiple workspaces. You must specify one with --api:\n"
+            let message = "There are multiple workspaces. You must specify one with --api:\n";
             const longestWorkspaceName = Math.max(
                 ...apiWorkspaceDirectoryNames.map((workspaceName) => workspaceName.length)
-            )
+            );
             message += apiWorkspaceDirectoryNames
                 .map((workspaceName) => {
-                    const suggestedCommand = `${cliName} ${process.argv.slice(2).join(" ")} --api ${workspaceName}`
+                    const suggestedCommand = `${cliName} ${process.argv.slice(2).join(" ")} --api ${workspaceName}`;
                     return ` › ${chalk.bold(workspaceName.padEnd(longestWorkspaceName))}  ${chalk.dim(
                         suggestedCommand
-                    )}`
+                    )}`;
                 })
-                .join("\n")
-            return context.failAndThrow(message)
+                .join("\n");
+            return context.failAndThrow(message);
         }
 
-        const apiWorkspaces: AbstractAPIWorkspace<unknown>[] = []
+        const apiWorkspaces: AbstractAPIWorkspace<unknown>[] = [];
 
         const filteredWorkspaces =
             commandLineApiWorkspace != null
                 ? apiWorkspaceDirectoryNames.filter((api) => {
-                      return api === commandLineApiWorkspace
+                      return api === commandLineApiWorkspace;
                   })
-                : apiWorkspaceDirectoryNames
+                : apiWorkspaceDirectoryNames;
 
         await Promise.all(
             filteredWorkspaces.map(async (workspaceDirectoryName) => {
@@ -162,17 +162,17 @@ export async function loadApis({
                     context,
                     cliVersion,
                     workspaceName: workspaceDirectoryName
-                })
+                });
                 if (workspace.didSucceed) {
-                    apiWorkspaces.push(workspace.workspace)
+                    apiWorkspaces.push(workspace.workspace);
                 } else {
-                    handleFailedWorkspaceParserResult(workspace, context.logger)
-                    context.failAndThrow()
+                    handleFailedWorkspaceParserResult(workspace, context.logger);
+                    context.failAndThrow();
                 }
             })
-        )
+        );
 
-        return apiWorkspaces
+        return apiWorkspaces;
     }
 
     const workspace = await loadAPIWorkspace({
@@ -180,11 +180,11 @@ export async function loadApis({
         context,
         cliVersion,
         workspaceName: undefined
-    })
+    });
     if (workspace.didSucceed) {
-        return [workspace.workspace]
+        return [workspace.workspace];
     } else {
-        handleFailedWorkspaceParserResult(workspace, context.logger)
-        return []
+        handleFailedWorkspaceParserResult(workspace, context.logger);
+        return [];
     }
 }

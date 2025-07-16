@@ -1,8 +1,8 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { ValidationViolation } from "../../../ValidationViolation"
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule"
-import { ValidOauthRule } from "../valid-oauth"
+import { ValidationViolation } from "../../../ValidationViolation";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { ValidOauthRule } from "../valid-oauth";
 
 describe("valid-oauth", () => {
     it("valid-default", async () => {
@@ -14,9 +14,9 @@ describe("valid-oauth", () => {
                 RelativeFilePath.of("valid"),
                 RelativeFilePath.of("default")
             )
-        })
-        expect(violations).toEqual([])
-    })
+        });
+        expect(violations).toEqual([]);
+    });
 
     it("valid-simple", async () => {
         const violations = await getViolationsForRule({
@@ -27,9 +27,9 @@ describe("valid-oauth", () => {
                 RelativeFilePath.of("valid"),
                 RelativeFilePath.of("simple")
             )
-        })
-        expect(violations).toEqual([])
-    })
+        });
+        expect(violations).toEqual([]);
+    });
 
     it("valid-query-parameters", async () => {
         const violations = await getViolationsForRule({
@@ -40,9 +40,9 @@ describe("valid-oauth", () => {
                 RelativeFilePath.of("valid"),
                 RelativeFilePath.of("query-parameters")
             )
-        })
-        expect(violations).toEqual([])
-    })
+        });
+        expect(violations).toEqual([]);
+    });
 
     it("valid-alias", async () => {
         const violations = await getViolationsForRule({
@@ -53,9 +53,9 @@ describe("valid-oauth", () => {
                 RelativeFilePath.of("valid"),
                 RelativeFilePath.of("alias")
             )
-        })
-        expect(violations).toEqual([])
-    })
+        });
+        expect(violations).toEqual([]);
+    });
 
     it("invalid-property-path", async () => {
         const violations = await getViolationsForRule({
@@ -66,7 +66,7 @@ describe("valid-oauth", () => {
                 RelativeFilePath.of("invalid"),
                 RelativeFilePath.of("property-path")
             )
-        })
+        });
         const expectedViolations: ValidationViolation[] = [
             {
                 message:
@@ -82,14 +82,14 @@ describe("valid-oauth", () => {
                 relativeFilepath: RelativeFilePath.of("auth.yml"),
                 severity: "fatal"
             }
-        ]
+        ];
         expect(() =>
             validateOAuthRuleViolations({
                 expected: expectedViolations,
                 actual: violations
             })
-        ).not.toThrow()
-    })
+        ).not.toThrow();
+    });
 
     it("invalid-missing", async () => {
         const violations = await getViolationsForRule({
@@ -100,7 +100,7 @@ describe("valid-oauth", () => {
                 RelativeFilePath.of("invalid"),
                 RelativeFilePath.of("missing")
             )
-        })
+        });
         const expectedViolations: ValidationViolation[] = [
             {
                 message:
@@ -144,14 +144,14 @@ describe("valid-oauth", () => {
                 relativeFilepath: RelativeFilePath.of("auth.yml"),
                 severity: "fatal"
             }
-        ]
+        ];
         expect(() =>
             validateOAuthRuleViolations({
                 expected: expectedViolations,
                 actual: violations
             })
-        ).not.toThrow()
-    })
+        ).not.toThrow();
+    });
 
     it("invalid-types", async () => {
         const violations = await getViolationsForRule({
@@ -162,7 +162,7 @@ describe("valid-oauth", () => {
                 RelativeFilePath.of("invalid"),
                 RelativeFilePath.of("types")
             )
-        })
+        });
         const expectedViolations: ValidationViolation[] = [
             {
                 message:
@@ -185,15 +185,15 @@ describe("valid-oauth", () => {
                 relativeFilepath: RelativeFilePath.of("auth.yml"),
                 severity: "fatal"
             }
-        ]
+        ];
         expect(() =>
             validateOAuthRuleViolations({
                 expected: expectedViolations,
                 actual: violations
             })
-        ).not.toThrow()
-    })
-})
+        ).not.toThrow();
+    });
+});
 
 // validateOAuthRuleViolations ensures all of the expected rule violations match,
 // but only verifies the message prefix because the output differs in certain
@@ -202,13 +202,13 @@ function validateOAuthRuleViolations({
     expected,
     actual
 }: {
-    expected: ValidationViolation[]
-    actual: ValidationViolation[]
+    expected: ValidationViolation[];
+    actual: ValidationViolation[];
 }): void {
     expected.forEach((expected, index) => {
-        const actualMessage = actual?.[index]?.message
-        expect(actualMessage).toBeDefined()
-        expect(actualMessage?.startsWith(expected.message)).toBe(true)
-    })
-    expect(actual.map(({ message, ...rest }) => rest)).toEqual(actual.map(({ message, ...rest }) => rest))
+        const actualMessage = actual?.[index]?.message;
+        expect(actualMessage).toBeDefined();
+        expect(actualMessage?.startsWith(expected.message)).toBe(true);
+    });
+    expect(actual.map(({ message, ...rest }) => rest)).toEqual(actual.map(({ message, ...rest }) => rest));
 }

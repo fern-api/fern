@@ -1,5 +1,5 @@
-import { boolean, object, property, string, stringLiteral } from "../../../../src/core/schemas/builders"
-import { itSchema, itSchemaIdentity } from "../utils/itSchema"
+import { boolean, object, property, string, stringLiteral } from "../../../../src/core/schemas/builders";
+import { itSchema, itSchemaIdentity } from "../utils/itSchema";
 
 describe("extend", () => {
     itSchemaIdentity(
@@ -17,7 +17,7 @@ describe("extend", () => {
         {
             title: "extended properties are included in schema"
         }
-    )
+    );
 
     itSchemaIdentity(
         object({
@@ -41,7 +41,7 @@ describe("extend", () => {
         {
             title: "extensions can be extended"
         }
-    )
+    );
 
     itSchema(
         "converts nested object",
@@ -58,7 +58,7 @@ describe("extend", () => {
             raw: { item: { hello_world: "yo" }, goodbye_raw: "peace" },
             parsed: { item: { helloWorld: "yo" }, goodbye: "peace" }
         }
-    )
+    );
 
     itSchema(
         "extensions work with raw/parsed property name conversions",
@@ -73,17 +73,17 @@ describe("extend", () => {
             raw: { item_raw: "hi", goodbye_raw: "peace" },
             parsed: { item: "hi", goodbye: "peace" }
         }
-    )
+    );
 
     describe("compile", () => {
         // eslint-disable-next-line jest/expect-expect
         it("doesn't compile with non-object schema", () => {
-            ;() =>
+            () =>
                 object({
                     foo: string()
                 })
                     // @ts-expect-error
-                    .extend([])
-        })
-    })
-})
+                    .extend([]);
+        });
+    });
+});

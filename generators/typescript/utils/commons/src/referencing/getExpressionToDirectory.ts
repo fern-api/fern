@@ -1,13 +1,13 @@
-import { ts } from "ts-morph"
+import { ts } from "ts-morph";
 
-import { ExportedDirectory, ExportsManager } from "../exports-manager"
-import { getQualifiedNameOfDirectory } from "./getQualifiedNameOfDirectory"
+import { ExportedDirectory, ExportsManager } from "../exports-manager";
+import { getQualifiedNameOfDirectory } from "./getQualifiedNameOfDirectory";
 
 export declare namespace getExpressionToDirectory {
     export interface Args {
-        pathToDirectory: ExportedDirectory[]
-        prefix?: ts.Expression
-        exportsManager: ExportsManager
+        pathToDirectory: ExportedDirectory[];
+        prefix?: ts.Expression;
+        exportsManager: ExportsManager;
     }
 }
 
@@ -22,5 +22,5 @@ export function getExpressionToDirectory({
         convertToQualifiedName: (value) => ts.factory.createIdentifier(value),
         prefix,
         exportsManager
-    })
+    });
 }

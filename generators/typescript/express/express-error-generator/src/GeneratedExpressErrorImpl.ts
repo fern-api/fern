@@ -1,6 +1,6 @@
-import { AbstractErrorClassGenerator } from "@fern-typescript/abstract-error-class-generator"
-import { getTextOfTsNode } from "@fern-typescript/commons"
-import { ExpressContext, GeneratedExpressError } from "@fern-typescript/contexts"
+import { AbstractErrorClassGenerator } from "@fern-typescript/abstract-error-class-generator";
+import { getTextOfTsNode } from "@fern-typescript/commons";
+import { ExpressContext, GeneratedExpressError } from "@fern-typescript/contexts";
 import {
     ClassDeclaration,
     OptionalKind,
@@ -8,14 +8,14 @@ import {
     PropertyDeclarationStructure,
     Scope,
     ts
-} from "ts-morph"
+} from "ts-morph";
 
-import { ErrorDeclaration } from "@fern-fern/ir-sdk/api"
+import { ErrorDeclaration } from "@fern-fern/ir-sdk/api";
 
 export declare namespace GeneratedExpressErrorImpl {
     export interface Init {
-        errorClassName: string
-        errorDeclaration: ErrorDeclaration
+        errorClassName: string;
+        errorDeclaration: ErrorDeclaration;
     }
 }
 
@@ -23,20 +23,20 @@ export class GeneratedExpressErrorImpl
     extends AbstractErrorClassGenerator<ExpressContext>
     implements GeneratedExpressError
 {
-    public readonly type = "class"
+    public readonly type = "class";
 
-    private static BODY_CONSTRUCTOR_PARAMETER_NAME = "body"
+    private static BODY_CONSTRUCTOR_PARAMETER_NAME = "body";
 
-    private errorDeclaration: ErrorDeclaration
+    private errorDeclaration: ErrorDeclaration;
 
     constructor({ errorClassName, errorDeclaration }: GeneratedExpressErrorImpl.Init) {
-        super({ errorClassName })
-        this.errorClassName = errorClassName
-        this.errorDeclaration = errorDeclaration
+        super({ errorClassName });
+        this.errorClassName = errorClassName;
+        this.errorDeclaration = errorDeclaration;
     }
 
     public writeToFile(context: ExpressContext): void {
-        super.writeToSourceFile(context)
+        super.writeToSourceFile(context);
     }
 
     protected addToClass(class_: ClassDeclaration, context: ExpressContext): void {
@@ -52,14 +52,14 @@ export class GeneratedExpressErrorImpl
                                     status: this.errorDeclaration.statusCode
                                 })
                             )
-                        ]
+                        ];
                     }
 
                     const errorSchema = context.expressErrorSchema.getGeneratedExpressErrorSchema(
                         this.errorDeclaration.name
-                    )
+                    );
                     if (errorSchema == null) {
-                        throw new Error("Error schema was not generated.")
+                        throw new Error("Error schema was not generated.");
                     }
 
                     return [
@@ -77,20 +77,20 @@ export class GeneratedExpressErrorImpl
                                 })
                             })
                         )
-                    ]
+                    ];
                 })
-        )
+        );
     }
 
     protected getClassProperties(): OptionalKind<PropertyDeclarationStructure>[] {
-        return []
+        return [];
     }
 
     protected getConstructorParameters(context: ExpressContext): OptionalKind<ParameterDeclarationStructure>[] {
         if (this.errorDeclaration.type == null) {
-            return []
+            return [];
         }
-        const referenceToType = context.type.getReferenceToType(this.errorDeclaration.type)
+        const referenceToType = context.type.getReferenceToType(this.errorDeclaration.type);
         return [
             {
                 name: GeneratedExpressErrorImpl.BODY_CONSTRUCTOR_PARAMETER_NAME,
@@ -99,24 +99,24 @@ export class GeneratedExpressErrorImpl
                 scope: Scope.Private,
                 isReadonly: true
             }
-        ]
+        ];
     }
 
     protected getSuperArguments(context: ExpressContext): ts.Expression[] {
         return context.genericAPIExpressError.getGeneratedGenericAPIExpressError().getConstructorArguments({
             errorName: this.errorClassName
-        })
+        });
     }
 
     protected getConstructorStatements(): ts.Statement[] {
-        return []
+        return [];
     }
 
     protected isAbstract(): boolean {
-        return false
+        return false;
     }
 
     protected override getBaseClass(context: ExpressContext): ts.TypeNode {
-        return context.genericAPIExpressError.getReferenceToGenericAPIExpressError().getTypeNode()
+        return context.genericAPIExpressError.getReferenceToGenericAPIExpressError().getTypeNode();
     }
 }

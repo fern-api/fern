@@ -1,14 +1,14 @@
-import { readFile } from "fs/promises"
-import path from "path"
+import { readFile } from "fs/promises";
+import path from "path";
 
-import { generatorsYml } from "@fern-api/configuration"
-import { assertNever } from "@fern-api/core-utils"
-import { visitRawApiAuth } from "@fern-api/fern-definition-schema"
-import { AbsoluteFilePath, RelativeFilePath, dirname, join, resolve } from "@fern-api/fs-utils"
-import { TaskContext } from "@fern-api/task-context"
+import { generatorsYml } from "@fern-api/configuration";
+import { assertNever } from "@fern-api/core-utils";
+import { visitRawApiAuth } from "@fern-api/fern-definition-schema";
+import { AbsoluteFilePath, RelativeFilePath, dirname, join, resolve } from "@fern-api/fs-utils";
+import { TaskContext } from "@fern-api/task-context";
 
-import { FernFiddle } from "@fern-fern/fiddle-sdk"
-import { GithubPullRequestReviewer, OutputMetadata, PublishingMetadata, PypiMetadata } from "@fern-fern/fiddle-sdk/api"
+import { FernFiddle } from "@fern-fern/fiddle-sdk";
+import { GithubPullRequestReviewer, OutputMetadata, PublishingMetadata, PypiMetadata } from "@fern-fern/fiddle-sdk/api";
 
 const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     shouldUseTitleAsName: undefined,
@@ -30,21 +30,21 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     additionalPropertiesDefaultsTo: undefined,
     typeDatesAsStrings: undefined,
     preserveSingleSchemaOneOf: undefined
-}
+};
 
 export async function convertGeneratorsConfiguration({
     absolutePathToGeneratorsConfiguration,
     rawGeneratorsConfiguration,
     context
 }: {
-    absolutePathToGeneratorsConfiguration: AbsoluteFilePath
-    rawGeneratorsConfiguration: generatorsYml.GeneratorsConfigurationSchema
-    context: TaskContext
+    absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
+    rawGeneratorsConfiguration: generatorsYml.GeneratorsConfigurationSchema;
+    context: TaskContext;
 }): Promise<generatorsYml.GeneratorsConfiguration> {
-    const maybeTopLevelMetadata = getOutputMetadata(rawGeneratorsConfiguration.metadata)
-    const readme = rawGeneratorsConfiguration.readme
-    warnForDeprecatedConfiguration(context, rawGeneratorsConfiguration)
-    const parsedApiConfiguration = await parseAPIConfiguration(rawGeneratorsConfiguration)
+    const maybeTopLevelMetadata = getOutputMetadata(rawGeneratorsConfiguration.metadata);
+    const readme = rawGeneratorsConfiguration.readme;
+    warnForDeprecatedConfiguration(context, rawGeneratorsConfiguration);
+    const parsedApiConfiguration = await parseAPIConfiguration(rawGeneratorsConfiguration);
     return {
         absolutePathToConfiguration: absolutePathToGeneratorsConfiguration,
         api: parsedApiConfiguration,
@@ -72,7 +72,7 @@ export async function convertGeneratorsConfiguration({
                       github: rawGeneratorsConfiguration.whitelabel.github
                   }
                 : undefined
-    }
+    };
 }
 
 function parseDeprecatedApiDefinitionSettingsSchema(
@@ -87,7 +87,7 @@ function parseDeprecatedApiDefinitionSettingsSchema(
         onlyIncludeReferencedSchemas: settings?.["only-include-referenced-schemas"],
         inlinePathParameters: settings?.["inline-path-parameters"],
         shouldUseIdiomaticRequestNames: settings?.["idiomatic-request-names"]
-    }
+    };
 }
 
 function parseOpenApiDefinitionSettingsSchema(
@@ -108,7 +108,7 @@ function parseOpenApiDefinitionSettingsSchema(
         additionalPropertiesDefaultsTo: settings?.["additional-properties-defaults-to"],
         typeDatesAsStrings: settings?.["type-dates-as-strings"],
         preserveSingleSchemaOneOf: settings?.["preserve-single-schema-oneof"]
-    }
+    };
 }
 
 function parseAsyncApiDefinitionSettingsSchema(
@@ -117,7 +117,7 @@ function parseAsyncApiDefinitionSettingsSchema(
     return {
         ...parseBaseApiDefinitionSettingsSchema(settings),
         asyncApiMessageNaming: settings?.["message-naming"]
-    }
+    };
 }
 
 function parseBaseApiDefinitionSettingsSchema(
@@ -130,14 +130,14 @@ function parseBaseApiDefinitionSettingsSchema(
         shouldUseOptionalAdditionalProperties: settings?.["optional-additional-properties"] ?? true,
         coerceEnumsToLiterals: settings?.["coerce-enums-to-literals"],
         respectNullableSchemas: settings?.["respect-nullable-schemas"]
-    }
+    };
 }
 
 async function parseAPIConfigurationToApiLocations(
     apiConfiguration: generatorsYml.ApiConfigurationSchemaInternal | undefined,
     rawConfiguration: generatorsYml.GeneratorsConfigurationSchema
 ): Promise<generatorsYml.APIDefinitionLocation[]> {
-    const apiDefinitions: generatorsYml.APIDefinitionLocation[] = []
+    const apiDefinitions: generatorsYml.APIDefinitionLocation[] = [];
 
     if (apiConfiguration != null) {
         if (typeof apiConfiguration === "string") {
@@ -150,7 +150,7 @@ async function parseAPIConfigurationToApiLocations(
                 overrides: undefined,
                 audiences: [],
                 settings: { ...UNDEFINED_API_DEFINITION_SETTINGS }
-            })
+            });
         } else if (generatorsYml.isRawProtobufAPIDefinitionSchema(apiConfiguration)) {
             apiDefinitions.push({
                 schema: {
@@ -163,7 +163,7 @@ async function parseAPIConfigurationToApiLocations(
                 overrides: apiConfiguration.proto.overrides,
                 audiences: [],
                 settings: { ...UNDEFINED_API_DEFINITION_SETTINGS }
-            })
+            });
         } else if (Array.isArray(apiConfiguration)) {
             for (const definition of apiConfiguration) {
                 if (typeof definition === "string") {
@@ -176,7 +176,7 @@ async function parseAPIConfigurationToApiLocations(
                         overrides: undefined,
                         audiences: [],
                         settings: { ...UNDEFINED_API_DEFINITION_SETTINGS }
-                    })
+                    });
                 } else if (generatorsYml.isRawProtobufAPIDefinitionSchema(definition)) {
                     apiDefinitions.push({
                         schema: {
@@ -189,7 +189,7 @@ async function parseAPIConfigurationToApiLocations(
                         overrides: definition.proto.overrides,
                         audiences: [],
                         settings: { ...UNDEFINED_API_DEFINITION_SETTINGS }
-                    })
+                    });
                 } else {
                     apiDefinitions.push({
                         schema: {
@@ -200,7 +200,7 @@ async function parseAPIConfigurationToApiLocations(
                         overrides: definition.overrides,
                         audiences: definition.audiences,
                         settings: parseDeprecatedApiDefinitionSettingsSchema(definition.settings)
-                    })
+                    });
                 }
             }
         } else {
@@ -213,14 +213,14 @@ async function parseAPIConfigurationToApiLocations(
                 overrides: apiConfiguration.overrides,
                 audiences: apiConfiguration.audiences,
                 settings: parseDeprecatedApiDefinitionSettingsSchema(apiConfiguration.settings)
-            })
+            });
         }
     } else {
-        const rootSettings = rawConfiguration[generatorsYml.API_SETTINGS_KEY]
-        const openapi = rawConfiguration[generatorsYml.OPENAPI_LOCATION_KEY]
-        const apiOrigin = rawConfiguration[generatorsYml.API_ORIGIN_LOCATION_KEY]
-        const openapiOverrides = rawConfiguration[generatorsYml.OPENAPI_OVERRIDES_LOCATION_KEY]
-        const asyncapi = rawConfiguration[generatorsYml.ASYNC_API_LOCATION_KEY]
+        const rootSettings = rawConfiguration[generatorsYml.API_SETTINGS_KEY];
+        const openapi = rawConfiguration[generatorsYml.OPENAPI_LOCATION_KEY];
+        const apiOrigin = rawConfiguration[generatorsYml.API_ORIGIN_LOCATION_KEY];
+        const openapiOverrides = rawConfiguration[generatorsYml.OPENAPI_OVERRIDES_LOCATION_KEY];
+        const asyncapi = rawConfiguration[generatorsYml.ASYNC_API_LOCATION_KEY];
         if (openapi != null) {
             if (typeof openapi === "string") {
                 apiDefinitions.push({
@@ -232,7 +232,7 @@ async function parseAPIConfigurationToApiLocations(
                     overrides: openapiOverrides,
                     audiences: [],
                     settings: parseDeprecatedApiDefinitionSettingsSchema(rootSettings)
-                })
+                });
             } else if (typeof openapi === "object") {
                 apiDefinitions.push({
                     schema: {
@@ -243,7 +243,7 @@ async function parseAPIConfigurationToApiLocations(
                     overrides: openapi.overrides,
                     audiences: [],
                     settings: parseOpenApiDefinitionSettingsSchema(openapi.settings)
-                })
+                });
             }
         }
 
@@ -257,19 +257,19 @@ async function parseAPIConfigurationToApiLocations(
                 overrides: undefined,
                 audiences: [],
                 settings: parseDeprecatedApiDefinitionSettingsSchema(rootSettings)
-            })
+            });
         }
     }
 
-    return apiDefinitions
+    return apiDefinitions;
 }
 
 async function parseApiConfigurationV2Schema({
     apiConfiguration,
     rawConfiguration
 }: {
-    apiConfiguration: generatorsYml.ApiConfigurationV2Schema
-    rawConfiguration: generatorsYml.GeneratorsConfigurationSchema
+    apiConfiguration: generatorsYml.ApiConfigurationV2Schema;
+    rawConfiguration: generatorsYml.GeneratorsConfigurationSchema;
 }): Promise<generatorsYml.APIDefinition> {
     const partialConfig = {
         "auth-schemes":
@@ -277,35 +277,35 @@ async function parseApiConfigurationV2Schema({
                 ? Object.fromEntries(
                       Object.entries(rawConfiguration["auth-schemes"] ?? {}).filter(([name, _]) => {
                           if (apiConfiguration.auth == null) {
-                              return false
+                              return false;
                           }
                           return visitRawApiAuth(apiConfiguration.auth, {
                               any: (any) => {
-                                  return any.any.includes(name)
+                                  return any.any.includes(name);
                               },
                               single: (single) => {
-                                  return single === name
+                                  return single === name;
                               }
-                          })
+                          });
                       })
                   )
                 : undefined,
         ...apiConfiguration
-    }
+    };
 
     if (generatorsYml.isConjureSchema(apiConfiguration.specs)) {
         return {
             type: "conjure",
             pathToConjureDefinition: apiConfiguration.specs.conjure,
             ...partialConfig
-        }
+        };
     }
 
-    const rootDefinitions: generatorsYml.APIDefinitionLocation[] = []
-    const namespacedDefinitions: Record<string, generatorsYml.APIDefinitionLocation[]> = {}
+    const rootDefinitions: generatorsYml.APIDefinitionLocation[] = [];
+    const namespacedDefinitions: Record<string, generatorsYml.APIDefinitionLocation[]> = {};
 
     for (const spec of apiConfiguration.specs ?? []) {
-        let definitionLocation: generatorsYml.APIDefinitionLocation
+        let definitionLocation: generatorsYml.APIDefinitionLocation;
         if (generatorsYml.isOpenApiSpecSchema(spec)) {
             definitionLocation = {
                 schema: {
@@ -316,7 +316,7 @@ async function parseApiConfigurationV2Schema({
                 overrides: spec.overrides,
                 audiences: [],
                 settings: parseOpenApiDefinitionSettingsSchema(spec.settings)
-            }
+            };
         } else if (generatorsYml.isAsyncApiSpecSchema(spec)) {
             definitionLocation = {
                 schema: {
@@ -327,7 +327,7 @@ async function parseApiConfigurationV2Schema({
                 overrides: spec.overrides,
                 audiences: [],
                 settings: parseAsyncApiDefinitionSettingsSchema(spec.settings)
-            }
+            };
         } else if (generatorsYml.isProtoSpecSchema(spec)) {
             definitionLocation = {
                 schema: {
@@ -340,7 +340,7 @@ async function parseApiConfigurationV2Schema({
                 overrides: spec.proto.overrides,
                 audiences: [],
                 settings: { ...UNDEFINED_API_DEFINITION_SETTINGS }
-            }
+            };
         } else if (generatorsYml.isOpenRpcSpecSchema(spec)) {
             definitionLocation = {
                 schema: {
@@ -351,16 +351,16 @@ async function parseApiConfigurationV2Schema({
                 overrides: spec.overrides,
                 audiences: [],
                 settings: { ...UNDEFINED_API_DEFINITION_SETTINGS }
-            }
+            };
         } else {
-            continue
+            continue;
         }
         if ("namespace" in spec && spec.namespace != null) {
-            namespacedDefinitions[spec.namespace] ??= []
+            namespacedDefinitions[spec.namespace] ??= [];
             // biome-ignore lint/style/noNonNullAssertion: allow
-            namespacedDefinitions[spec.namespace]!.push(definitionLocation)
+            namespacedDefinitions[spec.namespace]!.push(definitionLocation);
         } else {
-            rootDefinitions.push(definitionLocation)
+            rootDefinitions.push(definitionLocation);
         }
     }
 
@@ -370,7 +370,7 @@ async function parseApiConfigurationV2Schema({
             type: "singleNamespace",
             definitions: rootDefinitions,
             ...partialConfig
-        }
+        };
     }
     // Yes namespaces
     return {
@@ -378,39 +378,39 @@ async function parseApiConfigurationV2Schema({
         rootDefinitions,
         definitions: namespacedDefinitions,
         ...partialConfig
-    }
+    };
 }
 
 async function parseAPIConfiguration(
     rawGeneratorsConfiguration: generatorsYml.GeneratorsConfigurationSchema
 ): Promise<generatorsYml.APIDefinition> {
-    const apiConfiguration = rawGeneratorsConfiguration.api
+    const apiConfiguration = rawGeneratorsConfiguration.api;
 
     if (apiConfiguration != null) {
         if (generatorsYml.isApiConfigurationV2Schema(apiConfiguration)) {
-            return parseApiConfigurationV2Schema({ apiConfiguration, rawConfiguration: rawGeneratorsConfiguration })
+            return parseApiConfigurationV2Schema({ apiConfiguration, rawConfiguration: rawGeneratorsConfiguration });
         }
 
         if (generatorsYml.isNamespacedApiConfiguration(apiConfiguration)) {
-            const namespacedDefinitions: Record<string, generatorsYml.APIDefinitionLocation[]> = {}
+            const namespacedDefinitions: Record<string, generatorsYml.APIDefinitionLocation[]> = {};
             for (const [namespace, configuration] of Object.entries(apiConfiguration.namespaces)) {
                 namespacedDefinitions[namespace] = await parseAPIConfigurationToApiLocations(
                     configuration,
                     rawGeneratorsConfiguration
-                )
+                );
             }
             return {
                 type: "multiNamespace",
                 rootDefinitions: undefined,
                 definitions: namespacedDefinitions
-            }
+            };
         }
     }
 
     return {
         type: "singleNamespace",
         definitions: await parseAPIConfigurationToApiLocations(apiConfiguration, rawGeneratorsConfiguration)
-    }
+    };
 }
 
 async function convertGroup({
@@ -421,14 +421,14 @@ async function convertGroup({
     maybeTopLevelReviewers,
     readme
 }: {
-    absolutePathToGeneratorsConfiguration: AbsoluteFilePath
-    groupName: string
-    group: generatorsYml.GeneratorGroupSchema
-    maybeTopLevelMetadata: OutputMetadata | undefined
-    maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined
-    readme: generatorsYml.ReadmeSchema | undefined
+    absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
+    groupName: string;
+    group: generatorsYml.GeneratorGroupSchema;
+    maybeTopLevelMetadata: OutputMetadata | undefined;
+    maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined;
+    readme: generatorsYml.ReadmeSchema | undefined;
 }): Promise<generatorsYml.GeneratorGroup> {
-    const maybeGroupLevelMetadata = getOutputMetadata(group.metadata)
+    const maybeGroupLevelMetadata = getOutputMetadata(group.metadata);
     return {
         groupName,
         reviewers: group.reviewers,
@@ -446,7 +446,7 @@ async function convertGroup({
                 })
             )
         )
-    }
+    };
 }
 
 async function convertGenerator({
@@ -458,13 +458,13 @@ async function convertGenerator({
     maybeTopLevelReviewers,
     readme
 }: {
-    absolutePathToGeneratorsConfiguration: AbsoluteFilePath
-    generator: generatorsYml.GeneratorInvocationSchema
-    maybeGroupLevelMetadata: OutputMetadata | undefined
-    maybeTopLevelMetadata: OutputMetadata | undefined
-    maybeGroupLevelReviewers: generatorsYml.ReviewersSchema | undefined
-    maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined
-    readme: generatorsYml.ReadmeSchema | undefined
+    absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
+    generator: generatorsYml.GeneratorInvocationSchema;
+    maybeGroupLevelMetadata: OutputMetadata | undefined;
+    maybeTopLevelMetadata: OutputMetadata | undefined;
+    maybeGroupLevelReviewers: generatorsYml.ReviewersSchema | undefined;
+    maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined;
+    readme: generatorsYml.ReadmeSchema | undefined;
 }): Promise<generatorsYml.GeneratorInvocation> {
     return {
         raw: generator,
@@ -495,31 +495,31 @@ async function convertGenerator({
         publishMetadata: getPublishMetadata({ generatorInvocation: generator }),
         readme,
         settings: generator.api?.settings ?? undefined
-    }
+    };
 }
 
 function getPublishMetadata({
     generatorInvocation
 }: {
-    generatorInvocation: generatorsYml.GeneratorInvocationSchema
+    generatorInvocation: generatorsYml.GeneratorInvocationSchema;
 }): PublishingMetadata | undefined {
-    const publishMetadata = generatorInvocation["publish-metadata"]
+    const publishMetadata = generatorInvocation["publish-metadata"];
     if (publishMetadata != null) {
         return {
             packageDescription: publishMetadata["package-description"],
             publisherEmail: publishMetadata.email,
             publisherName: publishMetadata.author,
             referenceUrl: publishMetadata["reference-url"]
-        }
+        };
     } else if (generatorInvocation.metadata != null) {
         return {
             packageDescription: generatorInvocation.metadata["package-description"],
             publisherEmail: generatorInvocation.metadata.email,
             publisherName: generatorInvocation.metadata.author,
             referenceUrl: generatorInvocation.metadata["reference-url"]
-        }
+        };
     }
-    return undefined
+    return undefined;
 }
 
 function _getPypiMetadata({
@@ -527,16 +527,16 @@ function _getPypiMetadata({
     maybeGroupLevelMetadata,
     maybeTopLevelMetadata
 }: {
-    pypiOutputMetadata: generatorsYml.PypiOutputMetadataSchema | undefined
-    maybeGroupLevelMetadata: OutputMetadata | undefined
-    maybeTopLevelMetadata: OutputMetadata | undefined
+    pypiOutputMetadata: generatorsYml.PypiOutputMetadataSchema | undefined;
+    maybeGroupLevelMetadata: OutputMetadata | undefined;
+    maybeTopLevelMetadata: OutputMetadata | undefined;
 }): PypiMetadata | undefined {
-    let maybePyPiMetadata: PypiMetadata | undefined
+    let maybePyPiMetadata: PypiMetadata | undefined;
     if (pypiOutputMetadata != null) {
-        maybePyPiMetadata = getPyPiMetadata(pypiOutputMetadata)
-        maybePyPiMetadata = { ...maybeTopLevelMetadata, ...maybeGroupLevelMetadata, ...maybePyPiMetadata }
+        maybePyPiMetadata = getPyPiMetadata(pypiOutputMetadata);
+        maybePyPiMetadata = { ...maybeTopLevelMetadata, ...maybeGroupLevelMetadata, ...maybePyPiMetadata };
     }
-    return maybePyPiMetadata
+    return maybePyPiMetadata;
 }
 
 function _getReviewers({
@@ -544,41 +544,41 @@ function _getReviewers({
     groupLevelReviewers,
     outputModeReviewers
 }: {
-    topLevelReviewers: generatorsYml.ReviewersSchema | undefined
-    groupLevelReviewers: generatorsYml.ReviewersSchema | undefined
-    outputModeReviewers: generatorsYml.ReviewersSchema | undefined
+    topLevelReviewers: generatorsYml.ReviewersSchema | undefined;
+    groupLevelReviewers: generatorsYml.ReviewersSchema | undefined;
+    outputModeReviewers: generatorsYml.ReviewersSchema | undefined;
 }): GithubPullRequestReviewer[] {
-    const teamNames = new Set<string>()
-    const userNames = new Set<string>()
+    const teamNames = new Set<string>();
+    const userNames = new Set<string>();
 
-    const reviewers: GithubPullRequestReviewer[] = []
+    const reviewers: GithubPullRequestReviewer[] = [];
 
     const allTeamReviewers = [
         ...(topLevelReviewers?.teams ?? []),
         ...(groupLevelReviewers?.teams ?? []),
         ...(outputModeReviewers?.teams ?? [])
-    ]
+    ];
     const allUserReviewers = [
         ...(topLevelReviewers?.users ?? []),
         ...(groupLevelReviewers?.users ?? []),
         ...(outputModeReviewers?.users ?? [])
-    ]
+    ];
 
     for (const team of allTeamReviewers) {
         if (!teamNames.has(team.name)) {
-            reviewers.push(GithubPullRequestReviewer.team({ name: team.name }))
-            teamNames.add(team.name)
+            reviewers.push(GithubPullRequestReviewer.team({ name: team.name }));
+            teamNames.add(team.name);
         }
     }
 
     for (const user of allUserReviewers) {
         if (!userNames.has(user.name)) {
-            reviewers.push(GithubPullRequestReviewer.user({ name: user.name }))
-            userNames.add(user.name)
+            reviewers.push(GithubPullRequestReviewer.user({ name: user.name }));
+            userNames.add(user.name);
         }
     }
 
-    return reviewers
+    return reviewers;
 }
 
 async function convertOutputMode({
@@ -589,31 +589,31 @@ async function convertOutputMode({
     maybeGroupLevelReviewers,
     maybeTopLevelReviewers
 }: {
-    absolutePathToGeneratorsConfiguration: AbsoluteFilePath
-    generator: generatorsYml.GeneratorInvocationSchema
-    maybeGroupLevelMetadata: OutputMetadata | undefined
-    maybeTopLevelMetadata: OutputMetadata | undefined
-    maybeGroupLevelReviewers: generatorsYml.ReviewersSchema | undefined
-    maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined
+    absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
+    generator: generatorsYml.GeneratorInvocationSchema;
+    maybeGroupLevelMetadata: OutputMetadata | undefined;
+    maybeTopLevelMetadata: OutputMetadata | undefined;
+    maybeGroupLevelReviewers: generatorsYml.ReviewersSchema | undefined;
+    maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined;
 }): Promise<FernFiddle.OutputMode> {
-    const downloadSnippets = generator.snippets != null && generator.snippets.path !== ""
+    const downloadSnippets = generator.snippets != null && generator.snippets.path !== "";
     if (generator.github != null && !isGithubSelfhosted(generator.github)) {
-        const indexOfFirstSlash = generator.github.repository.indexOf("/")
-        const owner = generator.github.repository.slice(0, indexOfFirstSlash)
-        const repo = generator.github.repository.slice(indexOfFirstSlash + 1)
+        const indexOfFirstSlash = generator.github.repository.indexOf("/");
+        const owner = generator.github.repository.slice(0, indexOfFirstSlash);
+        const repo = generator.github.repository.slice(indexOfFirstSlash + 1);
         const publishInfo =
             generator.output != null
                 ? getGithubPublishInfo(generator.output, maybeGroupLevelMetadata, maybeTopLevelMetadata)
-                : undefined
-        const licenseSchema = getGithubLicenseSchema(generator)
+                : undefined;
+        const licenseSchema = getGithubLicenseSchema(generator);
         const license =
             licenseSchema != null
                 ? await getGithubLicense({
                       absolutePathToGeneratorsConfiguration,
                       githubLicense: licenseSchema
                   })
-                : undefined
-        const mode = generator.github.mode ?? "release"
+                : undefined;
+        const mode = generator.github.mode ?? "release";
         switch (mode) {
             case "commit":
             case "release":
@@ -625,13 +625,13 @@ async function convertOutputMode({
                         publishInfo,
                         downloadSnippets
                     })
-                )
+                );
             case "pull-request": {
                 const reviewers = _getReviewers({
                     topLevelReviewers: maybeTopLevelReviewers,
                     groupLevelReviewers: maybeGroupLevelReviewers,
                     outputModeReviewers: (generator.github as generatorsYml.GithubPullRequestSchema).reviewers
-                })
+                });
                 return FernFiddle.OutputMode.githubV2(
                     FernFiddle.GithubOutputModeV2.pullRequest({
                         owner,
@@ -641,7 +641,7 @@ async function convertOutputMode({
                         downloadSnippets,
                         reviewers
                     })
-                )
+                );
             }
             case "push":
                 return FernFiddle.OutputMode.githubV2(
@@ -653,19 +653,19 @@ async function convertOutputMode({
                         publishInfo,
                         downloadSnippets
                     })
-                )
+                );
             default:
-                assertNever(mode)
+                assertNever(mode);
         }
     }
     if (generator.output == null) {
-        return FernFiddle.remoteGen.OutputMode.publish({ registryOverrides: {} })
+        return FernFiddle.remoteGen.OutputMode.publish({ registryOverrides: {} });
     }
     switch (generator.output.location) {
         case "local-file-system":
             return FernFiddle.OutputMode.downloadFiles({
                 downloadSnippets
-            })
+            });
         case "npm":
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.npmOverride({
@@ -674,7 +674,7 @@ async function convertOutputMode({
                     token: generator.output.token ?? "",
                     downloadSnippets
                 })
-            )
+            );
         case "maven": {
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.mavenOverride({
@@ -692,7 +692,7 @@ async function convertOutputMode({
                             : undefined,
                     downloadSnippets
                 })
-            )
+            );
         }
         case "postman":
             return FernFiddle.OutputMode.publishV2(
@@ -700,7 +700,7 @@ async function convertOutputMode({
                     apiKey: generator.output["api-key"],
                     workspaceId: generator.output["workspace-id"]
                 })
-            )
+            );
         case "pypi":
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.pypiOverride({
@@ -715,7 +715,7 @@ async function convertOutputMode({
                         maybeTopLevelMetadata
                     })
                 })
-            )
+            );
         case "nuget":
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.nugetOverride({
@@ -724,7 +724,7 @@ async function convertOutputMode({
                     apiKey: generator.output["api-key"] ?? "",
                     downloadSnippets
                 })
-            )
+            );
         case "rubygems":
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.rubyGemsOverride({
@@ -733,9 +733,9 @@ async function convertOutputMode({
                     apiKey: generator.output["api-key"] ?? "",
                     downloadSnippets
                 })
-            )
+            );
         default:
-            assertNever(generator.output)
+            assertNever(generator.output);
     }
 }
 
@@ -743,31 +743,31 @@ async function getGithubLicense({
     absolutePathToGeneratorsConfiguration,
     githubLicense
 }: {
-    absolutePathToGeneratorsConfiguration: AbsoluteFilePath
-    githubLicense: generatorsYml.GithubLicenseSchema
+    absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
+    githubLicense: generatorsYml.GithubLicenseSchema;
 }): Promise<FernFiddle.GithubLicense> {
     if (typeof githubLicense === "string") {
         switch (githubLicense) {
             case "MIT":
                 return FernFiddle.GithubLicense.basic({
                     id: FernFiddle.GithubLicenseId.Mit
-                })
+                });
             case "Apache-2.0":
                 return FernFiddle.GithubLicense.basic({
                     id: FernFiddle.GithubLicenseId.Apache
-                })
+                });
             default:
-                assertNever(githubLicense)
+                assertNever(githubLicense);
         }
     }
     const absolutePathToLicense = join(
         AbsoluteFilePath.of(path.dirname(absolutePathToGeneratorsConfiguration)),
         RelativeFilePath.of(githubLicense.custom)
-    )
-    const licenseContent = await readFile(absolutePathToLicense)
+    );
+    const licenseContent = await readFile(absolutePathToLicense);
     return FernFiddle.GithubLicense.custom({
         contents: licenseContent.toString()
-    })
+    });
 }
 
 // TODO: This is where we should add support for Go and PHP.
@@ -778,13 +778,13 @@ function getGithubPublishInfo(
 ): FernFiddle.GithubPublishInfo {
     switch (output.location) {
         case "local-file-system":
-            throw new Error("Cannot use local-file-system with github publishing")
+            throw new Error("Cannot use local-file-system with github publishing");
         case "npm":
             return FernFiddle.GithubPublishInfo.npm({
                 registryUrl: output.url ?? "https://registry.npmjs.org",
                 packageName: output["package-name"],
                 token: output.token
-            })
+            });
         case "maven":
             return FernFiddle.GithubPublishInfo.maven({
                 registryUrl: getMavenRegistryUrl(output),
@@ -804,12 +804,12 @@ function getGithubPublishInfo(
                               secretKey: output.signature.secretKey
                           }
                         : undefined
-            })
+            });
         case "postman":
             return FernFiddle.GithubPublishInfo.postman({
                 apiKey: output["api-key"],
                 workspaceId: output["workspace-id"]
-            })
+            });
         case "pypi":
             return FernFiddle.GithubPublishInfo.pypi({
                 registryUrl: output.url ?? "https://upload.pypi.org/legacy/",
@@ -829,72 +829,72 @@ function getGithubPublishInfo(
                     maybeGroupLevelMetadata,
                     maybeTopLevelMetadata
                 })
-            })
+            });
         case "nuget":
             return FernFiddle.GithubPublishInfo.nuget({
                 registryUrl: output.url ?? "https://nuget.org/",
                 packageName: output["package-name"],
                 apiKey: output["api-key"]
-            })
+            });
         case "rubygems":
             return FernFiddle.GithubPublishInfo.rubygems({
                 registryUrl: output.url ?? "https://rubygems.org/",
                 packageName: output["package-name"],
                 apiKey: output["api-key"]
-            })
+            });
         default:
-            assertNever(output)
+            assertNever(output);
     }
 }
 
 function getLanguageFromGeneratorName(generatorName: string) {
     if (generatorName.includes("csharp")) {
-        return generatorsYml.GenerationLanguage.CSHARP
+        return generatorsYml.GenerationLanguage.CSHARP;
     }
     if (generatorName.includes("go")) {
-        return generatorsYml.GenerationLanguage.GO
+        return generatorsYml.GenerationLanguage.GO;
     }
     if (generatorName.includes("java") || generatorName.includes("spring")) {
-        return generatorsYml.GenerationLanguage.JAVA
+        return generatorsYml.GenerationLanguage.JAVA;
     }
     if (generatorName.includes("php")) {
-        return generatorsYml.GenerationLanguage.PHP
+        return generatorsYml.GenerationLanguage.PHP;
     }
     if (generatorName.includes("python") || generatorName.includes("fastapi") || generatorName.includes("pydantic")) {
-        return generatorsYml.GenerationLanguage.PYTHON
+        return generatorsYml.GenerationLanguage.PYTHON;
     }
     if (generatorName.includes("ruby")) {
-        return generatorsYml.GenerationLanguage.RUBY
+        return generatorsYml.GenerationLanguage.RUBY;
     }
     if (generatorName.includes("swift")) {
-        return generatorsYml.GenerationLanguage.SWIFT
+        return generatorsYml.GenerationLanguage.SWIFT;
     }
     if (generatorName.includes("typescript")) {
-        return generatorsYml.GenerationLanguage.TYPESCRIPT
+        return generatorsYml.GenerationLanguage.TYPESCRIPT;
     }
-    return undefined
+    return undefined;
 }
 
 function getMavenRegistryUrl(maven: generatorsYml.MavenOutputLocationSchema) {
     if (maven.url != null) {
-        return maven.url
+        return maven.url;
     }
     return maven.signature != null
         ? "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-        : "https://s01.oss.sonatype.org/content/repositories/releases/"
+        : "https://s01.oss.sonatype.org/content/repositories/releases/";
 }
 
 function getGithubLicenseSchema(
     generator: generatorsYml.GeneratorInvocationSchema
 ): generatorsYml.GithubLicenseSchema | undefined {
     if (generator["publish-metadata"]?.license != null) {
-        return generator["publish-metadata"].license
+        return generator["publish-metadata"].license;
     } else if (generator.metadata?.license != null) {
-        return generator.metadata.license
+        return generator.metadata.license;
     } else if (isGithubSelfhosted(generator.github)) {
-        return undefined
+        return undefined;
     }
-    return generator.github?.license
+    return generator.github?.license;
 }
 
 function getOutputMetadata(metadata: generatorsYml.OutputMetadataSchema | undefined): OutputMetadata | undefined {
@@ -903,7 +903,7 @@ function getOutputMetadata(metadata: generatorsYml.OutputMetadataSchema | undefi
               description: metadata.description,
               authors: metadata.authors?.map((author) => ({ name: author.name, email: author.email }))
           }
-        : undefined
+        : undefined;
 }
 
 function getPyPiMetadata(metadata: generatorsYml.PypiOutputMetadataSchema | undefined): PypiMetadata | undefined {
@@ -915,56 +915,56 @@ function getPyPiMetadata(metadata: generatorsYml.PypiOutputMetadataSchema | unde
               documentationLink: metadata["documentation-link"],
               homepageLink: metadata["homepage-link"]
           }
-        : undefined
+        : undefined;
 }
 
 function warnForDeprecatedConfiguration(context: TaskContext, config: generatorsYml.GeneratorsConfigurationSchema) {
-    const warnings = []
+    const warnings = [];
     if (config["api-settings"] != null) {
-        warnings.push('"api-settings" is deprecated. Please use "api.specs[].settings" instead.')
+        warnings.push('"api-settings" is deprecated. Please use "api.specs[].settings" instead.');
     }
     if (config["async-api"] != null) {
-        warnings.push('"async-api" is deprecated. Please use "api.specs[].asyncapi" instead.')
+        warnings.push('"async-api" is deprecated. Please use "api.specs[].asyncapi" instead.');
     }
     if (config.openapi != null) {
-        warnings.push('"openapi" is deprecated. Please use "api.specs[].openapi" instead.')
+        warnings.push('"openapi" is deprecated. Please use "api.specs[].openapi" instead.');
     }
     if (config["openapi-overrides"] != null) {
-        warnings.push('"openapi-overrides" is deprecated. Please use "api.specs[].overrides" instead.')
+        warnings.push('"openapi-overrides" is deprecated. Please use "api.specs[].overrides" instead.');
     }
     if (config["spec-origin"]) {
-        warnings.push('"spec-origin" is deprecated. Please use "api.specs[].origin" instead.')
+        warnings.push('"spec-origin" is deprecated. Please use "api.specs[].origin" instead.');
     }
     if (config.api != null) {
         if (typeof config.api === "string") {
             warnings.push(
                 'Using an OpenAPI or AsyncAPI path string for "api" is deprecated. Please use "api.specs[].openapi" or "api.specs[].asyncapi" instead.'
-            )
+            );
         }
         if (Array.isArray(config.api)) {
             warnings.push(
                 'Using an array for "api" is deprecated. Please use "api.specs[].openapi", "api.specs[].asyncapi", or "api.specs[].proto" instead.'
-            )
+            );
         } else if (typeof config.api === "object") {
             if ("path" in config.api) {
                 warnings.push(
                     'Using "api.path" is deprecated. Please use "api.specs[].openapi" or "api.specs[].asyncapi" instead.'
-                )
+                );
             }
             if ("proto" in config.api) {
-                warnings.push('Using "api.proto" is deprecated. Please use "api.specs[].proto" instead.')
+                warnings.push('Using "api.proto" is deprecated. Please use "api.specs[].proto" instead.');
             }
             if ("namespaces" in config.api) {
                 warnings.push(
                     'Using "api.namespaces" is deprecated. Please use "api.specs[].openapi", "api.specs[].asyncapi", or "api.specs[].proto" with the "namespace" property instead.'
-                )
+                );
             }
         }
     }
 
     if (warnings.length > 0) {
-        context.logger.warn("Warnings for generators.yml:")
-        context.logger.warn("\t" + warnings.join("\n\t"))
+        context.logger.warn("Warnings for generators.yml:");
+        context.logger.warn("\t" + warnings.join("\n\t"));
     }
 }
 
@@ -975,7 +975,7 @@ export function isGithubSelfhosted(
     github: generatorsYml.GithubConfigurationSchema | undefined
 ): github is generatorsYml.GithubSelfhostedSchema {
     if (github == null) {
-        return false
+        return false;
     }
-    return "uri" in github && "token" in github
+    return "uri" in github && "token" in github;
 }

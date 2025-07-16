@@ -1,12 +1,12 @@
-import chalk from "chalk"
-import capitalize from "lodash-es/capitalize"
-import urlJoin from "url-join"
+import chalk from "chalk";
+import capitalize from "lodash-es/capitalize";
+import urlJoin from "url-join";
 
-import { RawSchemas } from "@fern-api/fern-definition-schema"
-import { getEndpointPathParameters } from "@fern-api/ir-generator"
-import { constructHttpPath } from "@fern-api/ir-utils"
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { getEndpointPathParameters } from "@fern-api/ir-generator";
+import { constructHttpPath } from "@fern-api/ir-utils";
 
-import { Rule, RuleViolation } from "../../Rule"
+import { Rule, RuleViolation } from "../../Rule";
 
 export const NoUndefinedPathParametersRule: Rule = {
     name: "no-undefined-path-parameters",
@@ -15,13 +15,13 @@ export const NoUndefinedPathParametersRule: Rule = {
             rootApiFile: {
                 file: (file) => {
                     if (file["base-path"] == null) {
-                        return []
+                        return [];
                     }
                     return getPathParameterRuleViolations({
                         path: file["base-path"],
                         pathParameters: file["path-parameters"] ?? {},
                         pathType: "file"
-                    })
+                    });
                 }
             },
             definitionFile: {
@@ -30,7 +30,7 @@ export const NoUndefinedPathParametersRule: Rule = {
                         path: service["base-path"],
                         pathParameters: service["path-parameters"] ?? {},
                         pathType: "service"
-                    })
+                    });
                 },
                 httpEndpoint: ({ endpoint }) => {
                     return getPathParameterRuleViolations({
@@ -40,59 +40,59 @@ export const NoUndefinedPathParametersRule: Rule = {
                                 : endpoint.path,
                         pathParameters: getEndpointPathParameters(endpoint),
                         pathType: "endpoint"
-                    })
+                    });
                 }
             }
-        }
+        };
     }
-}
+};
 
 function getPathParameterRuleViolations({
     path,
     pathParameters,
     pathType
 }: {
-    path: string
-    pathParameters: Record<string, RawSchemas.HttpPathParameterSchema>
-    pathType: "file" | "service" | "endpoint"
+    path: string;
+    pathParameters: Record<string, RawSchemas.HttpPathParameterSchema>;
+    pathType: "file" | "service" | "endpoint";
 }): RuleViolation[] {
-    const errors: RuleViolation[] = []
+    const errors: RuleViolation[] = [];
 
-    const urlPathParameters = new Set()
-    const httpPath = constructHttpPath(path)
+    const urlPathParameters = new Set();
+    const httpPath = constructHttpPath(path);
     httpPath.parts.forEach((part) => {
         if (urlPathParameters.has(part.pathParameter)) {
             errors.push({
                 severity: "fatal",
                 message: `${capitalize(pathType)} has duplicate path parameter: ${chalk.bold(part.pathParameter)}.`
-            })
+            });
         }
-        urlPathParameters.add(part.pathParameter)
-    })
+        urlPathParameters.add(part.pathParameter);
+    });
 
-    const definedPathParameters = new Set(Object.keys(pathParameters))
+    const definedPathParameters = new Set(Object.keys(pathParameters));
 
     // path parameters present in the url but are not defined
-    const undefinedPathParameters = getDifference(urlPathParameters, definedPathParameters)
+    const undefinedPathParameters = getDifference(urlPathParameters, definedPathParameters);
     undefinedPathParameters.forEach((pathParameter) => {
         errors.push({
             severity: "fatal",
             message: `${capitalize(pathType)} has missing path-parameter: ${chalk.bold(pathParameter)}.`
-        })
-    })
+        });
+    });
 
     // path parameters that are defined but not present in the url
-    const missingUrlPathParameters = getDifference(definedPathParameters, urlPathParameters)
+    const missingUrlPathParameters = getDifference(definedPathParameters, urlPathParameters);
     missingUrlPathParameters.forEach((pathParameter) => {
         errors.push({
             severity: "fatal",
             message: `Path parameter is unreferenced in ${pathType}: ${chalk.bold(pathParameter)}.`
-        })
-    })
+        });
+    });
 
-    return errors
+    return errors;
 }
 
 function getDifference<T>(setA: Set<T>, setB: Set<T>): Set<T> {
-    return new Set([...setA].filter((element) => !setB.has(element)))
+    return new Set([...setA].filter((element) => !setB.has(element)));
 }

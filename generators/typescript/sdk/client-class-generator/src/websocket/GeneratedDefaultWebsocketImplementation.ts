@@ -1,5 +1,5 @@
-import { PackageId, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons"
-import { ChannelSignature, GeneratedWebsocketImplementation, SdkContext } from "@fern-typescript/contexts"
+import { PackageId, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
+import { ChannelSignature, GeneratedWebsocketImplementation, SdkContext } from "@fern-typescript/contexts";
 import {
     ClassDeclarationStructure,
     InterfaceDeclarationStructure,
@@ -7,9 +7,9 @@ import {
     Scope,
     StructureKind,
     ts
-} from "ts-morph"
+} from "ts-morph";
 
-import { SetRequired } from "@fern-api/core-utils"
+import { SetRequired } from "@fern-api/core-utils";
 
 import {
     IntermediateRepresentation,
@@ -17,48 +17,48 @@ import {
     QueryParameter,
     WebSocketChannel,
     WebSocketChannelId
-} from "@fern-fern/ir-sdk/api"
+} from "@fern-fern/ir-sdk/api";
 
-import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl"
-import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams"
-import { buildUrl } from "../endpoints/utils/buildUrl"
+import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
+import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams";
+import { buildUrl } from "../endpoints/utils/buildUrl";
 
 export declare namespace GeneratedDefaultWebsocketImplementation {
     export interface Init {
-        intermediateRepresentation: IntermediateRepresentation
-        generatedSdkClientClass: GeneratedSdkClientClassImpl
-        channel: WebSocketChannel
-        channelId: WebSocketChannelId
-        packageId: PackageId
-        serviceClassName: string
-        requireDefaultEnvironment: boolean
-        includeSerdeLayer: boolean
-        retainOriginalCasing: boolean
-        omitUndefined: boolean
+        intermediateRepresentation: IntermediateRepresentation;
+        generatedSdkClientClass: GeneratedSdkClientClassImpl;
+        channel: WebSocketChannel;
+        channelId: WebSocketChannelId;
+        packageId: PackageId;
+        serviceClassName: string;
+        requireDefaultEnvironment: boolean;
+        includeSerdeLayer: boolean;
+        retainOriginalCasing: boolean;
+        omitUndefined: boolean;
     }
 }
 
 export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsocketImplementation {
-    private static readonly CONNECT_ARGS_INTERFACE_NAME = "ConnectArgs"
-    private static readonly CONNECT_ARGS_PRIVATE_MEMBER = "args"
-    private static readonly DEBUG_PROPERTY_NAME = "debug"
-    private static readonly HEADERS_PROPERTY_NAME = "headers"
-    private static readonly HEADERS_VARIABLE_NAME = "_headers"
+    private static readonly CONNECT_ARGS_INTERFACE_NAME = "ConnectArgs";
+    private static readonly CONNECT_ARGS_PRIVATE_MEMBER = "args";
+    private static readonly DEBUG_PROPERTY_NAME = "debug";
+    private static readonly HEADERS_PROPERTY_NAME = "headers";
+    private static readonly HEADERS_VARIABLE_NAME = "_headers";
 
-    private static readonly RECONNECT_ATTEMPTS_PROPERTY_NAME = "reconnectAttempts"
-    private static readonly GENERATED_VERSION_PROPERTY_NAME = "fernSdkVersion"
-    private static readonly DEFAULT_NUM_RECONNECT_ATTEMPTS = 30
+    private static readonly RECONNECT_ATTEMPTS_PROPERTY_NAME = "reconnectAttempts";
+    private static readonly GENERATED_VERSION_PROPERTY_NAME = "fernSdkVersion";
+    private static readonly DEFAULT_NUM_RECONNECT_ATTEMPTS = 30;
 
-    private readonly intermediateRepresentation: IntermediateRepresentation
-    private readonly generatedSdkClientClass: GeneratedSdkClientClassImpl
-    private readonly channelId: WebSocketChannelId
-    private readonly packageId: PackageId
-    private readonly serviceClassName: string
-    private readonly requireDefaultEnvironment: boolean
-    private readonly includeSerdeLayer: boolean
-    private readonly retainOriginalCasing: boolean
-    private readonly omitUndefined: boolean
-    channel: WebSocketChannel
+    private readonly intermediateRepresentation: IntermediateRepresentation;
+    private readonly generatedSdkClientClass: GeneratedSdkClientClassImpl;
+    private readonly channelId: WebSocketChannelId;
+    private readonly packageId: PackageId;
+    private readonly serviceClassName: string;
+    private readonly requireDefaultEnvironment: boolean;
+    private readonly includeSerdeLayer: boolean;
+    private readonly retainOriginalCasing: boolean;
+    private readonly omitUndefined: boolean;
+    channel: WebSocketChannel;
 
     constructor({
         intermediateRepresentation,
@@ -72,20 +72,20 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         retainOriginalCasing,
         omitUndefined
     }: GeneratedDefaultWebsocketImplementation.Init) {
-        this.intermediateRepresentation = intermediateRepresentation
-        this.generatedSdkClientClass = generatedSdkClientClass
-        this.channelId = channelId
-        this.packageId = packageId
-        this.channel = channel
-        this.serviceClassName = serviceClassName
-        this.requireDefaultEnvironment = requireDefaultEnvironment
-        this.includeSerdeLayer = includeSerdeLayer
-        this.retainOriginalCasing = retainOriginalCasing
-        this.omitUndefined = omitUndefined
+        this.intermediateRepresentation = intermediateRepresentation;
+        this.generatedSdkClientClass = generatedSdkClientClass;
+        this.channelId = channelId;
+        this.packageId = packageId;
+        this.channel = channel;
+        this.serviceClassName = serviceClassName;
+        this.requireDefaultEnvironment = requireDefaultEnvironment;
+        this.includeSerdeLayer = includeSerdeLayer;
+        this.retainOriginalCasing = retainOriginalCasing;
+        this.omitUndefined = omitUndefined;
     }
 
     public getSignature(context: SdkContext): ChannelSignature {
-        const connectArgsInterface = this.generateConnectArgsInterface(context)
+        const connectArgsInterface = this.generateConnectArgsInterface(context);
 
         return {
             parameters: [
@@ -96,19 +96,19 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 }
             ],
             returnTypeWithoutPromise: this.getSocketTypeNode(context)
-        }
+        };
     }
 
     public getModuleStatement(context: SdkContext): InterfaceDeclarationStructure {
-        return this.generateConnectArgsInterface(context)
+        return this.generateConnectArgsInterface(context);
     }
 
     public getClassStatements(context: SdkContext): ts.Statement[] {
-        return this.generateConnectMethodStatements(context)
+        return this.generateConnectMethodStatements(context);
     }
 
     public writeToFile(context: SdkContext): void {
-        const connectArgsInterface = this.generateConnectArgsInterface(context)
+        const connectArgsInterface = this.generateConnectArgsInterface(context);
 
         const serviceModule: ModuleDeclarationStructure = {
             kind: StructureKind.Module,
@@ -116,7 +116,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
             isExported: true,
             hasDeclareKeyword: true,
             statements: [connectArgsInterface]
-        }
+        };
 
         const serviceClass: ClassDeclarationStructure = {
             kind: StructureKind.Class,
@@ -125,9 +125,9 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
             properties: [],
             ctors: [],
             methods: []
-        }
+        };
 
-        const statements = this.generateConnectMethodStatements(context)
+        const statements = this.generateConnectMethodStatements(context);
 
         serviceClass.methods?.push({
             name: "connect",
@@ -146,10 +146,10 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 ])
             ),
             statements: statements.map(getTextOfTsNode)
-        })
+        });
 
-        context.sourceFile.addModule(serviceModule)
-        context.sourceFile.addClass(serviceClass)
+        context.sourceFile.addModule(serviceModule);
+        context.sourceFile.addClass(serviceClass);
     }
 
     private generateConnectArgsInterface(context: SdkContext): InterfaceDeclarationStructure {
@@ -162,21 +162,21 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                         name: getPropertyKey(pathParameter.name.originalName),
                         type: getTextOfTsNode(context.type.getReferenceToType(pathParameter.valueType).typeNode),
                         hasQuestionToken: false
-                    }
+                    };
                 }),
                 ...(this.channel.queryParameters ?? []).map((queryParameter) => {
                     return {
                         name: this.getPropertyNameOfQueryParameter(queryParameter).propertyName,
                         type: getTextOfTsNode(context.type.getReferenceToType(queryParameter.valueType).typeNode),
                         hasQuestionToken: context.type.isOptional(queryParameter.valueType)
-                    }
+                    };
                 }),
                 ...(this.channel.headers ?? []).map((header) => {
                     return {
                         name: getPropertyKey(header.name.wireValue),
                         type: getTextOfTsNode(context.type.getReferenceToType(header.valueType).typeNode),
                         hasQuestionToken: context.type.isOptional(header.valueType)
-                    }
+                    };
                 }),
                 {
                     name: GeneratedDefaultWebsocketImplementation.HEADERS_PROPERTY_NAME,
@@ -203,23 +203,23 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 }
             ],
             isExported: true
-        }
+        };
 
-        const generatedVersion = context.versionContext.getGeneratedVersion()
+        const generatedVersion = context.versionContext.getGeneratedVersion();
         if (generatedVersion != null) {
-            const header = generatedVersion.getHeader()
+            const header = generatedVersion.getHeader();
             requestOptions.properties.push({
                 name: GeneratedDefaultWebsocketImplementation.GENERATED_VERSION_PROPERTY_NAME,
                 type: generatedVersion.getEnumValueUnion(),
                 hasQuestionToken: true,
                 docs: [`Override the ${header.name.wireValue} header`]
-            })
+            });
         }
-        return requestOptions
+        return requestOptions;
     }
 
     private generateConnectMethodStatements(context: SdkContext): ts.Statement[] {
-        const bindingElements: ts.BindingElement[] = []
+        const bindingElements: ts.BindingElement[] = [];
 
         // Add path parameters binding
         for (const pathParameter of [
@@ -232,7 +232,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                     undefined,
                     ts.factory.createIdentifier(pathParameter.name.originalName)
                 )
-            )
+            );
         }
 
         // Add query parameters binding
@@ -243,7 +243,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                     undefined,
                     ts.factory.createIdentifier(this.getPropertyNameOfQueryParameter(queryParameter).propertyName)
                 )
-            )
+            );
         }
 
         // Add headers binding
@@ -253,7 +253,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 undefined,
                 ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.HEADERS_PROPERTY_NAME)
             )
-        )
+        );
 
         // Add other optional parameters
         bindingElements.push(
@@ -267,10 +267,10 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 undefined,
                 ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.RECONNECT_ATTEMPTS_PROPERTY_NAME)
             )
-        )
+        );
 
         // Add generated version if available
-        const generatedVersion = context.versionContext.getGeneratedVersion()
+        const generatedVersion = context.versionContext.getGeneratedVersion();
         if (generatedVersion != null) {
             bindingElements.push(
                 ts.factory.createBindingElement(
@@ -278,7 +278,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                     undefined,
                     ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.GENERATED_VERSION_PROPERTY_NAME)
                 )
-            )
+            );
         }
 
         // Create the destructuring statement
@@ -295,14 +295,14 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 ],
                 ts.NodeFlags.Const
             )
-        )
+        );
 
         const queryParameters = new GeneratedQueryParams({
             queryParameters: this.channel.queryParameters,
             referenceToQueryParameterProperty: (key, context) => {
-                return this.getReferenceToQueryParameter(key, context)
+                return this.getReferenceToQueryParameter(key, context);
             }
-        })
+        });
 
         return [
             destructuringStatement,
@@ -388,7 +388,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                             )
                         )
                     ])
-                )
+                );
             }),
             ts.factory.createVariableStatement(
                 undefined,
@@ -411,11 +411,11 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                     ])
                 ])
             )
-        ]
+        ];
     }
 
     private getReferenceToWebsocket(context: SdkContext): ts.Expression {
-        const baseUrl = this.getBaseUrl(this.channel, context)
+        const baseUrl = this.getBaseUrl(this.channel, context);
         const url = buildUrl({
             endpoint: {
                 allPathParameters: [...this.intermediateRepresentation.pathParameters, ...this.channel.pathParameters],
@@ -429,12 +429,12 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
             retainOriginalCasing: this.retainOriginalCasing,
             omitUndefined: this.omitUndefined,
             getReferenceToPathParameterVariableFromRequest: (pathParameter) => {
-                return ts.factory.createIdentifier(`args.${pathParameter.name.camelCase.safeName}`)
+                return ts.factory.createIdentifier(`args.${pathParameter.name.camelCase.safeName}`);
             }
-        })
+        });
 
         if (url == null) {
-            throw new Error(`Failed to build URL for ${this.channelId}`)
+            throw new Error(`Failed to build URL for ${this.channelId}`);
         }
 
         return context.coreUtilities.websocket.ReconnectingWebSocket._connect({
@@ -464,21 +464,21 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
             ]),
             headers: ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.HEADERS_VARIABLE_NAME),
             queryParameters: ts.factory.createIdentifier(GeneratedQueryParams.QUERY_PARAMS_VARIABLE_NAME)
-        })
+        });
     }
 
     private getEnvironment(channel: WebSocketChannel, context: SdkContext): ts.Expression {
-        let referenceToEnvironmentValue = this.getReferenceToEnvironment(context)
+        let referenceToEnvironmentValue = this.getReferenceToEnvironment(context);
 
         const defaultEnvironment = context.environments
             .getGeneratedEnvironments()
-            .getReferenceToDefaultEnvironment(context)
+            .getReferenceToDefaultEnvironment(context);
 
         if (this.requireDefaultEnvironment) {
             if (defaultEnvironment == null) {
-                throw new Error("Cannot use default environment because none exists")
+                throw new Error("Cannot use default environment because none exists");
             }
-            return defaultEnvironment
+            return defaultEnvironment;
         }
 
         if (defaultEnvironment != null) {
@@ -486,85 +486,85 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 referenceToEnvironmentValue,
                 ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
                 defaultEnvironment
-            )
+            );
         }
 
         return context.environments.getGeneratedEnvironments().getReferenceToEnvironmentUrl({
             referenceToEnvironmentValue,
             baseUrlId: channel.baseUrl ?? undefined
-        })
+        });
     }
 
     private getReferenceToOption(option: string): ts.Expression {
         return ts.factory.createElementAccessExpression(
             this.getReferenceToOptions(),
             ts.factory.createStringLiteral(option)
-        )
+        );
     }
 
     private getReferenceToArg(arg: string): ts.Expression {
-        return ts.factory.createElementAccessExpression(this.getReferenceToArgs(), ts.factory.createStringLiteral(arg))
+        return ts.factory.createElementAccessExpression(this.getReferenceToArgs(), ts.factory.createStringLiteral(arg));
     }
 
     public getSocketTypeNode(context: SdkContext): ts.TypeNode {
-        const reference = context.websocket.getReferenceToWebsocketSocketClass(this.packageId)
+        const reference = context.websocket.getReferenceToWebsocketSocketClass(this.packageId);
         return reference.getTypeNode({
             isForComment: true
-        })
+        });
     }
 
     public getReferenceToSocket(context: SdkContext): ts.Expression {
-        const reference = context.websocket.getReferenceToWebsocketSocketClass(this.packageId)
-        return reference.getExpression()
+        const reference = context.websocket.getReferenceToWebsocketSocketClass(this.packageId);
+        return reference.getExpression();
     }
 
     public getReferenceToOptions(): ts.Expression {
         return ts.factory.createPropertyAccessExpression(
             ts.factory.createThis(),
             GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER
-        )
+        );
     }
 
     public getReferenceToArgs(): ts.Expression {
-        return ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.CONNECT_ARGS_PRIVATE_MEMBER)
+        return ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.CONNECT_ARGS_PRIVATE_MEMBER);
     }
 
     private getReferenceToBaseUrl(context: SdkContext): ts.Expression {
         return context.coreUtilities.fetcher.Supplier.get(
             this.getReferenceToOption(GeneratedSdkClientClassImpl.BASE_URL_OPTION_PROPERTY_NAME)
-        )
+        );
     }
 
     private getReferenceToEnvironment(context: SdkContext): ts.Expression {
         return context.coreUtilities.fetcher.Supplier.get(
             this.getReferenceToOption(GeneratedSdkClientClassImpl.ENVIRONMENT_OPTION_PROPERTY_NAME)
-        )
+        );
     }
 
     public getBaseUrl(channel: WebSocketChannel, context: SdkContext): ts.Expression {
-        const referenceToBaseUrl = this.getReferenceToBaseUrl(context)
+        const referenceToBaseUrl = this.getReferenceToBaseUrl(context);
 
-        const environment = this.getEnvironment(channel, context)
+        const environment = this.getEnvironment(channel, context);
 
         return ts.factory.createBinaryExpression(
             referenceToBaseUrl,
             ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
             environment
-        )
+        );
     }
 
     public getReferenceToQueryParameter(queryParameterKey: string, context: SdkContext): ts.Expression {
         const queryParameter = this.channel.queryParameters.find(
             (queryParam) => queryParam.name.wireValue === queryParameterKey
-        )
+        );
         if (queryParameter == null) {
-            throw new Error("Query parameter does not exist: " + queryParameterKey)
+            throw new Error("Query parameter does not exist: " + queryParameterKey);
         }
-        return ts.factory.createIdentifier(this.getPropertyNameOfQueryParameter(queryParameter).propertyName)
+        return ts.factory.createIdentifier(this.getPropertyNameOfQueryParameter(queryParameter).propertyName);
     }
 
     public getPropertyNameOfQueryParameter(queryParameter: QueryParameter): { safeName: string; propertyName: string } {
-        return this.getPropertyNameOfQueryParameterFromName(queryParameter.name)
+        return this.getPropertyNameOfQueryParameterFromName(queryParameter.name);
     }
 
     public getPropertyNameOfQueryParameterFromName(name: NameAndWireValue): { safeName: string; propertyName: string } {
@@ -572,6 +572,6 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
             safeName: name.name.camelCase.safeName,
             propertyName:
                 this.includeSerdeLayer && !this.retainOriginalCasing ? name.name.camelCase.unsafeName : name.wireValue
-        }
+        };
     }
 }

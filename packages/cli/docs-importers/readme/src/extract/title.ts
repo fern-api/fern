@@ -1,6 +1,6 @@
-import type { Element, ElementContent, Root as HastRoot } from "hast"
-import type { BlockContent, Root as MdastRoot } from "mdast"
-import { CONTINUE, EXIT, visit } from "unist-util-visit"
+import type { Element, ElementContent, Root as HastRoot } from "hast";
+import type { BlockContent, Root as MdastRoot } from "mdast";
+import { CONTINUE, EXIT, visit } from "unist-util-visit";
 
 export function findTitle(
     node: Element | ElementContent | BlockContent | MdastRoot | HastRoot | undefined,
@@ -10,108 +10,108 @@ export function findTitle(
         tagName: undefined
     }
 ): string {
-    let title = ""
+    let title = "";
     if (!node) {
-        return title
+        return title;
     }
 
     visit(node, opts.nodeType ? opts.nodeType : node, function (subNode) {
         if (opts.tagName && subNode.type === "element" && subNode.tagName !== opts.tagName) {
-            return CONTINUE
+            return CONTINUE;
         }
         visit(subNode, "text", function (textNode, index, parent) {
-            title += textNode.value
+            title += textNode.value;
             if (opts.delete && parent && typeof index === "number") {
-                parent.children.splice(index, 1)
+                parent.children.splice(index, 1);
             }
-        })
-        return EXIT
-    })
+        });
+        return EXIT;
+    });
 
     if (opts.escaped) {
-        return title.trim().replace(/"/g, '\\"')
+        return title.trim().replace(/"/g, '\\"');
     } else {
-        return title.trim()
+        return title.trim();
     }
 }
 
 export function getTitleFromHeading(root: MdastRoot): string {
-    let headingElement: BlockContent | undefined = undefined
+    let headingElement: BlockContent | undefined = undefined;
     visit(root, "heading", function (subNode, index, parent) {
-        headingElement = subNode
+        headingElement = subNode;
         if (parent && typeof index === "number") {
-            parent.children.splice(index, 1)
+            parent.children.splice(index, 1);
         }
-        return EXIT
-    })
-    return findTitle(headingElement, { delete: true, escaped: true })
+        return EXIT;
+    });
+    return findTitle(headingElement, { delete: true, escaped: true });
 }
 
 export function getDescriptionFromRoot(root: MdastRoot): string {
-    let descriptionElement: BlockContent | undefined = undefined
+    let descriptionElement: BlockContent | undefined = undefined;
     visit(root, "paragraph", function (subNode, index, parent) {
         if (typeof index !== "number" || index !== 0 || !parent || parent.type !== "root") {
-            return EXIT
+            return EXIT;
         }
 
-        descriptionElement = subNode
+        descriptionElement = subNode;
         if (typeof index === "number") {
-            parent.children.splice(index, 1)
+            parent.children.splice(index, 1);
         }
-        return EXIT
-    })
-    return findTitle(descriptionElement, { delete: true, escaped: true })
+        return EXIT;
+    });
+    return findTitle(descriptionElement, { delete: true, escaped: true });
 }
 
 export function getTitleFromLink(url: string): string {
     if (url.startsWith("http")) {
-        url = new URL(url).pathname
+        url = new URL(url).pathname;
     }
-    const lastPathname = url.split("/").at(-1) ?? ""
-    const dashSplitPathname = lastPathname.split("-").flatMap((i) => i.split("_"))
+    const lastPathname = url.split("/").at(-1) ?? "";
+    const dashSplitPathname = lastPathname.split("-").flatMap((i) => i.split("_"));
     dashSplitPathname.forEach((str, index) => {
-        dashSplitPathname[index] = str[0] ? `${str[0].toUpperCase()}${str.substring(1)}` : str
-    })
+        dashSplitPathname[index] = str[0] ? `${str[0].toUpperCase()}${str.substring(1)}` : str;
+    });
 
-    return dashSplitPathname.join(" ")
+    return dashSplitPathname.join(" ");
 }
 
 export async function getTitle(hast: HastRoot): Promise<string> {
-    const defaultTitle = "ENTER TITLE HERE"
-    let text: string | undefined = undefined as string | undefined
+    const defaultTitle = "ENTER TITLE HERE";
+    let text: string | undefined = undefined as string | undefined;
 
     visit(hast, "element", function (node) {
         if (node.tagName !== "title") {
-            return CONTINUE
+            return CONTINUE;
         }
 
         visit(node, "text", function (subNode) {
-            text = subNode.value
-            return EXIT
-        })
+            text = subNode.value;
+            return EXIT;
+        });
 
         if (text) {
-            return EXIT
+            return EXIT;
         }
-        return CONTINUE
-    })
+        return CONTINUE;
+    });
 
     if (!text) {
-        return defaultTitle
+        return defaultTitle;
     }
 
-    const title = text as string
-    let siteGroupTitle = ""
+    const title = text as string;
+    let siteGroupTitle = "";
 
     if (title.includes("|")) {
-        siteGroupTitle = (title.split("|").at(-1) ?? "").trim() as string
+        siteGroupTitle = (title.split("|").at(-1) ?? "").trim() as string;
     } else if (title.includes("–")) {
-        siteGroupTitle = (title.split("–").at(-1) ?? "").trim() as string
+        siteGroupTitle = (title.split("–").at(-1) ?? "").trim() as string;
     } else if (title.includes("-")) {
-        siteGroupTitle = (title.split("-").at(-1) ?? "").trim() as string
+        siteGroupTitle = (title.split("-").at(-1) ?? "").trim() as string;
     } else {
-        siteGroupTitle = title.trim()
+        siteGroupTitle = title.trim();
     }
 
-    return siteGroupTitle ? siteGroupTitle : defaultTitle
+    return siteGroupTitle ? siteGroupTitle : defaultTitle;
 }

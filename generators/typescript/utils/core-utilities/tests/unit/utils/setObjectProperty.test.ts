@@ -1,11 +1,11 @@
-import { setObjectProperty } from "../../../src/core/utils/setObjectProperty"
+import { setObjectProperty } from "../../../src/core/utils/setObjectProperty";
 
 interface TestCase {
-    description: string
-    giveObject: object
-    givePath: string
-    giveValue: any
-    wantObject: object
+    description: string;
+    giveObject: object;
+    givePath: string;
+    giveValue: any;
+    wantObject: object;
 }
 
 describe("Test setObjectProperty", () => {
@@ -66,9 +66,9 @@ describe("Test setObjectProperty", () => {
             giveValue: "John",
             wantObject: { info: { age: 42, address: { street: "123 Main St." }, name: { first: "John", last: "Doe" } } }
         }
-    ]
+    ];
     test.each(testCases)("$description", ({ giveObject, givePath, giveValue, wantObject }) => {
-        const result = setObjectProperty(giveObject, givePath, giveValue)
-        expect(result).toEqual(wantObject)
-    })
-})
+        const result = setObjectProperty(giveObject, givePath, giveValue);
+        expect(result).toEqual(wantObject);
+    });
+});

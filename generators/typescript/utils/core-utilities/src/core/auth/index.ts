@@ -1,2 +1,2 @@
-export { BasicAuth } from "./BasicAuth"
-export { BearerToken } from "./BearerToken"
+export { BasicAuth } from "./BasicAuth";
+export { BearerToken } from "./BearerToken";

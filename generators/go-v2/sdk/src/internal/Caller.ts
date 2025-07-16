@@ -1,18 +1,18 @@
-import { go } from "@fern-api/go-ast"
+import { go } from "@fern-api/go-ast";
 
-import { HttpEndpoint } from "@fern-fern/ir-sdk/api"
+import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
 
-import { SdkGeneratorContext } from "../SdkGeneratorContext"
+import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 export declare namespace Caller {
     export interface CallArgs {
-        endpoint: HttpEndpoint
-        clientReference: go.AstNode
-        optionsReference: go.AstNode
-        url: go.AstNode
-        request?: go.AstNode
-        response?: go.AstNode
-        errorCodes?: go.AstNode
+        endpoint: HttpEndpoint;
+        clientReference: go.AstNode;
+        optionsReference: go.AstNode;
+        url: go.AstNode;
+        request?: go.AstNode;
+        response?: go.AstNode;
+        errorCodes?: go.AstNode;
     }
 }
 
@@ -20,56 +20,56 @@ export declare namespace Caller {
  * Utility class that helps make HTTP calls.
  */
 export class Caller {
-    public static TYPE_NAME = "Caller"
-    public static FIELD_NAME = "caller"
-    public static CONSTRUCTOR_FUNC_NAME = "NewCaller"
-    public static CALLER_PARAMS_TYPE_NAME = "CallerParams"
-    public static CALL_PARAMS_TYPE_NAME = "CallParams"
-    public static CALL_METHOD_NAME = "Call"
+    public static TYPE_NAME = "Caller";
+    public static FIELD_NAME = "caller";
+    public static CONSTRUCTOR_FUNC_NAME = "NewCaller";
+    public static CALLER_PARAMS_TYPE_NAME = "CallerParams";
+    public static CALL_PARAMS_TYPE_NAME = "CallParams";
+    public static CALL_METHOD_NAME = "Call";
 
-    private context: SdkGeneratorContext
+    private context: SdkGeneratorContext;
 
     public constructor(context: SdkGeneratorContext) {
-        this.context = context
+        this.context = context;
     }
 
     public getTypeReference(): go.TypeReference {
         return go.typeReference({
             name: Caller.TYPE_NAME,
             importPath: this.context.getInternalImportPath()
-        })
+        });
     }
 
     public getConstructorTypeReference(): go.TypeReference {
         return go.typeReference({
             name: Caller.CONSTRUCTOR_FUNC_NAME,
             importPath: this.context.getInternalImportPath()
-        })
+        });
     }
 
     public getCallerParamsTypeReference(): go.TypeReference {
         return go.typeReference({
             name: Caller.CALLER_PARAMS_TYPE_NAME,
             importPath: this.context.getInternalImportPath()
-        })
+        });
     }
 
     public getCallParamsTypeReference(): go.TypeReference {
         return go.typeReference({
             name: Caller.CALL_PARAMS_TYPE_NAME,
             importPath: this.context.getInternalImportPath()
-        })
+        });
     }
 
     public getFieldName(): string {
-        return Caller.FIELD_NAME
+        return Caller.FIELD_NAME;
     }
 
     public getField(): go.Field {
         return go.field({
             name: this.getFieldName(),
             type: go.Type.pointer(go.Type.reference(this.getTypeReference()))
-        })
+        });
     }
 
     public instantiate({ client, maxAttempts }: { client: go.AstNode; maxAttempts: go.AstNode }): go.AstNode {
@@ -90,7 +90,7 @@ export class Caller {
                     ]
                 })
             ]
-        })
+        });
     }
 
     public call(args: Caller.CallArgs): go.AstNode {
@@ -143,24 +143,24 @@ export class Caller {
                     })
                 )
             }
-        ]
+        ];
         if (args.request != null) {
             arguments_.push({
                 name: "Request",
                 value: go.TypeInstantiation.reference(args.request)
-            })
+            });
         }
         if (args.response != null) {
             arguments_.push({
                 name: "Response",
                 value: go.TypeInstantiation.reference(args.response)
-            })
+            });
         }
         if (args.errorCodes != null) {
             arguments_.push({
                 name: "ErrorDecoder",
                 value: go.TypeInstantiation.reference(this.context.callNewErrorDecoder([args.errorCodes]))
-            })
+            });
         }
         return go.codeblock((writer) => {
             writer.writeNode(
@@ -175,7 +175,7 @@ export class Caller {
                         })
                     ]
                 })
-            )
-        })
+            );
+        });
     }
 }

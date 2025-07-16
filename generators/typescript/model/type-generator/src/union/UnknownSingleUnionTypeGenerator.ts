@@ -1,37 +1,37 @@
-import { getPropertyKey } from "@fern-typescript/commons"
-import { BaseContext } from "@fern-typescript/contexts"
-import { SingleUnionTypeGenerator } from "@fern-typescript/union-generator"
-import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph"
+import { getPropertyKey } from "@fern-typescript/commons";
+import { BaseContext } from "@fern-typescript/contexts";
+import { SingleUnionTypeGenerator } from "@fern-typescript/union-generator";
+import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
 export class UnknownSingleUnionTypeGenerator implements SingleUnionTypeGenerator<BaseContext> {
-    private static BUILDER_PARAMETER_NAME = "value"
+    private static BUILDER_PARAMETER_NAME = "value";
 
     public generateForInlineUnion(context: BaseContext): ts.TypeNode {
-        return ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
+        return ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword);
     }
 
     public getExtendsForInterface(): ts.TypeNode[] {
-        return []
+        return [];
     }
 
     public getDiscriminantPropertiesForInterface(): OptionalKind<PropertySignatureStructure>[] {
-        return []
+        return [];
     }
 
     public generateModule(context: BaseContext): ModuleDeclarationStructure | undefined {
-        return undefined
+        return undefined;
     }
 
     public getNonDiscriminantPropertiesForInterface(): OptionalKind<PropertySignatureStructure>[] {
-        return []
+        return [];
     }
 
     public getVisitorArguments({
         localReferenceToUnionValue
     }: {
-        localReferenceToUnionValue: ts.Expression
+        localReferenceToUnionValue: ts.Expression;
     }): ts.Expression[] {
-        return [localReferenceToUnionValue]
+        return [localReferenceToUnionValue];
     }
 
     public getVisitMethodParameterType(
@@ -45,7 +45,7 @@ export class UnknownSingleUnionTypeGenerator implements SingleUnionTypeGenerator
                 undefined,
                 ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
             )
-        ])
+        ]);
     }
 
     public getParametersForBuilder(
@@ -68,11 +68,11 @@ export class UnknownSingleUnionTypeGenerator implements SingleUnionTypeGenerator
                     )
                 ])
             )
-        ]
+        ];
     }
 
     public getBuilderArgsFromExistingValue(existingValue: ts.Expression): ts.Expression[] {
-        return [existingValue]
+        return [existingValue];
     }
 
     public getNonDiscriminantPropertiesForBuilder(): ts.ObjectLiteralElementLike[] {
@@ -85,6 +85,6 @@ export class UnknownSingleUnionTypeGenerator implements SingleUnionTypeGenerator
                     )
                 )
             )
-        ]
+        ];
     }
 }

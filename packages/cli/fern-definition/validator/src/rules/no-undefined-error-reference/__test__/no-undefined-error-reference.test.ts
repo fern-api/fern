@@ -1,7 +1,7 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule"
-import { NoUndefinedErrorReferenceRule } from "../no-undefined-error-reference"
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { NoUndefinedErrorReferenceRule } from "../no-undefined-error-reference";
 
 describe("no-undefined-error-reference", () => {
     it("simple", async () => {
@@ -12,7 +12,7 @@ describe("no-undefined-error-reference", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
             )
-        })
+        });
         expect(violations).toEqual([
             {
                 severity: "fatal",
@@ -38,6 +38,6 @@ describe("no-undefined-error-reference", () => {
                 ],
                 message: "Error is not defined."
             }
-        ])
-    })
-})
+        ]);
+    });
+});

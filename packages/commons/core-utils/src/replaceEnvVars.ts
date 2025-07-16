@@ -1,5 +1,5 @@
-import { isPlainObject } from "./objects/isPlainObject"
-import { mapValues } from "./objects/mapValues"
+import { isPlainObject } from "./objects/isPlainObject";
+import { mapValues } from "./objects/mapValues";
 
 /**
  * Captures templates inside "${}"
@@ -10,7 +10,7 @@ import { mapValues } from "./objects/mapValues"
  * "someContent".replace(ENV_VAR_REGEX, (substring, envVarName) => { ... });
  * ```
  */
-export const ENV_VAR_REGEX = /\$\{(\w+)\}/g
+export const ENV_VAR_REGEX = /\$\{(\w+)\}/g;
 
 /**
  * Immutably substitutes templated environment variables in the parameter with their values.
@@ -31,21 +31,21 @@ export function replaceEnvVariables<T>(
     if (typeof content === "string") {
         const transformed = (content as string).replace(ENV_VAR_REGEX, (_substring, envVarName) => {
             if (options.substituteAsEmpty) {
-                return ""
+                return "";
             }
-            const envVarValue = process.env[envVarName]
+            const envVarValue = process.env[envVarName];
             if (envVarValue == null) {
-                context.onError(`Environment variable ${envVarName} is not defined.`)
+                context.onError(`Environment variable ${envVarName} is not defined.`);
             }
-            return envVarValue ?? ""
-        })
-        return transformed as unknown as T
+            return envVarValue ?? "";
+        });
+        return transformed as unknown as T;
     }
 
     if (!isPlainObject(content)) {
-        return content
+        return content;
     }
 
-    const transformed = mapValues(content, (value) => replaceEnvVariables(value, context, options))
-    return transformed as unknown as T
+    const transformed = mapValues(content, (value) => replaceEnvVariables(value, context, options));
+    return transformed as unknown as T;
 }

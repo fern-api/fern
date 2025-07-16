@@ -1,4 +1,4 @@
-import { Rule, RuleViolation } from "../../Rule"
+import { Rule, RuleViolation } from "../../Rule";
 
 export const ValidEndpointPathRule: Rule = {
     name: "valid-endpoint-path",
@@ -7,21 +7,21 @@ export const ValidEndpointPathRule: Rule = {
             definitionFile: {
                 httpEndpoint: ({ endpoint }) => {
                     if (endpoint.path === "") {
-                        return []
+                        return [];
                     }
 
-                    const violations: RuleViolation[] = []
+                    const violations: RuleViolation[] = [];
 
                     if (!endpoint.path.startsWith("/")) {
                         violations.push({
                             severity: "fatal",
                             message: "Path must start with a slash."
-                        })
+                        });
                     }
 
-                    return violations
+                    return violations;
                 }
             }
-        }
+        };
     }
-}
+};

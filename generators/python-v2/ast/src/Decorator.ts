@@ -1,24 +1,24 @@
-import { AstNode } from "./core/AstNode"
-import { Writer } from "./core/Writer"
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
 
 export declare namespace Decorator {
     interface Args {
-        callable: AstNode
+        callable: AstNode;
     }
 }
 
 export class Decorator extends AstNode {
-    private callable: AstNode
+    private callable: AstNode;
 
     constructor({ callable }: Decorator.Args) {
-        super()
-        this.callable = callable
-        this.inheritReferences(callable)
+        super();
+        this.callable = callable;
+        this.inheritReferences(callable);
     }
 
     public write(writer: Writer): void {
-        writer.write("@")
-        this.callable.write(writer)
-        writer.newLine()
+        writer.write("@");
+        this.callable.write(writer);
+        writer.newLine();
     }
 }

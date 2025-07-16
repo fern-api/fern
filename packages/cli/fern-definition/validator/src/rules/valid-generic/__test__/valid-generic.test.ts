@@ -1,7 +1,7 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule"
-import { ValidGenericRule } from "../valid-generic"
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { ValidGenericRule } from "../valid-generic";
 
 describe("valid-generic", () => {
     it("simple", async () => {
@@ -12,7 +12,7 @@ describe("valid-generic", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
             )
-        })
+        });
 
         expect(violations).toEqual([
             {
@@ -75,6 +75,6 @@ describe("valid-generic", () => {
                 nodePath: ["types", "GenericWrongNumberOfArgumentsNoArgumentsApplied"],
                 message: "Generic GenericWrongNumberOfArguments expects 6 arguments, but received none"
             }
-        ])
-    })
-})
+        ]);
+    });
+});

@@ -1,1 +1,1 @@
-export { NoUndefinedPathParametersRule } from "./no-undefined-path-parameters"
+export { NoUndefinedPathParametersRule } from "./no-undefined-path-parameters";

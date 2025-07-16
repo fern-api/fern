@@ -1,31 +1,31 @@
-import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 
 export function getTypeFromTypeReference(typeReference: RawSchemas.TypeReferenceSchema): string {
     if (typeof typeReference === "string") {
-        return typeReference
+        return typeReference;
     }
-    return typeReference.type
+    return typeReference.type;
 }
 
 export function getDocsFromTypeReference(typeReference: RawSchemas.TypeReferenceSchema): string | undefined {
     if (typeof typeReference === "string") {
-        return undefined
+        return undefined;
     }
-    return typeReference.docs
+    return typeReference.docs;
 }
 
 export function getDefaultFromTypeReference(typeReference: RawSchemas.TypeReferenceSchema): unknown | undefined {
     if (typeof typeReference === "string") {
-        return undefined
+        return undefined;
     }
-    return typeReference.default
+    return typeReference.default;
 }
 
 export function getValidationFromTypeReference(
     typeReference: RawSchemas.TypeReferenceSchema
 ): RawSchemas.ValidationSchema | undefined {
     if (typeof typeReference === "string") {
-        return undefined
+        return undefined;
     }
-    return typeReference.validation
+    return typeReference.validation;
 }

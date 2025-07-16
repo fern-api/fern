@@ -1,19 +1,19 @@
-import chalk from "chalk"
+import chalk from "chalk";
 
-import { FernToken } from "@fern-api/auth"
-import { Project } from "@fern-api/project-loader"
-import { registerApi } from "@fern-api/register"
+import { FernToken } from "@fern-api/auth";
+import { Project } from "@fern-api/project-loader";
+import { registerApi } from "@fern-api/register";
 
-import { CliContext } from "../../cli-context/CliContext"
+import { CliContext } from "../../cli-context/CliContext";
 
 export async function registerWorkspacesV2({
     project,
     cliContext,
     token
 }: {
-    project: Project
-    cliContext: CliContext
-    token: FernToken
+    project: Project;
+    cliContext: CliContext;
+    token: FernToken;
 }): Promise<void> {
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
@@ -32,9 +32,9 @@ export async function registerWorkspacesV2({
                         goSdk: undefined,
                         csharpSdk: undefined
                     }
-                })
-                context.logger.info(chalk.green("Registered API"))
-            })
+                });
+                context.logger.info(chalk.green("Registered API"));
+            });
         })
-    )
+    );
 }

@@ -1,17 +1,17 @@
-import { OpenAPIV3 } from "openapi-types"
+import { OpenAPIV3 } from "openapi-types";
 
-import { EndpointWithExample, LiteralSchemaValue, SchemaWithExample, Source } from "@fern-api/openapi-ir"
+import { EndpointWithExample, LiteralSchemaValue, SchemaWithExample, Source } from "@fern-api/openapi-ir";
 
-import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName"
-import { isReferenceObject } from "../../../../schema/utils/isReferenceObject"
-import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext"
-import { AsyncFernExtensionSchema } from "../../extensions/getFernAsyncExtension"
-import { OperationContext } from "../contexts"
-import { convertHttpOperation } from "./convertHttpOperation"
+import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName";
+import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
+import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
+import { AsyncFernExtensionSchema } from "../../extensions/getFernAsyncExtension";
+import { OperationContext } from "../contexts";
+import { convertHttpOperation } from "./convertHttpOperation";
 
 export interface AsyncAndSyncEndpoints {
-    async: EndpointWithExample
-    sync: EndpointWithExample
+    async: EndpointWithExample;
+    sync: EndpointWithExample;
 }
 
 export function convertAsyncSyncOperation({
@@ -20,19 +20,19 @@ export function convertAsyncSyncOperation({
     asyncExtension,
     source
 }: {
-    operationContext: OperationContext
-    context: AbstractOpenAPIV3ParserContext
-    asyncExtension: AsyncFernExtensionSchema
-    source: Source
+    operationContext: OperationContext;
+    context: AbstractOpenAPIV3ParserContext;
+    asyncExtension: AsyncFernExtensionSchema;
+    source: Source;
 }): AsyncAndSyncEndpoints {
-    const { operation, pathItemParameters, operationParameters } = operationContext
+    const { operation, pathItemParameters, operationParameters } = operationContext;
 
-    const headerToIgnore = asyncExtension.discriminant.name
-    const headerValue = asyncExtension.discriminant.value
-    const asyncResponseStatusCode = asyncExtension["response-status-code"]
+    const headerToIgnore = asyncExtension.discriminant.name;
+    const headerValue = asyncExtension.discriminant.value;
+    const asyncResponseStatusCode = asyncExtension["response-status-code"];
 
-    const filteredPathItemParams = filterParameters({ context, headerToIgnore, parameters: pathItemParameters })
-    const filteredOperationParams = filterParameters({ context, headerToIgnore, parameters: operationParameters })
+    const filteredPathItemParams = filterParameters({ context, headerToIgnore, parameters: pathItemParameters });
+    const filteredOperationParams = filterParameters({ context, headerToIgnore, parameters: operationParameters });
 
     const syncOperation = convertHttpOperation({
         operationContext: {
@@ -43,7 +43,7 @@ export function convertAsyncSyncOperation({
                 ...operation,
                 responses: Object.fromEntries(
                     Object.entries(operation.responses).filter(([statusCode]) => {
-                        return parseInt(statusCode) !== asyncResponseStatusCode
+                        return parseInt(statusCode) !== asyncResponseStatusCode;
                     })
                 )
             }
@@ -51,7 +51,7 @@ export function convertAsyncSyncOperation({
         context,
         streamFormat: undefined,
         source
-    })
+    });
 
     const asyncOperation = convertHttpOperation({
         operationContext: {
@@ -65,7 +65,7 @@ export function convertAsyncSyncOperation({
         responseStatusCode: asyncResponseStatusCode,
         streamFormat: undefined,
         source
-    })
+    });
 
     asyncOperation.headers.push({
         name: headerToIgnore,
@@ -84,12 +84,12 @@ export function convertAsyncSyncOperation({
         env: undefined,
         availability: undefined,
         source
-    })
+    });
 
     return {
         sync: syncOperation,
         async: asyncOperation
-    }
+    };
 }
 
 function filterParameters({
@@ -97,17 +97,17 @@ function filterParameters({
     headerToIgnore,
     parameters
 }: {
-    context: AbstractOpenAPIV3ParserContext
-    headerToIgnore: string
-    parameters: (OpenAPIV3.ReferenceObject | OpenAPIV3.ParameterObject)[]
+    context: AbstractOpenAPIV3ParserContext;
+    headerToIgnore: string;
+    parameters: (OpenAPIV3.ReferenceObject | OpenAPIV3.ParameterObject)[];
 }): (OpenAPIV3.ReferenceObject | OpenAPIV3.ParameterObject)[] {
     return parameters.filter((parameter) => {
         const resolvedParameter = isReferenceObject(parameter)
             ? context.resolveParameterReference(parameter)
-            : parameter
+            : parameter;
         if (resolvedParameter.in === "header" && resolvedParameter.name === headerToIgnore) {
-            return false
+            return false;
         }
-        return true
-    })
+        return true;
+    });
 }

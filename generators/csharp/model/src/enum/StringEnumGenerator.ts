@@ -1,29 +1,29 @@
-import { CSharpFile, FileGenerator } from "@fern-api/csharp-base"
-import { csharp } from "@fern-api/csharp-codegen"
-import { RelativeFilePath, join } from "@fern-api/fs-utils"
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
+import { csharp } from "@fern-api/csharp-codegen";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { EnumTypeDeclaration, NameAndWireValue, TypeDeclaration } from "@fern-fern/ir-sdk/api"
+import { EnumTypeDeclaration, NameAndWireValue, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
-import { ModelCustomConfigSchema } from "../ModelCustomConfig"
-import { ModelGeneratorContext } from "../ModelGeneratorContext"
+import { ModelCustomConfigSchema } from "../ModelCustomConfig";
+import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
 export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
-    private readonly classReference: csharp.ClassReference
-    private readonly customMethodName: string
+    private readonly classReference: csharp.ClassReference;
+    private readonly customMethodName: string;
 
     constructor(
         context: ModelGeneratorContext,
         private readonly typeDeclaration: TypeDeclaration,
         private readonly enumDeclaration: EnumTypeDeclaration
     ) {
-        super(context)
-        this.classReference = this.context.csharpTypeMapper.convertToClassReference(this.typeDeclaration.name)
-        this.customMethodName = this.getCustomMethodName(enumDeclaration)
+        super(context);
+        this.classReference = this.context.csharpTypeMapper.convertToClassReference(this.typeDeclaration.name);
+        this.customMethodName = this.getCustomMethodName(enumDeclaration);
     }
 
     private getCustomMethodName(enumDeclaration: EnumTypeDeclaration): string {
-        const d = "FromCustom"
-        return enumDeclaration.values.some((v) => v.name.name.pascalCase.safeName === d) ? "FromCustom_" : d
+        const d = "FromCustom";
+        return enumDeclaration.values.some((v) => v.name.name.pascalCase.safeName === d) ? "FromCustom_" : d;
     }
 
     protected doGenerate(): CSharpFile {
@@ -33,13 +33,13 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
                 namespace: "System.Text.Json.Serialization"
             }),
             argument: csharp.codeblock((writer) => {
-                writer.write("typeof(")
+                writer.write("typeof(");
                 writer.writeNode(
                     csharp.classReference(this.context.getStringEnumSerializerClassReference(this.classReference))
-                )
-                writer.write(")")
+                );
+                writer.write(")");
             })
-        })
+        });
 
         const stringEnum = csharp.class_({
             ...this.classReference,
@@ -53,7 +53,7 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
             access: csharp.Access.Public,
             type: csharp.Class.ClassType.RecordStruct,
             readonly: true
-        })
+        });
 
         stringEnum.addConstructor({
             access: csharp.Access.Public,
@@ -65,9 +65,9 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
                 })
             ],
             body: csharp.codeblock((writer) => {
-                writer.writeTextStatement("Value = value")
+                writer.writeTextStatement("Value = value");
             })
-        })
+        });
 
         stringEnum.addField(
             csharp.field({
@@ -77,7 +77,7 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
                 get: csharp.Access.Public,
                 summary: "The string value of the enum."
             })
-        )
+        );
 
         const valuesClass = csharp.class_({
             access: csharp.Access.Public,
@@ -88,13 +88,13 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
             isNestedClass: true,
             summary: "Constant strings for enum values",
             annotations: [this.context.getSerializableAttribute()]
-        })
+        });
 
         this.enumDeclaration.values.forEach((member) => {
             const fieldName = this.getPropertyName({
                 className: this.classReference.name,
                 objectProperty: member.name
-            })
+            });
             valuesClass.addField(
                 csharp.field({
                     name: fieldName,
@@ -104,7 +104,7 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
                     const_: true,
                     initializer: csharp.codeblock(csharp.string_({ string: member.name.wireValue }))
                 })
-            )
+            );
             stringEnum.addField(
                 csharp.field({
                     name: this.getPropertyName({ className: this.classReference.name, objectProperty: member.name }),
@@ -116,10 +116,10 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
                     readonly: true,
                     initializer: csharp.codeblock(`new(Values.${fieldName})`)
                 })
-            )
-        })
+            );
+        });
 
-        stringEnum.addNestedClass(valuesClass)
+        stringEnum.addNestedClass(valuesClass);
 
         stringEnum.addMethod(
             csharp.method({
@@ -137,16 +137,16 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
                 type: csharp.MethodType.STATIC,
                 classReference: csharp.classReference(this.classReference),
                 body: csharp.codeblock((writer) => {
-                    writer.write("return ")
+                    writer.write("return ");
                     writer.writeNodeStatement(
                         csharp.instantiateClass({
                             classReference: this.classReference,
                             arguments_: [csharp.codeblock("value")]
                         })
-                    )
+                    );
                 })
             })
-        )
+        );
 
         stringEnum.addMethod(
             csharp.method({
@@ -158,10 +158,10 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
                 summary: "Returns the string value of the enum.",
                 type: csharp.MethodType.INSTANCE,
                 body: csharp.codeblock((writer) => {
-                    writer.writeTextStatement("return Value")
+                    writer.writeTextStatement("return Value");
                 })
             })
-        )
+        );
 
         stringEnum.addMethod(
             csharp.method({
@@ -175,10 +175,10 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
                 ],
                 return_: csharp.Type.boolean(),
                 body: csharp.codeblock((writer) => {
-                    writer.writeTextStatement("return Value.Equals(other)")
+                    writer.writeTextStatement("return Value.Equals(other)");
                 })
             })
-        )
+        );
 
         stringEnum.addOperator({
             type: "==",
@@ -188,10 +188,10 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
             ],
             return: csharp.Type.boolean(),
             body: csharp.codeblock((writer) => {
-                writer.write("value1.Value.Equals(value2)")
+                writer.write("value1.Value.Equals(value2)");
             }),
             useExpressionBody: true
-        })
+        });
 
         stringEnum.addOperator({
             type: "!=",
@@ -201,10 +201,10 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
             ],
             return: csharp.Type.boolean(),
             body: csharp.codeblock((writer) => {
-                writer.write("!value1.Value.Equals(value2)")
+                writer.write("!value1.Value.Equals(value2)");
             }),
             useExpressionBody: true
-        })
+        });
 
         stringEnum.addOperator({
             type: "explicit",
@@ -215,7 +215,7 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
             }),
             body: csharp.codeblock("value.Value"),
             useExpressionBody: true
-        })
+        });
         stringEnum.addOperator({
             type: "explicit",
             parameter: csharp.parameter({
@@ -224,7 +224,7 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
             }),
             body: csharp.codeblock("new(value)"),
             useExpressionBody: true
-        })
+        });
 
         return new CSharpFile({
             clazz: stringEnum,
@@ -233,7 +233,7 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
             namespace: this.context.getNamespace(),
             customConfig: this.context.customConfig
-        })
+        });
     }
 
     /**
@@ -243,20 +243,20 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomCo
         className,
         objectProperty
     }: {
-        className: string
-        objectProperty: NameAndWireValue
+        className: string;
+        objectProperty: NameAndWireValue;
     }): string {
-        const propertyName = this.context.getPascalCaseSafeName(objectProperty.name)
+        const propertyName = this.context.getPascalCaseSafeName(objectProperty.name);
         if (propertyName === className) {
-            return `${propertyName}_`
+            return `${propertyName}_`;
         }
-        return propertyName
+        return propertyName;
     }
 
     protected getFilepath(): RelativeFilePath {
         return join(
             this.context.project.filepaths.getSourceFileDirectory(),
             RelativeFilePath.of(this.classReference.name + ".cs")
-        )
+        );
     }
 }

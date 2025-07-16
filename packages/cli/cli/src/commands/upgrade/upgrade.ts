@@ -1,17 +1,17 @@
-import chalk from "chalk"
-import { writeFile } from "fs/promises"
-import { produce } from "immer"
+import chalk from "chalk";
+import { writeFile } from "fs/promises";
+import { produce } from "immer";
 
-import { runMigrations } from "@fern-api/cli-migrations"
-import { FERN_DIRECTORY, fernConfigJson, getFernDirectory, loadProjectConfig } from "@fern-api/configuration-loader"
-import { loggingExeca } from "@fern-api/logging-execa"
-import { isVersionAhead } from "@fern-api/semver-utils"
+import { runMigrations } from "@fern-api/cli-migrations";
+import { FERN_DIRECTORY, fernConfigJson, getFernDirectory, loadProjectConfig } from "@fern-api/configuration-loader";
+import { loggingExeca } from "@fern-api/logging-execa";
+import { isVersionAhead } from "@fern-api/semver-utils";
 
-import { CliContext } from "../../cli-context/CliContext"
-import { doesVersionOfCliExist } from "../../cli-context/upgrade-utils/doesVersionOfCliExist"
-import { rerunFernCliAtVersion } from "../../rerunFernCliAtVersion"
+import { CliContext } from "../../cli-context/CliContext";
+import { doesVersionOfCliExist } from "../../cli-context/upgrade-utils/doesVersionOfCliExist";
+import { rerunFernCliAtVersion } from "../../rerunFernCliAtVersion";
 
-export const PREVIOUS_VERSION_ENV_VAR = "FERN_PRE_UPGRADE_VERSION"
+export const PREVIOUS_VERSION_ENV_VAR = "FERN_PRE_UPGRADE_VERSION";
 
 /**
  * there are 3 relevant versions:
@@ -43,68 +43,68 @@ export async function upgrade({
     includePreReleases,
     targetVersion
 }: {
-    cliContext: CliContext
-    includePreReleases: boolean
-    targetVersion: string | undefined
+    cliContext: CliContext;
+    includePreReleases: boolean;
+    targetVersion: string | undefined;
 }): Promise<void> {
     if (targetVersion != null) {
         const versionExists = await doesVersionOfCliExist({
             cliEnvironment: cliContext.environment,
             version: targetVersion
-        })
+        });
         if (!versionExists) {
             cliContext.failAndThrow(
                 `Failed to upgrade to ${targetVersion} because it does not exist. See https://www.npmjs.com/package/${cliContext.environment.packageName}?activeTab=versions.`
-            )
+            );
         }
 
-        const versionAhead = isVersionAhead(targetVersion, cliContext.environment.packageVersion)
+        const versionAhead = isVersionAhead(targetVersion, cliContext.environment.packageVersion);
         if (!versionAhead) {
             cliContext.failAndThrow(
                 `Cannot upgrade because target version (${targetVersion}) is not ahead of existing version ${cliContext.environment.packageVersion}`
-            )
+            );
         }
     }
 
-    let fernCliUpgradeInfo = targetVersion != null ? { targetVersion, isUpgradeAvailable: true } : undefined
+    let fernCliUpgradeInfo = targetVersion != null ? { targetVersion, isUpgradeAvailable: true } : undefined;
     if (fernCliUpgradeInfo == null) {
         const fernUpgradeInfo = await cliContext.isUpgradeAvailable({
             includePreReleases
-        })
+        });
         if (fernUpgradeInfo.cliUpgradeInfo != null) {
             fernCliUpgradeInfo = {
                 targetVersion: fernUpgradeInfo.cliUpgradeInfo.latestVersion,
                 isUpgradeAvailable: fernUpgradeInfo.cliUpgradeInfo.isUpgradeAvailable
-            }
+            };
         }
     }
 
     if (fernCliUpgradeInfo && !fernCliUpgradeInfo.isUpgradeAvailable) {
-        const previousVersion = process.env[PREVIOUS_VERSION_ENV_VAR]
+        const previousVersion = process.env[PREVIOUS_VERSION_ENV_VAR];
         if (previousVersion == null) {
-            cliContext.logger.info("No upgrade available.")
-            return
+            cliContext.logger.info("No upgrade available.");
+            return;
         }
-        await runPostUpgradeSteps({ cliContext, previousVersion, newVersion: fernCliUpgradeInfo.targetVersion })
+        await runPostUpgradeSteps({ cliContext, previousVersion, newVersion: fernCliUpgradeInfo.targetVersion });
     } else if (fernCliUpgradeInfo != null) {
-        const fernDirectory = await getFernDirectory()
+        const fernDirectory = await getFernDirectory();
         if (fernDirectory == null) {
-            return cliContext.failAndThrow(`Directory "${FERN_DIRECTORY}" not found.`)
+            return cliContext.failAndThrow(`Directory "${FERN_DIRECTORY}" not found.`);
         }
         const projectConfig = await cliContext.runTask((context) =>
             loadProjectConfig({ directory: fernDirectory, context })
-        )
+        );
 
         const newProjectConfig = produce(projectConfig.rawConfig, (draft) => {
-            draft.version = fernCliUpgradeInfo.targetVersion
-        })
-        await writeFile(projectConfig._absolutePath, JSON.stringify(newProjectConfig, undefined, 2))
+            draft.version = fernCliUpgradeInfo.targetVersion;
+        });
+        await writeFile(projectConfig._absolutePath, JSON.stringify(newProjectConfig, undefined, 2));
 
         cliContext.logger.info(
             `Upgrading from ${chalk.dim(cliContext.environment.packageVersion)} → ${chalk.green(
                 fernCliUpgradeInfo.targetVersion
             )}`
-        )
+        );
 
         // special case: if we're running the local-dev version of the CLI, simulate a re-run
         if (cliContext.environment.packageVersion === "0.0.0") {
@@ -112,13 +112,13 @@ export async function upgrade({
                 cliContext,
                 previousVersion: projectConfig.version,
                 newVersion: fernCliUpgradeInfo.targetVersion
-            })
+            });
         } else {
             await loggingExeca(cliContext.logger, "npm", [
                 "install",
                 "-g",
                 `${cliContext.environment.packageName}@${fernCliUpgradeInfo.targetVersion}`
-            ])
+            ]);
 
             await rerunFernCliAtVersion({
                 version: fernCliUpgradeInfo.targetVersion,
@@ -126,7 +126,7 @@ export async function upgrade({
                 env: {
                     [PREVIOUS_VERSION_ENV_VAR]: cliContext.environment.packageVersion
                 }
-            })
+            });
         }
     }
 }
@@ -136,16 +136,16 @@ async function runPostUpgradeSteps({
     previousVersion,
     newVersion
 }: {
-    cliContext: CliContext
-    previousVersion: string
-    newVersion: string
+    cliContext: CliContext;
+    previousVersion: string;
+    newVersion: string;
 }) {
     await cliContext.runTask(async (context) => {
         await runMigrations({
             fromVersion: previousVersion,
             toVersion: newVersion,
             context
-        })
-    })
-    await cliContext.exitIfFailed()
+        });
+    });
+    await cliContext.exitIfFailed();
 }

@@ -54,10 +54,10 @@ export const PATH_FIELD_NUMBERS = {
         CLIENT_STREAMING: 5, // client streaming flag
         SERVER_STREAMING: 6 // server streaming flag
     }
-} as const
+} as const;
 
 export const SOURCE_CODE_INFO_PATH_STARTERS = {
     MESSAGE: 4,
     ENUM: 5,
     SERVICE: 6
-} as const
+} as const;

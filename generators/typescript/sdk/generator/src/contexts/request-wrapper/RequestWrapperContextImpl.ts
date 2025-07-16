@@ -1,45 +1,45 @@
-import { ExportsManager, ImportsManager, PackageId } from "@fern-typescript/commons"
-import { GeneratedRequestWrapper, RequestWrapperContext } from "@fern-typescript/contexts"
-import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator"
-import { PackageResolver } from "@fern-typescript/resolvers"
-import { SourceFile, ts } from "ts-morph"
+import { ExportsManager, ImportsManager, PackageId } from "@fern-typescript/commons";
+import { GeneratedRequestWrapper, RequestWrapperContext } from "@fern-typescript/contexts";
+import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
+import { PackageResolver } from "@fern-typescript/resolvers";
+import { SourceFile, ts } from "ts-morph";
 
-import { assertNever } from "@fern-api/core-utils"
+import { assertNever } from "@fern-api/core-utils";
 
-import { Name, SdkRequest } from "@fern-fern/ir-sdk/api"
+import { Name, SdkRequest } from "@fern-fern/ir-sdk/api";
 
-import { RequestWrapperDeclarationReferencer } from "../../declaration-referencers/RequestWrapperDeclarationReferencer"
+import { RequestWrapperDeclarationReferencer } from "../../declaration-referencers/RequestWrapperDeclarationReferencer";
 
 export declare namespace RequestWrapperContextImpl {
     export interface Init {
-        requestWrapperGenerator: RequestWrapperGenerator
-        requestWrapperDeclarationReferencer: RequestWrapperDeclarationReferencer
-        packageResolver: PackageResolver
-        importsManager: ImportsManager
-        exportsManager: ExportsManager
-        sourceFile: SourceFile
-        includeSerdeLayer: boolean
-        retainOriginalCasing: boolean
-        inlineFileProperties: boolean
-        inlinePathParameters: boolean
-        enableInlineTypes: boolean
-        formDataSupport: "Node16" | "Node18"
+        requestWrapperGenerator: RequestWrapperGenerator;
+        requestWrapperDeclarationReferencer: RequestWrapperDeclarationReferencer;
+        packageResolver: PackageResolver;
+        importsManager: ImportsManager;
+        exportsManager: ExportsManager;
+        sourceFile: SourceFile;
+        includeSerdeLayer: boolean;
+        retainOriginalCasing: boolean;
+        inlineFileProperties: boolean;
+        inlinePathParameters: boolean;
+        enableInlineTypes: boolean;
+        formDataSupport: "Node16" | "Node18";
     }
 }
 
 export class RequestWrapperContextImpl implements RequestWrapperContext {
-    private requestWrapperGenerator: RequestWrapperGenerator
-    private requestWrapperDeclarationReferencer: RequestWrapperDeclarationReferencer
-    private packageResolver: PackageResolver
-    private importsManager: ImportsManager
-    private exportsManager: ExportsManager
-    private sourceFile: SourceFile
-    private includeSerdeLayer: boolean
-    private retainOriginalCasing: boolean
-    private inlineFileProperties: boolean
-    private inlinePathParameters: boolean
-    private enableInlineTypes: boolean
-    private readonly formDataSupport: "Node16" | "Node18"
+    private requestWrapperGenerator: RequestWrapperGenerator;
+    private requestWrapperDeclarationReferencer: RequestWrapperDeclarationReferencer;
+    private packageResolver: PackageResolver;
+    private importsManager: ImportsManager;
+    private exportsManager: ExportsManager;
+    private sourceFile: SourceFile;
+    private includeSerdeLayer: boolean;
+    private retainOriginalCasing: boolean;
+    private inlineFileProperties: boolean;
+    private inlinePathParameters: boolean;
+    private enableInlineTypes: boolean;
+    private readonly formDataSupport: "Node16" | "Node18";
 
     constructor({
         requestWrapperGenerator,
@@ -55,51 +55,51 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
         enableInlineTypes,
         formDataSupport
     }: RequestWrapperContextImpl.Init) {
-        this.requestWrapperGenerator = requestWrapperGenerator
-        this.requestWrapperDeclarationReferencer = requestWrapperDeclarationReferencer
-        this.packageResolver = packageResolver
-        this.importsManager = importsManager
-        this.exportsManager = exportsManager
-        this.sourceFile = sourceFile
-        this.includeSerdeLayer = includeSerdeLayer
-        this.retainOriginalCasing = retainOriginalCasing
-        this.inlineFileProperties = inlineFileProperties
-        this.inlinePathParameters = inlinePathParameters
-        this.enableInlineTypes = enableInlineTypes
-        this.formDataSupport = formDataSupport
+        this.requestWrapperGenerator = requestWrapperGenerator;
+        this.requestWrapperDeclarationReferencer = requestWrapperDeclarationReferencer;
+        this.packageResolver = packageResolver;
+        this.importsManager = importsManager;
+        this.exportsManager = exportsManager;
+        this.sourceFile = sourceFile;
+        this.includeSerdeLayer = includeSerdeLayer;
+        this.retainOriginalCasing = retainOriginalCasing;
+        this.inlineFileProperties = inlineFileProperties;
+        this.inlinePathParameters = inlinePathParameters;
+        this.enableInlineTypes = enableInlineTypes;
+        this.formDataSupport = formDataSupport;
     }
 
     public shouldInlinePathParameters(sdkRequest: SdkRequest | undefined | null): boolean {
         if (!this.inlinePathParameters) {
-            return false
+            return false;
         }
         if (sdkRequest == null) {
-            return false
+            return false;
         }
         switch (sdkRequest.shape.type) {
             case "justRequestBody":
-                return false
+                return false;
             case "wrapper":
-                break
+                break;
             default:
-                assertNever(sdkRequest.shape)
+                assertNever(sdkRequest.shape);
         }
         if (sdkRequest.shape.onlyPathParameters) {
-            return true
+            return true;
         }
         if (sdkRequest.shape.includePathParameters) {
-            return true
+            return true;
         }
-        return false
+        return false;
     }
 
     public getGeneratedRequestWrapper(packageId: PackageId, endpointName: Name): GeneratedRequestWrapper {
-        const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId)
+        const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
             (endpoint) => endpoint.name.originalName === endpointName.originalName
-        )
+        );
         if (endpoint == null) {
-            throw new Error(`Endpoint ${endpointName.originalName} does not exist`)
+            throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
         }
         return this.requestWrapperGenerator.generateRequestWrapper({
             service: serviceDeclaration,
@@ -115,16 +115,16 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
             enableInlineTypes: this.enableInlineTypes,
             shouldInlinePathParameters: this.shouldInlinePathParameters(endpoint.sdkRequest),
             formDataSupport: this.formDataSupport
-        })
+        });
     }
 
     public getReferenceToRequestWrapper(packageId: PackageId, endpointName: Name): ts.TypeNode {
-        const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId)
+        const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
             (endpoint) => endpoint.name.originalName === endpointName.originalName
-        )
+        );
         if (endpoint == null) {
-            throw new Error(`Endpoint ${endpointName.originalName} does not exist`)
+            throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
         }
         return this.requestWrapperDeclarationReferencer.getReferenceToRequestWrapperType({
             name: { packageId, endpoint },
@@ -135,6 +135,6 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
                 namespaceImport: this.requestWrapperDeclarationReferencer.namespaceExport
             },
             referencedIn: this.sourceFile
-        })
+        });
     }
 }

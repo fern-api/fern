@@ -1,3 +1,3 @@
-import { RubySdkGeneratorCli } from "./GeneratorCli"
+import { RubySdkGeneratorCli } from "./GeneratorCli";
 
-void new RubySdkGeneratorCli().runCli()
+void new RubySdkGeneratorCli().runCli();

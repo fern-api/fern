@@ -1,7 +1,7 @@
-import { FernDocsNavigationBuilder } from "./FernDocsBuilder"
+import { FernDocsNavigationBuilder } from "./FernDocsBuilder";
 
 export interface TabInfo {
-    name: string
-    url: string
-    navigationBuilder: FernDocsNavigationBuilder
+    name: string;
+    url: string;
+    navigationBuilder: FernDocsNavigationBuilder;
 }

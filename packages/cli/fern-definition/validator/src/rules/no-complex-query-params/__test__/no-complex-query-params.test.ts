@@ -1,7 +1,7 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule"
-import { NoComplexQueryParamsRule } from "../no-complex-query-params"
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { NoComplexQueryParamsRule } from "../no-complex-query-params";
 
 describe("no-complex-query-params", () => {
     it("simple", async () => {
@@ -12,7 +12,7 @@ describe("no-complex-query-params", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
             )
-        })
+        });
 
         expect(violations).toEqual([
             {
@@ -45,6 +45,6 @@ describe("no-complex-query-params", () => {
                 relativeFilepath: RelativeFilePath.of("a.yml"),
                 severity: "fatal"
             }
-        ])
-    })
-})
+        ]);
+    });
+});

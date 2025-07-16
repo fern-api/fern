@@ -1,12 +1,12 @@
 /* eslint-disable jest/no-export */
-import { Schema, SchemaOptions } from "../../../../src/core/schemas/Schema"
+import { Schema, SchemaOptions } from "../../../../src/core/schemas/Schema";
 
 export function itSchemaIdentity<T>(
     schema: Schema<T, T>,
     value: T,
     { title = "functions as identity", opts }: { title?: string; opts?: SchemaOptions } = {}
 ): void {
-    itSchema(title, schema, { raw: value, parsed: value, opts })
+    itSchema(title, schema, { raw: value, parsed: value, opts });
 }
 
 export function itSchema<Raw, Parsed>(
@@ -18,17 +18,17 @@ export function itSchema<Raw, Parsed>(
         opts,
         only = false
     }: {
-        raw: Raw
-        parsed: Parsed
-        opts?: SchemaOptions
-        only?: boolean
+        raw: Raw;
+        parsed: Parsed;
+        opts?: SchemaOptions;
+        only?: boolean;
     }
 ): void {
     // eslint-disable-next-line jest/valid-title
-    ;(only ? describe.only : describe)(title, () => {
-        itParse("parse()", schema, { raw, parsed, opts })
-        itJson("json()", schema, { raw, parsed, opts })
-    })
+    (only ? describe.only : describe)(title, () => {
+        itParse("parse()", schema, { raw, parsed, opts });
+        itJson("json()", schema, { raw, parsed, opts });
+    });
 }
 
 export function itParse<Raw, Parsed>(
@@ -39,19 +39,19 @@ export function itParse<Raw, Parsed>(
         parsed,
         opts
     }: {
-        raw: Raw
-        parsed: Parsed
-        opts?: SchemaOptions
+        raw: Raw;
+        parsed: Parsed;
+        opts?: SchemaOptions;
     }
 ): void {
     // eslint-disable-next-line jest/valid-title
     it(title, () => {
-        const maybeValid = schema.parse(raw, opts)
+        const maybeValid = schema.parse(raw, opts);
         if (!maybeValid.ok) {
-            throw new Error("Failed to parse() " + JSON.stringify(maybeValid.errors, undefined, 4))
+            throw new Error("Failed to parse() " + JSON.stringify(maybeValid.errors, undefined, 4));
         }
-        expect(maybeValid.value).toStrictEqual(parsed)
-    })
+        expect(maybeValid.value).toStrictEqual(parsed);
+    });
 }
 
 export function itJson<Raw, Parsed>(
@@ -62,17 +62,17 @@ export function itJson<Raw, Parsed>(
         parsed,
         opts
     }: {
-        raw: Raw
-        parsed: Parsed
-        opts?: SchemaOptions
+        raw: Raw;
+        parsed: Parsed;
+        opts?: SchemaOptions;
     }
 ): void {
     // eslint-disable-next-line jest/valid-title
     it(title, () => {
-        const maybeValid = schema.json(parsed, opts)
+        const maybeValid = schema.json(parsed, opts);
         if (!maybeValid.ok) {
-            throw new Error("Failed to json() " + JSON.stringify(maybeValid.errors, undefined, 4))
+            throw new Error("Failed to json() " + JSON.stringify(maybeValid.errors, undefined, 4));
         }
-        expect(maybeValid.value).toStrictEqual(raw)
-    })
+        expect(maybeValid.value).toStrictEqual(raw);
+    });
 }

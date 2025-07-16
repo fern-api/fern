@@ -1,32 +1,32 @@
-import decompress from "decompress"
-import { cp, readFile, readdir, rm, rmdir } from "fs/promises"
-import tmp from "tmp-promise"
+import decompress from "decompress";
+import { cp, readFile, readdir, rm, rmdir } from "fs/promises";
+import tmp from "tmp-promise";
 
-import { FERNIGNORE_FILENAME } from "@fern-api/configuration"
-import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils"
-import { loggingExeca } from "@fern-api/logging-execa"
-import { TaskContext } from "@fern-api/task-context"
+import { FERNIGNORE_FILENAME } from "@fern-api/configuration";
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
+import { loggingExeca } from "@fern-api/logging-execa";
+import { TaskContext } from "@fern-api/task-context";
 
 export declare namespace LocalTaskHandler {
     export interface Init {
-        context: TaskContext
-        absolutePathToTmpOutputDirectory: AbsoluteFilePath
-        absolutePathToTmpSnippetJSON: AbsoluteFilePath | undefined
-        absolutePathToLocalSnippetTemplateJSON: AbsoluteFilePath | undefined
-        absolutePathToLocalOutput: AbsoluteFilePath
-        absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined
-        absolutePathToTmpSnippetTemplatesJSON: AbsoluteFilePath | undefined
+        context: TaskContext;
+        absolutePathToTmpOutputDirectory: AbsoluteFilePath;
+        absolutePathToTmpSnippetJSON: AbsoluteFilePath | undefined;
+        absolutePathToLocalSnippetTemplateJSON: AbsoluteFilePath | undefined;
+        absolutePathToLocalOutput: AbsoluteFilePath;
+        absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined;
+        absolutePathToTmpSnippetTemplatesJSON: AbsoluteFilePath | undefined;
     }
 }
 
 export class LocalTaskHandler {
-    private context: TaskContext
-    private absolutePathToTmpOutputDirectory: AbsoluteFilePath
-    private absolutePathToTmpSnippetJSON: AbsoluteFilePath | undefined
-    private absolutePathToTmpSnippetTemplatesJSON: AbsoluteFilePath | undefined
-    private absolutePathToLocalSnippetTemplateJSON: AbsoluteFilePath | undefined
-    private absolutePathToLocalOutput: AbsoluteFilePath
-    private absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined
+    private context: TaskContext;
+    private absolutePathToTmpOutputDirectory: AbsoluteFilePath;
+    private absolutePathToTmpSnippetJSON: AbsoluteFilePath | undefined;
+    private absolutePathToTmpSnippetTemplatesJSON: AbsoluteFilePath | undefined;
+    private absolutePathToLocalSnippetTemplateJSON: AbsoluteFilePath | undefined;
+    private absolutePathToLocalOutput: AbsoluteFilePath;
+    private absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined;
 
     constructor({
         context,
@@ -37,20 +37,20 @@ export class LocalTaskHandler {
         absolutePathToLocalSnippetJSON,
         absolutePathToTmpSnippetTemplatesJSON
     }: LocalTaskHandler.Init) {
-        this.context = context
-        this.absolutePathToLocalOutput = absolutePathToLocalOutput
-        this.absolutePathToTmpOutputDirectory = absolutePathToTmpOutputDirectory
-        this.absolutePathToTmpSnippetJSON = absolutePathToTmpSnippetJSON
-        this.absolutePathToLocalSnippetJSON = absolutePathToLocalSnippetJSON
-        this.absolutePathToLocalSnippetTemplateJSON = absolutePathToLocalSnippetTemplateJSON
-        this.absolutePathToTmpSnippetTemplatesJSON = absolutePathToTmpSnippetTemplatesJSON
+        this.context = context;
+        this.absolutePathToLocalOutput = absolutePathToLocalOutput;
+        this.absolutePathToTmpOutputDirectory = absolutePathToTmpOutputDirectory;
+        this.absolutePathToTmpSnippetJSON = absolutePathToTmpSnippetJSON;
+        this.absolutePathToLocalSnippetJSON = absolutePathToLocalSnippetJSON;
+        this.absolutePathToLocalSnippetTemplateJSON = absolutePathToLocalSnippetTemplateJSON;
+        this.absolutePathToTmpSnippetTemplatesJSON = absolutePathToTmpSnippetTemplatesJSON;
     }
 
     public async copyGeneratedFiles(): Promise<void> {
         if (await this.isFernIgnorePresent()) {
-            await this.copyGeneratedFilesWithFernIgnore()
+            await this.copyGeneratedFilesWithFernIgnore();
         } else {
-            await this.copyGeneratedFilesNoFernIgnore()
+            await this.copyGeneratedFilesNoFernIgnore();
         }
         if (
             this.absolutePathToTmpSnippetJSON != null &&
@@ -60,7 +60,7 @@ export class LocalTaskHandler {
             await this.copySnippetJSON({
                 absolutePathToTmpSnippetJSON: this.absolutePathToTmpSnippetJSON,
                 absolutePathToLocalSnippetJSON: this.absolutePathToLocalSnippetJSON
-            })
+            });
         }
 
         if (
@@ -71,57 +71,57 @@ export class LocalTaskHandler {
             await this.copySnippetJSON({
                 absolutePathToTmpSnippetJSON: this.absolutePathToTmpSnippetTemplatesJSON,
                 absolutePathToLocalSnippetJSON: this.absolutePathToLocalSnippetTemplateJSON
-            })
+            });
         }
     }
 
     private async isFernIgnorePresent(): Promise<boolean> {
         const absolutePathToFernignore = AbsoluteFilePath.of(
             join(this.absolutePathToLocalOutput, RelativeFilePath.of(FERNIGNORE_FILENAME))
-        )
-        return await doesPathExist(absolutePathToFernignore)
+        );
+        return await doesPathExist(absolutePathToFernignore);
     }
 
     private async copyGeneratedFilesWithFernIgnore(): Promise<void> {
         // Create temp directory to resolve .fernignore
-        const tmpOutputResolutionDir = AbsoluteFilePath.of((await tmp.dir({})).path)
+        const tmpOutputResolutionDir = AbsoluteFilePath.of((await tmp.dir({})).path);
 
         // Read all .fernignore paths
         const absolutePathToFernignore = AbsoluteFilePath.of(
             join(this.absolutePathToLocalOutput, RelativeFilePath.of(FERNIGNORE_FILENAME))
-        )
-        const fernIgnorePaths = await getFernIgnorePaths({ absolutePathToFernignore })
+        );
+        const fernIgnorePaths = await getFernIgnorePaths({ absolutePathToFernignore });
 
         // Copy files from local output to tmp directory
-        await cp(this.absolutePathToLocalOutput, tmpOutputResolutionDir, { recursive: true })
+        await cp(this.absolutePathToLocalOutput, tmpOutputResolutionDir, { recursive: true });
 
         // In tmp directory initialize a `.git` directory
-        await this.runGitCommand(["init"], tmpOutputResolutionDir)
-        await this.runGitCommand(["add", "."], tmpOutputResolutionDir)
+        await this.runGitCommand(["init"], tmpOutputResolutionDir);
+        await this.runGitCommand(["add", "."], tmpOutputResolutionDir);
 
-        const response = await this.runGitCommand(["config", "--list"], tmpOutputResolutionDir)
+        const response = await this.runGitCommand(["config", "--list"], tmpOutputResolutionDir);
         if (!response.includes("user.name")) {
-            await this.runGitCommand(["config", "user.name", "fern-api"], tmpOutputResolutionDir)
-            await this.runGitCommand(["config", "user.email", "info@buildwithfern.com"], tmpOutputResolutionDir)
+            await this.runGitCommand(["config", "user.name", "fern-api"], tmpOutputResolutionDir);
+            await this.runGitCommand(["config", "user.email", "info@buildwithfern.com"], tmpOutputResolutionDir);
         }
-        await this.runGitCommand(["commit", "--allow-empty", "-m", '"init"'], tmpOutputResolutionDir)
+        await this.runGitCommand(["commit", "--allow-empty", "-m", '"init"'], tmpOutputResolutionDir);
 
         // Stage deletions `git rm -rf .`
-        await this.runGitCommand(["rm", "-rf", "."], tmpOutputResolutionDir)
+        await this.runGitCommand(["rm", "-rf", "."], tmpOutputResolutionDir);
 
         // Copy all files from generated temp dir
-        await this.copyGeneratedFilesToDirectory(tmpOutputResolutionDir)
+        await this.copyGeneratedFilesToDirectory(tmpOutputResolutionDir);
 
         // Undo changes to fernignore paths
-        await this.runGitCommand(["reset", "--", ...fernIgnorePaths], tmpOutputResolutionDir)
-        await this.runGitCommand(["restore", "."], tmpOutputResolutionDir)
+        await this.runGitCommand(["reset", "--", ...fernIgnorePaths], tmpOutputResolutionDir);
+        await this.runGitCommand(["restore", "."], tmpOutputResolutionDir);
 
         // remove .git dir before copying files over
-        await rmdir(join(tmpOutputResolutionDir, RelativeFilePath.of(".git")), { recursive: true })
+        await rmdir(join(tmpOutputResolutionDir, RelativeFilePath.of(".git")), { recursive: true });
 
         // Delete local output directory and copy all files from the generated directory
-        await rmdir(this.absolutePathToLocalOutput, { recursive: true })
-        await cp(tmpOutputResolutionDir, this.absolutePathToLocalOutput, { recursive: true })
+        await rmdir(this.absolutePathToLocalOutput, { recursive: true });
+        await cp(tmpOutputResolutionDir, this.absolutePathToLocalOutput, { recursive: true });
     }
 
     /**
@@ -129,33 +129,33 @@ export class LocalTaskHandler {
      * copy the generated output from the tmp directory.
      */
     private async copyGeneratedFilesNoFernIgnore(): Promise<void> {
-        this.context.logger.debug(`rm -rf ${this.absolutePathToLocalOutput}`)
-        await rm(this.absolutePathToLocalOutput, { force: true, recursive: true })
-        await this.copyGeneratedFilesToDirectory(this.absolutePathToLocalOutput)
+        this.context.logger.debug(`rm -rf ${this.absolutePathToLocalOutput}`);
+        await rm(this.absolutePathToLocalOutput, { force: true, recursive: true });
+        await this.copyGeneratedFilesToDirectory(this.absolutePathToLocalOutput);
     }
 
     private async copyGeneratedFilesToDirectory(outputPath: AbsoluteFilePath): Promise<void> {
         const [firstLocalOutputItem, ...remaininglocalOutputItems] = await readdir(
             this.absolutePathToTmpOutputDirectory
-        )
+        );
         if (firstLocalOutputItem == null) {
-            return
+            return;
         }
-        this.context.logger.debug(`Copying generated files to ${outputPath}`)
+        this.context.logger.debug(`Copying generated files to ${outputPath}`);
         if (firstLocalOutputItem.endsWith(".zip")) {
             await decompress(
                 join(this.absolutePathToTmpOutputDirectory, RelativeFilePath.of(firstLocalOutputItem)),
                 outputPath
-            )
+            );
             for (const localOutputItem of remaininglocalOutputItems) {
                 await cp(
                     join(this.absolutePathToTmpOutputDirectory, RelativeFilePath.of(localOutputItem)),
                     join(outputPath, RelativeFilePath.of(localOutputItem)),
                     { recursive: true }
-                )
+                );
             }
         } else {
-            await cp(this.absolutePathToTmpOutputDirectory, outputPath, { recursive: true })
+            await cp(this.absolutePathToTmpOutputDirectory, outputPath, { recursive: true });
         }
     }
 
@@ -163,35 +163,35 @@ export class LocalTaskHandler {
         absolutePathToTmpSnippetJSON,
         absolutePathToLocalSnippetJSON
     }: {
-        absolutePathToTmpSnippetJSON: AbsoluteFilePath
-        absolutePathToLocalSnippetJSON: AbsoluteFilePath
+        absolutePathToTmpSnippetJSON: AbsoluteFilePath;
+        absolutePathToLocalSnippetJSON: AbsoluteFilePath;
     }): Promise<void> {
-        this.context.logger.debug(`Copying generated snippets to ${absolutePathToLocalSnippetJSON}`)
-        await cp(absolutePathToTmpSnippetJSON, absolutePathToLocalSnippetJSON)
+        this.context.logger.debug(`Copying generated snippets to ${absolutePathToLocalSnippetJSON}`);
+        await cp(absolutePathToTmpSnippetJSON, absolutePathToLocalSnippetJSON);
     }
 
     private async runGitCommand(options: string[], cwd: AbsoluteFilePath): Promise<string> {
         const response = await loggingExeca(this.context.logger, "git", options, {
             cwd,
             doNotPipeOutput: true
-        })
-        return response.stdout
+        });
+        return response.stdout;
     }
 }
 
-const NEW_LINE_REGEX = /\r?\n/
+const NEW_LINE_REGEX = /\r?\n/;
 
 async function getFernIgnorePaths({
     absolutePathToFernignore
 }: {
-    absolutePathToFernignore: AbsoluteFilePath
+    absolutePathToFernignore: AbsoluteFilePath;
 }): Promise<string[]> {
-    const fernIgnoreFileContents = (await readFile(absolutePathToFernignore)).toString()
+    const fernIgnoreFileContents = (await readFile(absolutePathToFernignore)).toString();
     return [
         FERNIGNORE_FILENAME,
         ...fernIgnoreFileContents
             .trim()
             .split(NEW_LINE_REGEX)
             .filter((line) => !line.startsWith("#") && line.length > 0)
-    ]
+    ];
 }

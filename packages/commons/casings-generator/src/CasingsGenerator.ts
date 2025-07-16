@@ -1,30 +1,30 @@
-import { camelCase, snakeCase, upperFirst, words } from "lodash-es"
+import { camelCase, snakeCase, upperFirst, words } from "lodash-es";
 
-import { generatorsYml } from "@fern-api/configuration"
-import { RawSchemas } from "@fern-api/fern-definition-schema"
-import { Name, NameAndWireValue, SafeAndUnsafeString } from "@fern-api/ir-sdk"
+import { generatorsYml } from "@fern-api/configuration";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { Name, NameAndWireValue, SafeAndUnsafeString } from "@fern-api/ir-sdk";
 
-import { RESERVED_KEYWORDS } from "./reserved"
+import { RESERVED_KEYWORDS } from "./reserved";
 
 export interface CasingsGenerator {
-    generateName(name: string, opts?: { casingOverrides?: RawSchemas.CasingOverridesSchema }): Name
+    generateName(name: string, opts?: { casingOverrides?: RawSchemas.CasingOverridesSchema }): Name;
     generateNameAndWireValue(args: {
-        name: string
-        wireValue: string
-        opts?: { casingOverrides?: RawSchemas.CasingOverridesSchema }
-    }): NameAndWireValue
+        name: string;
+        wireValue: string;
+        opts?: { casingOverrides?: RawSchemas.CasingOverridesSchema };
+    }): NameAndWireValue;
 }
 
-const CAPITALIZE_INITIALISM: generatorsYml.GenerationLanguage[] = ["go", "ruby"]
+const CAPITALIZE_INITIALISM: generatorsYml.GenerationLanguage[] = ["go", "ruby"];
 
 export function constructCasingsGenerator({
     generationLanguage,
     keywords,
     smartCasing
 }: {
-    generationLanguage: generatorsYml.GenerationLanguage | undefined
-    keywords: string[] | undefined
-    smartCasing: boolean
+    generationLanguage: generatorsYml.GenerationLanguage | undefined;
+    keywords: string[] | undefined;
+    smartCasing: boolean;
 }): CasingsGenerator {
     const casingsGenerator: CasingsGenerator = {
         generateName: (name, opts) => {
@@ -34,12 +34,12 @@ export function constructCasingsGenerator({
                     name: unsafeString,
                     keywords: getKeywords({ generationLanguage, keywords })
                 })
-            })
+            });
 
-            let camelCaseName = camelCase(name)
-            let pascalCaseName = upperFirst(camelCaseName)
-            let snakeCaseName = snakeCase(name)
-            const camelCaseWords = words(camelCaseName)
+            let camelCaseName = camelCase(name);
+            let pascalCaseName = upperFirst(camelCaseName);
+            let snakeCaseName = snakeCase(name);
+            const camelCaseWords = words(camelCaseName);
             if (smartCasing) {
                 if (
                     !hasAdjacentCommonInitialisms(camelCaseWords) &&
@@ -48,34 +48,34 @@ export function constructCasingsGenerator({
                     camelCaseName = camelCaseWords
                         .map((word, index) => {
                             if (index > 0) {
-                                const pluralInitialism = maybeGetPluralInitialism(word)
+                                const pluralInitialism = maybeGetPluralInitialism(word);
                                 if (pluralInitialism != null) {
-                                    return pluralInitialism
+                                    return pluralInitialism;
                                 }
                                 if (isCommonInitialism(word)) {
-                                    return word.toUpperCase()
+                                    return word.toUpperCase();
                                 }
                             }
-                            return word
+                            return word;
                         })
-                        .join("")
+                        .join("");
                     pascalCaseName = upperFirst(
                         camelCaseWords
                             .map((word, index) => {
-                                const pluralInitialism = maybeGetPluralInitialism(word)
+                                const pluralInitialism = maybeGetPluralInitialism(word);
                                 if (pluralInitialism != null) {
-                                    return pluralInitialism
+                                    return pluralInitialism;
                                 }
                                 if (isCommonInitialism(word)) {
-                                    return word.toUpperCase()
+                                    return word.toUpperCase();
                                 }
                                 if (index === 0) {
-                                    return upperFirst(word)
+                                    return upperFirst(word);
                                 }
-                                return word
+                                return word;
                             })
                             .join("")
-                    )
+                    );
                 }
 
                 // In smartCasing, manage numbers next to letters differently:
@@ -84,7 +84,7 @@ export function constructCasingsGenerator({
                 snakeCaseName = name
                     .split(" ")
                     .map((part) => part.split(/(\d+)/).map(snakeCase).join(""))
-                    .join("_")
+                    .join("_");
             }
 
             return {
@@ -95,26 +95,26 @@ export function constructCasingsGenerator({
                     opts?.casingOverrides?.["screaming-snake"] ?? snakeCaseName.toUpperCase()
                 ),
                 pascalCase: generateSafeAndUnsafeString(opts?.casingOverrides?.pascal ?? pascalCaseName)
-            }
+            };
         },
         generateNameAndWireValue: ({ name, wireValue, opts }) => ({
             name: casingsGenerator.generateName(name, opts),
             wireValue
         })
-    }
-    return casingsGenerator
+    };
+    return casingsGenerator;
 }
 
 function sanitizeName({ name, keywords }: { name: string; keywords: Set<string> | undefined }): string {
     if (keywords == null) {
-        return name
+        return name;
     }
     if (keywords.has(name)) {
-        return name + "_"
+        return name + "_";
     } else if (startsWithNumber(name)) {
-        return "_" + name
+        return "_" + name;
     } else {
-        return name
+        return name;
     }
 }
 
@@ -122,45 +122,45 @@ function getKeywords({
     generationLanguage,
     keywords
 }: {
-    generationLanguage: generatorsYml.GenerationLanguage | undefined
-    keywords: string[] | undefined
+    generationLanguage: generatorsYml.GenerationLanguage | undefined;
+    keywords: string[] | undefined;
 }): Set<string> | undefined {
     if (keywords != null) {
-        return new Set(keywords)
+        return new Set(keywords);
     }
     if (generationLanguage != null) {
-        return RESERVED_KEYWORDS[generationLanguage]
+        return RESERVED_KEYWORDS[generationLanguage];
     }
-    return undefined
+    return undefined;
 }
 
-const STARTS_WITH_NUMBER = /^[0-9]/
+const STARTS_WITH_NUMBER = /^[0-9]/;
 function startsWithNumber(str: string): boolean {
-    return STARTS_WITH_NUMBER.test(str)
+    return STARTS_WITH_NUMBER.test(str);
 }
 
 function hasAdjacentCommonInitialisms(wordList: string[]): boolean {
     return wordList.some((word, index) => {
         if (index === 0) {
-            return false
+            return false;
         }
-        const previousWord = wordList[index - 1]
+        const previousWord = wordList[index - 1];
         if (previousWord == null) {
-            return false
+            return false;
         }
         const previousWordIsInitialism =
-            maybeGetPluralInitialism(previousWord) != null || isCommonInitialism(previousWord)
-        const currentWordIsInitialism = maybeGetPluralInitialism(word) != null || isCommonInitialism(word)
-        return previousWordIsInitialism && currentWordIsInitialism
-    })
+            maybeGetPluralInitialism(previousWord) != null || isCommonInitialism(previousWord);
+        const currentWordIsInitialism = maybeGetPluralInitialism(word) != null || isCommonInitialism(word);
+        return previousWordIsInitialism && currentWordIsInitialism;
+    });
 }
 
 function maybeGetPluralInitialism(name: string): string | undefined {
-    return PLURAL_COMMON_INITIALISMS.get(name.toUpperCase())
+    return PLURAL_COMMON_INITIALISMS.get(name.toUpperCase());
 }
 
 function isCommonInitialism(name: string): boolean {
-    return COMMON_INITIALISMS.has(name.toUpperCase())
+    return COMMON_INITIALISMS.has(name.toUpperCase());
 }
 
 // For better casing conventions, define the set of common initialisms.
@@ -208,7 +208,7 @@ const COMMON_INITIALISMS = new Set<string>([
     "XMPP",
     "XSRF",
     "XSS"
-])
+]);
 
 // A subset of the COMMON_INITIALISMS that require special handling. We want
 // the plural equivalent to be specified with a lowercase trailing 's', such
@@ -223,4 +223,4 @@ const PLURAL_COMMON_INITIALISMS = new Map<string, string>([
     ["UUIDS", "UUIDs"],
     ["URIS", "URIs"],
     ["URLS", "URLs"]
-])
+]);

@@ -1,8 +1,12 @@
-import { GeneratorName } from "@fern-api/configuration-loader"
+import { GeneratorName } from "@fern-api/configuration-loader";
 
-import { IrSerialization } from "../../ir-serialization"
-import { IrVersions } from "../../ir-versions"
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
+import { IrSerialization } from "../../ir-serialization";
+import { IrVersions } from "../../ir-versions";
+import {
+    GeneratorWasNeverUpdatedToConsumeNewIR,
+    GeneratorWasNotCreatedYet,
+    IrMigration
+} from "../../types/IrMigration";
 
 export const V26_TO_V25_MIGRATION: IrMigration<
     IrVersions.V26.ir.IntermediateRepresentation,
@@ -48,23 +52,23 @@ export const V26_TO_V25_MIGRATION: IrMigration<
             ...v26,
             types: Object.fromEntries(
                 Object.entries(v26.types).map(([key, val]) => {
-                    return [key, convertTypeDeclaration(val)]
+                    return [key, convertTypeDeclaration(val)];
                 })
             ),
             headers: v26.headers.map((header) => convertHeader(header)),
             webhookGroups: Object.fromEntries(
                 Object.entries(v26.webhookGroups).map(([key, val]) => {
-                    return [key, val.map((webhook) => convertWebhook(webhook))]
+                    return [key, val.map((webhook) => convertWebhook(webhook))];
                 })
             ),
             services: Object.fromEntries(
                 Object.entries(v26.services).map(([key, val]) => {
-                    return [key, convertHttpService(val)]
+                    return [key, convertHttpService(val)];
                 })
             )
-        }
+        };
     }
-}
+};
 
 function convertWebhook(val: IrVersions.V26.Webhook): IrVersions.V25.Webhook {
     return {
@@ -77,7 +81,7 @@ function convertWebhook(val: IrVersions.V26.Webhook): IrVersions.V25.Webhook {
                       message: undefined
                   }
                 : val.availability
-    }
+    };
 }
 
 function convertHttpService(val: IrVersions.V26.HttpService): IrVersions.V25.HttpService {
@@ -92,7 +96,7 @@ function convertHttpService(val: IrVersions.V26.HttpService): IrVersions.V25.Htt
                       message: undefined
                   }
                 : val.availability
-    }
+    };
 }
 
 function convertEndpoint(val: IrVersions.V26.HttpEndpoint): IrVersions.V25.HttpEndpoint {
@@ -107,7 +111,7 @@ function convertEndpoint(val: IrVersions.V26.HttpEndpoint): IrVersions.V25.HttpE
                       message: undefined
                   }
                 : val.availability
-    }
+    };
 }
 
 function convertHeader(val: IrVersions.V26.HttpHeader): IrVersions.V25.HttpHeader {
@@ -120,7 +124,7 @@ function convertHeader(val: IrVersions.V26.HttpHeader): IrVersions.V25.HttpHeade
                       message: undefined
                   }
                 : val.availability
-    }
+    };
 }
 
 function convertQueryParameter(val: IrVersions.V26.QueryParameter): IrVersions.V25.QueryParameter {
@@ -133,7 +137,7 @@ function convertQueryParameter(val: IrVersions.V26.QueryParameter): IrVersions.V
                       message: undefined
                   }
                 : val.availability
-    }
+    };
 }
 
 function convertTypeDeclaration(val: IrVersions.V26.TypeDeclaration): IrVersions.V25.TypeDeclaration {
@@ -158,7 +162,7 @@ function convertTypeDeclaration(val: IrVersions.V26.TypeDeclaration): IrVersions
             alias: (val) => IrVersions.V25.Type.alias(val),
             undiscriminatedUnion: (val) => IrVersions.V25.Type.undiscriminatedUnion(val),
             _other: () => {
-                throw new Error("Encountered unknown shape")
+                throw new Error("Encountered unknown shape");
             }
         }),
         availability:
@@ -168,7 +172,7 @@ function convertTypeDeclaration(val: IrVersions.V26.TypeDeclaration): IrVersions
                       message: undefined
                   }
                 : val.availability
-    }
+    };
 }
 
 function convertObjectProperty(val: IrVersions.V26.ObjectProperty): IrVersions.V25.ObjectProperty {
@@ -181,7 +185,7 @@ function convertObjectProperty(val: IrVersions.V26.ObjectProperty): IrVersions.V
                       message: undefined
                   }
                 : val.availability
-    }
+    };
 }
 
 function convertEnumValue(val: IrVersions.V26.EnumValue): IrVersions.V25.EnumValue {
@@ -194,5 +198,5 @@ function convertEnumValue(val: IrVersions.V26.EnumValue): IrVersions.V25.EnumVal
                       message: undefined
                   }
                 : val.availability
-    }
+    };
 }

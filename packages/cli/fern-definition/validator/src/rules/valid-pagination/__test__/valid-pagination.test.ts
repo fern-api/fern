@@ -1,8 +1,8 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { ValidationViolation } from "../../../ValidationViolation"
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule"
-import { ValidPaginationRule } from "../valid-pagination"
+import { ValidationViolation } from "../../../ValidationViolation";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { ValidPaginationRule } from "../valid-pagination";
 
 describe("valid-pagination", () => {
     it("valid", async () => {
@@ -13,9 +13,9 @@ describe("valid-pagination", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("valid")
             )
-        })
-        expect(violations).toEqual([])
-    })
+        });
+        expect(violations).toEqual([]);
+    });
 
     it("invalid", async () => {
         const violations = await getViolationsForRule({
@@ -25,7 +25,7 @@ describe("valid-pagination", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("invalid")
             )
-        })
+        });
         const expectedViolations: ValidationViolation[] = [
             {
                 message:
@@ -111,8 +111,8 @@ describe("valid-pagination", () => {
                 relativeFilepath: RelativeFilePath.of("simple.yml"),
                 severity: "fatal"
             }
-        ]
+        ];
 
-        expect(violations).toEqual(expectedViolations)
-    })
-})
+        expect(violations).toEqual(expectedViolations);
+    });
+});

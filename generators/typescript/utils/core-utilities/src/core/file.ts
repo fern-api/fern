@@ -8,4 +8,4 @@ export type FileLike =
     | import("stream/web").ReadableStream
     | globalThis.Blob
     | globalThis.File
-    | ReadableStream
+    | ReadableStream;

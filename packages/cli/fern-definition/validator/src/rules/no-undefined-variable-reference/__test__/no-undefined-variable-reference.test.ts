@@ -1,8 +1,8 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { ValidationViolation } from "../../../ValidationViolation"
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule"
-import { NoUndefinedVariableReferenceRule } from "../no-undefined-variable-reference"
+import { ValidationViolation } from "../../../ValidationViolation";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { NoUndefinedVariableReferenceRule } from "../no-undefined-variable-reference";
 
 describe("no-undefined-variable-reference", () => {
     it("simple", async () => {
@@ -13,7 +13,7 @@ describe("no-undefined-variable-reference", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
             )
-        })
+        });
 
         const expectedViolations: ValidationViolation[] = [
             {
@@ -40,8 +40,8 @@ describe("no-undefined-variable-reference", () => {
                 relativeFilepath: RelativeFilePath.of("simple.yml"),
                 severity: "fatal"
             }
-        ]
+        ];
 
-        expect(violations).toEqual(expectedViolations)
-    })
-})
+        expect(violations).toEqual(expectedViolations);
+    });
+});

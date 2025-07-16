@@ -1,10 +1,10 @@
-import { GeneratorNotificationService } from "@fern-api/base-generator"
-import { AbstractTypescriptMcpGeneratorContext, AsIsFiles } from "@fern-api/typescript-mcp-base"
+import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { AbstractTypescriptMcpGeneratorContext, AsIsFiles } from "@fern-api/typescript-mcp-base";
 
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api"
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
-import { TypescriptCustomConfigSchema } from "../../../typescript-v2/ast/src"
+import { TypescriptCustomConfigSchema } from "../../../typescript-v2/ast/src";
 
 export class ServerGeneratorContext extends AbstractTypescriptMcpGeneratorContext<TypescriptCustomConfigSchema> {
     public constructor(
@@ -13,7 +13,7 @@ export class ServerGeneratorContext extends AbstractTypescriptMcpGeneratorContex
         public readonly customConfig: TypescriptCustomConfigSchema,
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
-        super(ir, config, customConfig, generatorNotificationService)
+        super(ir, config, customConfig, generatorNotificationService);
     }
 
     public getRawAsIsFiles(): string[] {
@@ -23,6 +23,6 @@ export class ServerGeneratorContext extends AbstractTypescriptMcpGeneratorContex
             AsIsFiles.ServerCustomTs,
             AsIsFiles.ServerTs,
             AsIsFiles.TsConfigJson
-        ]
+        ];
     }
 }

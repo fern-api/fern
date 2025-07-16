@@ -1,8 +1,12 @@
-import { GeneratorName } from "@fern-api/configuration-loader"
+import { GeneratorName } from "@fern-api/configuration-loader";
 
-import { IrMigrationContext } from "../../IrMigrationContext"
-import { IrVersions } from "../../ir-versions"
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
+import { IrMigrationContext } from "../../IrMigrationContext";
+import { IrVersions } from "../../ir-versions";
+import {
+    GeneratorWasNeverUpdatedToConsumeNewIR,
+    GeneratorWasNotCreatedYet,
+    IrMigration
+} from "../../types/IrMigration";
 
 export const V11_TO_V10_MIGRATION: IrMigration<
     IrVersions.V11.ir.IntermediateRepresentation,
@@ -44,15 +48,15 @@ export const V11_TO_V10_MIGRATION: IrMigration<
         return {
             ...v11,
             auth: convertAuth(v11.auth, context)
-        }
+        };
     }
-}
+};
 
 function convertAuth(auth: IrVersions.V11.auth.ApiAuth, context: IrMigrationContext): IrVersions.V10.auth.ApiAuth {
     return {
         ...auth,
         schemes: auth.schemes.map((scheme) => convertAuthScheme(scheme, context))
-    }
+    };
 }
 
 function convertAuthScheme(
@@ -71,7 +75,7 @@ function convertAuthScheme(
                               ` If you'd like to use this feature, please upgrade ${targetGenerator.name}` +
                               " to a compatible version."
                         : "Cannot backwards-migrate IR because this IR contains an auth header prefix."
-                )
+                );
             }
             return IrVersions.V10.auth.AuthScheme.header({
                 docs: header.docs,
@@ -84,10 +88,10 @@ function convertAuthScheme(
                     wireValue: header.header
                 },
                 valueType: header.valueType
-            })
+            });
         },
         _unknown: () => {
-            throw new Error("Unknown auth scheme: " + scheme._type)
+            throw new Error("Unknown auth scheme: " + scheme._type);
         }
-    })
+    });
 }

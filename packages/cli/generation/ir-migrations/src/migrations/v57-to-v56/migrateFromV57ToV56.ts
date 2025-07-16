@@ -1,11 +1,15 @@
-import { mapValues } from "lodash-es"
+import { mapValues } from "lodash-es";
 
-import { GeneratorName } from "@fern-api/configuration-loader"
-import { assertNever } from "@fern-api/core-utils"
+import { GeneratorName } from "@fern-api/configuration-loader";
+import { assertNever } from "@fern-api/core-utils";
 
-import { IrSerialization } from "../../ir-serialization"
-import { IrVersions } from "../../ir-versions"
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
+import { IrSerialization } from "../../ir-serialization";
+import { IrVersions } from "../../ir-versions";
+import {
+    GeneratorWasNeverUpdatedToConsumeNewIR,
+    GeneratorWasNotCreatedYet,
+    IrMigration
+} from "../../types/IrMigration";
 
 export const V57_TO_V56_MIGRATION: IrMigration<
     IrVersions.V57.ir.IntermediateRepresentation,
@@ -51,9 +55,9 @@ export const V57_TO_V56_MIGRATION: IrMigration<
         return {
             ...v57,
             dynamic: v57.dynamic != null ? convertDynamicIr(v57.dynamic) : undefined
-        } as IrVersions.V56.ir.IntermediateRepresentation
+        } as IrVersions.V56.ir.IntermediateRepresentation;
     }
-}
+};
 
 function convertDynamicIr(
     ir: IrVersions.V57.dynamic.DynamicIntermediateRepresentation
@@ -61,7 +65,7 @@ function convertDynamicIr(
     return {
         ...ir,
         endpoints: convertDynamicEndpoints(ir.endpoints)
-    }
+    };
 }
 
 function convertDynamicEndpoints(
@@ -71,7 +75,7 @@ function convertDynamicEndpoints(
         Object.entries(endpoints)
             .map(([key, endpoint]) => [key, convertDynamicEndpoint(endpoint)])
             .filter(([_, endpoint]) => endpoint != null)
-    )
+    );
 }
 
 function convertDynamicEndpoint(
@@ -81,13 +85,13 @@ function convertDynamicEndpoint(
         ...endpoint,
         auth: endpoint.auth != null ? convertDynamicAuth(endpoint.auth) : undefined,
         examples: endpoint.examples != null ? convertDynamicExamples(endpoint.examples) : undefined
-    }
+    };
 }
 
 function convertDynamicExamples(
     examples: IrVersions.V57.dynamic.EndpointExample[]
 ): IrVersions.V56.dynamic.EndpointExample[] {
-    return examples.map((example) => convertDynamicExample(example)).filter((example) => example != null)
+    return examples.map((example) => convertDynamicExample(example)).filter((example) => example != null);
 }
 
 function convertDynamicExample(
@@ -96,21 +100,21 @@ function convertDynamicExample(
     return {
         ...example,
         auth: example.auth != null ? convertDynamicAuthValues(example.auth) : undefined
-    }
+    };
 }
 
 function convertDynamicAuth(auth: IrVersions.V57.dynamic.Auth): IrVersions.V56.dynamic.Auth | undefined {
     switch (auth.type) {
         case "basic":
-            return IrVersions.V56.dynamic.Auth.basic(auth)
+            return IrVersions.V56.dynamic.Auth.basic(auth);
         case "bearer":
-            return IrVersions.V56.dynamic.Auth.bearer(auth)
+            return IrVersions.V56.dynamic.Auth.bearer(auth);
         case "header":
-            return IrVersions.V56.dynamic.Auth.header(auth)
+            return IrVersions.V56.dynamic.Auth.header(auth);
         case "oauth":
-            return undefined
+            return undefined;
         default:
-            assertNever(auth)
+            assertNever(auth);
     }
 }
 
@@ -119,14 +123,14 @@ function convertDynamicAuthValues(
 ): IrVersions.V56.dynamic.AuthValues | undefined {
     switch (auth.type) {
         case "basic":
-            return IrVersions.V56.dynamic.AuthValues.basic(auth)
+            return IrVersions.V56.dynamic.AuthValues.basic(auth);
         case "bearer":
-            return IrVersions.V56.dynamic.AuthValues.bearer(auth)
+            return IrVersions.V56.dynamic.AuthValues.bearer(auth);
         case "header":
-            return IrVersions.V56.dynamic.AuthValues.header(auth)
+            return IrVersions.V56.dynamic.AuthValues.header(auth);
         case "oauth":
-            return undefined
+            return undefined;
         default:
-            assertNever(auth)
+            assertNever(auth);
     }
 }

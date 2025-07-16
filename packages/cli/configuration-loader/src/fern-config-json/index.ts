@@ -1,1 +1,1 @@
-export * from "./loadProjectConfig"
+export * from "./loadProjectConfig";

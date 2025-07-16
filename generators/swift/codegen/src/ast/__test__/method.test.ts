@@ -1,8 +1,8 @@
-import { describe, expect, it } from "vitest"
+import { describe, expect, it } from "vitest";
 
-import { swift } from "../.."
-import { AccessLevel } from "../AccessLevel"
-import { Type } from "../Type"
+import { swift } from "../..";
+import { AccessLevel } from "../AccessLevel";
+import { Type } from "../Type";
 
 describe("Method", () => {
     describe("write", () => {
@@ -10,39 +10,39 @@ describe("Method", () => {
             const method = swift.method({
                 unsafeName: "getName",
                 returnType: Type.string()
-            })
+            });
 
             expect(method.toString()).toMatchInlineSnapshot(`
               "func getName() -> String {
               }"
-            `)
-        })
+            `);
+        });
 
         it("should write method with access level", () => {
             const method = swift.method({
                 unsafeName: "getValue",
                 accessLevel: AccessLevel.Public,
                 returnType: Type.int()
-            })
+            });
 
             expect(method.toString()).toMatchInlineSnapshot(`
               "public func getValue() -> Int {
               }"
-            `)
-        })
+            `);
+        });
 
         it("should write static method", () => {
             const method = swift.method({
                 unsafeName: "create",
                 static_: true,
                 returnType: Type.custom("User")
-            })
+            });
 
             expect(method.toString()).toMatchInlineSnapshot(`
               "static func create() -> User {
               }"
-            `)
-        })
+            `);
+        });
 
         it("should write method with all modifiers", () => {
             const method = swift.method({
@@ -50,13 +50,13 @@ describe("Method", () => {
                 accessLevel: AccessLevel.Private,
                 static_: true,
                 returnType: Type.bool()
-            })
+            });
 
             expect(method.toString()).toMatchInlineSnapshot(`
               "private static func process() -> Bool {
               }"
-            `)
-        })
+            `);
+        });
 
         it("should write method with single unlabeled parameter", () => {
             const method = swift.method({
@@ -68,13 +68,13 @@ describe("Method", () => {
                     })
                 ],
                 returnType: Type.custom("Void")
-            })
+            });
 
             expect(method.toString()).toMatchInlineSnapshot(`
               "func setValue(_ value: String) -> Void {
               }"
-            `)
-        })
+            `);
+        });
 
         it("should write method with multiple unlabeled parameters", () => {
             const method = swift.method({
@@ -94,15 +94,15 @@ describe("Method", () => {
                     })
                 ],
                 returnType: Type.bool()
-            })
+            });
 
             expect(method.toString()).toMatchInlineSnapshot(
                 `
               "func updateUser(_ id: Int, _ name: String, _ email: String) -> Bool {
               }"
             `
-            )
-        })
+            );
+        });
 
         it("should write method with argument labels", () => {
             const method = swift.method({
@@ -120,15 +120,15 @@ describe("Method", () => {
                     })
                 ],
                 returnType: Type.custom("User")
-            })
+            });
 
             expect(method.toString()).toMatchInlineSnapshot(
                 `
               "func createUser(with name: String, email emailAddress: String) -> User {
               }"
             `
-            )
-        })
+            );
+        });
 
         it("should write method with optional parameters", () => {
             const method = swift.method({
@@ -146,15 +146,15 @@ describe("Method", () => {
                     })
                 ],
                 returnType: Type.custom("User?")
-            })
+            });
 
             expect(method.toString()).toMatchInlineSnapshot(
                 `
               "func findUser(_ id: Int, includingDeleted deleted: Bool?) -> User? {
               }"
             `
-            )
-        })
+            );
+        });
 
         it("should write method with mixed parameter configurations", () => {
             const method = swift.method({
@@ -178,27 +178,27 @@ describe("Method", () => {
                     })
                 ],
                 returnType: Type.dictionary(Type.string(), Type.any())
-            })
+            });
 
             expect(method.toString()).toMatchInlineSnapshot(
                 `
               "public func complexMethod(_ value: String, with options: [String], timeout timeoutValue: Double?) -> [String: Any] {
               }"
             `
-            )
-        })
+            );
+        });
 
         it("should write method with reserved keyword name", () => {
             const method = swift.method({
                 unsafeName: "class",
                 returnType: Type.string()
-            })
+            });
 
             expect(method.toString()).toMatchInlineSnapshot(`
               "func \`class\`() -> String {
               }"
-            `)
-        })
+            `);
+        });
 
         it("should write method with reserved keyword parameters", () => {
             const method = swift.method({
@@ -215,27 +215,27 @@ describe("Method", () => {
                     })
                 ],
                 returnType: Type.string()
-            })
+            });
 
             expect(method.toString()).toMatchInlineSnapshot(
                 `
               "func configure(_ enum: String, for struct: Config) -> String {
               }"
             `
-            )
-        })
+            );
+        });
 
         it("should write method with complex return types", () => {
             const method = swift.method({
                 unsafeName: "getComplexData",
                 returnType: Type.array(Type.dictionary(Type.string(), Type.tuple([Type.int(), Type.bool()])))
-            })
+            });
 
             expect(method.toString()).toMatchInlineSnapshot(`
               "func getComplexData() -> [[String: (Int, Bool)]] {
               }"
-            `)
-        })
+            `);
+        });
 
         it("should combine argument label and parameter name if they are the same", () => {
             const method = swift.method({
@@ -248,13 +248,13 @@ describe("Method", () => {
                     })
                 ],
                 returnType: Type.any()
-            })
+            });
 
             expect(method.toString()).toMatchInlineSnapshot(`
               "func setName(name: String) -> Any {
               }"
-            `)
-        })
+            `);
+        });
 
         it("should write complex static method with all features", () => {
             const method = swift.method({
@@ -275,15 +275,15 @@ describe("Method", () => {
                     })
                 ],
                 returnType: Type.string()
-            })
+            });
 
             expect(method.toString()).toMatchInlineSnapshot(
                 `
               "public static func createInstance(from data: Data, with options: [String]?) -> String {
               }"
             `
-            )
-        })
+            );
+        });
 
         it("should write method with default parameter values", () => {
             const method = swift.method({
@@ -310,15 +310,15 @@ describe("Method", () => {
                     })
                 ],
                 returnType: Type.custom("User")
-            })
+            });
 
             expect(method.toString()).toMatchInlineSnapshot(
                 `
               "public func createUser(with name: String, email emailAddress: String? = nil, isActive active: Bool = true) -> User {
               }"
             `
-            )
-        })
+            );
+        });
 
         it("should write method with body", () => {
             const method = swift.method({
@@ -328,14 +328,14 @@ describe("Method", () => {
                     swift.Statement.constantDeclaration("name", swift.Expression.rawStringValue("John Appleseed")),
                     swift.Statement.return(swift.Expression.rawValue("name"))
                 ])
-            })
+            });
 
             expect(method.toString()).toMatchInlineSnapshot(`
               "func getUserName() -> String {
                   let name = "John Appleseed"
                   return name
               }"
-            `)
-        })
-    })
-})
+            `);
+        });
+    });
+});

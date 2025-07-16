@@ -1,11 +1,11 @@
-import { FernWorkspace } from "@fern-api/api-workspace-commons"
-import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 
-import { FernFileContext } from "../FernFileContext"
-import { ExampleResolver } from "../resolvers/ExampleResolver"
-import { TypeResolver } from "../resolvers/TypeResolver"
-import { ExampleViolation } from "./exampleViolation"
-import { validateTypeReferenceExample } from "./validateTypeReferenceExample"
+import { FernFileContext } from "../FernFileContext";
+import { ExampleResolver } from "../resolvers/ExampleResolver";
+import { TypeResolver } from "../resolvers/TypeResolver";
+import { ExampleViolation } from "./exampleViolation";
+import { validateTypeReferenceExample } from "./validateTypeReferenceExample";
 
 export function validateUndiscriminatedUnionExample({
     rawUnion,
@@ -17,16 +17,16 @@ export function validateUndiscriminatedUnionExample({
     breadcrumbs,
     depth
 }: {
-    rawUnion: RawSchemas.UndiscriminatedUnionSchema
-    example: RawSchemas.ExampleTypeValueSchema
-    typeResolver: TypeResolver
-    exampleResolver: ExampleResolver
-    file: FernFileContext
-    workspace: FernWorkspace
-    breadcrumbs: string[]
-    depth: number
+    rawUnion: RawSchemas.UndiscriminatedUnionSchema;
+    example: RawSchemas.ExampleTypeValueSchema;
+    typeResolver: TypeResolver;
+    exampleResolver: ExampleResolver;
+    file: FernFileContext;
+    workspace: FernWorkspace;
+    breadcrumbs: string[];
+    depth: number;
 }): ExampleViolation[] {
-    const violations: ExampleViolation[] = []
+    const violations: ExampleViolation[] = [];
     for (const member of rawUnion.union) {
         const violationsForMember = validateTypeReferenceExample({
             rawTypeReference: typeof member === "string" ? member : member.type,
@@ -37,12 +37,12 @@ export function validateUndiscriminatedUnionExample({
             workspace,
             breadcrumbs,
             depth: depth + 1
-        })
+        });
         if (violationsForMember.length === 0) {
-            return []
+            return [];
         } else if (violations.length === 0) {
-            violations.push(...violationsForMember)
+            violations.push(...violationsForMember);
         }
     }
-    return violations
+    return violations;
 }

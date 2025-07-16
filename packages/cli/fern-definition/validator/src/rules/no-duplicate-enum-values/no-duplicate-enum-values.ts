@@ -1,9 +1,9 @@
-import chalk from "chalk"
+import chalk from "chalk";
 
-import { isRawEnumDefinition } from "@fern-api/fern-definition-schema"
+import { isRawEnumDefinition } from "@fern-api/fern-definition-schema";
 
-import { Rule } from "../../Rule"
-import { getDuplicates } from "../../utils/getDuplicates"
+import { Rule } from "../../Rule";
+import { getDuplicates } from "../../utils/getDuplicates";
 
 export const NoDuplicateEnumValuesRule: Rule = {
     name: "no-duplicate-enum-values",
@@ -12,21 +12,21 @@ export const NoDuplicateEnumValuesRule: Rule = {
             definitionFile: {
                 typeDeclaration: ({ declaration }) => {
                     if (!isRawEnumDefinition(declaration)) {
-                        return []
+                        return [];
                     }
 
                     const duplicatedValues = getDuplicates(
                         declaration.enum.map((enumValue) =>
                             typeof enumValue === "string" ? enumValue : enumValue.value
                         )
-                    )
+                    );
 
                     return duplicatedValues.map((duplicatedValue) => ({
                         severity: "fatal",
                         message: `Duplicated enum value: ${chalk.bold(duplicatedValue)}.`
-                    }))
+                    }));
                 }
             }
-        }
+        };
     }
-}
+};

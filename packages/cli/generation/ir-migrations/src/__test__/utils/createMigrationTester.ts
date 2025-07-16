@@ -1,23 +1,23 @@
-import { AbsoluteFilePath } from "@fern-api/fs-utils"
-import { createMockTaskContext } from "@fern-api/task-context"
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { createMockTaskContext } from "@fern-api/task-context";
 
 import {
     MigratedIntermediateMigration,
     getIntermediateRepresentationMigrator
-} from "../../IntermediateRepresentationMigrator"
-import { IrMigrationContext } from "../../IrMigrationContext"
-import { IrMigration } from "../../types/IrMigration"
-import { getIrForApi } from "./getIrForApi"
+} from "../../IntermediateRepresentationMigrator";
+import { IrMigrationContext } from "../../IrMigrationContext";
+import { IrMigration } from "../../types/IrMigration";
+import { getIrForApi } from "./getIrForApi";
 
 export interface MigrationTesterArgs {
-    pathToFixture: AbsoluteFilePath
-    context?: Partial<IrMigrationContext>
+    pathToFixture: AbsoluteFilePath;
+    context?: Partial<IrMigrationContext>;
 }
 
 export function createMigrationTester<LaterVersion, EarlierVersion>(
     migration: IrMigration<LaterVersion, EarlierVersion>
 ): (args: MigrationTesterArgs) => Promise<MigratedIntermediateMigration<EarlierVersion>> {
-    return (args) => runFixtureThroughMigration(migration, args)
+    return (args) => runFixtureThroughMigration(migration, args);
 }
 
 async function runFixtureThroughMigration<LaterVersion, EarlierVersion>(
@@ -32,6 +32,6 @@ async function runFixtureThroughMigration<LaterVersion, EarlierVersion>(
             name: "",
             version: ""
         }
-    })
-    return migrated
+    });
+    return migrated;
 }

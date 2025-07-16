@@ -1,13 +1,13 @@
-import { JSONSchema4 } from "json-schema"
+import { JSONSchema4 } from "json-schema";
 
-import { EnumTypeDeclaration } from "@fern-api/ir-sdk"
+import { EnumTypeDeclaration } from "@fern-api/ir-sdk";
 
-import { JsonSchemaConverterContext } from "../JsonSchemaConverterContext"
+import { JsonSchemaConverterContext } from "../JsonSchemaConverterContext";
 
 export declare namespace convertEnumToJsonSchema {
     interface Args {
-        enum: EnumTypeDeclaration
-        context: JsonSchemaConverterContext
+        enum: EnumTypeDeclaration;
+        context: JsonSchemaConverterContext;
     }
 }
 
@@ -15,5 +15,5 @@ export function convertEnumToJsonSchema({ enum: enumDeclaration, context }: conv
     return {
         type: "string",
         enum: enumDeclaration.values.map((value) => value.name.wireValue)
-    }
+    };
 }

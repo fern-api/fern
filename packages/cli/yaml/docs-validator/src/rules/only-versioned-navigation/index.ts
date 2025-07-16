@@ -1,1 +1,1 @@
-export { OnlyVersionedNavigation } from "./only-versioned-navigation"
+export { OnlyVersionedNavigation } from "./only-versioned-navigation";

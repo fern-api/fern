@@ -1,4 +1,4 @@
-import { Rule } from "../../Rule"
+import { Rule } from "../../Rule";
 
 export const OnlyVersionedNavigation: Rule = {
     name: "only-versioned-navigation",
@@ -12,10 +12,10 @@ export const OnlyVersionedNavigation: Rule = {
                             message:
                                 "Cannot contain both navigation and versions. If you want versioned docs, use versions. Otherwise use navigation."
                         }
-                    ]
+                    ];
                 }
-                return []
+                return [];
             }
-        }
+        };
     }
-}
+};

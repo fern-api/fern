@@ -1,59 +1,59 @@
-import { AstNode } from "./core/AstNode"
-import { Writer } from "./core/Writer"
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
 
 export declare namespace Map {
     interface Args {
-        entries: Entry[] | undefined
-        multiline?: boolean
+        entries: Entry[] | undefined;
+        multiline?: boolean;
     }
 
     interface Entry {
-        key: AstNode
-        value: AstNode
+        key: AstNode;
+        value: AstNode;
     }
 }
 
 export class Map extends AstNode {
-    private entries: Map.Entry[]
-    private multiline: boolean
+    private entries: Map.Entry[];
+    private multiline: boolean;
 
     constructor({ entries, multiline }: Map.Args) {
-        super()
-        this.entries = entries ?? []
-        this.multiline = multiline ?? false
+        super();
+        this.entries = entries ?? [];
+        this.multiline = multiline ?? false;
     }
 
     public write(writer: Writer): void {
         if (this.multiline) {
-            this.writeMultiline(writer)
-            return
+            this.writeMultiline(writer);
+            return;
         }
-        this.writeCompact(writer)
+        this.writeCompact(writer);
     }
 
     private writeMultiline(writer: Writer): void {
-        writer.writeLine("[")
-        writer.indent()
+        writer.writeLine("[");
+        writer.indent();
         for (const { key, value } of this.entries) {
-            key.write(writer)
-            writer.write(" => ")
-            value.write(writer)
-            writer.writeLine(",")
+            key.write(writer);
+            writer.write(" => ");
+            value.write(writer);
+            writer.writeLine(",");
         }
-        writer.dedent()
-        writer.write("]")
+        writer.dedent();
+        writer.write("]");
     }
 
     private writeCompact(writer: Writer): void {
-        writer.write("[")
+        writer.write("[");
         for (const [index, { key, value }] of this.entries.entries()) {
             if (index > 0) {
-                writer.write(", ")
+                writer.write(", ");
             }
-            key.write(writer)
-            writer.write(" => ")
-            value.write(writer)
+            key.write(writer);
+            writer.write(" => ");
+            value.write(writer);
         }
-        writer.write("]")
+        writer.write("]");
     }
 }

@@ -1,2 +1,2 @@
-export { getPackageName } from "./getPackageName"
-export { getSdkVersion } from "./getSdkVersion"
+export { getPackageName } from "./getPackageName";
+export { getSdkVersion } from "./getSdkVersion";

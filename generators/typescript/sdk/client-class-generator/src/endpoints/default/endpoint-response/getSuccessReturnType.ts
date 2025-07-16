@@ -1,11 +1,11 @@
-import { SdkContext } from "@fern-typescript/contexts"
-import { ts } from "ts-morph"
+import { SdkContext } from "@fern-typescript/contexts";
+import { ts } from "ts-morph";
 
-import { assertNever } from "@fern-api/core-utils"
+import { assertNever } from "@fern-api/core-utils";
 
-import { HttpEndpoint, HttpResponseBody, PrimitiveTypeV1, TypeReference } from "@fern-fern/ir-sdk/api"
+import { HttpEndpoint, HttpResponseBody, PrimitiveTypeV1, TypeReference } from "@fern-fern/ir-sdk/api";
 
-import { getReadableTypeNode } from "../../../getReadableTypeNode"
+import { getReadableTypeNode } from "../../../getReadableTypeNode";
 
 export function getSuccessReturnType(
     endpoint: HttpEndpoint,
@@ -17,16 +17,16 @@ export function getSuccessReturnType(
         | undefined,
     context: SdkContext,
     opts: {
-        includeContentHeadersOnResponse: boolean
-        streamType: "wrapper" | "web"
-        fileResponseType: "stream" | "binary-response"
+        includeContentHeadersOnResponse: boolean;
+        streamType: "wrapper" | "web";
+        fileResponseType: "stream" | "binary-response";
     }
 ): ts.TypeNode {
     if (response == null) {
         if (endpoint.method === "HEAD") {
-            return ts.factory.createTypeReferenceNode("Headers")
+            return ts.factory.createTypeReferenceNode("Headers");
         }
-        return ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword)
+        return ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword);
     }
     switch (response.type) {
         case "fileDownload": {
@@ -35,14 +35,14 @@ export function getSuccessReturnType(
                 includeContentHeadersOnResponse: opts.includeContentHeadersOnResponse,
                 streamType: opts.streamType,
                 fileResponseType: opts.fileResponseType
-            })
+            });
         }
         case "json":
-            return context.type.getReferenceToType(response.value.responseBodyType).typeNode
+            return context.type.getReferenceToType(response.value.responseBodyType).typeNode;
         case "text":
             return context.type.getReferenceToType(
                 TypeReference.primitive({ v1: PrimitiveTypeV1.String, v2: undefined })
-            ).typeNode
+            ).typeNode;
         case "streaming": {
             const dataEventType = response.value._visit({
                 json: (json) => context.type.getReferenceToType(json.payload),
@@ -52,20 +52,20 @@ export function getSuccessReturnType(
                         TypeReference.primitive({ v1: PrimitiveTypeV1.String, v2: undefined })
                     ),
                 _other: ({ type }) => {
-                    throw new Error(`Encountered unknown data event type ${type}`)
+                    throw new Error(`Encountered unknown data event type ${type}`);
                 }
-            })
-            return context.coreUtilities.stream.Stream._getReferenceToType(dataEventType.typeNode)
+            });
+            return context.coreUtilities.stream.Stream._getReferenceToType(dataEventType.typeNode);
         }
         default:
-            assertNever(response)
+            assertNever(response);
     }
 }
 
-export const CONTENT_LENGTH_VARIABLE_NAME = "_contentLength"
-export const READABLE_RESPONSE_KEY = "data"
-export const CONTENT_TYPE_RESPONSE_KEY = "contentType"
-export const CONTENT_LENGTH_RESPONSE_KEY = "contentLengthInBytes"
+export const CONTENT_LENGTH_VARIABLE_NAME = "_contentLength";
+export const READABLE_RESPONSE_KEY = "data";
+export const CONTENT_TYPE_RESPONSE_KEY = "contentType";
+export const CONTENT_LENGTH_RESPONSE_KEY = "contentLengthInBytes";
 
 function getFileType({
     context,
@@ -73,10 +73,10 @@ function getFileType({
     streamType,
     fileResponseType
 }: {
-    context: SdkContext
-    includeContentHeadersOnResponse: boolean
-    streamType: "wrapper" | "web"
-    fileResponseType: "stream" | "binary-response"
+    context: SdkContext;
+    includeContentHeadersOnResponse: boolean;
+    streamType: "wrapper" | "web";
+    fileResponseType: "stream" | "binary-response";
 }): ts.TypeNode {
     const fileType = (() => {
         switch (fileResponseType) {
@@ -85,15 +85,15 @@ function getFileType({
                     typeArgument: ts.factory.createTypeReferenceNode("Uint8Array"),
                     context,
                     streamType
-                })
+                });
             case "binary-response":
-                return context.coreUtilities.fetcher.BinaryResponse._getReferenceToType()
+                return context.coreUtilities.fetcher.BinaryResponse._getReferenceToType();
             default:
-                assertNever(fileResponseType)
+                assertNever(fileResponseType);
         }
-    })()
+    })();
     if (!includeContentHeadersOnResponse) {
-        return fileType
+        return fileType;
     }
     return ts.factory.createTypeLiteralNode([
         ts.factory.createPropertySignature(undefined, READABLE_RESPONSE_KEY, undefined, fileType),
@@ -109,5 +109,5 @@ function getFileType({
             ts.factory.createToken(ts.SyntaxKind.QuestionToken),
             ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
         )
-    ])
+    ]);
 }

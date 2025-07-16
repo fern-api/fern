@@ -1,7 +1,7 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule"
-import { NoUnusedGenericRule } from "../no-unused-generic"
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { NoUnusedGenericRule } from "../no-unused-generic";
 
 describe("no-unused-generic", () => {
     it("simple", async () => {
@@ -12,7 +12,7 @@ describe("no-unused-generic", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
             )
-        })
+        });
 
         expect(violations).toEqual([
             {
@@ -27,6 +27,6 @@ describe("no-unused-generic", () => {
                 relativeFilepath: RelativeFilePath.of("2.yml"),
                 severity: "fatal"
             }
-        ])
-    })
-})
+        ]);
+    });
+});

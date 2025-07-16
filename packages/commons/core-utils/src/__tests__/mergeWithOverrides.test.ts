@@ -1,4 +1,4 @@
-import { mergeWithOverrides } from "../mergeWithOverrides"
+import { mergeWithOverrides } from "../mergeWithOverrides";
 
 describe("mergeWithOverrides", () => {
     it("should handle schema with null examples", () => {
@@ -13,16 +13,16 @@ describe("mergeWithOverrides", () => {
                     }
                 }
             }
-        }
+        };
 
         const result = mergeWithOverrides({
             data: schema1,
             overrides: {},
             allowNullKeys: ["examples"]
-        })
+        });
 
-        expect(result).toEqual(schema1)
-    })
+        expect(result).toEqual(schema1);
+    });
 
     it("should handle schema without null examples", () => {
         const schema2 = {
@@ -36,12 +36,12 @@ describe("mergeWithOverrides", () => {
                     }
                 }
             }
-        }
+        };
 
         const result = mergeWithOverrides({
             data: schema2,
             overrides: {}
-        })
+        });
 
         expect(result).toEqual({
             type: "object",
@@ -53,8 +53,8 @@ describe("mergeWithOverrides", () => {
                     }
                 }
             }
-        })
-    })
+        });
+    });
 
     it("should merge arrays of objects", () => {
         const data = {
@@ -62,43 +62,43 @@ describe("mergeWithOverrides", () => {
                 { id: 1, name: "Item 1" },
                 { id: 2, name: "Item 2" }
             ]
-        }
+        };
 
         const overrides = {
             items: [{ id: 1, description: "Updated Item 1" }]
-        }
+        };
 
         const result = mergeWithOverrides({
             data,
             overrides
-        })
+        });
 
         expect(result).toEqual({
             items: [
                 { id: 1, name: "Item 1", description: "Updated Item 1" },
                 { id: 2, name: "Item 2" }
             ]
-        })
-    })
+        });
+    });
 
     it("should replace arrays of primitives", () => {
         const data = {
             tags: ["tag1", "tag2"]
-        }
+        };
 
         const overrides = {
             tags: ["tag3", "tag4"]
-        }
+        };
 
         const result = mergeWithOverrides({
             data,
             overrides
-        })
+        });
 
         expect(result).toEqual({
             tags: ["tag3", "tag4"]
-        })
-    })
+        });
+    });
 
     it("should handle nested object merging", () => {
         const data = {
@@ -108,7 +108,7 @@ describe("mergeWithOverrides", () => {
                     notifications: true
                 }
             }
-        }
+        };
 
         const overrides = {
             config: {
@@ -117,12 +117,12 @@ describe("mergeWithOverrides", () => {
                     sound: false
                 }
             }
-        }
+        };
 
         const result = mergeWithOverrides({
             data,
             overrides
-        })
+        });
 
         expect(result).toEqual({
             config: {
@@ -132,6 +132,6 @@ describe("mergeWithOverrides", () => {
                     sound: false
                 }
             }
-        })
-    })
-})
+        });
+    });
+});

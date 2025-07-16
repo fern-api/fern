@@ -1,17 +1,17 @@
-import { php } from "@fern-api/php-codegen"
+import { php } from "@fern-api/php-codegen";
 
-import { HttpEndpoint, HttpService, SdkRequest, TypeReference } from "@fern-fern/ir-sdk/api"
+import { HttpEndpoint, HttpService, SdkRequest, TypeReference } from "@fern-fern/ir-sdk/api";
 
-import { SdkGeneratorContext } from "../../SdkGeneratorContext"
+import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import {
     EndpointRequest,
     HeaderParameterCodeBlock,
     QueryParameterCodeBlock,
     RequestBodyCodeBlock
-} from "./EndpointRequest"
+} from "./EndpointRequest";
 
 export class ReferencedEndpointRequest extends EndpointRequest {
-    private requestBodyShape: TypeReference
+    private requestBodyShape: TypeReference;
 
     public constructor(
         context: SdkGeneratorContext,
@@ -20,20 +20,20 @@ export class ReferencedEndpointRequest extends EndpointRequest {
         endpoint: HttpEndpoint,
         requestBodyShape: TypeReference
     ) {
-        super(context, sdkRequest, service, endpoint)
-        this.requestBodyShape = requestBodyShape
+        super(context, sdkRequest, service, endpoint);
+        this.requestBodyShape = requestBodyShape;
     }
 
     public getRequestParameterType(): php.Type {
-        return this.context.phpTypeMapper.convert({ reference: this.requestBodyShape })
+        return this.context.phpTypeMapper.convert({ reference: this.requestBodyShape });
     }
 
     public getQueryParameterCodeBlock(): QueryParameterCodeBlock | undefined {
-        return undefined
+        return undefined;
     }
 
     public getHeaderParameterCodeBlock(): HeaderParameterCodeBlock | undefined {
-        return undefined
+        return undefined;
     }
 
     public getRequestBodyCodeBlock(): RequestBodyCodeBlock | undefined {
@@ -41,6 +41,6 @@ export class ReferencedEndpointRequest extends EndpointRequest {
             requestBodyReference: this.serializeJsonRequest({
                 bodyArgument: php.codeblock(this.getRequestParameterName())
             })
-        }
+        };
     }
 }

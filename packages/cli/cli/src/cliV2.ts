@@ -1,18 +1,18 @@
-import { writeFile } from "fs/promises"
-import { Argv } from "yargs"
+import { writeFile } from "fs/promises";
+import { Argv } from "yargs";
 
-import { GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader"
+import { GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader";
 
-import { FernRegistry } from "@fern-fern/generators-sdk"
+import { FernRegistry } from "@fern-fern/generators-sdk";
 
-import { CliContext } from "./cli-context/CliContext"
-import { getGeneratorUpgradeMessage } from "./cli-context/upgrade-utils/getFernUpgradeMessage"
-import { getProjectGeneratorUpgrades } from "./cli-context/upgrade-utils/getGeneratorVersions"
-import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons"
-import { GenerationModeFilter, getGeneratorList } from "./commands/generator-list/getGeneratorList"
-import { getGeneratorMetadata } from "./commands/generator-metadata/getGeneratorMetadata"
-import { getOrganization } from "./commands/organization/getOrganization"
-import { upgradeGenerator } from "./commands/upgrade/upgradeGenerator"
+import { CliContext } from "./cli-context/CliContext";
+import { getGeneratorUpgradeMessage } from "./cli-context/upgrade-utils/getFernUpgradeMessage";
+import { getProjectGeneratorUpgrades } from "./cli-context/upgrade-utils/getGeneratorVersions";
+import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons";
+import { GenerationModeFilter, getGeneratorList } from "./commands/generator-list/getGeneratorList";
+import { getGeneratorMetadata } from "./commands/generator-metadata/getGeneratorMetadata";
+import { getOrganization } from "./commands/organization/getOrganization";
+import { upgradeGenerator } from "./commands/upgrade/upgradeGenerator";
 
 export function addGetOrganizationCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext): void {
     cli.command(
@@ -31,7 +31,7 @@ export function addGetOrganizationCommand(cli: Argv<GlobalCliOptions>, cliContex
                 properties: {
                     outputLocation: argv.output
                 }
-            })
+            });
             await getOrganization({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: undefined,
@@ -39,9 +39,9 @@ export function addGetOrganizationCommand(cli: Argv<GlobalCliOptions>, cliContex
                 }),
                 context: cliContext,
                 outputLocation: argv.output
-            })
+            });
         }
-    )
+    );
 }
 
 export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: CliContext): void {
@@ -99,7 +99,7 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                         properties: {
                             outputLocation: argv.output
                         }
-                    })
+                    });
                     await getGeneratorList({
                         project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                             commandLineApiWorkspace: undefined,
@@ -113,7 +113,7 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                         outputLocation: argv.output,
                         includedModes: argv["include-mode"] ? new Set(argv["include-mode"]) : undefined,
                         excludedModes: argv["exclude-mode"] ? new Set(argv["exclude-mode"]) : undefined
-                    })
+                    });
                 }
             )
             .command(
@@ -163,16 +163,16 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                             includeMajor: argv.includeMajor,
                             rc: argv.rc
                         }
-                    })
+                    });
 
                     const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                         commandLineApiWorkspace: argv.api,
                         defaultToAllApiWorkspaces: true
-                    })
+                    });
 
                     if (argv.list) {
                         // We're delivering a verbose upgrade message, so we should suppress the traditional upgrade message
-                        cliContext.suppressUpgradeMessage()
+                        cliContext.suppressUpgradeMessage();
                         const upgrades = await getProjectGeneratorUpgrades({
                             cliContext,
                             project,
@@ -180,15 +180,15 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                             groupFilter: argv.group,
                             includeMajor: argv.includeMajor,
                             channel: argv.channel
-                        })
+                        });
 
                         const message = await getGeneratorUpgradeMessage({
                             generatorUpgradeInfo: upgrades,
                             header: "Generator Upgrades\n",
                             includeBoxen: true
-                        })
+                        });
                         if (message != null) {
-                            cliContext.logger.info(message)
+                            cliContext.logger.info(message);
                         }
                     } else {
                         await upgradeGenerator({
@@ -201,7 +201,7 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                             }),
                             includeMajor: argv.includeMajor,
                             channel: argv.channel
-                        })
+                        });
                     }
                 }
             )
@@ -255,7 +255,7 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                             group: argv.group,
                             includeMajor: argv.includeMajor
                         }
-                    })
+                    });
                     const generator = await getGeneratorMetadata({
                         cliContext,
                         generatorFilter: argv.generator,
@@ -265,41 +265,41 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                             commandLineApiWorkspace: argv.api,
                             defaultToAllApiWorkspaces: true
                         })
-                    })
+                    });
 
                     interface GeneratorMetadata {
-                        version?: string
-                        language?: string
-                        repository?: string
+                        version?: string;
+                        language?: string;
+                        repository?: string;
                     }
 
                     if (generator == null) {
-                        const maybeApiFilter = argv.api ? ` for API ${argv.api}` : ""
+                        const maybeApiFilter = argv.api ? ` for API ${argv.api}` : "";
                         cliContext.failAndThrow(
                             `Generator ${argv.generator}, in group ${argv.group}${maybeApiFilter} was not found.`
-                        )
+                        );
                     }
 
-                    const generatorMetadata: GeneratorMetadata = {}
+                    const generatorMetadata: GeneratorMetadata = {};
                     if (argv.version) {
-                        generatorMetadata.version = generator.version
+                        generatorMetadata.version = generator.version;
                         if (argv.output == null) {
-                            process.stdout.write(generator.version)
-                            return
+                            process.stdout.write(generator.version);
+                            return;
                         }
                     }
 
                     if (argv.language) {
                         if (generator.language != null) {
-                            generatorMetadata.language = generator.language
+                            generatorMetadata.language = generator.language;
                             if (argv.output == null) {
-                                process.stdout.write(generator.language)
-                                return
+                                process.stdout.write(generator.language);
+                                return;
                             }
                         } else {
                             cliContext.logger.warn(
                                 `Language information is not available for generator ${generator.name} in group ${argv.group}`
-                            )
+                            );
                         }
                     }
 
@@ -309,31 +309,31 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                                 ? generator.outputMode.repo
                                 : generator.outputMode.type === "githubV2"
                                   ? generator.outputMode.githubV2.repo
-                                  : undefined
+                                  : undefined;
                         if (repository != null) {
-                            generatorMetadata.repository = repository
+                            generatorMetadata.repository = repository;
                             if (argv.output == null) {
-                                process.stdout.write(generatorMetadata.repository)
-                                return
+                                process.stdout.write(generatorMetadata.repository);
+                                return;
                             }
                         } else {
                             cliContext.logger.warn(
                                 `Repository information is not available for generator ${generator.name} in group ${argv.group}`
-                            )
+                            );
                         }
                     }
 
                     if (argv.output) {
                         try {
-                            await writeFile(argv.output, JSON.stringify(generatorMetadata, null, 2))
+                            await writeFile(argv.output, JSON.stringify(generatorMetadata, null, 2));
                         } catch (error) {
                             cliContext.failAndThrow(
                                 `Could not write file to the specified location: ${argv.output}`,
                                 error
-                            )
+                            );
                         }
                     }
                 }
-            )
-    })
+            );
+    });
 }

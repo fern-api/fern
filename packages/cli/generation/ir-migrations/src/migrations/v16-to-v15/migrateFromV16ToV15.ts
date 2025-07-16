@@ -1,9 +1,13 @@
-import { mapValues } from "lodash-es"
+import { mapValues } from "lodash-es";
 
-import { GeneratorName } from "@fern-api/configuration-loader"
+import { GeneratorName } from "@fern-api/configuration-loader";
 
-import { IrVersions } from "../../ir-versions"
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
+import { IrVersions } from "../../ir-versions";
+import {
+    GeneratorWasNeverUpdatedToConsumeNewIR,
+    GeneratorWasNotCreatedYet,
+    IrMigration
+} from "../../types/IrMigration";
 
 export const V16_TO_V15_MIGRATION: IrMigration<
     IrVersions.V16.ir.IntermediateRepresentation,
@@ -50,7 +54,7 @@ export const V16_TO_V15_MIGRATION: IrMigration<
                           ` If you'd like to use this feature, please upgrade ${targetGenerator.name}` +
                           " to a compatible version."
                     : "Cannot backwards-migrate IR because this IR contains a root base-path."
-            )
+            );
         }
         return {
             ...v16,
@@ -63,14 +67,14 @@ export const V16_TO_V15_MIGRATION: IrMigration<
                     pathParameters: convertPathParameters(endpoint.pathParameters)
                 }))
             }))
-        }
+        };
     }
-}
+};
 
 function convertPathParameters(
     pathParameters: IrVersions.V16.http.PathParameter[]
 ): IrVersions.V15.http.PathParameter[] {
-    return pathParameters.map((pathParameter) => convertPathParameter(pathParameter))
+    return pathParameters.map((pathParameter) => convertPathParameter(pathParameter));
 }
 
 function convertPathParameter(pathParameter: IrVersions.V16.http.PathParameter): IrVersions.V15.http.PathParameter {
@@ -80,5 +84,5 @@ function convertPathParameter(pathParameter: IrVersions.V16.http.PathParameter):
             status: IrVersions.V15.commons.AvailabilityStatus.GeneralAvailability,
             message: undefined
         }
-    }
+    };
 }

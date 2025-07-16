@@ -1,2 +1,2 @@
-export * from "./ParsedDocsConfiguration"
-export * as RawSchemas from "./schemas"
+export * from "./ParsedDocsConfiguration";
+export * as RawSchemas from "./schemas";

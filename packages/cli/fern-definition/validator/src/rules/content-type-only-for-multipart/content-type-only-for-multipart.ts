@@ -1,6 +1,6 @@
-import { isInlineRequestBody, parseFileUploadRequest } from "@fern-api/fern-definition-schema"
+import { isInlineRequestBody, parseFileUploadRequest } from "@fern-api/fern-definition-schema";
 
-import { Rule, RuleViolation } from "../../Rule"
+import { Rule, RuleViolation } from "../../Rule";
 
 export const ContentTypeOnlyForMultipartRule: Rule = {
     name: "content-type-only-for-multipart",
@@ -10,12 +10,12 @@ export const ContentTypeOnlyForMultipartRule: Rule = {
             definitionFile: {
                 httpEndpoint: ({ endpoint }) => {
                     if (endpoint.request == null) {
-                        return []
+                        return [];
                     }
 
-                    const parsedFileUploadRequest = parseFileUploadRequest(endpoint.request)
+                    const parsedFileUploadRequest = parseFileUploadRequest(endpoint.request);
                     if (parsedFileUploadRequest != null) {
-                        return []
+                        return [];
                     }
 
                     if (
@@ -23,26 +23,26 @@ export const ContentTypeOnlyForMultipartRule: Rule = {
                         endpoint.request.body != null &&
                         isInlineRequestBody(endpoint.request.body)
                     ) {
-                        const violations: RuleViolation[] = []
+                        const violations: RuleViolation[] = [];
                         for (const [propertyName, propertyDeclaration] of Object.entries(
                             endpoint.request.body.properties ?? {}
                         )) {
                             if (typeof propertyDeclaration === "string") {
-                                continue
+                                continue;
                             }
                             if (propertyDeclaration["content-type"] != null) {
                                 violations.push({
                                     severity: "fatal",
                                     message: `${propertyName} has content-type, but the request is not multipart`
-                                })
+                                });
                             }
                         }
-                        return violations
+                        return violations;
                     }
 
-                    return []
+                    return [];
                 }
             }
-        }
+        };
     }
-}
+};

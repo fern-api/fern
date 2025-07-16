@@ -1,10 +1,10 @@
-import type { Element, ElementContent } from "hast"
-import { CONTINUE, EXIT, visit } from "unist-util-visit"
+import type { Element, ElementContent } from "hast";
+import { CONTINUE, EXIT, visit } from "unist-util-visit";
 
-import { assertIsDefined } from "../assert"
-import { convertHastChildrenToMdast } from "../customComponents/children"
-import { findTitle } from "../extract/title"
-import type { HastNode, HastNodeIndex, HastNodeParent } from "../types/hastTypes"
+import { assertIsDefined } from "../assert";
+import { convertHastChildrenToMdast } from "../customComponents/children";
+import { findTitle } from "../extract/title";
+import type { HastNode, HastNodeIndex, HastNodeParent } from "../types/hastTypes";
 
 export function scrapeCard(node: HastNode, _: HastNodeIndex, parent: HastNodeParent): Element | undefined {
     if (
@@ -20,32 +20,32 @@ export function scrapeCard(node: HastNode, _: HastNodeIndex, parent: HastNodePar
             !node.properties.className.join(" ").includes("-card") &&
             !node.properties.className.includes("starter-card"))
     ) {
-        return undefined
+        return undefined;
     }
 
-    const title = findTitle(node)
+    const title = findTitle(node);
 
-    let href: string | undefined = undefined
+    let href: string | undefined = undefined;
     if (node.properties.href) {
-        href = node.properties.href as string
+        href = node.properties.href as string;
     } else if (node.properties.onclick && typeof node.properties.onclick === "string") {
-        const str = node.properties.onclick.split("'")[1]
-        href = str ? `./${str}` : undefined
+        const str = node.properties.onclick.split("'")[1];
+        href = str ? `./${str}` : undefined;
     } else {
         visit(node, "element", function (subNode) {
             if (subNode.properties.href) {
-                href = subNode.properties.href as string
-                return EXIT
+                href = subNode.properties.href as string;
+                return EXIT;
             } else if (subNode.properties.onclick && typeof node.properties.onclick === "string") {
-                const str = node.properties.onclick.split("'")[1]
-                href = str ? `./${str}` : undefined
-                return EXIT
+                const str = node.properties.onclick.split("'")[1];
+                href = str ? `./${str}` : undefined;
+                return EXIT;
             }
-            return CONTINUE
-        })
+            return CONTINUE;
+        });
     }
 
-    assertIsDefined(parent)
+    assertIsDefined(parent);
     const newNode: Element = {
         type: "element",
         tagName: "Card",
@@ -54,7 +54,7 @@ export function scrapeCard(node: HastNode, _: HastNodeIndex, parent: HastNodePar
             href
         },
         children: convertHastChildrenToMdast(node.children as Array<Element>) as Array<ElementContent>
-    }
+    };
 
-    return newNode
+    return newNode;
 }

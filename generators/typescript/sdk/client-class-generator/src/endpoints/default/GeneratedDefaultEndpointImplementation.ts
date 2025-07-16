@@ -1,47 +1,47 @@
-import { Fetcher, GetReferenceOpts, getExampleEndpointCalls, getTextOfTsNode } from "@fern-typescript/commons"
-import { GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts"
-import { ts } from "ts-morph"
+import { Fetcher, GetReferenceOpts, getExampleEndpointCalls, getTextOfTsNode } from "@fern-typescript/commons";
+import { GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
+import { ts } from "ts-morph";
 
-import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api"
+import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 
-import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl"
-import { GeneratedEndpointRequest } from "../../endpoint-request/GeneratedEndpointRequest"
-import { buildUrl } from "../utils/buildUrl"
+import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl";
+import { GeneratedEndpointRequest } from "../../endpoint-request/GeneratedEndpointRequest";
+import { buildUrl } from "../utils/buildUrl";
 import {
     REQUEST_OPTIONS_PARAMETER_NAME,
     getAbortSignalExpression,
     getMaxRetriesExpression,
     getRequestOptionsParameter,
     getTimeoutExpression
-} from "../utils/requestOptionsParameter"
-import { GeneratedEndpointResponse } from "./endpoint-response/GeneratedEndpointResponse"
+} from "../utils/requestOptionsParameter";
+import { GeneratedEndpointResponse } from "./endpoint-response/GeneratedEndpointResponse";
 
 export declare namespace GeneratedDefaultEndpointImplementation {
     export interface Init {
-        endpoint: HttpEndpoint
-        generatedSdkClientClass: GeneratedSdkClientClassImpl
-        includeCredentialsOnCrossOriginRequests: boolean
-        defaultTimeoutInSeconds: number | "infinity" | undefined
-        request: GeneratedEndpointRequest
-        response: GeneratedEndpointResponse
-        includeSerdeLayer: boolean
-        retainOriginalCasing: boolean
-        omitUndefined: boolean
+        endpoint: HttpEndpoint;
+        generatedSdkClientClass: GeneratedSdkClientClassImpl;
+        includeCredentialsOnCrossOriginRequests: boolean;
+        defaultTimeoutInSeconds: number | "infinity" | undefined;
+        request: GeneratedEndpointRequest;
+        response: GeneratedEndpointResponse;
+        includeSerdeLayer: boolean;
+        retainOriginalCasing: boolean;
+        omitUndefined: boolean;
     }
 }
 
-const EXAMPLE_PREFIX = "    "
+const EXAMPLE_PREFIX = "    ";
 
 export class GeneratedDefaultEndpointImplementation implements GeneratedEndpointImplementation {
-    public readonly endpoint: HttpEndpoint
-    public readonly response: GeneratedEndpointResponse
-    private generatedSdkClientClass: GeneratedSdkClientClassImpl
-    private includeCredentialsOnCrossOriginRequests: boolean
-    private defaultTimeoutInSeconds: number | "infinity" | undefined
-    private request: GeneratedEndpointRequest
-    private includeSerdeLayer: boolean
-    private retainOriginalCasing: boolean
-    private omitUndefined: boolean
+    public readonly endpoint: HttpEndpoint;
+    public readonly response: GeneratedEndpointResponse;
+    private generatedSdkClientClass: GeneratedSdkClientClassImpl;
+    private includeCredentialsOnCrossOriginRequests: boolean;
+    private defaultTimeoutInSeconds: number | "infinity" | undefined;
+    private request: GeneratedEndpointRequest;
+    private includeSerdeLayer: boolean;
+    private retainOriginalCasing: boolean;
+    private omitUndefined: boolean;
 
     constructor({
         endpoint,
@@ -54,31 +54,31 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         retainOriginalCasing,
         omitUndefined
     }: GeneratedDefaultEndpointImplementation.Init) {
-        this.endpoint = endpoint
-        this.generatedSdkClientClass = generatedSdkClientClass
-        this.includeCredentialsOnCrossOriginRequests = includeCredentialsOnCrossOriginRequests
-        this.defaultTimeoutInSeconds = defaultTimeoutInSeconds
-        this.request = request
-        this.response = response
-        this.includeSerdeLayer = includeSerdeLayer
-        this.retainOriginalCasing = retainOriginalCasing
-        this.omitUndefined = omitUndefined
+        this.endpoint = endpoint;
+        this.generatedSdkClientClass = generatedSdkClientClass;
+        this.includeCredentialsOnCrossOriginRequests = includeCredentialsOnCrossOriginRequests;
+        this.defaultTimeoutInSeconds = defaultTimeoutInSeconds;
+        this.request = request;
+        this.response = response;
+        this.includeSerdeLayer = includeSerdeLayer;
+        this.retainOriginalCasing = retainOriginalCasing;
+        this.omitUndefined = omitUndefined;
     }
 
     public isPaginated(context: SdkContext): boolean {
-        return this.response.getPaginationInfo(context) != null
+        return this.response.getPaginationInfo(context) != null;
     }
 
     public getOverloads(): GeneratedEndpointImplementation.EndpointSignature[] {
-        return []
+        return [];
     }
 
     public getSignature(context: SdkContext): GeneratedEndpointImplementation.EndpointSignature {
-        const paginationInfo = this.response.getPaginationInfo(context)
+        const paginationInfo = this.response.getPaginationInfo(context);
         const mainReturnType =
             paginationInfo != null
                 ? context.coreUtilities.pagination.Page._getReferenceToType(paginationInfo.itemType)
-                : this.response.getReturnType(context)
+                : this.response.getReturnType(context);
         return {
             parameters: [
                 ...this.request.getEndpointParameters(context),
@@ -87,86 +87,86 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                 })
             ],
             returnTypeWithoutPromise: mainReturnType
-        }
+        };
     }
 
     public getDocs(context: SdkContext): string | undefined {
-        const groups: string[] = []
+        const groups: string[] = [];
         if (this.endpoint.docs != null) {
-            groups.push(this.endpoint.docs)
+            groups.push(this.endpoint.docs);
         }
 
-        const params: string[] = []
+        const params: string[] = [];
         for (const parameter of this.request.getEndpointParameters(context)) {
             if (parameter.docs == null) {
-                params.push(`@param {${parameter.type}} ${parameter.name}`)
-                continue
+                params.push(`@param {${parameter.type}} ${parameter.name}`);
+                continue;
             }
-            const docsStrPrefix = `@param {${parameter.type}} ${parameter.name} - `
+            const docsStrPrefix = `@param {${parameter.type}} ${parameter.name} - `;
             const docsStrings = parameter.docs.split("\n").map((line: string, index: number) => {
                 if (index === 0) {
-                    return `${docsStrPrefix}${line}`
+                    return `${docsStrPrefix}${line}`;
                 } else {
-                    return `${" ".repeat(docsStrPrefix.length)}${line}`
+                    return `${" ".repeat(docsStrPrefix.length)}${line}`;
                 }
-            })
-            params.push(...docsStrings)
+            });
+            params.push(...docsStrings);
         }
 
         // Every method supports request options, so we always include this parameter last.
-        const requestOptionsType = this.generatedSdkClientClass.getRequestOptionsType(this.endpoint.idempotent)
+        const requestOptionsType = this.generatedSdkClientClass.getRequestOptionsType(this.endpoint.idempotent);
         params.push(
             `@param {${requestOptionsType}} ${REQUEST_OPTIONS_PARAMETER_NAME} - Request-specific configuration.`
-        )
-        groups.push(params.join("\n"))
+        );
+        groups.push(params.join("\n"));
 
-        const exceptions: string[] = []
+        const exceptions: string[] = [];
         for (const errorName of this.response.getNamesOfThrownExceptions(context)) {
-            exceptions.push(`@throws {@link ${errorName}}`)
+            exceptions.push(`@throws {@link ${errorName}}`);
         }
         if (exceptions.length > 0) {
-            groups.push(exceptions.join("\n"))
+            groups.push(exceptions.join("\n"));
         }
 
-        const examples: string[] = []
+        const examples: string[] = [];
         for (const example of getExampleEndpointCalls(this.endpoint)) {
             const generatedExample = this.getExample({
                 context,
                 example,
                 opts: { isForComment: true },
                 clientReference: context.sdkInstanceReferenceForSnippet
-            })
+            });
             if (generatedExample == null) {
-                continue
+                continue;
             }
-            let exampleStr = "@example\n" + getTextOfTsNode(generatedExample)
-            exampleStr = exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`)
+            let exampleStr = "@example\n" + getTextOfTsNode(generatedExample);
+            exampleStr = exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`);
             // Only add if it doesn't already exist
             if (!examples.includes(exampleStr)) {
-                examples.push(exampleStr)
+                examples.push(exampleStr);
             }
         }
         if (examples.length > 0) {
             // Each example is its own group.
-            groups.push(...examples)
+            groups.push(...examples);
         }
 
-        return groups.join("\n\n")
+        return groups.join("\n\n");
     }
 
     public getExample(args: {
-        context: SdkContext
-        example: ExampleEndpointCall
-        opts: GetReferenceOpts
-        clientReference: ts.Identifier
+        context: SdkContext;
+        example: ExampleEndpointCall;
+        opts: GetReferenceOpts;
+        clientReference: ts.Identifier;
     }): ts.Expression | undefined {
         const exampleParameters = this.request.getExampleEndpointParameters({
             context: args.context,
             example: args.example,
             opts: args.opts
-        })
+        });
         if (exampleParameters == null) {
-            return undefined
+            return undefined;
         }
         return ts.factory.createAwaitExpression(
             ts.factory.createCallExpression(
@@ -179,23 +179,23 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                 undefined,
                 exampleParameters
             )
-        )
+        );
     }
 
     public maybeLeverageInvocation({
         invocation,
         context
     }: {
-        invocation: ts.Expression
-        context: SdkContext
+        invocation: ts.Expression;
+        context: SdkContext;
     }): ts.Node[] | undefined {
         if (this.endpoint.pagination == null || !context.config.generatePaginatedClients) {
-            return undefined
+            return undefined;
         }
 
-        const responseVariableName = "response"
-        const pageVariableName = "page"
-        const itemVariableName = "item"
+        const responseVariableName = "response";
+        const pageVariableName = "page";
+        const itemVariableName = "item";
         return [
             ts.factory.createVariableStatement(
                 undefined,
@@ -286,19 +286,19 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                     true
                 )
             )
-        ]
+        ];
     }
 
     public getStatements(context: SdkContext): ts.Statement[] {
-        const listFnName = "list"
+        const listFnName = "list";
         const body = [
             ...this.request.getBuildRequestStatements(context),
             ...this.invokeFetcherAndReturnResponse(context)
-        ]
+        ];
 
-        const requestParameter = this.request.getRequestParameter(context)
-        const paginationInfo = this.response.getPaginationInfo(context)
-        const responseReturnType = this.response.getReturnType(context)
+        const requestParameter = this.request.getRequestParameter(context);
+        const paginationInfo = this.response.getPaginationInfo(context);
+        const responseReturnType = this.response.getReturnType(context);
         if (paginationInfo != null && requestParameter != null) {
             const listFn = ts.factory.createVariableDeclarationList(
                 [
@@ -333,12 +333,12 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                     )
                 ],
                 ts.NodeFlags.Const
-            )
-            const statements: ts.Statement[] = [ts.factory.createVariableStatement(undefined, listFn)]
+            );
+            const statements: ts.Statement[] = [ts.factory.createVariableStatement(undefined, listFn)];
             if (paginationInfo.type === "offset" || paginationInfo.type === "offset-step") {
-                statements.push(paginationInfo.initializeOffset)
+                statements.push(paginationInfo.initializeOffset);
             }
-            const initialResponseVar = ts.factory.createIdentifier("dataWithRawResponse")
+            const initialResponseVar = ts.factory.createIdentifier("dataWithRawResponse");
             statements.push(
                 ts.factory.createVariableStatement(
                     undefined,
@@ -367,7 +367,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                         ts.NodeFlags.Const
                     )
                 )
-            )
+            );
             statements.push(
                 ts.factory.createReturnStatement(
                     context.coreUtilities.pagination.Pageable._construct({
@@ -383,20 +383,20 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                         })
                     })
                 )
-            )
-            return statements
+            );
+            return statements;
         }
-        return body
+        return body;
     }
 
     private createLambdaWithResponse({
         body,
         ignoreResponse
     }: {
-        body: ts.ConciseBody
-        ignoreResponse?: boolean
+        body: ts.ConciseBody;
+        ignoreResponse?: boolean;
     }): ts.Expression {
-        const responseParameterName = ignoreResponse ? "_response" : "response"
+        const responseParameterName = ignoreResponse ? "_response" : "response";
         return ts.factory.createArrowFunction(
             undefined,
             undefined,
@@ -414,15 +414,15 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             undefined,
             ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
             body
-        )
+        );
     }
 
     public invokeFetcherAndReturnResponse(context: SdkContext): ts.Statement[] {
-        return [...this.invokeFetcher(context), ...this.response.getReturnResponseStatements(context)]
+        return [...this.invokeFetcher(context), ...this.response.getReturnResponseStatements(context)];
     }
 
     private getReferenceToBaseUrl(context: SdkContext): ts.Expression {
-        const baseUrl = this.generatedSdkClientClass.getBaseUrl(this.endpoint, context)
+        const baseUrl = this.generatedSdkClientClass.getBaseUrl(this.endpoint, context);
         const url = buildUrl({
             endpoint: this.endpoint,
             generatedClientClass: this.generatedSdkClientClass,
@@ -431,13 +431,13 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             retainOriginalCasing: this.retainOriginalCasing,
             omitUndefined: this.omitUndefined,
             getReferenceToPathParameterVariableFromRequest: (pathParameter) => {
-                return this.request.getReferenceToPathParameter(pathParameter.name.originalName, context)
+                return this.request.getReferenceToPathParameter(pathParameter.name.originalName, context);
             }
-        })
+        });
         if (url != null) {
-            return context.coreUtilities.urlUtils.join._invoke([baseUrl, url])
+            return context.coreUtilities.urlUtils.join._invoke([baseUrl, url]);
         } else {
-            return baseUrl
+            return baseUrl;
         }
     }
 
@@ -464,10 +464,10 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             }),
 
             withCredentials: this.includeCredentialsOnCrossOriginRequests
-        }
+        };
 
         if (this.endpoint.response?.body?.type === "text") {
-            fetcherArgs.responseType = "text"
+            fetcherArgs.responseType = "text";
         }
 
         return [
@@ -488,6 +488,6 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                     ts.NodeFlags.Const
                 )
             )
-        ]
+        ];
     }
 }

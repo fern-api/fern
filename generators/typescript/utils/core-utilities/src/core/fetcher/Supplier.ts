@@ -1,11 +1,11 @@
-export type Supplier<T> = T | Promise<T> | (() => T | Promise<T>)
+export type Supplier<T> = T | Promise<T> | (() => T | Promise<T>);
 
 export const Supplier = {
     get: async <T>(supplier: Supplier<T>): Promise<T> => {
         if (typeof supplier === "function") {
-            return (supplier as () => T)()
+            return (supplier as () => T)();
         } else {
-            return supplier
+            return supplier;
         }
     }
-}
+};

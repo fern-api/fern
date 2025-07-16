@@ -1,19 +1,19 @@
-import { writeFile } from "fs/promises"
+import { writeFile } from "fs/promises";
 
-import { File, GeneratorNotificationService } from "@fern-api/base-generator"
-import { RelativeFilePath } from "@fern-api/fs-utils"
-import { AbstractJavaGeneratorCli } from "@fern-api/java-base"
-import { DynamicSnippetsGenerator } from "@fern-api/java-dynamic-snippets"
+import { File, GeneratorNotificationService } from "@fern-api/base-generator";
+import { RelativeFilePath } from "@fern-api/fs-utils";
+import { AbstractJavaGeneratorCli } from "@fern-api/java-base";
+import { DynamicSnippetsGenerator } from "@fern-api/java-dynamic-snippets";
 
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
-import { Endpoint } from "@fern-fern/generator-exec-sdk/api"
-import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization"
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api"
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
+import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
-import { SdkCustomConfigSchema } from "./SdkCustomConfig"
-import { SdkGeneratorContext } from "./SdkGeneratorContext"
-import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest"
-import { convertIr } from "./utils/convertIr"
+import { SdkCustomConfigSchema } from "./SdkCustomConfig";
+import { SdkGeneratorContext } from "./SdkGeneratorContext";
+import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
+import { convertIr } from "./utils/convertIr";
 
 export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -22,54 +22,54 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
         generatorConfig,
         generatorNotificationService
     }: {
-        ir: IntermediateRepresentation
-        customConfig: SdkCustomConfigSchema
-        generatorConfig: FernGeneratorExec.GeneratorConfig
-        generatorNotificationService: GeneratorNotificationService
+        ir: IntermediateRepresentation;
+        customConfig: SdkCustomConfigSchema;
+        generatorConfig: FernGeneratorExec.GeneratorConfig;
+        generatorNotificationService: GeneratorNotificationService;
     }): SdkGeneratorContext {
-        return new SdkGeneratorContext(ir, generatorConfig, customConfig, generatorNotificationService)
+        return new SdkGeneratorContext(ir, generatorConfig, customConfig, generatorNotificationService);
     }
 
     protected parseCustomConfigOrThrow(customConfig: unknown): SdkCustomConfigSchema {
-        const parsed = customConfig != null ? SdkCustomConfigSchema.parse(customConfig) : undefined
+        const parsed = customConfig != null ? SdkCustomConfigSchema.parse(customConfig) : undefined;
         if (parsed != null) {
-            return parsed
+            return parsed;
         }
-        return {}
+        return {};
     }
 
     protected async publishPackage(context: SdkGeneratorContext): Promise<void> {
-        await this.generate(context)
+        await this.generate(context);
     }
 
     protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {
-        await this.generate(context)
+        await this.generate(context);
         if (context.isSelfHosted()) {
-            await this.generateGitHub({ context })
+            await this.generateGitHub({ context });
         }
     }
 
     protected async writeForDownload(context: SdkGeneratorContext): Promise<void> {
-        await this.generate(context)
+        await this.generate(context);
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
         if (context.config.output.snippetFilepath != null) {
-            const snippetFilepath = context.config.output.snippetFilepath
-            let endpointSnippets: Endpoint[] = []
+            const snippetFilepath = context.config.output.snippetFilepath;
+            let endpointSnippets: Endpoint[] = [];
             try {
-                endpointSnippets = await this.generateSnippets({ context })
+                endpointSnippets = await this.generateSnippets({ context });
             } catch (e) {
-                context.logger.warn("Failed to generate snippets, this is OK.")
+                context.logger.warn("Failed to generate snippets, this is OK.");
             }
 
             try {
                 await this.generateReadme({
                     context,
                     endpointSnippets
-                })
+                });
             } catch (e) {
-                context.logger.warn("Failed to generate README.md, this is OK.")
+                context.logger.warn("Failed to generate README.md, this is OK.");
             }
 
             try {
@@ -77,41 +77,41 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
                     context,
                     endpointSnippets,
                     snippetFilepath
-                })
+                });
             } catch (e) {
-                context.logger.warn("Failed to generate snippets.json, this is OK")
+                context.logger.warn("Failed to generate snippets.json, this is OK");
             }
         }
 
-        await context.project.persist()
+        await context.project.persist();
     }
 
     private async generateSnippets({ context }: { context: SdkGeneratorContext }): Promise<Endpoint[]> {
-        const endpointSnippets: Endpoint[] = []
-        const dynamicIr = context.ir.dynamic
+        const endpointSnippets: Endpoint[] = [];
+        const dynamicIr = context.ir.dynamic;
 
         if (!dynamicIr) {
-            throw new Error("Cannot generate dynamic snippets without dynamic IR")
+            throw new Error("Cannot generate dynamic snippets without dynamic IR");
         }
 
         const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
             // NOTE: This will eventually become a shared library. See the generators/go-v2/sdk/src/SdkGeneratorCli.ts
             ir: convertIr(dynamicIr),
             config: context.config
-        })
+        });
 
         for (const [endpointId, endpoint] of Object.entries(dynamicIr.endpoints)) {
-            const method = endpoint.location.method
-            const path = FernGeneratorExec.EndpointPath(endpoint.location.path)
+            const method = endpoint.location.method;
+            const path = FernGeneratorExec.EndpointPath(endpoint.location.path);
 
             for (const endpointExample of endpoint.examples ?? []) {
                 const generatedSnippet = await dynamicSnippetsGenerator.generate(
                     convertDynamicEndpointSnippetRequest(endpointExample)
-                )
+                );
 
-                const syncClient = generatedSnippet.snippet + "\n"
+                const syncClient = generatedSnippet.snippet + "\n";
                 // TODO: Properly generate async client; this is a placeholder for now.
-                const asyncClient = generatedSnippet.snippet + "\n"
+                const asyncClient = generatedSnippet.snippet + "\n";
 
                 endpointSnippets.push({
                     exampleIdentifier: endpointExample.id,
@@ -124,22 +124,24 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
                         syncClient,
                         asyncClient
                     })
-                })
+                });
             }
         }
 
-        return endpointSnippets
+        return endpointSnippets;
     }
 
     private async generateReadme({
         context,
         endpointSnippets
     }: {
-        context: SdkGeneratorContext
-        endpointSnippets: Endpoint[]
+        context: SdkGeneratorContext;
+        endpointSnippets: Endpoint[];
     }): Promise<void> {
-        const content = await context.generatorAgent.generateReadme({ context, endpointSnippets })
-        context.project.addRawFiles(new File(context.generatorAgent.README_FILENAME, RelativeFilePath.of("."), content))
+        const content = await context.generatorAgent.generateReadme({ context, endpointSnippets });
+        context.project.addRawFiles(
+            new File(context.generatorAgent.README_FILENAME, RelativeFilePath.of("."), content)
+        );
     }
 
     private async generateSnippetsJson({
@@ -147,28 +149,28 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
         endpointSnippets,
         snippetFilepath
     }: {
-        context: SdkGeneratorContext
-        endpointSnippets: Endpoint[]
-        snippetFilepath: string
+        context: SdkGeneratorContext;
+        endpointSnippets: Endpoint[];
+        snippetFilepath: string;
     }): Promise<void> {
         if (endpointSnippets.length === 0) {
-            context.logger.debug("No snippets were produced; skipping snippets.json generation.")
-            return
+            context.logger.debug("No snippets were produced; skipping snippets.json generation.");
+            return;
         }
 
         const snippets: FernGeneratorExec.Snippets = {
             endpoints: endpointSnippets,
             // TODO: Add types
             types: {}
-        }
+        };
 
         await writeFile(
             snippetFilepath,
             JSON.stringify(await FernGeneratorExecSerializers.Snippets.jsonOrThrow(snippets), undefined, 4)
-        )
+        );
     }
 
     private async generateGitHub({ context }: { context: SdkGeneratorContext }): Promise<void> {
-        await context.generatorAgent.pushToGitHub({ context })
+        await context.generatorAgent.pushToGitHub({ context });
     }
 }

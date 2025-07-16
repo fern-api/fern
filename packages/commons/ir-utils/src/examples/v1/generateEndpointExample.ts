@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils"
+import { assertNever } from "@fern-api/core-utils";
 import {
     ErrorDeclaration,
     ExampleEndpointCall,
@@ -15,40 +15,40 @@ import {
     TypeDeclaration,
     TypeId,
     TypeReference
-} from "@fern-api/ir-sdk"
+} from "@fern-api/ir-sdk";
 
-import { hashJSON } from "../../hashJSON"
-import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional"
-import { ExampleGenerationResult } from "./ExampleGenerationResult"
+import { hashJSON } from "../../hashJSON";
+import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional";
+import { ExampleGenerationResult } from "./ExampleGenerationResult";
 import {
     generateHeaderExamples,
     generatePathParameterExamples,
     generateQueryParameterExamples
-} from "./generateParameterExamples"
-import { generateTypeDeclarationExample } from "./generateTypeDeclarationExample"
-import { generateTypeReferenceExample } from "./generateTypeReferenceExample"
+} from "./generateParameterExamples";
+import { generateTypeDeclarationExample } from "./generateTypeDeclarationExample";
+import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
 
 export declare namespace generateEndpointExample {
     interface Args {
-        ir: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage">
-        service: HttpService
-        endpoint: HttpEndpoint
-        typeDeclarations: Record<TypeId, TypeDeclaration>
+        ir: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage">;
+        service: HttpService;
+        endpoint: HttpEndpoint;
+        typeDeclarations: Record<TypeId, TypeDeclaration>;
 
-        skipOptionalRequestProperties: boolean
+        skipOptionalRequestProperties: boolean;
 
-        generationResponse: GenerationResponseType
+        generationResponse: GenerationResponseType;
     }
 
-    type GenerationResponseType = SuccessResponseType | ErrorResponseType
+    type GenerationResponseType = SuccessResponseType | ErrorResponseType;
 
     interface SuccessResponseType {
-        type: "success"
+        type: "success";
     }
 
     interface ErrorResponseType {
-        type: "error"
-        declaration: ErrorDeclaration
+        type: "error";
+        declaration: ErrorDeclaration;
     }
 }
 
@@ -58,7 +58,7 @@ const TEXT_TYPE_REFERENCE = TypeReference.primitive({
         default: undefined,
         validation: undefined
     })
-})
+});
 
 export function generateEndpointExample({
     ir,
@@ -79,85 +79,85 @@ export function generateEndpointExample({
         request: undefined,
         response: ExampleResponse.ok(ExampleEndpointSuccessResponse.body(undefined)),
         docs: undefined
-    }
+    };
 
     const endpointPathResult = generatePathParameterExamples(endpoint.pathParameters, {
         typeDeclarations,
         skipOptionalRequestProperties,
         maxDepth: 1
-    })
+    });
     if (endpointPathResult.type === "failure") {
-        return endpointPathResult
+        return endpointPathResult;
     }
-    result.endpointPathParameters = endpointPathResult.example
+    result.endpointPathParameters = endpointPathResult.example;
 
     const servicePathResult = generatePathParameterExamples(service.pathParameters, {
         typeDeclarations,
         skipOptionalRequestProperties,
         maxDepth: 1
-    })
+    });
     if (servicePathResult.type === "failure") {
-        return servicePathResult
+        return servicePathResult;
     }
-    result.servicePathParameters = servicePathResult.example
+    result.servicePathParameters = servicePathResult.example;
 
     const rootPathResult = generatePathParameterExamples(ir.pathParameters, {
         typeDeclarations,
         skipOptionalRequestProperties,
         maxDepth: 1
-    })
+    });
     if (rootPathResult.type === "failure") {
-        return rootPathResult
+        return rootPathResult;
     }
-    result.rootPathParameters = rootPathResult.example
+    result.rootPathParameters = rootPathResult.example;
 
     const queryParamsResult = generateQueryParameterExamples(endpoint.queryParameters, {
         typeDeclarations,
         skipOptionalRequestProperties,
         maxDepth: 10
-    })
+    });
     if (queryParamsResult.type === "failure") {
-        return queryParamsResult
+        return queryParamsResult;
     }
-    result.queryParameters = queryParamsResult.example
+    result.queryParameters = queryParamsResult.example;
 
     const endpointHeadersResult = generateHeaderExamples(endpoint.headers, {
         typeDeclarations,
         skipOptionalRequestProperties,
         maxDepth: 1
-    })
+    });
     if (endpointHeadersResult.type === "failure") {
-        return endpointHeadersResult
+        return endpointHeadersResult;
     }
-    result.endpointHeaders = endpointHeadersResult.example
+    result.endpointHeaders = endpointHeadersResult.example;
 
     const serviceHeadersResult = generateHeaderExamples(service.headers, {
         typeDeclarations,
         skipOptionalRequestProperties,
         maxDepth: 1
-    })
+    });
     if (serviceHeadersResult.type === "failure") {
-        return serviceHeadersResult
+        return serviceHeadersResult;
     }
-    result.serviceHeaders = serviceHeadersResult.example
+    result.serviceHeaders = serviceHeadersResult.example;
 
     if (endpoint.requestBody != null) {
         switch (endpoint.requestBody.type) {
             case "bytes":
-                return { type: "failure", message: "Bytes request unsupported" }
+                return { type: "failure", message: "Bytes request unsupported" };
             case "fileUpload":
-                return { type: "failure", message: "File upload unsupported" }
+                return { type: "failure", message: "File upload unsupported" };
             case "inlinedRequestBody": {
-                const jsonExample: Record<string, unknown> = {}
-                const properties: ExampleInlinedRequestBodyProperty[] = []
+                const jsonExample: Record<string, unknown> = {};
+                const properties: ExampleInlinedRequestBodyProperty[] = [];
 
                 if (endpoint.requestBody.extends != null) {
                     for (const extendedTypeReference of endpoint.requestBody.extends) {
-                        const extendedTypeDeclaration = typeDeclarations[extendedTypeReference.typeId]
+                        const extendedTypeDeclaration = typeDeclarations[extendedTypeReference.typeId];
                         if (extendedTypeDeclaration == null) {
                             throw new Error(
                                 `Failed to find extended type declaration with id ${extendedTypeReference.typeId}`
-                            )
+                            );
                         }
                         const extendedExample = generateTypeDeclarationExample({
                             typeDeclaration: extendedTypeDeclaration,
@@ -165,12 +165,12 @@ export function generateEndpointExample({
                             currentDepth: 1,
                             maxDepth: 10,
                             skipOptionalProperties: skipOptionalRequestProperties
-                        })
+                        });
                         if (extendedExample == null) {
-                            continue
+                            continue;
                         }
                         if (extendedExample.type === "success") {
-                            Object.assign(jsonExample, extendedExample.jsonExample)
+                            Object.assign(jsonExample, extendedExample.jsonExample);
                         }
                     }
                 }
@@ -186,7 +186,7 @@ export function generateEndpointExample({
                         currentDepth: 1,
                         maxDepth: 10,
                         skipOptionalProperties: skipOptionalRequestProperties
-                    })
+                    });
                     if (
                         propertyExample.type === "failure" &&
                         !isTypeReferenceOptional({ typeDeclarations, typeReference: property.valueType })
@@ -194,23 +194,23 @@ export function generateEndpointExample({
                         return {
                             type: "failure",
                             message: `Failed to generate required property ${property.name.wireValue} b/c ${propertyExample.message}`
-                        }
+                        };
                     } else if (propertyExample.type === "failure") {
-                        continue
+                        continue;
                     }
-                    const { example, jsonExample: propertyJsonExample } = propertyExample
+                    const { example, jsonExample: propertyJsonExample } = propertyExample;
                     properties.push({
                         name: property.name,
                         originalTypeDeclaration: undefined,
                         value: example
-                    })
-                    jsonExample[property.name.wireValue] = propertyJsonExample
+                    });
+                    jsonExample[property.name.wireValue] = propertyJsonExample;
                 }
                 result.request = ExampleRequestBody.inlinedRequestBody({
                     jsonExample,
                     properties
-                })
-                break
+                });
+                break;
             }
             case "reference": {
                 const generatedExample = generateTypeReferenceExample({
@@ -219,23 +219,23 @@ export function generateEndpointExample({
                     typeDeclarations,
                     typeReference: endpoint.requestBody.requestBodyType,
                     skipOptionalProperties: skipOptionalRequestProperties
-                })
+                });
                 if (generatedExample.type === "failure") {
-                    return generatedExample
+                    return generatedExample;
                 }
-                const { example } = generatedExample
-                result.request = ExampleRequestBody.reference(example)
-                break
+                const { example } = generatedExample;
+                result.request = ExampleRequestBody.reference(example);
+                break;
             }
             default:
-                assertNever(endpoint.requestBody)
+                assertNever(endpoint.requestBody);
         }
     }
 
     if (generationResponse.type === "success" && endpoint.response?.body != null) {
         switch (endpoint.response.body.type) {
             case "fileDownload":
-                return { type: "failure", message: "File download unsupported" }
+                return { type: "failure", message: "File download unsupported" };
             case "json": {
                 const generatedExample = generateTypeReferenceExample({
                     currentDepth: 0,
@@ -243,21 +243,21 @@ export function generateEndpointExample({
                     typeDeclarations,
                     typeReference: endpoint.response.body.value.responseBodyType,
                     skipOptionalProperties: false
-                })
+                });
                 if (generatedExample.type === "failure") {
-                    return generatedExample
+                    return generatedExample;
                 }
-                const { example, jsonExample } = generatedExample
-                result.response = ExampleResponse.ok(ExampleEndpointSuccessResponse.body({ ...example, jsonExample }))
-                break
+                const { example, jsonExample } = generatedExample;
+                result.response = ExampleResponse.ok(ExampleEndpointSuccessResponse.body({ ...example, jsonExample }));
+                break;
             }
             case "streamParameter": {
-                let generatedExample: ExampleGenerationResult<ExampleTypeReference> | undefined = undefined
+                let generatedExample: ExampleGenerationResult<ExampleTypeReference> | undefined = undefined;
                 switch (endpoint.response.body.nonStreamResponse.type) {
                     case "bytes":
-                        return { type: "failure", message: "Bytes unsupported" }
+                        return { type: "failure", message: "Bytes unsupported" };
                     case "fileDownload":
-                        return { type: "failure", message: "File download unsupported" }
+                        return { type: "failure", message: "File download unsupported" };
                     case "json":
                         generatedExample = generateTypeReferenceExample({
                             currentDepth: 0,
@@ -265,8 +265,8 @@ export function generateEndpointExample({
                             typeDeclarations,
                             typeReference: endpoint.response.body.nonStreamResponse.value.responseBodyType,
                             skipOptionalProperties: false
-                        })
-                        break
+                        });
+                        break;
                     case "text":
                         generatedExample = generateTypeReferenceExample({
                             currentDepth: 0,
@@ -274,20 +274,20 @@ export function generateEndpointExample({
                             typeDeclarations,
                             typeReference: TEXT_TYPE_REFERENCE,
                             skipOptionalProperties: false
-                        })
-                        break
+                        });
+                        break;
                     default:
-                        assertNever(endpoint.response.body.nonStreamResponse)
+                        assertNever(endpoint.response.body.nonStreamResponse);
                 }
                 if (generatedExample.type === "failure") {
-                    return generatedExample
+                    return generatedExample;
                 }
-                const { example, jsonExample } = generatedExample
-                result.response = ExampleResponse.ok(ExampleEndpointSuccessResponse.body({ ...example, jsonExample }))
-                break
+                const { example, jsonExample } = generatedExample;
+                result.response = ExampleResponse.ok(ExampleEndpointSuccessResponse.body({ ...example, jsonExample }));
+                break;
             }
             case "streaming": {
-                let generatedExample: ExampleGenerationResult<ExampleTypeReference> | undefined = undefined
+                let generatedExample: ExampleGenerationResult<ExampleTypeReference> | undefined = undefined;
                 switch (endpoint.response.body.value.type) {
                     case "sse": {
                         generatedExample = generateTypeReferenceExample({
@@ -296,15 +296,15 @@ export function generateEndpointExample({
                             typeDeclarations,
                             typeReference: endpoint.response.body.value.payload,
                             skipOptionalProperties: false
-                        })
+                        });
                         if (generatedExample.type === "failure") {
-                            return generatedExample
+                            return generatedExample;
                         }
-                        const { example, jsonExample } = generatedExample
+                        const { example, jsonExample } = generatedExample;
                         result.response = ExampleResponse.ok(
                             ExampleEndpointSuccessResponse.sse([{ data: { ...example, jsonExample }, event: "" }])
-                        )
-                        break
+                        );
+                        break;
                     }
                     case "json": {
                         generatedExample = generateTypeReferenceExample({
@@ -313,15 +313,15 @@ export function generateEndpointExample({
                             typeDeclarations,
                             typeReference: endpoint.response.body.value.payload,
                             skipOptionalProperties: false
-                        })
+                        });
                         if (generatedExample.type === "failure") {
-                            return generatedExample
+                            return generatedExample;
                         }
-                        const { example, jsonExample } = generatedExample
+                        const { example, jsonExample } = generatedExample;
                         result.response = ExampleResponse.ok(
                             ExampleEndpointSuccessResponse.stream([{ ...example, jsonExample }])
-                        )
-                        break
+                        );
+                        break;
                     }
                     case "text": {
                         generatedExample = generateTypeReferenceExample({
@@ -330,21 +330,21 @@ export function generateEndpointExample({
                             typeDeclarations,
                             typeReference: TEXT_TYPE_REFERENCE,
                             skipOptionalProperties: false
-                        })
+                        });
                         if (generatedExample.type === "failure") {
-                            return generatedExample
+                            return generatedExample;
                         }
-                        const { example, jsonExample } = generatedExample
+                        const { example, jsonExample } = generatedExample;
                         result.response = ExampleResponse.ok(
                             ExampleEndpointSuccessResponse.stream([{ ...example, jsonExample }])
-                        )
-                        break
+                        );
+                        break;
                     }
                     default:
-                        assertNever(endpoint.response.body.value)
+                        assertNever(endpoint.response.body.value);
                 }
 
-                break
+                break;
             }
             case "text": {
                 const generatedExample = generateTypeReferenceExample({
@@ -353,25 +353,25 @@ export function generateEndpointExample({
                     typeDeclarations,
                     typeReference: TEXT_TYPE_REFERENCE,
                     skipOptionalProperties: false
-                })
+                });
                 if (generatedExample.type === "failure") {
-                    return generatedExample
+                    return generatedExample;
                 }
-                const { example, jsonExample } = generatedExample
-                result.response = ExampleResponse.ok(ExampleEndpointSuccessResponse.body({ ...example, jsonExample }))
-                break
+                const { example, jsonExample } = generatedExample;
+                result.response = ExampleResponse.ok(ExampleEndpointSuccessResponse.body({ ...example, jsonExample }));
+                break;
             }
             case "bytes":
-                return { type: "failure", message: "Bytes unsupported" }
+                return { type: "failure", message: "Bytes unsupported" };
             default:
-                assertNever(endpoint.response.body)
+                assertNever(endpoint.response.body);
         }
     } else if (generationResponse.type === "error") {
         if (generationResponse.declaration.type == null) {
             result.response = ExampleResponse.error({
                 body: undefined,
                 error: generationResponse.declaration.name
-            })
+            });
         } else {
             const generatedExample = generateTypeReferenceExample({
                 currentDepth: 0,
@@ -379,20 +379,20 @@ export function generateEndpointExample({
                 typeDeclarations,
                 typeReference: generationResponse.declaration.type,
                 skipOptionalProperties: skipOptionalRequestProperties
-            })
+            });
             if (generatedExample.type === "failure") {
-                return generatedExample
+                return generatedExample;
             }
-            const { example } = generatedExample
+            const { example } = generatedExample;
             result.response = ExampleResponse.error({
                 body: example,
                 error: generationResponse.declaration.name
-            })
+            });
         }
     }
 
     try {
-        const hashed = hashJSON(result)
+        const hashed = hashJSON(result);
         return {
             type: "success",
             example: {
@@ -401,25 +401,25 @@ export function generateEndpointExample({
                 ...result
             },
             jsonExample: undefined // dummy
-        }
+        };
     } catch (e) {
-        return { type: "failure", message: `Parse failure with exceptions ${e}` }
+        return { type: "failure", message: `Parse failure with exceptions ${e}` };
     }
 }
 
 function getUrlForExample(endpoint: HttpEndpoint, example: Omit<ExampleEndpointCall, "id" | "url">): string {
-    const pathParameters: Record<string, string> = {}
-    ;[...example.rootPathParameters, ...example.servicePathParameters, ...example.endpointPathParameters].forEach(
+    const pathParameters: Record<string, string> = {};
+    [...example.rootPathParameters, ...example.servicePathParameters, ...example.endpointPathParameters].forEach(
         (examplePathParameter) => {
-            const value = examplePathParameter.value.jsonExample
-            const stringValue = typeof value === "string" ? value : JSON.stringify(value)
-            pathParameters[examplePathParameter.name.originalName] = stringValue
+            const value = examplePathParameter.value.jsonExample;
+            const stringValue = typeof value === "string" ? value : JSON.stringify(value);
+            pathParameters[examplePathParameter.name.originalName] = stringValue;
         }
-    )
+    );
     const url =
         endpoint.fullPath.head +
         endpoint.fullPath.parts
             .map((pathPart) => encodeURIComponent(`${pathParameters[pathPart.pathParameter]}`) + pathPart.tail)
-            .join("")
-    return url.startsWith("/") || url === "" ? url : `/${url}`
+            .join("");
+    return url.startsWith("/") || url === "" ? url : `/${url}`;
 }

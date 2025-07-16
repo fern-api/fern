@@ -1,19 +1,19 @@
-import { RawSchemas } from "@fern-api/fern-definition-schema"
-import { ApiVersionScheme, EnumTypeDeclaration, HttpHeader } from "@fern-api/ir-sdk"
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { ApiVersionScheme, EnumTypeDeclaration, HttpHeader } from "@fern-api/ir-sdk";
 
-import { FernFileContext } from "../FernFileContext"
-import { convertHttpHeader } from "./services/convertHttpService"
-import { convertEnumTypeDeclaration } from "./type-declarations/convertEnumTypeDeclaration"
+import { FernFileContext } from "../FernFileContext";
+import { convertHttpHeader } from "./services/convertHttpService";
+import { convertEnumTypeDeclaration } from "./type-declarations/convertEnumTypeDeclaration";
 
 export function convertApiVersionScheme({
     file,
     rawApiFileSchema
 }: {
-    file: FernFileContext
-    rawApiFileSchema: RawSchemas.RootApiFileSchema
+    file: FernFileContext;
+    rawApiFileSchema: RawSchemas.RootApiFileSchema;
 }): ApiVersionScheme | undefined {
     if (rawApiFileSchema.version == null) {
-        return undefined
+        return undefined;
     }
     return ApiVersionScheme.header({
         header: convertHeader({
@@ -24,15 +24,15 @@ export function convertApiVersionScheme({
             file,
             versionDeclaration: rawApiFileSchema.version
         })
-    })
+    });
 }
 
 function convertHeader({
     file,
     header
 }: {
-    file: FernFileContext
-    header: RawSchemas.VersionDeclarationHeaderSchema
+    file: FernFileContext;
+    header: RawSchemas.VersionDeclarationHeaderSchema;
 }): HttpHeader {
     if (typeof header === "string") {
         return convertHttpHeader({
@@ -41,7 +41,7 @@ function convertHeader({
             header: {
                 type: "string"
             }
-        })
+        });
     }
     return convertHttpHeader({
         file,
@@ -51,15 +51,15 @@ function convertHeader({
             name: header.name,
             env: header.env
         }
-    })
+    });
 }
 
 function convertEnum({
     file,
     versionDeclaration
 }: {
-    file: FernFileContext
-    versionDeclaration: RawSchemas.VersionDeclarationSchema
+    file: FernFileContext;
+    versionDeclaration: RawSchemas.VersionDeclarationSchema;
 }): EnumTypeDeclaration {
     return convertEnumTypeDeclaration({
         _enum: {
@@ -67,5 +67,5 @@ function convertEnum({
             enum: versionDeclaration.values
         },
         file
-    })
+    });
 }

@@ -1,11 +1,11 @@
-import { Audiences, generatorsYml } from "@fern-api/configuration"
-import { generateIntermediateRepresentation } from "@fern-api/ir-generator"
-import { dynamic } from "@fern-api/ir-sdk"
-import { NopSourceResolver } from "@fern-api/source-resolver"
+import { Audiences, generatorsYml } from "@fern-api/configuration";
+import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { dynamic } from "@fern-api/ir-sdk";
+import { NopSourceResolver } from "@fern-api/source-resolver";
 
-import { OpenAPISpec } from "./Spec"
-import { convertSpecToWorkspace } from "./utils/convertSpecToWorkspace"
-import { createTaskContext } from "./utils/createTaskContext"
+import { OpenAPISpec } from "./Spec";
+import { convertSpecToWorkspace } from "./utils/convertSpecToWorkspace";
+import { createTaskContext } from "./utils/createTaskContext";
 
 export function generateDynamicIR({
     spec,
@@ -15,12 +15,12 @@ export function generateDynamicIR({
     smartCasing,
     disableDynamicExamples
 }: {
-    spec: OpenAPISpec
-    language: generatorsYml.GenerationLanguage
-    audiences?: Audiences
-    keywords?: string[]
-    smartCasing?: boolean
-    disableDynamicExamples?: boolean
+    spec: OpenAPISpec;
+    language: generatorsYml.GenerationLanguage;
+    audiences?: Audiences;
+    keywords?: string[];
+    smartCasing?: boolean;
+    disableDynamicExamples?: boolean;
 }): dynamic.DynamicIntermediateRepresentation {
     return generateDynamicIRFromOpenAPI({
         spec,
@@ -29,7 +29,7 @@ export function generateDynamicIR({
         keywords,
         smartCasing,
         disableDynamicExamples
-    })
+    });
 }
 
 function generateDynamicIRFromOpenAPI({
@@ -40,15 +40,15 @@ function generateDynamicIRFromOpenAPI({
     smartCasing,
     disableDynamicExamples
 }: {
-    spec: OpenAPISpec
-    language: generatorsYml.GenerationLanguage
-    audiences?: Audiences
-    keywords?: string[]
-    smartCasing?: boolean
-    disableDynamicExamples?: boolean
+    spec: OpenAPISpec;
+    language: generatorsYml.GenerationLanguage;
+    audiences?: Audiences;
+    keywords?: string[];
+    smartCasing?: boolean;
+    disableDynamicExamples?: boolean;
 }): dynamic.DynamicIntermediateRepresentation {
-    const context = createTaskContext()
-    const workspace = convertSpecToWorkspace({ context, spec })
+    const context = createTaskContext();
+    const workspace = convertSpecToWorkspace({ context, spec });
     const ir = generateIntermediateRepresentation({
         context,
         workspace,
@@ -62,9 +62,9 @@ function generateDynamicIRFromOpenAPI({
         version: undefined,
         packageName: undefined,
         readme: undefined
-    })
+    });
     if (ir.dynamic == null) {
-        throw new Error("Internal error; failed to generate dynamic intermediate representation")
+        throw new Error("Internal error; failed to generate dynamic intermediate representation");
     }
-    return ir.dynamic
+    return ir.dynamic;
 }

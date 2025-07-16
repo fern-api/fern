@@ -1,10 +1,10 @@
-import type { Element } from "hast"
-import { visit } from "unist-util-visit"
+import type { Element } from "hast";
+import { visit } from "unist-util-visit";
 
 export function unifiedRemoveSuggestEdits(): (node: Element) => void {
     return function (node: Element): void {
-        return removeSuggestEdits(node)
-    }
+        return removeSuggestEdits(node);
+    };
 }
 
 export function removeSuggestEdits(node: Element): void {
@@ -17,7 +17,7 @@ export function removeSuggestEdits(node: Element): void {
             parent &&
             typeof index === "number"
         ) {
-            parent.children.splice(index, 1)
+            parent.children.splice(index, 1);
         }
-    })
+    });
 }

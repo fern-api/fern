@@ -1,24 +1,24 @@
-import { scrapedNavigationGroup } from "../types/scrapedNavigation"
+import { scrapedNavigationGroup } from "../types/scrapedNavigation";
 
 export function getFirstTabFromNavigationGroup({ navItem }: { navItem: scrapedNavigationGroup }): string | undefined {
     const findFirstPage = (item: scrapedNavigationGroup): string | undefined => {
         for (const page of item.pages) {
             if (page.type === "page") {
-                return page.slug
+                return page.slug;
             } else {
-                const firstPage = findFirstPage(page)
+                const firstPage = findFirstPage(page);
                 if (firstPage != null) {
-                    return firstPage
+                    return firstPage;
                 }
             }
         }
-        return undefined
-    }
+        return undefined;
+    };
 
-    const firstPage = findFirstPage(navItem)
+    const firstPage = findFirstPage(navItem);
     if (firstPage == null) {
-        return undefined
+        return undefined;
     }
-    const segments = firstPage.split("/")
-    return segments[0]
+    const segments = firstPage.split("/");
+    return segments[0];
 }

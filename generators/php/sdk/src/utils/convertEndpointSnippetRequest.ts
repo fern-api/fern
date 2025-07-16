@@ -1,8 +1,8 @@
-import { dynamic } from "@fern-fern/ir-sdk/api"
+import { dynamic } from "@fern-fern/ir-sdk/api";
 
 export type EndpointSnippetRequest = Omit<dynamic.EndpointSnippetRequest, "baseUrl"> & {
-    baseURL: string | undefined
-}
+    baseURL: string | undefined;
+};
 
 /**
  * The @fern-api/dynamic-ir-sdk doesn't include the serialization layer, so the casing
@@ -12,5 +12,5 @@ export function convertDynamicEndpointSnippetRequest(request: dynamic.EndpointSn
     return {
         ...request,
         baseURL: request.baseUrl
-    }
+    };
 }

@@ -1,14 +1,14 @@
-import { Headers } from "./Headers"
+import { Headers } from "./Headers";
 
 /**
  * The raw response from the fetch call excluding the body.
  */
 export type RawResponse = Omit<
     {
-        [K in keyof Response as Response[K] extends Function ? never : K]: Response[K] // strips out functions
+        [K in keyof Response as Response[K] extends Function ? never : K]: Response[K]; // strips out functions
     },
     "ok" | "body" | "bodyUsed"
-> // strips out body and bodyUsed
+>; // strips out body and bodyUsed
 
 /**
  * A raw response indicating that the request was aborted.
@@ -20,7 +20,7 @@ export const abortRawResponse: RawResponse = {
     statusText: "Client Closed Request",
     type: "error",
     url: ""
-} as const
+} as const;
 
 /**
  * A raw response indicating an unknown error.
@@ -32,7 +32,7 @@ export const unknownRawResponse: RawResponse = {
     statusText: "Unknown Error",
     type: "error",
     url: ""
-} as const
+} as const;
 
 /**
  * Converts a `RawResponse` object into a `RawResponse` by extracting its properties,
@@ -49,13 +49,13 @@ export function toRawResponse(response: Response): RawResponse {
         statusText: response.statusText,
         type: response.type,
         url: response.url
-    }
+    };
 }
 
 /**
  * Creates a `RawResponse` from a standard `Response` object.
  */
 export interface WithRawResponse<T> {
-    readonly data: T
-    readonly rawResponse: RawResponse
+    readonly data: T;
+    readonly rawResponse: RawResponse;
 }

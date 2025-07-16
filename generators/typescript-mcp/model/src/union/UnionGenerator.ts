@@ -1,24 +1,24 @@
-import { RelativeFilePath, join } from "@fern-api/fs-utils"
-import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast"
-import { ArrayLiteralNode, ExportNode, FileGenerator, TypescriptFile } from "@fern-api/typescript-mcp-base"
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
+import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
+import { ArrayLiteralNode, ExportNode, FileGenerator, TypescriptFile } from "@fern-api/typescript-mcp-base";
 
-import { TypeDeclaration, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api"
+import { TypeDeclaration, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 
-import { ModelGeneratorContext } from "../ModelGeneratorContext"
+import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
 export class UnionGenerator extends FileGenerator<TypescriptFile, TypescriptCustomConfigSchema, ModelGeneratorContext> {
-    private readonly schemaVariableName: string
+    private readonly schemaVariableName: string;
 
     constructor(
         context: ModelGeneratorContext,
         private readonly typeDeclaration: TypeDeclaration,
         private readonly unionDeclaration: UnionTypeDeclaration
     ) {
-        super(context)
+        super(context);
         this.schemaVariableName = this.context.project.builder.getSchemaVariableName(
             this.typeDeclaration.name.name,
             this.typeDeclaration.name.fernFilepath
-        )
+        );
     }
 
     public doGenerate(): TypescriptFile {
@@ -43,23 +43,23 @@ export class UnionGenerator extends FileGenerator<TypescriptFile, TypescriptCust
                         }),
                         default: true
                     })
-                )
+                );
             }),
             directory: this.getDirectory(),
             filename: this.getFilename(),
             customConfig: this.context.customConfig
-        })
+        });
     }
 
     protected getDirectory(): RelativeFilePath {
-        return RelativeFilePath.of("")
+        return RelativeFilePath.of("");
     }
 
     protected getFilename(): string {
-        return `${this.schemaVariableName}.ts`
+        return `${this.schemaVariableName}.ts`;
     }
 
     protected getFilepath(): RelativeFilePath {
-        return join(this.getDirectory(), RelativeFilePath.of(this.getFilename()))
+        return join(this.getDirectory(), RelativeFilePath.of(this.getFilename()));
     }
 }

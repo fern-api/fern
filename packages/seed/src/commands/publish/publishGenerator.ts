@@ -1,20 +1,20 @@
-import path from "path"
-import semver from "semver"
+import path from "path";
+import semver from "semver";
 
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils"
-import { loggingExeca } from "@fern-api/logging-execa"
-import { TaskContext } from "@fern-api/task-context"
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+import { loggingExeca } from "@fern-api/logging-execa";
+import { TaskContext } from "@fern-api/task-context";
 
-import { GeneratorReleaseRequest } from "@fern-fern/generators-sdk/api/resources/generators"
+import { GeneratorReleaseRequest } from "@fern-fern/generators-sdk/api/resources/generators";
 
-import { PublishDockerConfiguration } from "../../config/api"
-import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces"
-import { parseGeneratorReleasesFile } from "../../utils/convertVersionsFileToReleases"
-import { runCommands, subVersion } from "../../utils/publishUtilities"
+import { PublishDockerConfiguration } from "../../config/api";
+import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
+import { parseGeneratorReleasesFile } from "../../utils/convertVersionsFileToReleases";
+import { runCommands, subVersion } from "../../utils/publishUtilities";
 
 interface VersionFilePair {
-    latestChangelogPath: string
-    previousChangelogPath: string
+    latestChangelogPath: string;
+    previousChangelogPath: string;
 }
 
 export async function publishGenerator({
@@ -22,14 +22,14 @@ export async function publishGenerator({
     version,
     context
 }: {
-    generator: GeneratorWorkspace
-    version: string | VersionFilePair
-    context: TaskContext
+    generator: GeneratorWorkspace;
+    version: string | VersionFilePair;
+    context: TaskContext;
 }): Promise<void> {
-    const generatorId = generator.workspaceName
-    context.logger.info(`Publishing generator ${generatorId}@${version}...`)
+    const generatorId = generator.workspaceName;
+    context.logger.info(`Publishing generator ${generatorId}@${version}...`);
 
-    let publishVersion: string
+    let publishVersion: string;
     if (typeof version !== "string") {
         // We were given two version files, so we need to compare them to find if any new
         // versions have been added since the last publish.
@@ -37,44 +37,44 @@ export async function publishGenerator({
             generatorId,
             versionFilePair: version,
             context
-        })
+        });
 
         if (maybeNewVersion == null) {
             context.logger.error(
                 "No version to publish! There must not have been a new version since the last publish. Failing quietly"
-            )
-            return
+            );
+            return;
         }
-        publishVersion = maybeNewVersion
+        publishVersion = maybeNewVersion;
     } else {
-        publishVersion = version
+        publishVersion = version;
     }
 
-    const publishConfig = generator.workspaceConfig.publish
-    let workingDirectory = generator.absolutePathToWorkspace
+    const publishConfig = generator.workspaceConfig.publish;
+    let workingDirectory = generator.absolutePathToWorkspace;
     if (publishConfig.workingDirectory) {
         workingDirectory = AbsoluteFilePath.of(
             path.join(__dirname, RelativeFilePath.of("../../.."), RelativeFilePath.of(publishConfig.workingDirectory))
-        )
+        );
     }
     // Instance of PublishDocker configuration, leverage docker CLI here
     if ("docker" in publishConfig) {
-        const unparsedCommands = publishConfig.preBuildCommands
+        const unparsedCommands = publishConfig.preBuildCommands;
         const preBuildCommands = Array.isArray(unparsedCommands)
             ? unparsedCommands
             : unparsedCommands
               ? [unparsedCommands]
-              : []
+              : [];
 
-        await runCommands(preBuildCommands, context, workingDirectory)
-        await buildAndPushDockerImage(publishConfig.docker, publishVersion, context)
+        await runCommands(preBuildCommands, context, workingDirectory);
+        await buildAndPushDockerImage(publishConfig.docker, publishVersion, context);
     } else {
         // Instance of PublishCommand configuration, leverage these commands outright
-        const unparsedCommands = publishConfig.command
-        const commands = Array.isArray(unparsedCommands) ? unparsedCommands : [unparsedCommands]
-        const versionSubstitution = publishConfig.versionSubstitution
-        const subbedCommands = commands.map((command) => subVersion(command, publishVersion, versionSubstitution))
-        await runCommands(subbedCommands, context, workingDirectory)
+        const unparsedCommands = publishConfig.command;
+        const commands = Array.isArray(unparsedCommands) ? unparsedCommands : [unparsedCommands];
+        const versionSubstitution = publishConfig.versionSubstitution;
+        const subbedCommands = commands.map((command) => subVersion(command, publishVersion, versionSubstitution));
+        await runCommands(subbedCommands, context, workingDirectory);
     }
 }
 
@@ -84,24 +84,24 @@ async function buildAndPushDockerImage(
     context: TaskContext
 ) {
     // Push the Docker image to the registry
-    const dockerHubUsername = process?.env?.DOCKER_USERNAME
-    const dockerHubPassword = process?.env?.DOCKER_PASSWORD
+    const dockerHubUsername = process?.env?.DOCKER_USERNAME;
+    const dockerHubPassword = process?.env?.DOCKER_PASSWORD;
     if (!dockerHubUsername || !dockerHubPassword) {
-        context.failAndThrow("Docker Hub credentials not found within your environment variables.")
+        context.failAndThrow("Docker Hub credentials not found within your environment variables.");
     }
 
-    context.logger.debug("Logging into Docker Hub...")
+    context.logger.debug("Logging into Docker Hub...");
     await loggingExeca(context.logger, "docker", ["login", "-u", dockerHubUsername, "--password-stdin"], {
         doNotPipeOutput: true,
         input: dockerHubPassword
-    })
+    });
 
     // Build and push the Docker image, now that you've run the pre-build commands
-    const aliases = [dockerConfig.image, ...(dockerConfig.aliases ?? [])].map((alias) => `${alias}:${version}`)
-    const tagArgs = aliases.map((imageTag) => ["-t", imageTag]).flat()
-    context.logger.debug(`Pushing Docker image ${aliases[0]} to Docker Hub...`)
+    const aliases = [dockerConfig.image, ...(dockerConfig.aliases ?? [])].map((alias) => `${alias}:${version}`);
+    const tagArgs = aliases.map((imageTag) => ["-t", imageTag]).flat();
+    context.logger.debug(`Pushing Docker image ${aliases[0]} to Docker Hub...`);
     if (aliases.length > 1) {
-        context.logger.debug(`Also tagging with aliases: ${aliases.slice(1).join(", ")}`)
+        context.logger.debug(`Also tagging with aliases: ${aliases.slice(1).join(", ")}`);
     }
     const standardBuildOptions = [
         "build",
@@ -112,20 +112,20 @@ async function buildAndPushDockerImage(
         dockerConfig.file,
         ...tagArgs,
         dockerConfig.context
-    ]
+    ];
     try {
-        await loggingExeca(context.logger, "docker", standardBuildOptions, { doNotPipeOutput: true })
+        await loggingExeca(context.logger, "docker", standardBuildOptions, { doNotPipeOutput: true });
     } catch (e) {
         if (e instanceof Error && e.message.includes("Multi-platform build is not supported for the docker driver")) {
             context.logger.error(
                 "Docker cannot build multi-platform images with the current driver, trying `docker buildx`."
-            )
+            );
             await loggingExeca(context.logger, "docker", ["buildx", ...standardBuildOptions], {
                 doNotPipeOutput: false
-            })
-            return
+            });
+            return;
         }
-        throw e
+        throw e;
     }
 }
 
@@ -138,32 +138,32 @@ export async function getNewVersion({
     versionFilePair,
     context
 }: {
-    generatorId: string
-    versionFilePair: VersionFilePair
-    context: TaskContext
+    generatorId: string;
+    versionFilePair: VersionFilePair;
+    context: TaskContext;
 }): Promise<string | undefined> {
     // Our action performed on each generator release in the file is to
     // simply collect the version ID within a set for comparison later
     const collectVersions = (versionsSet: Set<string>) => {
         return async (release: GeneratorReleaseRequest) => {
-            versionsSet.add(release.version)
-        }
-    }
+            versionsSet.add(release.version);
+        };
+    };
 
-    const latestVersionGeneratorReleasesVersions = new Set<string>()
+    const latestVersionGeneratorReleasesVersions = new Set<string>();
     await parseGeneratorReleasesFile({
         generatorId,
         changelogPath: versionFilePair.latestChangelogPath,
         context,
         action: collectVersions(latestVersionGeneratorReleasesVersions)
-    })
-    const previousVersionGeneratorReleaseVersions = new Set<string>()
+    });
+    const previousVersionGeneratorReleaseVersions = new Set<string>();
     await parseGeneratorReleasesFile({
         generatorId,
         changelogPath: versionFilePair.previousChangelogPath,
         context,
         action: collectVersions(previousVersionGeneratorReleaseVersions)
-    })
+    });
 
     // Get generator versions not in the previous version file
     //
@@ -171,7 +171,7 @@ export async function getNewVersion({
     // array for versions explicitly not in the previous versions set
     const newVersions = Array.from(latestVersionGeneratorReleasesVersions).filter(
         (item) => !previousVersionGeneratorReleaseVersions.has(item)
-    )
+    );
 
     // Sort the resultant array of new versions by semantic version and return the largest / "most recent"
     return (
@@ -182,5 +182,5 @@ export async function getNewVersion({
             // We negate the number to get the largest version first
             .sort((a, b) => -a.compare(b))[0]
             ?.toString()
-    )
+    );
 }

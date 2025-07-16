@@ -1,14 +1,14 @@
-import { BaseSchema } from "../../Schema"
-import { filterObject } from "../../utils/filterObject"
-import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType"
-import { isPlainObject } from "../../utils/isPlainObject"
-import { getSchemaUtils } from "../schema-utils"
-import { ObjectLikeSchema, ObjectLikeUtils } from "./types"
+import { BaseSchema } from "../../Schema";
+import { filterObject } from "../../utils/filterObject";
+import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType";
+import { isPlainObject } from "../../utils/isPlainObject";
+import { getSchemaUtils } from "../schema-utils";
+import { ObjectLikeSchema, ObjectLikeUtils } from "./types";
 
 export function getObjectLikeUtils<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): ObjectLikeUtils<Raw, Parsed> {
     return {
         withParsedProperties: (properties) => withParsedProperties(schema, properties)
-    }
+    };
 }
 
 /**
@@ -21,9 +21,9 @@ export function withParsedProperties<RawObjectShape, ParsedObjectShape, Properti
 ): ObjectLikeSchema<RawObjectShape, ParsedObjectShape & Properties> {
     const objectSchema: BaseSchema<RawObjectShape, ParsedObjectShape & Properties> = {
         parse: (raw, opts) => {
-            const parsedObject = objectLike.parse(raw, opts)
+            const parsedObject = objectLike.parse(raw, opts);
             if (!parsedObject.ok) {
-                return parsedObject
+                return parsedObject;
             }
 
             const additionalProperties = Object.entries(properties).reduce<Record<string, any>>(
@@ -31,10 +31,10 @@ export function withParsedProperties<RawObjectShape, ParsedObjectShape, Properti
                     return {
                         ...processed,
                         [key]: typeof value === "function" ? value(parsedObject.value) : value
-                    }
+                    };
                 },
                 {}
-            )
+            );
 
             return {
                 ok: true,
@@ -42,7 +42,7 @@ export function withParsedProperties<RawObjectShape, ParsedObjectShape, Properti
                     ...parsedObject.value,
                     ...(additionalProperties as Properties)
                 }
-            }
+            };
         },
 
         json: (parsed, opts) => {
@@ -55,25 +55,25 @@ export function withParsedProperties<RawObjectShape, ParsedObjectShape, Properti
                             message: getErrorMessageForIncorrectType(parsed, "object")
                         }
                     ]
-                }
+                };
             }
 
             // strip out added properties
-            const addedPropertyKeys = new Set(Object.keys(properties))
+            const addedPropertyKeys = new Set(Object.keys(properties));
             const parsedWithoutAddedProperties = filterObject(
                 parsed,
                 Object.keys(parsed).filter((key) => !addedPropertyKeys.has(key))
-            )
+            );
 
-            return objectLike.json(parsedWithoutAddedProperties as ParsedObjectShape, opts)
+            return objectLike.json(parsedWithoutAddedProperties as ParsedObjectShape, opts);
         },
 
         getType: () => objectLike.getType()
-    }
+    };
 
     return {
         ...objectSchema,
         ...getSchemaUtils(objectSchema),
         ...getObjectLikeUtils(objectSchema)
-    }
+    };
 }

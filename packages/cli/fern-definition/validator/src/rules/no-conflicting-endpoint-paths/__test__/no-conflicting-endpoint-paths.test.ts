@@ -1,8 +1,8 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { ValidationViolation } from "../../../ValidationViolation"
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule"
-import { NoConflictingEndpointPathsRule } from "../no-conflicting-endpoint-paths"
+import { ValidationViolation } from "../../../ValidationViolation";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { NoConflictingEndpointPathsRule } from "../no-conflicting-endpoint-paths";
 
 describe("no-conflicting-endpoint-paths", () => {
     it("simple", async () => {
@@ -13,7 +13,7 @@ describe("no-conflicting-endpoint-paths", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
             )
-        })
+        });
 
         const expectedViolations: ValidationViolation[] = [
             {
@@ -78,8 +78,8 @@ describe("no-conflicting-endpoint-paths", () => {
                 relativeFilepath: RelativeFilePath.of("d.yml"),
                 severity: "warning"
             }
-        ]
+        ];
 
-        expect(violations).toEqual(expectedViolations)
-    })
-})
+        expect(violations).toEqual(expectedViolations);
+    });
+});

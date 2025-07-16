@@ -1,9 +1,13 @@
-import { GeneratorName } from "@fern-api/configuration-loader"
-import { assertNever } from "@fern-api/core-utils"
+import { GeneratorName } from "@fern-api/configuration-loader";
+import { assertNever } from "@fern-api/core-utils";
 
-import { IrSerialization } from "../../ir-serialization"
-import { IrVersions } from "../../ir-versions"
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
+import { IrSerialization } from "../../ir-serialization";
+import { IrVersions } from "../../ir-versions";
+import {
+    GeneratorWasNeverUpdatedToConsumeNewIR,
+    GeneratorWasNotCreatedYet,
+    IrMigration
+} from "../../types/IrMigration";
 
 export const V33_TO_V32_MIGRATION: IrMigration<
     IrVersions.V33.ir.IntermediateRepresentation,
@@ -46,7 +50,7 @@ export const V33_TO_V32_MIGRATION: IrMigration<
             skipValidation: true
         }),
     migrateBackwards: (v33): IrVersions.V32.ir.IntermediateRepresentation => {
-        const converter = new Converter(v33)
+        const converter = new Converter(v33);
         return {
             ...v33,
             services: Object.fromEntries(
@@ -57,18 +61,18 @@ export const V33_TO_V32_MIGRATION: IrMigration<
                             ...service,
                             endpoints: service.endpoints.map((endpoint) => converter.convertEndpoint(endpoint))
                         }
-                    ]
+                    ];
                 })
             )
-        }
+        };
     }
-}
+};
 
 class Converter {
-    private ir: IrVersions.V33.ir.IntermediateRepresentation
+    private ir: IrVersions.V33.ir.IntermediateRepresentation;
 
     constructor(ir: IrVersions.V33.ir.IntermediateRepresentation) {
-        this.ir = ir
+        this.ir = ir;
     }
 
     public convertEndpoint(endpoint: IrVersions.V33.HttpEndpoint): IrVersions.V32.HttpEndpoint {
@@ -92,21 +96,21 @@ class Converter {
                 examples: endpoint.examples,
                 convert: convertExampleEndpointCall
             })
-        }
+        };
     }
 
     private isTypeReferenceObject(typeReference: IrVersions.V33.TypeReference): boolean {
         switch (typeReference.type) {
             case "container":
-                return this.isContainerObject(typeReference.container)
+                return this.isContainerObject(typeReference.container);
             case "named":
-                return this.isNamedTypeObject(typeReference)
+                return this.isNamedTypeObject(typeReference);
             case "primitive":
-                return false
+                return false;
             case "unknown":
-                return true
+                return true;
             default:
-                assertNever(typeReference)
+                assertNever(typeReference);
         }
     }
 
@@ -115,33 +119,33 @@ class Converter {
             case "map":
             case "list":
             case "set":
-                return true
+                return true;
             case "optional":
-                return this.isTypeReferenceObject(containerType.optional)
+                return this.isTypeReferenceObject(containerType.optional);
             case "literal":
-                return false
+                return false;
             default:
-                assertNever(containerType)
+                assertNever(containerType);
         }
     }
 
     private isNamedTypeObject(exampleNamedType: IrVersions.V33.DeclaredTypeName): boolean {
-        const typeDeclaration = this.ir.types[exampleNamedType.typeId]
+        const typeDeclaration = this.ir.types[exampleNamedType.typeId];
         if (typeDeclaration == null) {
             // Best effort: the IR did not register this type, so we should remove it.
-            return true
+            return true;
         }
         switch (typeDeclaration.shape.type) {
             case "alias":
-                return this.isTypeReferenceObject(typeDeclaration.shape.aliasOf)
+                return this.isTypeReferenceObject(typeDeclaration.shape.aliasOf);
             case "enum":
-                return false
+                return false;
             case "object":
             case "union":
             case "undiscriminatedUnion":
-                return true
+                return true;
             default:
-                assertNever(typeDeclaration.shape)
+                assertNever(typeDeclaration.shape);
         }
     }
 }
@@ -150,17 +154,17 @@ function convertExamples<V33, V32>({
     examples,
     convert
 }: {
-    examples: V33[]
-    convert: (val: V33) => V32 | undefined
+    examples: V33[];
+    convert: (val: V33) => V32 | undefined;
 }): V32[] {
-    const convertedExamples = []
+    const convertedExamples = [];
     for (const example of examples) {
-        const convertedExampleEndpointCall = convert(example)
+        const convertedExampleEndpointCall = convert(example);
         if (convertedExampleEndpointCall != null) {
-            convertedExamples.push(convertedExampleEndpointCall)
+            convertedExamples.push(convertedExampleEndpointCall);
         }
     }
-    return convertedExamples
+    return convertedExamples;
 }
 
 function convertExampleEndpointCall(
@@ -172,21 +176,21 @@ function convertExampleEndpointCall(
             // Filter out all the object query parameters.
             (queryParameter) => !isExampleTypeReferenceObject(queryParameter.value)
         )
-    }
+    };
 }
 
 function isExampleTypeReferenceObject(exampleTypeReference: IrVersions.V33.ExampleTypeReference): boolean {
     switch (exampleTypeReference.shape.type) {
         case "container":
-            return isExampleContainerObject(exampleTypeReference.shape.container)
+            return isExampleContainerObject(exampleTypeReference.shape.container);
         case "named":
-            return isExampleNamedTypeObject(exampleTypeReference.shape)
+            return isExampleNamedTypeObject(exampleTypeReference.shape);
         case "primitive":
-            return false
+            return false;
         case "unknown":
-            return true
+            return true;
         default:
-            assertNever(exampleTypeReference.shape)
+            assertNever(exampleTypeReference.shape);
     }
 }
 
@@ -195,25 +199,25 @@ function isExampleContainerObject(exampleContainer: IrVersions.V33.ExampleContai
         case "map":
         case "list":
         case "set":
-            return true
+            return true;
         case "optional":
-            return exampleContainer.optional != null && isExampleTypeReferenceObject(exampleContainer.optional)
+            return exampleContainer.optional != null && isExampleTypeReferenceObject(exampleContainer.optional);
         default:
-            assertNever(exampleContainer)
+            assertNever(exampleContainer);
     }
 }
 
 function isExampleNamedTypeObject(exampleNamedType: IrVersions.V33.ExampleNamedType): boolean {
     switch (exampleNamedType.shape.type) {
         case "alias":
-            return isExampleTypeReferenceObject(exampleNamedType.shape.value)
+            return isExampleTypeReferenceObject(exampleNamedType.shape.value);
         case "enum":
-            return false
+            return false;
         case "object":
         case "union":
         case "undiscriminatedUnion":
-            return true
+            return true;
         default:
-            assertNever(exampleNamedType.shape)
+            assertNever(exampleNamedType.shape);
     }
 }

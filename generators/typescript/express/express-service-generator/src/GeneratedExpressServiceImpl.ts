@@ -4,9 +4,9 @@ import {
     getPropertyKey,
     getTextOfTsNode,
     maybeAddDocsNode
-} from "@fern-typescript/commons"
-import { ExpressContext, GeneratedExpressService } from "@fern-typescript/contexts"
-import { ClassDeclaration, InterfaceDeclaration, Scope, ts } from "ts-morph"
+} from "@fern-typescript/commons";
+import { ExpressContext, GeneratedExpressService } from "@fern-typescript/contexts";
+import { ClassDeclaration, InterfaceDeclaration, Scope, ts } from "ts-morph";
 
 import {
     HttpEndpoint,
@@ -17,42 +17,42 @@ import {
     JsonResponse,
     Package,
     PathParameter
-} from "@fern-fern/ir-sdk/api"
+} from "@fern-fern/ir-sdk/api";
 
 export declare namespace GeneratedExpressServiceImpl {
     export interface Init {
-        packageId: PackageId
-        package: Package
-        service: HttpService
-        serviceClassName: string
-        doNotHandleUnrecognizedErrors: boolean
-        includeSerdeLayer: boolean
-        skipRequestValidation: boolean
-        skipResponseValidation: boolean
-        requestValidationStatusCode: number
+        packageId: PackageId;
+        package: Package;
+        service: HttpService;
+        serviceClassName: string;
+        doNotHandleUnrecognizedErrors: boolean;
+        includeSerdeLayer: boolean;
+        skipRequestValidation: boolean;
+        skipResponseValidation: boolean;
+        requestValidationStatusCode: number;
     }
 }
 
 export class GeneratedExpressServiceImpl implements GeneratedExpressService {
-    private static readonly ROUTER_PROPERTY_NAME = "router"
-    private static readonly METHODS_PROPERTY_NAME = "methods"
-    private static readonly ADD_MIDDLEWARE_METHOD_NAME = "addMiddleware"
-    private static readonly TO_ROUTER_METHOD_NAME = "toRouter"
-    private static readonly CATCH_BLOCK_ERROR_VARIABLE_NAME = "error"
-    private static readonly SEND_RESPONSE_PROPERTY_NAME = "send"
-    private static readonly SEND_COOKIE_RESPONSE_PROPERTY_NAME = "cookie"
-    private static readonly RESPONSE_BODY_PARAMETER_NAME = "responseBody"
-    private static readonly LOCALS_PROPERTY_NAME = "locals"
+    private static readonly ROUTER_PROPERTY_NAME = "router";
+    private static readonly METHODS_PROPERTY_NAME = "methods";
+    private static readonly ADD_MIDDLEWARE_METHOD_NAME = "addMiddleware";
+    private static readonly TO_ROUTER_METHOD_NAME = "toRouter";
+    private static readonly CATCH_BLOCK_ERROR_VARIABLE_NAME = "error";
+    private static readonly SEND_RESPONSE_PROPERTY_NAME = "send";
+    private static readonly SEND_COOKIE_RESPONSE_PROPERTY_NAME = "cookie";
+    private static readonly RESPONSE_BODY_PARAMETER_NAME = "responseBody";
+    private static readonly LOCALS_PROPERTY_NAME = "locals";
 
-    private doNotHandleUnrecognizedErrors: boolean
-    private serviceClassName: string
-    private service: HttpService
-    private packageId: PackageId
-    private package_: Package
-    private includeSerdeLayer: boolean
-    private skipRequestValidation: boolean
-    private skipResponseValidation: boolean
-    private requestValidationStatusCode: number
+    private doNotHandleUnrecognizedErrors: boolean;
+    private serviceClassName: string;
+    private service: HttpService;
+    private packageId: PackageId;
+    private package_: Package;
+    private includeSerdeLayer: boolean;
+    private skipRequestValidation: boolean;
+    private skipResponseValidation: boolean;
+    private requestValidationStatusCode: number;
 
     constructor({
         packageId,
@@ -65,41 +65,41 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         skipResponseValidation,
         requestValidationStatusCode
     }: GeneratedExpressServiceImpl.Init) {
-        this.serviceClassName = serviceClassName
-        this.service = service
-        this.doNotHandleUnrecognizedErrors = doNotHandleUnrecognizedErrors
-        this.packageId = packageId
-        this.package_ = package_
-        this.includeSerdeLayer = includeSerdeLayer
-        this.skipRequestValidation = skipRequestValidation
-        this.skipResponseValidation = skipResponseValidation
-        this.requestValidationStatusCode = requestValidationStatusCode
+        this.serviceClassName = serviceClassName;
+        this.service = service;
+        this.doNotHandleUnrecognizedErrors = doNotHandleUnrecognizedErrors;
+        this.packageId = packageId;
+        this.package_ = package_;
+        this.includeSerdeLayer = includeSerdeLayer;
+        this.skipRequestValidation = skipRequestValidation;
+        this.skipResponseValidation = skipResponseValidation;
+        this.requestValidationStatusCode = requestValidationStatusCode;
     }
 
     public writeToFile(context: ExpressContext): void {
         const methodsInterface = context.sourceFile.addInterface({
             name: this.getMethodsInterfaceName(),
             isExported: true
-        })
+        });
 
         for (const endpoint of this.service.endpoints) {
-            this.addEndpointMethodToInterface({ endpoint, methodsInterface, context })
+            this.addEndpointMethodToInterface({ endpoint, methodsInterface, context });
         }
 
         const serviceClass = context.sourceFile.addClass({
             name: this.serviceClassName,
             isExported: true
-        })
-        maybeAddDocsNode(serviceClass, this.package_.docs)
+        });
+        maybeAddDocsNode(serviceClass, this.package_.docs);
 
         serviceClass.addProperty({
             scope: Scope.Private,
             name: GeneratedExpressServiceImpl.ROUTER_PROPERTY_NAME
-        })
+        });
 
-        this.addConstructor(serviceClass, context)
+        this.addConstructor(serviceClass, context);
 
-        this.addAddMiddlewareMethod({ serviceClass, context })
+        this.addAddMiddlewareMethod({ serviceClass, context });
 
         serviceClass.addMethod({
             scope: Scope.Public,
@@ -114,11 +114,11 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                     )
                 )
             ].map(getTextOfTsNode)
-        })
+        });
     }
 
     private addConstructor(serviceClass: ClassDeclaration, context: ExpressContext) {
-        const middlewareParameterName = "middleware"
+        const middlewareParameterName = "middleware";
         serviceClass.addConstructor({
             parameters: [
                 {
@@ -155,7 +155,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                     )
                 )
             ].map(getTextOfTsNode)
-        })
+        });
     }
 
     public toRouter(referenceToService: ts.Expression): ts.Expression {
@@ -166,7 +166,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
             ),
             undefined,
             undefined
-        )
+        );
     }
 
     private addEndpointMethodToInterface({
@@ -174,19 +174,19 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         methodsInterface,
         context
     }: {
-        endpoint: HttpEndpoint
-        methodsInterface: InterfaceDeclaration
-        context: ExpressContext
+        endpoint: HttpEndpoint;
+        methodsInterface: InterfaceDeclaration;
+        context: ExpressContext;
     }) {
-        const REQUEST_PARAMETER_NAME = "req"
-        const RESPONSE_PARAMETER_NAME = "res"
-        const NEXT_PARAMETER_NAME = "next"
+        const REQUEST_PARAMETER_NAME = "req";
+        const RESPONSE_PARAMETER_NAME = "res";
+        const NEXT_PARAMETER_NAME = "next";
 
-        const COOKIE_PARAMETER_NAME = "cookie"
-        const COOKIE_VALUE_PARAMETER_NAME = "value"
-        const COOKIE_OPTIONS_PARAMETER_NAME = "options"
+        const COOKIE_PARAMETER_NAME = "cookie";
+        const COOKIE_VALUE_PARAMETER_NAME = "value";
+        const COOKIE_OPTIONS_PARAMETER_NAME = "options";
 
-        const allPathParameters = [...this.service.pathParameters, ...endpoint.pathParameters]
+        const allPathParameters = [...this.service.pathParameters, ...endpoint.pathParameters];
 
         methodsInterface.addMethod({
             name: this.getEndpointMethodName(endpoint),
@@ -201,7 +201,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                           allPathParameters.map((pathParameter) => {
                                               const type = this.includeSerdeLayer
                                                   ? context.typeSchema.getReferenceToRawType(pathParameter.valueType)
-                                                  : context.type.getReferenceToType(pathParameter.valueType)
+                                                  : context.type.getReferenceToType(pathParameter.valueType);
                                               return ts.factory.createPropertySignature(
                                                   undefined,
                                                   getPropertyKey(this.getPathParameterName(pathParameter)),
@@ -209,7 +209,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                                       ? ts.factory.createToken(ts.SyntaxKind.QuestionToken)
                                                       : undefined,
                                                   type.typeNodeWithoutUndefined
-                                              )
+                                              );
                                           })
                                       )
                                     : undefined,
@@ -217,7 +217,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                 endpoint.queryParameters.length > 0
                                     ? ts.factory.createTypeLiteralNode(
                                           endpoint.queryParameters.map((queryParameter) => {
-                                              const type = context.type.getReferenceToType(queryParameter.valueType)
+                                              const type = context.type.getReferenceToType(queryParameter.valueType);
                                               return ts.factory.createPropertySignature(
                                                   undefined,
                                                   getPropertyKey(queryParameter.name.wireValue),
@@ -225,7 +225,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                                       ? ts.factory.createToken(ts.SyntaxKind.QuestionToken)
                                                       : undefined,
                                                   type.typeNodeWithoutUndefined
-                                              )
+                                              );
                                           })
                                       )
                                     : undefined,
@@ -330,17 +330,17 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                     ])
                 ])
             )
-        })
+        });
     }
 
     private addAddMiddlewareMethod({
         serviceClass,
         context
     }: {
-        serviceClass: ClassDeclaration
-        context: ExpressContext
+        serviceClass: ClassDeclaration;
+        context: ExpressContext;
     }) {
-        const HANDLER_PARAMETER_NAME = "handler"
+        const HANDLER_PARAMETER_NAME = "handler";
 
         serviceClass.addMethod({
             scope: Scope.Public,
@@ -361,11 +361,11 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                 ),
                 ts.factory.createReturnStatement(ts.factory.createThis())
             ].map(getTextOfTsNode)
-        })
+        });
     }
 
     private getEndpointMethodName(endpoint: HttpEndpoint): string {
-        return endpoint.name.camelCase.unsafeName
+        return endpoint.name.camelCase.unsafeName;
     }
 
     private addRouteToRouter(endpoint: HttpEndpoint, context: ExpressContext): ts.Statement {
@@ -379,7 +379,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                 delete: () => "delete",
                 head: () => "head",
                 _other: () => {
-                    throw new Error("Unknown ")
+                    throw new Error("Unknown ");
                 }
             }),
             path: convertHttpPathToExpressRoute(endpoint.path),
@@ -406,9 +406,9 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                               ])
                     ],
                     true
-                )
+                );
             }
-        })
+        });
     }
 
     private getIfElseMaybeWithValidation({
@@ -419,24 +419,24 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         requestBody,
         context
     }: {
-        expressRequest: ts.Expression
-        expressResponse: ts.Expression
-        next: ts.Expression
-        endpoint: HttpEndpoint
-        requestBody: HttpRequestBody
-        context: ExpressContext
+        expressRequest: ts.Expression;
+        expressResponse: ts.Expression;
+        next: ts.Expression;
+        endpoint: HttpEndpoint;
+        requestBody: HttpRequestBody;
+        context: ExpressContext;
     }): ts.Statement[] {
-        const DESERIALIZED_REQUEST_VARIABLE_NAME = "request"
+        const DESERIALIZED_REQUEST_VARIABLE_NAME = "request";
 
         const referenceToExpressBody = ts.factory.createPropertyAccessExpression(
             expressRequest,
             context.externalDependencies.express.Request.body
-        )
+        );
 
         // no validation required for `unknown` requests or when there's no serde layer
         const isRequestBodyUnknown =
             requestBody.type === "reference" &&
-            context.type.resolveTypeReference(requestBody.requestBodyType).type === "unknown"
+            context.type.resolveTypeReference(requestBody.requestBodyType).type === "unknown";
         if (!this.includeSerdeLayer || isRequestBodyUnknown) {
             return [
                 this.getTryCatch({
@@ -446,7 +446,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                     endpoint,
                     context
                 })
-            ]
+            ];
         }
 
         return [
@@ -490,7 +490,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                         })
                     ],
                     invalid: (requestErrors) => {
-                        const ERROR_VARIABLE_NAME = "error"
+                        const ERROR_VARIABLE_NAME = "error";
                         return [
                             ts.factory.createExpressionStatement(
                                 context.externalDependencies.express.Response.json({
@@ -566,11 +566,11 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                             ts.factory.createExpressionStatement(
                                 ts.factory.createCallExpression(next, undefined, [requestErrors])
                             )
-                        ]
+                        ];
                     }
                 }
             )
-        ]
+        ];
     }
 
     private getTryCatch({
@@ -580,11 +580,11 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         endpoint,
         context
     }: {
-        expressRequest: ts.Expression
-        expressResponse: ts.Expression
-        next: ts.Expression
-        endpoint: HttpEndpoint
-        context: ExpressContext
+        expressRequest: ts.Expression;
+        expressResponse: ts.Expression;
+        next: ts.Expression;
+        endpoint: HttpEndpoint;
+        context: ExpressContext;
     }): ts.TryStatement {
         return ts.factory.createTryStatement(
             ts.factory.createBlock(
@@ -593,7 +593,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
             ),
             this.getCatchClause({ expressResponse, next, context, endpoint }),
             undefined
-        )
+        );
     }
 
     private getStatementsForTryBlock({
@@ -603,13 +603,13 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         endpoint,
         context
     }: {
-        expressRequest: ts.Expression
-        expressResponse: ts.Expression
-        next: ts.Expression
-        endpoint: HttpEndpoint
-        context: ExpressContext
+        expressRequest: ts.Expression;
+        expressResponse: ts.Expression;
+        next: ts.Expression;
+        endpoint: HttpEndpoint;
+        context: ExpressContext;
     }): ts.Statement[] {
-        const statements: ts.Statement[] = []
+        const statements: ts.Statement[] = [];
 
         // call impl
         statements.push(
@@ -697,7 +697,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                     )
                 )
             )
-        )
+        );
 
         statements.push(
             ts.factory.createIfStatement(
@@ -710,9 +710,9 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                     true
                 )
             )
-        )
+        );
 
-        return statements
+        return statements;
     }
 
     private getCatchClause({
@@ -721,12 +721,12 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         context,
         endpoint
     }: {
-        expressResponse: ts.Expression
-        next: ts.Expression
-        context: ExpressContext
-        endpoint: HttpEndpoint
+        expressResponse: ts.Expression;
+        next: ts.Expression;
+        context: ExpressContext;
+        endpoint: HttpEndpoint;
     }): ts.CatchClause {
-        const ERROR_NAME = "error"
+        const ERROR_NAME = "error";
 
         return ts.factory.createCatchClause(
             ts.factory.createVariableDeclaration(ts.factory.createIdentifier(ERROR_NAME)),
@@ -774,7 +774,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                 ],
                 true
             )
-        )
+        );
     }
 
     private generateWarnForUnexpectedError(endpoint: HttpEndpoint, context: ExpressContext): ts.Statement {
@@ -831,10 +831,10 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                     )
                 ]
             )
-        )
+        );
 
         if (endpoint.errors.length === 0) {
-            return warnStatement
+            return warnStatement;
         }
 
         return ts.factory.createSwitchStatement(
@@ -852,18 +852,18 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                 ),
                 ts.factory.createDefaultClause([warnStatement])
             ])
-        )
+        );
     }
 
     private getReferenceToRouter(): ts.Expression {
         return ts.factory.createPropertyAccessExpression(
             ts.factory.createThis(),
             GeneratedExpressServiceImpl.ROUTER_PROPERTY_NAME
-        )
+        );
     }
 
     private getPathParameterName(pathParameter: PathParameter): string {
-        return pathParameter.name.originalName
+        return pathParameter.name.originalName;
     }
 
     private getReferenceToParsedRequestBody({
@@ -871,9 +871,9 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         requestBody,
         context
     }: {
-        endpoint: HttpEndpoint
-        requestBody: HttpRequestBody
-        context: ExpressContext
+        endpoint: HttpEndpoint;
+        requestBody: HttpRequestBody;
+        context: ExpressContext;
     }): ts.TypeNode {
         return HttpRequestBody._visit(requestBody, {
             inlinedRequestBody: () =>
@@ -882,15 +882,15 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                     .getTypeNode(),
             reference: ({ requestBodyType }) => context.type.getReferenceToType(requestBodyType).typeNode,
             fileUpload: () => {
-                throw new Error("File upload is not supported")
+                throw new Error("File upload is not supported");
             },
             bytes: () => {
-                throw new Error("bytes is not supported")
+                throw new Error("bytes is not supported");
             },
             _other: () => {
-                throw new Error("Unknown HttpRequestBody: " + requestBody.type)
+                throw new Error("Unknown HttpRequestBody: " + requestBody.type);
             }
-        })
+        });
     }
 
     private deserializeRequest({
@@ -899,69 +899,69 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         referenceToBody,
         context
     }: {
-        endpoint: HttpEndpoint
-        requestBodyType: HttpRequestBody
-        referenceToBody: ts.Expression
-        context: ExpressContext
+        endpoint: HttpEndpoint;
+        requestBodyType: HttpRequestBody;
+        referenceToBody: ts.Expression;
+        context: ExpressContext;
     }): ts.Expression {
         return HttpRequestBody._visit(requestBodyType, {
             inlinedRequestBody: () => {
                 if (this.skipRequestValidation) {
                     return context.expressInlinedRequestBodySchema
                         .getGeneratedInlinedRequestBodySchema(this.packageId, endpoint.name)
-                        .deserializeRequest(referenceToBody, context)
+                        .deserializeRequest(referenceToBody, context);
                 }
                 return context.expressInlinedRequestBodySchema
                     .getGeneratedInlinedRequestBodySchema(this.packageId, endpoint.name)
-                    .deserializeRequest(referenceToBody, context)
+                    .deserializeRequest(referenceToBody, context);
             },
             reference: () => {
                 if (this.skipRequestValidation) {
                     return context.expressEndpointTypeSchemas
                         .getGeneratedEndpointTypeSchemas(this.packageId, endpoint.name)
-                        .deserializeRequest(referenceToBody, context)
+                        .deserializeRequest(referenceToBody, context);
                 }
                 return context.expressEndpointTypeSchemas
                     .getGeneratedEndpointTypeSchemas(this.packageId, endpoint.name)
-                    .deserializeRequest(referenceToBody, context)
+                    .deserializeRequest(referenceToBody, context);
             },
             fileUpload: () => {
-                throw new Error("File upload is not supported")
+                throw new Error("File upload is not supported");
             },
             bytes: () => {
-                throw new Error("bytes is not supported")
+                throw new Error("bytes is not supported");
             },
             _other: () => {
-                throw new Error("Unknown HttpRequestBody: " + requestBodyType.type)
+                throw new Error("Unknown HttpRequestBody: " + requestBodyType.type);
             }
-        })
+        });
     }
 
     private getMethodsInterfaceName(): string {
-        return `${this.serviceClassName}Methods`
+        return `${this.serviceClassName}Methods`;
     }
 
     private getResponseBodyType(response: HttpResponseBody, context: ExpressContext): ts.TypeNode {
         return HttpResponseBody._visit<ts.TypeNode>(response, {
             json: (jsonResponse) => context.type.getReferenceToType(jsonResponse.responseBodyType).typeNode,
             bytes: () => {
-                throw new Error("bytes is not supported")
+                throw new Error("bytes is not supported");
             },
             streaming: () => {
-                throw new Error("Streaming is not supported")
+                throw new Error("Streaming is not supported");
             },
             streamParameter: () => {
-                throw new Error("Streaming is not supported")
+                throw new Error("Streaming is not supported");
             },
             fileDownload: () => {
-                throw new Error("File download is not supported")
+                throw new Error("File download is not supported");
             },
             text: () => {
-                throw new Error("Text response is not supported")
+                throw new Error("Text response is not supported");
             },
             _other: () => {
-                throw new Error("Unknown HttpResponseBody: " + response.type)
+                throw new Error("Unknown HttpResponseBody: " + response.type);
             }
-        })
+        });
     }
 }

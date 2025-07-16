@@ -1,13 +1,13 @@
-import type { Element } from "hast"
-import { CONTINUE, EXIT, SKIP, visit } from "unist-util-visit"
+import type { Element } from "hast";
+import { CONTINUE, EXIT, SKIP, visit } from "unist-util-visit";
 
-import { getFirstChild } from "../extract/firstChild"
-import { getText } from "../extract/text"
-import { findTitle } from "../extract/title"
-import { scrapedNavigationEntry, scrapedNavigationPage, scrapedNavigationSection } from "../types/scrapedNavigation"
+import { getFirstChild } from "../extract/firstChild";
+import { getText } from "../extract/text";
+import { findTitle } from "../extract/title";
+import { scrapedNavigationEntry, scrapedNavigationPage, scrapedNavigationSection } from "../types/scrapedNavigation";
 
 export function parseSidebar(rootNode: Element): Array<scrapedNavigationSection> {
-    const result: Array<scrapedNavigationSection> = []
+    const result: Array<scrapedNavigationSection> = [];
 
     visit(rootNode, "element", function (node) {
         if (
@@ -16,41 +16,41 @@ export function parseSidebar(rootNode: Element): Array<scrapedNavigationSection>
             Array.isArray(node.properties.className) &&
             node.properties.className.includes("rm-Sidebar-section")
         ) {
-            const heading = getFirstChild({ node, tagName: "h2" })
-            const headingText = heading ? getText(heading) : ""
-            const items = parseNavItems(node)
+            const heading = getFirstChild({ node, tagName: "h2" });
+            const headingText = heading ? getText(heading) : "";
+            const items = parseNavItems(node);
 
             const flattenedItems = items.flatMap((item) => {
                 if (item.type === "group") {
-                    return item.pages
+                    return item.pages;
                 }
-                return item
-            })
+                return item;
+            });
 
             result.push({
                 type: "group",
                 group: headingText,
                 pages: flattenedItems
-            })
+            });
         }
-    })
-    return result
+    });
+    return result;
 }
 
 export function parseNavItems(rootNode: Element): Array<scrapedNavigationEntry> {
-    const result: Array<scrapedNavigationEntry> = []
-    const rootSectionTagName = "section"
-    const innerSectionTagName = "h2"
+    const result: Array<scrapedNavigationEntry> = [];
+    const rootSectionTagName = "section";
+    const innerSectionTagName = "h2";
 
     visit(rootNode, "element", function (node, index, parent) {
         if (node.tagName === rootSectionTagName) {
-            node.tagName = "li"
+            node.tagName = "li";
         }
         if (node.tagName !== "li") {
-            return CONTINUE
+            return CONTINUE;
         }
 
-        let title: string | undefined = undefined
+        let title: string | undefined = undefined;
         if (
             node.children[0] &&
             node.children[1] &&
@@ -61,7 +61,7 @@ export function parseNavItems(rootNode: Element): Array<scrapedNavigationEntry> 
             node.children[0].children.filter((child) => child.type === "text").length ===
                 node.children[0].children.length
         ) {
-            title = findTitle(node.children[0], { delete: false })
+            title = findTitle(node.children[0], { delete: false });
         }
 
         if (
@@ -79,7 +79,7 @@ export function parseNavItems(rootNode: Element): Array<scrapedNavigationEntry> 
                     properties: {},
                     children: node.children
                 }
-            ]
+            ];
         }
 
         const entry = parseListItem({
@@ -87,16 +87,16 @@ export function parseNavItems(rootNode: Element): Array<scrapedNavigationEntry> 
             sectionTagName: innerSectionTagName,
             childListTagName: "ul",
             title
-        })
+        });
 
         if (entry !== undefined) {
-            result.push(entry)
-            return SKIP
+            result.push(entry);
+            return SKIP;
         }
-        return CONTINUE
-    })
+        return CONTINUE;
+    });
 
-    return result
+    return result;
 }
 
 export function parseListItem({
@@ -105,79 +105,79 @@ export function parseListItem({
     childListTagName = "ul",
     title
 }: {
-    node: Element
-    sectionTagName: string
-    childListTagName: string
-    title?: string
+    node: Element;
+    sectionTagName: string;
+    childListTagName: string;
+    title?: string;
 }): scrapedNavigationEntry | undefined {
-    const link = getFirstChild({ node, tagName: "a" })
+    const link = getFirstChild({ node, tagName: "a" });
     if (!link) {
-        return undefined
+        return undefined;
     }
 
-    let linkHref: string | undefined = undefined
-    linkHref = link.properties.href as string | undefined
+    let linkHref: string | undefined = undefined;
+    linkHref = link.properties.href as string | undefined;
 
     if (linkHref === undefined || linkHref === "#") {
-        return undefined
+        return undefined;
     }
 
-    let isApiReferenceLink = false as boolean
+    let isApiReferenceLink = false as boolean;
     visit(link, "element", function (subNode) {
         if (
             subNode.tagName === "span" &&
             Array.isArray(subNode.properties.className) &&
             subNode.properties.className.includes("rm-APIMethod")
         ) {
-            isApiReferenceLink = true
-            return EXIT
+            isApiReferenceLink = true;
+            return EXIT;
         }
-        return CONTINUE
-    })
+        return CONTINUE;
+    });
     if (isApiReferenceLink) {
-        return undefined
+        return undefined;
     }
 
     if (linkHref.startsWith("/")) {
-        linkHref = linkHref.substring(1)
+        linkHref = linkHref.substring(1);
     }
 
-    const sectionHeader = getFirstChild({ node, tagName: sectionTagName })
-    const childList = getFirstChild({ node, tagName: childListTagName })
+    const sectionHeader = getFirstChild({ node, tagName: sectionTagName });
+    const childList = getFirstChild({ node, tagName: childListTagName });
     if (!childList) {
         return {
             type: "page",
             page: getText(link) || getText(sectionHeader) || "",
             slug: linkHref
-        }
+        };
     }
 
-    let groupTitle = title
+    let groupTitle = title;
     if (!groupTitle) {
-        groupTitle = getText(link) || getText(sectionHeader) || ""
+        groupTitle = getText(link) || getText(sectionHeader) || "";
     }
 
-    const childEntries = parseNavItems(childList)
-    const newLink = linkHref
+    const childEntries = parseNavItems(childList);
+    const newLink = linkHref;
 
     if (linkHref !== "#") {
         const newPage: scrapedNavigationPage = {
             type: "page",
             page: getText(link) || getText(sectionHeader) || "",
             slug: newLink
-        }
+        };
 
         // Check if the link already exists in child entries
-        const existingPageIndex = childEntries.findIndex((child) => child.type === "page" && child.slug === linkHref)
+        const existingPageIndex = childEntries.findIndex((child) => child.type === "page" && child.slug === linkHref);
 
         if (existingPageIndex !== -1) {
             // Replace the existing page with the new one
-            childEntries[existingPageIndex] = newPage
+            childEntries[existingPageIndex] = newPage;
         } else if (!childEntries.some((child) => child.type === "page" && child.slug === newLink)) {
             // Add the new page if it doesn't exist
-            childEntries.unshift(newPage)
+            childEntries.unshift(newPage);
         }
     }
 
-    return { type: "group", group: groupTitle, pages: childEntries }
+    return { type: "group", group: groupTitle, pages: childEntries };
 }

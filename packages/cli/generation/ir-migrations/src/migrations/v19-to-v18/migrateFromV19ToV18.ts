@@ -1,10 +1,14 @@
-import { mapValues } from "lodash-es"
+import { mapValues } from "lodash-es";
 
-import { GeneratorName } from "@fern-api/configuration-loader"
+import { GeneratorName } from "@fern-api/configuration-loader";
 
-import { IrMigrationContext } from "../../IrMigrationContext"
-import { IrVersions } from "../../ir-versions"
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
+import { IrMigrationContext } from "../../IrMigrationContext";
+import { IrVersions } from "../../ir-versions";
+import {
+    GeneratorWasNeverUpdatedToConsumeNewIR,
+    GeneratorWasNotCreatedYet,
+    IrMigration
+} from "../../types/IrMigration";
 
 export const V19_TO_V18_MIGRATION: IrMigration<
     IrVersions.V19.ir.IntermediateRepresentation,
@@ -46,14 +50,14 @@ export const V19_TO_V18_MIGRATION: IrMigration<
         return {
             ...v19,
             services: mapValues(v19.services, (service) => {
-                return convertService(service, context)
+                return convertService(service, context);
             }),
             types: mapValues(v19.types, (type) => {
-                return convertTypeDeclaration(type, context)
+                return convertTypeDeclaration(type, context);
             })
-        }
+        };
     }
-}
+};
 
 function convertService(
     service: IrVersions.V19.http.HttpService,
@@ -62,7 +66,7 @@ function convertService(
     return {
         ...service,
         endpoints: service.endpoints.map((endpoint) => convertEndpoint(endpoint, context))
-    }
+    };
 }
 
 function convertEndpoint(
@@ -72,7 +76,7 @@ function convertEndpoint(
     return {
         ...endpoint,
         examples: endpoint.examples.map((example) => convertExampleEndpointCall(example, context))
-    }
+    };
 }
 
 function convertExampleEndpointCall(
@@ -99,7 +103,7 @@ function convertExampleEndpointCall(
         ),
         request: example.request != null ? convertExampleRequest(example.request, context) : undefined,
         response: convertExampleResponse(example.response, context)
-    }
+    };
 }
 
 function convertExamplePathParameter(
@@ -109,7 +113,7 @@ function convertExamplePathParameter(
     return {
         key: example.key,
         value: convertExampleTypeReference(example.value, context)
-    }
+    };
 }
 
 function convertExampleHeader(
@@ -119,7 +123,7 @@ function convertExampleHeader(
     return {
         wireKey: example.wireKey,
         value: convertExampleTypeReference(example.value, context)
-    }
+    };
 }
 
 function convertExampleQueryParameter(
@@ -129,7 +133,7 @@ function convertExampleQueryParameter(
     return {
         wireKey: example.wireKey,
         value: convertExampleTypeReference(example.value, context)
-    }
+    };
 }
 
 function convertExampleRequest(
@@ -145,14 +149,14 @@ function convertExampleRequest(
                     value: convertExampleTypeReference(property.value, context),
                     originalTypeDeclaration: property.originalTypeDeclaration
                 }))
-            })
+            });
         },
         reference: (exampleReference) =>
             IrVersions.V18.http.ExampleRequestBody.reference(convertExampleTypeReference(exampleReference, context)),
         _unknown: () => {
-            throw new Error("Unknown ExampleRequestBody: " + example.type)
+            throw new Error("Unknown ExampleRequestBody: " + example.type);
         }
-    })
+    });
 }
 
 function convertExampleResponse(
@@ -170,9 +174,9 @@ function convertExampleResponse(
                 body: errorExample.body != null ? convertExampleTypeReference(errorExample.body, context) : undefined
             }),
         _unknown: () => {
-            throw new Error("Unknown ExampleResponse: " + example.type)
+            throw new Error("Unknown ExampleResponse: " + example.type);
         }
-    })
+    });
 }
 
 function convertTypeDeclaration(
@@ -182,7 +186,7 @@ function convertTypeDeclaration(
     return {
         ...type,
         examples: type.examples.map((example) => convertExampleType(example, context))
-    }
+    };
 }
 
 function convertExampleType(
@@ -192,7 +196,7 @@ function convertExampleType(
     return {
         ...example,
         shape: convertExampleTypeShape(example.shape, context)
-    }
+    };
 }
 
 function convertExampleTypeShape(
@@ -233,16 +237,16 @@ function convertExampleTypeShape(
                             _unknown: () => {
                                 throw new Error(
                                     "Unknown ExampleSingleUnionTypeProperties: " + unionExample.properties.type
-                                )
+                                );
                             }
                         }
                     )
             }),
         enum: IrVersions.V18.types.ExampleTypeShape.enum,
         _unknown: () => {
-            throw new Error("Unknown ExampleTypeShape: " + example.type)
+            throw new Error("Unknown ExampleTypeShape: " + example.type);
         }
-    })
+    });
 }
 
 function convertExampleTypeReference(
@@ -252,7 +256,7 @@ function convertExampleTypeReference(
     return {
         jsonExample: example.jsonExample,
         shape: convertExampleTypeReferenceShape(example.shape, context)
-    }
+    };
 }
 
 function convertExampleTypeReferenceShape(
@@ -298,17 +302,17 @@ function convertExampleTypeReferenceShape(
                                     }))
                                 ),
                             _unknown: () => {
-                                throw new Error("Unknown ExampleContainer: " + exampleContainer.type)
+                                throw new Error("Unknown ExampleContainer: " + exampleContainer.type);
                             }
                         }
                     )
                 ),
             unknown: IrVersions.V18.types.ExampleTypeReferenceShape.unknown,
             _unknown: () => {
-                throw new Error("Unknown ExampleTypeReferenceShape: " + example.type)
+                throw new Error("Unknown ExampleTypeReferenceShape: " + example.type);
             }
         }
-    )
+    );
 }
 
 function convertExamplePrimitive(
@@ -323,7 +327,7 @@ function convertExamplePrimitive(
                       ` If you'd like to use this feature, please upgrade ${targetGenerator.name}` +
                       " to a compatible version."
                 : "Cannot backwards-migrate IR because this IR contains date examples."
-        )
+        );
     }
-    return example
+    return example;
 }

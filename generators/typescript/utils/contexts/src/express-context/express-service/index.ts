@@ -1,2 +1,2 @@
-export { type ExpressServiceContext } from "./ExpressServiceContext"
-export { type GeneratedExpressService } from "./GeneratedExpressService"
+export { type ExpressServiceContext } from "./ExpressServiceContext";
+export { type GeneratedExpressService } from "./GeneratedExpressService";

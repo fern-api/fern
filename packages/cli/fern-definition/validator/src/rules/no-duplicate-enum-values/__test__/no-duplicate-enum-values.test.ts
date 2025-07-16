@@ -1,7 +1,7 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule"
-import { NoDuplicateEnumValuesRule } from "../no-duplicate-enum-values"
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { NoDuplicateEnumValuesRule } from "../no-duplicate-enum-values";
 
 describe("no-duplicate-enum-values", () => {
     it("simple", async () => {
@@ -12,7 +12,7 @@ describe("no-duplicate-enum-values", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
             )
-        })
+        });
 
         expect(violations).toEqual([
             {
@@ -21,6 +21,6 @@ describe("no-duplicate-enum-values", () => {
                 relativeFilepath: RelativeFilePath.of("simple.yml"),
                 severity: "fatal"
             }
-        ])
-    })
-})
+        ]);
+    });
+});

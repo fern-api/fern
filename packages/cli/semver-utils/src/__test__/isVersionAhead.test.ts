@@ -1,4 +1,4 @@
-import { isVersionAhead } from "../isVersionAhead"
+import { isVersionAhead } from "../isVersionAhead";
 
 describe("isVersionAhead", () => {
     it.each`
@@ -44,6 +44,6 @@ describe("isVersionAhead", () => {
         ${"0.0.190-beta.0"}         | ${"0.0.190-alpha.0"}        | ${true}
         ${"0.0.190-alpha.0"}        | ${"0.0.190-beta.0"}         | ${false}
     `("$a vs. $b", ({ a, b, expected }) => {
-        expect(isVersionAhead(a, b)).toBe(expected)
-    })
-})
+        expect(isVersionAhead(a, b)).toBe(expected);
+    });
+});

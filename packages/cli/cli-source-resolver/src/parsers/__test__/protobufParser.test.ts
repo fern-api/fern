@@ -1,18 +1,18 @@
-import path from "path"
+import path from "path";
 
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { ProtobufFileInfo, ProtobufParser } from "../ProtobufParser"
+import { ProtobufFileInfo, ProtobufParser } from "../ProtobufParser";
 
-const TEST_DEFINITIONS = AbsoluteFilePath.of(path.join(__dirname, "protobuf/test-definitions"))
+const TEST_DEFINITIONS = AbsoluteFilePath.of(path.join(__dirname, "protobuf/test-definitions"));
 
 interface TestCase {
-    filename: string
-    expected: ProtobufFileInfo
+    filename: string;
+    expected: ProtobufFileInfo;
 }
 
 describe("protobuf parser", () => {
-    const parser = new ProtobufParser()
+    const parser = new ProtobufParser();
 
     const testCases: TestCase[] = [
         {
@@ -55,14 +55,14 @@ describe("protobuf parser", () => {
                 serviceName: "User"
             }
         }
-    ]
+    ];
 
     testCases.forEach((testCase) => {
         it(`"${testCase.filename}"`, async () => {
             const actual = parser.parse({
                 absoluteFilePath: join(TEST_DEFINITIONS, RelativeFilePath.of(testCase.filename))
-            })
-            expect(actual).toEqual(testCase.expected)
-        })
-    })
-})
+            });
+            expect(actual).toEqual(testCase.expected);
+        });
+    });
+});

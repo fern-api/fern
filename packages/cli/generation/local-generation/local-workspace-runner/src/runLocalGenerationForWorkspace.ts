@@ -1,25 +1,25 @@
-import chalk from "chalk"
-import os from "os"
-import path from "path"
-import tmp from "tmp-promise"
+import chalk from "chalk";
+import os from "os";
+import path from "path";
+import tmp from "tmp-promise";
 
-import { FernToken } from "@fern-api/auth"
-import { getAccessToken } from "@fern-api/auth"
-import { SourceResolverImpl } from "@fern-api/cli-source-resolver"
-import { fernConfigJson, generatorsYml } from "@fern-api/configuration"
-import { createVenusService } from "@fern-api/core"
-import { ContainerRunner, replaceEnvVariables } from "@fern-api/core-utils"
-import { RelativeFilePath, join } from "@fern-api/fs-utils"
-import { generateIntermediateRepresentation } from "@fern-api/ir-generator"
-import { FernIr } from "@fern-api/ir-sdk"
-import { TaskContext } from "@fern-api/task-context"
-import { FernVenusApi } from "@fern-api/venus-api-sdk"
+import { FernToken } from "@fern-api/auth";
+import { getAccessToken } from "@fern-api/auth";
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
+import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
+import { createVenusService } from "@fern-api/core";
+import { ContainerRunner, replaceEnvVariables } from "@fern-api/core-utils";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
+import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { FernIr } from "@fern-api/ir-sdk";
+import { TaskContext } from "@fern-api/task-context";
+import { FernVenusApi } from "@fern-api/venus-api-sdk";
 import {
     AbstractAPIWorkspace,
     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
-} from "@fern-api/workspace-loader"
+} from "@fern-api/workspace-loader";
 
-import { writeFilesToDiskAndRunGenerator } from "./runGenerator"
+import { writeFilesToDiskAndRunGenerator } from "./runGenerator";
 
 export async function runLocalGenerationForWorkspace({
     token,
@@ -30,28 +30,28 @@ export async function runLocalGenerationForWorkspace({
     context,
     runner
 }: {
-    token: FernToken | undefined
-    projectConfig: fernConfigJson.ProjectConfig
-    workspace: AbstractAPIWorkspace<unknown>
-    generatorGroup: generatorsYml.GeneratorGroup
-    keepDocker: boolean
-    context: TaskContext
-    runner: ContainerRunner | undefined
+    token: FernToken | undefined;
+    projectConfig: fernConfigJson.ProjectConfig;
+    workspace: AbstractAPIWorkspace<unknown>;
+    generatorGroup: generatorsYml.GeneratorGroup;
+    keepDocker: boolean;
+    context: TaskContext;
+    runner: ContainerRunner | undefined;
 }): Promise<void> {
-    const workspaceTempDir = await getWorkspaceTempDir()
+    const workspaceTempDir = await getWorkspaceTempDir();
 
     const results = await Promise.all(
         generatorGroup.generators.map(async (generatorInvocation) => {
             return context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
                 const substituteEnvVars = <T>(stringOrObject: T) =>
-                    replaceEnvVariables(stringOrObject, { onError: (e) => interactiveTaskContext.failAndThrow(e) })
+                    replaceEnvVariables(stringOrObject, { onError: (e) => interactiveTaskContext.failAndThrow(e) });
 
-                generatorInvocation = substituteEnvVars(generatorInvocation)
+                generatorInvocation = substituteEnvVars(generatorInvocation);
 
                 const fernWorkspace = await workspace.toFernWorkspace(
                     { context },
                     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
-                )
+                );
 
                 const intermediateRepresentation = generateIntermediateRepresentation({
                     workspace: fernWorkspace,
@@ -68,40 +68,40 @@ export async function runLocalGenerationForWorkspace({
                     packageName: generatorsYml.getPackageName({ generatorInvocation }),
                     context,
                     sourceResolver: new SourceResolverImpl(context, fernWorkspace)
-                })
+                });
 
-                const venus = createVenusService({ token: token?.value })
+                const venus = createVenusService({ token: token?.value });
 
                 if (generatorInvocation.absolutePathToLocalOutput == null) {
-                    token = await getAccessToken()
+                    token = await getAccessToken();
                     if (token == null) {
-                        interactiveTaskContext.failWithoutThrowing("Please provide a FERN_TOKEN in your environment.")
-                        return
+                        interactiveTaskContext.failWithoutThrowing("Please provide a FERN_TOKEN in your environment.");
+                        return;
                     }
                 }
 
                 const organization = await venus.organization.get(
                     FernVenusApi.OrganizationId(projectConfig.organization)
-                )
+                );
 
                 if (generatorInvocation.absolutePathToLocalOutput == null && !organization.ok) {
                     interactiveTaskContext.failWithoutThrowing(
                         `Failed to load details for organization ${projectConfig.organization}.`
-                    )
-                    return
+                    );
+                    return;
                 }
 
                 if (organization.ok && organization.body.selfHostedSdKs) {
-                    intermediateRepresentation.selfHosted = true
+                    intermediateRepresentation.selfHosted = true;
                 }
 
                 // Set the publish config on the intermediateRepresentation if available
                 const publishConfig = getPublishConfig({
                     generatorInvocation,
                     org: organization.ok ? organization.body : undefined
-                })
+                });
                 if (publishConfig != null) {
-                    intermediateRepresentation.publishConfig = publishConfig
+                    intermediateRepresentation.publishConfig = publishConfig;
                 }
 
                 const absolutePathToLocalOutput =
@@ -110,7 +110,7 @@ export async function runLocalGenerationForWorkspace({
                         workspace.absoluteFilePath,
                         RelativeFilePath.of("sdks"),
                         RelativeFilePath.of(generatorInvocation.language ?? generatorInvocation.name)
-                    )
+                    );
 
                 await writeFilesToDiskAndRunGenerator({
                     organization: projectConfig.organization,
@@ -131,15 +131,15 @@ export async function runLocalGenerationForWorkspace({
                     generatePaginatedClients: organization.ok ? (organization?.body.paginationEnabled ?? false) : false,
                     ir: intermediateRepresentation,
                     runner
-                })
+                });
 
-                interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput))
-            })
+                interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
+            });
         })
-    )
+    );
 
     if (results.some((didSucceed) => !didSucceed)) {
-        context.failAndThrow()
+        context.failAndThrow();
     }
 }
 
@@ -149,15 +149,15 @@ export async function getWorkspaceTempDir(): Promise<tmp.DirectoryResult> {
         // see https://stackoverflow.com/a/45123074
         tmpdir: os.platform() === "darwin" ? path.join("/private", os.tmpdir()) : undefined,
         prefix: "fern"
-    })
+    });
 }
 
 function getPublishConfig({
     generatorInvocation,
     org
 }: {
-    generatorInvocation: generatorsYml.GeneratorInvocation
-    org?: FernVenusApi.Organization
+    generatorInvocation: generatorsYml.GeneratorInvocation;
+    org?: FernVenusApi.Organization;
 }): FernIr.PublishingConfig | undefined {
     if (generatorInvocation.raw?.github != null && isGithubSelfhosted(generatorInvocation.raw.github)) {
         return FernIr.PublishingConfig.github({
@@ -170,13 +170,13 @@ function getPublishConfig({
                 workspaceId: "",
                 collectionId: undefined
             })
-        })
+        });
     }
 
     if (generatorInvocation.raw?.output?.location === "local-file-system") {
         return FernIr.PublishingConfig.filesystem({
             generateFullProject: org?.selfHostedSdKs ?? false
-        })
+        });
     }
 
     return generatorInvocation.outputMode._visit({
@@ -186,7 +186,7 @@ function getPublishConfig({
         publish: () => undefined,
         publishV2: () => undefined,
         _other: () => undefined
-    })
+    });
 }
 
 /**
@@ -196,7 +196,7 @@ function isGithubSelfhosted(
     github: generatorsYml.GithubConfigurationSchema | undefined
 ): github is generatorsYml.GithubSelfhostedSchema {
     if (github == null) {
-        return false
+        return false;
     }
-    return "uri" in github && "token" in github
+    return "uri" in github && "token" in github;
 }

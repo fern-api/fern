@@ -1,20 +1,20 @@
-import { ts } from "ts-morph"
+import { ts } from "ts-morph";
 
-import { GeneratedFile } from "../../commons/GeneratedFile"
-import { SdkContext } from "../SdkContext"
+import { GeneratedFile } from "../../commons/GeneratedFile";
+import { SdkContext } from "../SdkContext";
 
-export type GeneratedSdkError = GeneratedSdkErrorType | GeneratedSdkErrorClass
+export type GeneratedSdkError = GeneratedSdkErrorType | GeneratedSdkErrorClass;
 
 export interface GeneratedSdkErrorType extends BaseGeneratedSdkError {
-    type: "type"
+    type: "type";
 }
 
 export interface GeneratedSdkErrorClass extends BaseGeneratedSdkError {
-    type: "class"
+    type: "class";
     build: (
         context: SdkContext,
         args: { referenceToBody: ts.Expression | undefined; referenceToRawResponse: ts.Expression | undefined }
-    ) => ts.NewExpression
+    ) => ts.NewExpression;
 }
 
 export interface BaseGeneratedSdkError extends GeneratedFile<SdkContext> {}

@@ -1,26 +1,26 @@
-import { camelCase, snakeCase, upperFirst } from "lodash-es"
+import { camelCase, snakeCase, upperFirst } from "lodash-es";
 
-import { RelativeFilePath } from "@fern-api/fs-utils"
+import { RelativeFilePath } from "@fern-api/fs-utils";
 
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
-import { BasicLicense, CustomLicense } from "@fern-fern/generator-exec-sdk/api"
-import { FernFilepath } from "@fern-fern/ir-sdk/api"
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { BasicLicense, CustomLicense } from "@fern-fern/generator-exec-sdk/api";
+import { FernFilepath } from "@fern-fern/ir-sdk/api";
 
-import { ExternalDependency } from "../ast/ExternalDependency"
-import { Module_ } from "../ast/Module_"
-import { Expression } from "../ast/expressions/Expression"
-import { Gemspec } from "../ast/gem/Gemspec"
-import { GeneratedFile } from "./GeneratedFile"
-import { GeneratedRubyFile } from "./GeneratedRubyFile"
+import { ExternalDependency } from "../ast/ExternalDependency";
+import { Module_ } from "../ast/Module_";
+import { Expression } from "../ast/expressions/Expression";
+import { Gemspec } from "../ast/gem/Gemspec";
+import { GeneratedFile } from "./GeneratedFile";
+import { GeneratedRubyFile } from "./GeneratedRubyFile";
 
-export const MINIMUM_RUBY_VERSION = "2.7"
+export const MINIMUM_RUBY_VERSION = "2.7";
 
 export function getGemName(organization: string, apiName: string, clientClassName?: string, gemName?: string): string {
-    return gemName != null ? snakeCase(gemName) : snakeCase(getClientName(organization, apiName, clientClassName))
+    return gemName != null ? snakeCase(gemName) : snakeCase(getClientName(organization, apiName, clientClassName));
 }
 
 export function getClientName(organization: string, apiName: string, clientClassName?: string): string {
-    return clientClassName ?? upperFirst(camelCase(organization)) + upperFirst(camelCase(apiName)) + "Client"
+    return clientClassName ?? upperFirst(camelCase(organization)) + upperFirst(camelCase(apiName)) + "Client";
 }
 
 export function getBreadcrumbsFromFilepath(
@@ -33,7 +33,7 @@ export function getBreadcrumbsFromFilepath(
         ...(includeFullPath === true ? fernFilepath.allParts : fernFilepath.packagePath).map(
             (pathPart) => pathPart.pascalCase.safeName
         )
-    ]
+    ];
 }
 
 export function generateBasicRakefile(): GeneratedFile {
@@ -48,8 +48,8 @@ Rake::TestTask.new do |t|
 end
 
 RuboCop::RakeTask.new
-`
-    return new GeneratedFile("Rakefile", RelativeFilePath.of("."), content)
+`;
+    return new GeneratedFile("Rakefile", RelativeFilePath.of("."), content);
 }
 
 // These tests are so static + basic that I didn't go through the trouble of leveraging the AST
@@ -60,8 +60,8 @@ $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 
 require "minitest/autorun"
 require "${gemName}"
-`
-    const helperFile = new GeneratedFile("test_helper.rb", RelativeFilePath.of("test/"), helperContent)
+`;
+    const helperFile = new GeneratedFile("test_helper.rb", RelativeFilePath.of("test/"), helperContent);
 
     const testContent = `# frozen_string_literal: true
 require_relative "test_helper"
@@ -72,10 +72,10 @@ class Test${clientName} < Minitest::Test
   def test_function
     # ${clientName}::Client.new
   end
-end`
-    const testFile = new GeneratedFile(`test_${gemName}.rb`, RelativeFilePath.of("test/"), testContent)
+end`;
+    const testFile = new GeneratedFile(`test_${gemName}.rb`, RelativeFilePath.of("test/"), testContent);
 
-    return [helperFile, testFile]
+    return [helperFile, testFile];
 }
 
 export function generateGemspec(
@@ -89,15 +89,15 @@ export function generateGemspec(
 ): GeneratedRubyFile {
     const license = licenseConfig?._visit({
         basic: (l: BasicLicense) => {
-            return { licenseType: l.id, licenseFilePath: "LICENSE" }
+            return { licenseType: l.id, licenseFilePath: "LICENSE" };
         },
         custom: (l: CustomLicense) => {
-            return { licenseFilePath: l.filename }
+            return { licenseFilePath: l.filename };
         },
         _other: () => {
-            throw new Error("Unknown license configuration provided.")
+            throw new Error("Unknown license configuration provided.");
         }
-    })
+    });
     const gemspec = new Gemspec({
         clientName,
         gemName,
@@ -106,13 +106,13 @@ export function generateGemspec(
         license,
         hasFileBasedDependencies,
         hasEndpoints
-    })
+    });
     return new GeneratedRubyFile({
         rootNode: gemspec,
         fullPath: gemName,
         fileExtension: "gemspec",
         isConfigurationFile: true
-    })
+    });
 }
 
 // To ensure configuration may be managed independently from dependencies, we introduce a new config file that
@@ -146,11 +146,11 @@ export function generateGemConfig(clientName: string, repoUrl?: string): Generat
                 })
             ]
         })
-    })
+    });
     return new GeneratedRubyFile({
         rootNode: gemspec,
         fullPath: "gemconfig"
-    })
+    });
 }
 
 export function generateGitignore(): GeneratedFile {
@@ -164,8 +164,8 @@ export function generateGitignore(): GeneratedFile {
 /tmp/
 *.gem
 .env
-`
-    return new GeneratedFile(".gitignore", RelativeFilePath.of("."), content)
+`;
+    return new GeneratedFile(".gitignore", RelativeFilePath.of("."), content);
 }
 
 export function generateGithubWorkflow(gemName: string, registryUrl: string, apiKeyEnvVar: string): GeneratedFile {
@@ -195,8 +195,8 @@ jobs:
               gem build ${gemName}.gemspec
 
               gem push ${gemName}-*.gem --host ${registryUrl}
-`
-    return new GeneratedFile("publish.yml", RelativeFilePath.of(".github/workflows"), content)
+`;
+    return new GeneratedFile("publish.yml", RelativeFilePath.of(".github/workflows"), content);
 }
 
 export function generateRubocopConfig(): GeneratedFile {
@@ -236,8 +236,8 @@ Metrics/CyclomaticComplexity:
 
 Metrics/PerceivedComplexity:
   Enabled: false
-`
-    return new GeneratedFile(".rubocop.yml", RelativeFilePath.of("."), content)
+`;
+    return new GeneratedFile(".rubocop.yml", RelativeFilePath.of("."), content);
 }
 
 // TODO: this should probably be codified in a more intentional way
@@ -251,15 +251,15 @@ gemspec
 gem "minitest", "~> 5.0"
 gem "rake", "~> 13.0"
 gem "rubocop", "~> 1.21"
-`
+`;
 
     if (extraDevDependencies.length > 0) {
-        gemfileContent += "\n"
+        gemfileContent += "\n";
         for (const dep of extraDevDependencies) {
-            gemfileContent += `gem ${dep.write({})}\n`
+            gemfileContent += `gem ${dep.write({})}\n`;
         }
     }
-    return new GeneratedFile("Gemfile", RelativeFilePath.of("."), gemfileContent)
+    return new GeneratedFile("Gemfile", RelativeFilePath.of("."), gemfileContent);
 }
 
 export function generateBinDir(gemName: string): GeneratedFile[] {
@@ -269,8 +269,8 @@ IFS=$'\n\t'
 set -vx
 
 bundle install
-`
-    const setup = new GeneratedFile("setup", RelativeFilePath.of("bin"), setupContent)
+`;
+    const setup = new GeneratedFile("setup", RelativeFilePath.of("bin"), setupContent);
 
     const consoleContent = `#!/usr/bin/env ruby
 # frozen_string_literal: true
@@ -287,13 +287,13 @@ require "${gemName}"
 
 require "irb"
 IRB.start(__FILE__)
-`
-    const console = new GeneratedFile("setup", RelativeFilePath.of("bin"), consoleContent)
+`;
+    const console = new GeneratedFile("setup", RelativeFilePath.of("bin"), consoleContent);
 
-    return [setup, console]
+    return [setup, console];
 }
 
 export function generateReadme(): GeneratedFile {
-    const content = ""
-    return new GeneratedFile("README.md", RelativeFilePath.of("."), content)
+    const content = "";
+    return new GeneratedFile("README.md", RelativeFilePath.of("."), content);
 }

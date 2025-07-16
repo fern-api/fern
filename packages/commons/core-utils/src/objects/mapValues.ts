@@ -26,11 +26,11 @@ export function mapValues<OldT, NewT>(
     object: Record<string | number | symbol, OldT>,
     iteratee: (value: OldT, key: string | number | symbol, obj: Record<string | number | symbol, OldT>) => NewT
 ): Record<string | number | symbol, NewT> {
-    object = Object(object)
-    const result: Record<keyof typeof object, NewT> = {}
+    object = Object(object);
+    const result: Record<keyof typeof object, NewT> = {};
 
     Object.keys(object).forEach((key) => {
-        result[key] = iteratee(object[key] as OldT, key, object)
-    })
-    return result
+        result[key] = iteratee(object[key] as OldT, key, object);
+    });
+    return result;
 }

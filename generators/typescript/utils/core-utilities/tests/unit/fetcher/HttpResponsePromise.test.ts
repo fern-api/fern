@@ -1,7 +1,7 @@
-import { beforeEach, describe, expect, it, jest } from "@jest/globals"
+import { beforeEach, describe, expect, it, jest } from "@jest/globals";
 
-import { HttpResponsePromise } from "../../../src/core/fetcher/HttpResponsePromise"
-import { RawResponse, WithRawResponse } from "../../../src/core/fetcher/RawResponse"
+import { HttpResponsePromise } from "../../../src/core/fetcher/HttpResponsePromise";
+import { RawResponse, WithRawResponse } from "../../../src/core/fetcher/RawResponse";
 
 describe("HttpResponsePromise", () => {
     const mockRawResponse: RawResponse = {
@@ -11,133 +11,133 @@ describe("HttpResponsePromise", () => {
         statusText: "OK",
         type: "basic" as ResponseType,
         url: "https://example.com"
-    }
-    const mockData = { id: "123", name: "test" }
+    };
+    const mockData = { id: "123", name: "test" };
     const mockWithRawResponse: WithRawResponse<typeof mockData> = {
         data: mockData,
         rawResponse: mockRawResponse
-    }
+    };
 
     describe("fromFunction", () => {
         it("should create an HttpResponsePromise from a function", async () => {
             const mockFn = jest
                 .fn<(arg1: string, arg2: string) => Promise<WithRawResponse<typeof mockData>>>()
-                .mockResolvedValue(mockWithRawResponse)
+                .mockResolvedValue(mockWithRawResponse);
 
-            const responsePromise = HttpResponsePromise.fromFunction(mockFn, "arg1", "arg2")
+            const responsePromise = HttpResponsePromise.fromFunction(mockFn, "arg1", "arg2");
 
-            const result = await responsePromise
-            expect(result).toEqual(mockData)
-            expect(mockFn).toHaveBeenCalledWith("arg1", "arg2")
+            const result = await responsePromise;
+            expect(result).toEqual(mockData);
+            expect(mockFn).toHaveBeenCalledWith("arg1", "arg2");
 
-            const resultWithRawResponse = await responsePromise.withRawResponse()
+            const resultWithRawResponse = await responsePromise.withRawResponse();
             expect(resultWithRawResponse).toEqual({
                 data: mockData,
                 rawResponse: mockRawResponse
-            })
-        })
-    })
+            });
+        });
+    });
 
     describe("fromPromise", () => {
         it("should create an HttpResponsePromise from a promise", async () => {
-            const promise = Promise.resolve(mockWithRawResponse)
+            const promise = Promise.resolve(mockWithRawResponse);
 
-            const responsePromise = HttpResponsePromise.fromPromise(promise)
+            const responsePromise = HttpResponsePromise.fromPromise(promise);
 
-            const result = await responsePromise
-            expect(result).toEqual(mockData)
+            const result = await responsePromise;
+            expect(result).toEqual(mockData);
 
-            const resultWithRawResponse = await responsePromise.withRawResponse()
+            const resultWithRawResponse = await responsePromise.withRawResponse();
             expect(resultWithRawResponse).toEqual({
                 data: mockData,
                 rawResponse: mockRawResponse
-            })
-        })
-    })
+            });
+        });
+    });
 
     describe("fromExecutor", () => {
         it("should create an HttpResponsePromise from an executor function", async () => {
             const responsePromise = HttpResponsePromise.fromExecutor((resolve) => {
-                resolve(mockWithRawResponse)
-            })
+                resolve(mockWithRawResponse);
+            });
 
-            const result = await responsePromise
-            expect(result).toEqual(mockData)
+            const result = await responsePromise;
+            expect(result).toEqual(mockData);
 
-            const resultWithRawResponse = await responsePromise.withRawResponse()
+            const resultWithRawResponse = await responsePromise.withRawResponse();
             expect(resultWithRawResponse).toEqual({
                 data: mockData,
                 rawResponse: mockRawResponse
-            })
-        })
-    })
+            });
+        });
+    });
 
     describe("fromResult", () => {
         it("should create an HttpResponsePromise from a result", async () => {
-            const responsePromise = HttpResponsePromise.fromResult(mockWithRawResponse)
+            const responsePromise = HttpResponsePromise.fromResult(mockWithRawResponse);
 
-            const result = await responsePromise
-            expect(result).toEqual(mockData)
+            const result = await responsePromise;
+            expect(result).toEqual(mockData);
 
-            const resultWithRawResponse = await responsePromise.withRawResponse()
+            const resultWithRawResponse = await responsePromise.withRawResponse();
             expect(resultWithRawResponse).toEqual({
                 data: mockData,
                 rawResponse: mockRawResponse
-            })
-        })
-    })
+            });
+        });
+    });
 
     describe("Promise methods", () => {
-        let responsePromise: HttpResponsePromise<typeof mockData>
+        let responsePromise: HttpResponsePromise<typeof mockData>;
 
         beforeEach(() => {
-            responsePromise = HttpResponsePromise.fromResult(mockWithRawResponse)
-        })
+            responsePromise = HttpResponsePromise.fromResult(mockWithRawResponse);
+        });
 
         it("should support then() method", async () => {
             const result = await responsePromise.then((data) => ({
                 ...data,
                 modified: true
-            }))
+            }));
 
             expect(result).toEqual({
                 ...mockData,
                 modified: true
-            })
-        })
+            });
+        });
 
         it("should support catch() method", async () => {
             const errorResponsePromise = HttpResponsePromise.fromExecutor((_, reject) => {
-                reject(new Error("Test error"))
-            })
+                reject(new Error("Test error"));
+            });
 
-            const catchSpy = jest.fn()
-            await errorResponsePromise.catch(catchSpy)
+            const catchSpy = jest.fn();
+            await errorResponsePromise.catch(catchSpy);
 
-            expect(catchSpy).toHaveBeenCalled()
-            const error = catchSpy.mock.calls[0]?.[0]
-            expect(error).toBeInstanceOf(Error)
-            expect((error as Error).message).toBe("Test error")
-        })
+            expect(catchSpy).toHaveBeenCalled();
+            const error = catchSpy.mock.calls[0]?.[0];
+            expect(error).toBeInstanceOf(Error);
+            expect((error as Error).message).toBe("Test error");
+        });
 
         it("should support finally() method", async () => {
-            const finallySpy = jest.fn()
-            await responsePromise.finally(finallySpy)
+            const finallySpy = jest.fn();
+            await responsePromise.finally(finallySpy);
 
-            expect(finallySpy).toHaveBeenCalled()
-        })
-    })
+            expect(finallySpy).toHaveBeenCalled();
+        });
+    });
 
     describe("withRawResponse", () => {
         it("should return both data and raw response", async () => {
-            const responsePromise = HttpResponsePromise.fromResult(mockWithRawResponse)
+            const responsePromise = HttpResponsePromise.fromResult(mockWithRawResponse);
 
-            const result = await responsePromise.withRawResponse()
+            const result = await responsePromise.withRawResponse();
 
             expect(result).toEqual({
                 data: mockData,
                 rawResponse: mockRawResponse
-            })
-        })
-    })
-})
+            });
+        });
+    });
+});

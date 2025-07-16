@@ -161,7 +161,7 @@
 			"jsxQuoteStyle": "double",
 			"quoteProperties": "asNeeded",
 			"trailingCommas": "none",
-			"semicolons": "asNeeded",
+			"semicolons": "always",
 			"arrowParentheses": "always",
 			"bracketSameLine": false,
 			"quoteStyle": "double",

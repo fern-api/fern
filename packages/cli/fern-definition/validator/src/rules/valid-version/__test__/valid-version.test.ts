@@ -1,8 +1,8 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { ValidationViolation } from "../../../ValidationViolation"
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule"
-import { ValidVersionRule } from "../valid-version"
+import { ValidationViolation } from "../../../ValidationViolation";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { ValidVersionRule } from "../valid-version";
 
 describe("valid-version", () => {
     it("valid", async () => {
@@ -13,9 +13,9 @@ describe("valid-version", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("valid")
             )
-        })
-        expect(violations).toEqual([])
-    })
+        });
+        expect(violations).toEqual([]);
+    });
 
     it("invalid", async () => {
         const violations = await getViolationsForRule({
@@ -25,7 +25,7 @@ describe("valid-version", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("invalid")
             )
-        })
+        });
         const expectedViolations: ValidationViolation[] = [
             {
                 message: 'Default version "1.0" not found in version values',
@@ -33,7 +33,7 @@ describe("valid-version", () => {
                 nodePath: [],
                 relativeFilepath: RelativeFilePath.of("api.yml")
             }
-        ]
-        expect(violations).toEqual(expectedViolations)
-    })
-})
+        ];
+        expect(violations).toEqual(expectedViolations);
+    });
+});

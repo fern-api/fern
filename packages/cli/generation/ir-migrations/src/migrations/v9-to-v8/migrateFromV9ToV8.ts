@@ -1,8 +1,12 @@
-import { GeneratorName } from "@fern-api/configuration-loader"
-import { TaskResult } from "@fern-api/task-context"
+import { GeneratorName } from "@fern-api/configuration-loader";
+import { TaskResult } from "@fern-api/task-context";
 
-import { IrVersions } from "../../ir-versions"
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
+import { IrVersions } from "../../ir-versions";
+import {
+    GeneratorWasNeverUpdatedToConsumeNewIR,
+    GeneratorWasNotCreatedYet,
+    IrMigration
+} from "../../types/IrMigration";
 
 export const V9_TO_V8_MIGRATION: IrMigration<
     IrVersions.V9.ir.IntermediateRepresentation,
@@ -49,11 +53,11 @@ export const V9_TO_V8_MIGRATION: IrMigration<
                               ` If you'd like to use this feature, please upgrade ${targetGenerator.name}` +
                               " to a compatible version."
                         : "Cannot backwards-migrate IR because this IR contains a union with base-properties."
-                )
+                );
             }
         }
         if (taskContext.getResult() === TaskResult.Failure) {
-            taskContext.failAndThrow()
+            taskContext.failAndThrow();
         }
 
         return {
@@ -61,6 +65,6 @@ export const V9_TO_V8_MIGRATION: IrMigration<
             types: Object.values(v9.types),
             errors: Object.values(v9.errors),
             services: Object.values(v9.services)
-        }
+        };
     }
-}
+};

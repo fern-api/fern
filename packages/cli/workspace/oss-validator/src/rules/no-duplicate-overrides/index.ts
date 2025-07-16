@@ -1,1 +1,1 @@
-export { NoDuplicateOverridesRule } from "./no-duplicate-overrides"
+export { NoDuplicateOverridesRule } from "./no-duplicate-overrides";

@@ -1,7 +1,7 @@
-import { constructCasingsGenerator } from "@fern-api/casings-generator"
-import { RelativeFilePath } from "@fern-api/fs-utils"
-import { constructFernFileContext, convertToFernFilepath, parseInlineType } from "@fern-api/ir-generator"
-import { ContainerType, serialization as IrSerialization, TypeReference } from "@fern-api/ir-sdk"
+import { constructCasingsGenerator } from "@fern-api/casings-generator";
+import { RelativeFilePath } from "@fern-api/fs-utils";
+import { constructFernFileContext, convertToFernFilepath, parseInlineType } from "@fern-api/ir-generator";
+import { ContainerType, serialization as IrSerialization, TypeReference } from "@fern-api/ir-sdk";
 
 describe("parse inline types", () => {
     it("nested containers", async () => {
@@ -9,10 +9,10 @@ describe("parse inline types", () => {
             generationLanguage: undefined,
             keywords: undefined,
             smartCasing: false
-        })
+        });
 
-        const dummyTypeName = "Dummy"
-        const dummyFilepath = RelativeFilePath.of("a/b/c")
+        const dummyTypeName = "Dummy";
+        const dummyFilepath = RelativeFilePath.of("a/b/c");
         const parsedTypeReference = parseInlineType({
             type: "optional<list<" + dummyTypeName + ">>",
             _default: undefined,
@@ -25,7 +25,7 @@ describe("parse inline types", () => {
                     name: "api"
                 }
             })
-        })
+        });
         const expectedTypeReference = TypeReference.container(
             ContainerType.optional(
                 TypeReference.container(
@@ -44,11 +44,11 @@ describe("parse inline types", () => {
                     )
                 )
             )
-        )
+        );
 
-        const parsedTypeReferenceJson = IrSerialization.TypeReference.jsonOrThrow(parsedTypeReference)
-        const expectedTypeReferenceJson = IrSerialization.TypeReference.jsonOrThrow(expectedTypeReference)
+        const parsedTypeReferenceJson = IrSerialization.TypeReference.jsonOrThrow(parsedTypeReference);
+        const expectedTypeReferenceJson = IrSerialization.TypeReference.jsonOrThrow(expectedTypeReference);
 
-        expect(parsedTypeReferenceJson).toEqual(expectedTypeReferenceJson)
-    })
-})
+        expect(parsedTypeReferenceJson).toEqual(expectedTypeReferenceJson);
+    });
+});

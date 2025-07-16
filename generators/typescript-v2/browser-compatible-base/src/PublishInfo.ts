@@ -1,4 +1,4 @@
 export interface PublishInfo {
-    registryUrl: string
-    token: string
+    registryUrl: string;
+    token: string;
 }

@@ -1,16 +1,16 @@
-import { GeneratedExpressInlinedRequestBody } from "@fern-typescript/contexts"
+import { GeneratedExpressInlinedRequestBody } from "@fern-typescript/contexts";
 
-import { InlinedRequestBody } from "@fern-fern/ir-sdk/api"
+import { InlinedRequestBody } from "@fern-fern/ir-sdk/api";
 
-import { GeneratedExpressInlinedRequestBodyImpl } from "./GeneratedExpressInlinedRequestBodyImpl"
+import { GeneratedExpressInlinedRequestBodyImpl } from "./GeneratedExpressInlinedRequestBodyImpl";
 
 export declare namespace ExpressInlinedRequestBodyGenerator {
     export namespace generateInlinedRequestBody {
         export interface Args {
-            requestBody: InlinedRequestBody
-            typeName: string
-            retainOriginalCasing: boolean
-            includeSerdeLayer: boolean
+            requestBody: InlinedRequestBody;
+            typeName: string;
+            retainOriginalCasing: boolean;
+            includeSerdeLayer: boolean;
         }
     }
 }
@@ -27,6 +27,6 @@ export class ExpressInlinedRequestBodyGenerator {
             typeName,
             retainOriginalCasing,
             includeSerdeLayer
-        })
+        });
     }
 }

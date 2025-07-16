@@ -1,5 +1,5 @@
-import { CasingsGenerator } from "@fern-api/casings-generator"
-import { RawSchemas, visitRawApiAuth, visitRawAuthSchemeDeclaration } from "@fern-api/fern-definition-schema"
+import { CasingsGenerator } from "@fern-api/casings-generator";
+import { RawSchemas, visitRawApiAuth, visitRawAuthSchemeDeclaration } from "@fern-api/fern-definition-schema";
 import {
     ApiAuth,
     AuthScheme,
@@ -7,36 +7,36 @@ import {
     PrimitiveTypeV1,
     PrimitiveTypeV2,
     TypeReference
-} from "@fern-api/ir-sdk"
+} from "@fern-api/ir-sdk";
 
 export function convertApiAuth({
     rawApiFileSchema,
     casingsGenerator
 }: {
-    rawApiFileSchema: RawSchemas.WithAuthSchema
-    casingsGenerator: CasingsGenerator
+    rawApiFileSchema: RawSchemas.WithAuthSchema;
+    casingsGenerator: CasingsGenerator;
 }): ApiAuth {
     if (rawApiFileSchema.auth == null) {
         return {
             docs: undefined,
             requirement: AuthSchemesRequirement.All,
             schemes: []
-        }
+        };
     }
 
-    const docs = typeof rawApiFileSchema.auth !== "string" ? rawApiFileSchema.auth.docs : undefined
+    const docs = typeof rawApiFileSchema.auth !== "string" ? rawApiFileSchema.auth.docs : undefined;
     return visitRawApiAuth<ApiAuth>(rawApiFileSchema.auth, {
         single: (authScheme) => {
             const schemaReference = convertSchemeReference({
                 reference: authScheme,
                 authSchemeDeclarations: rawApiFileSchema["auth-schemes"],
                 casingsGenerator
-            })
+            });
             return {
                 docs,
                 requirement: AuthSchemesRequirement.All,
                 schemes: [schemaReference]
-            }
+            };
         },
         any: ({ any }) => ({
             docs,
@@ -49,7 +49,7 @@ export function convertApiAuth({
                 })
             )
         })
-    })
+    });
 }
 
 function convertSchemeReference({
@@ -57,14 +57,14 @@ function convertSchemeReference({
     authSchemeDeclarations,
     casingsGenerator
 }: {
-    reference: RawSchemas.AuthSchemeReferenceSchema | string
-    authSchemeDeclarations: Record<string, RawSchemas.AuthSchemeDeclarationSchema> | undefined
-    casingsGenerator: CasingsGenerator
+    reference: RawSchemas.AuthSchemeReferenceSchema | string;
+    authSchemeDeclarations: Record<string, RawSchemas.AuthSchemeDeclarationSchema> | undefined;
+    casingsGenerator: CasingsGenerator;
 }): AuthScheme {
     const convertNamedAuthSchemeReference = (reference: string, docs: string | undefined) => {
-        const declaration = authSchemeDeclarations?.[reference]
+        const declaration = authSchemeDeclarations?.[reference];
         if (declaration == null) {
-            throw new Error("Unknown auth scheme: " + reference)
+            throw new Error("Unknown auth scheme: " + reference);
         }
         return visitRawAuthSchemeDeclaration<AuthScheme>(declaration, {
             header: (rawHeader) =>
@@ -99,10 +99,10 @@ function convertSchemeReference({
                     docs,
                     rawScheme: undefined
                 })
-        })
-    }
+        });
+    };
 
-    const scheme = typeof reference === "string" ? reference : reference.scheme
+    const scheme = typeof reference === "string" ? reference : reference.scheme;
 
     switch (scheme) {
         case "bearer":
@@ -111,15 +111,15 @@ function convertSchemeReference({
                 casingsGenerator,
                 docs: undefined,
                 rawScheme: undefined
-            })
+            });
         case "basic":
             return generateBasicAuth({
                 casingsGenerator,
                 docs: undefined,
                 rawScheme: undefined
-            })
+            });
         default:
-            return convertNamedAuthSchemeReference(scheme, typeof reference !== "string" ? reference.docs : undefined)
+            return convertNamedAuthSchemeReference(scheme, typeof reference !== "string" ? reference.docs : undefined);
     }
 }
 
@@ -128,15 +128,15 @@ function generateBearerAuth({
     docs,
     rawScheme
 }: {
-    casingsGenerator: CasingsGenerator
-    docs: string | undefined
-    rawScheme: RawSchemas.BearerAuthSchemeSchema | undefined
+    casingsGenerator: CasingsGenerator;
+    docs: string | undefined;
+    rawScheme: RawSchemas.BearerAuthSchemeSchema | undefined;
 }): AuthScheme.Bearer {
     return AuthScheme.bearer({
         docs,
         token: casingsGenerator.generateName(rawScheme?.token?.name ?? "token"),
         tokenEnvVar: rawScheme?.token?.env
-    })
+    });
 }
 
 function generateBasicAuth({
@@ -144,9 +144,9 @@ function generateBasicAuth({
     docs,
     rawScheme
 }: {
-    casingsGenerator: CasingsGenerator
-    docs: string | undefined
-    rawScheme: RawSchemas.BasicAuthSchemeSchema | undefined
+    casingsGenerator: CasingsGenerator;
+    docs: string | undefined;
+    rawScheme: RawSchemas.BasicAuthSchemeSchema | undefined;
 }): AuthScheme.Basic {
     return AuthScheme.basic({
         docs,
@@ -154,5 +154,5 @@ function generateBasicAuth({
         usernameEnvVar: rawScheme?.username?.env,
         password: casingsGenerator.generateName(rawScheme?.password?.name ?? "password"),
         passwordEnvVar: rawScheme?.password?.env
-    })
+    });
 }

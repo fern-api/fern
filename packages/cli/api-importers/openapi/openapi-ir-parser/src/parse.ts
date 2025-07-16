@@ -1,32 +1,32 @@
-import { OpenAPIV3 } from "openapi-types"
+import { OpenAPIV3 } from "openapi-types";
 
-import { assertNever } from "@fern-api/core-utils"
-import { OpenApiIntermediateRepresentation, Source as OpenApiIrSource, Schemas } from "@fern-api/openapi-ir"
-import { TaskContext } from "@fern-api/task-context"
+import { assertNever } from "@fern-api/core-utils";
+import { OpenApiIntermediateRepresentation, Source as OpenApiIrSource, Schemas } from "@fern-api/openapi-ir";
+import { TaskContext } from "@fern-api/task-context";
 
-import { DEFAULT_PARSE_ASYNCAPI_SETTINGS, ParseAsyncAPIOptions } from "./asyncapi/options"
-import { parseAsyncAPI } from "./asyncapi/parse"
-import { AsyncAPIV2 } from "./asyncapi/v2"
-import { AsyncAPIV3 } from "./asyncapi/v3"
-import { generateIr as generateIrFromV3 } from "./openapi/v3/generateIr"
-import { ParseOpenAPIOptions, getParseOptions } from "./options"
+import { DEFAULT_PARSE_ASYNCAPI_SETTINGS, ParseAsyncAPIOptions } from "./asyncapi/options";
+import { parseAsyncAPI } from "./asyncapi/parse";
+import { AsyncAPIV2 } from "./asyncapi/v2";
+import { AsyncAPIV3 } from "./asyncapi/v3";
+import { generateIr as generateIrFromV3 } from "./openapi/v3/generateIr";
+import { ParseOpenAPIOptions, getParseOptions } from "./options";
 
-export type Document = OpenAPIDocument | AsyncAPIDocument
+export type Document = OpenAPIDocument | AsyncAPIDocument;
 
 export interface OpenAPIDocument {
-    type: "openapi"
-    value: OpenAPIV3.Document
-    source?: OpenApiIrSource
-    namespace?: string
-    settings: ParseOpenAPIOptions
+    type: "openapi";
+    value: OpenAPIV3.Document;
+    source?: OpenApiIrSource;
+    namespace?: string;
+    settings: ParseOpenAPIOptions;
 }
 
 export interface AsyncAPIDocument {
-    type: "asyncapi"
-    value: AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3
-    source?: OpenApiIrSource
-    namespace?: string
-    settings: ParseOpenAPIOptions
+    type: "asyncapi";
+    value: AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3;
+    source?: OpenApiIrSource;
+    namespace?: string;
+    settings: ParseOpenAPIOptions;
 }
 
 export function parse({
@@ -34,9 +34,9 @@ export function parse({
     documents,
     options
 }: {
-    context: TaskContext
-    documents: Document[]
-    options?: Partial<ParseOpenAPIOptions>
+    context: TaskContext;
+    documents: Document[];
+    options?: Partial<ParseOpenAPIOptions>;
 }): OpenApiIntermediateRepresentation {
     let ir: OpenApiIntermediateRepresentation = {
         apiVersion: undefined,
@@ -63,9 +63,9 @@ export function parse({
         globalHeaders: [],
         idempotencyHeaders: [],
         groups: {}
-    }
+    };
     for (const document of documents) {
-        const source = document.source != null ? document.source : OpenApiIrSource.openapi({ file: "<memory>" })
+        const source = document.source != null ? document.source : OpenApiIrSource.openapi({ file: "<memory>" });
         switch (document.type) {
             case "openapi": {
                 const openapiIr = generateIrFromV3({
@@ -74,9 +74,9 @@ export function parse({
                     options: getParseOptions({ options: document.settings, overrides: options }),
                     source,
                     namespace: document.namespace
-                })
-                ir = merge(ir, openapiIr)
-                break
+                });
+                ir = merge(ir, openapiIr);
+                break;
             }
             case "asyncapi": {
                 const parsedAsyncAPI = parseAsyncAPI({
@@ -86,7 +86,7 @@ export function parse({
                     source,
                     asyncApiOptions: getParseAsyncOptions({ options: document.settings }),
                     namespace: document.namespace
-                })
+                });
                 if (parsedAsyncAPI.servers != null) {
                     ir.websocketServers = [
                         ...ir.websocketServers,
@@ -95,39 +95,39 @@ export function parse({
                             audiences: undefined,
                             description: undefined
                         }))
-                    ]
+                    ];
                 }
                 if (parsedAsyncAPI.channels != null) {
                     ir.channels = {
                         ...ir.channels,
                         ...parsedAsyncAPI.channels
-                    }
+                    };
                 }
                 if (parsedAsyncAPI.groupedSchemas != null) {
-                    ir.groupedSchemas = mergeSchemaMaps(ir.groupedSchemas, parsedAsyncAPI.groupedSchemas)
+                    ir.groupedSchemas = mergeSchemaMaps(ir.groupedSchemas, parsedAsyncAPI.groupedSchemas);
                 }
                 if (parsedAsyncAPI.basePath != null) {
-                    ir.basePath = parsedAsyncAPI.basePath
+                    ir.basePath = parsedAsyncAPI.basePath;
                 }
-                break
+                break;
             }
             default:
-                assertNever(document)
+                assertNever(document);
         }
     }
-    return ir
+    return ir;
 }
 
 function getParseAsyncOptions({
     options,
     overrides
 }: {
-    options?: ParseOpenAPIOptions
-    overrides?: Partial<ParseAsyncAPIOptions>
+    options?: ParseOpenAPIOptions;
+    overrides?: Partial<ParseAsyncAPIOptions>;
 }): ParseAsyncAPIOptions {
     return {
         naming: overrides?.naming ?? options?.asyncApiNaming ?? DEFAULT_PARSE_ASYNCAPI_SETTINGS.naming
-    }
+    };
 }
 
 function merge(
@@ -175,21 +175,21 @@ function merge(
             ...ir1.groups,
             ...ir2.groups
         }
-    }
+    };
 }
 
 function mergeSchemaMaps(schemas1: Schemas, schemas2: Schemas): Schemas {
-    schemas1.rootSchemas = { ...schemas1.rootSchemas, ...schemas2.rootSchemas }
+    schemas1.rootSchemas = { ...schemas1.rootSchemas, ...schemas2.rootSchemas };
 
     for (const [namespace, namespaceSchemas] of Object.entries(schemas2.namespacedSchemas)) {
         // If both share the namespace, merge the schemas within that namespace
         if (schemas1.namespacedSchemas[namespace] != null) {
-            schemas1.namespacedSchemas[namespace] = { ...schemas1.namespacedSchemas[namespace], ...namespaceSchemas }
+            schemas1.namespacedSchemas[namespace] = { ...schemas1.namespacedSchemas[namespace], ...namespaceSchemas };
         } else {
             // Otherwise, just add the namespace to the schemas
-            schemas1.namespacedSchemas[namespace] = namespaceSchemas
+            schemas1.namespacedSchemas[namespace] = namespaceSchemas;
         }
     }
 
-    return schemas1
+    return schemas1;
 }

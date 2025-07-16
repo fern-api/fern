@@ -1,61 +1,61 @@
-import { assertNever } from "@fern-api/core-utils"
+import { assertNever } from "@fern-api/core-utils";
 
-import { OperatorType } from "./OperatorType"
-import { AstNode } from "./core/AstNode"
-import { Writer } from "./core/Writer"
+import { OperatorType } from "./OperatorType";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
 
 export declare namespace Operator {
     interface Args {
-        operator: OperatorType
-        lhs: AstNode
-        rhs: AstNode
+        operator: OperatorType;
+        lhs: AstNode;
+        rhs: AstNode;
     }
 }
 
 export class Operator extends AstNode {
-    private readonly operator: OperatorType
-    private readonly lhs: AstNode
-    private readonly rhs: AstNode
+    private readonly operator: OperatorType;
+    private readonly lhs: AstNode;
+    private readonly rhs: AstNode;
 
     public constructor({ operator, lhs, rhs }: Operator.Args) {
-        super()
-        this.operator = operator
-        this.lhs = lhs
-        this.inheritReferences(lhs)
-        this.rhs = rhs
-        this.inheritReferences(rhs)
+        super();
+        this.operator = operator;
+        this.lhs = lhs;
+        this.inheritReferences(lhs);
+        this.rhs = rhs;
+        this.inheritReferences(rhs);
     }
 
     private getOperatorString(): string {
         switch (this.operator) {
             case OperatorType.Or:
-                return "or"
+                return "or";
             case OperatorType.And:
-                return "and"
+                return "and";
             case OperatorType.Add:
-                return "+"
+                return "+";
             case OperatorType.Subtract:
-                return "-"
+                return "-";
             case OperatorType.Multiply:
-                return "*"
+                return "*";
             case OperatorType.Divide:
-                return "/"
+                return "/";
             case OperatorType.Modulo:
-                return "%"
+                return "%";
             case OperatorType.LeftShift:
-                return "<<"
+                return "<<";
             case OperatorType.RightShift:
-                return ">>"
+                return ">>";
             default:
-                assertNever(this.operator)
+                assertNever(this.operator);
         }
     }
 
     public write(writer: Writer): void {
-        this.lhs.write(writer)
-        writer.write(" ")
-        writer.write(this.getOperatorString())
-        writer.write(" ")
-        this.rhs.write(writer)
+        this.lhs.write(writer);
+        writer.write(" ");
+        writer.write(this.getOperatorString());
+        writer.write(" ");
+        this.rhs.write(writer);
     }
 }

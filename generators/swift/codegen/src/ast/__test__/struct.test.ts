@@ -1,9 +1,9 @@
-import { describe, expect, it } from "vitest"
+import { describe, expect, it } from "vitest";
 
-import { swift } from "../.."
-import { AccessLevel } from "../AccessLevel"
-import { DeclarationType } from "../DeclarationType"
-import { Type } from "../Type"
+import { swift } from "../..";
+import { AccessLevel } from "../AccessLevel";
+import { DeclarationType } from "../DeclarationType";
+import { Type } from "../Type";
 
 describe("Struct", () => {
     describe("write", () => {
@@ -20,35 +20,35 @@ describe("Struct", () => {
                     declarationType: DeclarationType.Let,
                     type: Type.string()
                 })
-            ]
+            ];
 
             const struct = swift.struct({
                 name: "User",
                 accessLevel: AccessLevel.Public,
                 conformances: ["Codable", "Equatable"],
                 properties
-            })
+            });
 
             expect(struct.toString()).toMatchInlineSnapshot(`
               "public struct User: Codable, Equatable {
                   let id: Int
                   public let name: String
               }"
-            `)
-        })
+            `);
+        });
 
         it("should write struct with multiple conformances", () => {
             const struct = swift.struct({
                 name: "TestStruct",
                 conformances: ["Codable", "Equatable", "Hashable"],
                 properties: []
-            })
+            });
 
             expect(struct.toString()).toMatchInlineSnapshot(`
               "struct TestStruct: Codable, Equatable, Hashable {
               }"
-            `)
-        })
+            `);
+        });
 
         it("should write struct with complex properties", () => {
             const properties = [
@@ -70,12 +70,12 @@ describe("Struct", () => {
                     declarationType: DeclarationType.Let,
                     type: Type.array(Type.string())
                 })
-            ]
+            ];
 
             const struct = swift.struct({
                 name: "ComplexStruct",
                 properties
-            })
+            });
 
             expect(struct.toString()).toMatchInlineSnapshot(`
               "struct ComplexStruct {
@@ -83,8 +83,8 @@ describe("Struct", () => {
                   var optionalProperty: Int?
                   private let privateProperty: [String]
               }"
-            `)
-        })
+            `);
+        });
 
         it("should write struct with reserved keyword properties", () => {
             const properties = [
@@ -98,20 +98,20 @@ describe("Struct", () => {
                     declarationType: DeclarationType.Let,
                     type: Type.int()
                 })
-            ]
+            ];
 
             const struct = swift.struct({
                 name: "ReservedStruct",
                 properties
-            })
+            });
 
             expect(struct.toString()).toMatchInlineSnapshot(`
               "struct ReservedStruct {
                   let \`class\`: String
                   let \`enum\`: Int
               }"
-            `)
-        })
+            `);
+        });
 
         it("should handle complex type properties", () => {
             const properties = [
@@ -135,12 +135,12 @@ describe("Struct", () => {
                     declarationType: DeclarationType.Let,
                     type: Type.array(Type.dictionary(Type.string(), Type.int()))
                 })
-            ]
+            ];
 
             const struct = swift.struct({
                 name: "ComplexTypeStruct",
                 properties
-            })
+            });
 
             expect(struct.toString()).toMatchInlineSnapshot(`
               "struct ComplexTypeStruct {
@@ -149,8 +149,8 @@ describe("Struct", () => {
                   let tupleProperty: (String, Int)
                   let nestedProperty: [[String: Int]]
               }"
-            `)
-        })
+            `);
+        });
 
         it("should handle mixed property access levels", () => {
             const properties = [
@@ -174,13 +174,13 @@ describe("Struct", () => {
                     declarationType: DeclarationType.Let,
                     type: Type.array(Type.double())
                 })
-            ]
+            ];
 
             const struct = swift.struct({
                 name: "AccessLevelStruct",
                 accessLevel: AccessLevel.Internal,
                 properties
-            })
+            });
 
             expect(struct.toString()).toMatchInlineSnapshot(`
               "internal struct AccessLevelStruct {
@@ -188,8 +188,8 @@ describe("Struct", () => {
                   private var privateOptional: Int?
                   fileprivate let fileprivateArray: [Double]
               }"
-            `)
-        })
+            `);
+        });
 
         it("should write struct with 1 nested enum", async () => {
             const struct = swift.struct({
@@ -216,10 +216,10 @@ describe("Struct", () => {
                         ]
                     })
                 ]
-            })
+            });
 
-            await expect(struct.toString()).toMatchFileSnapshot("snapshots/struct_with_1_nested_enum.swift")
-        })
+            await expect(struct.toString()).toMatchFileSnapshot("snapshots/struct_with_1_nested_enum.swift");
+        });
 
         it("should write struct with 2 nested enums", async () => {
             const struct = swift.struct({
@@ -254,10 +254,10 @@ describe("Struct", () => {
                         ]
                     })
                 ]
-            })
+            });
 
-            await expect(struct.toString()).toMatchFileSnapshot("snapshots/struct_with_2_nested_enums.swift")
-        })
+            await expect(struct.toString()).toMatchFileSnapshot("snapshots/struct_with_2_nested_enums.swift");
+        });
 
         it("should write struct with methods", async () => {
             const struct = swift.struct({
@@ -283,7 +283,7 @@ describe("Struct", () => {
                         accessLevel: AccessLevel.Public,
                         returnType: Type.int(),
                         body: swift.codeBlock((writer) => {
-                            writer.writeLine("return self.id")
+                            writer.writeLine("return self.id");
                         })
                     }),
                     swift.method({
@@ -291,7 +291,7 @@ describe("Struct", () => {
                         accessLevel: AccessLevel.Public,
                         returnType: Type.string(),
                         body: swift.codeBlock((writer) => {
-                            writer.writeLine("return self.name")
+                            writer.writeLine("return self.name");
                         })
                     }),
                     swift.method({
@@ -312,14 +312,14 @@ describe("Struct", () => {
                         ],
                         returnType: Type.custom("User"),
                         body: swift.codeBlock((writer) => {
-                            writer.writeLine("return User(id: id, name: name)")
+                            writer.writeLine("return User(id: id, name: name)");
                         })
                     })
                 ]
-            })
+            });
 
-            await expect(struct.toString()).toMatchFileSnapshot("snapshots/struct_with_3_methods.swift")
-        })
+            await expect(struct.toString()).toMatchFileSnapshot("snapshots/struct_with_3_methods.swift");
+        });
 
         it("should write struct with basic initializer", async () => {
             const struct = swift.struct({
@@ -359,10 +359,10 @@ describe("Struct", () => {
                         ])
                     })
                 ]
-            })
+            });
 
-            await expect(struct.toString()).toMatchFileSnapshot("snapshots/struct_with_basic_initializer.swift")
-        })
+            await expect(struct.toString()).toMatchFileSnapshot("snapshots/struct_with_basic_initializer.swift");
+        });
 
         it("should write struct with multiple initializers using statements", async () => {
             const struct = swift.struct({
@@ -422,20 +422,20 @@ describe("Struct", () => {
                             })
                         ],
                         body: swift.codeBlock((writer) => {
-                            writer.writeLine('guard let id = dictionary["id"] as? Int,')
-                            writer.writeLine('      let name = dictionary["name"] as? String,')
-                            writer.writeLine('      let price = dictionary["price"] as? Double else {')
-                            writer.writeLine("    return nil")
-                            writer.writeLine("}")
-                            writer.writeLine("self.id = id")
-                            writer.writeLine("self.name = name")
-                            writer.writeLine("self.price = price")
+                            writer.writeLine('guard let id = dictionary["id"] as? Int,');
+                            writer.writeLine('      let name = dictionary["name"] as? String,');
+                            writer.writeLine('      let price = dictionary["price"] as? Double else {');
+                            writer.writeLine("    return nil");
+                            writer.writeLine("}");
+                            writer.writeLine("self.id = id");
+                            writer.writeLine("self.name = name");
+                            writer.writeLine("self.price = price");
                         })
                     })
                 ]
-            })
+            });
 
-            await expect(struct.toString()).toMatchFileSnapshot("snapshots/struct_with_multiple_initializers.swift")
-        })
-    })
-})
+            await expect(struct.toString()).toMatchFileSnapshot("snapshots/struct_with_multiple_initializers.swift");
+        });
+    });
+});

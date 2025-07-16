@@ -1,6 +1,6 @@
-import { generatorsYml } from "@fern-api/configuration"
+import { generatorsYml } from "@fern-api/configuration";
 
-import { GeneratorName } from "./GeneratorName"
+import { GeneratorName } from "./GeneratorName";
 
 export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<generatorsYml.GeneratorInvocationSchema, "name">> = {
     [GeneratorName.JAVA]: {
@@ -162,4 +162,4 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<generatorsYml.Gen
             path: "../sdks/php/sdk"
         }
     }
-}
+};

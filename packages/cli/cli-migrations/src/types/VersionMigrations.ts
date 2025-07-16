@@ -1,6 +1,6 @@
-import { Migration } from "./Migration"
+import { Migration } from "./Migration";
 
 export interface VersionMigrations {
-    version: string
-    migrations: Migration[]
+    version: string;
+    migrations: Migration[];
 }

@@ -4,10 +4,10 @@ import {
     ImportsManager,
     Reference,
     getReferenceToExportFromRoot
-} from "@fern-typescript/commons"
-import { SourceFile } from "ts-morph"
+} from "@fern-typescript/commons";
+import { SourceFile } from "ts-morph";
 
-import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer"
+import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
 
 export declare namespace JsonDeclarationReferencer {
     export interface Init extends AbstractDeclarationReferencer.Init {}
@@ -15,7 +15,7 @@ export declare namespace JsonDeclarationReferencer {
 
 export class JsonDeclarationReferencer extends AbstractDeclarationReferencer {
     constructor({ ...superInit }: JsonDeclarationReferencer.Init) {
-        super(superInit)
+        super(superInit);
     }
 
     public getExportedFilepath(): ExportedFilePath {
@@ -27,11 +27,11 @@ export class JsonDeclarationReferencer extends AbstractDeclarationReferencer {
                     namedExports: ["toJson", "fromJson"]
                 }
             }
-        }
+        };
     }
 
     public getFilename(): string {
-        return "json.ts"
+        return "json.ts";
     }
 
     public getReferenceToFromJson({
@@ -39,16 +39,16 @@ export class JsonDeclarationReferencer extends AbstractDeclarationReferencer {
         exportsManager,
         sourceFile
     }: {
-        importsManager: ImportsManager
-        sourceFile: SourceFile
-        exportsManager: ExportsManager
+        importsManager: ImportsManager;
+        sourceFile: SourceFile;
+        exportsManager: ExportsManager;
     }): Reference {
         return this.getReferenceToExport({
             importsManager,
             exportsManager,
             sourceFile,
             exportedName: "fromJson"
-        })
+        });
     }
 
     public getReferenceToToJson({
@@ -56,16 +56,16 @@ export class JsonDeclarationReferencer extends AbstractDeclarationReferencer {
         exportsManager,
         sourceFile
     }: {
-        importsManager: ImportsManager
-        exportsManager: ExportsManager
-        sourceFile: SourceFile
+        importsManager: ImportsManager;
+        exportsManager: ExportsManager;
+        sourceFile: SourceFile;
     }): Reference {
         return this.getReferenceToExport({
             importsManager,
             exportsManager,
             sourceFile,
             exportedName: "toJson"
-        })
+        });
     }
 
     private getReferenceToExport({
@@ -74,10 +74,10 @@ export class JsonDeclarationReferencer extends AbstractDeclarationReferencer {
         sourceFile,
         exportedName
     }: {
-        importsManager: ImportsManager
-        exportsManager: ExportsManager
-        sourceFile: SourceFile
-        exportedName: string
+        importsManager: ImportsManager;
+        exportsManager: ExportsManager;
+        sourceFile: SourceFile;
+        exportedName: string;
     }): Reference {
         return getReferenceToExportFromRoot({
             exportedFromPath: {
@@ -88,6 +88,6 @@ export class JsonDeclarationReferencer extends AbstractDeclarationReferencer {
             importsManager,
             exportsManager,
             referencedIn: sourceFile
-        })
+        });
     }
 }

@@ -1,1 +1,1 @@
-export { ValidExampleTypeRule } from "./valid-example-type"
+export { ValidExampleTypeRule } from "./valid-example-type";

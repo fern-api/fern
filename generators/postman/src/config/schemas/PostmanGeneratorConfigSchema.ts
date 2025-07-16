@@ -1,6 +1,6 @@
-import { z } from "zod"
+import { z } from "zod";
 
-import { PublishConfigSchema } from "./PublishConfigSchema"
+import { PublishConfigSchema } from "./PublishConfigSchema";
 
 export const PostmanGeneratorConfigSchema = z.union([
     z.null(),
@@ -10,6 +10,6 @@ export const PostmanGeneratorConfigSchema = z.union([
         filename: z.string().optional(),
         "collection-name": z.string().optional()
     })
-])
+]);
 
-export type PostmanGeneratorConfigSchema = z.infer<typeof PostmanGeneratorConfigSchema>
+export type PostmanGeneratorConfigSchema = z.infer<typeof PostmanGeneratorConfigSchema>;

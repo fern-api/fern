@@ -1,4 +1,4 @@
-import { TypeReference } from "@fern-fern/ir-sdk/api"
+import { TypeReference } from "@fern-fern/ir-sdk/api";
 
 // Should this be in the codegen package?
 export function isTypeOptional(typeReference: TypeReference): boolean {
@@ -16,5 +16,5 @@ export function isTypeOptional(typeReference: TypeReference): boolean {
         primitive: () => false,
         _other: () => false,
         unknown: () => true
-    })
+    });
 }

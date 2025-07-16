@@ -1,4 +1,4 @@
-import { csharp } from "../.."
+import { csharp } from "../..";
 
 describe("class", () => {
     it("basic", async () => {
@@ -19,7 +19,7 @@ describe("class", () => {
                 ],
                 superClassArguments: []
             }
-        })
+        });
         expect(
             clazz.toString({
                 namespace: "",
@@ -28,6 +28,6 @@ describe("class", () => {
                 rootNamespace: "",
                 customConfig: {}
             })
-        ).toMatchSnapshot()
-    })
-})
+        ).toMatchSnapshot();
+    });
+});

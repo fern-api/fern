@@ -1,11 +1,11 @@
-import { noop, visitObject } from "@fern-api/core-utils"
-import { RootApiFileSchema, isOAuthScheme } from "@fern-api/fern-definition-schema"
+import { noop, visitObject } from "@fern-api/core-utils";
+import { RootApiFileSchema, isOAuthScheme } from "@fern-api/fern-definition-schema";
 
-import { RootApiFileAstVisitor } from "./RootApiFileAstVisitor"
-import { visitPathParameters } from "./visitors/services/visitHttpService"
+import { RootApiFileAstVisitor } from "./RootApiFileAstVisitor";
+import { visitPathParameters } from "./visitors/services/visitHttpService";
 
 export function visitRootApiFileYamlAst(contents: RootApiFileSchema, visitor: Partial<RootApiFileAstVisitor>): void {
-    visitor.file?.(contents, [])
+    visitor.file?.(contents, []);
     visitObject(contents, {
         version: noop,
         product: noop,
@@ -18,31 +18,31 @@ export function visitRootApiFileYamlAst(contents: RootApiFileSchema, visitor: Pa
         "auth-schemes": (authSchemes) =>
             Object.entries(authSchemes ?? {}).map(([authScheme, authSchemeDeclaration]) => {
                 if (isOAuthScheme(authSchemeDeclaration)) {
-                    visitor.oauth?.({ name: authScheme, oauth: authSchemeDeclaration }, ["auth-scheme", authScheme])
+                    visitor.oauth?.({ name: authScheme, oauth: authSchemeDeclaration }, ["auth-scheme", authScheme]);
                 }
             }),
         pagination: noop,
         "default-environment": (defaultEnvironment) => {
-            visitor.defaultEnvironment?.(defaultEnvironment, ["default-environment"])
+            visitor.defaultEnvironment?.(defaultEnvironment, ["default-environment"]);
         },
         docs: noop,
         headers: noop,
         environments: (environments) => {
             if (environments == null) {
-                return
+                return;
             }
             for (const [environmentId, environment] of Object.entries(environments)) {
-                visitor.environment?.({ environmentId, environment }, ["environments", environmentId])
+                visitor.environment?.({ environmentId, environment }, ["environments", environmentId]);
             }
         },
         "error-discrimination": (errorDiscrimination) => {
-            visitor.errorDiscrimination?.(errorDiscrimination, ["error-discrimination"])
+            visitor.errorDiscrimination?.(errorDiscrimination, ["error-discrimination"]);
         },
         audiences: noop,
         errors: (errors) => {
             if (errors != null) {
                 for (const error of errors) {
-                    visitor.errorReference?.(error, ["errors", error])
+                    visitor.errorReference?.(error, ["errors", error]);
                 }
             }
         },
@@ -52,7 +52,7 @@ export function visitRootApiFileYamlAst(contents: RootApiFileSchema, visitor: Pa
                 pathParameters,
                 visitor,
                 nodePath: ["path-parameters"]
-            })
+            });
         },
         variables: (variables) => {
             if (variables != null) {
@@ -63,9 +63,9 @@ export function visitRootApiFileYamlAst(contents: RootApiFileSchema, visitor: Pa
                             variable
                         },
                         ["variables", variableId]
-                    )
+                    );
                 }
             }
         }
-    })
+    });
 }

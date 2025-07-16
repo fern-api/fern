@@ -1,19 +1,19 @@
-import { BaseSchema, Schema, SchemaOptions, SchemaType } from "../../Schema"
-import { JsonError } from "./JsonError"
-import { ParseError } from "./ParseError"
+import { BaseSchema, Schema, SchemaOptions, SchemaType } from "../../Schema";
+import { JsonError } from "./JsonError";
+import { ParseError } from "./ParseError";
 
 export interface SchemaUtils<Raw, Parsed> {
-    nullable: () => Schema<Raw | null, Parsed | null>
-    optional: () => Schema<Raw | null | undefined, Parsed | undefined>
-    optionalNullable: () => Schema<Raw | null | undefined, Parsed | null | undefined>
-    transform: <Transformed>(transformer: SchemaTransformer<Parsed, Transformed>) => Schema<Raw, Transformed>
-    parseOrThrow: (raw: unknown, opts?: SchemaOptions) => Parsed
-    jsonOrThrow: (raw: unknown, opts?: SchemaOptions) => Raw
+    nullable: () => Schema<Raw | null, Parsed | null>;
+    optional: () => Schema<Raw | null | undefined, Parsed | undefined>;
+    optionalNullable: () => Schema<Raw | null | undefined, Parsed | null | undefined>;
+    transform: <Transformed>(transformer: SchemaTransformer<Parsed, Transformed>) => Schema<Raw, Transformed>;
+    parseOrThrow: (raw: unknown, opts?: SchemaOptions) => Parsed;
+    jsonOrThrow: (raw: unknown, opts?: SchemaOptions) => Raw;
 }
 
 export interface SchemaTransformer<Parsed, Transformed> {
-    transform: (parsed: Parsed) => Transformed
-    untransform: (transformed: any) => Parsed
+    transform: (parsed: Parsed) => Transformed;
+    untransform: (transformed: any) => Parsed;
 }
 
 export function getSchemaUtils<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): SchemaUtils<Raw, Parsed> {
@@ -23,20 +23,20 @@ export function getSchemaUtils<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): Sc
         optionalNullable: () => optionalNullable(schema),
         transform: (transformer) => transform(schema, transformer),
         parseOrThrow: (raw, opts) => {
-            const parsed = schema.parse(raw, opts)
+            const parsed = schema.parse(raw, opts);
             if (parsed.ok) {
-                return parsed.value
+                return parsed.value;
             }
-            throw new ParseError(parsed.errors)
+            throw new ParseError(parsed.errors);
         },
         jsonOrThrow: (parsed, opts) => {
-            const raw = schema.json(parsed, opts)
+            const raw = schema.json(parsed, opts);
             if (raw.ok) {
-                return raw.value
+                return raw.value;
             }
-            throw new JsonError(raw.errors)
+            throw new JsonError(raw.errors);
         }
-    }
+    };
 }
 
 /**
@@ -50,26 +50,26 @@ export function nullable<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): Schema<R
                 return {
                     ok: true,
                     value: null
-                }
+                };
             }
-            return schema.parse(raw, opts)
+            return schema.parse(raw, opts);
         },
         json: (parsed, opts) => {
             if (parsed == null) {
                 return {
                     ok: true,
                     value: null
-                }
+                };
             }
-            return schema.json(parsed, opts)
+            return schema.json(parsed, opts);
         },
         getType: () => SchemaType.NULLABLE
-    }
+    };
 
     return {
         ...baseSchema,
         ...getSchemaUtils(baseSchema)
-    }
+    };
 }
 
 export function optional<Raw, Parsed>(
@@ -81,32 +81,32 @@ export function optional<Raw, Parsed>(
                 return {
                     ok: true,
                     value: undefined
-                }
+                };
             }
-            return schema.parse(raw, opts)
+            return schema.parse(raw, opts);
         },
         json: (parsed, opts) => {
             if (opts?.omitUndefined && parsed === undefined) {
                 return {
                     ok: true,
                     value: undefined
-                }
+                };
             }
             if (parsed == null) {
                 return {
                     ok: true,
                     value: null
-                }
+                };
             }
-            return schema.json(parsed, opts)
+            return schema.json(parsed, opts);
         },
         getType: () => SchemaType.OPTIONAL
-    }
+    };
 
     return {
         ...baseSchema,
         ...getSchemaUtils(baseSchema)
-    }
+    };
 }
 
 export function optionalNullable<Raw, Parsed>(
@@ -118,38 +118,38 @@ export function optionalNullable<Raw, Parsed>(
                 return {
                     ok: true,
                     value: undefined
-                }
+                };
             }
             if (raw === null) {
                 return {
                     ok: true,
                     value: null
-                }
+                };
             }
-            return schema.parse(raw, opts)
+            return schema.parse(raw, opts);
         },
         json: (parsed, opts) => {
             if (parsed === undefined) {
                 return {
                     ok: true,
                     value: undefined
-                }
+                };
             }
             if (parsed === null) {
                 return {
                     ok: true,
                     value: null
-                }
+                };
             }
-            return schema.json(parsed, opts)
+            return schema.json(parsed, opts);
         },
         getType: () => SchemaType.OPTIONAL_NULLABLE
-    }
+    };
 
     return {
         ...baseSchema,
         ...getSchemaUtils(baseSchema)
-    }
+    };
 }
 
 export function transform<Raw, Parsed, Transformed>(
@@ -158,24 +158,24 @@ export function transform<Raw, Parsed, Transformed>(
 ): Schema<Raw, Transformed> {
     const baseSchema: BaseSchema<Raw, Transformed> = {
         parse: (raw, opts) => {
-            const parsed = schema.parse(raw, opts)
+            const parsed = schema.parse(raw, opts);
             if (!parsed.ok) {
-                return parsed
+                return parsed;
             }
             return {
                 ok: true,
                 value: transformer.transform(parsed.value)
-            }
+            };
         },
         json: (transformed, opts) => {
-            const parsed = transformer.untransform(transformed)
-            return schema.json(parsed, opts)
+            const parsed = transformer.untransform(transformed);
+            return schema.json(parsed, opts);
         },
         getType: () => schema.getType()
-    }
+    };
 
     return {
         ...baseSchema,
         ...getSchemaUtils(baseSchema)
-    }
+    };
 }

@@ -1,8 +1,12 @@
-import { GeneratorName } from "@fern-api/configuration-loader"
+import { GeneratorName } from "@fern-api/configuration-loader";
 
-import { IrSerialization } from "../../ir-serialization"
-import { IrVersions } from "../../ir-versions"
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
+import { IrSerialization } from "../../ir-serialization";
+import { IrVersions } from "../../ir-versions";
+import {
+    GeneratorWasNeverUpdatedToConsumeNewIR,
+    GeneratorWasNotCreatedYet,
+    IrMigration
+} from "../../types/IrMigration";
 
 export const V49_TO_V48_MIGRATION: IrMigration<
     IrVersions.V49.ir.IntermediateRepresentation,
@@ -48,7 +52,7 @@ export const V49_TO_V48_MIGRATION: IrMigration<
         const services = Object.fromEntries(
             Object.entries(v49.services).map(([serviceId, service]) => {
                 const convertedEndpoints: IrVersions.V48.HttpEndpoint[] = service.endpoints.flatMap((endpoint) => {
-                    let response: IrVersions.V48.HttpResponseBody | undefined = undefined
+                    let response: IrVersions.V48.HttpResponseBody | undefined = undefined;
                     if (endpoint.response?.body != null) {
                         response = endpoint.response.body?._visit<IrVersions.V48.HttpResponseBody | undefined>({
                             json: (val) => IrVersions.V48.HttpResponseBody.json({ ...val }),
@@ -57,9 +61,9 @@ export const V49_TO_V48_MIGRATION: IrMigration<
                             streaming: (val) => IrVersions.V48.HttpResponseBody.streaming({ ...val }),
                             streamParameter: () => undefined,
                             _other: () => undefined
-                        })
+                        });
                         if (response == null) {
-                            return []
+                            return [];
                         }
                     }
                     const convertedEndpoint: IrVersions.V48.HttpEndpoint = {
@@ -71,21 +75,21 @@ export const V49_TO_V48_MIGRATION: IrMigration<
                                       statusCode: endpoint.response?.statusCode,
                                       body: response
                                   }
-                    }
-                    return convertedEndpoint
-                })
+                    };
+                    return convertedEndpoint;
+                });
                 return [
                     serviceId,
                     {
                         ...service,
                         endpoints: convertedEndpoints
                     }
-                ]
+                ];
             })
-        )
+        );
         return {
             ...v49,
             services
-        }
+        };
     }
-}
+};

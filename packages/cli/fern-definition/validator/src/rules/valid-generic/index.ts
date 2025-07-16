@@ -1,1 +1,1 @@
-export { ValidGenericRule } from "./valid-generic"
+export { ValidGenericRule } from "./valid-generic";

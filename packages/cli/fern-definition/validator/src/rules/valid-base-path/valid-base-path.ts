@@ -1,4 +1,4 @@
-import { Rule, RuleViolation } from "../../Rule"
+import { Rule, RuleViolation } from "../../Rule";
 
 export const ValidBasePathRule: Rule = {
     name: "valid-base-path",
@@ -7,34 +7,34 @@ export const ValidBasePathRule: Rule = {
             rootApiFile: {
                 file: (rootApiFile) => {
                     if (rootApiFile["base-path"] != null) {
-                        return validateBasePath(rootApiFile["base-path"])
+                        return validateBasePath(rootApiFile["base-path"]);
                     } else {
-                        return []
+                        return [];
                     }
                 }
             },
             definitionFile: {
                 httpService: (service) => {
-                    return validateBasePath(service["base-path"])
+                    return validateBasePath(service["base-path"]);
                 }
             }
-        }
+        };
     }
-}
+};
 
 function validateBasePath(basePath: string): RuleViolation[] {
     if (basePath === "/" || basePath.length === 0) {
-        return []
+        return [];
     }
 
-    const violations: RuleViolation[] = []
+    const violations: RuleViolation[] = [];
 
     if (!basePath.startsWith("/")) {
         violations.push({
             severity: "fatal",
             message: "base-path must be empty or start with a slash."
-        })
+        });
     }
 
-    return violations
+    return violations;
 }

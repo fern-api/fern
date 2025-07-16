@@ -1,54 +1,54 @@
-import { generatorsYml } from "@fern-api/configuration"
-import { assertNever } from "@fern-api/core-utils"
-import { dynamic } from "@fern-api/ir-sdk"
+import { generatorsYml } from "@fern-api/configuration";
+import { assertNever } from "@fern-api/core-utils";
+import { dynamic } from "@fern-api/ir-sdk";
 
-import { FernFiddle } from "@fern-fern/fiddle-sdk"
+import { FernFiddle } from "@fern-fern/fiddle-sdk";
 
 export function getDynamicGeneratorConfig({
     apiName,
     organization,
     generatorInvocation
 }: {
-    apiName: string
-    organization: string
-    generatorInvocation: generatorsYml.GeneratorInvocation
+    apiName: string;
+    organization: string;
+    generatorInvocation: generatorsYml.GeneratorInvocation;
 }): dynamic.GeneratorConfig | undefined {
-    const outputConfig = getDynamicGeneratorOutputConfig(generatorInvocation)
+    const outputConfig = getDynamicGeneratorOutputConfig(generatorInvocation);
     if (outputConfig == null) {
-        return undefined
+        return undefined;
     }
     return {
         apiName,
         organization,
         customConfig: generatorInvocation.config,
         outputConfig
-    }
+    };
 }
 
 function getDynamicGeneratorOutputConfig(
     generatorInvocation: generatorsYml.GeneratorInvocation
 ): dynamic.GeneratorOutputConfig | undefined {
-    const outputMode = generatorInvocation.outputMode
+    const outputMode = generatorInvocation.outputMode;
     switch (outputMode.type) {
         case "downloadFiles":
-            return dynamic.GeneratorOutputConfig.local()
+            return dynamic.GeneratorOutputConfig.local();
         case "publishV2":
             return getDynamicGeneratorConfigPublishOutputMode({
                 publish: outputMode.publishV2,
                 version: generatorInvocation.version
-            })
+            });
         case "githubV2":
             return getDynamicGeneratorConfigGithubOutputMode({
                 github: outputMode.githubV2,
                 language: generatorInvocation.language,
                 version: generatorInvocation.version
-            })
+            });
         case "publish":
         case "github":
             // These output modes are no longer supported.
-            return undefined
+            return undefined;
         default:
-            assertNever(outputMode)
+            assertNever(outputMode);
     }
 }
 
@@ -56,14 +56,14 @@ function getDynamicGeneratorConfigPublishOutputMode({
     publish,
     version
 }: {
-    publish: FernFiddle.remoteGen.PublishOutputModeV2
-    version: string
+    publish: FernFiddle.remoteGen.PublishOutputModeV2;
+    version: string;
 }): dynamic.GeneratorOutputConfig | undefined {
     switch (publish.type) {
         case "npmOverride": {
-            const override = publish.npmOverride
+            const override = publish.npmOverride;
             if (override == null) {
-                return undefined
+                return undefined;
             }
             return dynamic.GeneratorOutputConfig.publish(
                 dynamic.PublishInfo.npm({
@@ -71,12 +71,12 @@ function getDynamicGeneratorConfigPublishOutputMode({
                     packageName: override.packageName,
                     repoUrl: undefined
                 })
-            )
+            );
         }
         case "mavenOverride": {
-            const override = publish.mavenOverride
+            const override = publish.mavenOverride;
             if (override == null) {
-                return undefined
+                return undefined;
             }
             return dynamic.GeneratorOutputConfig.publish(
                 dynamic.PublishInfo.maven({
@@ -84,12 +84,12 @@ function getDynamicGeneratorConfigPublishOutputMode({
                     coordinate: override.coordinate,
                     repoUrl: undefined
                 })
-            )
+            );
         }
         case "pypiOverride": {
-            const override = publish.pypiOverride
+            const override = publish.pypiOverride;
             if (override == null) {
-                return undefined
+                return undefined;
             }
             return dynamic.GeneratorOutputConfig.publish(
                 dynamic.PublishInfo.pypi({
@@ -97,12 +97,12 @@ function getDynamicGeneratorConfigPublishOutputMode({
                     packageName: override.coordinate,
                     repoUrl: undefined
                 })
-            )
+            );
         }
         case "rubyGemsOverride": {
-            const override = publish.rubyGemsOverride
+            const override = publish.rubyGemsOverride;
             if (override == null) {
-                return undefined
+                return undefined;
             }
             return dynamic.GeneratorOutputConfig.publish(
                 dynamic.PublishInfo.rubygems({
@@ -110,12 +110,12 @@ function getDynamicGeneratorConfigPublishOutputMode({
                     packageName: override.packageName,
                     repoUrl: undefined
                 })
-            )
+            );
         }
         case "nugetOverride": {
-            const override = publish.nugetOverride
+            const override = publish.nugetOverride;
             if (override == null) {
-                return undefined
+                return undefined;
             }
             return dynamic.GeneratorOutputConfig.publish(
                 dynamic.PublishInfo.nuget({
@@ -123,12 +123,12 @@ function getDynamicGeneratorConfigPublishOutputMode({
                     packageName: override.packageName,
                     repoUrl: undefined
                 })
-            )
+            );
         }
         case "postman":
-            return undefined
+            return undefined;
         default:
-            assertNever(publish)
+            assertNever(publish);
     }
 }
 
@@ -137,22 +137,22 @@ function getDynamicGeneratorConfigGithubOutputMode({
     version,
     language
 }: {
-    github: FernFiddle.remoteGen.BaseGithubInfo
-    version: string
-    language: generatorsYml.GenerationLanguage | undefined
+    github: FernFiddle.remoteGen.BaseGithubInfo;
+    version: string;
+    language: generatorsYml.GenerationLanguage | undefined;
 }): dynamic.GeneratorOutputConfig | undefined {
-    const repoUrl = getGithubRepoUrl({ owner: github.owner, repo: github.repo })
+    const repoUrl = getGithubRepoUrl({ owner: github.owner, repo: github.repo });
     if (language === generatorsYml.GenerationLanguage.GO) {
         return dynamic.GeneratorOutputConfig.publish(
             dynamic.PublishInfo.go({
                 version,
                 repoUrl
             })
-        )
+        );
     }
-    const publishInfo = github.publishInfo
+    const publishInfo = github.publishInfo;
     if (publishInfo == null) {
-        return undefined
+        return undefined;
     }
     switch (publishInfo.type) {
         case "maven":
@@ -162,7 +162,7 @@ function getDynamicGeneratorConfigGithubOutputMode({
                     coordinate: publishInfo.coordinate,
                     repoUrl
                 })
-            )
+            );
         case "npm":
             return dynamic.GeneratorOutputConfig.publish(
                 dynamic.PublishInfo.npm({
@@ -170,7 +170,7 @@ function getDynamicGeneratorConfigGithubOutputMode({
                     packageName: publishInfo.packageName,
                     repoUrl
                 })
-            )
+            );
         case "pypi":
             return dynamic.GeneratorOutputConfig.publish(
                 dynamic.PublishInfo.pypi({
@@ -178,7 +178,7 @@ function getDynamicGeneratorConfigGithubOutputMode({
                     packageName: publishInfo.packageName,
                     repoUrl
                 })
-            )
+            );
         case "rubygems":
             return dynamic.GeneratorOutputConfig.publish(
                 dynamic.PublishInfo.rubygems({
@@ -186,7 +186,7 @@ function getDynamicGeneratorConfigGithubOutputMode({
                     packageName: publishInfo.packageName,
                     repoUrl
                 })
-            )
+            );
         case "nuget":
             return dynamic.GeneratorOutputConfig.publish(
                 dynamic.PublishInfo.nuget({
@@ -194,14 +194,14 @@ function getDynamicGeneratorConfigGithubOutputMode({
                     packageName: publishInfo.packageName,
                     repoUrl
                 })
-            )
+            );
         case "postman":
-            return undefined
+            return undefined;
         default:
-            assertNever(publishInfo)
+            assertNever(publishInfo);
     }
 }
 
 function getGithubRepoUrl({ owner, repo }: { owner: string; repo: string }): string {
-    return `https://github.com/${owner}/${repo}`
+    return `https://github.com/${owner}/${repo}`;
 }

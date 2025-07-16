@@ -1,9 +1,13 @@
-import { mapValues } from "lodash-es"
+import { mapValues } from "lodash-es";
 
-import { GeneratorName } from "@fern-api/configuration-loader"
+import { GeneratorName } from "@fern-api/configuration-loader";
 
-import { IrVersions } from "../../ir-versions"
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
+import { IrVersions } from "../../ir-versions";
+import {
+    GeneratorWasNeverUpdatedToConsumeNewIR,
+    GeneratorWasNotCreatedYet,
+    IrMigration
+} from "../../types/IrMigration";
 
 export const V10_TO_V9_MIGRATION: IrMigration<
     IrVersions.V10.ir.IntermediateRepresentation,
@@ -48,21 +52,21 @@ export const V10_TO_V9_MIGRATION: IrMigration<
                 docs: undefined,
                 ...service
             })
-        )
+        );
 
         for (const subpackage of Object.values(v10.subpackages)) {
             if (subpackage.docs != null && subpackage.service != null) {
-                const service = v9Services[subpackage.service]
+                const service = v9Services[subpackage.service];
                 if (service == null) {
-                    throw new Error("Service does not exist: " + subpackage.service)
+                    throw new Error("Service does not exist: " + subpackage.service);
                 }
-                service.docs = subpackage.docs
+                service.docs = subpackage.docs;
             }
         }
 
         return {
             ...v10,
             services: v9Services
-        }
+        };
     }
-}
+};

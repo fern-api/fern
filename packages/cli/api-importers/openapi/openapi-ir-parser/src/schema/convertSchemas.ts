@@ -1,7 +1,7 @@
-import { size } from "lodash-es"
-import { OpenAPIV3 } from "openapi-types"
+import { size } from "lodash-es";
+import { OpenAPIV3 } from "openapi-types";
 
-import { Logger } from "@fern-api/logger"
+import { Logger } from "@fern-api/logger";
 import {
     Availability,
     Encoding,
@@ -13,37 +13,40 @@ import {
     SchemaWithExample,
     SdkGroupName,
     Source
-} from "@fern-api/openapi-ir"
+} from "@fern-api/openapi-ir";
 
-import { getExtension } from "../getExtension"
-import { OpenAPIExtension } from "../openapi/v3/extensions/extensions"
-import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions"
-import { getExamples } from "../openapi/v3/extensions/getExamples"
-import { getFernEncoding } from "../openapi/v3/extensions/getFernEncoding"
-import { getFernEnum } from "../openapi/v3/extensions/getFernEnum"
-import { getFernTypeExtension } from "../openapi/v3/extensions/getFernTypeExtension"
-import { getSourceExtension } from "../openapi/v3/extensions/getSourceExtension"
-import { getValueIfBoolean } from "../utils/getValue"
-import { SchemaParserContext } from "./SchemaParserContext"
-import { convertAdditionalProperties, wrapMap } from "./convertAdditionalProperties"
-import { convertArray } from "./convertArray"
-import { convertAvailability } from "./convertAvailability"
-import { convertDiscriminatedOneOf, convertDiscriminatedOneOfWithVariants } from "./convertDiscriminatedOneOf"
-import { convertEncoding } from "./convertEncoding"
-import { convertEnum } from "./convertEnum"
-import { convertInteger } from "./convertInteger"
-import { convertLiteral } from "./convertLiteral"
-import { convertNumber } from "./convertNumber"
-import { convertObject } from "./convertObject"
-import { convertUndiscriminatedOneOf, convertUndiscriminatedOneOfWithDiscriminant } from "./convertUndiscriminatedOneOf"
-import { getDefaultAsString } from "./defaults/getDefault"
-import { getExampleAsArray, getExampleAsBoolean, getExampleAsNumber, getExamplesString } from "./examples/getExample"
-import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference"
-import { getGeneratedTypeName } from "./utils/getSchemaName"
-import { isReferenceObject } from "./utils/isReferenceObject"
+import { getExtension } from "../getExtension";
+import { OpenAPIExtension } from "../openapi/v3/extensions/extensions";
+import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions";
+import { getExamples } from "../openapi/v3/extensions/getExamples";
+import { getFernEncoding } from "../openapi/v3/extensions/getFernEncoding";
+import { getFernEnum } from "../openapi/v3/extensions/getFernEnum";
+import { getFernTypeExtension } from "../openapi/v3/extensions/getFernTypeExtension";
+import { getSourceExtension } from "../openapi/v3/extensions/getSourceExtension";
+import { getValueIfBoolean } from "../utils/getValue";
+import { SchemaParserContext } from "./SchemaParserContext";
+import { convertAdditionalProperties, wrapMap } from "./convertAdditionalProperties";
+import { convertArray } from "./convertArray";
+import { convertAvailability } from "./convertAvailability";
+import { convertDiscriminatedOneOf, convertDiscriminatedOneOfWithVariants } from "./convertDiscriminatedOneOf";
+import { convertEncoding } from "./convertEncoding";
+import { convertEnum } from "./convertEnum";
+import { convertInteger } from "./convertInteger";
+import { convertLiteral } from "./convertLiteral";
+import { convertNumber } from "./convertNumber";
+import { convertObject } from "./convertObject";
+import {
+    convertUndiscriminatedOneOf,
+    convertUndiscriminatedOneOfWithDiscriminant
+} from "./convertUndiscriminatedOneOf";
+import { getDefaultAsString } from "./defaults/getDefault";
+import { getExampleAsArray, getExampleAsBoolean, getExampleAsNumber, getExamplesString } from "./examples/getExample";
+import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference";
+import { getGeneratedTypeName } from "./utils/getSchemaName";
+import { isReferenceObject } from "./utils/isReferenceObject";
 
-export const SCHEMA_REFERENCE_PREFIX = "#/components/schemas/"
-export const SCHEMA_INLINE_REFERENCE_PREFIX = "#/components/responses/"
+export const SCHEMA_REFERENCE_PREFIX = "#/components/schemas/";
+export const SCHEMA_INLINE_REFERENCE_PREFIX = "#/components/responses/";
 
 export function convertSchema(
     schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject,
@@ -56,17 +59,17 @@ export function convertSchema(
     propertiesToExclude: Set<string> = new Set(),
     fallback?: string | number | boolean | unknown[]
 ): SchemaWithExample {
-    const source = getSourceExtension(schema) ?? fileSource
-    const encoding = getEncoding({ schema, logger: context.logger })
+    const source = getSourceExtension(schema) ?? fileSource;
+    const encoding = getEncoding({ schema, logger: context.logger });
     if (isReferenceObject(schema)) {
-        const schemaId = getSchemaIdFromReference(schema)
+        const schemaId = getSchemaIdFromReference(schema);
         if (schemaId != null) {
             if (!referencedAsRequest) {
-                context.markSchemaAsReferencedByNonRequest(schemaId)
+                context.markSchemaAsReferencedByNonRequest(schemaId);
             } else {
-                context.markSchemaAsReferencedByRequest(schemaId)
+                context.markSchemaAsReferencedByRequest(schemaId);
             }
-            return convertReferenceObject(schema, wrapAsNullable, context, breadcrumbs, encoding, source, namespace)
+            return convertReferenceObject(schema, wrapAsNullable, context, breadcrumbs, encoding, source, namespace);
         }
         // if the schema id is null, we should convert the entire schema and inline it
         // in the OpenAPI IR
@@ -81,7 +84,7 @@ export function convertSchema(
             propertiesToExclude,
             referencedAsRequest,
             fallback
-        )
+        );
     }
     return convertSchemaObject(
         schema,
@@ -94,7 +97,7 @@ export function convertSchema(
         propertiesToExclude,
         referencedAsRequest,
         fallback
-    )
+    );
 }
 
 export function convertReferenceObject(
@@ -119,7 +122,7 @@ export function convertReferenceObject(
           )
         : SchemaWithExample.reference(
               convertToReferencedSchema(schema, breadcrumbs, source, context.options.preserveSchemaIds)
-          )
+          );
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
             title: undefined,
@@ -131,24 +134,24 @@ export function convertReferenceObject(
             namespace: undefined,
             groupName: undefined,
             inline: undefined
-        })
+        });
     } else {
-        return referenceSchema
+        return referenceSchema;
     }
 }
 
 // Returns a Schema Title if it's suitable as a code generated name
 function getTitleAsName(title: string | undefined): string | undefined {
     if (title == null) {
-        return undefined
+        return undefined;
     }
     if (title.includes(" ")) {
-        return undefined
+        return undefined;
     }
     if (!/^[a-zA-Z]+$/.test(title)) {
-        return undefined
+        return undefined;
     }
-    return title
+    return title;
 }
 
 export function convertSchemaObject(
@@ -164,70 +167,70 @@ export function convertSchemaObject(
     fallback?: string | number | boolean | unknown[]
 ): SchemaWithExample {
     if (typeof schema === "string") {
-        schema = { type: schema } as OpenAPIV3.SchemaObject
+        schema = { type: schema } as OpenAPIV3.SchemaObject;
     }
     const nameOverride =
         getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME) ??
-        (context.options.useTitlesAsName ? getTitleAsName(schema.title) : undefined)
+        (context.options.useTitlesAsName ? getTitleAsName(schema.title) : undefined);
     const mixedGroupName =
         getExtension(schema, FernOpenAPIExtension.SDK_GROUP_NAME) ??
-        getExtension<string[]>(schema, OpenAPIExtension.TAGS)?.[0]
-    let groupName: SdkGroupName = (typeof mixedGroupName === "string" ? [mixedGroupName] : mixedGroupName) ?? []
-    groupName = context.resolveGroupName(groupName)
+        getExtension<string[]>(schema, OpenAPIExtension.TAGS)?.[0];
+    let groupName: SdkGroupName = (typeof mixedGroupName === "string" ? [mixedGroupName] : mixedGroupName) ?? [];
+    groupName = context.resolveGroupName(groupName);
 
-    const generatedName = getGeneratedTypeName(breadcrumbs, context.options.preserveSchemaIds)
-    const title = schema.title
-    const description = schema.description
-    const availability = convertAvailability(schema)
+    const generatedName = getGeneratedTypeName(breadcrumbs, context.options.preserveSchemaIds);
+    const title = schema.title;
+    const description = schema.description;
+    const availability = convertAvailability(schema);
 
-    const fullExamples: NamedFullExample[] = []
+    const fullExamples: NamedFullExample[] = [];
     if (schema.example != null) {
-        fullExamples.push({ name: undefined, value: schema.example, description: undefined })
+        fullExamples.push({ name: undefined, value: schema.example, description: undefined });
     }
 
-    const xExamples = getExtension<Record<string, OpenAPIV3.ExampleObject>>(schema, OpenAPIExtension.EXAMPLES)
+    const xExamples = getExtension<Record<string, OpenAPIV3.ExampleObject>>(schema, OpenAPIExtension.EXAMPLES);
     if (xExamples != null && Object.keys(xExamples).length > 0) {
         fullExamples.push(
             ...Object.entries(xExamples).map(([name, value]) => {
-                return { name: value?.summary ?? name, value: value.value, description: value.description }
+                return { name: value?.summary ?? name, value: value.value, description: value.description };
             })
-        )
+        );
     }
 
-    const examples = getExamples(schema)
+    const examples = getExamples(schema);
     if (examples != null && Object.keys(examples).length > 0) {
         fullExamples.push(
             ...examples.map((value) => {
-                return { name: undefined, value, description: undefined }
+                return { name: undefined, value, description: undefined };
             })
-        )
+        );
     }
 
-    const fernSchema = getFernTypeExtension({ schema, description, title, nameOverride, generatedName, availability })
+    const fernSchema = getFernTypeExtension({ schema, description, title, nameOverride, generatedName, availability });
     if (fernSchema != null) {
-        return fernSchema
+        return fernSchema;
     }
 
     // handle type array
     if (Array.isArray(schema.type)) {
-        const nullIndex = schema.type.indexOf("null")
-        const hasNull = nullIndex !== -1
+        const nullIndex = schema.type.indexOf("null");
+        const hasNull = nullIndex !== -1;
         if (schema.type.length === 1) {
-            schema.type = schema.type[0]
+            schema.type = schema.type[0];
         } else if (schema.type.length === 2 && hasNull) {
-            schema.type.splice(nullIndex, 1)
-            schema.type = schema.type[0]
-            schema.nullable = true
+            schema.type.splice(nullIndex, 1);
+            schema.type = schema.type[0];
+            schema.nullable = true;
         } else {
             if (hasNull) {
-                schema.type.splice(nullIndex, 1)
-                schema.nullable = true
+                schema.type.splice(nullIndex, 1);
+                schema.nullable = true;
             }
             if (schema.oneOf == null) {
-                schema.oneOf = [...new Set(schema.type)]
+                schema.oneOf = [...new Set(schema.type)];
             } else {
-                const uniqueTypes = new Set([...schema.oneOf, ...schema.type])
-                schema.oneOf = [...uniqueTypes]
+                const uniqueTypes = new Set([...schema.oneOf, ...schema.type]);
+                schema.oneOf = [...uniqueTypes];
             }
         }
     }
@@ -245,7 +248,7 @@ export function convertSchemaObject(
             propertiesToExclude,
             referencedAsRequest,
             fallback
-        )
+        );
     }
 
     // enums
@@ -273,10 +276,10 @@ export function convertSchemaObject(
                 wrapAsNullable,
                 description,
                 availability
-            })
+            });
         }
 
-        const fernEnum = getFernEnum(schema)
+        const fernEnum = getFernEnum(schema);
 
         if (schema.enum.length === 1 && schema.enum[0] != null && fernEnum == null) {
             return convertLiteral({
@@ -289,7 +292,7 @@ export function convertSchemaObject(
                 availability,
                 namespace,
                 groupName
-            })
+            });
         }
 
         return convertEnum({
@@ -308,12 +311,12 @@ export function convertSchemaObject(
             context,
             source,
             inline: undefined
-        })
+        });
     }
 
     // List of types that is undiscriminated union
     if (isListOfStrings(schema.type) && schema.type.length > 1) {
-        const wrapVariantAsNullable = schema.type.includes("null")
+        const wrapVariantAsNullable = schema.type.includes("null");
         const subtypes: OpenAPIV3.SchemaObject[] = schema.type
             .filter((val) => val !== "null")
             .map((type) => {
@@ -321,8 +324,8 @@ export function convertSchemaObject(
                     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                     type: type as any,
                     nullable: wrapVariantAsNullable
-                }
-            })
+                };
+            });
         return convertUndiscriminatedOneOf({
             nameOverride,
             generatedName,
@@ -337,12 +340,12 @@ export function convertSchemaObject(
             groupName,
             encoding,
             source
-        })
+        });
     }
 
     // primitive types
     if (schema.type === "boolean") {
-        const literalValue = getExtension<boolean>(schema, FernOpenAPIExtension.BOOLEAN_LITERAL)
+        const literalValue = getExtension<boolean>(schema, FernOpenAPIExtension.BOOLEAN_LITERAL);
         if (literalValue != null) {
             return wrapLiteral({
                 nameOverride,
@@ -354,7 +357,7 @@ export function convertSchemaObject(
                 availability,
                 namespace,
                 groupName
-            })
+            });
         }
         return wrapPrimitive({
             nameOverride,
@@ -369,7 +372,7 @@ export function convertSchemaObject(
             availability,
             namespace,
             groupName
-        })
+        });
     }
 
     if (schema.type === "number") {
@@ -390,7 +393,7 @@ export function convertSchemaObject(
             example: getExampleAsNumber({ schema, logger: context.logger, fallback }),
             namespace,
             groupName
-        })
+        });
     }
     if (schema.type === "integer") {
         return convertInteger({
@@ -410,7 +413,7 @@ export function convertSchemaObject(
             example: getExampleAsNumber({ schema, logger: context.logger, fallback }),
             namespace,
             groupName
-        })
+        });
     }
     if ((schema.type as string) === "float") {
         return convertNumber({
@@ -430,7 +433,7 @@ export function convertSchemaObject(
             example: getExampleAsNumber({ schema, logger: context.logger, fallback }),
             namespace,
             groupName
-        })
+        });
     }
     if (schema.type === "string") {
         if (schema.format === "date-time") {
@@ -446,7 +449,7 @@ export function convertSchemaObject(
                 availability,
                 namespace,
                 groupName
-            })
+            });
         }
 
         if (schema.format === "date" && context.options.typeDatesAsStrings === false) {
@@ -462,7 +465,7 @@ export function convertSchemaObject(
                 availability,
                 namespace,
                 groupName
-            })
+            });
         }
 
         if (schema.format === "json-string") {
@@ -475,10 +478,10 @@ export function convertSchemaObject(
                 namespace,
                 groupName,
                 example: undefined
-            })
+            });
         }
 
-        const maybeConstValue = getProperty<string>(schema, "const")
+        const maybeConstValue = getProperty<string>(schema, "const");
         if (maybeConstValue != null) {
             return wrapLiteral({
                 nameOverride,
@@ -490,7 +493,7 @@ export function convertSchemaObject(
                 availability,
                 namespace,
                 groupName
-            })
+            });
         }
 
         return wrapPrimitive({
@@ -510,7 +513,7 @@ export function convertSchemaObject(
             wrapAsNullable,
             description,
             availability
-        })
+        });
     }
 
     // arrays
@@ -529,7 +532,7 @@ export function convertSchemaObject(
             groupName,
             example: getExampleAsArray({ schema, logger: context.logger, fallback }),
             source
-        })
+        });
     }
 
     // maps
@@ -549,12 +552,12 @@ export function convertSchemaObject(
             encoding,
             example: schema.example,
             source
-        })
+        });
     }
 
     // handle oneOf with IS_DISCRIMINATED extension
     if (schema.oneOf != null && schema.oneOf.length > 0) {
-        const isDiscriminated = getExtension<boolean>(schema, FernOpenAPIExtension.IS_DISCRIMINATED)
+        const isDiscriminated = getExtension<boolean>(schema, FernOpenAPIExtension.IS_DISCRIMINATED);
         if (isDiscriminated === false) {
             return convertUndiscriminatedOneOf({
                 nameOverride,
@@ -570,7 +573,7 @@ export function convertSchemaObject(
                 groupName,
                 encoding,
                 source
-            })
+            });
         }
     }
 
@@ -592,7 +595,7 @@ export function convertSchemaObject(
                 groupName,
                 encoding,
                 source
-            })
+            });
         } else {
             return convertUndiscriminatedOneOfWithDiscriminant({
                 nameOverride,
@@ -607,13 +610,13 @@ export function convertSchemaObject(
                 discriminator: schema.discriminator,
                 encoding,
                 source
-            })
+            });
         }
     }
 
     // handle oneOf
     if (schema.oneOf != null && schema.oneOf.length > 0) {
-        const isUndiscriminated = getExtension(schema, FernOpenAPIExtension.IS_UNDISCRIMINATED)
+        const isUndiscriminated = getExtension(schema, FernOpenAPIExtension.IS_UNDISCRIMINATED);
         if (
             schema.discriminator != null &&
             schema.discriminator.mapping != null &&
@@ -633,7 +636,7 @@ export function convertSchemaObject(
                     discriminator: schema.discriminator,
                     encoding,
                     source
-                })
+                });
             } else {
                 return convertDiscriminatedOneOf({
                     nameOverride,
@@ -651,7 +654,7 @@ export function convertSchemaObject(
                     groupName,
                     encoding,
                     source
-                })
+                });
             }
         } else if (schema.oneOf.length === 1 && schema.oneOf[0] != null) {
             if (context.options.preserveSingleSchemaOneOf) {
@@ -665,13 +668,13 @@ export function convertSchemaObject(
                     wrapAsNullable,
                     context,
                     subtypes: schema.oneOf.filter((schema) => {
-                        return isReferenceObject(schema) || (schema.type as string) !== "null"
+                        return isReferenceObject(schema) || (schema.type as string) !== "null";
                     }),
                     encoding,
                     namespace,
                     groupName,
                     source
-                })
+                });
             }
             const convertedSchema = convertSchema(
                 schema.oneOf[0],
@@ -681,20 +684,20 @@ export function convertSchemaObject(
                 source,
                 namespace,
                 referencedAsRequest
-            )
-            return maybeInjectDescriptionOrGroupName(convertedSchema, description, namespace, groupName)
+            );
+            return maybeInjectDescriptionOrGroupName(convertedSchema, description, namespace, groupName);
         } else if (schema.oneOf.length > 1) {
             if (schema.oneOf.length === 2 && schema.oneOf[0] != null && schema.oneOf[1] != null) {
-                const firstSchema = schema.oneOf[0]
-                const secondSchema = schema.oneOf[1]
+                const firstSchema = schema.oneOf[0];
+                const secondSchema = schema.oneOf[1];
                 if (!isReferenceObject(firstSchema) && (firstSchema.type as string) === "null") {
-                    return convertSchema(secondSchema, true, context, breadcrumbs, source, namespace)
+                    return convertSchema(secondSchema, true, context, breadcrumbs, source, namespace);
                 } else if (!isReferenceObject(secondSchema) && (secondSchema.type as string) === "null") {
-                    return convertSchema(firstSchema, true, context, breadcrumbs, source, namespace)
+                    return convertSchema(firstSchema, true, context, breadcrumbs, source, namespace);
                 }
             }
 
-            const maybeAllEnumValues = getMaybeAllEnumValues({ schemas: schema.oneOf })
+            const maybeAllEnumValues = getMaybeAllEnumValues({ schemas: schema.oneOf });
             if (maybeAllEnumValues != null) {
                 return convertEnum({
                     nameOverride,
@@ -712,10 +715,10 @@ export function convertSchemaObject(
                     context,
                     source,
                     inline: undefined
-                })
+                });
             }
 
-            const maybeDiscriminant = getDiscriminant({ schemas: schema.oneOf, context })
+            const maybeDiscriminant = getDiscriminant({ schemas: schema.oneOf, context });
             if (maybeDiscriminant != null && !context.options.discriminatedUnionV2 && !isUndiscriminated) {
                 return convertDiscriminatedOneOfWithVariants({
                     nameOverride,
@@ -734,13 +737,13 @@ export function convertSchemaObject(
                     groupName,
                     encoding,
                     source
-                })
+                });
             }
 
             const hasNullValue =
                 schema.oneOf.filter((schema) => {
-                    return !isReferenceObject(schema) && (schema.type as string) === "null"
-                }).length > 0
+                    return !isReferenceObject(schema) && (schema.type as string) === "null";
+                }).length > 0;
             return convertUndiscriminatedOneOf({
                 nameOverride,
                 generatedName,
@@ -751,13 +754,13 @@ export function convertSchemaObject(
                 wrapAsNullable: wrapAsNullable || hasNullValue,
                 context,
                 subtypes: schema.oneOf.filter((schema) => {
-                    return isReferenceObject(schema) || (schema.type as string) !== "null"
+                    return isReferenceObject(schema) || (schema.type as string) !== "null";
                 }),
                 encoding,
                 namespace,
                 groupName,
                 source
-            })
+            });
         }
     }
 
@@ -772,19 +775,19 @@ export function convertSchemaObject(
                 source,
                 namespace,
                 referencedAsRequest
-            )
-            return maybeInjectDescriptionOrGroupName(convertedSchema, description, namespace, groupName)
+            );
+            return maybeInjectDescriptionOrGroupName(convertedSchema, description, namespace, groupName);
         }
 
         if (schema.anyOf.length === 2) {
-            const [firstSchema, secondSchema] = schema.anyOf
+            const [firstSchema, secondSchema] = schema.anyOf;
             if (firstSchema != null && secondSchema != null) {
                 if (!isReferenceObject(firstSchema) && (firstSchema.type as unknown) === "null") {
-                    const convertedSchema = convertSchema(secondSchema, true, context, breadcrumbs, source, namespace)
-                    return maybeInjectDescriptionOrGroupName(convertedSchema, description, namespace, groupName)
+                    const convertedSchema = convertSchema(secondSchema, true, context, breadcrumbs, source, namespace);
+                    return maybeInjectDescriptionOrGroupName(convertedSchema, description, namespace, groupName);
                 } else if (!isReferenceObject(secondSchema) && (secondSchema.type as unknown) === "null") {
-                    const convertedSchema = convertSchema(firstSchema, true, context, breadcrumbs, source, namespace)
-                    return maybeInjectDescriptionOrGroupName(convertedSchema, description, namespace, groupName)
+                    const convertedSchema = convertSchema(firstSchema, true, context, breadcrumbs, source, namespace);
+                    return maybeInjectDescriptionOrGroupName(convertedSchema, description, namespace, groupName);
                 }
             }
         }
@@ -792,7 +795,7 @@ export function convertSchemaObject(
         const maybeDiscriminant = getDiscriminant({
             schemas: schema.anyOf,
             context
-        })
+        });
         if (maybeDiscriminant != null && !context.options.discriminatedUnionV2) {
             return convertDiscriminatedOneOfWithVariants({
                 nameOverride,
@@ -811,13 +814,13 @@ export function convertSchemaObject(
                 groupName,
                 encoding,
                 source
-            })
+            });
         }
 
         const hasNullValue =
             schema.anyOf.filter((schema) => {
-                return !isReferenceObject(schema) && (schema.type as string) === "null"
-            }).length > 0
+                return !isReferenceObject(schema) && (schema.type as string) === "null";
+            }).length > 0;
         return convertUndiscriminatedOneOf({
             nameOverride,
             generatedName,
@@ -828,21 +831,21 @@ export function convertSchemaObject(
             wrapAsNullable: wrapAsNullable || hasNullValue,
             context,
             subtypes: schema.anyOf.filter((schema) => {
-                return isReferenceObject(schema) || (schema.type as string) !== "null"
+                return isReferenceObject(schema) || (schema.type as string) !== "null";
             }),
             encoding,
             namespace,
             groupName,
             source
-        })
+        });
     }
 
     // handle objects
     if (schema.allOf != null || schema.properties != null) {
-        const filteredAllOfs: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[] = []
+        const filteredAllOfs: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[] = [];
         for (const allOf of schema.allOf ?? []) {
             if (isReferenceObject(allOf) || Object.keys(allOf).length > 0) {
-                filteredAllOfs.push(allOf)
+                filteredAllOfs.push(allOf);
             }
         }
         if (
@@ -860,19 +863,19 @@ export function convertSchemaObject(
                 source,
                 namespace,
                 referencedAsRequest
-            )
-            return maybeInjectDescriptionOrGroupName(convertedSchema, description, namespace, groupName)
+            );
+            return maybeInjectDescriptionOrGroupName(convertedSchema, description, namespace, groupName);
         }
 
         // Now that we've handled the single-element allOf case, filter the
         // allOfs down to just the objects.
         const filteredAllOfObjects = filteredAllOfs.filter((allOf) => {
-            const valid = isValidAllOfObject(allOf)
+            const valid = isValidAllOfObject(allOf);
             if (!valid) {
-                context.logger.warn(`Skipping non-object allOf element: ${JSON.stringify(allOf)}`)
+                context.logger.warn(`Skipping non-object allOf element: ${JSON.stringify(allOf)}`);
             }
-            return valid
-        })
+            return valid;
+        });
 
         if (
             (schema.properties == null || hasNoProperties(schema)) &&
@@ -888,8 +891,8 @@ export function convertSchemaObject(
                 source,
                 namespace,
                 referencedAsRequest
-            )
-            return maybeInjectDescriptionOrGroupName(convertedSchema, description, namespace, groupName)
+            );
+            return maybeInjectDescriptionOrGroupName(convertedSchema, description, namespace, groupName);
         }
 
         return convertObject({
@@ -911,7 +914,7 @@ export function convertSchemaObject(
             availability,
             encoding,
             source
-        })
+        });
     }
 
     // handle vanilla object
@@ -954,11 +957,11 @@ export function convertSchemaObject(
             groupName,
             encoding,
             example: schema.example
-        })
+        });
     }
 
     if (schema.type == null) {
-        const inferredValue = schema.example ?? schema.default
+        const inferredValue = schema.example ?? schema.default;
         return SchemaWithExample.unknown({
             nameOverride,
             generatedName,
@@ -968,38 +971,38 @@ export function convertSchemaObject(
             namespace,
             groupName,
             example: inferredValue
-        })
+        });
     }
 
     throw new Error(
         `Failed to convert schema breadcrumbs=${JSON.stringify(breadcrumbs)} value=${JSON.stringify(schema)}`
-    )
+    );
 }
 
 function getBooleanFromDefault(defaultValue: unknown): boolean | undefined {
     if (defaultValue == null) {
-        return undefined
+        return undefined;
     }
     if (typeof defaultValue === "boolean") {
-        return defaultValue
+        return defaultValue;
     }
     if (typeof defaultValue === "string") {
-        const lowercased = defaultValue.toLowerCase()
+        const lowercased = defaultValue.toLowerCase();
         if (lowercased === "true") {
-            return true
+            return true;
         }
         if (lowercased === "false") {
-            return false
+            return false;
         }
     }
-    return undefined
+    return undefined;
 }
 
 export function getSchemaIdFromReference(ref: OpenAPIV3.ReferenceObject): string | undefined {
     if (!ref.$ref.startsWith(SCHEMA_REFERENCE_PREFIX)) {
-        return undefined
+        return undefined;
     }
-    return ref.$ref.replace(SCHEMA_REFERENCE_PREFIX, "")
+    return ref.$ref.replace(SCHEMA_REFERENCE_PREFIX, "");
 }
 
 export function convertToReferencedSchema(
@@ -1008,15 +1011,15 @@ export function convertToReferencedSchema(
     source: Source,
     preserveSchemaIds: boolean
 ): ReferencedSchema {
-    const nameOverride = getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME)
-    const generatedName = getGeneratedTypeName(breadcrumbs, preserveSchemaIds)
+    const nameOverride = getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME);
+    const generatedName = getGeneratedTypeName(breadcrumbs, preserveSchemaIds);
     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-    const description = (schema as any).description
-    const availability = convertAvailability(schema)
+    const description = (schema as any).description;
+    const availability = convertAvailability(schema);
 
-    const schemaId = getSchemaIdFromReference(schema)
+    const schemaId = getSchemaIdFromReference(schema);
     if (schemaId == null) {
-        throw new Error(`Invalid schema reference ${JSON.stringify(schema)}`)
+        throw new Error(`Invalid schema reference ${JSON.stringify(schema)}`);
     }
 
     return Schema.reference({
@@ -1030,23 +1033,23 @@ export function convertToReferencedSchema(
         namespace: undefined,
         groupName: undefined,
         source
-    })
+    });
 }
 
 function hasNoOneOf(schema: OpenAPIV3.SchemaObject): boolean {
-    return schema.oneOf == null || schema.oneOf.length === 0
+    return schema.oneOf == null || schema.oneOf.length === 0;
 }
 
 function hasNoAllOf(schema: OpenAPIV3.SchemaObject): boolean {
-    return schema.allOf == null || schema.allOf.length === 0
+    return schema.allOf == null || schema.allOf.length === 0;
 }
 
 function hasNoProperties(schema: OpenAPIV3.SchemaObject): boolean {
-    return schema.properties == null || size(schema.properties) === 0
+    return schema.properties == null || size(schema.properties) === 0;
 }
 
 function isListOfStrings(x: unknown): x is string[] {
-    return Array.isArray(x) && x.every((item) => typeof item === "string")
+    return Array.isArray(x) && x.every((item) => typeof item === "string");
 }
 
 function maybeInjectDescriptionOrGroupName(
@@ -1062,7 +1065,7 @@ function maybeInjectDescriptionOrGroupName(
             availability: schema.availability,
             namespace,
             groupName
-        })
+        });
     } else if (schema.type === "optional") {
         return SchemaWithExample.optional({
             nameOverride: schema.nameOverride,
@@ -1074,7 +1077,7 @@ function maybeInjectDescriptionOrGroupName(
             namespace,
             groupName,
             inline: undefined
-        })
+        });
     } else if (schema.type === "nullable") {
         return SchemaWithExample.nullable({
             nameOverride: schema.nameOverride,
@@ -1086,9 +1089,9 @@ function maybeInjectDescriptionOrGroupName(
             namespace,
             groupName,
             inline: undefined
-        })
+        });
     }
-    return schema
+    return schema;
 }
 
 // isValidAllOfObject returns true if the given allOf is a valid object according to the following:
@@ -1098,18 +1101,18 @@ function maybeInjectDescriptionOrGroupName(
 //  (4): All nested allOf, oneOf, or anyOf types satisfy (1), (2), or (3)
 function isValidAllOfObject(allOf: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject): boolean {
     if (isReferenceObject(allOf) || allOf.type === "object" || allOf.properties != null) {
-        return true
+        return true;
     }
     if (allOf.allOf != null) {
-        return allOf.allOf.every((elem) => isValidAllOfObject(elem))
+        return allOf.allOf.every((elem) => isValidAllOfObject(elem));
     }
     if (allOf.oneOf != null) {
-        return allOf.oneOf.every((elem) => isValidAllOfObject(elem))
+        return allOf.oneOf.every((elem) => isValidAllOfObject(elem));
     }
     if (allOf.anyOf != null) {
-        return allOf.anyOf.every((elem) => isValidAllOfObject(elem))
+        return allOf.anyOf.every((elem) => isValidAllOfObject(elem));
     }
-    return false
+    return false;
 }
 
 export function wrapLiteral({
@@ -1123,15 +1126,15 @@ export function wrapLiteral({
     generatedName,
     title
 }: {
-    literal: LiteralSchemaValue
-    wrapAsNullable: boolean
-    description: string | undefined
-    availability: Availability | undefined
-    namespace: string | undefined
-    groupName: SdkGroupName | undefined
-    nameOverride: string | undefined
-    generatedName: string
-    title: string | undefined
+    literal: LiteralSchemaValue;
+    wrapAsNullable: boolean;
+    description: string | undefined;
+    availability: Availability | undefined;
+    namespace: string | undefined;
+    groupName: SdkGroupName | undefined;
+    nameOverride: string | undefined;
+    generatedName: string;
+    title: string | undefined;
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
@@ -1153,7 +1156,7 @@ export function wrapLiteral({
             description,
             availability,
             inline: undefined
-        })
+        });
     }
     return SchemaWithExample.literal({
         nameOverride,
@@ -1164,7 +1167,7 @@ export function wrapLiteral({
         groupName,
         description,
         availability
-    })
+    });
 }
 
 export function wrapPrimitive({
@@ -1178,17 +1181,17 @@ export function wrapPrimitive({
     nameOverride,
     title
 }: {
-    primitive: PrimitiveSchemaValueWithExample
-    wrapAsNullable: boolean
-    namespace: string | undefined
-    groupName: SdkGroupName | undefined
-    description: string | undefined
-    availability: Availability | undefined
-    nameOverride: string | undefined
-    generatedName: string
-    title: string | undefined
+    primitive: PrimitiveSchemaValueWithExample;
+    wrapAsNullable: boolean;
+    namespace: string | undefined;
+    groupName: SdkGroupName | undefined;
+    description: string | undefined;
+    availability: Availability | undefined;
+    nameOverride: string | undefined;
+    generatedName: string;
+    title: string | undefined;
 }): SchemaWithExample {
-    groupName = typeof groupName === "string" ? [groupName] : groupName
+    groupName = typeof groupName === "string" ? [groupName] : groupName;
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
             nameOverride,
@@ -1209,7 +1212,7 @@ export function wrapPrimitive({
             description,
             availability,
             inline: undefined
-        })
+        });
     }
     return SchemaWithExample.primitive({
         nameOverride,
@@ -1220,54 +1223,54 @@ export function wrapPrimitive({
         availability,
         namespace,
         groupName
-    })
+    });
 }
 
 interface DiscriminantProperty {
-    discriminant: string
-    schemas: Record<string, OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject>
+    discriminant: string;
+    schemas: Record<string, OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject>;
 }
 
 function getMaybeAllEnumValues({
     schemas
 }: {
-    schemas: (OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject)[]
+    schemas: (OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject)[];
 }): undefined | string[] {
-    const enumValues = new Set<string>()
+    const enumValues = new Set<string>();
     for (const schema of schemas) {
         if (isReferenceObject(schema)) {
-            return undefined
+            return undefined;
         }
         if (schema.enum != null && isListOfStrings(schema.enum)) {
-            schema.enum.forEach((val) => enumValues.add(val))
+            schema.enum.forEach((val) => enumValues.add(val));
         } else {
-            return undefined
+            return undefined;
         }
     }
-    return Array.from(enumValues)
+    return Array.from(enumValues);
 }
 
 function getDiscriminant({
     schemas,
     context
 }: {
-    schemas: (OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject)[]
-    context: SchemaParserContext
+    schemas: (OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject)[];
+    context: SchemaParserContext;
 }): undefined | DiscriminantProperty {
     const discriminantToVariants: Record<
         string,
         Record<string, OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject>
-    > = {}
+    > = {};
     for (const schema of schemas) {
-        const possibleDiscriminants = getPossibleDiscriminants({ schema, context })
+        const possibleDiscriminants = getPossibleDiscriminants({ schema, context });
         for (const [property, value] of Object.entries(possibleDiscriminants)) {
-            const variants = discriminantToVariants[property]
+            const variants = discriminantToVariants[property];
             if (variants != null) {
-                variants[value] = schema
+                variants[value] = schema;
             } else {
                 discriminantToVariants[property] = {
                     [value]: schema
-                }
+                };
             }
         }
     }
@@ -1276,47 +1279,47 @@ function getDiscriminant({
             return {
                 discriminant,
                 schemas: variants
-            }
+            };
         }
     }
-    return undefined
+    return undefined;
 }
 
 function getPossibleDiscriminants({
     schema,
     context
 }: {
-    schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject
-    context: SchemaParserContext
+    schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
+    context: SchemaParserContext;
 }): Record<string, string> {
-    const resolvedSchema = isReferenceObject(schema) ? context.resolveSchemaReference(schema) : schema
-    return getPossibleDiscriminantsForSchemaObject({ schema: resolvedSchema, context })
+    const resolvedSchema = isReferenceObject(schema) ? context.resolveSchemaReference(schema) : schema;
+    return getPossibleDiscriminantsForSchemaObject({ schema: resolvedSchema, context });
 }
 
 function getPossibleDiscriminantsForSchemaObject({
     schema,
     context
 }: {
-    schema: OpenAPIV3.SchemaObject
-    context: SchemaParserContext
+    schema: OpenAPIV3.SchemaObject;
+    context: SchemaParserContext;
 }): Record<string, string> {
-    const possibleDiscrimimants: Record<string, string> = {}
+    const possibleDiscrimimants: Record<string, string> = {};
     if (schema.anyOf != null) {
         for (const elem of schema.anyOf) {
             const possibleDiscriminantsForVariant = getPossibleDiscriminants({
                 schema: elem,
                 context
-            })
+            });
             for (const [key, value] of Object.entries(possibleDiscriminantsForVariant ?? {})) {
-                possibleDiscrimimants[key] = value
+                possibleDiscrimimants[key] = value;
             }
         }
-        return possibleDiscrimimants
+        return possibleDiscrimimants;
     }
     for (const [propertyName, propertySchema] of Object.entries(schema.properties ?? {})) {
         const resolvedPropertySchema = isReferenceObject(propertySchema)
             ? context.resolveSchemaReference(propertySchema)
-            : propertySchema
+            : propertySchema;
         if (
             resolvedPropertySchema.type === "string" &&
             resolvedPropertySchema.enum != null &&
@@ -1324,20 +1327,20 @@ function getPossibleDiscriminantsForSchemaObject({
             getEnumSet(resolvedPropertySchema.enum).length === 1 &&
             resolvedPropertySchema.enum[0] != null
         ) {
-            possibleDiscrimimants[propertyName] = resolvedPropertySchema.enum[0]
+            possibleDiscrimimants[propertyName] = resolvedPropertySchema.enum[0];
         }
 
-        const maybeConstValue = getProperty<string>(resolvedPropertySchema, "const")
+        const maybeConstValue = getProperty<string>(resolvedPropertySchema, "const");
         if (resolvedPropertySchema.type === "string" && maybeConstValue != null) {
-            possibleDiscrimimants[propertyName] = maybeConstValue
+            possibleDiscrimimants[propertyName] = maybeConstValue;
         }
 
         // assuming that if a type property on the object exists and has an example then it could be the discriminant
         if (propertyName === "type" && resolvedPropertySchema.example != null) {
-            possibleDiscrimimants[propertyName] = resolvedPropertySchema.example
+            possibleDiscrimimants[propertyName] = resolvedPropertySchema.example;
         }
     }
-    return possibleDiscrimimants
+    return possibleDiscrimimants;
 }
 
 // getEnumSet reduces the list of enums values into a set and
@@ -1348,43 +1351,43 @@ function getPossibleDiscriminantsForSchemaObject({
 // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
 function getEnumSet(enums: any[] | undefined): any[] {
     if (!enums) {
-        return []
+        return [];
     }
 
     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-    const set = new Set<any>()
+    const set = new Set<any>();
 
     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     enums.forEach((item: any) => {
         if (typeof item === "string") {
-            set.add(item.toLowerCase())
+            set.add(item.toLowerCase());
         } else {
-            set.add(item)
+            set.add(item);
         }
-    })
+    });
 
-    return Array.from(set)
+    return Array.from(set);
 }
 
 export function getProperty<T>(object: object, property: string): T | undefined {
     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-    const extensionValue = (object as any)[property]
+    const extensionValue = (object as any)[property];
     if (extensionValue != null) {
-        return extensionValue as T
+        return extensionValue as T;
     }
-    return undefined
+    return undefined;
 }
 
 function getEncoding({
     schema,
     logger
 }: {
-    schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject
-    logger: Logger
+    schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject;
+    logger: Logger;
 }): Encoding | undefined {
-    const encoding = getFernEncoding({ schema, logger })
+    const encoding = getFernEncoding({ schema, logger });
     if (encoding == null) {
-        return undefined
+        return undefined;
     }
-    return convertEncoding(encoding)
+    return convertEncoding(encoding);
 }

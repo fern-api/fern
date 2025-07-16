@@ -1,9 +1,13 @@
-import { GeneratorName } from "@fern-api/configuration-loader"
-import { assertNever } from "@fern-api/core-utils"
+import { GeneratorName } from "@fern-api/configuration-loader";
+import { assertNever } from "@fern-api/core-utils";
 
-import { IrSerialization } from "../../ir-serialization"
-import { IrVersions } from "../../ir-versions"
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
+import { IrSerialization } from "../../ir-serialization";
+import { IrVersions } from "../../ir-versions";
+import {
+    GeneratorWasNeverUpdatedToConsumeNewIR,
+    GeneratorWasNotCreatedYet,
+    IrMigration
+} from "../../types/IrMigration";
 
 export const V42_TO_V41_MIGRATION: IrMigration<
     IrVersions.V42.ir.IntermediateRepresentation,
@@ -52,22 +56,22 @@ export const V42_TO_V41_MIGRATION: IrMigration<
                 ...V42.auth,
                 schemes: V42.auth.schemes.map((scheme) => convertAuthScheme(scheme))
             }
-        }
+        };
     }
-}
+};
 
 function convertAuthScheme(scheme: IrVersions.V42.AuthScheme): IrVersions.V41.AuthScheme {
     switch (scheme.type) {
         case "basic":
-            return IrVersions.V41.AuthScheme.basic(scheme)
+            return IrVersions.V41.AuthScheme.basic(scheme);
         case "bearer":
-            return IrVersions.V41.AuthScheme.bearer(scheme)
+            return IrVersions.V41.AuthScheme.bearer(scheme);
         case "header":
-            return IrVersions.V41.AuthScheme.header(scheme)
+            return IrVersions.V41.AuthScheme.header(scheme);
         case "oauth":
-            return IrVersions.V41.AuthScheme.oauth(convertOAuthScheme(scheme))
+            return IrVersions.V41.AuthScheme.oauth(convertOAuthScheme(scheme));
         default:
-            assertNever(scheme)
+            assertNever(scheme);
     }
 }
 
@@ -90,8 +94,8 @@ function convertOAuthScheme(scheme: IrVersions.V42.OAuthScheme): IrVersions.V41.
                               }
                             : undefined
                 })
-            }
+            };
         default:
-            assertNever(scheme.configuration.type)
+            assertNever(scheme.configuration.type);
     }
 }

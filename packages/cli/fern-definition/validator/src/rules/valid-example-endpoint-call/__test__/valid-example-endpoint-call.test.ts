@@ -1,8 +1,8 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { ValidationViolation } from "../../../ValidationViolation"
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule"
-import { ValidExampleEndpointCallRule } from "../valid-example-endpoint-call"
+import { ValidationViolation } from "../../../ValidationViolation";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { ValidExampleEndpointCallRule } from "../valid-example-endpoint-call";
 
 describe("valid-example-endpoint-call", () => {
     it("simple", async () => {
@@ -13,7 +13,7 @@ describe("valid-example-endpoint-call", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
             )
-        })
+        });
 
         const expectedViolations: ValidationViolation[] = [
             // headers.yml
@@ -463,10 +463,10 @@ describe("valid-example-endpoint-call", () => {
                 relativeFilepath: RelativeFilePath.of("response.yml"),
                 severity: "fatal"
             }
-        ]
+        ];
 
-        expect(violations).toEqual(expectedViolations)
-    })
+        expect(violations).toEqual(expectedViolations);
+    });
 
     it("optional-example-property", async () => {
         const violations = await getViolationsForRule({
@@ -476,11 +476,11 @@ describe("valid-example-endpoint-call", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("optional-example-property")
             )
-        })
+        });
 
-        const expectedViolations: ValidationViolation[] = []
-        expect(violations).toEqual(expectedViolations)
-    })
+        const expectedViolations: ValidationViolation[] = [];
+        expect(violations).toEqual(expectedViolations);
+    });
 
     it("server-sent-events", async () => {
         const violations = await getViolationsForRule({
@@ -490,12 +490,12 @@ describe("valid-example-endpoint-call", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("server-sent-events")
             )
-        })
+        });
 
-        const expectedViolations: ValidationViolation[] = []
+        const expectedViolations: ValidationViolation[] = [];
 
-        expect(violations).toEqual(expectedViolations)
-    })
+        expect(violations).toEqual(expectedViolations);
+    });
 
     it("endpoint-level-base-path", async () => {
         const violations = await getViolationsForRule({
@@ -505,12 +505,12 @@ describe("valid-example-endpoint-call", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("endpoint-level-base-path")
             )
-        })
+        });
 
-        const expectedViolations: ValidationViolation[] = []
+        const expectedViolations: ValidationViolation[] = [];
 
-        expect(violations).toEqual(expectedViolations)
-    })
+        expect(violations).toEqual(expectedViolations);
+    });
 
     it("endpoint-recursive-types", async () => {
         const violations = await getViolationsForRule({
@@ -520,12 +520,12 @@ describe("valid-example-endpoint-call", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("endpoint-recursive-types")
             )
-        })
+        });
 
-        const expectedViolations: ValidationViolation[] = []
+        const expectedViolations: ValidationViolation[] = [];
 
-        expect(violations).toEqual(expectedViolations)
-    })
+        expect(violations).toEqual(expectedViolations);
+    });
 
     it("extra-properties", async () => {
         const violations = await getViolationsForRule({
@@ -535,10 +535,10 @@ describe("valid-example-endpoint-call", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("extra-properties")
             )
-        })
+        });
 
-        const expectedViolations: ValidationViolation[] = []
+        const expectedViolations: ValidationViolation[] = [];
 
-        expect(violations).toEqual(expectedViolations)
-    })
-})
+        expect(violations).toEqual(expectedViolations);
+    });
+});

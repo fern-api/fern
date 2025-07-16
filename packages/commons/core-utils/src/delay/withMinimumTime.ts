@@ -1,4 +1,4 @@
-import { delay } from "./delay"
+import { delay } from "./delay";
 
 /**
  * if the promise resolves:
@@ -12,16 +12,16 @@ export async function withMinimumTime<T>(
     ms: number,
     { alwaysDelay = false }: { alwaysDelay?: boolean } = {}
 ): Promise<T> {
-    const delayPromise = delay(ms)
+    const delayPromise = delay(ms);
 
     try {
-        const result = await promise
+        const result = await promise;
         if (alwaysDelay) {
-            await delayPromise
+            await delayPromise;
         }
-        return result
+        return result;
     } catch (error) {
-        await delayPromise
-        throw error
+        await delayPromise;
+        throw error;
     }
 }

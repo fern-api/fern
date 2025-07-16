@@ -1,4 +1,4 @@
-import webpack from "webpack"
+import webpack from "webpack";
 
 describe("test env compatibility", () => {
     test("webpack", () => {
@@ -26,17 +26,17 @@ describe("test env compatibility", () => {
                 },
                 (err, stats) => {
                     try {
-                        expect(err).toBe(null)
+                        expect(err).toBe(null);
                         if (stats?.hasErrors()) {
-                            console.log(stats?.toString())
+                            console.log(stats?.toString());
                         }
-                        expect(stats?.hasErrors()).toBe(false)
-                        resolve()
+                        expect(stats?.hasErrors()).toBe(false);
+                        resolve();
                     } catch (error) {
-                        reject(error)
+                        reject(error);
                     }
                 }
-            )
-        })
-    }, 180_000)
-})
+            );
+        });
+    }, 180_000);
+});

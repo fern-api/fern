@@ -1,32 +1,32 @@
-export { And } from "./And"
-export { Annotation } from "./Annotation"
-export { Access } from "./Access"
-export { Class } from "./Class"
-export { ClassInstantiation } from "./ClassInstantiation"
-export { ClassReference } from "./ClassReference"
-export { CodeBlock } from "./CodeBlock"
-export { Writer } from "./core/Writer"
-export { XmlDocWriter } from "./core/XmlDocWriter"
-export { CoreClassReference } from "./CoreClassReference"
-export * as dependencies from "./dependencies"
-export { Dictionary } from "./Dictionary"
-export { Enum } from "./Enum"
-export { EnumInstantiation } from "./EnumInstantiation"
-export { Field } from "./Field"
-export { PrimitiveInstantiation as InstantiatedPrimitive } from "./InstantiatedPrimitive"
-export { Interface } from "./Interface"
-export { List } from "./List"
-export { Method, MethodType } from "./Method"
-export { AnonymousFunction } from "./AnonymousFunction"
-export { MethodInvocation } from "./MethodInvocation"
-export { Or } from "./Or"
-export { Parameter } from "./Parameter"
-export { TypeParameter } from "./TypeParameter"
-export { Set } from "./Set"
-export { Switch } from "./Switch"
-export { Ternary } from "./Ternary"
-export { TestClass } from "./TestClass"
-export { convertReadOnlyPrimitiveTypes, Type, VALID_READ_ONLY_MEMORY_TYPES } from "./Type"
-export { TypeLiteral } from "./TypeLiteral"
-export { XmlDocBlock } from "./XmlDocBlock"
-export { String_ } from "./String_"
+export { And } from "./And";
+export { Annotation } from "./Annotation";
+export { Access } from "./Access";
+export { Class } from "./Class";
+export { ClassInstantiation } from "./ClassInstantiation";
+export { ClassReference } from "./ClassReference";
+export { CodeBlock } from "./CodeBlock";
+export { Writer } from "./core/Writer";
+export { XmlDocWriter } from "./core/XmlDocWriter";
+export { CoreClassReference } from "./CoreClassReference";
+export * as dependencies from "./dependencies";
+export { Dictionary } from "./Dictionary";
+export { Enum } from "./Enum";
+export { EnumInstantiation } from "./EnumInstantiation";
+export { Field } from "./Field";
+export { PrimitiveInstantiation as InstantiatedPrimitive } from "./InstantiatedPrimitive";
+export { Interface } from "./Interface";
+export { List } from "./List";
+export { Method, MethodType } from "./Method";
+export { AnonymousFunction } from "./AnonymousFunction";
+export { MethodInvocation } from "./MethodInvocation";
+export { Or } from "./Or";
+export { Parameter } from "./Parameter";
+export { TypeParameter } from "./TypeParameter";
+export { Set } from "./Set";
+export { Switch } from "./Switch";
+export { Ternary } from "./Ternary";
+export { TestClass } from "./TestClass";
+export { convertReadOnlyPrimitiveTypes, Type, VALID_READ_ONLY_MEMORY_TYPES } from "./Type";
+export { TypeLiteral } from "./TypeLiteral";
+export { XmlDocBlock } from "./XmlDocBlock";
+export { String_ } from "./String_";

@@ -1,17 +1,17 @@
-import { readFile } from "fs/promises"
-import yaml from "js-yaml"
+import { readFile } from "fs/promises";
+import yaml from "js-yaml";
 
-import { DefinitionFile, serialization } from "@fern-api/conjure-sdk"
-import { AbsoluteFilePath, RelativeFilePath, listFiles, relative } from "@fern-api/fs-utils"
+import { DefinitionFile, serialization } from "@fern-api/conjure-sdk";
+import { AbsoluteFilePath, RelativeFilePath, listFiles, relative } from "@fern-api/fs-utils";
 
 export interface ConjureFile {
-    fileContents: DefinitionFile
-    absoluteFilepath: AbsoluteFilePath
-    relativeFilepath: RelativeFilePath
+    fileContents: DefinitionFile;
+    absoluteFilepath: AbsoluteFilePath;
+    relativeFilepath: RelativeFilePath;
 }
 
 export async function listConjureFiles(root: AbsoluteFilePath, extensionGlob: string): Promise<ConjureFile[]> {
-    const files: ConjureFile[] = []
+    const files: ConjureFile[] = [];
 
     for (const absoluteFilepath of await listFiles(root, extensionGlob)) {
         files.push(
@@ -19,18 +19,18 @@ export async function listConjureFiles(root: AbsoluteFilePath, extensionGlob: st
                 relativeFilepath: relative(root, absoluteFilepath),
                 absoluteFilepath
             })
-        )
+        );
     }
 
-    return files
+    return files;
 }
 
 async function createConjureFile({
     relativeFilepath,
     absoluteFilepath
 }: {
-    relativeFilepath: RelativeFilePath
-    absoluteFilepath: AbsoluteFilePath
+    relativeFilepath: RelativeFilePath;
+    absoluteFilepath: AbsoluteFilePath;
 }): Promise<ConjureFile> {
     const rawContents = (await readFile(absoluteFilepath))
         .toString()
@@ -42,7 +42,7 @@ async function createConjureFile({
         .replaceAll("safelong>", "long>")
         .replaceAll(": any", ": unknown")
         .replaceAll("<any>", "<unknown>")
-        .replaceAll("any>", "unknown>")
+        .replaceAll("any>", "unknown>");
     return {
         relativeFilepath,
         absoluteFilepath,
@@ -51,5 +51,5 @@ async function createConjureFile({
             allowUnrecognizedEnumValues: true,
             allowUnrecognizedUnionMembers: true
         })
-    }
+    };
 }

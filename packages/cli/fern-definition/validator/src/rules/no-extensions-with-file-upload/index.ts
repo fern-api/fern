@@ -1,1 +1,1 @@
-export { NoExtensionsWithFileUploadRule } from "./no-extensions-with-file-upload"
+export { NoExtensionsWithFileUploadRule } from "./no-extensions-with-file-upload";

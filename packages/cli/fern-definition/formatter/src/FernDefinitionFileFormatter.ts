@@ -1,12 +1,12 @@
-import * as prettier from "prettier2"
+import * as prettier from "prettier2";
 
-import { assertNever, assertNeverNoThrow } from "@fern-api/core-utils"
-import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { assertNever, assertNeverNoThrow } from "@fern-api/core-utils";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 
 const LANG_SERVER_BANNER =
-    "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json"
+    "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json";
 
-const YAML_KEY_REGEX = /^(\s*)(\S+):.*$/
+const YAML_KEY_REGEX = /^(\s*)(\S+):.*$/;
 
 type FernFileCursorLocation =
     | keyof RawSchemas.DefinitionFileSchema
@@ -14,62 +14,62 @@ type FernFileCursorLocation =
     | "webhook"
     | "type"
     | "error"
-    | "unknown"
+    | "unknown";
 
 export class FernDefinitionFileFormatter {
-    private tabWidth: number | undefined
-    private fileContents: string
-    private formatted: string | undefined
+    private tabWidth: number | undefined;
+    private fileContents: string;
+    private formatted: string | undefined;
 
     constructor({ fileContents }: { fileContents: string }) {
-        this.fileContents = fileContents
+        this.fileContents = fileContents;
     }
 
     public async format(): Promise<string> {
         if (this.formatted == null) {
-            const { header, body } = await this.splitFileAtHeader()
+            const { header, body } = await this.splitFileAtHeader();
 
-            const writer = new FileWriter()
+            const writer = new FileWriter();
 
             if (!this.fileContents.includes("yaml-language-server")) {
-                writer.writeLine(LANG_SERVER_BANNER)
-                writer.writeLine()
+                writer.writeLine(LANG_SERVER_BANNER);
+                writer.writeLine();
             }
             if (header.length > 0) {
                 for (const headerLine of header) {
-                    writer.writeLine(headerLine)
-                    writer.writeLine()
+                    writer.writeLine(headerLine);
+                    writer.writeLine();
                 }
             }
 
-            const reader = new LineReader(body)
-            let location: FernFileCursorLocation = "unknown"
+            const reader = new LineReader(body);
+            let location: FernFileCursorLocation = "unknown";
             while (!reader.isEof()) {
-                location = this.writeNextLine({ nextLine: reader.readNextLine(), writer, location })
+                location = this.writeNextLine({ nextLine: reader.readNextLine(), writer, location });
             }
-            this.formatted = await this.prettierFormat(writer.getContent())
+            this.formatted = await this.prettierFormat(writer.getContent());
         }
-        return this.formatted
+        return this.formatted;
     }
 
     private async splitFileAtHeader(): Promise<{ header: string[]; body: string[] }> {
-        const lines = (await this.prettierFormat(this.fileContents)).split("\n")
+        const lines = (await this.prettierFormat(this.fileContents)).split("\n");
 
         const indexOfSeparator = lines.findIndex((line) => {
-            const trimmed = line.trim()
-            return trimmed.length === 0 || !trimmed.startsWith("#")
-        })
+            const trimmed = line.trim();
+            return trimmed.length === 0 || !trimmed.startsWith("#");
+        });
 
         return {
             header: lines.slice(0, indexOfSeparator),
             body: lines.slice(indexOfSeparator).filter((line) => line.trim().length > 0)
-        }
+        };
     }
 
     private async prettierFormat(content: string): Promise<string> {
         return prettier.format(content, {
             parser: "yaml"
-        })
+        });
     }
 
     private writeNextLine({
@@ -77,18 +77,18 @@ export class FernDefinitionFileFormatter {
         writer,
         location: previousLocation
     }: {
-        nextLine: string
-        writer: FileWriter
-        location: FernFileCursorLocation
+        nextLine: string;
+        writer: FileWriter;
+        location: FernFileCursorLocation;
     }): FernFileCursorLocation {
-        const newCursorLocation = this.getNewCursorLocation({ previousLocation, line: nextLine })
+        const newCursorLocation = this.getNewCursorLocation({ previousLocation, line: nextLine });
         if (newCursorLocation != null) {
-            writer.writeLine()
+            writer.writeLine();
         }
 
-        writer.writeLine(nextLine)
+        writer.writeLine(nextLine);
 
-        return newCursorLocation ?? previousLocation
+        return newCursorLocation ?? previousLocation;
     }
 
     /**
@@ -99,25 +99,25 @@ export class FernDefinitionFileFormatter {
         previousLocation,
         line
     }: {
-        previousLocation: FernFileCursorLocation | undefined
-        line: string
+        previousLocation: FernFileCursorLocation | undefined;
+        line: string;
     }): FernFileCursorLocation | undefined {
-        const match = line.match(YAML_KEY_REGEX)
+        const match = line.match(YAML_KEY_REGEX);
         if (match == null) {
-            return undefined
+            return undefined;
         }
 
-        const [_, indentStr, key] = match
+        const [_, indentStr, key] = match;
         if (indentStr == null || key == null) {
-            return undefined
+            return undefined;
         }
         if (this.tabWidth == null && indentStr.length > 0) {
-            this.tabWidth = indentStr.length
+            this.tabWidth = indentStr.length;
         }
-        const indent = this.tabWidth != null ? indentStr.length / this.tabWidth : 0
+        const indent = this.tabWidth != null ? indentStr.length / this.tabWidth : 0;
 
         if (indent === 0) {
-            const castedKey = key as keyof RawSchemas.DefinitionFileSchema
+            const castedKey = key as keyof RawSchemas.DefinitionFileSchema;
             switch (castedKey) {
                 case "docs":
                 case "imports":
@@ -126,89 +126,89 @@ export class FernDefinitionFileFormatter {
                 case "errors":
                 case "webhooks":
                 case "channel":
-                    return castedKey
+                    return castedKey;
                 default:
-                    assertNeverNoThrow(castedKey)
-                    return "unknown"
+                    assertNeverNoThrow(castedKey);
+                    return "unknown";
             }
         }
 
         if (previousLocation == null || previousLocation === "unknown") {
-            return undefined
+            return undefined;
         }
 
         switch (previousLocation) {
             case "docs":
             case "imports":
-                return undefined
+                return undefined;
             case "service":
             case "endpoint":
                 if (indent === 2) {
-                    return "endpoint"
+                    return "endpoint";
                 }
-                return undefined
+                return undefined;
             case "types":
             case "type":
                 if (indent === 1) {
-                    return "type"
+                    return "type";
                 }
-                return undefined
+                return undefined;
             case "errors":
             case "error":
                 if (indent === 1) {
-                    return "error"
+                    return "error";
                 }
-                return undefined
+                return undefined;
             case "webhooks":
             case "webhook":
                 if (indent === 1) {
-                    return "webhook"
+                    return "webhook";
                 }
-                return undefined
+                return undefined;
             case "channel":
                 if (indent === 1) {
-                    return "channel"
+                    return "channel";
                 }
-                return undefined
+                return undefined;
             default:
-                assertNever(previousLocation)
+                assertNever(previousLocation);
         }
     }
 }
 
 class LineReader {
-    private lineIndex = 0
+    private lineIndex = 0;
 
     constructor(private readonly lines: string[]) {}
 
     public isEof() {
-        return this.lines[this.lineIndex] == null
+        return this.lines[this.lineIndex] == null;
     }
 
     public readNextLine(): string {
-        const nextLine = this.lines[this.lineIndex++]
+        const nextLine = this.lines[this.lineIndex++];
         if (nextLine == null) {
-            throw new Error("EOF")
+            throw new Error("EOF");
         }
-        return nextLine
+        return nextLine;
     }
 }
 
 class FileWriter {
-    private content = ""
+    private content = "";
 
     public write(content: string): void {
-        this.content += content
+        this.content += content;
     }
 
     public writeLine(content?: string): void {
         if (content != null) {
-            this.write(content)
+            this.write(content);
         }
-        this.write("\n")
+        this.write("\n");
     }
 
     public getContent(): string {
-        return this.content
+        return this.content;
     }
 }

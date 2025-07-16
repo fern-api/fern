@@ -1,8 +1,8 @@
-import { size } from "lodash-es"
+import { size } from "lodash-es";
 
-import { isInlineRequestBody } from "@fern-api/fern-definition-schema"
+import { isInlineRequestBody } from "@fern-api/fern-definition-schema";
 
-import { Rule } from "../../Rule"
+import { Rule } from "../../Rule";
 
 export const NoMissingRequestNameRule: Rule = {
     name: "no-missing-request-name",
@@ -11,7 +11,7 @@ export const NoMissingRequestNameRule: Rule = {
             definitionFile: {
                 httpEndpoint: ({ endpoint, service }) => {
                     if (typeof endpoint.request !== "string" && endpoint.request?.name != null) {
-                        return []
+                        return [];
                     }
 
                     if (endpoint.request != null && typeof endpoint.request !== "string") {
@@ -21,7 +21,7 @@ export const NoMissingRequestNameRule: Rule = {
                                     severity: "fatal",
                                     message: "Request name is required because request body is defined inline"
                                 }
-                            ]
+                            ];
                         }
 
                         if (
@@ -33,7 +33,7 @@ export const NoMissingRequestNameRule: Rule = {
                                     severity: "fatal",
                                     message: "Request name is required because request has query parameters"
                                 }
-                            ]
+                            ];
                         }
 
                         if (size(endpoint.request.headers) > 0) {
@@ -42,7 +42,7 @@ export const NoMissingRequestNameRule: Rule = {
                                     severity: "fatal",
                                     message: "Request name is required because request has headers"
                                 }
-                            ]
+                            ];
                         }
                     }
 
@@ -52,12 +52,12 @@ export const NoMissingRequestNameRule: Rule = {
                                 severity: "fatal",
                                 message: "Request name is required because service has headers"
                             }
-                        ]
+                        ];
                     }
 
-                    return []
+                    return [];
                 }
             }
-        }
+        };
     }
-}
+};

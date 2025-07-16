@@ -1,9 +1,13 @@
-import { mapValues } from "lodash-es"
+import { mapValues } from "lodash-es";
 
-import { GeneratorName } from "@fern-api/configuration-loader"
+import { GeneratorName } from "@fern-api/configuration-loader";
 
-import { IrVersions } from "../../ir-versions"
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
+import { IrVersions } from "../../ir-versions";
+import {
+    GeneratorWasNeverUpdatedToConsumeNewIR,
+    GeneratorWasNotCreatedYet,
+    IrMigration
+} from "../../types/IrMigration";
 
 export const V18_TO_V17_MIGRATION: IrMigration<
     IrVersions.V18.ir.IntermediateRepresentation,
@@ -45,7 +49,7 @@ export const V18_TO_V17_MIGRATION: IrMigration<
         return {
             ...v18,
             services: mapValues(v18.services, (service) => {
-                const baseUrl = service.endpoints[0]?.baseUrl
+                const baseUrl = service.endpoints[0]?.baseUrl;
 
                 if (service.endpoints.some((endpoint) => endpoint.baseUrl !== baseUrl)) {
                     return taskContext.failAndThrow(
@@ -55,14 +59,14 @@ export const V18_TO_V17_MIGRATION: IrMigration<
                                   ` If you'd like to use this feature, please upgrade ${targetGenerator.name}` +
                                   " to a compatible version."
                             : "Cannot backwards-migrate IR because this IR contains endpoint-level server URLs."
-                    )
+                    );
                 }
 
                 return {
                     ...service,
                     baseUrl
-                }
+                };
             })
-        }
+        };
     }
-}
+};

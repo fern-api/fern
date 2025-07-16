@@ -1,7 +1,7 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule"
-import { NoResponsePropertyRule } from "../no-response-property"
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { NoResponsePropertyRule } from "../no-response-property";
 
 describe("no-response-property", () => {
     it("simple", async () => {
@@ -12,7 +12,7 @@ describe("no-response-property", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
             )
-        })
+        });
 
         expect(violations).toEqual([
             {
@@ -21,6 +21,6 @@ describe("no-response-property", () => {
                 relativeFilepath: RelativeFilePath.of("a.yml"),
                 severity: "fatal"
             }
-        ])
-    })
-})
+        ]);
+    });
+});

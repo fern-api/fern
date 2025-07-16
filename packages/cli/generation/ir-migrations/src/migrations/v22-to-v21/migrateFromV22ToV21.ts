@@ -1,9 +1,13 @@
-import { mapValues } from "lodash-es"
+import { mapValues } from "lodash-es";
 
-import { GeneratorName } from "@fern-api/configuration-loader"
+import { GeneratorName } from "@fern-api/configuration-loader";
 
-import { IrVersions } from "../../ir-versions"
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
+import { IrVersions } from "../../ir-versions";
+import {
+    GeneratorWasNeverUpdatedToConsumeNewIR,
+    GeneratorWasNotCreatedYet,
+    IrMigration
+} from "../../types/IrMigration";
 
 export const V22_TO_V21_MIGRATION: IrMigration<
     IrVersions.V22.ir.IntermediateRepresentation,
@@ -45,17 +49,17 @@ export const V22_TO_V21_MIGRATION: IrMigration<
         return {
             ...v22,
             services: mapValues(v22.services, (service) => {
-                return convertService(service)
+                return convertService(service);
             })
-        }
+        };
     }
-}
+};
 
 function convertService(service: IrVersions.V22.http.HttpService): IrVersions.V21.http.HttpService {
     return {
         ...service,
         endpoints: service.endpoints.map((endpoint) => convertEndpoint(endpoint))
-    }
+    };
 }
 
 function convertEndpoint(endpoint: IrVersions.V22.http.HttpEndpoint): IrVersions.V21.http.HttpEndpoint {
@@ -81,7 +85,7 @@ function convertEndpoint(endpoint: IrVersions.V22.http.HttpEndpoint): IrVersions
                       sdkResponse: IrVersions.V21.http.SdkResponse.streaming(streamingResponse)
                   }),
                   _unknown: () => {
-                      throw new Error("Unknown HttpResponse: " + endpoint.response?.type)
+                      throw new Error("Unknown HttpResponse: " + endpoint.response?.type);
                   }
               })
             : {
@@ -89,5 +93,5 @@ function convertEndpoint(endpoint: IrVersions.V22.http.HttpEndpoint): IrVersions
                   streamingResponse: undefined,
                   sdkResponse: undefined
               })
-    }
+    };
 }

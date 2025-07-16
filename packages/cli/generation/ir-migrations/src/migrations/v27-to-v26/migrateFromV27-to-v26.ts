@@ -1,8 +1,12 @@
-import { GeneratorName } from "@fern-api/configuration-loader"
+import { GeneratorName } from "@fern-api/configuration-loader";
 
-import { IrSerialization } from "../../ir-serialization"
-import { IrVersions } from "../../ir-versions"
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
+import { IrSerialization } from "../../ir-serialization";
+import { IrVersions } from "../../ir-versions";
+import {
+    GeneratorWasNeverUpdatedToConsumeNewIR,
+    GeneratorWasNotCreatedYet,
+    IrMigration
+} from "../../types/IrMigration";
 
 export const V27_TO_V26_MIGRATION: IrMigration<
     IrVersions.V27.ir.IntermediateRepresentation,
@@ -48,37 +52,37 @@ export const V27_TO_V26_MIGRATION: IrMigration<
             ...v27,
             services: Object.fromEntries(
                 Object.entries(v27.services).map(([key, val]) => {
-                    return [key, convertHttpService(val)]
+                    return [key, convertHttpService(val)];
                 })
             )
-        }
+        };
     }
-}
+};
 
 function convertHttpService(val: IrVersions.V27.HttpService): IrVersions.V26.HttpService {
     return {
         ...val,
         endpoints: val.endpoints.map((endpoint) => convertHttpEndpoint(endpoint))
-    }
+    };
 }
 
 function convertHttpEndpoint(val: IrVersions.V27.HttpEndpoint): IrVersions.V26.HttpEndpoint {
     return {
         ...val,
         response: val.response != null ? convertHttpResponse(val.response) : undefined
-    }
+    };
 }
 
 function convertHttpResponse(val: IrVersions.V27.HttpResponse): IrVersions.V26.HttpResponse {
     if (val.type !== "json") {
-        return val
+        return val;
     }
-    const jsonResponse = val.value
+    const jsonResponse = val.value;
     if (jsonResponse.type === "response") {
-        return IrVersions.V26.HttpResponse.json(jsonResponse)
+        return IrVersions.V26.HttpResponse.json(jsonResponse);
     }
     return IrVersions.V26.HttpResponse.json({
         docs: jsonResponse.docs,
         responseBodyType: jsonResponse.responseBodyType
-    })
+    });
 }

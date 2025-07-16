@@ -1,22 +1,22 @@
-import chalk from "chalk"
+import chalk from "chalk";
 
-import { ROOT_API_FILENAME } from "@fern-api/configuration-loader"
+import { ROOT_API_FILENAME } from "@fern-api/configuration-loader";
 
-import { Rule, RuleViolation } from "../../Rule"
-import { getAllEnvironmentUrlIds } from "../../utils/getAllEnvironmentUriIds"
+import { Rule, RuleViolation } from "../../Rule";
+import { getAllEnvironmentUrlIds } from "../../utils/getAllEnvironmentUriIds";
 
 export const ValidServiceUrlsRule: Rule = {
     name: "valid-service-urls",
     create: ({ workspace }) => {
-        const urlIds = getAllEnvironmentUrlIds(workspace)
+        const urlIds = getAllEnvironmentUrlIds(workspace);
 
         const validateBaseUrl = (url: string): RuleViolation[] => {
             if (urlIds.includes(url)) {
-                return []
+                return [];
             }
 
             if (urlIds.length === 0 && workspace.definition.rootApiFile.contents?.["default-url"] != null) {
-                return []
+                return [];
             }
 
             if (urlIds.length === 0) {
@@ -25,7 +25,7 @@ export const ValidServiceUrlsRule: Rule = {
                         severity: "fatal",
                         message: `"url" cannot be configured unless you specify multiple URLs for each environment in ${ROOT_API_FILENAME}`
                     }
-                ]
+                ];
             }
 
             return [
@@ -38,25 +38,25 @@ export const ValidServiceUrlsRule: Rule = {
                         ...urlIds.map((urlId) => `  - ${urlId}`)
                     ].join("\n")
                 }
-            ]
-        }
+            ];
+        };
 
         return {
             definitionFile: {
                 serviceBaseUrl: (url) => {
                     if (url == null) {
-                        return []
+                        return [];
                     }
-                    return validateBaseUrl(url)
+                    return validateBaseUrl(url);
                 },
                 endpointBaseUrl: ({ baseUrl, service }) => {
                     if (workspace.definition.rootApiFile.contents?.["default-url"]) {
-                        return []
+                        return [];
                     }
 
                     if (baseUrl == null) {
                         if (urlIds.length === 0 || service.url != null) {
-                            return []
+                            return [];
                         }
                         return [
                             {
@@ -66,12 +66,12 @@ export const ValidServiceUrlsRule: Rule = {
                                     ...urlIds.map((urlId) => `  - ${urlId}`)
                                 ].join("\n")
                             }
-                        ]
+                        ];
                     }
 
-                    return validateBaseUrl(baseUrl)
+                    return validateBaseUrl(baseUrl);
                 }
             }
-        }
+        };
     }
-}
+};

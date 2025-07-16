@@ -1,23 +1,23 @@
-import { GeneratedTypeReferenceExample } from "@fern-typescript/contexts"
+import { GeneratedTypeReferenceExample } from "@fern-typescript/contexts";
 
-import { ExampleTypeReference } from "@fern-fern/ir-sdk/api"
+import { ExampleTypeReference } from "@fern-fern/ir-sdk/api";
 
-import { GeneratedTypeReferenceExampleImpl } from "./GeneratedTypeReferenceExampleImpl"
+import { GeneratedTypeReferenceExampleImpl } from "./GeneratedTypeReferenceExampleImpl";
 
 export declare namespace TypeReferenceExampleGenerator {
     export interface Init {
-        useBigInt: boolean
-        includeSerdeLayer: boolean
+        useBigInt: boolean;
+        includeSerdeLayer: boolean;
     }
 }
 
 export class TypeReferenceExampleGenerator {
-    private useBigInt: boolean
-    private includeSerdeLayer: boolean
+    private useBigInt: boolean;
+    private includeSerdeLayer: boolean;
 
     constructor({ useBigInt, includeSerdeLayer }: TypeReferenceExampleGenerator.Init) {
-        this.useBigInt = useBigInt
-        this.includeSerdeLayer = includeSerdeLayer
+        this.useBigInt = useBigInt;
+        this.includeSerdeLayer = includeSerdeLayer;
     }
 
     public generateExample(example: ExampleTypeReference): GeneratedTypeReferenceExample {
@@ -25,6 +25,6 @@ export class TypeReferenceExampleGenerator {
             example,
             useBigInt: this.useBigInt,
             includeSerdeLayer: this.includeSerdeLayer
-        })
+        });
     }
 }

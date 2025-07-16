@@ -1,7 +1,7 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule"
-import { NoUndefinedTypeReferenceRule } from "../no-undefined-type-reference"
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { NoUndefinedTypeReferenceRule } from "../no-undefined-type-reference";
 
 describe("no-undefined-type-reference", () => {
     it("simple", async () => {
@@ -12,7 +12,7 @@ describe("no-undefined-type-reference", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
             )
-        })
+        });
 
         expect(violations).toEqual([
             {
@@ -69,6 +69,6 @@ describe("no-undefined-type-reference", () => {
                 relativeFilepath: RelativeFilePath.of("text.yml"),
                 severity: "fatal"
             }
-        ])
-    })
-})
+        ]);
+    });
+});

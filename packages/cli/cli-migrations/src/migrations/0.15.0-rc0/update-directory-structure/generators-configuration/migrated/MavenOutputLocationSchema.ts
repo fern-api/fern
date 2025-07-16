@@ -1,4 +1,4 @@
-import { z } from "zod"
+import { z } from "zod";
 
 export const MavenOutputLocationSchema = z.strictObject({
     location: z.literal("maven"),
@@ -6,6 +6,6 @@ export const MavenOutputLocationSchema = z.strictObject({
     coordinate: z.string(),
     username: z.optional(z.string()),
     password: z.optional(z.string())
-})
+});
 
-export type MavenOutputLocationSchema = z.infer<typeof MavenOutputLocationSchema>
+export type MavenOutputLocationSchema = z.infer<typeof MavenOutputLocationSchema>;

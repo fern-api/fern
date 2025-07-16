@@ -1,3 +1,3 @@
-import { SubpackageId } from "@fern-fern/ir-sdk/api"
+import { SubpackageId } from "@fern-fern/ir-sdk/api";
 
-export type PackageId = { isRoot: true } | { isRoot: false; subpackageId: SubpackageId }
+export type PackageId = { isRoot: true } | { isRoot: false; subpackageId: SubpackageId };

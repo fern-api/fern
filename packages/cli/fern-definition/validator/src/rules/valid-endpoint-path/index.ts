@@ -1,1 +1,1 @@
-export { ValidEndpointPathRule } from "./valid-endpoint-path"
+export { ValidEndpointPathRule } from "./valid-endpoint-path";

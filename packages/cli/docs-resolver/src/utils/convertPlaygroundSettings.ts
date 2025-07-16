@@ -1,5 +1,5 @@
-import { docsYml } from "@fern-api/configuration-loader"
-import { FernNavigation } from "@fern-api/fdr-sdk"
+import { docsYml } from "@fern-api/configuration-loader";
+import { FernNavigation } from "@fern-api/fdr-sdk";
 
 export function convertPlaygroundSettings(
     playgroundSettings?: docsYml.RawSchemas.PlaygroundSettings
@@ -20,8 +20,8 @@ export function convertPlaygroundSettings(
                 playgroundSettings.limitWebsocketMessagesPerConnection != null
                     ? playgroundSettings.limitWebsocketMessagesPerConnection
                     : undefined
-        }
+        };
     }
 
-    return
+    return;
 }

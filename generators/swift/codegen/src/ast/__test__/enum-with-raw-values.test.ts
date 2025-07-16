@@ -1,4 +1,4 @@
-import { swift } from "../.."
+import { swift } from "../..";
 
 describe("Enum", () => {
     describe("write", () => {
@@ -12,7 +12,7 @@ describe("Enum", () => {
                     { unsafeName: "east", rawValue: "east" },
                     { unsafeName: "west", rawValue: "west" }
                 ]
-            })
+            });
 
             expect(enum_.toString()).toMatchInlineSnapshot(`
               "enum Direction: String {
@@ -21,8 +21,8 @@ describe("Enum", () => {
                   case east
                   case west
               }"
-            `)
-        })
+            `);
+        });
 
         it("should specify raw values if they are not the same as the case names", () => {
             const enum_ = swift.enumWithRawValues({
@@ -34,7 +34,7 @@ describe("Enum", () => {
                     { unsafeName: "east", rawValue: "east" },
                     { unsafeName: "west", rawValue: "west" }
                 ]
-            })
+            });
 
             expect(enum_.toString()).toMatchInlineSnapshot(`
               "enum Direction: String {
@@ -43,8 +43,8 @@ describe("Enum", () => {
                   case east
                   case west
               }"
-            `)
-        })
+            `);
+        });
 
         it("should handle reserved keywords in case names", () => {
             const enum_ = swift.enumWithRawValues({
@@ -54,7 +54,7 @@ describe("Enum", () => {
                     { unsafeName: "associatedtype", rawValue: "associated-type" },
                     { unsafeName: "north", rawValue: "north" }
                 ]
-            })
+            });
 
             expect(enum_.toString()).toMatchInlineSnapshot(`
               "enum KeywordEnum {
@@ -62,7 +62,7 @@ describe("Enum", () => {
                   case \`associatedtype\` = "associated-type"
                   case north
               }"
-            `)
-        })
-    })
-})
+            `);
+        });
+    });
+});

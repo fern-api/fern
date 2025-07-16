@@ -1,16 +1,16 @@
-import { Field } from "../Field"
-import { File } from "../File"
-import { Func } from "../Func"
-import { GoTypeReference } from "../GoTypeReference"
-import { Struct } from "../Struct"
-import { Type } from "../Type"
-import { TypeInstantiation } from "../TypeInstantiation"
-import { AstNode } from "../core/AstNode"
-import { GoFile } from "../core/GoFile"
+import { Field } from "../Field";
+import { File } from "../File";
+import { Func } from "../Func";
+import { GoTypeReference } from "../GoTypeReference";
+import { Struct } from "../Struct";
+import { Type } from "../Type";
+import { TypeInstantiation } from "../TypeInstantiation";
+import { AstNode } from "../core/AstNode";
+import { GoFile } from "../core/GoFile";
 
 interface TestCase {
-    description: string
-    giveNode: AstNode
+    description: string;
+    giveNode: AstNode;
 }
 
 describe("Snippets", () => {
@@ -269,29 +269,29 @@ describe("Snippets", () => {
                 ]
             })
         }
-    ]
+    ];
     test.each(testCases)("$description", async ({ giveNode }) => {
         const file = new GoFile({
             packageName: "example",
             rootImportPath: "github.com/acme/acme-go",
             importPath: "github.com/acme/consumer",
             customConfig: {}
-        })
-        file.write("var value = ")
-        file.writeNode(giveNode)
+        });
+        file.write("var value = ");
+        file.writeNode(giveNode);
 
-        const content = await file.toStringAsync()
-        expect(content).toMatchSnapshot()
-    })
-})
+        const content = await file.toStringAsync();
+        expect(content).toMatchSnapshot();
+    });
+});
 
 describe("file", () => {
     it("import collision", () => {
-        const file = new File()
+        const file = new File();
         const foo = new Struct({
             name: "Foo",
             importPath: "github.com/acme/acme-go"
-        })
+        });
         foo.addField(
             new Field({
                 name: "Name",
@@ -302,11 +302,11 @@ describe("file", () => {
                     })
                 )
             })
-        )
+        );
         const bar = new Struct({
             name: "Bar",
             importPath: "github.com/acme/acme-go"
-        })
+        });
         bar.addField(
             new Field({
                 name: "Name",
@@ -317,19 +317,19 @@ describe("file", () => {
                     })
                 )
             })
-        )
-        file.add(foo, bar)
+        );
+        file.add(foo, bar);
         const content = file.toString({
             packageName: "example",
             rootImportPath: "github.com/acme/acme-go",
             importPath: "github.com/acme/consumer",
             customConfig: {}
-        })
-        expect(content).toMatchSnapshot()
-    })
-})
+        });
+        expect(content).toMatchSnapshot();
+    });
+});
 
 const USER_TYPE_REFERENCE = new GoTypeReference({
     name: "User",
     importPath: "github.com/acme/acme-go"
-})
+});

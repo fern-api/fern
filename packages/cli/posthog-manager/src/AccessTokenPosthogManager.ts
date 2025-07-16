@@ -1,14 +1,14 @@
-import { PostHog } from "posthog-node"
+import { PostHog } from "posthog-node";
 
-import { PosthogEvent } from "@fern-api/task-context"
+import { PosthogEvent } from "@fern-api/task-context";
 
-import { PosthogManager } from "./PosthogManager"
+import { PosthogManager } from "./PosthogManager";
 
 export class AccessTokenPosthogManager implements PosthogManager {
-    private posthog: PostHog
+    private posthog: PostHog;
 
     constructor({ posthogApiKey }: { posthogApiKey: string }) {
-        this.posthog = new PostHog(posthogApiKey)
+        this.posthog = new PostHog(posthogApiKey);
     }
 
     public async identify(): Promise<void> {
@@ -26,11 +26,11 @@ export class AccessTokenPosthogManager implements PosthogManager {
                     version: process.env.CLI_VERSION,
                     usingAccessToken: true
                 }
-            })
+            });
         }
     }
 
     public async flush(): Promise<void> {
-        await this.posthog.flush()
+        await this.posthog.flush();
     }
 }

@@ -1,7 +1,7 @@
-import { CSharpFile, FileGenerator } from "@fern-api/csharp-base"
-import { csharp } from "@fern-api/csharp-codegen"
-import { ExampleGenerator, generateField, generateFieldForFileProperty } from "@fern-api/fern-csharp-model"
-import { RelativeFilePath, join } from "@fern-api/fs-utils"
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
+import { csharp } from "@fern-api/csharp-codegen";
+import { ExampleGenerator, generateField, generateFieldForFileProperty } from "@fern-api/fern-csharp-model";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import {
     ContainerType,
@@ -11,34 +11,34 @@ import {
     SdkRequestWrapper,
     ServiceId,
     TypeReference
-} from "@fern-fern/ir-sdk/api"
+} from "@fern-fern/ir-sdk/api";
 
-import { SdkCustomConfigSchema } from "../SdkCustomConfig"
-import { SdkGeneratorContext } from "../SdkGeneratorContext"
+import { SdkCustomConfigSchema } from "../SdkCustomConfig";
+import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 export declare namespace WrappedRequestGenerator {
     export interface Args {
-        serviceId: ServiceId
-        wrapper: SdkRequestWrapper
-        context: SdkGeneratorContext
-        endpoint: HttpEndpoint
+        serviceId: ServiceId;
+        wrapper: SdkRequestWrapper;
+        context: SdkGeneratorContext;
+        endpoint: HttpEndpoint;
     }
 }
 
 export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
-    private classReference: csharp.ClassReference
-    private wrapper: SdkRequestWrapper
-    private serviceId: ServiceId
-    private endpoint: HttpEndpoint
-    private exampleGenerator: ExampleGenerator
+    private classReference: csharp.ClassReference;
+    private wrapper: SdkRequestWrapper;
+    private serviceId: ServiceId;
+    private endpoint: HttpEndpoint;
+    private exampleGenerator: ExampleGenerator;
 
     public constructor({ wrapper, context, serviceId, endpoint }: WrappedRequestGenerator.Args) {
-        super(context)
-        this.wrapper = wrapper
-        this.serviceId = serviceId
-        this.classReference = this.context.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName)
-        this.endpoint = endpoint
-        this.exampleGenerator = new ExampleGenerator(context)
+        super(context);
+        this.wrapper = wrapper;
+        this.serviceId = serviceId;
+        this.classReference = this.context.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName);
+        this.endpoint = endpoint;
+        this.exampleGenerator = new ExampleGenerator(context);
     }
 
     protected doGenerate(): CSharpFile {
@@ -48,11 +48,11 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             access: csharp.Access.Public,
             type: csharp.Class.ClassType.Record,
             annotations: [this.context.getSerializableAttribute()]
-        })
+        });
 
-        const service = this.context.getHttpServiceOrThrow(this.serviceId)
-        const isProtoRequest = this.context.endpointUsesGrpcTransport(service, this.endpoint)
-        const protobufProperties: { propertyName: string; typeReference: TypeReference }[] = []
+        const service = this.context.getHttpServiceOrThrow(this.serviceId);
+        const isProtoRequest = this.context.endpointUsesGrpcTransport(service, this.endpoint);
+        const protobufProperties: { propertyName: string; typeReference: TypeReference }[] = [];
 
         if (this.context.includePathParametersInWrappedRequest({ endpoint: this.endpoint, wrapper: this.wrapper })) {
             for (const pathParameter of this.endpoint.allPathParameters) {
@@ -70,17 +70,17 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                         }),
                         annotations: [this.context.getJsonIgnoreAnnotation()]
                     })
-                )
+                );
             }
         }
 
         for (const query of this.endpoint.queryParameters) {
-            const propertyName = query.name.name.pascalCase.safeName
+            const propertyName = query.name.name.pascalCase.safeName;
             const type = query.allowMultiple
                 ? csharp.Type.list(
                       this.context.csharpTypeMapper.convert({ reference: query.valueType, unboxOptionals: true })
                   )
-                : this.context.csharpTypeMapper.convert({ reference: query.valueType })
+                : this.context.csharpTypeMapper.convert({ reference: query.valueType });
             class_.addField(
                 csharp.field({
                     name: propertyName,
@@ -95,14 +95,14 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     }),
                     annotations: [this.context.getJsonIgnoreAnnotation()]
                 })
-            )
+            );
             if (isProtoRequest) {
                 protobufProperties.push({
                     propertyName,
                     typeReference: query.allowMultiple
                         ? TypeReference.container(ContainerType.list(query.valueType))
                         : query.valueType
-                })
+                });
             }
         }
         for (const header of [...service.headers, ...this.endpoint.headers]) {
@@ -120,13 +120,13 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     }),
                     annotations: [this.context.getJsonIgnoreAnnotation()]
                 })
-            )
+            );
         }
 
         this.endpoint.requestBody?._visit({
             reference: (reference) => {
-                const type = this.context.csharpTypeMapper.convert({ reference: reference.requestBodyType })
-                const useRequired = !type.isOptional()
+                const type = this.context.csharpTypeMapper.convert({ reference: reference.requestBodyType });
+                const useRequired = !type.isOptional();
                 class_.addField(
                     csharp.field({
                         name: this.wrapper.bodyKey.pascalCase.safeName,
@@ -138,7 +138,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                         useRequired,
                         annotations: [this.context.getJsonIgnoreAnnotation()]
                     })
-                )
+                );
             },
             inlinedRequestBody: (request) => {
                 for (const property of [...request.properties, ...(request.extendedProperties ?? [])]) {
@@ -146,14 +146,14 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                         property,
                         className: this.classReference.name,
                         context: this.context
-                    })
-                    class_.addField(field)
+                    });
+                    class_.addField(field);
 
                     if (isProtoRequest) {
                         protobufProperties.push({
                             propertyName: field.name,
                             typeReference: property.valueType
-                        })
+                        });
                     }
                 }
             },
@@ -168,8 +168,8 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                                     context: this.context,
                                     jsonProperty: false
                                 })
-                            )
-                            break
+                            );
+                            break;
                         case "file":
                             class_.addField(
                                 generateFieldForFileProperty({
@@ -177,31 +177,31 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                                     className: this.classReference.name,
                                     context: this.context
                                 })
-                            )
+                            );
                     }
                 }
             },
             bytes: () => undefined,
             _other: () => undefined
-        })
+        });
 
-        class_.addMethod(this.context.getToStringMethod())
+        class_.addMethod(this.context.getToStringMethod());
 
         if (isProtoRequest) {
-            const protobufService = this.context.protobufResolver.getProtobufServiceForServiceId(this.serviceId)
+            const protobufService = this.context.protobufResolver.getProtobufServiceForServiceId(this.serviceId);
             if (protobufService != null) {
                 const protobufClassReference = csharp.classReference({
                     name: this.classReference.name,
                     namespace: this.context.protobufResolver.getNamespaceFromProtobufFileOrThrow(protobufService.file),
                     namespaceAlias: "Proto"
-                })
+                });
                 class_.addMethod(
                     this.context.csharpProtobufTypeMapper.toProtoMethod({
                         classReference: this.classReference,
                         protobufClassReference,
                         properties: protobufProperties
                     })
-                )
+                );
             }
         }
 
@@ -212,17 +212,17 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
             namespace: this.context.getNamespace(),
             customConfig: this.context.customConfig
-        })
+        });
     }
 
     public doGenerateSnippet({
         example,
         parseDatetimes
     }: {
-        example: ExampleEndpointCall
-        parseDatetimes: boolean
+        example: ExampleEndpointCall;
+        parseDatetimes: boolean;
     }): csharp.CodeBlock {
-        const orderedFields: { name: Name; value: csharp.CodeBlock }[] = []
+        const orderedFields: { name: Name; value: csharp.CodeBlock }[] = [];
         if (this.context.includePathParametersInWrappedRequest({ endpoint: this.endpoint, wrapper: this.wrapper })) {
             for (const pathParameter of [
                 ...example.rootPathParameters,
@@ -235,16 +235,16 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                         exampleTypeReference: pathParameter.value,
                         parseDatetimes
                     })
-                })
+                });
             }
         }
         for (const exampleQueryParameter of example.queryParameters) {
             const isSingleQueryParameter =
-                exampleQueryParameter.shape == null || exampleQueryParameter.shape.type === "single"
+                exampleQueryParameter.shape == null || exampleQueryParameter.shape.type === "single";
             const singleValueSnippet = this.exampleGenerator.getSnippetForTypeReference({
                 exampleTypeReference: exampleQueryParameter.value,
                 parseDatetimes
-            })
+            });
             const value = isSingleQueryParameter
                 ? singleValueSnippet
                 : csharp.codeblock((writer) =>
@@ -253,11 +253,11 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                               entries: [singleValueSnippet]
                           })
                       )
-                  )
+                  );
             orderedFields.push({
                 name: exampleQueryParameter.name.name,
                 value
-            })
+            });
         }
 
         for (const header of [...example.endpointHeaders, ...example.serviceHeaders]) {
@@ -267,7 +267,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     exampleTypeReference: header.value,
                     parseDatetimes
                 })
-            })
+            });
         }
 
         example.request?._visit({
@@ -278,7 +278,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                         exampleTypeReference: reference,
                         parseDatetimes
                     })
-                })
+                });
             },
             inlinedRequestBody: (inlinedRequestBody) => {
                 for (const property of inlinedRequestBody.properties) {
@@ -288,22 +288,22 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                             exampleTypeReference: property.value,
                             parseDatetimes
                         })
-                    })
+                    });
                 }
             },
             _other: () => undefined
-        })
+        });
         const args = orderedFields.map(({ name, value }) => {
             return {
                 name: name.pascalCase.safeName,
                 assignment: value
-            }
-        })
+            };
+        });
         const instantiateClass = csharp.instantiateClass({
             classReference: this.classReference,
             arguments_: args
-        })
-        return csharp.codeblock((writer) => writer.writeNode(instantiateClass))
+        });
+        return csharp.codeblock((writer) => writer.writeNode(instantiateClass));
     }
 
     protected getFilepath(): RelativeFilePath {
@@ -311,11 +311,11 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             this.context.project.filepaths.getSourceFileDirectory(),
             this.getDirectory(),
             RelativeFilePath.of(this.classReference.name + ".cs")
-        )
+        );
     }
 
     private getDirectory(): RelativeFilePath {
-        const directory = this.context.getDirectoryForServiceId(this.serviceId)
-        return RelativeFilePath.of(directory ? `${directory}/Requests` : "Requests")
+        const directory = this.context.getDirectoryForServiceId(this.serviceId);
+        return RelativeFilePath.of(directory ? `${directory}/Requests` : "Requests");
     }
 }

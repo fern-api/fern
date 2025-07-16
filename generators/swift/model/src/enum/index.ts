@@ -1,1 +1,1 @@
-export * from "./StringEnumGenerator"
+export * from "./StringEnumGenerator";

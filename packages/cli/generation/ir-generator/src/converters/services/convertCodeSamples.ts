@@ -1,14 +1,14 @@
-import { RawSchemas, visitExampleCodeSampleSchema } from "@fern-api/fern-definition-schema"
-import { ExampleCodeSample, SupportedSdkLanguage } from "@fern-api/ir-sdk"
+import { RawSchemas, visitExampleCodeSampleSchema } from "@fern-api/fern-definition-schema";
+import { ExampleCodeSample, SupportedSdkLanguage } from "@fern-api/ir-sdk";
 
-import { FernFileContext } from "../../FernFileContext"
+import { FernFileContext } from "../../FernFileContext";
 
 export function convertCodeSample({
     codeSample,
     file
 }: {
-    codeSample: RawSchemas.ExampleCodeSampleSchema
-    file: FernFileContext
+    codeSample: RawSchemas.ExampleCodeSampleSchema;
+    file: FernFileContext;
 }): ExampleCodeSample {
     return visitExampleCodeSampleSchema<ExampleCodeSample>(codeSample, {
         language: (languageScheme) =>
@@ -26,28 +26,28 @@ export function convertCodeSample({
                 sdk: removeSdkAlias(sdkScheme.sdk),
                 code: sdkScheme.code
             })
-    })
+    });
 }
 
 function removeSdkAlias(sdk: RawSchemas.SupportedSdkLanguageSchema): SupportedSdkLanguage {
     switch (sdk) {
         case "js":
-            return "javascript"
+            return "javascript";
         case "node":
-            return "javascript"
+            return "javascript";
         case "ts":
-            return "typescript"
+            return "typescript";
         case "nodets":
-            return "typescript"
+            return "typescript";
         case "golang":
-            return "go"
+            return "go";
         case "dotnet":
-            return "csharp"
+            return "csharp";
         case "c#":
-            return "csharp"
+            return "csharp";
         case "jvm":
-            return "java"
+            return "java";
         default:
-            return sdk
+            return sdk;
     }
 }

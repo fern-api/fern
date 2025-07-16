@@ -1,5 +1,5 @@
-import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator"
-import { BaseCsharpCustomConfigSchema } from "@fern-api/csharp-codegen"
+import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
+import { BaseCsharpCustomConfigSchema } from "@fern-api/csharp-codegen";
 
 const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
     dryRun: false,
@@ -26,12 +26,12 @@ const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
         "explicit-namespaces": true,
         "inline-path-parameters": true
     } as BaseCsharpCustomConfigSchema
-}
+};
 
 export function buildGeneratorConfig({
     customConfig
 }: {
-    customConfig?: Partial<BaseCsharpCustomConfigSchema>
+    customConfig?: Partial<BaseCsharpCustomConfigSchema>;
 } = {}): FernGeneratorExec.GeneratorConfig {
     return {
         ...DEFAULT_CONFIG,
@@ -39,5 +39,5 @@ export function buildGeneratorConfig({
             ...(DEFAULT_CONFIG.customConfig as BaseCsharpCustomConfigSchema),
             ...customConfig
         }
-    }
+    };
 }

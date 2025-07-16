@@ -1,9 +1,13 @@
-import { GeneratorName } from "@fern-api/configuration-loader"
-import { assertNever } from "@fern-api/core-utils"
+import { GeneratorName } from "@fern-api/configuration-loader";
+import { assertNever } from "@fern-api/core-utils";
 
-import { IrSerialization } from "../../ir-serialization"
-import { IrVersions } from "../../ir-versions"
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
+import { IrSerialization } from "../../ir-serialization";
+import { IrVersions } from "../../ir-versions";
+import {
+    GeneratorWasNeverUpdatedToConsumeNewIR,
+    GeneratorWasNotCreatedYet,
+    IrMigration
+} from "../../types/IrMigration";
 
 export const V32_TO_V31_MIGRATION: IrMigration<
     IrVersions.V32.ir.IntermediateRepresentation,
@@ -50,33 +54,33 @@ export const V32_TO_V31_MIGRATION: IrMigration<
             ...v32,
             types: Object.fromEntries(
                 Object.entries(v32.types).map(([typeId, type]) => {
-                    return [typeId, { ...type, examples: convertExampleTypes(type.examples) }]
+                    return [typeId, { ...type, examples: convertExampleTypes(type.examples) }];
                 })
             ),
             services: Object.fromEntries(
                 Object.entries(v32.services).map(([serviceId, service]) => {
-                    return [serviceId, { ...service, endpoints: service.endpoints.map(convertEndpoint) }]
+                    return [serviceId, { ...service, endpoints: service.endpoints.map(convertEndpoint) }];
                 })
             )
-        }
+        };
     }
-}
+};
 
 function convertExamples<V32, V31>({
     examples,
     convert
 }: {
-    examples: V32[]
-    convert: (val: V32) => V31 | undefined
+    examples: V32[];
+    convert: (val: V32) => V31 | undefined;
 }): V31[] {
-    const convertedExamples = []
+    const convertedExamples = [];
     for (const example of examples) {
-        const convertedExampleEndpointCall = convert(example)
+        const convertedExampleEndpointCall = convert(example);
         if (convertedExampleEndpointCall != null) {
-            convertedExamples.push(convertedExampleEndpointCall)
+            convertedExamples.push(convertedExampleEndpointCall);
         }
     }
-    return convertedExamples
+    return convertedExamples;
 }
 
 function convertEndpoint(endpoint: IrVersions.V32.HttpEndpoint): IrVersions.V31.HttpEndpoint {
@@ -86,22 +90,22 @@ function convertEndpoint(endpoint: IrVersions.V32.HttpEndpoint): IrVersions.V31.
             examples: endpoint.examples,
             convert: convertExampleEndpointCall
         })
-    }
+    };
 }
 
 function convertExampleEndpointCall(
     example: IrVersions.V32.ExampleEndpointCall
 ): IrVersions.V31.ExampleEndpointCall | undefined {
-    let convertedExampleRequest = undefined
+    let convertedExampleRequest = undefined;
     if (example.request != null) {
-        convertedExampleRequest = convertExampleRequestBody(example.request)
+        convertedExampleRequest = convertExampleRequestBody(example.request);
         if (convertedExampleRequest == null) {
-            return undefined
+            return undefined;
         }
     }
-    const convertedResponse = convertExampleResponse(example.response)
+    const convertedResponse = convertExampleResponse(example.response);
     if (convertedResponse == null) {
-        return undefined
+        return undefined;
     }
     return {
         ...example,
@@ -131,7 +135,7 @@ function convertExampleEndpointCall(
         }),
         request: convertedExampleRequest,
         response: convertedResponse
-    }
+    };
 }
 
 function convertExampleRequestBody(
@@ -139,34 +143,34 @@ function convertExampleRequestBody(
 ): IrVersions.V31.ExampleRequestBody | undefined {
     switch (example.type) {
         case "inlinedRequestBody": {
-            const convertedProperties = []
+            const convertedProperties = [];
             for (const objectProperty of example.properties) {
-                const convertedTypeReference = convertExampleTypeReference(objectProperty.value)
+                const convertedTypeReference = convertExampleTypeReference(objectProperty.value);
                 if (convertedTypeReference == null) {
-                    continue
+                    continue;
                 }
                 convertedProperties.push({
                     ...objectProperty,
                     value: convertedTypeReference
-                })
+                });
             }
             return IrVersions.V31.ExampleRequestBody.inlinedRequestBody({
                 ...example,
                 properties: convertedProperties
-            })
+            });
         }
         case "reference": {
-            const convertedExampleShape = convertExampleTypeReferenceShape(example.shape)
+            const convertedExampleShape = convertExampleTypeReferenceShape(example.shape);
             if (convertedExampleShape == null) {
-                return undefined
+                return undefined;
             }
             return IrVersions.V31.ExampleRequestBody.reference({
                 ...example,
                 shape: convertedExampleShape
-            })
+            });
         }
         default:
-            assertNever(example)
+            assertNever(example);
     }
 }
 
@@ -176,31 +180,31 @@ function convertExampleResponse(example: IrVersions.V32.ExampleResponse): IrVers
             if (example.body == null) {
                 return IrVersions.V31.ExampleResponse.ok({
                     body: undefined
-                })
+                });
             }
-            const convertedBody = convertExampleTypeReference(example.body)
+            const convertedBody = convertExampleTypeReference(example.body);
             if (convertedBody == null) {
-                return undefined
+                return undefined;
             }
             return IrVersions.V31.ExampleResponse.ok({
                 body: convertedBody
-            })
+            });
         }
         case "error": {
             if (example.body == null) {
                 return IrVersions.V31.ExampleResponse.error({
                     ...example,
                     body: undefined
-                })
+                });
             }
-            const convertedBody = convertExampleTypeReference(example.body)
+            const convertedBody = convertExampleTypeReference(example.body);
             if (convertedBody == null) {
-                return undefined
+                return undefined;
             }
             return IrVersions.V31.ExampleResponse.error({
                 ...example,
                 body: convertedBody
-            })
+            });
         }
     }
 }
@@ -208,60 +212,60 @@ function convertExampleResponse(example: IrVersions.V32.ExampleResponse): IrVers
 function convertExamplePathParameter(
     example: IrVersions.V32.ExamplePathParameter
 ): IrVersions.V31.ExamplePathParameter | undefined {
-    const convertedPathParameterValue = convertExampleTypeReference(example.value)
+    const convertedPathParameterValue = convertExampleTypeReference(example.value);
     if (convertedPathParameterValue == null) {
-        return undefined
+        return undefined;
     }
     return {
         ...example,
         value: convertedPathParameterValue
-    }
+    };
 }
 
 function convertExampleHeader(example: IrVersions.V32.ExampleHeader): IrVersions.V31.ExampleHeader | undefined {
-    const convertedHeaderValue = convertExampleTypeReference(example.value)
+    const convertedHeaderValue = convertExampleTypeReference(example.value);
     if (convertedHeaderValue == null) {
-        return undefined
+        return undefined;
     }
     return {
         ...example,
         value: convertedHeaderValue
-    }
+    };
 }
 
 function convertExampleQueryParams(
     example: IrVersions.V32.ExampleQueryParameter
 ): IrVersions.V31.ExampleQueryParameter | undefined {
-    const convertedQueryParameterValue = convertExampleTypeReference(example.value)
+    const convertedQueryParameterValue = convertExampleTypeReference(example.value);
     if (convertedQueryParameterValue == null) {
-        return undefined
+        return undefined;
     }
     return {
         ...example,
         value: convertedQueryParameterValue
-    }
+    };
 }
 
 function convertExampleTypes(examples: IrVersions.V32.ExampleType[]): IrVersions.V31.ExampleType[] {
-    const convertedExamples = []
+    const convertedExamples = [];
     for (const example of examples) {
-        const convertedExampleType = convertExampleType(example)
+        const convertedExampleType = convertExampleType(example);
         if (convertedExampleType != null) {
-            convertedExamples.push(convertedExampleType)
+            convertedExamples.push(convertedExampleType);
         }
     }
-    return convertedExamples
+    return convertedExamples;
 }
 
 function convertExampleType(example: IrVersions.V32.ExampleType): IrVersions.V31.ExampleType | undefined {
-    const convertedShape = convertExampleTypeShape(example.shape)
+    const convertedShape = convertExampleTypeShape(example.shape);
     if (convertedShape == null) {
-        return undefined
+        return undefined;
     }
     return {
         ...example,
         shape: convertedShape
-    }
+    };
 }
 
 function convertExampleTypeShape(
@@ -269,73 +273,73 @@ function convertExampleTypeShape(
 ): IrVersions.V31.ExampleTypeShape | undefined {
     switch (example.type) {
         case "enum":
-            return IrVersions.V31.ExampleTypeShape.enum(example)
+            return IrVersions.V31.ExampleTypeShape.enum(example);
         case "alias": {
-            const convertedTypeReference = convertExampleTypeReference(example.value)
+            const convertedTypeReference = convertExampleTypeReference(example.value);
             if (convertedTypeReference == null) {
-                return undefined
+                return undefined;
             }
             return IrVersions.V31.ExampleTypeShape.alias({
                 value: convertedTypeReference
-            })
+            });
         }
         case "object": {
-            const convertedProperties = []
+            const convertedProperties = [];
             for (const objectProperty of example.properties) {
-                const convertedTypeReference = convertExampleTypeReference(objectProperty.value)
+                const convertedTypeReference = convertExampleTypeReference(objectProperty.value);
                 if (convertedTypeReference == null) {
-                    continue
+                    continue;
                 }
                 convertedProperties.push({
                     ...objectProperty,
                     value: convertedTypeReference
-                })
+                });
             }
             return IrVersions.V31.ExampleTypeShape.object({
                 properties: convertedProperties
-            })
+            });
         }
         case "union": {
-            const convertedSingleUnionTypeShape = convertExampleSingleUnionType(example.singleUnionType)
+            const convertedSingleUnionTypeShape = convertExampleSingleUnionType(example.singleUnionType);
             if (convertedSingleUnionTypeShape == null) {
-                return undefined
+                return undefined;
             }
             return IrVersions.V31.ExampleTypeShape.union({
                 ...example,
                 singleUnionType: convertedSingleUnionTypeShape
-            })
+            });
         }
         case "undiscriminatedUnion":
-            return undefined
+            return undefined;
         default:
-            assertNever(example)
+            assertNever(example);
     }
 }
 
 function convertExampleTypeReference(
     example: IrVersions.V32.ExampleTypeReference
 ): IrVersions.V31.ExampleTypeReference | undefined {
-    const convertedExampleTypeReferenceShape = convertExampleTypeReferenceShape(example.shape)
+    const convertedExampleTypeReferenceShape = convertExampleTypeReferenceShape(example.shape);
     if (convertedExampleTypeReferenceShape == null) {
-        return undefined
+        return undefined;
     }
     return {
         shape: convertedExampleTypeReferenceShape,
         jsonExample: example.jsonExample
-    }
+    };
 }
 
 function convertExampleSingleUnionType(
     example: IrVersions.V32.ExampleSingleUnionType
 ): IrVersions.V31.ExampleSingleUnionType | undefined {
-    const convertedProperties = convertExampleSingleUnionTypeProperties(example.shape)
+    const convertedProperties = convertExampleSingleUnionTypeProperties(example.shape);
     if (convertedProperties == null) {
-        return undefined
+        return undefined;
     }
     return {
         ...example,
         shape: convertedProperties
-    }
+    };
 }
 
 function convertExampleSingleUnionTypeProperties(
@@ -343,38 +347,38 @@ function convertExampleSingleUnionTypeProperties(
 ): IrVersions.V31.ExampleSingleUnionTypeProperties | undefined {
     switch (example.type) {
         case "noProperties":
-            return IrVersions.V31.ExampleSingleUnionTypeProperties.noProperties()
+            return IrVersions.V31.ExampleSingleUnionTypeProperties.noProperties();
         case "singleProperty": {
-            const convertedSingleProperty = convertExampleTypeReferenceShape(example.shape)
+            const convertedSingleProperty = convertExampleTypeReferenceShape(example.shape);
             if (convertedSingleProperty == null) {
-                return
+                return;
             }
             return IrVersions.V31.ExampleSingleUnionTypeProperties.singleProperty({
                 ...example,
                 shape: convertedSingleProperty
-            })
+            });
         }
         case "samePropertiesAsObject": {
-            const convertedProperties = []
+            const convertedProperties = [];
             for (const objectProperty of example.object.properties) {
-                const convertedTypeReference = convertExampleTypeReference(objectProperty.value)
+                const convertedTypeReference = convertExampleTypeReference(objectProperty.value);
                 if (convertedTypeReference == null) {
-                    continue
+                    continue;
                 }
                 convertedProperties.push({
                     ...objectProperty,
                     value: convertedTypeReference
-                })
+                });
             }
             return IrVersions.V31.ExampleSingleUnionTypeProperties.samePropertiesAsObject({
                 ...example,
                 object: {
                     properties: convertedProperties
                 }
-            })
+            });
         }
         default:
-            assertNever(example)
+            assertNever(example);
     }
 }
 
@@ -383,28 +387,28 @@ function convertExampleTypeReferenceShape(
 ): IrVersions.V31.ExampleTypeReferenceShape | undefined {
     switch (example.type) {
         case "container": {
-            const convertedExampleContainer = convertExampleContainer(example.container)
+            const convertedExampleContainer = convertExampleContainer(example.container);
             if (convertedExampleContainer == null) {
-                return undefined
+                return undefined;
             }
-            return IrVersions.V31.ExampleTypeReferenceShape.container(convertedExampleContainer)
+            return IrVersions.V31.ExampleTypeReferenceShape.container(convertedExampleContainer);
         }
         case "named": {
-            const convertedShape = convertExampleTypeShape(example.shape)
+            const convertedShape = convertExampleTypeShape(example.shape);
             if (convertedShape == null) {
-                return undefined
+                return undefined;
             }
             return IrVersions.V31.ExampleTypeReferenceShape.named({
                 ...example,
                 shape: convertedShape
-            })
+            });
         }
         case "primitive":
-            return IrVersions.V31.ExampleTypeReferenceShape.primitive(example.primitive)
+            return IrVersions.V31.ExampleTypeReferenceShape.primitive(example.primitive);
         case "unknown":
-            return IrVersions.V31.ExampleTypeReferenceShape.unknown(example.unknown)
+            return IrVersions.V31.ExampleTypeReferenceShape.unknown(example.unknown);
         default:
-            assertNever(example)
+            assertNever(example);
     }
 }
 
@@ -413,50 +417,50 @@ function convertExampleContainer(
 ): IrVersions.V31.ExampleContainer | undefined {
     switch (example.type) {
         case "list": {
-            const items = []
+            const items = [];
             for (const item of example.list) {
-                const convertedItem = convertExampleTypeReference(item)
+                const convertedItem = convertExampleTypeReference(item);
                 if (convertedItem != null) {
-                    items.push(convertedItem)
+                    items.push(convertedItem);
                 }
             }
-            return IrVersions.V31.ExampleContainer.list(items)
+            return IrVersions.V31.ExampleContainer.list(items);
         }
         case "set": {
-            const items = []
+            const items = [];
             for (const item of example.set) {
-                const convertedItem = convertExampleTypeReference(item)
+                const convertedItem = convertExampleTypeReference(item);
                 if (convertedItem != null) {
-                    items.push(convertedItem)
+                    items.push(convertedItem);
                 }
             }
-            return IrVersions.V31.ExampleContainer.set(items)
+            return IrVersions.V31.ExampleContainer.set(items);
         }
         case "map": {
-            const entries = []
+            const entries = [];
             for (const entry of example.map) {
-                const convertedKey = convertExampleTypeReference(entry.key)
-                const convertedValue = convertExampleTypeReference(entry.value)
+                const convertedKey = convertExampleTypeReference(entry.key);
+                const convertedValue = convertExampleTypeReference(entry.value);
                 if (convertedKey != null && convertedValue != null) {
                     entries.push({
                         key: convertedKey,
                         value: convertedValue
-                    })
+                    });
                 }
             }
-            return IrVersions.V31.ExampleContainer.map(entries)
+            return IrVersions.V31.ExampleContainer.map(entries);
         }
         case "optional": {
             if (example.optional == null) {
-                return IrVersions.V31.ExampleContainer.optional()
+                return IrVersions.V31.ExampleContainer.optional();
             }
-            const convertedValue = convertExampleTypeReference(example.optional)
+            const convertedValue = convertExampleTypeReference(example.optional);
             if (convertedValue == null) {
-                return IrVersions.V31.ExampleContainer.optional()
+                return IrVersions.V31.ExampleContainer.optional();
             }
-            return IrVersions.V31.ExampleContainer.optional(convertedValue)
+            return IrVersions.V31.ExampleContainer.optional(convertedValue);
         }
         default:
-            assertNever(example)
+            assertNever(example);
     }
 }

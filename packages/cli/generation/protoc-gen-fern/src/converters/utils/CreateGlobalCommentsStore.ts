@@ -1,65 +1,65 @@
-import { FileDescriptorProto } from "@bufbuild/protobuf/dist/cjs/wkt/gen/google/protobuf/descriptor_pb"
+import { FileDescriptorProto } from "@bufbuild/protobuf/dist/cjs/wkt/gen/google/protobuf/descriptor_pb";
 
-import { SOURCE_CODE_INFO_PATH_STARTERS } from "./PathFieldNumbers"
+import { SOURCE_CODE_INFO_PATH_STARTERS } from "./PathFieldNumbers";
 
-export type PathStarterValues = (typeof SOURCE_CODE_INFO_PATH_STARTERS)[keyof typeof SOURCE_CODE_INFO_PATH_STARTERS]
+export type PathStarterValues = (typeof SOURCE_CODE_INFO_PATH_STARTERS)[keyof typeof SOURCE_CODE_INFO_PATH_STARTERS];
 
 export type CommentNode = {
-    _comment?: string
-    [key: number]: CommentNode
-}
+    _comment?: string;
+    [key: number]: CommentNode;
+};
 
 export function initializeGlobalCommentsStore(): Record<PathStarterValues, CommentNode> {
     return {
         4: {},
         5: {},
         6: {}
-    }
+    };
 }
 
 export function createGlobalCommentsStore(spec: FileDescriptorProto): Record<PathStarterValues, CommentNode> {
-    const commentsByStartingNodeType = initializeGlobalCommentsStore()
+    const commentsByStartingNodeType = initializeGlobalCommentsStore();
 
     if (spec.package?.startsWith("google.protobuf")) {
-        return commentsByStartingNodeType
+        return commentsByStartingNodeType;
     }
 
     spec.sourceCodeInfo?.location.forEach((sourceCodeInfoLocation) => {
-        const path = sourceCodeInfoLocation.path
+        const path = sourceCodeInfoLocation.path;
 
         if (!path || path.length === 0) {
-            return
+            return;
         }
 
-        const startValue = path[0] as PathStarterValues
+        const startValue = path[0] as PathStarterValues;
         if (!(startValue in commentsByStartingNodeType)) {
-            return
+            return;
         }
 
-        const comment = sourceCodeInfoLocation.leadingComments || sourceCodeInfoLocation.trailingComments || ""
+        const comment = sourceCodeInfoLocation.leadingComments || sourceCodeInfoLocation.trailingComments || "";
 
         if (!comment) {
-            return
+            return;
         }
 
-        let current: CommentNode = commentsByStartingNodeType[startValue]
+        let current: CommentNode = commentsByStartingNodeType[startValue];
 
         for (let i = 1; i < path.length; i++) {
-            const key = path[i]
+            const key = path[i];
 
             if (key == null) {
-                continue
+                continue;
             }
 
             if (!(key in current)) {
-                current[key] = {}
+                current[key] = {};
             }
 
-            current = current[key] as CommentNode
+            current = current[key] as CommentNode;
         }
 
-        current._comment = comment.trim()
-    })
+        current._comment = comment.trim();
+    });
 
-    return commentsByStartingNodeType
+    return commentsByStartingNodeType;
 }

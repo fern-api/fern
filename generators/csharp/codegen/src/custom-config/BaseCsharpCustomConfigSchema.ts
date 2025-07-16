@@ -1,4 +1,4 @@
-import { z } from "zod"
+import { z } from "zod";
 
 export const BaseCsharpCustomConfigSchema = z.object({
     // Influence dynamic snippets.
@@ -35,6 +35,6 @@ export const BaseCsharpCustomConfigSchema = z.object({
     "simplify-object-dictionaries": z.boolean().optional(),
     "experimental-enable-forward-compatible-enums": z.boolean().optional(),
     "experimental-additional-properties": z.boolean().optional()
-})
+});
 
-export type BaseCsharpCustomConfigSchema = z.infer<typeof BaseCsharpCustomConfigSchema>
+export type BaseCsharpCustomConfigSchema = z.infer<typeof BaseCsharpCustomConfigSchema>;

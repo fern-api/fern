@@ -1,89 +1,89 @@
-import { toJson } from "../json"
-import { APIResponse } from "./APIResponse"
-import { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse"
-import { Supplier } from "./Supplier"
-import { createRequestUrl } from "./createRequestUrl"
-import { getErrorResponseBody } from "./getErrorResponseBody"
-import { getFetchFn } from "./getFetchFn"
-import { getRequestBody } from "./getRequestBody"
-import { getResponseBody } from "./getResponseBody"
-import { makeRequest } from "./makeRequest"
-import { requestWithRetries } from "./requestWithRetries"
+import { toJson } from "../json";
+import { APIResponse } from "./APIResponse";
+import { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse";
+import { Supplier } from "./Supplier";
+import { createRequestUrl } from "./createRequestUrl";
+import { getErrorResponseBody } from "./getErrorResponseBody";
+import { getFetchFn } from "./getFetchFn";
+import { getRequestBody } from "./getRequestBody";
+import { getResponseBody } from "./getResponseBody";
+import { makeRequest } from "./makeRequest";
+import { requestWithRetries } from "./requestWithRetries";
 
-export type FetchFunction = <R = unknown>(args: Fetcher.Args) => Promise<APIResponse<R, Fetcher.Error>>
+export type FetchFunction = <R = unknown>(args: Fetcher.Args) => Promise<APIResponse<R, Fetcher.Error>>;
 
 export declare namespace Fetcher {
     export interface Args {
-        url: string
-        method: string
-        contentType?: string
-        headers?: Record<string, string | Supplier<string | undefined> | undefined>
-        queryParameters?: Record<string, string | string[] | object | object[] | null>
-        body?: unknown
-        timeoutMs?: number
-        maxRetries?: number
-        withCredentials?: boolean
-        abortSignal?: AbortSignal
-        requestType?: "json" | "file" | "bytes"
-        responseType?: "json" | "blob" | "sse" | "streaming" | "text" | "arrayBuffer" | "binary-response"
-        duplex?: "half"
+        url: string;
+        method: string;
+        contentType?: string;
+        headers?: Record<string, string | Supplier<string | undefined> | undefined>;
+        queryParameters?: Record<string, string | string[] | object | object[] | null>;
+        body?: unknown;
+        timeoutMs?: number;
+        maxRetries?: number;
+        withCredentials?: boolean;
+        abortSignal?: AbortSignal;
+        requestType?: "json" | "file" | "bytes";
+        responseType?: "json" | "blob" | "sse" | "streaming" | "text" | "arrayBuffer" | "binary-response";
+        duplex?: "half";
     }
 
-    export type Error = FailedStatusCodeError | NonJsonError | TimeoutError | UnknownError
+    export type Error = FailedStatusCodeError | NonJsonError | TimeoutError | UnknownError;
 
     export interface FailedStatusCodeError {
-        reason: "status-code"
-        statusCode: number
-        body: unknown
+        reason: "status-code";
+        statusCode: number;
+        body: unknown;
     }
 
     export interface NonJsonError {
-        reason: "non-json"
-        statusCode: number
-        rawBody: string
+        reason: "non-json";
+        statusCode: number;
+        rawBody: string;
     }
 
     export interface TimeoutError {
-        reason: "timeout"
+        reason: "timeout";
     }
 
     export interface UnknownError {
-        reason: "unknown"
-        errorMessage: string
+        reason: "unknown";
+        errorMessage: string;
     }
 }
 
 async function getHeaders(args: Fetcher.Args): Promise<Record<string, string>> {
-    const newHeaders: Record<string, string> = {}
+    const newHeaders: Record<string, string> = {};
     if (args.body !== undefined && args.contentType != null) {
-        newHeaders["Content-Type"] = args.contentType
+        newHeaders["Content-Type"] = args.contentType;
     }
 
     if (args.headers == null) {
-        return newHeaders
+        return newHeaders;
     }
 
     for (const [key, value] of Object.entries(args.headers)) {
-        const result = await Supplier.get(value)
+        const result = await Supplier.get(value);
         if (typeof result === "string") {
-            newHeaders[key] = result
-            continue
+            newHeaders[key] = result;
+            continue;
         }
         if (result == null) {
-            continue
+            continue;
         }
-        newHeaders[key] = `${result}`
+        newHeaders[key] = `${result}`;
     }
-    return newHeaders
+    return newHeaders;
 }
 
 export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse<R, Fetcher.Error>> {
-    const url = createRequestUrl(args.url, args.queryParameters)
+    const url = createRequestUrl(args.url, args.queryParameters);
     const requestBody: BodyInit | undefined = await getRequestBody({
         body: args.body,
         type: args.requestType === "json" ? "json" : "other"
-    })
-    const fetchFn = await getFetchFn()
+    });
+    const fetchFn = await getFetchFn();
 
     try {
         const response = await requestWithRetries(
@@ -100,7 +100,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                     args.duplex
                 ),
             args.maxRetries
-        )
+        );
 
         if (response.status >= 200 && response.status < 400) {
             return {
@@ -108,7 +108,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 body: (await getResponseBody(response, args.responseType)) as R,
                 headers: response.headers,
                 rawResponse: toRawResponse(response)
-            }
+            };
         } else {
             return {
                 ok: false,
@@ -118,7 +118,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                     body: await getErrorResponseBody(response)
                 },
                 rawResponse: toRawResponse(response)
-            }
+            };
         }
     } catch (error) {
         if (args.abortSignal != null && args.abortSignal.aborted) {
@@ -129,7 +129,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                     errorMessage: "The user aborted a request"
                 },
                 rawResponse: abortRawResponse
-            }
+            };
         } else if (error instanceof Error && error.name === "AbortError") {
             return {
                 ok: false,
@@ -137,7 +137,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                     reason: "timeout"
                 },
                 rawResponse: abortRawResponse
-            }
+            };
         } else if (error instanceof Error) {
             return {
                 ok: false,
@@ -146,7 +146,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                     errorMessage: error.message
                 },
                 rawResponse: unknownRawResponse
-            }
+            };
         }
 
         return {
@@ -156,8 +156,8 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 errorMessage: toJson(error)
             },
             rawResponse: unknownRawResponse
-        }
+        };
     }
 }
 
-export const fetcher: FetchFunction = fetcherImpl
+export const fetcher: FetchFunction = fetcherImpl;

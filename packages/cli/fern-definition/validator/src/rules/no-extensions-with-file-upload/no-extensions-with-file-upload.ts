@@ -1,6 +1,6 @@
-import { parseFileUploadRequest } from "@fern-api/fern-definition-schema"
+import { parseFileUploadRequest } from "@fern-api/fern-definition-schema";
 
-import { Rule } from "../../Rule"
+import { Rule } from "../../Rule";
 
 export const NoExtensionsWithFileUploadRule: Rule = {
     name: "no-extensions-with-file-upload",
@@ -9,12 +9,12 @@ export const NoExtensionsWithFileUploadRule: Rule = {
             definitionFile: {
                 httpEndpoint: ({ endpoint }) => {
                     if (endpoint.request == null) {
-                        return []
+                        return [];
                     }
 
-                    const parsedFileUploadRequest = parseFileUploadRequest(endpoint.request)
+                    const parsedFileUploadRequest = parseFileUploadRequest(endpoint.request);
                     if (parsedFileUploadRequest?.extends == null) {
-                        return []
+                        return [];
                     }
 
                     return [
@@ -22,9 +22,9 @@ export const NoExtensionsWithFileUploadRule: Rule = {
                             severity: "fatal",
                             message: "Request body extensions are not supported for file-upload requests."
                         }
-                    ]
+                    ];
                 }
             }
-        }
+        };
     }
-}
+};

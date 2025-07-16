@@ -7,6 +7,6 @@ export const DeclarationType = {
      * Constant declaration.
      */
     Let: "let"
-} as const
+} as const;
 
-export type DeclarationType = (typeof DeclarationType)[keyof typeof DeclarationType]
+export type DeclarationType = (typeof DeclarationType)[keyof typeof DeclarationType];

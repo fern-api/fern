@@ -1,10 +1,10 @@
-import type { Root as MdastRoot } from "mdast"
-import { CONTINUE, EXIT, visit } from "unist-util-visit"
+import type { Root as MdastRoot } from "mdast";
+import { CONTINUE, EXIT, visit } from "unist-util-visit";
 
 export function remarkRemoveUpdatedAt(): (root: MdastRoot) => void {
     return function (root: MdastRoot): void {
-        return removeUpdatedAt(root)
-    }
+        return removeUpdatedAt(root);
+    };
 }
 
 function removeUpdatedAt(root: MdastRoot): void {
@@ -15,11 +15,11 @@ function removeUpdatedAt(root: MdastRoot): void {
                 subNode.value.endsWith("ago")
             ) {
                 if (parent && typeof index === "number") {
-                    parent.children.splice(index, 1)
-                    return [CONTINUE, index]
+                    parent.children.splice(index, 1);
+                    return [CONTINUE, index];
                 }
             }
-            return EXIT
-        })
-    })
+            return EXIT;
+        });
+    });
 }

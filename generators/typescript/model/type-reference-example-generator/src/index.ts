@@ -1,1 +1,1 @@
-export { TypeReferenceExampleGenerator } from "./TypeReferenceExampleGenerator"
+export { TypeReferenceExampleGenerator } from "./TypeReferenceExampleGenerator";

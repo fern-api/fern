@@ -1,16 +1,16 @@
-import { CSharpFile, FileGenerator } from "@fern-api/csharp-base"
-import { csharp } from "@fern-api/csharp-codegen"
-import { RelativeFilePath, join } from "@fern-api/fs-utils"
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
+import { csharp } from "@fern-api/csharp-codegen";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { SingleBaseUrlEnvironments } from "@fern-fern/ir-sdk/api"
+import { SingleBaseUrlEnvironments } from "@fern-fern/ir-sdk/api";
 
-import { SdkCustomConfigSchema } from "../SdkCustomConfig"
-import { SdkGeneratorContext } from "../SdkGeneratorContext"
+import { SdkCustomConfigSchema } from "../SdkCustomConfig";
+import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 export declare namespace SingleUrlEnvironmentGenerator {
     interface Args {
-        context: SdkGeneratorContext
-        singleUrlEnvironments: SingleBaseUrlEnvironments
+        context: SdkGeneratorContext;
+        singleUrlEnvironments: SingleBaseUrlEnvironments;
     }
 }
 
@@ -19,11 +19,11 @@ export class SingleUrlEnvironmentGenerator extends FileGenerator<
     SdkCustomConfigSchema,
     SdkGeneratorContext
 > {
-    private singleUrlEnvironments: SingleBaseUrlEnvironments
+    private singleUrlEnvironments: SingleBaseUrlEnvironments;
 
     constructor({ context, singleUrlEnvironments }: SingleUrlEnvironmentGenerator.Args) {
-        super(context)
-        this.singleUrlEnvironments = singleUrlEnvironments
+        super(context);
+        this.singleUrlEnvironments = singleUrlEnvironments;
     }
 
     public doGenerate(): CSharpFile {
@@ -32,7 +32,7 @@ export class SingleUrlEnvironmentGenerator extends FileGenerator<
             partial: false,
             access: csharp.Access.Public,
             annotations: [this.context.getSerializableAttribute()]
-        })
+        });
 
         for (const environment of this.singleUrlEnvironments.environments) {
             class_.addField(
@@ -46,7 +46,7 @@ export class SingleUrlEnvironmentGenerator extends FileGenerator<
                     type: csharp.Type.string(),
                     initializer: csharp.codeblock(csharp.string_({ string: environment.url }))
                 })
-            )
+            );
         }
 
         return new CSharpFile({
@@ -56,13 +56,13 @@ export class SingleUrlEnvironmentGenerator extends FileGenerator<
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
             namespace: this.context.getNamespace(),
             customConfig: this.context.customConfig
-        })
+        });
     }
 
     protected getFilepath(): RelativeFilePath {
         return join(
             this.context.project.filepaths.getPublicCoreFilesDirectory(),
             RelativeFilePath.of(`${this.context.getEnvironmentsClassReference().name}.cs`)
-        )
+        );
     }
 }

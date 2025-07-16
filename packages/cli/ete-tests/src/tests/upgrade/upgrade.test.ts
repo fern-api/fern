@@ -1,11 +1,11 @@
-import { readFile, writeFile } from "fs/promises"
-import yaml from "js-yaml"
+import { readFile, writeFile } from "fs/promises";
+import yaml from "js-yaml";
 
-import { FERN_DIRECTORY, GENERATORS_CONFIGURATION_FILENAME, generatorsYml } from "@fern-api/configuration"
-import { RelativeFilePath, join } from "@fern-api/fs-utils"
+import { FERN_DIRECTORY, GENERATORS_CONFIGURATION_FILENAME, generatorsYml } from "@fern-api/configuration";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { runFernCli } from "../../utils/runFernCli"
-import { init } from "../init/init"
+import { runFernCli } from "../../utils/runFernCli";
+import { init } from "../init/init";
 
 const GENERATORS_CONFIGURATION: generatorsYml.GeneratorsConfigurationSchema = {
     groups: {
@@ -88,27 +88,27 @@ const GENERATORS_CONFIGURATION: generatorsYml.GeneratorsConfigurationSchema = {
             ]
         }
     }
-}
+};
 
 describe("fern upgrade", () => {
     it("upgrades generators", async () => {
-        const directory = await init()
+        const directory = await init();
         const generatorsConfigurationFilepath = join(
             directory,
             RelativeFilePath.of(FERN_DIRECTORY),
             RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)
-        )
+        );
         // make sure the file exists
-        await readFile(generatorsConfigurationFilepath)
-        await writeFile(generatorsConfigurationFilepath, yaml.dump(GENERATORS_CONFIGURATION))
+        await readFile(generatorsConfigurationFilepath);
+        await writeFile(generatorsConfigurationFilepath, yaml.dump(GENERATORS_CONFIGURATION));
         await runFernCli(["upgrade"], {
             cwd: directory,
             env: {
                 // this env var needs to be defined so the CLI thinks we're mid-upgrade
                 FERN_PRE_UPGRADE_VERSION: "0.0.0"
             }
-        })
-        const generatorsConfiguration = (await readFile(generatorsConfigurationFilepath)).toString()
-        expect(generatorsConfiguration).toMatchSnapshot()
-    }, 90_000)
-})
+        });
+        const generatorsConfiguration = (await readFile(generatorsConfigurationFilepath)).toString();
+        expect(generatorsConfiguration).toMatchSnapshot();
+    }, 90_000);
+});

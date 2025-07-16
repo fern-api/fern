@@ -1,30 +1,32 @@
-import { readdir } from "fs/promises"
+import { readdir } from "fs/promises";
 
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
-import { createMockTaskContext } from "@fern-api/task-context"
-import { loadAPIWorkspace } from "@fern-api/workspace-loader"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { createMockTaskContext } from "@fern-api/task-context";
+import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 
-const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"))
-const filterFixture = process.env.TEST_FIXTURE
+const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
+const filterFixture = process.env.TEST_FIXTURE;
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
 describe("openapi-ir-to-fern docs", async () => {
     for (const fixture of await readdir(FIXTURES_DIR, { withFileTypes: true })) {
         if (!fixture.isDirectory() || (filterFixture && !fixture.name.includes(filterFixture))) {
-            continue
+            continue;
         }
 
         it(fixture.name, async () => {
-            const fixturePath = join(FIXTURES_DIR, RelativeFilePath.of(fixture.name), RelativeFilePath.of("fern"))
-            const context = createMockTaskContext()
+            const fixturePath = join(FIXTURES_DIR, RelativeFilePath.of(fixture.name), RelativeFilePath.of("fern"));
+            const context = createMockTaskContext();
             const workspace = await loadAPIWorkspace({
                 absolutePathToWorkspace: fixturePath,
                 context,
                 cliVersion: "0.0.0",
                 workspaceName: fixture.name
-            })
+            });
             if (!workspace.didSucceed) {
-                throw new Error(`Failed to load OpenAPI fixture ${fixture.name}\n${JSON.stringify(workspace.failures)}`)
+                throw new Error(
+                    `Failed to load OpenAPI fixture ${fixture.name}\n${JSON.stringify(workspace.failures)}`
+                );
             }
 
             const definition = await workspace.workspace.getDefinition(
@@ -33,9 +35,9 @@ describe("openapi-ir-to-fern docs", async () => {
                     absoluteFilePath: AbsoluteFilePath.of("/DUMMY_PATH")
                 },
                 { enableUniqueErrorsPerEndpoint: true, preserveSchemaIds: true }
-            )
+            );
 
-            await expect(definition).toMatchFileSnapshot(`./__snapshots__/openapi-docs/${fixture.name}.json`)
-        }, 90_000)
+            await expect(definition).toMatchFileSnapshot(`./__snapshots__/openapi-docs/${fixture.name}.json`);
+        }, 90_000);
     }
-})
+});

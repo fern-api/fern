@@ -1,16 +1,20 @@
-import { GeneratorName } from "@fern-api/configuration-loader"
+import { GeneratorName } from "@fern-api/configuration-loader";
 
-import { IrVersions } from "../../ir-versions"
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
-import { ErrorResolverImpl } from "./ErrorResolver"
-import { TypeReferenceResolverImpl } from "./TypeReferenceResolver"
-import { convertAuth } from "./convertAuth"
-import { convertEnvironment } from "./convertEnvironment"
-import { convertErrorDeclaration } from "./convertErrorDeclaration"
-import { convertHeader } from "./convertHeader"
-import { convertNameAndWireValueToV1, convertNameAndWireValueToV2, convertNameToV2 } from "./convertName"
-import { convertService } from "./convertService"
-import { convertTypeDeclaration } from "./convertTypeDeclaration"
+import { IrVersions } from "../../ir-versions";
+import {
+    GeneratorWasNeverUpdatedToConsumeNewIR,
+    GeneratorWasNotCreatedYet,
+    IrMigration
+} from "../../types/IrMigration";
+import { ErrorResolverImpl } from "./ErrorResolver";
+import { TypeReferenceResolverImpl } from "./TypeReferenceResolver";
+import { convertAuth } from "./convertAuth";
+import { convertEnvironment } from "./convertEnvironment";
+import { convertErrorDeclaration } from "./convertErrorDeclaration";
+import { convertHeader } from "./convertHeader";
+import { convertNameAndWireValueToV1, convertNameAndWireValueToV2, convertNameToV2 } from "./convertName";
+import { convertService } from "./convertService";
+import { convertTypeDeclaration } from "./convertTypeDeclaration";
 
 export const V5_TO_V4_MIGRATION: IrMigration<
     IrVersions.V5.ir.IntermediateRepresentation,
@@ -49,8 +53,8 @@ export const V5_TO_V4_MIGRATION: IrMigration<
     },
     jsonifyEarlierVersion: (ir) => ir,
     migrateBackwards: (v5): IrVersions.V4.ir.IntermediateRepresentation => {
-        const typeReferenceResolver = new TypeReferenceResolverImpl(v5)
-        const errorResolver = new ErrorResolverImpl(v5)
+        const typeReferenceResolver = new TypeReferenceResolverImpl(v5);
+        const errorResolver = new ErrorResolverImpl(v5);
         return {
             apiName: v5.apiName.originalName,
             apiDisplayName: v5.apiDisplayName,
@@ -155,11 +159,11 @@ export const V5_TO_V4_MIGRATION: IrMigration<
                         _unknown: () => {
                             throw new Error(
                                 "Unknown ErrorDiscriminationStrategy: " + v5.errorDiscriminationStrategy.type
-                            )
+                            );
                         }
                     }
                 ),
             sdkConfig: v5.sdkConfig
-        }
+        };
     }
-}
+};

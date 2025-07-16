@@ -1,8 +1,8 @@
-import { format } from "util"
+import { format } from "util";
 
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils"
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { Import } from "../Import"
+import { Import } from "../Import";
 
 export enum NewLinePlacement {
     BEFORE,
@@ -11,44 +11,44 @@ export enum NewLinePlacement {
 }
 export declare namespace AstNode {
     export interface Init {
-        documentation?: string[] | string
-        contentOverride?: string
-        writeImports?: boolean
+        documentation?: string[] | string;
+        contentOverride?: string;
+        writeImports?: boolean;
         // Where is this node, since any node can be written loose to a file
-        location?: string
+        location?: string;
     }
 
     export interface AddText {
-        stringContent?: string
-        templateString?: string
-        appendToLastString?: boolean
-        startingTabSpaces?: number
+        stringContent?: string;
+        templateString?: string;
+        appendToLastString?: boolean;
+        startingTabSpaces?: number;
     }
 }
 export abstract class AstNode {
     // We could also track line length, but we'd likely be better off running Rubocop to format the code after it's written
-    public tabSizeSpaces = 2
-    public documentation: string[] | undefined
+    public tabSizeSpaces = 2;
+    public documentation: string[] | undefined;
     // This field takes precedence over the node's write function, this
     // should be used if you know exactly the content you'd like to generate
-    public contentOverride: string | undefined
+    public contentOverride: string | undefined;
 
-    public writeImports: boolean
-    public location: string | undefined
+    public writeImports: boolean;
+    public location: string | undefined;
     // Pretty print content
-    text: string[] = []
+    text: string[] = [];
 
     constructor({ documentation, contentOverride, writeImports = false }: AstNode.Init) {
         // TODO: Make documentation a list of strings split by returns then make them multi-line comments
-        this.documentation = documentation instanceof Array ? documentation : documentation?.split("\n")
-        this.contentOverride = contentOverride
-        this.writeImports = writeImports
+        this.documentation = documentation instanceof Array ? documentation : documentation?.split("\n");
+        this.contentOverride = contentOverride;
+        this.writeImports = writeImports;
     }
 
-    public abstract writeInternal(startingTabSpaces: number): void
+    public abstract writeInternal(startingTabSpaces: number): void;
 
     protected writePaddedString(startingTabSpaces: number, content: string): string {
-        return `${" ".repeat(startingTabSpaces)}${content}`
+        return `${" ".repeat(startingTabSpaces)}${content}`;
     }
 
     protected addText({
@@ -58,23 +58,23 @@ export abstract class AstNode {
         startingTabSpaces = 0
     }: AstNode.AddText): void {
         if (stringContent === undefined) {
-            return
+            return;
         }
         if (templateString !== undefined) {
-            stringContent = format(templateString, stringContent)
+            stringContent = format(templateString, stringContent);
         }
 
         if (appendToLastString && this.text.length > 0) {
-            this.text[this.text.length - 1] += stringContent
+            this.text[this.text.length - 1] += stringContent;
         } else {
-            stringContent = this.writePaddedString(startingTabSpaces, stringContent)
+            stringContent = this.writePaddedString(startingTabSpaces, stringContent);
 
-            this.text.push(stringContent)
+            this.text.push(stringContent);
         }
     }
 
     protected addNewLine(): void {
-        this.text.push("")
+        this.text.push("");
     }
 
     public write({
@@ -82,9 +82,9 @@ export abstract class AstNode {
         filePath,
         pathPrefix
     }: {
-        startingTabSpaces?: number
-        filePath?: AbsoluteFilePath
-        pathPrefix?: RelativeFilePath
+        startingTabSpaces?: number;
+        filePath?: AbsoluteFilePath;
+        pathPrefix?: RelativeFilePath;
     }): string {
         if (this.writeImports) {
             this.getImports().forEach((i) =>
@@ -97,21 +97,21 @@ export abstract class AstNode {
                               : i.write({ startingTabSpaces }),
                     startingTabSpaces
                 })
-            )
-            this.addNewLine()
+            );
+            this.addNewLine();
         }
-        this.writeInternal(startingTabSpaces)
+        this.writeInternal(startingTabSpaces);
         const text =
             this.contentOverride !== undefined
                 ? this.writePaddedString(startingTabSpaces, this.contentOverride)
-                : this.text.join("\n")
+                : this.text.join("\n");
         // Reset text buffer
-        this.text = []
-        return text
+        this.text = [];
+        return text;
     }
 
     // Effectively: to use this node, what do I need to import
     public getImports(): Set<Import> {
-        return new Set()
+        return new Set();
     }
 }

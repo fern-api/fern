@@ -1,9 +1,9 @@
-import { OpenAPIV3 } from "openapi-types"
+import { OpenAPIV3 } from "openapi-types";
 
-import { Availability, SchemaWithExample, SdkGroupName, Source } from "@fern-api/openapi-ir"
+import { Availability, SchemaWithExample, SdkGroupName, Source } from "@fern-api/openapi-ir";
 
-import { SchemaParserContext } from "./SchemaParserContext"
-import { convertSchema } from "./convertSchemas"
+import { SchemaParserContext } from "./SchemaParserContext";
+import { convertSchema } from "./convertSchemas";
 
 export function convertArray({
     nameOverride,
@@ -20,19 +20,19 @@ export function convertArray({
     example,
     source
 }: {
-    nameOverride: string | undefined
-    generatedName: string
-    title: string | undefined
-    breadcrumbs: string[]
-    item: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined
-    description: string | undefined
-    availability: Availability | undefined
-    wrapAsNullable: boolean
-    context: SchemaParserContext
-    namespace: string | undefined
-    groupName: SdkGroupName | undefined
-    example: unknown[] | undefined
-    source: Source
+    nameOverride: string | undefined;
+    generatedName: string;
+    title: string | undefined;
+    breadcrumbs: string[];
+    item: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined;
+    description: string | undefined;
+    availability: Availability | undefined;
+    wrapAsNullable: boolean;
+    context: SchemaParserContext;
+    namespace: string | undefined;
+    groupName: SdkGroupName | undefined;
+    example: unknown[] | undefined;
+    source: Source;
 }): SchemaWithExample {
     const itemSchema =
         item == null
@@ -46,7 +46,7 @@ export function convertArray({
                   namespace,
                   groupName
               })
-            : convertSchema(item, false, context, [...breadcrumbs, "Item"], source, namespace)
+            : convertSchema(item, false, context, [...breadcrumbs, "Item"], source, namespace);
     return wrapArray({
         nameOverride,
         generatedName,
@@ -58,7 +58,7 @@ export function convertArray({
         description,
         availability,
         example
-    })
+    });
 }
 
 export function wrapArray({
@@ -73,16 +73,16 @@ export function wrapArray({
     groupName,
     example
 }: {
-    nameOverride: string | undefined
-    generatedName: string
-    title: string | undefined
-    itemSchema: SchemaWithExample
-    wrapAsNullable: boolean
-    description: string | undefined
-    availability: Availability | undefined
-    namespace: string | undefined
-    groupName: SdkGroupName | undefined
-    example: unknown[] | undefined
+    nameOverride: string | undefined;
+    generatedName: string;
+    title: string | undefined;
+    itemSchema: SchemaWithExample;
+    wrapAsNullable: boolean;
+    description: string | undefined;
+    availability: Availability | undefined;
+    namespace: string | undefined;
+    groupName: SdkGroupName | undefined;
+    example: unknown[] | undefined;
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
@@ -106,7 +106,7 @@ export function wrapArray({
             namespace,
             groupName,
             inline: undefined
-        })
+        });
     }
     return SchemaWithExample.array({
         nameOverride,
@@ -119,5 +119,5 @@ export function wrapArray({
         groupName,
         example,
         inline: undefined
-    })
+    });
 }

@@ -1,6 +1,6 @@
-import { Rule } from "../../Rule"
+import { Rule } from "../../Rule";
 
-const ALPHA_REGEX = /^[a-z]/i
+const ALPHA_REGEX = /^[a-z]/i;
 
 export const ValidTypeNameRule: Rule = {
     name: "valid-type-name",
@@ -14,11 +14,11 @@ export const ValidTypeNameRule: Rule = {
                                 severity: "fatal",
                                 message: "Type name must begin with a letter"
                             }
-                        ]
+                        ];
                     }
-                    return []
+                    return [];
                 }
             }
-        }
+        };
     }
-}
+};

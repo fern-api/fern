@@ -1,22 +1,22 @@
-import { docsYml } from "@fern-api/configuration-loader"
-import { FernNavigation } from "@fern-api/fdr-sdk"
-import { AbsoluteFilePath, resolve } from "@fern-api/fs-utils"
-import { createMockTaskContext } from "@fern-api/task-context"
-import { loadDocsWorkspace } from "@fern-api/workspace-loader"
+import { docsYml } from "@fern-api/configuration-loader";
+import { FernNavigation } from "@fern-api/fdr-sdk";
+import { AbsoluteFilePath, resolve } from "@fern-api/fs-utils";
+import { createMockTaskContext } from "@fern-api/task-context";
+import { loadDocsWorkspace } from "@fern-api/workspace-loader";
 
-import { DocsDefinitionResolver } from "../DocsDefinitionResolver"
+import { DocsDefinitionResolver } from "../DocsDefinitionResolver";
 
-const context = createMockTaskContext()
+const context = createMockTaskContext();
 
 // biome-ignore lint/suspicious/noSkippedTests: allow
 it.skip("converts to api reference node", async () => {
     const docsWorkspace = await loadDocsWorkspace({
         fernDirectory: resolve(AbsoluteFilePath.of(__dirname), "fixtures/dry/fern"),
         context
-    })
+    });
 
     if (docsWorkspace == null) {
-        throw new Error("Workspace is null")
+        throw new Error("Workspace is null");
     }
 
     const resolver = new DocsDefinitionResolver(
@@ -29,9 +29,9 @@ it.skip("converts to api reference node", async () => {
         async (_files) => [],
         async (_opts) => "",
         async (_opts) => ""
-    )
+    );
 
-    const resolved = await resolver.resolve()
+    const resolved = await resolver.resolve();
 
-    expect(resolved.pages[FernNavigation.PageId("page.mdx")]?.markdown).toMatchSnapshot()
-})
+    expect(resolved.pages[FernNavigation.PageId("page.mdx")]?.markdown).toMatchSnapshot();
+});

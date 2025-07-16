@@ -1,8 +1,8 @@
-import { HttpEndpoint, HttpService, ServiceId } from "@fern-fern/ir-sdk/api"
+import { HttpEndpoint, HttpService, ServiceId } from "@fern-fern/ir-sdk/api";
 
-import { SdkGeneratorContext } from "../../SdkGeneratorContext"
-import { EndpointRequest } from "../request/EndpointRequest"
-import { createEndpointRequest } from "../request/EndpointRequestFactory"
+import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { EndpointRequest } from "../request/EndpointRequest";
+import { createEndpointRequest } from "../request/EndpointRequestFactory";
 
 export function getEndpointRequest({
     context,
@@ -10,17 +10,17 @@ export function getEndpointRequest({
     serviceId,
     service
 }: {
-    context: SdkGeneratorContext
-    endpoint: HttpEndpoint
-    serviceId: ServiceId
-    service: HttpService
+    context: SdkGeneratorContext;
+    endpoint: HttpEndpoint;
+    serviceId: ServiceId;
+    service: HttpService;
 }): EndpointRequest | undefined {
     if (endpoint.sdkRequest == null) {
-        return undefined
+        return undefined;
     }
     if (endpoint.sdkRequest.shape.type === "wrapper") {
         if (context.shouldSkipWrappedRequest({ endpoint, wrapper: endpoint.sdkRequest.shape })) {
-            return undefined
+            return undefined;
         }
     }
     return createEndpointRequest({
@@ -29,5 +29,5 @@ export function getEndpointRequest({
         serviceId,
         service,
         sdkRequest: endpoint.sdkRequest
-    })
+    });
 }

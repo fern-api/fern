@@ -1,4 +1,4 @@
-import { BaseGoCustomConfigSchema } from "./BaseGoCustomConfigSchema"
+import { BaseGoCustomConfigSchema } from "./BaseGoCustomConfigSchema";
 
 export const DefaultBaseGoCustomConfigSchema: BaseGoCustomConfigSchema = {
     alwaysSendRequiredProperties: true,
@@ -6,4 +6,4 @@ export const DefaultBaseGoCustomConfigSchema: BaseGoCustomConfigSchema = {
     inlineFileProperties: true,
     useReaderForBytesRequest: true,
     union: "v1"
-}
+};

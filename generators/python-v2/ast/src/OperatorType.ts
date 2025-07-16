@@ -7,7 +7,7 @@ export type OperatorType =
     | "divide"
     | "modulo"
     | "leftShift"
-    | "rightShift"
+    | "rightShift";
 
 export const OperatorType = {
     Or: "or",
@@ -19,4 +19,4 @@ export const OperatorType = {
     Modulo: "modulo",
     LeftShift: "leftShift",
     RightShift: "rightShift"
-} as const
+} as const;

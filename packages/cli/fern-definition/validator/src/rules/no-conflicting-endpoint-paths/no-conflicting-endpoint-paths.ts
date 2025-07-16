@@ -1,16 +1,16 @@
-import chalk from "chalk"
+import chalk from "chalk";
 
-import { visitAllDefinitionFiles } from "@fern-api/api-workspace-commons"
+import { visitAllDefinitionFiles } from "@fern-api/api-workspace-commons";
 
-import { Rule } from "../../Rule"
-import { visitDefinitionFileYamlAst } from "../../ast"
-import { EndpointPathRegistry } from "./EndpointPathRegistry"
-import { getFullEndpointPath } from "./getFullEndpointPath"
+import { Rule } from "../../Rule";
+import { visitDefinitionFileYamlAst } from "../../ast";
+import { EndpointPathRegistry } from "./EndpointPathRegistry";
+import { getFullEndpointPath } from "./getFullEndpointPath";
 
 export const NoConflictingEndpointPathsRule: Rule = {
     name: "no-conflicting-endpoint-paths",
     create: ({ workspace }) => {
-        const endpointPathRegistry = new EndpointPathRegistry()
+        const endpointPathRegistry = new EndpointPathRegistry();
 
         visitAllDefinitionFiles(workspace, (relativeFilepath, file) => {
             visitDefinitionFileYamlAst(file, {
@@ -20,10 +20,10 @@ export const NoConflictingEndpointPathsRule: Rule = {
                         endpointId,
                         endpoint,
                         relativeFilepath
-                    })
+                    });
                 }
-            })
-        })
+            });
+        });
 
         return {
             definitionFile: {
@@ -33,10 +33,10 @@ export const NoConflictingEndpointPathsRule: Rule = {
                         endpointId,
                         endpoint,
                         relativeFilepath
-                    })
+                    });
 
                     if (conflictingEndpoints.length === 0) {
-                        return []
+                        return [];
                     }
 
                     return [
@@ -60,9 +60,9 @@ export const NoConflictingEndpointPathsRule: Rule = {
                                 )
                             ].join("\n")
                         }
-                    ]
+                    ];
                 }
             }
-        }
+        };
     }
-}
+};

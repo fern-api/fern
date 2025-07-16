@@ -1,14 +1,14 @@
-import { JSONSchema4 } from "json-schema"
+import { JSONSchema4 } from "json-schema";
 
-import { UndiscriminatedUnionTypeDeclaration } from "@fern-api/ir-sdk"
+import { UndiscriminatedUnionTypeDeclaration } from "@fern-api/ir-sdk";
 
-import { JsonSchemaConverterContext } from "../JsonSchemaConverterContext"
-import { convertTypeReferenceToJsonSchema } from "./typeReferenceToJsonSchema"
+import { JsonSchemaConverterContext } from "../JsonSchemaConverterContext";
+import { convertTypeReferenceToJsonSchema } from "./typeReferenceToJsonSchema";
 
 export declare namespace convertUndiscriminatedUnionToJsonSchema {
     interface Args {
-        undiscriminatedUnion: UndiscriminatedUnionTypeDeclaration
-        context: JsonSchemaConverterContext
+        undiscriminatedUnion: UndiscriminatedUnionTypeDeclaration;
+        context: JsonSchemaConverterContext;
     }
 }
 
@@ -21,11 +21,11 @@ export function convertUndiscriminatedUnionToJsonSchema({
             const jsonSchemaMember = convertTypeReferenceToJsonSchema({
                 typeReference: member.type,
                 context
-            })
+            });
             if (member.docs) {
-                jsonSchemaMember.description = member.docs
+                jsonSchemaMember.description = member.docs;
             }
-            return jsonSchemaMember
+            return jsonSchemaMember;
         })
-    }
+    };
 }

@@ -1,12 +1,12 @@
-import { RawSchemas } from "@fern-api/fern-definition-schema"
-import { RelativeFilePath } from "@fern-api/path-utils"
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { RelativeFilePath } from "@fern-api/path-utils";
 
-import { FernDefinitionDirectory } from "../utils/FernDefinitionDirectory"
+import { FernDefinitionDirectory } from "../utils/FernDefinitionDirectory";
 
 interface TestCase {
-    description: string
-    giveFilepaths: string[]
-    wantFiles: Record<string, RawSchemas.DefinitionFileSchema>
+    description: string;
+    giveFilepaths: string[];
+    wantFiles: Record<string, RawSchemas.DefinitionFileSchema>;
 }
 
 describe("FernDefinitionDirectory", () => {
@@ -58,15 +58,15 @@ describe("FernDefinitionDirectory", () => {
                 "user/events/metadata.yml": {}
             }
         }
-    ]
+    ];
 
     testCases.forEach((testCase) => {
         it(`"${testCase.description}"`, async () => {
-            const root = new FernDefinitionDirectory()
+            const root = new FernDefinitionDirectory();
             for (const filepath of testCase.giveFilepaths) {
-                root.getOrCreateFile(RelativeFilePath.of(filepath))
+                root.getOrCreateFile(RelativeFilePath.of(filepath));
             }
-            expect(root.getAllFiles()).toEqual(testCase.wantFiles)
-        })
-    })
-})
+            expect(root.getAllFiles()).toEqual(testCase.wantFiles);
+        });
+    });
+});

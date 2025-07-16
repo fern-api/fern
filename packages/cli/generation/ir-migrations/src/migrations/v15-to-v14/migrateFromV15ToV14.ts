@@ -1,9 +1,13 @@
-import { mapValues } from "lodash-es"
+import { mapValues } from "lodash-es";
 
-import { GeneratorName } from "@fern-api/configuration-loader"
+import { GeneratorName } from "@fern-api/configuration-loader";
 
-import { IrVersions } from "../../ir-versions"
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
+import { IrVersions } from "../../ir-versions";
+import {
+    GeneratorWasNeverUpdatedToConsumeNewIR,
+    GeneratorWasNotCreatedYet,
+    IrMigration
+} from "../../types/IrMigration";
 
 export const V15_TO_V14_MIGRATION: IrMigration<
     IrVersions.V15.ir.IntermediateRepresentation,
@@ -55,10 +59,10 @@ export const V15_TO_V14_MIGRATION: IrMigration<
                                     return {
                                         ...objectProperty,
                                         valueType: convertTypeReference(objectProperty.valueType)
-                                    }
+                                    };
                                 }),
                                 types: union.types.map((singleUnionType) => convertSingleUnionType(singleUnionType))
-                            })
+                            });
                         },
                         enum: IrVersions.V14.types.Type.enum,
                         object: (object) => {
@@ -68,28 +72,28 @@ export const V15_TO_V14_MIGRATION: IrMigration<
                                     return {
                                         ...objectProperty,
                                         valueType: convertTypeReference(objectProperty.valueType)
-                                    }
+                                    };
                                 })
-                            })
+                            });
                         },
                         alias: (aliasTypeDeclaration) => {
                             return IrVersions.V14.types.Type.alias({
                                 aliasOf: convertTypeReference(aliasTypeDeclaration.aliasOf),
                                 resolvedType: convertResolvedType(aliasTypeDeclaration.resolvedType)
-                            })
+                            });
                         },
                         undiscriminatedUnion: (undiscriminatedUnion) => {
                             return IrVersions.V14.types.Type.undiscriminatedUnion(
                                 convertUndiscriminatedUnion(undiscriminatedUnion)
-                            )
+                            );
                         },
                         _unknown: () => {
-                            throw new Error("Encountered unknown shape")
+                            throw new Error("Encountered unknown shape");
                         }
                     })
-                }
+                };
             }
-        )
+        );
         return {
             ...v14,
             auth: convertAuth(v14.auth),
@@ -97,9 +101,9 @@ export const V15_TO_V14_MIGRATION: IrMigration<
             types: v13Types,
             services: mapValues(v14.services, (service) => convertHttpService(service)),
             errors: mapValues(v14.errors, (error) => convertErrorDeclaration(error))
-        }
+        };
     }
-}
+};
 
 function convertAuth(auth: IrVersions.V15.auth.ApiAuth): IrVersions.V14.auth.ApiAuth {
     return {
@@ -107,11 +111,11 @@ function convertAuth(auth: IrVersions.V15.auth.ApiAuth): IrVersions.V14.auth.Api
         requirement: auth.requirement,
         schemes: auth.schemes.map((scheme) => {
             if (scheme._type !== "header") {
-                return scheme
+                return scheme;
             }
-            return IrVersions.V14.auth.AuthScheme.header(convertHeader(scheme))
+            return IrVersions.V14.auth.AuthScheme.header(convertHeader(scheme));
         })
-    }
+    };
 }
 
 function convertHeader(header: IrVersions.V15.auth.AuthScheme.Header): IrVersions.V14.auth.HeaderAuthScheme {
@@ -120,7 +124,7 @@ function convertHeader(header: IrVersions.V15.auth.AuthScheme.Header): IrVersion
         prefix: header.prefix,
         name: header.name,
         valueType: convertTypeReference(header.valueType)
-    }
+    };
 }
 
 function convertHttpHeader(header: IrVersions.V15.http.HttpHeader): IrVersions.V14.http.HttpHeader {
@@ -129,7 +133,7 @@ function convertHttpHeader(header: IrVersions.V15.http.HttpHeader): IrVersions.V
         availability: header.availability,
         name: header.name,
         valueType: convertTypeReference(header.valueType)
-    }
+    };
 }
 
 function convertTypeReference(typeReference: IrVersions.V15.types.TypeReference): IrVersions.V14.types.TypeReference {
@@ -137,16 +141,16 @@ function convertTypeReference(typeReference: IrVersions.V15.types.TypeReference)
         container: (container) => IrVersions.V14.types.TypeReference.container(convertContainerType(container)),
         primitive: (primitiveType) => {
             if (primitiveType === "BASE_64") {
-                return IrVersions.V14.types.TypeReference.primitive(IrVersions.V14.types.PrimitiveType.String)
+                return IrVersions.V14.types.TypeReference.primitive(IrVersions.V14.types.PrimitiveType.String);
             }
-            return IrVersions.V14.types.TypeReference.primitive(primitiveType)
+            return IrVersions.V14.types.TypeReference.primitive(primitiveType);
         },
         named: IrVersions.V14.types.TypeReference.named,
         unknown: IrVersions.V14.types.TypeReference.unknown,
         _unknown: () => {
-            throw new Error("Unknown type reference: " + typeReference._type)
+            throw new Error("Unknown type reference: " + typeReference._type);
         }
-    })
+    });
 }
 
 function convertContainerType(container: IrVersions.V15.types.ContainerType): IrVersions.V14.types.ContainerType {
@@ -161,9 +165,9 @@ function convertContainerType(container: IrVersions.V15.types.ContainerType): Ir
             }),
         literal: IrVersions.V14.types.ContainerType.literal,
         _unknown: () => {
-            throw new Error("Unknown ContainerType: " + container._type)
+            throw new Error("Unknown ContainerType: " + container._type);
         }
-    })
+    });
 }
 
 function convertSingleUnionType(
@@ -173,7 +177,7 @@ function convertSingleUnionType(
         docs: singleUnionType.docs,
         discriminantValue: singleUnionType.discriminantValue,
         shape: convertSingleUnionTypeProperties(singleUnionType.shape)
-    }
+    };
 }
 
 function convertSingleUnionTypeProperties(
@@ -191,10 +195,10 @@ function convertSingleUnionTypeProperties(
                 }),
             noProperties: IrVersions.V14.types.SingleUnionTypeProperties.noProperties,
             _unknown: () => {
-                throw new Error("Unknown SingleUnionTypeProperties: " + properties._type)
+                throw new Error("Unknown SingleUnionTypeProperties: " + properties._type);
             }
         }
-    )
+    );
 }
 
 function convertResolvedType(
@@ -205,15 +209,15 @@ function convertResolvedType(
         named: IrVersions.V14.types.ResolvedTypeReference.named,
         primitive: (primitiveType) => {
             if (primitiveType === "BASE_64") {
-                return IrVersions.V14.types.ResolvedTypeReference.primitive(IrVersions.V14.types.PrimitiveType.String)
+                return IrVersions.V14.types.ResolvedTypeReference.primitive(IrVersions.V14.types.PrimitiveType.String);
             }
-            return IrVersions.V14.types.ResolvedTypeReference.primitive(primitiveType)
+            return IrVersions.V14.types.ResolvedTypeReference.primitive(primitiveType);
         },
         unknown: IrVersions.V14.types.ResolvedTypeReference.unknown,
         _unknown: () => {
-            throw new Error("Unknown ResolvedTypeReference: " + resolvedType._type)
+            throw new Error("Unknown ResolvedTypeReference: " + resolvedType._type);
         }
-    })
+    });
 }
 
 function convertUndiscriminatedUnion(
@@ -224,9 +228,9 @@ function convertUndiscriminatedUnion(
             return {
                 ...member,
                 type: convertTypeReference(member.type)
-            }
+            };
         })
-    }
+    };
 }
 
 function convertHttpService(service: IrVersions.V15.http.HttpService): IrVersions.V14.http.HttpService {
@@ -239,7 +243,7 @@ function convertHttpService(service: IrVersions.V15.http.HttpService): IrVersion
         pathParameters: service.pathParameters.map((pathParameter) => convertPathParameter(pathParameter)),
         headers: service.headers.map((header) => convertHttpHeader(header)),
         endpoints: service.endpoints.map((endpoint) => convertEndpoint(endpoint))
-    }
+    };
 }
 
 function convertPathParameter(pathParameter: IrVersions.V15.http.PathParameter): IrVersions.V14.http.PathParameter {
@@ -248,7 +252,7 @@ function convertPathParameter(pathParameter: IrVersions.V15.http.PathParameter):
         docs: pathParameter.docs,
         name: pathParameter.name,
         valueType: convertTypeReference(pathParameter.valueType)
-    }
+    };
 }
 
 function convertEndpoint(endpoint: IrVersions.V15.http.HttpEndpoint): IrVersions.V14.http.HttpEndpoint {
@@ -271,7 +275,7 @@ function convertEndpoint(endpoint: IrVersions.V15.http.HttpEndpoint): IrVersions
         streamingResponse:
             endpoint.streamingResponse != null ? convertStreamingResponse(endpoint.streamingResponse) : undefined,
         sdkResponse: endpoint.sdkResponse != null ? convertSdkResponse(endpoint.sdkResponse) : undefined
-    }
+    };
 }
 
 function convertQueryParameter(queryParameter: IrVersions.V15.http.QueryParameter): IrVersions.V14.http.QueryParameter {
@@ -281,14 +285,14 @@ function convertQueryParameter(queryParameter: IrVersions.V15.http.QueryParamete
         name: queryParameter.name,
         valueType: convertTypeReference(queryParameter.valueType),
         allowMultiple: queryParameter.allowMultiple
-    }
+    };
 }
 
 function convertSdkRequest(sdkRequest: IrVersions.V15.http.SdkRequest): IrVersions.V14.http.SdkRequest {
     return {
         requestParameterName: sdkRequest.requestParameterName,
         shape: convertSdkRequestShape(sdkRequest.shape)
-    }
+    };
 }
 
 function convertSdkRequestShape(shape: IrVersions.V15.http.SdkRequestShape): IrVersions.V14.http.SdkRequestShape {
@@ -300,9 +304,9 @@ function convertSdkRequestShape(shape: IrVersions.V15.http.SdkRequestShape): IrV
             }),
         wrapper: IrVersions.V14.http.SdkRequestShape.wrapper,
         _unknown: () => {
-            throw new Error("Unknown SdkRequestShape: " + shape.type)
+            throw new Error("Unknown SdkRequestShape: " + shape.type);
         }
-    })
+    });
 }
 
 function convertRequestBody(requestBody: IrVersions.V15.http.HttpRequestBody): IrVersions.V14.http.HttpRequestBody {
@@ -330,15 +334,15 @@ function convertRequestBody(requestBody: IrVersions.V15.http.HttpRequestBody): I
                         return {
                             ...fileUploadRequestProperty,
                             valueType: convertTypeReference(fileUploadRequestProperty.valueType)
-                        }
+                        };
                     }
-                    return fileUploadRequestProperty
+                    return fileUploadRequestProperty;
                 })
             }),
         _unknown: () => {
-            throw new Error("Unknown HttpRequestBody: " + requestBody.type)
+            throw new Error("Unknown HttpRequestBody: " + requestBody.type);
         }
-    })
+    });
 }
 
 function convertHttpResponse(
@@ -347,7 +351,7 @@ function convertHttpResponse(
     return {
         docs: response.docs,
         responseBodyType: convertTypeReference(response.responseBodyType)
-    }
+    };
 }
 
 function convertStreamingResponse(
@@ -356,7 +360,7 @@ function convertStreamingResponse(
     return {
         dataEventType: convertTypeReference(response.dataEventType),
         terminator: response.terminator
-    }
+    };
 }
 
 function convertSdkResponse(sdkResponse: IrVersions.V15.http.SdkResponse): IrVersions.V14.http.SdkResponse {
@@ -372,9 +376,9 @@ function convertSdkResponse(sdkResponse: IrVersions.V15.http.SdkResponse): IrVer
                 streaming: convertStreamingResponse(maybeStreamingResponse.streaming)
             }),
         _unknown: () => {
-            throw new Error("Encountered unknown sdk response")
+            throw new Error("Encountered unknown sdk response");
         }
-    })
+    });
 }
 
 function convertErrorDeclaration(
@@ -386,5 +390,5 @@ function convertErrorDeclaration(
         discriminantValue: error.discriminantValue,
         type: error.type != null ? convertTypeReference(error.type) : undefined,
         statusCode: error.statusCode
-    }
+    };
 }

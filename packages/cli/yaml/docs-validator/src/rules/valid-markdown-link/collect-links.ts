@@ -1,18 +1,18 @@
-import type { Node as EstreeNode } from "estree"
-import { walk } from "estree-walker"
-import type { Root as HastRoot } from "hast"
-import { toHast } from "mdast-util-to-hast"
-import { readFileSync } from "node:fs"
-import type { Position } from "unist"
-import { visit } from "unist-util-visit"
+import type { Node as EstreeNode } from "estree";
+import { walk } from "estree-walker";
+import type { Root as HastRoot } from "hast";
+import { toHast } from "mdast-util-to-hast";
+import { readFileSync } from "node:fs";
+import type { Position } from "unist";
+import { visit } from "unist-util-visit";
 
 import {
     extractAttributeValueLiteral,
     parseMarkdownToTree,
     walkEstreeJsxAttributes
-} from "@fern-api/docs-markdown-utils"
-import { extractSingleLiteral, isMdxJsxAttribute } from "@fern-api/docs-markdown-utils"
-import { AbsoluteFilePath, RelativeFilePath, dirname, resolve } from "@fern-api/fs-utils"
+} from "@fern-api/docs-markdown-utils";
+import { extractSingleLiteral, isMdxJsxAttribute } from "@fern-api/docs-markdown-utils";
+import { AbsoluteFilePath, RelativeFilePath, dirname, resolve } from "@fern-api/fs-utils";
 
 const MDX_NODE_TYPES = [
     "mdxFlowExpression",
@@ -20,71 +20,71 @@ const MDX_NODE_TYPES = [
     "mdxJsxTextElement",
     "mdxTextExpression",
     "mdxjsEsm"
-] as const
+] as const;
 
 interface HastLink {
-    href: string
-    sourceFilepath?: AbsoluteFilePath
-    position?: Position
+    href: string;
+    sourceFilepath?: AbsoluteFilePath;
+    position?: Position;
 }
 
 interface HastSource {
-    src: string
-    sourceFilepath?: AbsoluteFilePath
-    position?: Position
+    src: string;
+    sourceFilepath?: AbsoluteFilePath;
+    position?: Position;
 }
 
 export function collectLinksAndSources({
     readFile = (path) => readFileSync(path, "utf-8"),
     ...opts
 }: {
-    readFile?: (path: AbsoluteFilePath) => string
-    content: string
-    absoluteFilepath?: AbsoluteFilePath
+    readFile?: (path: AbsoluteFilePath) => string;
+    content: string;
+    absoluteFilepath?: AbsoluteFilePath;
 }): {
-    links: HastLink[]
-    sources: HastSource[]
+    links: HastLink[];
+    sources: HastSource[];
 } {
-    const visitedAbsoluteFilepaths = new Set<AbsoluteFilePath>()
+    const visitedAbsoluteFilepaths = new Set<AbsoluteFilePath>();
 
     // we'll use this queue to trace imported markdown files (e.g. via mdxjsEsm, or the <Markdown> component)
     // which are markdown snippets that should be checked for links as well.
     const contentQueue: {
-        content: string
-        absoluteFilepath?: AbsoluteFilePath
-    }[] = [opts]
+        content: string;
+        absoluteFilepath?: AbsoluteFilePath;
+    }[] = [opts];
 
-    const links: HastLink[] = []
-    const sources: HastSource[] = []
+    const links: HastLink[] = [];
+    const sources: HastSource[] = [];
 
-    const LOOP_LIMIT = 1000
-    let loopCount = 0
+    const LOOP_LIMIT = 1000;
+    let loopCount = 0;
     do {
-        loopCount++
+        loopCount++;
         if (loopCount > LOOP_LIMIT) {
-            throw new Error("Infinite loop detected while collecting links and sources")
+            throw new Error("Infinite loop detected while collecting links and sources");
         }
-        const popped = contentQueue.shift()
+        const popped = contentQueue.shift();
         if (popped == null) {
-            break
+            break;
         }
 
-        const { content, absoluteFilepath } = popped
+        const { content, absoluteFilepath } = popped;
 
         // NOTE: we don't want to visit the same file multiple times
         if (absoluteFilepath != null) {
             if (visitedAbsoluteFilepaths.has(absoluteFilepath)) {
-                throw new Error(`Circular import detected: ${absoluteFilepath}`)
+                throw new Error(`Circular import detected: ${absoluteFilepath}`);
             }
-            visitedAbsoluteFilepaths.add(absoluteFilepath)
+            visitedAbsoluteFilepaths.add(absoluteFilepath);
         }
 
-        const mdast = parseMarkdownToTree(content)
+        const mdast = parseMarkdownToTree(content);
 
         const hast = toHast(mdast, {
             allowDangerousHtml: true,
             passThrough: [...MDX_NODE_TYPES]
-        }) as HastRoot
+        }) as HastRoot;
 
         visit(hast, (node) => {
             // if mdxjsEsm imports from a .md or .mdx file, we'll treat it as if it was a markdown snippet
@@ -99,73 +99,73 @@ export function collectLinksAndSources({
                                 child.source.type === "Literal" &&
                                 typeof child.source.value === "string"
                             ) {
-                                const importPath = RelativeFilePath.of(child.source.value)
-                                const resolvedImportPath = resolve(dirname(absoluteFilepath), importPath)
+                                const importPath = RelativeFilePath.of(child.source.value);
+                                const resolvedImportPath = resolve(dirname(absoluteFilepath), importPath);
                                 // TODO: should we handle md files? what about other md extensions?
                                 if (resolvedImportPath.endsWith(".mdx") || resolvedImportPath.endsWith(".md")) {
                                     contentQueue.push({
                                         content: readFile(resolvedImportPath),
                                         absoluteFilepath: resolvedImportPath
-                                    })
+                                    });
                                 }
                             }
                         }
-                    })
+                    });
                 }
-                return "skip"
+                return "skip";
             }
 
             if (node.type === "element") {
-                const href = node.properties.href
+                const href = node.properties.href;
                 if (typeof href === "string") {
-                    links.push({ href, sourceFilepath: absoluteFilepath, position: node.position })
+                    links.push({ href, sourceFilepath: absoluteFilepath, position: node.position });
                 }
 
-                const src = node.properties.src
+                const src = node.properties.src;
                 if (typeof src === "string") {
-                    sources.push({ src, sourceFilepath: absoluteFilepath, position: node.position })
+                    sources.push({ src, sourceFilepath: absoluteFilepath, position: node.position });
                 }
             }
 
             function walkJsx(estree: EstreeNode, position: Position | undefined) {
                 walkEstreeJsxAttributes(estree, {
                     src: (attr) => {
-                        const src = extractSingleLiteral(attr.value)
+                        const src = extractSingleLiteral(attr.value);
                         if (typeof src === "string") {
-                            sources.push({ src, sourceFilepath: absoluteFilepath, position })
+                            sources.push({ src, sourceFilepath: absoluteFilepath, position });
                         }
                     },
                     href: (attr) => {
-                        const href = extractSingleLiteral(attr.value)
+                        const href = extractSingleLiteral(attr.value);
                         if (typeof href === "string") {
-                            links.push({ href, sourceFilepath: absoluteFilepath, position })
+                            links.push({ href, sourceFilepath: absoluteFilepath, position });
                         }
                     }
-                })
+                });
             }
 
             if (node.type === "mdxJsxFlowElement" || node.type === "mdxJsxTextElement") {
                 const href = extractAttributeValueLiteral(
                     node.attributes.filter(isMdxJsxAttribute).find((attribute) => attribute.name === "href")?.value
-                )
+                );
 
                 const src = extractAttributeValueLiteral(
                     node.attributes.filter(isMdxJsxAttribute).find((attribute) => attribute.name === "src")?.value
-                )
+                );
 
                 // this is a special case for the <Markdown> component
                 // which is our legacy support for markdown snippets. This should be deprecated soon.
                 if (node.name === "Markdown") {
                     if (absoluteFilepath && typeof src === "string") {
-                        const resolvedImportPath = resolve(dirname(absoluteFilepath), src)
+                        const resolvedImportPath = resolve(dirname(absoluteFilepath), src);
                         contentQueue.push({
                             content: readFile(resolvedImportPath),
                             absoluteFilepath: resolvedImportPath
-                        })
+                        });
                     }
 
                     // Markdown component are special: they shouldn't have children, so we can skip them
-                    return "skip"
+                    return "skip";
                 }
 
                 // NOTE: this collects links if they are in the form of <a href="...">
@@ -175,7 +175,7 @@ export function collectLinksAndSources({
                         href,
                         sourceFilepath: absoluteFilepath,
                         position: node.position
-                    })
+                    });
                 }
 
                 if (typeof src === "string") {
@@ -183,7 +183,7 @@ export function collectLinksAndSources({
                         src,
                         sourceFilepath: absoluteFilepath,
                         position: node.position
-                    })
+                    });
                 }
 
                 node.attributes.forEach((attr) => {
@@ -193,23 +193,23 @@ export function collectLinksAndSources({
                         attr.value != null &&
                         attr.value.data?.estree
                     ) {
-                        walkJsx(attr.value.data.estree, attr.position)
+                        walkJsx(attr.value.data.estree, attr.position);
                     } else if (attr.type === "mdxJsxExpressionAttribute" && attr.data?.estree) {
-                        walkJsx(attr.data.estree, attr.position)
+                        walkJsx(attr.data.estree, attr.position);
                     }
-                })
+                });
             }
 
             if (node.type === "mdxFlowExpression" || node.type === "mdxTextExpression") {
                 if (node.data?.estree) {
-                    walkJsx(node.data.estree, node.position)
+                    walkJsx(node.data.estree, node.position);
                 }
             }
-            return
-        })
-    } while (contentQueue.length > 0)
+            return;
+        });
+    } while (contentQueue.length > 0);
 
-    return { links, sources }
+    return { links, sources };
 }
 
 // acorns and other errors are being thrown when we parse the markdown
@@ -219,15 +219,15 @@ export function safeCollectLinksAndSources({
     content,
     absoluteFilepath
 }: {
-    content: string
-    absoluteFilepath?: AbsoluteFilePath
+    content: string;
+    absoluteFilepath?: AbsoluteFilePath;
 }): {
-    links: HastLink[]
-    sources: HastSource[]
+    links: HastLink[];
+    sources: HastSource[];
 } {
     try {
-        return collectLinksAndSources({ content, absoluteFilepath })
+        return collectLinksAndSources({ content, absoluteFilepath });
     } catch (error) {
-        return { links: [], sources: [] }
+        return { links: [], sources: [] };
     }
 }

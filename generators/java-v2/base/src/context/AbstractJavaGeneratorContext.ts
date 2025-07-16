@@ -1,14 +1,14 @@
-import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator"
-import { BaseJavaCustomConfigSchema, java } from "@fern-api/java-ast"
+import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
+import { BaseJavaCustomConfigSchema, java } from "@fern-api/java-ast";
 
-import { FernFilepath, IntermediateRepresentation, Name, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api"
+import { FernFilepath, IntermediateRepresentation, Name, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
 
-import { JavaTypeMapper } from "./JavaTypeMapper"
+import { JavaTypeMapper } from "./JavaTypeMapper";
 
 export abstract class AbstractJavaGeneratorContext<
     CustomConfig extends BaseJavaCustomConfigSchema
 > extends AbstractGeneratorContext {
-    public readonly javaTypeMapper: JavaTypeMapper
+    public readonly javaTypeMapper: JavaTypeMapper;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
@@ -16,43 +16,43 @@ export abstract class AbstractJavaGeneratorContext<
         public readonly customConfig: CustomConfig,
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
-        super(config, generatorNotificationService)
-        this.javaTypeMapper = new JavaTypeMapper(this)
+        super(config, generatorNotificationService);
+        this.javaTypeMapper = new JavaTypeMapper(this);
     }
 
-    public abstract getRootPackageName(): string
+    public abstract getRootPackageName(): string;
 
-    public abstract getTypesPackageName(fernFilePath: FernFilepath): string
+    public abstract getTypesPackageName(fernFilePath: FernFilepath): string;
 
     public getJavaClassReferenceFromTypeId(typeId: TypeId): java.ClassReference {
-        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId)
-        return this.getJavaClassReferenceFromDeclaration({ typeDeclaration })
+        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
+        return this.getJavaClassReferenceFromDeclaration({ typeDeclaration });
     }
 
     public getJavaClassReferenceFromDeclaration({
         typeDeclaration
     }: {
-        typeDeclaration: TypeDeclaration
+        typeDeclaration: TypeDeclaration;
     }): java.ClassReference {
         return java.classReference({
             name: typeDeclaration.name.name.pascalCase.unsafeName,
             packageName: this.getTypesPackageName(typeDeclaration.name.fernFilepath)
-        })
+        });
     }
 
     public getTypeDeclarationOrThrow(typeId: TypeId): TypeDeclaration {
-        const typeDeclaration = this.getTypeDeclaration(typeId)
+        const typeDeclaration = this.getTypeDeclaration(typeId);
         if (typeDeclaration == null) {
-            throw new Error(`Type declaration with id ${typeId} not found`)
+            throw new Error(`Type declaration with id ${typeId} not found`);
         }
-        return typeDeclaration
+        return typeDeclaration;
     }
 
     public getTypeDeclaration(typeId: TypeId): TypeDeclaration | undefined {
-        return this.ir.types[typeId]
+        return this.ir.types[typeId];
     }
 
     public getClassName(name: Name): string {
-        return name.pascalCase.safeName
+        return name.pascalCase.safeName;
     }
 }

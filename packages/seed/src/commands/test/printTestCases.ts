@@ -1,6 +1,6 @@
-import { printTable } from "console-table-printer"
+import { printTable } from "console-table-printer";
 
-import { TestRunner } from "./test-runner"
+import { TestRunner } from "./test-runner";
 
 export function printTestCases(result: TestRunner.TestResult[]): void {
     const items = result.map((r) => {
@@ -12,7 +12,7 @@ export function printTestCases(result: TestRunner.TestResult[]): void {
             "Compile Time": r.metrics.compileTime,
             "Failure Type": r.type === "failure" ? r.cause : "",
             "Failure Message": r.type === "failure" ? r.message : ""
-        }
-    })
-    printTable(items)
+        };
+    });
+    printTable(items);
 }

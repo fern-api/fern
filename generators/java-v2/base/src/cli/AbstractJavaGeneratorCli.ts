@@ -1,11 +1,11 @@
-import { AbstractGeneratorCli, parseIR } from "@fern-api/base-generator"
-import { AbsoluteFilePath } from "@fern-api/fs-utils"
-import { BaseJavaCustomConfigSchema } from "@fern-api/java-ast"
+import { AbstractGeneratorCli, parseIR } from "@fern-api/base-generator";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { BaseJavaCustomConfigSchema } from "@fern-api/java-ast";
 
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api"
-import * as IrSerialization from "@fern-fern/ir-sdk/serialization"
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 
-import { AbstractJavaGeneratorContext } from "../context/AbstractJavaGeneratorContext"
+import { AbstractJavaGeneratorContext } from "../context/AbstractJavaGeneratorContext";
 
 export abstract class AbstractJavaGeneratorCli<
     CustomConfig extends BaseJavaCustomConfigSchema,
@@ -20,6 +20,6 @@ export abstract class AbstractJavaGeneratorCli<
         return await parseIR<IntermediateRepresentation>({
             absolutePathToIR: AbsoluteFilePath.of(irFilepath),
             parse: IrSerialization.IntermediateRepresentation.parse
-        })
+        });
     }
 }

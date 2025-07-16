@@ -1,17 +1,17 @@
-import { assertNever } from "@fern-api/core-utils"
-import { RawSchemas } from "@fern-api/fern-definition-schema"
-import { ErrorDiscriminationStrategy } from "@fern-api/ir-sdk"
+import { assertNever } from "@fern-api/core-utils";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { ErrorDiscriminationStrategy } from "@fern-api/ir-sdk";
 
-import { FernFileContext } from "../FernFileContext"
+import { FernFileContext } from "../FernFileContext";
 
-const ERROR_CONTENT_PROPERTY_NAME = "content"
+const ERROR_CONTENT_PROPERTY_NAME = "content";
 
 export function convertErrorDiscriminationStrategy(
     rawStrategy: RawSchemas.ErrorDiscriminationSchema | undefined,
     file: FernFileContext
 ): ErrorDiscriminationStrategy {
     if (rawStrategy == null || rawStrategy.strategy === "status-code") {
-        return ErrorDiscriminationStrategy.statusCode()
+        return ErrorDiscriminationStrategy.statusCode();
     }
     switch (rawStrategy.strategy) {
         case "property":
@@ -24,8 +24,8 @@ export function convertErrorDiscriminationStrategy(
                     name: ERROR_CONTENT_PROPERTY_NAME,
                     wireValue: ERROR_CONTENT_PROPERTY_NAME
                 })
-            })
+            });
         default:
-            assertNever(rawStrategy)
+            assertNever(rawStrategy);
     }
 }

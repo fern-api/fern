@@ -1,3 +1,3 @@
 export interface GeneratedFile<Context> {
-    writeToFile: (context: Context) => void
+    writeToFile: (context: Context) => void;
 }

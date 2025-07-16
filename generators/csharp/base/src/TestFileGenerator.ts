@@ -1,9 +1,9 @@
-import { BaseCsharpCustomConfigSchema, csharp, dependencies } from "@fern-api/csharp-codegen"
-import { RelativeFilePath, join } from "@fern-api/fs-utils"
+import { BaseCsharpCustomConfigSchema, csharp, dependencies } from "@fern-api/csharp-codegen";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { FileGenerator } from "./FileGenerator"
-import { AbstractCsharpGeneratorContext } from "./context/AbstractCsharpGeneratorContext"
-import { CSharpFile } from "./project"
+import { FileGenerator } from "./FileGenerator";
+import { AbstractCsharpGeneratorContext } from "./context/AbstractCsharpGeneratorContext";
+import { CSharpFile } from "./project";
 
 export class TestFileGenerator extends FileGenerator<
     CSharpFile,
@@ -11,7 +11,7 @@ export class TestFileGenerator extends FileGenerator<
     AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>
 > {
     protected getFilepath(): RelativeFilePath {
-        return join(this.context.project.filepaths.getTestFilesDirectory(), RelativeFilePath.of("TestClient.cs"))
+        return join(this.context.project.filepaths.getTestFilesDirectory(), RelativeFilePath.of("TestClient.cs"));
     }
 
     public doGenerate(): CSharpFile {
@@ -24,7 +24,7 @@ export class TestFileGenerator extends FileGenerator<
                     reference: dependencies.nunit.TestFixture
                 })
             ]
-        })
+        });
         return new CSharpFile({
             clazz: testClass,
             directory: RelativeFilePath.of(""),
@@ -32,6 +32,6 @@ export class TestFileGenerator extends FileGenerator<
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
             namespace: this.context.getNamespace(),
             customConfig: this.context.customConfig
-        })
+        });
     }
 }

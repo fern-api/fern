@@ -1,18 +1,18 @@
-import { WithRawResponse } from "./RawResponse"
+import { WithRawResponse } from "./RawResponse";
 
 /**
  * A promise that returns the parsed response and lets you retrieve the raw response too.
  */
 export class HttpResponsePromise<T> extends Promise<T> {
-    private innerPromise: Promise<WithRawResponse<T>>
-    private unwrappedPromise: Promise<T> | undefined
+    private innerPromise: Promise<WithRawResponse<T>>;
+    private unwrappedPromise: Promise<T> | undefined;
 
     private constructor(promise: Promise<WithRawResponse<T>>) {
         // Initialize with a no-op to avoid premature parsing
         super((resolve) => {
-            resolve(undefined as unknown as T)
-        })
-        this.innerPromise = promise
+            resolve(undefined as unknown as T);
+        });
+        this.innerPromise = promise;
     }
 
     /**
@@ -26,7 +26,7 @@ export class HttpResponsePromise<T> extends Promise<T> {
         fn: F,
         ...args: Parameters<F>
     ): HttpResponsePromise<T> {
-        return new HttpResponsePromise<T>(fn(...args))
+        return new HttpResponsePromise<T>(fn(...args));
     }
 
     /**
@@ -40,8 +40,8 @@ export class HttpResponsePromise<T> extends Promise<T> {
         T = Awaited<ReturnType<F>>["data"]
     >(fn: F): (...args: Parameters<F>) => HttpResponsePromise<T> {
         return (...args: Parameters<F>): HttpResponsePromise<T> => {
-            return HttpResponsePromise.fromPromise<T>(fn(...args))
-        }
+            return HttpResponsePromise.fromPromise<T>(fn(...args));
+        };
     }
 
     /**
@@ -51,7 +51,7 @@ export class HttpResponsePromise<T> extends Promise<T> {
      * @returns An `HttpResponsePromise` instance.
      */
     public static fromPromise<T>(promise: Promise<WithRawResponse<T>>): HttpResponsePromise<T> {
-        return new HttpResponsePromise<T>(promise)
+        return new HttpResponsePromise<T>(promise);
     }
 
     /**
@@ -63,8 +63,8 @@ export class HttpResponsePromise<T> extends Promise<T> {
     public static fromExecutor<T>(
         executor: (resolve: (value: WithRawResponse<T>) => void, reject: (reason?: unknown) => void) => void
     ): HttpResponsePromise<T> {
-        const promise = new Promise<WithRawResponse<T>>(executor)
-        return new HttpResponsePromise<T>(promise)
+        const promise = new Promise<WithRawResponse<T>>(executor);
+        return new HttpResponsePromise<T>(promise);
     }
 
     /**
@@ -74,15 +74,15 @@ export class HttpResponsePromise<T> extends Promise<T> {
      * @returns An `HttpResponsePromise` instance.
      */
     public static fromResult<T>(result: WithRawResponse<T>): HttpResponsePromise<T> {
-        const promise = Promise.resolve(result)
-        return new HttpResponsePromise<T>(promise)
+        const promise = Promise.resolve(result);
+        return new HttpResponsePromise<T>(promise);
     }
 
     private unwrap(): Promise<T> {
         if (!this.unwrappedPromise) {
-            this.unwrappedPromise = this.innerPromise.then(({ data }) => data)
+            this.unwrappedPromise = this.innerPromise.then(({ data }) => data);
         }
-        return this.unwrappedPromise
+        return this.unwrappedPromise;
     }
 
     /** @inheritdoc */
@@ -90,19 +90,19 @@ export class HttpResponsePromise<T> extends Promise<T> {
         onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | null,
         onrejected?: ((reason: unknown) => TResult2 | PromiseLike<TResult2>) | null
     ): Promise<TResult1 | TResult2> {
-        return this.unwrap().then(onfulfilled, onrejected)
+        return this.unwrap().then(onfulfilled, onrejected);
     }
 
     /** @inheritdoc */
     public override catch<TResult = never>(
         onrejected?: ((reason: unknown) => TResult | PromiseLike<TResult>) | null
     ): Promise<T | TResult> {
-        return this.unwrap().catch(onrejected)
+        return this.unwrap().catch(onrejected);
     }
 
     /** @inheritdoc */
     public override finally(onfinally?: (() => void) | null): Promise<T> {
-        return this.unwrap().finally(onfinally)
+        return this.unwrap().finally(onfinally);
     }
 
     /**
@@ -111,6 +111,6 @@ export class HttpResponsePromise<T> extends Promise<T> {
      * @returns A promise resolving to a `WithRawResponse` object.
      */
     public async withRawResponse(): Promise<WithRawResponse<T>> {
-        return await this.innerPromise
+        return await this.innerPromise;
     }
 }

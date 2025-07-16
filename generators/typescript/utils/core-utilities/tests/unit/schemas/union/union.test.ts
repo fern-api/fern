@@ -1,6 +1,6 @@
-import { boolean, discriminant, number, object, string, union } from "../../../../src/core/schemas/builders"
-import { itSchema, itSchemaIdentity } from "../utils/itSchema"
-import { itValidate } from "../utils/itValidate"
+import { boolean, discriminant, number, object, string, union } from "../../../../src/core/schemas/builders";
+import { itSchema, itSchemaIdentity } from "../utils/itSchema";
+import { itValidate } from "../utils/itValidate";
 
 describe("union", () => {
     itSchemaIdentity(
@@ -14,7 +14,7 @@ describe("union", () => {
         }),
         { type: "lion", meows: true },
         { title: "doesn't transform discriminant when it's a string" }
-    )
+    );
 
     itSchema(
         "transforms discriminant when it's a discriminant()",
@@ -26,7 +26,7 @@ describe("union", () => {
             raw: { _type: "lion", meows: true },
             parsed: { type: "lion", meows: true }
         }
-    )
+    );
 
     describe("allowUnrecognizedUnionMembers", () => {
         itSchema(
@@ -44,8 +44,8 @@ describe("union", () => {
                     allowUnrecognizedUnionMembers: true
                 }
             }
-        )
-    })
+        );
+    });
 
     describe("withParsedProperties", () => {
         it("Added property is included on parsed object", async () => {
@@ -54,15 +54,15 @@ describe("union", () => {
                 tiger: object({ value: string() })
             }).withParsedProperties({
                 printType: (parsed) => () => parsed.type
-            })
+            });
 
-            const parsed = await schema.parse({ type: "lion" })
+            const parsed = await schema.parse({ type: "lion" });
             if (!parsed.ok) {
-                throw new Error("Failed to parse")
+                throw new Error("Failed to parse");
             }
-            expect(parsed.value.printType()).toBe("lion")
-        })
-    })
+            expect(parsed.value.printType()).toBe("lion");
+        });
+    });
 
     itValidate(
         "non-object",
@@ -77,7 +77,7 @@ describe("union", () => {
                 message: "Expected object. Received list."
             }
         ]
-    )
+    );
 
     itValidate(
         "missing discriminant",
@@ -92,7 +92,7 @@ describe("union", () => {
                 message: 'Missing discriminant ("type")'
             }
         ]
-    )
+    );
 
     itValidate(
         "unrecognized discriminant value",
@@ -109,5 +109,5 @@ describe("union", () => {
                 message: 'Expected enum. Received "bear".'
             }
         ]
-    )
-})
+    );
+});

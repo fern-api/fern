@@ -1,8 +1,12 @@
-import { GeneratorName } from "@fern-api/configuration-loader"
+import { GeneratorName } from "@fern-api/configuration-loader";
 
-import { IrSerialization } from "../../ir-serialization"
-import { IrVersions } from "../../ir-versions"
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
+import { IrSerialization } from "../../ir-serialization";
+import { IrVersions } from "../../ir-versions";
+import {
+    GeneratorWasNeverUpdatedToConsumeNewIR,
+    GeneratorWasNotCreatedYet,
+    IrMigration
+} from "../../types/IrMigration";
 
 export const V24_TO_V23_MIGRATION: IrMigration<
     IrVersions.V24.ir.IntermediateRepresentation,
@@ -46,6 +50,6 @@ export const V24_TO_V23_MIGRATION: IrMigration<
     migrateBackwards: (v24): IrVersions.V23.ir.IntermediateRepresentation => {
         return {
             ...v24
-        }
+        };
     }
-}
+};

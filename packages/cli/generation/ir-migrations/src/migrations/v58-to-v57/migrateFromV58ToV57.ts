@@ -1,8 +1,12 @@
-import { GeneratorName } from "@fern-api/configuration-loader"
+import { GeneratorName } from "@fern-api/configuration-loader";
 
-import { IrSerialization } from "../../ir-serialization"
-import { IrVersions } from "../../ir-versions"
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
+import { IrSerialization } from "../../ir-serialization";
+import { IrVersions } from "../../ir-versions";
+import {
+    GeneratorWasNeverUpdatedToConsumeNewIR,
+    GeneratorWasNotCreatedYet,
+    IrMigration
+} from "../../types/IrMigration";
 
 export const V58_TO_V57_MIGRATION: IrMigration<
     IrVersions.V58.ir.IntermediateRepresentation,
@@ -49,37 +53,37 @@ export const V58_TO_V57_MIGRATION: IrMigration<
             ...v58,
             services: v58.services != null ? convertServicesIr(v58.services) : undefined,
             dynamic: v58.dynamic != null ? convertDynamicIr(v58.dynamic) : undefined
-        } as IrVersions.V57.ir.IntermediateRepresentation
+        } as IrVersions.V57.ir.IntermediateRepresentation;
     }
-}
+};
 
 function convertServicesIr(
     services: Record<string, IrVersions.V58.http.HttpService>
 ): Record<string, IrVersions.V57.http.HttpService> {
-    return Object.fromEntries(Object.entries(services).map(([key, service]) => [key, convertServiceIr(service)]))
+    return Object.fromEntries(Object.entries(services).map(([key, service]) => [key, convertServiceIr(service)]));
 }
 
 function convertServiceIr(service: IrVersions.V58.http.HttpService): IrVersions.V57.http.HttpService {
     return {
         ...service,
         endpoints: convertEndpointsIr(service.endpoints)
-    }
+    };
 }
 
 function convertEndpointsIr(endpoints: IrVersions.V58.http.HttpEndpoint[]): IrVersions.V57.http.HttpEndpoint[] {
-    return endpoints.map(convertEndpointIr).filter((endpoint) => endpoint != null)
+    return endpoints.map(convertEndpointIr).filter((endpoint) => endpoint != null);
 }
 
 function convertEndpointIr(endpoint: IrVersions.V58.http.HttpEndpoint): IrVersions.V57.http.HttpEndpoint | undefined {
-    const method = endpoint.method
+    const method = endpoint.method;
     if (method === "HEAD") {
         // HEAD methods can dropped entirely.
-        return undefined
+        return undefined;
     }
     return {
         ...endpoint,
         method: endpoint.method as IrVersions.V57.http.HttpMethod
-    }
+    };
 }
 
 function convertDynamicIr(
@@ -88,7 +92,7 @@ function convertDynamicIr(
     return {
         ...ir,
         endpoints: convertDynamicEndpoints(ir.endpoints)
-    }
+    };
 }
 
 function convertDynamicEndpoints(
@@ -98,16 +102,16 @@ function convertDynamicEndpoints(
         Object.entries(endpoints)
             .map(([key, endpoint]) => [key, convertDynamicEndpoint(endpoint)])
             .filter(([_, endpoint]) => endpoint != null)
-    )
+    );
 }
 
 function convertDynamicEndpoint(
     endpoint: IrVersions.V58.dynamic.Endpoint
 ): IrVersions.V57.dynamic.Endpoint | undefined {
-    const method = endpoint.location.method
+    const method = endpoint.location.method;
     if (method === "HEAD") {
         // HEAD methods can dropped entirely.
-        return undefined
+        return undefined;
     }
     return {
         ...endpoint,
@@ -116,22 +120,22 @@ function convertDynamicEndpoint(
             ...endpoint.location,
             method
         }
-    }
+    };
 }
 
 function convertDynamicExamples(
     examples: IrVersions.V58.dynamic.EndpointExample[]
 ): IrVersions.V57.dynamic.EndpointExample[] {
-    return examples.map((example) => convertDynamicExample(example)).filter((example) => example != null)
+    return examples.map((example) => convertDynamicExample(example)).filter((example) => example != null);
 }
 
 function convertDynamicExample(
     example: IrVersions.V58.dynamic.EndpointExample
 ): IrVersions.V57.dynamic.EndpointExample | undefined {
-    const method = example.endpoint.method
+    const method = example.endpoint.method;
     if (method === "HEAD") {
         // HEAD methods can dropped entirely.
-        return undefined
+        return undefined;
     }
     return {
         ...example,
@@ -139,5 +143,5 @@ function convertDynamicExample(
             ...example.endpoint,
             method
         }
-    }
+    };
 }

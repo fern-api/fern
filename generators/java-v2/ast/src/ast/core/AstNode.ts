@@ -1,7 +1,7 @@
-import { AbstractAstNode, AbstractFormatter } from "@fern-api/browser-compatible-base-generator"
+import { AbstractAstNode, AbstractFormatter } from "@fern-api/browser-compatible-base-generator";
 
-import { BaseJavaCustomConfigSchema } from "../../custom-config/BaseJavaCustomConfigSchema"
-import { JavaFile } from "./JavaFile"
+import { BaseJavaCustomConfigSchema } from "../../custom-config/BaseJavaCustomConfigSchema";
+import { JavaFile } from "./JavaFile";
 
 export abstract class AstNode extends AbstractAstNode {
     /**
@@ -12,17 +12,17 @@ export abstract class AstNode extends AbstractAstNode {
         customConfig,
         formatter
     }: {
-        packageName: string
-        customConfig: BaseJavaCustomConfigSchema
-        formatter?: AbstractFormatter
+        packageName: string;
+        customConfig: BaseJavaCustomConfigSchema;
+        formatter?: AbstractFormatter;
     }): Promise<string> {
         const file = new JavaFile({
             packageName,
             customConfig,
             formatter
-        })
-        this.write(file)
-        return file.toStringAsync()
+        });
+        this.write(file);
+        return file.toStringAsync();
     }
 
     /**
@@ -33,16 +33,16 @@ export abstract class AstNode extends AbstractAstNode {
         customConfig,
         formatter
     }: {
-        packageName: string
-        customConfig: BaseJavaCustomConfigSchema
-        formatter?: AbstractFormatter
+        packageName: string;
+        customConfig: BaseJavaCustomConfigSchema;
+        formatter?: AbstractFormatter;
     }): string {
         const file = new JavaFile({
             packageName,
             customConfig,
             formatter
-        })
-        this.write(file)
-        return file.toString()
+        });
+        this.write(file);
+        return file.toString();
     }
 }

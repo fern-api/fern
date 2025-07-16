@@ -1,8 +1,8 @@
-import { Reference } from "@fern-typescript/commons"
+import { Reference } from "@fern-typescript/commons";
 
-import { GeneratedVersion } from "./GeneratedVersion"
+import { GeneratedVersion } from "./GeneratedVersion";
 
 export interface VersionContext {
-    getGeneratedVersion: () => GeneratedVersion | undefined
-    getReferenceToVersionEnum: () => Reference | undefined
+    getGeneratedVersion: () => GeneratedVersion | undefined;
+    getReferenceToVersionEnum: () => Reference | undefined;
 }

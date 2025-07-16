@@ -1,20 +1,20 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
-import { createLogger } from "@fern-api/logger"
-import { createMockTaskContext } from "@fern-api/task-context"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { createLogger } from "@fern-api/logger";
+import { createMockTaskContext } from "@fern-api/task-context";
 
-import { createMigrationTester } from "../../../__test__/utils/createMigrationTester"
-import { IrVersions } from "../../../ir-versions"
-import { V6_TO_V5_MIGRATION } from "../migrateFromV6ToV5"
+import { createMigrationTester } from "../../../__test__/utils/createMigrationTester";
+import { IrVersions } from "../../../ir-versions";
+import { V6_TO_V5_MIGRATION } from "../migrateFromV6ToV5";
 
-const runMigration = createMigrationTester(V6_TO_V5_MIGRATION)
+const runMigration = createMigrationTester(V6_TO_V5_MIGRATION);
 
 describe("migrateFromV6ToV5", () => {
     it("correctly migrates when not using environments", async () => {
         const migrated = await runMigration({
             pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/no-environments"))
-        })
-        expect(migrated.ir.environments).toEqual([])
-    })
+        });
+        expect(migrated.ir.environments).toEqual([]);
+    });
 
     it("correctly migrates when using one base-url per environment", async () => {
         const migrated = await runMigration({
@@ -22,7 +22,7 @@ describe("migrateFromV6ToV5", () => {
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("./fixtures/single-url-per-environment")
             )
-        })
+        });
 
         const expectedEnvironments: IrVersions.V5.environment.Environment[] = [
             {
@@ -73,19 +73,19 @@ describe("migrateFromV6ToV5", () => {
                 },
                 url: "staging.com"
             }
-        ]
+        ];
 
-        expect(migrated.ir.environments).toEqual(expectedEnvironments)
-        expect(migrated.ir.defaultEnvironment).toBe("Production")
-    })
+        expect(migrated.ir.environments).toEqual(expectedEnvironments);
+        expect(migrated.ir.defaultEnvironment).toBe("Production");
+    });
 
     it("throws when using multiple base-urls per environment", async () => {
-        let output = ""
+        let output = "";
         const context = createMockTaskContext({
             logger: createLogger((_logLevel, ...logs) => {
-                output += logs.join(" ")
+                output += logs.join(" ");
             })
-        })
+        });
         await expect(
             runMigration({
                 pathToFixture: join(
@@ -96,7 +96,7 @@ describe("migrateFromV6ToV5", () => {
                     taskContext: context
                 }
             })
-        ).rejects.toBeTruthy()
-        expect(output).toContain("does not support specifying multiple URLs for a single environment")
-    })
-})
+        ).rejects.toBeTruthy();
+        expect(output).toContain("does not support specifying multiple URLs for a single environment");
+    });
+});

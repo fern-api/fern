@@ -1,4 +1,4 @@
-import { Values } from "@fern-api/core-utils"
+import { Values } from "@fern-api/core-utils";
 
 export const LogLevel = {
     Trace: "trace",
@@ -6,8 +6,8 @@ export const LogLevel = {
     Info: "info",
     Warn: "warn",
     Error: "error"
-} as const
+} as const;
 
-export type LogLevel = Values<typeof LogLevel>
+export type LogLevel = Values<typeof LogLevel>;
 
-export const LOG_LEVELS = Object.values(LogLevel)
+export const LOG_LEVELS = Object.values(LogLevel);

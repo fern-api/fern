@@ -1,1 +1,1 @@
-export * from "./createSampleIr"
+export * from "./createSampleIr";

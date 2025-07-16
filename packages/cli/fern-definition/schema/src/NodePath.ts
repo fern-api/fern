@@ -1,8 +1,8 @@
-export type NodePath = readonly NodePathItem[]
+export type NodePath = readonly NodePathItem[];
 
-export type NodePathItem = string | DetailedNodePathItem
+export type NodePathItem = string | DetailedNodePathItem;
 
 export interface DetailedNodePathItem {
-    key: string
-    arrayIndex?: number
+    key: string;
+    arrayIndex?: number;
 }

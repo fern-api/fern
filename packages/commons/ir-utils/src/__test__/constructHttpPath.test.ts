@@ -1,6 +1,6 @@
-import { HttpPath } from "@fern-api/ir-sdk"
+import { HttpPath } from "@fern-api/ir-sdk";
 
-import { constructHttpPath } from "../constructHttpPath"
+import { constructHttpPath } from "../constructHttpPath";
 
 describe("constructHttpPath", () => {
     it("/hello/{world}", () => {
@@ -12,10 +12,10 @@ describe("constructHttpPath", () => {
                     tail: ""
                 }
             ]
-        }
-        const actual = constructHttpPath("/hello/{world}")
-        expect(actual).toEqual(expected)
-    })
+        };
+        const actual = constructHttpPath("/hello/{world}");
+        expect(actual).toEqual(expected);
+    });
 
     it("{hello}/{world}", () => {
         const expected: HttpPath = {
@@ -30,10 +30,10 @@ describe("constructHttpPath", () => {
                     tail: ""
                 }
             ]
-        }
-        const actual = constructHttpPath("{hello}/{world}")
-        expect(actual).toEqual(expected)
-    })
+        };
+        const actual = constructHttpPath("{hello}/{world}");
+        expect(actual).toEqual(expected);
+    });
 
     it("{hello}/{world}/hello", () => {
         const expected: HttpPath = {
@@ -48,8 +48,8 @@ describe("constructHttpPath", () => {
                     tail: "/hello"
                 }
             ]
-        }
-        const actual = constructHttpPath("{hello}/{world}/hello")
-        expect(actual).toEqual(expected)
-    })
-})
+        };
+        const actual = constructHttpPath("{hello}/{world}/hello");
+        expect(actual).toEqual(expected);
+    });
+});

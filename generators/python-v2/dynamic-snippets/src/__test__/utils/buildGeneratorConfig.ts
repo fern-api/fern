@@ -1,12 +1,12 @@
-import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator"
-import { BasePythonCustomConfigSchema } from "@fern-api/python-browser-compatible-base"
+import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
+import { BasePythonCustomConfigSchema } from "@fern-api/python-browser-compatible-base";
 
 const PYPI = {
     packageName: "acme",
     registryUrl: "https://registry.npmjs.org",
     username: "dummy",
     password: "dummy"
-}
+};
 
 const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
     dryRun: false,
@@ -36,12 +36,12 @@ const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
             class_name: "Acme"
         }
     } as BasePythonCustomConfigSchema
-}
+};
 
 export function buildGeneratorConfig({
     customConfig
 }: {
-    customConfig?: Partial<BasePythonCustomConfigSchema>
+    customConfig?: Partial<BasePythonCustomConfigSchema>;
 } = {}): FernGeneratorExec.GeneratorConfig {
     return {
         ...DEFAULT_CONFIG,
@@ -49,5 +49,5 @@ export function buildGeneratorConfig({
             ...(DEFAULT_CONFIG.customConfig as BasePythonCustomConfigSchema),
             ...customConfig
         }
-    }
+    };
 }

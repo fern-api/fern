@@ -1,7 +1,7 @@
-import { z } from "zod"
+import { z } from "zod";
 
-import { GeneratorOutputSchema } from "./GeneratorOutputSchema"
-import { GithubConfigurationSchema } from "./GithubConfigurationSchema"
+import { GeneratorOutputSchema } from "./GeneratorOutputSchema";
+import { GithubConfigurationSchema } from "./GithubConfigurationSchema";
 
 export const GeneratorInvocationSchema = z.strictObject({
     name: z.string(),
@@ -9,6 +9,6 @@ export const GeneratorInvocationSchema = z.strictObject({
     output: z.optional(GeneratorOutputSchema),
     github: z.optional(GithubConfigurationSchema),
     config: z.unknown()
-})
+});
 
-export type GeneratorInvocationSchema = z.infer<typeof GeneratorInvocationSchema>
+export type GeneratorInvocationSchema = z.infer<typeof GeneratorInvocationSchema>;

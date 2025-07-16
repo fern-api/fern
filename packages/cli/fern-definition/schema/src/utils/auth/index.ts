@@ -1,1 +1,1 @@
-export { isOAuthScheme } from "./isOauthScheme"
+export { isOAuthScheme } from "./isOauthScheme";

@@ -1,5 +1,5 @@
-import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator"
-import { BasePhpCustomConfigSchema } from "@fern-api/php-codegen"
+import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
+import { BasePhpCustomConfigSchema } from "@fern-api/php-codegen";
 
 const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
     dryRun: false,
@@ -20,12 +20,12 @@ const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
     customConfig: {
         namespace: "Acme"
     } as BasePhpCustomConfigSchema
-}
+};
 
 export function buildGeneratorConfig({
     customConfig
 }: {
-    customConfig?: Partial<BasePhpCustomConfigSchema>
+    customConfig?: Partial<BasePhpCustomConfigSchema>;
 } = {}): FernGeneratorExec.GeneratorConfig {
     return {
         ...DEFAULT_CONFIG,
@@ -33,5 +33,5 @@ export function buildGeneratorConfig({
             ...(DEFAULT_CONFIG.customConfig as BasePhpCustomConfigSchema),
             ...customConfig
         }
-    }
+    };
 }

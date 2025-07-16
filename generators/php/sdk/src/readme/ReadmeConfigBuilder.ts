@@ -1,12 +1,12 @@
-import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk"
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
+import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
-import { SdkGeneratorContext } from "../SdkGeneratorContext"
-import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder"
+import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder";
 
 export interface Snippet {
-    id: string
-    snippet: string
+    id: string;
+    snippet: string;
 }
 
 export class ReadmeConfigBuilder {
@@ -16,28 +16,28 @@ export class ReadmeConfigBuilder {
         featureConfig,
         endpointSnippets
     }: {
-        context: SdkGeneratorContext
-        remote: FernGeneratorCli.Remote | undefined
-        featureConfig: FernGeneratorCli.FeatureConfig
-        endpointSnippets: FernGeneratorExec.Endpoint[]
+        context: SdkGeneratorContext;
+        remote: FernGeneratorCli.Remote | undefined;
+        featureConfig: FernGeneratorCli.FeatureConfig;
+        endpointSnippets: FernGeneratorExec.Endpoint[];
     }): FernGeneratorCli.ReadmeConfig {
         const readmeSnippetBuilder = new ReadmeSnippetBuilder({
             context,
             endpointSnippets
-        })
-        const snippets = readmeSnippetBuilder.buildReadmeSnippets()
-        const addendums = readmeSnippetBuilder.buildReadmeAddendums()
-        const features: FernGeneratorCli.ReadmeFeature[] = []
+        });
+        const snippets = readmeSnippetBuilder.buildReadmeSnippets();
+        const addendums = readmeSnippetBuilder.buildReadmeAddendums();
+        const features: FernGeneratorCli.ReadmeFeature[] = [];
         for (const feature of featureConfig.features) {
-            const featureSnippets = snippets[feature.id]
+            const featureSnippets = snippets[feature.id];
             if (!featureSnippets) {
-                continue
+                continue;
             }
 
-            const addendumForFeature = addendums[feature.id]
+            const addendumForFeature = addendums[feature.id];
 
             if (addendumForFeature != null) {
-                feature.addendum = addendumForFeature
+                feature.addendum = addendumForFeature;
             }
 
             features.push({
@@ -47,7 +47,7 @@ export class ReadmeConfigBuilder {
                 snippets: featureSnippets,
                 addendum: feature.addendum,
                 snippetsAreOptional: false
-            })
+            });
         }
         return {
             remote,
@@ -58,7 +58,7 @@ export class ReadmeConfigBuilder {
             introduction: context.ir.readmeConfig?.introduction,
             features,
             requirements: ["PHP ^8.1"]
-        }
+        };
     }
 
     private getLanguageInfo({ context }: { context: SdkGeneratorContext }): FernGeneratorCli.LanguageInfo {
@@ -66,6 +66,6 @@ export class ReadmeConfigBuilder {
             publishInfo: {
                 packageName: context.getPackageName()
             }
-        })
+        });
     }
 }

@@ -1,13 +1,13 @@
-import { RawSchemas } from "@fern-api/fern-definition-schema"
-import { ResolvedType, TypeResolverImpl, constructFernFileContext } from "@fern-api/ir-generator"
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { ResolvedType, TypeResolverImpl, constructFernFileContext } from "@fern-api/ir-generator";
 
-import { Rule, RuleViolation } from "../../Rule"
-import { CASINGS_GENERATOR } from "../../utils/casingsGenerator"
+import { Rule, RuleViolation } from "../../Rule";
+import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 
 export const ExplodedFormDataIsArrayRule: Rule = {
     name: "exploded-form-data-is-array",
     create: ({ workspace }) => {
-        const typeResolver = new TypeResolverImpl(workspace)
+        const typeResolver = new TypeResolverImpl(workspace);
         return {
             definitionFile: {
                 httpEndpoint: ({ endpoint }, { relativeFilepath, contents: definitionFile }) => {
@@ -17,22 +17,22 @@ export const ExplodedFormDataIsArrayRule: Rule = {
                         endpoint.request?.body == null ||
                         typeof endpoint.request.body === "string"
                     ) {
-                        return []
+                        return [];
                     }
 
                     if (!isHttpInlineRequestBodySchema(endpoint.request.body)) {
-                        return []
+                        return [];
                     }
 
-                    const violations: RuleViolation[] = []
+                    const violations: RuleViolation[] = [];
 
                     for (const [propertyKey, propertyShape] of Object.entries(endpoint.request.body.properties ?? {})) {
                         if (typeof propertyShape === "string") {
-                            continue
+                            continue;
                         }
 
                         if (propertyShape.style !== "exploded") {
-                            continue
+                            continue;
                         }
 
                         const file = constructFernFileContext({
@@ -40,48 +40,48 @@ export const ExplodedFormDataIsArrayRule: Rule = {
                             definitionFile,
                             casingsGenerator: CASINGS_GENERATOR,
                             rootApiFile: workspace.definition.rootApiFile.contents
-                        })
+                        });
 
                         const resolvedType = typeResolver.resolveType({
                             type: propertyShape.type,
                             file
-                        })
+                        });
 
                         if (resolvedType == null) {
                             // This error is caught by another rule.
-                            return []
+                            return [];
                         }
 
                         if (!isListType(resolvedType)) {
                             violations.push({
                                 message: `${propertyKey} is exploded and must be a list. Did you mean list<${propertyShape.type}>?`,
                                 severity: "error"
-                            })
+                            });
                         }
                     }
 
-                    return violations
+                    return violations;
                 }
             }
-        }
+        };
     }
-}
+};
 
 function isListType(type: ResolvedType): boolean {
     if (type._type !== "container") {
-        return false
+        return false;
     }
     if (type.container._type === "list") {
-        return true
+        return true;
     }
     if (type.container._type === "optional" || type.container._type === "nullable") {
-        return isListType(type.container.itemType)
+        return isListType(type.container.itemType);
     }
-    return false
+    return false;
 }
 
 function isHttpInlineRequestBodySchema(
     body: RawSchemas.HttpRequestBodySchema
 ): body is RawSchemas.HttpInlineRequestBodySchema {
-    return (body as RawSchemas.HttpInlineRequestBodySchema)?.properties != null
+    return (body as RawSchemas.HttpInlineRequestBodySchema)?.properties != null;
 }

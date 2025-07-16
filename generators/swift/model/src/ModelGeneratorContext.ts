@@ -1,9 +1,9 @@
-import { FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator"
-import { AbstractSwiftGeneratorContext } from "@fern-api/swift-base"
+import { FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
+import { AbstractSwiftGeneratorContext } from "@fern-api/swift-base";
 
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api"
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
-import { ModelCustomConfigSchema } from "./ModelCustomConfig"
+import { ModelCustomConfigSchema } from "./ModelCustomConfig";
 
 export class ModelGeneratorContext extends AbstractSwiftGeneratorContext<ModelCustomConfigSchema> {
     // biome-ignore lint/complexity/noUselessConstructor: allow
@@ -13,6 +13,6 @@ export class ModelGeneratorContext extends AbstractSwiftGeneratorContext<ModelCu
         customConfig: ModelCustomConfigSchema,
         generatorNotificationService: GeneratorNotificationService
     ) {
-        super(ir, config, customConfig, generatorNotificationService)
+        super(ir, config, customConfig, generatorNotificationService);
     }
 }

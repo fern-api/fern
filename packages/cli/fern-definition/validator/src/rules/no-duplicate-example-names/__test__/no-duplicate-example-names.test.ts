@@ -1,7 +1,7 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule"
-import { NoDuplicateExampleNamesRule } from "../no-duplicate-example-names"
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { NoDuplicateExampleNamesRule } from "../no-duplicate-example-names";
 
 describe("no-duplicate-example-names", () => {
     it("simple", async () => {
@@ -12,7 +12,7 @@ describe("no-duplicate-example-names", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
             )
-        })
+        });
 
         expect(violations).toEqual([
             {
@@ -27,6 +27,6 @@ describe("no-duplicate-example-names", () => {
                 relativeFilepath: RelativeFilePath.of("1.yml"),
                 severity: "fatal"
             }
-        ])
-    })
-})
+        ]);
+    });
+});

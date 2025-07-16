@@ -1,4 +1,4 @@
-import { Values } from "@fern-api/core-utils"
+import { Values } from "@fern-api/core-utils";
 
 export const OpenAPIExtension = {
     BEARER_FORMAT: "x-bearer-format",
@@ -13,6 +13,6 @@ export const OpenAPIExtension = {
     /* https://redocly.com/docs/api-reference-docs/specification-extensions/x-code-samples/ */
     REDOCLY_CODE_SAMPLES_KEBAB: "x-code-samples",
     REDOCLY_CODE_SAMPLES_CAMEL: "x-codeSamples"
-} as const
+} as const;
 
-export type OpenAPIExtension = Values<typeof OpenAPIExtension>
+export type OpenAPIExtension = Values<typeof OpenAPIExtension>;

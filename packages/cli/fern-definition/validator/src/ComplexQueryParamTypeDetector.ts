@@ -1,5 +1,5 @@
-import { FernWorkspace } from "@fern-api/api-workspace-commons"
-import { assertNever } from "@fern-api/core-utils"
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
+import { assertNever } from "@fern-api/core-utils";
 import {
     DefinitionFileSchema,
     RawSchemas,
@@ -7,7 +7,7 @@ import {
     isRawEnumDefinition,
     isRawObjectDefinition,
     isRawUndiscriminatedUnionDefinition
-} from "@fern-api/fern-definition-schema"
+} from "@fern-api/fern-definition-schema";
 import {
     FernFileContext,
     ResolvedContainerType,
@@ -16,16 +16,16 @@ import {
     TypeResolverImpl,
     constructFernFileContext,
     getAllPropertiesForObject
-} from "@fern-api/ir-generator"
+} from "@fern-api/ir-generator";
 
-import { RuleRunnerArgs } from "./Rule"
-import { CASINGS_GENERATOR } from "./utils/casingsGenerator"
+import { RuleRunnerArgs } from "./Rule";
+import { CASINGS_GENERATOR } from "./utils/casingsGenerator";
 
 export class ComplexQueryParamTypeDetector {
-    private typeResolver: TypeResolver
+    private typeResolver: TypeResolver;
 
     constructor(private readonly workspace: FernWorkspace) {
-        this.typeResolver = new TypeResolverImpl(workspace)
+        this.typeResolver = new TypeResolverImpl(workspace);
     }
 
     public isTypeComplex(type: string, ruleRunnerArgs: RuleRunnerArgs<DefinitionFileSchema>): boolean | undefined {
@@ -34,20 +34,20 @@ export class ComplexQueryParamTypeDetector {
             definitionFile: ruleRunnerArgs.contents,
             casingsGenerator: CASINGS_GENERATOR,
             rootApiFile: this.workspace.definition.rootApiFile.contents
-        })
+        });
         const resolvedType = this.typeResolver.resolveType({
             type,
             file
-        })
+        });
         if (resolvedType == null) {
-            return undefined
+            return undefined;
         }
-        const visited = new Set<string>()
+        const visited = new Set<string>();
         return this.isResolvedReferenceComplex({
             type: resolvedType,
             file,
             visited
-        })
+        });
     }
 
     private isResolvedReferenceComplex({
@@ -55,9 +55,9 @@ export class ComplexQueryParamTypeDetector {
         file,
         visited
     }: {
-        type: ResolvedType
-        file: FernFileContext
-        visited: Set<string>
+        type: ResolvedType;
+        file: FernFileContext;
+        visited: Set<string>;
     }): boolean {
         switch (type._type) {
             case "container":
@@ -65,19 +65,19 @@ export class ComplexQueryParamTypeDetector {
                     type: type.container,
                     file,
                     visited
-                })
+                });
             case "named":
                 return this.isNamedTypeComplex({
                     type,
                     file,
                     visited
-                })
+                });
             case "primitive":
-                return false
+                return false;
             case "unknown":
-                return true
+                return true;
             default:
-                assertNever(type)
+                assertNever(type);
         }
     }
 
@@ -86,13 +86,13 @@ export class ComplexQueryParamTypeDetector {
         file,
         visited
     }: {
-        type: ResolvedContainerType
-        file: FernFileContext
-        visited: Set<string>
+        type: ResolvedContainerType;
+        file: FernFileContext;
+        visited: Set<string>;
     }): boolean {
         switch (type._type) {
             case "literal":
-                return false
+                return false;
             case "map":
                 return (
                     (this.isResolvedReferenceComplex({
@@ -111,7 +111,7 @@ export class ComplexQueryParamTypeDetector {
                         type.keyType.primitive.v1 === "STRING" &&
                         type.valueType._type === "unknown"
                     )
-                )
+                );
             case "optional":
             case "nullable":
             case "list":
@@ -120,9 +120,9 @@ export class ComplexQueryParamTypeDetector {
                     type: type.itemType,
                     file,
                     visited
-                })
+                });
             default:
-                assertNever(type)
+                assertNever(type);
         }
     }
 
@@ -131,19 +131,19 @@ export class ComplexQueryParamTypeDetector {
         file,
         visited
     }: {
-        type: ResolvedType.Named
-        file: FernFileContext
-        visited: Set<string>
+        type: ResolvedType.Named;
+        file: FernFileContext;
+        visited: Set<string>;
     }): boolean {
         if (visited.has(type.rawName)) {
-            return false
+            return false;
         }
-        visited.add(type.rawName)
+        visited.add(type.rawName);
         if (isRawDiscriminatedUnionDefinition(type.declaration)) {
-            return true
+            return true;
         }
         if (isRawEnumDefinition(type.declaration)) {
-            return false
+            return false;
         }
         if (isRawObjectDefinition(type.declaration)) {
             return this.objectHasComplexProperties({
@@ -151,22 +151,22 @@ export class ComplexQueryParamTypeDetector {
                 objectDeclaration: type.declaration,
                 file,
                 visited
-            })
+            });
         }
         if (isRawUndiscriminatedUnionDefinition(type.declaration)) {
             for (const variant of type.declaration.union) {
-                const variantType = typeof variant === "string" ? variant : variant.type
+                const variantType = typeof variant === "string" ? variant : variant.type;
                 const isVariantComplex = this.isTypeComplex(variantType, {
                     contents: file.definitionFile,
                     relativeFilepath: file.relativeFilepath
-                })
+                });
                 if (isVariantComplex != null && isVariantComplex) {
-                    return true
+                    return true;
                 }
             }
-            return false
+            return false;
         }
-        assertNever(type.declaration)
+        assertNever(type.declaration);
     }
 
     private objectHasComplexProperties({
@@ -175,10 +175,10 @@ export class ComplexQueryParamTypeDetector {
         file,
         visited
     }: {
-        typeName: string
-        objectDeclaration: RawSchemas.ObjectSchema
-        file: FernFileContext
-        visited: Set<string>
+        typeName: string;
+        objectDeclaration: RawSchemas.ObjectSchema;
+        file: FernFileContext;
+        visited: Set<string>;
     }): boolean {
         const allPropertiesForObject = getAllPropertiesForObject({
             typeName,
@@ -188,14 +188,14 @@ export class ComplexQueryParamTypeDetector {
             workspace: this.workspace,
             filepathOfDeclaration: file.relativeFilepath,
             smartCasing: false
-        })
+        });
         return allPropertiesForObject.some((property) => {
             return this.isComplex({
                 type: property.resolvedPropertyType,
                 file,
                 visited
-            })
-        })
+            });
+        });
     }
 
     private isComplex({
@@ -203,9 +203,9 @@ export class ComplexQueryParamTypeDetector {
         file,
         visited
     }: {
-        type: ResolvedType
-        file: FernFileContext
-        visited: Set<string>
+        type: ResolvedType;
+        file: FernFileContext;
+        visited: Set<string>;
     }): boolean {
         switch (type._type) {
             case "named":
@@ -213,18 +213,18 @@ export class ComplexQueryParamTypeDetector {
                     type,
                     file,
                     visited
-                })
+                });
             case "primitive":
             case "unknown":
-                return false
+                return false;
             case "container":
                 return this.isComplexContainer({
                     type: type.container,
                     file,
                     visited
-                })
+                });
             default:
-                assertNever(type)
+                assertNever(type);
         }
     }
 
@@ -233,13 +233,13 @@ export class ComplexQueryParamTypeDetector {
         file,
         visited
     }: {
-        type: ResolvedContainerType
-        file: FernFileContext
-        visited: Set<string>
+        type: ResolvedContainerType;
+        file: FernFileContext;
+        visited: Set<string>;
     }): boolean {
         switch (type._type) {
             case "literal":
-                return false
+                return false;
             case "map":
                 return (
                     this.isComplex({
@@ -252,7 +252,7 @@ export class ComplexQueryParamTypeDetector {
                         file,
                         visited
                     })
-                )
+                );
             case "optional":
             case "nullable":
             case "list":
@@ -261,9 +261,9 @@ export class ComplexQueryParamTypeDetector {
                     type: type.itemType,
                     file,
                     visited
-                })
+                });
             default:
-                assertNever(type)
+                assertNever(type);
         }
     }
 }

@@ -1,8 +1,8 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { ValidationViolation } from "../../../ValidationViolation"
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule"
-import { ValidExampleErrorRule } from "../valid-example-error"
+import { ValidationViolation } from "../../../ValidationViolation";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { ValidExampleErrorRule } from "../valid-example-error";
 
 describe("valid-example-error", () => {
     it("simple", async () => {
@@ -13,7 +13,7 @@ describe("valid-example-error", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
             )
-        })
+        });
 
         const expectedViolations: ValidationViolation[] = [
             {
@@ -22,8 +22,8 @@ describe("valid-example-error", () => {
                 nodePath: ["errors", "ForbiddenError", "type"],
                 message: 'Expected example to be a string. Example is: {"foo":{"bar":"baz"}}'
             }
-        ]
+        ];
 
-        expect(violations).toEqual(expectedViolations)
-    })
-})
+        expect(violations).toEqual(expectedViolations);
+    });
+});

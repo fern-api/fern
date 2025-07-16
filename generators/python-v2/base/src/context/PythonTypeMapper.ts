@@ -1,5 +1,5 @@
-import { assertNever } from "@fern-api/core-utils"
-import { python } from "@fern-api/python-ast"
+import { assertNever } from "@fern-api/core-utils";
+import { python } from "@fern-api/python-ast";
 
 import {
     ContainerType,
@@ -10,22 +10,22 @@ import {
     PrimitiveTypeV1,
     TypeId,
     TypeReference
-} from "@fern-fern/ir-sdk/api"
+} from "@fern-fern/ir-sdk/api";
 
-import { BasePythonCustomConfigSchema } from "../custom-config/BasePythonCustomConfigSchema"
-import { AbstractPythonGeneratorContext } from "./AbstractPythonGeneratorContext"
+import { BasePythonCustomConfigSchema } from "../custom-config/BasePythonCustomConfigSchema";
+import { AbstractPythonGeneratorContext } from "./AbstractPythonGeneratorContext";
 
 export declare namespace PythonTypeMapper {
     interface Args {
-        reference: TypeReference
+        reference: TypeReference;
     }
 }
 
 export class PythonTypeMapper {
-    private context: AbstractPythonGeneratorContext<BasePythonCustomConfigSchema>
+    private context: AbstractPythonGeneratorContext<BasePythonCustomConfigSchema>;
 
     constructor(context: AbstractPythonGeneratorContext<BasePythonCustomConfigSchema>) {
-        this.context = context
+        this.context = context;
     }
 
     public convert({ reference }: PythonTypeMapper.Args): python.Type {
@@ -33,15 +33,15 @@ export class PythonTypeMapper {
             case "container":
                 return this.convertContainer({
                     container: reference.container
-                })
+                });
             case "named":
-                return this.convertNamed({ named: reference })
+                return this.convertNamed({ named: reference });
             case "primitive":
-                return this.convertPrimitive(reference)
+                return this.convertPrimitive(reference);
             case "unknown":
-                return python.Type.any()
+                return python.Type.any();
             default:
-                assertNever(reference)
+                assertNever(reference);
         }
     }
 
@@ -49,28 +49,28 @@ export class PythonTypeMapper {
         return new python.Reference({
             name: this.context.getPascalCaseSafeName(name),
             modulePath: [...this.context.getModulePathForId(typeId), this.context.getSnakeCaseSafeName(name)]
-        })
+        });
     }
 
     private convertContainer({ container }: { container: ContainerType }): python.Type {
         switch (container.type) {
             case "list":
-                return python.Type.list(this.convert({ reference: container.list }))
+                return python.Type.list(this.convert({ reference: container.list }));
             case "map": {
-                const key = this.convert({ reference: container.keyType })
-                const value = this.convert({ reference: container.valueType })
-                return python.Type.dict(key, value)
+                const key = this.convert({ reference: container.keyType });
+                const value = this.convert({ reference: container.valueType });
+                return python.Type.dict(key, value);
             }
             case "set":
-                return python.Type.set(this.convert({ reference: container.set }))
+                return python.Type.set(this.convert({ reference: container.set }));
             case "optional":
-                return python.Type.optional(this.convert({ reference: container.optional }))
+                return python.Type.optional(this.convert({ reference: container.optional }));
             case "nullable":
-                return python.Type.optional(this.convert({ reference: container.nullable }))
+                return python.Type.optional(this.convert({ reference: container.nullable }));
             case "literal":
-                return this.convertLiteral({ literal: container.literal })
+                return this.convertLiteral({ literal: container.literal });
             default:
-                assertNever(container)
+                assertNever(container);
         }
     }
 
@@ -90,35 +90,35 @@ export class PythonTypeMapper {
             base64: () => python.Type.bytes(),
             bigInteger: () => python.Type.str(),
             _other: () => python.Type.any()
-        })
+        });
     }
 
     private convertLiteral({ literal }: { literal: Literal }): python.Type {
         switch (literal.type) {
             case "boolean":
-                return python.Type.bool()
+                return python.Type.bool();
             case "string":
-                return python.Type.str()
+                return python.Type.str();
         }
     }
 
     private convertNamed({ named }: { named: DeclaredTypeName }): python.Type {
-        const objectClassReference = this.convertToClassReference(named)
-        const typeDeclaration = this.context.getTypeDeclarationOrThrow(named.typeId)
+        const objectClassReference = this.convertToClassReference(named);
+        const typeDeclaration = this.context.getTypeDeclarationOrThrow(named.typeId);
         switch (typeDeclaration.shape.type) {
             case "alias":
-                return this.convert({ reference: typeDeclaration.shape.aliasOf })
+                return this.convert({ reference: typeDeclaration.shape.aliasOf });
             case "enum":
-                return python.Type.reference(objectClassReference)
+                return python.Type.reference(objectClassReference);
             case "object":
-                return python.Type.reference(objectClassReference)
+                return python.Type.reference(objectClassReference);
             case "union":
-                return python.Type.reference(objectClassReference)
+                return python.Type.reference(objectClassReference);
             case "undiscriminatedUnion": {
-                return python.Type.reference(objectClassReference)
+                return python.Type.reference(objectClassReference);
             }
             default:
-                assertNever(typeDeclaration.shape)
+                assertNever(typeDeclaration.shape);
         }
     }
 }

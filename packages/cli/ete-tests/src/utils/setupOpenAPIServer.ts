@@ -1,6 +1,6 @@
-import express from "express"
-import * as http from "http"
-import { OpenAPI } from "openapi-types"
+import express from "express";
+import * as http from "http";
+import { OpenAPI } from "openapi-types";
 
 const TEST_OPENAPI_DOCUMENT: OpenAPI.Document = {
     openapi: "3.0.0",
@@ -52,27 +52,27 @@ const TEST_OPENAPI_DOCUMENT: OpenAPI.Document = {
             }
         }
     }
-}
+};
 
 export function setupOpenAPIServer(): { server: http.Server; cleanup: () => Promise<void> } {
-    const app = express()
+    const app = express();
 
     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     app.get("/openapi.json", (req: any, res: any) => {
-        res.json(TEST_OPENAPI_DOCUMENT)
-    })
+        res.json(TEST_OPENAPI_DOCUMENT);
+    });
 
-    const server = app.listen(4567)
+    const server = app.listen(4567);
     const cleanup = async () => {
         return new Promise<void>((resolve, reject) => {
             server.close((err) => {
                 if (err) {
-                    reject(err)
+                    reject(err);
                 } else {
-                    resolve()
+                    resolve();
                 }
-            })
-        })
-    }
-    return { server, cleanup }
+            });
+        });
+    };
+    return { server, cleanup };
 }

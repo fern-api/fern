@@ -1,10 +1,10 @@
-import type { Element, Root as HastRoot } from "hast"
-import type { BlockContent, DefinitionContent } from "mdast"
-import type { MdxJsxFlowElement } from "mdast-util-mdx-jsx"
-import { visit } from "unist-util-visit"
+import type { Element, Root as HastRoot } from "hast";
+import type { BlockContent, DefinitionContent } from "mdast";
+import type { MdxJsxFlowElement } from "mdast-util-mdx-jsx";
+import { visit } from "unist-util-visit";
 
-import { ESCAPED_COMPONENTS } from "../constants"
-import type { EscapedComponent } from "../types/components"
+import { ESCAPED_COMPONENTS } from "../constants";
+import type { EscapedComponent } from "../types/components";
 
 export function rehypeToRemarkCustomComponents(): (tree: HastRoot) => HastRoot {
     return function (tree: HastRoot): HastRoot {
@@ -19,12 +19,12 @@ export function rehypeToRemarkCustomComponents(): (tree: HastRoot) => HastRoot {
                         value: value as string
                     })),
                     children: node.children as Array<BlockContent | DefinitionContent>
-                }
+                };
                 if (parent && typeof index === "number") {
-                    parent.children[index] = newNode as unknown as Element
+                    parent.children[index] = newNode as unknown as Element;
                 }
             }
-        })
-        return tree
-    }
+        });
+        return tree;
+    };
 }

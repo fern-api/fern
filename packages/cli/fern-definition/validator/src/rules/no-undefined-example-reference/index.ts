@@ -1,1 +1,1 @@
-export { NoUndefinedExampleReferenceRule } from "./no-undefined-example-reference"
+export { NoUndefinedExampleReferenceRule } from "./no-undefined-example-reference";

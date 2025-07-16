@@ -1,7 +1,7 @@
-import { Zurg } from "@fern-typescript/commons"
-import { ExpressContext } from "@fern-typescript/contexts"
+import { Zurg } from "@fern-typescript/commons";
+import { ExpressContext } from "@fern-typescript/contexts";
 
 export interface GeneratedEndpointTypeSchema {
-    writeSchemaToFile: (context: ExpressContext) => void
-    getReferenceToZurgSchema: (context: ExpressContext) => Zurg.Schema
+    writeSchemaToFile: (context: ExpressContext) => void;
+    getReferenceToZurgSchema: (context: ExpressContext) => Zurg.Schema;
 }

@@ -1,4 +1,4 @@
-import { z } from "zod"
+import { z } from "zod";
 
 export const PydanticConfig = z.object({
     // Influence dynamic snippets.
@@ -23,6 +23,6 @@ export const PydanticConfig = z.object({
     use_string_enums: z.boolean().optional(),
     version_compatibility: z.enum(["v1", "v2", "both", "v1_on_v2"]).optional(),
     wrapped_aliases: z.boolean().optional()
-})
+});
 
-export type PydanticConfig = z.infer<typeof PydanticConfig>
+export type PydanticConfig = z.infer<typeof PydanticConfig>;

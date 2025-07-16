@@ -1,29 +1,29 @@
-import { DependencyManager, DependencyType } from "../dependency-manager/DependencyManager"
-import { ImportDeclaration, ImportsManager } from "../imports-manager/ImportsManager"
+import { DependencyManager, DependencyType } from "../dependency-manager/DependencyManager";
+import { ImportDeclaration, ImportsManager } from "../imports-manager/ImportsManager";
 
 export declare namespace ExternalDependency {
     export interface Init {
-        importsManager: ImportsManager
-        dependencyManager: DependencyManager
+        importsManager: ImportsManager;
+        dependencyManager: DependencyManager;
     }
 
     export interface Package {
-        name: string
+        name: string;
         // not defined for built-ins
-        version?: string
+        version?: string;
     }
 }
 
 export abstract class ExternalDependency {
-    protected abstract readonly PACKAGE: ExternalDependency.Package
-    protected abstract readonly TYPES_PACKAGE: ExternalDependency.Package | undefined
+    protected abstract readonly PACKAGE: ExternalDependency.Package;
+    protected abstract readonly TYPES_PACKAGE: ExternalDependency.Package | undefined;
 
-    private importsManager: ImportsManager
-    private dependencyManager: DependencyManager
+    private importsManager: ImportsManager;
+    private dependencyManager: DependencyManager;
 
     constructor({ importsManager, dependencyManager }: ExternalDependency.Init) {
-        this.importsManager = importsManager
-        this.dependencyManager = dependencyManager
+        this.importsManager = importsManager;
+        this.dependencyManager = dependencyManager;
     }
 
     protected withNamedImport<T>(
@@ -31,7 +31,7 @@ export abstract class ExternalDependency {
         // eslint-disable-next-line @typescript-eslint/ban-types
         run: (withImport: <F extends Function>(f: F) => F, namedImport: string) => T
     ): T {
-        return this.withImport(namedImport, { namedImports: [namedImport] }, run)
+        return this.withImport(namedImport, { namedImports: [namedImport] }, run);
     }
 
     protected withNamespaceImport<T>(
@@ -39,7 +39,7 @@ export abstract class ExternalDependency {
         // eslint-disable-next-line @typescript-eslint/ban-types
         run: (withImport: <F extends Function>(f: F) => F, namedImport: string) => T
     ): T {
-        return this.withImport(namespaceImport, { namespaceImport }, run)
+        return this.withImport(namespaceImport, { namespaceImport }, run);
     }
 
     protected withDefaultImport<T>(
@@ -55,9 +55,9 @@ export abstract class ExternalDependency {
                     namedImports: [{ name: "default", alias: defaultImport }]
                 },
                 run
-            )
+            );
         } else {
-            return this.withImport(defaultImport, { defaultImport }, run)
+            return this.withImport(defaultImport, { defaultImport }, run);
         }
     }
 
@@ -71,18 +71,18 @@ export abstract class ExternalDependency {
         return run(<F extends Function>(f: F): F => {
             const wrapped = (...args: unknown[]) => {
                 if (this.PACKAGE.version != null) {
-                    this.dependencyManager.addDependency(this.PACKAGE.name, this.PACKAGE.version)
+                    this.dependencyManager.addDependency(this.PACKAGE.name, this.PACKAGE.version);
                 }
                 if (this.TYPES_PACKAGE?.version != null) {
                     this.dependencyManager.addDependency(this.TYPES_PACKAGE.name, this.TYPES_PACKAGE.version, {
                         type: DependencyType.DEV
-                    })
+                    });
                 }
-                this.importsManager.addImport(this.PACKAGE.name, importDeclaration)
+                this.importsManager.addImport(this.PACKAGE.name, importDeclaration);
 
-                return f(...args)
-            }
-            return wrapped as unknown as F
-        }, importedItem)
+                return f(...args);
+            };
+            return wrapped as unknown as F;
+        }, importedItem);
     }
 }

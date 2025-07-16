@@ -1,9 +1,13 @@
-import { GeneratorName } from "@fern-api/configuration-loader"
-import { assertNever, isNonNullish } from "@fern-api/core-utils"
+import { GeneratorName } from "@fern-api/configuration-loader";
+import { assertNever, isNonNullish } from "@fern-api/core-utils";
 
-import { IrSerialization } from "../../ir-serialization"
-import { IrVersions } from "../../ir-versions"
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
+import { IrSerialization } from "../../ir-serialization";
+import { IrVersions } from "../../ir-versions";
+import {
+    GeneratorWasNeverUpdatedToConsumeNewIR,
+    GeneratorWasNotCreatedYet,
+    IrMigration
+} from "../../types/IrMigration";
 
 export const V44_TO_V43_MIGRATION: IrMigration<
     IrVersions.V44.ir.IntermediateRepresentation,
@@ -59,59 +63,59 @@ export const V44_TO_V43_MIGRATION: IrMigration<
                                     ...endpoint,
                                     examples: endpoint.examples
                                         .map((example) => {
-                                            return convertHttpExample({ example })
+                                            return convertHttpExample({ example });
                                         })
                                         .filter(isNonNullish)
                                 })
                             )
                         }
-                    ]
+                    ];
                 })
             )
-        }
+        };
     }
-}
+};
 
 function convertHttpExample({
     example
 }: {
-    example: IrVersions.V44.HttpEndpointExample
+    example: IrVersions.V44.HttpEndpointExample;
 }): IrVersions.V43.HttpEndpointExample | undefined {
     return example._visit<IrVersions.V43.HttpEndpointExample | undefined>({
         userProvided: (example) => {
-            return IrVersions.V43.HttpEndpointExample.userProvided(convertExampleEndpoint({ example }))
+            return IrVersions.V43.HttpEndpointExample.userProvided(convertExampleEndpoint({ example }));
         },
         generated: (example) => {
-            return IrVersions.V43.HttpEndpointExample.generated(convertExampleEndpoint({ example }))
+            return IrVersions.V43.HttpEndpointExample.generated(convertExampleEndpoint({ example }));
         },
         _other: () => undefined
-    })
+    });
 }
 
 function convertExampleEndpoint({
     example
 }: {
-    example: IrVersions.V44.ExampleEndpointCall
+    example: IrVersions.V44.ExampleEndpointCall;
 }): IrVersions.V43.ExampleEndpointCall {
     return {
         ...example,
         response: convertExampleResponse({ example: example.response })
-    }
+    };
 }
 
 function convertExampleResponse({
     example
 }: {
-    example: IrVersions.V44.ExampleResponse
+    example: IrVersions.V44.ExampleResponse;
 }): IrVersions.V43.ExampleResponse {
     /* eslint-disable no-fallthrough */
     switch (example.type) {
         case "ok":
-            return convertExampleSuccessResponse({ example: example.value })
+            return convertExampleSuccessResponse({ example: example.value });
         case "error":
-            return IrVersions.V43.ExampleResponse.error(example)
+            return IrVersions.V43.ExampleResponse.error(example);
         default:
-            assertNever(example)
+            assertNever(example);
     }
     /* eslint-enable no-fallthrough */
 }
@@ -119,20 +123,20 @@ function convertExampleResponse({
 function convertExampleSuccessResponse({
     example
 }: {
-    example: IrVersions.V44.ExampleEndpointSuccessResponse
+    example: IrVersions.V44.ExampleEndpointSuccessResponse;
 }): IrVersions.V43.ExampleResponse {
     switch (example.type) {
         case "body":
-            return IrVersions.V43.ExampleResponse.ok({ body: example.value })
+            return IrVersions.V43.ExampleResponse.ok({ body: example.value });
         case "sse":
             return IrVersions.V43.ExampleResponse.ok({
                 body: undefined
-            })
+            });
         case "stream":
             return IrVersions.V43.ExampleResponse.ok({
                 body: undefined
-            })
+            });
         default:
-            assertNever(example)
+            assertNever(example);
     }
 }

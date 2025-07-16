@@ -1,1 +1,1 @@
-export { NoComplexQueryParamsRule } from "./no-complex-query-params"
+export { NoComplexQueryParamsRule } from "./no-complex-query-params";

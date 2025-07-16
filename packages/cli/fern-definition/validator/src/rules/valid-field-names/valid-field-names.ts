@@ -1,8 +1,8 @@
-import { visitRawTypeDeclaration } from "@fern-api/fern-definition-schema"
+import { visitRawTypeDeclaration } from "@fern-api/fern-definition-schema";
 
-import { Rule, RuleViolation } from "../../Rule"
-import { validateEnumNames } from "./validateEnumNames"
-import { validateUnionNames } from "./validateUnionNames"
+import { Rule, RuleViolation } from "../../Rule";
+import { validateEnumNames } from "./validateEnumNames";
+import { validateUnionNames } from "./validateUnionNames";
 
 export const ValidFieldNamesRule: Rule = {
     name: "valid-field-names",
@@ -16,9 +16,9 @@ export const ValidFieldNamesRule: Rule = {
                         object: () => [],
                         undiscriminatedUnion: () => [],
                         discriminatedUnion: validateUnionNames
-                    })
+                    });
                 }
             }
-        }
+        };
     }
-}
+};

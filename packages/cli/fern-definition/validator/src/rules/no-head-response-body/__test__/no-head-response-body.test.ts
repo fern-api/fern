@@ -1,7 +1,7 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule"
-import { NoHeadResponseBodyRule } from "../no-head-response-body"
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { NoHeadResponseBodyRule } from "../no-head-response-body";
 
 describe("no-head-response-body", () => {
     it("simple", async () => {
@@ -12,7 +12,7 @@ describe("no-head-response-body", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
             )
-        })
+        });
 
         expect(violations).toEqual([
             {
@@ -21,6 +21,6 @@ describe("no-head-response-body", () => {
                 relativeFilepath: RelativeFilePath.of("a.yml"),
                 severity: "fatal"
             }
-        ])
-    })
-})
+        ]);
+    });
+});

@@ -1,9 +1,9 @@
-import { FieldDescriptorProto_Type } from "@bufbuild/protobuf/wkt"
+import { FieldDescriptorProto_Type } from "@bufbuild/protobuf/wkt";
 
-export type ProtobufSettings = undefined
+export type ProtobufSettings = undefined;
 
 export function getProtobufSettings(): ProtobufSettings {
-    return undefined
+    return undefined;
 }
 
 export const PRIMITIVE_TYPES = new Set([
@@ -22,4 +22,4 @@ export const PRIMITIVE_TYPES = new Set([
     FieldDescriptorProto_Type.SFIXED64,
     FieldDescriptorProto_Type.SINT32,
     FieldDescriptorProto_Type.SINT64
-])
+]);

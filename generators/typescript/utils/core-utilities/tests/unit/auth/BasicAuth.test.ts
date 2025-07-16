@@ -1,4 +1,4 @@
-import { BasicAuth } from "../../../src/core/auth/BasicAuth"
+import { BasicAuth } from "../../../src/core/auth/BasicAuth";
 
 describe("BasicAuth", () => {
     describe("toAuthorizationHeader", () => {
@@ -8,15 +8,15 @@ describe("BasicAuth", () => {
                     username: "username",
                     password: "password"
                 })
-            ).toBe("Basic dXNlcm5hbWU6cGFzc3dvcmQ=")
-        })
-    })
+            ).toBe("Basic dXNlcm5hbWU6cGFzc3dvcmQ=");
+        });
+    });
     describe("fromAuthorizationHeader", () => {
         it("correctly parses header", () => {
             expect(BasicAuth.fromAuthorizationHeader("Basic dXNlcm5hbWU6cGFzc3dvcmQ=")).toEqual({
                 username: "username",
                 password: "password"
-            })
-        })
-    })
-})
+            });
+        });
+    });
+});

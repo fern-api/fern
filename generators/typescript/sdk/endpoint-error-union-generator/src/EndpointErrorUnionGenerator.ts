@@ -1,36 +1,36 @@
-import { PackageId } from "@fern-typescript/commons"
-import { GeneratedEndpointErrorUnion } from "@fern-typescript/contexts"
-import { ErrorResolver } from "@fern-typescript/resolvers"
+import { PackageId } from "@fern-typescript/commons";
+import { GeneratedEndpointErrorUnion } from "@fern-typescript/contexts";
+import { ErrorResolver } from "@fern-typescript/resolvers";
 
-import { HttpEndpoint, IntermediateRepresentation } from "@fern-fern/ir-sdk/api"
+import { HttpEndpoint, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
-import { GeneratedEndpointErrorUnionImpl } from "./GeneratedEndpointErrorUnionImpl"
+import { GeneratedEndpointErrorUnionImpl } from "./GeneratedEndpointErrorUnionImpl";
 
 export declare namespace EndpointErrorUnionGenerator {
     export interface Init {
-        intermediateRepresentation: IntermediateRepresentation
-        errorResolver: ErrorResolver
-        includeSerdeLayer: boolean
-        retainOriginalCasing: boolean
-        noOptionalProperties: boolean
-        enableInlineTypes: boolean
+        intermediateRepresentation: IntermediateRepresentation;
+        errorResolver: ErrorResolver;
+        includeSerdeLayer: boolean;
+        retainOriginalCasing: boolean;
+        noOptionalProperties: boolean;
+        enableInlineTypes: boolean;
     }
 
     export namespace generateEndpointErrorUnion {
         export interface Args {
-            packageId: PackageId
-            endpoint: HttpEndpoint
+            packageId: PackageId;
+            endpoint: HttpEndpoint;
         }
     }
 }
 
 export class EndpointErrorUnionGenerator {
-    private intermediateRepresentation: IntermediateRepresentation
-    private errorResolver: ErrorResolver
-    private includeSerdeLayer: boolean
-    private retainOriginalCasing: boolean
-    private noOptionalProperties: boolean
-    private enableInlineTypes: boolean
+    private intermediateRepresentation: IntermediateRepresentation;
+    private errorResolver: ErrorResolver;
+    private includeSerdeLayer: boolean;
+    private retainOriginalCasing: boolean;
+    private noOptionalProperties: boolean;
+    private enableInlineTypes: boolean;
 
     constructor({
         intermediateRepresentation,
@@ -40,12 +40,12 @@ export class EndpointErrorUnionGenerator {
         noOptionalProperties,
         enableInlineTypes
     }: EndpointErrorUnionGenerator.Init) {
-        this.intermediateRepresentation = intermediateRepresentation
-        this.errorResolver = errorResolver
-        this.includeSerdeLayer = includeSerdeLayer
-        this.retainOriginalCasing = retainOriginalCasing
-        this.noOptionalProperties = noOptionalProperties
-        this.enableInlineTypes = enableInlineTypes
+        this.intermediateRepresentation = intermediateRepresentation;
+        this.errorResolver = errorResolver;
+        this.includeSerdeLayer = includeSerdeLayer;
+        this.retainOriginalCasing = retainOriginalCasing;
+        this.noOptionalProperties = noOptionalProperties;
+        this.enableInlineTypes = enableInlineTypes;
     }
 
     public generateEndpointErrorUnion({
@@ -61,6 +61,6 @@ export class EndpointErrorUnionGenerator {
             retainOriginalCasing: this.retainOriginalCasing,
             noOptionalProperties: this.noOptionalProperties,
             enableInlineTypes: this.enableInlineTypes
-        })
+        });
     }
 }

@@ -1,41 +1,41 @@
-import { LambdaParameter } from "./LambdaParameter"
-import { AstNode } from "./core/AstNode"
-import { Writer } from "./core/Writer"
+import { LambdaParameter } from "./LambdaParameter";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
 
 export declare namespace Lambda {
     interface Args {
         /* The parameter names of the lambda */
-        parameters?: LambdaParameter[]
+        parameters?: LambdaParameter[];
         /* The body of the lambda */
-        body: AstNode
+        body: AstNode;
     }
 }
 
 export class Lambda extends AstNode {
-    private readonly parameters: LambdaParameter[]
-    private readonly body: AstNode
+    private readonly parameters: LambdaParameter[];
+    private readonly body: AstNode;
 
     constructor({ parameters, body }: Lambda.Args) {
-        super()
-        this.parameters = parameters ?? []
-        this.body = body
+        super();
+        this.parameters = parameters ?? [];
+        this.body = body;
 
-        this.inheritReferences(body)
+        this.inheritReferences(body);
     }
 
     public write(writer: Writer): void {
-        writer.write("lambda")
+        writer.write("lambda");
 
         if (this.parameters && this.parameters.length) {
-            writer.write(" ")
+            writer.write(" ");
             this.parameters.forEach((param, index) => {
-                param.write(writer)
+                param.write(writer);
                 if (index < this.parameters.length - 1) {
-                    writer.write(", ")
+                    writer.write(", ");
                 }
-            })
+            });
         }
-        writer.write(": ")
-        this.body.write(writer)
+        writer.write(": ");
+        this.body.write(writer);
     }
 }

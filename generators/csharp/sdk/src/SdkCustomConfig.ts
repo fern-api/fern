@@ -1,7 +1,7 @@
-import { z } from "zod"
+import { z } from "zod";
 
-import { BaseCsharpCustomConfigSchema } from "@fern-api/csharp-codegen"
+import { BaseCsharpCustomConfigSchema } from "@fern-api/csharp-codegen";
 
-export const SdkCustomConfigSchema = BaseCsharpCustomConfigSchema
+export const SdkCustomConfigSchema = BaseCsharpCustomConfigSchema;
 
-export type SdkCustomConfigSchema = z.infer<typeof SdkCustomConfigSchema>
+export type SdkCustomConfigSchema = z.infer<typeof SdkCustomConfigSchema>;

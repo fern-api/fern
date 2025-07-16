@@ -1,51 +1,51 @@
-import { camelCase, isEqual } from "lodash-es"
+import { camelCase, isEqual } from "lodash-es";
 
-import { FERN_PACKAGE_MARKER_FILENAME, ROOT_API_FILENAME } from "@fern-api/configuration"
-import { RawSchemas, RootApiFileSchema, visitRawEnvironmentDeclaration } from "@fern-api/fern-definition-schema"
-import { AbsoluteFilePath, RelativeFilePath, basename, dirname, join, relative } from "@fern-api/path-utils"
+import { FERN_PACKAGE_MARKER_FILENAME, ROOT_API_FILENAME } from "@fern-api/configuration";
+import { RawSchemas, RootApiFileSchema, visitRawEnvironmentDeclaration } from "@fern-api/fern-definition-schema";
+import { AbsoluteFilePath, RelativeFilePath, basename, dirname, join, relative } from "@fern-api/path-utils";
 
-import { FernDefinitionDirectory } from "./utils/FernDefinitionDirectory"
+import { FernDefinitionDirectory } from "./utils/FernDefinitionDirectory";
 
-const BASE_MULTI_URL_ENVIRONMENT_NAME = "Production"
+const BASE_MULTI_URL_ENVIRONMENT_NAME = "Production";
 
 export type HttpServiceInfo = Partial<
     Pick<RawSchemas.HttpServiceSchema, "auth" | "base-path" | "display-name"> & { docs?: string }
->
+>;
 
 export interface FernDefinitionBuilder {
-    setDisplayName({ displayName }: { displayName: string }): void
+    setDisplayName({ displayName }: { displayName: string }): void;
 
-    addNavigation({ navigation }: { navigation: string[] }): void
+    addNavigation({ navigation }: { navigation: string[] }): void;
 
-    addAuthScheme({ name, schema }: { name: string; schema: RawSchemas.AuthSchemeDeclarationSchema }): void
+    addAuthScheme({ name, schema }: { name: string; schema: RawSchemas.AuthSchemeDeclarationSchema }): void;
 
-    setAuth(name: RawSchemas.ApiAuthSchema): void
+    setAuth(name: RawSchemas.ApiAuthSchema): void;
 
-    getGlobalHeaderNames(): Set<string>
+    getGlobalHeaderNames(): Set<string>;
 
-    getAuthHeaderName(): string | undefined
+    getAuthHeaderName(): string | undefined;
 
-    addGlobalHeader({ name, schema }: { name: string; schema: RawSchemas.HttpHeaderSchema }): void
+    addGlobalHeader({ name, schema }: { name: string; schema: RawSchemas.HttpHeaderSchema }): void;
 
-    getGlobalHeaders(): Record<string, RawSchemas.HttpHeaderSchema>
+    getGlobalHeaders(): Record<string, RawSchemas.HttpHeaderSchema>;
 
-    addIdempotencyHeader({ name, schema }: { name: string; schema: RawSchemas.HttpHeaderSchema }): void
+    addIdempotencyHeader({ name, schema }: { name: string; schema: RawSchemas.HttpHeaderSchema }): void;
 
-    addVariable({ name, schema }: { name: string; schema: RawSchemas.VariableDeclarationSchema }): void
+    addVariable({ name, schema }: { name: string; schema: RawSchemas.VariableDeclarationSchema }): void;
 
-    addEnvironment({ name, schema }: { name: string; schema: RawSchemas.EnvironmentSchema }): void
+    addEnvironment({ name, schema }: { name: string; schema: RawSchemas.EnvironmentSchema }): void;
 
-    setDefaultEnvironment(name: string): void
+    setDefaultEnvironment(name: string): void;
 
-    setDefaultUrl(name: string): void
+    setDefaultUrl(name: string): void;
 
-    setBasePath(basePath: string): void
+    setBasePath(basePath: string): void;
 
-    setApiVersion(apiVersionScheme: unknown): void
+    setApiVersion(apiVersionScheme: unknown): void;
 
-    getEnvironmentType(): "single" | "multi" | undefined
+    getEnvironmentType(): "single" | "multi" | undefined;
 
-    addAudience(name: string): void
+    addAudience(name: string): void;
 
     /**
      * Adds an import and returns the prefix for the import. Returns undefined if no prefix.
@@ -58,22 +58,22 @@ export interface FernDefinitionBuilder {
         fileToImport,
         alias
     }: {
-        file: RelativeFilePath
-        fileToImport: RelativeFilePath
-        alias?: string
-    }): string | undefined
+        file: RelativeFilePath;
+        fileToImport: RelativeFilePath;
+        alias?: string;
+    }): string | undefined;
 
-    addType(file: RelativeFilePath, { name, schema }: { name: string; schema: RawSchemas.TypeDeclarationSchema }): void
+    addType(file: RelativeFilePath, { name, schema }: { name: string; schema: RawSchemas.TypeDeclarationSchema }): void;
 
     addError(
         file: RelativeFilePath,
         { name, schema }: { name: string; schema: RawSchemas.ErrorDeclarationSchema }
-    ): void
+    ): void;
 
     addErrorExample(
         file: RelativeFilePath,
         { name, example }: { name: string; example: RawSchemas.ExampleTypeSchema }
-    ): void
+    ): void;
 
     addEndpoint(
         file: RelativeFilePath,
@@ -82,154 +82,154 @@ export interface FernDefinitionBuilder {
             schema,
             source
         }: { name: string; schema: RawSchemas.HttpEndpointSchema; source: RawSchemas.SourceSchema | undefined }
-    ): void
+    ): void;
 
-    addWebhook(file: RelativeFilePath, { name, schema }: { name: string; schema: RawSchemas.WebhookSchema }): void
+    addWebhook(file: RelativeFilePath, { name, schema }: { name: string; schema: RawSchemas.WebhookSchema }): void;
 
-    addChannel(file: RelativeFilePath, { channel }: { channel: RawSchemas.WebSocketChannelSchema }): void
+    addChannel(file: RelativeFilePath, { channel }: { channel: RawSchemas.WebSocketChannelSchema }): void;
 
     addChannelMessage(
         file: RelativeFilePath,
         { messageId, message }: { messageId: string; message: RawSchemas.WebSocketChannelMessageSchema }
-    ): void
+    ): void;
 
-    addChannelExample(file: RelativeFilePath, { example }: { example: RawSchemas.ExampleWebSocketSession }): void
+    addChannelExample(file: RelativeFilePath, { example }: { example: RawSchemas.ExampleWebSocketSession }): void;
 
-    setServiceInfo(file: RelativeFilePath, HttpServiceInfo: HttpServiceInfo): void
+    setServiceInfo(file: RelativeFilePath, HttpServiceInfo: HttpServiceInfo): void;
 
-    addTypeExample(file: RelativeFilePath, name: string, convertedExample: RawSchemas.ExampleTypeSchema): void
+    addTypeExample(file: RelativeFilePath, name: string, convertedExample: RawSchemas.ExampleTypeSchema): void;
 
-    build(): FernDefinition
+    build(): FernDefinition;
 
-    readonly enableUniqueErrorsPerEndpoint: boolean
+    readonly enableUniqueErrorsPerEndpoint: boolean;
 }
 
 export interface FernDefinition {
-    rootApiFile: RawSchemas.RootApiFileSchema
-    packageMarkerFile: RawSchemas.PackageMarkerFileSchema
-    definitionFiles: Record<RelativeFilePath, RawSchemas.DefinitionFileSchema>
+    rootApiFile: RawSchemas.RootApiFileSchema;
+    packageMarkerFile: RawSchemas.PackageMarkerFileSchema;
+    definitionFiles: Record<RelativeFilePath, RawSchemas.DefinitionFileSchema>;
 }
 
 export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
-    private root: FernDefinitionDirectory
-    private rootApiFile: RawSchemas.RootApiFileSchema
-    private packageMarkerFile: RawSchemas.PackageMarkerFileSchema = {}
-    private basePath: string | undefined = undefined
+    private root: FernDefinitionDirectory;
+    private rootApiFile: RawSchemas.RootApiFileSchema;
+    private packageMarkerFile: RawSchemas.PackageMarkerFileSchema = {};
+    private basePath: string | undefined = undefined;
 
     public constructor(public readonly enableUniqueErrorsPerEndpoint: boolean) {
-        this.root = new FernDefinitionDirectory()
+        this.root = new FernDefinitionDirectory();
         this.rootApiFile = {
             name: "api",
             "error-discrimination": {
                 strategy: "status-code"
             }
-        }
+        };
     }
 
     public setDisplayName({ displayName }: { displayName: string }): void {
-        this.rootApiFile["display-name"] = displayName
+        this.rootApiFile["display-name"] = displayName;
     }
 
     public addNavigation({ navigation }: { navigation: string[] }): void {
-        this.packageMarkerFile.navigation = navigation
+        this.packageMarkerFile.navigation = navigation;
     }
 
     public setServiceInfo(
         file: RelativeFilePath,
         { auth, "base-path": basePath, "display-name": displayName, docs }: HttpServiceInfo
     ): void {
-        const fernFile = this.getOrCreateFile(file)
+        const fernFile = this.getOrCreateFile(file);
         if (fernFile.service == null) {
             // Set to default values if service is null
             fernFile.service = {
                 auth: false,
                 "base-path": "",
                 endpoints: {}
-            }
+            };
         }
         if (auth != null) {
-            fernFile.service.auth = auth
+            fernFile.service.auth = auth;
         }
         if (basePath != null) {
-            fernFile.service["base-path"] = basePath
+            fernFile.service["base-path"] = basePath;
         }
         if (displayName != null) {
-            fernFile.service["display-name"] = displayName
+            fernFile.service["display-name"] = displayName;
         }
         if (docs != null) {
-            fernFile.docs = docs
+            fernFile.docs = docs;
         }
     }
 
     public addAudience(name: string): void {
         if (this.rootApiFile.audiences == null) {
-            this.rootApiFile.audiences = []
+            this.rootApiFile.audiences = [];
         }
-        this.rootApiFile.audiences.push(name)
+        this.rootApiFile.audiences.push(name);
     }
 
     public setAuth(auth: RawSchemas.ApiAuthSchema): void {
-        this.rootApiFile.auth = auth
+        this.rootApiFile.auth = auth;
     }
 
     public addAuthScheme({ name, schema }: { name: string; schema: RawSchemas.AuthSchemeDeclarationSchema }): void {
         if (this.rootApiFile["auth-schemes"] == null) {
-            this.rootApiFile["auth-schemes"] = {}
+            this.rootApiFile["auth-schemes"] = {};
         }
         if (this.rootApiFile["auth-schemes"][name] == null) {
-            this.rootApiFile["auth-schemes"][name] = schema
+            this.rootApiFile["auth-schemes"][name] = schema;
         }
     }
 
     public setDefaultEnvironment(name: string): void {
-        this.rootApiFile["default-environment"] = name
+        this.rootApiFile["default-environment"] = name;
     }
 
     public setDefaultUrl(name: string): void {
-        this.rootApiFile["default-url"] = name
+        this.rootApiFile["default-url"] = name;
     }
 
     public setBasePath(basePath: string): void {
-        this.basePath = basePath
+        this.basePath = basePath;
     }
 
     public setApiVersion(apiVersionScheme: unknown): void {
-        this.rootApiFile.version = apiVersionScheme as RawSchemas.VersionDeclarationSchema
+        this.rootApiFile.version = apiVersionScheme as RawSchemas.VersionDeclarationSchema;
     }
 
     public getEnvironmentType(): "single" | "multi" | undefined {
-        const environmentEntry = Object.entries(this.rootApiFile.environments ?? {})[0]
+        const environmentEntry = Object.entries(this.rootApiFile.environments ?? {})[0];
         if (environmentEntry == null) {
-            return undefined
+            return undefined;
         }
         return visitRawEnvironmentDeclaration<"single" | "multi">(environmentEntry[1], {
             singleBaseUrl: () => "single",
             multipleBaseUrls: () => "multi"
-        })
+        });
     }
 
     public addEnvironment({ name, schema }: { name: string; schema: RawSchemas.EnvironmentSchema }): void {
         if (this.rootApiFile.environments == null) {
-            this.rootApiFile.environments = {}
+            this.rootApiFile.environments = {};
         }
-        this.rootApiFile.environments[name] = schema
+        this.rootApiFile.environments[name] = schema;
     }
 
     public getGlobalHeaderNames(): Set<string> {
-        const headerNames = Object.keys(this.rootApiFile.headers ?? {})
+        const headerNames = Object.keys(this.rootApiFile.headers ?? {});
         // Get headers from auth schemes
         if (this.rootApiFile["auth-schemes"] != null) {
             for (const scheme of Object.values(this.rootApiFile["auth-schemes"])) {
                 if (isHeaderAuthScheme(scheme)) {
-                    headerNames.push(scheme.header)
+                    headerNames.push(scheme.header);
                 }
             }
         }
-        const maybeVersionHeader = this.getVersionHeader()
+        const maybeVersionHeader = this.getVersionHeader();
         if (maybeVersionHeader != null) {
-            headerNames.push(maybeVersionHeader)
+            headerNames.push(maybeVersionHeader);
         }
-        return new Set(headerNames)
+        return new Set(headerNames);
     }
 
     public getAuthHeaderName(): string | undefined {
@@ -237,41 +237,41 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         if (this.rootApiFile["auth-schemes"] != null) {
             for (const scheme of Object.values(this.rootApiFile["auth-schemes"])) {
                 if (isHeaderAuthScheme(scheme)) {
-                    return scheme.header
+                    return scheme.header;
                 }
             }
-            return "Authorization"
+            return "Authorization";
         }
-        return undefined
+        return undefined;
     }
 
     public addGlobalHeader({ name, schema }: { name: string; schema: RawSchemas.HttpHeaderSchema }): void {
-        const maybeVersionHeader = this.getVersionHeader()
+        const maybeVersionHeader = this.getVersionHeader();
         if (maybeVersionHeader != null && maybeVersionHeader === name) {
-            return
+            return;
         }
         if (this.rootApiFile.headers == null) {
-            this.rootApiFile.headers = {}
+            this.rootApiFile.headers = {};
         }
-        this.rootApiFile.headers[name] = schema
+        this.rootApiFile.headers[name] = schema;
     }
 
     public getGlobalHeaders(): Record<string, RawSchemas.HttpHeaderSchema> {
-        return this.rootApiFile.headers ?? {}
+        return this.rootApiFile.headers ?? {};
     }
 
     public addIdempotencyHeader({ name, schema }: { name: string; schema: RawSchemas.HttpHeaderSchema }): void {
         if (this.rootApiFile["idempotency-headers"] == null) {
-            this.rootApiFile["idempotency-headers"] = {}
+            this.rootApiFile["idempotency-headers"] = {};
         }
-        this.rootApiFile["idempotency-headers"][name] = schema
+        this.rootApiFile["idempotency-headers"][name] = schema;
     }
 
     public addVariable({ name, schema }: { name: string; schema: RawSchemas.VariableDeclarationSchema }): void {
         if (this.rootApiFile.variables == null) {
-            this.rootApiFile.variables = {}
+            this.rootApiFile.variables = {};
         }
-        this.rootApiFile.variables[name] = schema
+        this.rootApiFile.variables[name] = schema;
     }
 
     public addImport({
@@ -279,12 +279,12 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         fileToImport,
         alias
     }: {
-        file: RelativeFilePath
-        fileToImport: RelativeFilePath
-        alias?: string
+        file: RelativeFilePath;
+        fileToImport: RelativeFilePath;
+        alias?: string;
     }): string | undefined {
         if (file === fileToImport) {
-            return undefined
+            return undefined;
         }
         const importPrefix =
             alias ??
@@ -293,28 +293,28 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
                     "__package__",
                     "root"
                 )
-            )
+            );
 
         if (file === RelativeFilePath.of(ROOT_API_FILENAME)) {
             if (this.rootApiFile.imports == null) {
-                this.rootApiFile.imports = {}
+                this.rootApiFile.imports = {};
             }
             this.rootApiFile.imports[importPrefix] = relative(
                 dirname(AbsoluteFilePath.of(`/${file}`)),
                 AbsoluteFilePath.of(`/${fileToImport}`)
-            )
-            return importPrefix
+            );
+            return importPrefix;
         }
 
-        const fernFile = this.getOrCreateFile(file)
+        const fernFile = this.getOrCreateFile(file);
         if (fernFile.imports == null) {
-            fernFile.imports = {}
+            fernFile.imports = {};
         }
         fernFile.imports[importPrefix] = relative(
             dirname(AbsoluteFilePath.of(`/${file}`)),
             AbsoluteFilePath.of(`/${fileToImport}`)
-        )
-        return importPrefix
+        );
+        return importPrefix;
     }
 
     public addType(
@@ -323,32 +323,32 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     ): void {
         // No-op for types in api.yml
         if (file === RelativeFilePath.of(ROOT_API_FILENAME)) {
-            return
+            return;
         }
-        const fernFile = this.getOrCreateFile(file)
+        const fernFile = this.getOrCreateFile(file);
         if (fernFile.types == null) {
-            fernFile.types = {}
+            fernFile.types = {};
         }
-        fernFile.types[name] = schema
+        fernFile.types[name] = schema;
     }
 
     public addTypeExample(file: RelativeFilePath, name: string, convertedExample: RawSchemas.ExampleTypeSchema): void {
-        const fernFile = this.getOrCreateFile(file)
+        const fernFile = this.getOrCreateFile(file);
         if (fernFile.types == null) {
-            fernFile.types = {}
+            fernFile.types = {};
         }
-        const type = fernFile.types[name]
+        const type = fernFile.types[name];
         if (type != null) {
             if (typeof type === "string") {
                 fernFile.types[name] = {
                     type,
                     examples: [convertedExample]
-                }
+                };
             } else {
                 if (type.examples == null) {
-                    type.examples = []
+                    type.examples = [];
                 }
-                type.examples.push(convertedExample)
+                type.examples.push(convertedExample);
             }
         }
     }
@@ -357,17 +357,17 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         file: RelativeFilePath,
         { name, schema }: { name: string; schema: RawSchemas.ErrorDeclarationSchema }
     ): void {
-        const fernFile = this.getOrCreateFile(file)
+        const fernFile = this.getOrCreateFile(file);
         if (fernFile.errors == null) {
-            fernFile.errors = {}
+            fernFile.errors = {};
         }
         if (fernFile.errors[name] == null) {
-            fernFile.errors[name] = schema
+            fernFile.errors[name] = schema;
         } else if (fernFile.errors[name]?.type !== schema.type) {
             fernFile.errors[name] = {
                 "status-code": schema["status-code"],
                 type: "unknown"
-            }
+            };
         }
     }
 
@@ -375,23 +375,23 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         file: RelativeFilePath,
         { name, example }: { name: string; example: RawSchemas.ExampleTypeSchema }
     ): void {
-        const fernFile = this.getOrCreateFile(file)
+        const fernFile = this.getOrCreateFile(file);
         if (fernFile.errors == null) {
-            return
+            return;
         }
-        const errorDeclaration = fernFile.errors[name]
+        const errorDeclaration = fernFile.errors[name];
         if (errorDeclaration == null) {
-            return
+            return;
         }
         if (errorDeclaration.examples == null) {
-            errorDeclaration.examples = []
+            errorDeclaration.examples = [];
         }
         const alreadyAdded =
             errorDeclaration.examples.some((existingExample) => {
-                return isEqual(existingExample, example)
-            }) ?? false
+                return isEqual(existingExample, example);
+            }) ?? false;
         if (!alreadyAdded) {
-            errorDeclaration.examples?.push(example)
+            errorDeclaration.examples?.push(example);
         }
     }
 
@@ -403,38 +403,38 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
             source
         }: { name: string; schema: RawSchemas.HttpEndpointSchema; source: RawSchemas.SourceSchema | undefined }
     ): void {
-        const fernFile = this.getOrCreateFile(file)
+        const fernFile = this.getOrCreateFile(file);
         if (fernFile.service == null) {
             fernFile.service = {
                 auth: false,
                 "base-path": "",
                 endpoints: {}
-            }
+            };
         }
         if (source != null) {
-            fernFile.service.source = source
+            fernFile.service.source = source;
         }
-        fernFile.service.endpoints[name] = schema
+        fernFile.service.endpoints[name] = schema;
     }
 
     public addWebhook(
         file: RelativeFilePath,
         { name, schema }: { name: string; schema: RawSchemas.WebhookSchema }
     ): void {
-        const fernFile = this.getOrCreateFile(file)
+        const fernFile = this.getOrCreateFile(file);
         if (fernFile.webhooks == null) {
-            fernFile.webhooks = {}
+            fernFile.webhooks = {};
         }
-        fernFile.webhooks[name] = schema
+        fernFile.webhooks[name] = schema;
     }
 
     public addChannel(file: RelativeFilePath, { channel }: { channel: RawSchemas.WebSocketChannelSchema }): void {
-        const fernFile = this.getOrCreateFile(file)
-        fernFile.channel = channel
+        const fernFile = this.getOrCreateFile(file);
+        fernFile.channel = channel;
 
-        const basePath = this.basePath
+        const basePath = this.basePath;
         if (basePath != null) {
-            fernFile.channel.path = join(basePath, channel.path)
+            fernFile.channel.path = join(basePath, channel.path);
         }
     }
 
@@ -442,42 +442,42 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         file: RelativeFilePath,
         { example }: { example: RawSchemas.ExampleWebSocketSession }
     ): void {
-        const fernFile = this.getOrCreateFile(file)
+        const fernFile = this.getOrCreateFile(file);
         if (fernFile.channel == null) {
             fernFile.channel = {
                 path: "",
                 auth: false
-            }
+            };
         }
         if (fernFile.channel.messages == null) {
-            fernFile.channel.messages = {}
+            fernFile.channel.messages = {};
         }
         if (fernFile.channel.examples == null) {
-            fernFile.channel.examples = []
+            fernFile.channel.examples = [];
         }
-        fernFile.channel.examples.push(example)
+        fernFile.channel.examples.push(example);
     }
 
     public addChannelMessage(
         file: RelativeFilePath,
         { messageId, message }: { messageId: string; message: RawSchemas.WebSocketChannelMessageSchema }
     ): void {
-        const fernFile = this.getOrCreateFile(file)
+        const fernFile = this.getOrCreateFile(file);
         if (fernFile.channel == null) {
             fernFile.channel = {
                 path: "",
                 auth: false
-            }
+            };
         }
         if (fernFile.channel.messages == null) {
-            fernFile.channel.messages = {}
+            fernFile.channel.messages = {};
         }
-        fernFile.channel.messages[messageId] = message
+        fernFile.channel.messages[messageId] = message;
     }
 
     public build(): FernDefinition {
-        const definitionFiles = this.root.getAllFiles()
-        const basePath = this.basePath
+        const definitionFiles = this.root.getAllFiles();
+        const basePath = this.basePath;
         if (basePath != null) {
             // substitute package marker file
             if (this.packageMarkerFile.service != null) {
@@ -491,10 +491,10 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
                                     ...endpoint,
                                     path: join(basePath, endpoint.path)
                                 }
-                            ]
+                            ];
                         })
                     )
-                }
+                };
             }
 
             // substitute definition files
@@ -510,10 +510,10 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
                                         ...endpoint,
                                         path: join(basePath, endpoint.path)
                                     }
-                                ]
+                                ];
                             })
                         )
-                    }
+                    };
                 }
             }
         }
@@ -522,82 +522,82 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
             rootApiFile: this.rootApiFile,
             packageMarkerFile: this.packageMarkerFile,
             definitionFiles
-        }
-        return definition
+        };
+        return definition;
     }
 
     public getOrCreateFile(
         file: RelativeFilePath
     ): RawSchemas.PackageMarkerFileSchema | RawSchemas.DefinitionFileSchema {
         if (file === FERN_PACKAGE_MARKER_FILENAME) {
-            return this.packageMarkerFile
+            return this.packageMarkerFile;
         } else {
-            return this.root.getOrCreateFile(file)
+            return this.root.getOrCreateFile(file);
         }
     }
 
     private getVersionHeader(): string | undefined {
         if (this.rootApiFile.version == null) {
-            return undefined
+            return undefined;
         }
         return typeof this.rootApiFile.version.header === "string"
             ? this.rootApiFile.version.header
-            : this.rootApiFile.version.header.value
+            : this.rootApiFile.version.header.value;
     }
 }
 
 function getSharedEnvironmentBasePath(rootApiFile: RootApiFileSchema): string {
     if (rootApiFile.environments == null) {
-        return ""
+        return "";
     }
     const urls = Object.entries(rootApiFile.environments).flatMap(([_, url]) => {
         if (typeof url === "string") {
-            return [url]
+            return [url];
         } else if (isSingleBaseUrl(url)) {
-            return [url.url]
+            return [url.url];
         } else {
-            return Object.values(url.urls)
+            return Object.values(url.urls);
         }
-    })
-    return getSharedSuffix(urls.map(getPathname))
+    });
+    return getSharedSuffix(urls.map(getPathname));
 }
 
 function getPathname(url: string): string {
     try {
-        const parsedUrl = new URL(url)
-        const pathname = parsedUrl.pathname
+        const parsedUrl = new URL(url);
+        const pathname = parsedUrl.pathname;
         if (pathname.endsWith("/")) {
-            return pathname.slice(0, -1)
+            return pathname.slice(0, -1);
         } else {
-            return pathname
+            return pathname;
         }
     } catch (err) {
-        return ""
+        return "";
     }
 }
 
 function getSharedSuffix(strings: string[]): string {
-    let suffix = ""
+    let suffix = "";
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, no-constant-condition
     while (true) {
-        const chars = strings.map((s) => s[s.length - suffix.length - 1])
-        const char = chars[0]
+        const chars = strings.map((s) => s[s.length - suffix.length - 1]);
+        const char = chars[0];
         if (char == null || chars.some((c) => c !== char)) {
-            break
+            break;
         }
-        suffix = char + suffix
+        suffix = char + suffix;
     }
 
-    return suffix
+    return suffix;
 }
 
 function isSingleBaseUrl(url: RawSchemas.EnvironmentSchema): url is RawSchemas.SingleBaseUrlEnvironmentSchema {
-    return (url as RawSchemas.SingleBaseUrlEnvironmentSchema).url != null
+    return (url as RawSchemas.SingleBaseUrlEnvironmentSchema).url != null;
 }
 
 function isHeaderAuthScheme(
     scheme: RawSchemas.AuthSchemeDeclarationSchema
 ): scheme is RawSchemas.HeaderAuthSchemeSchema {
-    return (scheme as RawSchemas.HeaderAuthSchemeSchema)?.header != null
+    return (scheme as RawSchemas.HeaderAuthSchemeSchema)?.header != null;
 }

@@ -1,6 +1,6 @@
-import { ExportedFilePath, getTextOfTsNode } from "@fern-typescript/commons"
-import { SdkContext } from "@fern-typescript/contexts"
-import { Code, code } from "ts-poet"
+import { ExportedFilePath, getTextOfTsNode } from "@fern-typescript/commons";
+import { SdkContext } from "@fern-typescript/contexts";
+import { Code, code } from "ts-poet";
 
 import {
     HttpEndpoint,
@@ -13,33 +13,33 @@ import {
     OAuthClientCredentials,
     OAuthScheme,
     ResponseProperty
-} from "@fern-fern/ir-sdk/api"
+} from "@fern-fern/ir-sdk/api";
 
 export class OAuthTokenProviderGenerator {
-    public static readonly OAUTH_TOKEN_PROVIDER_CLASS_NAME = "OAuthTokenProvider"
-    public static readonly OAUTH_TOKEN_PROVIDER_PROPERTY_NAME = "_oauthTokenProvider"
-    public static readonly OAUTH_TOKEN_PROPERTY_NAME = "token"
-    public static readonly OAUTH_GET_TOKEN_METHOD_NAME = "getToken"
-    public static readonly OAUTH_CLIENT_ID_PROPERTY_NAME = "clientId"
-    public static readonly OAUTH_CLIENT_SECRET_PROPERTY_NAME = "clientSecret"
-    public static readonly OAUTH_AUTH_CLIENT_PROPERTY_NAME = "authClient"
+    public static readonly OAUTH_TOKEN_PROVIDER_CLASS_NAME = "OAuthTokenProvider";
+    public static readonly OAUTH_TOKEN_PROVIDER_PROPERTY_NAME = "_oauthTokenProvider";
+    public static readonly OAUTH_TOKEN_PROPERTY_NAME = "token";
+    public static readonly OAUTH_GET_TOKEN_METHOD_NAME = "getToken";
+    public static readonly OAUTH_CLIENT_ID_PROPERTY_NAME = "clientId";
+    public static readonly OAUTH_CLIENT_SECRET_PROPERTY_NAME = "clientSecret";
+    public static readonly OAUTH_AUTH_CLIENT_PROPERTY_NAME = "authClient";
 
-    private ir: IntermediateRepresentation
-    private neverThrowErrors: boolean
-    private includeSerdeLayer: boolean
+    private ir: IntermediateRepresentation;
+    private neverThrowErrors: boolean;
+    private includeSerdeLayer: boolean;
 
     constructor({
         intermediateRepresentation,
         neverThrowErrors,
         includeSerdeLayer
     }: {
-        intermediateRepresentation: IntermediateRepresentation
-        neverThrowErrors: boolean
-        includeSerdeLayer: boolean
+        intermediateRepresentation: IntermediateRepresentation;
+        neverThrowErrors: boolean;
+        includeSerdeLayer: boolean;
     }) {
-        this.ir = intermediateRepresentation
-        this.neverThrowErrors = neverThrowErrors
-        this.includeSerdeLayer = includeSerdeLayer
+        this.ir = intermediateRepresentation;
+        this.neverThrowErrors = neverThrowErrors;
+        this.includeSerdeLayer = includeSerdeLayer;
     }
 
     public getExportedFilePath(): ExportedFilePath {
@@ -55,7 +55,7 @@ export class OAuthTokenProviderGenerator {
             file: {
                 nameOnDisk: "OAuthTokenProvider.ts"
             }
-        }
+        };
     }
 
     public buildIndexFile(): Code {
@@ -63,7 +63,7 @@ export class OAuthTokenProviderGenerator {
             export { BasicAuth } from "./BasicAuth";
             export { BearerToken } from "./BearerToken";
             export { OAuthTokenProvider } from "./OAuthTokenProvider";
-        `
+        `;
     }
 
     public buildFile({ context, oauthScheme }: { context: SdkContext; oauthScheme: OAuthScheme }): Code {
@@ -73,9 +73,9 @@ export class OAuthTokenProviderGenerator {
                     context,
                     clientCredentials: oauthScheme.configuration,
                     authClientType: this.getAuthClientTypeName({ context, oauthScheme })
-                })
+                });
             default:
-                throw new Error(`OAuth for ${oauthScheme.configuration.type} is not supported yet.`)
+                throw new Error(`OAuth for ${oauthScheme.configuration.type} is not supported yet.`);
         }
     }
 
@@ -93,7 +93,7 @@ export class OAuthTokenProviderGenerator {
                           }
                 )
                 .getEntityName()
-        )
+        );
     }
 
     public buildClientCredentialsFile({
@@ -101,35 +101,35 @@ export class OAuthTokenProviderGenerator {
         clientCredentials,
         authClientType
     }: {
-        context: SdkContext
-        clientCredentials: OAuthClientCredentials
-        authClientType: string
+        context: SdkContext;
+        clientCredentials: OAuthClientCredentials;
+        authClientType: string;
     }): Code {
         const endpoint = Object.values(this.ir.services)
             .flatMap((service: HttpService) => service.endpoints)
             .find(
                 (endpoint: HttpEndpoint) => endpoint.id === clientCredentials.tokenEndpoint.endpointReference.endpointId
-            )
+            );
         if (endpoint == null) {
             throw new Error(
                 `failed to find endpoint with id ${clientCredentials.tokenEndpoint.endpointReference.endpointId}`
-            )
+            );
         }
 
-        const requestProperties: OAuthAccessTokenRequestProperties = clientCredentials.tokenEndpoint.requestProperties
+        const requestProperties: OAuthAccessTokenRequestProperties = clientCredentials.tokenEndpoint.requestProperties;
         const responseProperties: OAuthAccessTokenResponseProperties =
-            clientCredentials.tokenEndpoint.responseProperties
+            clientCredentials.tokenEndpoint.responseProperties;
 
         const clientIdType = getTextOfTsNode(
             context.type.getReferenceToType(
                 clientCredentials.tokenEndpoint.requestProperties.clientId.property.valueType
             ).typeNode
-        )
+        );
         const clientSecretType = getTextOfTsNode(
             context.type.getReferenceToType(
                 clientCredentials.tokenEndpoint.requestProperties.clientSecret.property.valueType
             ).typeNode
-        )
+        );
 
         return code`
             ${this.getImportStatements()}
@@ -166,17 +166,17 @@ export class OAuthTokenProviderGenerator {
                     responseProperties
                 })}
             };
-        `
+        `;
     }
 
     private getImportStatements(): Code {
         return code`
             import * as core from "../../core";
-        `
+        `;
     }
 
     private getGenericSdkErrorType({ context }: { context: SdkContext }): string {
-        return getTextOfTsNode(context.genericAPISdkError.getReferenceToGenericAPISdkError().getEntityName())
+        return getTextOfTsNode(context.genericAPISdkError.getReferenceToGenericAPISdkError().getEntityName());
     }
 
     private getProperties({
@@ -184,9 +184,9 @@ export class OAuthTokenProviderGenerator {
         clientIdType,
         clientSecretType
     }: {
-        authClientType: string
-        clientIdType: string
-        clientSecretType: string
+        authClientType: string;
+        clientIdType: string;
+        clientSecretType: string;
     }): Code {
         return code`
             private readonly BUFFER_IN_MINUTES = 2;
@@ -195,7 +195,7 @@ export class OAuthTokenProviderGenerator {
             private readonly _authClient: ${authClientType};
             private _accessToken: string | undefined;
             private _expiresAt: Date;
-        `
+        `;
     }
 
     private getConstructor({
@@ -203,9 +203,9 @@ export class OAuthTokenProviderGenerator {
         clientIdType,
         clientSecretType
     }: {
-        authClientType: string
-        clientIdType: string
-        clientSecretType: string
+        authClientType: string;
+        clientIdType: string;
+        clientSecretType: string;
     }): Code {
         return code`
             constructor({
@@ -222,7 +222,7 @@ export class OAuthTokenProviderGenerator {
                 this._authClient = authClient;
                 this._expiresAt = new Date();
             } 
-        `
+        `;
     }
 
     private getTokenMethod({ responseProperties }: { responseProperties: OAuthAccessTokenResponseProperties }): Code {
@@ -234,7 +234,7 @@ export class OAuthTokenProviderGenerator {
                     }
                     return this.refresh();
                 }
-            `
+            `;
         }
         return code`
             public async getToken(): Promise<string> {
@@ -243,7 +243,7 @@ export class OAuthTokenProviderGenerator {
                 }
                 return this._getToken();
             }
-        `
+        `;
     }
 
     private getRefreshMethod({
@@ -252,21 +252,21 @@ export class OAuthTokenProviderGenerator {
         requestProperties,
         responseProperties
     }: {
-        context: SdkContext
-        getTokenEndpoint: HttpEndpoint
-        requestProperties: OAuthAccessTokenRequestProperties
-        responseProperties: OAuthAccessTokenResponseProperties
+        context: SdkContext;
+        getTokenEndpoint: HttpEndpoint;
+        requestProperties: OAuthAccessTokenRequestProperties;
+        responseProperties: OAuthAccessTokenResponseProperties;
     }): Code {
-        const clientIdProperty = this.getName(requestProperties.clientId.property.name)
-        const clientSecretProperty = this.getName(requestProperties.clientSecret.property.name)
+        const clientIdProperty = this.getName(requestProperties.clientId.property.name);
+        const clientSecretProperty = this.getName(requestProperties.clientSecret.property.name);
         const accessTokenProperty = this.responsePropertyToDotDelimitedAccessor({
             responseProperty: responseProperties.accessToken
-        })
-        const handleNeverThrowErrors = this.getNeverThrowErrorsHandler({ context })
+        });
+        const handleNeverThrowErrors = this.getNeverThrowErrorsHandler({ context });
         if (responseProperties.expiresIn != null) {
             const expiresInProperty = this.responsePropertyToDotDelimitedAccessor({
                 responseProperty: responseProperties.expiresIn
-            })
+            });
             return code`
                 private async refresh(): Promise<string> {
                     const tokenResponse = await this._authClient.${this.getName(getTokenEndpoint.name)}({
@@ -278,7 +278,7 @@ export class OAuthTokenProviderGenerator {
                     this._expiresAt = this.getExpiresAt(tokenResponse.${expiresInProperty}, this.BUFFER_IN_MINUTES);
                     return this._accessToken;
                 }
-            `
+            `;
         }
         return code`
             private async _getToken(): Promise<string> {
@@ -290,62 +290,62 @@ export class OAuthTokenProviderGenerator {
                 this._accessToken = tokenResponse.${accessTokenProperty};
                 return this._accessToken;
             }
-        `
+        `;
     }
 
     private getNeverThrowErrorsHandler({ context }: { context: SdkContext }): Code {
         if (!this.neverThrowErrors) {
-            return code``
+            return code``;
         }
-        const errorType = this.getGenericSdkErrorType({ context })
+        const errorType = this.getGenericSdkErrorType({ context });
         return code`if (!tokenResponse.ok) {
                 throw new ${errorType}({ body: tokenResponse.error });
-            }`
+            }`;
     }
 
     private getExpiresAtMethod({
         responseProperties
     }: {
-        responseProperties: OAuthAccessTokenResponseProperties
+        responseProperties: OAuthAccessTokenResponseProperties;
     }): Code {
         if (responseProperties.expiresIn == null) {
-            return code``
+            return code``;
         }
         return code`
             private getExpiresAt(expiresInSeconds: number, bufferInMinutes: number): Date {
                 const now = new Date();
                 return new Date(now.getTime() + expiresInSeconds * 1000 - bufferInMinutes * 60 * 1000);
             }
-        `
+        `;
     }
 
     private responsePropertyToDotDelimitedAccessor({
         responseProperty
     }: {
-        responseProperty: ResponseProperty
+        responseProperty: ResponseProperty;
     }): string {
-        const prefix = this.neverThrowErrors ? "body." : ""
-        const propertyPath = responseProperty.propertyPath
+        const prefix = this.neverThrowErrors ? "body." : "";
+        const propertyPath = responseProperty.propertyPath;
         if (propertyPath == null || propertyPath.length === 0) {
-            return prefix + this.getName(responseProperty.property.name)
+            return prefix + this.getName(responseProperty.property.name);
         }
         return (
             prefix +
             propertyPath.map((name) => this.getName(name)).join(".") +
             "." +
             this.getName(responseProperty.property.name)
-        )
+        );
     }
     private getName(name: Name | NameAndWireValue): string {
         if (this.includeSerdeLayer) {
             if ("name" in name) {
-                return name.name.camelCase.unsafeName
+                return name.name.camelCase.unsafeName;
             }
-            return name.camelCase.unsafeName
+            return name.camelCase.unsafeName;
         }
         if ("name" in name) {
-            return name.name.originalName
+            return name.name.originalName;
         }
-        return name.originalName
+        return name.originalName;
     }
 }

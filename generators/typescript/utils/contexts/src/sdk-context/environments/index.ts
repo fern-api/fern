@@ -1,2 +1,2 @@
-export { type EnvironmentsContext } from "./EnvironmentsContext"
-export { type GeneratedEnvironments } from "./GeneratedEnvironments"
+export { type EnvironmentsContext } from "./EnvironmentsContext";
+export { type GeneratedEnvironments } from "./GeneratedEnvironments";

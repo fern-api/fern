@@ -11,37 +11,37 @@ import {
     Parameter,
     Property,
     StringClassReference
-} from "@fern-api/ruby-codegen"
+} from "@fern-api/ruby-codegen";
 
-import { OAuthAccessTokenProperties, ResponseProperty } from "@fern-fern/ir-sdk/api"
+import { OAuthAccessTokenProperties, ResponseProperty } from "@fern-fern/ir-sdk/api";
 
 export interface OauthFunction {
-    tokenResponseProperty: OAuthAccessTokenProperties
-    tokenFunctionClientClassReference: ClassReference
-    tokenFunction: Function_
+    tokenResponseProperty: OAuthAccessTokenProperties;
+    tokenFunctionClientClassReference: ClassReference;
+    tokenFunction: Function_;
 }
 
 export declare namespace OauthTokenProvider {
     export interface ClientCredentialsInit {
-        accessTokenFunction: OauthFunction
-        refreshTokenFunction?: OauthFunction
+        accessTokenFunction: OauthFunction;
+        refreshTokenFunction?: OauthFunction;
     }
 
     export interface Init {
-        clientName: string
-        oauthConfiguration: ClientCredentialsInit
-        oauthType: OauthType
-        requestClientReference: ClassReference
-        accessTokenReference: ClassReference
+        clientName: string;
+        oauthConfiguration: ClientCredentialsInit;
+        oauthType: OauthType;
+        requestClientReference: ClassReference;
+        accessTokenReference: ClassReference;
     }
 }
 
-type OauthType = "client_credentials" | undefined
+type OauthType = "client_credentials" | undefined;
 
 export class OauthTokenProvider extends Class_ {
-    public fetchToken: Function_
-    public initializerParameters: Parameter[]
-    public static FIELD_NAME = "token"
+    public fetchToken: Function_;
+    public initializerParameters: Parameter[];
+    public static FIELD_NAME = "token";
 
     // Including the type here to try to future proof some, though it's a bit awkward
     constructor({
@@ -55,7 +55,7 @@ export class OauthTokenProvider extends Class_ {
             name: "OauthTokenProvider",
             import_: new Import({ from: "core/oauth", isExternal: false }),
             moduleBreadcrumbs: [clientName]
-        })
+        });
         super({
             classReference: tokenProviderClassReference,
             includeInitializer: false,
@@ -72,12 +72,12 @@ export class OauthTokenProvider extends Class_ {
                 ...OauthTokenProvider.getAdditionalFunctions(oauthType, accessTokenReference, oauthConfiguration)
             ],
             expressions: OauthTokenProvider.getExpressions(oauthType)
-        })
+        });
 
         // Expose the function for fetching the access token since that's what's
         // being used by the different functions consuming this.
-        this.fetchToken = OauthTokenProvider.getTokenFunction(oauthType)
-        this.initializerParameters = OauthTokenProvider.getParameters(oauthType, requestClientReference)
+        this.fetchToken = OauthTokenProvider.getTokenFunction(oauthType);
+        this.initializerParameters = OauthTokenProvider.getParameters(oauthType, requestClientReference);
     }
 
     private static getInitializer(
@@ -99,7 +99,7 @@ export class OauthTokenProvider extends Class_ {
                         rightSide: "client_secret",
                         isAssignment: true
                     })
-                ]
+                ];
                 body.push(
                     new Expression({
                         leftSide: "@auth_client",
@@ -112,7 +112,7 @@ export class OauthTokenProvider extends Class_ {
                         }),
                         isAssignment: true
                     })
-                )
+                );
                 if (OauthTokenProvider.isRefreshClientSeparate(oauthConfiguration)) {
                     body.push(
                         new Expression({
@@ -126,7 +126,7 @@ export class OauthTokenProvider extends Class_ {
                             }),
                             isAssignment: true
                         })
-                    )
+                    );
                 }
 
                 return new Function_({
@@ -135,10 +135,10 @@ export class OauthTokenProvider extends Class_ {
                     functionBody: body,
                     parameters: OauthTokenProvider.getParameters(oauthType, requestClient),
                     returnValue: tokenProvider
-                })
+                });
             }
             default:
-                throw new Error("Invalid oauth type")
+                throw new Error("Invalid oauth type");
         }
     }
 
@@ -158,10 +158,10 @@ export class OauthTokenProvider extends Class_ {
                         name: "request_client",
                         type: requestClient
                     })
-                ]
+                ];
             }
             default:
-                return []
+                return [];
         }
     }
 
@@ -170,7 +170,7 @@ export class OauthTokenProvider extends Class_ {
             oauthConfiguration.refreshTokenFunction != null &&
             oauthConfiguration.refreshTokenFunction.tokenFunctionClientClassReference !==
                 oauthConfiguration.accessTokenFunction.tokenFunctionClientClassReference
-        )
+        );
     }
 
     private static getProperties(
@@ -192,19 +192,19 @@ export class OauthTokenProvider extends Class_ {
                         name: "auth_client",
                         type: StringClassReference
                     })
-                ]
+                ];
                 if (OauthTokenProvider.isRefreshClientSeparate(oauthConfiguration)) {
                     properties.push(
                         new Property({
                             name: "refresh_client",
                             type: StringClassReference
                         })
-                    )
+                    );
                 }
-                return properties
+                return properties;
             }
             default:
-                return []
+                return [];
         }
     }
 
@@ -217,10 +217,10 @@ export class OauthTokenProvider extends Class_ {
                         rightSide: "2",
                         isAssignment: true
                     })
-                ]
+                ];
             }
             default:
-                return []
+                return [];
         }
     }
 
@@ -259,16 +259,16 @@ export class OauthTokenProvider extends Class_ {
                     documentation:
                         "Returns a cached access token retrieved from the provided client credentials, refreshing if necessary.",
                     returnValue: StringClassReference
-                })
+                });
             }
             default:
-                throw new Error("Invalid oauth type")
+                throw new Error("Invalid oauth type");
         }
     }
 
     private static responsePropertyToObjectAccess(responseProperty: ResponseProperty): string {
-        const path = responseProperty.property.name.name.snakeCase.safeName
-        return [...(responseProperty.propertyPath ?? []).map((p) => p.snakeCase.safeName), path].join(".")
+        const path = responseProperty.property.name.name.snakeCase.safeName;
+        return [...(responseProperty.propertyPath ?? []).map((p) => p.snakeCase.safeName), path].join(".");
     }
 
     private static getAccessTokenInstantiation(
@@ -284,7 +284,7 @@ export class OauthTokenProvider extends Class_ {
                 name: "access_token",
                 isNamed: true
             })
-        ]
+        ];
         if (tokenResponseProperty.refreshToken != null) {
             accessTokenArguments.push(
                 new Argument({
@@ -294,7 +294,7 @@ export class OauthTokenProvider extends Class_ {
                     name: "refresh",
                     isNamed: true
                 })
-            )
+            );
         }
         if (tokenResponseProperty.expiresIn != null) {
             accessTokenArguments.push(
@@ -305,14 +305,14 @@ export class OauthTokenProvider extends Class_ {
                     name: "expires_at",
                     isNamed: true
                 })
-            )
+            );
         }
 
         return new FunctionInvocation({
             onObject: accessTokenReference,
             baseFunction: new Function_({ name: "new", functionBody: [] }),
             arguments_: accessTokenArguments
-        })
+        });
     }
 
     private static getAdditionalFunctions(
@@ -322,8 +322,8 @@ export class OauthTokenProvider extends Class_ {
     ): Function_[] {
         switch (oauthType) {
             case "client_credentials": {
-                const body: AstNode[] = []
-                const responseVariableName = "token_response"
+                const body: AstNode[] = [];
+                const responseVariableName = "token_response";
                 const clientCredentialArgs = [
                     new Argument({
                         isNamed: true,
@@ -335,7 +335,7 @@ export class OauthTokenProvider extends Class_ {
                         name: "client_secret",
                         value: "@client_secret"
                     })
-                ]
+                ];
                 if (oauthConfiguration.refreshTokenFunction != null) {
                     body.push(
                         new ConditionalStatement({
@@ -411,7 +411,7 @@ export class OauthTokenProvider extends Class_ {
                                 })
                             ]
                         })
-                    )
+                    );
                 } else {
                     body.push(
                         ...[
@@ -435,7 +435,7 @@ export class OauthTokenProvider extends Class_ {
                                 isAssignment: false
                             })
                         ]
-                    )
+                    );
                 }
 
                 return [
@@ -444,10 +444,10 @@ export class OauthTokenProvider extends Class_ {
                         functionBody: body,
                         returnValue: accessTokenReference
                     })
-                ]
+                ];
             }
             default:
-                return []
+                return [];
         }
     }
 }

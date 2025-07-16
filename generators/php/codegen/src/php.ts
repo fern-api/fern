@@ -1,4 +1,4 @@
-import { Ternary } from "@fern-api/browser-compatible-base-generator"
+import { Ternary } from "@fern-api/browser-compatible-base-generator";
 
 import {
     Array as Array_,
@@ -14,106 +14,106 @@ import {
     MethodInvocation,
     Parameter,
     Trait
-} from "./ast"
-import { DataClass } from "./ast/DataClass"
-import { MergeArrays } from "./ast/MergeArrays"
-import { AstNode } from "./ast/core/AstNode"
-import { convertToPhpVariableName } from "./ast/utils/convertToPhpVariableName"
+} from "./ast";
+import { DataClass } from "./ast/DataClass";
+import { MergeArrays } from "./ast/MergeArrays";
+import { AstNode } from "./ast/core/AstNode";
+import { convertToPhpVariableName } from "./ast/utils/convertToPhpVariableName";
 
 export function array(args: Array_.Args): Array_ {
-    return new Array_(args)
+    return new Array_(args);
 }
 
 export function attribute(args: Attribute.Args): Attribute {
-    return new Attribute(args)
+    return new Attribute(args);
 }
 
 export function class_(args: Class.Args): Class {
-    return new Class(args)
+    return new Class(args);
 }
 
 export function trait(args: Trait.Args): Trait {
-    return new Trait(args)
+    return new Trait(args);
 }
 
 export function classReference(args: ClassReference.Args): ClassReference {
-    return new ClassReference(args)
+    return new ClassReference(args);
 }
 
 export function codeblock(arg: CodeBlock.Arg): CodeBlock {
-    return new CodeBlock(arg)
+    return new CodeBlock(arg);
 }
 
 export function dataClass(args: DataClass.Args): DataClass {
-    return new DataClass(args)
+    return new DataClass(args);
 }
 
 export function enum_(args: Enum.Args): Enum {
-    return new Enum(args)
+    return new Enum(args);
 }
 
 export function field(args: Field.Args): Field {
-    return new Field(args)
+    return new Field(args);
 }
 
 export function instantiateClass(args: ClassInstantiation.Args): ClassInstantiation {
-    return new ClassInstantiation(args)
+    return new ClassInstantiation(args);
 }
 
 export function invokeMethod(args: MethodInvocation.Args): MethodInvocation {
-    return new MethodInvocation(args)
+    return new MethodInvocation(args);
 }
 
 export function throwException(args: ClassInstantiation.Args): AstNode {
     return codeblock((writer) => {
-        writer.write("throw ")
-        writer.writeNode(instantiateClass(args))
-    })
+        writer.write("throw ");
+        writer.writeNode(instantiateClass(args));
+    });
 }
 
 export function map(args: Map.Args): Map {
-    return new Map(args)
+    return new Map(args);
 }
 
 export function method(args: Method.Args): Method {
-    return new Method(args)
+    return new Method(args);
 }
 
 export function parameter(args: Parameter.Args): Parameter {
-    return new Parameter(args)
+    return new Parameter(args);
 }
 
 export function ternary(args: Ternary.Args): Ternary {
-    return new Ternary(args)
+    return new Ternary(args);
 }
 
 export function assignVariable(variableRef: AstNode, variableValue: string | AstNode): AstNode {
     return codeblock((writer) => {
-        writer.writeNodeOrString(variableRef)
-        writer.write(" = ")
-        writer.writeNodeOrString(variableValue)
-    })
+        writer.writeNodeOrString(variableRef);
+        writer.write(" = ");
+        writer.writeNodeOrString(variableValue);
+    });
 }
 
 export function variable(name: string): AstNode {
-    return codeblock(convertToPhpVariableName(name))
+    return codeblock(convertToPhpVariableName(name));
 }
 
 export function string(stringValue: string): AstNode {
-    return codeblock(`"${stringValue}"`)
+    return codeblock(`"${stringValue}"`);
 }
 
 export function mergeArrays(...args: MergeArrays.Args): MergeArrays {
-    return new MergeArrays(args)
+    return new MergeArrays(args);
 }
 
 export function this_(): AstNode {
     return new CodeBlock((writer) => {
-        writer.write("$this")
-    })
+        writer.write("$this");
+    });
 }
 
-export { AstNode } from "./ast/core/AstNode"
+export { AstNode } from "./ast/core/AstNode";
 export {
     Access,
     Array,
@@ -134,4 +134,4 @@ export {
     Type,
     TypeLiteral,
     Writer
-} from "./ast"
+} from "./ast";

@@ -1,9 +1,9 @@
-import { Type } from "./Type"
-import { AstNode } from "./core/AstNode"
-import { Writer } from "./core/Writer"
-import { convertToPhpVariableName } from "./utils/convertToPhpVariableName"
+import { Type } from "./Type";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
+import { convertToPhpVariableName } from "./utils/convertToPhpVariableName";
 
-export type TagType = "param" | "property" | "return" | "throws" | "var"
+export type TagType = "param" | "property" | "return" | "throws" | "var";
 
 export const TagType = {
     Param: "param",
@@ -11,78 +11,78 @@ export const TagType = {
     Returns: "return",
     Throws: "throws",
     Var: "var"
-} as const
+} as const;
 
 export declare namespace Comment {
     interface Args {
         /* The preface docs of the comment, if any */
-        docs?: string
+        docs?: string;
     }
 
     interface Tag {
         /* The type of the comment tag (e.g. @param) */
-        tagType: TagType
+        tagType: TagType;
         /* The type included in the @<tag> comment */
-        type: Type
+        type: Type;
         /* The name of the variable in the @<tag> comment, if any */
-        name?: string
+        name?: string;
         /* The in-line docs associated with the type, if any */
-        docs?: string
+        docs?: string;
     }
 }
 
 export class Comment extends AstNode {
-    public readonly docs: string | undefined
+    public readonly docs: string | undefined;
 
-    private tags: Comment.Tag[] = []
+    private tags: Comment.Tag[] = [];
 
     constructor({ docs }: Comment.Args = {}) {
-        super()
-        this.docs = docs
+        super();
+        this.docs = docs;
     }
 
     public addTag(tag: Comment.Tag): void {
         this.tags.push({
             ...tag,
             name: tag.name != null ? convertToPhpVariableName(tag.name) : undefined
-        })
+        });
     }
 
     public write(writer: Writer): void {
-        writer.writeLine("/**")
+        writer.writeLine("/**");
         if (this.docs != null) {
             this.docs.split("\n").forEach((line) => {
-                writer.writeLine(` * ${line}`)
-            })
+                writer.writeLine(` * ${line}`);
+            });
             if (this.tags.length > 0) {
-                writer.writeLine(" *")
+                writer.writeLine(" *");
             }
         }
         for (const tag of this.tags) {
-            this.writeTag({ writer, tag })
+            this.writeTag({ writer, tag });
         }
-        writer.writeLine(" */")
+        writer.writeLine(" */");
     }
 
     private writeTag({ writer, tag }: { writer: Writer; tag: Comment.Tag }): void {
-        const docsSplit = tag.docs != null ? tag.docs.split("\n") : undefined
+        const docsSplit = tag.docs != null ? tag.docs.split("\n") : undefined;
         if (docsSplit != null && docsSplit.length > 1) {
             docsSplit.forEach((line) => {
-                writer.writeLine(` * ${line}`)
-            })
-            writer.writeLine(" *")
+                writer.writeLine(` * ${line}`);
+            });
+            writer.writeLine(" *");
         }
 
-        writer.write(` * @${tag.tagType} `)
-        tag.type.write(writer, { comment: true })
+        writer.write(` * @${tag.tagType} `);
+        tag.type.write(writer, { comment: true });
         if (tag.name != null) {
-            writer.write(` ${tag.name}`)
+            writer.write(` ${tag.name}`);
         }
 
         if (docsSplit != null && docsSplit.length === 1) {
-            writer.write(` ${docsSplit[0]}`)
+            writer.write(` ${docsSplit[0]}`);
         }
 
-        writer.newLine()
+        writer.newLine();
     }
 }

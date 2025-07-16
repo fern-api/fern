@@ -1,24 +1,24 @@
-import { python } from ".."
-import { ClassMethodType } from "../Method"
-import { OperatorType } from "../OperatorType"
-import { Writer } from "../core/Writer"
+import { python } from "..";
+import { ClassMethodType } from "../Method";
+import { OperatorType } from "../OperatorType";
+import { Writer } from "../core/Writer";
 
 describe("Lambda", () => {
-    let writer: Writer
+    let writer: Writer;
 
     beforeEach(() => {
-        writer = new Writer()
-    })
+        writer = new Writer();
+    });
 
     describe("toString", () => {
         it("should generate a basic function with no args and a simple body", async () => {
             const method = python.lambda({
                 body: python.TypeInstantiation.bool(true)
-            })
-            method.write(writer)
-            expect(writer.toString()).toMatchSnapshot()
-            expect(method.getReferences().length).toBe(0)
-        })
+            });
+            method.write(writer);
+            expect(writer.toString()).toMatchSnapshot();
+            expect(method.getReferences().length).toBe(0);
+        });
 
         it("should generate a function with two args", async () => {
             const method = python.lambda({
@@ -28,11 +28,11 @@ describe("Lambda", () => {
                     operator: OperatorType.Add,
                     rhs: python.reference({ name: "b" })
                 })
-            })
-            method.write(writer)
-            expect(writer.toString()).toMatchSnapshot()
-            expect(method.getReferences().length).toBe(2)
-        })
+            });
+            method.write(writer);
+            expect(writer.toString()).toMatchSnapshot();
+            expect(method.getReferences().length).toBe(2);
+        });
 
         it("should generate a function with two args and initializers", async () => {
             const method = python.lambda({
@@ -48,10 +48,10 @@ describe("Lambda", () => {
                     operator: OperatorType.Add,
                     rhs: python.reference({ name: "b" })
                 })
-            })
-            method.write(writer)
-            expect(writer.toString()).toMatchSnapshot()
-            expect(method.getReferences().length).toBe(2)
-        })
-    })
-})
+            });
+            method.write(writer);
+            expect(writer.toString()).toMatchSnapshot();
+            expect(method.getReferences().length).toBe(2);
+        });
+    });
+});

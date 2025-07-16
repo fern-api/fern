@@ -1,12 +1,12 @@
-import { OAuthRefreshEndpoint } from "@fern-api/ir-sdk"
-import { IdGenerator } from "@fern-api/ir-utils"
+import { OAuthRefreshEndpoint } from "@fern-api/ir-sdk";
+import { IdGenerator } from "@fern-api/ir-utils";
 
-import { FernFileContext } from "../FernFileContext"
-import { EndpointResolver } from "../resolvers/EndpointResolver"
-import { PropertyResolver } from "../resolvers/PropertyResolver"
-import { generateEndpointIdFromResolvedEndpoint } from "../resolvers/generateEndpointIdFromResolvedEndpoint"
-import { isRootFernFilepath } from "../utils/isRootFernFilepath"
-import { RefreshTokenEndpoint } from "./convertOAuthUtils"
+import { FernFileContext } from "../FernFileContext";
+import { EndpointResolver } from "../resolvers/EndpointResolver";
+import { PropertyResolver } from "../resolvers/PropertyResolver";
+import { generateEndpointIdFromResolvedEndpoint } from "../resolvers/generateEndpointIdFromResolvedEndpoint";
+import { isRootFernFilepath } from "../utils/isRootFernFilepath";
+import { RefreshTokenEndpoint } from "./convertOAuthUtils";
 
 export function convertOAuthRefreshEndpoint({
     endpointResolver,
@@ -14,17 +14,17 @@ export function convertOAuthRefreshEndpoint({
     file,
     refreshTokenEndpoint
 }: {
-    endpointResolver: EndpointResolver
-    propertyResolver: PropertyResolver
-    file: FernFileContext
-    refreshTokenEndpoint: RefreshTokenEndpoint
+    endpointResolver: EndpointResolver;
+    propertyResolver: PropertyResolver;
+    file: FernFileContext;
+    refreshTokenEndpoint: RefreshTokenEndpoint;
 }): OAuthRefreshEndpoint | undefined {
     const resolvedEndpoint = endpointResolver.resolveEndpointOrThrow({
         endpoint: refreshTokenEndpoint.endpoint,
         file
-    })
+    });
 
-    let expiresIn = undefined
+    let expiresIn = undefined;
     try {
         expiresIn =
             refreshTokenEndpoint.responseProperties.expires_in != null
@@ -33,7 +33,7 @@ export function convertOAuthRefreshEndpoint({
                       endpoint: refreshTokenEndpoint.endpoint,
                       propertyComponents: refreshTokenEndpoint.responseProperties.expires_in
                   })
-                : undefined
+                : undefined;
         // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
     } catch {}
 
@@ -68,5 +68,5 @@ export function convertOAuthRefreshEndpoint({
                       })
                     : undefined
         }
-    }
+    };
 }

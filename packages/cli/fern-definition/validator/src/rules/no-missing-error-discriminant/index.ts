@@ -1,1 +1,1 @@
-export { NoMissingErrorDiscriminantRule } from "./no-missing-error-discriminant"
+export { NoMissingErrorDiscriminantRule } from "./no-missing-error-discriminant";

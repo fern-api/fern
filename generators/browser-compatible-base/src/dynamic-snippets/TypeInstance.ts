@@ -1,4 +1,4 @@
-import { FernIr } from "@fern-api/dynamic-ir-sdk"
+import { FernIr } from "@fern-api/dynamic-ir-sdk";
 
 /**
  * A type instance that can be converted into a language-specific AST node.
@@ -7,7 +7,7 @@ import { FernIr } from "@fern-api/dynamic-ir-sdk"
  * is (optionally) used within the dynamic snippet, e.g. for named fields.
  */
 export interface TypeInstance {
-    name: FernIr.NameAndWireValue
-    typeReference: FernIr.dynamic.TypeReference
-    value: unknown
+    name: FernIr.NameAndWireValue;
+    typeReference: FernIr.dynamic.TypeReference;
+    value: unknown;
 }

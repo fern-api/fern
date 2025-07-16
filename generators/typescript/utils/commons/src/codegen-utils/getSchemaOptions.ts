@@ -1,13 +1,13 @@
-import { SchemaOptions } from "../core-utilities/Zurg"
+import { SchemaOptions } from "../core-utilities/Zurg";
 
 export function getSchemaOptions({
     allowExtraFields,
     skipValidation,
     omitUndefined
 }: {
-    allowExtraFields: boolean
-    omitUndefined: boolean
-    skipValidation?: boolean
+    allowExtraFields: boolean;
+    omitUndefined: boolean;
+    skipValidation?: boolean;
 }): Required<SchemaOptions> {
     return {
         unrecognizedObjectKeys: allowExtraFields ? "passthrough" : "strip",
@@ -16,5 +16,5 @@ export function getSchemaOptions({
         skipValidation: skipValidation ?? false,
         breadcrumbsPrefix: [],
         omitUndefined
-    }
+    };
 }

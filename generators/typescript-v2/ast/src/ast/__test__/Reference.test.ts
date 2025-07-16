@@ -1,4 +1,4 @@
-import { ts } from "../.."
+import { ts } from "../..";
 
 describe("Reference", () => {
     describe("toStringWithDefaultImport", () => {
@@ -9,10 +9,10 @@ describe("Reference", () => {
                     moduleName: "Module",
                     type: "default"
                 }
-            })
-            expect(await reference.toStringAsync({ customConfig: {} })).toMatchSnapshot()
-        })
-    })
+            });
+            expect(await reference.toStringAsync({ customConfig: {} })).toMatchSnapshot();
+        });
+    });
 
     describe("toStringSameReferenceTwice", () => {
         it("Should generate a simple snippet using duplicate references", async () => {
@@ -25,7 +25,7 @@ describe("Reference", () => {
                             type: "default"
                         }
                     })
-                )
+                );
                 writer.writeNodeStatement(
                     ts.reference({
                         name: "defaultReference",
@@ -34,7 +34,7 @@ describe("Reference", () => {
                             type: "default"
                         }
                     })
-                )
+                );
                 writer.writeNodeStatement(
                     ts.reference({
                         name: "nonDefaultReference",
@@ -43,7 +43,7 @@ describe("Reference", () => {
                             type: "named"
                         }
                     })
-                )
+                );
                 writer.writeNodeStatement(
                     ts.reference({
                         name: "nonDefaultReference",
@@ -52,21 +52,21 @@ describe("Reference", () => {
                             type: "named"
                         }
                     })
-                )
+                );
                 writer.writeNodeStatement(
                     ts.reference({
                         name: "localReference"
                     })
-                )
+                );
                 writer.writeNodeStatement(
                     ts.reference({
                         name: "localReference"
                     })
-                )
-            })
-            expect(await references.toStringAsync({ customConfig: {} })).toMatchSnapshot()
-        })
-    })
+                );
+            });
+            expect(await references.toStringAsync({ customConfig: {} })).toMatchSnapshot();
+        });
+    });
 
     describe("toStringWithSingleNonDefaultImport", () => {
         it("Should generate a simple reference with a single named reference", async () => {
@@ -76,10 +76,10 @@ describe("Reference", () => {
                     type: "named",
                     moduleName: "module"
                 }
-            })
-            expect(await reference.toStringAsync({ customConfig: {} })).toMatchSnapshot()
-        })
-    })
+            });
+            expect(await reference.toStringAsync({ customConfig: {} })).toMatchSnapshot();
+        });
+    });
 
     describe("toStringWithMultipleNonDefaultImport", () => {
         it("Should generate a simple reference with multiple named references", async () => {
@@ -92,7 +92,7 @@ describe("Reference", () => {
                             type: "named"
                         }
                     })
-                )
+                );
                 writer.writeNodeStatement(
                     ts.reference({
                         name: "Reference2",
@@ -101,7 +101,7 @@ describe("Reference", () => {
                             type: "named"
                         }
                     })
-                )
+                );
                 writer.writeNodeStatement(
                     ts.reference({
                         name: "Reference3",
@@ -110,11 +110,11 @@ describe("Reference", () => {
                             type: "named"
                         }
                     })
-                )
-            })
-            expect(await references.toStringAsync({ customConfig: {} })).toMatchSnapshot()
-        })
-    })
+                );
+            });
+            expect(await references.toStringAsync({ customConfig: {} })).toMatchSnapshot();
+        });
+    });
 
     describe("toStringWithDefaultAndNamed", () => {
         it("Should generate a simple reference with multiple default, starred, and named references", async () => {
@@ -127,7 +127,7 @@ describe("Reference", () => {
                             type: "default"
                         }
                     })
-                )
+                );
                 writer.writeNodeStatement(
                     ts.reference({
                         name: "ReferenceA2",
@@ -136,7 +136,7 @@ describe("Reference", () => {
                             type: "named"
                         }
                     })
-                )
+                );
                 writer.writeNodeStatement(
                     ts.reference({
                         name: "ReferenceA3",
@@ -145,7 +145,7 @@ describe("Reference", () => {
                             type: "named"
                         }
                     })
-                )
+                );
                 writer.writeNodeStatement(
                     ts.reference({
                         name: "ReferenceB1",
@@ -154,7 +154,7 @@ describe("Reference", () => {
                             type: "default"
                         }
                     })
-                )
+                );
                 writer.writeNodeStatement(
                     ts.reference({
                         name: "ReferenceC1",
@@ -163,11 +163,11 @@ describe("Reference", () => {
                             type: "named"
                         }
                     })
-                )
-            })
-            expect(await references.toStringAsync({ customConfig: {} })).toMatchSnapshot()
-        })
-    })
+                );
+            });
+            expect(await references.toStringAsync({ customConfig: {} })).toMatchSnapshot();
+        });
+    });
 
     describe("toStringWithDefaultAndStar", () => {
         it("Should generate a simple reference with multiple default, starred, and star references", async () => {
@@ -180,7 +180,7 @@ describe("Reference", () => {
                             type: "default"
                         }
                     })
-                )
+                );
                 writer.writeNodeStatement(
                     ts.reference({
                         name: "ReferenceA2",
@@ -190,7 +190,7 @@ describe("Reference", () => {
                             starImportAlias: "alias"
                         }
                     })
-                )
+                );
                 writer.writeNodeStatement(
                     ts.reference({
                         name: "ReferenceA3",
@@ -200,7 +200,7 @@ describe("Reference", () => {
                             starImportAlias: "alias"
                         }
                     })
-                )
+                );
                 writer.writeNodeStatement(
                     ts.reference({
                         name: "ReferenceB1",
@@ -209,7 +209,7 @@ describe("Reference", () => {
                             type: "default"
                         }
                     })
-                )
+                );
                 writer.writeNodeStatement(
                     ts.reference({
                         name: "ReferenceC1",
@@ -219,7 +219,7 @@ describe("Reference", () => {
                             starImportAlias: "alias2"
                         }
                     })
-                )
+                );
                 writer.writeNodeStatement(
                     ts.reference({
                         name: "ReferenceC2",
@@ -229,9 +229,9 @@ describe("Reference", () => {
                             starImportAlias: "alias2"
                         }
                     })
-                )
-            })
-            expect(await references.toStringAsync({ customConfig: {} })).toMatchSnapshot()
-        })
-    })
-})
+                );
+            });
+            expect(await references.toStringAsync({ customConfig: {} })).toMatchSnapshot();
+        });
+    });
+});

@@ -1,19 +1,19 @@
-import { isVersionAhead } from "@fern-api/semver-utils"
+import { isVersionAhead } from "@fern-api/semver-utils";
 
-import { VersionMigrations } from "../types/VersionMigrations"
-import { ALL_MIGRATIONS } from "./all"
+import { VersionMigrations } from "../types/VersionMigrations";
+import { ALL_MIGRATIONS } from "./all";
 
 export function getMigrationsToRun({
     fromVersion,
     toVersion
 }: {
-    fromVersion: string
-    toVersion: string
+    fromVersion: string;
+    toVersion: string;
 }): VersionMigrations[] {
     return ALL_MIGRATIONS.slice(
         getIndexOfFirstMigrationGreaterThanOrEqualTo(fromVersion),
         getIndexOfFirstMigrationGreaterThanOrEqualTo(toVersion)
-    )
+    );
 }
 
 /**
@@ -21,13 +21,13 @@ export function getMigrationsToRun({
  * returns ALL_MIGRATIONS.length if no migrations are >= the provided version.
  */
 function getIndexOfFirstMigrationGreaterThanOrEqualTo(version: string): number {
-    let index
+    let index;
     for (index = 0; index < ALL_MIGRATIONS.length; index++) {
         // biome-ignore lint/style/noNonNullAssertion: allow
-        const versionOfMigration = ALL_MIGRATIONS[index]!.version
+        const versionOfMigration = ALL_MIGRATIONS[index]!.version;
         if (versionOfMigration === version || isVersionAhead(versionOfMigration, version)) {
-            break
+            break;
         }
     }
-    return index
+    return index;
 }

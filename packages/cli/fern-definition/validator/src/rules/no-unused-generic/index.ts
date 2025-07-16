@@ -1,1 +1,1 @@
-export { NoUnusedGenericRule } from "./no-unused-generic"
+export { NoUnusedGenericRule } from "./no-unused-generic";

@@ -1,10 +1,14 @@
-import { mapValues } from "lodash-es"
+import { mapValues } from "lodash-es";
 
-import { GeneratorName } from "@fern-api/configuration-loader"
+import { GeneratorName } from "@fern-api/configuration-loader";
 
-import { IrMigrationContext } from "../../IrMigrationContext"
-import { IrVersions } from "../../ir-versions"
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
+import { IrMigrationContext } from "../../IrMigrationContext";
+import { IrVersions } from "../../ir-versions";
+import {
+    GeneratorWasNeverUpdatedToConsumeNewIR,
+    GeneratorWasNotCreatedYet,
+    IrMigration
+} from "../../types/IrMigration";
 
 export const V12_TO_V11_MIGRATION: IrMigration<
     IrVersions.V12.ir.IntermediateRepresentation,
@@ -68,42 +72,42 @@ export const V12_TO_V11_MIGRATION: IrMigration<
                                                             taskContext,
                                                             targetGenerator
                                                         })
-                                                    )
+                                                    );
                                                 } else {
                                                     return IrVersions.V11.types.ResolvedTypeReference.named({
                                                         shape: namedType.shape,
                                                         name: namedType.name
-                                                    })
+                                                    });
                                                 }
                                             },
                                             unknown: IrVersions.V11.types.ResolvedTypeReference.unknown,
                                             _unknown: () => {
-                                                throw new Error("Encountered unknown alias")
+                                                throw new Error("Encountered unknown alias");
                                             }
                                         }
                                     )
-                            })
+                            });
                         },
                         undiscriminatedUnion: () => {
                             return taskContext.failAndThrow(
                                 getUndiscriminatedUnionsErrorMessage({ taskContext, targetGenerator })
-                            )
+                            );
                         },
                         _unknown: () => {
-                            throw new Error("Encountered unknown shape")
+                            throw new Error("Encountered unknown shape");
                         }
                     })
-                }
+                };
             }
-        )
+        );
 
         return {
             ...v12,
             types: v11Types,
             services: mapValues(v12.services, (service) => convertService(service, { taskContext, targetGenerator }))
-        }
+        };
     }
-}
+};
 
 function getUndiscriminatedUnionsErrorMessage(context: IrMigrationContext): string {
     if (context.targetGenerator != null) {
@@ -112,9 +116,9 @@ function getUndiscriminatedUnionsErrorMessage(context: IrMigrationContext): stri
             " does not support undiscriminated unions" +
             ` If you'd like to use this feature, please upgrade ${context.targetGenerator.name}` +
             " to a compatible version."
-        )
+        );
     } else {
-        return "Cannot backwards-migrate IR because this IR contains an undiscriminated union."
+        return "Cannot backwards-migrate IR because this IR contains an undiscriminated union.";
     }
 }
 
@@ -125,7 +129,7 @@ function convertService(
     return {
         ...service,
         endpoints: service.endpoints.map((endpoint) => convertEndpoint(endpoint, context))
-    }
+    };
 }
 
 function convertEndpoint(
@@ -140,7 +144,7 @@ function convertEndpoint(
                       ` If you'd like to use this feature, please upgrade ${targetGenerator.name}` +
                       " to a compatible version."
                 : "Cannot backwards-migrate IR because this IR contains a streaming response."
-        )
+        );
     }
 
     return {
@@ -160,10 +164,10 @@ function convertEndpoint(
                                             ` If you'd like to use this feature, please upgrade ${targetGenerator.name}` +
                                             " to a compatible version."
                                       : "Cannot backwards-migrate IR because this IR contains a file upload request."
-                              )
+                              );
                           },
                           _unknown: () => {
-                              throw new Error("Unknown HttpRequestBody type: " + endpoint.requestBody?.type)
+                              throw new Error("Unknown HttpRequestBody type: " + endpoint.requestBody?.type);
                           }
                       }
                   )
@@ -172,5 +176,5 @@ function convertEndpoint(
             endpoint.response != null
                 ? { docs: endpoint.response.docs, type: endpoint.response.responseBodyType }
                 : { docs: undefined, type: undefined }
-    }
+    };
 }

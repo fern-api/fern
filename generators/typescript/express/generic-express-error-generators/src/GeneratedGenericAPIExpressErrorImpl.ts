@@ -1,6 +1,6 @@
-import { AbstractErrorClassGenerator } from "@fern-typescript/abstract-error-class-generator"
-import { getTextOfTsNode } from "@fern-typescript/commons"
-import { ExpressContext, GeneratedGenericAPIExpressError } from "@fern-typescript/contexts"
+import { AbstractErrorClassGenerator } from "@fern-typescript/abstract-error-class-generator";
+import { getTextOfTsNode } from "@fern-typescript/commons";
+import { ExpressContext, GeneratedGenericAPIExpressError } from "@fern-typescript/contexts";
 import {
     ClassDeclaration,
     MethodDeclarationStructure,
@@ -9,22 +9,22 @@ import {
     PropertyDeclarationStructure,
     Scope,
     ts
-} from "ts-morph"
+} from "ts-morph";
 
 export class GeneratedGenericAPIExpressErrorImpl
     extends AbstractErrorClassGenerator<ExpressContext>
     implements GeneratedGenericAPIExpressError
 {
-    private static SEND_METHOD_NAME = "send"
-    private static SEND_RESPONSE_PARAMETER_NAME = "res"
-    private static ERROR_NAME_PROPERTY_NAME = "errorName"
+    private static SEND_METHOD_NAME = "send";
+    private static SEND_RESPONSE_PARAMETER_NAME = "res";
+    private static ERROR_NAME_PROPERTY_NAME = "errorName";
 
     public writeToFile(context: ExpressContext): void {
-        super.writeToSourceFile(context)
+        super.writeToSourceFile(context);
     }
 
     protected getClassProperties(): OptionalKind<PropertyDeclarationStructure>[] {
-        return []
+        return [];
     }
 
     protected getConstructorParameters(): OptionalKind<ParameterDeclarationStructure>[] {
@@ -36,19 +36,19 @@ export class GeneratedGenericAPIExpressErrorImpl
                 isReadonly: true,
                 scope: Scope.Public
             }
-        ]
+        ];
     }
 
     protected getSuperArguments(): ts.Expression[] {
-        return []
+        return [];
     }
 
     protected getConstructorStatements(): ts.Statement[] {
-        return []
+        return [];
     }
 
     protected addToClass(class_: ClassDeclaration, context: ExpressContext): void {
-        class_.addMethod(this.getSendMethod(context))
+        class_.addMethod(this.getSendMethod(context));
     }
 
     private getSendMethod(context: ExpressContext): OptionalKind<MethodDeclarationStructure> {
@@ -67,11 +67,11 @@ export class GeneratedGenericAPIExpressErrorImpl
                     ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword)
                 ])
             )
-        }
+        };
     }
 
     protected isAbstract(): boolean {
-        return true
+        return true;
     }
 
     public implementSend(
@@ -87,7 +87,7 @@ export class GeneratedGenericAPIExpressErrorImpl
                     GeneratedGenericAPIExpressErrorImpl.SEND_RESPONSE_PARAMETER_NAME
                 )
             }).map(getTextOfTsNode)
-        }
+        };
     }
 
     public send({ error, expressResponse }: { error: ts.Expression; expressResponse: ts.Expression }): ts.Expression {
@@ -97,17 +97,17 @@ export class GeneratedGenericAPIExpressErrorImpl
                 undefined,
                 [expressResponse]
             )
-        )
+        );
     }
 
     public getConstructorArguments({ errorName }: { errorName: string }): ts.Expression[] {
-        return [ts.factory.createStringLiteral(errorName)]
+        return [ts.factory.createStringLiteral(errorName)];
     }
 
     public getErrorClassName({ referenceToError }: { referenceToError: ts.Expression }): ts.Expression {
         return ts.factory.createPropertyAccessExpression(
             referenceToError,
             GeneratedGenericAPIExpressErrorImpl.ERROR_NAME_PROPERTY_NAME
-        )
+        );
     }
 }

@@ -1,108 +1,108 @@
-import { Access } from "./Access"
-import { ClassReference } from "./ClassReference"
-import { Field } from "./Field"
-import { Method } from "./Method"
-import { AstNode } from "./core/AstNode"
-import { Writer } from "./core/Writer"
+import { Access } from "./Access";
+import { ClassReference } from "./ClassReference";
+import { Field } from "./Field";
+import { Method } from "./Method";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
 
 export declare namespace Interface {
     interface Args {
         /* The name of the C# class */
-        name: string
+        name: string;
         /* The namespace of the C# class*/
-        namespace: string
+        namespace: string;
         /* The access level of the C# class */
-        access: Access
+        access: Access;
         /* Defaults to false */
-        partial?: boolean
+        partial?: boolean;
         /* Defaults to false */
-        isNestedInterface?: boolean
+        isNestedInterface?: boolean;
         /* Any interfaces the interface inherits */
-        interfaceReferences?: ClassReference[]
+        interfaceReferences?: ClassReference[];
     }
 }
 
 export class Interface extends AstNode {
-    public readonly name: string
-    public readonly namespace: string
-    public readonly access: Access
-    public readonly partial: boolean
-    public readonly reference: ClassReference
-    public readonly isNestedInterface: boolean
-    public readonly interfaceReferences: ClassReference[]
+    public readonly name: string;
+    public readonly namespace: string;
+    public readonly access: Access;
+    public readonly partial: boolean;
+    public readonly reference: ClassReference;
+    public readonly isNestedInterface: boolean;
+    public readonly interfaceReferences: ClassReference[];
 
-    private fields: Field[] = []
-    private methods: Method[] = []
+    private fields: Field[] = [];
+    private methods: Method[] = [];
 
     constructor({ name, namespace, access, partial, isNestedInterface, interfaceReferences }: Interface.Args) {
-        super()
-        this.name = name
-        this.namespace = namespace
-        this.access = access
-        this.partial = partial ?? false
-        this.isNestedInterface = isNestedInterface ?? false
-        this.interfaceReferences = interfaceReferences ?? []
+        super();
+        this.name = name;
+        this.namespace = namespace;
+        this.access = access;
+        this.partial = partial ?? false;
+        this.isNestedInterface = isNestedInterface ?? false;
+        this.interfaceReferences = interfaceReferences ?? [];
 
         this.reference = new ClassReference({
             name: this.name,
             namespace: this.namespace
-        })
+        });
     }
 
     public addField(field: Field): void {
-        this.fields.push(field)
+        this.fields.push(field);
     }
 
     public addFields(fields: Field[]): void {
-        fields.forEach((field) => this.fields.push(field))
+        fields.forEach((field) => this.fields.push(field));
     }
 
     public addMethod(method: Method): void {
-        this.methods.push(method)
+        this.methods.push(method);
     }
 
     public getNamespace(): string {
-        return this.namespace
+        return this.namespace;
     }
 
     public write(writer: Writer): void {
         if (!this.isNestedInterface) {
-            writer.writeLine(`namespace ${this.namespace};`)
-            writer.newLine()
+            writer.writeLine(`namespace ${this.namespace};`);
+            writer.newLine();
         }
-        writer.write(`${this.access} `)
+        writer.write(`${this.access} `);
         if (this.partial) {
-            writer.write("partial ")
+            writer.write("partial ");
         }
-        writer.write("interface ")
-        writer.writeLine(`${this.name}`)
+        writer.write("interface ");
+        writer.writeLine(`${this.name}`);
 
         if (this.interfaceReferences.length > 0) {
-            writer.write(" : ")
+            writer.write(" : ");
             this.interfaceReferences.forEach((interfaceReference, index) => {
-                interfaceReference.write(writer)
+                interfaceReference.write(writer);
                 // Don't write a comma after the last interface
                 if (index < this.interfaceReferences.length - 1) {
-                    writer.write(", ")
+                    writer.write(", ");
                 }
-            })
+            });
         }
-        writer.writeLine("{")
+        writer.writeLine("{");
 
-        writer.indent()
+        writer.indent();
         for (const field of this.fields) {
-            field.write(writer)
-            writer.writeLine("")
+            field.write(writer);
+            writer.writeLine("");
         }
-        writer.dedent()
+        writer.dedent();
 
-        writer.indent()
+        writer.indent();
         for (const method of this.methods) {
-            method.write(writer)
-            writer.writeLine("")
+            method.write(writer);
+            writer.writeLine("");
         }
-        writer.dedent()
+        writer.dedent();
 
-        writer.writeLine("}")
+        writer.writeLine("}");
     }
 }

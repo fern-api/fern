@@ -1,26 +1,26 @@
-import { SourceFile, ts } from "ts-morph"
+import { SourceFile, ts } from "ts-morph";
 
-import { ExportedDirectory, ExportedFilePath, ExportsManager } from "../exports-manager"
-import { ImportsManager } from "../imports-manager/ImportsManager"
-import { ModuleSpecifier } from "./ModuleSpecifier"
-import { GetReferenceOpts, Reference } from "./Reference"
-import { getDirectReferenceToExport } from "./getDirectReferenceToExport"
-import { getEntityNameOfDirectory } from "./getEntityNameOfDirectory"
-import { getExpressionToDirectory } from "./getExpressionToDirectory"
-import { getRelativePathAsModuleSpecifierTo } from "./getRelativePathAsModuleSpecifierTo"
+import { ExportedDirectory, ExportedFilePath, ExportsManager } from "../exports-manager";
+import { ImportsManager } from "../imports-manager/ImportsManager";
+import { ModuleSpecifier } from "./ModuleSpecifier";
+import { GetReferenceOpts, Reference } from "./Reference";
+import { getDirectReferenceToExport } from "./getDirectReferenceToExport";
+import { getEntityNameOfDirectory } from "./getEntityNameOfDirectory";
+import { getExpressionToDirectory } from "./getExpressionToDirectory";
+import { getRelativePathAsModuleSpecifierTo } from "./getRelativePathAsModuleSpecifierTo";
 
-const DEFAULT_SRC_DIRECTORY = "src"
+const DEFAULT_SRC_DIRECTORY = "src";
 
 export declare namespace getReferenceToExportFromRoot {
     export interface Args {
-        referencedIn: SourceFile
-        exportedName: string
-        exportedFromPath: ExportedFilePath
-        importsManager: ImportsManager
-        exportsManager: ExportsManager
-        namespaceImport?: string
-        useDynamicImport?: boolean
-        subImport?: string[]
+        referencedIn: SourceFile;
+        exportedName: string;
+        exportedFromPath: ExportedFilePath;
+        importsManager: ImportsManager;
+        exportsManager: ExportsManager;
+        namespaceImport?: string;
+        useDynamicImport?: boolean;
+        subImport?: string[];
     }
 }
 
@@ -34,28 +34,28 @@ export function getReferenceToExportFromRoot({
     useDynamicImport = false,
     subImport = []
 }: getReferenceToExportFromRoot.Args): Reference {
-    let prefix: ts.Identifier | undefined
-    let moduleSpecifier: ModuleSpecifier
-    let directoriesInsideNamespaceExport: ExportedDirectory[]
-    let addImport: () => void
+    let prefix: ts.Identifier | undefined;
+    let moduleSpecifier: ModuleSpecifier;
+    let directoriesInsideNamespaceExport: ExportedDirectory[];
+    let addImport: () => void;
 
-    const [firstDirectory, ...remainingDirectories] = exportedFromPath.directories
+    const [firstDirectory, ...remainingDirectories] = exportedFromPath.directories;
 
     // if there's a default export, just use that
     if (firstDirectory?.exportDeclaration?.defaultExport != null) {
         moduleSpecifier = getRelativePathAsModuleSpecifierTo({
             from: referencedIn,
             to: exportsManager.convertExportedDirectoryPathToFilePath([])
-        })
+        });
 
-        const { recommendedImportName } = firstDirectory.exportDeclaration.defaultExport
+        const { recommendedImportName } = firstDirectory.exportDeclaration.defaultExport;
 
         addImport = () => {
-            importsManager.addImport(`${moduleSpecifier}/index`, { defaultImport: recommendedImportName })
-        }
+            importsManager.addImport(`${moduleSpecifier}/index`, { defaultImport: recommendedImportName });
+        };
 
-        prefix = ts.factory.createIdentifier(recommendedImportName)
-        directoriesInsideNamespaceExport = remainingDirectories
+        prefix = ts.factory.createIdentifier(recommendedImportName);
+        directoriesInsideNamespaceExport = remainingDirectories;
     }
 
     // if the namespaceImport arg is provided,
@@ -67,31 +67,31 @@ export function getReferenceToExportFromRoot({
                 firstDirectory != null
                     ? exportsManager.convertExportedDirectoryPathToFilePath([firstDirectory])
                     : exportsManager.convertExportedFilePathToFilePath(exportedFromPath)
-        })
+        });
 
         addImport = () => {
-            importsManager.addImport(`${moduleSpecifier}/index`, { namespaceImport })
-        }
+            importsManager.addImport(`${moduleSpecifier}/index`, { namespaceImport });
+        };
 
-        prefix = ts.factory.createIdentifier(namespaceImport)
-        directoriesInsideNamespaceExport = remainingDirectories
+        prefix = ts.factory.createIdentifier(namespaceImport);
+        directoriesInsideNamespaceExport = remainingDirectories;
     }
 
     // otherwise, import directly from the first namespace-exported directory
     else {
-        const directoryToImportDirectlyFrom: ExportedDirectory[] = []
+        const directoryToImportDirectlyFrom: ExportedDirectory[] = [];
 
         // find the first namespace-exported directory
         for (const [index, directory] of exportedFromPath.directories.entries()) {
             // never import from root index.ts (to avoid circular dependencies)
             if (index > 0 && directory.exportDeclaration?.namespaceExport != null) {
-                break
+                break;
             }
-            directoryToImportDirectlyFrom.push(directory)
+            directoryToImportDirectlyFrom.push(directory);
         }
 
-        directoriesInsideNamespaceExport = exportedFromPath.directories.slice(directoryToImportDirectlyFrom.length)
-        const firstDirectoryInsideNamespaceExport = directoriesInsideNamespaceExport[0]
+        directoriesInsideNamespaceExport = exportedFromPath.directories.slice(directoryToImportDirectlyFrom.length);
+        const firstDirectoryInsideNamespaceExport = directoriesInsideNamespaceExport[0];
 
         // if there's no namespace exports in the directory path, then just import
         // directly from the file
@@ -104,20 +104,20 @@ export function getReferenceToExportFromRoot({
                 referencedIn,
                 importAlias: undefined,
                 subImport
-            })
+            });
         }
 
         moduleSpecifier = getRelativePathAsModuleSpecifierTo({
             from: referencedIn,
             to: exportsManager.convertExportedDirectoryPathToFilePath(directoryToImportDirectlyFrom)
-        })
+        });
 
-        const namedImport = firstDirectoryInsideNamespaceExport.exportDeclaration.namespaceExport
+        const namedImport = firstDirectoryInsideNamespaceExport.exportDeclaration.namespaceExport;
         addImport = () => {
             importsManager.addImport(`${moduleSpecifier}/index`, {
                 namedImports: [namedImport]
-            })
-        }
+            });
+        };
     }
 
     const entityName = [exportedName, ...subImport].reduce<ts.EntityName>(
@@ -127,7 +127,7 @@ export function getReferenceToExportFromRoot({
             prefix,
             exportsManager
         })
-    )
+    );
 
     const expression = [exportedName, ...subImport].reduce<ts.Expression>(
         (acc, part) => ts.factory.createPropertyAccessExpression(acc, part),
@@ -144,28 +144,28 @@ export function getReferenceToExportFromRoot({
                   )
                 : prefix
         })
-    )
+    );
 
-    const typeNode = ts.factory.createTypeReferenceNode(entityName)
+    const typeNode = ts.factory.createTypeReferenceNode(entityName);
 
     return {
         getTypeNode: ({ isForComment = false }: GetReferenceOpts = {}) => {
             if (!isForComment) {
-                addImport()
+                addImport();
             }
-            return typeNode
+            return typeNode;
         },
         getEntityName: ({ isForComment = false }: GetReferenceOpts = {}) => {
             if (!isForComment) {
-                addImport()
+                addImport();
             }
-            return entityName
+            return entityName;
         },
         getExpression: ({ isForComment = false }: GetReferenceOpts = {}) => {
             if (!useDynamicImport && !isForComment) {
-                addImport()
+                addImport();
             }
-            return expression
+            return expression;
         }
-    }
+    };
 }

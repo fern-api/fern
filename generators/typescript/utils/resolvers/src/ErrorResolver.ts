@@ -1,26 +1,26 @@
-import { DeclaredErrorName, ErrorDeclaration, ErrorId, IntermediateRepresentation } from "@fern-fern/ir-sdk/api"
+import { DeclaredErrorName, ErrorDeclaration, ErrorId, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
-type SimpleErrorName = string
+type SimpleErrorName = string;
 
 export class ErrorResolver {
-    private resolvedErrors: Record<ErrorId, Record<SimpleErrorName, ErrorDeclaration>> = {}
+    private resolvedErrors: Record<ErrorId, Record<SimpleErrorName, ErrorDeclaration>> = {};
 
     constructor(intermediateRepresentation: IntermediateRepresentation) {
         for (const error of Object.values(intermediateRepresentation.errors)) {
-            const errorsAtFilepath = (this.resolvedErrors[error.name.errorId] ??= {})
-            errorsAtFilepath[getSimpleErrorName(error.name)] = error
+            const errorsAtFilepath = (this.resolvedErrors[error.name.errorId] ??= {});
+            errorsAtFilepath[getSimpleErrorName(error.name)] = error;
         }
     }
 
     public getErrorDeclarationFromName(errorName: DeclaredErrorName): ErrorDeclaration {
-        const resolvedError = this.resolvedErrors[errorName.errorId]?.[getSimpleErrorName(errorName)]
+        const resolvedError = this.resolvedErrors[errorName.errorId]?.[getSimpleErrorName(errorName)];
         if (resolvedError == null) {
-            throw new Error("Error not found: " + errorName.errorId)
+            throw new Error("Error not found: " + errorName.errorId);
         }
-        return resolvedError
+        return resolvedError;
     }
 }
 
 function getSimpleErrorName(errorName: DeclaredErrorName): SimpleErrorName {
-    return errorName.name.originalName
+    return errorName.name.originalName;
 }

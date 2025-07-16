@@ -13,4 +13,4 @@ export const RawPrimitiveType = {
     date: "date",
     bigint: "bigint",
     unknown: "unknown"
-} as const
+} as const;

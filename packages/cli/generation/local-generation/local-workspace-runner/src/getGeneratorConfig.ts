@@ -1,6 +1,6 @@
-import { GeneratorInvocation, generatorsYml } from "@fern-api/configuration"
-import { isGithubSelfhosted } from "@fern-api/configuration-loader"
-import { AbsoluteFilePath } from "@fern-api/fs-utils"
+import { GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
+import { isGithubSelfhosted } from "@fern-api/configuration-loader";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 
 import {
     GithubPublishInfo as FiddleGithubPublishInfo,
@@ -12,36 +12,36 @@ import {
     PublishOutputModeV2,
     PypiOutput,
     RubyGemsOutput
-} from "@fern-fern/fiddle-sdk/api"
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
-import { EnvironmentVariable } from "@fern-fern/generator-exec-sdk/api"
+} from "@fern-fern/fiddle-sdk/api";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { EnvironmentVariable } from "@fern-fern/generator-exec-sdk/api";
 
 import {
     DOCKER_CODEGEN_OUTPUT_DIRECTORY,
     DOCKER_PATH_TO_IR,
     DOCKER_PATH_TO_SNIPPET,
     DOCKER_PATH_TO_SNIPPET_TEMPLATES
-} from "./constants"
+} from "./constants";
 
-const DEFAULT_OUTPUT_VERSION = "0.0.1"
+const DEFAULT_OUTPUT_VERSION = "0.0.1";
 
 export declare namespace getGeneratorConfig {
     export interface Args {
-        workspaceName: string
-        organization: string
-        outputVersion?: string | undefined
-        customConfig: unknown
-        generatorInvocation: generatorsYml.GeneratorInvocation
-        absolutePathToSnippet: AbsoluteFilePath | undefined
-        absolutePathToSnippetTemplates: AbsoluteFilePath | undefined
-        writeUnitTests: boolean
-        generateOauthClients: boolean
-        generatePaginatedClients: boolean
+        workspaceName: string;
+        organization: string;
+        outputVersion?: string | undefined;
+        customConfig: unknown;
+        generatorInvocation: generatorsYml.GeneratorInvocation;
+        absolutePathToSnippet: AbsoluteFilePath | undefined;
+        absolutePathToSnippetTemplates: AbsoluteFilePath | undefined;
+        writeUnitTests: boolean;
+        generateOauthClients: boolean;
+        generatePaginatedClients: boolean;
     }
 
     export interface Return {
-        config: FernGeneratorExec.GeneratorConfig
-        binds: string[]
+        config: FernGeneratorExec.GeneratorConfig;
+        binds: string[];
     }
 }
 
@@ -97,7 +97,7 @@ function getGithubPublishConfig(
                   }),
               _other: () => undefined
           })
-        : undefined
+        : undefined;
 }
 
 export function getGeneratorConfig({
@@ -112,21 +112,21 @@ export function getGeneratorConfig({
     generateOauthClients,
     generatePaginatedClients
 }: getGeneratorConfig.Args): getGeneratorConfig.Return {
-    const binds: string[] = []
+    const binds: string[] = [];
     const output = generatorInvocation.outputMode._visit<FernGeneratorExec.GeneratorOutputConfig>({
         publish: (value) => {
             return {
                 ...newDummyPublishOutputConfig(outputVersion, value, generatorInvocation),
                 snippetFilepath: DOCKER_PATH_TO_SNIPPET,
                 publishingMetadata: generatorInvocation.publishMetadata
-            }
+            };
         },
         publishV2: (value) => {
             return {
                 ...newDummyPublishOutputConfig(outputVersion, value, generatorInvocation),
                 snippetFilepath: DOCKER_PATH_TO_SNIPPET,
                 publishingMetadata: generatorInvocation.publishMetadata
-            }
+            };
         },
         downloadFiles: () => {
             return {
@@ -134,7 +134,7 @@ export function getGeneratorConfig({
                 path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
                 snippetFilepath: DOCKER_PATH_TO_SNIPPET,
                 publishingMetadata: generatorInvocation.publishMetadata
-            }
+            };
         },
         github: (value) => {
             const outputConfig: FernGeneratorExec.GeneratorOutputConfig = {
@@ -146,16 +146,16 @@ export function getGeneratorConfig({
                 }),
                 path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
                 publishingMetadata: generatorInvocation.publishMetadata
-            }
+            };
             if (absolutePathToSnippet !== undefined) {
-                binds.push(`${absolutePathToSnippet}:${DOCKER_PATH_TO_SNIPPET}`)
-                outputConfig.snippetFilepath = DOCKER_PATH_TO_SNIPPET
+                binds.push(`${absolutePathToSnippet}:${DOCKER_PATH_TO_SNIPPET}`);
+                outputConfig.snippetFilepath = DOCKER_PATH_TO_SNIPPET;
             }
             if (absolutePathToSnippetTemplates !== undefined) {
-                binds.push(`${absolutePathToSnippetTemplates}:${DOCKER_PATH_TO_SNIPPET_TEMPLATES}`)
-                outputConfig.snippetTemplateFilepath = DOCKER_PATH_TO_SNIPPET_TEMPLATES
+                binds.push(`${absolutePathToSnippetTemplates}:${DOCKER_PATH_TO_SNIPPET_TEMPLATES}`);
+                outputConfig.snippetTemplateFilepath = DOCKER_PATH_TO_SNIPPET_TEMPLATES;
             }
-            return outputConfig
+            return outputConfig;
         },
         githubV2: (value) => {
             const repoUrl = value._visit({
@@ -163,9 +163,9 @@ export function getGeneratorConfig({
                 push: (value) => `https://github.com/${value.owner}/${value.repo}`,
                 pullRequest: (value) => `https://github.com/${value.owner}/${value.repo}`,
                 _other: () => {
-                    throw new Error("Encountered unknown github mode")
+                    throw new Error("Encountered unknown github mode");
                 }
-            })
+            });
             const outputConfig: FernGeneratorExec.GeneratorOutputConfig = {
                 mode: FernGeneratorExec.OutputMode.github({
                     repoUrl,
@@ -174,21 +174,21 @@ export function getGeneratorConfig({
                 }),
                 path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
                 publishingMetadata: generatorInvocation.publishMetadata
-            }
+            };
             if (absolutePathToSnippet !== undefined) {
-                binds.push(`${absolutePathToSnippet}:${DOCKER_PATH_TO_SNIPPET}`)
-                outputConfig.snippetFilepath = DOCKER_PATH_TO_SNIPPET
+                binds.push(`${absolutePathToSnippet}:${DOCKER_PATH_TO_SNIPPET}`);
+                outputConfig.snippetFilepath = DOCKER_PATH_TO_SNIPPET;
             }
             if (absolutePathToSnippetTemplates !== undefined) {
-                binds.push(`${absolutePathToSnippetTemplates}:${DOCKER_PATH_TO_SNIPPET_TEMPLATES}`)
-                outputConfig.snippetTemplateFilepath = DOCKER_PATH_TO_SNIPPET_TEMPLATES
+                binds.push(`${absolutePathToSnippetTemplates}:${DOCKER_PATH_TO_SNIPPET_TEMPLATES}`);
+                outputConfig.snippetTemplateFilepath = DOCKER_PATH_TO_SNIPPET_TEMPLATES;
             }
-            return outputConfig
+            return outputConfig;
         },
         _other: () => {
-            throw new Error("Output type did not match any of the types supported by Fern")
+            throw new Error("Output type did not match any of the types supported by Fern");
         }
-    })
+    });
     return {
         binds,
         config: {
@@ -205,7 +205,7 @@ export function getGeneratorConfig({
             generateOauthClients,
             generatePaginatedClients
         }
-    }
+    };
 }
 
 function newDummyPublishOutputConfig(
@@ -213,9 +213,9 @@ function newDummyPublishOutputConfig(
     multipleOutputMode: PublishOutputMode | PublishOutputModeV2,
     generatorInvocation: GeneratorInvocation
 ): FernGeneratorExec.GeneratorOutputConfig {
-    let outputMode: NpmOutput | MavenOutput | PypiOutput | RubyGemsOutput | PostmanOutput | NugetOutput | undefined
+    let outputMode: NpmOutput | MavenOutput | PypiOutput | RubyGemsOutput | PostmanOutput | NugetOutput | undefined;
     if ("registryOverrides" in multipleOutputMode) {
-        outputMode = multipleOutputMode.registryOverrides.maven ?? multipleOutputMode.registryOverrides.npm
+        outputMode = multipleOutputMode.registryOverrides.maven ?? multipleOutputMode.registryOverrides.npm;
     } else if (outputMode != null) {
         outputMode = multipleOutputMode._visit<
             NpmOutput | MavenOutput | PypiOutput | RubyGemsOutput | PostmanOutput | NugetOutput | undefined
@@ -227,15 +227,15 @@ function newDummyPublishOutputConfig(
             postman: (value) => value,
             nugetOverride: (value) => value,
             _other: () => undefined
-        })
+        });
     }
 
-    let repoUrl = ""
+    let repoUrl = "";
     if (generatorInvocation.raw?.github != null) {
         if (isGithubSelfhosted(generatorInvocation.raw.github)) {
-            repoUrl = generatorInvocation.raw.github.uri
+            repoUrl = generatorInvocation.raw.github.uri;
         } else {
-            repoUrl = generatorInvocation.raw?.github.repository
+            repoUrl = generatorInvocation.raw?.github.repository;
         }
     }
 
@@ -245,5 +245,5 @@ function newDummyPublishOutputConfig(
             version
         }),
         path: DOCKER_CODEGEN_OUTPUT_DIRECTORY
-    }
+    };
 }

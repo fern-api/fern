@@ -1,20 +1,20 @@
-import { assertNever } from "@fern-api/core-utils"
-import { ContainerType, ExampleContainer, ExamplePrimitive, TypeDeclaration, TypeId } from "@fern-api/ir-sdk"
+import { assertNever } from "@fern-api/core-utils";
+import { ContainerType, ExampleContainer, ExamplePrimitive, TypeDeclaration, TypeId } from "@fern-api/ir-sdk";
 
-import { ExampleGenerationResult, ExampleGenerationSuccess } from "./ExampleGenerationResult"
-import { generateTypeReferenceExample } from "./generateTypeReferenceExample"
+import { ExampleGenerationResult, ExampleGenerationSuccess } from "./ExampleGenerationResult";
+import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
 
 export declare namespace generateContainerExample {
     interface Args {
         /* The field name that the example is being generated for*/
-        fieldName?: string
-        containerType: ContainerType
-        typeDeclarations: Record<TypeId, TypeDeclaration>
+        fieldName?: string;
+        containerType: ContainerType;
+        typeDeclarations: Record<TypeId, TypeDeclaration>;
 
-        maxDepth: number
-        currentDepth: number
+        maxDepth: number;
+        currentDepth: number;
 
-        skipOptionalProperties: boolean
+        skipOptionalProperties: boolean;
     }
 }
 
@@ -27,7 +27,7 @@ export function generateContainerExample({
     skipOptionalProperties
 }: generateContainerExample.Args): ExampleGenerationResult<ExampleContainer> {
     if (currentDepth >= maxDepth) {
-        return generateEmptyContainerExample({ containerType })
+        return generateEmptyContainerExample({ containerType });
     }
     switch (containerType.type) {
         case "list": {
@@ -38,9 +38,9 @@ export function generateContainerExample({
                 currentDepth: currentDepth + 1,
                 typeDeclarations,
                 skipOptionalProperties
-            })
+            });
             if (example.type === "failure") {
-                return generateEmptyContainerExample({ containerType })
+                return generateEmptyContainerExample({ containerType });
             }
             return {
                 type: "success",
@@ -49,7 +49,7 @@ export function generateContainerExample({
                     itemType: containerType.list
                 }),
                 jsonExample: [example.jsonExample, example.jsonExample]
-            }
+            };
         }
         case "literal": {
             return {
@@ -59,7 +59,7 @@ export function generateContainerExample({
                         boolean: (value) => ExamplePrimitive.boolean(value),
                         string: (value) => ExamplePrimitive.string({ original: value }),
                         _other: () => {
-                            throw new Error("Encountered unknown literal type")
+                            throw new Error("Encountered unknown literal type");
                         }
                     })
                 }),
@@ -67,14 +67,14 @@ export function generateContainerExample({
                     boolean: (value) => value,
                     string: (value) => value,
                     _other: () => {
-                        throw new Error("Encountered unknown literal type")
+                        throw new Error("Encountered unknown literal type");
                     }
                 })
-            }
+            };
         }
         case "optional": {
             if (skipOptionalProperties) {
-                return generateEmptyContainerExample({ containerType })
+                return generateEmptyContainerExample({ containerType });
             }
             const example = generateTypeReferenceExample({
                 fieldName,
@@ -83,9 +83,9 @@ export function generateContainerExample({
                 currentDepth: currentDepth + 1,
                 typeDeclarations,
                 skipOptionalProperties
-            })
+            });
             if (example.type === "failure") {
-                return generateEmptyContainerExample({ containerType })
+                return generateEmptyContainerExample({ containerType });
             }
             return {
                 type: "success",
@@ -94,11 +94,11 @@ export function generateContainerExample({
                     valueType: containerType.optional
                 }),
                 jsonExample: example.jsonExample
-            }
+            };
         }
         case "nullable": {
             if (skipOptionalProperties) {
-                return generateEmptyContainerExample({ containerType })
+                return generateEmptyContainerExample({ containerType });
             }
             const example = generateTypeReferenceExample({
                 fieldName,
@@ -107,9 +107,9 @@ export function generateContainerExample({
                 currentDepth: currentDepth + 1,
                 typeDeclarations,
                 skipOptionalProperties
-            })
+            });
             if (example.type === "failure") {
-                return generateEmptyContainerExample({ containerType })
+                return generateEmptyContainerExample({ containerType });
             }
             return {
                 type: "success",
@@ -118,7 +118,7 @@ export function generateContainerExample({
                     valueType: containerType.nullable
                 }),
                 jsonExample: example.jsonExample
-            }
+            };
         }
         case "set": {
             const example = generateTypeReferenceExample({
@@ -128,9 +128,9 @@ export function generateContainerExample({
                 currentDepth: currentDepth + 1,
                 typeDeclarations,
                 skipOptionalProperties
-            })
+            });
             if (example.type === "failure") {
-                return generateEmptyContainerExample({ containerType })
+                return generateEmptyContainerExample({ containerType });
             }
             return {
                 type: "success",
@@ -139,7 +139,7 @@ export function generateContainerExample({
                     itemType: containerType.set
                 }),
                 jsonExample: [example.jsonExample]
-            }
+            };
         }
         case "map": {
             const keyExample = generateTypeReferenceExample({
@@ -149,7 +149,7 @@ export function generateContainerExample({
                 currentDepth: currentDepth + 1,
                 typeDeclarations,
                 skipOptionalProperties
-            })
+            });
             const valueExample = generateTypeReferenceExample({
                 fieldName,
                 typeReference: containerType.valueType,
@@ -157,9 +157,9 @@ export function generateContainerExample({
                 currentDepth: currentDepth + 1,
                 typeDeclarations,
                 skipOptionalProperties
-            })
+            });
             if (keyExample.type === "failure" || valueExample.type === "failure") {
-                return generateEmptyContainerExample({ containerType })
+                return generateEmptyContainerExample({ containerType });
             }
             return {
                 type: "success",
@@ -175,18 +175,18 @@ export function generateContainerExample({
                 }),
                 // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                 jsonExample: { [keyExample.jsonExample as any]: valueExample.jsonExample }
-            }
+            };
         }
 
         default:
-            assertNever(containerType)
+            assertNever(containerType);
     }
 }
 
 export function generateEmptyContainerExample({
     containerType
 }: {
-    containerType: ContainerType
+    containerType: ContainerType;
 }): ExampleGenerationSuccess<ExampleContainer> {
     switch (containerType.type) {
         case "list": {
@@ -197,7 +197,7 @@ export function generateEmptyContainerExample({
                     itemType: containerType.list
                 }),
                 jsonExample: []
-            }
+            };
         }
         case "literal": {
             return {
@@ -207,7 +207,7 @@ export function generateEmptyContainerExample({
                         boolean: (value) => ExamplePrimitive.boolean(value),
                         string: (value) => ExamplePrimitive.string({ original: value }),
                         _other: () => {
-                            throw new Error("Encountered unknown literal type")
+                            throw new Error("Encountered unknown literal type");
                         }
                     })
                 }),
@@ -215,10 +215,10 @@ export function generateEmptyContainerExample({
                     boolean: (value) => value,
                     string: (value) => value,
                     _other: () => {
-                        throw new Error("Encountered unknown literal type")
+                        throw new Error("Encountered unknown literal type");
                     }
                 })
-            }
+            };
         }
         case "optional": {
             return {
@@ -228,7 +228,7 @@ export function generateEmptyContainerExample({
                     valueType: containerType.optional
                 }),
                 jsonExample: undefined
-            }
+            };
         }
         case "nullable": {
             return {
@@ -238,7 +238,7 @@ export function generateEmptyContainerExample({
                     valueType: containerType.nullable
                 }),
                 jsonExample: undefined
-            }
+            };
         }
         case "set": {
             return {
@@ -248,7 +248,7 @@ export function generateEmptyContainerExample({
                     itemType: containerType.set
                 }),
                 jsonExample: []
-            }
+            };
         }
         case "map": {
             return {
@@ -259,9 +259,9 @@ export function generateEmptyContainerExample({
                     valueType: containerType.valueType
                 }),
                 jsonExample: {}
-            }
+            };
         }
         default:
-            assertNever(containerType)
+            assertNever(containerType);
     }
 }

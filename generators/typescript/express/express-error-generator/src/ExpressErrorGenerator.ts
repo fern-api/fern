@@ -1,14 +1,14 @@
-import { GeneratedExpressError } from "@fern-typescript/contexts"
+import { GeneratedExpressError } from "@fern-typescript/contexts";
 
-import { ErrorDeclaration } from "@fern-fern/ir-sdk/api"
+import { ErrorDeclaration } from "@fern-fern/ir-sdk/api";
 
-import { GeneratedExpressErrorImpl } from "./GeneratedExpressErrorImpl"
+import { GeneratedExpressErrorImpl } from "./GeneratedExpressErrorImpl";
 
 export declare namespace ExpressErrorGenerator {
     export namespace generateError {
         export interface Args {
-            errorName: string
-            errorDeclaration: ErrorDeclaration
+            errorName: string;
+            errorDeclaration: ErrorDeclaration;
         }
     }
 }
@@ -21,6 +21,6 @@ export class ExpressErrorGenerator {
         return new GeneratedExpressErrorImpl({
             errorClassName: errorName,
             errorDeclaration
-        })
+        });
     }
 }

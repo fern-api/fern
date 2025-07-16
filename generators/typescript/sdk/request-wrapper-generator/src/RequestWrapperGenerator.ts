@@ -1,23 +1,23 @@
-import { PackageId } from "@fern-typescript/commons"
-import { GeneratedRequestWrapper } from "@fern-typescript/contexts"
+import { PackageId } from "@fern-typescript/commons";
+import { GeneratedRequestWrapper } from "@fern-typescript/contexts";
 
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api"
+import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
 
-import { GeneratedRequestWrapperImpl } from "./GeneratedRequestWrapperImpl"
+import { GeneratedRequestWrapperImpl } from "./GeneratedRequestWrapperImpl";
 
 export declare namespace RequestWrapperGenerator {
     export namespace generateRequestWrapper {
         export interface Args {
-            service: HttpService
-            endpoint: HttpEndpoint
-            wrapperName: string
-            packageId: PackageId
-            includeSerdeLayer: boolean
-            retainOriginalCasing: boolean
-            inlineFileProperties: boolean
-            enableInlineTypes: boolean
-            shouldInlinePathParameters: boolean
-            formDataSupport: "Node16" | "Node18"
+            service: HttpService;
+            endpoint: HttpEndpoint;
+            wrapperName: string;
+            packageId: PackageId;
+            includeSerdeLayer: boolean;
+            retainOriginalCasing: boolean;
+            inlineFileProperties: boolean;
+            enableInlineTypes: boolean;
+            shouldInlinePathParameters: boolean;
+            formDataSupport: "Node16" | "Node18";
         }
     }
 }
@@ -46,6 +46,6 @@ export class RequestWrapperGenerator {
             enableInlineTypes,
             shouldInlinePathParameters,
             formDataSupport
-        })
+        });
     }
 }

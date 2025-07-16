@@ -1,93 +1,93 @@
-import { BaseJavaCustomConfigSchema, java } from "@fern-api/java-ast"
+import { BaseJavaCustomConfigSchema, java } from "@fern-api/java-ast";
 
-import { ContainerType, Literal, PrimitiveType, PrimitiveTypeV1, TypeReference } from "@fern-fern/ir-sdk/api"
+import { ContainerType, Literal, PrimitiveType, PrimitiveTypeV1, TypeReference } from "@fern-fern/ir-sdk/api";
 
-import { assertNever } from "../../../../../packages/commons/core-utils/src"
-import { AbstractJavaGeneratorContext } from "./AbstractJavaGeneratorContext"
+import { assertNever } from "../../../../../packages/commons/core-utils/src";
+import { AbstractJavaGeneratorContext } from "./AbstractJavaGeneratorContext";
 
 export declare namespace JavaTypeMapper {
     interface Args {
-        reference: TypeReference
+        reference: TypeReference;
     }
 }
 
 export class JavaTypeMapper {
-    private context: AbstractJavaGeneratorContext<BaseJavaCustomConfigSchema>
-    private readonly wrappedAliases: boolean
+    private context: AbstractJavaGeneratorContext<BaseJavaCustomConfigSchema>;
+    private readonly wrappedAliases: boolean;
 
     constructor(context: AbstractJavaGeneratorContext<BaseJavaCustomConfigSchema>) {
-        this.context = context
-        this.wrappedAliases = this.context.customConfig["wrapped-aliases"] ?? false
+        this.context = context;
+        this.wrappedAliases = this.context.customConfig["wrapped-aliases"] ?? false;
     }
 
     public convert({ reference }: JavaTypeMapper.Args): java.Type {
         switch (reference.type) {
             case "container":
-                return this.convertContainer({ container: reference.container })
+                return this.convertContainer({ container: reference.container });
             case "named":
-                return this.convertNamed({ reference })
+                return this.convertNamed({ reference });
             case "primitive":
-                return this.convertPrimitive({ primitive: reference.primitive })
+                return this.convertPrimitive({ primitive: reference.primitive });
             case "unknown":
-                return java.Type.object()
+                return java.Type.object();
             default:
-                assertNever(reference)
+                assertNever(reference);
         }
     }
 
     public convertNamed({ reference }: { reference: TypeReference & { type: "named" } }): java.Type {
-        const typeDeclaration = this.context.getTypeDeclarationOrThrow(reference.typeId)
+        const typeDeclaration = this.context.getTypeDeclarationOrThrow(reference.typeId);
 
         if (!this.wrappedAliases && typeDeclaration.shape.type === "alias") {
-            const resolved = typeDeclaration.shape.resolvedType
+            const resolved = typeDeclaration.shape.resolvedType;
             switch (resolved.type) {
                 case "named":
-                    return java.Type.reference(this.context.getJavaClassReferenceFromTypeId(resolved.name.typeId))
+                    return java.Type.reference(this.context.getJavaClassReferenceFromTypeId(resolved.name.typeId));
                 case "primitive":
-                    return this.convertPrimitive({ primitive: resolved.primitive })
+                    return this.convertPrimitive({ primitive: resolved.primitive });
                 case "unknown":
-                    return java.Type.object()
+                    return java.Type.object();
                 case "container":
-                    return this.convertContainer({ container: resolved.container })
+                    return this.convertContainer({ container: resolved.container });
                 default:
-                    assertNever(resolved)
+                    assertNever(resolved);
             }
         }
 
-        const typeId = reference.typeId
-        return java.Type.reference(this.context.getJavaClassReferenceFromTypeId(typeId))
+        const typeId = reference.typeId;
+        return java.Type.reference(this.context.getJavaClassReferenceFromTypeId(typeId));
     }
 
     public convertContainer({ container }: { container: ContainerType }): java.Type {
         switch (container.type) {
             case "list":
-                return java.Type.list(this.convert({ reference: container.list }))
+                return java.Type.list(this.convert({ reference: container.list }));
             case "map":
                 return java.Type.map(
                     this.convert({ reference: container.keyType }),
                     this.convert({ reference: container.valueType })
-                )
+                );
             case "set":
-                return java.Type.set(this.convert({ reference: container.set }))
+                return java.Type.set(this.convert({ reference: container.set }));
             case "optional":
-                return java.Type.optional(this.convert({ reference: container.optional }))
+                return java.Type.optional(this.convert({ reference: container.optional }));
             case "nullable":
-                return java.Type.optional(this.convert({ reference: container.nullable }))
+                return java.Type.optional(this.convert({ reference: container.nullable }));
             case "literal":
-                return this.convertLiteral({ literal: container.literal })
+                return this.convertLiteral({ literal: container.literal });
             default:
-                assertNever(container)
+                assertNever(container);
         }
     }
 
     public convertLiteral({ literal }: { literal: Literal }): java.Type {
         switch (literal.type) {
             case "string":
-                return java.Type.string()
+                return java.Type.string();
             case "boolean":
-                return java.Type.boolean()
+                return java.Type.boolean();
             default:
-                assertNever(literal)
+                assertNever(literal);
         }
     }
 
@@ -107,6 +107,6 @@ export class JavaTypeMapper {
             base64: () => java.Type.string(),
             bigInteger: () => java.Type.string(),
             _other: () => java.Type.object()
-        })
+        });
     }
 }

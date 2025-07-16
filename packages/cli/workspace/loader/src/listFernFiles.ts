@@ -1,11 +1,11 @@
-import { readFile } from "fs/promises"
+import { readFile } from "fs/promises";
 
-import { AbsoluteFilePath, RelativeFilePath, listFiles, relative } from "@fern-api/fs-utils"
+import { AbsoluteFilePath, RelativeFilePath, listFiles, relative } from "@fern-api/fs-utils";
 
-import { FernFile } from "./types/FernFile"
+import { FernFile } from "./types/FernFile";
 
 export async function listFernFiles(root: AbsoluteFilePath, extensionGlob: string): Promise<FernFile[]> {
-    const files: FernFile[] = []
+    const files: FernFile[] = [];
 
     for (const absoluteFilepath of await listFiles(root, extensionGlob)) {
         files.push(
@@ -13,22 +13,22 @@ export async function listFernFiles(root: AbsoluteFilePath, extensionGlob: strin
                 relativeFilepath: relative(root, absoluteFilepath),
                 absoluteFilepath
             })
-        )
+        );
     }
 
-    return files
+    return files;
 }
 
 async function createFernFile({
     relativeFilepath,
     absoluteFilepath
 }: {
-    relativeFilepath: RelativeFilePath
-    absoluteFilepath: AbsoluteFilePath
+    relativeFilepath: RelativeFilePath;
+    absoluteFilepath: AbsoluteFilePath;
 }): Promise<FernFile> {
     return {
         relativeFilepath,
         absoluteFilepath,
         fileContents: (await readFile(absoluteFilepath)).toString()
-    }
+    };
 }

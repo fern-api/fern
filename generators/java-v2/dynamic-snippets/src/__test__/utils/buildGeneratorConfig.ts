@@ -1,5 +1,5 @@
-import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator"
-import { BaseJavaCustomConfigSchema } from "@fern-api/java-ast"
+import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
+import { BaseJavaCustomConfigSchema } from "@fern-api/java-ast";
 
 const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
     dryRun: false,
@@ -21,12 +21,12 @@ const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
         "inline-file-properties": true,
         "package-layout": "flat"
     } as BaseJavaCustomConfigSchema
-}
+};
 
 export function buildGeneratorConfig({
     customConfig
 }: {
-    customConfig?: Partial<BaseJavaCustomConfigSchema>
+    customConfig?: Partial<BaseJavaCustomConfigSchema>;
 } = {}): FernGeneratorExec.GeneratorConfig {
     return {
         ...DEFAULT_CONFIG,
@@ -34,5 +34,5 @@ export function buildGeneratorConfig({
             ...(DEFAULT_CONFIG.customConfig as BaseJavaCustomConfigSchema),
             ...customConfig
         }
-    }
+    };
 }

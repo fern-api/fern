@@ -7,40 +7,40 @@ import {
     TypeDeclaration,
     TypeId,
     TypeReference
-} from "@fern-fern/ir-sdk/api"
+} from "@fern-fern/ir-sdk/api";
 
 /**
  * TypeResolver converts a TypeName to a "resolved" value by following all
  * aliases and unwrapping all containers.
  */
 export class TypeResolver {
-    private allTypes: Record<TypeId, TypeDeclaration> = {}
+    private allTypes: Record<TypeId, TypeDeclaration> = {};
 
     constructor(intermediateRepresentation: IntermediateRepresentation) {
         for (const type of Object.values(intermediateRepresentation.types)) {
-            this.allTypes[type.name.typeId] = type
+            this.allTypes[type.name.typeId] = type;
         }
     }
 
     public getTypeDeclarationFromId(typeId: TypeId): TypeDeclaration {
-        const type = this.allTypes[typeId]
+        const type = this.allTypes[typeId];
         if (type == null) {
-            throw new Error("Type not found: " + typeId)
+            throw new Error("Type not found: " + typeId);
         }
-        return type
+        return type;
     }
 
     public getTypeDeclarationFromName(typeName: DeclaredTypeName): TypeDeclaration {
-        const type = this.allTypes[typeName.typeId]
+        const type = this.allTypes[typeName.typeId];
         if (type == null) {
-            throw new Error("Type not found: " + typeName.typeId)
+            throw new Error("Type not found: " + typeName.typeId);
         }
-        return type
+        return type;
     }
 
     public resolveTypeName(typeName: DeclaredTypeName): ResolvedTypeReference {
-        const declaration = this.getTypeDeclarationFromName(typeName)
-        return this.resolveTypeDeclaration(typeName, declaration.shape)
+        const declaration = this.getTypeDeclarationFromName(typeName);
+        return this.resolveTypeDeclaration(typeName, declaration.shape);
     }
 
     public resolveTypeReference(type: TypeReference): ResolvedTypeReference {
@@ -50,9 +50,9 @@ export class TypeResolver {
             primitive: ResolvedTypeReference.primitive,
             unknown: ResolvedTypeReference.unknown,
             _other: () => {
-                throw new Error("Unknown type reference type: " + type.type)
+                throw new Error("Unknown type reference type: " + type.type);
             }
-        })
+        });
     }
 
     public resolveTypeDeclaration(typeName: DeclaredTypeName, declaration: Type): ResolvedTypeReference {
@@ -79,12 +79,12 @@ export class TypeResolver {
                     shape: ShapeType.UndiscriminatedUnion
                 }),
             _other: () => {
-                throw new Error("Unknown type declaration type: " + declaration.type)
+                throw new Error("Unknown type declaration type: " + declaration.type);
             }
-        })
+        });
     }
 
     public doesTypeExist(typeName: DeclaredTypeName): boolean {
-        return this.allTypes[typeName.typeId] != null
+        return this.allTypes[typeName.typeId] != null;
     }
 }

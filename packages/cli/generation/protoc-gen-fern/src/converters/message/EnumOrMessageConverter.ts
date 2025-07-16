@@ -1,29 +1,29 @@
-import { DescriptorProto, EnumDescriptorProto } from "@bufbuild/protobuf/wkt"
+import { DescriptorProto, EnumDescriptorProto } from "@bufbuild/protobuf/wkt";
 
-import { FernIr, TypeId } from "@fern-api/ir-sdk"
-import { AbstractConverter, AbstractConverterContext } from "@fern-api/v2-importer-commons"
+import { FernIr, TypeId } from "@fern-api/ir-sdk";
+import { AbstractConverter, AbstractConverterContext } from "@fern-api/v2-importer-commons";
 
-import { ProtofileConverterContext } from "../ProtofileConverterContext"
-import { SOURCE_CODE_INFO_PATH_STARTERS } from "../utils/PathFieldNumbers"
-import { EnumConverter } from "./EnumConverter"
-import { MessageConverter } from "./MessageConverter"
+import { ProtofileConverterContext } from "../ProtofileConverterContext";
+import { SOURCE_CODE_INFO_PATH_STARTERS } from "../utils/PathFieldNumbers";
+import { EnumConverter } from "./EnumConverter";
+import { MessageConverter } from "./MessageConverter";
 
 export declare namespace EnumOrMessageConverter {
     export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {
-        schema: EnumDescriptorProto | DescriptorProto
-        sourceCodeInfoPath: number[]
-        schemaIndex: number
+        schema: EnumDescriptorProto | DescriptorProto;
+        sourceCodeInfoPath: number[];
+        schemaIndex: number;
     }
 
     export interface ConvertedSchema {
-        typeDeclaration: FernIr.TypeDeclaration
-        audiences: string[]
-        propertiesByAudience: Record<string, Set<string>>
+        typeDeclaration: FernIr.TypeDeclaration;
+        audiences: string[];
+        propertiesByAudience: Record<string, Set<string>>;
     }
 
     export interface Output {
-        convertedSchema: ConvertedSchema
-        inlinedTypes: Record<FernIr.TypeId, ConvertedSchema>
+        convertedSchema: ConvertedSchema;
+        inlinedTypes: Record<FernIr.TypeId, ConvertedSchema>;
     }
 }
 
@@ -31,29 +31,29 @@ export class EnumOrMessageConverter extends AbstractConverter<
     ProtofileConverterContext,
     EnumOrMessageConverter.Output
 > {
-    private readonly schema: EnumDescriptorProto | DescriptorProto
-    private readonly audiences: string[]
-    private readonly sourceCodeInfoPath: number[]
-    private readonly schemaIndex: number
+    private readonly schema: EnumDescriptorProto | DescriptorProto;
+    private readonly audiences: string[];
+    private readonly sourceCodeInfoPath: number[];
+    private readonly schemaIndex: number;
 
     constructor({ context, breadcrumbs, schema, sourceCodeInfoPath, schemaIndex }: EnumOrMessageConverter.Args) {
-        super({ context, breadcrumbs })
-        this.schema = schema
-        this.sourceCodeInfoPath = sourceCodeInfoPath
-        this.schemaIndex = schemaIndex
-        this.audiences = []
+        super({ context, breadcrumbs });
+        this.schema = schema;
+        this.sourceCodeInfoPath = sourceCodeInfoPath;
+        this.schemaIndex = schemaIndex;
+        this.audiences = [];
     }
 
     public convert(): EnumOrMessageConverter.Output | undefined {
-        const maybeConvertedGrpcEnum = this.tryConvertGrpcEnum()
+        const maybeConvertedGrpcEnum = this.tryConvertGrpcEnum();
         if (maybeConvertedGrpcEnum != null) {
-            return maybeConvertedGrpcEnum
+            return maybeConvertedGrpcEnum;
         }
-        const maybeConvertedGrpcMessage = this.tryConvertGrpcMessage()
+        const maybeConvertedGrpcMessage = this.tryConvertGrpcMessage();
         if (maybeConvertedGrpcMessage != null) {
-            return maybeConvertedGrpcMessage
+            return maybeConvertedGrpcMessage;
         }
-        return undefined
+        return undefined;
     }
 
     private tryConvertGrpcEnum(): EnumOrMessageConverter.Output | undefined {
@@ -63,8 +63,8 @@ export class EnumOrMessageConverter extends AbstractConverter<
                 breadcrumbs: [...this.breadcrumbs, this.schema.name],
                 enum: this.schema,
                 sourceCodeInfoPath: this.sourceCodeInfoPath
-            })
-            const convertedGrpcEnum = enumConverter.convert()
+            });
+            const convertedGrpcEnum = enumConverter.convert();
             if (convertedGrpcEnum != null) {
                 return {
                     convertedSchema: {
@@ -77,10 +77,10 @@ export class EnumOrMessageConverter extends AbstractConverter<
                         propertiesByAudience: {}
                     },
                     inlinedTypes: {}
-                }
+                };
             }
         }
-        return undefined
+        return undefined;
     }
 
     private tryConvertGrpcMessage(): EnumOrMessageConverter.Output | undefined {
@@ -90,16 +90,16 @@ export class EnumOrMessageConverter extends AbstractConverter<
                 breadcrumbs: [...this.breadcrumbs, this.schema.name],
                 message: this.schema,
                 sourceCodeInfoPath: this.sourceCodeInfoPath
-            })
-            const convertedGrpcMessage = messageConverter.convert()
+            });
+            const convertedGrpcMessage = messageConverter.convert();
             if (convertedGrpcMessage != null) {
                 return {
                     convertedSchema: convertedGrpcMessage.convertedSchema,
                     inlinedTypes: convertedGrpcMessage.inlinedTypes
-                }
+                };
             }
         }
-        return undefined
+        return undefined;
     }
 
     public createTypeDeclaration({
@@ -107,9 +107,9 @@ export class EnumOrMessageConverter extends AbstractConverter<
         referencedTypes,
         docs
     }: {
-        shape: FernIr.Type
-        referencedTypes: Set<TypeId>
-        docs?: string
+        shape: FernIr.Type;
+        referencedTypes: Set<TypeId>;
+        docs?: string;
     }): FernIr.TypeDeclaration {
         return {
             name: this.convertDeclaredTypeName(),
@@ -123,16 +123,16 @@ export class EnumOrMessageConverter extends AbstractConverter<
             source: undefined,
             inline: undefined,
             v2Examples: undefined
-        }
+        };
     }
 
     public convertDeclaredTypeName(): FernIr.DeclaredTypeName {
-        const fullyQualifiedName = this.context.maybePrependPackageName(this.schema.name)
+        const fullyQualifiedName = this.context.maybePrependPackageName(this.schema.name);
         return {
             typeId: fullyQualifiedName,
             fernFilepath: this.context.createFernFilepath(),
             name: this.context.casingsGenerator.generateName(fullyQualifiedName),
             displayName: this.schema.name
-        }
+        };
     }
 }

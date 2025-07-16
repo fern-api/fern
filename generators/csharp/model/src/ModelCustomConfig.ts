@@ -1,4 +1,4 @@
-import { z } from "zod"
+import { z } from "zod";
 
 export const ModelCustomConfigSchema = z.object({
     namespace: z.string().optional(),
@@ -10,6 +10,6 @@ export const ModelCustomConfigSchema = z.object({
     "additional-properties": z.boolean().optional(),
     "package-id": z.string().optional(),
     "use-discriminated-unions": z.boolean().optional()
-})
+});
 
-export type ModelCustomConfigSchema = z.infer<typeof ModelCustomConfigSchema>
+export type ModelCustomConfigSchema = z.infer<typeof ModelCustomConfigSchema>;

@@ -1,7 +1,7 @@
-import { GetReferenceOpts, NpmPackage, PackageId, getTextOfTsNode } from "@fern-typescript/commons"
-import { GeneratedEnumType, SdkContext } from "@fern-typescript/contexts"
-import { OAuthTokenProviderGenerator } from "@fern-typescript/sdk-client-class-generator/src/oauth-generator/OAuthTokenProviderGenerator"
-import { Project } from "ts-morph"
+import { GetReferenceOpts, NpmPackage, PackageId, getTextOfTsNode } from "@fern-typescript/commons";
+import { GeneratedEnumType, SdkContext } from "@fern-typescript/contexts";
+import { OAuthTokenProviderGenerator } from "@fern-typescript/sdk-client-class-generator/src/oauth-generator/OAuthTokenProviderGenerator";
+import { Project } from "ts-morph";
 
 import {
     ApiAuth,
@@ -22,29 +22,29 @@ import {
     TypeReference,
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
-} from "@fern-fern/ir-sdk/api"
-import { FdrSnippetTemplate } from "@fern-fern/snippet-sdk"
-import { TemplateInput } from "@fern-fern/snippet-sdk/api"
-import * as FDRAPIV1Read from "@fern-fern/snippet-sdk/api/resources/api/resources/v1/resources/read"
+} from "@fern-fern/ir-sdk/api";
+import { FdrSnippetTemplate } from "@fern-fern/snippet-sdk";
+import { TemplateInput } from "@fern-fern/snippet-sdk/api";
+import * as FDRAPIV1Read from "@fern-fern/snippet-sdk/api/resources/api/resources/v1/resources/read";
 
 // Write this in the fern def to share between FE + BE
-const TEMPLATE_SENTINEL = "$FERN_INPUT"
-const ENVIRONMENT_OPTION_PROPERTY_NAME = "environment"
+const TEMPLATE_SENTINEL = "$FERN_INPUT";
+const ENVIRONMENT_OPTION_PROPERTY_NAME = "environment";
 
 export class TemplateGenerator {
-    private endpointContext: SdkContext
-    private clientContext: SdkContext
-    private opts: GetReferenceOpts
-    private npmPackage: NpmPackage
-    private auth: ApiAuth
-    private headers: HttpHeader[]
-    private endpoint: HttpEndpoint
-    private packageId: PackageId
-    private rootPackageId: PackageId
-    private includeSerdeLayer: boolean
-    private retainOriginalCasing: boolean
-    private inlineFileProperties: boolean
-    private requireDefaultEnvironment: boolean
+    private endpointContext: SdkContext;
+    private clientContext: SdkContext;
+    private opts: GetReferenceOpts;
+    private npmPackage: NpmPackage;
+    private auth: ApiAuth;
+    private headers: HttpHeader[];
+    private endpoint: HttpEndpoint;
+    private packageId: PackageId;
+    private rootPackageId: PackageId;
+    private includeSerdeLayer: boolean;
+    private retainOriginalCasing: boolean;
+    private inlineFileProperties: boolean;
+    private requireDefaultEnvironment: boolean;
 
     constructor({
         clientContext,
@@ -60,37 +60,37 @@ export class TemplateGenerator {
         inlineFileProperties,
         requireDefaultEnvironment
     }: {
-        clientContext: SdkContext
-        endpointContext: SdkContext
-        npmPackage: NpmPackage
-        auth: ApiAuth
-        headers: HttpHeader[]
-        endpoint: HttpEndpoint
-        packageId: PackageId
-        rootPackageId: PackageId
-        includeSerdeLayer: boolean
-        retainOriginalCasing: boolean
-        inlineFileProperties: boolean
-        requireDefaultEnvironment: boolean
+        clientContext: SdkContext;
+        endpointContext: SdkContext;
+        npmPackage: NpmPackage;
+        auth: ApiAuth;
+        headers: HttpHeader[];
+        endpoint: HttpEndpoint;
+        packageId: PackageId;
+        rootPackageId: PackageId;
+        includeSerdeLayer: boolean;
+        retainOriginalCasing: boolean;
+        inlineFileProperties: boolean;
+        requireDefaultEnvironment: boolean;
     }) {
-        this.endpointContext = endpointContext
-        this.clientContext = clientContext
-        this.npmPackage = npmPackage
-        this.auth = auth
-        this.headers = headers
-        this.endpoint = endpoint
-        this.packageId = packageId
-        this.rootPackageId = rootPackageId
-        this.includeSerdeLayer = includeSerdeLayer
-        this.retainOriginalCasing = retainOriginalCasing
-        this.inlineFileProperties = inlineFileProperties
-        this.requireDefaultEnvironment = requireDefaultEnvironment
+        this.endpointContext = endpointContext;
+        this.clientContext = clientContext;
+        this.npmPackage = npmPackage;
+        this.auth = auth;
+        this.headers = headers;
+        this.endpoint = endpoint;
+        this.packageId = packageId;
+        this.rootPackageId = rootPackageId;
+        this.includeSerdeLayer = includeSerdeLayer;
+        this.retainOriginalCasing = retainOriginalCasing;
+        this.inlineFileProperties = inlineFileProperties;
+        this.requireDefaultEnvironment = requireDefaultEnvironment;
 
-        this.opts = { isForSnippet: true }
+        this.opts = { isForSnippet: true };
     }
 
     private getPropertyKey(name: Name): string {
-        return !this.includeSerdeLayer || this.retainOriginalCasing ? name.originalName : name.camelCase.unsafeName
+        return !this.includeSerdeLayer || this.retainOriginalCasing ? name.originalName : name.camelCase.unsafeName;
     }
 
     // Get the dot access path to the object within the broader json object
@@ -98,22 +98,22 @@ export class TemplateGenerator {
         wireOrOriginalName,
         nameBreadcrumbs
     }: {
-        wireOrOriginalName: string | undefined
-        nameBreadcrumbs: string[] | undefined
+        wireOrOriginalName: string | undefined;
+        nameBreadcrumbs: string[] | undefined;
     }): string | undefined {
-        let crumbs: string[] = []
+        let crumbs: string[] = [];
         if (wireOrOriginalName == null && nameBreadcrumbs != null) {
-            crumbs = nameBreadcrumbs
+            crumbs = nameBreadcrumbs;
         } else if (wireOrOriginalName != null && (nameBreadcrumbs == null || nameBreadcrumbs.length === 0)) {
-            crumbs = [wireOrOriginalName]
+            crumbs = [wireOrOriginalName];
         } else if (wireOrOriginalName != null && nameBreadcrumbs != null) {
-            crumbs = [...nameBreadcrumbs, wireOrOriginalName]
+            crumbs = [...nameBreadcrumbs, wireOrOriginalName];
         } else {
             // They're both undefined, return undefined
-            return undefined
+            return undefined;
         }
 
-        return crumbs.join(".")
+        return crumbs.join(".");
     }
 
     private getBaseGenericTemplate({
@@ -122,10 +122,10 @@ export class TemplateGenerator {
         wireOrOriginalName,
         nameBreadcrumbs
     }: {
-        name: string | undefined
-        location: FdrSnippetTemplate.PayloadLocation
-        wireOrOriginalName: string | undefined
-        nameBreadcrumbs: string[] | undefined
+        name: string | undefined;
+        location: FdrSnippetTemplate.PayloadLocation;
+        wireOrOriginalName: string | undefined;
+        nameBreadcrumbs: string[] | undefined;
     }): FdrSnippetTemplate.Template {
         return FdrSnippetTemplate.Template.generic({
             imports: [],
@@ -137,11 +137,11 @@ export class TemplateGenerator {
                     path: this.getBreadCrumbPath({ wireOrOriginalName, nameBreadcrumbs })
                 })
             ]
-        })
+        });
     }
 
     private getAsNamedParameterTemplate(name: string | undefined, coreTemplate: string): string {
-        return name != null ? `${name}: ${coreTemplate}` : coreTemplate
+        return name != null ? `${name}: ${coreTemplate}` : coreTemplate;
     }
 
     private getEnumTemplate({
@@ -152,19 +152,19 @@ export class TemplateGenerator {
         wireOrOriginalName,
         nameBreadcrumbs
     }: {
-        etd: EnumTypeDeclaration
-        generatedEnum: GeneratedEnumType<SdkContext>
-        name: string | undefined
-        location: FdrSnippetTemplate.PayloadLocation
-        wireOrOriginalName: string | undefined
-        nameBreadcrumbs: string[] | undefined
+        etd: EnumTypeDeclaration;
+        generatedEnum: GeneratedEnumType<SdkContext>;
+        name: string | undefined;
+        location: FdrSnippetTemplate.PayloadLocation;
+        wireOrOriginalName: string | undefined;
+        nameBreadcrumbs: string[] | undefined;
     }): FdrSnippetTemplate.Template {
-        const mappedEnumValues: Record<string, string> = {}
+        const mappedEnumValues: Record<string, string> = {};
         etd.values.forEach((ev) => {
-            const mockExampleTypeShape: ExampleTypeShape = ExampleTypeShape.enum({ value: ev.name })
-            const enumValue = generatedEnum.buildExample(mockExampleTypeShape, this.endpointContext, this.opts)
-            mappedEnumValues[ev.name.wireValue] = getTextOfTsNode(enumValue)
-        })
+            const mockExampleTypeShape: ExampleTypeShape = ExampleTypeShape.enum({ value: ev.name });
+            const enumValue = generatedEnum.buildExample(mockExampleTypeShape, this.endpointContext, this.opts);
+            mappedEnumValues[ev.name.wireValue] = getTextOfTsNode(enumValue);
+        });
 
         return FdrSnippetTemplate.Template.enum({
             imports: [],
@@ -175,7 +175,7 @@ export class TemplateGenerator {
                 location,
                 path: this.getBreadCrumbPath({ wireOrOriginalName, nameBreadcrumbs })
             })
-        })
+        });
     }
 
     private convertIRTypeReferenceToFdrTypeReference(typeReference: TypeReference): FDRAPIV1Read.TypeReference {
@@ -197,7 +197,7 @@ export class TemplateGenerator {
                         uint64: () => FDRAPIV1Read.PrimitiveType.uint64(),
                         float: () => FDRAPIV1Read.PrimitiveType.double({}),
                         _other: () => {
-                            throw new Error("Unknown primitive type: " + primitive.v1)
+                            throw new Error("Unknown primitive type: " + primitive.v1);
                         }
                     })
                 ),
@@ -230,7 +230,7 @@ export class TemplateGenerator {
                                 boolean: (bool) => FDRAPIV1Read.LiteralType.booleanLiteral(bool),
                                 string: (str) => FDRAPIV1Read.LiteralType.stringLiteral(str),
                                 _other: () => {
-                                    throw new Error("Unknown literal type: " + literalValue.type)
+                                    throw new Error("Unknown literal type: " + literalValue.type);
                                 }
                             })
                         ),
@@ -239,7 +239,7 @@ export class TemplateGenerator {
             named: (named) => FDRAPIV1Read.TypeReference.id({ value: named.typeId }),
             unknown: () => FDRAPIV1Read.TypeReference.unknown(),
             _other: () => FDRAPIV1Read.TypeReference.unknown()
-        })
+        });
     }
 
     private getUndiscriminatedUnionTemplate({
@@ -250,16 +250,16 @@ export class TemplateGenerator {
         nameBreadcrumbs,
         indentationLevel
     }: {
-        uutd: UndiscriminatedUnionTypeDeclaration
-        name: string | undefined
-        location: FdrSnippetTemplate.PayloadLocation
-        wireOrOriginalName: string | undefined
-        nameBreadcrumbs: string[] | undefined
-        indentationLevel: number
+        uutd: UndiscriminatedUnionTypeDeclaration;
+        name: string | undefined;
+        location: FdrSnippetTemplate.PayloadLocation;
+        wireOrOriginalName: string | undefined;
+        nameBreadcrumbs: string[] | undefined;
+        indentationLevel: number;
     }): FdrSnippetTemplate.Template | undefined {
-        const childIndentationLevel = indentationLevel + 1
+        const childIndentationLevel = indentationLevel + 1;
 
-        const memberTemplates: FdrSnippetTemplate.UnionTemplateMember[] = []
+        const memberTemplates: FdrSnippetTemplate.UnionTemplateMember[] = [];
         for (const member of uutd.members) {
             const memberTemplate = this.getTemplateFromTypeReference({
                 typeReference: member.type,
@@ -270,13 +270,13 @@ export class TemplateGenerator {
                 indentationLevel: childIndentationLevel,
                 isObjectInlined: true,
                 includeLiteralTemplates: true
-            })
+            });
 
             if (memberTemplate != null) {
                 memberTemplates.push({
                     template: memberTemplate,
                     type: this.convertIRTypeReferenceToFdrTypeReference(member.type)
-                })
+                });
             }
         }
         return FdrSnippetTemplate.Template.unionV2({
@@ -288,7 +288,7 @@ export class TemplateGenerator {
                 location,
                 path: this.getBreadCrumbPath({ wireOrOriginalName, nameBreadcrumbs })
             })
-        })
+        });
     }
 
     private getUnionTemplate({
@@ -299,22 +299,22 @@ export class TemplateGenerator {
         nameBreadcrumbs,
         indentationLevel
     }: {
-        utd: UnionTypeDeclaration
-        name: string | undefined
-        location: FdrSnippetTemplate.PayloadLocation
-        wireOrOriginalName: string | undefined
-        nameBreadcrumbs: string[] | undefined
-        indentationLevel: number
+        utd: UnionTypeDeclaration;
+        name: string | undefined;
+        location: FdrSnippetTemplate.PayloadLocation;
+        wireOrOriginalName: string | undefined;
+        nameBreadcrumbs: string[] | undefined;
+        indentationLevel: number;
     }): FdrSnippetTemplate.Template | undefined {
-        const childIndentationLevel = indentationLevel + 1
-        const childTabs = "\t".repeat(childIndentationLevel)
-        const childBreadcrumbs: string[] = [...(nameBreadcrumbs ?? [])]
+        const childIndentationLevel = indentationLevel + 1;
+        const childTabs = "\t".repeat(childIndentationLevel);
+        const childBreadcrumbs: string[] = [...(nameBreadcrumbs ?? [])];
         if (name != null) {
-            childBreadcrumbs.push(name)
+            childBreadcrumbs.push(name);
         }
 
-        const selfTabs = "\t".repeat(indentationLevel)
-        const memberTemplates: Record<string, FdrSnippetTemplate.Template> = {}
+        const selfTabs = "\t".repeat(indentationLevel);
+        const memberTemplates: Record<string, FdrSnippetTemplate.Template> = {};
         for (const member of utd.types) {
             const memberTemplate = member.shape._visit<FdrSnippetTemplate.Template | undefined>({
                 samePropertiesAsObject: (utdodtn) => {
@@ -326,7 +326,7 @@ export class TemplateGenerator {
                         nameBreadcrumbs,
                         indentationLevel: childIndentationLevel,
                         isObjectInlined: true
-                    })
+                    });
 
                     return FdrSnippetTemplate.Template.generic({
                         imports: [],
@@ -339,7 +339,7 @@ export class TemplateGenerator {
                         isOptional: true,
                         templateInputs:
                             namedTypeTemplate != null ? [this.getTemplateInputFromTemplate(namedTypeTemplate)] : []
-                    })
+                    });
                 },
                 singleProperty: (utdsp) => {
                     const singlePropertyTemplate = this.getTemplateInputFromTypeReference({
@@ -350,7 +350,7 @@ export class TemplateGenerator {
                         nameBreadcrumbs: childBreadcrumbs,
                         indentationLevel: childIndentationLevel,
                         isObjectInlined: true
-                    })
+                    });
                     return FdrSnippetTemplate.Template.generic({
                         imports: [],
                         templateString: this.getAsNamedParameterTemplate(
@@ -361,7 +361,7 @@ export class TemplateGenerator {
                         ),
                         isOptional: true,
                         templateInputs: singlePropertyTemplate != null ? [singlePropertyTemplate] : []
-                    })
+                    });
                 },
                 noProperties: () =>
                     FdrSnippetTemplate.Template.generic({
@@ -376,10 +376,10 @@ export class TemplateGenerator {
                         templateInputs: []
                     }),
                 _other: () => undefined
-            })
+            });
 
             if (memberTemplate != null) {
-                memberTemplates[member.discriminantValue.wireValue] = memberTemplate
+                memberTemplates[member.discriminantValue.wireValue] = memberTemplate;
             }
         }
 
@@ -393,7 +393,7 @@ export class TemplateGenerator {
                 location,
                 path: this.getBreadCrumbPath({ wireOrOriginalName, nameBreadcrumbs })
             })
-        })
+        });
     }
 
     private getObjectTemplate({
@@ -405,22 +405,22 @@ export class TemplateGenerator {
         indentationLevel,
         isObjectInlined
     }: {
-        otd: ObjectTypeDeclaration
-        name: string | undefined
-        location: FdrSnippetTemplate.PayloadLocation
-        wireOrOriginalName: string | undefined
-        nameBreadcrumbs: string[] | undefined
-        indentationLevel: number
-        isObjectInlined: boolean
+        otd: ObjectTypeDeclaration;
+        name: string | undefined;
+        location: FdrSnippetTemplate.PayloadLocation;
+        wireOrOriginalName: string | undefined;
+        nameBreadcrumbs: string[] | undefined;
+        indentationLevel: number;
+        isObjectInlined: boolean;
     }): FdrSnippetTemplate.Template | undefined {
-        const childIndentationLevel = indentationLevel + 1
-        const childTabs = "\t".repeat(isObjectInlined ? childIndentationLevel - 1 : childIndentationLevel)
-        const selfTabs = "\t".repeat(indentationLevel)
-        const templateInputs: FdrSnippetTemplate.TemplateInput[] = []
+        const childIndentationLevel = indentationLevel + 1;
+        const childTabs = "\t".repeat(isObjectInlined ? childIndentationLevel - 1 : childIndentationLevel);
+        const selfTabs = "\t".repeat(indentationLevel);
+        const templateInputs: FdrSnippetTemplate.TemplateInput[] = [];
         for (const prop of otd.properties) {
-            const childBreadcrumbs = nameBreadcrumbs != null ? [...nameBreadcrumbs] : []
+            const childBreadcrumbs = nameBreadcrumbs != null ? [...nameBreadcrumbs] : [];
             if (wireOrOriginalName != null) {
-                childBreadcrumbs.push(wireOrOriginalName)
+                childBreadcrumbs.push(wireOrOriginalName);
             }
             const propInput = this.getTemplateInputFromTypeReference({
                 typeReference: prop.valueType,
@@ -430,10 +430,10 @@ export class TemplateGenerator {
                 nameBreadcrumbs: childBreadcrumbs,
                 indentationLevel: childIndentationLevel,
                 isObjectInlined: false
-            })
+            });
 
             if (propInput != null) {
-                templateInputs.push(propInput)
+                templateInputs.push(propInput);
             }
         }
         return FdrSnippetTemplate.Template.generic({
@@ -446,7 +446,7 @@ export class TemplateGenerator {
             isOptional: true,
             inputDelimiter: `,\n${childTabs}`,
             templateInputs
-        })
+        });
     }
 
     private getNamedTypeTemplate({
@@ -459,17 +459,17 @@ export class TemplateGenerator {
         isObjectInlined,
         includeLiteralTemplates
     }: {
-        typeName: DeclaredTypeName
-        name: string | undefined
-        location: FdrSnippetTemplate.PayloadLocation
-        wireOrOriginalName: string | undefined
-        nameBreadcrumbs: string[] | undefined
-        indentationLevel: number
-        isObjectInlined: boolean
-        includeLiteralTemplates?: boolean
+        typeName: DeclaredTypeName;
+        name: string | undefined;
+        location: FdrSnippetTemplate.PayloadLocation;
+        wireOrOriginalName: string | undefined;
+        nameBreadcrumbs: string[] | undefined;
+        indentationLevel: number;
+        isObjectInlined: boolean;
+        includeLiteralTemplates?: boolean;
     }): FdrSnippetTemplate.Template | undefined {
-        const td = this.endpointContext.type.getTypeDeclaration(typeName)
-        const generatedType = this.endpointContext.type.getGeneratedType(typeName)
+        const td = this.endpointContext.type.getTypeDeclaration(typeName);
+        const generatedType = this.endpointContext.type.getGeneratedType(typeName);
 
         return td.shape._visit<FdrSnippetTemplate.Template | undefined>({
             enum: (etd) =>
@@ -521,7 +521,7 @@ export class TemplateGenerator {
                     indentationLevel
                 }),
             _other: () => undefined
-        })
+        });
     }
 
     private getContainerTemplate({
@@ -534,19 +534,19 @@ export class TemplateGenerator {
         isObjectInlined,
         includeLiteralTemplates
     }: {
-        containerType: ContainerType
-        name: string | undefined
-        location: FdrSnippetTemplate.PayloadLocation
-        wireOrOriginalName: string | undefined
-        nameBreadcrumbs: string[] | undefined
-        indentationLevel: number
-        isObjectInlined: boolean
-        includeLiteralTemplates?: boolean
+        containerType: ContainerType;
+        name: string | undefined;
+        location: FdrSnippetTemplate.PayloadLocation;
+        wireOrOriginalName: string | undefined;
+        nameBreadcrumbs: string[] | undefined;
+        indentationLevel: number;
+        isObjectInlined: boolean;
+        includeLiteralTemplates?: boolean;
     }): FdrSnippetTemplate.Template | undefined {
-        const childIndentationLevel = indentationLevel + 1
-        const selfTabs = "\t".repeat(indentationLevel)
-        const childTabs = "\t".repeat(childIndentationLevel)
-        const immediatePayloadPath = this.getBreadCrumbPath({ wireOrOriginalName, nameBreadcrumbs })
+        const childIndentationLevel = indentationLevel + 1;
+        const selfTabs = "\t".repeat(indentationLevel);
+        const childTabs = "\t".repeat(childIndentationLevel);
+        const immediatePayloadPath = this.getBreadCrumbPath({ wireOrOriginalName, nameBreadcrumbs });
         return containerType._visit<FdrSnippetTemplate.Template | undefined>({
             list: (itemType) => {
                 const innerTemplate = this.getTemplateFromTypeReference({
@@ -557,7 +557,7 @@ export class TemplateGenerator {
                     nameBreadcrumbs: undefined,
                     indentationLevel: childIndentationLevel,
                     isObjectInlined: false
-                })
+                });
                 return innerTemplate != null
                     ? FdrSnippetTemplate.Template.iterable({
                           imports: [],
@@ -573,7 +573,7 @@ export class TemplateGenerator {
                               path: immediatePayloadPath
                           })
                       })
-                    : undefined
+                    : undefined;
             },
             set: (itemType) => {
                 const innerTemplate = this.getTemplateFromTypeReference({
@@ -584,7 +584,7 @@ export class TemplateGenerator {
                     nameBreadcrumbs: undefined,
                     indentationLevel: childIndentationLevel,
                     isObjectInlined: false
-                })
+                });
 
                 return innerTemplate != null
                     ? FdrSnippetTemplate.Template.iterable({
@@ -601,7 +601,7 @@ export class TemplateGenerator {
                               path: immediatePayloadPath
                           })
                       })
-                    : undefined
+                    : undefined;
             },
             map: (kvType) => {
                 const keyTemplate = this.getTemplateFromTypeReference({
@@ -612,7 +612,7 @@ export class TemplateGenerator {
                     nameBreadcrumbs: undefined,
                     indentationLevel: childIndentationLevel,
                     isObjectInlined: false
-                })
+                });
                 const valueTemplate = this.getTemplateFromTypeReference({
                     typeReference: kvType.valueType,
                     name: undefined,
@@ -621,7 +621,7 @@ export class TemplateGenerator {
                     nameBreadcrumbs: undefined,
                     indentationLevel: childIndentationLevel,
                     isObjectInlined: false
-                })
+                });
 
                 return keyTemplate != null && valueTemplate != null
                     ? FdrSnippetTemplate.Template.dict({
@@ -640,7 +640,7 @@ export class TemplateGenerator {
                               path: immediatePayloadPath
                           })
                       })
-                    : undefined
+                    : undefined;
             },
             nullable: (nullableType) =>
                 this.getTemplateFromTypeReference({
@@ -667,9 +667,9 @@ export class TemplateGenerator {
                     boolean: (bool) => bool.toString(),
                     string: (str) => `"${str}"`,
                     _other: () => {
-                        throw new Error("Unknown literal type: " + literal.type)
+                        throw new Error("Unknown literal type: " + literal.type);
                     }
-                })
+                });
                 return includeLiteralTemplates
                     ? FdrSnippetTemplate.Template.generic({
                           imports: [],
@@ -682,10 +682,10 @@ export class TemplateGenerator {
                               })
                           ]
                       })
-                    : undefined
+                    : undefined;
             },
             _other: () => undefined
-        })
+        });
     }
 
     private getTemplateFromTypeReference({
@@ -698,19 +698,19 @@ export class TemplateGenerator {
         isObjectInlined,
         includeLiteralTemplates
     }: {
-        typeReference: TypeReference
-        name: string | undefined
-        location: FdrSnippetTemplate.PayloadLocation
-        wireOrOriginalName: string | undefined
-        nameBreadcrumbs: string[] | undefined
-        indentationLevel: number
-        isObjectInlined: boolean
-        includeLiteralTemplates?: boolean
+        typeReference: TypeReference;
+        name: string | undefined;
+        location: FdrSnippetTemplate.PayloadLocation;
+        wireOrOriginalName: string | undefined;
+        nameBreadcrumbs: string[] | undefined;
+        indentationLevel: number;
+        isObjectInlined: boolean;
+        includeLiteralTemplates?: boolean;
     }): FdrSnippetTemplate.Template | undefined {
         // TODO: Implement a better way to handle type -> template relation to better handle
         // circular references
         if (indentationLevel > 10) {
-            return
+            return;
         }
 
         return typeReference._visit({
@@ -739,28 +739,28 @@ export class TemplateGenerator {
                     includeLiteralTemplates
                 }),
             _other: () => undefined
-        })
+        });
     }
 
     private getTemplateInputFromTemplate(template: FdrSnippetTemplate.Template): FdrSnippetTemplate.TemplateInput {
-        return FdrSnippetTemplate.TemplateInput.template(template)
+        return FdrSnippetTemplate.TemplateInput.template(template);
     }
 
     private getTemplateInputFromTypeReference(args: {
-        typeReference: TypeReference
-        name: string | undefined
-        location: FdrSnippetTemplate.PayloadLocation
-        wireOrOriginalName: string | undefined
-        nameBreadcrumbs: string[] | undefined
-        indentationLevel: number
-        isObjectInlined: boolean
+        typeReference: TypeReference;
+        name: string | undefined;
+        location: FdrSnippetTemplate.PayloadLocation;
+        wireOrOriginalName: string | undefined;
+        nameBreadcrumbs: string[] | undefined;
+        indentationLevel: number;
+        isObjectInlined: boolean;
     }): FdrSnippetTemplate.TemplateInput | undefined {
-        const template = this.getTemplateFromTypeReference(args)
-        return template != null ? this.getTemplateInputFromTemplate(template) : template
+        const template = this.getTemplateFromTypeReference(args);
+        return template != null ? this.getTemplateInputFromTemplate(template) : template;
     }
 
     private getFileUploadRequestParametersFromEndpoint(): FdrSnippetTemplate.TemplateInput[] {
-        const frp: FdrSnippetTemplate.TemplateInput[] = []
+        const frp: FdrSnippetTemplate.TemplateInput[] = [];
         const rbpt = this.endpoint.requestBody?._visit<(FdrSnippetTemplate.TemplateInput | undefined)[] | undefined>({
             fileUpload: (fu) =>
                 fu.properties.flatMap((prop) =>
@@ -781,20 +781,20 @@ export class TemplateGenerator {
             reference: () => undefined,
             bytes: () => undefined,
             _other: () => undefined
-        })
+        });
         if (rbpt != null) {
             for (const ti of rbpt) {
                 if (ti != null) {
-                    frp.push(ti)
+                    frp.push(ti);
                 }
             }
         }
 
-        return frp
+        return frp;
     }
 
     private getNonRequestParametersFromEndpoint(): FdrSnippetTemplate.TemplateInput[] {
-        const nrp: FdrSnippetTemplate.TemplateInput[] = []
+        const nrp: FdrSnippetTemplate.TemplateInput[] = [];
         this.endpoint.allPathParameters.forEach((pathParameter) => {
             const pt = this.getTemplateInputFromTypeReference({
                 typeReference: pathParameter.valueType,
@@ -804,18 +804,18 @@ export class TemplateGenerator {
                 nameBreadcrumbs: undefined,
                 indentationLevel: 1,
                 isObjectInlined: false
-            })
+            });
             if (pt != null) {
-                nrp.push(pt)
+                nrp.push(pt);
             }
-        })
+        });
 
-        return nrp
+        return nrp;
     }
 
     private getRequestParametersFromEndpoint(): FdrSnippetTemplate.TemplateInput[] {
-        const isObjectInlined = false
-        const rp: FdrSnippetTemplate.TemplateInput[] = []
+        const isObjectInlined = false;
+        const rp: FdrSnippetTemplate.TemplateInput[] = [];
 
         this.endpoint.queryParameters.forEach((queryParameter) => {
             const pt = this.getTemplateInputFromTypeReference({
@@ -826,11 +826,11 @@ export class TemplateGenerator {
                 nameBreadcrumbs: undefined,
                 indentationLevel: 2,
                 isObjectInlined
-            })
+            });
             if (pt != null) {
-                rp.push(pt)
+                rp.push(pt);
             }
-        })
+        });
 
         this.endpoint.headers.forEach((header) => {
             const pt = this.getTemplateInputFromTypeReference({
@@ -841,11 +841,11 @@ export class TemplateGenerator {
                 nameBreadcrumbs: undefined,
                 indentationLevel: 2,
                 isObjectInlined
-            })
+            });
             if (pt != null) {
-                rp.push(pt)
+                rp.push(pt);
             }
-        })
+        });
 
         const rbpt = this.endpoint.requestBody?._visit<(FdrSnippetTemplate.TemplateInput | undefined)[] | undefined>({
             // These two are handled the same way, get the parameters and map them
@@ -876,7 +876,7 @@ export class TemplateGenerator {
                 fu.properties.flatMap((prop) =>
                     prop._visit<FdrSnippetTemplate.TemplateInput | undefined>({
                         file: (fileProperty) => {
-                            const propertyKey = this.getPropertyKey(fileProperty.key.name)
+                            const propertyKey = this.getPropertyKey(fileProperty.key.name);
                             if (this.inlineFileProperties) {
                                 const template = fileProperty._visit({
                                     file: () =>
@@ -898,12 +898,12 @@ export class TemplateGenerator {
                                             ]
                                         }),
                                     _other: () => undefined
-                                })
+                                });
                                 if (template != null) {
-                                    return this.getTemplateInputFromTemplate(template)
+                                    return this.getTemplateInputFromTemplate(template);
                                 }
                             }
-                            return undefined
+                            return undefined;
                         },
                         bodyProperty: (bp) =>
                             this.getTemplateInputFromTypeReference({
@@ -922,20 +922,20 @@ export class TemplateGenerator {
             bytes: () => undefined,
             // No sense in throwing, just ignore this.
             _other: () => undefined
-        })
+        });
         if (rbpt != null) {
             for (const ti of rbpt) {
                 if (ti != null) {
-                    rp.push(ti)
+                    rp.push(ti);
                 }
             }
         }
 
-        return rp
+        return rp;
     }
 
     private fileUploadArrayTemplate(key: NameAndWireValue) {
-        const containerTemplateString = `[\n\t\t${TEMPLATE_SENTINEL}\n\t]`
+        const containerTemplateString = `[\n\t\t${TEMPLATE_SENTINEL}\n\t]`;
         return FdrSnippetTemplate.Template.iterable({
             isOptional: true,
             containerTemplateString,
@@ -945,7 +945,7 @@ export class TemplateGenerator {
                 location: FdrSnippetTemplate.PayloadLocation.Body,
                 path: key.wireValue
             })
-        })
+        });
     }
 
     private fileUploadTemplate() {
@@ -954,32 +954,32 @@ export class TemplateGenerator {
             templateString: 'fs.createReadStream("/path/to/your/file")',
             isOptional: false,
             templateInputs: []
-        })
+        });
     }
 
     private getBearerAuthOptionKey(bearerAuthScheme: BearerAuthScheme): string {
-        return bearerAuthScheme.token.camelCase.safeName
+        return bearerAuthScheme.token.camelCase.safeName;
     }
 
     private getBasicAuthUsernameOptionKey(basicAuthScheme: BasicAuthScheme): string {
-        return basicAuthScheme.username.camelCase.safeName
+        return basicAuthScheme.username.camelCase.safeName;
     }
 
     private getBasicAuthPasswordOptionKey(basicAuthScheme: BasicAuthScheme): string {
-        return basicAuthScheme.password.camelCase.safeName
+        return basicAuthScheme.password.camelCase.safeName;
     }
 
     private getOptionKeyForAuthHeader(header: HeaderAuthScheme): string {
-        return header.name.name.camelCase.unsafeName
+        return header.name.name.camelCase.unsafeName;
     }
 
     private generateTopLevelClientInstantiationSnippetTemplateInput(
         addEnvironmentProperty: boolean
     ): FdrSnippetTemplate.TemplateInput[] {
-        const topLevelTemplateInputs: FdrSnippetTemplate.TemplateInput[] = []
+        const topLevelTemplateInputs: FdrSnippetTemplate.TemplateInput[] = [];
 
         if (addEnvironmentProperty) {
-            const firstEnvironment = this.clientContext.environments.getReferenceToFirstEnvironmentEnum()
+            const firstEnvironment = this.clientContext.environments.getReferenceToFirstEnvironmentEnum();
             topLevelTemplateInputs.push(
                 FdrSnippetTemplate.TemplateInput.template(
                     FdrSnippetTemplate.Template.generic({
@@ -993,7 +993,7 @@ export class TemplateGenerator {
                         templateInputs: []
                     })
                 )
-            )
+            );
         }
 
         for (const authScheme of this.auth.schemes) {
@@ -1030,7 +1030,7 @@ export class TemplateGenerator {
                                 ]
                             })
                         )
-                    )
+                    );
                 },
                 bearer: (bearerAuthScheme) => {
                     topLevelTemplateInputs.push(
@@ -1049,7 +1049,7 @@ export class TemplateGenerator {
                                 ]
                             })
                         )
-                    )
+                    );
                 },
                 // TODO: header & oauth are likely incorrect. payload path needs to be changed.
                 header: (header) => {
@@ -1067,7 +1067,7 @@ export class TemplateGenerator {
                                 ]
                             })
                         )
-                    )
+                    );
                 },
                 oauth: (oauthScheme) => {
                     topLevelTemplateInputs.push(
@@ -1084,7 +1084,7 @@ export class TemplateGenerator {
                                 ]
                             })
                         )
-                    )
+                    );
                     topLevelTemplateInputs.push(
                         FdrSnippetTemplate.TemplateInput.template(
                             FdrSnippetTemplate.Template.generic({
@@ -1099,12 +1099,12 @@ export class TemplateGenerator {
                                 ]
                             })
                         )
-                    )
+                    );
                 },
                 _other: () => {
-                    throw new Error("Unknown auth scheme: " + authScheme.type)
+                    throw new Error("Unknown auth scheme: " + authScheme.type);
                 }
-            })
+            });
         }
 
         for (const header of this.headers) {
@@ -1122,7 +1122,7 @@ export class TemplateGenerator {
                         ]
                     })
                 )
-            )
+            );
         }
 
         return [
@@ -1134,20 +1134,20 @@ export class TemplateGenerator {
                     templateInputs: topLevelTemplateInputs
                 })
             )
-        ]
+        ];
     }
 
     // Should take in all params, filter out request to put at the back
     // Then create type reference templates for everything
     // Then make the request param manual to ensure that it acts like a hash
     private generateTopLevelFunctionInvocationSnippetTemplateInput(): FdrSnippetTemplate.TemplateInput[] {
-        const topLevelTemplateInputs: FdrSnippetTemplate.TemplateInput[] = []
+        const topLevelTemplateInputs: FdrSnippetTemplate.TemplateInput[] = [];
         // TS params are essentially going to be ordered, if they're not named request then they're going to go in loose (no name)
         // if they're in the request object then they're named within this hash (this.requestExample)
         // path parameters matter since they are unnamed, if they're not present undefined is required
         // Generally its: (`path parameters`, {`request parameter`}}
 
-        const fileParamInputs = this.getFileUploadRequestParametersFromEndpoint()
+        const fileParamInputs = this.getFileUploadRequestParametersFromEndpoint();
         if (!this.inlineFileProperties && fileParamInputs.length > 0) {
             topLevelTemplateInputs.push(
                 FdrSnippetTemplate.TemplateInput.template(
@@ -1159,11 +1159,11 @@ export class TemplateGenerator {
                         templateInputs: fileParamInputs
                     })
                 )
-            )
+            );
         }
 
         // Add the unnamed, non-request params first
-        const nonRequestParamInputs = this.getNonRequestParametersFromEndpoint()
+        const nonRequestParamInputs = this.getNonRequestParametersFromEndpoint();
         if (nonRequestParamInputs.length > 0) {
             topLevelTemplateInputs.push(
                 FdrSnippetTemplate.TemplateInput.template(
@@ -1175,11 +1175,11 @@ export class TemplateGenerator {
                         templateInputs: nonRequestParamInputs
                     })
                 )
-            )
+            );
         }
 
         // Finally, if there's a request param, build that.
-        const requestParamInputs = this.getRequestParametersFromEndpoint()
+        const requestParamInputs = this.getRequestParametersFromEndpoint();
         if (requestParamInputs.length > 0) {
             topLevelTemplateInputs.push(
                 FdrSnippetTemplate.TemplateInput.template(
@@ -1191,20 +1191,20 @@ export class TemplateGenerator {
                         templateInputs: requestParamInputs
                     })
                 )
-            )
+            );
         }
-        return topLevelTemplateInputs
+        return topLevelTemplateInputs;
     }
 
     // TODO: share this logic with SdkGenerator
     private getEndpointFunctionName(endpoint: HttpEndpoint): string {
-        return endpoint.name.camelCase.unsafeName
+        return endpoint.name.camelCase.unsafeName;
     }
 
     public generateSnippetTemplate(): FdrSnippetTemplate.VersionedSnippetTemplate | undefined {
         const project = new Project({
             useInMemoryFileSystem: true
-        })
+        });
 
         // Create the client instantiation snippet
         const rootSdkClientName = getTextOfTsNode(
@@ -1213,37 +1213,37 @@ export class TemplateGenerator {
                     npmPackage: this.npmPackage
                 })
                 .getEntityName()
-        )
+        );
 
-        const clientReference = getTextOfTsNode(this.clientContext.sdkInstanceReferenceForSnippet)
+        const clientReference = getTextOfTsNode(this.clientContext.sdkInstanceReferenceForSnippet);
         const defaultEnvironment = this.clientContext.environments
             .getGeneratedEnvironments()
-            .getReferenceToDefaultEnvironment(this.clientContext)
-        const addEnvironmentProperty = !this.requireDefaultEnvironment && defaultEnvironment == null
+            .getReferenceToDefaultEnvironment(this.clientContext);
+        const addEnvironmentProperty = !this.requireDefaultEnvironment && defaultEnvironment == null;
 
         const topLevelClientInstantiationTemplateInputs =
-            this.generateTopLevelClientInstantiationSnippetTemplateInput(addEnvironmentProperty)
+            this.generateTopLevelClientInstantiationSnippetTemplateInput(addEnvironmentProperty);
 
         const clientInstantiationTemplateString =
             this.auth.schemes.length > 0 || this.headers.length > 0 || addEnvironmentProperty
                 ? `const ${clientReference} = new ${rootSdkClientName}(${TEMPLATE_SENTINEL});`
-                : `const ${clientReference} = new ${rootSdkClientName}();`
+                : `const ${clientReference} = new ${rootSdkClientName}();`;
 
         // Recurse over the parameters to the function
-        const topLevelFunctionInvocationTemplateInputs = this.generateTopLevelFunctionInvocationSnippetTemplateInput()
+        const topLevelFunctionInvocationTemplateInputs = this.generateTopLevelFunctionInvocationSnippetTemplateInput();
 
         // Create the outer function snippet
-        const clientClass = this.clientContext.sdkClientClass.getGeneratedSdkClientClass(this.packageId)
+        const clientClass = this.clientContext.sdkClientClass.getGeneratedSdkClientClass(this.packageId);
         const endpointClientAccess = clientClass.accessFromRootClient({
             referenceToRootClient: this.clientContext.sdkInstanceReferenceForSnippet
-        })
-        const endpointClientAccessString = getTextOfTsNode(endpointClientAccess)
+        });
+        const endpointClientAccessString = getTextOfTsNode(endpointClientAccess);
         const functionInvocationTemplateString =
             topLevelFunctionInvocationTemplateInputs.length > 0
                 ? `await ${endpointClientAccessString}.${this.getEndpointFunctionName(
                       this.endpoint
                   )}(\n\t${TEMPLATE_SENTINEL}\n)`
-                : `await ${endpointClientAccessString}.${this.getEndpointFunctionName(this.endpoint)}()`
+                : `await ${endpointClientAccessString}.${this.getEndpointFunctionName(this.endpoint)}()`;
 
         return FdrSnippetTemplate.VersionedSnippetTemplate.v1({
             clientInstantiation: FdrSnippetTemplate.Template.generic({
@@ -1260,6 +1260,6 @@ export class TemplateGenerator {
                 inputDelimiter: ",\n\t",
                 templateInputs: topLevelFunctionInvocationTemplateInputs
             })
-        })
+        });
     }
 }

@@ -1,10 +1,10 @@
-import { EndpointId, dynamic } from "@fern-fern/ir-sdk/api"
+import { EndpointId, dynamic } from "@fern-fern/ir-sdk/api";
 
-import { Endpoint, convertEndpoints } from "./convertEndpoints"
+import { Endpoint, convertEndpoints } from "./convertEndpoints";
 
 export type DynamicIntermediateRepresentation = Omit<dynamic.DynamicIntermediateRepresentation, "endpoints"> & {
-    endpoints: Record<EndpointId, Endpoint>
-}
+    endpoints: Record<EndpointId, Endpoint>;
+};
 
 /**
  * The @fern-api/dynamic-ir-sdk doesn't include the serialization layer, so the casing
@@ -14,5 +14,5 @@ export function convertIr(ir: dynamic.DynamicIntermediateRepresentation): Dynami
     return {
         ...ir,
         endpoints: convertEndpoints(ir.endpoints)
-    }
+    };
 }

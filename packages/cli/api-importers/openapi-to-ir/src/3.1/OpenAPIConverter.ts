@@ -1,53 +1,53 @@
-import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types"
+import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
-import { AuthScheme, FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk"
-import { convertApiAuth, convertEnvironments } from "@fern-api/ir-utils"
-import { AbstractSpecConverter, Converters, ServersConverter } from "@fern-api/v2-importer-commons"
+import { AuthScheme, FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { convertApiAuth, convertEnvironments } from "@fern-api/ir-utils";
+import { AbstractSpecConverter, Converters, ServersConverter } from "@fern-api/v2-importer-commons";
 
-import { FernGlobalHeadersExtension } from "../extensions/x-fern-global-headers"
-import { convertGlobalHeadersExtension } from "../utils/convertGlobalHeadersExtension"
-import { OpenAPIConverterContext3_1 } from "./OpenAPIConverterContext3_1"
-import { PathConverter } from "./paths/PathConverter"
-import { WebhookConverter } from "./paths/operations/WebhookConverter"
-import { SecuritySchemeConverter } from "./securitySchemes/SecuritySchemeConverter"
+import { FernGlobalHeadersExtension } from "../extensions/x-fern-global-headers";
+import { convertGlobalHeadersExtension } from "../utils/convertGlobalHeadersExtension";
+import { OpenAPIConverterContext3_1 } from "./OpenAPIConverterContext3_1";
+import { PathConverter } from "./paths/PathConverter";
+import { WebhookConverter } from "./paths/operations/WebhookConverter";
+import { SecuritySchemeConverter } from "./securitySchemes/SecuritySchemeConverter";
 
-export type BaseIntermediateRepresentation = Omit<IntermediateRepresentation, "apiName" | "constants">
+export type BaseIntermediateRepresentation = Omit<IntermediateRepresentation, "apiName" | "constants">;
 
 export declare namespace OpenAPIConverter {
-    type Args = AbstractSpecConverter.Args<OpenAPIConverterContext3_1>
+    type Args = AbstractSpecConverter.Args<OpenAPIConverterContext3_1>;
 }
 
 export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterContext3_1, IntermediateRepresentation> {
     constructor({ breadcrumbs, context, audiences }: AbstractSpecConverter.Args<OpenAPIConverterContext3_1>) {
-        super({ breadcrumbs, context, audiences })
+        super({ breadcrumbs, context, audiences });
     }
 
     public async convert(): Promise<IntermediateRepresentation> {
         this.context.spec = this.removeXFernIgnores({
             document: this.context.spec
-        }) as OpenAPIV3_1.Document
+        }) as OpenAPIV3_1.Document;
 
         this.context.spec = (await this.resolveAllExternalRefs({
             spec: this.context.spec
-        })) as OpenAPIV3_1.Document
+        })) as OpenAPIV3_1.Document;
 
-        const idToAuthScheme = this.convertSecuritySchemes()
+        const idToAuthScheme = this.convertSecuritySchemes();
 
-        this.convertGlobalHeaders()
+        this.convertGlobalHeaders();
 
-        this.convertSchemas()
+        this.convertSchemas();
 
-        this.convertWebhooks()
+        this.convertWebhooks();
 
-        const { endpointLevelServers, errors } = this.convertPaths({ idToAuthScheme })
+        const { endpointLevelServers, errors } = this.convertPaths({ idToAuthScheme });
 
-        this.addErrorsToIr(errors)
+        this.addErrorsToIr(errors);
 
-        const { defaultUrl } = this.convertServers({ endpointLevelServers })
+        const { defaultUrl } = this.convertServers({ endpointLevelServers });
 
-        this.updateEndpointsWithDefaultUrl(defaultUrl)
+        this.updateEndpointsWithDefaultUrl(defaultUrl);
 
-        return this.finalizeIr()
+        return this.finalizeIr();
     }
 
     private convertGlobalHeaders(): void {
@@ -59,15 +59,15 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             breadcrumbs: ["x-fern-global-headers"],
             document: this.context.spec,
             context: this.context
-        })
-        const convertedGlobalHeaders = globalHeadersExtension.convert()
+        });
+        const convertedGlobalHeaders = globalHeadersExtension.convert();
         if (convertedGlobalHeaders != null) {
             const globalHeaders = convertGlobalHeadersExtension({
                 globalHeaders: convertedGlobalHeaders,
                 context: this.context
-            })
-            this.addGlobalHeadersToIr(globalHeaders)
-            this.context.setGlobalHeaders(globalHeaders)
+            });
+            this.addGlobalHeadersToIr(globalHeaders);
+            this.context.setGlobalHeaders(globalHeaders);
         }
     }
 
@@ -78,31 +78,31 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                     rawApiFileSchema: this.context.authOverrides,
                     casingsGenerator: this.context.casingsGenerator
                 })
-            )
-            return {}
+            );
+            return {};
         }
 
         // Create a map to store converted auth schemes by their ID
-        const idToAuthScheme: Record<string, AuthScheme> = {}
-        const securitySchemes: AuthScheme[] = []
+        const idToAuthScheme: Record<string, AuthScheme> = {};
+        const securitySchemes: AuthScheme[] = [];
 
         for (const [id, securityScheme] of Object.entries(this.context.spec.components?.securitySchemes ?? {})) {
             const resolvedSecurityScheme = this.context.resolveMaybeReference<OpenAPIV3_1.SecuritySchemeObject>({
                 schemaOrReference: securityScheme,
                 breadcrumbs: ["components", "securitySchemes", id]
-            })
+            });
             if (resolvedSecurityScheme == null) {
-                continue
+                continue;
             }
 
             const securitySchemeConverter = new SecuritySchemeConverter({
                 context: this.context,
                 breadcrumbs: ["components", "securitySchemes", id],
                 securityScheme: resolvedSecurityScheme
-            })
-            const convertedScheme = securitySchemeConverter.convert()
+            });
+            const convertedScheme = securitySchemeConverter.convert();
             if (convertedScheme == null) {
-                continue
+                continue;
             }
 
             if (
@@ -112,9 +112,9 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                     currentSecuritySchemes: securitySchemes
                 })
             ) {
-                securitySchemes.push(convertedScheme)
+                securitySchemes.push(convertedScheme);
             } else {
-                idToAuthScheme[id] = convertedScheme
+                idToAuthScheme[id] = convertedScheme;
             }
         }
 
@@ -123,29 +123,29 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                 requirement: securitySchemes.length === 1 ? "ALL" : "ANY",
                 schemes: securitySchemes,
                 docs: undefined
-            })
+            });
         }
 
-        return idToAuthScheme
+        return idToAuthScheme;
     }
 
     private convertServers({ endpointLevelServers }: { endpointLevelServers?: OpenAPIV3_1.ServerObject[] }): {
-        defaultUrl: string | undefined
+        defaultUrl: string | undefined;
     } {
         if (this.context.environmentOverrides) {
             const convertedEnvironments = convertEnvironments({
                 rawApiFileSchema: this.context.environmentOverrides,
                 casingsGenerator: this.context.casingsGenerator
-            })
+            });
             if (convertedEnvironments != null) {
                 this.addEnvironmentsToIr({
                     environmentConfig: convertedEnvironments.environmentsConfig,
                     audiences: convertedEnvironments.audiences
-                })
+                });
             }
             return {
                 defaultUrl: this.context.environmentOverrides["default-url"]
-            }
+            };
         }
 
         const serversConverter = new ServersConverter({
@@ -153,12 +153,12 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             breadcrumbs: ["servers"],
             servers: this.context.spec.servers,
             endpointLevelServers
-        })
-        const convertedServers = serversConverter.convert()
-        this.addEnvironmentsToIr({ environmentConfig: convertedServers?.value })
+        });
+        const convertedServers = serversConverter.convert();
+        this.addEnvironmentsToIr({ environmentConfig: convertedServers?.value });
         return {
             defaultUrl: convertedServers?.defaultUrl
-        }
+        };
     }
 
     private convertSchemas(): void {
@@ -168,14 +168,14 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                 id,
                 breadcrumbs: ["components", "schemas", id],
                 schema
-            })
-            const convertedSchema = schemaConverter.convert()
+            });
+            const convertedSchema = schemaConverter.convert();
             if (convertedSchema != null) {
-                this.addTypeToPackage(id)
+                this.addTypeToPackage(id);
                 this.addTypesToIr({
                     ...convertedSchema.inlinedTypes,
                     [id]: convertedSchema.convertedSchema
-                })
+                });
             }
         }
     }
@@ -186,36 +186,36 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                 this.context.errorCollector.collect({
                     message: "Skipping empty webhook",
                     path: this.breadcrumbs
-                })
-                continue
+                });
+                continue;
             }
 
             if (!("post" in webhookItem)) {
                 this.context.errorCollector.collect({
                     message: "Skipping webhook as it is not a POST method",
                     path: this.breadcrumbs
-                })
-                continue
+                });
+                continue;
             }
 
             if (webhookItem.post?.operationId == null) {
                 this.context.errorCollector.collect({
                     message: "Skipping webhook as no operationId is present",
                     path: this.breadcrumbs
-                })
-                continue
+                });
+                continue;
             }
 
-            const operationId = webhookItem.post.operationId
+            const operationId = webhookItem.post.operationId;
             const webHookConverter = new WebhookConverter({
                 context: this.context,
                 breadcrumbs: ["webhooks", operationId],
                 operation: webhookItem.post,
                 method: OpenAPIV3.HttpMethods.POST,
                 path: operationId
-            })
+            });
 
-            const convertedWebHook = webHookConverter.convert()
+            const convertedWebHook = webHookConverter.convert();
 
             if (convertedWebHook != null) {
                 this.addWebhookToIr({
@@ -223,22 +223,22 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                     operationId,
                     audiences: convertedWebHook.audiences,
                     group: convertedWebHook.group
-                })
-                this.addTypesToIr(convertedWebHook.inlinedTypes)
+                });
+                this.addTypesToIr(convertedWebHook.inlinedTypes);
             }
         }
     }
 
     private convertPaths({ idToAuthScheme }: { idToAuthScheme: Record<string, AuthScheme> }): {
-        endpointLevelServers?: OpenAPIV3_1.ServerObject[]
-        errors: Record<FernIr.ErrorId, FernIr.ErrorDeclaration>
+        endpointLevelServers?: OpenAPIV3_1.ServerObject[];
+        errors: Record<FernIr.ErrorId, FernIr.ErrorDeclaration>;
     } {
-        const endpointLevelServers: OpenAPIV3_1.ServerObject[] = []
-        const errors: Record<FernIr.ErrorId, FernIr.ErrorDeclaration> = {}
+        const endpointLevelServers: OpenAPIV3_1.ServerObject[] = [];
+        const errors: Record<FernIr.ErrorId, FernIr.ErrorDeclaration> = {};
 
         for (const [path, pathItem] of Object.entries(this.context.spec.paths ?? {})) {
             if (pathItem == null) {
-                continue
+                continue;
             }
 
             const pathConverter = new PathConverter({
@@ -247,8 +247,8 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                 topLevelServers: this.context.spec.servers,
                 pathItem,
                 path
-            })
-            const convertedPath = pathConverter.convert()
+            });
+            const convertedPath = pathConverter.convert();
             if (convertedPath != null) {
                 for (const endpoint of convertedPath.endpoints) {
                     if (endpoint.streamEndpoint != null) {
@@ -257,7 +257,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                             audiences: endpoint.audiences,
                             endpointGroup: endpoint.group,
                             endpointGroupDisplayName: endpoint.groupDisplayName
-                        })
+                        });
                     }
 
                     this.addEndpointToIr({
@@ -265,7 +265,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                         audiences: endpoint.audiences,
                         endpointGroup: endpoint.group,
                         endpointGroupDisplayName: endpoint.groupDisplayName
-                    })
+                    });
 
                     if (endpoint.servers) {
                         for (const server of endpoint.servers) {
@@ -275,7 +275,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                                     currentServers: endpointLevelServers
                                 })
                             ) {
-                                endpointLevelServers.push(server)
+                                endpointLevelServers.push(server);
                             }
                         }
                     }
@@ -283,7 +283,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                         // TODO: For SDK-IR, errorIds are not guaranteed to be unique.
                         // We'll want to override the type to unknown if errorId is already present.
                         for (const [errorId, error] of Object.entries(endpoint.errors)) {
-                            errors[errorId] = error
+                            errors[errorId] = error;
                         }
                     }
                 }
@@ -292,18 +292,18 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                     const group = this.context.getGroup({
                         groupParts: webhook.group,
                         namespace: this.context.namespace
-                    })
+                    });
                     this.addWebhookToIr({
                         webhook: webhook.webhook,
                         operationId: group.join("."),
                         group,
                         audiences: webhook.audiences
-                    })
+                    });
                 }
-                this.addTypesToIr(convertedPath.inlinedTypes)
+                this.addTypesToIr(convertedPath.inlinedTypes);
             }
         }
-        return { endpointLevelServers, errors }
+        return { endpointLevelServers, errors };
     }
 
     private shouldAddAuthSchemeToIr({
@@ -311,23 +311,23 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         schemeId,
         currentSecuritySchemes
     }: {
-        authScheme: AuthScheme
-        schemeId: string
-        currentSecuritySchemes: AuthScheme[]
+        authScheme: AuthScheme;
+        schemeId: string;
+        currentSecuritySchemes: AuthScheme[];
     }): boolean {
         const schemeAlreadyExists = currentSecuritySchemes.some((scheme) => {
             if (scheme.type === authScheme.type) {
                 if (scheme.type === "bearer" && authScheme.type === "bearer") {
-                    return scheme.token === authScheme.token
+                    return scheme.token === authScheme.token;
                 }
                 // TODO: Add other scheme types as needed
             }
-            return false
-        })
+            return false;
+        });
 
         const topLevelSchemes = new Set<string>(
             this.context.spec.security?.flatMap((securityRequirement) => Object.keys(securityRequirement)) ?? []
-        )
-        return (topLevelSchemes.size === 0 || topLevelSchemes.has(schemeId)) && !schemeAlreadyExists
+        );
+        return (topLevelSchemes.size === 0 || topLevelSchemes.has(schemeId)) && !schemeAlreadyExists;
     }
 }

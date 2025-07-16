@@ -1,52 +1,52 @@
-import dedent from "dedent"
+import dedent from "dedent";
 
-import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator"
-import { FernIr } from "@fern-api/dynamic-ir-sdk"
+import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
+import { FernIr } from "@fern-api/dynamic-ir-sdk";
 
-import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk"
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
-import { EndpointId, FeatureId, FernFilepath, HttpEndpoint } from "@fern-fern/ir-sdk/api"
+import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { EndpointId, FeatureId, FernFilepath, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 
-import { SdkGeneratorContext } from "../SdkGeneratorContext"
+import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 interface EndpointWithFilepath {
-    endpoint: HttpEndpoint
-    fernFilepath: FernFilepath
+    endpoint: HttpEndpoint;
+    fernFilepath: FernFilepath;
 }
 
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
-    private static CLIENT_VARIABLE_NAME = "client"
+    private static CLIENT_VARIABLE_NAME = "client";
 
-    private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS"
-    private static RESPONSE_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "RESPONSE_HEADERS"
+    private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
+    private static RESPONSE_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "RESPONSE_HEADERS";
 
-    private readonly context: SdkGeneratorContext
-    private readonly endpointsById: Record<EndpointId, EndpointWithFilepath> = {}
-    private readonly prerenderedSnippetsByEndpointId: Record<EndpointId, string> = {}
-    private readonly defaultEndpointId: EndpointId
-    private readonly rootPackageName: string
-    private readonly rootPackageClientName: string
-    private readonly isPaginationEnabled: boolean
+    private readonly context: SdkGeneratorContext;
+    private readonly endpointsById: Record<EndpointId, EndpointWithFilepath> = {};
+    private readonly prerenderedSnippetsByEndpointId: Record<EndpointId, string> = {};
+    private readonly defaultEndpointId: EndpointId;
+    private readonly rootPackageName: string;
+    private readonly rootPackageClientName: string;
+    private readonly isPaginationEnabled: boolean;
 
     constructor({
         context,
         endpointSnippets
     }: {
-        context: SdkGeneratorContext
-        endpointSnippets: FernGeneratorExec.Endpoint[]
+        context: SdkGeneratorContext;
+        endpointSnippets: FernGeneratorExec.Endpoint[];
     }) {
-        super({ endpointSnippets })
-        this.context = context
+        super({ endpointSnippets });
+        this.context = context;
 
-        this.isPaginationEnabled = context.config.generatePaginatedClients ?? false
-        this.endpointsById = this.buildEndpointsById()
-        this.prerenderedSnippetsByEndpointId = this.buildPrerenderedSnippetsByEndpointId(endpointSnippets)
+        this.isPaginationEnabled = context.config.generatePaginatedClients ?? false;
+        this.endpointsById = this.buildEndpointsById();
+        this.prerenderedSnippetsByEndpointId = this.buildPrerenderedSnippetsByEndpointId(endpointSnippets);
         this.defaultEndpointId =
             this.context.ir.readmeConfig?.defaultEndpoint != null
                 ? this.context.ir.readmeConfig.defaultEndpoint
-                : this.getDefaultEndpointId()
-        this.rootPackageName = this.context.getRootPackageName()
-        this.rootPackageClientName = this.getRootPackageClientName()
+                : this.getDefaultEndpointId();
+        this.rootPackageName = this.context.getRootPackageName();
+        this.rootPackageClientName = this.getRootPackageClientName();
     }
 
     public buildReadmeSnippetsByFeatureId(): Record<FernGeneratorCli.FeatureId, string[]> {
@@ -54,18 +54,18 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const prerenderedSnippetsConfig: Record<
             FernGeneratorCli.FeatureId,
             {
-                predicate?: (endpoint: EndpointWithFilepath) => boolean
+                predicate?: (endpoint: EndpointWithFilepath) => boolean;
             }
         > = {
             [FernGeneratorCli.StructuredFeatureId.Usage]: {}
-        }
+        };
 
         // These feature sections are rendered using endpoint data interpolated into templates.
         const templatedSnippetsConfig: Record<
             FernGeneratorCli.FeatureId,
             {
-                renderer: (endpoint: EndpointWithFilepath) => string
-                predicate?: (endpoint: EndpointWithFilepath) => boolean
+                renderer: (endpoint: EndpointWithFilepath) => string;
+                predicate?: (endpoint: EndpointWithFilepath) => boolean;
             }
         > = {
             [ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID]: { renderer: this.renderEnvironmentsSnippet.bind(this) },
@@ -86,19 +86,19 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                       }
                   }
                 : undefined)
-        }
+        };
 
-        const snippetsByFeatureId: Record<FernGeneratorCli.FeatureId, string[]> = {}
+        const snippetsByFeatureId: Record<FernGeneratorCli.FeatureId, string[]> = {};
 
         for (const [featureId, { predicate }] of Object.entries(prerenderedSnippetsConfig)) {
-            snippetsByFeatureId[featureId] = this.getPrerenderedSnippetsForFeature(featureId, predicate)
+            snippetsByFeatureId[featureId] = this.getPrerenderedSnippetsForFeature(featureId, predicate);
         }
 
         for (const [featureId, { renderer, predicate }] of Object.entries(templatedSnippetsConfig)) {
-            snippetsByFeatureId[featureId] = this.renderSnippetsTemplateForFeature(featureId, renderer, predicate)
+            snippetsByFeatureId[featureId] = this.renderSnippetsTemplateForFeature(featureId, renderer, predicate);
         }
 
-        return snippetsByFeatureId
+        return snippetsByFeatureId;
     }
 
     private getPrerenderedSnippetsForFeature(
@@ -108,13 +108,13 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return this.getEndpointsForFeature(featureId)
             .filter(predicate)
             .map((endpoint) => {
-                const endpointId = endpoint.endpoint.id
-                const snippet = this.prerenderedSnippetsByEndpointId[endpoint.endpoint.id]
+                const endpointId = endpoint.endpoint.id;
+                const snippet = this.prerenderedSnippetsByEndpointId[endpoint.endpoint.id];
                 if (snippet == null) {
-                    throw new Error(`Internal error; missing snippet for endpoint ${endpointId}`)
+                    throw new Error(`Internal error; missing snippet for endpoint ${endpointId}`);
                 }
-                return snippet
-            })
+                return snippet;
+            });
     }
 
     private renderSnippetsTemplateForFeature(
@@ -122,14 +122,14 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         templateRenderer: (endpoint: EndpointWithFilepath) => string,
         predicate: (endpoint: EndpointWithFilepath) => boolean = () => true
     ): string[] {
-        return this.getEndpointsForFeature(featureId).filter(predicate).map(templateRenderer)
+        return this.getEndpointsForFeature(featureId).filter(predicate).map(templateRenderer);
     }
     private renderEnvironmentsSnippet(endpoint: EndpointWithFilepath): string {
         return this.writeCode(dedent`
             ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.NewClient(
                 option.WithBaseURL(${this.getBaseUrlOptionValue()}),
             )
-        `)
+        `);
     }
 
     private renderWithRawResponseHeadersSnippet(endpoint: EndpointWithFilepath): string {
@@ -139,7 +139,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 return err
             }
             fmt.Printf("Got response headers: %v", response.Header)
-        `)
+        `);
     }
 
     private renderRequestOptionsSnippet(endpoint: EndpointWithFilepath): string {
@@ -159,7 +159,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 ...,
                 option.WithToken("<YOUR_API_KEY>"),
             )
-        `)
+        `);
     }
 
     private renderErrorsSnippet(endpoint: EndpointWithFilepath): string {
@@ -172,7 +172,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 }
                 return err
             }
-        `)
+        `);
     }
 
     private renderRetriesSnippet(endpoint: EndpointWithFilepath): string {
@@ -185,7 +185,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 ...,
                 option.WithMaxAttempts(1),
             )
-        `)
+        `);
     }
 
     private renderTimeoutsSnippet(endpoint: EndpointWithFilepath): string {
@@ -194,7 +194,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             defer cancel()
 
             response, err := ${this.getMethodCall(endpoint)}(ctx, ...)
-        `)
+        `);
     }
 
     private renderPaginationSnippet(endpoint: EndpointWithFilepath): string {
@@ -230,121 +230,121 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                     return err
                 }
             }
-        `)
+        `);
     }
 
     private buildEndpointsById(): Record<EndpointId, EndpointWithFilepath> {
-        const endpoints: Record<EndpointId, EndpointWithFilepath> = {}
+        const endpoints: Record<EndpointId, EndpointWithFilepath> = {};
         for (const service of Object.values(this.context.ir.services)) {
             for (const endpoint of service.endpoints) {
                 endpoints[endpoint.id] = {
                     endpoint,
                     fernFilepath: service.name.fernFilepath
-                }
+                };
             }
         }
-        return endpoints
+        return endpoints;
     }
 
     private buildPrerenderedSnippetsByEndpointId(
         endpointSnippets: FernGeneratorExec.Endpoint[]
     ): Record<EndpointId, string> {
-        const snippets: Record<EndpointId, string> = {}
+        const snippets: Record<EndpointId, string> = {};
         for (const endpointSnippet of Object.values(endpointSnippets)) {
             if (endpointSnippet.id.identifierOverride == null) {
-                throw new Error("Internal error; snippets must define the endpoint id to generate README.md")
+                throw new Error("Internal error; snippets must define the endpoint id to generate README.md");
             }
             if (endpointSnippet.snippet.type !== "go") {
-                throw new Error(`Internal error; expected go snippet but got: ${endpointSnippet.snippet.type}`)
+                throw new Error(`Internal error; expected go snippet but got: ${endpointSnippet.snippet.type}`);
             }
-            snippets[endpointSnippet.id.identifierOverride] = endpointSnippet.snippet.client
+            snippets[endpointSnippet.id.identifierOverride] = endpointSnippet.snippet.client;
         }
-        return snippets
+        return snippets;
     }
 
     private getSnippetForEndpointId(endpointId: EndpointId): string {
-        const snippet = this.prerenderedSnippetsByEndpointId[endpointId]
+        const snippet = this.prerenderedSnippetsByEndpointId[endpointId];
         if (snippet == null) {
-            throw new Error(`Internal error; missing snippet for endpoint ${endpointId}`)
+            throw new Error(`Internal error; missing snippet for endpoint ${endpointId}`);
         }
-        return snippet
+        return snippet;
     }
 
     private getEndpointsForFeature(featureId: FeatureId): EndpointWithFilepath[] {
-        const endpointIds = this.getConfiguredEndpointIdsForFeature(featureId) ?? [this.defaultEndpointId]
-        return endpointIds.map(this.lookupEndpointById.bind(this))
+        const endpointIds = this.getConfiguredEndpointIdsForFeature(featureId) ?? [this.defaultEndpointId];
+        return endpointIds.map(this.lookupEndpointById.bind(this));
     }
 
     private getConfiguredEndpointIdsForFeature(featureId: FeatureId): EndpointId[] | undefined {
-        return this.context.ir.readmeConfig?.features?.[this.getFeatureKey(featureId)]
+        return this.context.ir.readmeConfig?.features?.[this.getFeatureKey(featureId)];
     }
 
     private lookupEndpointById(endpointId: EndpointId): EndpointWithFilepath {
-        const endpoint = this.endpointsById[endpointId]
+        const endpoint = this.endpointsById[endpointId];
         if (endpoint == null) {
-            throw new Error(`Internal error; missing endpoint ${endpointId}`)
+            throw new Error(`Internal error; missing endpoint ${endpointId}`);
         }
-        return endpoint
+        return endpoint;
     }
 
     private getMethodCall(endpoint: EndpointWithFilepath): string {
-        return `${this.getAccessFromRootClient(endpoint.fernFilepath)}.${this.getEndpointMethodName(endpoint.endpoint)}`
+        return `${this.getAccessFromRootClient(endpoint.fernFilepath)}.${this.getEndpointMethodName(endpoint.endpoint)}`;
     }
 
     private getWithRawResponseMethodCall(endpoint: EndpointWithFilepath): string {
         return `${this.getAccessFromRootClient(endpoint.fernFilepath)}.WithRawResponse.${this.getEndpointMethodName(
             endpoint.endpoint
-        )}`
+        )}`;
     }
 
     private getAccessFromRootClient(fernFilepath: FernFilepath): string {
-        const clientAccessParts = fernFilepath.allParts.map((part) => part.pascalCase.unsafeName)
+        const clientAccessParts = fernFilepath.allParts.map((part) => part.pascalCase.unsafeName);
         return clientAccessParts.length > 0
             ? `${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME}.${clientAccessParts.join(".")}`
-            : ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME
+            : ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME;
     }
 
     private getEndpointMethodName(endpoint: HttpEndpoint): string {
-        return endpoint.name.pascalCase.unsafeName
+        return endpoint.name.pascalCase.unsafeName;
     }
 
     private getDefaultEnvironmentId(): FernIr.EnvironmentId | undefined {
         if (this.context.ir.environments == null) {
-            return undefined
+            return undefined;
         }
 
         return (
             this.context.ir.environments?.defaultEnvironment ??
             this.context.ir.environments.environments.environments[0]?.id
-        )
+        );
     }
 
     private getBaseUrlOptionValue(): string {
-        return this.getEnvironmentBaseUrlReference() ?? '"https://example.com"'
+        return this.getEnvironmentBaseUrlReference() ?? '"https://example.com"';
     }
 
     private getEnvironmentBaseUrlReference(): string | undefined {
-        const defaultEnvironmentId = this.getDefaultEnvironmentId()
+        const defaultEnvironmentId = this.getDefaultEnvironmentId();
 
         if (defaultEnvironmentId == null || this.context.ir.environments == null) {
-            return undefined
+            return undefined;
         }
 
-        const { environments } = this.context.ir.environments
-        const defaultEnvironment = environments.environments.find((env) => env.id === defaultEnvironmentId)
+        const { environments } = this.context.ir.environments;
+        const defaultEnvironment = environments.environments.find((env) => env.id === defaultEnvironmentId);
 
         if (!defaultEnvironment) {
-            return undefined
+            return undefined;
         }
 
-        return `${this.rootPackageName}.Environments.${defaultEnvironment.name.pascalCase.unsafeName}`
+        return `${this.rootPackageName}.Environments.${defaultEnvironment.name.pascalCase.unsafeName}`;
     }
 
     private getRootPackageClientName(): string {
-        return "client"
+        return "client";
     }
 
     private writeCode(s: string): string {
-        return s.trim() + "\n"
+        return s.trim() + "\n";
     }
 }

@@ -11,7 +11,7 @@ import {
     Parameter,
     Property,
     StringClassReference
-} from "@fern-api/ruby-codegen"
+} from "@fern-api/ruby-codegen";
 
 import {
     ApiAuth,
@@ -21,42 +21,42 @@ import {
     HeaderAuthScheme,
     HttpHeader,
     OAuthScheme
-} from "@fern-fern/ir-sdk/api"
+} from "@fern-fern/ir-sdk/api";
 
-import { isTypeOptional } from "./TypeUtilities"
-import { OauthTokenProvider } from "./oauth/OauthTokenProvider"
+import { isTypeOptional } from "./TypeUtilities";
+import { OauthTokenProvider } from "./oauth/OauthTokenProvider";
 
 export interface BasicAuth {
-    username: string
-    password: string
+    username: string;
+    password: string;
 }
 export interface BearerAuth {
-    token: string
+    token: string;
 }
 
 // For global headers + auth headers
 export class HeadersGenerator {
-    BASIC_AUTH_VARIABLE_NAME = "basic_auth_token"
-    public headers: HttpHeader[]
-    public crf: ClassReferenceFactory
-    public auth: ApiAuth
+    BASIC_AUTH_VARIABLE_NAME = "basic_auth_token";
+    public headers: HttpHeader[];
+    public crf: ClassReferenceFactory;
+    public auth: ApiAuth;
 
-    public isAuthRequired: boolean
-    public shouldGeneratOauth: boolean
+    public isAuthRequired: boolean;
+    public shouldGeneratOauth: boolean;
 
     constructor(headers: HttpHeader[], crf: ClassReferenceFactory, auth: ApiAuth, shouldGeneratOauth: boolean) {
-        this.headers = headers
-        this.crf = crf
-        this.auth = auth
+        this.headers = headers;
+        this.crf = crf;
+        this.auth = auth;
 
         this.isAuthRequired = AuthSchemesRequirement._visit<boolean>(auth.requirement, {
             all: () => true,
             any: () => false,
             _other: () => {
-                throw new Error("Unrecognized auth requirement.")
+                throw new Error("Unrecognized auth requirement.");
             }
-        })
-        this.shouldGeneratOauth = shouldGeneratOauth
+        });
+        this.shouldGeneratOauth = shouldGeneratOauth;
     }
 
     // Get as parameters
@@ -71,7 +71,7 @@ export class HeadersGenerator {
                     // If the header is optional, let's not provide an example
                     example: isTypeOptional(header.valueType) ? undefined : `"${header.name.name.pascalCase.safeName}"`
                 })
-        )
+        );
     }
 
     public getAuthHeadersAsParameters(forRootClient: boolean): Parameter[] {
@@ -148,7 +148,7 @@ export class HeadersGenerator {
                                             })
                                         ],
                               _other: () => {
-                                  throw new Error("Unrecognized auth scheme.")
+                                  throw new Error("Unrecognized auth scheme.");
                               }
                           })
                         : [
@@ -172,10 +172,10 @@ export class HeadersGenerator {
                     })
                 ],
                 _other: () => {
-                    throw new Error("Unrecognized auth scheme.")
+                    throw new Error("Unrecognized auth scheme.");
                 }
             })
-        )
+        );
     }
 
     // Get as properties
@@ -189,7 +189,7 @@ export class HeadersGenerator {
                     wireValue: header.name.wireValue,
                     documentation: header.docs
                 })
-        )
+        );
     }
 
     public getAuthHeadersAsProperties(isOptionalOverride?: boolean): Property[] {
@@ -237,10 +237,10 @@ export class HeadersGenerator {
                     })
                 ],
                 _other: () => {
-                    throw new Error("Unrecognized auth scheme.")
+                    throw new Error("Unrecognized auth scheme.");
                 }
             })
-        )
+        );
     }
 
     // Get as hash
@@ -249,8 +249,8 @@ export class HeadersGenerator {
     // }
 
     private getBearerAuthorizationHeader(bas: BearerAuthScheme): [string, string] {
-        const bearerValue = new Expression({ rightSide: bas.token.snakeCase.safeName, isAssignment: false })
-        return [`@${bas.token.snakeCase.safeName}`, `"Bearer #{${bearerValue.write({})}}"`]
+        const bearerValue = new Expression({ rightSide: bas.token.snakeCase.safeName, isAssignment: false });
+        return [`@${bas.token.snakeCase.safeName}`, `"Bearer #{${bearerValue.write({})}}"`];
     }
 
     private getOAuthBearerAuthorizationHeader(oas: OAuthScheme): [string, string] {
@@ -265,18 +265,18 @@ export class HeadersGenerator {
                           cc.tokenPrefix != null
                               ? `"${cc.tokenPrefix} #{${OauthTokenProvider.FIELD_NAME}}"`
                               : OauthTokenProvider.FIELD_NAME
-                      ]
+                      ];
                   },
                   _other: () => {
-                      throw new Error("Unrecognized auth scheme.")
+                      throw new Error("Unrecognized auth scheme.");
                   }
               })
-            : [`@${OauthTokenProvider.FIELD_NAME}`, `"Bearer #{${OauthTokenProvider.FIELD_NAME}}"`]
+            : [`@${OauthTokenProvider.FIELD_NAME}`, `"Bearer #{${OauthTokenProvider.FIELD_NAME}}"`];
     }
 
     private getBasicAuthorizationHeader(bas: BasicAuthScheme): [string, string] {
-        const userName = new Expression({ rightSide: bas.username.snakeCase.safeName, isAssignment: false })
-        const password = new Expression({ rightSide: bas.password.snakeCase.safeName, isAssignment: false })
+        const userName = new Expression({ rightSide: bas.username.snakeCase.safeName, isAssignment: false });
+        const password = new Expression({ rightSide: bas.password.snakeCase.safeName, isAssignment: false });
 
         const b64 = new FunctionInvocation({
             onObject: new ClassReference({ name: "Base64", import_: new Import({ from: "base64", isExternal: true }) }),
@@ -287,9 +287,9 @@ export class HeadersGenerator {
                     value: `'#{${userName.write({})}}:#{${password.write({})}}'`
                 })
             ]
-        })
+        });
 
-        return [`@${this.BASIC_AUTH_VARIABLE_NAME}`, `"Basic #{${b64.write({})}}"`]
+        return [`@${this.BASIC_AUTH_VARIABLE_NAME}`, `"Basic #{${b64.write({})}}"`];
     }
 
     // TODO: I don't love how this works, ideally it's a string to expression hash instead, but we don't
@@ -302,12 +302,12 @@ export class HeadersGenerator {
         //     onObject: has.name.name.snakeCase.safeName,
         //     baseFunction: new Function_({ name: "to_json", functionBody: [] })
         // });
-        const headerValue = new Expression({ rightSide: has.name.name.snakeCase.safeName, isAssignment: false })
+        const headerValue = new Expression({ rightSide: has.name.name.snakeCase.safeName, isAssignment: false });
 
         return [
             `@${has.name.name.snakeCase.safeName}`,
             has.prefix != null ? `"${has.prefix} #{${headerValue.write({})}}"` : headerValue.write({})
-        ]
+        ];
     }
 
     public getAuthHeaders(): [string, string][] {
@@ -318,9 +318,9 @@ export class HeadersGenerator {
                 header: (has: HeaderAuthScheme) => this.getCustomAuthorizationHeader(has),
                 oauth: (oas: OAuthScheme) => this.getOAuthBearerAuthorizationHeader(oas),
                 _other: () => {
-                    throw new Error("Unrecognized auth scheme.")
+                    throw new Error("Unrecognized auth scheme.");
                 }
             })
-        )
+        );
     }
 }

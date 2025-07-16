@@ -1,4 +1,4 @@
-import { createPythonClassName } from "../../core/utils"
+import { createPythonClassName } from "../../core/utils";
 
 describe("Casing", () => {
     describe("createPythonClassName", () => {
@@ -24,10 +24,10 @@ describe("Casing", () => {
             ["complex mix_of-DifferentCases", "ComplexMixOfDifferentCases"],
             ["ALLCAPS input", "ALLCAPSInput"], // Preserve ALLCAPS as requested
             ["PascalCaseAlready", "PascalCaseAlready"]
-        ]
+        ];
 
         it.each<[string, string]>(testCases)("should convert %s' to %s'", (input, expected) => {
-            expect(createPythonClassName(input)).toBe(expected)
-        })
-    })
-})
+            expect(createPythonClassName(input)).toBe(expected);
+        });
+    });
+});

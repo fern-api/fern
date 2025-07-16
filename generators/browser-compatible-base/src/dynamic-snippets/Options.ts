@@ -1,4 +1,4 @@
-import { AbstractFormatter } from "../ast/AbstractFormatter"
+import { AbstractFormatter } from "../ast/AbstractFormatter";
 
 // Style of the generated snippets.
 export enum Style {
@@ -13,11 +13,11 @@ export enum Style {
 export interface Options {
     // Config to use for a specific generator. This is independent of the customConfig
     // used by the generator, and is primarily used in testing environments.
-    config?: unknown
+    config?: unknown;
 
     // The formatter to use for the generated snippets.
-    formatter?: AbstractFormatter
+    formatter?: AbstractFormatter;
 
     // Style of the generated snippets. By default, the executable style is used.
-    style?: Style
+    style?: Style;
 }

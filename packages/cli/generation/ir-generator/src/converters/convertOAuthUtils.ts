@@ -1,6 +1,6 @@
-import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 
-import { getRequestPropertyComponents, getResponsePropertyComponents } from "./services/convertProperty"
+import { getRequestPropertyComponents, getResponsePropertyComponents } from "./services/convertProperty";
 
 const DEFAULT_TOKEN_ENDPOINT: Omit<TokenEndpoint, "endpoint"> = {
     requestProperties: {
@@ -15,7 +15,7 @@ const DEFAULT_TOKEN_ENDPOINT: Omit<TokenEndpoint, "endpoint"> = {
         expires_in: ["expires_in"],
         refresh_token: undefined
     }
-}
+};
 
 const DEFAULT_REFRESH_TOKEN_ENDPOINT: Omit<RefreshTokenEndpoint, "endpoint"> = {
     requestProperties: {
@@ -28,37 +28,37 @@ const DEFAULT_REFRESH_TOKEN_ENDPOINT: Omit<RefreshTokenEndpoint, "endpoint"> = {
         refresh_token: undefined,
         expires_in: ["expires_in"]
     }
-}
+};
 
 export interface TokenEndpoint {
-    endpoint: string
-    requestProperties: OAuthAccessTokenRequestPropertyComponents
-    responseProperties: OAuthAccessTokenResponsePropertyComponents
+    endpoint: string;
+    requestProperties: OAuthAccessTokenRequestPropertyComponents;
+    responseProperties: OAuthAccessTokenResponsePropertyComponents;
 }
 
 export interface RefreshTokenEndpoint {
-    endpoint: string
-    requestProperties: OAuthRefreshTokenRequestPropertyComponents
-    responseProperties: OAuthAccessTokenResponsePropertyComponents
+    endpoint: string;
+    requestProperties: OAuthRefreshTokenRequestPropertyComponents;
+    responseProperties: OAuthAccessTokenResponsePropertyComponents;
 }
 
 interface OAuthAccessTokenRequestPropertyComponents {
-    type: "access_token"
-    client_id: string[]
-    client_secret: string[]
-    scopes: string[] | undefined
+    type: "access_token";
+    client_id: string[];
+    client_secret: string[];
+    scopes: string[] | undefined;
 }
 
 interface OAuthAccessTokenResponsePropertyComponents {
-    type: "access_token"
-    access_token: string[]
-    expires_in: string[] | undefined
-    refresh_token: string[] | undefined
+    type: "access_token";
+    access_token: string[];
+    expires_in: string[] | undefined;
+    refresh_token: string[] | undefined;
 }
 
 interface OAuthRefreshTokenRequestPropertyComponents {
-    type: "refresh_token"
-    refresh_token: string[]
+    type: "refresh_token";
+    refresh_token: string[];
 }
 
 export function getTokenEndpoint(oauthSchema: RawSchemas.OAuthSchemeSchema): TokenEndpoint {
@@ -70,12 +70,12 @@ export function getTokenEndpoint(oauthSchema: RawSchemas.OAuthSchemeSchema): Tok
         responseProperties: getTokenEndpointResponseProperties({
             responseProperties: oauthSchema["get-token"]?.["response-properties"]
         })
-    }
+    };
 }
 
 export function getRefreshTokenEndpoint(oauthSchema: RawSchemas.OAuthSchemeSchema): RefreshTokenEndpoint | undefined {
     if (oauthSchema["refresh-token"] == null) {
-        return undefined
+        return undefined;
     }
     return {
         endpoint: oauthSchema["refresh-token"].endpoint,
@@ -85,20 +85,20 @@ export function getRefreshTokenEndpoint(oauthSchema: RawSchemas.OAuthSchemeSchem
         responseProperties: getRefreshTokenEndpointResponseProperties({
             responseProperties: oauthSchema["refresh-token"]?.["response-properties"]
         })
-    }
+    };
 }
 
 function getTokenEndpointRequestProperties({
     requestProperties
 }: {
-    requestProperties: RawSchemas.OAuthAccessTokenRequestPropertiesSchema | undefined
+    requestProperties: RawSchemas.OAuthAccessTokenRequestPropertiesSchema | undefined;
 }): OAuthAccessTokenRequestPropertyComponents {
     if (requestProperties == null) {
-        return DEFAULT_TOKEN_ENDPOINT.requestProperties
+        return DEFAULT_TOKEN_ENDPOINT.requestProperties;
     }
-    const maybeClientId = requestProperties["client-id"]
-    const maybeClientSecret = requestProperties["client-secret"]
-    const maybeScopes = requestProperties.scopes
+    const maybeClientId = requestProperties["client-id"];
+    const maybeClientSecret = requestProperties["client-secret"];
+    const maybeScopes = requestProperties.scopes;
     return {
         type: "access_token",
         client_id:
@@ -113,62 +113,62 @@ function getTokenEndpointRequestProperties({
             maybeScopes != null
                 ? getRequestPropertyComponents(maybeScopes)
                 : DEFAULT_TOKEN_ENDPOINT.requestProperties.scopes
-    }
+    };
 }
 
 function getTokenEndpointResponseProperties({
     responseProperties
 }: {
-    responseProperties: RawSchemas.OAuthAccessTokenResponsePropertiesSchema | undefined
+    responseProperties: RawSchemas.OAuthAccessTokenResponsePropertiesSchema | undefined;
 }): OAuthAccessTokenResponsePropertyComponents {
     return getTokenEndpointResponsePropertiesWithDefault({
         responseProperties,
         defaultValue: DEFAULT_TOKEN_ENDPOINT.responseProperties
-    })
+    });
 }
 
 function getRefreshTokenEndpointRequestProperties({
     requestProperties
 }: {
-    requestProperties: RawSchemas.OAuthRefreshTokenRequestPropertiesSchema | undefined
+    requestProperties: RawSchemas.OAuthRefreshTokenRequestPropertiesSchema | undefined;
 }): OAuthRefreshTokenRequestPropertyComponents {
     if (requestProperties == null) {
-        return DEFAULT_REFRESH_TOKEN_ENDPOINT.requestProperties
+        return DEFAULT_REFRESH_TOKEN_ENDPOINT.requestProperties;
     }
-    const maybeRefreshToken = requestProperties["refresh-token"]
+    const maybeRefreshToken = requestProperties["refresh-token"];
     return {
         type: "refresh_token",
         refresh_token:
             maybeRefreshToken != null
                 ? getRequestPropertyComponents(maybeRefreshToken)
                 : DEFAULT_REFRESH_TOKEN_ENDPOINT.requestProperties.refresh_token
-    }
+    };
 }
 
 function getRefreshTokenEndpointResponseProperties({
     responseProperties
 }: {
-    responseProperties: RawSchemas.OAuthAccessTokenResponsePropertiesSchema | undefined
+    responseProperties: RawSchemas.OAuthAccessTokenResponsePropertiesSchema | undefined;
 }): OAuthAccessTokenResponsePropertyComponents {
     return getTokenEndpointResponsePropertiesWithDefault({
         responseProperties,
         defaultValue: DEFAULT_REFRESH_TOKEN_ENDPOINT.responseProperties
-    })
+    });
 }
 
 function getTokenEndpointResponsePropertiesWithDefault({
     responseProperties,
     defaultValue
 }: {
-    responseProperties: RawSchemas.OAuthAccessTokenResponsePropertiesSchema | undefined
-    defaultValue: OAuthAccessTokenResponsePropertyComponents
+    responseProperties: RawSchemas.OAuthAccessTokenResponsePropertiesSchema | undefined;
+    defaultValue: OAuthAccessTokenResponsePropertyComponents;
 }): OAuthAccessTokenResponsePropertyComponents {
     if (responseProperties == null) {
-        return defaultValue
+        return defaultValue;
     }
-    const maybeAccessToken = responseProperties["access-token"]
-    const maybeExpiresIn = responseProperties["expires-in"]
-    const maybeRefreshToken = responseProperties["refresh-token"]
+    const maybeAccessToken = responseProperties["access-token"];
+    const maybeExpiresIn = responseProperties["expires-in"];
+    const maybeRefreshToken = responseProperties["refresh-token"];
     return {
         type: "access_token",
         access_token:
@@ -176,5 +176,5 @@ function getTokenEndpointResponsePropertiesWithDefault({
         expires_in: maybeExpiresIn != null ? getResponsePropertyComponents(maybeExpiresIn) : defaultValue.expires_in,
         refresh_token:
             maybeRefreshToken != null ? getResponsePropertyComponents(maybeRefreshToken) : defaultValue.refresh_token
-    }
+    };
 }

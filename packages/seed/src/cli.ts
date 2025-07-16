@@ -1,32 +1,32 @@
-import { writeFile } from "fs/promises"
-import yargs, { Argv } from "yargs"
-import { hideBin } from "yargs/helpers"
+import { writeFile } from "fs/promises";
+import yargs, { Argv } from "yargs";
+import { hideBin } from "yargs/helpers";
 
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
-import { LOG_LEVELS, LogLevel } from "@fern-api/logger"
-import { askToLogin } from "@fern-api/login"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
+import { askToLogin } from "@fern-api/login";
 
-import { FernRegistryClient as FdrClient } from "@fern-fern/generators-sdk"
+import { FernRegistryClient as FdrClient } from "@fern-fern/generators-sdk";
 
-import { Semaphore } from "./Semaphore"
-import { generateCliChangelog } from "./commands/generate/generateCliChangelog"
-import { generateGeneratorChangelog } from "./commands/generate/generateGeneratorChangelog"
-import { getLatestCli } from "./commands/latest/getLatestCli"
-import { getLatestGenerator } from "./commands/latest/getLatestGenerator"
-import { publishCli } from "./commands/publish/publishCli"
-import { publishGenerator } from "./commands/publish/publishGenerator"
-import { registerCliRelease } from "./commands/register/registerCliRelease"
-import { registerGenerator } from "./commands/register/registerGenerator"
-import { runWithCustomFixture } from "./commands/run/runWithCustomFixture"
-import { ScriptRunner } from "./commands/test/ScriptRunner"
-import { TaskContextFactory } from "./commands/test/TaskContextFactory"
-import { DockerTestRunner, LocalTestRunner } from "./commands/test/test-runner"
-import { FIXTURES, testGenerator } from "./commands/test/testWorkspaceFixtures"
-import { validateCliRelease } from "./commands/validate/validateCliChangelog"
-import { validateGenerator } from "./commands/validate/validateGeneratorChangelog"
-import { GeneratorWorkspace, loadGeneratorWorkspaces } from "./loadGeneratorWorkspaces"
+import { Semaphore } from "./Semaphore";
+import { generateCliChangelog } from "./commands/generate/generateCliChangelog";
+import { generateGeneratorChangelog } from "./commands/generate/generateGeneratorChangelog";
+import { getLatestCli } from "./commands/latest/getLatestCli";
+import { getLatestGenerator } from "./commands/latest/getLatestGenerator";
+import { publishCli } from "./commands/publish/publishCli";
+import { publishGenerator } from "./commands/publish/publishGenerator";
+import { registerCliRelease } from "./commands/register/registerCliRelease";
+import { registerGenerator } from "./commands/register/registerGenerator";
+import { runWithCustomFixture } from "./commands/run/runWithCustomFixture";
+import { ScriptRunner } from "./commands/test/ScriptRunner";
+import { TaskContextFactory } from "./commands/test/TaskContextFactory";
+import { DockerTestRunner, LocalTestRunner } from "./commands/test/test-runner";
+import { FIXTURES, testGenerator } from "./commands/test/testWorkspaceFixtures";
+import { validateCliRelease } from "./commands/validate/validateCliChangelog";
+import { validateGenerator } from "./commands/validate/validateGeneratorChangelog";
+import { GeneratorWorkspace, loadGeneratorWorkspaces } from "./loadGeneratorWorkspaces";
 
-void tryRunCli()
+void tryRunCli();
 
 export async function tryRunCli(): Promise<void> {
     const cli: Argv = yargs(hideBin(process.argv))
@@ -34,21 +34,21 @@ export async function tryRunCli(): Promise<void> {
         .fail((message, error: unknown, argv) => {
             // if error is null, it's a yargs validation error
             if (error == null) {
-                argv.showHelp()
+                argv.showHelp();
                 // biome-ignore lint: ignore next line
-                console.error(message)
+                console.error(message);
             }
-        })
+        });
 
-    addTestCommand(cli)
-    addRunCommand(cli)
-    addRegisterCommands(cli)
-    addPublishCommands(cli)
-    addValidateCommands(cli)
-    addLatestCommands(cli)
-    addGenerateCommands(cli)
+    addTestCommand(cli);
+    addRunCommand(cli);
+    addRegisterCommands(cli);
+    addPublishCommands(cli);
+    addValidateCommands(cli);
+    addLatestCommands(cli);
+    addGenerateCommands(cli);
 
-    await cli.parse()
+    await cli.parse();
 }
 
 function addTestCommand(cli: Argv) {
@@ -109,26 +109,26 @@ function addTestCommand(cli: Argv) {
                     description: "Allow unexpected test failures without failing the command"
                 }),
         async (argv) => {
-            const generators = await loadGeneratorWorkspaces()
+            const generators = await loadGeneratorWorkspaces();
             if (argv.generator != null) {
-                throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: argv.generator })
+                throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: argv.generator });
             }
 
-            const taskContextFactory = new TaskContextFactory(argv["log-level"])
-            const lock = new Semaphore(argv.parallel)
-            const tests: Promise<boolean>[] = []
-            const scriptRunners: ScriptRunner[] = []
+            const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+            const lock = new Semaphore(argv.parallel);
+            const tests: Promise<boolean>[] = [];
+            const scriptRunners: ScriptRunner[] = [];
 
             for (const generator of generators) {
                 if (argv.generator != null && !argv.generator.includes(generator.workspaceName)) {
-                    continue
+                    continue;
                 }
-                let testRunner
+                let testRunner;
                 const scriptRunner = new ScriptRunner(
                     generator,
                     argv.skipScripts,
                     taskContextFactory.create("script-runner")
-                )
+                );
                 if (argv.local && generator.workspaceConfig.test.local != null) {
                     testRunner = new LocalTestRunner({
                         generator,
@@ -137,7 +137,7 @@ function addTestCommand(cli: Argv) {
                         skipScripts: argv.skipScripts,
                         scriptRunner,
                         keepDocker: false // dummy
-                    })
+                    });
                 } else {
                     testRunner = new DockerTestRunner({
                         generator,
@@ -146,7 +146,7 @@ function addTestCommand(cli: Argv) {
                         skipScripts: argv.skipScripts,
                         keepDocker: argv.keepDocker,
                         scriptRunner
-                    })
+                    });
                 }
 
                 tests.push(
@@ -156,21 +156,21 @@ function addTestCommand(cli: Argv) {
                         fixtures: argv.fixture,
                         outputFolder: argv.outputFolder
                     })
-                )
+                );
             }
 
-            const results = await Promise.all(tests)
+            const results = await Promise.all(tests);
 
             for (const scriptRunner of scriptRunners) {
-                await scriptRunner.stop()
+                await scriptRunner.stop();
             }
 
             // If any of the tests failed and allow-unexpected-failures is false, exit with a non-zero status code
             if (results.includes(false) && !argv["allow-unexpected-failures"]) {
-                process.exit(1)
+                process.exit(1);
             }
         }
-    )
+    );
 }
 
 function addRunCommand(cli: Argv) {
@@ -210,14 +210,14 @@ function addRunCommand(cli: Argv) {
                     demandOption: false
                 }),
         async (argv) => {
-            const generators = await loadGeneratorWorkspaces()
-            throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [argv.generator] })
+            const generators = await loadGeneratorWorkspaces();
+            throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [argv.generator] });
 
-            const generator = generators.find((g) => g.workspaceName === argv.generator)
+            const generator = generators.find((g) => g.workspaceName === argv.generator);
             if (generator == null) {
                 throw new Error(
                     `Generator ${argv.generator} not found. Please make sure that there is a folder with the name ${argv.generator} in the seed directory.`
-                )
+                );
             }
 
             await runWithCustomFixture({
@@ -233,9 +233,9 @@ function addRunCommand(cli: Argv) {
                         ? AbsoluteFilePath.of(argv["output-path"])
                         : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(argv["output-path"]))
                     : undefined
-            })
+            });
         }
-    )
+    );
 }
 
 function addPublishCommands(cli: Argv) {
@@ -276,11 +276,11 @@ function addPublishCommands(cli: Argv) {
                             return (
                                 // Check: Either version or changelog and previousChangelog must be provided
                                 argv.ver || (argv.changelog && argv.previousChangelog)
-                            )
+                            );
                         }),
                 async (argv) => {
-                    const taskContextFactory = new TaskContextFactory(argv["log-level"])
-                    const context = taskContextFactory.create("Publish")
+                    const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+                    const context = taskContextFactory.create("Publish");
 
                     await publishCli({
                         version: argv.ver
@@ -295,7 +295,7 @@ function addPublishCommands(cli: Argv) {
                               },
                         context,
                         isDevRelease: argv.dev
-                    })
+                    });
                 }
             )
             .command(
@@ -333,21 +333,21 @@ function addPublishCommands(cli: Argv) {
                             return (
                                 // Check: Either version or changelog and previousChangelog must be provided
                                 argv.ver || (argv.changelog && argv.previousChangelog)
-                            )
+                            );
                         }),
                 async (argv) => {
-                    const generators = await loadGeneratorWorkspaces()
+                    const generators = await loadGeneratorWorkspaces();
                     if (argv.generators != null) {
-                        throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [argv.generator] })
+                        throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [argv.generator] });
                     }
 
-                    const taskContextFactory = new TaskContextFactory(argv["log-level"])
-                    const context = taskContextFactory.create("Publish")
+                    const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+                    const context = taskContextFactory.create("Publish");
 
-                    const maybeGeneratorWorkspace = generators.find((g) => g.workspaceName === argv.generator)
+                    const maybeGeneratorWorkspace = generators.find((g) => g.workspaceName === argv.generator);
                     if (maybeGeneratorWorkspace == null) {
-                        context.failAndThrow(`Specified generator ${argv.generator} not found.`)
-                        return
+                        context.failAndThrow(`Specified generator ${argv.generator} not found.`);
+                        return;
                     }
 
                     await publishGenerator({
@@ -363,10 +363,10 @@ function addPublishCommands(cli: Argv) {
                                   previousChangelogPath: argv.previousChangelog!
                               },
                         context
-                    })
+                    });
                 }
-            )
-    })
+            );
+    });
 }
 
 function addRegisterCommands(cli: Argv) {
@@ -381,16 +381,16 @@ function addRegisterCommands(cli: Argv) {
                         choices: LOG_LEVELS
                     }),
                 async (argv) => {
-                    const taskContextFactory = new TaskContextFactory(argv["log-level"])
-                    const context = taskContextFactory.create("Register")
-                    const token = await askToLogin(context)
+                    const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+                    const context = taskContextFactory.create("Register");
+                    const token = await askToLogin(context);
 
-                    const fdrClient = createFdrService({ token: token.value })
+                    const fdrClient = createFdrService({ token: token.value });
 
                     await registerCliRelease({
                         fdrClient,
                         context
-                    })
+                    });
                 }
             )
             .command(
@@ -410,31 +410,31 @@ function addRegisterCommands(cli: Argv) {
                             choices: LOG_LEVELS
                         }),
                 async (argv) => {
-                    const generators = await loadGeneratorWorkspaces()
+                    const generators = await loadGeneratorWorkspaces();
                     if (argv.generators != null) {
-                        throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: argv.generators })
+                        throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: argv.generators });
                     }
-                    const taskContextFactory = new TaskContextFactory(argv["log-level"])
-                    const context = taskContextFactory.create("Register")
-                    const token = await askToLogin(context)
+                    const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+                    const context = taskContextFactory.create("Register");
+                    const token = await askToLogin(context);
 
-                    const fdrClient = createFdrService({ token: token.value })
+                    const fdrClient = createFdrService({ token: token.value });
 
                     for (const generator of generators) {
                         // If you've specified a list of generators, and the current generator is not in that list, skip it
                         if (argv.generators != null && !argv.generators.includes(generator.workspaceName)) {
-                            continue
+                            continue;
                         }
                         // Register the generator and it's versions
                         await registerGenerator({
                             generator,
                             fdrClient,
                             context
-                        })
+                        });
                     }
                 }
-            )
-    })
+            );
+    });
 }
 
 function addLatestCommands(cli: Argv) {
@@ -470,11 +470,11 @@ function addLatestCommands(cli: Argv) {
                             return (
                                 (!argv.changelog && !argv.previousChangelog) ||
                                 (argv.changelog && argv.previousChangelog)
-                            )
+                            );
                         }),
                 async (argv) => {
-                    const taskContextFactory = new TaskContextFactory(argv["log-level"])
-                    const context = taskContextFactory.create("Publish")
+                    const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+                    const context = taskContextFactory.create("Publish");
 
                     const ver = await getLatestCli({
                         context,
@@ -485,16 +485,16 @@ function addLatestCommands(cli: Argv) {
                                       previousChangelogPath: argv.previousChangelog!
                                   }
                                 : undefined
-                    })
+                    });
                     if (ver == null) {
-                        context.logger.error("No latest version found for CLI")
-                        return
+                        context.logger.error("No latest version found for CLI");
+                        return;
                     }
 
                     if (argv.output) {
-                        await writeFile(argv.output, ver)
+                        await writeFile(argv.output, ver);
                     } else {
-                        process.stdout.write(ver)
+                        process.stdout.write(ver);
                     }
                 }
             )
@@ -518,36 +518,36 @@ function addLatestCommands(cli: Argv) {
                             demandOption: false
                         }),
                 async (argv) => {
-                    const generators = await loadGeneratorWorkspaces()
+                    const generators = await loadGeneratorWorkspaces();
                     if (argv.generators != null) {
-                        throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [argv.generator] })
+                        throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [argv.generator] });
                     }
 
-                    const taskContextFactory = new TaskContextFactory(argv["log-level"])
-                    const context = taskContextFactory.create("Publish")
+                    const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+                    const context = taskContextFactory.create("Publish");
 
-                    const maybeGeneratorWorkspace = generators.find((g) => g.workspaceName === argv.generator)
+                    const maybeGeneratorWorkspace = generators.find((g) => g.workspaceName === argv.generator);
                     if (maybeGeneratorWorkspace == null) {
-                        context.failAndThrow(`Specified generator ${argv.generator} not found.`)
-                        return
+                        context.failAndThrow(`Specified generator ${argv.generator} not found.`);
+                        return;
                     }
 
                     const ver = await getLatestGenerator({
                         generator: maybeGeneratorWorkspace,
                         context
-                    })
+                    });
                     if (ver == null) {
-                        context.logger.error(`No latest version found for generator ${argv.generator}`)
-                        return
+                        context.logger.error(`No latest version found for generator ${argv.generator}`);
+                        return;
                     }
                     if (argv.output) {
-                        await writeFile(argv.output, ver)
+                        await writeFile(argv.output, ver);
                     } else {
-                        process.stdout.write(ver)
+                        process.stdout.write(ver);
                     }
                 }
-            )
-    })
+            );
+    });
 }
 
 function addValidateCommands(cli: Argv) {
@@ -562,12 +562,12 @@ function addValidateCommands(cli: Argv) {
                         choices: LOG_LEVELS
                     }),
                 async (argv) => {
-                    const taskContextFactory = new TaskContextFactory(argv["log-level"])
-                    const context = taskContextFactory.create("CLI")
+                    const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+                    const context = taskContextFactory.create("CLI");
 
                     await validateCliRelease({
                         context
-                    })
+                    });
                 }
             )
             .command(
@@ -585,26 +585,26 @@ function addValidateCommands(cli: Argv) {
                             choices: LOG_LEVELS
                         }),
                 async (argv) => {
-                    const generators = await loadGeneratorWorkspaces()
+                    const generators = await loadGeneratorWorkspaces();
                     if (argv.generator != null) {
-                        throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [argv.generator] })
+                        throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [argv.generator] });
                     }
-                    const taskContextFactory = new TaskContextFactory(argv["log-level"])
+                    const taskContextFactory = new TaskContextFactory(argv["log-level"]);
 
                     for (const generator of generators) {
                         // If you've specified a list of generators, and the current generator is not in that list, skip it
                         if (argv.generator !== generator.workspaceName) {
-                            continue
+                            continue;
                         }
                         // Register the generator and it's versions
                         await validateGenerator({
                             generator,
                             context: taskContextFactory.create(argv.generator)
-                        })
+                        });
                     }
                 }
-            )
-    })
+            );
+    });
 }
 
 function addGenerateCommands(cli: Argv) {
@@ -634,18 +634,18 @@ function addGenerateCommands(cli: Argv) {
                                     "If true, we will delete the contents of the output directory before generating the changelog."
                             }),
                     async (argv) => {
-                        const taskContextFactory = new TaskContextFactory(argv["log-level"])
-                        const context = taskContextFactory.create("Changelog")
+                        const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+                        const context = taskContextFactory.create("Changelog");
 
-                        const token = await askToLogin(context)
-                        const fdrClient = createFdrService({ token: token.value })
+                        const token = await askToLogin(context);
+                        const fdrClient = createFdrService({ token: token.value });
 
                         await generateCliChangelog({
                             context,
                             outputPath: argv.output,
                             fdrClient,
                             cleanOutputDirectory: argv.cleanDirectory ?? false
-                        })
+                        });
                     }
                 )
                 .command(
@@ -678,28 +678,28 @@ function addGenerateCommands(cli: Argv) {
                                     "If true, we will delete the contents of the output directory before generating the changelog."
                             }),
                     async (argv) => {
-                        const generators = await loadGeneratorWorkspaces()
+                        const generators = await loadGeneratorWorkspaces();
                         if (argv.generators != null) {
-                            throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: argv.generators })
+                            throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: argv.generators });
                         }
-                        const taskContextFactory = new TaskContextFactory(argv["log-level"])
-                        const context = taskContextFactory.create("Changelog")
+                        const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+                        const context = taskContextFactory.create("Changelog");
 
-                        const token = await askToLogin(context)
-                        const fdrClient = createFdrService({ token: token.value })
+                        const token = await askToLogin(context);
+                        const fdrClient = createFdrService({ token: token.value });
 
                         for (const generator of generators) {
                             // If you've specified a list of generators, and the current generator is not in that list, skip it
                             if (argv.generators != null && !argv.generators.includes(generator.workspaceName)) {
-                                continue
+                                continue;
                             }
 
-                            let outputPath = argv.output
+                            let outputPath = argv.output;
                             if (argv.generators == null || argv.generators?.length > 1) {
                                 outputPath = join(
                                     RelativeFilePath.of(argv.output ?? "./"),
                                     RelativeFilePath.of(generator.workspaceName)
-                                )
+                                );
                             }
 
                             await generateGeneratorChangelog({
@@ -708,30 +708,30 @@ function addGenerateCommands(cli: Argv) {
                                 outputPath,
                                 fdrClient,
                                 cleanOutputDirectory: argv.cleanDirectory ?? false
-                            })
+                            });
                         }
                     }
-                )
-        })
-    })
+                );
+        });
+    });
 }
 
 function throwIfGeneratorDoesNotExist({
     seedWorkspaces,
     generators
 }: {
-    seedWorkspaces: GeneratorWorkspace[]
-    generators: string[]
+    seedWorkspaces: GeneratorWorkspace[];
+    generators: string[];
 }) {
     const generatorNames = new Set(
         seedWorkspaces.map((gen) => {
-            return gen.workspaceName
+            return gen.workspaceName;
         })
-    )
-    const missingGenerators = []
+    );
+    const missingGenerators = [];
     for (const generator of generators) {
         if (!generatorNames.has(generator)) {
-            missingGenerators.push(generator)
+            missingGenerators.push(generator);
         }
     }
     if (missingGenerators.length > 0) {
@@ -739,7 +739,7 @@ function throwIfGeneratorDoesNotExist({
             `Generators ${missingGenerators.join(
                 ", "
             )} not found. Please make sure that there is a folder with those names in the seed directory.`
-        )
+        );
     }
 }
 
@@ -749,11 +749,11 @@ function createFdrService({
     environment = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com",
     token
 }: {
-    environment?: string
-    token: (() => string) | string
+    environment?: string;
+    token: (() => string) | string;
 }): FdrClient {
     return new FdrClient({
         environment,
         token
-    })
+    });
 }

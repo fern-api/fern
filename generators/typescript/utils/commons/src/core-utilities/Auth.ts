@@ -1,28 +1,28 @@
-import { ts } from "ts-morph"
+import { ts } from "ts-morph";
 
-import { DependencyManager } from "../dependency-manager/DependencyManager"
-import { MANIFEST as Base64Manifest } from "./Base64Utils"
-import { CoreUtility } from "./CoreUtility"
+import { DependencyManager } from "../dependency-manager/DependencyManager";
+import { MANIFEST as Base64Manifest } from "./Base64Utils";
+import { CoreUtility } from "./CoreUtility";
 
 export interface Auth {
     BearerToken: {
-        _getReferenceToType: () => ts.TypeNode
+        _getReferenceToType: () => ts.TypeNode;
 
-        toAuthorizationHeader: (token: ts.Expression) => ts.Expression
-        fromAuthorizationHeader: (header: ts.Expression) => ts.Expression
-    }
+        toAuthorizationHeader: (token: ts.Expression) => ts.Expression;
+        fromAuthorizationHeader: (header: ts.Expression) => ts.Expression;
+    };
 
     BasicAuth: {
-        _getReferenceToType: () => ts.TypeNode
+        _getReferenceToType: () => ts.TypeNode;
 
-        toAuthorizationHeader: (username: ts.Expression, password: ts.Expression) => ts.Expression
-        fromAuthorizationHeader: (header: ts.Expression) => ts.Expression
-    }
+        toAuthorizationHeader: (username: ts.Expression, password: ts.Expression) => ts.Expression;
+        fromAuthorizationHeader: (header: ts.Expression) => ts.Expression;
+    };
 
     OAuthTokenProvider: {
-        _getExpression: () => ts.Expression
-        _getReferenceToType: () => ts.TypeNode
-    }
+        _getExpression: () => ts.Expression;
+        _getReferenceToType: () => ts.TypeNode;
+    };
 }
 
 export const MANIFEST: CoreUtility.Manifest = {
@@ -30,12 +30,12 @@ export const MANIFEST: CoreUtility.Manifest = {
     pathInCoreUtilities: { nameOnDisk: "auth", exportDeclaration: { exportAll: true } },
     dependsOn: [Base64Manifest],
     getFilesPatterns: () => {
-        return { patterns: ["src/core/auth/**", "tests/unit/auth/**"] }
+        return { patterns: ["src/core/auth/**", "tests/unit/auth/**"] };
     }
-}
+};
 
 export class AuthImpl extends CoreUtility implements Auth {
-    public readonly MANIFEST = MANIFEST
+    public readonly MANIFEST = MANIFEST;
 
     public readonly BearerToken = {
         _getReferenceToType: this.withExportedName("BearerToken", (BearerToken) => () => BearerToken.getTypeNode()),
@@ -50,7 +50,7 @@ export class AuthImpl extends CoreUtility implements Auth {
                         ),
                         undefined,
                         [token]
-                    )
+                    );
                 }
         ),
         fromAuthorizationHeader: this.withExportedName(
@@ -64,10 +64,10 @@ export class AuthImpl extends CoreUtility implements Auth {
                         ),
                         undefined,
                         [header]
-                    )
+                    );
                 }
         )
-    }
+    };
 
     public readonly BasicAuth = {
         _getReferenceToType: this.withExportedName("BasicAuth", (BasicAuth) => () => BasicAuth.getTypeNode()),
@@ -96,7 +96,7 @@ export class AuthImpl extends CoreUtility implements Auth {
                                 true
                             )
                         ]
-                    )
+                    );
                 }
         ),
         fromAuthorizationHeader: this.withExportedName(
@@ -110,10 +110,10 @@ export class AuthImpl extends CoreUtility implements Auth {
                         ),
                         undefined,
                         [header]
-                    )
+                    );
                 }
         )
-    }
+    };
 
     public readonly OAuthTokenProvider = {
         _getExpression: this.withExportedName(
@@ -124,5 +124,5 @@ export class AuthImpl extends CoreUtility implements Auth {
             "OAuthTokenProvider",
             (OAuthTokenProvider) => () => OAuthTokenProvider.getTypeNode()
         )
-    }
+    };
 }

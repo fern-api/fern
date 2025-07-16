@@ -11,5 +11,5 @@ export function escapeSwiftStringLiteral(rawValue: string): string {
             // Escape double quotes (but not if already escaped)
             .replace(/(?<!\\)"/g, '\\"')
         // \n, \r, \t, \\ are already valid in Swift and don't need conversion
-    )
+    );
 }

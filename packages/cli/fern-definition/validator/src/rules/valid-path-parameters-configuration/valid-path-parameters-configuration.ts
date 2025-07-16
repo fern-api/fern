@@ -1,4 +1,4 @@
-import { Rule } from "../../Rule"
+import { Rule } from "../../Rule";
 
 export const ValidPathParametersConfigurationRule: Rule = {
     name: "valid-path-parameters-configuration",
@@ -16,11 +16,11 @@ export const ValidPathParametersConfigurationRule: Rule = {
                                 severity: "fatal",
                                 message: "path-parameters cannot be defined in both endpoint and request."
                             }
-                        ]
+                        ];
                     }
-                    return []
+                    return [];
                 }
             }
-        }
+        };
     }
-}
+};

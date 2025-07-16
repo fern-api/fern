@@ -1,8 +1,8 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { ValidationViolation } from "../../../ValidationViolation"
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule"
-import { ValidFieldNamesRule } from "../valid-field-names"
+import { ValidationViolation } from "../../../ValidationViolation";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { ValidFieldNamesRule } from "../valid-field-names";
 
 describe("valid-field-names", () => {
     it("simple", async () => {
@@ -13,7 +13,7 @@ describe("valid-field-names", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
             )
-        })
+        });
 
         const expectedViolations: ValidationViolation[] = [
             {
@@ -58,8 +58,8 @@ describe("valid-field-names", () => {
                 message:
                     "Discriminant name _type is not suitable for code generation. It must start with a letter and only contain letters, numbers, and underscores."
             }
-        ]
+        ];
 
-        expect(violations).toEqual(expectedViolations)
-    })
-})
+        expect(violations).toEqual(expectedViolations);
+    });
+});

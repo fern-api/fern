@@ -13,31 +13,31 @@ import {
     StringClassReference,
     Variable,
     VariableType
-} from "@fern-api/ruby-codegen"
+} from "@fern-api/ruby-codegen";
 
 export class FileUploadUtility extends Class_ {
-    public convertToFaradayMultipart: Function_
+    public convertToFaradayMultipart: Function_;
     constructor(clientName: string) {
         const fileProperty = new Property({
             name: "file_like",
             documentation: "The file to be uploaded, or a string path to the file.",
             type: [StringClassReference, FileClassReference]
-        })
-        const fileVariable = fileProperty.toVariable(VariableType.LOCAL)
+        });
+        const fileVariable = fileProperty.toVariable(VariableType.LOCAL);
         const pathVariable = new Variable({
             name: "path",
             type: StringClassReference,
             variableType: VariableType.LOCAL
-        })
+        });
         const mimeTypeVariable = new Variable({
             name: "mime_type",
             type: GenericClassReference,
             variableType: VariableType.LOCAL
-        })
+        });
         const faradayFilePartCr = new ClassReference({
             name: "Faraday::Multipart::FilePart",
             import_: new Import({ from: "faraday/multipart", isExternal: true })
-        })
+        });
         const convertToFaradayMultipart = new Function_({
             name: "as_faraday_multipart",
             isStatic: true,
@@ -121,7 +121,7 @@ export class FileUploadUtility extends Class_ {
             ],
             parameters: [fileProperty.toParameter({})],
             returnValue: faradayFilePartCr
-        })
+        });
 
         super({
             classReference: new ClassReference({
@@ -133,8 +133,8 @@ export class FileUploadUtility extends Class_ {
             properties: [],
             documentation: "Utility class for managing files.",
             functions: [convertToFaradayMultipart]
-        })
+        });
 
-        this.convertToFaradayMultipart = convertToFaradayMultipart
+        this.convertToFaradayMultipart = convertToFaradayMultipart;
     }
 }

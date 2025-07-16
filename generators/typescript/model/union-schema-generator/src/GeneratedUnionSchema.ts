@@ -1,35 +1,35 @@
-import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator"
-import { Reference, Zurg, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons"
-import { GeneratedUnion, ModelContext } from "@fern-typescript/contexts"
-import { ModuleDeclaration, VariableDeclarationKind, ts } from "ts-morph"
+import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
+import { Reference, Zurg, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
+import { GeneratedUnion, ModelContext } from "@fern-typescript/contexts";
+import { ModuleDeclaration, VariableDeclarationKind, ts } from "ts-morph";
 
-import { NameAndWireValue, ObjectProperty } from "@fern-fern/ir-sdk/api"
+import { NameAndWireValue, ObjectProperty } from "@fern-fern/ir-sdk/api";
 
-import { RawSingleUnionType } from "./RawSingleUnionType"
+import { RawSingleUnionType } from "./RawSingleUnionType";
 
 export declare namespace GeneratedUnionSchema {
     export interface Init<Context extends ModelContext> extends AbstractGeneratedSchema.Init {
-        discriminant: NameAndWireValue
-        singleUnionTypes: RawSingleUnionType<Context>[]
-        baseProperties?: ObjectProperty[]
-        getGeneratedUnion: (context: Context) => GeneratedUnion<Context>
-        getReferenceToSchema: (context: Context) => Reference
-        shouldIncludeDefaultCaseInTransform: boolean
-        includeUtilsOnUnionMembers: boolean
+        discriminant: NameAndWireValue;
+        singleUnionTypes: RawSingleUnionType<Context>[];
+        baseProperties?: ObjectProperty[];
+        getGeneratedUnion: (context: Context) => GeneratedUnion<Context>;
+        getReferenceToSchema: (context: Context) => Reference;
+        shouldIncludeDefaultCaseInTransform: boolean;
+        includeUtilsOnUnionMembers: boolean;
     }
 }
 
 export class GeneratedUnionSchema<Context extends ModelContext> extends AbstractGeneratedSchema<Context> {
-    private static VALUE_PARAMETER_NAME = "value"
-    private static BASE_SCHEMA_NAME = "_Base"
+    private static VALUE_PARAMETER_NAME = "value";
+    private static BASE_SCHEMA_NAME = "_Base";
 
-    private discriminant: NameAndWireValue
-    private singleUnionTypes: RawSingleUnionType<Context>[]
-    private baseProperties: ObjectProperty[]
-    private getGeneratedUnion: (context: Context) => GeneratedUnion<Context>
-    protected getReferenceToSchema: (context: Context) => Reference
-    private shouldIncludeDefaultCaseInTransform: boolean
-    private includeUtilsOnUnionMembers: boolean
+    private discriminant: NameAndWireValue;
+    private singleUnionTypes: RawSingleUnionType<Context>[];
+    private baseProperties: ObjectProperty[];
+    private getGeneratedUnion: (context: Context) => GeneratedUnion<Context>;
+    protected getReferenceToSchema: (context: Context) => Reference;
+    private shouldIncludeDefaultCaseInTransform: boolean;
+    private includeUtilsOnUnionMembers: boolean;
 
     constructor({
         discriminant,
@@ -41,18 +41,18 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
         includeUtilsOnUnionMembers,
         ...superInit
     }: GeneratedUnionSchema.Init<Context>) {
-        super(superInit)
-        this.discriminant = discriminant
-        this.singleUnionTypes = singleUnionTypes
-        this.baseProperties = baseProperties
-        this.getGeneratedUnion = getGeneratedUnion
-        this.getReferenceToSchema = getReferenceToSchema
-        this.shouldIncludeDefaultCaseInTransform = shouldIncludeDefaultCaseInTransform
-        this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers
+        super(superInit);
+        this.discriminant = discriminant;
+        this.singleUnionTypes = singleUnionTypes;
+        this.baseProperties = baseProperties;
+        this.getGeneratedUnion = getGeneratedUnion;
+        this.getReferenceToSchema = getReferenceToSchema;
+        this.shouldIncludeDefaultCaseInTransform = shouldIncludeDefaultCaseInTransform;
+        this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers;
     }
 
     public override generateRawTypeDeclaration(context: Context, module: ModuleDeclaration): void {
-        const interfaces = this.singleUnionTypes.map((singleUnionType) => singleUnionType.generateInterface(context))
+        const interfaces = this.singleUnionTypes.map((singleUnionType) => singleUnionType.generateInterface(context));
 
         module.addTypeAlias({
             name: AbstractGeneratedSchema.RAW_TYPE_NAME,
@@ -69,12 +69,12 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
                 )
             ),
             isExported: true
-        })
+        });
 
         for (const interfaceStructure of interfaces) {
-            const interface_ = module.addInterface(interfaceStructure)
+            const interface_ = module.addInterface(interfaceStructure);
             if (this.hasBaseInterface()) {
-                interface_.insertExtends(0, GeneratedUnionSchema.BASE_SCHEMA_NAME)
+                interface_.insertExtends(0, GeneratedUnionSchema.BASE_SCHEMA_NAME);
             }
         }
 
@@ -82,20 +82,20 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
             module.addInterface({
                 name: GeneratedUnionSchema.BASE_SCHEMA_NAME,
                 properties: this.baseProperties.map((property) => {
-                    const type = context.typeSchema.getReferenceToRawType(property.valueType)
+                    const type = context.typeSchema.getReferenceToRawType(property.valueType);
                     return {
                         name: getPropertyKey(property.name.wireValue),
                         type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                         hasQuestionToken: type.isOptional
-                    }
+                    };
                 }),
                 isExported: true
-            })
+            });
         }
     }
 
     public override getReferenceToParsedShape(context: Context): ts.TypeNode {
-        return this.getReferenceToParsedUnion(context)
+        return this.getReferenceToParsedUnion(context);
     }
 
     public buildSchema(context: Context): Zurg.Schema {
@@ -103,18 +103,18 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
             parsedDiscriminant: this.getParsedDiscriminant(context),
             rawDiscriminant: this.discriminant.wireValue,
             singleUnionTypes: this.singleUnionTypes.map((singleUnionType) => {
-                const singleUnionTypeSchema = singleUnionType.getSchema(context)
+                const singleUnionTypeSchema = singleUnionType.getSchema(context);
                 if (this.hasBaseInterface()) {
                     singleUnionTypeSchema.nonDiscriminantProperties =
                         singleUnionTypeSchema.nonDiscriminantProperties.extend(
                             context.coreUtilities.zurg.Schema._fromExpression(
                                 ts.factory.createIdentifier(GeneratedUnionSchema.BASE_SCHEMA_NAME)
                             )
-                        )
+                        );
                 }
-                return singleUnionTypeSchema
+                return singleUnionTypeSchema;
             })
-        })
+        });
 
         if (this.includeUtilsOnUnionMembers) {
             schema = schema.transform({
@@ -151,7 +151,7 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
                         ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
                     )
                 )
-            })
+            });
         } else {
             schema = schema.transform({
                 newShape: this.getReferenceToParsedShape(context),
@@ -185,15 +185,15 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
                     undefined,
                     ts.factory.createIdentifier(GeneratedUnionSchema.VALUE_PARAMETER_NAME)
                 )
-            })
+            });
         }
 
-        return schema
+        return schema;
     }
 
     public override writeSchemaToFile(context: Context): void {
         if (this.singleUnionTypes.length === 0) {
-            return
+            return;
         }
 
         if (this.hasBaseInterface()) {
@@ -219,10 +219,10 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
                         )
                     }
                 ]
-            })
+            });
         }
 
-        super.writeSchemaToFile(context)
+        super.writeSchemaToFile(context);
     }
 
     private generateAddVisitTransform(context: Context): ts.Expression {
@@ -253,7 +253,7 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
                 ],
                 true
             )
-        )
+        );
     }
 
     private getSwitchClauses(context: Context): ts.CaseOrDefaultClause[] {
@@ -267,7 +267,7 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
                     })
                 )
             ])
-        )
+        );
 
         if (this.shouldIncludeDefaultCaseInTransform) {
             clauses.push(
@@ -279,17 +279,17 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
                         })
                     )
                 ])
-            )
+            );
         }
-        return clauses
+        return clauses;
     }
 
     private getParsedDiscriminant(context: Context): string {
-        return this.getGeneratedUnion(context).discriminant
+        return this.getGeneratedUnion(context).discriminant;
     }
 
     private getReferenceToParsedUnion(context: Context): ts.TypeNode {
-        return this.getGeneratedUnion(context).getReferenceTo(context)
+        return this.getGeneratedUnion(context).getReferenceTo(context);
     }
 
     private buildParsedUnion({
@@ -297,18 +297,18 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
         existingValue,
         context
     }: {
-        discriminantValueToBuild: string
-        existingValue: ts.Expression
-        context: Context
+        discriminantValueToBuild: string;
+        existingValue: ts.Expression;
+        context: Context;
     }): ts.Expression {
         return this.getGeneratedUnion(context).buildFromExistingValue({
             discriminantValueToBuild,
             existingValue,
             context
-        })
+        });
     }
 
     private hasBaseInterface(): boolean {
-        return this.baseProperties.length > 0
+        return this.baseProperties.length > 0;
     }
 }

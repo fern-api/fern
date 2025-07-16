@@ -1,1 +1,1 @@
-export { ValidServiceUrlsRule } from "./valid-service-url"
+export { ValidServiceUrlsRule } from "./valid-service-url";

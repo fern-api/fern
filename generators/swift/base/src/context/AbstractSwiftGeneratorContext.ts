@@ -1,14 +1,14 @@
-import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator"
-import { BaseSwiftCustomConfigSchema } from "@fern-api/swift-codegen"
+import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
+import { BaseSwiftCustomConfigSchema } from "@fern-api/swift-codegen";
 
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api"
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
-import { SwiftProject } from "../project"
+import { SwiftProject } from "../project";
 
 export abstract class AbstractSwiftGeneratorContext<
     CustomConfig extends BaseSwiftCustomConfigSchema
 > extends AbstractGeneratorContext {
-    public readonly project: SwiftProject
+    public readonly project: SwiftProject;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
@@ -16,10 +16,10 @@ export abstract class AbstractSwiftGeneratorContext<
         public readonly customConfig: CustomConfig,
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
-        super(config, generatorNotificationService)
+        super(config, generatorNotificationService);
         this.project = new SwiftProject({
             context: this,
             name: this.ir.apiName.pascalCase.unsafeName
-        })
+        });
     }
 }

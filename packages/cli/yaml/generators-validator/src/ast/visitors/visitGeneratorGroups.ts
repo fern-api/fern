@@ -1,7 +1,7 @@
-import { generatorsYml } from "@fern-api/configuration-loader"
-import { NodePath } from "@fern-api/fern-definition-schema"
+import { generatorsYml } from "@fern-api/configuration-loader";
+import { NodePath } from "@fern-api/fern-definition-schema";
 
-import { GeneratorsYmlFileAstVisitor } from "../GeneratorsYmlAstVisitor"
+import { GeneratorsYmlFileAstVisitor } from "../GeneratorsYmlAstVisitor";
 
 export async function visitGeneratorGroups({
     groups,
@@ -9,16 +9,16 @@ export async function visitGeneratorGroups({
     nodePath,
     cliVersion
 }: {
-    groups: Record<string, generatorsYml.GeneratorGroupSchema> | undefined
-    visitor: Partial<GeneratorsYmlFileAstVisitor>
-    nodePath: NodePath
-    cliVersion: string
+    groups: Record<string, generatorsYml.GeneratorGroupSchema> | undefined;
+    visitor: Partial<GeneratorsYmlFileAstVisitor>;
+    nodePath: NodePath;
+    cliVersion: string;
 }): Promise<void> {
     if (groups == null) {
-        return
+        return;
     }
     for (const [groupName, group] of Object.entries(groups)) {
-        await visitGeneratorGroup({ group, visitor, nodePath: [...nodePath, groupName], cliVersion })
+        await visitGeneratorGroup({ group, visitor, nodePath: [...nodePath, groupName], cliVersion });
     }
 }
 
@@ -28,10 +28,10 @@ async function visitGeneratorGroup({
     nodePath,
     cliVersion
 }: {
-    group: generatorsYml.GeneratorGroupSchema
-    visitor: Partial<GeneratorsYmlFileAstVisitor>
-    nodePath: NodePath
-    cliVersion: string
+    group: generatorsYml.GeneratorGroupSchema;
+    visitor: Partial<GeneratorsYmlFileAstVisitor>;
+    nodePath: NodePath;
+    cliVersion: string;
 }): Promise<void> {
     await Promise.all(
         group.generators.map(
@@ -43,5 +43,5 @@ async function visitGeneratorGroup({
                     generator.name
                 ])
         )
-    )
+    );
 }

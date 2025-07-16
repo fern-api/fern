@@ -1,73 +1,73 @@
-import { OpenAPIV3_1 } from "openapi-types"
+import { OpenAPIV3_1 } from "openapi-types";
 
-import { HttpHeader, PathParameter, QueryParameter, TypeId, TypeReference, V2SchemaExamples } from "@fern-api/ir-sdk"
+import { HttpHeader, PathParameter, QueryParameter, TypeId, TypeReference, V2SchemaExamples } from "@fern-api/ir-sdk";
 
-import { AbstractConverter, AbstractConverterContext } from "../.."
-import { ExampleConverter } from "../ExampleConverter"
-import { SchemaConverter } from "../schema/SchemaConverter"
+import { AbstractConverter, AbstractConverterContext } from "../..";
+import { ExampleConverter } from "../ExampleConverter";
+import { SchemaConverter } from "../schema/SchemaConverter";
 
 export declare namespace AbstractParameterConverter {
     export interface Args<TParameter extends OpenAPIV3_1.ParameterObject> extends AbstractConverter.AbstractArgs {
-        parameter: TParameter
+        parameter: TParameter;
     }
 
     export interface BaseParameterOutput {
-        inlinedTypes?: Record<TypeId, SchemaConverter.ConvertedSchema>
+        inlinedTypes?: Record<TypeId, SchemaConverter.ConvertedSchema>;
     }
 
     export interface QueryParameterOutput extends BaseParameterOutput {
-        type: "query"
-        parameter: QueryParameter
+        type: "query";
+        parameter: QueryParameter;
     }
 
     export interface HeaderParameterOutput extends BaseParameterOutput {
-        type: "header"
-        parameter: HttpHeader
+        type: "header";
+        parameter: HttpHeader;
     }
 
     export interface PathParameterOutput extends BaseParameterOutput {
-        type: "path"
-        parameter: PathParameter
+        type: "path";
+        parameter: PathParameter;
     }
 
-    export type Output = QueryParameterOutput | HeaderParameterOutput | PathParameterOutput
+    export type Output = QueryParameterOutput | HeaderParameterOutput | PathParameterOutput;
 }
 
 export abstract class AbstractParameterConverter<
     TParameter extends OpenAPIV3_1.ParameterObject
 > extends AbstractConverter<AbstractConverterContext<object>, AbstractParameterConverter.Output> {
-    protected readonly parameter: TParameter
+    protected readonly parameter: TParameter;
 
     constructor({ context, breadcrumbs, parameter }: AbstractParameterConverter.Args<TParameter>) {
-        super({ context, breadcrumbs })
-        this.parameter = parameter
+        super({ context, breadcrumbs });
+        this.parameter = parameter;
     }
 
-    public abstract convert(): AbstractParameterConverter.Output | undefined
+    public abstract convert(): AbstractParameterConverter.Output | undefined;
 
     protected convertToOutput({
         schema,
         typeReference,
         inlinedTypes
     }: {
-        schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
-        typeReference: TypeReference | undefined
-        inlinedTypes: Record<TypeId, SchemaConverter.ConvertedSchema> | undefined
+        schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
+        typeReference: TypeReference | undefined;
+        inlinedTypes: Record<TypeId, SchemaConverter.ConvertedSchema> | undefined;
     }): AbstractParameterConverter.Output | undefined {
         const availability = this.context.getAvailability({
             node: this.parameter,
             breadcrumbs: this.breadcrumbs
-        })
+        });
 
         const resolvedParameterSchema: OpenAPIV3_1.SchemaObject | undefined =
             this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
                 schemaOrReference: schema,
                 breadcrumbs: this.breadcrumbs
-            })
+            });
 
         const parameterSchemaWithExampleOverride = this.getParameterSchemaWithExampleOverride({
             schema: resolvedParameterSchema
-        })
+        });
 
         switch (this.parameter.in) {
             case "query":
@@ -87,7 +87,7 @@ export abstract class AbstractParameterConverter<
                         availability
                     },
                     inlinedTypes
-                }
+                };
             case "header":
                 return {
                     type: "header",
@@ -105,7 +105,7 @@ export abstract class AbstractParameterConverter<
                         availability
                     },
                     inlinedTypes
-                }
+                };
             case "path":
                 return {
                     type: "path",
@@ -120,51 +120,51 @@ export abstract class AbstractParameterConverter<
                         })
                     },
                     inlinedTypes
-                }
+                };
             default:
-                return undefined
+                return undefined;
         }
     }
 
     private getParameterSchemaWithExampleOverride({
         schema
     }: {
-        schema: OpenAPIV3_1.SchemaObject | undefined
+        schema: OpenAPIV3_1.SchemaObject | undefined;
     }): OpenAPIV3_1.SchemaObject | undefined {
         if (schema == null) {
-            return undefined
+            return undefined;
         }
 
         if (schema.type === "string" && schema.example == null) {
             return {
                 ...schema,
                 example: this.parameter.name
-            }
+            };
         }
 
-        return schema
+        return schema;
     }
 
     protected convertParameterExamples({
         schema
     }: {
-        schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
+        schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
     }): V2SchemaExamples {
         const v2Examples: V2SchemaExamples = {
             userSpecifiedExamples: {},
             autogeneratedExamples: {}
-        }
+        };
 
-        const parameterExample = this.parameter.example
-        const parameterExamples = this.parameter.examples
+        const parameterExample = this.parameter.example;
+        const parameterExamples = this.parameter.examples;
 
         for (const [key, example] of Object.entries(parameterExamples ?? {})) {
-            const resolvedExample = this.context.resolveExampleWithValue(example)
+            const resolvedExample = this.context.resolveExampleWithValue(example);
             if (resolvedExample != null) {
                 v2Examples.userSpecifiedExamples[key] = this.generateOrValidateExample({
                     schema,
                     example: resolvedExample
-                })
+                });
             }
         }
 
@@ -172,21 +172,21 @@ export abstract class AbstractParameterConverter<
             const parameterExampleName = this.context.generateUniqueName({
                 prefix: `${this.parameter.name}_example`,
                 existingNames: Object.keys(v2Examples.userSpecifiedExamples)
-            })
+            });
             v2Examples.userSpecifiedExamples[parameterExampleName] = this.generateOrValidateExample({
                 schema,
                 example: parameterExample
-            })
+            });
         }
         if (Object.keys(v2Examples.userSpecifiedExamples).length === 0) {
-            const exampleName = `${this.parameter.name}_example`
+            const exampleName = `${this.parameter.name}_example`;
             v2Examples.autogeneratedExamples[exampleName] = this.generateOrValidateExample({
                 schema,
                 example: undefined,
                 ignoreErrors: true
-            })
+            });
         }
-        return v2Examples
+        return v2Examples;
     }
 
     private generateOrValidateExample({
@@ -194,25 +194,25 @@ export abstract class AbstractParameterConverter<
         ignoreErrors,
         example
     }: {
-        schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
-        example: unknown
-        ignoreErrors?: boolean
+        schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
+        example: unknown;
+        ignoreErrors?: boolean;
     }): unknown {
         const exampleConverter = new ExampleConverter({
             breadcrumbs: this.breadcrumbs,
             context: this.context,
             schema,
             example
-        })
-        const { validExample: convertedExample, errors } = exampleConverter.convert()
+        });
+        const { validExample: convertedExample, errors } = exampleConverter.convert();
         if (!ignoreErrors) {
             errors.forEach((error) => {
                 this.context.errorCollector.collect({
                     message: error.message,
                     path: error.path
-                })
-            })
+                });
+            });
         }
-        return convertedExample
+        return convertedExample;
     }
 }

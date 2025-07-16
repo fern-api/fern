@@ -1,6 +1,6 @@
-import type { Node as EstreeNode } from "estree"
-import type { JSXAttribute, JSXElement } from "estree-jsx"
-import { walk } from "estree-walker"
+import type { Node as EstreeNode } from "estree";
+import type { JSXAttribute, JSXElement } from "estree-jsx";
+import { walk } from "estree-walker";
 
 export function walkEstreeJsxAttributes(
     estree: EstreeNode,
@@ -15,10 +15,10 @@ export function walkEstreeJsxAttributes(
                         attr.name.type === "JSXIdentifier" &&
                         handlers[attr.name.name]
                     ) {
-                        handlers[attr.name.name]?.(attr, node)
+                        handlers[attr.name.name]?.(attr, node);
                     }
-                })
+                });
             }
         }
-    })
+    });
 }

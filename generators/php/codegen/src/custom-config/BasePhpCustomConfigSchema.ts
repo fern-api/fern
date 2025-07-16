@@ -1,4 +1,4 @@
-import { z } from "zod"
+import { z } from "zod";
 
 export const BasePhpCustomConfigSchema = z.object({
     clientName: z.string().optional(),
@@ -10,6 +10,6 @@ export const BasePhpCustomConfigSchema = z.object({
     composerJson: z.optional(z.record(z.any())),
     // Deprecated; use clientName instead.
     "client-class-name": z.string().optional()
-})
+});
 
-export type BasePhpCustomConfigSchema = z.infer<typeof BasePhpCustomConfigSchema>
+export type BasePhpCustomConfigSchema = z.infer<typeof BasePhpCustomConfigSchema>;

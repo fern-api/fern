@@ -1,7 +1,7 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule"
-import { NoMissingAuthRule } from "../no-missing-auth"
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { NoMissingAuthRule } from "../no-missing-auth";
 
 describe("no-missing-auth", () => {
     it("simple", async () => {
@@ -12,7 +12,7 @@ describe("no-missing-auth", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
             )
-        })
+        });
 
         expect(violations).toEqual([
             {
@@ -27,6 +27,6 @@ describe("no-missing-auth", () => {
                 nodePath: ["service"],
                 message: "Service requires auth, but no auth is defined."
             }
-        ])
-    })
-})
+        ]);
+    });
+});

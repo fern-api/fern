@@ -1,1 +1,1 @@
-export { ValidMarkdownRule } from "./valid-markdown"
+export { ValidMarkdownRule } from "./valid-markdown";

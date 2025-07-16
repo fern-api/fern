@@ -5,6 +5,6 @@ export const RawContainerType = {
     list: "list",
     map: "map",
     literal: "literal"
-} as const
+} as const;
 
-export const RawContainerTypes = new Set<string>(Object.values(RawContainerType))
+export const RawContainerTypes = new Set<string>(Object.values(RawContainerType));

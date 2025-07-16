@@ -1,5 +1,5 @@
-import { BaseJavaCustomConfigSchema } from "@fern-api/java-ast"
+import { BaseJavaCustomConfigSchema } from "@fern-api/java-ast";
 
-export const SdkCustomConfigSchema: typeof BaseJavaCustomConfigSchema = BaseJavaCustomConfigSchema
+export const SdkCustomConfigSchema: typeof BaseJavaCustomConfigSchema = BaseJavaCustomConfigSchema;
 
-export type SdkCustomConfigSchema = BaseJavaCustomConfigSchema
+export type SdkCustomConfigSchema = BaseJavaCustomConfigSchema;

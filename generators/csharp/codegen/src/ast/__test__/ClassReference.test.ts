@@ -1,4 +1,4 @@
-import { csharp } from "../.."
+import { csharp } from "../..";
 
 describe("class reference", () => {
     it("generics", async () => {
@@ -16,7 +16,7 @@ describe("class reference", () => {
                     })
                 )
             ]
-        })
+        });
         expect(
             clazz.toString({
                 namespace: "",
@@ -25,6 +25,6 @@ describe("class reference", () => {
                 rootNamespace: "",
                 customConfig: {}
             })
-        ).toContain("OneOf<string, bool, List<string>>")
-    })
-})
+        ).toContain("OneOf<string, bool, List<string>>");
+    });
+});

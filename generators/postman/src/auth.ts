@@ -1,11 +1,11 @@
-import { AuthScheme, HeaderAuthScheme } from "@fern-fern/ir-sdk/api"
-import { PostmanHeader, PostmanRequestAuth, PostmanVariable } from "@fern-fern/postman-sdk/api"
+import { AuthScheme, HeaderAuthScheme } from "@fern-fern/ir-sdk/api";
+import { PostmanHeader, PostmanRequestAuth, PostmanVariable } from "@fern-fern/postman-sdk/api";
 
-import { getReferenceToVariable } from "./utils"
+import { getReferenceToVariable } from "./utils";
 
-const BASIC_AUTH_USERNAME_VARIABLE = "username"
-const BASIC_AUTH_PASSWORD_VARIABLE = "password"
-const BEARER_AUTH_TOKEN_VARIABLE = "token"
+const BASIC_AUTH_USERNAME_VARIABLE = "username";
+const BASIC_AUTH_PASSWORD_VARIABLE = "password";
+const BEARER_AUTH_TOKEN_VARIABLE = "token";
 
 export function convertAuth(schemes: AuthScheme[]): PostmanRequestAuth | undefined {
     for (const scheme of schemes) {
@@ -65,19 +65,19 @@ export function convertAuth(schemes: AuthScheme[]): PostmanRequestAuth | undefin
                             type: "string"
                         }
                     ]
-                }
+                };
             },
             _other: () => {
-                throw new Error("Unknown auth scheme: " + scheme.type)
+                throw new Error("Unknown auth scheme: " + scheme.type);
             }
-        })
+        });
 
         if (auth != null) {
-            return auth
+            return auth;
         }
     }
 
-    return undefined
+    return undefined;
 }
 
 export function getAuthHeaders(schemes: AuthScheme[]): PostmanHeader[] {
@@ -95,10 +95,10 @@ export function getAuthHeaders(schemes: AuthScheme[]): PostmanHeader[] {
                 }
             ],
             _other: () => {
-                throw new Error("Unknown auth scheme: " + scheme.type)
+                throw new Error("Unknown auth scheme: " + scheme.type);
             }
         })
-    )
+    );
 }
 
 export function getVariablesForAuthScheme(scheme: AuthScheme): PostmanVariable[] {
@@ -137,11 +137,11 @@ export function getVariablesForAuthScheme(scheme: AuthScheme): PostmanVariable[]
             }
         ],
         _other: () => {
-            throw new Error("Unknown auth scheme: " + scheme.type)
+            throw new Error("Unknown auth scheme: " + scheme.type);
         }
-    })
+    });
 }
 
 function getVariableForAuthHeader(header: HeaderAuthScheme): string {
-    return header.name.name.camelCase.unsafeName
+    return header.name.name.camelCase.unsafeName;
 }

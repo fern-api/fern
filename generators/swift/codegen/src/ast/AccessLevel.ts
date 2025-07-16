@@ -31,6 +31,6 @@ export const AccessLevel = {
      * Most restrictive. Accessible within the enclosing declaration only.
      */
     Private: "private"
-} as const
+} as const;
 
-export type AccessLevel = (typeof AccessLevel)[keyof typeof AccessLevel]
+export type AccessLevel = (typeof AccessLevel)[keyof typeof AccessLevel];

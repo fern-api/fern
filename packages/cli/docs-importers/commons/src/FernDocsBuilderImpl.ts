@@ -1,5 +1,5 @@
-import { cp, mkdir, writeFile } from "fs/promises"
-import yaml from "js-yaml"
+import { cp, mkdir, writeFile } from "fs/promises";
+import yaml from "js-yaml";
 
 import {
     DOCS_CONFIGURATION_FILENAME,
@@ -7,43 +7,43 @@ import {
     GENERATORS_CONFIGURATION_FILENAME,
     docsYml,
     generatorsYml
-} from "@fern-api/configuration"
-import { AbsoluteFilePath, RelativeFilePath, dirname, join } from "@fern-api/fs-utils"
+} from "@fern-api/configuration";
+import { AbsoluteFilePath, RelativeFilePath, dirname, join } from "@fern-api/fs-utils";
 
-import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk"
+import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 
-import { FernDocsBuilder, FernDocsNavigationBuilder } from "./FernDocsBuilder"
+import { FernDocsBuilder, FernDocsNavigationBuilder } from "./FernDocsBuilder";
 
 interface MarkdownPage {
-    frontmatter: CjsFdrSdk.docs.latest.Frontmatter
-    markdown: string
+    frontmatter: CjsFdrSdk.docs.latest.Frontmatter;
+    markdown: string;
 }
 
 interface Asset {
-    absoluteFilePathToAsset: AbsoluteFilePath
+    absoluteFilePathToAsset: AbsoluteFilePath;
 }
 
 export class FernDocsBuilderImpl extends FernDocsBuilder {
-    private openApiSpecs: Record<RelativeFilePath, AbsoluteFilePath> = {}
-    private nonTabbedNavigation: NonTabbedNavigationBuilderImpl = new NonTabbedNavigationBuilderImpl()
-    private tabbedNavigation: Record<docsYml.RawSchemas.TabId, TabbedNavigationBuilderImpl> = {}
-    private markdownPages: Record<RelativeFilePath, MarkdownPage> = {}
-    private assets: Record<RelativeFilePath, Asset> = {}
+    private openApiSpecs: Record<RelativeFilePath, AbsoluteFilePath> = {};
+    private nonTabbedNavigation: NonTabbedNavigationBuilderImpl = new NonTabbedNavigationBuilderImpl();
+    private tabbedNavigation: Record<docsYml.RawSchemas.TabId, TabbedNavigationBuilderImpl> = {};
+    private markdownPages: Record<RelativeFilePath, MarkdownPage> = {};
+    private assets: Record<RelativeFilePath, Asset> = {};
     private docsYml: docsYml.RawSchemas.DocsConfiguration = {
         instances: []
-    }
+    };
     private generatorsYml: generatorsYml.GeneratorsConfigurationSchema = {
         api: { specs: [] as generatorsYml.ApiConfigurationV2SpecsSchema }
-    }
+    };
 
     public addOpenAPI({
         relativePathToOpenAPI,
         absolutePathToOpenAPI
     }: {
-        relativePathToOpenAPI: RelativeFilePath
-        absolutePathToOpenAPI: AbsoluteFilePath
+        relativePathToOpenAPI: RelativeFilePath;
+        absolutePathToOpenAPI: AbsoluteFilePath;
     }): void {
-        this.openApiSpecs[relativePathToOpenAPI] = absolutePathToOpenAPI
+        this.openApiSpecs[relativePathToOpenAPI] = absolutePathToOpenAPI;
     }
 
     public addMarkdownPage({
@@ -51,96 +51,96 @@ export class FernDocsBuilderImpl extends FernDocsBuilder {
         markdown,
         relativeFilePathFromDocsYml
     }: {
-        frontmatter: CjsFdrSdk.docs.latest.Frontmatter
-        markdown: string
-        relativeFilePathFromDocsYml: RelativeFilePath
+        frontmatter: CjsFdrSdk.docs.latest.Frontmatter;
+        markdown: string;
+        relativeFilePathFromDocsYml: RelativeFilePath;
     }): void {
-        this.markdownPages[relativeFilePathFromDocsYml] = { markdown, frontmatter }
+        this.markdownPages[relativeFilePathFromDocsYml] = { markdown, frontmatter };
     }
 
     public addAsset({
         absoluteFilePathToAsset,
         relativeFilePathFromDocsYml
     }: {
-        absoluteFilePathToAsset: AbsoluteFilePath
-        relativeFilePathFromDocsYml: RelativeFilePath
+        absoluteFilePathToAsset: AbsoluteFilePath;
+        relativeFilePathFromDocsYml: RelativeFilePath;
     }): void {
-        this.assets[relativeFilePathFromDocsYml] = { absoluteFilePathToAsset }
+        this.assets[relativeFilePathFromDocsYml] = { absoluteFilePathToAsset };
     }
 
     public getNavigationBuilder(args?: {
-        tabId: string
-        tabConfig: docsYml.RawSchemas.TabConfig
+        tabId: string;
+        tabConfig: docsYml.RawSchemas.TabConfig;
     }): FernDocsNavigationBuilder {
         if (args != null) {
-            let navigationBuilder = this.tabbedNavigation[args.tabId]
+            let navigationBuilder = this.tabbedNavigation[args.tabId];
             if (navigationBuilder == null) {
-                navigationBuilder = new TabbedNavigationBuilderImpl(args.tabId, args.tabConfig)
-                this.tabbedNavigation[args.tabId] = navigationBuilder
+                navigationBuilder = new TabbedNavigationBuilderImpl(args.tabId, args.tabConfig);
+                this.tabbedNavigation[args.tabId] = navigationBuilder;
             }
-            return navigationBuilder
+            return navigationBuilder;
         }
-        return this.nonTabbedNavigation
+        return this.nonTabbedNavigation;
     }
 
     public addVersion({
         versionConfig,
         navigation
     }: {
-        versionConfig: docsYml.RawSchemas.VersionConfig
-        navigation: docsYml.RawSchemas.VersionFileConfig
+        versionConfig: docsYml.RawSchemas.VersionConfig;
+        navigation: docsYml.RawSchemas.VersionFileConfig;
     }): void {
-        throw new Error("Method not implemented.")
+        throw new Error("Method not implemented.");
     }
 
     public addNavbarLink({ link }: { link: docsYml.RawSchemas.NavbarLink }): void {
         if (this.docsYml.navbarLinks == null) {
-            this.docsYml.navbarLinks = [link]
+            this.docsYml.navbarLinks = [link];
         }
-        this.docsYml.navbarLinks.push(link)
+        this.docsYml.navbarLinks.push(link);
     }
 
     public setTitle({ title }: { title: string }): void {
-        this.docsYml.title = title
+        this.docsYml.title = title;
     }
 
     public setFavicon({ favicon }: { favicon: RelativeFilePath }): void {
-        this.docsYml.favicon = favicon
+        this.docsYml.favicon = favicon;
     }
 
     public setLogo({ logo }: { logo: docsYml.RawSchemas.LogoConfiguration }): void {
-        this.docsYml.logo = logo
+        this.docsYml.logo = logo;
     }
 
     public setColors({ colors }: { colors: docsYml.RawSchemas.ColorsConfiguration }): void {
-        this.docsYml.colors = colors
+        this.docsYml.colors = colors;
     }
 
     public setLayout({ layout }: { layout: docsYml.RawSchemas.LayoutConfig }): void {
-        this.docsYml.layout = layout
+        this.docsYml.layout = layout;
     }
 
     public async build({ outputDirectory }: { outputDirectory: AbsoluteFilePath }): Promise<void> {
-        const absolutePathToFernDirectory = join(outputDirectory, RelativeFilePath.of(FERN_DIRECTORY))
-        await mkdir(absolutePathToFernDirectory, { recursive: true })
+        const absolutePathToFernDirectory = join(outputDirectory, RelativeFilePath.of(FERN_DIRECTORY));
+        await mkdir(absolutePathToFernDirectory, { recursive: true });
 
         if (Object.keys(this.tabbedNavigation).length > 0) {
             this.docsYml.tabs = Object.fromEntries(
                 Object.entries(this.tabbedNavigation).map(([key, value]) => {
-                    return [value.tabId, value.tabConfig]
+                    return [value.tabId, value.tabConfig];
                 })
-            )
-            const tabbedNavigationItems: docsYml.RawSchemas.TabbedNavigationItem[] = []
+            );
+            const tabbedNavigationItems: docsYml.RawSchemas.TabbedNavigationItem[] = [];
             Object.entries(this.tabbedNavigation).forEach(([_, value]) => {
                 const tabbedItem: docsYml.RawSchemas.TabbedNavigationItem = {
                     tab: value.tabId,
                     ...(value.items.length > 0 ? { layout: value.items } : {})
-                }
-                tabbedNavigationItems.push(tabbedItem)
-            })
-            this.docsYml.navigation = tabbedNavigationItems
+                };
+                tabbedNavigationItems.push(tabbedItem);
+            });
+            this.docsYml.navigation = tabbedNavigationItems;
         } else if (this.nonTabbedNavigation != null) {
-            this.docsYml.navigation = this.nonTabbedNavigation.items
+            this.docsYml.navigation = this.nonTabbedNavigation.items;
         }
         if (Object.entries(this.openApiSpecs).length > 0 && this.generatorsYml?.api != null) {
             if (typeof this.generatorsYml.api !== "string") {
@@ -148,19 +148,19 @@ export class FernDocsBuilderImpl extends FernDocsBuilder {
                     specs: Object.entries(this.openApiSpecs).map(([relativePath]) => ({
                         openapi: relativePath
                     }))
-                }
+                };
             }
             await writeFile(
                 join(absolutePathToFernDirectory, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)),
                 yaml.dump(generatorsYml.serialization.GeneratorsConfigurationSchema.jsonOrThrow(this.generatorsYml))
-            )
+            );
             await Promise.all(
                 Object.entries(this.openApiSpecs).map(async ([relativePath, absolutePath]) => {
-                    const absolutePathToOpenAPI = join(absolutePathToFernDirectory, RelativeFilePath.of(relativePath))
-                    await mkdir(dirname(absolutePathToOpenAPI), { recursive: true })
-                    await cp(absolutePath, absolutePathToOpenAPI)
+                    const absolutePathToOpenAPI = join(absolutePathToFernDirectory, RelativeFilePath.of(relativePath));
+                    await mkdir(dirname(absolutePathToOpenAPI), { recursive: true });
+                    await cp(absolutePath, absolutePathToOpenAPI);
                 })
-            )
+            );
         }
 
         await writeFile(
@@ -168,47 +168,47 @@ export class FernDocsBuilderImpl extends FernDocsBuilder {
             yaml.dump(
                 docsYml.RawSchemas.Serializer.DocsConfiguration.jsonOrThrow(this.docsYml, { omitUndefined: true })
             )
-        )
+        );
 
         await Promise.all(
             Object.entries(this.markdownPages).map(async ([filepath, page]) => {
-                const absoluteFilepathToMarkdownPage = join(absolutePathToFernDirectory, RelativeFilePath.of(filepath))
-                await mkdir(dirname(absoluteFilepathToMarkdownPage), { recursive: true })
+                const absoluteFilepathToMarkdownPage = join(absolutePathToFernDirectory, RelativeFilePath.of(filepath));
+                await mkdir(dirname(absoluteFilepathToMarkdownPage), { recursive: true });
                 const frontmatter =
                     Object.keys(page.frontmatter).length > 0
                         ? `---\n${yaml.dump(JSON.parse(JSON.stringify(page.frontmatter)))}---\n\n`
-                        : ""
-                await writeFile(absoluteFilepathToMarkdownPage, `${frontmatter}${page.markdown}`)
+                        : "";
+                await writeFile(absoluteFilepathToMarkdownPage, `${frontmatter}${page.markdown}`);
             })
-        )
+        );
 
         await Promise.all(
             Object.entries(this.assets).map(async ([filepath, asset]) => {
-                const absolutePathToAsset = join(absolutePathToFernDirectory, RelativeFilePath.of(filepath))
-                await mkdir(dirname(absolutePathToAsset), { recursive: true })
-                await cp(asset.absoluteFilePathToAsset, absolutePathToAsset)
+                const absolutePathToAsset = join(absolutePathToFernDirectory, RelativeFilePath.of(filepath));
+                await mkdir(dirname(absolutePathToAsset), { recursive: true });
+                await cp(asset.absoluteFilePathToAsset, absolutePathToAsset);
             })
-        )
+        );
     }
 
     public setInstance({ companyName }: { companyName: string }): string {
         // We may append a suffix to the company name string to make it harder for
         // other companies to build migrators for our docs. For now, we're not doing
         // so but we can add that easily in the future.
-        const formattedCompanyString = companyName.toLowerCase().replace(" ", "-")
+        const formattedCompanyString = companyName.toLowerCase().replace(" ", "-");
 
-        const fernDocsUrl = `https://${formattedCompanyString}.docs.buildwithfern.com`
+        const fernDocsUrl = `https://${formattedCompanyString}.docs.buildwithfern.com`;
 
         this.docsYml.instances.push({
             url: fernDocsUrl
-        })
+        });
 
-        return fernDocsUrl
+        return fernDocsUrl;
     }
 }
 
 export class TabbedNavigationBuilderImpl implements FernDocsNavigationBuilder {
-    public items: docsYml.RawSchemas.NavigationItem[] = []
+    public items: docsYml.RawSchemas.NavigationItem[] = [];
 
     public constructor(
         public readonly tabId: docsYml.RawSchemas.TabId,
@@ -216,14 +216,14 @@ export class TabbedNavigationBuilderImpl implements FernDocsNavigationBuilder {
     ) {}
 
     public addItem({ item }: { item: docsYml.RawSchemas.NavigationItem }): void {
-        this.items.push(item)
+        this.items.push(item);
     }
 }
 
 export class NonTabbedNavigationBuilderImpl implements FernDocsNavigationBuilder {
-    public items: docsYml.RawSchemas.NavigationItem[] = []
+    public items: docsYml.RawSchemas.NavigationItem[] = [];
 
     public addItem({ item }: { item: docsYml.RawSchemas.NavigationItem }): void {
-        this.items.push(item)
+        this.items.push(item);
     }
 }

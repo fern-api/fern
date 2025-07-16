@@ -1,9 +1,9 @@
-import chalk from "chalk"
+import chalk from "chalk";
 
-import { RawSchemas } from "@fern-api/fern-definition-schema"
-import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator"
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
 
-import { RuleViolation } from "../../Rule"
+import { RuleViolation } from "../../Rule";
 import {
     REQUEST_PREFIX,
     RESPONSE_PREFIX,
@@ -14,12 +14,12 @@ import {
     maybePrimitiveType,
     requestTypeHasProperty,
     resolvedTypeHasProperty
-} from "../../utils/propertyValidatorUtils"
+} from "../../utils/propertyValidatorUtils";
 
-export const DEFAULT_CLIENT_ID = `${REQUEST_PREFIX}client_id`
-export const DEFAULT_CLIENT_SECRET = `${REQUEST_PREFIX}client_secret`
-export const DEFAULT_ACCESS_TOKEN = `${RESPONSE_PREFIX}access_token`
-export const DEFAULT_REFRESH_TOKEN = `${REQUEST_PREFIX}refresh_token`
+export const DEFAULT_CLIENT_ID = `${REQUEST_PREFIX}client_id`;
+export const DEFAULT_CLIENT_SECRET = `${REQUEST_PREFIX}client_secret`;
+export const DEFAULT_ACCESS_TOKEN = `${RESPONSE_PREFIX}access_token`;
+export const DEFAULT_REFRESH_TOKEN = `${REQUEST_PREFIX}refresh_token`;
 
 export function validateClientIdRequestProperty({
     endpointId,
@@ -28,11 +28,11 @@ export function validateClientIdRequestProperty({
     file,
     clientIdProperty
 }: {
-    endpointId: string
-    endpoint: RawSchemas.HttpEndpointSchema
-    typeResolver: TypeResolver
-    file: FernFileContext
-    clientIdProperty: string
+    endpointId: string;
+    endpoint: RawSchemas.HttpEndpointSchema;
+    typeResolver: TypeResolver;
+    file: FernFileContext;
+    clientIdProperty: string;
 }): RuleViolation[] {
     return validateRequestProperty({
         endpointId,
@@ -44,7 +44,7 @@ export function validateClientIdRequestProperty({
             propertyID: "client-id",
             validate: isStringType
         }
-    })
+    });
 }
 
 export function validateClientSecretRequestProperty({
@@ -54,11 +54,11 @@ export function validateClientSecretRequestProperty({
     file,
     clientSecretProperty
 }: {
-    endpointId: string
-    endpoint: RawSchemas.HttpEndpointSchema
-    typeResolver: TypeResolver
-    file: FernFileContext
-    clientSecretProperty: string
+    endpointId: string;
+    endpoint: RawSchemas.HttpEndpointSchema;
+    typeResolver: TypeResolver;
+    file: FernFileContext;
+    clientSecretProperty: string;
 }): RuleViolation[] {
     return validateRequestProperty({
         endpointId,
@@ -70,7 +70,7 @@ export function validateClientSecretRequestProperty({
             propertyID: "client-secret",
             validate: isStringType
         }
-    })
+    });
 }
 
 export function validateScopesRequestProperty({
@@ -80,11 +80,11 @@ export function validateScopesRequestProperty({
     file,
     scopesProperty
 }: {
-    endpointId: string
-    endpoint: RawSchemas.HttpEndpointSchema
-    typeResolver: TypeResolver
-    file: FernFileContext
-    scopesProperty: string
+    endpointId: string;
+    endpoint: RawSchemas.HttpEndpointSchema;
+    typeResolver: TypeResolver;
+    file: FernFileContext;
+    scopesProperty: string;
 }): RuleViolation[] {
     return validateRequestProperty({
         endpointId,
@@ -96,7 +96,7 @@ export function validateScopesRequestProperty({
             propertyID: "scopes",
             validate: isStringType
         }
-    })
+    });
 }
 
 export function validateRefreshTokenRequestProperty({
@@ -106,11 +106,11 @@ export function validateRefreshTokenRequestProperty({
     file,
     refreshTokenProperty
 }: {
-    endpointId: string
-    endpoint: RawSchemas.HttpEndpointSchema
-    typeResolver: TypeResolver
-    file: FernFileContext
-    refreshTokenProperty: string
+    endpointId: string;
+    endpoint: RawSchemas.HttpEndpointSchema;
+    typeResolver: TypeResolver;
+    file: FernFileContext;
+    refreshTokenProperty: string;
 }): RuleViolation[] {
     return validateRequestProperty({
         endpointId,
@@ -122,7 +122,7 @@ export function validateRefreshTokenRequestProperty({
             propertyID: "refresh-token",
             validate: isStringType
         }
-    })
+    });
 }
 
 export function validateAccessTokenResponseProperty({
@@ -132,11 +132,11 @@ export function validateAccessTokenResponseProperty({
     resolvedResponseType,
     accessTokenProperty
 }: {
-    endpointId: string
-    typeResolver: TypeResolver
-    file: FernFileContext
-    resolvedResponseType: ResolvedType
-    accessTokenProperty: string
+    endpointId: string;
+    typeResolver: TypeResolver;
+    file: FernFileContext;
+    resolvedResponseType: ResolvedType;
+    accessTokenProperty: string;
 }): RuleViolation[] {
     return validateResponseProperty({
         endpointId,
@@ -148,7 +148,7 @@ export function validateAccessTokenResponseProperty({
             propertyID: "access-token",
             validate: isValidTokenProperty
         }
-    })
+    });
 }
 
 export function validateRefreshTokenResponseProperty({
@@ -158,11 +158,11 @@ export function validateRefreshTokenResponseProperty({
     resolvedResponseType,
     refreshTokenProperty
 }: {
-    endpointId: string
-    typeResolver: TypeResolver
-    file: FernFileContext
-    resolvedResponseType: ResolvedType
-    refreshTokenProperty: string
+    endpointId: string;
+    typeResolver: TypeResolver;
+    file: FernFileContext;
+    resolvedResponseType: ResolvedType;
+    refreshTokenProperty: string;
 }): RuleViolation[] {
     return validateResponseProperty({
         endpointId,
@@ -174,7 +174,7 @@ export function validateRefreshTokenResponseProperty({
             propertyID: "refresh-token",
             validate: isValidTokenProperty
         }
-    })
+    });
 }
 
 export function validateExpiresInResponseProperty({
@@ -184,11 +184,11 @@ export function validateExpiresInResponseProperty({
     resolvedResponseType,
     expiresInProperty
 }: {
-    endpointId: string
-    typeResolver: TypeResolver
-    file: FernFileContext
-    resolvedResponseType: ResolvedType
-    expiresInProperty: string
+    endpointId: string;
+    typeResolver: TypeResolver;
+    file: FernFileContext;
+    resolvedResponseType: ResolvedType;
+    expiresInProperty: string;
 }): RuleViolation[] {
     return validateResponseProperty({
         endpointId,
@@ -200,7 +200,7 @@ export function validateExpiresInResponseProperty({
             propertyID: "expires-in",
             validate: isValidExpiresInProperty
         }
-    })
+    });
 }
 
 function isValidExpiresInProperty({
@@ -209,10 +209,10 @@ function isValidExpiresInProperty({
     resolvedType,
     propertyComponents
 }: {
-    typeResolver: TypeResolver
-    file: FernFileContext
-    resolvedType: ResolvedType | undefined
-    propertyComponents: string[]
+    typeResolver: TypeResolver;
+    file: FernFileContext;
+    resolvedType: ResolvedType | undefined;
+    propertyComponents: string[];
 }): boolean {
     return resolvedTypeHasProperty({
         typeResolver,
@@ -220,7 +220,7 @@ function isValidExpiresInProperty({
         resolvedType,
         propertyComponents,
         validate: isIntegerType
-    })
+    });
 }
 
 function isValidTokenProperty({
@@ -229,10 +229,10 @@ function isValidTokenProperty({
     resolvedType,
     propertyComponents
 }: {
-    typeResolver: TypeResolver
-    file: FernFileContext
-    resolvedType: ResolvedType | undefined
-    propertyComponents: string[]
+    typeResolver: TypeResolver;
+    file: FernFileContext;
+    resolvedType: ResolvedType | undefined;
+    propertyComponents: string[];
 }): boolean {
     return resolvedTypeHasProperty({
         typeResolver,
@@ -240,7 +240,7 @@ function isValidTokenProperty({
         resolvedType,
         propertyComponents,
         validate: isStringType
-    })
+    });
 }
 
 function validateRequestProperty({
@@ -251,24 +251,24 @@ function validateRequestProperty({
     requestProperty,
     propertyValidator
 }: {
-    endpointId: string
-    endpoint: RawSchemas.HttpEndpointSchema
-    typeResolver: TypeResolver
-    file: FernFileContext
-    requestProperty: string
-    propertyValidator: RequestPropertyValidator
+    endpointId: string;
+    endpoint: RawSchemas.HttpEndpointSchema;
+    typeResolver: TypeResolver;
+    file: FernFileContext;
+    requestProperty: string;
+    propertyValidator: RequestPropertyValidator;
 }): RuleViolation[] {
-    const violations: RuleViolation[] = []
+    const violations: RuleViolation[] = [];
 
-    const requestPropertyComponents = getRequestPropertyComponents(requestProperty)
+    const requestPropertyComponents = getRequestPropertyComponents(requestProperty);
     if (requestPropertyComponents == null) {
         violations.push({
             severity: "fatal",
             message: `OAuth configuration for endpoint ${chalk.bold(endpointId)} must define a dot-delimited '${
                 propertyValidator.propertyID
             }' property starting with $request (e.g. $request.${propertyValidator.propertyID}).`
-        })
-        return violations
+        });
+        return violations;
     }
     if (requestPropertyComponents.length > 1) {
         // For now, we prevent request properties from being nested further than the top-level.
@@ -279,8 +279,8 @@ function validateRequestProperty({
             )} cannot reference nested $request properties like '${requestProperty}'; expected '$request.${
                 propertyValidator.propertyID
             }' instead.`
-        })
-        return violations
+        });
+        return violations;
     }
     if (
         !requestTypeHasProperty({
@@ -296,10 +296,10 @@ function validateRequestProperty({
             message: `OAuth configuration for endpoint ${chalk.bold(endpointId)} specifies '${
                 propertyValidator.propertyID
             }' ${requestProperty}, which is not a valid '${propertyValidator.propertyID}' type.`
-        })
+        });
     }
 
-    return violations
+    return violations;
 }
 
 function validateResponseProperty({
@@ -310,23 +310,23 @@ function validateResponseProperty({
     responseProperty,
     propertyValidator
 }: {
-    endpointId: string
-    typeResolver: TypeResolver
-    file: FernFileContext
-    resolvedResponseType: ResolvedType
-    responseProperty: string
-    propertyValidator: ResponsePropertyValidator
+    endpointId: string;
+    typeResolver: TypeResolver;
+    file: FernFileContext;
+    resolvedResponseType: ResolvedType;
+    responseProperty: string;
+    propertyValidator: ResponsePropertyValidator;
 }): RuleViolation[] {
-    const violations: RuleViolation[] = []
+    const violations: RuleViolation[] = [];
 
-    const responsePropertyComponents = getResponsePropertyComponents(responseProperty)
+    const responsePropertyComponents = getResponsePropertyComponents(responseProperty);
     if (responsePropertyComponents == null) {
         violations.push({
             severity: "fatal",
             message: `OAuth configuration for endpoint ${chalk.bold(endpointId)} must define a dot-delimited '${
                 propertyValidator.propertyID
             }' property starting with $response (e.g. $response.${propertyValidator.propertyID}).`
-        })
+        });
     }
 
     if (
@@ -343,16 +343,16 @@ function validateResponseProperty({
             message: `OAuth configuration for endpoint ${chalk.bold(endpointId)} specifies '${
                 propertyValidator.propertyID
             }' ${responseProperty}, which is not a valid '${propertyValidator.propertyID}' type.`
-        })
+        });
     }
 
-    return violations
+    return violations;
 }
 
 function isIntegerType({ resolvedType }: { resolvedType: ResolvedType | undefined }): boolean {
-    return maybePrimitiveType(resolvedType) === "INTEGER"
+    return maybePrimitiveType(resolvedType) === "INTEGER";
 }
 
 function isStringType({ resolvedType }: { resolvedType: ResolvedType | undefined }): boolean {
-    return maybePrimitiveType(resolvedType) === "STRING"
+    return maybePrimitiveType(resolvedType) === "STRING";
 }

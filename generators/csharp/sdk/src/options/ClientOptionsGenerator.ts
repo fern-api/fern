@@ -1,24 +1,24 @@
-import { CSharpFile, FileGenerator } from "@fern-api/csharp-base"
-import { csharp } from "@fern-api/csharp-codegen"
-import { RelativeFilePath, join } from "@fern-api/fs-utils"
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
+import { csharp } from "@fern-api/csharp-codegen";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { Name } from "@fern-fern/ir-sdk/api"
+import { Name } from "@fern-fern/ir-sdk/api";
 
-import { SdkCustomConfigSchema } from "../SdkCustomConfig"
-import { SdkGeneratorContext } from "../SdkGeneratorContext"
-import { BASE_URL_FIELD_NAME, BASE_URL_SUMMARY, BaseOptionsGenerator, OptionArgs } from "./BaseOptionsGenerator"
+import { SdkCustomConfigSchema } from "../SdkCustomConfig";
+import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { BASE_URL_FIELD_NAME, BASE_URL_SUMMARY, BaseOptionsGenerator, OptionArgs } from "./BaseOptionsGenerator";
 
-export const CLIENT_OPTIONS_CLASS_NAME = "ClientOptions"
-export const GLOBAL_TEST_SETUP_NAME = "GlobalTestSetup"
-export const EXCEPTION_HANDLER_MEMBER_NAME = "ExceptionHandler"
+export const CLIENT_OPTIONS_CLASS_NAME = "ClientOptions";
+export const GLOBAL_TEST_SETUP_NAME = "GlobalTestSetup";
+export const EXCEPTION_HANDLER_MEMBER_NAME = "ExceptionHandler";
 
 export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
-    private baseOptionsGenerator: BaseOptionsGenerator
+    private baseOptionsGenerator: BaseOptionsGenerator;
 
     constructor(context: SdkGeneratorContext, baseOptionsGenerator: BaseOptionsGenerator) {
-        super(context)
+        super(context);
 
-        this.baseOptionsGenerator = baseOptionsGenerator
+        this.baseOptionsGenerator = baseOptionsGenerator;
     }
 
     public doGenerate(): CSharpFile {
@@ -27,32 +27,32 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
             partial: true,
             access: csharp.Access.Public,
             annotations: [this.context.getSerializableAttribute()]
-        })
+        });
         const optionArgs: OptionArgs = {
             optional: false,
             includeInitializer: true
-        }
-        class_.addField(this.getBaseUrlField())
-        class_.addField(this.baseOptionsGenerator.getHttpClientField(optionArgs))
+        };
+        class_.addField(this.getBaseUrlField());
+        class_.addField(this.baseOptionsGenerator.getHttpClientField(optionArgs));
         class_.addField(
             this.baseOptionsGenerator.getHttpHeadersField({
                 optional: false,
                 includeInitializer: true,
                 interfaceReference: undefined
             })
-        )
+        );
         class_.addField(
             this.baseOptionsGenerator.getAdditionalHeadersField({
                 summary:
                     "Additional headers to be sent with HTTP requests.\nHeaders with matching keys will be overwritten by headers set on the request.",
                 includeInitializer: true
             })
-        )
-        class_.addField(this.baseOptionsGenerator.getMaxRetriesField(optionArgs))
-        class_.addField(this.baseOptionsGenerator.getTimeoutField(optionArgs))
-        class_.addFields(this.baseOptionsGenerator.getLiteralHeaderOptions(optionArgs))
+        );
+        class_.addField(this.baseOptionsGenerator.getMaxRetriesField(optionArgs));
+        class_.addField(this.baseOptionsGenerator.getTimeoutField(optionArgs));
+        class_.addFields(this.baseOptionsGenerator.getLiteralHeaderOptions(optionArgs));
         if (this.context.hasGrpcEndpoints()) {
-            class_.addField(this.getGrpcOptionsField())
+            class_.addField(this.getGrpcOptionsField());
         }
 
         if (this.context.includeExceptionHandler()) {
@@ -70,13 +70,13 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
                                 classReference: this.context.getExceptionHandlerClassReference(),
                                 arguments_: [csharp.codeblock("null")]
                             })
-                        )
+                        );
                     })
                 })
-            )
+            );
         }
 
-        class_.addMethod(this.getCloneMethod(class_))
+        class_.addMethod(this.getCloneMethod(class_));
 
         return new CSharpFile({
             clazz: class_,
@@ -85,38 +85,38 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
             namespace: this.context.getPublicCoreNamespace(),
             customConfig: this.context.customConfig
-        })
+        });
     }
 
     protected getFilepath(): RelativeFilePath {
         return join(
             this.context.project.filepaths.getPublicCoreFilesDirectory(),
             RelativeFilePath.of(`${CLIENT_OPTIONS_CLASS_NAME}.cs`)
-        )
+        );
     }
 
     private getBaseUrlField(): csharp.Field {
-        const defaultEnvironmentId = this.context.ir.environments?.defaultEnvironment
-        let defaultEnvironment: Name | undefined = undefined
+        const defaultEnvironmentId = this.context.ir.environments?.defaultEnvironment;
+        let defaultEnvironment: Name | undefined = undefined;
         if (defaultEnvironmentId != null) {
             defaultEnvironment = this.context.ir.environments?.environments._visit({
                 singleBaseUrl: (value) => {
                     return value.environments.find((env) => {
-                        return env.id === defaultEnvironmentId
-                    })?.name
+                        return env.id === defaultEnvironmentId;
+                    })?.name;
                 },
                 multipleBaseUrls: (value) => {
                     return value.environments.find((env) => {
-                        return env.id === defaultEnvironmentId
-                    })?.name
+                        return env.id === defaultEnvironmentId;
+                    })?.name;
                 },
                 _other: () => undefined
-            })
+            });
         }
         const defaultEnvironmentName =
             (this.context.customConfig["pascal-case-environments"] ?? true)
                 ? defaultEnvironment?.pascalCase.safeName
-                : defaultEnvironment?.screamingSnakeCase.safeName
+                : defaultEnvironment?.screamingSnakeCase.safeName;
 
         if (this.context.ir.environments != null) {
             const field = this.context.ir.environments.environments._visit({
@@ -132,11 +132,11 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
                         initializer:
                             defaultEnvironment != null
                                 ? csharp.codeblock((writer) => {
-                                      writer.writeNode(this.context.getEnvironmentsClassReference())
-                                      writer.write(`.${defaultEnvironmentName}`)
+                                      writer.writeNode(this.context.getEnvironmentsClassReference());
+                                      writer.write(`.${defaultEnvironmentName}`);
                                   })
                                 : csharp.codeblock('""') // TODO: remove this logic since it sets url to ""
-                    })
+                    });
                 },
                 multipleBaseUrls: () => {
                     return csharp.field({
@@ -150,16 +150,16 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
                         initializer:
                             defaultEnvironment != null
                                 ? csharp.codeblock((writer) => {
-                                      writer.writeNode(this.context.getEnvironmentsClassReference())
-                                      writer.write(`.${defaultEnvironmentName}`)
+                                      writer.writeNode(this.context.getEnvironmentsClassReference());
+                                      writer.write(`.${defaultEnvironmentName}`);
                                   })
                                 : csharp.codeblock("null") // TODO: remove this logic since it sets url to null
-                    })
+                    });
                 },
                 _other: () => undefined
-            })
+            });
             if (field != null) {
-                return field
+                return field;
             }
         }
 
@@ -174,11 +174,11 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
             initializer:
                 defaultEnvironment != null
                     ? csharp.codeblock((writer) => {
-                          writer.writeNode(this.context.getEnvironmentsClassReference())
-                          writer.write(`.${defaultEnvironmentName}`)
+                          writer.writeNode(this.context.getEnvironmentsClassReference());
+                          writer.write(`.${defaultEnvironmentName}`);
                       })
                     : csharp.codeblock('""') // TODO: remove this logic since it sets url to ""
-        })
+        });
     }
 
     private getGrpcOptionsField(): csharp.Field {
@@ -189,7 +189,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
             init: true,
             type: csharp.Type.optional(csharp.Type.reference(this.context.getGrpcChannelOptionsClassReference())),
             summary: "The options used for gRPC client endpoints."
-        })
+        });
     }
 
     private getCloneMethod(class_: csharp.Class): csharp.Method {
@@ -219,10 +219,10 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
     Headers = new Headers(new Dictionary<string, HeaderValue>(Headers)),
     ${this.context.includeExceptionHandler() ? "ExceptionHandler = ExceptionHandler.Clone()," : ""}
 }`
-                )
+                );
             }),
             isAsync: false,
             parameters: []
-        })
+        });
     }
 }

@@ -1,10 +1,10 @@
-import type { Element, Root as HastRoot } from "hast"
-import type { Handle, State } from "hast-util-to-mdast"
-import { defaultHandlers, toMdast } from "hast-util-to-mdast"
-import type { BlockContent, DefinitionContent, Root as MdastRoot } from "mdast"
-import type { MdxJsxFlowElement } from "mdast-util-mdx-jsx"
+import type { Element, Root as HastRoot } from "hast";
+import type { Handle, State } from "hast-util-to-mdast";
+import { defaultHandlers, toMdast } from "hast-util-to-mdast";
+import type { BlockContent, DefinitionContent, Root as MdastRoot } from "mdast";
+import type { MdxJsxFlowElement } from "mdast-util-mdx-jsx";
 
-import { ESCAPED_COMPONENTS } from "../constants.js"
+import { ESCAPED_COMPONENTS } from "../constants.js";
 
 export function mdxJsxFlowElementHandler(_: State, node: Element): MdxJsxFlowElement {
     return {
@@ -16,20 +16,20 @@ export function mdxJsxFlowElementHandler(_: State, node: Element): MdxJsxFlowEle
             value: value as string
         })),
         children: node.children as Array<BlockContent | DefinitionContent>
-    }
+    };
 }
 
 export function selectiveRehypeRemark(): (tree: HastRoot) => MdastRoot {
-    const handlers: Record<string, Handle> = { ...defaultHandlers }
+    const handlers: Record<string, Handle> = { ...defaultHandlers };
     ESCAPED_COMPONENTS.forEach((tagName) => {
-        handlers[tagName] = mdxJsxFlowElementHandler
-    })
-    handlers.mdxJsxFlowElement = mdxJsxFlowElementHandler
+        handlers[tagName] = mdxJsxFlowElementHandler;
+    });
+    handlers.mdxJsxFlowElement = mdxJsxFlowElementHandler;
 
     return function (tree: HastRoot): MdastRoot {
         const newTree = toMdast(tree, {
             handlers
-        }) as MdastRoot
-        return newTree
-    }
+        }) as MdastRoot;
+        return newTree;
+    };
 }

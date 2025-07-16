@@ -1,6 +1,6 @@
-import { upperFirst } from "lodash-es"
+import { upperFirst } from "lodash-es";
 
-import { generatorsYml } from "@fern-api/configuration"
+import { generatorsYml } from "@fern-api/configuration";
 
 export const RESERVED_KEYWORDS: Record<generatorsYml.GenerationLanguage, Set<string>> = {
     [generatorsYml.GenerationLanguage.PHP]: new Set(
@@ -464,4 +464,4 @@ export const RESERVED_KEYWORDS: Record<generatorsYml.GenerationLanguage, Set<str
     ]),
     // TODO(mikemilla): add reserved keywords for Swift
     [generatorsYml.GenerationLanguage.SWIFT]: new Set([])
-}
+};

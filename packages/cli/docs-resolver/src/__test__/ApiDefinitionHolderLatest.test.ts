@@ -1,6 +1,6 @@
-import { FdrAPI } from "@fern-api/fdr-sdk"
+import { FdrAPI } from "@fern-api/fdr-sdk";
 
-import { ApiDefinitionHolderLatest } from "../ApiDefinitionHolderLatest"
+import { ApiDefinitionHolderLatest } from "../ApiDefinitionHolderLatest";
 
 it.skip("finds subpackage by exact match", () => {
     const apiDefinitionHolder = new ApiDefinitionHolderLatest({
@@ -24,13 +24,13 @@ it.skip("finds subpackage by exact match", () => {
         auths: {},
         globalHeaders: [],
         snippetsConfiguration: undefined
-    })
+    });
     expect(apiDefinitionHolder.getSubpackageByLocator("test")).toEqual({
         id: FdrAPI.api.v1.SubpackageId("test"),
         name: "test",
         displayName: "test"
-    })
-})
+    });
+});
 
 it.skip("finds subpackage from yaml/yml files", () => {
     const apiDefinitionHolder = new ApiDefinitionHolderLatest({
@@ -49,19 +49,19 @@ it.skip("finds subpackage from yaml/yml files", () => {
         auths: {},
         globalHeaders: [],
         snippetsConfiguration: undefined
-    })
+    });
 
     expect(apiDefinitionHolder.getSubpackageByLocator("test.yaml")).toEqual({
         id: FdrAPI.api.v1.SubpackageId("test"),
         name: "test",
         displayName: "test"
-    })
+    });
     expect(apiDefinitionHolder.getSubpackageByLocator("test.yml")).toEqual({
         id: FdrAPI.api.v1.SubpackageId("test"),
         name: "test",
         displayName: "test"
-    })
-})
+    });
+});
 
 it.skip("finds endpoint by id and by path/method", () => {
     const apiDefinitionHolder = new ApiDefinitionHolderLatest({
@@ -98,11 +98,11 @@ it.skip("finds endpoint by id and by path/method", () => {
         auths: {},
         globalHeaders: [],
         snippetsConfiguration: undefined
-    })
-    expect(apiDefinitionHolder.getEndpointByLocator("getUser", undefined)).toBeDefined()
-    expect(apiDefinitionHolder.getEndpointByLocator("GET /users/:id", undefined)).toBeDefined()
-    expect(apiDefinitionHolder.getEndpointByLocator("GET /users/{id}", undefined)).toBeDefined()
-})
+    });
+    expect(apiDefinitionHolder.getEndpointByLocator("getUser", undefined)).toBeDefined();
+    expect(apiDefinitionHolder.getEndpointByLocator("GET /users/:id", undefined)).toBeDefined();
+    expect(apiDefinitionHolder.getEndpointByLocator("GET /users/{id}", undefined)).toBeDefined();
+});
 
 it.skip("finds websocket by id and by path", () => {
     const apiDefinitionHolder = new ApiDefinitionHolderLatest({
@@ -133,10 +133,10 @@ it.skip("finds websocket by id and by path", () => {
         auths: {},
         globalHeaders: [],
         snippetsConfiguration: undefined
-    })
-    expect(apiDefinitionHolder.getWebSocketByLocator("userStream", undefined)).toBeDefined()
-    expect(apiDefinitionHolder.getWebSocketByLocator("STREAM /users/stream", undefined)).toBeDefined()
-})
+    });
+    expect(apiDefinitionHolder.getWebSocketByLocator("userStream", undefined)).toBeDefined();
+    expect(apiDefinitionHolder.getWebSocketByLocator("STREAM /users/stream", undefined)).toBeDefined();
+});
 
 it.skip("finds webhook by id and by path/method", () => {
     const apiDefinitionHolder = new ApiDefinitionHolderLatest({
@@ -163,7 +163,7 @@ it.skip("finds webhook by id and by path/method", () => {
         auths: {},
         globalHeaders: [],
         snippetsConfiguration: undefined
-    })
-    expect(apiDefinitionHolder.getWebhookByLocator("userCreated", undefined)).toBeDefined()
-    expect(apiDefinitionHolder.getWebhookByLocator("POST /webhooks/user-created", undefined)).toBeDefined()
-})
+    });
+    expect(apiDefinitionHolder.getWebhookByLocator("userCreated", undefined)).toBeDefined();
+    expect(apiDefinitionHolder.getWebhookByLocator("POST /webhooks/user-created", undefined)).toBeDefined();
+});

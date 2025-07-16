@@ -1,20 +1,20 @@
-import { Request } from "express"
-import { isEqualWith } from "lodash-es"
+import { Request } from "express";
+import { isEqualWith } from "lodash-es";
 
-import { ExampleEndpointCall } from "@fern-api/ir-sdk"
+import { ExampleEndpointCall } from "@fern-api/ir-sdk";
 
-import { EqualResponse } from "./EqualRequestResponse"
+import { EqualResponse } from "./EqualRequestResponse";
 
 export declare namespace headersEqual {
     interface Args {
-        request: Request
-        example: ExampleEndpointCall
+        request: Request;
+        example: ExampleEndpointCall;
     }
 }
 
 export function headersEqual({ request, example }: headersEqual.Args): EqualResponse {
     for (const exampleHeader of [...example.serviceHeaders, ...example.endpointHeaders]) {
-        const requestHeader = request.headers[exampleHeader.name.wireValue.toLowerCase()]
+        const requestHeader = request.headers[exampleHeader.name.wireValue.toLowerCase()];
         if (
             !isEqualWith(
                 requestHeader,
@@ -29,8 +29,8 @@ export function headersEqual({ request, example }: headersEqual.Args): EqualResp
                 actualValue: requestHeader,
                 expectedValue: exampleHeader.value.jsonExample,
                 location: "header"
-            }
+            };
         }
     }
-    return { type: "equal" }
+    return { type: "equal" };
 }

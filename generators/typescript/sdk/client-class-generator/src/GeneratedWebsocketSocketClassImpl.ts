@@ -1,6 +1,6 @@
-import { PackageId, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons"
-import { GeneratedWebsocketSocketClass, SdkContext } from "@fern-typescript/contexts"
-import { camelCase } from "lodash-es"
+import { PackageId, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
+import { GeneratedWebsocketSocketClass, SdkContext } from "@fern-typescript/contexts";
+import { camelCase } from "lodash-es";
 import {
     ClassDeclarationStructure,
     InterfaceDeclarationStructure,
@@ -11,40 +11,40 @@ import {
     StructureKind,
     TypeAliasDeclarationStructure,
     ts
-} from "ts-morph"
+} from "ts-morph";
 
-import { WebSocketChannel, WebSocketMessage, WebSocketMessageBody } from "@fern-fern/ir-sdk/api"
+import { WebSocketChannel, WebSocketMessage, WebSocketMessageBody } from "@fern-fern/ir-sdk/api";
 
 export declare namespace GeneratedWebsocketSocketClassImpl {
     export interface Init {
-        packageId: PackageId
-        includeSerdeLayer: boolean
-        channel: WebSocketChannel
-        serviceClassName: string
-        retainOriginalCasing: boolean
-        omitUndefined: boolean
-        skipResponseValidation: boolean
+        packageId: PackageId;
+        includeSerdeLayer: boolean;
+        channel: WebSocketChannel;
+        serviceClassName: string;
+        retainOriginalCasing: boolean;
+        omitUndefined: boolean;
+        skipResponseValidation: boolean;
     }
 }
 
 export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSocketClass {
-    private static readonly ARGS_PROPERTY_NAME = "Args"
-    private static readonly RESPONSE_PROPERTY_NAME = "Response"
-    private static readonly EVENT_HANDLERS_PROPERTY_TYPE = "EventHandlers"
-    private static readonly EVENT_HANDLERS_PROPERTY_NAME = "eventHandlers"
-    private static readonly SOCKET_PROPERTY_NAME = "socket"
-    private static readonly EVENT_PARAMETER_NAME = "event"
-    private static readonly CALLBACK_PARAMETER_NAME = "callback"
-    private static readonly MESSAGE_PARAMETER_NAME = "message"
-    private static readonly CLOSE_CODE_VALUE = 1000
+    private static readonly ARGS_PROPERTY_NAME = "Args";
+    private static readonly RESPONSE_PROPERTY_NAME = "Response";
+    private static readonly EVENT_HANDLERS_PROPERTY_TYPE = "EventHandlers";
+    private static readonly EVENT_HANDLERS_PROPERTY_NAME = "eventHandlers";
+    private static readonly SOCKET_PROPERTY_NAME = "socket";
+    private static readonly EVENT_PARAMETER_NAME = "event";
+    private static readonly CALLBACK_PARAMETER_NAME = "callback";
+    private static readonly MESSAGE_PARAMETER_NAME = "message";
+    private static readonly CLOSE_CODE_VALUE = 1000;
 
-    private readonly channel: WebSocketChannel
-    private readonly includeSerdeLayer: boolean
-    private readonly serviceClassName: string
-    private readonly packageId: PackageId
-    private readonly retainOriginalCasing: boolean
-    private readonly omitUndefined: boolean
-    private readonly skipResponseValidation: boolean
+    private readonly channel: WebSocketChannel;
+    private readonly includeSerdeLayer: boolean;
+    private readonly serviceClassName: string;
+    private readonly packageId: PackageId;
+    private readonly retainOriginalCasing: boolean;
+    private readonly omitUndefined: boolean;
+    private readonly skipResponseValidation: boolean;
 
     constructor({
         packageId,
@@ -55,13 +55,13 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         omitUndefined,
         skipResponseValidation
     }: GeneratedWebsocketSocketClassImpl.Init) {
-        this.includeSerdeLayer = includeSerdeLayer
-        this.channel = channel
-        this.packageId = packageId
-        this.serviceClassName = serviceClassName
-        this.retainOriginalCasing = retainOriginalCasing
-        this.omitUndefined = omitUndefined
-        this.skipResponseValidation = skipResponseValidation
+        this.includeSerdeLayer = includeSerdeLayer;
+        this.channel = channel;
+        this.packageId = packageId;
+        this.serviceClassName = serviceClassName;
+        this.retainOriginalCasing = retainOriginalCasing;
+        this.omitUndefined = omitUndefined;
+        this.skipResponseValidation = skipResponseValidation;
     }
 
     public writeToFile(context: SdkContext): void {
@@ -75,7 +75,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                 this.generateSocketResponse(context),
                 this.generateSocketHandlers(context)
             ]
-        }
+        };
 
         const serviceClass: ClassDeclarationStructure = {
             kind: StructureKind.Class,
@@ -126,20 +126,20 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                 }
             ],
             methods: []
-        }
+        };
 
-        const handlerRegister = this.generateHandlerRegister(context)
-        const sendHelperMethods = this.generateSendHelperMethods(context)
-        const connectMethod = this.generateConnectMethod()
-        const closeMethod = this.generateCloseMethod()
-        const waitForOpen = this.generateWaitForOpen(context)
-        const assertSocketIsOpen = this.generateAssertSocketIsOpen(context)
+        const handlerRegister = this.generateHandlerRegister(context);
+        const sendHelperMethods = this.generateSendHelperMethods(context);
+        const connectMethod = this.generateConnectMethod();
+        const closeMethod = this.generateCloseMethod();
+        const waitForOpen = this.generateWaitForOpen(context);
+        const assertSocketIsOpen = this.generateAssertSocketIsOpen(context);
 
-        const sendBinary = this.generateSendBinary(context)
-        const handleOpen = this.generateHandleOpen()
-        const handleMessage = this.generateHandleMessage(context)
-        const handleClose = this.generateHandleClose(context)
-        const handleError = this.generateHandleError(context)
+        const sendBinary = this.generateSendBinary(context);
+        const handleOpen = this.generateHandleOpen();
+        const handleMessage = this.generateHandleMessage(context);
+        const handleClose = this.generateHandleClose(context);
+        const handleError = this.generateHandleError(context);
 
         serviceClass.methods?.push(
             handlerRegister,
@@ -149,16 +149,16 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
             waitForOpen,
             assertSocketIsOpen,
             sendBinary
-        )
+        );
         if (!this.includeSerdeLayer) {
-            const sendJson = this.generateSendJson(context)
-            serviceClass.methods?.push(sendJson)
+            const sendJson = this.generateSendJson(context);
+            serviceClass.methods?.push(sendJson);
         }
 
-        serviceClass.properties?.push(handleOpen, handleMessage, handleClose, handleError)
+        serviceClass.properties?.push(handleOpen, handleMessage, handleClose, handleError);
 
-        context.sourceFile.addModule(serviceModule)
-        context.sourceFile.addClass(serviceClass)
+        context.sourceFile.addModule(serviceModule);
+        context.sourceFile.addClass(serviceClass);
     }
 
     private generateSocketArgs(context: SdkContext): InterfaceDeclarationStructure {
@@ -172,7 +172,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                     type: getTextOfTsNode(context.coreUtilities.websocket.ReconnectingWebSocket._getReferenceToType())
                 }
             ]
-        }
+        };
     }
 
     private generateSocketResponse(context: SdkContext): TypeAliasDeclarationStructure {
@@ -181,7 +181,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
             name: GeneratedWebsocketSocketClassImpl.RESPONSE_PROPERTY_NAME,
             isExported: true,
             type: getTextOfTsNode(this.getUnionedNodeForOrigin(context, "server"))
-        }
+        };
     }
 
     private generateSocketHandlers(context: SdkContext): TypeAliasDeclarationStructure {
@@ -267,7 +267,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                     )
                 ])
             )
-        }
+        };
     }
 
     private generateHandlerRegister(context: SdkContext): MethodDeclarationStructure {
@@ -308,14 +308,14 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                 `this.${GeneratedWebsocketSocketClassImpl.EVENT_HANDLERS_PROPERTY_NAME}[${GeneratedWebsocketSocketClassImpl.EVENT_PARAMETER_NAME}]` +
                     ` = ${GeneratedWebsocketSocketClassImpl.CALLBACK_PARAMETER_NAME};`
             ]
-        }
+        };
     }
 
     private generateSendHelperMethods(context: SdkContext): MethodDeclarationStructure[] {
         return this.getMessagesForOrigin("client").map((message) => {
-            const node = this.getNodeForMessage(context, message)
-            return this.generateSendMessage(context, message, node)
-        })
+            const node = this.getNodeForMessage(context, message);
+            return this.generateSendMessage(context, message, node);
+        });
     }
 
     private generateSendMessage(
@@ -323,7 +323,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         message: WebSocketMessage,
         node: ts.TypeNode
     ): MethodDeclarationStructure {
-        const messageType = camelCase(message.type)
+        const messageType = camelCase(message.type);
         return {
             kind: StructureKind.Method,
             name: `send${messageType.charAt(0).toUpperCase() + messageType.slice(1)}`,
@@ -345,7 +345,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                       "this.assertSocketIsOpen();",
                       `this.sendJson(${GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME});`
                   ]
-        }
+        };
     }
 
     private generateConnectMethod(): MethodDeclarationStructure {
@@ -369,7 +369,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                     description: "Connect to the websocket and register event handlers."
                 }
             ]
-        }
+        };
     }
 
     private generateCloseMethod(): MethodDeclarationStructure {
@@ -393,7 +393,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                     description: "Close the websocket and unregister event handlers."
                 }
             ]
-        }
+        };
     }
 
     private generateWaitForOpen(context: SdkContext): MethodDeclarationStructure {
@@ -422,7 +422,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                     description: "Returns a promise that resolves when the websocket is open."
                 }
             ]
-        }
+        };
     }
 
     private generateAssertSocketIsOpen(context: SdkContext): MethodDeclarationStructure {
@@ -445,11 +445,11 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                     description: "Asserts that the websocket is open."
                 }
             ]
-        }
+        };
     }
 
     private generateSendJson(context: SdkContext): MethodDeclarationStructure {
-        const publishMessageNode = this.getUnionedNodeForOrigin(context, "client")
+        const publishMessageNode = this.getUnionedNodeForOrigin(context, "client");
         return {
             kind: StructureKind.Method,
             name: "sendJson",
@@ -470,7 +470,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                     description: "Send a JSON payload to the websocket."
                 }
             ]
-        }
+        };
     }
 
     private generateSendBinary(context: SdkContext): MethodDeclarationStructure {
@@ -491,14 +491,14 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                     description: "Send a binary payload to the websocket."
                 }
             ]
-        }
+        };
     }
 
     private generateHandleMessage(context: SdkContext): PropertyDeclarationStructure {
         const bodyLines: string[] = [
             `const data = ${getTextOfTsNode(context.jsonContext.getReferenceToFromJson().getTypeNode())}(event.data);`,
             ""
-        ]
+        ];
 
         if (this.includeSerdeLayer) {
             bodyLines.push(
@@ -508,11 +508,11 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                 "} else {",
                 '    this.eventHandlers.error?.(new Error("Received unknown message type"));',
                 "}"
-            )
+            );
         } else {
             bodyLines.push(
                 `this.eventHandlers.message?.(data as ${this.serviceClassName}.${GeneratedWebsocketSocketClassImpl.RESPONSE_PROPERTY_NAME});`
-            )
+            );
         }
 
         return {
@@ -523,7 +523,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
             initializer: `event => {
     ${bodyLines.map((line) => "    " + line).join("\n")}
     }`
-        }
+        };
     }
 
     private generateHandleOpen(): PropertyDeclarationStructure {
@@ -535,7 +535,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
             initializer: `() => {
         this.${GeneratedWebsocketSocketClassImpl.EVENT_HANDLERS_PROPERTY_NAME}.open?.();
     }`
-        }
+        };
     }
 
     private generateHandleClose(context: SdkContext): PropertyDeclarationStructure {
@@ -547,7 +547,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
             initializer: `event => {
         this.${GeneratedWebsocketSocketClassImpl.EVENT_HANDLERS_PROPERTY_NAME}.close?.(event);
     }`
-        }
+        };
     }
 
     private generateHandleError(context: SdkContext): PropertyDeclarationStructure {
@@ -560,7 +560,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         const ${GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME} = event.message;
         this.${GeneratedWebsocketSocketClassImpl.EVENT_HANDLERS_PROPERTY_NAME}.error?.(new Error(${GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME}));
     }`
-        }
+        };
     }
 
     private getSerializedExpression(
@@ -568,10 +568,10 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         requestBodyReference: string,
         context: SdkContext
     ): ts.Expression {
-        const referenceToRequestBody = ts.factory.createIdentifier(requestBodyReference)
+        const referenceToRequestBody = ts.factory.createIdentifier(requestBodyReference);
         switch (subscribeMessage.type) {
             case "inlinedBody": {
-                throw new Error("Websocket inlined schemas are not supported at the moment.")
+                throw new Error("Websocket inlined schemas are not supported at the moment.");
             }
             case "reference":
                 return context.typeSchema
@@ -583,37 +583,37 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                         skipValidation: this.skipResponseValidation,
                         breadcrumbsPrefix: [],
                         omitUndefined: this.omitUndefined
-                    })
+                    });
         }
     }
 
     private getUnionedParseResponse(context: SdkContext): ts.Expression {
         const receiveMessages = this.getMessagesForOrigin("server")
             .map((message) => message.body)
-            .filter((body) => body.type === "reference")
+            .filter((body) => body.type === "reference");
         return context.websocketTypeSchema
             .getGeneratedWebsocketResponseTypeSchema(this.packageId, this.channel, receiveMessages)
-            .deserializeResponse(ts.factory.createIdentifier("data"), context)
+            .deserializeResponse(ts.factory.createIdentifier("data"), context);
     }
 
     private getMessagesForOrigin(origin: "client" | "server"): WebSocketMessage[] {
-        return this.channel.messages.filter((message) => message.origin === origin)
+        return this.channel.messages.filter((message) => message.origin === origin);
     }
 
     private getAllMessageNodesForOrigin(context: SdkContext, origin: "client" | "server"): ts.TypeNode[] {
-        return this.getMessagesForOrigin(origin).map((message) => this.getNodeForMessage(context, message))
+        return this.getMessagesForOrigin(origin).map((message) => this.getNodeForMessage(context, message));
     }
 
     private getUnionedNodeForOrigin(context: SdkContext, origin: "client" | "server"): ts.TypeNode {
-        const allReturnTypes = this.getAllMessageNodesForOrigin(context, origin)
-        return ts.factory.createUnionTypeNode(allReturnTypes)
+        const allReturnTypes = this.getAllMessageNodesForOrigin(context, origin);
+        return ts.factory.createUnionTypeNode(allReturnTypes);
     }
 
     private getNodeForMessage(context: SdkContext, message: WebSocketMessage): ts.TypeNode {
         if (message.body.type === "inlinedBody") {
-            throw new Error("Websocket inlined schemas are not supported at the moment.")
+            throw new Error("Websocket inlined schemas are not supported at the moment.");
         }
-        const generatedType = context.type.getReferenceToType(message.body.bodyType)
-        return ts.factory.createTypeReferenceNode(getTextOfTsNode(generatedType.typeNode), undefined)
+        const generatedType = context.type.getReferenceToType(message.body.bodyType);
+        return ts.factory.createTypeReferenceNode(getTextOfTsNode(generatedType.typeNode), undefined);
     }
 }

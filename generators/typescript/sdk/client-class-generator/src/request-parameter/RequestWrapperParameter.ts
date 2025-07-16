@@ -1,8 +1,8 @@
-import { GetReferenceOpts } from "@fern-typescript/commons"
-import { GeneratedRequestWrapper, RequestWrapperNonBodyProperty, SdkContext } from "@fern-typescript/contexts"
-import { ts } from "ts-morph"
+import { GetReferenceOpts } from "@fern-typescript/commons";
+import { GeneratedRequestWrapper, RequestWrapperNonBodyProperty, SdkContext } from "@fern-typescript/contexts";
+import { ts } from "ts-morph";
 
-import { ExampleEndpointCall, HttpHeader, QueryParameter } from "@fern-fern/ir-sdk/api"
+import { ExampleEndpointCall, HttpHeader, QueryParameter } from "@fern-fern/ir-sdk/api";
 import {
     BigIntegerType,
     BooleanType,
@@ -11,74 +11,74 @@ import {
     LongType,
     StringType,
     TypeReference
-} from "@fern-fern/ir-sdk/api/resources/types/types"
+} from "@fern-fern/ir-sdk/api/resources/types/types";
 
-import { AbstractRequestParameter } from "./AbstractRequestParameter"
+import { AbstractRequestParameter } from "./AbstractRequestParameter";
 
 type DefaultNonBodyKeyName = string & {
-    __DefaultNonBodyKeyName: void
-}
+    __DefaultNonBodyKeyName: void;
+};
 
 export class RequestWrapperParameter extends AbstractRequestParameter {
-    private static BODY_VARIABLE_NAME = "_body"
+    private static BODY_VARIABLE_NAME = "_body";
 
-    private nonBodyKeyAliases: Record<DefaultNonBodyKeyName, string> = {}
+    private nonBodyKeyAliases: Record<DefaultNonBodyKeyName, string> = {};
 
     protected getParameterType(context: SdkContext): {
-        type: ts.TypeNode
-        hasQuestionToken: boolean
-        initializer?: ts.Expression
+        type: ts.TypeNode;
+        hasQuestionToken: boolean;
+        initializer?: ts.Expression;
     } {
-        const isOptional = this.getGeneratedRequestWrapper(context).areAllPropertiesOptional(context)
+        const isOptional = this.getGeneratedRequestWrapper(context).areAllPropertiesOptional(context);
         return {
             type: context.requestWrapper.getReferenceToRequestWrapper(this.packageId, this.endpoint.name),
             hasQuestionToken: false,
             initializer: isOptional ? ts.factory.createObjectLiteralExpression([], false) : undefined
-        }
+        };
     }
 
     public getType(context: SdkContext): ts.TypeNode {
-        return context.requestWrapper.getReferenceToRequestWrapper(this.packageId, this.endpoint.name)
+        return context.requestWrapper.getReferenceToRequestWrapper(this.packageId, this.endpoint.name);
     }
 
     public getInitialStatements(
         context: SdkContext,
         { variablesInScope }: { variablesInScope: string[] }
     ): ts.Statement[] {
-        this.nonBodyKeyAliases = {}
+        this.nonBodyKeyAliases = {};
 
-        const generatedRequestWrapper = this.getGeneratedRequestWrapper(context)
-        const nonBodyKeys = generatedRequestWrapper.getNonBodyKeysWithData(context)
+        const generatedRequestWrapper = this.getGeneratedRequestWrapper(context);
+        const nonBodyKeys = generatedRequestWrapper.getNonBodyKeysWithData(context);
 
         if (nonBodyKeys.length === 0) {
-            return []
+            return [];
         }
 
-        const usedNames = new Set(variablesInScope)
+        const usedNames = new Set(variablesInScope);
         const getNonConflictingName = (name: string) => {
             while (usedNames.has(name)) {
-                name = `${name}_`
+                name = `${name}_`;
             }
-            usedNames.add(name)
-            return name
-        }
+            usedNames.add(name);
+            return name;
+        };
 
         const bindingElements: ts.BindingElement[] = nonBodyKeys.map((nonBodyKey) => {
-            const defaultName = this.getDefaultVariableNameForNonBodyProperty(nonBodyKey)
-            const nonConflictingName = getNonConflictingName(defaultName)
-            this.nonBodyKeyAliases[defaultName] = nonConflictingName
+            const defaultName = this.getDefaultVariableNameForNonBodyProperty(nonBodyKey);
+            const nonConflictingName = getNonConflictingName(defaultName);
+            this.nonBodyKeyAliases[defaultName] = nonConflictingName;
 
             const useDefaultValues = (context.config.customConfig as { useDefaultRequestParameterValues?: boolean })
-                ?.useDefaultRequestParameterValues
+                ?.useDefaultRequestParameterValues;
 
-            let defaultValue: ts.Expression | undefined
+            let defaultValue: ts.Expression | undefined;
             if (useDefaultValues) {
                 if (nonBodyKey.originalParameter != null) {
                     if (nonBodyKey.originalParameter.type !== "file") {
                         defaultValue = this.extractDefaultValue(
                             nonBodyKey.originalParameter.parameter.valueType,
                             context
-                        )
+                        );
                     }
                 }
             }
@@ -90,8 +90,8 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
                     : undefined,
                 nonConflictingName,
                 defaultValue
-            )
-        })
+            );
+        });
 
         if (this.endpoint.requestBody != null) {
             bindingElements.push(
@@ -106,7 +106,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
                           generatedRequestWrapper.getReferencedBodyPropertyName(),
                           RequestWrapperParameter.BODY_VARIABLE_NAME
                       )
-            )
+            );
         }
 
         return [
@@ -124,17 +124,17 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
                     ts.NodeFlags.Const
                 )
             )
-        ]
+        ];
     }
 
     public getReferenceToRequestBody(context: SdkContext): ts.Expression | undefined {
         if (this.endpoint.requestBody == null) {
-            return undefined
+            return undefined;
         }
         if (this.getGeneratedRequestWrapper(context).getNonBodyKeys(context).length > 0) {
-            return ts.factory.createIdentifier(RequestWrapperParameter.BODY_VARIABLE_NAME)
+            return ts.factory.createIdentifier(RequestWrapperParameter.BODY_VARIABLE_NAME);
         } else {
-            return ts.factory.createIdentifier(this.getRequestParameterName())
+            return ts.factory.createIdentifier(this.getRequestParameterName());
         }
     }
 
@@ -143,16 +143,16 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         example,
         opts
     }: {
-        context: SdkContext
-        example: ExampleEndpointCall
-        opts: GetReferenceOpts
+        context: SdkContext;
+        example: ExampleEndpointCall;
+        opts: GetReferenceOpts;
     }): ts.Expression | undefined {
-        const requestWrapperExample = this.getGeneratedRequestWrapper(context).generateExample(example)
-        return requestWrapperExample?.build(context, opts)
+        const requestWrapperExample = this.getGeneratedRequestWrapper(context).generateExample(example);
+        return requestWrapperExample?.build(context, opts);
     }
 
     public getAllQueryParameters(context: SdkContext): QueryParameter[] {
-        return this.getGeneratedRequestWrapper(context).getAllQueryParameters()
+        return this.getGeneratedRequestWrapper(context).getAllQueryParameters();
     }
 
     public withQueryParameter(
@@ -161,7 +161,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         queryParamSetter: (value: ts.Expression) => ts.Statement[],
         queryParamItemSetter: (value: ts.Expression) => ts.Statement[]
     ): ts.Statement[] {
-        const generatedRequestWrapper = this.getGeneratedRequestWrapper(context)
+        const generatedRequestWrapper = this.getGeneratedRequestWrapper(context);
         return generatedRequestWrapper.withQueryParameter({
             queryParameter,
             referenceToQueryParameterProperty: ts.factory.createIdentifier(
@@ -170,37 +170,37 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
             context,
             queryParamSetter,
             queryParamItemSetter
-        })
+        });
     }
 
     public isOptional({ context }: { context: SdkContext }): boolean {
-        return this.getGeneratedRequestWrapper(context).areAllPropertiesOptional(context)
+        return this.getGeneratedRequestWrapper(context).areAllPropertiesOptional(context);
     }
 
     public getReferenceToPathParameter(pathParameterKey: string, context: SdkContext): ts.Expression {
         const pathParameter = this.endpoint.allPathParameters.find(
             (pathParam) => pathParam.name.originalName === pathParameterKey
-        )
+        );
         if (pathParameter == null) {
-            throw new Error("Path parameter does not exist: " + pathParameterKey)
+            throw new Error("Path parameter does not exist: " + pathParameterKey);
         }
-        const generatedRequestWrapper = this.getGeneratedRequestWrapper(context)
+        const generatedRequestWrapper = this.getGeneratedRequestWrapper(context);
         return ts.factory.createIdentifier(
             this.getAliasForNonBodyProperty(generatedRequestWrapper.getPropertyNameOfPathParameter(pathParameter))
-        )
+        );
     }
 
     public getReferenceToQueryParameter(queryParameterKey: string, context: SdkContext): ts.Expression {
         const queryParameter = this.endpoint.queryParameters.find(
             (queryParam) => queryParam.name.wireValue === queryParameterKey
-        )
+        );
         if (queryParameter == null) {
-            throw new Error("Query parameter does not exist: " + queryParameterKey)
+            throw new Error("Query parameter does not exist: " + queryParameterKey);
         }
-        const generatedRequestWrapper = this.getGeneratedRequestWrapper(context)
+        const generatedRequestWrapper = this.getGeneratedRequestWrapper(context);
         return ts.factory.createIdentifier(
             this.getAliasForNonBodyProperty(generatedRequestWrapper.getPropertyNameOfQueryParameter(queryParameter))
-        )
+        );
     }
 
     public getReferenceToNonLiteralHeader(header: HttpHeader, context: SdkContext): ts.Expression {
@@ -208,84 +208,84 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
             this.getAliasForNonBodyProperty(
                 this.getGeneratedRequestWrapper(context).getPropertyNameOfNonLiteralHeader(header)
             )
-        )
+        );
     }
 
     private getGeneratedRequestWrapper(context: SdkContext): GeneratedRequestWrapper {
-        return context.requestWrapper.getGeneratedRequestWrapper(this.packageId, this.endpoint.name)
+        return context.requestWrapper.getGeneratedRequestWrapper(this.packageId, this.endpoint.name);
     }
 
     private getDefaultVariableNameForNonBodyProperty(
         nonBodyProperty: RequestWrapperNonBodyProperty
     ): DefaultNonBodyKeyName {
-        return nonBodyProperty.safeName as DefaultNonBodyKeyName
+        return nonBodyProperty.safeName as DefaultNonBodyKeyName;
     }
 
     private getAliasForNonBodyProperty(nonBodyProperty: RequestWrapperNonBodyProperty): string {
-        const defaultName = this.getDefaultVariableNameForNonBodyProperty(nonBodyProperty)
-        const alias = this.nonBodyKeyAliases[defaultName]
+        const defaultName = this.getDefaultVariableNameForNonBodyProperty(nonBodyProperty);
+        const alias = this.nonBodyKeyAliases[defaultName];
         if (alias == null) {
-            throw new Error("Could not locate alias for: " + defaultName)
+            throw new Error("Could not locate alias for: " + defaultName);
         }
-        return alias
+        return alias;
     }
 
     private extractDefaultValue(typeReference: TypeReference, context: SdkContext): ts.Expression | undefined {
-        const resolvedType = context.type.resolveTypeReference(typeReference)
+        const resolvedType = context.type.resolveTypeReference(typeReference);
 
         if (resolvedType.type === "container" && resolvedType.container.type === "optional") {
-            return this.extractDefaultValue(resolvedType.container.optional, context)
+            return this.extractDefaultValue(resolvedType.container.optional, context);
         }
 
-        const useBigInt = (context.config.customConfig as { useBigInt?: boolean })?.useBigInt
+        const useBigInt = (context.config.customConfig as { useBigInt?: boolean })?.useBigInt;
 
         if (resolvedType.type === "primitive" && resolvedType.primitive.v2 != null) {
             return resolvedType.primitive.v2._visit<ts.Expression | undefined>({
                 integer: (integerType: IntegerType) => {
                     if (integerType.default != null) {
-                        return ts.factory.createNumericLiteral(integerType.default.toString())
+                        return ts.factory.createNumericLiteral(integerType.default.toString());
                     }
-                    return undefined
+                    return undefined;
                 },
                 long: (longType: LongType) => {
                     if (longType.default != null) {
                         if (useBigInt) {
                             return ts.factory.createCallExpression(ts.factory.createIdentifier("BigInt"), undefined, [
                                 ts.factory.createStringLiteral(longType.default.toString())
-                            ])
+                            ]);
                         }
-                        return ts.factory.createNumericLiteral(longType.default.toString())
+                        return ts.factory.createNumericLiteral(longType.default.toString());
                     }
-                    return undefined
+                    return undefined;
                 },
                 double: (doubleType: DoubleType) => {
                     if (doubleType.default != null) {
-                        return ts.factory.createNumericLiteral(doubleType.default.toString())
+                        return ts.factory.createNumericLiteral(doubleType.default.toString());
                     }
-                    return undefined
+                    return undefined;
                 },
                 string: (stringType: StringType) => {
                     if (stringType.default != null) {
-                        return ts.factory.createStringLiteral(stringType.default)
+                        return ts.factory.createStringLiteral(stringType.default);
                     }
-                    return undefined
+                    return undefined;
                 },
                 boolean: (booleanType: BooleanType) => {
                     if (booleanType.default != null) {
-                        return booleanType.default ? ts.factory.createTrue() : ts.factory.createFalse()
+                        return booleanType.default ? ts.factory.createTrue() : ts.factory.createFalse();
                     }
-                    return undefined
+                    return undefined;
                 },
                 bigInteger: (bigIntegerType: BigIntegerType) => {
                     if (bigIntegerType.default != null) {
                         if (useBigInt) {
                             return ts.factory.createCallExpression(ts.factory.createIdentifier("BigInt"), undefined, [
                                 ts.factory.createStringLiteral(bigIntegerType.default)
-                            ])
+                            ]);
                         }
-                        return ts.factory.createStringLiteral(bigIntegerType.default)
+                        return ts.factory.createStringLiteral(bigIntegerType.default);
                     }
-                    return undefined
+                    return undefined;
                 },
                 uint: () => undefined,
                 uint64: () => undefined,
@@ -295,8 +295,8 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
                 uuid: () => undefined,
                 base64: () => undefined,
                 _other: () => undefined
-            })
+            });
         }
-        return undefined
+        return undefined;
     }
 }

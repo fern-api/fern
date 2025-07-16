@@ -1,19 +1,19 @@
-import { AbstractFormatter, File } from "@fern-api/base-generator"
-import { RelativeFilePath } from "@fern-api/fs-utils"
-import { BaseRubyCustomConfigSchema, ruby } from "@fern-api/ruby-ast"
+import { AbstractFormatter, File } from "@fern-api/base-generator";
+import { RelativeFilePath } from "@fern-api/fs-utils";
+import { BaseRubyCustomConfigSchema, ruby } from "@fern-api/ruby-ast";
 
 export declare namespace RubyFile {
     interface Args {
         /* The node to be written to the Ruby source file */
-        node: ruby.AstNode
+        node: ruby.AstNode;
         /* Directory of the file */
-        directory: RelativeFilePath
+        directory: RelativeFilePath;
         /* Filename of the file */
-        filename: string
+        filename: string;
         /* Custom generator config */
-        customConfig: BaseRubyCustomConfigSchema
+        customConfig: BaseRubyCustomConfigSchema;
         /* Optional formatter */
-        formatter?: AbstractFormatter
+        formatter?: AbstractFormatter;
     }
 }
 
@@ -26,6 +26,6 @@ export class RubyFile extends File {
                 customConfig,
                 formatter
             })
-        )
+        );
     }
 }

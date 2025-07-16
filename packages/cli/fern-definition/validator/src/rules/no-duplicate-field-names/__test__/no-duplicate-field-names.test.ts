@@ -1,7 +1,7 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule"
-import { NoDuplicateFieldNamesRule } from "../no-duplicate-field-names"
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { NoDuplicateFieldNamesRule } from "../no-duplicate-field-names";
 
 describe("no-duplicate-field-names", () => {
     it("simple", async () => {
@@ -12,7 +12,7 @@ describe("no-duplicate-field-names", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
             )
-        })
+        });
 
         expect(violations).toEqual([
             {
@@ -60,6 +60,6 @@ describe("no-duplicate-field-names", () => {
   - a -> ObjectWithDuplicatedNameFooByDifferentExtensions -> (extends) ObjectWithFooProperty -> foo
   - a -> ObjectWithDuplicatedNameFooByDifferentExtensions -> (extends) ObjectWithFooAndBarProperties -> propertyWithFooName`
             }
-        ])
-    })
-})
+        ]);
+    });
+});

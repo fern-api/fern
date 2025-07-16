@@ -1,9 +1,13 @@
-import { GeneratorName } from "@fern-api/configuration-loader"
-import { assertNever } from "@fern-api/core-utils"
+import { GeneratorName } from "@fern-api/configuration-loader";
+import { assertNever } from "@fern-api/core-utils";
 
-import { IrSerialization } from "../../ir-serialization"
-import { IrVersions } from "../../ir-versions"
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
+import { IrSerialization } from "../../ir-serialization";
+import { IrVersions } from "../../ir-versions";
+import {
+    GeneratorWasNeverUpdatedToConsumeNewIR,
+    GeneratorWasNotCreatedYet,
+    IrMigration
+} from "../../types/IrMigration";
 
 export const V39_TO_V38_MIGRATION: IrMigration<
     IrVersions.V39.ir.IntermediateRepresentation,
@@ -52,18 +56,18 @@ export const V39_TO_V38_MIGRATION: IrMigration<
                 ...V39.auth,
                 schemes: V39.auth.schemes.map((scheme) => convertAuthScheme(scheme))
             }
-        }
+        };
     }
-}
+};
 
 function convertAuthScheme(scheme: IrVersions.V39.AuthScheme): IrVersions.V38.AuthScheme {
     switch (scheme.type) {
         case "basic":
-            return IrVersions.V38.AuthScheme.basic(scheme)
+            return IrVersions.V38.AuthScheme.basic(scheme);
         case "bearer":
-            return IrVersions.V38.AuthScheme.bearer(scheme)
+            return IrVersions.V38.AuthScheme.bearer(scheme);
         case "header":
-            return IrVersions.V38.AuthScheme.header(scheme)
+            return IrVersions.V38.AuthScheme.header(scheme);
         case "oauth":
             return IrVersions.V38.AuthScheme.bearer({
                 docs: scheme.docs,
@@ -87,8 +91,8 @@ function convertAuthScheme(scheme: IrVersions.V39.AuthScheme): IrVersions.V38.Au
                     }
                 },
                 tokenEnvVar: undefined
-            })
+            });
         default:
-            assertNever(scheme)
+            assertNever(scheme);
     }
 }

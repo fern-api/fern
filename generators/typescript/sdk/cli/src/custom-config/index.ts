@@ -1,2 +1,2 @@
-export * from "./SdkCustomConfig"
-export * from "./schema/index"
+export * from "./SdkCustomConfig";
+export * from "./schema/index";

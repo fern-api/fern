@@ -1,10 +1,10 @@
-import { z } from "zod"
+import { z } from "zod";
 
-import { BaseDependencyConfig } from "./BaseDependencyConfig"
-import { ClientConfig } from "./ClientConfig"
-import { DependencyConfig } from "./DependencyConfig"
-import { ModuleExport } from "./ModuleExport"
-import { PydanticConfig } from "./PydanticConfig"
+import { BaseDependencyConfig } from "./BaseDependencyConfig";
+import { ClientConfig } from "./ClientConfig";
+import { DependencyConfig } from "./DependencyConfig";
+import { ModuleExport } from "./ModuleExport";
+import { PydanticConfig } from "./PydanticConfig";
 
 export const BasePythonCustomConfigSchema = z.object({
     // Influence dynamic snippets.
@@ -34,6 +34,6 @@ export const BasePythonCustomConfigSchema = z.object({
     include_legacy_wire_tests: z.boolean().optional(),
     inline_request_params: z.boolean().optional(),
     use_api_name_in_package: z.boolean().optional()
-})
+});
 
-export type BasePythonCustomConfigSchema = z.infer<typeof BasePythonCustomConfigSchema>
+export type BasePythonCustomConfigSchema = z.infer<typeof BasePythonCustomConfigSchema>;

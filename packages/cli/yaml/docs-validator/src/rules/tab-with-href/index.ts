@@ -1,54 +1,54 @@
-import { docsYml } from "@fern-api/configuration-loader"
+import { docsYml } from "@fern-api/configuration-loader";
 
-import { Rule, RuleViolation } from "../../Rule"
+import { Rule, RuleViolation } from "../../Rule";
 
 export const TabWithHrefRule: Rule = {
     name: "tab-with-href",
     create: () => {
         return {
             file: async ({ config }) => {
-                const tabs = config.tabs ?? {}
+                const tabs = config.tabs ?? {};
 
                 if (config.navigation == null) {
-                    return []
+                    return [];
                 }
 
-                const ruleViolations: RuleViolation[] = []
+                const ruleViolations: RuleViolation[] = [];
 
                 if (isTabbedNavigationConfig(config.navigation)) {
                     for (const tabItem of config.navigation) {
-                        const tabConfig = tabs[tabItem.tab]
+                        const tabConfig = tabs[tabItem.tab];
                         if (tabConfig == null) {
                             ruleViolations.push({
                                 severity: "fatal",
                                 message: `Tab "${tabItem.tab}" is missing from the tabs configuration.`
-                            })
-                            continue
+                            });
+                            continue;
                         }
 
                         if (tabConfig.href != null && tabItem.layout != null) {
                             ruleViolations.push({
                                 severity: "fatal",
                                 message: `Tab "${tabItem.tab}" has both a href and layout. Only one should be used.`
-                            })
-                            continue
+                            });
+                            continue;
                         }
 
                         if (tabConfig.href == null && tabItem.layout == null) {
                             ruleViolations.push({
                                 severity: "fatal",
                                 message: `Tab "${tabItem.tab}" is missing a href or layout.`
-                            })
-                            continue
+                            });
+                            continue;
                         }
                     }
                 }
 
-                return []
+                return [];
             }
-        }
+        };
     }
-}
+};
 
 function isTabbedNavigationConfig(
     navigationConfig: docsYml.RawSchemas.NavigationConfig
@@ -58,5 +58,5 @@ function isTabbedNavigationConfig(
         navigationConfig.length > 0 &&
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         (navigationConfig[0] as docsYml.RawSchemas.TabbedNavigationItem).tab != null
-    )
+    );
 }

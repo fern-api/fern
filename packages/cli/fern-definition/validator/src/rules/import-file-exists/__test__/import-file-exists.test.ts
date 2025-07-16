@@ -1,7 +1,7 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule"
-import { ImportFileExistsRule } from "../import-file-exists"
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { ImportFileExistsRule } from "../import-file-exists";
 
 describe("import-file-exists", () => {
     it("simple", async () => {
@@ -12,7 +12,7 @@ describe("import-file-exists", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
             )
-        })
+        });
 
         expect(violations).toEqual([
             {
@@ -33,6 +33,6 @@ describe("import-file-exists", () => {
                 relativeFilepath: RelativeFilePath.of("subfolder-b/b.yml"),
                 severity: "fatal"
             }
-        ])
-    })
-})
+        ]);
+    });
+});

@@ -1,39 +1,39 @@
-import { RelativeFilePath, join } from "@fern-api/fs-utils"
-import { go } from "@fern-api/go-ast"
-import { FileGenerator, GoFile } from "@fern-api/go-base"
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
+import { go } from "@fern-api/go-ast";
+import { FileGenerator, GoFile } from "@fern-api/go-base";
 
-import { HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api"
+import { HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
 
-import { SdkCustomConfigSchema } from "../SdkCustomConfig"
-import { SdkGeneratorContext } from "../SdkGeneratorContext"
+import { SdkCustomConfigSchema } from "../SdkCustomConfig";
+import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 export declare namespace RawClientGenerator {
     interface Args {
-        context: SdkGeneratorContext
-        serviceId: ServiceId
-        service: HttpService
-        subpackage: Subpackage | undefined
+        context: SdkGeneratorContext;
+        serviceId: ServiceId;
+        service: HttpService;
+        subpackage: Subpackage | undefined;
     }
 }
 
 export class RawClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema, SdkGeneratorContext> {
-    private serviceId: ServiceId
-    private service: HttpService
-    private subpackage: Subpackage | undefined
+    private serviceId: ServiceId;
+    private service: HttpService;
+    private subpackage: Subpackage | undefined;
 
     constructor({ subpackage, context, serviceId, service }: RawClientGenerator.Args) {
-        super(context)
-        this.serviceId = serviceId
-        this.service = service
-        this.subpackage = subpackage
+        super(context);
+        this.serviceId = serviceId;
+        this.service = service;
+        this.subpackage = subpackage;
     }
 
     public doGenerate(): GoFile {
         const struct = go.struct({
             ...this.getClassReference()
-        })
+        });
 
-        struct.addConstructor(this.getConstructor())
+        struct.addConstructor(this.getConstructor());
 
         struct.addField(
             go.field({
@@ -45,7 +45,7 @@ export class RawClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSch
                 name: "header",
                 type: go.Type.reference(this.context.getNetHttpHeaderTypeReference())
             })
-        )
+        );
 
         for (const endpoint of this.service.endpoints) {
             const methods = this.context.endpointGenerator.generateRaw({
@@ -53,8 +53,8 @@ export class RawClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSch
                 service: this.service,
                 subpackage: this.subpackage,
                 endpoint
-            })
-            struct.addMethod(...methods)
+            });
+            struct.addMethod(...methods);
         }
         return new GoFile({
             node: struct,
@@ -64,11 +64,11 @@ export class RawClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSch
             directory: this.getDirectory(),
             filename: this.context.getRawClientFilename(this.subpackage),
             customConfig: this.context.customConfig
-        })
+        });
     }
 
     protected getFilepath(): RelativeFilePath {
-        return join(this.getDirectory(), RelativeFilePath.of(this.context.getRawClientFilename()))
+        return join(this.getDirectory(), RelativeFilePath.of(this.context.getRawClientFilename()));
     }
 
     private getConstructor(): go.Struct.Constructor {
@@ -80,7 +80,7 @@ export class RawClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSch
                 })
             ],
             body: go.codeblock((writer) => {
-                writer.write("return ")
+                writer.write("return ");
                 writer.writeNode(
                     go.TypeInstantiation.structPointer({
                         typeReference: this.getClassReference(),
@@ -124,34 +124,34 @@ export class RawClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSch
                             }
                         ]
                     })
-                )
+                );
             })
-        }
+        };
     }
 
     private getClassReference(): go.TypeReference {
         return this.subpackage != null
             ? this.context.getRawClientClassReference({ service: this.service, subpackage: this.subpackage })
-            : this.context.getRootRawClientClassReference()
+            : this.context.getRootRawClientClassReference();
     }
 
     private getPackageName(): string {
         return this.subpackage != null
             ? this.context.getServiceClientPackageName({ service: this.service, subpackage: this.subpackage })
-            : this.context.getRootClientPackageName()
+            : this.context.getRootClientPackageName();
     }
 
     private getDirectory(): RelativeFilePath {
         return this.subpackage != null
             ? this.context.getServiceClientFileLocation({ service: this.service, subpackage: this.subpackage })
                   .directory
-            : this.context.getRootClientDirectory()
+            : this.context.getRootClientDirectory();
     }
 
     private getImportPath(): string {
         return this.subpackage != null
             ? this.context.getServiceClientFileLocation({ service: this.service, subpackage: this.subpackage })
                   .importPath
-            : this.context.getRootClientImportPath()
+            : this.context.getRootClientImportPath();
     }
 }

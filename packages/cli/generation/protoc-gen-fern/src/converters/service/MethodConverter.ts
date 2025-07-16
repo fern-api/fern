@@ -1,4 +1,4 @@
-import { MethodDescriptorProto } from "@bufbuild/protobuf/wkt"
+import { MethodDescriptorProto } from "@bufbuild/protobuf/wkt";
 
 import {
     HttpEndpoint,
@@ -10,55 +10,55 @@ import {
     JsonResponse,
     ProtobufMethodType,
     V2HttpEndpointResponseBody
-} from "@fern-api/ir-sdk"
-import { AbstractConverter } from "@fern-api/v2-importer-commons"
+} from "@fern-api/ir-sdk";
+import { AbstractConverter } from "@fern-api/v2-importer-commons";
 
-import { ProtofileConverterContext } from "../ProtofileConverterContext"
-import { ExampleConverter } from "../message/ExampleConverter"
+import { ProtofileConverterContext } from "../ProtofileConverterContext";
+import { ExampleConverter } from "../message/ExampleConverter";
 
 export declare namespace MethodConverter {
     export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {
-        operation: MethodDescriptorProto
-        serviceName: string
-        sourceCodeInfoPath: number[]
+        operation: MethodDescriptorProto;
+        serviceName: string;
+        sourceCodeInfoPath: number[];
     }
 
     export interface Output {
-        group: string[]
-        endpoint: HttpEndpoint
+        group: string[];
+        endpoint: HttpEndpoint;
     }
 
     export interface ConvertedRequestBodyOutput {
-        requestBody: HttpRequestBody | undefined
-        requestExample: ExampleConverter.Output | undefined
+        requestBody: HttpRequestBody | undefined;
+        requestExample: ExampleConverter.Output | undefined;
     }
 
     export interface ConvertedResponseBodyOutput {
-        responseBody: HttpResponse | undefined
-        responseExample: ExampleConverter.Output | undefined
+        responseBody: HttpResponse | undefined;
+        responseExample: ExampleConverter.Output | undefined;
     }
 
-    type BaseEndpoint = Omit<HttpEndpoint, "requestBody" | "response" | "name" | "docs" | "id" | "v2Examples">
+    type BaseEndpoint = Omit<HttpEndpoint, "requestBody" | "response" | "name" | "docs" | "id" | "v2Examples">;
 }
 
 export class MethodConverter extends AbstractConverter<ProtofileConverterContext, MethodConverter.Output> {
-    private readonly operation: MethodDescriptorProto
-    private readonly serviceName: string
-    private readonly sourceCodeInfoPath: number[]
+    private readonly operation: MethodDescriptorProto;
+    private readonly serviceName: string;
+    private readonly sourceCodeInfoPath: number[];
     constructor({ context, breadcrumbs, operation, serviceName, sourceCodeInfoPath }: MethodConverter.Args) {
-        super({ context, breadcrumbs })
-        this.operation = operation
-        this.serviceName = serviceName
-        this.sourceCodeInfoPath = sourceCodeInfoPath
+        super({ context, breadcrumbs });
+        this.operation = operation;
+        this.serviceName = serviceName;
+        this.sourceCodeInfoPath = sourceCodeInfoPath;
     }
 
     public convert(): MethodConverter.Output | undefined {
         // TODO: convert method by parsing name, request type, and response type
 
-        const packageName = this.context.spec.package
+        const packageName = this.context.spec.package;
 
-        const convertedRequestBody = this.convertRequestBody()
-        const convertedResponseBody = this.convertResponseBody()
+        const convertedRequestBody = this.convertRequestBody();
+        const convertedResponseBody = this.convertResponseBody();
 
         return {
             group: [packageName, this.serviceName],
@@ -135,27 +135,27 @@ export class MethodConverter extends AbstractConverter<ProtofileConverterContext
                 }),
                 audiences: []
             }
-        }
+        };
     }
 
     private getGrpcMethodType(): ProtobufMethodType {
         if (this.operation.clientStreaming && this.operation.serverStreaming) {
-            return ProtobufMethodType.BidirectionalStream
+            return ProtobufMethodType.BidirectionalStream;
         }
         if (this.operation.clientStreaming) {
-            return ProtobufMethodType.ClientStream
+            return ProtobufMethodType.ClientStream;
         }
         if (this.operation.serverStreaming) {
-            return ProtobufMethodType.ServerStream
+            return ProtobufMethodType.ServerStream;
         }
-        return ProtobufMethodType.Unary
+        return ProtobufMethodType.Unary;
     }
 
     private convertRequestBody(): MethodConverter.ConvertedRequestBodyOutput | undefined {
         const requestBodyType = this.context.convertGrpcReferenceToTypeReference({
             typeName: this.operation.inputType,
             displayNameOverride: this.context.maybeRemoveGrpcPackagePrefix(this.operation.inputType)
-        })
+        });
         if (requestBodyType.ok) {
             return {
                 requestBody: HttpRequestBody.reference({
@@ -165,19 +165,19 @@ export class MethodConverter extends AbstractConverter<ProtofileConverterContext
                     v2Examples: undefined
                 }),
                 requestExample: undefined
-            }
+            };
         }
         return {
             requestBody: undefined,
             requestExample: undefined
-        }
+        };
     }
 
     private convertResponseBody(): MethodConverter.ConvertedResponseBodyOutput | undefined {
         const responseBodyType = this.context.convertGrpcReferenceToTypeReference({
             typeName: this.operation.outputType,
             displayNameOverride: this.context.maybeRemoveGrpcPackagePrefix(this.operation.outputType)
-        })
+        });
 
         if (responseBodyType.ok) {
             return {
@@ -192,12 +192,12 @@ export class MethodConverter extends AbstractConverter<ProtofileConverterContext
                     statusCode: undefined
                 },
                 responseExample: undefined
-            }
+            };
         }
 
         return {
             responseBody: undefined,
             responseExample: undefined
-        }
+        };
     }
 }

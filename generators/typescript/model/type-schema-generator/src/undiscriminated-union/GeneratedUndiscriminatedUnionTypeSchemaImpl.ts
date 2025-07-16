@@ -1,22 +1,22 @@
-import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator"
-import { Zurg, getTextOfTsNode } from "@fern-typescript/commons"
-import { GeneratedUndiscriminatedUnionTypeSchema, ModelContext } from "@fern-typescript/contexts"
-import { ModuleDeclaration, ts } from "ts-morph"
+import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
+import { Zurg, getTextOfTsNode } from "@fern-typescript/commons";
+import { GeneratedUndiscriminatedUnionTypeSchema, ModelContext } from "@fern-typescript/contexts";
+import { ModuleDeclaration, ts } from "ts-morph";
 
-import { UndiscriminatedUnionTypeDeclaration } from "@fern-fern/ir-sdk/api"
+import { UndiscriminatedUnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 
-import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema"
+import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema";
 
 export class GeneratedUndiscriminatedUnionTypeSchemaImpl<Context extends ModelContext>
     extends AbstractGeneratedTypeSchema<UndiscriminatedUnionTypeDeclaration, Context>
     implements GeneratedUndiscriminatedUnionTypeSchema<Context>
 {
-    public readonly type = "undiscriminatedUnion"
+    public readonly type = "undiscriminatedUnion";
 
     protected override buildSchema(context: Context): Zurg.Schema {
         return context.coreUtilities.zurg.undiscriminatedUnion(
             this.shape.members.map((member) => context.typeSchema.getSchemaOfTypeReference(member.type))
-        )
+        );
     }
 
     protected override generateRawTypeDeclaration(context: Context, module: ModuleDeclaration): void {
@@ -28,6 +28,6 @@ export class GeneratedUndiscriminatedUnionTypeSchemaImpl<Context extends ModelCo
                 )
             ),
             isExported: true
-        })
+        });
     }
 }

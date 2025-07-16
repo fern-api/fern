@@ -1,4 +1,4 @@
 export interface GroupNameAndLocation {
-    group?: string[]
-    method: string
+    group?: string[];
+    method: string;
 }

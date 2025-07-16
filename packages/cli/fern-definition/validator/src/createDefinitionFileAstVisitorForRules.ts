@@ -1,9 +1,9 @@
-import { DefinitionFileSchema, NodePath } from "@fern-api/fern-definition-schema"
-import { RelativeFilePath } from "@fern-api/fs-utils"
+import { DefinitionFileSchema, NodePath } from "@fern-api/fern-definition-schema";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 
-import { RuleVisitors } from "./Rule"
-import { ValidationViolation } from "./ValidationViolation"
-import { DefinitionFileAstNodeTypes, DefinitionFileAstNodeVisitor, DefinitionFileAstVisitor } from "./ast"
+import { RuleVisitors } from "./Rule";
+import { ValidationViolation } from "./ValidationViolation";
+import { DefinitionFileAstNodeTypes, DefinitionFileAstNodeVisitor, DefinitionFileAstVisitor } from "./ast";
 
 export function createDefinitionFileAstVisitorForRules({
     relativeFilepath,
@@ -11,19 +11,19 @@ export function createDefinitionFileAstVisitorForRules({
     allRuleVisitors,
     addViolations
 }: {
-    relativeFilepath: RelativeFilePath
-    contents: DefinitionFileSchema
-    allRuleVisitors: RuleVisitors[]
-    addViolations: (newViolations: ValidationViolation[]) => void
+    relativeFilepath: RelativeFilePath;
+    contents: DefinitionFileSchema;
+    allRuleVisitors: RuleVisitors[];
+    addViolations: (newViolations: ValidationViolation[]) => void;
 }): DefinitionFileAstVisitor {
     function createAstNodeVisitor<K extends keyof DefinitionFileAstNodeTypes>(
         nodeType: K
     ): Record<K, DefinitionFileAstNodeVisitor<K>> {
         const visit: DefinitionFileAstNodeVisitor<K> = (node: DefinitionFileAstNodeTypes[K], nodePath: NodePath) => {
             for (const ruleVisitors of allRuleVisitors) {
-                const visitFromRule = ruleVisitors.definitionFile?.[nodeType]
+                const visitFromRule = ruleVisitors.definitionFile?.[nodeType];
                 if (visitFromRule != null) {
-                    const ruleViolations = visitFromRule(node, { relativeFilepath, contents })
+                    const ruleViolations = visitFromRule(node, { relativeFilepath, contents });
                     addViolations(
                         ruleViolations.map((violation) => ({
                             severity: violation.severity,
@@ -31,12 +31,12 @@ export function createDefinitionFileAstVisitorForRules({
                             nodePath,
                             message: violation.message
                         }))
-                    )
+                    );
                 }
             }
-        }
+        };
 
-        return { [nodeType]: visit } as Record<K, DefinitionFileAstNodeVisitor<K>>
+        return { [nodeType]: visit } as Record<K, DefinitionFileAstNodeVisitor<K>>;
     }
 
     return {
@@ -67,5 +67,5 @@ export function createDefinitionFileAstVisitorForRules({
         ...createAstNodeVisitor("serviceBaseUrl"),
         ...createAstNodeVisitor("endpointBaseUrl"),
         ...createAstNodeVisitor("exampleError")
-    }
+    };
 }

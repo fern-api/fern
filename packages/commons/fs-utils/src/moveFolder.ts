@@ -1,15 +1,15 @@
-import { mkdir, rename } from "fs/promises"
+import { mkdir, rename } from "fs/promises";
 
-import { AbsoluteFilePath } from "./AbsoluteFilePath"
-import { RelativeFilePath } from "./RelativeFilePath"
-import { dirname } from "./dirname"
-import { doesPathExist } from "./doesPathExist"
-import { FileOrDirectory, getDirectoryContents } from "./getDirectoryContents"
-import { join } from "./join"
+import { AbsoluteFilePath } from "./AbsoluteFilePath";
+import { RelativeFilePath } from "./RelativeFilePath";
+import { dirname } from "./dirname";
+import { doesPathExist } from "./doesPathExist";
+import { FileOrDirectory, getDirectoryContents } from "./getDirectoryContents";
+import { join } from "./join";
 
 export async function moveFolder({ src, dest }: { src: AbsoluteFilePath; dest: AbsoluteFilePath }): Promise<void> {
-    const contents = await getDirectoryContents(src)
-    await moveDirectoryContentsFromFolder({ src, dest, contents })
+    const contents = await getDirectoryContents(src);
+    await moveDirectoryContentsFromFolder({ src, dest, contents });
 }
 
 async function moveDirectoryContentsFromFolder({
@@ -17,26 +17,26 @@ async function moveDirectoryContentsFromFolder({
     dest,
     contents
 }: {
-    src: AbsoluteFilePath
-    dest: AbsoluteFilePath
-    contents: FileOrDirectory[]
+    src: AbsoluteFilePath;
+    dest: AbsoluteFilePath;
+    contents: FileOrDirectory[];
 }): Promise<void> {
     for (const content of contents) {
         if (content.type === "file") {
-            const originalPath = join(src, RelativeFilePath.of(content.name))
-            const destinationPath = join(dest, RelativeFilePath.of(content.name))
+            const originalPath = join(src, RelativeFilePath.of(content.name));
+            const destinationPath = join(dest, RelativeFilePath.of(content.name));
 
-            const destinationParentDir = dirname(destinationPath)
+            const destinationParentDir = dirname(destinationPath);
             if (!(await doesPathExist(destinationParentDir))) {
-                await mkdir(destinationParentDir, { recursive: true })
+                await mkdir(destinationParentDir, { recursive: true });
             }
-            await rename(originalPath, destinationPath)
+            await rename(originalPath, destinationPath);
         } else {
             await moveDirectoryContentsFromFolder({
                 src: join(src, RelativeFilePath.of(content.name)),
                 dest: join(dest, RelativeFilePath.of(content.name)),
                 contents: content.contents
-            })
+            });
         }
     }
 }

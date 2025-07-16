@@ -1,8 +1,8 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { ValidationViolation } from "../../../ValidationViolation"
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule"
-import { ValidExampleTypeRule } from "../valid-example-type"
+import { ValidationViolation } from "../../../ValidationViolation";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { ValidExampleTypeRule } from "../valid-example-type";
 
 describe("valid-example-type", () => {
     it("simple", async () => {
@@ -13,7 +13,7 @@ describe("valid-example-type", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
             )
-        })
+        });
 
         const expectedViolations: ValidationViolation[] = [
             // alias.yml
@@ -329,8 +329,8 @@ describe("valid-example-type", () => {
                 message: 'Unexpected property "randomProperty"',
                 nodePath: ["types", "Animal", { key: "examples", arrayIndex: 9 }]
             }
-        ]
+        ];
 
-        expect(violations).toEqual(expectedViolations)
-    })
-})
+        expect(violations).toEqual(expectedViolations);
+    });
+});

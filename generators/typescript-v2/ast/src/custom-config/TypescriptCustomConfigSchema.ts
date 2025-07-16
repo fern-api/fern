@@ -1,4 +1,4 @@
-import { z } from "zod"
+import { z } from "zod";
 
 // The full set of configuration options supported by the TypeScript SDK generator.
 export const TypescriptCustomConfigSchema = z.strictObject({
@@ -53,6 +53,6 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     // deprecated
     timeoutInSeconds: z.optional(z.union([z.literal("infinity"), z.number()])),
     includeApiReference: z.optional(z.boolean())
-})
+});
 
-export type TypescriptCustomConfigSchema = z.infer<typeof TypescriptCustomConfigSchema>
+export type TypescriptCustomConfigSchema = z.infer<typeof TypescriptCustomConfigSchema>;

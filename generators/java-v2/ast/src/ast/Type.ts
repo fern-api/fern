@@ -1,8 +1,8 @@
-import { assertNever } from "@fern-api/core-utils"
+import { assertNever } from "@fern-api/core-utils";
 
-import { ClassReference } from "./ClassReference"
-import { AstNode } from "./core/AstNode"
-import { Writer } from "./core/Writer"
+import { ClassReference } from "./ClassReference";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
 
 type InternalType =
     | Array
@@ -26,202 +26,202 @@ type InternalType =
     | Set
     | String_
     | UUID
-    | Void
+    | Void;
 
 interface Array {
-    type: "array"
-    value: Type
+    type: "array";
+    value: Type;
 }
 
 interface BigInteger {
-    type: "bigInteger"
+    type: "bigInteger";
 }
 
 interface Boolean_ {
-    type: "boolean"
+    type: "boolean";
 }
 
 interface Bytes {
-    type: "bytes"
+    type: "bytes";
 }
 
 interface Date {
-    type: "date"
+    type: "date";
 }
 
 interface DateTime {
-    type: "dateTime"
+    type: "dateTime";
 }
 
 interface Double {
-    type: "double"
+    type: "double";
 }
 
 interface Float {
-    type: "float"
+    type: "float";
 }
 
 interface Generic {
-    type: "generic"
-    value: ClassReference
-    parameters: Type[]
+    type: "generic";
+    value: ClassReference;
+    parameters: Type[];
 }
 
 interface InputStream {
-    type: "inputStream"
+    type: "inputStream";
 }
 
 interface Integer {
-    type: "integer"
+    type: "integer";
 }
 
 interface Iterable {
-    type: "iterable"
-    value: Type
+    type: "iterable";
+    value: Type;
 }
 
 interface List {
-    type: "list"
-    value: Type
+    type: "list";
+    value: Type;
 }
 
 interface Long {
-    type: "long"
+    type: "long";
 }
 
 interface Map {
-    type: "map"
-    keyType: Type
-    valueType: Type
+    type: "map";
+    keyType: Type;
+    valueType: Type;
 }
 
 interface Object_ {
-    type: "object"
+    type: "object";
 }
 
 interface Optional {
-    type: "optional"
-    value: Type
+    type: "optional";
+    value: Type;
 }
 
 interface Reference {
-    type: "reference"
-    value: ClassReference
+    type: "reference";
+    value: ClassReference;
 }
 
 interface Set {
-    type: "set"
-    value: Type
+    type: "set";
+    value: Type;
 }
 
 interface String_ {
-    type: "string"
+    type: "string";
 }
 
 interface UUID {
-    type: "uuid"
+    type: "uuid";
 }
 
 interface Void {
-    type: "void"
+    type: "void";
 }
 
 export class Type extends AstNode {
     private constructor(public readonly internalType: InternalType) {
-        super()
+        super();
     }
 
     // TODO: Add unboxed variants for primitive types
     public write(writer: Writer): void {
         switch (this.internalType.type) {
             case "array":
-                writer.writeNode(this.internalType.value)
-                writer.write("[]")
-                break
+                writer.writeNode(this.internalType.value);
+                writer.write("[]");
+                break;
             case "bigInteger":
-                writer.writeNode(BigIntegerClassReference)
-                break
+                writer.writeNode(BigIntegerClassReference);
+                break;
             case "boolean":
-                writer.write("Boolean")
-                break
+                writer.write("Boolean");
+                break;
             case "bytes":
-                writer.write("byte[]")
-                break
+                writer.write("byte[]");
+                break;
             case "date":
-                writer.write("String")
-                break
+                writer.write("String");
+                break;
             case "dateTime":
-                writer.writeNode(OffsetDateTimeClassReference)
-                break
+                writer.writeNode(OffsetDateTimeClassReference);
+                break;
             case "double":
-                writer.write("Double")
-                break
+                writer.write("Double");
+                break;
             case "float":
-                writer.write("Float")
-                break
+                writer.write("Float");
+                break;
             case "generic":
-                writer.writeNode(this.internalType.value)
-                writer.write("<")
+                writer.writeNode(this.internalType.value);
+                writer.write("<");
                 for (const [index, parameter] of this.internalType.parameters.entries()) {
-                    writer.writeNode(parameter)
+                    writer.writeNode(parameter);
                     if (index < this.internalType.parameters.length - 1) {
-                        writer.write(", ")
+                        writer.write(", ");
                     }
                 }
-                writer.write(">")
-                break
+                writer.write(">");
+                break;
             case "inputStream":
-                writer.writeNode(InputStreamClassReference)
-                break
+                writer.writeNode(InputStreamClassReference);
+                break;
             case "integer":
-                writer.write("Integer")
-                break
+                writer.write("Integer");
+                break;
             case "iterable":
-                this.writeIterable({ writer, iterable: this.internalType })
-                break
+                this.writeIterable({ writer, iterable: this.internalType });
+                break;
             case "list": {
-                this.writeList({ writer, list: this.internalType })
-                break
+                this.writeList({ writer, list: this.internalType });
+                break;
             }
             case "long": {
-                writer.write("Long")
-                break
+                writer.write("Long");
+                break;
             }
             case "map": {
-                this.writeMap({ writer, map: this.internalType })
-                break
+                this.writeMap({ writer, map: this.internalType });
+                break;
             }
             case "object": {
-                writer.write("Object")
-                break
+                writer.write("Object");
+                break;
             }
             case "optional": {
-                this.writeOptional({ writer, optional: this.internalType })
-                break
+                this.writeOptional({ writer, optional: this.internalType });
+                break;
             }
             case "reference":
-                writer.writeNode(this.internalType.value)
-                break
+                writer.writeNode(this.internalType.value);
+                break;
             case "set": {
-                this.writeSet({ writer, set: this.internalType })
-                break
+                this.writeSet({ writer, set: this.internalType });
+                break;
             }
             case "string":
-                writer.write("String")
-                break
+                writer.write("String");
+                break;
             case "uuid":
-                writer.writeNode(UUIDClassReference)
-                break
+                writer.writeNode(UUIDClassReference);
+                break;
             case "void":
-                writer.write("Void")
-                break
+                writer.write("Void");
+                break;
             default:
-                assertNever(this.internalType)
+                assertNever(this.internalType);
         }
     }
 
     public isOptional(): boolean {
-        return this.internalType.type === "optional"
+        return this.internalType.type === "optional";
     }
 
     /* Static factory methods for creating a Type */
@@ -229,68 +229,68 @@ export class Type extends AstNode {
         return new this({
             type: "array",
             value
-        })
+        });
     }
 
     public static bigInteger(): Type {
         return new this({
             type: "bigInteger"
-        })
+        });
     }
 
     public static boolean(): Type {
         return new this({
             type: "boolean"
-        })
+        });
     }
 
     public static bytes(): Type {
         return new this({
             type: "bytes"
-        })
+        });
     }
 
     public static date(): Type {
         return new this({
             type: "date"
-        })
+        });
     }
 
     public static dateTime(): Type {
         return new this({
             type: "dateTime"
-        })
+        });
     }
 
     public static double(): Type {
         return new this({
             type: "double"
-        })
+        });
     }
 
     public static float(): Type {
         return new this({
             type: "float"
-        })
+        });
     }
 
     public static integer(): Type {
         return new this({
             type: "integer"
-        })
+        });
     }
 
     public static list(value: Type): Type {
         return new this({
             type: "list",
             value
-        })
+        });
     }
 
     public static long(): Type {
         return new this({
             type: "long"
-        })
+        });
     }
 
     public static map(keyType: Type, valueType: Type): Type {
@@ -298,31 +298,31 @@ export class Type extends AstNode {
             type: "map",
             keyType,
             valueType
-        })
+        });
     }
 
     public static object(): Type {
         return new this({
             type: "object"
-        })
+        });
     }
 
     public static optional(value: Type): Type {
         // Avoids double optional.
         if (this.isAlreadyOptional(value)) {
-            return value
+            return value;
         }
         return new this({
             type: "optional",
             value
-        })
+        });
     }
 
     public static reference(value: ClassReference): Type {
         return new this({
             type: "reference",
             value
-        })
+        });
     }
 
     public static generic(value: ClassReference, parameters: Type[]): Type {
@@ -330,135 +330,135 @@ export class Type extends AstNode {
             type: "generic",
             value,
             parameters
-        })
+        });
     }
 
     public static set(value: Type): Type {
         return new this({
             type: "set",
             value
-        })
+        });
     }
 
     public static string(): Type {
         return new this({
             type: "string"
-        })
+        });
     }
 
     public static uuid(): Type {
         return new this({
             type: "uuid"
-        })
+        });
     }
 
     public static void(): Type {
         return new this({
             type: "void"
-        })
+        });
     }
 
     public static iterable(value: Type): Type {
         return new this({
             type: "iterable",
             value
-        })
+        });
     }
 
     public static inputStream(): Type {
         return new this({
             type: "inputStream"
-        })
+        });
     }
 
     private writeList({ writer, list }: { writer: Writer; list: List }): void {
-        writer.writeNode(ListClassReference)
-        writer.write("<")
-        list.value.write(writer)
-        writer.write(">")
+        writer.writeNode(ListClassReference);
+        writer.write("<");
+        list.value.write(writer);
+        writer.write(">");
     }
 
     private writeMap({ writer, map }: { writer: Writer; map: Map }): void {
-        writer.writeNode(MapClassReference)
-        writer.write("<")
-        map.keyType.write(writer)
-        writer.write(", ")
-        map.valueType.write(writer)
-        writer.write(">")
+        writer.writeNode(MapClassReference);
+        writer.write("<");
+        map.keyType.write(writer);
+        writer.write(", ");
+        map.valueType.write(writer);
+        writer.write(">");
     }
 
     private writeOptional({ writer, optional }: { writer: Writer; optional: Optional }): void {
-        writer.writeNode(OptionalClassReference)
-        writer.write("<")
-        optional.value.write(writer)
-        writer.write(">")
+        writer.writeNode(OptionalClassReference);
+        writer.write("<");
+        optional.value.write(writer);
+        writer.write(">");
     }
 
     private writeIterable({ writer, iterable }: { writer: Writer; iterable: Iterable }): void {
-        writer.writeNode(OptionalClassReference)
-        writer.write("<")
-        iterable.value.write(writer)
-        writer.write(">")
+        writer.writeNode(OptionalClassReference);
+        writer.write("<");
+        iterable.value.write(writer);
+        writer.write(">");
     }
 
     private writeSet({ writer, set }: { writer: Writer; set: Set }): void {
-        writer.writeNode(SetClassReference)
-        writer.write("<")
-        set.value.write(writer)
-        writer.write(">")
+        writer.writeNode(SetClassReference);
+        writer.write("<");
+        set.value.write(writer);
+        writer.write(">");
     }
 
     private static isAlreadyOptional(value: Type) {
-        return value.internalType.type === "optional"
+        return value.internalType.type === "optional";
     }
 }
 
 export const ArraysClassReference = new ClassReference({
     name: "Arrays",
     packageName: "java.util"
-})
+});
 
 export const BigIntegerClassReference = new ClassReference({
     name: "BigInteger",
     packageName: "java.math"
-})
+});
 
 export const HashMapClassReference = new ClassReference({
     name: "HashMap",
     packageName: "java.util"
-})
+});
 
 export const ListClassReference = new ClassReference({
     name: "List",
     packageName: "java.util"
-})
+});
 
 export const MapClassReference = new ClassReference({
     name: "Map",
     packageName: "java.util"
-})
+});
 
 export const OffsetDateTimeClassReference = new ClassReference({
     name: "OffsetDateTime",
     packageName: "java.time"
-})
+});
 
 export const OptionalClassReference = new ClassReference({
     name: "Optional",
     packageName: "java.util"
-})
+});
 
 export const SetClassReference = new ClassReference({
     name: "Set",
     packageName: "java.util"
-})
+});
 
 export const UUIDClassReference = new ClassReference({
     name: "UUID",
     packageName: "java.util"
-})
+});
 
 export const InputStreamClassReference = new ClassReference({
     name: "InputStream",
     packageName: "java.io"
-})
+});

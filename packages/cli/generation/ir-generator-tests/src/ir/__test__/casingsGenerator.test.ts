@@ -1,12 +1,12 @@
-import { constructCasingsGenerator } from "@fern-api/casings-generator"
-import { Name } from "@fern-api/ir-sdk"
+import { constructCasingsGenerator } from "@fern-api/casings-generator";
+import { Name } from "@fern-api/ir-sdk";
 
 describe("casingsGenerator", () => {
     const casingsGenerator = constructCasingsGenerator({
         generationLanguage: undefined,
         keywords: undefined,
         smartCasing: true
-    })
+    });
     it("simple", () => {
         const expected: Name = {
             originalName: "hello",
@@ -26,10 +26,10 @@ describe("casingsGenerator", () => {
                 safeName: "HELLO",
                 unsafeName: "HELLO"
             }
-        }
-        const actual = casingsGenerator.generateName(expected.originalName)
-        expect(actual).toEqual(expected)
-    })
+        };
+        const actual = casingsGenerator.generateName(expected.originalName);
+        expect(actual).toEqual(expected);
+    });
 
     it("multiple", () => {
         const expected: Name = {
@@ -50,10 +50,10 @@ describe("casingsGenerator", () => {
                 safeName: "HELLO_WORLD",
                 unsafeName: "HELLO_WORLD"
             }
-        }
-        const actual = casingsGenerator.generateName(expected.originalName)
-        expect(actual).toEqual(expected)
-    })
+        };
+        const actual = casingsGenerator.generateName(expected.originalName);
+        expect(actual).toEqual(expected);
+    });
 
     it("single initialism", () => {
         const expected: Name = {
@@ -74,10 +74,10 @@ describe("casingsGenerator", () => {
                 safeName: "API",
                 unsafeName: "API"
             }
-        }
-        const actual = casingsGenerator.generateName(expected.originalName)
-        expect(actual).toEqual(expected)
-    })
+        };
+        const actual = casingsGenerator.generateName(expected.originalName);
+        expect(actual).toEqual(expected);
+    });
 
     it("multiple with single initialism", () => {
         const expected: Name = {
@@ -98,10 +98,10 @@ describe("casingsGenerator", () => {
                 safeName: "USER_API",
                 unsafeName: "USER_API"
             }
-        }
-        const actual = casingsGenerator.generateName(expected.originalName)
-        expect(actual).toEqual(expected)
-    })
+        };
+        const actual = casingsGenerator.generateName(expected.originalName);
+        expect(actual).toEqual(expected);
+    });
 
     it("adjacent initialism", () => {
         const expected: Name = {
@@ -122,10 +122,10 @@ describe("casingsGenerator", () => {
                 safeName: "API_URL",
                 unsafeName: "API_URL"
             }
-        }
-        const actual = casingsGenerator.generateName(expected.originalName)
-        expect(actual).toEqual(expected)
-    })
+        };
+        const actual = casingsGenerator.generateName(expected.originalName);
+        expect(actual).toEqual(expected);
+    });
 
     it("adjacent plural initialism", () => {
         const expected: Name = {
@@ -146,10 +146,10 @@ describe("casingsGenerator", () => {
                 safeName: "API_URLS",
                 unsafeName: "API_URLS"
             }
-        }
-        const actual = casingsGenerator.generateName(expected.originalName)
-        expect(actual).toEqual(expected)
-    })
+        };
+        const actual = casingsGenerator.generateName(expected.originalName);
+        expect(actual).toEqual(expected);
+    });
 
     it("non-adjacent initialism", () => {
         const expected: Name = {
@@ -170,10 +170,10 @@ describe("casingsGenerator", () => {
                 safeName: "GET_URL_AS_JSON",
                 unsafeName: "GET_URL_AS_JSON"
             }
-        }
-        const actual = casingsGenerator.generateName(expected.originalName)
-        expect(actual).toEqual(expected)
-    })
+        };
+        const actual = casingsGenerator.generateName(expected.originalName);
+        expect(actual).toEqual(expected);
+    });
 
     it("plural initialism", () => {
         const expected: Name = {
@@ -194,10 +194,10 @@ describe("casingsGenerator", () => {
                 safeName: "GET_USER_IDS",
                 unsafeName: "GET_USER_IDS"
             }
-        }
-        const actual = casingsGenerator.generateName(expected.originalName)
-        expect(actual).toEqual(expected)
-    })
+        };
+        const actual = casingsGenerator.generateName(expected.originalName);
+        expect(actual).toEqual(expected);
+    });
 
     it("alphanumeric snake casing", () => {
         const expected: Name = {
@@ -218,10 +218,10 @@ describe("casingsGenerator", () => {
                 safeName: "APPLICATION_V1",
                 unsafeName: "APPLICATION_V1"
             }
-        }
-        const actual = casingsGenerator.generateName(expected.originalName)
-        expect(actual).toEqual(expected)
-    })
+        };
+        const actual = casingsGenerator.generateName(expected.originalName);
+        expect(actual).toEqual(expected);
+    });
 
     it("saml", () => {
         const expected: Name = {
@@ -242,8 +242,8 @@ describe("casingsGenerator", () => {
                 safeName: "GET_SAML_CODE_REQUEST",
                 unsafeName: "GET_SAML_CODE_REQUEST"
             }
-        }
-        const actual = casingsGenerator.generateName(expected.originalName)
-        expect(actual).toEqual(expected)
-    })
-})
+        };
+        const actual = casingsGenerator.generateName(expected.originalName);
+        expect(actual).toEqual(expected);
+    });
+});

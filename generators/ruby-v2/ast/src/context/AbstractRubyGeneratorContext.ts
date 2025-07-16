@@ -2,11 +2,11 @@ import {
     AbstractGeneratorContext,
     FernGeneratorExec,
     GeneratorNotificationService
-} from "@fern-api/browser-compatible-base-generator"
+} from "@fern-api/browser-compatible-base-generator";
 
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api"
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
-import { BaseRubyCustomConfigSchema } from "../custom-config/BaseRubyCustomConfigSchema"
+import { BaseRubyCustomConfigSchema } from "../custom-config/BaseRubyCustomConfigSchema";
 
 export abstract class AbstractRubyGeneratorContext<
     CustomConfig extends BaseRubyCustomConfigSchema
@@ -17,6 +17,6 @@ export abstract class AbstractRubyGeneratorContext<
         public readonly customConfig: CustomConfig,
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
-        super(config, generatorNotificationService)
+        super(config, generatorNotificationService);
     }
 }

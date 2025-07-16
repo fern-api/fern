@@ -1,5 +1,5 @@
-import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator"
-import { BaseGoCustomConfigSchema } from "@fern-api/go-ast"
+import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
+import { BaseGoCustomConfigSchema } from "@fern-api/go-ast";
 
 const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
     dryRun: false,
@@ -22,12 +22,12 @@ const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
         union: "v1",
         inlineFileProperties: true
     } as BaseGoCustomConfigSchema
-}
+};
 
 export function buildGeneratorConfig({
     customConfig
 }: {
-    customConfig?: Partial<BaseGoCustomConfigSchema>
+    customConfig?: Partial<BaseGoCustomConfigSchema>;
 } = {}): FernGeneratorExec.GeneratorConfig {
     return {
         ...DEFAULT_CONFIG,
@@ -35,5 +35,5 @@ export function buildGeneratorConfig({
             ...(DEFAULT_CONFIG.customConfig as BaseGoCustomConfigSchema),
             ...customConfig
         }
-    }
+    };
 }

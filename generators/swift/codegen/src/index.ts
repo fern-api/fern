@@ -1,2 +1,2 @@
-export * as swift from "./swift"
-export * from "./custom-config"
+export * as swift from "./swift";
+export * from "./custom-config";

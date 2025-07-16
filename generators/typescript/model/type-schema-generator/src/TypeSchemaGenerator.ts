@@ -1,4 +1,4 @@
-import { Reference } from "@fern-typescript/commons"
+import { Reference } from "@fern-typescript/commons";
 import {
     GeneratedAliasTypeSchema,
     GeneratedEnumTypeSchema,
@@ -7,8 +7,8 @@ import {
     GeneratedTypeSchema,
     GeneratedUnionTypeSchema,
     ModelContext
-} from "@fern-typescript/contexts"
-import { ts } from "ts-morph"
+} from "@fern-typescript/contexts";
+import { ts } from "ts-morph";
 
 import {
     AliasTypeDeclaration,
@@ -17,38 +17,38 @@ import {
     Type,
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
-} from "@fern-fern/ir-sdk/api"
+} from "@fern-fern/ir-sdk/api";
 
-import { GeneratedAliasTypeSchemaImpl } from "./alias/GeneratedAliasTypeSchemaImpl"
-import { GeneratedEnumTypeSchemaImpl } from "./enum/GeneratedEnumTypeSchemaImpl"
-import { GeneratedObjectTypeSchemaImpl } from "./object/GeneratedObjectTypeSchemaImpl"
-import { GeneratedUndiscriminatedUnionTypeSchemaImpl } from "./undiscriminated-union/GeneratedUndiscriminatedUnionTypeSchemaImpl"
-import { GeneratedUnionTypeSchemaImpl } from "./union/GeneratedUnionTypeSchemaImpl"
+import { GeneratedAliasTypeSchemaImpl } from "./alias/GeneratedAliasTypeSchemaImpl";
+import { GeneratedEnumTypeSchemaImpl } from "./enum/GeneratedEnumTypeSchemaImpl";
+import { GeneratedObjectTypeSchemaImpl } from "./object/GeneratedObjectTypeSchemaImpl";
+import { GeneratedUndiscriminatedUnionTypeSchemaImpl } from "./undiscriminated-union/GeneratedUndiscriminatedUnionTypeSchemaImpl";
+import { GeneratedUnionTypeSchemaImpl } from "./union/GeneratedUnionTypeSchemaImpl";
 
 export declare namespace TypeSchemaGenerator {
     export interface Init {
-        includeUtilsOnUnionMembers: boolean
-        noOptionalProperties: boolean
+        includeUtilsOnUnionMembers: boolean;
+        noOptionalProperties: boolean;
     }
 
     export namespace generateTypeSchema {
         export interface Args<Context> {
-            typeName: string
-            shape: Type
-            getGeneratedType: () => GeneratedType<Context>
-            getReferenceToGeneratedType: () => ts.TypeNode
-            getReferenceToGeneratedTypeSchema: (context: Context) => Reference
+            typeName: string;
+            shape: Type;
+            getGeneratedType: () => GeneratedType<Context>;
+            getReferenceToGeneratedType: () => ts.TypeNode;
+            getReferenceToGeneratedTypeSchema: (context: Context) => Reference;
         }
     }
 }
 
 export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
-    private includeUtilsOnUnionMembers: boolean
-    private noOptionalProperties: boolean
+    private includeUtilsOnUnionMembers: boolean;
+    private noOptionalProperties: boolean;
 
     constructor({ includeUtilsOnUnionMembers, noOptionalProperties }: TypeSchemaGenerator.Init) {
-        this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers
-        this.noOptionalProperties = noOptionalProperties
+        this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers;
+        this.noOptionalProperties = noOptionalProperties;
     }
 
     public generateTypeSchema({
@@ -100,9 +100,9 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
                     getReferenceToGeneratedTypeSchema
                 }),
             _other: () => {
-                throw new Error("Unknown type declaration shape: " + shape.type)
+                throw new Error("Unknown type declaration shape: " + shape.type);
             }
-        })
+        });
     }
 
     private generateUnion({
@@ -112,11 +112,11 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
         getReferenceToGeneratedType,
         getReferenceToGeneratedTypeSchema
     }: {
-        typeName: string
-        shape: UnionTypeDeclaration
-        getGeneratedType: () => GeneratedType<Context>
-        getReferenceToGeneratedType: () => ts.TypeNode
-        getReferenceToGeneratedTypeSchema: (context: Context) => Reference
+        typeName: string;
+        shape: UnionTypeDeclaration;
+        getGeneratedType: () => GeneratedType<Context>;
+        getReferenceToGeneratedType: () => ts.TypeNode;
+        getReferenceToGeneratedTypeSchema: (context: Context) => Reference;
     }): GeneratedUnionTypeSchema<Context> {
         return new GeneratedUnionTypeSchemaImpl({
             typeName,
@@ -126,7 +126,7 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
             getReferenceToGeneratedTypeSchema,
             includeUtilsOnUnionMembers: this.includeUtilsOnUnionMembers,
             noOptionalProperties: this.noOptionalProperties
-        })
+        });
     }
 
     private generateObject({
@@ -136,11 +136,11 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
         getReferenceToGeneratedType,
         getReferenceToGeneratedTypeSchema
     }: {
-        typeName: string
-        shape: ObjectTypeDeclaration
-        getGeneratedType: () => GeneratedType<Context>
-        getReferenceToGeneratedType: () => ts.TypeNode
-        getReferenceToGeneratedTypeSchema: (context: Context) => Reference
+        typeName: string;
+        shape: ObjectTypeDeclaration;
+        getGeneratedType: () => GeneratedType<Context>;
+        getReferenceToGeneratedType: () => ts.TypeNode;
+        getReferenceToGeneratedTypeSchema: (context: Context) => Reference;
     }): GeneratedObjectTypeSchema<Context> {
         return new GeneratedObjectTypeSchemaImpl({
             typeName,
@@ -149,7 +149,7 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
             getReferenceToGeneratedType,
             getReferenceToGeneratedTypeSchema,
             noOptionalProperties: this.noOptionalProperties
-        })
+        });
     }
 
     private generateEnum({
@@ -159,11 +159,11 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
         getReferenceToGeneratedType,
         getReferenceToGeneratedTypeSchema
     }: {
-        typeName: string
-        shape: EnumTypeDeclaration
-        getGeneratedType: () => GeneratedType<Context>
-        getReferenceToGeneratedType: () => ts.TypeNode
-        getReferenceToGeneratedTypeSchema: (context: Context) => Reference
+        typeName: string;
+        shape: EnumTypeDeclaration;
+        getGeneratedType: () => GeneratedType<Context>;
+        getReferenceToGeneratedType: () => ts.TypeNode;
+        getReferenceToGeneratedTypeSchema: (context: Context) => Reference;
     }): GeneratedEnumTypeSchema<Context> {
         return new GeneratedEnumTypeSchemaImpl({
             typeName,
@@ -172,7 +172,7 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
             getReferenceToGeneratedType,
             getReferenceToGeneratedTypeSchema,
             noOptionalProperties: this.noOptionalProperties
-        })
+        });
     }
 
     private generateAlias({
@@ -182,11 +182,11 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
         getReferenceToGeneratedType,
         getReferenceToGeneratedTypeSchema
     }: {
-        typeName: string
-        shape: AliasTypeDeclaration
-        getGeneratedType: () => GeneratedType<Context>
-        getReferenceToGeneratedType: () => ts.TypeNode
-        getReferenceToGeneratedTypeSchema: (context: Context) => Reference
+        typeName: string;
+        shape: AliasTypeDeclaration;
+        getGeneratedType: () => GeneratedType<Context>;
+        getReferenceToGeneratedType: () => ts.TypeNode;
+        getReferenceToGeneratedTypeSchema: (context: Context) => Reference;
     }): GeneratedAliasTypeSchema<Context> {
         return new GeneratedAliasTypeSchemaImpl({
             typeName,
@@ -195,7 +195,7 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
             getReferenceToGeneratedType,
             getReferenceToGeneratedTypeSchema,
             noOptionalProperties: this.noOptionalProperties
-        })
+        });
     }
 
     private generateUndiscriminatedUnion({
@@ -205,11 +205,11 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
         getReferenceToGeneratedType,
         getReferenceToGeneratedTypeSchema
     }: {
-        typeName: string
-        shape: UndiscriminatedUnionTypeDeclaration
-        getGeneratedType: () => GeneratedType<Context>
-        getReferenceToGeneratedType: () => ts.TypeNode
-        getReferenceToGeneratedTypeSchema: (context: Context) => Reference
+        typeName: string;
+        shape: UndiscriminatedUnionTypeDeclaration;
+        getGeneratedType: () => GeneratedType<Context>;
+        getReferenceToGeneratedType: () => ts.TypeNode;
+        getReferenceToGeneratedTypeSchema: (context: Context) => Reference;
     }): GeneratedUndiscriminatedUnionTypeSchemaImpl<Context> {
         return new GeneratedUndiscriminatedUnionTypeSchemaImpl({
             typeName,
@@ -218,6 +218,6 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
             getReferenceToGeneratedType,
             getReferenceToGeneratedTypeSchema,
             noOptionalProperties: this.noOptionalProperties
-        })
+        });
     }
 }

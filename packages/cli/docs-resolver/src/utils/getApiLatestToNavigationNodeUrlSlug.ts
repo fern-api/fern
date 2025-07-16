@@ -1,13 +1,13 @@
-import { kebabCase } from "lodash-es"
+import { kebabCase } from "lodash-es";
 
-import { FernNavigation } from "@fern-api/fdr-sdk"
+import { FernNavigation } from "@fern-api/fdr-sdk";
 
 export function getApiLatestToNavigationNodeUrlSlug<T extends { id: string; operationId?: string }>({
     item,
     parentSlug
 }: {
-    item: T
-    parentSlug: FernNavigation.V1.SlugGenerator
+    item: T;
+    parentSlug: FernNavigation.V1.SlugGenerator;
 }): FernNavigation.V1.Slug {
-    return parentSlug.apply({ urlSlug: kebabCase(item.id.split(".").pop() ?? "") }).get()
+    return parentSlug.apply({ urlSlug: kebabCase(item.id.split(".").pop() ?? "") }).get();
 }

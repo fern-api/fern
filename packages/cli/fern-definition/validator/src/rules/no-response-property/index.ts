@@ -1,1 +1,1 @@
-export { NoResponsePropertyRule } from "./no-response-property"
+export { NoResponsePropertyRule } from "./no-response-property";

@@ -1,3 +1,3 @@
-import { ExpressGeneratorCli } from "./ExpressGeneratorCli"
+import { ExpressGeneratorCli } from "./ExpressGeneratorCli";
 
-void new ExpressGeneratorCli().runCli()
+void new ExpressGeneratorCli().runCli();

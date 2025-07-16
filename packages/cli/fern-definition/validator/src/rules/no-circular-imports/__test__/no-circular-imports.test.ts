@@ -1,7 +1,7 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule"
-import { NoCircularImportsRule } from "../no-circular-imports"
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
+import { NoCircularImportsRule } from "../no-circular-imports";
 
 describe("no-circular-imports", () => {
     it("simple", async () => {
@@ -12,7 +12,7 @@ describe("no-circular-imports", () => {
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
             )
-        })
+        });
 
         expect(violations).toEqual([
             {
@@ -33,6 +33,6 @@ describe("no-circular-imports", () => {
                 relativeFilepath: RelativeFilePath.of("d/d.yml"),
                 severity: "fatal"
             }
-        ])
-    })
-})
+        ]);
+    });
+});

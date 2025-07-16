@@ -1,20 +1,20 @@
-import { TypescriptCustomConfigSchema } from "@fern-api/typescript-ast"
+import { TypescriptCustomConfigSchema } from "@fern-api/typescript-ast";
 
-import { PrimitiveTypeV1, SdkRequest, SingleUnionType, TypeId, TypeReference } from "@fern-fern/ir-sdk/api"
+import { PrimitiveTypeV1, SdkRequest, SingleUnionType, TypeId, TypeReference } from "@fern-fern/ir-sdk/api";
 
-import { AbstractTypescriptMcpGeneratorContext } from "./AbstractTypescriptMcpGeneratorContext"
+import { AbstractTypescriptMcpGeneratorContext } from "./AbstractTypescriptMcpGeneratorContext";
 
 export declare namespace ZodTypeMapper {
     interface Args {
-        reference: TypeReference
+        reference: TypeReference;
     }
 }
 
 export class ZodTypeMapper {
-    private context: AbstractTypescriptMcpGeneratorContext<TypescriptCustomConfigSchema>
+    private context: AbstractTypescriptMcpGeneratorContext<TypescriptCustomConfigSchema>;
 
     constructor(context: AbstractTypescriptMcpGeneratorContext<TypescriptCustomConfigSchema>) {
-        this.context = context
+        this.context = context;
     }
 
     // TODO: finish implementing this
@@ -25,7 +25,7 @@ export class ZodTypeMapper {
             primitive: (value) => this.convertPrimitiveTypeV1(value.v1),
             unknown: () => "unknown",
             _other: (value) => "any"
-        })
+        });
     }
 
     // TODO: finish implementing this
@@ -37,8 +37,8 @@ export class ZodTypeMapper {
                         value.requestBodyType._visit({
                             container: (value) => "any",
                             named: (value) => {
-                                const { name: schemaName, fernFilepath: schemaFilepath } = value
-                                return this.context.project.builder.getSchemaVariableName(schemaName, schemaFilepath)
+                                const { name: schemaName, fernFilepath: schemaFilepath } = value;
+                                return this.context.project.builder.getSchemaVariableName(schemaName, schemaFilepath);
                             },
                             primitive: (value) => this.convertPrimitiveTypeV1(value.v1),
                             unknown: () => "unknown",
@@ -49,7 +49,7 @@ export class ZodTypeMapper {
                 }),
             wrapper: (value) => "any",
             _other: (value) => "any"
-        })
+        });
     }
 
     // TODO: finish implementing this
@@ -69,7 +69,7 @@ export class ZodTypeMapper {
             base64: () => "string().base64",
             bigInteger: () => "bigint",
             _other: () => "any"
-        })
+        });
     }
 
     // TODO: finish implementing this
@@ -79,6 +79,6 @@ export class ZodTypeMapper {
             singleProperty: (value) => "any",
             noProperties: () => "any",
             _other: (value) => "any"
-        })
+        });
     }
 }

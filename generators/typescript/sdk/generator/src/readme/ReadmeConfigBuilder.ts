@@ -1,24 +1,24 @@
-import { NpmPackage } from "@fern-typescript/commons"
-import { SdkContext } from "@fern-typescript/contexts"
+import { NpmPackage } from "@fern-typescript/commons";
+import { SdkContext } from "@fern-typescript/contexts";
 
-import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk"
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
+import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
-import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder"
+import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder";
 
 export class ReadmeConfigBuilder {
-    private endpointSnippets: FernGeneratorExec.Endpoint[]
-    private readonly fileResponseType: "stream" | "binary-response"
+    private endpointSnippets: FernGeneratorExec.Endpoint[];
+    private readonly fileResponseType: "stream" | "binary-response";
 
     constructor({
         endpointSnippets,
         fileResponseType
     }: {
-        endpointSnippets: FernGeneratorExec.Endpoint[]
-        fileResponseType: "stream" | "binary-response"
+        endpointSnippets: FernGeneratorExec.Endpoint[];
+        fileResponseType: "stream" | "binary-response";
     }) {
-        this.endpointSnippets = endpointSnippets
-        this.fileResponseType = fileResponseType
+        this.endpointSnippets = endpointSnippets;
+        this.fileResponseType = fileResponseType;
     }
 
     public build({
@@ -26,28 +26,28 @@ export class ReadmeConfigBuilder {
         remote,
         featureConfig
     }: {
-        context: SdkContext
-        remote: FernGeneratorCli.Remote | undefined
-        featureConfig: FernGeneratorCli.FeatureConfig
+        context: SdkContext;
+        remote: FernGeneratorCli.Remote | undefined;
+        featureConfig: FernGeneratorCli.FeatureConfig;
     }): FernGeneratorCli.ReadmeConfig {
         const readmeSnippetBuilder = new ReadmeSnippetBuilder({
             context,
             endpointSnippets: this.endpointSnippets,
             fileResponseType: this.fileResponseType
-        })
-        const snippets = readmeSnippetBuilder.buildReadmeSnippets()
-        const addendums = readmeSnippetBuilder.buildReadmeAddendums()
-        const features: FernGeneratorCli.ReadmeFeature[] = []
+        });
+        const snippets = readmeSnippetBuilder.buildReadmeSnippets();
+        const addendums = readmeSnippetBuilder.buildReadmeAddendums();
+        const features: FernGeneratorCli.ReadmeFeature[] = [];
         for (const feature of featureConfig.features) {
-            const snippetForFeature = snippets[feature.id]
+            const snippetForFeature = snippets[feature.id];
             if (snippetForFeature == null) {
-                continue
+                continue;
             }
 
-            const addendumForFeature = addendums[feature.id]
+            const addendumForFeature = addendums[feature.id];
 
             if (addendumForFeature != null) {
-                feature.addendum = addendumForFeature
+                feature.addendum = addendumForFeature;
             }
             features.push({
                 id: feature.id,
@@ -56,7 +56,7 @@ export class ReadmeConfigBuilder {
                 snippets: snippetForFeature,
                 addendum: feature.addendum,
                 snippetsAreOptional: false
-            })
+            });
         }
         return {
             remote,
@@ -67,7 +67,7 @@ export class ReadmeConfigBuilder {
             introduction: context.ir.readmeConfig?.introduction,
             referenceMarkdownPath: "./reference.md",
             features
-        }
+        };
     }
 
     private getLanguageInfo({ npmPackage }: { npmPackage: NpmPackage | undefined }): FernGeneratorCli.LanguageInfo {
@@ -76,8 +76,8 @@ export class ReadmeConfigBuilder {
                 publishInfo: {
                     packageName: npmPackage.packageName
                 }
-            })
+            });
         }
-        return FernGeneratorCli.LanguageInfo.typescript({})
+        return FernGeneratorCli.LanguageInfo.typescript({});
     }
 }

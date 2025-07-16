@@ -1,7 +1,7 @@
-import { constructCasingsGenerator } from "@fern-api/casings-generator"
-import { RelativeFilePath } from "@fern-api/fs-utils"
-import { constructFernFileContext, convertResponseErrors, convertToFernFilepath } from "@fern-api/ir-generator"
-import { ResponseErrors } from "@fern-api/ir-sdk"
+import { constructCasingsGenerator } from "@fern-api/casings-generator";
+import { RelativeFilePath } from "@fern-api/fs-utils";
+import { constructFernFileContext, convertResponseErrors, convertToFernFilepath } from "@fern-api/ir-generator";
+import { ResponseErrors } from "@fern-api/ir-sdk";
 
 describe("convertResponseErrors", () => {
     it("reference to an error in another file", () => {
@@ -9,7 +9,7 @@ describe("convertResponseErrors", () => {
             generationLanguage: undefined,
             keywords: undefined,
             smartCasing: false
-        })
+        });
         const actualResponseErrors = convertResponseErrors({
             errors: ["commons.UnauthorizedError"],
             file: constructFernFileContext({
@@ -24,7 +24,7 @@ describe("convertResponseErrors", () => {
                     name: "api"
                 }
             })
-        })
+        });
 
         const expectedResponseErrors: ResponseErrors = [
             {
@@ -56,8 +56,8 @@ describe("convertResponseErrors", () => {
                     }
                 }
             }
-        ]
+        ];
 
-        expect(actualResponseErrors).toEqual(expectedResponseErrors)
-    })
-})
+        expect(actualResponseErrors).toEqual(expectedResponseErrors);
+    });
+});

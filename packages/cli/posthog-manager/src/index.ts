@@ -1,2 +1,2 @@
-export { getPosthogManager } from "./getPosthogManager"
-export { type PosthogManager } from "./PosthogManager"
+export { getPosthogManager } from "./getPosthogManager";
+export { type PosthogManager } from "./PosthogManager";
