@@ -1,4 +1,4 @@
-import { sep } from './sep'
+import { sep } from "./sep"
 
 export function relative(from: string, to: string): string {
     const fromParts = from.split(sep).filter(Boolean)
@@ -9,8 +9,8 @@ export function relative(from: string, to: string): string {
     }
     const upLevels = fromParts.length - i
     const result = [
-        ...Array(upLevels).fill('..'), // Go up for each remaining directory in `from`
+        ...Array(upLevels).fill(".."), // Go up for each remaining directory in `from`
         ...toParts.slice(i) // Add the remaining path parts from `to`
     ]
-    return result.join(sep) || '.'
+    return result.join(sep) || "."
 }

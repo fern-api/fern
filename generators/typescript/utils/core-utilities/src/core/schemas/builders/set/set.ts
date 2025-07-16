@@ -1,8 +1,8 @@
-import { BaseSchema, Schema, SchemaType } from '../../Schema'
-import { getErrorMessageForIncorrectType } from '../../utils/getErrorMessageForIncorrectType'
-import { maybeSkipValidation } from '../../utils/maybeSkipValidation'
-import { list } from '../list'
-import { getSchemaUtils } from '../schema-utils'
+import { BaseSchema, Schema, SchemaType } from "../../Schema"
+import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType"
+import { maybeSkipValidation } from "../../utils/maybeSkipValidation"
+import { list } from "../list"
+import { getSchemaUtils } from "../schema-utils"
 
 export function set<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Raw[], Set<Parsed>> {
     const listSchema = list(schema)
@@ -25,7 +25,7 @@ export function set<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Raw[], Set
                     errors: [
                         {
                             path: opts?.breadcrumbsPrefix ?? [],
-                            message: getErrorMessageForIncorrectType(parsed, 'Set')
+                            message: getErrorMessageForIncorrectType(parsed, "Set")
                         }
                     ]
                 }

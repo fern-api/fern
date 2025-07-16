@@ -1,6 +1,6 @@
-import { DefinitionFileSchema, PackageMarkerFileSchema, RootApiFileSchema } from '@fern-api/fern-definition-schema'
-import { RelativeFilePath } from '@fern-api/path-utils'
-import { TaskContext } from '@fern-api/task-context'
+import { DefinitionFileSchema, PackageMarkerFileSchema, RootApiFileSchema } from "@fern-api/fern-definition-schema"
+import { RelativeFilePath } from "@fern-api/path-utils"
+import { TaskContext } from "@fern-api/task-context"
 
 export declare namespace APIDefinitionImporter {
     interface Return {

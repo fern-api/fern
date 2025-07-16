@@ -1,16 +1,16 @@
-import { GeneratorName } from '@fern-api/configuration-loader'
-import { isNonNullish } from '@fern-api/core-utils'
+import { GeneratorName } from "@fern-api/configuration-loader"
+import { isNonNullish } from "@fern-api/core-utils"
 
-import { IrSerialization } from '../../ir-serialization'
-import { IrVersions } from '../../ir-versions'
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
+import { IrSerialization } from "../../ir-serialization"
+import { IrVersions } from "../../ir-versions"
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
 
 export const V47_TO_V46_MIGRATION: IrMigration<
     IrVersions.V47.ir.IntermediateRepresentation,
     IrVersions.V46.ir.IntermediateRepresentation
 > = {
-    laterVersion: 'v47',
-    earlierVersion: 'v46',
+    laterVersion: "v47",
+    earlierVersion: "v46",
     firstGeneratorVersionToConsumeNewIR: {
         [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -42,7 +42,7 @@ export const V47_TO_V46_MIGRATION: IrMigration<
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V46.IntermediateRepresentation.jsonOrThrow(ir, {
-            unrecognizedObjectKeys: 'strip',
+            unrecognizedObjectKeys: "strip",
             skipValidation: true
         }),
     migrateBackwards: (v47): IrVersions.V46.ir.IntermediateRepresentation => {

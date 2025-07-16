@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from "zod"
 
 export const ClientConfig = z.object({
     filename: z.string().optional(),

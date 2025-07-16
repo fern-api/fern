@@ -1,8 +1,8 @@
-import { JSONSchema4 } from 'json-schema'
+import { JSONSchema4 } from "json-schema"
 
-import { EnumTypeDeclaration } from '@fern-api/ir-sdk'
+import { EnumTypeDeclaration } from "@fern-api/ir-sdk"
 
-import { JsonSchemaConverterContext } from '../JsonSchemaConverterContext'
+import { JsonSchemaConverterContext } from "../JsonSchemaConverterContext"
 
 export declare namespace convertEnumToJsonSchema {
     interface Args {
@@ -13,7 +13,7 @@ export declare namespace convertEnumToJsonSchema {
 
 export function convertEnumToJsonSchema({ enum: enumDeclaration, context }: convertEnumToJsonSchema.Args): JSONSchema4 {
     return {
-        type: 'string',
+        type: "string",
         enum: enumDeclaration.values.map((value) => value.name.wireValue)
     }
 }

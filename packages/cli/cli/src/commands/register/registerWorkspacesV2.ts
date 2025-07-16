@@ -1,10 +1,10 @@
-import chalk from 'chalk'
+import chalk from "chalk"
 
-import { FernToken } from '@fern-api/auth'
-import { Project } from '@fern-api/project-loader'
-import { registerApi } from '@fern-api/register'
+import { FernToken } from "@fern-api/auth"
+import { Project } from "@fern-api/project-loader"
+import { registerApi } from "@fern-api/register"
 
-import { CliContext } from '../../cli-context/CliContext'
+import { CliContext } from "../../cli-context/CliContext"
 
 export async function registerWorkspacesV2({
     project,
@@ -23,7 +23,7 @@ export async function registerWorkspacesV2({
                     workspace: await workspace.toFernWorkspace({ context }),
                     context,
                     token,
-                    audiences: { type: 'all' },
+                    audiences: { type: "all" },
                     snippetsConfig: {
                         typescriptSdk: undefined,
                         pythonSdk: undefined,
@@ -33,7 +33,7 @@ export async function registerWorkspacesV2({
                         csharpSdk: undefined
                     }
                 })
-                context.logger.info(chalk.green('Registered API'))
+                context.logger.info(chalk.green("Registered API"))
             })
         })
     )

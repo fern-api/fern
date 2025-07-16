@@ -1,21 +1,21 @@
-import path from 'path'
+import path from "path"
 
-import { FernWorkspace } from '@fern-api/api-workspace-commons'
-import { generatorsYml } from '@fern-api/configuration'
-import { AbsoluteFilePath } from '@fern-api/fs-utils'
-import { runLocalGenerationForSeed } from '@fern-api/local-workspace-runner'
-import { CONSOLE_LOGGER } from '@fern-api/logger'
-import { TaskContext } from '@fern-api/task-context'
+import { FernWorkspace } from "@fern-api/api-workspace-commons"
+import { generatorsYml } from "@fern-api/configuration"
+import { AbsoluteFilePath } from "@fern-api/fs-utils"
+import { runLocalGenerationForSeed } from "@fern-api/local-workspace-runner"
+import { CONSOLE_LOGGER } from "@fern-api/logger"
+import { TaskContext } from "@fern-api/task-context"
 
-import { runScript } from '../../../runScript'
-import { ALL_AUDIENCES, DUMMY_ORGANIZATION } from '../../../utils/constants'
-import { getGeneratorInvocation } from '../../../utils/getGeneratorInvocation'
-import { TestRunner } from './TestRunner'
+import { runScript } from "../../../runScript"
+import { ALL_AUDIENCES, DUMMY_ORGANIZATION } from "../../../utils/constants"
+import { getGeneratorInvocation } from "../../../utils/getGeneratorInvocation"
+import { TestRunner } from "./TestRunner"
 
 export class DockerTestRunner extends TestRunner {
     async build(): Promise<void> {
         const dockerCommands =
-            typeof this.generator.workspaceConfig.test.docker.command === 'string'
+            typeof this.generator.workspaceConfig.test.docker.command === "string"
                 ? [this.generator.workspaceConfig.test.docker.command]
                 : this.generator.workspaceConfig.test.docker.command
         if (dockerCommands == null) {
@@ -51,9 +51,9 @@ export class DockerTestRunner extends TestRunner {
         shouldGenerateDynamicSnippetTests
     }: TestRunner.DoRunArgs): Promise<void> {
         const generatorGroup: generatorsYml.GeneratorGroup = {
-            groupName: 'test',
+            groupName: "test",
             reviewers: undefined,
-            audiences: selectAudiences != null ? { type: 'select', audiences: selectAudiences } : ALL_AUDIENCES,
+            audiences: selectAudiences != null ? { type: "select", audiences: selectAudiences } : ALL_AUDIENCES,
             generators: [
                 await getGeneratorInvocation({
                     absolutePathToOutput: outputDir,

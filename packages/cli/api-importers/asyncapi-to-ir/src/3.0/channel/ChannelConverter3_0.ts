@@ -1,14 +1,14 @@
-import { OpenAPIV3, OpenAPIV3_1 } from 'openapi-types'
+import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types"
 
-import { HttpHeader, PathParameter, QueryParameter, WebSocketMessage, WebSocketMessageBody } from '@fern-api/ir-sdk'
-import { constructHttpPath } from '@fern-api/ir-utils'
-import { Converters } from '@fern-api/v2-importer-commons'
+import { HttpHeader, PathParameter, QueryParameter, WebSocketMessage, WebSocketMessageBody } from "@fern-api/ir-sdk"
+import { constructHttpPath } from "@fern-api/ir-utils"
+import { Converters } from "@fern-api/v2-importer-commons"
 
-import { AsyncAPIV3 } from '..'
-import { AbstractChannelConverter } from '../../converters/AbstractChannelConverter'
-import { ParameterConverter } from '../../converters/ParameterConverter'
-import { DisplayNameExtension } from '../../extensions/x-fern-display-name'
-import { ChannelParameter } from '../types'
+import { AsyncAPIV3 } from ".."
+import { AbstractChannelConverter } from "../../converters/AbstractChannelConverter"
+import { ParameterConverter } from "../../converters/ParameterConverter"
+import { DisplayNameExtension } from "../../extensions/x-fern-display-name"
+import { ChannelParameter } from "../types"
 
 export declare namespace ChannelConverter3_0 {
     export interface Args extends AbstractChannelConverter.Args<AsyncAPIV3.ChannelV3> {
@@ -17,13 +17,13 @@ export declare namespace ChannelConverter3_0 {
 }
 
 type ChannelParameterLocation = {
-    type: 'header' | 'path' | 'query'
+    type: "header" | "path" | "query"
     parameterKey: string
 }
 
-const LOCATION_PREFIX = '$message.'
-const CHANNEL_REFERENCE_PREFIX = '#/channels/'
-const SERVER_REFERENCE_PREFIX = '#/servers/'
+const LOCATION_PREFIX = "$message."
+const CHANNEL_REFERENCE_PREFIX = "#/channels/"
+const SERVER_REFERENCE_PREFIX = "#/servers/"
 
 export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.ChannelV3> {
     private readonly operations: Record<string, AsyncAPIV3.Operation>
@@ -44,7 +44,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
             channel: this.channel,
             context: this.context
         })
-        const displayName = displayNameExtension.convert() ?? this.websocketGroup?.join('.') ?? this.channelPath
+        const displayName = displayNameExtension.convert() ?? this.websocketGroup?.join(".") ?? this.channelPath
 
         if (this.channel.parameters) {
             this.convertChannelParameters({
@@ -81,7 +81,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
                     messages.push({
                         type: operationId,
                         displayName: operationId,
-                        origin: operation.action === 'send' ? 'client' : 'server',
+                        origin: operation.action === "send" ? "client" : "server",
                         body: messageBody,
                         availability: this.context.getAvailability({
                             node: operation,
@@ -128,7 +128,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
                     userSpecifiedExamples: this.convertExamples({
                         fullPath: channelAddress,
                         baseUrl,
-                        asyncApiVersion: 'v3'
+                        asyncApiVersion: "v3"
                     })
                 }
             },
@@ -151,7 +151,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
         for (const parameter of Object.values(this.channel.parameters ?? {})) {
             const parameterObject = this.context.resolveMaybeReference<ChannelParameter>({
                 schemaOrReference: parameter,
-                breadcrumbs: [...this.breadcrumbs, 'parameters']
+                breadcrumbs: [...this.breadcrumbs, "parameters"]
             })
             if (parameterObject == null) {
                 continue
@@ -175,13 +175,13 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
             if (convertedParameter != null) {
                 this.inlinedTypes = { ...this.inlinedTypes, ...convertedParameter.inlinedTypes }
                 switch (convertedParameter.type) {
-                    case 'path':
+                    case "path":
                         pathParameters.push(convertedParameter.parameter)
                         break
-                    case 'query':
+                    case "query":
                         queryParameters.push(convertedParameter.parameter)
                         break
-                    case 'header':
+                    case "header":
                         headers.push(convertedParameter.parameter)
                         break
                 }
@@ -191,7 +191,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
 
     private convertChannelParameterLocation(location: string): ChannelParameterLocation | undefined {
         try {
-            const [messageType, parameterKey] = location.split('#/')
+            const [messageType, parameterKey] = location.split("#/")
             if (messageType == null || parameterKey == null) {
                 this.context.errorCollector.collect({
                     message: `Invalid location format: ${location}; unable to parse message type and parameter key`,
@@ -207,22 +207,22 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
                 return undefined
             }
             const type = messageType.substring(LOCATION_PREFIX.length)
-            if (type !== 'header' && type !== 'path' && type !== 'payload') {
+            if (type !== "header" && type !== "path" && type !== "payload") {
                 this.context.errorCollector.collect({
                     message: `Invalid message type: ${type}. Must be one of: header, path, payload`,
                     path: this.breadcrumbs
                 })
                 return undefined
             }
-            if (type === 'payload') {
-                return { type: 'query', parameterKey }
+            if (type === "payload") {
+                return { type: "query", parameterKey }
             }
             return { type, parameterKey }
         } catch (error) {
             this.context.errorCollector.collect({
                 message:
                     `Invalid location format: ${location}; see here for more details: ` +
-                    'https://www.asyncapi.com/docs/reference/specification/v3.0.0#runtimeExpression',
+                    "https://www.asyncapi.com/docs/reference/specification/v3.0.0#runtimeExpression",
                 path: this.breadcrumbs
             })
             return undefined

@@ -1,4 +1,4 @@
-import { assertNever } from '@fern-api/core-utils'
+import { assertNever } from "@fern-api/core-utils"
 import {
     RawSchemas,
     isGeneric,
@@ -6,12 +6,12 @@ import {
     isRawEnumDefinition,
     isRawObjectDefinition,
     isRawUndiscriminatedUnionDefinition
-} from '@fern-api/fern-definition-schema'
-import { ResolvedTypeReference, ShapeType, Type } from '@fern-api/ir-sdk'
+} from "@fern-api/fern-definition-schema"
+import { ResolvedTypeReference, ShapeType, Type } from "@fern-api/ir-sdk"
 
-import { FernFileContext } from '../../FernFileContext'
-import { TypeResolver } from '../../resolvers/TypeResolver'
-import { convertGenericTypeDeclaration } from './convertGenericTypeDeclaration'
+import { FernFileContext } from "../../FernFileContext"
+import { TypeResolver } from "../../resolvers/TypeResolver"
+import { convertGenericTypeDeclaration } from "./convertGenericTypeDeclaration"
 
 export function convertAliasTypeDeclaration({
     alias,
@@ -22,7 +22,7 @@ export function convertAliasTypeDeclaration({
     file: FernFileContext
     typeResolver: TypeResolver
 }): Type {
-    const aliasOfStr = typeof alias === 'string' ? alias : alias.type
+    const aliasOfStr = typeof alias === "string" ? alias : alias.type
     if (isGeneric(aliasOfStr)) {
         return convertGenericTypeDeclaration({ generic: aliasOfStr, file, typeResolver })
     }
@@ -43,13 +43,13 @@ function constructResolvedTypeReference({
 }): ResolvedTypeReference {
     const resolvedType = typeResolver.resolveTypeOrThrow({ type: aliasOf, file })
     switch (resolvedType._type) {
-        case 'primitive':
+        case "primitive":
             return ResolvedTypeReference.primitive(resolvedType.originalTypeReference.primitive)
-        case 'container':
+        case "container":
             return ResolvedTypeReference.container(resolvedType.originalTypeReference.container)
-        case 'unknown':
+        case "unknown":
             return ResolvedTypeReference.unknown()
-        case 'named': {
+        case "named": {
             const shapeType = isRawObjectDefinition(resolvedType.declaration)
                 ? ShapeType.Object
                 : isRawDiscriminatedUnionDefinition(resolvedType.declaration)

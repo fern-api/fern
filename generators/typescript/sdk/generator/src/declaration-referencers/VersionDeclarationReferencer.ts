@@ -5,12 +5,12 @@ import {
     ImportsManager,
     Reference,
     getReferenceToExportViaNamespaceImport
-} from '@fern-typescript/commons'
-import { SourceFile, ts } from 'ts-morph'
+} from "@fern-typescript/commons"
+import { SourceFile, ts } from "ts-morph"
 
-import { ApiVersionScheme } from '@fern-fern/ir-sdk/api'
+import { ApiVersionScheme } from "@fern-fern/ir-sdk/api"
 
-import { AbstractDeclarationReferencer } from './AbstractDeclarationReferencer'
+import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer"
 
 export declare namespace VersionDeclarationReferencer {
     export interface Init extends AbstractDeclarationReferencer.Init {
@@ -51,7 +51,7 @@ export class VersionDeclarationReferencer extends AbstractDeclarationReferencer 
     }
 
     public getFilename(): string {
-        return 'version.ts'
+        return "version.ts"
     }
 
     public getExportedNameOfVersionEnum(): string {
@@ -112,7 +112,7 @@ export class VersionDeclarationReferencer extends AbstractDeclarationReferencer 
             exportedName,
             filepathToNamespaceImport: this.getExportedFilepath(),
             filepathInsideNamespaceImport: undefined,
-            namespaceImport: 'version',
+            namespaceImport: "version",
             importsManager,
             exportsManager,
             referencedIn: sourceFile
@@ -121,8 +121,8 @@ export class VersionDeclarationReferencer extends AbstractDeclarationReferencer 
 
     private getFirstVersionName(apiVersion: ApiVersionScheme): string {
         switch (apiVersion.type) {
-            case 'header':
-                return apiVersion.value.values[0]?.name.wireValue ?? '1.0.0'
+            case "header":
+                return apiVersion.value.values[0]?.name.wireValue ?? "1.0.0"
         }
     }
 }

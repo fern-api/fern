@@ -1,7 +1,7 @@
-import { ExportedFilePath, PackageId, Reference } from '@fern-typescript/commons'
+import { ExportedFilePath, PackageId, Reference } from "@fern-typescript/commons"
 
-import { AbstractExpressServiceDeclarationReferencer } from './AbstractExpressServiceDeclarationReferencer'
-import { DeclarationReferencer } from './DeclarationReferencer'
+import { AbstractExpressServiceDeclarationReferencer } from "./AbstractExpressServiceDeclarationReferencer"
+import { DeclarationReferencer } from "./DeclarationReferencer"
 
 export class ExpressServiceDeclarationReferencer extends AbstractExpressServiceDeclarationReferencer<PackageId> {
     public getExportedFilepath(name: PackageId): ExportedFilePath {
@@ -19,7 +19,7 @@ export class ExpressServiceDeclarationReferencer extends AbstractExpressServiceD
 
     public getExportedNameOfService(name: PackageId): string {
         if (name.isRoot) {
-            return 'RootService'
+            return "RootService"
         }
         const subpackage = this.packageResolver.resolveSubpackage(name.subpackageId)
         return `${subpackage.name.pascalCase.unsafeName}Service`

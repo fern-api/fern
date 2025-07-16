@@ -1,14 +1,14 @@
-import { mkdir, readdir, rm } from 'fs/promises'
-import moment from 'moment'
+import { mkdir, readdir, rm } from "fs/promises"
+import moment from "moment"
 
-import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from '@fern-api/fs-utils'
-import { TaskContext } from '@fern-api/task-context'
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils"
+import { TaskContext } from "@fern-api/task-context"
 
-import { FernRegistryClient } from '@fern-fern/generators-sdk'
+import { FernRegistryClient } from "@fern-fern/generators-sdk"
 
-import { loadCliWorkspace } from '../../loadGeneratorWorkspaces'
-import { parseCliReleasesFile } from '../../utils/convertVersionsFileToReleases'
-import { writeChangelogEntries, writeChangelogsToFile } from './writeChangelogEntries'
+import { loadCliWorkspace } from "../../loadGeneratorWorkspaces"
+import { parseCliReleasesFile } from "../../utils/convertVersionsFileToReleases"
+import { writeChangelogEntries, writeChangelogsToFile } from "./writeChangelogEntries"
 
 export async function generateCliChangelog({
     context,
@@ -24,7 +24,7 @@ export async function generateCliChangelog({
     const resolvedOutputPath =
         outputPath == null
             ? AbsoluteFilePath.of(process.cwd())
-            : outputPath.startsWith('/')
+            : outputPath.startsWith("/")
               ? AbsoluteFilePath.of(outputPath)
               : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(outputPath))
 
@@ -45,12 +45,12 @@ export async function generateCliChangelog({
 
     const cliWorkspace = await loadCliWorkspace()
     if (cliWorkspace == null) {
-        context.logger.error('Failed to find CLI workspace, no latest version found.')
+        context.logger.error("Failed to find CLI workspace, no latest version found.")
         return
     }
     if (cliWorkspace.workspaceConfig.changelogLocation == null) {
         context.logger.error(
-            'No changelog location specified, unable to generate changelog. To register CLI releases, specify a changelog location at: `changelogLocation`.'
+            "No changelog location specified, unable to generate changelog. To register CLI releases, specify a changelog location at: `changelogLocation`."
         )
         return
     }
@@ -90,7 +90,7 @@ export async function generateCliChangelog({
                 context.logger.error(`Release ${release.version} has been yanked, skipping this release.`)
                 return
             }
-            createdAt = moment(createdAt).format('YYYY-MM-DD')
+            createdAt = moment(createdAt).format("YYYY-MM-DD")
 
             if (!writtenVersions.has(createdAt)) {
                 writtenVersions.set(createdAt, new Map())

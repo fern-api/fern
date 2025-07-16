@@ -1,1 +1,1 @@
-export { OnlyObjectExtensionsRule } from './only-object-extensions'
+export { OnlyObjectExtensionsRule } from "./only-object-extensions"

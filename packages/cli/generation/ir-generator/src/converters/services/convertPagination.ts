@@ -1,13 +1,13 @@
-import { assertNever } from '@fern-api/core-utils'
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { Pagination } from '@fern-api/ir-sdk'
+import { assertNever } from "@fern-api/core-utils"
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { Pagination } from "@fern-api/ir-sdk"
 
-import { FernFileContext } from '../../FernFileContext'
-import { PropertyResolver } from '../../resolvers/PropertyResolver'
-import { convertCursorPagination } from './convertCursorPagination'
-import { convertCustomPagination } from './convertCustomPagination'
-import { convertOffsetPagination } from './convertOffsetPagination'
-import { getPaginationPropertyComponents } from './convertPaginationUtils'
+import { FernFileContext } from "../../FernFileContext"
+import { PropertyResolver } from "../../resolvers/PropertyResolver"
+import { convertCursorPagination } from "./convertCursorPagination"
+import { convertCustomPagination } from "./convertCustomPagination"
+import { convertOffsetPagination } from "./convertOffsetPagination"
+import { getPaginationPropertyComponents } from "./convertPaginationUtils"
 
 export function convertPagination({
     propertyResolver,
@@ -21,13 +21,13 @@ export function convertPagination({
     endpointSchema: RawSchemas.HttpEndpointSchema
 }): Pagination | undefined {
     const endpointPagination =
-        typeof endpointSchema.pagination === 'boolean' ? file.rootApiFile.pagination : endpointSchema.pagination
+        typeof endpointSchema.pagination === "boolean" ? file.rootApiFile.pagination : endpointSchema.pagination
     if (!endpointPagination) {
         return undefined
     }
     const paginationPropertyComponents = getPaginationPropertyComponents(endpointPagination)
     switch (paginationPropertyComponents.type) {
-        case 'cursor':
+        case "cursor":
             return convertCursorPagination({
                 propertyResolver,
                 file,
@@ -35,7 +35,7 @@ export function convertPagination({
                 endpointSchema,
                 paginationPropertyComponents
             })
-        case 'offset':
+        case "offset":
             return convertOffsetPagination({
                 propertyResolver,
                 file,
@@ -43,7 +43,7 @@ export function convertPagination({
                 endpointSchema,
                 paginationPropertyComponents
             })
-        case 'custom':
+        case "custom":
             return convertCustomPagination({
                 propertyResolver,
                 file,

@@ -1,9 +1,9 @@
-import chalk from 'chalk'
+import chalk from "chalk"
 
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { FernFileContext, ResolvedType, TypeResolver } from '@fern-api/ir-generator'
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator"
 
-import { RuleViolation } from '../../Rule'
+import { RuleViolation } from "../../Rule"
 import {
     REQUEST_PREFIX,
     RESPONSE_PREFIX,
@@ -14,7 +14,7 @@ import {
     maybePrimitiveType,
     requestTypeHasProperty,
     resolvedTypeHasProperty
-} from '../../utils/propertyValidatorUtils'
+} from "../../utils/propertyValidatorUtils"
 
 export const DEFAULT_CLIENT_ID = `${REQUEST_PREFIX}client_id`
 export const DEFAULT_CLIENT_SECRET = `${REQUEST_PREFIX}client_secret`
@@ -41,7 +41,7 @@ export function validateClientIdRequestProperty({
         file,
         requestProperty: clientIdProperty,
         propertyValidator: {
-            propertyID: 'client-id',
+            propertyID: "client-id",
             validate: isStringType
         }
     })
@@ -67,7 +67,7 @@ export function validateClientSecretRequestProperty({
         file,
         requestProperty: clientSecretProperty,
         propertyValidator: {
-            propertyID: 'client-secret',
+            propertyID: "client-secret",
             validate: isStringType
         }
     })
@@ -93,7 +93,7 @@ export function validateScopesRequestProperty({
         file,
         requestProperty: scopesProperty,
         propertyValidator: {
-            propertyID: 'scopes',
+            propertyID: "scopes",
             validate: isStringType
         }
     })
@@ -119,7 +119,7 @@ export function validateRefreshTokenRequestProperty({
         file,
         requestProperty: refreshTokenProperty,
         propertyValidator: {
-            propertyID: 'refresh-token',
+            propertyID: "refresh-token",
             validate: isStringType
         }
     })
@@ -145,7 +145,7 @@ export function validateAccessTokenResponseProperty({
         resolvedResponseType,
         responseProperty: accessTokenProperty,
         propertyValidator: {
-            propertyID: 'access-token',
+            propertyID: "access-token",
             validate: isValidTokenProperty
         }
     })
@@ -171,7 +171,7 @@ export function validateRefreshTokenResponseProperty({
         resolvedResponseType,
         responseProperty: refreshTokenProperty,
         propertyValidator: {
-            propertyID: 'refresh-token',
+            propertyID: "refresh-token",
             validate: isValidTokenProperty
         }
     })
@@ -197,7 +197,7 @@ export function validateExpiresInResponseProperty({
         resolvedResponseType,
         responseProperty: expiresInProperty,
         propertyValidator: {
-            propertyID: 'expires-in',
+            propertyID: "expires-in",
             validate: isValidExpiresInProperty
         }
     })
@@ -263,7 +263,7 @@ function validateRequestProperty({
     const requestPropertyComponents = getRequestPropertyComponents(requestProperty)
     if (requestPropertyComponents == null) {
         violations.push({
-            severity: 'fatal',
+            severity: "fatal",
             message: `OAuth configuration for endpoint ${chalk.bold(endpointId)} must define a dot-delimited '${
                 propertyValidator.propertyID
             }' property starting with $request (e.g. $request.${propertyValidator.propertyID}).`
@@ -273,7 +273,7 @@ function validateRequestProperty({
     if (requestPropertyComponents.length > 1) {
         // For now, we prevent request properties from being nested further than the top-level.
         violations.push({
-            severity: 'fatal',
+            severity: "fatal",
             message: `OAuth configuration for endpoint ${chalk.bold(
                 endpointId
             )} cannot reference nested $request properties like '${requestProperty}'; expected '$request.${
@@ -292,7 +292,7 @@ function validateRequestProperty({
         })
     ) {
         violations.push({
-            severity: 'fatal',
+            severity: "fatal",
             message: `OAuth configuration for endpoint ${chalk.bold(endpointId)} specifies '${
                 propertyValidator.propertyID
             }' ${requestProperty}, which is not a valid '${propertyValidator.propertyID}' type.`
@@ -322,7 +322,7 @@ function validateResponseProperty({
     const responsePropertyComponents = getResponsePropertyComponents(responseProperty)
     if (responsePropertyComponents == null) {
         violations.push({
-            severity: 'fatal',
+            severity: "fatal",
             message: `OAuth configuration for endpoint ${chalk.bold(endpointId)} must define a dot-delimited '${
                 propertyValidator.propertyID
             }' property starting with $response (e.g. $response.${propertyValidator.propertyID}).`
@@ -339,7 +339,7 @@ function validateResponseProperty({
         })
     ) {
         violations.push({
-            severity: 'fatal',
+            severity: "fatal",
             message: `OAuth configuration for endpoint ${chalk.bold(endpointId)} specifies '${
                 propertyValidator.propertyID
             }' ${responseProperty}, which is not a valid '${propertyValidator.propertyID}' type.`
@@ -350,9 +350,9 @@ function validateResponseProperty({
 }
 
 function isIntegerType({ resolvedType }: { resolvedType: ResolvedType | undefined }): boolean {
-    return maybePrimitiveType(resolvedType) === 'INTEGER'
+    return maybePrimitiveType(resolvedType) === "INTEGER"
 }
 
 function isStringType({ resolvedType }: { resolvedType: ResolvedType | undefined }): boolean {
-    return maybePrimitiveType(resolvedType) === 'STRING'
+    return maybePrimitiveType(resolvedType) === "STRING"
 }

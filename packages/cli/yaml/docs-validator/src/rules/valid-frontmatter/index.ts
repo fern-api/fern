@@ -1,1 +1,1 @@
-export { ValidFrontmatter } from './valid-frontmatter'
+export { ValidFrontmatter } from "./valid-frontmatter"

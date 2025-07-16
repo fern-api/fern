@@ -1,5 +1,5 @@
-import { assertNever } from '@fern-api/core-utils'
-import { go } from '@fern-api/go-ast'
+import { assertNever } from "@fern-api/core-utils"
+import { go } from "@fern-api/go-ast"
 
 import {
     FilePropertyArray,
@@ -11,15 +11,15 @@ import {
     PathParameter,
     SdkRequest,
     ServiceId
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { SdkGeneratorContext } from '../SdkGeneratorContext'
-import { EndpointSignatureInfo } from './EndpointSignatureInfo'
-import { EndpointRequest } from './request/EndpointRequest'
-import { getEndpointRequest } from './utils/getEndpointRequest'
-import { getEndpointReturnTypes } from './utils/getEndpointReturnTypes'
-import { getEndpointReturnZeroValues } from './utils/getEndpointReturnZeroValue'
-import { getRawEndpointReturnTypeReference } from './utils/getRawEndpointReturnTypeReference'
+import { SdkGeneratorContext } from "../SdkGeneratorContext"
+import { EndpointSignatureInfo } from "./EndpointSignatureInfo"
+import { EndpointRequest } from "./request/EndpointRequest"
+import { getEndpointRequest } from "./utils/getEndpointRequest"
+import { getEndpointReturnTypes } from "./utils/getEndpointReturnTypes"
+import { getEndpointReturnZeroValues } from "./utils/getEndpointReturnZeroValue"
+import { getRawEndpointReturnTypeReference } from "./utils/getRawEndpointReturnTypeReference"
 
 export abstract class AbstractEndpointGenerator {
     protected readonly context: SdkGeneratorContext
@@ -71,7 +71,7 @@ export abstract class AbstractEndpointGenerator {
     }: {
         serviceId: ServiceId
         endpoint: HttpEndpoint
-    }): Pick<EndpointSignatureInfo, 'pathParameters' | 'pathParameterReferences'> {
+    }): Pick<EndpointSignatureInfo, "pathParameters" | "pathParameterReferences"> {
         const service = this.context.getHttpServiceOrThrow(serviceId)
         const includePathParametersInSignature = this.includePathParametersInEndpointSignature({ endpoint })
         const pathParameters: go.Parameter[] = []
@@ -113,11 +113,11 @@ export abstract class AbstractEndpointGenerator {
 
     private getFileParametersFromRequestBody({ requestBody }: { requestBody: HttpRequestBody }): go.Parameter[] {
         switch (requestBody.type) {
-            case 'fileUpload':
+            case "fileUpload":
                 return this.getFileParametersFromFileUpload({ properties: requestBody.properties })
-            case 'reference':
-            case 'inlinedRequestBody':
-            case 'bytes':
+            case "reference":
+            case "inlinedRequestBody":
+            case "bytes":
                 return []
             default:
                 assertNever(requestBody)
@@ -132,10 +132,10 @@ export abstract class AbstractEndpointGenerator {
         const fileParameters: go.Parameter[] = []
         for (const property of properties) {
             switch (property.type) {
-                case 'file':
+                case "file":
                     fileParameters.push(this.getFileParameterFromProperty({ property }))
                     break
-                case 'bodyProperty':
+                case "bodyProperty":
                     break
                 default: {
                     assertNever(property)
@@ -148,9 +148,9 @@ export abstract class AbstractEndpointGenerator {
     private getFileParameterFromProperty({ property }: { property: FileUploadRequestProperty.File_ }): go.Parameter {
         const filePropertyType = property.value.type
         switch (filePropertyType) {
-            case 'file':
+            case "file":
                 return this.getSingleFileParameter({ fileProperty: property.value })
-            case 'fileArray':
+            case "fileArray":
                 return this.getFileArrayParameter({ fileProperty: property.value })
             default:
                 assertNever(filePropertyType)
@@ -181,7 +181,7 @@ export abstract class AbstractEndpointGenerator {
         if (request == null) {
             return undefined
         }
-        if (endpoint.sdkRequest?.shape.type === 'wrapper') {
+        if (endpoint.sdkRequest?.shape.type === "wrapper") {
             if (this.context.shouldSkipWrappedRequest({ endpoint, wrapper: endpoint.sdkRequest.shape })) {
                 return undefined
             }
@@ -198,10 +198,10 @@ export abstract class AbstractEndpointGenerator {
             return true
         }
         switch (shape.type) {
-            case 'wrapper': {
+            case "wrapper": {
                 return !this.context.includePathParametersInWrappedRequest({ endpoint, wrapper: shape })
             }
-            case 'justRequestBody': {
+            case "justRequestBody": {
                 return true
             }
             default: {

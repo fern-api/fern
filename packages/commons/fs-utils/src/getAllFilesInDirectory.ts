@@ -1,5 +1,5 @@
-import { readdir } from 'fs/promises'
-import path from 'path'
+import { readdir } from "fs/promises"
+import path from "path"
 
 export async function getAllFilesInDirectory(dir: string): Promise<string[]> {
     const files = await readdir(dir, { withFileTypes: true })
@@ -10,7 +10,7 @@ export async function getAllFilesInDirectory(dir: string): Promise<string[]> {
             return getAllFilesInDirectory(filePath)
         }
 
-        if (file.isSymbolicLink() || file.name.startsWith('.')) {
+        if (file.isSymbolicLink() || file.name.startsWith(".")) {
             return []
         }
 

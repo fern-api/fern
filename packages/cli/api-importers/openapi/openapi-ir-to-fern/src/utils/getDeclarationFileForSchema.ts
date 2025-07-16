@@ -1,35 +1,35 @@
-import { camelCase } from 'lodash-es'
+import { camelCase } from "lodash-es"
 
-import { FERN_PACKAGE_MARKER_FILENAME } from '@fern-api/configuration'
-import { assertNever } from '@fern-api/core-utils'
-import { Schema, SdkGroupName } from '@fern-api/openapi-ir'
-import { RelativeFilePath } from '@fern-api/path-utils'
+import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration"
+import { assertNever } from "@fern-api/core-utils"
+import { Schema, SdkGroupName } from "@fern-api/openapi-ir"
+import { RelativeFilePath } from "@fern-api/path-utils"
 
-import { convertSdkGroupNameToFile } from './convertSdkGroupName'
+import { convertSdkGroupNameToFile } from "./convertSdkGroupName"
 
 const PACKAGE_MARKER_RELATIVE_FILEPATH = RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME)
 
 export function getDeclarationFileForSchema(schema: Schema): RelativeFilePath {
     switch (schema.type) {
-        case 'object':
-        case 'primitive':
-        case 'enum':
-        case 'array':
-        case 'map':
-        case 'reference':
-        case 'literal':
-        case 'optional':
-        case 'nullable':
+        case "object":
+        case "primitive":
+        case "enum":
+        case "array":
+        case "map":
+        case "reference":
+        case "literal":
+        case "optional":
+        case "nullable":
             return getDeclarationFileFromGroupName({
                 namespace: schema.namespace,
                 groupName: schema.groupName
             })
-        case 'oneOf':
+        case "oneOf":
             return getDeclarationFileFromGroupName({
                 namespace: schema.value.namespace,
                 groupName: schema.value.groupName
             })
-        case 'unknown':
+        case "unknown":
             return PACKAGE_MARKER_RELATIVE_FILEPATH
         default:
             assertNever(schema)
@@ -52,7 +52,7 @@ function getDeclarationFileFromGroupName({
     if (namespace != null && groupName != null) {
         return convertSdkGroupNameToFile([
             {
-                type: 'namespace',
+                type: "namespace",
                 name: namespace
             },
             ...groupName
@@ -61,7 +61,7 @@ function getDeclarationFileFromGroupName({
     if (namespace != null) {
         return convertSdkGroupNameToFile([
             {
-                type: 'namespace',
+                type: "namespace",
                 name: namespace
             }
         ])

@@ -1,8 +1,8 @@
-import { GeneratedExpressError } from '@fern-typescript/contexts'
+import { GeneratedExpressError } from "@fern-typescript/contexts"
 
-import { ErrorDeclaration } from '@fern-fern/ir-sdk/api'
+import { ErrorDeclaration } from "@fern-fern/ir-sdk/api"
 
-import { GeneratedExpressErrorImpl } from './GeneratedExpressErrorImpl'
+import { GeneratedExpressErrorImpl } from "./GeneratedExpressErrorImpl"
 
 export declare namespace ExpressErrorGenerator {
     export namespace generateError {

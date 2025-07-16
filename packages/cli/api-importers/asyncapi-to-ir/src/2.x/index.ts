@@ -1,1 +1,1 @@
-export * as AsyncAPIV2 from './types'
+export * as AsyncAPIV2 from "./types"

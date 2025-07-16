@@ -1,12 +1,12 @@
-import { DescriptorProto, EnumDescriptorProto } from '@bufbuild/protobuf/wkt'
+import { DescriptorProto, EnumDescriptorProto } from "@bufbuild/protobuf/wkt"
 
-import { FernIr, TypeId } from '@fern-api/ir-sdk'
-import { AbstractConverter, AbstractConverterContext } from '@fern-api/v2-importer-commons'
+import { FernIr, TypeId } from "@fern-api/ir-sdk"
+import { AbstractConverter, AbstractConverterContext } from "@fern-api/v2-importer-commons"
 
-import { ProtofileConverterContext } from '../ProtofileConverterContext'
-import { SOURCE_CODE_INFO_PATH_STARTERS } from '../utils/PathFieldNumbers'
-import { EnumConverter } from './EnumConverter'
-import { MessageConverter } from './MessageConverter'
+import { ProtofileConverterContext } from "../ProtofileConverterContext"
+import { SOURCE_CODE_INFO_PATH_STARTERS } from "../utils/PathFieldNumbers"
+import { EnumConverter } from "./EnumConverter"
+import { MessageConverter } from "./MessageConverter"
 
 export declare namespace EnumOrMessageConverter {
     export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {
@@ -57,7 +57,7 @@ export class EnumOrMessageConverter extends AbstractConverter<
     }
 
     private tryConvertGrpcEnum(): EnumOrMessageConverter.Output | undefined {
-        if (this.schema.$typeName === 'google.protobuf.EnumDescriptorProto') {
+        if (this.schema.$typeName === "google.protobuf.EnumDescriptorProto") {
             const enumConverter = new EnumConverter({
                 context: this.context,
                 breadcrumbs: [...this.breadcrumbs, this.schema.name],
@@ -84,7 +84,7 @@ export class EnumOrMessageConverter extends AbstractConverter<
     }
 
     private tryConvertGrpcMessage(): EnumOrMessageConverter.Output | undefined {
-        if (this.schema.$typeName === 'google.protobuf.DescriptorProto') {
+        if (this.schema.$typeName === "google.protobuf.DescriptorProto") {
             const messageConverter = new MessageConverter({
                 context: this.context,
                 breadcrumbs: [...this.breadcrumbs, this.schema.name],

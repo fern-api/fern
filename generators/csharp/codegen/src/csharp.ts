@@ -23,9 +23,9 @@ import {
     Ternary,
     TestClass,
     TypeParameter
-} from './ast'
-import { ReadOnlyMemory } from './ast/ReadOnlymemory'
-import { XmlDocBlock } from './ast/XmlDocBlock'
+} from "./ast"
+import { ReadOnlyMemory } from "./ast/ReadOnlymemory"
+import { XmlDocBlock } from "./ast/XmlDocBlock"
 
 export function class_(args: Class.Args): Class {
     return new Class(args)
@@ -80,7 +80,7 @@ export function parameter(args: Parameter.Args): Parameter {
 }
 
 export function typeParameter(args: string | TypeParameter.Args): TypeParameter {
-    if (typeof args === 'string') {
+    if (typeof args === "string") {
         args = { name: args }
     }
     return new TypeParameter(args)
@@ -159,6 +159,6 @@ export {
     VALID_READ_ONLY_MEMORY_TYPES,
     convertReadOnlyPrimitiveTypes,
     String_
-} from './ast'
-export { type ConstructorField } from './ast/TypeLiteral'
-export { AstNode } from './ast/core/AstNode'
+} from "./ast"
+export { type ConstructorField } from "./ast/TypeLiteral"
+export { AstNode } from "./ast/core/AstNode"

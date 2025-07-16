@@ -1,7 +1,7 @@
-import { AbstractAstNode, AbstractFormatter, AbstractWriter } from '@fern-api/browser-compatible-base-generator'
+import { AbstractAstNode, AbstractFormatter, AbstractWriter } from "@fern-api/browser-compatible-base-generator"
 
-import { BaseRubyCustomConfigSchema } from '../../custom-config/BaseRubyCustomConfigSchema'
-import { RubyFile } from './RubyFile'
+import { BaseRubyCustomConfigSchema } from "../../custom-config/BaseRubyCustomConfigSchema"
+import { RubyFile } from "./RubyFile"
 
 export abstract class AstNode extends AbstractAstNode {
     /**

@@ -1,11 +1,11 @@
-import { AbstractFormatter, FernGeneratorExec, GeneratorNotificationService } from '@fern-api/base-generator'
-import { AbstractCsharpGeneratorContext, AsIsFiles } from '@fern-api/csharp-base'
-import { CsharpFormatter } from '@fern-api/csharp-formatter'
-import { RelativeFilePath } from '@fern-api/fs-utils'
+import { AbstractFormatter, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator"
+import { AbstractCsharpGeneratorContext, AsIsFiles } from "@fern-api/csharp-base"
+import { CsharpFormatter } from "@fern-api/csharp-formatter"
+import { RelativeFilePath } from "@fern-api/fs-utils"
 
-import { FernFilepath, IntermediateRepresentation, TypeId, WellKnownProtobufType } from '@fern-fern/ir-sdk/api'
+import { FernFilepath, IntermediateRepresentation, TypeId, WellKnownProtobufType } from "@fern-fern/ir-sdk/api"
 
-import { ModelCustomConfigSchema } from './ModelCustomConfig'
+import { ModelCustomConfigSchema } from "./ModelCustomConfig"
 
 export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelCustomConfigSchema> {
     public readonly formatter: AbstractFormatter
@@ -29,7 +29,7 @@ export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelC
     public getDirectoryForTypeId(typeId: TypeId): RelativeFilePath {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId)
         return RelativeFilePath.of(
-            [...typeDeclaration.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName)].join('/')
+            [...typeDeclaration.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName)].join("/")
         )
     }
 
@@ -38,7 +38,7 @@ export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelC
         return [
             this.getNamespace(),
             ...typeDeclaration.name.fernFilepath.packagePath.map((path) => path.pascalCase.safeName)
-        ].join('.')
+        ].join(".")
     }
 
     public getRawAsIsFiles(): string[] {

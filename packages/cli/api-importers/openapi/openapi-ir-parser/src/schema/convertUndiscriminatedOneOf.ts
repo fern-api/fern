@@ -1,5 +1,5 @@
-import { difference } from 'lodash-es'
-import { OpenAPIV3 } from 'openapi-types'
+import { difference } from "lodash-es"
+import { OpenAPIV3 } from "openapi-types"
 
 import {
     Availability,
@@ -11,20 +11,20 @@ import {
     Source,
     convertNumberToSnakeCase,
     isSchemaEqual
-} from '@fern-api/openapi-ir'
+} from "@fern-api/openapi-ir"
 
-import { SchemaParserContext } from './SchemaParserContext'
-import { convertEnum } from './convertEnum'
-import { convertReferenceObject, convertSchema } from './convertSchemas'
-import { getGeneratedTypeName } from './utils/getSchemaName'
-import { isReferenceObject } from './utils/isReferenceObject'
+import { SchemaParserContext } from "./SchemaParserContext"
+import { convertEnum } from "./convertEnum"
+import { convertReferenceObject, convertSchema } from "./convertSchemas"
+import { getGeneratedTypeName } from "./utils/getSchemaName"
+import { isReferenceObject } from "./utils/isReferenceObject"
 
 export interface UndiscriminatedOneOfPrefixNotFound {
-    type: 'notFound'
+    type: "notFound"
 }
 
 export interface UndiscriminatedOneOfPrefixName {
-    type: 'name'
+    type: "name"
     name: string
 }
 
@@ -114,7 +114,7 @@ export function convertUndiscriminatedOneOf({
             !isReferenceObject(schema) &&
             schema.enum != null &&
             context.options.coerceEnumsToLiterals &&
-            schema.type === 'string'
+            schema.type === "string"
         ) {
             return schema.enum.map((enumValue) => {
                 return SchemaWithExample.literal({
@@ -132,7 +132,7 @@ export function convertUndiscriminatedOneOf({
         let subtypePrefix = derivedSubtypePrefixes[index]
         if (subtypePrefixOverrides != null) {
             const override = subtypePrefixOverrides[index]
-            if (override != null && 'name' in override) {
+            if (override != null && "name" in override) {
                 subtypePrefix = override.name
             }
         }
@@ -203,13 +203,13 @@ function processSubtypes({
     source: Source
 }): SchemaWithExample {
     const everySubTypeIsLiteral = Object.entries(uniqueSubtypes).every(([_, schema]) => {
-        return schema.type === 'literal'
+        return schema.type === "literal"
     })
     if (everySubTypeIsLiteral) {
         const enumDescriptions: Record<string, { description: string }> = {}
         const enumValues: string[] = []
         Object.entries(uniqueSubtypes).forEach(([_, schema]) => {
-            if (schema.type === 'literal' && schema.value.type === 'string') {
+            if (schema.type === "literal" && schema.value.type === "string") {
                 enumValues.push(schema.value.value)
                 if (schema.description != null) {
                     enumDescriptions[schema.value.value] = {
@@ -299,7 +299,7 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
         context.markSchemaWithDiscriminantValue(subtypeReferenceSchema, discriminator.propertyName, discriminantValue)
 
         // If the reference is an object (which I think it has to be?), add the discriminant value as a property
-        if (subtypeReference.type === 'object') {
+        if (subtypeReference.type === "object") {
             subtypeReference.properties = {
                 [discriminator.propertyName]: SchemaWithExample.literal({
                     nameOverride: undefined,
@@ -340,13 +340,13 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
     }
 
     const everySubTypeIsLiteral = Object.entries(uniqueSubtypes).every(([_, schema]) => {
-        return schema.type === 'literal'
+        return schema.type === "literal"
     })
     if (everySubTypeIsLiteral) {
         const enumDescriptions: Record<string, { description: string }> = {}
         const enumValues: string[] = []
         Object.entries(uniqueSubtypes).forEach(([_, schema]) => {
-            if (schema.type === 'literal' && schema.value.type === 'string') {
+            if (schema.type === "literal" && schema.value.type === "string") {
                 enumValues.push(schema.value.value)
                 if (schema.description != null) {
                     enumDescriptions[schema.value.value] = {
@@ -436,13 +436,13 @@ function getUniqueSubTypeNames({
         if (isReferenceObject(schema)) {
             prefixes.push(convertNumberToSnakeCase(i) ?? `${i}`)
         } else if (
-            schema.type === 'array' ||
-            schema.type === 'boolean' ||
-            schema.type === 'integer' ||
-            schema.type === 'number' ||
-            schema.type === 'string'
+            schema.type === "array" ||
+            schema.type === "boolean" ||
+            schema.type === "integer" ||
+            schema.type === "number" ||
+            schema.type === "string"
         ) {
-            prefixes.push('')
+            prefixes.push("")
         } else {
             prefixes.push(convertNumberToSnakeCase(i) ?? `${i}`)
         }

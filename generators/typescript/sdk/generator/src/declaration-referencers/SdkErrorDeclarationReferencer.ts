@@ -1,13 +1,13 @@
-import { ExportedFilePath, Reference, getExportedDirectoriesForFernFilepath } from '@fern-typescript/commons'
+import { ExportedFilePath, Reference, getExportedDirectoriesForFernFilepath } from "@fern-typescript/commons"
 
-import { RelativeFilePath } from '@fern-api/fs-utils'
+import { RelativeFilePath } from "@fern-api/fs-utils"
 
-import { DeclaredErrorName } from '@fern-fern/ir-sdk/api'
+import { DeclaredErrorName } from "@fern-fern/ir-sdk/api"
 
-import { AbstractDeclarationReferencer } from './AbstractDeclarationReferencer'
-import { DeclarationReferencer } from './DeclarationReferencer'
+import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer"
+import { DeclarationReferencer } from "./DeclarationReferencer"
 
-export const ERRORS_DIRECTORY_NAME = 'errors'
+export const ERRORS_DIRECTORY_NAME = "errors"
 
 export class SdkErrorDeclarationReferencer extends AbstractDeclarationReferencer<DeclaredErrorName> {
     public getExportedFilepath(errorName: DeclaredErrorName): ExportedFilePath {

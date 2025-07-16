@@ -1,4 +1,4 @@
-import { PublishInfo } from './PublishInfo'
+import { PublishInfo } from "./PublishInfo"
 
 export interface NpmPackage {
     packageName: string

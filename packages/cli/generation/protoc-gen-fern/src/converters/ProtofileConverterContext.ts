@@ -1,12 +1,12 @@
-import { CodeGeneratorRequest, DescriptorProto, FileDescriptorProto } from '@bufbuild/protobuf/wkt'
-import { OpenAPIV3_1 } from 'openapi-types'
+import { CodeGeneratorRequest, DescriptorProto, FileDescriptorProto } from "@bufbuild/protobuf/wkt"
+import { OpenAPIV3_1 } from "openapi-types"
 
-import { TypeReference } from '@fern-api/ir-sdk'
-import { AbstractConverterContext, Spec } from '@fern-api/v2-importer-commons'
+import { TypeReference } from "@fern-api/ir-sdk"
+import { AbstractConverterContext, Spec } from "@fern-api/v2-importer-commons"
 
-import { EnumOrMessageConverter } from './message/EnumOrMessageConverter'
-import { CommentNode, PathStarterValues } from './utils/CreateGlobalCommentsStore'
-import { SOURCE_CODE_INFO_PATH_STARTERS } from './utils/PathFieldNumbers'
+import { EnumOrMessageConverter } from "./message/EnumOrMessageConverter"
+import { CommentNode, PathStarterValues } from "./utils/CreateGlobalCommentsStore"
+import { SOURCE_CODE_INFO_PATH_STARTERS } from "./utils/PathFieldNumbers"
 
 export declare namespace ProtofileConverterContext {
     export interface Args extends Spec.Args<FileDescriptorProto> {
@@ -61,7 +61,7 @@ export class ProtofileConverterContext extends AbstractConverterContext<FileDesc
         if (this.maybeRemoveLeadingPeriod(name).startsWith(this.spec.package)) {
             return name
         }
-        return this.spec.package + '.' + name
+        return this.spec.package + "." + name
     }
 
     public convertReferenceToTypeReference({
@@ -102,15 +102,15 @@ export class ProtofileConverterContext extends AbstractConverterContext<FileDesc
     }
 
     public maybeRemoveLeadingPeriod(typeName: string): string {
-        if (typeName.startsWith('.')) {
+        if (typeName.startsWith(".")) {
             return typeName.slice(1)
         }
         return typeName
     }
 
     public maybeRemoveGrpcPackagePrefix(typeName: string): string {
-        const typeParts = typeName.split('.').filter((part) => part !== '')
-        const packageParts = this.spec.package.split('.').filter((part) => part !== '')
+        const typeParts = typeName.split(".").filter((part) => part !== "")
+        const packageParts = this.spec.package.split(".").filter((part) => part !== "")
 
         while (typeParts.length > 0 && packageParts.length > 0) {
             if (typeParts[0] !== packageParts[0]) {
@@ -124,7 +124,7 @@ export class ProtofileConverterContext extends AbstractConverterContext<FileDesc
             return typeName
         }
 
-        return typeParts.join('.')
+        return typeParts.join(".")
     }
 
     public updateTypeId(

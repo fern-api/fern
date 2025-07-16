@@ -1,13 +1,13 @@
-import { AbsoluteFilePath } from '@fern-api/fs-utils'
-import { createMockTaskContext } from '@fern-api/task-context'
+import { AbsoluteFilePath } from "@fern-api/fs-utils"
+import { createMockTaskContext } from "@fern-api/task-context"
 
 import {
     MigratedIntermediateMigration,
     getIntermediateRepresentationMigrator
-} from '../../IntermediateRepresentationMigrator'
-import { IrMigrationContext } from '../../IrMigrationContext'
-import { IrMigration } from '../../types/IrMigration'
-import { getIrForApi } from './getIrForApi'
+} from "../../IntermediateRepresentationMigrator"
+import { IrMigrationContext } from "../../IrMigrationContext"
+import { IrMigration } from "../../types/IrMigration"
+import { getIrForApi } from "./getIrForApi"
 
 export interface MigrationTesterArgs {
     pathToFixture: AbsoluteFilePath
@@ -29,8 +29,8 @@ async function runFixtureThroughMigration<LaterVersion, EarlierVersion>(
         intermediateRepresentation: await getIrForApi(pathToFixture),
         context: context?.taskContext ?? createMockTaskContext(),
         targetGenerator: context?.targetGenerator ?? {
-            name: '',
-            version: ''
+            name: "",
+            version: ""
         }
     })
     return migrated

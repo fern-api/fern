@@ -1,13 +1,13 @@
-import { NodePath } from '@fern-api/fern-definition-schema'
-import { RelativeFilePath } from '@fern-api/fs-utils'
+import { NodePath } from "@fern-api/fern-definition-schema"
+import { RelativeFilePath } from "@fern-api/fs-utils"
 
-import { RuleVisitor } from './Rule'
-import { ValidationViolation } from './ValidationViolation'
+import { RuleVisitor } from "./Rule"
+import { ValidationViolation } from "./ValidationViolation"
 import {
     DocsConfigFileAstNodeTypes,
     DocsConfigFileAstNodeVisitor,
     DocsConfigFileAstVisitor
-} from './docsAst/DocsConfigFileAstVisitor'
+} from "./docsAst/DocsConfigFileAstVisitor"
 
 export function createDocsConfigFileAstVisitorForRules({
     relativeFilepath,
@@ -33,7 +33,7 @@ export function createDocsConfigFileAstVisitorForRules({
                         ruleViolations.map((violation) => ({
                             name: violation.name,
                             severity: violation.severity,
-                            relativeFilepath: violation.relativeFilepath ?? RelativeFilePath.of(''),
+                            relativeFilepath: violation.relativeFilepath ?? RelativeFilePath.of(""),
                             nodePath,
                             message: violation.message
                         }))
@@ -46,12 +46,12 @@ export function createDocsConfigFileAstVisitorForRules({
     }
 
     return {
-        ...createAstNodeVisitor('file'),
-        ...createAstNodeVisitor('filepath'),
-        ...createAstNodeVisitor('markdownPage'),
-        ...createAstNodeVisitor('versionFile'),
-        ...createAstNodeVisitor('apiSection'),
-        ...createAstNodeVisitor('permissions'),
-        ...createAstNodeVisitor('productFile')
+        ...createAstNodeVisitor("file"),
+        ...createAstNodeVisitor("filepath"),
+        ...createAstNodeVisitor("markdownPage"),
+        ...createAstNodeVisitor("versionFile"),
+        ...createAstNodeVisitor("apiSection"),
+        ...createAstNodeVisitor("permissions"),
+        ...createAstNodeVisitor("productFile")
     }
 }

@@ -1,15 +1,15 @@
-import { Browser, launch } from 'puppeteer'
+import { Browser, launch } from "puppeteer"
 
 const userAgent =
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
 
 const headers = {
-    'Accept-Language': 'en-US,en;q=0.9',
-    Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
-    'User-Agent':
-        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
-    'Accept-Encoding': 'gzip, deflate, br, zstd',
-    Connection: 'keep-alive'
+    "Accept-Language": "en-US,en;q=0.9",
+    Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "User-Agent":
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
+    "Accept-Encoding": "gzip, deflate, br, zstd",
+    Connection: "keep-alive"
 }
 
 async function exponentialBackoff<T>(
@@ -32,9 +32,9 @@ async function exponentialBackoff<T>(
 
 export async function startPuppeteer(): Promise<Browser> {
     try {
-        return await launch({ headless: 'new', ignoreHTTPSErrors: true })
+        return await launch({ headless: "new", ignoreHTTPSErrors: true })
     } catch (error) {
-        throw new Error('Could not create a Puppeteer instance')
+        throw new Error("Could not create a Puppeteer instance")
     }
 }
 
@@ -55,7 +55,7 @@ export async function getHtmlWithPuppeteer(browser: Browser, url: string | URL):
 
         await exponentialBackoff(() =>
             page.goto(url.toString(), {
-                waitUntil: 'networkidle2',
+                waitUntil: "networkidle2",
                 timeout: 30000
             })
         )
@@ -63,7 +63,7 @@ export async function getHtmlWithPuppeteer(browser: Browser, url: string | URL):
         await page.close()
         return content
     } catch (error) {
-        throw new Error('Failed to download page from Puppeteer')
+        throw new Error("Failed to download page from Puppeteer")
     }
 }
 
@@ -75,7 +75,7 @@ async function fetchPageResponse(url: string | URL): Promise<string> {
         }
         return await res.text()
     } catch (error) {
-        throw new Error('Failed to fetch page from source')
+        throw new Error("Failed to fetch page from source")
     }
 }
 
@@ -90,7 +90,7 @@ export async function fetchPageHtml({ url, browser }: { url: string | URL; brows
         if (res) {
             return res
         }
-        throw new Error('An unknown error occurred.')
+        throw new Error("An unknown error occurred.")
     } catch (error) {
         throw new Error(`Error retrieving HTML for ${url.toString()}`)
     }

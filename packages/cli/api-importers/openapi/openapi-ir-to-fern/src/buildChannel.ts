@@ -1,14 +1,14 @@
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { WebsocketChannel } from '@fern-api/openapi-ir'
-import { RelativeFilePath } from '@fern-api/path-utils'
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { WebsocketChannel } from "@fern-api/openapi-ir"
+import { RelativeFilePath } from "@fern-api/path-utils"
 
-import { OpenApiIrConverterContext } from './OpenApiIrConverterContext'
-import { buildHeader } from './buildHeader'
-import { buildPathParameter } from './buildPathParameter'
-import { buildQueryParameter } from './buildQueryParameter'
-import { buildTypeReference } from './buildTypeReference'
-import { buildWebsocketSessionExample } from './buildWebsocketSessionExample'
-import { getNamespaceFromGroup } from './utils/getNamespaceFromGroup'
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext"
+import { buildHeader } from "./buildHeader"
+import { buildPathParameter } from "./buildPathParameter"
+import { buildQueryParameter } from "./buildQueryParameter"
+import { buildTypeReference } from "./buildTypeReference"
+import { buildWebsocketSessionExample } from "./buildWebsocketSessionExample"
+import { getNamespaceFromGroup } from "./utils/getNamespaceFromGroup"
 
 export function buildChannel({
     channel,
@@ -32,7 +32,7 @@ export function buildChannel({
     }
 
     if (channel.summary != null) {
-        convertedChannel['display-name'] = channel.summary
+        convertedChannel["display-name"] = channel.summary
     }
 
     if (channel.description != null) {
@@ -53,7 +53,7 @@ export function buildChannel({
         }
     }
     if (Object.keys(pathParameters).length > 0) {
-        convertedChannel['path-parameters'] = pathParameters
+        convertedChannel["path-parameters"] = pathParameters
     }
 
     const queryParameters: Record<string, RawSchemas.HttpQueryParameterSchema> = {}
@@ -73,7 +73,7 @@ export function buildChannel({
         }
     }
     if (Object.keys(queryParameters).length > 0) {
-        convertedChannel['query-parameters'] = queryParameters
+        convertedChannel["query-parameters"] = queryParameters
     }
 
     const headers: Record<string, RawSchemas.HttpHeaderSchema> = {}

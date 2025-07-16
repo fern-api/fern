@@ -1,6 +1,6 @@
-import { AstNode } from '../ruby'
-import { Parameter } from './Parameter'
-import { Writer } from './core/Writer'
+import { AstNode } from "../ruby"
+import { Parameter } from "./Parameter"
+import { Writer } from "./core/Writer"
 
 export declare namespace PositionalParameter {
     interface Args extends Parameter.Args {
@@ -28,7 +28,7 @@ export class PositionalParameter extends Parameter {
 
     public writeTypeDefinition(writer: Writer): void {
         if (this.optional) {
-            writer.write('?')
+            writer.write("?")
         }
 
         this.type.writeTypeDefinition(writer)

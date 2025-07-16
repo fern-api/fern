@@ -1,12 +1,12 @@
-import chalk from 'chalk'
+import chalk from "chalk"
 
-import { ROOT_API_FILENAME } from '@fern-api/configuration-loader'
+import { ROOT_API_FILENAME } from "@fern-api/configuration-loader"
 
-import { Rule, RuleViolation } from '../../Rule'
-import { getAllEnvironmentUrlIds } from '../../utils/getAllEnvironmentUriIds'
+import { Rule, RuleViolation } from "../../Rule"
+import { getAllEnvironmentUrlIds } from "../../utils/getAllEnvironmentUriIds"
 
 export const ValidServiceUrlsRule: Rule = {
-    name: 'valid-service-urls',
+    name: "valid-service-urls",
     create: ({ workspace }) => {
         const urlIds = getAllEnvironmentUrlIds(workspace)
 
@@ -15,14 +15,14 @@ export const ValidServiceUrlsRule: Rule = {
                 return []
             }
 
-            if (urlIds.length === 0 && workspace.definition.rootApiFile.contents?.['default-url'] != null) {
+            if (urlIds.length === 0 && workspace.definition.rootApiFile.contents?.["default-url"] != null) {
                 return []
             }
 
             if (urlIds.length === 0) {
                 return [
                     {
-                        severity: 'fatal',
+                        severity: "fatal",
                         message: `"url" cannot be configured unless you specify multiple URLs for each environment in ${ROOT_API_FILENAME}`
                     }
                 ]
@@ -30,13 +30,13 @@ export const ValidServiceUrlsRule: Rule = {
 
             return [
                 {
-                    severity: 'fatal',
+                    severity: "fatal",
                     message: [
                         `URL ${chalk.bold(
                             url
                         )} is not recognized. Please add it to your environments in ${ROOT_API_FILENAME} or specify one of the configured environment URLs:`,
                         ...urlIds.map((urlId) => `  - ${urlId}`)
-                    ].join('\n')
+                    ].join("\n")
                 }
             ]
         }
@@ -50,7 +50,7 @@ export const ValidServiceUrlsRule: Rule = {
                     return validateBaseUrl(url)
                 },
                 endpointBaseUrl: ({ baseUrl, service }) => {
-                    if (workspace.definition.rootApiFile.contents?.['default-url']) {
+                    if (workspace.definition.rootApiFile.contents?.["default-url"]) {
                         return []
                     }
 
@@ -60,11 +60,11 @@ export const ValidServiceUrlsRule: Rule = {
                         }
                         return [
                             {
-                                severity: 'fatal',
+                                severity: "fatal",
                                 message: [
                                     '"url" is missing. Please specify one of the configured environment URLs:',
                                     ...urlIds.map((urlId) => `  - ${urlId}`)
-                                ].join('\n')
+                                ].join("\n")
                             }
                         ]
                     }

@@ -1,9 +1,9 @@
-import { ExportsManager, ImportsManager, Reference } from '@fern-typescript/commons'
-import { GeneratedGenericAPISdkError, GenericAPISdkErrorContext } from '@fern-typescript/contexts'
-import { GenericAPISdkErrorGenerator } from '@fern-typescript/generic-sdk-error-generators'
-import { SourceFile } from 'ts-morph'
+import { ExportsManager, ImportsManager, Reference } from "@fern-typescript/commons"
+import { GeneratedGenericAPISdkError, GenericAPISdkErrorContext } from "@fern-typescript/contexts"
+import { GenericAPISdkErrorGenerator } from "@fern-typescript/generic-sdk-error-generators"
+import { SourceFile } from "ts-morph"
 
-import { GenericAPISdkErrorDeclarationReferencer } from '../../declaration-referencers/GenericAPISdkErrorDeclarationReferencer'
+import { GenericAPISdkErrorDeclarationReferencer } from "../../declaration-referencers/GenericAPISdkErrorDeclarationReferencer"
 
 export declare namespace GenericAPISdkErrorContextImpl {
     export interface Init {

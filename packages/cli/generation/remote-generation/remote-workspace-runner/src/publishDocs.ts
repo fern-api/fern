@@ -1,24 +1,24 @@
-import axios from 'axios'
-import chalk from 'chalk'
-import { readFile } from 'fs/promises'
-import { chunk } from 'lodash-es'
-import * as mime from 'mime-types'
-import terminalLink from 'terminal-link'
+import axios from "axios"
+import chalk from "chalk"
+import { readFile } from "fs/promises"
+import { chunk } from "lodash-es"
+import * as mime from "mime-types"
+import terminalLink from "terminal-link"
 
-import { FernToken } from '@fern-api/auth'
-import { docsYml } from '@fern-api/configuration'
-import { createFdrService } from '@fern-api/core'
-import { MediaType } from '@fern-api/core-utils'
-import { DocsDefinitionResolver, UploadedFile, wrapWithHttps } from '@fern-api/docs-resolver'
-import { AbsoluteFilePath, RelativeFilePath, convertToFernHostRelativeFilePath, resolve } from '@fern-api/fs-utils'
-import { convertIrToFdrApi } from '@fern-api/register'
-import { TaskContext } from '@fern-api/task-context'
-import { AbstractAPIWorkspace, DocsWorkspace } from '@fern-api/workspace-loader'
+import { FernToken } from "@fern-api/auth"
+import { docsYml } from "@fern-api/configuration"
+import { createFdrService } from "@fern-api/core"
+import { MediaType } from "@fern-api/core-utils"
+import { DocsDefinitionResolver, UploadedFile, wrapWithHttps } from "@fern-api/docs-resolver"
+import { AbsoluteFilePath, RelativeFilePath, convertToFernHostRelativeFilePath, resolve } from "@fern-api/fs-utils"
+import { convertIrToFdrApi } from "@fern-api/register"
+import { TaskContext } from "@fern-api/task-context"
+import { AbstractAPIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader"
 
-import { FernRegistry as CjsFdrSdk } from '@fern-fern/fdr-cjs-sdk'
+import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk"
 
-import { OSSWorkspace } from '../../../../workspace/lazy-fern-workspace/src'
-import { measureImageSizes } from './measureImageSizes'
+import { OSSWorkspace } from "../../../../workspace/lazy-fern-workspace/src"
+import { measureImageSizes } from "./measureImageSizes"
 
 const MEASURE_IMAGE_BATCH_SIZE = 10
 const UPLOAD_FILE_BATCH_SIZE = 10
@@ -58,8 +58,8 @@ export async function publishDocs({
 }): Promise<void> {
     const fdr = createFdrService({ token: token.value })
     const authConfig: CjsFdrSdk.docs.v2.write.AuthConfig = isPrivate
-        ? { type: 'private', authType: 'sso' }
-        : { type: 'public' }
+        ? { type: "private", authType: "sso" }
+        : { type: "public" }
 
     let docsRegistrationId: string | undefined
     let urlToOutput = customDomains[0] ?? domain
@@ -112,7 +112,7 @@ export async function publishDocs({
             if (preview) {
                 const startDocsRegisterResponse = await fdr.docs.v2.write.startDocsPreviewRegister({
                     orgId: CjsFdrSdk.OrgId(organization),
-                    authConfig: isPrivate ? { type: 'private', authType: 'sso' } : { type: 'public' },
+                    authConfig: isPrivate ? { type: "private", authType: "sso" } : { type: "public" },
                     filepaths: filepaths.map((filePath) => CjsFdrSdk.docs.v1.write.FilePath(filePath)),
                     images,
                     basePath
@@ -138,7 +138,7 @@ export async function publishDocs({
                     domain,
                     customDomains,
                     authConfig,
-                    apiId: CjsFdrSdk.ApiId(''),
+                    apiId: CjsFdrSdk.ApiId(""),
                     orgId: CjsFdrSdk.OrgId(organization),
                     filepaths: filepaths.map((filePath) => CjsFdrSdk.docs.v1.write.FilePath(filePath)),
                     images
@@ -177,10 +177,10 @@ export async function publishDocs({
                 return response.body.apiDefinitionId
             } else {
                 switch (response.error.error) {
-                    case 'UnauthorizedError':
-                    case 'UserNotInOrgError': {
+                    case "UnauthorizedError":
+                    case "UserNotInOrgError": {
                         return context.failAndThrow(
-                            'You do not have permissions to register the docs. Reach out to support@buildwithfern.com'
+                            "You do not have permissions to register the docs. Reach out to support@buildwithfern.com"
                         )
                     }
                     default:
@@ -213,10 +213,10 @@ export async function publishDocs({
                 return response.body.apiDefinitionId
             } else {
                 switch (response.error.error) {
-                    case 'UnauthorizedError':
-                    case 'UserNotInOrgError': {
+                    case "UnauthorizedError":
+                    case "UserNotInOrgError": {
                         return context.failAndThrow(
-                            'You do not have permissions to register the docs. Reach out to support@buildwithfern.com'
+                            "You do not have permissions to register the docs. Reach out to support@buildwithfern.com"
                         )
                     }
                     default:
@@ -237,10 +237,10 @@ export async function publishDocs({
     const docsDefinition = await resolver.resolve()
 
     if (docsRegistrationId == null) {
-        return context.failAndThrow('Failed to publish docs.', 'Docs registration ID is missing.')
+        return context.failAndThrow("Failed to publish docs.", "Docs registration ID is missing.")
     }
 
-    context.logger.debug('Publishing docs...')
+    context.logger.debug("Publishing docs...")
     const registerDocsResponse = await fdr.docs.v2.write.finishDocsRegister(
         CjsFdrSdk.docs.v1.write.DocsRegistrationId(docsRegistrationId),
         {
@@ -254,16 +254,16 @@ export async function publishDocs({
         context.logger.info(chalk.green(`Published docs to ${link}`))
     } else {
         switch (registerDocsResponse.error.error) {
-            case 'UnauthorizedError':
-            case 'UserNotInOrgError':
-                return context.failAndThrow('Insufficient permissions. Failed to publish docs to ' + domain)
-            case 'DocsRegistrationIdNotFound':
+            case "UnauthorizedError":
+            case "UserNotInOrgError":
+                return context.failAndThrow("Insufficient permissions. Failed to publish docs to " + domain)
+            case "DocsRegistrationIdNotFound":
                 return context.failAndThrow(
-                    'Failed to publish docs to ' + domain,
+                    "Failed to publish docs to " + domain,
                     `Docs registration ID ${docsRegistrationId} does not exist.`
                 )
             default:
-                return context.failAndThrow('Failed to publish docs to ' + domain, registerDocsResponse.error)
+                return context.failAndThrow("Failed to publish docs to " + domain, registerDocsResponse.error)
         }
     }
 }
@@ -288,7 +288,7 @@ async function uploadFiles(
                     const mimeType = mime.lookup(absoluteFilePath)
                     await axios.put(uploadUrl, await readFile(absoluteFilePath), {
                         headers: {
-                            'Content-Type': mimeType === false ? 'application/octet-stream' : mimeType
+                            "Content-Type": mimeType === false ? "application/octet-stream" : mimeType
                         }
                     })
                 } catch (e) {
@@ -327,32 +327,32 @@ async function startDocsRegisterFailed(
     context: TaskContext
 ): Promise<never> {
     await context.instrumentPostHogEvent({
-        command: 'docs-generation',
+        command: "docs-generation",
         properties: {
             error: JSON.stringify(error)
         }
     })
     switch (error.error) {
-        case 'InvalidCustomDomainError':
+        case "InvalidCustomDomainError":
             return context.failAndThrow(
-                `Your docs domain should end with ${process.env.DOCS_DOMAIN_SUFFIX ?? 'docs.buildwithfern.com'}`
+                `Your docs domain should end with ${process.env.DOCS_DOMAIN_SUFFIX ?? "docs.buildwithfern.com"}`
             )
-        case 'InvalidDomainError':
+        case "InvalidDomainError":
             return context.failAndThrow(
-                'Please make sure that none of your custom domains are not overlapping (i.e. one is a substring of another)'
+                "Please make sure that none of your custom domains are not overlapping (i.e. one is a substring of another)"
             )
-        case 'UnauthorizedError':
-            return context.failAndThrow('Please make sure that your FERN_TOKEN is set.')
-        case 'UserNotInOrgError':
+        case "UnauthorizedError":
+            return context.failAndThrow("Please make sure that your FERN_TOKEN is set.")
+        case "UserNotInOrgError":
             return context.failAndThrow(
-                'Please verify if you have access to the organization you are trying to publish the docs to. If you are not a member of the organization, please reach out to the organization owner.'
+                "Please verify if you have access to the organization you are trying to publish the docs to. If you are not a member of the organization, please reach out to the organization owner."
             )
-        case 'UnavailableError':
+        case "UnavailableError":
             return context.failAndThrow(
-                'Failed to publish docs. Please try again later or reach out to Fern support at support@buildwithfern.com.'
+                "Failed to publish docs. Please try again later or reach out to Fern support at support@buildwithfern.com."
             )
         default:
-            return context.failAndThrow('Failed to publish docs.', error)
+            return context.failAndThrow("Failed to publish docs.", error)
     }
 }
 

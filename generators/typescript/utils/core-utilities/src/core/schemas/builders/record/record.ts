@@ -1,10 +1,10 @@
-import { MaybeValid, Schema, SchemaType, ValidationError } from '../../Schema'
-import { entries } from '../../utils/entries'
-import { getErrorMessageForIncorrectType } from '../../utils/getErrorMessageForIncorrectType'
-import { isPlainObject } from '../../utils/isPlainObject'
-import { maybeSkipValidation } from '../../utils/maybeSkipValidation'
-import { getSchemaUtils } from '../schema-utils'
-import { BaseRecordSchema, RecordSchema } from './types'
+import { MaybeValid, Schema, SchemaType, ValidationError } from "../../Schema"
+import { entries } from "../../utils/entries"
+import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType"
+import { isPlainObject } from "../../utils/isPlainObject"
+import { maybeSkipValidation } from "../../utils/maybeSkipValidation"
+import { getSchemaUtils } from "../schema-utils"
+import { BaseRecordSchema, RecordSchema } from "./types"
 
 export function record<RawKey extends string | number, RawValue, ParsedValue, ParsedKey extends string | number>(
     keySchema: Schema<RawKey, ParsedKey>,
@@ -73,7 +73,7 @@ function validateAndTransformRecord<TransformedKey extends string | number, Tran
             errors: [
                 {
                     path: breadcrumbsPrefix,
-                    message: getErrorMessageForIncorrectType(value, 'object')
+                    message: getErrorMessageForIncorrectType(value, "object")
                 }
             ]
         }

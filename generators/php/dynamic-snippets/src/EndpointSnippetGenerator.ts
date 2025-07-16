@@ -1,14 +1,14 @@
-import { NamedArgument, Scope, Severity } from '@fern-api/browser-compatible-base-generator'
-import { assertNever } from '@fern-api/core-utils'
-import { FernIr } from '@fern-api/dynamic-ir-sdk'
-import { php } from '@fern-api/php-codegen'
+import { NamedArgument, Scope, Severity } from "@fern-api/browser-compatible-base-generator"
+import { assertNever } from "@fern-api/core-utils"
+import { FernIr } from "@fern-api/dynamic-ir-sdk"
+import { php } from "@fern-api/php-codegen"
 
-import { DynamicSnippetsGeneratorContext } from './context/DynamicSnippetsGeneratorContext'
-import { FilePropertyInfo } from './context/FilePropertyMapper'
+import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext"
+import { FilePropertyInfo } from "./context/FilePropertyMapper"
 
-const CLIENT_VAR_NAME = '$client'
-const SNIPPET_NAMESPACE = 'Example'
-const PHP_PREFIX = '<?php\n\n'
+const CLIENT_VAR_NAME = "$client"
+const SNIPPET_NAMESPACE = "Example"
+const PHP_PREFIX = "<?php\n\n"
 
 export class EndpointSnippetGenerator {
     private context: DynamicSnippetsGeneratorContext
@@ -134,7 +134,7 @@ export class EndpointSnippetGenerator {
         return [
             ...authArgs,
             {
-                name: 'options',
+                name: "options",
                 assignment: php.TypeLiteral.map({
                     entries: optionArgs.map((arg) => ({
                         key: php.TypeLiteral.string(arg.name),
@@ -153,8 +153,8 @@ export class EndpointSnippetGenerator {
         values: FernIr.dynamic.AuthValues
     }): NamedArgument[] {
         switch (auth.type) {
-            case 'basic':
-                if (values.type !== 'basic') {
+            case "basic":
+                if (values.type !== "basic") {
                     this.context.errors.add({
                         severity: Severity.Critical,
                         message: this.context.newAuthMismatchError({ auth, values }).message
@@ -162,8 +162,8 @@ export class EndpointSnippetGenerator {
                     return []
                 }
                 return this.getConstructorBasicAuthArgs({ auth, values })
-            case 'bearer':
-                if (values.type !== 'bearer') {
+            case "bearer":
+                if (values.type !== "bearer") {
                     this.context.errors.add({
                         severity: Severity.Critical,
                         message: this.context.newAuthMismatchError({ auth, values }).message
@@ -171,8 +171,8 @@ export class EndpointSnippetGenerator {
                     return []
                 }
                 return this.getConstructorBearerAuthArgs({ auth, values })
-            case 'header':
-                if (values.type !== 'header') {
+            case "header":
+                if (values.type !== "header") {
                     this.context.errors.add({
                         severity: Severity.Critical,
                         message: this.context.newAuthMismatchError({ auth, values }).message
@@ -180,8 +180,8 @@ export class EndpointSnippetGenerator {
                     return []
                 }
                 return this.getConstructorHeaderAuthArgs({ auth, values })
-            case 'oauth':
-                if (values.type !== 'oauth') {
+            case "oauth":
+                if (values.type !== "oauth") {
                     this.context.errors.add({
                         severity: Severity.Critical,
                         message: this.context.newAuthMismatchError({ auth, values }).message
@@ -230,7 +230,7 @@ export class EndpointSnippetGenerator {
         }
         return [
             {
-                name: 'baseUrl',
+                name: "baseUrl",
                 value: baseUrlArg
             }
         ]
@@ -246,7 +246,7 @@ export class EndpointSnippetGenerator {
         if (baseUrl != null && environment != null) {
             this.context.errors.add({
                 severity: Severity.Critical,
-                message: 'Cannot specify both baseUrl and environment options'
+                message: "Cannot specify both baseUrl and environment options"
             })
             return php.TypeLiteral.nop()
         }
@@ -266,7 +266,7 @@ export class EndpointSnippetGenerator {
                 return php.TypeLiteral.reference(
                     php.codeblock((writer) => {
                         writer.writeNode(classReference)
-                        writer.write('->value')
+                        writer.write("->value")
                     })
                 )
             }
@@ -361,9 +361,9 @@ export class EndpointSnippetGenerator {
         snippet: FernIr.dynamic.EndpointSnippetRequest
     }): php.TypeLiteral[] {
         switch (endpoint.request.type) {
-            case 'inlined':
+            case "inlined":
                 return this.getMethodArgsForInlinedRequest({ request: endpoint.request, snippet })
-            case 'body':
+            case "body":
                 return this.getMethodArgsForBodyRequest({ request: endpoint.request, snippet })
             default:
                 assertNever(endpoint.request)
@@ -405,10 +405,10 @@ export class EndpointSnippetGenerator {
         value: unknown
     }): php.TypeLiteral {
         switch (body.type) {
-            case 'bytes': {
+            case "bytes": {
                 return this.getBytesBodyRequestArg({ value })
             }
-            case 'typeReference':
+            case "typeReference":
                 return this.context.dynamicTypeLiteralMapper.convert({ typeReference: body.value, value })
             default:
                 assertNever(body)
@@ -556,11 +556,11 @@ export class EndpointSnippetGenerator {
         filePropertyInfo: FilePropertyInfo
     }): php.ConstructorField[] {
         switch (body.type) {
-            case 'properties':
+            case "properties":
                 return this.getInlinedRequestBodyPropertyConstructorFields({ parameters: body.value, value })
-            case 'referenced':
+            case "referenced":
                 return [this.getReferencedRequestBodyPropertyConstructorField({ body, value })]
-            case 'fileUpload':
+            case "fileUpload":
                 return this.getFileUploadRequestBodyConstructorFields({ filePropertyInfo })
             default:
                 assertNever(body)
@@ -596,9 +596,9 @@ export class EndpointSnippetGenerator {
         value: unknown
     }): php.TypeLiteral {
         switch (body.type) {
-            case 'bytes':
+            case "bytes":
                 return this.getBytesBodyRequestArg({ value })
-            case 'typeReference':
+            case "typeReference":
                 return this.context.dynamicTypeLiteralMapper.convert({ typeReference: body.value, value })
             default:
                 assertNever(body)
@@ -655,7 +655,7 @@ export class EndpointSnippetGenerator {
         if (endpoint.declaration.fernFilepath.allParts.length > 0) {
             return `${endpoint.declaration.fernFilepath.allParts
                 .map((val) => this.context.getPropertyName(val))
-                .join('->')}->${this.context.getMethodName(endpoint.declaration.name)}`
+                .join("->")}->${this.context.getMethodName(endpoint.declaration.name)}`
         }
         return this.context.getMethodName(endpoint.declaration.name)
     }

@@ -1,11 +1,11 @@
-import { NpmPackage } from '@fern-typescript/commons'
-import { ts } from 'ts-morph'
+import { NpmPackage } from "@fern-typescript/commons"
+import { ts } from "ts-morph"
 
-import { EndpointId, ExampleEndpointCall } from '@fern-fern/ir-sdk/api'
+import { EndpointId, ExampleEndpointCall } from "@fern-fern/ir-sdk/api"
 
-import { SdkContext } from '..'
-import { GeneratedFile } from '../../commons/GeneratedFile'
-import { GeneratedEndpointImplementation } from './GeneratedEndpointImplementation'
+import { SdkContext } from ".."
+import { GeneratedFile } from "../../commons/GeneratedFile"
+import { GeneratedEndpointImplementation } from "./GeneratedEndpointImplementation"
 
 export interface GeneratedSdkClientClass extends GeneratedFile<SdkContext> {
     instantiate: (args: { referenceToClient: ts.Expression; referenceToOptions: ts.Expression }) => ts.Expression

@@ -1,7 +1,7 @@
-import { SdkContext } from '@fern-typescript/contexts'
-import { ts } from 'ts-morph'
+import { SdkContext } from "@fern-typescript/contexts"
+import { ts } from "ts-morph"
 
-import { DeclaredTypeName, QueryParameter, TypeReference } from '@fern-fern/ir-sdk/api'
+import { DeclaredTypeName, QueryParameter, TypeReference } from "@fern-fern/ir-sdk/api"
 
 export declare namespace GeneratedQueryParams {
     export interface Init {
@@ -11,7 +11,7 @@ export declare namespace GeneratedQueryParams {
 }
 
 export class GeneratedQueryParams {
-    public static readonly QUERY_PARAMS_VARIABLE_NAME = '_queryParams' as const
+    public static readonly QUERY_PARAMS_VARIABLE_NAME = "_queryParams" as const
 
     private queryParameters: QueryParameter[] | undefined
     private referenceToQueryParameterProperty: (queryParameterKey: string, context: SdkContext) => ts.Expression
@@ -34,7 +34,7 @@ export class GeneratedQueryParams {
                                 ts.factory.createVariableDeclaration(
                                     GeneratedQueryParams.QUERY_PARAMS_VARIABLE_NAME,
                                     undefined,
-                                    ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('Record'), [
+                                    ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Record"), [
                                         ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
                                         ts.factory.createUnionTypeNode([
                                             ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
@@ -82,9 +82,9 @@ export class GeneratedQueryParams {
                                             .jsonOrThrow(referenceToQueryParameter, {
                                                 allowUnrecognizedEnumValues: true,
                                                 allowUnrecognizedUnionMembers: true,
-                                                unrecognizedObjectKeys: 'passthrough',
+                                                unrecognizedObjectKeys: "passthrough",
                                                 skipValidation: false,
-                                                breadcrumbsPrefix: ['request', paramName],
+                                                breadcrumbsPrefix: ["request", paramName],
                                                 omitUndefined: context.omitUndefined
                                             })
                                     } else {
@@ -122,8 +122,8 @@ export class GeneratedQueryParams {
                                 let getAssignmentExpression: (itemReference: ts.Expression) => ts.Expression
                                 let isAssignmentExpressionAsync = false
                                 const objectType = this.getObjectType(
-                                    queryParameter.valueType.type === 'container' &&
-                                        queryParameter.valueType.container.type === 'list'
+                                    queryParameter.valueType.type === "container" &&
+                                        queryParameter.valueType.container.type === "list"
                                         ? queryParameter.valueType.container.list
                                         : queryParameter.valueType,
                                     context
@@ -138,10 +138,10 @@ export class GeneratedQueryParams {
                                             .jsonOrThrow(itemReference, {
                                                 allowUnrecognizedEnumValues: true,
                                                 allowUnrecognizedUnionMembers: true,
-                                                unrecognizedObjectKeys: 'passthrough',
+                                                unrecognizedObjectKeys: "passthrough",
                                                 skipValidation: false,
                                                 breadcrumbsPrefix: [
-                                                    'request',
+                                                    "request",
                                                     context.retainOriginalCasing
                                                         ? queryParameter.name.name.originalName
                                                         : queryParameter.name.name.camelCase.unsafeName
@@ -221,17 +221,17 @@ export class GeneratedQueryParams {
                     undefined,
                     undefined,
                     undefined,
-                    ts.factory.createIdentifier('item'),
+                    ts.factory.createIdentifier("item"),
                     undefined,
                     undefined
                 )
             ],
             undefined,
             ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
-            getAssignmentExpression(ts.factory.createIdentifier('item'))
+            getAssignmentExpression(ts.factory.createIdentifier("item"))
         )
         let mapExpression: ts.Expression = ts.factory.createCallExpression(
-            ts.factory.createPropertyAccessExpression(referenceToQueryParameter, ts.factory.createIdentifier('map')),
+            ts.factory.createPropertyAccessExpression(referenceToQueryParameter, ts.factory.createIdentifier("map")),
             undefined,
             [mapFunction]
         )
@@ -239,8 +239,8 @@ export class GeneratedQueryParams {
             mapExpression = ts.factory.createAwaitExpression(
                 ts.factory.createCallExpression(
                     ts.factory.createPropertyAccessExpression(
-                        ts.factory.createIdentifier('Promise'),
-                        ts.factory.createIdentifier('all')
+                        ts.factory.createIdentifier("Promise"),
+                        ts.factory.createIdentifier("all")
                     ),
                     undefined,
                     [mapExpression]
@@ -265,21 +265,21 @@ export class GeneratedQueryParams {
      */
     private getPrimitiveType(typeReference: TypeReference, context: SdkContext): TypeReference.Primitive | undefined {
         switch (typeReference.type) {
-            case 'primitive':
+            case "primitive":
                 return typeReference
-            case 'named':
+            case "named":
                 {
                     const typeDeclaration = context.type.getTypeDeclaration(typeReference)
                     switch (typeDeclaration.shape.type) {
-                        case 'alias': {
+                        case "alias": {
                             return this.getPrimitiveType(typeDeclaration.shape.aliasOf, context)
                         }
                     }
                 }
                 break
-            case 'container': {
+            case "container": {
                 switch (typeReference.container.type) {
-                    case 'optional':
+                    case "optional":
                         return this.getPrimitiveType(typeReference.container.optional, context)
                 }
             }
@@ -289,21 +289,21 @@ export class GeneratedQueryParams {
 
     private getObjectType(typeReference: TypeReference, context: SdkContext): DeclaredTypeName | undefined {
         switch (typeReference.type) {
-            case 'named':
+            case "named":
                 {
                     const typeDeclaration = context.type.getTypeDeclaration(typeReference)
                     switch (typeDeclaration.shape.type) {
-                        case 'object':
+                        case "object":
                             return typeReference
-                        case 'alias': {
+                        case "alias": {
                             return this.getObjectType(typeDeclaration.shape.aliasOf, context)
                         }
                     }
                 }
                 break
-            case 'container': {
+            case "container": {
                 switch (typeReference.container.type) {
-                    case 'optional':
+                    case "optional":
                         return this.getObjectType(typeReference.container.optional, context)
                 }
             }
@@ -331,8 +331,8 @@ export class GeneratedQueryParams {
                 ts.factory.createIfStatement(
                     ts.factory.createCallExpression(
                         ts.factory.createPropertyAccessExpression(
-                            ts.factory.createIdentifier('Array'),
-                            ts.factory.createIdentifier('isArray')
+                            ts.factory.createIdentifier("Array"),
+                            ts.factory.createIdentifier("isArray")
                         ),
                         undefined,
                         [referenceToQueryParameterProperty]
@@ -356,7 +356,7 @@ export class GeneratedQueryParams {
                     ts.factory.createBinaryExpression(
                         referenceToQueryParameterProperty,
                         ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsEqualsToken),
-                        ts.factory.createIdentifier('undefined')
+                        ts.factory.createIdentifier("undefined")
                     ),
                     ts.factory.createBlock(statements)
                 )

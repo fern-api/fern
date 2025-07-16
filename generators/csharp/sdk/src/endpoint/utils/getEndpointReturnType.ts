@@ -1,9 +1,9 @@
-import { csharp } from '@fern-api/csharp-codegen'
+import { csharp } from "@fern-api/csharp-codegen"
 
-import { FernIr } from '@fern-fern/ir-sdk'
-import { HttpEndpoint } from '@fern-fern/ir-sdk/api'
+import { FernIr } from "@fern-fern/ir-sdk"
+import { HttpEndpoint } from "@fern-fern/ir-sdk/api"
 
-import { SdkGeneratorContext } from '../../SdkGeneratorContext'
+import { SdkGeneratorContext } from "../../SdkGeneratorContext"
 
 export function getEndpointReturnType({
     context,

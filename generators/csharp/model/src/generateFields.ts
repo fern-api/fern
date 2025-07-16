@@ -1,8 +1,8 @@
-import { csharp } from '@fern-api/csharp-codegen'
+import { csharp } from "@fern-api/csharp-codegen"
 
-import { FernIr } from '@fern-fern/ir-sdk'
+import { FernIr } from "@fern-fern/ir-sdk"
 
-import { ModelGeneratorContext } from './ModelGeneratorContext'
+import { ModelGeneratorContext } from "./ModelGeneratorContext"
 
 export function generateFields({
     properties,
@@ -33,7 +33,7 @@ export function generateField({
     })
     const fieldAttributes = []
     if (jsonProperty) {
-        if ('propertyAccess' in property && property.propertyAccess) {
+        if ("propertyAccess" in property && property.propertyAccess) {
             fieldAttributes.push(context.createJsonAccessAttribute(property.propertyAccess))
         }
         fieldAttributes.push(context.createJsonPropertyNameAttribute(property.name.wireValue))

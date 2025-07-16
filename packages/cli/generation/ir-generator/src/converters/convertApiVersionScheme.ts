@@ -1,9 +1,9 @@
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { ApiVersionScheme, EnumTypeDeclaration, HttpHeader } from '@fern-api/ir-sdk'
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { ApiVersionScheme, EnumTypeDeclaration, HttpHeader } from "@fern-api/ir-sdk"
 
-import { FernFileContext } from '../FernFileContext'
-import { convertHttpHeader } from './services/convertHttpService'
-import { convertEnumTypeDeclaration } from './type-declarations/convertEnumTypeDeclaration'
+import { FernFileContext } from "../FernFileContext"
+import { convertHttpHeader } from "./services/convertHttpService"
+import { convertEnumTypeDeclaration } from "./type-declarations/convertEnumTypeDeclaration"
 
 export function convertApiVersionScheme({
     file,
@@ -34,12 +34,12 @@ function convertHeader({
     file: FernFileContext
     header: RawSchemas.VersionDeclarationHeaderSchema
 }): HttpHeader {
-    if (typeof header === 'string') {
+    if (typeof header === "string") {
         return convertHttpHeader({
             file,
             headerKey: header,
             header: {
-                type: 'string'
+                type: "string"
             }
         })
     }
@@ -47,7 +47,7 @@ function convertHeader({
         file,
         headerKey: header.value,
         header: {
-            type: 'string',
+            type: "string",
             name: header.name,
             env: header.env
         }

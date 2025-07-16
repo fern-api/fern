@@ -1,4 +1,4 @@
-import { RawSchemas } from '@fern-api/fern-definition-schema'
+import { RawSchemas } from "@fern-api/fern-definition-schema"
 
 export interface ConvertOpenAPIOptions {
     /**

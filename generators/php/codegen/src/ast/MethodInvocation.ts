@@ -1,8 +1,8 @@
-import { Arguments } from '@fern-api/browser-compatible-base-generator'
+import { Arguments } from "@fern-api/browser-compatible-base-generator"
 
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
-import { writeArguments } from './utils/writeArguments'
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
+import { writeArguments } from "./utils/writeArguments"
 
 export declare namespace MethodInvocation {
     interface Args {
@@ -46,6 +46,6 @@ export class MethodInvocation extends AstNode {
     }
 
     private getMethodAccessor(): string {
-        return this.static_ ? '::' : '->'
+        return this.static_ ? "::" : "->"
     }
 }

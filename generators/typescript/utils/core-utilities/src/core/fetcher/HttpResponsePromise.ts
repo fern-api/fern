@@ -1,4 +1,4 @@
-import { WithRawResponse } from './RawResponse'
+import { WithRawResponse } from "./RawResponse"
 
 /**
  * A promise that returns the parsed response and lets you retrieve the raw response too.
@@ -37,7 +37,7 @@ export class HttpResponsePromise<T> extends Promise<T> {
      */
     public static interceptFunction<
         F extends (...args: never[]) => Promise<WithRawResponse<T>>,
-        T = Awaited<ReturnType<F>>['data']
+        T = Awaited<ReturnType<F>>["data"]
     >(fn: F): (...args: Parameters<F>) => HttpResponsePromise<T> {
         return (...args: Parameters<F>): HttpResponsePromise<T> => {
             return HttpResponsePromise.fromPromise<T>(fn(...args))

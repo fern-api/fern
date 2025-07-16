@@ -1,11 +1,11 @@
-import { CSharpFile, FileGenerator } from '@fern-api/csharp-base'
-import { csharp } from '@fern-api/csharp-codegen'
-import { RelativeFilePath, join } from '@fern-api/fs-utils'
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base"
+import { csharp } from "@fern-api/csharp-codegen"
+import { RelativeFilePath, join } from "@fern-api/fs-utils"
 
-import { ModelCustomConfigSchema } from '../ModelCustomConfig'
-import { ModelGeneratorContext } from '../ModelGeneratorContext'
+import { ModelCustomConfigSchema } from "../ModelCustomConfig"
+import { ModelGeneratorContext } from "../ModelGeneratorContext"
 
-const DEFAULT_VERSION = '0.0.0'
+const DEFAULT_VERSION = "0.0.0"
 
 export class VersionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
     private classReference: csharp.ClassReference
@@ -46,7 +46,7 @@ export class VersionGenerator extends FileGenerator<CSharpFile, ModelCustomConfi
     protected getFilepath(): RelativeFilePath {
         return join(
             this.context.project.filepaths.getPublicCoreFilesDirectory(),
-            RelativeFilePath.of(this.classReference.name + '.cs')
+            RelativeFilePath.of(this.classReference.name + ".cs")
         )
     }
 }

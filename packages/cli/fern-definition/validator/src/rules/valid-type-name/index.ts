@@ -1,1 +1,1 @@
-export { ValidTypeNameRule } from './valid-type-name'
+export { ValidTypeNameRule } from "./valid-type-name"

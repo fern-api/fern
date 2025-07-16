@@ -1,4 +1,4 @@
-import { AstNode, Writer } from './core'
+import { AstNode, Writer } from "./core"
 
 export declare namespace Variable {
     interface Args {
@@ -20,12 +20,12 @@ export class Variable extends AstNode {
 
     public write(writer: Writer): void {
         if (this.args.export) {
-            writer.write('export ')
+            writer.write("export ")
         }
         if (this.args.const) {
-            writer.write('const ')
+            writer.write("const ")
         } else {
-            writer.write('let ')
+            writer.write("let ")
         }
         writer.write(`${this.args.name} = `)
         writer.writeNode(this.args.initializer)

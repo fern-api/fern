@@ -1,6 +1,6 @@
-import { AbstractErrorClassGenerator } from '@fern-typescript/abstract-error-class-generator'
-import { getTextOfTsNode } from '@fern-typescript/commons'
-import { ExpressContext, GeneratedGenericAPIExpressError } from '@fern-typescript/contexts'
+import { AbstractErrorClassGenerator } from "@fern-typescript/abstract-error-class-generator"
+import { getTextOfTsNode } from "@fern-typescript/commons"
+import { ExpressContext, GeneratedGenericAPIExpressError } from "@fern-typescript/contexts"
 import {
     ClassDeclaration,
     MethodDeclarationStructure,
@@ -9,15 +9,15 @@ import {
     PropertyDeclarationStructure,
     Scope,
     ts
-} from 'ts-morph'
+} from "ts-morph"
 
 export class GeneratedGenericAPIExpressErrorImpl
     extends AbstractErrorClassGenerator<ExpressContext>
     implements GeneratedGenericAPIExpressError
 {
-    private static SEND_METHOD_NAME = 'send'
-    private static SEND_RESPONSE_PARAMETER_NAME = 'res'
-    private static ERROR_NAME_PROPERTY_NAME = 'errorName'
+    private static SEND_METHOD_NAME = "send"
+    private static SEND_RESPONSE_PARAMETER_NAME = "res"
+    private static ERROR_NAME_PROPERTY_NAME = "errorName"
 
     public writeToFile(context: ExpressContext): void {
         super.writeToSourceFile(context)
@@ -31,7 +31,7 @@ export class GeneratedGenericAPIExpressErrorImpl
         return [
             {
                 name: GeneratedGenericAPIExpressErrorImpl.ERROR_NAME_PROPERTY_NAME,
-                type: 'string',
+                type: "string",
                 hasQuestionToken: true,
                 isReadonly: true,
                 scope: Scope.Public
@@ -63,7 +63,7 @@ export class GeneratedGenericAPIExpressErrorImpl
                 }
             ],
             returnType: getTextOfTsNode(
-                ts.factory.createTypeReferenceNode('Promise', [
+                ts.factory.createTypeReferenceNode("Promise", [
                     ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword)
                 ])
             )

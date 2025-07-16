@@ -4,10 +4,10 @@ import {
     ExamplePathParameter,
     HttpHeader,
     PathParameter
-} from '@fern-fern/ir-sdk/api'
-import { PostmanHeader, PostmanUrlVariable } from '@fern-fern/postman-sdk/api'
+} from "@fern-fern/ir-sdk/api"
+import { PostmanHeader, PostmanUrlVariable } from "@fern-fern/postman-sdk/api"
 
-import { AbstractGeneratedRequest } from './AbstractGeneratedRequest'
+import { AbstractGeneratedRequest } from "./AbstractGeneratedRequest"
 
 export declare namespace GeneratedExampleRequest {
     export interface Init extends AbstractGeneratedRequest.Init {
@@ -35,7 +35,7 @@ export class GeneratedExampleRequest extends AbstractGeneratedRequest {
                 key: exampleQueryParameter.name.wireValue,
                 description: queryParameterDeclaration.docs ?? undefined,
                 value:
-                    typeof exampleQueryParameter.value.jsonExample !== 'string'
+                    typeof exampleQueryParameter.value.jsonExample !== "string"
                         ? JSON.stringify(exampleQueryParameter.value.jsonExample)
                         : exampleQueryParameter.value.jsonExample
             }
@@ -77,7 +77,7 @@ export class GeneratedExampleRequest extends AbstractGeneratedRequest {
                 key: examplePathParameter.name.originalName,
                 description: pathParameterDeclaration.docs ?? undefined,
                 value:
-                    typeof examplePathParameter.value.jsonExample !== 'string'
+                    typeof examplePathParameter.value.jsonExample !== "string"
                         ? JSON.stringify(examplePathParameter.value.jsonExample)
                         : examplePathParameter.value.jsonExample
             }
@@ -96,9 +96,9 @@ export class GeneratedExampleRequest extends AbstractGeneratedRequest {
             }),
             ...[
                 {
-                    type: 'text',
-                    key: 'Content-Type',
-                    value: 'application/json'
+                    type: "text",
+                    key: "Content-Type",
+                    value: "application/json"
                 }
             ]
         ]

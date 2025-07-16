@@ -1,6 +1,6 @@
-import { OpenAPIV3_1 } from 'openapi-types'
+import { OpenAPIV3_1 } from "openapi-types"
 
-import { AbstractExtension } from '../AbstractExtension'
+import { AbstractExtension } from "../AbstractExtension"
 
 export declare namespace FernTypeExtension {
     export interface Args extends AbstractExtension.Args {
@@ -10,7 +10,7 @@ export declare namespace FernTypeExtension {
 
 export class FernTypeExtension extends AbstractExtension<string> {
     private readonly schema: OpenAPIV3_1.SchemaObject
-    public readonly key = 'x-fern-type'
+    public readonly key = "x-fern-type"
 
     constructor({ breadcrumbs, schema, context }: FernTypeExtension.Args) {
         super({ breadcrumbs, context })
@@ -23,7 +23,7 @@ export class FernTypeExtension extends AbstractExtension<string> {
             return undefined
         }
 
-        if (typeof extensionValue !== 'string') {
+        if (typeof extensionValue !== "string") {
             return undefined
         }
 

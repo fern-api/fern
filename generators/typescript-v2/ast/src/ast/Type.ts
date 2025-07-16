@@ -1,7 +1,7 @@
-import { assertNever } from '@fern-api/core-utils'
+import { assertNever } from "@fern-api/core-utils"
 
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 type InternalType =
     | String_
@@ -22,72 +22,72 @@ type InternalType =
     | Nop
 
 interface String_ {
-    type: 'string'
+    type: "string"
 }
 
 interface Number_ {
-    type: 'number'
+    type: "number"
 }
 
 interface BigInt_ {
-    type: 'bigint'
+    type: "bigint"
 }
 
 interface Boolean_ {
-    type: 'boolean'
+    type: "boolean"
 }
 
 interface Array_ {
-    type: 'array'
+    type: "array"
     valueType: Type
 }
 
 interface Object_ {
-    type: 'object'
+    type: "object"
     fields: Record<string, Type>
 }
 
 interface Map_ {
-    type: 'map'
+    type: "map"
     keyType: Type
     valueType: Type
 }
 
 interface Enum {
-    type: 'enum'
+    type: "enum"
     values: string[]
 }
 
 interface Any {
-    type: 'any'
+    type: "any"
 }
 
 interface Unknown {
-    type: 'unknown'
+    type: "unknown"
 }
 
 interface Void {
-    type: 'void'
+    type: "void"
 }
 
 interface Undefined {
-    type: 'undefined'
+    type: "undefined"
 }
 
 interface Null {
-    type: 'null'
+    type: "null"
 }
 
 interface Never {
-    type: 'never'
+    type: "never"
 }
 
 interface Nop {
-    type: 'nop'
+    type: "nop"
 }
 
 interface Promise_ {
-    type: 'promise'
+    type: "promise"
     value: Type
 }
 
@@ -98,67 +98,67 @@ export class Type extends AstNode {
 
     public write(writer: Writer): void {
         switch (this.internalType.type) {
-            case 'string':
-                writer.write('string')
+            case "string":
+                writer.write("string")
                 break
-            case 'number':
-                writer.write('number')
+            case "number":
+                writer.write("number")
                 break
-            case 'bigint':
-                writer.write('bigint')
+            case "bigint":
+                writer.write("bigint")
                 break
-            case 'boolean':
-                writer.write('boolean')
+            case "boolean":
+                writer.write("boolean")
                 break
-            case 'array':
+            case "array":
                 this.internalType.valueType.write(writer)
-                writer.write('[]')
+                writer.write("[]")
                 break
-            case 'map':
-                writer.write('Record<')
+            case "map":
+                writer.write("Record<")
                 this.internalType.keyType.write(writer)
-                writer.write(', ')
+                writer.write(", ")
                 this.internalType.valueType.write(writer)
-                writer.write('>')
+                writer.write(">")
                 break
-            case 'object':
-                writer.write('{')
+            case "object":
+                writer.write("{")
                 writer.indent()
                 for (const [key, value] of Object.entries(this.internalType.fields)) {
                     writer.write(`${key}: `)
                     value.write(writer)
-                    writer.writeLine(',')
+                    writer.writeLine(",")
                 }
                 writer.dedent()
-                writer.write('}')
+                writer.write("}")
                 break
-            case 'enum':
-                writer.write('enum')
+            case "enum":
+                writer.write("enum")
                 break
-            case 'any':
-                writer.write('any')
+            case "any":
+                writer.write("any")
                 break
-            case 'promise':
-                writer.write('Promise<')
+            case "promise":
+                writer.write("Promise<")
                 this.internalType.value.write(writer)
-                writer.write('>')
+                writer.write(">")
                 break
-            case 'unknown':
-                writer.write('unknown')
+            case "unknown":
+                writer.write("unknown")
                 break
-            case 'void':
-                writer.write('void')
+            case "void":
+                writer.write("void")
                 break
-            case 'undefined':
-                writer.write('undefined')
+            case "undefined":
+                writer.write("undefined")
                 break
-            case 'null':
-                writer.write('null')
+            case "null":
+                writer.write("null")
                 break
-            case 'never':
-                writer.write('never')
+            case "never":
+                writer.write("never")
                 break
-            case 'nop':
+            case "nop":
                 break
             default:
                 assertNever(this.internalType)
@@ -168,99 +168,99 @@ export class Type extends AstNode {
     /* Static factory methods for creating a Type */
     public static string(): Type {
         return new this({
-            type: 'string'
+            type: "string"
         })
     }
 
     public static number(): Type {
         return new this({
-            type: 'number'
+            type: "number"
         })
     }
 
     public static bigint(): Type {
         return new this({
-            type: 'bigint'
+            type: "bigint"
         })
     }
 
     public static boolean(): Type {
         return new this({
-            type: 'boolean'
+            type: "boolean"
         })
     }
 
     public static array(valueType: Type): Type {
         return new this({
-            type: 'array',
+            type: "array",
             valueType
         })
     }
 
     public static object(fields: Record<string, Type>): Type {
         return new this({
-            type: 'object',
+            type: "object",
             fields
         })
     }
 
     public static enum(values: string[]): Type {
         return new this({
-            type: 'enum',
+            type: "enum",
             values
         })
     }
 
     public static any(): Type {
         return new this({
-            type: 'any'
+            type: "any"
         })
     }
 
     public static promise(value: Type): Type {
-        if (value.internalType.type === 'promise') {
+        if (value.internalType.type === "promise") {
             // Avoids double promise.
             return value
         }
         return new this({
-            type: 'promise',
+            type: "promise",
             value
         })
     }
 
     public static unknown(): Type {
         return new this({
-            type: 'unknown'
+            type: "unknown"
         })
     }
 
     public static void(): Type {
         return new this({
-            type: 'void'
+            type: "void"
         })
     }
 
     public static undefined(): Type {
         return new this({
-            type: 'undefined'
+            type: "undefined"
         })
     }
 
     public static null(): Type {
         return new this({
-            type: 'null'
+            type: "null"
         })
     }
 
     public static never(): Type {
         return new this({
-            type: 'never'
+            type: "never"
         })
     }
 
     public static nop(): Type {
         return new this({
-            type: 'nop'
+            type: "nop"
         })
     }
 }

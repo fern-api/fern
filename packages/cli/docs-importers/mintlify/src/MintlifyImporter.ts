@@ -1,16 +1,16 @@
-import { readFile } from 'fs/promises'
+import { readFile } from "fs/promises"
 
-import { stripLeadingSlash } from '@fern-api/core-utils'
-import { DocsImporter, FernDocsBuilder, FernDocsNavigationBuilder, TabInfo } from '@fern-api/docs-importer-commons'
-import { DEFAULT_LAYOUT } from '@fern-api/docs-importer-commons'
-import { AbsoluteFilePath, RelativeFilePath, dirname, join } from '@fern-api/fs-utils'
+import { stripLeadingSlash } from "@fern-api/core-utils"
+import { DocsImporter, FernDocsBuilder, FernDocsNavigationBuilder, TabInfo } from "@fern-api/docs-importer-commons"
+import { DEFAULT_LAYOUT } from "@fern-api/docs-importer-commons"
+import { AbsoluteFilePath, RelativeFilePath, dirname, join } from "@fern-api/fs-utils"
 
-import { convertColors } from './convertColors'
-import { convertLogo } from './convertLogo'
-import { convertNavigationItem } from './convertNavigationItem'
-import { MintJsonSchema, MintNavigationItem } from './mintlify'
-import { convertInstanceName } from './utils/convertInstanceName'
-import { getTabForMintItem } from './utils/getTabForMintItem'
+import { convertColors } from "./convertColors"
+import { convertLogo } from "./convertLogo"
+import { convertNavigationItem } from "./convertNavigationItem"
+import { MintJsonSchema, MintNavigationItem } from "./mintlify"
+import { convertInstanceName } from "./utils/convertInstanceName"
+import { getTabForMintItem } from "./utils/getTabForMintItem"
 
 export declare namespace MintlifyImporter {
     interface Args {
@@ -23,7 +23,7 @@ export class MintlifyImporter extends DocsImporter<MintlifyImporter.Args> {
     private tabUrlToInfo: Record<string, TabInfo> = {}
 
     public async import({ args, builder }: { args: MintlifyImporter.Args; builder: FernDocsBuilder }): Promise<void> {
-        const mintJsonContent = await readFile(args.absolutePathToMintJson, 'utf-8')
+        const mintJsonContent = await readFile(args.absolutePathToMintJson, "utf-8")
         const mint = JSON.parse(mintJsonContent) as MintJsonSchema
 
         builder.setTitle({ title: mint.name })
@@ -39,13 +39,13 @@ export class MintlifyImporter extends DocsImporter<MintlifyImporter.Args> {
         if (logo != null) {
             builder.setLogo({ logo })
         }
-        this.context.logger.debug('Converted logo')
+        this.context.logger.debug("Converted logo")
 
         const colors = convertColors(mint.colors)
         if (colors != null) {
             builder.setColors({ colors })
         }
-        this.context.logger.debug('Converted color configuration')
+        this.context.logger.debug("Converted color configuration")
 
         builder.setLayout({ layout: DEFAULT_LAYOUT })
 
@@ -62,7 +62,7 @@ export class MintlifyImporter extends DocsImporter<MintlifyImporter.Args> {
             }
         } else if (mint.anchors != null) {
             for (const anchor of mint.anchors) {
-                if ('url' in anchor && anchor.url != null && anchor.url.startsWith('https://')) {
+                if ("url" in anchor && anchor.url != null && anchor.url.startsWith("https://")) {
                     this.tabUrlToInfo[anchor.url] = {
                         name: anchor.name,
                         url: anchor.url,
@@ -71,7 +71,7 @@ export class MintlifyImporter extends DocsImporter<MintlifyImporter.Args> {
                             tabConfig: { href: anchor.url, displayName: anchor.name }
                         })
                     }
-                } else if ('url' in anchor && anchor.url != null) {
+                } else if ("url" in anchor && anchor.url != null) {
                     this.tabUrlToInfo[anchor.url] = {
                         name: anchor.name,
                         url: anchor.url,
@@ -96,9 +96,9 @@ export class MintlifyImporter extends DocsImporter<MintlifyImporter.Args> {
                 nav.addItem({ item: section })
             }
         }
-        this.context.logger.debug('Converted navigation')
+        this.context.logger.debug("Converted navigation")
 
-        if (typeof mint.openapi === 'string') {
+        if (typeof mint.openapi === "string") {
             const absolutePathToOpenAPI = join(
                 dirname(args.absolutePathToMintJson),
                 RelativeFilePath.of(stripLeadingSlash(mint.openapi))
@@ -120,7 +120,7 @@ export class MintlifyImporter extends DocsImporter<MintlifyImporter.Args> {
             }
         } else if (mint.anchors != null) {
             for (const anchor of mint.anchors) {
-                if ('openapi' in anchor && anchor.openapi != null) {
+                if ("openapi" in anchor && anchor.openapi != null) {
                     const absolutePathToOpenAPI = join(
                         dirname(args.absolutePathToMintJson),
                         RelativeFilePath.of(stripLeadingSlash(anchor.openapi))
@@ -132,7 +132,7 @@ export class MintlifyImporter extends DocsImporter<MintlifyImporter.Args> {
                 }
             }
         }
-        this.context.logger.debug('Imported OpenAPI specs')
+        this.context.logger.debug("Imported OpenAPI specs")
 
         const instanceUrl = builder.setInstance({
             companyName: convertInstanceName(mint.name)
@@ -161,11 +161,11 @@ export class MintlifyImporter extends DocsImporter<MintlifyImporter.Args> {
     private getDefaultDocumentationTab(builder: FernDocsBuilder): TabInfo {
         if (this.documentationTab == null) {
             this.documentationTab = {
-                name: 'Documentation',
-                url: 'documentation',
+                name: "Documentation",
+                url: "documentation",
                 navigationBuilder: builder.getNavigationBuilder({
-                    tabId: 'documentation',
-                    tabConfig: { displayName: 'Documentation', slug: 'documentation' }
+                    tabId: "documentation",
+                    tabConfig: { displayName: "Documentation", slug: "documentation" }
                 })
             }
         }

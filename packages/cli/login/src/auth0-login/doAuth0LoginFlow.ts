@@ -1,8 +1,8 @@
-import axios from 'axios'
-import { IncomingMessage, Server } from 'http'
-import open from 'open'
+import axios from "axios"
+import { IncomingMessage, Server } from "http"
+import open from "open"
 
-import { createServer } from './createServer'
+import { createServer } from "./createServer"
 
 const SUCCESS_PAGE = `
 <!DOCTYPE html>
@@ -61,7 +61,7 @@ function getCode({
 }) {
     return new Promise<{ code: string }>((resolve) => {
         // eslint-disable-next-line @typescript-eslint/no-misused-promises
-        server.addListener('request', async (request, response) => {
+        server.addListener("request", async (request, response) => {
             const code = parseCodeFromUrl(request, origin)
             if (code == null) {
                 request.socket.end()
@@ -80,7 +80,7 @@ function parseCodeFromUrl(request: IncomingMessage, origin: string): string | un
         return undefined
     }
     const { searchParams } = new URL(request.url, origin)
-    return searchParams.get('code') ?? undefined
+    return searchParams.get("code") ?? undefined
 }
 
 async function getTokenFromCode({
@@ -97,18 +97,18 @@ async function getTokenFromCode({
     const response = await axios.post(
         `https://${auth0Domain}/oauth/token`,
         new URLSearchParams({
-            grant_type: 'authorization_code',
+            grant_type: "authorization_code",
             client_id: auth0ClientId,
             code,
             redirect_uri: origin
         }).toString(),
         {
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            headers: { "Content-Type": "application/x-www-form-urlencoded" }
         }
     )
     const { access_token: token } = response.data
     if (token == null) {
-        throw new Error('Token is not defined')
+        throw new Error("Token is not defined")
     }
     return token
 }
@@ -126,9 +126,9 @@ function constructAuth0Url({
 }) {
     const queryParams = new URLSearchParams({
         client_id: auth0ClientId,
-        response_type: 'code',
-        connection: 'github',
-        scope: 'openid profile email offline_access',
+        response_type: "code",
+        connection: "github",
+        scope: "openid profile email offline_access",
         redirect_uri: origin,
         audience
     })

@@ -1,4 +1,4 @@
-import { V2SchemaExample, V2SchemaExamples } from '@fern-api/ir-sdk'
+import { V2SchemaExample, V2SchemaExamples } from "@fern-api/ir-sdk"
 
 export function getFirstExamples(examples: V2SchemaExamples | undefined): {
     userExample: unknown

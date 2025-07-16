@@ -1,15 +1,15 @@
-import { csharp } from '@fern-api/csharp-codegen'
+import { csharp } from "@fern-api/csharp-codegen"
 
-import { HttpEndpoint, SdkRequest } from '@fern-fern/ir-sdk/api'
+import { HttpEndpoint, SdkRequest } from "@fern-fern/ir-sdk/api"
 
-import { SdkGeneratorContext } from '../../SdkGeneratorContext'
-import { RawClient } from '../http/RawClient'
+import { SdkGeneratorContext } from "../../SdkGeneratorContext"
+import { RawClient } from "../http/RawClient"
 import {
     EndpointRequest,
     HeaderParameterCodeBlock,
     QueryParameterCodeBlock,
     RequestBodyCodeBlock
-} from './EndpointRequest'
+} from "./EndpointRequest"
 
 export class BytesOnlyEndpointRequest extends EndpointRequest {
     // biome-ignore lint/complexity/noUselessConstructor: allow
@@ -20,7 +20,7 @@ export class BytesOnlyEndpointRequest extends EndpointRequest {
     public getParameterType(): csharp.Type {
         return csharp.Type.coreClass(
             csharp.coreClassReference({
-                name: 'Stream'
+                name: "Stream"
             })
         )
     }
@@ -40,6 +40,6 @@ export class BytesOnlyEndpointRequest extends EndpointRequest {
     }
 
     public getRequestType(): RawClient.RequestBodyType | undefined {
-        return 'bytes'
+        return "bytes"
     }
 }

@@ -1,16 +1,16 @@
-import chalk from 'chalk'
+import chalk from "chalk"
 
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { FernFileContext, ResolvedType, TypeResolver } from '@fern-api/ir-generator'
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator"
 
-import { RuleViolation } from '../../Rule'
+import { RuleViolation } from "../../Rule"
 import {
     maybeFileFromResolvedType,
     maybePrimitiveType,
     resolveResponseType,
     resolvedTypeHasProperty
-} from '../../utils/propertyValidatorUtils'
-import { validateRequestProperty, validateResponseProperty, validateResultsProperty } from './validateUtils'
+} from "../../utils/propertyValidatorUtils"
+import { validateRequestProperty, validateResponseProperty, validateResultsProperty } from "./validateUtils"
 
 export function validateCursorPagination({
     endpointId,
@@ -40,7 +40,7 @@ export function validateCursorPagination({
     const resolvedResponseType = resolveResponseType({ endpoint, typeResolver, file })
     if (resolvedResponseType == null) {
         violations.push({
-            severity: 'fatal',
+            severity: "fatal",
             message: `Pagination configuration for endpoint ${chalk.bold(endpointId)} must define a response type.`
         })
         return violations
@@ -89,7 +89,7 @@ function validateCursorProperty({
         file,
         requestProperty: cursorPagination.cursor,
         propertyValidator: {
-            propertyID: 'cursor',
+            propertyID: "cursor",
             validate: isValidCursorType
         }
     })
@@ -115,7 +115,7 @@ function validateNextCursorProperty({
         resolvedResponseType,
         responseProperty: nextProperty,
         propertyValidator: {
-            propertyID: 'next_cursor',
+            propertyID: "next_cursor",
             validate: isValidCursorProperty
         }
     })
@@ -146,5 +146,5 @@ function isValidCursorType({ resolvedType }: { resolvedType: ResolvedType | unde
     if (primitiveType == null) {
         return false
     }
-    return primitiveType !== 'BOOLEAN'
+    return primitiveType !== "BOOLEAN"
 }

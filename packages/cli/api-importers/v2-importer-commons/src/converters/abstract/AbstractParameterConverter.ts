@@ -1,10 +1,10 @@
-import { OpenAPIV3_1 } from 'openapi-types'
+import { OpenAPIV3_1 } from "openapi-types"
 
-import { HttpHeader, PathParameter, QueryParameter, TypeId, TypeReference, V2SchemaExamples } from '@fern-api/ir-sdk'
+import { HttpHeader, PathParameter, QueryParameter, TypeId, TypeReference, V2SchemaExamples } from "@fern-api/ir-sdk"
 
-import { AbstractConverter, AbstractConverterContext } from '../..'
-import { ExampleConverter } from '../ExampleConverter'
-import { SchemaConverter } from '../schema/SchemaConverter'
+import { AbstractConverter, AbstractConverterContext } from "../.."
+import { ExampleConverter } from "../ExampleConverter"
+import { SchemaConverter } from "../schema/SchemaConverter"
 
 export declare namespace AbstractParameterConverter {
     export interface Args<TParameter extends OpenAPIV3_1.ParameterObject> extends AbstractConverter.AbstractArgs {
@@ -16,17 +16,17 @@ export declare namespace AbstractParameterConverter {
     }
 
     export interface QueryParameterOutput extends BaseParameterOutput {
-        type: 'query'
+        type: "query"
         parameter: QueryParameter
     }
 
     export interface HeaderParameterOutput extends BaseParameterOutput {
-        type: 'header'
+        type: "header"
         parameter: HttpHeader
     }
 
     export interface PathParameterOutput extends BaseParameterOutput {
-        type: 'path'
+        type: "path"
         parameter: PathParameter
     }
 
@@ -70,9 +70,9 @@ export abstract class AbstractParameterConverter<
         })
 
         switch (this.parameter.in) {
-            case 'query':
+            case "query":
                 return {
-                    type: 'query',
+                    type: "query",
                     parameter: {
                         name: this.context.casingsGenerator.generateNameAndWireValue({
                             name: this.parameter.name,
@@ -88,9 +88,9 @@ export abstract class AbstractParameterConverter<
                     },
                     inlinedTypes
                 }
-            case 'header':
+            case "header":
                 return {
-                    type: 'header',
+                    type: "header",
                     parameter: {
                         name: this.context.casingsGenerator.generateNameAndWireValue({
                             name: this.parameter.name,
@@ -106,14 +106,14 @@ export abstract class AbstractParameterConverter<
                     },
                     inlinedTypes
                 }
-            case 'path':
+            case "path":
                 return {
-                    type: 'path',
+                    type: "path",
                     parameter: {
                         name: this.context.casingsGenerator.generateName(this.parameter.name),
                         docs: this.parameter.description,
                         valueType: typeReference ?? AbstractConverter.STRING,
-                        location: 'ENDPOINT',
+                        location: "ENDPOINT",
                         variable: undefined,
                         v2Examples: this.convertParameterExamples({
                             schema: parameterSchemaWithExampleOverride ?? schema
@@ -135,7 +135,7 @@ export abstract class AbstractParameterConverter<
             return undefined
         }
 
-        if (schema.type === 'string' && schema.example == null) {
+        if (schema.type === "string" && schema.example == null) {
             return {
                 ...schema,
                 example: this.parameter.name

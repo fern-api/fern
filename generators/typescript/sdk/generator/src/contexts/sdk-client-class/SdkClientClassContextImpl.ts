@@ -1,10 +1,10 @@
-import { ExportsManager, ImportsManager, NpmPackage, PackageId, Reference } from '@fern-typescript/commons'
-import { GeneratedSdkClientClass, SdkClientClassContext } from '@fern-typescript/contexts'
-import { PackageResolver } from '@fern-typescript/resolvers'
-import { SdkClientClassGenerator } from '@fern-typescript/sdk-client-class-generator'
-import { SourceFile } from 'ts-morph'
+import { ExportsManager, ImportsManager, NpmPackage, PackageId, Reference } from "@fern-typescript/commons"
+import { GeneratedSdkClientClass, SdkClientClassContext } from "@fern-typescript/contexts"
+import { PackageResolver } from "@fern-typescript/resolvers"
+import { SdkClientClassGenerator } from "@fern-typescript/sdk-client-class-generator"
+import { SourceFile } from "ts-morph"
 
-import { SdkClientClassDeclarationReferencer } from '../../declaration-referencers/SdkClientClassDeclarationReferencer'
+import { SdkClientClassDeclarationReferencer } from "../../declaration-referencers/SdkClientClassDeclarationReferencer"
 
 export declare namespace SdkClientClassContextImpl {
     export interface Init {
@@ -57,7 +57,7 @@ export class SdkClientClassContextImpl implements SdkClientClassContext {
                 referencedIn: this.sourceFile,
                 importsManager: this.importsManager,
                 exportsManager: this.exportsManager,
-                importStrategy: { type: 'fromPackage', packageName: npmPackage.packageName }
+                importStrategy: { type: "fromPackage", packageName: npmPackage.packageName }
             })
         }
         return this.sdkClientClassDeclarationReferencer.getReferenceToClient({
@@ -65,7 +65,7 @@ export class SdkClientClassContextImpl implements SdkClientClassContext {
             referencedIn: this.sourceFile,
             importsManager: this.importsManager,
             exportsManager: this.exportsManager,
-            importStrategy: { type: 'direct', alias: importAlias }
+            importStrategy: { type: "direct", alias: importAlias }
         })
     }
 }

@@ -1,9 +1,9 @@
-import { OpenAPIV3_1 } from 'openapi-types'
+import { OpenAPIV3_1 } from "openapi-types"
 
-import { Availability, ContainerType, TypeReference } from '@fern-api/ir-sdk'
+import { Availability, ContainerType, TypeReference } from "@fern-api/ir-sdk"
 
-import { AbstractConverter, AbstractConverterContext } from '../..'
-import { SchemaConverter } from './SchemaConverter'
+import { AbstractConverter, AbstractConverterContext } from "../.."
+import { SchemaConverter } from "./SchemaConverter"
 
 export declare namespace SchemaOrReferenceConverter {
     export interface Args extends AbstractConverter.AbstractArgs {
@@ -125,7 +125,7 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
         const convertedSchema = schemaConverter.convert()
         if (convertedSchema != null) {
             const convertedSchemaShape = convertedSchema.convertedSchema.typeDeclaration.shape
-            if (convertedSchemaShape.type === 'alias') {
+            if (convertedSchemaShape.type === "alias") {
                 return {
                     type: this.wrapTypeReference(convertedSchemaShape.aliasOf),
                     schema: convertedSchema.convertedSchema,

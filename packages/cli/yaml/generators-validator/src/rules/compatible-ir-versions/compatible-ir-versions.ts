@@ -1,8 +1,8 @@
-import { generatorsYml } from '@fern-api/configuration-loader'
-import { createFdrGeneratorsSdkService } from '@fern-api/core'
-import { isVersionAhead } from '@fern-api/semver-utils'
+import { generatorsYml } from "@fern-api/configuration-loader"
+import { createFdrGeneratorsSdkService } from "@fern-api/core"
+import { isVersionAhead } from "@fern-api/semver-utils"
 
-import { Rule, RuleViolation } from '../../Rule'
+import { Rule, RuleViolation } from "../../Rule"
 
 function getMaybeBadVersionMessage(
     generatorName: string,
@@ -12,7 +12,7 @@ function getMaybeBadVersionMessage(
     if (!isVersionAhead(cliVersion, minCliVersion)) {
         return [
             {
-                severity: 'fatal',
+                severity: "fatal",
                 message: `The generator ${generatorName} requires CLI version ${minCliVersion} or later (current version: ${cliVersion}). Please run \`fern upgrade\` to upgrade your CLI version and use this generator.`
             }
         ]
@@ -21,7 +21,7 @@ function getMaybeBadVersionMessage(
 }
 
 function getOverriddenIrVersion(irVersion: string): number {
-    return Number(irVersion.replace('v', ''))
+    return Number(irVersion.replace("v", ""))
 }
 
 async function getIrVersionForGeneratorInvocation(
@@ -50,7 +50,7 @@ async function getIrVersionForGeneratorInvocation(
 
 // NOTE: we do not throw in the event of a failure here, to account for using the generator offline
 export const CompatibleIrVersionsRule: Rule = {
-    name: 'compatible-ir-version',
+    name: "compatible-ir-version",
     create: async () => {
         return {
             generatorsYml: {
@@ -70,9 +70,9 @@ export const CompatibleIrVersionsRule: Rule = {
 
                     // Pull the generator release to get the IR version
                     let invocationIrVersion: number
-                    if (invocation['ir-version'] != null) {
+                    if (invocation["ir-version"] != null) {
                         // You've overridden the IR version in the generator invocation, let's clean it up
-                        invocationIrVersion = getOverriddenIrVersion(invocation['ir-version'])
+                        invocationIrVersion = getOverriddenIrVersion(invocation["ir-version"])
                     } else {
                         const maybeIrVersion = await getIrVersionForGeneratorInvocation(invocation)
 

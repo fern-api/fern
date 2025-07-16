@@ -1,8 +1,8 @@
-import { RawSchemas, isInlineRequestBody } from '@fern-api/fern-definition-schema'
-import { FernFileContext, ResolvedType, TypeResolver } from '@fern-api/ir-generator'
+import { RawSchemas, isInlineRequestBody } from "@fern-api/fern-definition-schema"
+import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator"
 
-import { RuleViolation } from '../../Rule'
-import { getAllPropertiesForRawObjectSchema, validatePropertyInType } from './validatePropertyInType'
+import { RuleViolation } from "../../Rule"
+import { getAllPropertiesForRawObjectSchema, validatePropertyInType } from "./validatePropertyInType"
 
 export declare namespace ValidatePropertyInRequest {
     interface Args {
@@ -27,7 +27,7 @@ export function validatePropertyInRequest({
     }
 
     // referenced request
-    if (typeof request === 'string') {
+    if (typeof request === "string") {
         const resolvedType = typeResolver.resolveType({
             type: request,
             file
@@ -47,7 +47,7 @@ export function validatePropertyInRequest({
     }
 
     // inlined query param
-    const queryParam = request['query-parameters']?.[firstComponent]
+    const queryParam = request["query-parameters"]?.[firstComponent]
     if (queryParam != null) {
         const resolvedQueryParamType = typeResolver.resolveType({
             type: getTypeFromTypeReference(queryParam),
@@ -87,7 +87,7 @@ export function validatePropertyInRequest({
 }
 
 function getTypeFromTypeReference(typeReference: RawSchemas.TypeReferenceSchema): string {
-    if (typeof typeReference === 'string') {
+    if (typeof typeReference === "string") {
         return typeReference
     }
     return typeReference.type

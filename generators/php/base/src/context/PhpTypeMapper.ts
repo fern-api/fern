@@ -1,8 +1,8 @@
-import { isEqual, uniqWith } from 'lodash-es'
+import { isEqual, uniqWith } from "lodash-es"
 
-import { assertNever } from '@fern-api/core-utils'
-import { php } from '@fern-api/php-codegen'
-import { BasePhpCustomConfigSchema } from '@fern-api/php-codegen'
+import { assertNever } from "@fern-api/core-utils"
+import { php } from "@fern-api/php-codegen"
+import { BasePhpCustomConfigSchema } from "@fern-api/php-codegen"
 
 import {
     ContainerType,
@@ -13,9 +13,9 @@ import {
     PrimitiveTypeV1,
     TypeId,
     TypeReference
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { AbstractPhpGeneratorContext } from './AbstractPhpGeneratorContext'
+import { AbstractPhpGeneratorContext } from "./AbstractPhpGeneratorContext"
 
 export declare namespace PhpTypeMapper {
     interface Args {
@@ -37,16 +37,16 @@ export class PhpTypeMapper {
 
     public convert({ reference, preserveEnums = false }: PhpTypeMapper.Args): php.Type {
         switch (reference.type) {
-            case 'container':
+            case "container":
                 return this.convertContainer({
                     container: reference.container,
                     preserveEnums
                 })
-            case 'named':
+            case "named":
                 return this.convertNamed({ named: reference, preserveEnums })
-            case 'primitive':
+            case "primitive":
                 return this.convertPrimitive(reference)
-            case 'unknown':
+            case "unknown":
                 return php.Type.mixed()
             default:
                 assertNever(reference)
@@ -55,9 +55,9 @@ export class PhpTypeMapper {
 
     public convertLiteral({ literal }: { literal: Literal }): php.Type {
         switch (literal.type) {
-            case 'boolean':
+            case "boolean":
                 return php.Type.literalBoolean(literal.boolean)
-            case 'string':
+            case "string":
                 return php.Type.literalString(literal.string)
         }
     }
@@ -84,20 +84,20 @@ export class PhpTypeMapper {
         preserveEnums: boolean
     }): php.Type {
         switch (container.type) {
-            case 'list':
+            case "list":
                 return php.Type.array(this.convert({ reference: container.list, preserveEnums }))
-            case 'map': {
+            case "map": {
                 const key = this.convert({ reference: container.keyType, preserveEnums })
                 const value = this.convert({ reference: container.valueType, preserveEnums })
                 return php.Type.map(key, value)
             }
-            case 'set':
+            case "set":
                 return php.Type.array(this.convert({ reference: container.set, preserveEnums }))
-            case 'optional':
+            case "optional":
                 return php.Type.optional(this.convert({ reference: container.optional, preserveEnums }))
-            case 'nullable':
+            case "nullable":
                 return php.Type.optional(this.convert({ reference: container.nullable, preserveEnums }))
-            case 'literal':
+            case "literal":
                 return this.convertLiteral({ literal: container.literal })
             default:
                 assertNever(container)
@@ -127,14 +127,14 @@ export class PhpTypeMapper {
         const classReference = this.convertToClassReference(named)
         const typeDeclaration = this.context.getTypeDeclarationOrThrow(named.typeId)
         switch (typeDeclaration.shape.type) {
-            case 'alias':
+            case "alias":
                 return this.convert({ reference: typeDeclaration.shape.aliasOf, preserveEnums })
-            case 'enum':
+            case "enum":
                 return preserveEnums ? php.Type.reference(classReference) : php.Type.enumString(classReference)
-            case 'object':
-            case 'union':
+            case "object":
+            case "union":
                 return php.Type.reference(classReference)
-            case 'undiscriminatedUnion': {
+            case "undiscriminatedUnion": {
                 return php.Type.union(
                     uniqWith(
                         typeDeclaration.shape.members.map((member) =>

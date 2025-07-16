@@ -1,15 +1,15 @@
-import { GeneratorName } from '@fern-api/configuration-loader'
+import { GeneratorName } from "@fern-api/configuration-loader"
 
-import { IrSerialization } from '../../ir-serialization'
-import { IrVersions } from '../../ir-versions'
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
+import { IrSerialization } from "../../ir-serialization"
+import { IrVersions } from "../../ir-versions"
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
 
 export const V41_TO_V40_MIGRATION: IrMigration<
     IrVersions.V41.ir.IntermediateRepresentation,
     IrVersions.V40.ir.IntermediateRepresentation
 > = {
-    laterVersion: 'v41',
-    earlierVersion: 'v40',
+    laterVersion: "v41",
+    earlierVersion: "v40",
     firstGeneratorVersionToConsumeNewIR: {
         [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -41,7 +41,7 @@ export const V41_TO_V40_MIGRATION: IrMigration<
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V40.IntermediateRepresentation.jsonOrThrow(ir, {
-            unrecognizedObjectKeys: 'strip',
+            unrecognizedObjectKeys: "strip",
             skipValidation: true
         }),
     migrateBackwards: (V41, _context): IrVersions.V40.ir.IntermediateRepresentation => {

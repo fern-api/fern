@@ -1,14 +1,14 @@
-import { readFile } from 'fs/promises'
+import { readFile } from "fs/promises"
 
-import { OpenAPISpec, isOpenAPIV2, isOpenAPIV3 } from '@fern-api/api-workspace-commons'
-import { AbsoluteFilePath, join, relative } from '@fern-api/fs-utils'
-import { Source as OpenApiIrSource } from '@fern-api/openapi-ir'
-import { Document, getParseOptions } from '@fern-api/openapi-ir-parser'
-import { TaskContext } from '@fern-api/task-context'
+import { OpenAPISpec, isOpenAPIV2, isOpenAPIV3 } from "@fern-api/api-workspace-commons"
+import { AbsoluteFilePath, join, relative } from "@fern-api/fs-utils"
+import { Source as OpenApiIrSource } from "@fern-api/openapi-ir"
+import { Document, getParseOptions } from "@fern-api/openapi-ir-parser"
+import { TaskContext } from "@fern-api/task-context"
 
-import { convertOpenAPIV2ToV3 } from '../utils/convertOpenAPIV2ToV3'
-import { loadAsyncAPI } from '../utils/loadAsyncAPI'
-import { loadOpenAPI } from '../utils/loadOpenAPI'
+import { convertOpenAPIV2ToV3 } from "../utils/convertOpenAPIV2ToV3"
+import { loadAsyncAPI } from "../utils/loadAsyncAPI"
+import { loadOpenAPI } from "../utils/loadOpenAPI"
 
 export class OpenAPILoader {
     constructor(private readonly absoluteFilePath: AbsoluteFilePath) {}
@@ -28,10 +28,10 @@ export class OpenAPILoader {
                 sourceRelativePath = join(spec.source.relativePathToDependency, sourceRelativePath)
             }
             const source =
-                spec.source.type === 'protobuf'
+                spec.source.type === "protobuf"
                     ? OpenApiIrSource.protobuf({ file: sourceRelativePath })
                     : OpenApiIrSource.openapi({ file: sourceRelativePath })
-            if (contents.includes('openapi') || contents.includes('swagger')) {
+            if (contents.includes("openapi") || contents.includes("swagger")) {
                 const openAPI = await loadOpenAPI({
                     absolutePathToOpenAPI: spec.absoluteFilepath,
                     context,
@@ -39,7 +39,7 @@ export class OpenAPILoader {
                 })
                 if (isOpenAPIV3(openAPI)) {
                     documents.push({
-                        type: 'openapi',
+                        type: "openapi",
                         value: openAPI,
                         source,
                         namespace: spec.namespace,
@@ -49,7 +49,7 @@ export class OpenAPILoader {
                 } else if (isOpenAPIV2(openAPI)) {
                     const convertedOpenAPI = await convertOpenAPIV2ToV3(openAPI)
                     documents.push({
-                        type: 'openapi',
+                        type: "openapi",
                         value: convertedOpenAPI,
                         source,
                         namespace: spec.namespace,
@@ -58,14 +58,14 @@ export class OpenAPILoader {
                     continue
                 }
             }
-            if (contents.includes('asyncapi')) {
+            if (contents.includes("asyncapi")) {
                 const asyncAPI = await loadAsyncAPI({
                     context,
                     absoluteFilePath: spec.absoluteFilepath,
                     absoluteFilePathToOverrides: spec.absoluteFilepathToOverrides
                 })
                 documents.push({
-                    type: 'asyncapi',
+                    type: "asyncapi",
                     value: asyncAPI,
                     source,
                     namespace: spec.namespace,
@@ -73,14 +73,14 @@ export class OpenAPILoader {
                 })
                 continue
             }
-            if (contents.includes('openrpc')) {
+            if (contents.includes("openrpc")) {
                 const asyncAPI = await loadAsyncAPI({
                     context,
                     absoluteFilePath: spec.absoluteFilepath,
                     absoluteFilePathToOverrides: spec.absoluteFilepathToOverrides
                 })
                 documents.push({
-                    type: 'asyncapi',
+                    type: "asyncapi",
                     value: asyncAPI,
                     source,
                     namespace: spec.namespace,

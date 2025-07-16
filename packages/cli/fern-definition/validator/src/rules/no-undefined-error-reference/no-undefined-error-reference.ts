@@ -1,17 +1,17 @@
-import { mapValues } from 'lodash-es'
+import { mapValues } from "lodash-es"
 
-import { FernWorkspace, visitAllDefinitionFiles } from '@fern-api/api-workspace-commons'
-import { DefinitionFileSchema, RootApiFileSchema } from '@fern-api/fern-definition-schema'
-import { RelativeFilePath } from '@fern-api/fs-utils'
-import { parseReferenceToTypeName } from '@fern-api/ir-generator'
+import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/api-workspace-commons"
+import { DefinitionFileSchema, RootApiFileSchema } from "@fern-api/fern-definition-schema"
+import { RelativeFilePath } from "@fern-api/fs-utils"
+import { parseReferenceToTypeName } from "@fern-api/ir-generator"
 
-import { Rule, RuleViolation } from '../../Rule'
-import { visitDefinitionFileYamlAst } from '../../ast'
+import { Rule, RuleViolation } from "../../Rule"
+import { visitDefinitionFileYamlAst } from "../../ast"
 
 type ErrorName = string
 
 export const NoUndefinedErrorReferenceRule: Rule = {
-    name: 'no-undefined-error-reference',
+    name: "no-undefined-error-reference",
     create: ({ workspace }) => {
         const errorsByFilepath: Record<RelativeFilePath, Set<ErrorName>> = getErrorsByFilepath(workspace)
 
@@ -40,8 +40,8 @@ export const NoUndefinedErrorReferenceRule: Rule = {
 
             return [
                 {
-                    severity: 'fatal',
-                    message: 'Error is not defined.'
+                    severity: "fatal",
+                    message: "Error is not defined."
                 }
             ]
         }

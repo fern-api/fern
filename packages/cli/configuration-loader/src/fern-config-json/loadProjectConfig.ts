@@ -1,12 +1,12 @@
-import { readFile } from 'fs/promises'
+import { readFile } from "fs/promises"
 
-import { PROJECT_CONFIG_FILENAME } from '@fern-api/configuration'
-import { fernConfigJson } from '@fern-api/configuration'
-import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
-import { TaskContext } from '@fern-api/task-context'
+import { PROJECT_CONFIG_FILENAME } from "@fern-api/configuration"
+import { fernConfigJson } from "@fern-api/configuration"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { TaskContext } from "@fern-api/task-context"
 
-import { validateSchema } from '../commons/validateSchema'
-import { ProjectConfigSchema } from './schema/ProjectConfigSchema'
+import { validateSchema } from "../commons/validateSchema"
+import { ProjectConfigSchema } from "./schema/ProjectConfigSchema"
 
 export async function loadProjectConfig({
     directory,

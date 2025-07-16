@@ -1,8 +1,8 @@
-import { FernRegistryClient as FdrClient } from '@fern-fern/fdr-cjs-sdk'
-import { FernRegistryClient } from '@fern-fern/fdr-test-sdk'
+import { FernRegistryClient as FdrClient } from "@fern-fern/fdr-cjs-sdk"
+import { FernRegistryClient } from "@fern-fern/fdr-test-sdk"
 
 export function createFdrService({
-    environment = process.env.DEFAULT_FDR_ORIGIN ?? 'https://registry.buildwithfern.com',
+    environment = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com",
     token
 }: {
     environment?: string
@@ -16,7 +16,7 @@ export function createFdrService({
 }
 
 export function createFdrTestService({
-    environment = process.env.DEFAULT_FDR_ORIGIN ?? 'https://registry.buildwithfern.com',
+    environment = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com",
     token
 }: {
     environment?: string

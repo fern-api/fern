@@ -1,4 +1,4 @@
-const TIMEOUT = 'timeout'
+const TIMEOUT = "timeout"
 
 export function getTimeoutSignal(timeoutMs: number): { signal: AbortSignal; abortId: NodeJS.Timeout } {
     const controller = new AbortController()
@@ -29,7 +29,7 @@ export function anySignal(...args: AbortSignal[] | [AbortSignal[]]): AbortSignal
 
         // Listening for signals and removing the listeners
         // when at least one symbol is aborted.
-        signal.addEventListener('abort', () => controller.abort((signal as any)?.reason), {
+        signal.addEventListener("abort", () => controller.abort((signal as any)?.reason), {
             signal: controller.signal
         })
     }

@@ -1,6 +1,6 @@
-import { OpenAPIV3 } from 'openapi-types'
+import { OpenAPIV3 } from "openapi-types"
 
-import { MediaType } from '@fern-api/core-utils'
+import { MediaType } from "@fern-api/core-utils"
 import {
     MultipartRequestProperty,
     MultipartRequestPropertyEncoding,
@@ -9,13 +9,13 @@ import {
     RequestWithExample,
     SchemaWithExample,
     Source
-} from '@fern-api/openapi-ir'
+} from "@fern-api/openapi-ir"
 
-import { isAdditionalPropertiesAny } from '../../../../schema/convertAdditionalProperties'
-import { SCHEMA_REFERENCE_PREFIX, convertSchema, getSchemaIdFromReference } from '../../../../schema/convertSchemas'
-import { isReferenceObject } from '../../../../schema/utils/isReferenceObject'
-import { AbstractOpenAPIV3ParserContext } from '../../AbstractOpenAPIV3ParserContext'
-import { getApplicationJsonSchemaMediaObject, getExamples } from './getApplicationJsonSchema'
+import { isAdditionalPropertiesAny } from "../../../../schema/convertAdditionalProperties"
+import { SCHEMA_REFERENCE_PREFIX, convertSchema, getSchemaIdFromReference } from "../../../../schema/convertSchemas"
+import { isReferenceObject } from "../../../../schema/utils/isReferenceObject"
+import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext"
+import { getApplicationJsonSchemaMediaObject, getExamples } from "./getApplicationJsonSchema"
 
 function getApplicationUrlFormEncodedRequest(
     requestBody: OpenAPIV3.RequestBodyObject,
@@ -74,7 +74,7 @@ function multipartRequestHasFile(
           }
     return (
         Object.entries(resolvedMultipartSchema.schema.properties ?? {}).find(([_, definition]) => {
-            return !isReferenceObject(definition) && definition.type === 'string' && definition.format === 'binary'
+            return !isReferenceObject(definition) && definition.type === "string" && definition.format === "binary"
         }) != null
     )
 }
@@ -134,7 +134,7 @@ export function convertRequest({
             namespace
         )
         const properties: MultipartRequestProperty[] = []
-        if (convertedMultipartSchema.type === 'object') {
+        if (convertedMultipartSchema.type === "object") {
             for (const property of convertedMultipartSchema.properties) {
                 const { isFile, isOptional, isArray, description } = recursivelyCheckSchemaWithExampleIsFile({
                     schema: property.schema
@@ -223,7 +223,7 @@ export function convertRequest({
 }
 
 const CONTENT_TYPE_TO_ENCODING_MAP: Record<string, MultipartRequestPropertyEncoding> = {
-    'application/json': 'json'
+    "application/json": "json"
 }
 function getMultipartPartEncodingFromContentType(
     contentType: string | undefined
@@ -315,19 +315,19 @@ function recursivelyCheckSchemaWithExampleIsFile({
 }
 
 function checkSchemaWithExampleIsFile(schema: SchemaWithExample): schema is SchemaWithExample.Primitive {
-    return schema.type === 'primitive' && schema.schema.type === 'string' && schema.schema.format === 'binary'
+    return schema.type === "primitive" && schema.schema.type === "string" && schema.schema.format === "binary"
 }
 
 function checkSchemaWithExampleIsOptional(schema: SchemaWithExample): schema is SchemaWithExample.Optional {
-    return schema.type === 'optional'
+    return schema.type === "optional"
 }
 
 function checkSchemaWithExampleIsNullable(schema: SchemaWithExample): schema is SchemaWithExample.Nullable {
-    return schema.type === 'nullable'
+    return schema.type === "nullable"
 }
 
 function checkSchemaWithExampleIsArray(schema: SchemaWithExample): schema is SchemaWithExample.Array {
-    return schema.type === 'array'
+    return schema.type === "array"
 }
 
 function getContentType(key: string, multipartEncoding: Record<string, OpenAPIV3.EncodingObject> | undefined) {

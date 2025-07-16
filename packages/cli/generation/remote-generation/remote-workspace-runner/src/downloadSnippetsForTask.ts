@@ -1,11 +1,11 @@
-import axios from 'axios'
-import chalk from 'chalk'
-import { createWriteStream } from 'fs'
-import { mkdir, rm } from 'fs/promises'
-import { pipeline } from 'stream/promises'
+import axios from "axios"
+import chalk from "chalk"
+import { createWriteStream } from "fs"
+import { mkdir, rm } from "fs/promises"
+import { pipeline } from "stream/promises"
 
-import { AbsoluteFilePath, dirname, doesPathExist } from '@fern-api/fs-utils'
-import { InteractiveTaskContext } from '@fern-api/task-context'
+import { AbsoluteFilePath, dirname, doesPathExist } from "@fern-api/fs-utils"
+import { InteractiveTaskContext } from "@fern-api/task-context"
 
 export async function downloadSnippetsForTask({
     snippetsS3PreSignedReadUrl,
@@ -23,7 +23,7 @@ export async function downloadSnippetsForTask({
         })
         context.logger.info(chalk.green(`Downloaded to ${absolutePathToLocalSnippetJSON}`))
     } catch (e) {
-        context.logger.debug(chalk.yellow('Failed to download snippet.json from output.'))
+        context.logger.debug(chalk.yellow("Failed to download snippet.json from output."))
     }
 }
 
@@ -35,7 +35,7 @@ async function downloadFileForTask({
     absolutePathToLocalOutput: AbsoluteFilePath
 }): Promise<void> {
     const request = await axios.get(s3PreSignedReadUrl, {
-        responseType: 'stream'
+        responseType: "stream"
     })
     if (await doesPathExist(absolutePathToLocalOutput)) {
         await rm(absolutePathToLocalOutput, { recursive: true })

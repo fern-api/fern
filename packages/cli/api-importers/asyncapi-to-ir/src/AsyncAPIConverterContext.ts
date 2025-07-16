@@ -1,21 +1,21 @@
-import { OpenAPIV3, OpenAPIV3_1 } from 'openapi-types'
+import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types"
 
-import { TypeReference } from '@fern-api/ir-sdk'
-import { AbstractConverterContext, DisplayNameOverrideSource } from '@fern-api/v2-importer-commons'
+import { TypeReference } from "@fern-api/ir-sdk"
+import { AbstractConverterContext, DisplayNameOverrideSource } from "@fern-api/v2-importer-commons"
 
-import { AsyncAPIV2 } from './2.x'
-import { AsyncAPIV3 } from './3.0'
+import { AsyncAPIV2 } from "./2.x"
+import { AsyncAPIV3 } from "./3.0"
 
 /**
  * Context class for converting AsyncAPI specifications
  */
 export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3> {
     public isReferenceObject(parameter: unknown): parameter is OpenAPIV3.ReferenceObject | OpenAPIV3_1.ReferenceObject {
-        return parameter != null && typeof parameter === 'object' && '$ref' in parameter
+        return parameter != null && typeof parameter === "object" && "$ref" in parameter
     }
 
     public isMessageWithPayload(msg: unknown): msg is AsyncAPIV3.ChannelMessage {
-        return msg != null && typeof msg === 'object' && 'payload' in msg
+        return msg != null && typeof msg === "object" && "payload" in msg
     }
 
     public getTypeIdFromMessageReference(reference: OpenAPIV3_1.ReferenceObject): string | undefined {
@@ -97,11 +97,11 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
 
         let displayName: string | undefined
 
-        if (displayNameOverrideSource === 'reference_identifier') {
+        if (displayNameOverrideSource === "reference_identifier") {
             displayName = displayNameOverride ?? resolvedReference.value.title
         } else if (
-            displayNameOverrideSource === 'discriminator_key' ||
-            displayNameOverrideSource === 'schema_identifier'
+            displayNameOverrideSource === "discriminator_key" ||
+            displayNameOverrideSource === "schema_identifier"
         ) {
             displayName = resolvedReference.value.title ?? displayNameOverride
         }
@@ -142,11 +142,11 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
 
         let displayName: string | undefined
 
-        if (displayNameOverrideSource === 'reference_identifier') {
+        if (displayNameOverrideSource === "reference_identifier") {
             displayName = displayNameOverride ?? resolvedReference.value.name
         } else if (
-            displayNameOverrideSource === 'discriminator_key' ||
-            displayNameOverrideSource === 'schema_identifier'
+            displayNameOverrideSource === "discriminator_key" ||
+            displayNameOverrideSource === "schema_identifier"
         ) {
             displayName = resolvedReference.value.name ?? displayNameOverride
         }
@@ -184,11 +184,11 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
 
         let displayName: string | undefined
 
-        if (displayNameOverrideSource === 'reference_identifier') {
+        if (displayNameOverrideSource === "reference_identifier") {
             displayName = displayNameOverride ?? resolvedReference.value.messageId ?? resolvedReference.value.name
         } else if (
-            displayNameOverrideSource === 'discriminator_key' ||
-            displayNameOverrideSource === 'schema_identifier'
+            displayNameOverrideSource === "discriminator_key" ||
+            displayNameOverrideSource === "schema_identifier"
         ) {
             displayName = resolvedReference.value.messageId ?? resolvedReference.value.name ?? displayNameOverride
         }

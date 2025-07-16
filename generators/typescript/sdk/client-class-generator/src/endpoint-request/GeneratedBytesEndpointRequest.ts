@@ -5,9 +5,9 @@ import {
     PackageId,
     getParameterNameForPositionalPathParameter,
     getTextOfTsNode
-} from '@fern-typescript/commons'
-import { SdkContext } from '@fern-typescript/contexts'
-import { OptionalKind, ParameterDeclarationStructure, ts } from 'ts-morph'
+} from "@fern-typescript/commons"
+import { SdkContext } from "@fern-typescript/contexts"
+import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph"
 
 import {
     ExampleEndpointCall,
@@ -15,14 +15,14 @@ import {
     HttpRequestBody,
     HttpService,
     IntermediateRepresentation
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { GeneratedSdkClientClassImpl } from '../GeneratedSdkClientClassImpl'
-import { GeneratedQueryParams } from '../endpoints/utils/GeneratedQueryParams'
-import { generateHeaders } from '../endpoints/utils/generateHeaders'
-import { getPathParametersForEndpointSignature } from '../endpoints/utils/getPathParametersForEndpointSignature'
-import { FileUploadRequestParameter } from '../request-parameter/FileUploadRequestParameter'
-import { GeneratedEndpointRequest } from './GeneratedEndpointRequest'
+import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl"
+import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams"
+import { generateHeaders } from "../endpoints/utils/generateHeaders"
+import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature"
+import { FileUploadRequestParameter } from "../request-parameter/FileUploadRequestParameter"
+import { GeneratedEndpointRequest } from "./GeneratedEndpointRequest"
 
 export declare namespace GeneratedBytesEndpointRequest {
     export interface Init {
@@ -38,7 +38,7 @@ export declare namespace GeneratedBytesEndpointRequest {
 }
 
 export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
-    private static readonly BYTES_VARIABLE_NAME = 'bytes'
+    private static readonly BYTES_VARIABLE_NAME = "bytes"
 
     private ir: IntermediateRepresentation
     private requestParameter: FileUploadRequestParameter | undefined
@@ -66,11 +66,11 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
         this.retainOriginalCasing = retainOriginalCasing
 
         if (this.endpoint.sdkRequest == null) {
-            throw new Error('SdkRequest is not defined for bytes endpoint')
+            throw new Error("SdkRequest is not defined for bytes endpoint")
         }
 
         // You have query parameters
-        if (this.endpoint.sdkRequest.shape.type === 'wrapper') {
+        if (this.endpoint.sdkRequest.shape.type === "wrapper") {
             this.requestParameter = new FileUploadRequestParameter({
                 packageId,
                 service,
@@ -95,7 +95,7 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
     }): ts.Expression[] | undefined {
         const exampleParameters = [...example.servicePathParameters, ...example.endpointPathParameters]
         const result: ts.Expression[] = [
-            context.externalDependencies.fs.createReadStream(ts.factory.createStringLiteral('/path/to/your/file'))
+            context.externalDependencies.fs.createReadStream(ts.factory.createStringLiteral("/path/to/your/file"))
         ]
         for (const pathParameter of getPathParametersForEndpointSignature({
             service: this.service,
@@ -106,7 +106,7 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
                 (param) => param.name.originalName === pathParameter.name.originalName
             )
             if (exampleParameter == null) {
-                result.push(ts.factory.createIdentifier('undefined'))
+                result.push(ts.factory.createIdentifier("undefined"))
             } else {
                 const generatedExample = context.type.getGeneratedExample(exampleParameter.value)
                 result.push(generatedExample.build(context, opts))
@@ -116,7 +116,7 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
             const requestParameterExample = this.requestParameter.generateExample({ context, example, opts })
             if (
                 requestParameterExample != null &&
-                getTextOfTsNode(requestParameterExample) === '{}' &&
+                getTextOfTsNode(requestParameterExample) === "{}" &&
                 this.requestParameter.isOptional({ context })
             ) {
                 // pass
@@ -160,7 +160,7 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
     }
 
     private getFileParameterType(context: SdkContext): ts.TypeNode {
-        const types: ts.TypeNode[] = [ts.factory.createTypeReferenceNode('File')]
+        const types: ts.TypeNode[] = [ts.factory.createTypeReferenceNode("File")]
 
         types.push(context.externalDependencies.fs.ReadStream._getReferenceToType())
         types.push(context.externalDependencies.blob.Blob._getReferenceToType())
@@ -189,15 +189,15 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
 
     public getFetcherRequestArgs(
         context: SdkContext
-    ): Pick<Fetcher.Args, 'headers' | 'queryParameters' | 'body' | 'contentType' | 'requestType' | 'duplex'> {
+    ): Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType" | "requestType" | "duplex"> {
         const queryParams = this.getQueryParams(context)
         return {
             headers: this.getHeaders(context),
             queryParameters: queryParams != null ? queryParams.getReferenceTo() : undefined,
             contentType: this.requestBody.contentType,
-            requestType: 'bytes',
+            requestType: "bytes",
             body: ts.factory.createIdentifier(GeneratedBytesEndpointRequest.BYTES_VARIABLE_NAME),
-            duplex: ts.factory.createStringLiteral('half')
+            duplex: ts.factory.createStringLiteral("half")
         }
     }
 
@@ -219,14 +219,14 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
 
     public getReferenceToPathParameter(pathParameterKey: string, context: SdkContext): ts.Expression {
         if (this.requestParameter == null) {
-            throw new Error('Cannot get reference to path parameter because request parameter is not defined.')
+            throw new Error("Cannot get reference to path parameter because request parameter is not defined.")
         }
         return this.requestParameter.getReferenceToPathParameter(pathParameterKey, context)
     }
 
     public getReferenceToQueryParameter(queryParameterKey: string, context: SdkContext): ts.Expression {
         if (this.requestParameter == null) {
-            throw new Error('Cannot get reference to query parameter because request parameter is not defined.')
+            throw new Error("Cannot get reference to query parameter because request parameter is not defined.")
         }
         return this.requestParameter.getReferenceToQueryParameter(queryParameterKey, context)
     }

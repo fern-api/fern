@@ -1,6 +1,6 @@
-import { AbstractFormatter, AbstractWriter, NopFormatter } from '@fern-api/browser-compatible-base-generator'
+import { AbstractFormatter, AbstractWriter, NopFormatter } from "@fern-api/browser-compatible-base-generator"
 
-import { BaseRubyCustomConfigSchema } from '../../custom-config/BaseRubyCustomConfigSchema'
+import { BaseRubyCustomConfigSchema } from "../../custom-config/BaseRubyCustomConfigSchema"
 
 type RequirePath = string
 

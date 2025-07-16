@@ -1,8 +1,8 @@
-import { assertNever } from '@fern-api/core-utils'
-import { FernIr } from '@fern-api/dynamic-ir-sdk'
-import { go } from '@fern-api/go-ast'
+import { assertNever } from "@fern-api/core-utils"
+import { FernIr } from "@fern-api/dynamic-ir-sdk"
+import { go } from "@fern-api/go-ast"
 
-import { DynamicSnippetsGeneratorContext } from './DynamicSnippetsGeneratorContext'
+import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext"
 
 export declare namespace DynamicTypeMapper {
     interface Args {
@@ -19,31 +19,31 @@ export class DynamicTypeMapper {
 
     public convert(args: DynamicTypeMapper.Args): go.Type {
         switch (args.typeReference.type) {
-            case 'list':
+            case "list":
                 return go.Type.slice(this.convert({ typeReference: args.typeReference }))
-            case 'literal':
+            case "literal":
                 return this.convertLiteral({ literal: args.typeReference.value })
-            case 'map':
+            case "map":
                 return go.Type.map(
                     this.convert({ typeReference: args.typeReference.key }),
                     this.convert({ typeReference: args.typeReference.value })
                 )
-            case 'named': {
+            case "named": {
                 const named = this.context.resolveNamedType({ typeId: args.typeReference.value })
                 if (named == null) {
                     return this.convertUnknown()
                 }
                 return this.convertNamed({ named })
             }
-            case 'optional':
+            case "optional":
                 return go.Type.optional(this.convert({ typeReference: args.typeReference.value }))
-            case 'nullable':
+            case "nullable":
                 return go.Type.optional(this.convert({ typeReference: args.typeReference.value }))
-            case 'primitive':
+            case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value })
-            case 'set':
+            case "set":
                 return go.Type.slice(this.convert({ typeReference: args.typeReference }))
-            case 'unknown':
+            case "unknown":
                 return this.convertUnknown()
             default:
                 assertNever(args.typeReference)
@@ -52,9 +52,9 @@ export class DynamicTypeMapper {
 
     private convertLiteral({ literal }: { literal: FernIr.dynamic.LiteralType }): go.Type {
         switch (literal.type) {
-            case 'boolean':
+            case "boolean":
                 return go.Type.bool()
-            case 'string':
+            case "string":
                 return go.Type.string()
         }
     }
@@ -67,12 +67,12 @@ export class DynamicTypeMapper {
             })
         )
         switch (named.type) {
-            case 'alias':
-            case 'enum':
+            case "alias":
+            case "enum":
                 return goTypeReference
-            case 'discriminatedUnion':
-            case 'object':
-            case 'undiscriminatedUnion':
+            case "discriminatedUnion":
+            case "object":
+            case "undiscriminatedUnion":
                 return go.Type.pointer(goTypeReference)
             default:
                 assertNever(named)
@@ -85,31 +85,31 @@ export class DynamicTypeMapper {
 
     private convertPrimitive({ primitive }: { primitive: FernIr.PrimitiveTypeV1 }): go.Type {
         switch (primitive) {
-            case 'INTEGER':
+            case "INTEGER":
                 return go.Type.int()
-            case 'UINT':
+            case "UINT":
                 return go.Type.int()
-            case 'LONG':
+            case "LONG":
                 return go.Type.int64()
-            case 'UINT_64':
+            case "UINT_64":
                 return go.Type.int64()
-            case 'FLOAT':
+            case "FLOAT":
                 return go.Type.float64()
-            case 'DOUBLE':
+            case "DOUBLE":
                 return go.Type.float64()
-            case 'BOOLEAN':
+            case "BOOLEAN":
                 return go.Type.bool()
-            case 'STRING':
+            case "STRING":
                 return go.Type.string()
-            case 'DATE':
+            case "DATE":
                 return go.Type.date()
-            case 'DATE_TIME':
+            case "DATE_TIME":
                 return go.Type.dateTime()
-            case 'UUID':
+            case "UUID":
                 return go.Type.uuid()
-            case 'BASE_64':
+            case "BASE_64":
                 return go.Type.bytes()
-            case 'BIG_INTEGER':
+            case "BIG_INTEGER":
                 return go.Type.string()
             default:
                 assertNever(primitive)

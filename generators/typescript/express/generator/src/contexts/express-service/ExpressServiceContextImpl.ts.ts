@@ -1,10 +1,10 @@
-import { ExportsManager, ImportsManager, PackageId, Reference } from '@fern-typescript/commons'
-import { ExpressServiceContext, GeneratedExpressService } from '@fern-typescript/contexts'
-import { ExpressServiceGenerator } from '@fern-typescript/express-service-generator'
-import { PackageResolver } from '@fern-typescript/resolvers'
-import { SourceFile } from 'ts-morph'
+import { ExportsManager, ImportsManager, PackageId, Reference } from "@fern-typescript/commons"
+import { ExpressServiceContext, GeneratedExpressService } from "@fern-typescript/contexts"
+import { ExpressServiceGenerator } from "@fern-typescript/express-service-generator"
+import { PackageResolver } from "@fern-typescript/resolvers"
+import { SourceFile } from "ts-morph"
 
-import { ExpressServiceDeclarationReferencer } from '../../declaration-referencers/ExpressServiceDeclarationReferencer'
+import { ExpressServiceDeclarationReferencer } from "../../declaration-referencers/ExpressServiceDeclarationReferencer"
 
 export declare namespace ExpressServiceContextImpl {
     export interface Init {
@@ -55,7 +55,7 @@ export class ExpressServiceContextImpl implements ExpressServiceContext {
             name: packageId,
             importsManager: this.importsManager,
             exportsManager: this.exportsManager,
-            importStrategy: { type: 'direct', alias: importAlias },
+            importStrategy: { type: "direct", alias: importAlias },
             referencedIn: this.sourceFile
         })
     }

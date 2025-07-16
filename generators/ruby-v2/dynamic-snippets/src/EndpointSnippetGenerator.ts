@@ -1,11 +1,11 @@
-import { AbstractFormatter } from '@fern-api/browser-compatible-base-generator'
-import { assertNever } from '@fern-api/core-utils'
-import { FernIr } from '@fern-api/dynamic-ir-sdk'
-import { ruby } from '@fern-api/ruby-ast'
+import { AbstractFormatter } from "@fern-api/browser-compatible-base-generator"
+import { assertNever } from "@fern-api/core-utils"
+import { FernIr } from "@fern-api/dynamic-ir-sdk"
+import { ruby } from "@fern-api/ruby-ast"
 
-import { DynamicSnippetsGeneratorContext } from './context/DynamicSnippetsGeneratorContext'
+import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext"
 
-const CLIENT_VAR_NAME = 'client'
+const CLIENT_VAR_NAME = "client"
 
 export class EndpointSnippetGenerator {
     private context: DynamicSnippetsGeneratorContext
@@ -92,15 +92,15 @@ export class EndpointSnippetGenerator {
     }): ruby.KeywordArgument[] {
         if (baseUrl != null && environment != null) {
             this.context.errors.add({
-                severity: 'CRITICAL',
-                message: 'Cannot specify both baseUrl and environment options'
+                severity: "CRITICAL",
+                message: "Cannot specify both baseUrl and environment options"
             })
             return []
         }
         if (baseUrl != null) {
             return [
                 ruby.keywordArgument({
-                    name: 'base_url',
+                    name: "base_url",
                     value: ruby.TypeLiteral.string(baseUrl)
                 })
             ]
@@ -110,7 +110,7 @@ export class EndpointSnippetGenerator {
                 const environmentTypeReference = this.context.getEnvironmentTypeReferenceFromID(environment)
                 if (environmentTypeReference == null) {
                     this.context.errors.add({
-                        severity: 'CRITICAL',
+                        severity: "CRITICAL",
                         message: `Environment ID ${environment} not found`
                     })
                     return []
@@ -118,15 +118,15 @@ export class EndpointSnippetGenerator {
 
                 return [
                     ruby.keywordArgument({
-                        name: 'environment',
+                        name: "environment",
                         value: environmentTypeReference
                     })
                 ]
             }
             if (this.context.isMultiEnvironmentValues(environment)) {
                 this.context.errors.add({
-                    severity: 'CRITICAL',
-                    message: 'Multi-environment values are not supported in Ruby snippets yet'
+                    severity: "CRITICAL",
+                    message: "Multi-environment values are not supported in Ruby snippets yet"
                 })
                 return []
             }
@@ -143,37 +143,37 @@ export class EndpointSnippetGenerator {
         values: FernIr.dynamic.AuthValues
     }): ruby.KeywordArgument[] {
         switch (auth.type) {
-            case 'basic':
-                if (values.type !== 'basic') {
+            case "basic":
+                if (values.type !== "basic") {
                     this.context.errors.add({
-                        severity: 'CRITICAL',
+                        severity: "CRITICAL",
                         message: this.context.newAuthMismatchError({ auth, values }).message
                     })
                     return []
                 }
                 return this.getRootClientBasicAuthArgs({ auth, values })
-            case 'bearer':
-                if (values.type !== 'bearer') {
+            case "bearer":
+                if (values.type !== "bearer") {
                     this.context.errors.add({
-                        severity: 'CRITICAL',
+                        severity: "CRITICAL",
                         message: this.context.newAuthMismatchError({ auth, values }).message
                     })
                     return []
                 }
                 return this.getRootClientBearerAuthArgs({ auth, values })
-            case 'header':
-                if (values.type !== 'header') {
+            case "header":
+                if (values.type !== "header") {
                     this.context.errors.add({
-                        severity: 'CRITICAL',
+                        severity: "CRITICAL",
                         message: this.context.newAuthMismatchError({ auth, values }).message
                     })
                     return []
                 }
                 return this.getRootClientHeaderAuthArgs({ auth, values })
-            case 'oauth':
-                if (values.type !== 'oauth') {
+            case "oauth":
+                if (values.type !== "oauth") {
                     this.context.errors.add({
-                        severity: 'CRITICAL',
+                        severity: "CRITICAL",
                         message: this.context.newAuthMismatchError({ auth, values }).message
                     })
                     return []
@@ -265,7 +265,7 @@ export class EndpointSnippetGenerator {
         const args: ruby.KeywordArgument[] = []
         for (const header of headers) {
             const value = values[header.name.name.originalName]
-            if (value != null && typeof value === 'string') {
+            if (value != null && typeof value === "string") {
                 args.push(
                     ruby.keywordArgument({
                         name: header.name.name.snakeCase.safeName,
@@ -293,7 +293,7 @@ export class EndpointSnippetGenerator {
                 builderArgs.push(...this.getRootClientAuthArgs({ auth: endpoint.auth, values: snippet.auth }))
             } else {
                 this.context.errors.add({
-                    severity: 'WARNING',
+                    severity: "WARNING",
                     message: `Auth with ${endpoint.auth.type} configuration is required for this endpoint`
                 })
             }
@@ -309,7 +309,7 @@ export class EndpointSnippetGenerator {
         }
 
         // Headers
-        this.context.errors.scope('Headers')
+        this.context.errors.scope("Headers")
         if (this.context.ir.headers != null && snippet.headers != null) {
             builderArgs.push(
                 ...this.getRootClientHeaderArgs({ headers: this.context.ir.headers, values: snippet.headers })
@@ -342,9 +342,9 @@ export class EndpointSnippetGenerator {
         snippet: FernIr.dynamic.EndpointSnippetRequest
     }): ruby.AstNode[] {
         switch (endpoint.request.type) {
-            case 'inlined':
+            case "inlined":
                 return [this.getMethodArgsForInlinedRequest({ request: endpoint.request, snippet })]
-            case 'body':
+            case "body":
                 return this.getMethodArgsForBodyRequest({ request: endpoint.request, snippet })
             default:
                 assertNever(endpoint.request)
@@ -362,21 +362,21 @@ export class EndpointSnippetGenerator {
 
         args.push(
             ...this.getNamedParameterArgs({
-                kind: 'PathParameters',
+                kind: "PathParameters",
                 namedParameters: request.pathParameters,
                 values: snippet.pathParameters
             })
         )
         args.push(
             ...this.getNamedParameterArgs({
-                kind: 'QueryParameters',
+                kind: "QueryParameters",
                 namedParameters: request.queryParameters,
                 values: snippet.queryParameters
             })
         )
         args.push(
             ...this.getNamedParameterArgs({
-                kind: 'Headers',
+                kind: "Headers",
                 namedParameters: request.headers,
                 values: snippet.headers
             })
@@ -385,11 +385,11 @@ export class EndpointSnippetGenerator {
         // Handle request.body if present
         if (request.body != null) {
             switch (request.body.type) {
-                case 'properties':
+                case "properties":
                     args.push(...this.getMethodArgsForPropertiesRequest({ request: request.body, snippet }))
                     break
-                case 'referenced':
-                case 'fileUpload':
+                case "referenced":
+                case "fileUpload":
                     // Not implemented for Ruby snippets yet
                     break
                 default:
@@ -410,7 +410,7 @@ export class EndpointSnippetGenerator {
         namedParameters,
         values
     }: {
-        kind: 'PathParameters' | 'QueryParameters' | 'Headers'
+        kind: "PathParameters" | "QueryParameters" | "Headers"
         namedParameters: FernIr.dynamic.NamedParameter[] | undefined
         values: Record<string, unknown> | undefined
     }): ruby.KeywordArgument[] {
@@ -471,14 +471,14 @@ export class EndpointSnippetGenerator {
         }
 
         switch (request.body.type) {
-            case 'bytes':
+            case "bytes":
                 // Not supported in Ruby snippets yet
                 this.context.errors.add({
-                    severity: 'CRITICAL',
-                    message: 'Multi-environment values are not supported in Ruby snippets yet'
+                    severity: "CRITICAL",
+                    message: "Multi-environment values are not supported in Ruby snippets yet"
                 })
                 return []
-            case 'typeReference':
+            case "typeReference":
                 return [
                     ruby.positionalArgument({
                         value: this.context.dynamicTypeLiteralMapper.convert({
@@ -496,7 +496,7 @@ export class EndpointSnippetGenerator {
         if (endpoint.declaration.fernFilepath.allParts.length > 0) {
             return `${endpoint.declaration.fernFilepath.allParts
                 .map((val) => `${this.context.getMethodName(val)}`)
-                .join('.')}.${this.context.getMethodName(endpoint.declaration.name)}`
+                .join(".")}.${this.context.getMethodName(endpoint.declaration.name)}`
         }
         return this.context.getMethodName(endpoint.declaration.name)
     }

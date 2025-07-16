@@ -1,9 +1,9 @@
-import { go } from '@fern-api/go-ast'
+import { go } from "@fern-api/go-ast"
 
-import { HttpEndpoint, HttpService, SdkRequest } from '@fern-fern/ir-sdk/api'
+import { HttpEndpoint, HttpService, SdkRequest } from "@fern-fern/ir-sdk/api"
 
-import { SdkGeneratorContext } from '../../SdkGeneratorContext'
-import { EndpointRequest } from './EndpointRequest'
+import { SdkGeneratorContext } from "../../SdkGeneratorContext"
+import { EndpointRequest } from "./EndpointRequest"
 
 export class BytesRequest extends EndpointRequest {
     // biome-ignore lint/complexity/noUselessConstructor: allow

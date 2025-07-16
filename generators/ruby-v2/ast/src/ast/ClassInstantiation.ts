@@ -1,7 +1,7 @@
-import { ClassReference } from './ClassReference'
-import { KeywordArgument } from './KeywordArgument'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { ClassReference } from "./ClassReference"
+import { KeywordArgument } from "./KeywordArgument"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export declare namespace ClassInstantiation {
     interface Args {
@@ -24,9 +24,9 @@ export class ClassInstantiation extends AstNode {
 
     public write(writer: Writer): void {
         writer.writeNode(this.classReference)
-        writer.write('.')
-        writer.write('new')
-        writer.write('(')
+        writer.write(".")
+        writer.write("new")
+        writer.write("(")
         // If there is more than one argument, write each argument on its own line,
         // separated by commas, for better readability in the generated Ruby code.
         // Otherwise, write the arguments inline (on the same line).
@@ -35,7 +35,7 @@ export class ClassInstantiation extends AstNode {
             writer.newLine()
             this.arguments_.forEach((argument, index) => {
                 if (index > 0) {
-                    writer.write(',')
+                    writer.write(",")
                     writer.newLine()
                 }
                 argument.write(writer)
@@ -45,11 +45,11 @@ export class ClassInstantiation extends AstNode {
         } else {
             this.arguments_.forEach((argument, index) => {
                 if (index > 0) {
-                    writer.write(', ')
+                    writer.write(", ")
                 }
                 argument.write(writer)
             })
         }
-        writer.write(')')
+        writer.write(")")
     }
 }

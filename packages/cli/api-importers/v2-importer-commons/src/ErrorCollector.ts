@@ -1,13 +1,13 @@
-import * as fs from 'fs'
-import { readFile } from 'fs/promises'
-import yaml from 'js-yaml'
-import SourceMap from 'js-yaml-source-map'
-import path from 'path'
-import YAML from 'yaml'
+import * as fs from "fs"
+import { readFile } from "fs/promises"
+import yaml from "js-yaml"
+import SourceMap from "js-yaml-source-map"
+import path from "path"
+import YAML from "yaml"
 
-import { formatLog } from '@fern-api/cli-logger'
-import { RelativeFilePath } from '@fern-api/fs-utils'
-import { LogLevel } from '@fern-api/logger'
+import { formatLog } from "@fern-api/cli-logger"
+import { RelativeFilePath } from "@fern-api/fs-utils"
+import { LogLevel } from "@fern-api/logger"
 
 interface APIErrorLoggingArgs {
     /* Defaults to false */
@@ -26,8 +26,8 @@ export interface APIError {
 }
 
 export enum APIErrorLevel {
-    WARNING = 'warning',
-    ERROR = 'error'
+    WARNING = "warning",
+    ERROR = "error"
 }
 
 /**
@@ -89,7 +89,7 @@ export class ErrorCollector {
 
         for (const error of this.errors) {
             // Create a unique key for each error based on message, level, and path
-            const pathString = error.path ? error.path.join('->') : ''
+            const pathString = error.path ? error.path.join("->") : ""
             const errorKey = `${error.message}|${error.level || APIErrorLevel.WARNING}|${pathString}`
 
             if (!seen.has(errorKey)) {
@@ -140,7 +140,7 @@ export class ErrorCollector {
                         const sourceLocation = await this.breadcrumbToLineNumberMapper?.getSourceLocation(error.path)
                         const locationInfo = sourceLocation
                             ? `${this.relativeFilepathToSpec}:${sourceLocation.line}:${sourceLocation.column}`
-                            : error.path.join(' -> ')
+                            : error.path.join(" -> ")
                         this.logger.log(LogLevel.Error, `\t- at location (${locationInfo})`)
                     }
                     break
@@ -183,7 +183,7 @@ class BreadcrumbToLineNumber {
         }
 
         try {
-            const fileContent = await readFile(this.relativePathToFile, 'utf-8')
+            const fileContent = await readFile(this.relativePathToFile, "utf-8")
             yaml.load(fileContent, { listener: this.map.listen() })
             this.initialized = true
         } catch (error) {

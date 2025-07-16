@@ -1,5 +1,5 @@
-import { AbstractAstNode } from './AbstractAstNode'
-import { AbstractWriter } from './AbstractWriter'
+import { AbstractAstNode } from "./AbstractAstNode"
+import { AbstractWriter } from "./AbstractWriter"
 
 export declare namespace Ternary {
     interface Args {
@@ -27,9 +27,9 @@ export class Ternary extends AbstractAstNode {
 
     public write(writer: AbstractWriter): void {
         writer.writeNode(this.condition)
-        writer.write(' ? ')
+        writer.write(" ? ")
         writer.writeNode(this.true_)
-        writer.write(' : ')
+        writer.write(" : ")
         writer.writeNode(this.false_)
     }
 }

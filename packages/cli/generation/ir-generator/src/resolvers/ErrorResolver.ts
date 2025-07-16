@@ -1,8 +1,8 @@
-import { FernWorkspace, getDefinitionFile } from '@fern-api/api-workspace-commons'
-import { RawSchemas } from '@fern-api/fern-definition-schema'
+import { FernWorkspace, getDefinitionFile } from "@fern-api/api-workspace-commons"
+import { RawSchemas } from "@fern-api/fern-definition-schema"
 
-import { FernFileContext, constructFernFileContext } from '../FernFileContext'
-import { parseReferenceToTypeName } from '../utils/parseReferenceToTypeName'
+import { FernFileContext, constructFernFileContext } from "../FernFileContext"
+import { parseReferenceToTypeName } from "../utils/parseReferenceToTypeName"
 
 export interface ErrorResolver {
     getDeclarationOrThrow(
@@ -24,7 +24,7 @@ export class ErrorResolverImpl implements ErrorResolver {
     ): { declaration: RawSchemas.ErrorDeclarationSchema; file: FernFileContext } {
         const declaration = this.getDeclaration(referenceToError, file)
         if (declaration == null) {
-            throw new Error('Error does not exist: ' + referenceToError)
+            throw new Error("Error does not exist: " + referenceToError)
         }
         return declaration
     }

@@ -1,6 +1,6 @@
-import { camelCase, upperFirst } from 'lodash-es'
+import { camelCase, upperFirst } from "lodash-es"
 
-import { replaceStartingNumber } from '@fern-api/openapi-ir'
+import { replaceStartingNumber } from "@fern-api/openapi-ir"
 
 export function getGeneratedTypeName(breadcrumbs: string[], useOriginalSchemaIds: boolean): string {
     const processedTokens = breadcrumbs.map((token) => {
@@ -11,7 +11,7 @@ export function getGeneratedTypeName(breadcrumbs: string[], useOriginalSchemaIds
         }
     })
 
-    const name = processedTokens.join('')
+    const name = processedTokens.join("")
 
     if (/^\d/.test(name)) {
         return replaceStartingNumber(name) ?? name
@@ -20,6 +20,6 @@ export function getGeneratedTypeName(breadcrumbs: string[], useOriginalSchemaIds
 }
 
 export function getGeneratedPropertyName(breadcrumbs: string[]): string {
-    const underscoreDelimited = breadcrumbs.join('_')
+    const underscoreDelimited = breadcrumbs.join("_")
     return camelCase(underscoreDelimited)
 }

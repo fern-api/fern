@@ -1,18 +1,18 @@
-import ansiEscapes from 'ansi-escapes'
-import chalk from 'chalk'
-import IS_CI from 'is-ci'
-import ora, { Ora } from 'ora'
+import ansiEscapes from "ansi-escapes"
+import chalk from "chalk"
+import IS_CI from "is-ci"
+import ora, { Ora } from "ora"
 
-import { addPrefixToString, assertNever, noop } from '@fern-api/core-utils'
-import { LOG_LEVELS, LogLevel } from '@fern-api/logger'
+import { addPrefixToString, assertNever, noop } from "@fern-api/core-utils"
+import { LOG_LEVELS, LogLevel } from "@fern-api/logger"
 
-import { Log } from './Log'
-import { TaskContextImpl } from './TaskContextImpl'
+import { Log } from "./Log"
+import { TaskContextImpl } from "./TaskContextImpl"
 
 export class TtyAwareLogger {
     private tasks: TaskContextImpl[] = []
-    private lastPaint = ''
-    private spinner = ora({ spinner: 'dots11' })
+    private lastPaint = ""
+    private spinner = ora({ spinner: "dots11" })
     private interval: NodeJS.Timer | undefined
 
     constructor(
@@ -41,7 +41,7 @@ export class TtyAwareLogger {
 
     private paintAndStartInterval() {
         if (this.interval != null) {
-            throw new Error('Cannot start interval because interval already exists')
+            throw new Error("Cannot start interval because interval already exists")
         }
         this.writeStdout(this.paint())
         this.interval = setInterval(this.repaint.bind(this), getSpinnerInterval(this.spinner))
@@ -52,7 +52,7 @@ export class TtyAwareLogger {
     }
 
     private shouldBuffer = false
-    private buffer = ''
+    private buffer = ""
     private writeStdout(content: string) {
         if (this.shouldBuffer) {
             this.buffer += content
@@ -72,7 +72,7 @@ export class TtyAwareLogger {
     private flushAndStopBuffering() {
         this.shouldBuffer = false
         this.writeStdout(this.buffer)
-        this.buffer = ''
+        this.buffer = ""
     }
 
     public async takeOverTerminal(run: () => void | Promise<void>): Promise<void> {
@@ -125,17 +125,17 @@ export class TtyAwareLogger {
         }
 
         if (taskLines.length === 0) {
-            return ''
+            return ""
         }
 
         const paint =
             [
-                '┌─',
+                "┌─",
                 ...taskLines.map((taskLine) =>
-                    addPrefixToString({ content: taskLine, prefix: '│ ', includePrefixOnAllLines: true })
+                    addPrefixToString({ content: taskLine, prefix: "│ ", includePrefixOnAllLines: true })
                 ),
-                '└─'
-            ].join('\n') + '\n'
+                "└─"
+            ].join("\n") + "\n"
         this.lastPaint = paint
         return paint
     }
@@ -146,7 +146,7 @@ export class TtyAwareLogger {
 }
 
 function getSpinnerInterval(spinner: Ora) {
-    if (typeof spinner.spinner !== 'string' && spinner.spinner.interval != null) {
+    if (typeof spinner.spinner !== "string" && spinner.spinner.interval != null) {
         return spinner.spinner.interval
     } else {
         return 100
@@ -156,7 +156,7 @@ function getSpinnerInterval(spinner: Ora) {
 function countLines(str: string): number {
     let numLines = 1
     for (const char of str) {
-        if (char === '\n') {
+        if (char === "\n") {
             numLines++
         }
     }
@@ -164,7 +164,7 @@ function countLines(str: string): number {
 }
 
 function formatLog(log: Log, { includeDebugInfo }: { includeDebugInfo: boolean }): string {
-    let content = log.parts.join(' ')
+    let content = log.parts.join(" ")
     if (log.prefix != null) {
         content = addPrefixToString({
             prefix: log.prefix,
@@ -177,13 +177,13 @@ function formatLog(log: Log, { includeDebugInfo }: { includeDebugInfo: boolean }
             content
         })
     }
-    content += '\n'
+    content += "\n"
 
     switch (log.level) {
         case LogLevel.Error:
             return chalk.red(content)
         case LogLevel.Warn:
-            return chalk.hex('FFA500')(content)
+            return chalk.hex("FFA500")(content)
         case LogLevel.Trace:
         case LogLevel.Debug:
         case LogLevel.Info:
@@ -199,15 +199,15 @@ function getDebugPrefix(log: Log) {
 function getLogLevelAsString(logLevel: LogLevel) {
     switch (logLevel) {
         case LogLevel.Trace:
-            return 'TRACE'
+            return "TRACE"
         case LogLevel.Debug:
-            return 'DEBUG'
+            return "DEBUG"
         case LogLevel.Info:
-            return 'INFO'
+            return "INFO"
         case LogLevel.Warn:
-            return 'WARN'
+            return "WARN"
         case LogLevel.Error:
-            return 'ERROR'
+            return "ERROR"
         default:
             assertNever(logLevel)
     }

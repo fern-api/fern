@@ -1,7 +1,7 @@
-import { CallbackQueue } from '../../../src/core/callback-queue/CallbackQueue'
+import { CallbackQueue } from "../../../src/core/callback-queue/CallbackQueue"
 
-describe('CallbackQueue', () => {
-    it('correctly queues functions', async () => {
+describe("CallbackQueue", () => {
+    it("correctly queues functions", async () => {
         const numbers: number[] = []
 
         const queue = new CallbackQueue()

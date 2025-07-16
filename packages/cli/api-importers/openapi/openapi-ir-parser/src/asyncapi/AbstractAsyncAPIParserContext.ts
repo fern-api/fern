@@ -1,16 +1,16 @@
-import { OpenAPIV3 } from 'openapi-types'
+import { OpenAPIV3 } from "openapi-types"
 
-import { Logger } from '@fern-api/logger'
-import { Namespace, SdkGroup, SdkGroupName } from '@fern-api/openapi-ir'
-import { TaskContext } from '@fern-api/task-context'
+import { Logger } from "@fern-api/logger"
+import { Namespace, SdkGroup, SdkGroupName } from "@fern-api/openapi-ir"
+import { TaskContext } from "@fern-api/task-context"
 
-import { ParseOpenAPIOptions } from '../options'
-import { SchemaParserContext } from '../schema/SchemaParserContext'
-import { SCHEMA_REFERENCE_PREFIX } from '../schema/convertSchemas'
-import { isReferenceObject } from '../schema/utils/isReferenceObject'
-import { WebsocketSessionExampleMessage } from './getFernExamples'
-import { AsyncAPIV2 } from './v2'
-import { AsyncAPIV3 } from './v3'
+import { ParseOpenAPIOptions } from "../options"
+import { SchemaParserContext } from "../schema/SchemaParserContext"
+import { SCHEMA_REFERENCE_PREFIX } from "../schema/convertSchemas"
+import { isReferenceObject } from "../schema/utils/isReferenceObject"
+import { WebsocketSessionExampleMessage } from "./getFernExamples"
+import { AsyncAPIV2 } from "./v2"
+import { AsyncAPIV3 } from "./v3"
 
 export abstract class AbstractAsyncAPIParserContext<TDocument extends object> implements SchemaParserContext {
     public readonly document: AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3
@@ -20,7 +20,7 @@ export abstract class AbstractAsyncAPIParserContext<TDocument extends object> im
     public readonly options: ParseOpenAPIOptions
     public readonly namespace: string | undefined
 
-    protected static readonly MESSAGE_REFERENCE_PREFIX = '#/components/messages/'
+    protected static readonly MESSAGE_REFERENCE_PREFIX = "#/components/messages/"
 
     constructor({
         document,
@@ -46,7 +46,7 @@ export abstract class AbstractAsyncAPIParserContext<TDocument extends object> im
      */
     public resolveGroupName(groupName: SdkGroupName): SdkGroupName {
         if (this.namespace != null) {
-            return [{ type: 'namespace', name: this.namespace }, ...groupName]
+            return [{ type: "namespace", name: this.namespace }, ...groupName]
         }
         return groupName
     }
@@ -62,7 +62,7 @@ export abstract class AbstractAsyncAPIParserContext<TDocument extends object> im
         const tags: SdkGroup[] = []
         if (this.namespace != null) {
             const namespaceSegment: Namespace = {
-                type: 'namespace',
+                type: "namespace",
                 name: this.namespace
             }
             tags.push(namespaceSegment)
@@ -81,16 +81,16 @@ export abstract class AbstractAsyncAPIParserContext<TDocument extends object> im
         }
 
         const schemaKey = schema.$ref.substring(SCHEMA_REFERENCE_PREFIX.length)
-        const splitSchemaKey = schemaKey.split('/')
+        const splitSchemaKey = schemaKey.split("/")
 
         const components = (this.document as AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3).components
         if (components == null || components.schemas == null) {
-            throw new Error('Document does not have components.schemas.')
+            throw new Error("Document does not have components.schemas.")
         }
 
         const [topKey, maybeProps, maybePropKey] = splitSchemaKey
 
-        if (topKey == null || topKey === '') {
+        if (topKey == null || topKey === "") {
             throw new Error(`${schema.$ref} cannot be resolved. No schema key provided.`)
         }
 
@@ -103,7 +103,7 @@ export abstract class AbstractAsyncAPIParserContext<TDocument extends object> im
             resolvedSchema = this.resolveSchemaReference(resolvedSchema)
         }
 
-        if (maybeProps === 'properties' && maybePropKey != null) {
+        if (maybeProps === "properties" && maybePropKey != null) {
             const resolvedProperty = resolvedSchema.properties?.[maybePropKey]
             if (resolvedProperty == null) {
                 throw new Error(`Property "${maybePropKey}" not found on "${topKey}". Full ref: ${schema.$ref}`)
@@ -131,14 +131,14 @@ export abstract class AbstractAsyncAPIParserContext<TDocument extends object> im
         // Step 1: Get keys
         const keys = ref
             .substring(2)
-            .split('/')
-            .map((key) => key.replace(/~1/g, '/'))
+            .split("/")
+            .map((key) => key.replace(/~1/g, "/"))
 
         // Step 2: Index recursively into the document
         // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         let resolved: any = this.document
         for (const key of keys) {
-            if (typeof resolved !== 'object' || resolved == null) {
+            if (typeof resolved !== "object" || resolved == null) {
                 return false
             }
             resolved = resolved[key]

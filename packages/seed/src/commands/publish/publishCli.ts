@@ -1,12 +1,12 @@
-import path from 'path'
+import path from "path"
 
-import { AbsoluteFilePath, RelativeFilePath } from '@fern-api/fs-utils'
-import { TaskContext } from '@fern-api/task-context'
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils"
+import { TaskContext } from "@fern-api/task-context"
 
-import { PublishCommand } from '../../config/api'
-import { loadCliWorkspace } from '../../loadGeneratorWorkspaces'
-import { runCommands, subVersion } from '../../utils/publishUtilities'
-import { VersionFilePair, getNewCliVersion } from '../../utils/versionUtilities'
+import { PublishCommand } from "../../config/api"
+import { loadCliWorkspace } from "../../loadGeneratorWorkspaces"
+import { runCommands, subVersion } from "../../utils/publishUtilities"
+import { VersionFilePair, getNewCliVersion } from "../../utils/versionUtilities"
 
 export async function publishCli({
     version,
@@ -21,7 +21,7 @@ export async function publishCli({
     context.logger.info(`Publishing CLI@${version}...`)
 
     let publishVersion: string
-    if (typeof version !== 'string') {
+    if (typeof version !== "string") {
         // We were given two version files, so we need to compare them to find if any new
         // versions have been added since the last publish.
         context.logger.info(
@@ -34,7 +34,7 @@ export async function publishCli({
 
         if (maybeNewVersion == null) {
             context.failWithoutThrowing(
-                'No version to publish! There must not have been a new version since the last publish.'
+                "No version to publish! There must not have been a new version since the last publish."
             )
             return
         }
@@ -47,7 +47,7 @@ export async function publishCli({
     if (isDevRelease) {
         context.logger.info(`Publishing CLI@${publishVersion} as a dev release...`)
         publishConfig = cliWorkspace.workspaceConfig.publishDev
-    } else if (publishVersion.includes('rc')) {
+    } else if (publishVersion.includes("rc")) {
         context.logger.info(`Publishing CLI@${publishVersion} as a pre-release...`)
         publishConfig = cliWorkspace.workspaceConfig.publishRc
     } else {
@@ -64,7 +64,7 @@ export async function publishCli({
     let workingDirectory = cliWorkspace.absolutePathToWorkspace
     if (publishConfig.workingDirectory) {
         workingDirectory = AbsoluteFilePath.of(
-            path.join(__dirname, RelativeFilePath.of('../../..'), RelativeFilePath.of(publishConfig.workingDirectory))
+            path.join(__dirname, RelativeFilePath.of("../../.."), RelativeFilePath.of(publishConfig.workingDirectory))
         )
     }
     await runCommands(subbedCommands, context, workingDirectory)

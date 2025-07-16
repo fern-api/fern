@@ -1,10 +1,10 @@
-import { python } from '.'
-import { CodeBlock } from './CodeBlock'
-import { Decorator } from './Decorator'
-import { Parameter } from './Parameter'
-import { Type } from './Type'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { python } from "."
+import { CodeBlock } from "./CodeBlock"
+import { Decorator } from "./Decorator"
+import { Parameter } from "./Parameter"
+import { Type } from "./Type"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export enum ClassMethodType {
     STATIC,
@@ -75,7 +75,7 @@ export class Method extends AstNode {
         if (this.static_) {
             this.decorators.push(
                 python.decorator({
-                    callable: python.codeBlock('staticmethod')
+                    callable: python.codeBlock("staticmethod")
                 })
             )
         }
@@ -88,13 +88,13 @@ export class Method extends AstNode {
         if (this.type === ClassMethodType.CLASS) {
             python
                 .decorator({
-                    callable: new CodeBlock('classmethod')
+                    callable: new CodeBlock("classmethod")
                 })
                 .write(writer)
         } else if (this.type === ClassMethodType.STATIC) {
             python
                 .decorator({
-                    callable: new CodeBlock('staticmethod')
+                    callable: new CodeBlock("staticmethod")
                 })
                 .write(writer)
         }
@@ -111,17 +111,17 @@ export class Method extends AstNode {
         }
 
         if (this.type === ClassMethodType.INSTANCE) {
-            writer.write('self')
+            writer.write("self")
             if (this.parameters.length > 0) {
-                writer.write(useMultiline ? ',' : ', ')
+                writer.write(useMultiline ? "," : ", ")
                 if (useMultiline) {
                     writer.newLine()
                 }
             }
         } else if (this.type === ClassMethodType.CLASS) {
-            writer.write('cls')
+            writer.write("cls")
             if (this.parameters.length > 0) {
-                writer.write(useMultiline ? ',' : ', ')
+                writer.write(useMultiline ? "," : ", ")
                 if (useMultiline) {
                     writer.newLine()
                 }
@@ -130,7 +130,7 @@ export class Method extends AstNode {
         this.parameters.forEach((param, index) => {
             param.write(writer)
             if (index < this.parameters.length - 1) {
-                writer.write(useMultiline ? ',' : ', ')
+                writer.write(useMultiline ? "," : ", ")
                 if (useMultiline) {
                     writer.newLine()
                 }
@@ -138,20 +138,20 @@ export class Method extends AstNode {
         })
 
         if (useMultiline) {
-            writer.write(',')
+            writer.write(",")
             writer.dedent()
             writer.newLine()
         }
 
-        writer.write(')')
+        writer.write(")")
 
         // Write return type if specified
         if (this.return) {
-            writer.write(' -> ')
+            writer.write(" -> ")
             this.return.write(writer)
         }
 
-        writer.write(':')
+        writer.write(":")
         writer.newLine()
 
         // Write docstring if specified
@@ -176,7 +176,7 @@ export class Method extends AstNode {
             writer.dedent()
         } else {
             writer.indent()
-            writer.write('pass')
+            writer.write("pass")
             writer.dedent()
         }
         writer.newLine()

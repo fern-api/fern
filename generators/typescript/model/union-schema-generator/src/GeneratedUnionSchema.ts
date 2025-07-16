@@ -1,11 +1,11 @@
-import { AbstractGeneratedSchema } from '@fern-typescript/abstract-schema-generator'
-import { Reference, Zurg, getPropertyKey, getTextOfTsNode } from '@fern-typescript/commons'
-import { GeneratedUnion, ModelContext } from '@fern-typescript/contexts'
-import { ModuleDeclaration, VariableDeclarationKind, ts } from 'ts-morph'
+import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator"
+import { Reference, Zurg, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons"
+import { GeneratedUnion, ModelContext } from "@fern-typescript/contexts"
+import { ModuleDeclaration, VariableDeclarationKind, ts } from "ts-morph"
 
-import { NameAndWireValue, ObjectProperty } from '@fern-fern/ir-sdk/api'
+import { NameAndWireValue, ObjectProperty } from "@fern-fern/ir-sdk/api"
 
-import { RawSingleUnionType } from './RawSingleUnionType'
+import { RawSingleUnionType } from "./RawSingleUnionType"
 
 export declare namespace GeneratedUnionSchema {
     export interface Init<Context extends ModelContext> extends AbstractGeneratedSchema.Init {
@@ -20,8 +20,8 @@ export declare namespace GeneratedUnionSchema {
 }
 
 export class GeneratedUnionSchema<Context extends ModelContext> extends AbstractGeneratedSchema<Context> {
-    private static VALUE_PARAMETER_NAME = 'value'
-    private static BASE_SCHEMA_NAME = '_Base'
+    private static VALUE_PARAMETER_NAME = "value"
+    private static BASE_SCHEMA_NAME = "_Base"
 
     private discriminant: NameAndWireValue
     private singleUnionTypes: RawSingleUnionType<Context>[]

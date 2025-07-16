@@ -1,12 +1,12 @@
-import chalk from 'chalk'
+import chalk from "chalk"
 
-import { assertNever } from '@fern-api/core-utils'
-import { CONSOLE_LOGGER, LOG_LEVELS, LogLevel } from '@fern-api/logger'
-import { TaskContext } from '@fern-api/task-context'
+import { assertNever } from "@fern-api/core-utils"
+import { CONSOLE_LOGGER, LOG_LEVELS, LogLevel } from "@fern-api/logger"
+import { TaskContext } from "@fern-api/task-context"
 
-import { TaskContextImpl } from '../../TaskContextImpl'
+import { TaskContextImpl } from "../../TaskContextImpl"
 
-const TASK_COLORS = ['#2E86AB', '#A23B72', '#F18F01', '#C73E1D', '#CCE2A3']
+const TASK_COLORS = ["#2E86AB", "#A23B72", "#F18F01", "#C73E1D", "#CCE2A3"]
 
 export class TaskContextFactory {
     private idx = 0
@@ -23,22 +23,22 @@ export class TaskContextFactory {
                     (log) => LOG_LEVELS.indexOf(log.level) >= LOG_LEVELS.indexOf(this.logLevel)
                 )
                 filtered.forEach((log) => {
-                    const parts = log.parts.flatMap((parts) => parts).flatMap((part) => part.split('\n'))
+                    const parts = log.parts.flatMap((parts) => parts).flatMap((part) => part.split("\n"))
                     for (const part of parts) {
                         switch (log.level) {
-                            case 'trace':
+                            case "trace":
                                 CONSOLE_LOGGER.trace(`[${prefixWithColor}]: `, part)
                                 break
-                            case 'debug':
+                            case "debug":
                                 CONSOLE_LOGGER.debug(`[${prefixWithColor}]: `, part)
                                 break
-                            case 'error':
+                            case "error":
                                 CONSOLE_LOGGER.error(`[${prefixWithColor}]: `, part)
                                 break
-                            case 'warn':
+                            case "warn":
                                 CONSOLE_LOGGER.warn(`[${prefixWithColor}]: `, part)
                                 break
-                            case 'info':
+                            case "info":
                                 CONSOLE_LOGGER.info(`[${prefixWithColor}]: `, part)
                                 break
                             default:

@@ -1,16 +1,16 @@
-import { Type } from './Type'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
-import { convertToPhpVariableName } from './utils/convertToPhpVariableName'
+import { Type } from "./Type"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
+import { convertToPhpVariableName } from "./utils/convertToPhpVariableName"
 
-export type TagType = 'param' | 'property' | 'return' | 'throws' | 'var'
+export type TagType = "param" | "property" | "return" | "throws" | "var"
 
 export const TagType = {
-    Param: 'param',
-    Property: 'property',
-    Returns: 'return',
-    Throws: 'throws',
-    Var: 'var'
+    Param: "param",
+    Property: "property",
+    Returns: "return",
+    Throws: "throws",
+    Var: "var"
 } as const
 
 export declare namespace Comment {
@@ -49,28 +49,28 @@ export class Comment extends AstNode {
     }
 
     public write(writer: Writer): void {
-        writer.writeLine('/**')
+        writer.writeLine("/**")
         if (this.docs != null) {
-            this.docs.split('\n').forEach((line) => {
+            this.docs.split("\n").forEach((line) => {
                 writer.writeLine(` * ${line}`)
             })
             if (this.tags.length > 0) {
-                writer.writeLine(' *')
+                writer.writeLine(" *")
             }
         }
         for (const tag of this.tags) {
             this.writeTag({ writer, tag })
         }
-        writer.writeLine(' */')
+        writer.writeLine(" */")
     }
 
     private writeTag({ writer, tag }: { writer: Writer; tag: Comment.Tag }): void {
-        const docsSplit = tag.docs != null ? tag.docs.split('\n') : undefined
+        const docsSplit = tag.docs != null ? tag.docs.split("\n") : undefined
         if (docsSplit != null && docsSplit.length > 1) {
             docsSplit.forEach((line) => {
                 writer.writeLine(` * ${line}`)
             })
-            writer.writeLine(' *')
+            writer.writeLine(" *")
         }
 
         writer.write(` * @${tag.tagType} `)

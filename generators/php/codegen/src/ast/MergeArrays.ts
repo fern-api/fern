@@ -1,9 +1,9 @@
-import { AbstractAstNode } from '@fern-api/browser-compatible-base-generator'
+import { AbstractAstNode } from "@fern-api/browser-compatible-base-generator"
 
-import { codeblock } from '../php'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
-import { writeArguments } from './utils/writeArguments'
+import { codeblock } from "../php"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
+import { writeArguments } from "./utils/writeArguments"
 
 export declare namespace MergeArrays {
     export type Arg =
@@ -32,18 +32,18 @@ export class MergeArrays extends AstNode {
     }
 
     public write(writer: Writer): void {
-        writer.write('array_merge')
+        writer.write("array_merge")
         writeArguments({
             writer,
             arguments_: this.arrays.map<AbstractAstNode>((array) => {
                 return codeblock((writer: Writer) => {
-                    if (typeof array === 'string' || array instanceof AstNode) {
+                    if (typeof array === "string" || array instanceof AstNode) {
                         writer.writeNodeOrString(array)
                         return
                     }
                     writer.writeNodeOrString(array.ref)
                     if (array.fallback) {
-                        writer.write(' ?? ')
+                        writer.write(" ?? ")
                         writer.writeNodeOrString(array.fallback)
                     }
                 })

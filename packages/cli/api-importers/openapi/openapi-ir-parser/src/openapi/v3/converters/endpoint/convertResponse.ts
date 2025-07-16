@@ -1,24 +1,24 @@
-import { OpenAPIV3 } from 'openapi-types'
+import { OpenAPIV3 } from "openapi-types"
 
-import { MediaType, assertNever } from '@fern-api/core-utils'
-import { FernOpenapiIr, ResponseWithExample, Source } from '@fern-api/openapi-ir'
+import { MediaType, assertNever } from "@fern-api/core-utils"
+import { FernOpenapiIr, ResponseWithExample, Source } from "@fern-api/openapi-ir"
 
-import { getExtension } from '../../../../getExtension'
-import { convertSchema } from '../../../../schema/convertSchemas'
-import { isReferenceObject } from '../../../../schema/utils/isReferenceObject'
-import { AbstractOpenAPIV3ParserContext } from '../../AbstractOpenAPIV3ParserContext'
-import { FernOpenAPIExtension } from '../../extensions/fernExtensions'
-import { OperationContext } from '../contexts'
-import { ERROR_NAMES_BY_STATUS_CODE } from '../convertToHttpError'
+import { getExtension } from "../../../../getExtension"
+import { convertSchema } from "../../../../schema/convertSchemas"
+import { isReferenceObject } from "../../../../schema/utils/isReferenceObject"
+import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext"
+import { FernOpenAPIExtension } from "../../extensions/fernExtensions"
+import { OperationContext } from "../contexts"
+import { ERROR_NAMES_BY_STATUS_CODE } from "../convertToHttpError"
 import {
     getApplicationJsonSchemaMediaObject,
     getSchemaMediaObject,
     getTextEventStreamObject
-} from './getApplicationJsonSchema'
+} from "./getApplicationJsonSchema"
 
 // The converter will attempt to get response in priority order
 // (i.e. try for 200, then 201, then 202...)
-const SUCCESSFUL_STATUS_CODES = ['200', '201', '202', '204']
+const SUCCESSFUL_STATUS_CODES = ["200", "201", "202", "204"]
 
 export interface ConvertedResponse {
     value: ResponseWithExample | undefined
@@ -35,7 +35,7 @@ export function convertResponse({
     source
 }: {
     operationContext: OperationContext
-    streamFormat: 'sse' | 'json' | undefined
+    streamFormat: "sse" | "json" | undefined
     responses: OpenAPIV3.ResponsesObject
     context: AbstractOpenAPIV3ParserContext
     responseBreadcrumbs: string[]
@@ -65,7 +65,7 @@ export function convertResponse({
                 streamFormat,
                 source,
                 namespace: context.namespace,
-                statusCode: typeof statusCode === 'string' ? parseInt(statusCode) : statusCode
+                statusCode: typeof statusCode === "string" ? parseInt(statusCode) : statusCode
             })
         }
     }
@@ -85,21 +85,21 @@ export function convertResponse({
 
     if (convertedResponse != null) {
         switch (convertedResponse.type) {
-            case 'json':
+            case "json":
                 return {
                     value: convertedResponse,
                     errors
                 }
-            case 'streamingJson':
-            case 'streamingSse':
+            case "streamingJson":
+            case "streamingSse":
                 return {
                     value: convertedResponse,
                     errors
                 }
-            case 'bytes':
-            case 'file':
-            case 'text':
-            case 'streamingText':
+            case "bytes":
+            case "file":
+            case "text":
+            case "streamingText":
                 return {
                     value: convertedResponse,
                     errors
@@ -126,7 +126,7 @@ function convertResolvedResponse({
     statusCode
 }: {
     operationContext: OperationContext
-    streamFormat: 'sse' | 'json' | undefined
+    streamFormat: "sse" | "json" | undefined
     response: OpenAPIV3.ReferenceObject | OpenAPIV3.ResponseObject
     context: AbstractOpenAPIV3ParserContext
     responseBreadcrumbs: string[]
@@ -144,7 +144,7 @@ function convertResolvedResponse({
             const resolvedSchema = isReferenceObject(mediaObject.schema)
                 ? context.resolveSchemaReference(mediaObject.schema)
                 : mediaObject.schema
-            return resolvedSchema.type === 'string' && resolvedSchema.format === 'binary'
+            return resolvedSchema.type === "string" && resolvedSchema.format === "binary"
         })
         if (binaryContent) {
             if (context.options.useBytesForBinaryResponse && streamFormat == null) {
@@ -158,7 +158,7 @@ function convertResolvedResponse({
     const textEventStreamObject = getTextEventStreamObject(resolvedResponse.content ?? {}, context)
     if (textEventStreamObject != null && streamFormat != null) {
         switch (streamFormat) {
-            case 'json':
+            case "json":
                 return ResponseWithExample.streamingJson({
                     statusCode,
                     description: resolvedResponse.description,
@@ -177,7 +177,7 @@ function convertResolvedResponse({
                     ),
                     source
                 })
-            case 'sse':
+            case "sse":
                 return ResponseWithExample.streamingSse({
                     description: resolvedResponse.description,
                     responseProperty: undefined,
@@ -200,7 +200,7 @@ function convertResolvedResponse({
     if (jsonMediaObject != null) {
         if (streamFormat != null) {
             switch (streamFormat) {
-                case 'json':
+                case "json":
                     return ResponseWithExample.streamingJson({
                         description: resolvedResponse.description,
                         responseProperty: undefined,
@@ -216,7 +216,7 @@ function convertResolvedResponse({
                         source,
                         statusCode
                     })
-                case 'sse':
+                case "sse":
                     return ResponseWithExample.streamingSse({
                         description: resolvedResponse.description,
                         responseProperty: undefined,
@@ -268,7 +268,7 @@ function convertResolvedResponse({
             const resolvedTextPlainSchema = isReferenceObject(textPlainSchema)
                 ? context.resolveSchemaReference(textPlainSchema)
                 : textPlainSchema
-            if (resolvedTextPlainSchema.type === 'string' && resolvedTextPlainSchema.format === 'byte') {
+            if (resolvedTextPlainSchema.type === "string" && resolvedTextPlainSchema.format === "byte") {
                 return ResponseWithExample.file({ description: resolvedResponse.description, source, statusCode })
             }
             return ResponseWithExample.text({ description: resolvedResponse.description, source, statusCode })
@@ -291,7 +291,7 @@ function markErrorSchemas({
 }): Record<FernOpenapiIr.StatusCode, FernOpenapiIr.HttpErrorWithExample> {
     const errors: Record<FernOpenapiIr.StatusCode, FernOpenapiIr.HttpErrorWithExample> = {}
     for (const [statusCode, response] of Object.entries(responses)) {
-        if (statusCode === 'default') {
+        if (statusCode === "default") {
             continue
         }
         const parsedStatusCode = parseInt(statusCode)
@@ -311,7 +311,7 @@ function markErrorSchemas({
             nameOverride: undefined,
             generatedName: errorName,
             description: resolvedResponse.description,
-            schema: convertSchema(mediaObject?.schema ?? {}, false, context, [errorName, 'Body'], source, namespace),
+            schema: convertSchema(mediaObject?.schema ?? {}, false, context, [errorName, "Body"], source, namespace),
             fullExamples: mediaObject?.examples,
             source
         }

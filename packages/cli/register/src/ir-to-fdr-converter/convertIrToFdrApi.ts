@@ -1,10 +1,10 @@
-import { IntermediateRepresentation } from '@fern-api/ir-sdk'
+import { IntermediateRepresentation } from "@fern-api/ir-sdk"
 
-import { FernRegistry as FdrCjsSdk } from '@fern-fern/fdr-cjs-sdk'
+import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk"
 
-import { PlaygroundConfig, convertAuth } from './convertAuth'
-import { convertIrAvailability, convertPackage } from './convertPackage'
-import { convertTypeReference, convertTypeShape } from './convertTypeShape'
+import { PlaygroundConfig, convertAuth } from "./convertAuth"
+import { convertIrAvailability, convertPackage } from "./convertPackage"
+import { convertTypeReference, convertTypeShape } from "./convertTypeShape"
 
 export function convertIrToFdrApi({
     ir,

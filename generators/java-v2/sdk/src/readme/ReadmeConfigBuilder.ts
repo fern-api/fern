@@ -1,8 +1,8 @@
-import { FernGeneratorCli } from '@fern-fern/generator-cli-sdk'
-import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
+import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk"
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
 
-import { SdkGeneratorContext } from '../SdkGeneratorContext'
-import { ReadmeSnippetBuilder } from './ReadmeSnippetBuilder'
+import { SdkGeneratorContext } from "../SdkGeneratorContext"
+import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder"
 
 export class ReadmeConfigBuilder {
     public build({
@@ -52,8 +52,8 @@ export class ReadmeConfigBuilder {
 
     private getLanguageInfo({ context }: { context: SdkGeneratorContext }): FernGeneratorCli.LanguageInfo {
         const config = context.config
-        if (config.output.mode.type === 'github' && config.output.mode.publishInfo?.type === 'maven') {
-            const coordinates = config.output.mode.publishInfo.coordinate.split(':')
+        if (config.output.mode.type === "github" && config.output.mode.publishInfo?.type === "maven") {
+            const coordinates = config.output.mode.publishInfo.coordinate.split(":")
             const group = coordinates[0]
             const artifact = coordinates[1]
             const version = config.output.mode.version
@@ -62,20 +62,20 @@ export class ReadmeConfigBuilder {
             } else {
                 const missingFields: string[] = []
                 if (!group) {
-                    missingFields.push('group')
+                    missingFields.push("group")
                 }
                 if (!artifact) {
-                    missingFields.push('artifact')
+                    missingFields.push("artifact")
                 }
                 if (!version) {
-                    missingFields.push('version')
+                    missingFields.push("version")
                 }
                 context.logger.debug(
-                    `Unable to populate Java language info. Missing required fields: ${missingFields.join(', ')}`
+                    `Unable to populate Java language info. Missing required fields: ${missingFields.join(", ")}`
                 )
             }
         } else {
-            context.logger.debug('Unable to populate Java language info.')
+            context.logger.debug("Unable to populate Java language info.")
         }
         return FernGeneratorCli.LanguageInfo.java({})
     }

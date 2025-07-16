@@ -1,2 +1,2 @@
-export { MintlifyImporter } from './MintlifyImporter'
-export { runMintlifyMigration } from './runMintlifyMigration'
+export { MintlifyImporter } from "./MintlifyImporter"
+export { runMintlifyMigration } from "./runMintlifyMigration"

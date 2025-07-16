@@ -1,10 +1,10 @@
-import { AbstractDynamicSnippetsGeneratorContext, FernGeneratorExec } from '@fern-api/browser-compatible-base-generator'
-import { FernIr } from '@fern-api/dynamic-ir-sdk'
-import { TypescriptCustomConfigSchema, ts } from '@fern-api/typescript-ast'
-import { constructNpmPackage, getNamespaceExport } from '@fern-api/typescript-browser-compatible-base'
+import { AbstractDynamicSnippetsGeneratorContext, FernGeneratorExec } from "@fern-api/browser-compatible-base-generator"
+import { FernIr } from "@fern-api/dynamic-ir-sdk"
+import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast"
+import { constructNpmPackage, getNamespaceExport } from "@fern-api/typescript-browser-compatible-base"
 
-import { DynamicTypeLiteralMapper } from './DynamicTypeLiteralMapper'
-import { FilePropertyMapper } from './FilePropertyMapper'
+import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper"
+import { FilePropertyMapper } from "./FilePropertyMapper"
 
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
     public ir: FernIr.dynamic.DynamicIntermediateRepresentation
@@ -44,7 +44,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     public getModuleImport(): ts.Reference.ModuleImport {
         return {
-            type: 'named',
+            type: "named",
             moduleName: this.moduleName
         }
     }
@@ -80,7 +80,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         if (declaration.fernFilepath.allParts.length > 0) {
             return `${declaration.fernFilepath.allParts
                 .map((val) => val.camelCase.unsafeName)
-                .join('.')}.${this.getTypeName(declaration.name)}`
+                .join(".")}.${this.getTypeName(declaration.name)}`
         }
         return `${this.getTypeName(declaration.name)}`
     }
@@ -94,7 +94,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     private formatOriginalPropertyName(value: string): string {
-        if (value.includes('-')) {
+        if (value.includes("-")) {
             // For example, header names like the following:
             //
             // {

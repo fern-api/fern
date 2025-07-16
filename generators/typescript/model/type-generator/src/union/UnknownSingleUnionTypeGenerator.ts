@@ -1,10 +1,10 @@
-import { getPropertyKey } from '@fern-typescript/commons'
-import { BaseContext } from '@fern-typescript/contexts'
-import { SingleUnionTypeGenerator } from '@fern-typescript/union-generator'
-import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from 'ts-morph'
+import { getPropertyKey } from "@fern-typescript/commons"
+import { BaseContext } from "@fern-typescript/contexts"
+import { SingleUnionTypeGenerator } from "@fern-typescript/union-generator"
+import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph"
 
 export class UnknownSingleUnionTypeGenerator implements SingleUnionTypeGenerator<BaseContext> {
-    private static BUILDER_PARAMETER_NAME = 'value'
+    private static BUILDER_PARAMETER_NAME = "value"
 
     public generateForInlineUnion(context: BaseContext): ts.TypeNode {
         return ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)

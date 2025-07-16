@@ -1,4 +1,4 @@
-import { format } from 'util'
+import { format } from "util"
 
 import {
     Argument,
@@ -24,7 +24,7 @@ import {
     Variable,
     VariableType,
     getBreadcrumbsFromFilepath
-} from '@fern-api/ruby-codegen'
+} from "@fern-api/ruby-codegen"
 
 import {
     EnvironmentId,
@@ -44,15 +44,15 @@ import {
     SingleBaseUrlEnvironments,
     Subpackage,
     TypeId
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { ArtifactRegistry } from './utils/ArtifactRegistry'
-import { EndpointGenerator } from './utils/EndpointGenerator'
-import { FileUploadUtility } from './utils/FileUploadUtility'
-import { HeadersGenerator } from './utils/HeadersGenerator'
-import { IdempotencyRequestOptions } from './utils/IdempotencyRequestOptionsClass'
-import { RequestOptions } from './utils/RequestOptionsClass'
-import { OauthFunction, OauthTokenProvider } from './utils/oauth/OauthTokenProvider'
+import { ArtifactRegistry } from "./utils/ArtifactRegistry"
+import { EndpointGenerator } from "./utils/EndpointGenerator"
+import { FileUploadUtility } from "./utils/FileUploadUtility"
+import { HeadersGenerator } from "./utils/HeadersGenerator"
+import { IdempotencyRequestOptions } from "./utils/IdempotencyRequestOptionsClass"
+import { RequestOptions } from "./utils/RequestOptionsClass"
+import { OauthFunction, OauthTokenProvider } from "./utils/oauth/OauthTokenProvider"
 
 export interface ClientClassPair {
     subpackageName: Name
@@ -63,7 +63,7 @@ export interface ClientClassPair {
 // TODO: Move this to ConfigUtilities.ts
 // Note that these paths do not have leading or trailing slashes
 export function generateRubyPathTemplate(pathParameters: PathParameter[], basePath?: HttpPath): string {
-    return generatePathTemplate('#{%s}', pathParameters, basePath)
+    return generatePathTemplate("#{%s}", pathParameters, basePath)
 }
 export function generateEndpoints(
     crf: ClassReferenceFactory,
@@ -88,17 +88,17 @@ export function generateEndpoints(
                 return
             }
             const path = [irBasePath, serviceBasePath, generateRubyPathTemplate(endpoint.pathParameters, endpoint.path)]
-                .filter((pathPart) => pathPart !== '')
-                .join('/')
+                .filter((pathPart) => pathPart !== "")
+                .join("/")
             const responseVariable = new Variable({
-                name: 'response',
+                name: "response",
                 type: GenericClassReference,
                 variableType: VariableType.LOCAL
             })
 
             const endpointRequestOptions = endpoint.idempotent ? idempotencyRequestOptions : requestOptions
             const requestOptionsVariable = new Variable({
-                name: 'request_options',
+                name: "request_options",
                 type: endpointRequestOptions.classReference,
                 variableType: VariableType.LOCAL
             })
@@ -135,8 +135,8 @@ export function generateEndpoints(
                     ? [
                           new FunctionInvocation({
                               onObject: new ClassReference({
-                                  name: 'Async',
-                                  import_: new Import({ from: 'async', isExternal: true })
+                                  name: "Async",
+                                  import_: new Import({ from: "async", isExternal: true })
                               }),
                               block: { expressions: functionCore }
                           })
@@ -167,7 +167,7 @@ export function generateEndpoints(
 // how to instantiate the root client to be able to generate the snippets as we go.
 export function generateDummyRootClient(gemName: string, clientName: string, requestClient: Class_): Class_ {
     const classReference = new ClassReference({
-        name: 'Client',
+        name: "Client",
         import_: new Import({ from: gemName, isExternal: false }),
         moduleBreadcrumbs: [clientName]
     })
@@ -208,14 +208,14 @@ export function generateRootPackage(
     rootService?: HttpService
 ): GeneratedRubyFile {
     const classReference = new ClassReference({
-        name: 'Client',
+        name: "Client",
         import_: new Import({ from: gemName, isExternal: false }),
         moduleBreadcrumbs: [clientName]
     })
 
     // Add Client class
     const requestClientVariable = new Variable({
-        name: 'request_client',
+        name: "request_client",
         type: requestClient.classReference,
         variableType: VariableType.INSTANCE
     })
@@ -234,7 +234,7 @@ export function generateRootPackage(
             .map((param) => param.toArgument(param.name)) ?? []
 
     if (oauthTokenProviderClass != null) {
-        const tokenProviderName = 'oauth_provider'
+        const tokenProviderName = "oauth_provider"
         const oauthProviderVariable = new Variable({
             name: tokenProviderName,
             type: oauthTokenProviderClass.classReference,
@@ -247,10 +247,10 @@ export function generateRootPackage(
                 baseFunction: oauthTokenProviderClass.initializer,
                 arguments_: [
                     ...(oauthTokenProviderClass.initializer?.parameters ?? [])
-                        .filter((param) => param.name !== 'request_client')
+                        .filter((param) => param.name !== "request_client")
                         .map((param) => param.toArgument(param.name)),
                     new Argument({
-                        name: 'request_client',
+                        name: "request_client",
                         value: new FunctionInvocation({
                             onObject: requestClient.classReference,
                             baseFunction: requestClient.initializer,
@@ -340,11 +340,11 @@ export function generateRootPackage(
             : [],
         includeInitializer: false,
         initializerOverride: new Function_({
-            name: 'initialize',
-            invocationName: 'new',
+            name: "initialize",
+            invocationName: "new",
             functionBody: initializerBody,
             parameters: getClientParameters(
-                'rootClient',
+                "rootClient",
                 environmentClass,
                 headersGenerator,
                 retriesProperty,
@@ -357,7 +357,7 @@ export function generateRootPackage(
 
     // Add Async Client class
     const asyncRequestClientVariable = new Variable({
-        name: 'async_request_client',
+        name: "async_request_client",
         type: asyncRequestClient.classReference,
         variableType: VariableType.INSTANCE
     })
@@ -394,7 +394,7 @@ export function generateRootPackage(
     )
 
     const asyncClassReference = new ClassReference({
-        name: 'AsyncClient',
+        name: "AsyncClient",
         import_: new Import({ from: gemName, isExternal: false }),
         moduleBreadcrumbs: [clientName]
     })
@@ -424,11 +424,11 @@ export function generateRootPackage(
             : [],
         includeInitializer: false,
         initializerOverride: new Function_({
-            name: 'initialize',
-            invocationName: 'new',
+            name: "initialize",
+            invocationName: "new",
             functionBody: asyncInitializerBody,
             parameters: getClientParameters(
-                'rootClient',
+                "rootClient",
                 environmentClass,
                 headersGenerator,
                 retriesProperty,
@@ -464,13 +464,13 @@ export function generateSubpackage(
     subpackages: Map<Name, Class_> = new Map(),
     asyncSubpackages: Map<Name, Class_> = new Map()
 ): ClientClassPair {
-    const location = locationGenerator.getLocationFromFernFilepath(package_.fernFilepath, 'client')
+    const location = locationGenerator.getLocationFromFernFilepath(package_.fernFilepath, "client")
     const moduleBreadcrumbs = getBreadcrumbsFromFilepath(package_.fernFilepath, clientName)
 
     // Add Client class
-    const requestClientProperty = new Property({ name: 'request_client', type: requestClientCr })
+    const requestClientProperty = new Property({ name: "request_client", type: requestClientCr })
     const syncClassReference = new ClassReference({
-        name: 'Client',
+        name: "Client",
         import_: new Import({ from: location, isExternal: false }),
         moduleBreadcrumbs
     })
@@ -481,8 +481,8 @@ export function generateSubpackage(
             ([spName, sp]) => new Property({ name: getSubpackagePropertyNameFromIr(spName), type: sp.classReference })
         ),
         initializerOverride: new Function_({
-            name: 'initialize',
-            invocationName: 'new',
+            name: "initialize",
+            invocationName: "new",
             // Initialize each subpackage
             functionBody: Array.from(subpackages.entries()).map(([spName, sp]) => {
                 const subpackageClassVariable = new Variable({
@@ -512,9 +512,9 @@ export function generateSubpackage(
     })
 
     // Add Async Client class
-    const asyncRequestClientProperty = new Property({ name: 'request_client', type: asyncRequestClientCr })
+    const asyncRequestClientProperty = new Property({ name: "request_client", type: asyncRequestClientCr })
     const asyncClassReference = new ClassReference({
-        name: 'AsyncClient',
+        name: "AsyncClient",
         import_: new Import({ from: location, isExternal: false }),
         moduleBreadcrumbs
     })
@@ -525,8 +525,8 @@ export function generateSubpackage(
             ([spName, sp]) => new Property({ name: getSubpackagePropertyNameFromIr(spName), type: sp.classReference })
         ),
         initializerOverride: new Function_({
-            name: 'initialize',
-            invocationName: 'new',
+            name: "initialize",
+            invocationName: "new",
             // Initialize each subpackage
             functionBody: Array.from(asyncSubpackages.entries()).map(([spName, sp]) => {
                 const subpackageClassVariable = new Variable({
@@ -584,7 +584,7 @@ export function generateService(
 
     // Add Client class
     const serviceBasePath = generateRubyPathTemplate(service.pathParameters, service.basePath)
-    const requestClientProperty = new Property({ name: 'request_client', type: requestClientCr })
+    const requestClientProperty = new Property({ name: "request_client", type: requestClientCr })
     const syncClientClassReference = new ClassReference({
         name: `${serviceName}Client`,
         import_,
@@ -618,7 +618,7 @@ export function generateService(
     })
 
     // Add Async Client class
-    const asyncRequestClientProperty = new Property({ name: 'request_client', type: asyncRequestClientCr })
+    const asyncRequestClientProperty = new Property({ name: "request_client", type: asyncRequestClientCr })
     const asyncClientClass = new Class_({
         classReference: new ClassReference({
             name: `Async${serviceName}Client`,
@@ -657,7 +657,7 @@ export function getEnvironments(environmentsConfig: EnvironmentsConfig): Map<Env
         singleBaseUrl: (sbue: SingleBaseUrlEnvironments) => new Map(sbue.environments.map((e) => [e.id, e.name])),
         multipleBaseUrls: (mbue: MultipleBaseUrlsEnvironments) => new Map(mbue.environments.map((e) => [e.id, e.name])),
         _other: () => {
-            throw new Error('Unknown environments configuration has been provided.')
+            throw new Error("Unknown environments configuration has been provided.")
         }
     })
 }
@@ -678,8 +678,8 @@ export function getDefaultEnvironmentUrl(
 export function generateEnvironmentConstants(environmentsConfig: EnvironmentsConfig, clientName: string): Class_ {
     return new Class_({
         classReference: new ClassReference({
-            name: 'Environment',
-            import_: new Import({ from: 'environment', isExternal: false }),
+            name: "Environment",
+            import_: new Import({ from: "environment", isExternal: false }),
             moduleBreadcrumbs: [clientName]
         }),
         expressions: environmentsConfig.environments._visit<Expression[]>({
@@ -705,7 +705,7 @@ export function generateEnvironmentConstants(environmentsConfig: EnvironmentsCon
                         })
                 ),
             _other: () => {
-                throw new Error('Unknown environments configuration has been provided.')
+                throw new Error("Unknown environments configuration has been provided.")
             }
         }),
         includeInitializer: false
@@ -724,17 +724,17 @@ function generateRequestClientInitializer(
     hasFileBasedDependencies = false
 ): Function_ {
     const retryOptions = new HashInstance({
-        contents: new Map([['max', retriesProperty.toVariable(VariableType.LOCAL)]])
+        contents: new Map([["max", retriesProperty.toVariable(VariableType.LOCAL)]])
     })
     const faradayConfiguration = []
     if (hasFileBasedDependencies) {
         faradayConfiguration.push(
             new Expression({
-                leftSide: 'faraday.request',
+                leftSide: "faraday.request",
                 rightSide: new Expression({
                     rightSide: new ClassReference({
-                        name: ':multipart',
-                        import_: new Import({ from: 'faraday/multipart', isExternal: true })
+                        name: ":multipart",
+                        import_: new Import({ from: "faraday/multipart", isExternal: true })
                     }),
                     isAssignment: false
                 }),
@@ -744,11 +744,11 @@ function generateRequestClientInitializer(
     }
     faradayConfiguration.push(
         ...[
-            new Expression({ leftSide: 'faraday.request', rightSide: ':json', isAssignment: false }),
+            new Expression({ leftSide: "faraday.request", rightSide: ":json", isAssignment: false }),
             // TODO: parse and throw the custom exception within the endpoint function. Disable this faraday middleware that does this generically.
             new Expression({
-                leftSide: 'faraday.response',
-                rightSide: ':raise_error, include_request: true',
+                leftSide: "faraday.response",
+                rightSide: ":raise_error, include_request: true",
                 isAssignment: false
             })
         ]
@@ -757,10 +757,10 @@ function generateRequestClientInitializer(
     if (isAsync) {
         faradayConfiguration.push(
             new Expression({
-                leftSide: 'faraday.adapter',
+                leftSide: "faraday.adapter",
                 rightSide: new ClassReference({
-                    name: ':async_http',
-                    import_: new Import({ from: 'async/http/faraday', isExternal: true })
+                    name: ":async_http",
+                    import_: new Import({ from: "async/http/faraday", isExternal: true })
                 }),
                 isAssignment: false
             })
@@ -773,19 +773,19 @@ function generateRequestClientInitializer(
                 rightSide: new FunctionInvocation({
                     // TODO: Do this field access on the client better
                     onObject: retriesProperty.toVariable(VariableType.LOCAL).write({}),
-                    baseFunction: new Function_({ name: 'nil?', functionBody: [] })
+                    baseFunction: new Function_({ name: "nil?", functionBody: [] })
                 }),
-                operation: '!',
+                operation: "!",
                 expressions: [
                     new Expression({
-                        leftSide: 'faraday.request',
+                        leftSide: "faraday.request",
                         rightSide: new Expression({
                             leftSide: new ClassReference({
-                                name: ':retry',
-                                import_: new Import({ from: 'faraday/retry', isExternal: true })
+                                name: ":retry",
+                                import_: new Import({ from: "faraday/retry", isExternal: true })
                             }),
                             rightSide: retryOptions,
-                            operation: ', ',
+                            operation: ", ",
                             isAssignment: false
                         }),
                         isAssignment: false
@@ -800,12 +800,12 @@ function generateRequestClientInitializer(
                 rightSide: new FunctionInvocation({
                     // TODO: Do this field access on the client better
                     onObject: timeoutProperty.toVariable(VariableType.LOCAL).write({}),
-                    baseFunction: new Function_({ name: 'nil?', functionBody: [] })
+                    baseFunction: new Function_({ name: "nil?", functionBody: [] })
                 }),
-                operation: '!',
+                operation: "!",
                 expressions: [
                     new Expression({
-                        leftSide: 'faraday.options.timeout',
+                        leftSide: "faraday.options.timeout",
                         rightSide: timeoutProperty.toVariable(VariableType.LOCAL).write({}),
                         isAssignment: true
                     })
@@ -819,8 +819,8 @@ function generateRequestClientInitializer(
     if (environmentCr !== undefined) {
         functionBody.push(
             new Expression({
-                leftSide: '@default_environment',
-                rightSide: 'environment',
+                leftSide: "@default_environment",
+                rightSide: "environment",
                 isAssignment: true
             })
         )
@@ -828,8 +828,8 @@ function generateRequestClientInitializer(
         if (!isMultiBaseUrlEnvironments) {
             functionBody.push(
                 new Expression({
-                    leftSide: '@base_url',
-                    rightSide: 'environment || base_url',
+                    leftSide: "@base_url",
+                    rightSide: "environment || base_url",
                     isAssignment: true
                 })
             )
@@ -837,8 +837,8 @@ function generateRequestClientInitializer(
     } else {
         functionBody.push(
             new Expression({
-                leftSide: '@base_url',
-                rightSide: 'base_url',
+                leftSide: "@base_url",
+                rightSide: "base_url",
                 isAssignment: true
             })
         )
@@ -865,9 +865,9 @@ function generateRequestClientInitializer(
                 if_: {
                     rightSide: new FunctionInvocation({
                         onObject: prop.name,
-                        baseFunction: new Function_({ name: 'nil?', functionBody: [] })
+                        baseFunction: new Function_({ name: "nil?", functionBody: [] })
                     }),
-                    operation: '!',
+                    operation: "!",
                     expressions: [
                         new Expression({
                             leftSide: `@headers["${prop.wireValue ?? prop.name}"]`,
@@ -883,7 +883,7 @@ function generateRequestClientInitializer(
     if (hasHeaders) {
         functionBody = functionBody.concat([
             new Expression({
-                leftSide: '@headers',
+                leftSide: "@headers",
                 rightSide: new HashInstance({}),
                 isAssignment: true
             }),
@@ -892,10 +892,10 @@ function generateRequestClientInitializer(
     }
 
     return new Function_({
-        name: 'initialize',
-        invocationName: 'new',
+        name: "initialize",
+        invocationName: "new",
         parameters: getClientParameters(
-            'requestClient',
+            "requestClient",
             environmentCr,
             headersGenerator,
             retriesProperty,
@@ -907,23 +907,23 @@ function generateRequestClientInitializer(
             ...functionBody,
             // Set the Faraday connection
             new Expression({
-                leftSide: '@conn',
+                leftSide: "@conn",
                 rightSide: new FunctionInvocation({
                     onObject: new ClassReference({
-                        name: 'Faraday',
-                        import_: new Import({ from: 'faraday', isExternal: true })
+                        name: "Faraday",
+                        import_: new Import({ from: "faraday", isExternal: true })
                     }),
-                    baseFunction: new Function_({ name: 'new', functionBody: [] }),
+                    baseFunction: new Function_({ name: "new", functionBody: [] }),
                     arguments_: hasHeaders
                         ? [
                               new Argument({
                                   isNamed: true,
-                                  name: 'headers',
-                                  value: '@headers'
+                                  name: "headers",
+                                  value: "@headers"
                               })
                           ]
                         : undefined,
-                    block: { arguments: 'faraday', expressions: faradayConfiguration }
+                    block: { arguments: "faraday", expressions: faradayConfiguration }
                 }),
                 isAssignment: true
             })
@@ -932,7 +932,7 @@ function generateRequestClientInitializer(
 }
 
 function getClientParameters(
-    desiredClient: 'rootClient' | 'requestClient',
+    desiredClient: "rootClient" | "requestClient",
     environmentCr: ClassReference | undefined,
     headersGenerator: HeadersGenerator,
     retriesProperty: Property,
@@ -941,7 +941,7 @@ function getClientParameters(
 ): Parameter[] {
     const functionParams = [
         new Parameter({
-            name: 'base_url',
+            name: "base_url",
             type: StringClassReference,
             isOptional: true,
             example: '"https://api.example.com"'
@@ -950,7 +950,7 @@ function getClientParameters(
     if (environmentCr !== undefined) {
         functionParams.push(
             new Parameter({
-                name: 'environment',
+                name: "environment",
                 type: environmentCr,
                 defaultValue: defaultEnvironment,
                 isOptional: true,
@@ -966,7 +966,7 @@ function getClientParameters(
         // Select sample of the request overrides object properties
         ...initialRequestOverrides.map((prop) => prop.toParameter({})),
         // Auth headers
-        ...headersGenerator.getAuthHeadersAsParameters(desiredClient === 'rootClient'),
+        ...headersGenerator.getAuthHeadersAsParameters(desiredClient === "rootClient"),
         // Global headers
         ...headersGenerator.getAdditionalHeadersAsParameters()
     ]
@@ -983,12 +983,12 @@ function requestClientFunctions(
     sdkVersion: string | undefined
 ): Function_[] {
     const requestOptionsParameter = new Parameter({
-        name: 'request_options',
+        name: "request_options",
         type: requestOptions.classReference,
         isOptional: true
     })
     const environmentOverrideParameter = new Parameter({
-        name: 'environment',
+        name: "environment",
         type: StringClassReference
     })
     const parameters = [requestOptionsParameter]
@@ -998,7 +998,7 @@ function requestClientFunctions(
 
     const allHeaders = new Map([
         // SDK Default Headers
-        [`"${platformHeaders.language}"`, 'Ruby'],
+        [`"${platformHeaders.language}"`, "Ruby"],
         [`"${platformHeaders.sdkName}"`, gemName]
     ])
     if (sdkVersion !== undefined) {
@@ -1007,7 +1007,7 @@ function requestClientFunctions(
 
     return [
         new Function_({
-            name: 'get_url',
+            name: "get_url",
             functionBody: [
                 new Expression({
                     leftSide: requestOptions.getBaseUrlProperty(requestOptionsParameter.toVariable()),
@@ -1020,11 +1020,11 @@ function requestClientFunctions(
                                             .toVariable()
                                             .write({})}]`
                                       : environmentProperty.toVariable(),
-                                  operation: '||',
+                                  operation: "||",
                                   isAssignment: false
                               })
                             : baseUrlProperty.toVariable(),
-                    operation: '||',
+                    operation: "||",
                     isAssignment: false
                 })
             ],
@@ -1032,10 +1032,10 @@ function requestClientFunctions(
             returnValue: StringClassReference
         }),
         new Function_({
-            name: 'get_headers',
+            name: "get_headers",
             functionBody: [
                 new Expression({
-                    leftSide: 'headers',
+                    leftSide: "headers",
                     rightSide: new HashInstance({
                         contents: new Map([...allHeaders.entries()])
                     }),
@@ -1054,7 +1054,7 @@ function requestClientFunctions(
                         })
                 ),
                 new Expression({
-                    leftSide: 'headers',
+                    leftSide: "headers",
                     isAssignment: false
                 })
             ],
@@ -1079,20 +1079,20 @@ export function generateRequestClients(
 ): [Class_, Class_] {
     const hasEnvironments = environmentCr != null
     const faradayReference = new ClassReference({
-        name: 'Faraday',
-        import_: new Import({ from: 'faraday', isExternal: true })
+        name: "Faraday",
+        import_: new Import({ from: "faraday", isExternal: true })
     })
     const baseUrlProperty = new Property({
-        name: 'base_url',
+        name: "base_url",
         type: StringClassReference
     })
     const environmentProperty = new Property({
-        name: 'default_environment',
+        name: "default_environment",
         type: StringClassReference
     })
     // Client properties
     const clientProperties = [
-        new Property({ name: 'conn', type: faradayReference }),
+        new Property({ name: "conn", type: faradayReference }),
         baseUrlProperty,
         ...headersGenerator.getAuthHeadersAsProperties()
     ]
@@ -1103,8 +1103,8 @@ export function generateRequestClients(
 
     // Add Client class
     const clientClassReference = new ClassReference({
-        name: 'RequestClient',
-        import_: new Import({ from: 'requests', isExternal: false }),
+        name: "RequestClient",
+        import_: new Import({ from: "requests", isExternal: false }),
         moduleBreadcrumbs: [clientName]
     })
     const clientClass = new Class_({
@@ -1136,8 +1136,8 @@ export function generateRequestClients(
 
     // Add Async Client class
     const asyncClientClassReference = new ClassReference({
-        name: 'AsyncRequestClient',
-        import_: new Import({ from: 'requests', isExternal: false }),
+        name: "AsyncRequestClient",
+        import_: new Import({ from: "requests", isExternal: false }),
         moduleBreadcrumbs: [clientName]
     })
     const asyncClientClass = new Class_({
@@ -1220,7 +1220,7 @@ export function getOauthRefreshTokenFunctionMetadata({
 
 function generatePathTemplate(templateString: string, pathParameters: PathParameter[], basePath?: HttpPath): string {
     if (basePath === undefined) {
-        return ''
+        return ""
     }
     let pathParametersTemplate = basePath.head
     for (let i = 0; i < basePath.parts.length; i++) {
@@ -1229,9 +1229,9 @@ function generatePathTemplate(templateString: string, pathParameters: PathParame
             continue
         }
         pathParametersTemplate = pathParametersTemplate.concat(
-            `${format(templateString, pathPart.name.snakeCase.safeName)}${basePath.parts[i]?.tail ?? ''}`
+            `${format(templateString, pathPart.name.snakeCase.safeName)}${basePath.parts[i]?.tail ?? ""}`
         )
     }
     // Strip leading and trailing slashes
-    return pathParametersTemplate.replaceAll(/^\/+|\/+$/g, '')
+    return pathParametersTemplate.replaceAll(/^\/+|\/+$/g, "")
 }

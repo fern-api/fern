@@ -1,4 +1,4 @@
-import { Reference } from '@fern-typescript/commons'
+import { Reference } from "@fern-typescript/commons"
 import {
     BaseContext,
     GeneratedAliasType,
@@ -7,7 +7,7 @@ import {
     GeneratedType,
     GeneratedUndiscriminatedUnionType,
     GeneratedUnionType
-} from '@fern-typescript/contexts'
+} from "@fern-typescript/contexts"
 
 import {
     EnumTypeDeclaration,
@@ -19,14 +19,14 @@ import {
     TypeReference,
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { GeneratedAliasTypeImpl } from './alias/GeneratedAliasTypeImpl'
-import { GeneratedBrandedStringAliasImpl } from './alias/GeneratedBrandedStringAliasImpl'
-import { GeneratedEnumTypeImpl } from './enum/GeneratedEnumTypeImpl'
-import { GeneratedObjectTypeImpl } from './object/GeneratedObjectTypeImpl'
-import { GeneratedUndiscriminatedUnionTypeImpl } from './undiscriminated-union/GeneratedUndiscriminatedUnionTypeImpl'
-import { GeneratedUnionTypeImpl } from './union/GeneratedUnionTypeImpl'
+import { GeneratedAliasTypeImpl } from "./alias/GeneratedAliasTypeImpl"
+import { GeneratedBrandedStringAliasImpl } from "./alias/GeneratedBrandedStringAliasImpl"
+import { GeneratedEnumTypeImpl } from "./enum/GeneratedEnumTypeImpl"
+import { GeneratedObjectTypeImpl } from "./object/GeneratedObjectTypeImpl"
+import { GeneratedUndiscriminatedUnionTypeImpl } from "./undiscriminated-union/GeneratedUndiscriminatedUnionTypeImpl"
+import { GeneratedUnionTypeImpl } from "./union/GeneratedUnionTypeImpl"
 
 export declare namespace TypeGenerator {
     export interface Init {
@@ -115,7 +115,7 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
                     getReferenceToSelf
                 }),
             _other: () => {
-                throw new Error('Unknown type declaration shape: ' + shape.type)
+                throw new Error("Unknown type declaration shape: " + shape.type)
             }
         })
     }
@@ -286,7 +286,7 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
 }
 
 function isTypeStringLike(type: TypeReference): boolean {
-    if (type.type !== 'primitive') {
+    if (type.type !== "primitive") {
         return false
     }
     return PrimitiveTypeV1._visit(type.primitive.v1, {

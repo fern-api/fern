@@ -1,23 +1,23 @@
-import { mapValues } from 'lodash-es'
+import { mapValues } from "lodash-es"
 
-import { GeneratorName } from '@fern-api/configuration-loader'
-import { assertNever } from '@fern-api/core-utils'
+import { GeneratorName } from "@fern-api/configuration-loader"
+import { assertNever } from "@fern-api/core-utils"
 
-import { IrVersions } from '../../ir-versions'
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
+import { IrVersions } from "../../ir-versions"
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
 
 export const V23_TO_V22_MIGRATION: IrMigration<
     IrVersions.V23.IntermediateRepresentation,
     IrVersions.V22.ir.IntermediateRepresentation
 > = {
-    laterVersion: 'v23',
-    earlierVersion: 'v22',
+    laterVersion: "v23",
+    earlierVersion: "v22",
     firstGeneratorVersionToConsumeNewIR: {
-        [GeneratorName.TYPESCRIPT_NODE_SDK]: '0.7.4-rc3-4-g6cf92f81',
-        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: '0.7.4-rc3-4-g6cf92f81',
+        [GeneratorName.TYPESCRIPT_NODE_SDK]: "0.7.4-rc3-4-g6cf92f81",
+        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: "0.7.4-rc3-4-g6cf92f81",
         [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_SDK]: '0.7.4-rc3-4-g6cf92f81',
-        [GeneratorName.TYPESCRIPT_EXPRESS]: '0.7.4-rc3-4-g6cf92f81',
+        [GeneratorName.TYPESCRIPT_SDK]: "0.7.4-rc3-4-g6cf92f81",
+        [GeneratorName.TYPESCRIPT_EXPRESS]: "0.7.4-rc3-4-g6cf92f81",
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -25,9 +25,9 @@ export const V23_TO_V22_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_FASTAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_PYDANTIC]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.OPENAPI]: '0.0.28-3-g112d3dd',
-        [GeneratorName.STOPLIGHT]: '0.0.28-3-g112d3dd',
-        [GeneratorName.POSTMAN]: '0.0.44-4-gddab2ae',
+        [GeneratorName.OPENAPI]: "0.0.28-3-g112d3dd",
+        [GeneratorName.STOPLIGHT]: "0.0.28-3-g112d3dd",
+        [GeneratorName.POSTMAN]: "0.0.44-4-gddab2ae",
         [GeneratorName.PYTHON_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_FIBER]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -66,7 +66,7 @@ export const V23_TO_V22_MIGRATION: IrMigration<
         if (bytesEndpoints.length > 0) {
             context.taskContext.logger.warn(
                 `Generator ${context.targetGenerator?.name}@${context.targetGenerator?.version}` +
-                    ' does not support bytes requests. '
+                    " does not support bytes requests. "
             )
             if (bytesEndpoints.length === 1 && bytesEndpoints[0] != null) {
                 context.taskContext.logger.warn(
@@ -76,7 +76,7 @@ export const V23_TO_V22_MIGRATION: IrMigration<
                 context.taskContext.logger.warn(
                     `Therefore, endpoints ${bytesEndpoints
                         .map((endpoint) => endpoint.name.originalName)
-                        .join(', ')} will be skipped.`
+                        .join(", ")} will be skipped.`
                 )
             }
         }
@@ -129,19 +129,19 @@ function convertRequestBody(
     requestBody: IrVersions.V23.http.HttpRequestBody
 ): IrVersions.V22.http.HttpRequestBody | undefined {
     switch (requestBody.type) {
-        case 'bytes':
+        case "bytes":
             return undefined
-        case 'fileUpload':
+        case "fileUpload":
             return IrVersions.V22.http.HttpRequestBody.fileUpload({
                 ...requestBody,
                 properties: requestBody.properties.map((property) => convertFileUploadRequestBodyProperty(property))
             })
-        case 'inlinedRequestBody':
+        case "inlinedRequestBody":
             return IrVersions.V22.http.HttpRequestBody.inlinedRequestBody({
                 ...requestBody,
                 properties: requestBody.properties.map((property) => convertInlinedRequestBodyProperty(property))
             })
-        case 'reference':
+        case "reference":
             return IrVersions.V22.http.HttpRequestBody.reference({
                 ...requestBody,
                 requestBodyType: convertTypeReference(requestBody.requestBodyType)
@@ -168,7 +168,7 @@ function convertAuthScheme(authScheme: IrVersions.V23.AuthScheme): IrVersions.V2
                 valueType: convertTypeReference(header.valueType)
             }),
         _other: () => {
-            throw new Error('Unknown auth scheme: ' + authScheme.type)
+            throw new Error("Unknown auth scheme: " + authScheme.type)
         }
     })
 }
@@ -213,7 +213,7 @@ function convertTypeShape(typeShape: IrVersions.V23.Type): IrVersions.V22.types.
                 }))
             }),
         _other: () => {
-            throw new Error('Unknown type shape: ' + typeShape.type)
+            throw new Error("Unknown type shape: " + typeShape.type)
         }
     })
 }
@@ -249,7 +249,7 @@ function convertExampleTypeShape(
                 properties: convertExampleSingleUnionTypeProperties(union.properties)
             }),
         _other: () => {
-            throw new Error('Unknown example type shape: ' + exampleTypeShape.type)
+            throw new Error("Unknown example type shape: " + exampleTypeShape.type)
         }
     })
 }
@@ -279,7 +279,7 @@ function convertExampleTypeReferenceShape(
                     date: IrVersions.V22.types.ExamplePrimitive.date,
                     uuid: IrVersions.V22.types.ExamplePrimitive.uuid,
                     _other: () => {
-                        throw new Error('Unknown example primitive: ' + primitive.type)
+                        throw new Error("Unknown example primitive: " + primitive.type)
                     }
                 })
             ),
@@ -311,13 +311,13 @@ function convertExampleTypeReferenceShape(
                             }))
                         ),
                     _other: () => {
-                        throw new Error('Unknown example container: ' + container.type)
+                        throw new Error("Unknown example container: " + container.type)
                     }
                 })
             ),
         unknown: IrVersions.V22.types.ExampleTypeReferenceShape.unknown,
         _other: () => {
-            throw new Error('Unknown example type reference shape: ' + exampleTypeReferenceShape.type)
+            throw new Error("Unknown example type reference shape: " + exampleTypeReferenceShape.type)
         }
     })
 }
@@ -338,7 +338,7 @@ function convertExampleSingleUnionTypeProperties(
                 shape: convertExampleTypeShape(samePropertiesAsObject.shape)
             }),
         _other: () => {
-            throw new Error('Unknown example single union type properties: ' + exampleSingleUnionTypeProperties.type)
+            throw new Error("Unknown example single union type properties: " + exampleSingleUnionTypeProperties.type)
         }
     })
 }
@@ -350,7 +350,7 @@ function convertTypeReference(typeReference: IrVersions.V23.TypeReference): IrVe
         named: IrVersions.V22.types.TypeReference.named,
         unknown: IrVersions.V22.types.TypeReference.unknown,
         _other: () => {
-            throw new Error('Unknown type reference: ' + typeReference.type)
+            throw new Error("Unknown type reference: " + typeReference.type)
         }
     })
 }
@@ -367,7 +367,7 @@ function convertContainerType(container: IrVersions.V23.ContainerType): IrVersio
             }),
         literal: IrVersions.V22.types.ContainerType.literal,
         _other: () => {
-            throw new Error('Unknown container type: ' + container.type)
+            throw new Error("Unknown container type: " + container.type)
         }
     })
 }
@@ -381,7 +381,7 @@ function convertResolvedTypeReference(
         named: IrVersions.V22.types.ResolvedTypeReference.named,
         unknown: IrVersions.V22.types.ResolvedTypeReference.unknown,
         _other: () => {
-            throw new Error('Unknown resolved type reference: ' + resolvedTypeReference.type)
+            throw new Error("Unknown resolved type reference: " + resolvedTypeReference.type)
         }
     })
 }
@@ -405,7 +405,7 @@ function convertSingleUnionTypeProperties(
             }),
         samePropertiesAsObject: IrVersions.V22.types.SingleUnionTypeProperties.samePropertiesAsObject,
         _other: () => {
-            throw new Error('Unknown single union type properties: ' + properties.propertiesType)
+            throw new Error("Unknown single union type properties: " + properties.propertiesType)
         }
     })
 }
@@ -447,7 +447,7 @@ function convertSdkRequestShape(sdkRequestShape: IrVersions.V23.SdkRequestShape)
             }),
         wrapper: IrVersions.V22.http.SdkRequestShape.wrapper,
         _other: () => {
-            throw new Error('Unknown SDK request shape: ' + sdkRequestShape.type)
+            throw new Error("Unknown SDK request shape: " + sdkRequestShape.type)
         }
     })
 }
@@ -467,12 +467,12 @@ function convertResponse(response: IrVersions.V23.HttpResponse): IrVersions.V22.
                     json: (json) => IrVersions.V22.http.StreamingResponseChunkType.json(convertTypeReference(json)),
                     text: IrVersions.V22.http.StreamingResponseChunkType.text,
                     _other: () => {
-                        throw new Error('Unknown streaming data event type: ' + streaming.dataEventType.type)
+                        throw new Error("Unknown streaming data event type: " + streaming.dataEventType.type)
                     }
                 })
             }),
         _other: () => {
-            throw new Error('Unknown response: ' + response.type)
+            throw new Error("Unknown response: " + response.type)
         }
     })
 }
@@ -513,7 +513,7 @@ function convertExampleEndpointCall(
                               shape: convertExampleTypeReferenceShape(reference.shape)
                           }),
                       _other: () => {
-                          throw new Error('Unknown example request body: ' + exampleEndpointCall.request?.type)
+                          throw new Error("Unknown example request body: " + exampleEndpointCall.request?.type)
                       }
                   })
                 : undefined,
@@ -529,7 +529,7 @@ function convertExampleEndpointCall(
                     body: errorResponse.body != null ? convertExampleTypeReference(errorResponse.body) : undefined
                 }),
             _other: () => {
-                throw new Error('Unknown example response: ' + exampleEndpointCall.response.type)
+                throw new Error("Unknown example response: " + exampleEndpointCall.response.type)
             }
         })
     }
@@ -571,7 +571,7 @@ function convertFileUploadRequestBodyProperty(
                 valueType: convertTypeReference(bodyProperty.valueType)
             }),
         _other: () => {
-            throw new Error('Unknown file upload request body property: ' + fileUploadRequestBodyProperty.type)
+            throw new Error("Unknown file upload request body property: " + fileUploadRequestBodyProperty.type)
         }
     })
 }

@@ -1,11 +1,11 @@
-import tinycolor from 'tinycolor2'
+import tinycolor from "tinycolor2"
 
-import { docsYml, getColorFromRawConfig, getColorType } from '@fern-api/configuration-loader'
+import { docsYml, getColorFromRawConfig, getColorType } from "@fern-api/configuration-loader"
 
-import { Rule, RuleViolation } from '../../Rule'
+import { Rule, RuleViolation } from "../../Rule"
 
 export const AccentColorContrastRule: Rule = {
-    name: 'accent-color-contrast',
+    name: "accent-color-contrast",
     create: () => {
         return {
             file: async ({ config }) => {
@@ -15,12 +15,12 @@ export const AccentColorContrastRule: Rule = {
 
                 const colorType = getColorType(config.colors)
 
-                if (colorType === 'dark') {
-                    return validateTheme(config.colors, 'dark')
-                } else if (colorType === 'light') {
-                    return validateTheme(config.colors, 'light')
-                } else if (colorType === 'darkAndLight') {
-                    return [...validateTheme(config.colors, 'dark'), ...validateTheme(config.colors, 'light')]
+                if (colorType === "dark") {
+                    return validateTheme(config.colors, "dark")
+                } else if (colorType === "light") {
+                    return validateTheme(config.colors, "light")
+                } else if (colorType === "darkAndLight") {
+                    return [...validateTheme(config.colors, "dark"), ...validateTheme(config.colors, "light")]
                 }
                 return []
             }
@@ -30,28 +30,28 @@ export const AccentColorContrastRule: Rule = {
 
 export function validateTheme(
     colors: docsYml.RawSchemas.ColorsConfiguration,
-    theme: 'dark' | 'light'
+    theme: "dark" | "light"
 ): RuleViolation[] {
     const accentPrimaryColor = getColorFromRawConfig(
         colors.accentPrimary ?? colors.accentPrimaryDeprecated,
-        'accent-primary',
+        "accent-primary",
         theme
     )
     let backgroundColor =
-        getColorFromRawConfig(colors.background, 'background', theme) ?? (theme === 'dark' ? '#000' : '#FFF')
+        getColorFromRawConfig(colors.background, "background", theme) ?? (theme === "dark" ? "#000" : "#FFF")
 
     const ruleViolations: RuleViolation[] = []
 
     if (!tinycolor(backgroundColor).isValid()) {
         ruleViolations.push({
-            severity: 'fatal',
+            severity: "fatal",
             message: `Invalid background color provided for colors.background.${theme}: ${backgroundColor}.`
         })
     } else {
         const newBackground = enforceBackgroundTheme(tinycolor(backgroundColor), theme)
         if (tinycolor(backgroundColor).toHexString() !== newBackground.toHexString()) {
             ruleViolations.push({
-                severity: 'warning',
+                severity: "warning",
                 message: `The provided background color for ${theme} mode is not ${theme} enough. It will be adjusted to ${newBackground.toHexString()}.`
             })
         }
@@ -60,12 +60,12 @@ export function validateTheme(
 
     if (accentPrimaryColor == null) {
         ruleViolations.push({
-            severity: 'warning',
+            severity: "warning",
             message: `No accent-color provided for ${theme} mode. A random color will be used.`
         })
     } else if (!tinycolor(accentPrimaryColor).isValid()) {
         ruleViolations.push({
-            severity: 'fatal',
+            severity: "fatal",
             message: `Invalid accent-color provided for colors.accent-primary.${theme}: ${accentPrimaryColor}.`
         })
     } else {
@@ -74,17 +74,17 @@ export function validateTheme(
 
         if (ratio < 3) {
             ruleViolations.push({
-                severity: 'warning',
+                severity: "warning",
                 message: `The contrast ratio between the accent color and the background color for ${theme} mode is ${readableRatio}. It should be at least 3:1.`
             })
         } else if (ratio < 4.5) {
             ruleViolations.push({
-                severity: 'warning',
+                severity: "warning",
                 message: `The contrast ratio between the accent color and the background color for ${theme} mode is ${readableRatio}. Fern will adjust the color to meet the minimum contrast ratio of 4.5:1 for WCAG AA and 7:1 for WCAG AAA.`
             })
         } else if (ratio < 7) {
             ruleViolations.push({
-                severity: 'warning',
+                severity: "warning",
                 message: `The contrast ratio between the accent color and the background color for ${theme} mode is ${readableRatio}. Fern will adjust the color to meet the minimum contrast ratio of 7:1 for WCAG AAA.`
             })
         }
@@ -93,10 +93,10 @@ export function validateTheme(
     return ruleViolations
 }
 
-export function enforceBackgroundTheme(color: tinycolor.Instance, theme: 'dark' | 'light'): tinycolor.Instance {
-    if (theme === 'dark' && color.isDark()) {
+export function enforceBackgroundTheme(color: tinycolor.Instance, theme: "dark" | "light"): tinycolor.Instance {
+    if (theme === "dark" && color.isDark()) {
         return color
-    } else if (theme === 'light' && color.isLight()) {
+    } else if (theme === "light" && color.isLight()) {
         return color
     }
 
@@ -114,32 +114,32 @@ function getOppositeBrightness(color: tinycolor.Instance | undefined): tinycolor
     return tinycolor({ h, s, v: 1 - v })
 }
 
-function getDesiredRatio(ratio: 'aaa' | 'aa' | 'ui'): number {
+function getDesiredRatio(ratio: "aaa" | "aa" | "ui"): number {
     switch (ratio) {
-        case 'aaa':
+        case "aaa":
             return 7
-        case 'aa':
+        case "aa":
             return 4.5
-        case 'ui':
+        case "ui":
             return 3
     }
 }
 
-function getUserReadableRatio(ratio: 'aaa' | 'aa' | 'ui'): string {
+function getUserReadableRatio(ratio: "aaa" | "aa" | "ui"): string {
     switch (ratio) {
-        case 'aaa':
-            return '7:1'
-        case 'aa':
-            return '4.5:1'
-        case 'ui':
-            return '3:1'
+        case "aaa":
+            return "7:1"
+        case "aa":
+            return "4.5:1"
+        case "ui":
+            return "3:1"
     }
 }
 
 function increaseForegroundContrast(
     foregroundColor: tinycolor.Instance,
     backgroundColor: tinycolor.Instance,
-    ratio: 'aaa' | 'aa' | 'ui'
+    ratio: "aaa" | "aa" | "ui"
 ): tinycolor.Instance {
     let newForgroundColor = foregroundColor
     const dark = backgroundColor.isDark()

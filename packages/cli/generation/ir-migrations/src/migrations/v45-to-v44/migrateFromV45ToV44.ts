@@ -1,17 +1,17 @@
-import { mapValues } from 'lodash-es'
+import { mapValues } from "lodash-es"
 
-import { GeneratorName } from '@fern-api/configuration-loader'
+import { GeneratorName } from "@fern-api/configuration-loader"
 
-import { IrSerialization } from '../../ir-serialization'
-import { IrVersions } from '../../ir-versions'
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
+import { IrSerialization } from "../../ir-serialization"
+import { IrVersions } from "../../ir-versions"
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
 
 export const V45_TO_V44_MIGRATION: IrMigration<
     IrVersions.V45.ir.IntermediateRepresentation,
     IrVersions.V44.ir.IntermediateRepresentation
 > = {
-    laterVersion: 'v45',
-    earlierVersion: 'v44',
+    laterVersion: "v45",
+    earlierVersion: "v44",
     firstGeneratorVersionToConsumeNewIR: {
         [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -43,7 +43,7 @@ export const V45_TO_V44_MIGRATION: IrMigration<
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V44.IntermediateRepresentation.jsonOrThrow(ir, {
-            unrecognizedObjectKeys: 'strip',
+            unrecognizedObjectKeys: "strip",
             skipValidation: true
         }),
     migrateBackwards: (v45): IrVersions.V44.ir.IntermediateRepresentation => {
@@ -89,7 +89,7 @@ export const V45_TO_V44_MIGRATION: IrMigration<
                             )
                         },
                         _other: () => {
-                            throw new Error('Encountered unknown shape')
+                            throw new Error("Encountered unknown shape")
                         }
                     })
                 }
@@ -140,7 +140,7 @@ function convertWebsocketMessageBody(
     body: IrVersions.V45.websocket.WebSocketMessageBody
 ): IrVersions.V44.websocket.WebSocketMessageBody {
     switch (body.type) {
-        case 'inlinedBody':
+        case "inlinedBody":
             return IrVersions.V44.websocket.WebSocketMessageBody.inlinedBody({
                 ...body,
                 properties: body.properties.map((property) => {
@@ -150,7 +150,7 @@ function convertWebsocketMessageBody(
                     }
                 })
             })
-        case 'reference':
+        case "reference":
             return IrVersions.V44.websocket.WebSocketMessageBody.reference({
                 ...body,
                 bodyType: convertTypeReference(body.bodyType)
@@ -174,12 +174,12 @@ function convertWebhookPayload(
     payload: IrVersions.V45.webhooks.WebhookPayload
 ): IrVersions.V44.webhooks.WebhookPayload {
     switch (payload.type) {
-        case 'reference':
+        case "reference":
             return IrVersions.V44.webhooks.WebhookPayload.reference({
                 ...payload,
                 payloadType: convertTypeReference(payload.payloadType)
             })
-        case 'inlinedPayload':
+        case "inlinedPayload":
             return IrVersions.V44.webhooks.WebhookPayload.inlinedPayload({
                 ...payload,
                 properties: payload.properties.map((property) => {
@@ -197,13 +197,13 @@ function convertAuth(auth: IrVersions.V45.auth.ApiAuth): IrVersions.V44.auth.Api
         ...auth,
         schemes: auth.schemes.map((scheme) => {
             switch (scheme.type) {
-                case 'basic':
+                case "basic":
                     return IrVersions.V44.auth.AuthScheme.basic(scheme)
-                case 'bearer':
+                case "bearer":
                     return IrVersions.V44.auth.AuthScheme.bearer(scheme)
-                case 'header':
+                case "header":
                     return IrVersions.V44.auth.AuthScheme.header(convertHeader(scheme))
-                case 'oauth':
+                case "oauth":
                     return IrVersions.V44.auth.AuthScheme.oauth(convertOAuth(scheme))
             }
         })
@@ -291,7 +291,7 @@ function convertTypeReference(typeReference: IrVersions.V45.types.TypeReference)
     return IrVersions.V45.types.TypeReference._visit<IrVersions.V44.types.TypeReference>(typeReference, {
         container: (container) => IrVersions.V44.types.TypeReference.container(convertContainerType(container)),
         primitive: (primitiveType) => {
-            if (primitiveType.v1 === 'BIG_INTEGER') {
+            if (primitiveType.v1 === "BIG_INTEGER") {
                 return IrVersions.V44.types.TypeReference.primitive(IrVersions.V44.types.PrimitiveType.String)
             }
             return IrVersions.V44.types.TypeReference.primitive(primitiveType.v1)
@@ -299,7 +299,7 @@ function convertTypeReference(typeReference: IrVersions.V45.types.TypeReference)
         named: IrVersions.V44.types.TypeReference.named,
         unknown: IrVersions.V44.types.TypeReference.unknown,
         _other: () => {
-            throw new Error('Unknown type reference: ' + typeReference.type)
+            throw new Error("Unknown type reference: " + typeReference.type)
         }
     })
 }
@@ -316,7 +316,7 @@ function convertContainerType(container: IrVersions.V45.types.ContainerType): Ir
             }),
         literal: IrVersions.V44.types.ContainerType.literal,
         _other: () => {
-            throw new Error('Unknown ContainerType: ' + container.type)
+            throw new Error("Unknown ContainerType: " + container.type)
         }
     })
 }
@@ -358,14 +358,14 @@ function convertResolvedType(
         container: (container) => IrVersions.V44.types.ResolvedTypeReference.container(convertContainerType(container)),
         named: IrVersions.V44.types.ResolvedTypeReference.named,
         primitive: (primitiveType) => {
-            if (primitiveType.v1 === 'BIG_INTEGER') {
+            if (primitiveType.v1 === "BIG_INTEGER") {
                 return IrVersions.V44.types.ResolvedTypeReference.primitive(IrVersions.V44.types.PrimitiveType.String)
             }
             return IrVersions.V44.types.ResolvedTypeReference.primitive(primitiveType.v1)
         },
         unknown: IrVersions.V44.types.ResolvedTypeReference.unknown,
         _other: () => {
-            throw new Error('Unknown ResolvedTypeReference: ' + resolvedType.type)
+            throw new Error("Unknown ResolvedTypeReference: " + resolvedType.type)
         }
     })
 }
@@ -429,25 +429,25 @@ function convertHttpResponse(response: IrVersions.V45.http.HttpResponse): IrVers
 
 function convertResponseBody(responseBody: IrVersions.V45.http.HttpResponseBody): IrVersions.V44.http.HttpResponseBody {
     switch (responseBody.type) {
-        case 'json':
+        case "json":
             return IrVersions.V44.http.HttpResponseBody.json(convertJsonResponse(responseBody.value))
-        case 'fileDownload':
+        case "fileDownload":
             return IrVersions.V44.http.HttpResponseBody.fileDownload(responseBody)
-        case 'text':
+        case "text":
             return IrVersions.V44.http.HttpResponseBody.text(responseBody)
-        case 'streaming':
+        case "streaming":
             return IrVersions.V44.http.HttpResponseBody.streaming(convertStreamingResponse(responseBody.value))
     }
 }
 
 function convertJsonResponse(jsonResponse: IrVersions.V45.http.JsonResponse): IrVersions.V44.http.JsonResponse {
     switch (jsonResponse.type) {
-        case 'response':
+        case "response":
             return IrVersions.V44.http.JsonResponse.response({
                 ...jsonResponse,
                 responseBodyType: convertTypeReference(jsonResponse.responseBodyType)
             })
-        case 'nestedPropertyAsResponse':
+        case "nestedPropertyAsResponse":
             return IrVersions.V44.http.JsonResponse.nestedPropertyAsResponse({
                 ...jsonResponse,
                 responseBodyType: convertTypeReference(jsonResponse.responseBodyType),
@@ -463,14 +463,14 @@ function convertStreamingResponse(
     streamingResponse: IrVersions.V45.http.StreamingResponse
 ): IrVersions.V44.http.StreamingResponse {
     switch (streamingResponse.type) {
-        case 'json':
+        case "json":
             return IrVersions.V44.http.StreamingResponse.json({
                 ...streamingResponse,
                 payload: convertTypeReference(streamingResponse.payload)
             })
-        case 'text':
+        case "text":
             return IrVersions.V44.http.StreamingResponse.text(streamingResponse)
-        case 'sse':
+        case "sse":
             return IrVersions.V44.http.StreamingResponse.sse({
                 ...streamingResponse,
                 payload: convertTypeReference(streamingResponse.payload)
@@ -480,9 +480,9 @@ function convertStreamingResponse(
 
 function convertPagination(pagination: IrVersions.V45.http.Pagination): IrVersions.V44.http.Pagination {
     switch (pagination.type) {
-        case 'cursor':
+        case "cursor":
             return IrVersions.V44.http.Pagination.cursor(convertCursorPagination(pagination))
-        case 'offset':
+        case "offset":
             return IrVersions.V44.http.Pagination.offset(convertOffsetPagination(pagination))
     }
 }
@@ -521,9 +521,9 @@ function convertRequestPropertValue(
     requestPropertyValue: IrVersions.V45.http.RequestPropertyValue
 ): IrVersions.V44.http.RequestPropertyValue {
     switch (requestPropertyValue.type) {
-        case 'query':
+        case "query":
             return IrVersions.V44.RequestPropertyValue.query(convertQueryParameter(requestPropertyValue))
-        case 'body':
+        case "body":
             return IrVersions.V44.RequestPropertyValue.body(convertObjectProperty(requestPropertyValue))
     }
 }
@@ -566,7 +566,7 @@ function convertSdkRequestShape(shape: IrVersions.V45.http.SdkRequestShape): IrV
             IrVersions.V44.http.SdkRequestShape.justRequestBody(convertSdkRequestBodyType(reference)),
         wrapper: IrVersions.V44.http.SdkRequestShape.wrapper,
         _other: () => {
-            throw new Error('Unknown SdkRequestShape: ' + shape.type)
+            throw new Error("Unknown SdkRequestShape: " + shape.type)
         }
     })
 }
@@ -575,9 +575,9 @@ function convertSdkRequestBodyType(
     shape: IrVersions.V45.http.SdkRequestBodyType
 ): IrVersions.V44.http.SdkRequestBodyType {
     switch (shape.type) {
-        case 'bytes':
+        case "bytes":
             return IrVersions.V44.http.SdkRequestBodyType.bytes(shape)
-        case 'typeReference':
+        case "typeReference":
             return IrVersions.V44.http.SdkRequestBodyType.typeReference({
                 ...shape,
                 requestBodyType: convertTypeReference(shape.requestBodyType)
@@ -605,12 +605,12 @@ function convertRequestBody(requestBody: IrVersions.V45.http.HttpRequestBody): I
                 ...fileUpload,
                 properties: fileUpload.properties.map((fileUploadRequestProperty) => {
                     switch (fileUploadRequestProperty.type) {
-                        case 'bodyProperty':
+                        case "bodyProperty":
                             return IrVersions.V44.http.FileUploadRequestProperty.bodyProperty({
                                 ...fileUploadRequestProperty,
                                 valueType: convertTypeReference(fileUploadRequestProperty.valueType)
                             })
-                        case 'file':
+                        case "file":
                             return IrVersions.V44.http.FileUploadRequestProperty.file(
                                 convertFileProperty(fileUploadRequestProperty.value)
                             )
@@ -621,16 +621,16 @@ function convertRequestBody(requestBody: IrVersions.V45.http.HttpRequestBody): I
             return IrVersions.V44.http.HttpRequestBody.bytes(bytes)
         },
         _other: () => {
-            throw new Error('Unknown HttpRequestBody: ' + requestBody.type)
+            throw new Error("Unknown HttpRequestBody: " + requestBody.type)
         }
     })
 }
 
 function convertFileProperty(fileProperty: IrVersions.V45.http.FileProperty): IrVersions.V44.http.FileProperty {
     switch (fileProperty.type) {
-        case 'file':
+        case "file":
             return IrVersions.V44.http.FileProperty.file(fileProperty)
-        case 'fileArray':
+        case "fileArray":
             return IrVersions.V44.http.FileProperty.fileArray(fileProperty)
     }
 }

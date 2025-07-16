@@ -1,11 +1,11 @@
-import { camelCase } from 'lodash-es'
+import { camelCase } from "lodash-es"
 
-import { GeneratorNotificationService } from '@fern-api/base-generator'
-import { assertNever } from '@fern-api/core-utils'
-import { java } from '@fern-api/java-ast'
-import { AbstractJavaGeneratorContext, JavaProject } from '@fern-api/java-base'
+import { GeneratorNotificationService } from "@fern-api/base-generator"
+import { assertNever } from "@fern-api/core-utils"
+import { java } from "@fern-api/java-ast"
+import { AbstractJavaGeneratorContext, JavaProject } from "@fern-api/java-base"
 
-import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
 import {
     FernFilepath,
     HttpEndpoint,
@@ -13,12 +13,12 @@ import {
     Name,
     TypeDeclaration,
     TypeId
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { JavaGeneratorAgent } from './JavaGeneratorAgent'
-import { SdkCustomConfigSchema } from './SdkCustomConfig'
-import { TYPES_DIRECTORY } from './constants'
-import { ReadmeConfigBuilder } from './readme/ReadmeConfigBuilder'
+import { JavaGeneratorAgent } from "./JavaGeneratorAgent"
+import { SdkCustomConfigSchema } from "./SdkCustomConfig"
+import { TYPES_DIRECTORY } from "./constants"
+import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder"
 
 export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomConfigSchema> {
     public readonly generatorAgent: JavaGeneratorAgent
@@ -48,21 +48,21 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
         }
 
         switch (responseBody.type) {
-            case 'json':
+            case "json":
                 return this.javaTypeMapper.convert({ reference: responseBody.value.responseBodyType })
-            case 'text':
+            case "text":
                 return java.Type.string()
-            case 'bytes':
-                throw new Error('Returning bytes is not supported')
-            case 'streaming':
+            case "bytes":
+                throw new Error("Returning bytes is not supported")
+            case "streaming":
                 switch (responseBody.value.type) {
-                    case 'text':
-                        throw new Error('Returning streamed text is not supported')
-                    case 'json':
+                    case "text":
+                        throw new Error("Returning streamed text is not supported")
+                    case "json":
                         return java.Type.iterable(
                             this.javaTypeMapper.convert({ reference: responseBody.value.payload })
                         )
-                    case 'sse':
+                    case "sse":
                         return java.Type.iterable(
                             this.javaTypeMapper.convert({ reference: responseBody.value.payload })
                         )
@@ -70,10 +70,10 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
                         assertNever(responseBody.value)
                 }
                 break
-            case 'fileDownload':
+            case "fileDownload":
                 return java.Type.inputStream()
-            case 'streamParameter':
-                throw new Error('Returning stream parameter is not supported')
+            case "streamParameter":
+                throw new Error("Returning stream parameter is not supported")
             default:
                 assertNever(responseBody)
         }
@@ -107,24 +107,24 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
     }
 
     public getPaginationPackageName(): string {
-        if (this.getPackageLayout() === 'flat') {
+        if (this.getPackageLayout() === "flat") {
             return this.getCorePackageName()
         }
-        return this.getCorePackageName() + '.pagination'
+        return this.getCorePackageName() + ".pagination"
     }
 
     public getPackageLayout(): string {
-        return this.customConfig?.['package-layout'] ?? 'nested'
+        return this.customConfig?.["package-layout"] ?? "nested"
     }
 
     public getPaginationClassName(): string {
-        return 'SyncPagingIterable'
+        return "SyncPagingIterable"
     }
 
     public getOkHttpClientClassReference(): java.ClassReference {
         return java.classReference({
-            name: 'OkHttpClient',
-            packageName: 'okhttp3'
+            name: "OkHttpClient",
+            packageName: "okhttp3"
         })
     }
 
@@ -136,7 +136,7 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
     }
 
     public getRequestOptionsClassName(): string {
-        return 'RequestOptions'
+        return "RequestOptions"
     }
 
     public getApiExceptionClassReference(): java.ClassReference {
@@ -147,7 +147,7 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
     }
 
     public getApiExceptionClassName(): string {
-        return this.customConfig?.['base-api-exception-class-name'] ?? `${this.getBaseNamePrefix()}ApiException`
+        return this.customConfig?.["base-api-exception-class-name"] ?? `${this.getBaseNamePrefix()}ApiException`
     }
 
     public getEnvironmentClassReference(): java.ClassReference {
@@ -159,12 +159,12 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
 
     public getCorePackageName(): string {
         const tokens = this.getPackagePrefixTokens()
-        tokens.push('core')
+        tokens.push("core")
         return this.joinPackageTokens(tokens)
     }
 
     public getEnvironmentClassName(): string {
-        return 'Environment'
+        return "Environment"
     }
 
     public getRootClientClassReference(): java.ClassReference {
@@ -180,7 +180,7 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
     }
 
     public getRootClientClassName(): string {
-        return this.customConfig?.['client-class-name'] ?? `${this.getBaseNamePrefix()}Client`
+        return this.customConfig?.["client-class-name"] ?? `${this.getBaseNamePrefix()}Client`
     }
 
     public isSelfHosted(): boolean {
@@ -189,9 +189,9 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
 
     private joinPackageTokens(tokens: string[]): string {
         const sanitizedTokens = tokens.map((token) => {
-            return this.startsWithNumber(token) ? '_' + token : token
+            return this.startsWithNumber(token) ? "_" + token : token
         })
-        return sanitizedTokens.join('.')
+        return sanitizedTokens.join(".")
     }
 
     private startsWithNumber(token: string): boolean {
@@ -199,11 +199,11 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
     }
 
     private getPackagePrefixTokens(): string[] {
-        if (this.customConfig?.['package-prefix'] != null) {
-            return this.customConfig['package-prefix'].split('.')
+        if (this.customConfig?.["package-prefix"] != null) {
+            return this.customConfig["package-prefix"].split(".")
         }
         const prefix: string[] = []
-        prefix.push('com')
+        prefix.push("com")
         prefix.push(...this.splitOnNonAlphaNumericChar(this.config.organization))
         prefix.push(...this.splitOnNonAlphaNumericChar(this.getApiName()))
         return prefix
@@ -231,15 +231,15 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
     protected getResourcesPackage(fernFilepath: FernFilepath, suffix?: string): string {
         const tokens = this.getPackagePrefixTokens()
         switch (this.getPackageLayout()) {
-            case 'flat':
+            case "flat":
                 if (fernFilepath != null) {
                     tokens.push(...fernFilepath.packagePath.map((name) => this.getPackageNameSegment(name)))
                 }
                 break
-            case 'nested':
+            case "nested":
             default:
                 if (fernFilepath != null && fernFilepath.allParts.length > 0) {
-                    tokens.push('resources')
+                    tokens.push("resources")
                 }
                 if (fernFilepath != null) {
                     tokens.push(...fernFilepath.allParts.map((name) => this.getPackageNameSegment(name)))

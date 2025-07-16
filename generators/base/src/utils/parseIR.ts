@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, streamObjectFromFile } from '@fern-api/fs-utils'
+import { AbsoluteFilePath, streamObjectFromFile } from "@fern-api/fs-utils"
 
 export declare namespace parseIR {
     export interface Args<IntermediateRepresentation> {
@@ -27,7 +27,7 @@ export declare namespace parseIR {
          *
          * @default "fail"
          */
-        unrecognizedObjectKeys?: 'fail' | 'passthrough' | 'strip'
+        unrecognizedObjectKeys?: "fail" | "passthrough" | "strip"
         /**
          * whether to fail when an unrecognized discriminant value is
          * encountered in a union
@@ -67,7 +67,7 @@ export async function parseIR<IR>({ absolutePathToIR, parse }: parseIR.Args<IR>)
     // biome-ignore lint/suspicious/noConsole: allow console
     console.log(`Parsed ${absolutePathToIR}`)
     const parsedIR = await parse(irJson, {
-        unrecognizedObjectKeys: 'passthrough',
+        unrecognizedObjectKeys: "passthrough",
         allowUnrecognizedEnumValues: true,
         allowUnrecognizedUnionMembers: true
     })

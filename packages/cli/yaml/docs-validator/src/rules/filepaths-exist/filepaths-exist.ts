@@ -1,16 +1,16 @@
-import { doesPathExist } from '@fern-api/fs-utils'
+import { doesPathExist } from "@fern-api/fs-utils"
 
-import { Rule } from '../../Rule'
+import { Rule } from "../../Rule"
 
 export const FilepathsExistRule: Rule = {
-    name: 'filepaths-exist',
+    name: "filepaths-exist",
     create: () => {
         return {
             filepath: async ({ absoluteFilepath, value }) => {
                 if (!(await doesPathExist(absoluteFilepath))) {
                     return [
                         {
-                            severity: 'fatal',
+                            severity: "fatal",
                             message: `Path ${value} does not exist`
                         }
                     ]

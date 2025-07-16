@@ -1,10 +1,10 @@
-import { OpenAPIV3_1 } from 'openapi-types'
+import { OpenAPIV3_1 } from "openapi-types"
 
-import { MediaType } from '@fern-api/core-utils'
-import { HttpResponseBody, JsonResponse, StreamingResponse } from '@fern-api/ir-sdk'
-import { Converters, SchemaOrReferenceConverter } from '@fern-api/v2-importer-commons'
+import { MediaType } from "@fern-api/core-utils"
+import { HttpResponseBody, JsonResponse, StreamingResponse } from "@fern-api/ir-sdk"
+import { Converters, SchemaOrReferenceConverter } from "@fern-api/v2-importer-commons"
 
-import { FernStreamingExtension } from '../../extensions/x-fern-streaming'
+import { FernStreamingExtension } from "../../extensions/x-fern-streaming"
 
 export declare namespace ResponseBodyConverter {
     export interface Args extends Converters.AbstractConverters.AbstractMediaTypeObjectConverter.Args {
@@ -49,10 +49,10 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
         if (this.streamingExtension == null) {
             return undefined
         }
-        if (this.streamingExtension.type == 'streamCondition') {
+        if (this.streamingExtension.type == "streamCondition") {
             const streamingResponse = this.streamingExtension.responseStream
             const nonStreamingResponse = this.streamingExtension.response
-            const nonStreamingSchemaId = [...this.group, this.method, 'Response', this.statusCode].join('_')
+            const nonStreamingSchemaId = [...this.group, this.method, "Response", this.statusCode].join("_")
             const streamingSchemaId = `${nonStreamingSchemaId}_streaming`
 
             const convertedStreamingSchema = this.parseMediaTypeSchemaOrReference({
@@ -69,8 +69,8 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                 convertedNonStreamingSchema
             })
         }
-        if (this.streamingExtension.type === 'stream') {
-            const schemaId = [...this.group, this.method, 'Response', this.statusCode].join('_')
+        if (this.streamingExtension.type === "stream") {
+            const schemaId = [...this.group, this.method, "Response", this.statusCode].join("_")
             const contentTypes = Object.keys(this.responseBody.content ?? {})
             for (const contentType of contentTypes) {
                 const mediaTypeObject = this.responseBody.content?.[contentType]
@@ -96,8 +96,8 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
     }
 
     private convertNonStreamingResponseBody(): ResponseBodyConverter.Output | undefined {
-        const schemaId = [...this.group, this.method, 'Response', this.statusCode].join('_')
-        const jsonContentTypes = Object.keys(this.responseBody.content ?? {}).filter((type) => type.includes('json'))
+        const schemaId = [...this.group, this.method, "Response", this.statusCode].join("_")
+        const jsonContentTypes = Object.keys(this.responseBody.content ?? {}).filter((type) => type.includes("json"))
         for (const contentType of jsonContentTypes) {
             const mediaTypeObject = this.responseBody.content?.[contentType]
             if (mediaTypeObject == null) {
@@ -120,7 +120,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
         }
 
         const nonJsonContentTypes = Object.keys(this.responseBody.content ?? {}).filter(
-            (type) => !type.includes('json')
+            (type) => !type.includes("json")
         )
         for (const contentType of nonJsonContentTypes) {
             const mediaTypeObject = this.responseBody.content?.[contentType]
@@ -204,7 +204,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
         }
         const format = this.streamingExtension.format
         switch (format) {
-            case 'json': {
+            case "json": {
                 // TODO: continue this impl. here
                 return {
                     responseBody: HttpResponseBody.streaming(
@@ -215,7 +215,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                             v2Examples: this.convertMediaTypeObjectExamples({
                                 mediaTypeObject,
                                 generateOptionalProperties: true,
-                                exampleGenerationStrategy: 'response'
+                                exampleGenerationStrategy: "response"
                             })
                         })
                     ),
@@ -224,7 +224,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                     examples: convertedSchema.examples
                 }
             }
-            case 'sse': {
+            case "sse": {
                 return {
                     responseBody: HttpResponseBody.streaming(
                         StreamingResponse.sse({
@@ -234,7 +234,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                             v2Examples: this.convertMediaTypeObjectExamples({
                                 mediaTypeObject,
                                 generateOptionalProperties: true,
-                                exampleGenerationStrategy: 'response'
+                                exampleGenerationStrategy: "response"
                             })
                         })
                     ),
@@ -264,7 +264,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                     v2Examples: this.convertMediaTypeObjectExamples({
                         mediaTypeObject,
                         generateOptionalProperties: true,
-                        exampleGenerationStrategy: 'response'
+                        exampleGenerationStrategy: "response"
                     })
                 })
             ),
@@ -285,7 +285,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                 v2Examples: this.convertMediaTypeObjectExamples({
                     mediaTypeObject,
                     generateOptionalProperties: true,
-                    exampleGenerationStrategy: 'response'
+                    exampleGenerationStrategy: "response"
                 })
             }),
             streamResponseBody: undefined,
@@ -304,7 +304,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                 v2Examples: this.convertMediaTypeObjectExamples({
                     mediaTypeObject,
                     generateOptionalProperties: true,
-                    exampleGenerationStrategy: 'response'
+                    exampleGenerationStrategy: "response"
                 })
             }),
             streamResponseBody: undefined,
@@ -323,7 +323,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                 v2Examples: this.convertMediaTypeObjectExamples({
                     mediaTypeObject,
                     generateOptionalProperties: true,
-                    exampleGenerationStrategy: 'response'
+                    exampleGenerationStrategy: "response"
                 })
             }),
             streamResponseBody: undefined,
@@ -334,17 +334,17 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
     private isBinarySchema(convertedSchema: SchemaOrReferenceConverter.Output): boolean {
         const typeReference = convertedSchema.type
         switch (typeReference.type) {
-            case 'container':
-            case 'named':
-            case 'unknown':
+            case "container":
+            case "named":
+            case "unknown":
                 return false
-            case 'primitive':
+            case "primitive":
                 if (typeReference.primitive.v2 == null) {
                     return false
                 }
                 return (
-                    typeReference.primitive.v2.type === 'string' &&
-                    typeReference.primitive.v2.validation?.format === 'binary'
+                    typeReference.primitive.v2.type === "string" &&
+                    typeReference.primitive.v2.validation?.format === "binary"
                 )
             default:
                 return false
@@ -356,7 +356,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
     }
 
     private shouldReturnJsonResponse(contentType: string): boolean {
-        return contentType.includes('json')
+        return contentType.includes("json")
     }
 
     private shouldReturnBytesResponse(): boolean {

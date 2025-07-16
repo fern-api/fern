@@ -1,9 +1,9 @@
-import { OpenAPIV3 } from 'openapi-types'
+import { OpenAPIV3 } from "openapi-types"
 
-import { Pagination } from '@fern-api/openapi-ir'
+import { Pagination } from "@fern-api/openapi-ir"
 
-import { getExtension } from '../../../getExtension'
-import { FernOpenAPIExtension } from './fernExtensions'
+import { getExtension } from "../../../getExtension"
+import { FernOpenAPIExtension } from "./fernExtensions"
 
 declare namespace Raw {
     export type PaginationExtensionSchema = boolean | CursorPaginationExtensionSchema | OffsetPaginationExtensionSchema
@@ -18,11 +18,11 @@ declare namespace Raw {
         offset: string
         results: string
         step: string | undefined
-        'has-next-page': string | undefined
+        "has-next-page": string | undefined
     }
 
     export interface CustomPaginationExtensionSchema {
-        type: 'custom'
+        type: "custom"
         results: string
     }
 }
@@ -38,22 +38,22 @@ export function convertPaginationExtension(
             results: maybeCursorPagination.results
         })
     }
-    if ('offset' in pagination) {
+    if ("offset" in pagination) {
         const offsetPagination = pagination as Raw.OffsetPaginationExtensionSchema
         return Pagination.offset({
             offset: offsetPagination.offset,
             results: offsetPagination.results,
             step: offsetPagination.step,
-            hasNextPage: offsetPagination['has-next-page']
+            hasNextPage: offsetPagination["has-next-page"]
         })
     }
-    if ('type' in pagination && pagination.type === 'custom') {
+    if ("type" in pagination && pagination.type === "custom") {
         const customPagination = pagination as Raw.CustomPaginationExtensionSchema
         return Pagination.custom({
             results: customPagination.results
         })
     }
-    throw new Error('Invalid pagination extension')
+    throw new Error("Invalid pagination extension")
 }
 
 export function getFernPaginationExtension(
@@ -64,15 +64,15 @@ export function getFernPaginationExtension(
     if (pagination == null) {
         return undefined
     }
-    if (typeof pagination === 'boolean') {
+    if (typeof pagination === "boolean") {
         // The endpoint is trying to leverage the global config, grab extension from global
         const topLevelPagination = getExtension<Raw.PaginationExtensionSchema>(
             document,
             FernOpenAPIExtension.PAGINATION
         )
-        if (typeof topLevelPagination === 'boolean') {
+        if (typeof topLevelPagination === "boolean") {
             throw new Error(
-                'Global pagination extension is a boolean, expected an object. Only endpoints may declare a boolean for x-fern-pagination.'
+                "Global pagination extension is a boolean, expected an object. Only endpoints may declare a boolean for x-fern-pagination."
             )
         }
         return topLevelPagination == null ? undefined : convertPaginationExtension(topLevelPagination)

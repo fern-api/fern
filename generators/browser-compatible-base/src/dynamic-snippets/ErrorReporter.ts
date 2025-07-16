@@ -1,6 +1,6 @@
 export const Severity = {
-    Critical: 'CRITICAL',
-    Warning: 'WARNING'
+    Critical: "CRITICAL",
+    Warning: "WARNING"
 } as const
 
 export declare namespace ErrorReporter {
@@ -22,7 +22,7 @@ export declare namespace ErrorReporter {
 }
 
 interface Error_ {
-    severity: 'CRITICAL' | 'WARNING'
+    severity: "CRITICAL" | "WARNING"
     path: string[] | undefined
     message: string
 }
@@ -36,7 +36,7 @@ export class ErrorReporter {
         this.path = []
     }
 
-    public add(err: Omit<ErrorReporter.Error, 'path'>): void {
+    public add(err: Omit<ErrorReporter.Error, "path">): void {
         this.errors.push({
             ...err,
             path: [...this.path]
@@ -86,7 +86,7 @@ export class ErrorReporter {
     private pathToStringArray(path: ErrorReporter.Path): string[] {
         const result: string[] = []
         for (const item of path) {
-            if (typeof item === 'string') {
+            if (typeof item === "string") {
                 result.push(item)
                 continue
             }

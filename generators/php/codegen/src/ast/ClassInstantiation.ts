@@ -1,9 +1,9 @@
-import { Arguments } from '@fern-api/browser-compatible-base-generator'
+import { Arguments } from "@fern-api/browser-compatible-base-generator"
 
-import { ClassReference } from './ClassReference'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
-import { writeArguments } from './utils/writeArguments'
+import { ClassReference } from "./ClassReference"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
+import { writeArguments } from "./utils/writeArguments"
 
 export declare namespace ClassInstantiation {
     interface Args {
@@ -29,7 +29,7 @@ export class ClassInstantiation extends AstNode {
     }
 
     public write(writer: Writer): void {
-        writer.write('new ')
+        writer.write("new ")
         writer.writeNode(this.classReference)
         writeArguments({ writer, arguments_: this.arguments_, multiline: this.multiline })
     }

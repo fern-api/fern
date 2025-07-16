@@ -1,13 +1,13 @@
-import { PackageId, Zurg } from '@fern-typescript/commons'
-import { GeneratedUnion, SdkContext } from '@fern-typescript/contexts'
-import { ErrorResolver } from '@fern-typescript/resolvers'
-import { GeneratedUnionSchema, RawNoPropertiesSingleUnionType } from '@fern-typescript/union-schema-generator'
-import { ts } from 'ts-morph'
+import { PackageId, Zurg } from "@fern-typescript/commons"
+import { GeneratedUnion, SdkContext } from "@fern-typescript/contexts"
+import { ErrorResolver } from "@fern-typescript/resolvers"
+import { GeneratedUnionSchema, RawNoPropertiesSingleUnionType } from "@fern-typescript/union-schema-generator"
+import { ts } from "ts-morph"
 
-import { ErrorDiscriminationByPropertyStrategy, HttpEndpoint } from '@fern-fern/ir-sdk/api'
+import { ErrorDiscriminationByPropertyStrategy, HttpEndpoint } from "@fern-fern/ir-sdk/api"
 
-import { GeneratedEndpointErrorSchema } from './GeneratedEndpointErrorSchema'
-import { RawSinglePropertyErrorSingleUnionType } from './RawSinglePropertyErrorSingleUnionType'
+import { GeneratedEndpointErrorSchema } from "./GeneratedEndpointErrorSchema"
+import { RawSinglePropertyErrorSingleUnionType } from "./RawSinglePropertyErrorSingleUnionType"
 
 export declare namespace GeneratedEndpointErrorSchemaImpl {
     export interface Init {
@@ -19,7 +19,7 @@ export declare namespace GeneratedEndpointErrorSchemaImpl {
 }
 
 export class GeneratedEndpointErrorSchemaImpl implements GeneratedEndpointErrorSchema {
-    private static ERROR_SCHEMA_NAME = 'Error'
+    private static ERROR_SCHEMA_NAME = "Error"
 
     private packageId: PackageId
     private endpoint: HttpEndpoint

@@ -1,9 +1,9 @@
-import { assertNever } from '@fern-api/core-utils'
-import { php } from '@fern-api/php-codegen'
+import { assertNever } from "@fern-api/core-utils"
+import { php } from "@fern-api/php-codegen"
 
-import { FileUploadRequest, HttpEndpoint, HttpService, InlinedRequestBody, SdkRequest } from '@fern-fern/ir-sdk/api'
+import { FileUploadRequest, HttpEndpoint, HttpService, InlinedRequestBody, SdkRequest } from "@fern-fern/ir-sdk/api"
 
-import { SdkGeneratorContext } from '../../SdkGeneratorContext'
+import { SdkGeneratorContext } from "../../SdkGeneratorContext"
 
 export interface QueryParameterCodeBlock {
     code: php.CodeBlock
@@ -33,7 +33,7 @@ export abstract class EndpointRequest {
     }
 
     public shouldIncludeDefaultInitializer(): boolean {
-        if (this.sdkRequest.shape.type === 'wrapper') {
+        if (this.sdkRequest.shape.type === "wrapper") {
             if (
                 this.context.includePathParametersInWrappedRequest({
                     endpoint: this.endpoint,
@@ -56,13 +56,13 @@ export abstract class EndpointRequest {
         const requestBody = this.endpoint.requestBody
         if (requestBody != null) {
             switch (requestBody.type) {
-                case 'inlinedRequestBody':
+                case "inlinedRequestBody":
                     return this.inlinedRequestBodyHasRequiredProperties(requestBody)
-                case 'fileUpload':
+                case "fileUpload":
                     return this.fileUploadRequestBodyHasRequiredProperties(requestBody)
-                case 'reference':
+                case "reference":
                     return false
-                case 'bytes':
+                case "bytes":
                     return false
                 default:
                     assertNever(requestBody)
@@ -100,43 +100,43 @@ export abstract class EndpointRequest {
         const underlyingType = type.underlyingType()
         const internalType = underlyingType.internalType
         switch (internalType.type) {
-            case 'array':
-            case 'map':
+            case "array":
+            case "map":
                 return this.serializeJsonRequestForArray({
                     bodyArgument,
                     type: underlyingType,
                     isOptional
                 })
-            case 'date':
+            case "date":
                 return this.serializeJsonRequestForDateTime({
                     bodyArgument,
-                    variant: 'Date',
+                    variant: "Date",
                     isOptional
                 })
-            case 'dateTime':
+            case "dateTime":
                 return this.serializeJsonRequestForDateTime({
                     bodyArgument,
-                    variant: 'DateTime',
+                    variant: "DateTime",
                     isOptional
                 })
-            case 'union':
+            case "union":
                 return this.serializeJsonForUnion({
                     bodyArgument,
                     types: internalType.types,
                     isOptional
                 })
-            case 'reference':
-            case 'int':
-            case 'float':
-            case 'string':
-            case 'bool':
-            case 'mixed':
-            case 'object':
-            case 'optional':
-            case 'null':
-            case 'typeDict':
-            case 'enumString':
-            case 'literal':
+            case "reference":
+            case "int":
+            case "float":
+            case "string":
+            case "bool":
+            case "mixed":
+            case "object":
+            case "optional":
+            case "null":
+            case "typeDict":
+            case "enumString":
+            case "literal":
                 return bodyArgument
         }
     }
@@ -154,7 +154,7 @@ export abstract class EndpointRequest {
             bodyArgument,
             methodInvocation: php.invokeMethod({
                 on: this.context.getJsonSerializerClassReference(),
-                method: 'serializeArray',
+                method: "serializeArray",
                 arguments_: [bodyArgument, this.context.phpAttributeMapper.getTypeAttributeArgument(type)],
                 static_: true
             }),
@@ -175,7 +175,7 @@ export abstract class EndpointRequest {
         // if deduping in getUnionTypeParameters results in one type, treat it like just that type
         if (unionTypeParameters.length === 1) {
             if (types[0] == null) {
-                throw new Error('Unexpected empty types')
+                throw new Error("Unexpected empty types")
             }
             return this.serializeJsonType({ type: types[0], bodyArgument, isOptional })
         }
@@ -183,7 +183,7 @@ export abstract class EndpointRequest {
             bodyArgument,
             methodInvocation: php.invokeMethod({
                 on: this.context.getJsonSerializerClassReference(),
-                method: 'serializeUnion',
+                method: "serializeUnion",
                 arguments_: [
                     bodyArgument,
                     this.context.phpAttributeMapper.getUnionTypeClassRepresentation(unionTypeParameters)
@@ -200,7 +200,7 @@ export abstract class EndpointRequest {
         isOptional
     }: {
         bodyArgument: php.CodeBlock
-        variant: 'Date' | 'DateTime'
+        variant: "Date" | "DateTime"
         isOptional: boolean
     }): php.CodeBlock {
         return this.serializeJsonRequestMethod({
@@ -233,7 +233,7 @@ export abstract class EndpointRequest {
                 php.ternary({
                     condition: bodyArgument,
                     true_: methodInvocation,
-                    false_: php.codeblock('null')
+                    false_: php.codeblock("null")
                 })
             )
         })
@@ -252,13 +252,13 @@ export abstract class EndpointRequest {
     private fileUploadRequestBodyHasRequiredProperties(requestBody: FileUploadRequest): boolean {
         for (const property of requestBody.properties) {
             switch (property.type) {
-                case 'file': {
+                case "file": {
                     if (!property.value.isOptional) {
                         return false
                     }
                     break
                 }
-                case 'bodyProperty': {
+                case "bodyProperty": {
                     if (!this.context.isOptional(property.valueType)) {
                         return false
                     }

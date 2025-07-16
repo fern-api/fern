@@ -1,19 +1,19 @@
-import { ExportsManager, ImportsManager, Reference, TypeReferenceNode, Zurg } from '@fern-typescript/commons'
-import { CoreUtilities } from '@fern-typescript/commons/src/core-utilities/CoreUtilities'
-import { BaseContext, GeneratedTypeSchema, TypeSchemaContext } from '@fern-typescript/contexts'
-import { TypeResolver } from '@fern-typescript/resolvers'
-import { TypeGenerator } from '@fern-typescript/type-generator'
+import { ExportsManager, ImportsManager, Reference, TypeReferenceNode, Zurg } from "@fern-typescript/commons"
+import { CoreUtilities } from "@fern-typescript/commons/src/core-utilities/CoreUtilities"
+import { BaseContext, GeneratedTypeSchema, TypeSchemaContext } from "@fern-typescript/contexts"
+import { TypeResolver } from "@fern-typescript/resolvers"
+import { TypeGenerator } from "@fern-typescript/type-generator"
 import {
     TypeReferenceToRawTypeNodeConverter,
     TypeReferenceToSchemaConverter
-} from '@fern-typescript/type-reference-converters'
-import { TypeSchemaGenerator } from '@fern-typescript/type-schema-generator'
-import { SourceFile, ts } from 'ts-morph'
+} from "@fern-typescript/type-reference-converters"
+import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator"
+import { SourceFile, ts } from "ts-morph"
 
-import { DeclaredTypeName, ShapeType, TypeDeclaration, TypeReference } from '@fern-fern/ir-sdk/api'
+import { DeclaredTypeName, ShapeType, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api"
 
-import { TypeDeclarationReferencer } from '../../declaration-referencers/TypeDeclarationReferencer'
-import { getSchemaImportStrategy } from '../getSchemaImportStrategy'
+import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer"
+import { getSchemaImportStrategy } from "../getSchemaImportStrategy"
 
 export declare namespace TypeSchemaContextImpl {
     export interface Init {
@@ -135,7 +135,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
                         referencedIn: this.sourceFile,
                         // setting this to direct will create a direct import in the same file as the schema const is declared and being exported
                         importStrategy: {
-                            type: 'fromRoot',
+                            type: "fromRoot",
                             namespaceImport: this.typeDeclarationReferencer.namespaceExport
                         }
                     })
@@ -168,13 +168,13 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
             name: typeName,
             importStrategy: isCircular
                 ? {
-                      type: 'fromRoot',
+                      type: "fromRoot",
                       useDynamicImport: false,
-                      namespaceImport: 'serializers'
+                      namespaceImport: "serializers"
                   }
-                : { type: 'direct' },
+                : { type: "direct" },
             // TODO this should not be hardcoded here
-            subImport: ['Raw'],
+            subImport: ["Raw"],
             importsManager: this.importsManager,
             exportsManager: this.exportsManager,
             referencedIn: this.sourceFile
@@ -182,7 +182,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
     }
 
     private generateForInlineUnion(typeName: DeclaredTypeName): ts.TypeNode {
-        throw new Error('Internal error; inline unions are not supported in schemas.')
+        throw new Error("Internal error; inline unions are not supported in schemas.")
     }
 
     public getSchemaOfTypeReference(typeReference: TypeReference): Zurg.Schema {
@@ -203,11 +203,11 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
                     // Your logic here to determine the import strategy
                     if (isGeneratingSchema && isCircular) {
                         // Circular references should be imported from the root.
-                        return { type: 'fromRoot', useDynamicImport: false, namespaceImport: 'serializers' }
+                        return { type: "fromRoot", useDynamicImport: false, namespaceImport: "serializers" }
                     } else if (isGeneratingSchema) {
-                        return { type: 'direct' }
+                        return { type: "direct" }
                     } else {
-                        return { type: 'fromRoot', namespaceImport: 'serializers' }
+                        return { type: "fromRoot", namespaceImport: "serializers" }
                     }
                 })(),
                 importsManager: this.importsManager,
@@ -217,7 +217,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
             .getExpression()
 
         const schema = this.coreUtilities.zurg.Schema._fromExpression(referenceToSchema, {
-            isObject: typeDeclaration.shape.type === 'object'
+            isObject: typeDeclaration.shape.type === "object"
         })
 
         // when generating schemas, wrap named types with lazy() to prevent issues with circular imports
@@ -231,7 +231,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
 
     private wrapSchemaWithLazy(schema: Zurg.Schema, typeName: DeclaredTypeName): Zurg.Schema {
         const resolvedType = this.context.type.resolveTypeName(typeName)
-        return resolvedType.type === 'named' && resolvedType.shape === ShapeType.Object
+        return resolvedType.type === "named" && resolvedType.shape === ShapeType.Object
             ? this.coreUtilities.zurg.lazyObject(schema)
             : this.coreUtilities.zurg.lazy(schema)
     }

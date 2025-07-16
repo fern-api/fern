@@ -1,6 +1,6 @@
-import { requestWithRetries } from '../../../src/core/fetcher/requestWithRetries'
+import { requestWithRetries } from "../../../src/core/fetcher/requestWithRetries"
 
-describe('requestWithRetries', () => {
+describe("requestWithRetries", () => {
     let mockFetch: jest.Mock
     let originalMathRandom: typeof Math.random
     let setTimeoutSpy: jest.SpyInstance
@@ -12,7 +12,7 @@ describe('requestWithRetries', () => {
         // Mock Math.random for consistent jitter
         Math.random = jest.fn(() => 0.5)
 
-        jest.useFakeTimers({ doNotFake: ['nextTick'] })
+        jest.useFakeTimers({ doNotFake: ["nextTick"] })
     })
 
     afterEach(() => {
@@ -21,8 +21,8 @@ describe('requestWithRetries', () => {
         jest.clearAllTimers()
     })
 
-    it('should retry on retryable status codes', async () => {
-        setTimeoutSpy = jest.spyOn(global, 'setTimeout').mockImplementation((callback: (args: void) => void) => {
+    it("should retry on retryable status codes", async () => {
+        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
             process.nextTick(callback)
             return null as any
         })
@@ -32,9 +32,9 @@ describe('requestWithRetries', () => {
 
         mockFetch.mockImplementation(async () => {
             if (callCount < retryableStatuses.length) {
-                return new Response('', { status: retryableStatuses[callCount++] })
+                return new Response("", { status: retryableStatuses[callCount++] })
             }
-            return new Response('', { status: 200 })
+            return new Response("", { status: 200 })
         })
 
         const responsePromise = requestWithRetries(() => mockFetch(), retryableStatuses.length)
@@ -45,14 +45,14 @@ describe('requestWithRetries', () => {
         expect(response.status).toBe(200)
     })
 
-    it('should respect maxRetries limit', async () => {
-        setTimeoutSpy = jest.spyOn(global, 'setTimeout').mockImplementation((callback: (args: void) => void) => {
+    it("should respect maxRetries limit", async () => {
+        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
             process.nextTick(callback)
             return null as any
         })
 
         const maxRetries = 2
-        mockFetch.mockResolvedValue(new Response('', { status: 500 }))
+        mockFetch.mockResolvedValue(new Response("", { status: 500 }))
 
         const responsePromise = requestWithRetries(() => mockFetch(), maxRetries)
         await jest.runAllTimersAsync()
@@ -62,8 +62,8 @@ describe('requestWithRetries', () => {
         expect(response.status).toBe(500)
     })
 
-    it('should not retry on success status codes', async () => {
-        setTimeoutSpy = jest.spyOn(global, 'setTimeout').mockImplementation((callback: (args: void) => void) => {
+    it("should not retry on success status codes", async () => {
+        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
             process.nextTick(callback)
             return null as any
         })
@@ -73,7 +73,7 @@ describe('requestWithRetries', () => {
         for (const status of successStatuses) {
             mockFetch.mockReset()
             setTimeoutSpy.mockClear()
-            mockFetch.mockResolvedValueOnce(new Response('', { status }))
+            mockFetch.mockResolvedValueOnce(new Response("", { status }))
 
             const responsePromise = requestWithRetries(() => mockFetch(), 3)
             await jest.runAllTimersAsync()
@@ -84,13 +84,13 @@ describe('requestWithRetries', () => {
         }
     })
 
-    it('should apply correct exponential backoff with jitter', async () => {
-        setTimeoutSpy = jest.spyOn(global, 'setTimeout').mockImplementation((callback: (args: void) => void) => {
+    it("should apply correct exponential backoff with jitter", async () => {
+        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
             process.nextTick(callback)
             return null as any
         })
 
-        mockFetch.mockResolvedValue(new Response('', { status: 500 }))
+        mockFetch.mockResolvedValue(new Response("", { status: 500 }))
         const maxRetries = 3
         const expectedDelays = [1000, 2000, 4000]
 
@@ -108,17 +108,17 @@ describe('requestWithRetries', () => {
         expect(mockFetch).toHaveBeenCalledTimes(maxRetries + 1)
     })
 
-    it('should handle concurrent retries independently', async () => {
-        setTimeoutSpy = jest.spyOn(global, 'setTimeout').mockImplementation((callback: (args: void) => void) => {
+    it("should handle concurrent retries independently", async () => {
+        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
             process.nextTick(callback)
             return null as any
         })
 
         mockFetch
-            .mockResolvedValueOnce(new Response('', { status: 500 }))
-            .mockResolvedValueOnce(new Response('', { status: 500 }))
-            .mockResolvedValueOnce(new Response('', { status: 200 }))
-            .mockResolvedValueOnce(new Response('', { status: 200 }))
+            .mockResolvedValueOnce(new Response("", { status: 500 }))
+            .mockResolvedValueOnce(new Response("", { status: 500 }))
+            .mockResolvedValueOnce(new Response("", { status: 200 }))
+            .mockResolvedValueOnce(new Response("", { status: 200 }))
 
         const promise1 = requestWithRetries(() => mockFetch(), 1)
         const promise2 = requestWithRetries(() => mockFetch(), 1)

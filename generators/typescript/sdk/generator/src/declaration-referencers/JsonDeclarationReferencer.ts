@@ -4,10 +4,10 @@ import {
     ImportsManager,
     Reference,
     getReferenceToExportFromRoot
-} from '@fern-typescript/commons'
-import { SourceFile } from 'ts-morph'
+} from "@fern-typescript/commons"
+import { SourceFile } from "ts-morph"
 
-import { AbstractDeclarationReferencer } from './AbstractDeclarationReferencer'
+import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer"
 
 export declare namespace JsonDeclarationReferencer {
     export interface Init extends AbstractDeclarationReferencer.Init {}
@@ -24,14 +24,14 @@ export class JsonDeclarationReferencer extends AbstractDeclarationReferencer {
             file: {
                 nameOnDisk: this.getFilename(),
                 exportDeclaration: {
-                    namedExports: ['toJson', 'fromJson']
+                    namedExports: ["toJson", "fromJson"]
                 }
             }
         }
     }
 
     public getFilename(): string {
-        return 'json.ts'
+        return "json.ts"
     }
 
     public getReferenceToFromJson({
@@ -47,7 +47,7 @@ export class JsonDeclarationReferencer extends AbstractDeclarationReferencer {
             importsManager,
             exportsManager,
             sourceFile,
-            exportedName: 'fromJson'
+            exportedName: "fromJson"
         })
     }
 
@@ -64,7 +64,7 @@ export class JsonDeclarationReferencer extends AbstractDeclarationReferencer {
             importsManager,
             exportsManager,
             sourceFile,
-            exportedName: 'toJson'
+            exportedName: "toJson"
         })
     }
 
@@ -81,8 +81,8 @@ export class JsonDeclarationReferencer extends AbstractDeclarationReferencer {
     }): Reference {
         return getReferenceToExportFromRoot({
             exportedFromPath: {
-                directories: [{ nameOnDisk: 'core' }],
-                file: { nameOnDisk: 'json', exportDeclaration: { namedExports: ['toJson', 'fromJson'] } }
+                directories: [{ nameOnDisk: "core" }],
+                file: { nameOnDisk: "json", exportDeclaration: { namedExports: ["toJson", "fromJson"] } }
             },
             exportedName,
             importsManager,

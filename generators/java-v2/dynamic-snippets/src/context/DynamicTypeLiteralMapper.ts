@@ -1,9 +1,9 @@
-import { DiscriminatedUnionTypeInstance, Severity, TypeInstance } from '@fern-api/browser-compatible-base-generator'
-import { assertNever } from '@fern-api/core-utils'
-import { FernIr } from '@fern-api/dynamic-ir-sdk'
-import { java } from '@fern-api/java-ast'
+import { DiscriminatedUnionTypeInstance, Severity, TypeInstance } from "@fern-api/browser-compatible-base-generator"
+import { assertNever } from "@fern-api/core-utils"
+import { FernIr } from "@fern-api/dynamic-ir-sdk"
+import { java } from "@fern-api/java-ast"
 
-import { DynamicSnippetsGeneratorContext } from './DynamicSnippetsGeneratorContext'
+import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext"
 
 export declare namespace DynamicTypeLiteralMapper {
     interface Args {
@@ -14,7 +14,7 @@ export declare namespace DynamicTypeLiteralMapper {
 
     // Identifies what the type is being converted as, which sometimes influences how
     // the type is instantiated.
-    type ConvertedAs = 'mapKey' | 'mapValue'
+    type ConvertedAs = "mapKey" | "mapValue"
 }
 
 export class DynamicTypeLiteralMapper {
@@ -32,7 +32,7 @@ export class DynamicTypeLiteralMapper {
             }
             this.context.errors.add({
                 severity: Severity.Critical,
-                message: 'Expected non-null value, but got null'
+                message: "Expected non-null value, but got null"
             })
             return java.TypeLiteral.nop()
         }
@@ -40,21 +40,21 @@ export class DynamicTypeLiteralMapper {
             return java.TypeLiteral.nop()
         }
         switch (args.typeReference.type) {
-            case 'list':
+            case "list":
                 return this.convertList({ list: args.typeReference.value, value: args.value })
-            case 'literal':
+            case "literal":
                 return this.convertLiteral({ literal: args.typeReference.value, value: args.value })
-            case 'map':
+            case "map":
                 return this.convertMap({ map: args.typeReference, value: args.value })
-            case 'named': {
+            case "named": {
                 const named = this.context.resolveNamedType({ typeId: args.typeReference.value })
                 if (named == null) {
                     return java.TypeLiteral.nop()
                 }
                 return this.convertNamed({ named, value: args.value, as: args.as })
             }
-            case 'nullable':
-            case 'optional':
+            case "nullable":
+            case "optional":
                 return java.TypeLiteral.optional({
                     value: this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as }),
 
@@ -62,13 +62,13 @@ export class DynamicTypeLiteralMapper {
                     //
                     // This is difficult to use in practice - we should update this to unbox the map values and remove this
                     // flag.
-                    useOf: args.as === 'mapValue'
+                    useOf: args.as === "mapValue"
                 })
-            case 'primitive':
+            case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value, value: args.value, as: args.as })
-            case 'set':
+            case "set":
                 return this.convertSet({ set: args.typeReference.value, value: args.value })
-            case 'unknown':
+            case "unknown":
                 return this.convertUnknown({ value: args.value })
             default:
                 assertNever(args.typeReference)
@@ -104,14 +104,14 @@ export class DynamicTypeLiteralMapper {
         value: unknown
     }): java.TypeLiteral {
         switch (literal.type) {
-            case 'boolean': {
+            case "boolean": {
                 const bool = this.context.getValueAsBoolean({ value })
                 if (bool == null) {
                     return java.TypeLiteral.nop()
                 }
                 return java.TypeLiteral.boolean(bool)
             }
-            case 'string': {
+            case "string": {
                 const str = this.context.getValueAsString({ value })
                 if (str == null) {
                     return java.TypeLiteral.nop()
@@ -145,10 +145,10 @@ export class DynamicTypeLiteralMapper {
     }
 
     private convertMap({ map, value }: { map: FernIr.dynamic.MapType; value: unknown }): java.TypeLiteral {
-        if (typeof value !== 'object' || value == null) {
+        if (typeof value !== "object" || value == null) {
             this.context.errors.add({
                 severity: Severity.Critical,
-                message: `Expected object but got: ${value == null ? 'null' : typeof value}`
+                message: `Expected object but got: ${value == null ? "null" : typeof value}`
             })
             return java.TypeLiteral.nop()
         }
@@ -159,8 +159,8 @@ export class DynamicTypeLiteralMapper {
                 this.context.errors.scope(key)
                 try {
                     return {
-                        key: this.convert({ typeReference: map.key, value: key, as: 'mapKey' }),
-                        value: this.convert({ typeReference: map.value, value, as: 'mapValue' })
+                        key: this.convert({ typeReference: map.key, value: key, as: "mapKey" }),
+                        value: this.convert({ typeReference: map.value, value, as: "mapValue" })
                     }
                 } finally {
                     this.context.errors.unscope()
@@ -179,18 +179,18 @@ export class DynamicTypeLiteralMapper {
         as?: DynamicTypeLiteralMapper.ConvertedAs
     }): java.TypeLiteral {
         switch (named.type) {
-            case 'alias':
+            case "alias":
                 return this.convert({ typeReference: named.typeReference, value, as })
-            case 'discriminatedUnion':
+            case "discriminatedUnion":
                 return this.convertDiscriminatedUnion({
                     discriminatedUnion: named,
                     value
                 })
-            case 'enum':
+            case "enum":
                 return this.convertEnum({ enum_: named, value })
-            case 'object':
+            case "object":
                 return this.convertObject({ object_: named, value, as })
-            case 'undiscriminatedUnion':
+            case "undiscriminatedUnion":
                 return this.convertUndiscriminatedUnion({ undiscriminatedUnion: named, value })
             default:
                 assertNever(named)
@@ -216,7 +216,7 @@ export class DynamicTypeLiteralMapper {
         }
         const unionVariant = discriminatedUnionTypeInstance.singleDiscriminatedUnionType
         switch (unionVariant.type) {
-            case 'samePropertiesAsObject': {
+            case "samePropertiesAsObject": {
                 const named = this.context.resolveNamedType({
                     typeId: unionVariant.typeId
                 })
@@ -231,7 +231,7 @@ export class DynamicTypeLiteralMapper {
                     })
                 )
             }
-            case 'singleProperty': {
+            case "singleProperty": {
                 const record = this.context.getRecord(discriminatedUnionTypeInstance.value)
                 if (record == null) {
                     return java.TypeLiteral.nop()
@@ -254,7 +254,7 @@ export class DynamicTypeLiteralMapper {
                     this.context.errors.unscope()
                 }
             }
-            case 'noProperties':
+            case "noProperties":
                 return java.TypeLiteral.reference(
                     java.invokeMethod({
                         on: classReference,
@@ -312,7 +312,7 @@ export class DynamicTypeLiteralMapper {
     }
 
     private getEnumValueName({ enum_, value }: { enum_: FernIr.dynamic.EnumType; value: unknown }): string | undefined {
-        if (typeof value !== 'string') {
+        if (typeof value !== "string") {
             this.context.errors.add({
                 severity: Severity.Critical,
                 message: `Expected enum value string, got: ${typeof value}`
@@ -352,7 +352,7 @@ export class DynamicTypeLiteralMapper {
                     on: this.context.getJavaClassReferenceFromDeclaration({
                         declaration: undiscriminatedUnion.declaration
                     }),
-                    method: 'of',
+                    method: "of",
                     arguments_: [result.typeInstantiation]
                 })
             )
@@ -400,29 +400,29 @@ export class DynamicTypeLiteralMapper {
         typeReference: FernIr.dynamic.TypeReference
     }): string | undefined {
         switch (typeReference.type) {
-            case 'list':
+            case "list":
                 return this.getUndiscriminatedUnionFieldNameForList({ list: typeReference })
-            case 'literal':
+            case "literal":
                 return this.getUndiscriminatedUnionFieldNameForLiteral({ literal: typeReference.value })
-            case 'map':
+            case "map":
                 return this.getUndiscriminatedUnionFieldNameForMap({ map: typeReference })
-            case 'named': {
+            case "named": {
                 const named = this.context.resolveNamedType({ typeId: typeReference.value })
                 if (named == null) {
                     return undefined
                 }
                 return this.context.getClassName(named.declaration.name)
             }
-            case 'optional':
+            case "optional":
                 return this.getUndiscriminatedUnionFieldNameForOptional({ typeReference })
-            case 'nullable':
+            case "nullable":
                 return this.getUndiscriminatedUnionFieldNameForNullable({ typeReference })
-            case 'primitive':
+            case "primitive":
                 return this.getUndiscriminatedUnionFieldNameForPrimitive({ primitive: typeReference.value })
-            case 'set':
+            case "set":
                 return this.getUndiscriminatedUnionFieldNameForSet({ set: typeReference })
-            case 'unknown':
-                return 'Unknown'
+            case "unknown":
+                return "Unknown"
             default:
                 assertNever(typeReference)
         }
@@ -499,30 +499,30 @@ export class DynamicTypeLiteralMapper {
 
     private getUndiscriminatedUnionFieldNameForPrimitive({ primitive }: { primitive: FernIr.PrimitiveTypeV1 }): string {
         switch (primitive) {
-            case 'INTEGER':
-            case 'UINT':
-                return 'Integer'
-            case 'LONG':
-            case 'UINT_64':
-                return 'Long'
-            case 'FLOAT':
-                return 'Float'
-            case 'DOUBLE':
-                return 'Double'
-            case 'BOOLEAN':
-                return 'Boolean'
-            case 'BIG_INTEGER':
-                return 'BigInteger'
-            case 'STRING':
-                return 'String'
-            case 'UUID':
-                return 'Uuid'
-            case 'DATE':
-                return 'Date'
-            case 'DATE_TIME':
-                return 'DateTime'
-            case 'BASE_64':
-                return 'Base64'
+            case "INTEGER":
+            case "UINT":
+                return "Integer"
+            case "LONG":
+            case "UINT_64":
+                return "Long"
+            case "FLOAT":
+                return "Float"
+            case "DOUBLE":
+                return "Double"
+            case "BOOLEAN":
+                return "Boolean"
+            case "BIG_INTEGER":
+                return "BigInteger"
+            case "STRING":
+                return "String"
+            case "UUID":
+                return "Uuid"
+            case "DATE":
+                return "Date"
+            case "DATE_TIME":
+                return "DateTime"
+            case "BASE_64":
+                return "Base64"
             default:
                 assertNever(primitive)
         }
@@ -542,79 +542,79 @@ export class DynamicTypeLiteralMapper {
         as?: DynamicTypeLiteralMapper.ConvertedAs
     }): java.TypeLiteral {
         switch (primitive) {
-            case 'INTEGER':
-            case 'UINT': {
+            case "INTEGER":
+            case "UINT": {
                 const num = this.getValueAsNumber({ value, as })
                 if (num == null) {
                     return java.TypeLiteral.nop()
                 }
                 return java.TypeLiteral.integer(num)
             }
-            case 'LONG':
-            case 'UINT_64': {
+            case "LONG":
+            case "UINT_64": {
                 const num = this.getValueAsNumber({ value, as })
                 if (num == null) {
                     return java.TypeLiteral.nop()
                 }
                 return java.TypeLiteral.long(num)
             }
-            case 'FLOAT': {
+            case "FLOAT": {
                 const num = this.getValueAsNumber({ value, as })
                 if (num == null) {
                     return java.TypeLiteral.nop()
                 }
                 return java.TypeLiteral.float(num)
             }
-            case 'DOUBLE': {
+            case "DOUBLE": {
                 const num = this.getValueAsNumber({ value, as })
                 if (num == null) {
                     return java.TypeLiteral.nop()
                 }
                 return java.TypeLiteral.double(num)
             }
-            case 'BOOLEAN': {
+            case "BOOLEAN": {
                 const bool = this.getValueAsBoolean({ value, as })
                 if (bool == null) {
                     return java.TypeLiteral.nop()
                 }
                 return java.TypeLiteral.boolean(bool)
             }
-            case 'STRING': {
+            case "STRING": {
                 const str = this.context.getValueAsString({ value })
                 if (str == null) {
                     return java.TypeLiteral.nop()
                 }
                 return java.TypeLiteral.string(str)
             }
-            case 'DATE': {
+            case "DATE": {
                 const date = this.context.getValueAsString({ value })
                 if (date == null) {
                     return java.TypeLiteral.nop()
                 }
                 return java.TypeLiteral.string(date)
             }
-            case 'DATE_TIME': {
+            case "DATE_TIME": {
                 const dateTime = this.context.getValueAsString({ value })
                 if (dateTime == null) {
                     return java.TypeLiteral.nop()
                 }
                 return java.TypeLiteral.dateTime(dateTime)
             }
-            case 'UUID': {
+            case "UUID": {
                 const uuid = this.context.getValueAsString({ value })
                 if (uuid == null) {
                     return java.TypeLiteral.nop()
                 }
                 return java.TypeLiteral.uuid(uuid)
             }
-            case 'BASE_64': {
+            case "BASE_64": {
                 const base64 = this.context.getValueAsString({ value })
                 if (base64 == null) {
                     return java.TypeLiteral.nop()
                 }
                 return java.TypeLiteral.bytes(base64)
             }
-            case 'BIG_INTEGER': {
+            case "BIG_INTEGER": {
                 const bigInt = this.context.getValueAsString({ value })
                 if (bigInt == null) {
                     return java.TypeLiteral.nop()
@@ -633,7 +633,7 @@ export class DynamicTypeLiteralMapper {
         value: unknown
         as?: DynamicTypeLiteralMapper.ConvertedAs
     }): number | undefined {
-        const num = as === 'mapKey' ? (typeof value === 'string' ? Number(value) : value) : value
+        const num = as === "mapKey" ? (typeof value === "string" ? Number(value) : value) : value
         return this.context.getValueAsNumber({ value: num })
     }
 
@@ -645,7 +645,7 @@ export class DynamicTypeLiteralMapper {
         as?: DynamicTypeLiteralMapper.ConvertedAs
     }): boolean | undefined {
         const bool =
-            as === 'mapKey' ? (typeof value === 'string' ? value === 'true' : value === 'false' ? false : value) : value
+            as === "mapKey" ? (typeof value === "string" ? value === "true" : value === "false" ? false : value) : value
         return this.context.getValueAsBoolean({ value: bool })
     }
 }

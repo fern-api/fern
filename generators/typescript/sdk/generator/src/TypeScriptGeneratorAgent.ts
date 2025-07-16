@@ -1,14 +1,14 @@
-import { ExportedFilePath } from '@fern-typescript/commons'
-import { SdkContext } from '@fern-typescript/contexts'
+import { ExportedFilePath } from "@fern-typescript/commons"
+import { SdkContext } from "@fern-typescript/contexts"
 
-import { AbstractGeneratorAgent } from '@fern-api/base-generator'
-import { Logger } from '@fern-api/logger'
+import { AbstractGeneratorAgent } from "@fern-api/base-generator"
+import { Logger } from "@fern-api/logger"
 
-import { FernGeneratorCli } from '@fern-fern/generator-cli-sdk'
-import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
-import { IntermediateRepresentation, PublishingConfig } from '@fern-fern/ir-sdk/api'
+import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk"
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
+import { IntermediateRepresentation, PublishingConfig } from "@fern-fern/ir-sdk/api"
 
-import { ReadmeConfigBuilder } from './readme/ReadmeConfigBuilder'
+import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder"
 
 export class TypeScriptGeneratorAgent extends AbstractGeneratorAgent<SdkContext> {
     private readmeConfigBuilder: ReadmeConfigBuilder
@@ -48,7 +48,7 @@ export class TypeScriptGeneratorAgent extends AbstractGeneratorAgent<SdkContext>
             file: {
                 nameOnDisk: this.README_FILENAME
             },
-            rootDir: ''
+            rootDir: ""
         }
     }
 
@@ -58,17 +58,17 @@ export class TypeScriptGeneratorAgent extends AbstractGeneratorAgent<SdkContext>
             file: {
                 nameOnDisk: this.REFERENCE_FILENAME
             },
-            rootDir: ''
+            rootDir: ""
         }
     }
 
     public getGitHubConfig(args: AbstractGeneratorAgent.GitHubConfigArgs<SdkContext>): FernGeneratorCli.GitHubConfig {
         // TODO: get from env
         return {
-            sourceDirectory: 'NONE',
-            uri: 'NONE',
-            token: 'token',
-            branch: 'NONE'
+            sourceDirectory: "NONE",
+            uri: "NONE",
+            token: "token",
+            branch: "NONE"
         }
     }
 }

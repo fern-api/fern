@@ -1,16 +1,16 @@
-import { writeFile } from 'fs/promises'
-import yaml from 'js-yaml'
+import { writeFile } from "fs/promises"
+import yaml from "js-yaml"
 
-import { generatorsYml, loadGeneratorsConfiguration } from '@fern-api/configuration-loader'
-import { Values, assertNever } from '@fern-api/core-utils'
-import { Project } from '@fern-api/project-loader'
+import { generatorsYml, loadGeneratorsConfiguration } from "@fern-api/configuration-loader"
+import { Values, assertNever } from "@fern-api/core-utils"
+import { Project } from "@fern-api/project-loader"
 
-import { CliContext } from '../../cli-context/CliContext'
+import { CliContext } from "../../cli-context/CliContext"
 
 export const GenerationModeFilter = {
-    GitHub: 'github',
-    Local: 'local-file-system',
-    PackageRegistry: 'publish'
+    GitHub: "github",
+    Local: "local-file-system",
+    PackageRegistry: "publish"
 } as const
 
 export type GenerationModeFilter = Values<typeof GenerationModeFilter>
@@ -20,7 +20,7 @@ export async function getGeneratorList({
     generatorFilter,
     groupFilter,
     apiFilter,
-    apiKeyFallback = 'FERN_DEFAULT',
+    apiKeyFallback = "FERN_DEFAULT",
     project: { apiWorkspaces },
     outputLocation,
     excludedModes,
@@ -102,15 +102,15 @@ function isGeneratorInModeSet(generator: generatorsYml.GeneratorInvocation, mode
 
     const outputModeType = generator.outputMode.type
     switch (outputModeType) {
-        case 'downloadFiles':
+        case "downloadFiles":
             convertedMode = GenerationModeFilter.Local
             break
-        case 'github':
-        case 'githubV2':
+        case "github":
+        case "githubV2":
             convertedMode = GenerationModeFilter.GitHub
             break
-        case 'publish':
-        case 'publishV2':
+        case "publish":
+        case "publishV2":
             convertedMode = GenerationModeFilter.PackageRegistry
             break
         default:

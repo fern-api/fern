@@ -1,4 +1,4 @@
-export type LogLevel = 'debug' | 'info' | 'warn' | 'error' | 'trace'
+export type LogLevel = "debug" | "info" | "warn" | "error" | "trace"
 
 export class NopLogger {
     public disable(): void {

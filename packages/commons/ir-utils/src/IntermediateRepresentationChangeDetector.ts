@@ -1,4 +1,4 @@
-import { assertNever } from '@fern-api/core-utils'
+import { assertNever } from "@fern-api/core-utils"
 import {
     ContainerType,
     DeclaredErrorName,
@@ -29,11 +29,11 @@ import {
     Type,
     TypeDeclaration,
     TypeReference
-} from '@fern-api/ir-sdk'
+} from "@fern-api/ir-sdk"
 
 export namespace IntermediateRepresentationChangeDetector {
     export type Result = {
-        bump: 'major' | 'minor'
+        bump: "major" | "minor"
         isBreaking: boolean
         errors: Error[]
     }
@@ -43,7 +43,7 @@ export namespace IntermediateRepresentationChangeDetector {
     }
 
     export type FileUploadRequest = {
-        [name: string]: 'file' | 'fileArray' | TypeReference
+        [name: string]: "file" | "fileArray" | TypeReference
     }
 
     export interface Error {
@@ -93,7 +93,7 @@ export class IntermediateRepresentationChangeDetector {
     }): Promise<IntermediateRepresentationChangeDetector.Result> {
         const result = this.checkBreaking({ from, to })
         return {
-            bump: result.isBreaking ? 'major' : 'minor',
+            bump: result.isBreaking ? "major" : "minor",
             isBreaking: result.isBreaking,
             errors: result.errors
         }
@@ -120,7 +120,7 @@ export class IntermediateRepresentationChangeDetector {
         })
         const isBreaking = this.errors.hasErrors()
         return {
-            bump: isBreaking ? 'major' : 'minor',
+            bump: isBreaking ? "major" : "minor",
             isBreaking,
             errors: this.errors.getErrors()
         }
@@ -271,7 +271,7 @@ export class IntermediateRepresentationChangeDetector {
 
         if ((from.pagination != null && to.pagination == null) || (from.pagination == null && to.pagination != null)) {
             this.errors.add(
-                `Pagination was ${from.pagination != null ? 'added' : 'removed'} from endpoint "${from.id}".`
+                `Pagination was ${from.pagination != null ? "added" : "removed"} from endpoint "${from.id}".`
             )
         }
     }
@@ -402,29 +402,29 @@ export class IntermediateRepresentationChangeDetector {
         to: HttpRequestBody
     }): void {
         switch (from.type) {
-            case 'inlinedRequestBody':
-                if (to.type === 'inlinedRequestBody') {
+            case "inlinedRequestBody":
+                if (to.type === "inlinedRequestBody") {
                     if (this.areInlinedRequestBodiesCompatible({ from, to })) {
                         return
                     }
                 }
                 break
-            case 'reference':
-                if (to.type === 'reference') {
+            case "reference":
+                if (to.type === "reference") {
                     if (this.areReferenceRequestBodiesCompatible({ from, to })) {
                         return
                     }
                 }
                 break
-            case 'fileUpload':
-                if (to.type === 'fileUpload') {
+            case "fileUpload":
+                if (to.type === "fileUpload") {
                     if (this.areFileUploadRequestBodiesCompatible({ from, to })) {
                         return
                     }
                 }
                 break
-            case 'bytes':
-                if (to.type === 'bytes') {
+            case "bytes":
+                if (to.type === "bytes") {
                     return
                 }
                 break
@@ -484,19 +484,19 @@ export class IntermediateRepresentationChangeDetector {
                 this.errors.add(`File upload property "${propName}" was removed.`)
                 return false
             }
-            if (fromProp === 'file') {
-                if (toProp !== 'file') {
+            if (fromProp === "file") {
+                if (toProp !== "file") {
                     this.errors.add(`File upload property "${propName}" type changed.`)
                     return false
                 }
             }
-            if (fromProp === 'fileArray') {
-                if (toProp !== 'fileArray') {
+            if (fromProp === "fileArray") {
+                if (toProp !== "fileArray") {
                     this.errors.add(`File upload property "${propName}" type changed.`)
                     return false
                 }
             }
-            if (fromProp !== 'file' && fromProp !== 'fileArray' && toProp !== 'file' && toProp !== 'fileArray') {
+            if (fromProp !== "file" && fromProp !== "fileArray" && toProp !== "file" && toProp !== "fileArray") {
                 if (!this.areTypeReferencesCompatible({ from: fromProp, to: toProp })) {
                     this.errors.add(`File upload property "${propName}" type changed.`)
                     return false
@@ -522,39 +522,39 @@ export class IntermediateRepresentationChangeDetector {
             return
         }
         if (from.body == null || to.body == null) {
-            this.errors.add(`Response body was ${from.body == null ? 'added' : 'removed'}.`)
+            this.errors.add(`Response body was ${from.body == null ? "added" : "removed"}.`)
             return
         }
         switch (from.body.type) {
-            case 'json':
-                if (to.body.type === 'json') {
+            case "json":
+                if (to.body.type === "json") {
                     this.areJsonResponsesCompatible({ from: from.body.value, to: to.body.value })
                     return
                 }
                 break
-            case 'fileDownload':
-                if (to.body.type === 'fileDownload') {
+            case "fileDownload":
+                if (to.body.type === "fileDownload") {
                     return
                 }
                 break
-            case 'text':
-                if (to.body.type === 'text') {
+            case "text":
+                if (to.body.type === "text") {
                     return
                 }
                 break
-            case 'bytes':
-                if (to.body.type === 'bytes') {
+            case "bytes":
+                if (to.body.type === "bytes") {
                     return
                 }
                 break
-            case 'streaming':
-                if (to.body.type === 'streaming') {
+            case "streaming":
+                if (to.body.type === "streaming") {
                     this.areStreamingResponsesCompatible({ from: from.body.value, to: to.body.value })
                     return
                 }
                 break
-            case 'streamParameter':
-                if (to.body.type === 'streamParameter') {
+            case "streamParameter":
+                if (to.body.type === "streamParameter") {
                     this.areStreamingResponsesCompatible({
                         from: from.body.streamResponse,
                         to: to.body.streamResponse
@@ -576,18 +576,18 @@ export class IntermediateRepresentationChangeDetector {
 
     private areStreamingResponsesCompatible({ from, to }: { from: StreamingResponse; to: StreamingResponse }): boolean {
         switch (from.type) {
-            case 'json':
-                if (to.type === 'json') {
+            case "json":
+                if (to.type === "json") {
                     return this.areTypeReferencesCompatible({ from: from.payload, to: to.payload })
                 }
                 break
-            case 'sse':
-                if (to.type === 'sse') {
+            case "sse":
+                if (to.type === "sse") {
                     return this.areTypeReferencesCompatible({ from: from.payload, to: to.payload })
                 }
                 break
-            case 'text':
-                if (to.type === 'text') {
+            case "text":
+                if (to.type === "text") {
                     return true
                 }
                 break
@@ -613,40 +613,40 @@ export class IntermediateRepresentationChangeDetector {
 
     private areTypeShapesCompatible({ from, to }: { from: Type; to: Type }): boolean {
         switch (from.type) {
-            case 'alias':
-                if (to.type === 'alias') {
+            case "alias":
+                if (to.type === "alias") {
                     return this.areAliasTypesCompatible({
                         from,
                         to
                     })
                 }
                 break
-            case 'enum':
-                if (to.type === 'enum') {
+            case "enum":
+                if (to.type === "enum") {
                     return this.areEnumTypesCompatible({
                         from,
                         to
                     })
                 }
                 break
-            case 'object':
-                if (to.type === 'object') {
+            case "object":
+                if (to.type === "object") {
                     return this.areObjectTypesCompatible({
                         from,
                         to
                     })
                 }
                 break
-            case 'union':
-                if (to.type === 'union') {
+            case "union":
+                if (to.type === "union") {
                     return this.areUnionTypesCompatible({
                         from,
                         to
                     })
                 }
                 break
-            case 'undiscriminatedUnion':
-                if (to.type === 'undiscriminatedUnion') {
+            case "undiscriminatedUnion":
+                if (to.type === "undiscriminatedUnion") {
                     return this.areUndiscriminatedUnionTypesCompatible({
                         from,
                         to
@@ -799,16 +799,16 @@ export class IntermediateRepresentationChangeDetector {
         to: SingleUnionTypeProperties
     }): boolean {
         switch (from.propertiesType) {
-            case 'samePropertiesAsObject':
-                if (to.propertiesType === 'samePropertiesAsObject') {
+            case "samePropertiesAsObject":
+                if (to.propertiesType === "samePropertiesAsObject") {
                     return this.areDeclaredTypeNamesCompatible({
                         from,
                         to
                     })
                 }
                 break
-            case 'singleProperty':
-                if (to.propertiesType === 'singleProperty') {
+            case "singleProperty":
+                if (to.propertiesType === "singleProperty") {
                     return (
                         this.areNameAndWireValuesCompatible({
                             from: from.name,
@@ -821,8 +821,8 @@ export class IntermediateRepresentationChangeDetector {
                     )
                 }
                 break
-            case 'noProperties':
-                if (to.propertiesType === 'noProperties') {
+            case "noProperties":
+                if (to.propertiesType === "noProperties") {
                     return true
                 }
                 break
@@ -871,7 +871,7 @@ export class IntermediateRepresentationChangeDetector {
             if (fromProperty) {
                 continue
             }
-            if (toProperty.type !== 'container' || toProperty.container.type !== 'optional') {
+            if (toProperty.type !== "container" || toProperty.container.type !== "optional") {
                 this.errors.add(`Required property "${propertyName}" was added.`)
             }
         }
@@ -889,10 +889,10 @@ export class IntermediateRepresentationChangeDetector {
             if (fromProperty) {
                 continue
             }
-            if (toProperty === 'file' || toProperty === 'fileArray') {
+            if (toProperty === "file" || toProperty === "fileArray") {
                 continue
             }
-            if (toProperty.type !== 'container' || toProperty.container.type !== 'optional') {
+            if (toProperty.type !== "container" || toProperty.container.type !== "optional") {
                 this.errors.add(`Required property "${propertyName}" was added.`)
             }
         }
@@ -910,7 +910,7 @@ export class IntermediateRepresentationChangeDetector {
             if (fromProperty) {
                 continue
             }
-            if (toProperty.type !== 'container' || toProperty.container.type !== 'optional') {
+            if (toProperty.type !== "container" || toProperty.container.type !== "optional") {
                 this.errors.add(`Required property "${propertyName}" was added.`)
             }
         }
@@ -923,32 +923,32 @@ export class IntermediateRepresentationChangeDetector {
      */
     private areTypeReferencesCompatible({ from, to }: { from: TypeReference; to: TypeReference }): boolean {
         switch (from.type) {
-            case 'primitive':
-                if (to.type === 'primitive') {
+            case "primitive":
+                if (to.type === "primitive") {
                     return this.arePrimitiveTypesCompatible({
                         from,
                         to
                     })
                 }
                 break
-            case 'container':
-                if (to.type === 'container') {
+            case "container":
+                if (to.type === "container") {
                     return this.areContainerTypesCompatible({
                         from: from.container,
                         to: to.container
                     })
                 }
                 break
-            case 'named':
-                if (to.type === 'named') {
+            case "named":
+                if (to.type === "named") {
                     return this.areNamedTypesCompatible({
                         from,
                         to
                     })
                 }
                 break
-            case 'unknown':
-                if (to.type === 'unknown') {
+            case "unknown":
+                if (to.type === "unknown") {
                     return true
                 }
                 break
@@ -971,24 +971,24 @@ export class IntermediateRepresentationChangeDetector {
 
     private areContainerTypesCompatible({ from, to }: { from: ContainerType; to: ContainerType }): boolean {
         switch (from.type) {
-            case 'list':
-                if (to.type === 'list') {
+            case "list":
+                if (to.type === "list") {
                     return this.areTypeReferencesCompatible({
                         from: from.list,
                         to: to.list
                     })
                 }
                 break
-            case 'set':
-                if (to.type === 'set') {
+            case "set":
+                if (to.type === "set") {
                     return this.areTypeReferencesCompatible({
                         from: from.set,
                         to: to.set
                     })
                 }
                 break
-            case 'map':
-                if (to.type === 'map') {
+            case "map":
+                if (to.type === "map") {
                     return (
                         this.areTypeReferencesCompatible({
                             from: from.keyType,
@@ -1001,24 +1001,24 @@ export class IntermediateRepresentationChangeDetector {
                     )
                 }
                 break
-            case 'optional':
-                if (to.type === 'optional') {
+            case "optional":
+                if (to.type === "optional") {
                     return this.areTypeReferencesCompatible({
                         from: from.optional,
                         to: to.optional
                     })
                 }
                 break
-            case 'nullable':
-                if (to.type === 'nullable') {
+            case "nullable":
+                if (to.type === "nullable") {
                     return this.areTypeReferencesCompatible({
                         from: from.nullable,
                         to: to.nullable
                     })
                 }
                 break
-            case 'literal':
-                if (to.type === 'literal') {
+            case "literal":
+                if (to.type === "literal") {
                     return this.areLiteralsCompatible({
                         from: from.literal,
                         to: to.literal
@@ -1082,13 +1082,13 @@ export class IntermediateRepresentationChangeDetector {
 
     private areLiteralsCompatible({ from, to }: { from: Literal; to: Literal }): boolean {
         switch (from.type) {
-            case 'boolean':
-                if (to.type === 'boolean') {
+            case "boolean":
+                if (to.type === "boolean") {
                     return from.boolean === to.boolean
                 }
                 break
-            case 'string':
-                if (to.type === 'string') {
+            case "string":
+                if (to.type === "string") {
                     return from.string === to.string
                 }
                 break
@@ -1134,10 +1134,10 @@ export class IntermediateRepresentationChangeDetector {
         const properties: IntermediateRepresentationChangeDetector.FileUploadRequest = {}
         for (const property of fileUploadRequestProperties) {
             switch (property.type) {
-                case 'file':
-                    properties[property.value.key.wireValue] = 'file'
+                case "file":
+                    properties[property.value.key.wireValue] = "file"
                     break
-                case 'bodyProperty':
+                case "bodyProperty":
                     properties[property.name.wireValue] = property.valueType
                     break
                 default:
@@ -1148,7 +1148,7 @@ export class IntermediateRepresentationChangeDetector {
     }
 
     private getKeyForDeclaration({ name, fernFilepath }: { name: Name; fernFilepath: FernFilepath }): string {
-        const prefix = fernFilepath.allParts.map((part) => part.camelCase.unsafeName).join('.')
+        const prefix = fernFilepath.allParts.map((part) => part.camelCase.unsafeName).join(".")
         return `${prefix}.${name.pascalCase.unsafeName}`
     }
 }

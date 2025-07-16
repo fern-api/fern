@@ -1,9 +1,9 @@
-import { OpenAPISpec, ProtobufSpec, Spec } from '@fern-api/api-workspace-commons'
-import { isNonNullish } from '@fern-api/core-utils'
-import { RelativeFilePath } from '@fern-api/fs-utils'
-import { TaskContext } from '@fern-api/task-context'
+import { OpenAPISpec, ProtobufSpec, Spec } from "@fern-api/api-workspace-commons"
+import { isNonNullish } from "@fern-api/core-utils"
+import { RelativeFilePath } from "@fern-api/fs-utils"
+import { TaskContext } from "@fern-api/task-context"
 
-import { ProtobufOpenAPIGenerator } from '../protobuf/ProtobufOpenAPIGenerator'
+import { ProtobufOpenAPIGenerator } from "../protobuf/ProtobufOpenAPIGenerator"
 
 export async function getAllOpenAPISpecs({
     context,
@@ -16,11 +16,11 @@ export async function getAllOpenAPISpecs({
 }): Promise<OpenAPISpec[]> {
     const generator = new ProtobufOpenAPIGenerator({ context })
     const openApiSpecs: OpenAPISpec[] = specs
-        .filter((spec): spec is OpenAPISpec => spec.type === 'openapi')
+        .filter((spec): spec is OpenAPISpec => spec.type === "openapi")
         .map((spec) => {
             return { ...spec, relativePathToDependency }
         })
-    const protobufSpecs: ProtobufSpec[] = specs.filter((spec): spec is ProtobufSpec => spec.type === 'protobuf')
+    const protobufSpecs: ProtobufSpec[] = specs.filter((spec): spec is ProtobufSpec => spec.type === "protobuf")
     const openApiSpecsFromProto = await Promise.all(
         protobufSpecs.map(async (protobufSpec) => {
             return convertProtobufToOpenAPI({ generator, protobufSpec, relativePathToDependency })
@@ -48,12 +48,12 @@ export async function convertProtobufToOpenAPI({
         local: protobufSpec.generateLocally
     })
     return {
-        type: 'openapi',
+        type: "openapi",
         absoluteFilepath: openAPIAbsoluteFilePath,
         absoluteFilepathToOverrides: protobufSpec.absoluteFilepathToOverrides,
         settings: protobufSpec.settings,
         source: {
-            type: 'protobuf',
+            type: "protobuf",
             relativePathToDependency,
             root: protobufSpec.absoluteFilepathToProtobufRoot,
             file: protobufSpec.absoluteFilepathToProtobufTarget

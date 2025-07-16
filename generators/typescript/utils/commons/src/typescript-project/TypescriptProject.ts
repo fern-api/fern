@@ -1,15 +1,15 @@
-import { mkdir, writeFile } from 'fs/promises'
-import Dirent from 'memfs/lib/Dirent'
-import { Volume } from 'memfs/lib/volume'
-import path from 'path'
-import tmp from 'tmp-promise'
-import { Project } from 'ts-morph'
+import { mkdir, writeFile } from "fs/promises"
+import Dirent from "memfs/lib/Dirent"
+import { Volume } from "memfs/lib/volume"
+import path from "path"
+import tmp from "tmp-promise"
+import { Project } from "ts-morph"
 
-import { AbsoluteFilePath, RelativeFilePath } from '@fern-api/fs-utils'
-import { NpmPackage } from '@fern-api/typescript-base'
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils"
+import { NpmPackage } from "@fern-api/typescript-base"
 
-import { PackageDependencies } from '../dependency-manager/DependencyManager'
-import { PersistedTypescriptProject } from './PersistedTypescriptProject'
+import { PackageDependencies } from "../dependency-manager/DependencyManager"
+import { PersistedTypescriptProject } from "./PersistedTypescriptProject"
 
 export declare namespace TypescriptProject {
     export interface Init {
@@ -31,44 +31,44 @@ export declare namespace TypescriptProject {
 }
 
 export abstract class TypescriptProject {
-    protected static readonly DEFAULT_SRC_DIRECTORY = 'src'
-    protected static readonly TEST_DIRECTORY = 'tests'
-    protected static readonly DIST_DIRECTORY = 'dist'
-    protected static readonly SCRIPTS_DIRECTORY_NAME = 'scripts'
+    protected static readonly DEFAULT_SRC_DIRECTORY = "src"
+    protected static readonly TEST_DIRECTORY = "tests"
+    protected static readonly DIST_DIRECTORY = "dist"
+    protected static readonly SCRIPTS_DIRECTORY_NAME = "scripts"
 
-    protected static readonly CJS_DIRECTORY = 'cjs'
-    protected static readonly ESM_DIRECTORY = 'esm'
-    protected static readonly TYPES_DIRECTORY = 'types'
+    protected static readonly CJS_DIRECTORY = "cjs"
+    protected static readonly ESM_DIRECTORY = "esm"
+    protected static readonly TYPES_DIRECTORY = "types"
 
-    protected static readonly BUILD_SCRIPT_FILENAME = 'build.js'
-    protected static readonly NODE_DIST_DIRECTORY = 'node'
-    protected static readonly BROWSER_DIST_DIRECTORY = 'browser'
+    protected static readonly BUILD_SCRIPT_FILENAME = "build.js"
+    protected static readonly NODE_DIST_DIRECTORY = "node"
+    protected static readonly BROWSER_DIST_DIRECTORY = "browser"
     protected static readonly BROWSER_ESM_DIST_DIRECTORY =
         `${TypescriptProject.BROWSER_DIST_DIRECTORY}/${TypescriptProject.ESM_DIRECTORY}` as const
     protected static readonly BROWSER_CJS_DIST_DIRECTORY =
         `${TypescriptProject.BROWSER_DIST_DIRECTORY}/${TypescriptProject.CJS_DIRECTORY}` as const
-    protected static readonly API_BUNDLE_FILENAME = 'index.js'
+    protected static readonly API_BUNDLE_FILENAME = "index.js"
 
-    protected static readonly PRETTIER_RC_FILENAME = '.prettierrc.yml'
-    protected static readonly TS_CONFIG_BASE_FILENAME = 'tsconfig.base.json'
-    protected static readonly TS_CONFIG_FILENAME = 'tsconfig.json'
-    protected static readonly TS_CONFIG_ESM_FILENAME = 'tsconfig.esm.json'
-    protected static readonly TS_CONFIG_CJS_FILENAME = 'tsconfig.cjs.json'
-    protected static readonly PACKAGE_JSON_FILENAME = 'package.json'
-    protected static readonly JSR_JSON_FILENAME = 'jsr.json'
-    protected static readonly GIT_IGNORE_FILENAME = '.gitignore'
-    protected static readonly NPM_IGNORE_FILENAME = '.npmignore'
-    protected static readonly FERN_IGNORE_FILENAME = '.fernignore'
-    protected static readonly REFERENCE_FILENAME = 'reference.md'
-    protected static readonly README_FILENAME = 'README.md'
-    protected static readonly LICENSE_FILENAME = 'LICENSE'
+    protected static readonly PRETTIER_RC_FILENAME = ".prettierrc.yml"
+    protected static readonly TS_CONFIG_BASE_FILENAME = "tsconfig.base.json"
+    protected static readonly TS_CONFIG_FILENAME = "tsconfig.json"
+    protected static readonly TS_CONFIG_ESM_FILENAME = "tsconfig.esm.json"
+    protected static readonly TS_CONFIG_CJS_FILENAME = "tsconfig.cjs.json"
+    protected static readonly PACKAGE_JSON_FILENAME = "package.json"
+    protected static readonly JSR_JSON_FILENAME = "jsr.json"
+    protected static readonly GIT_IGNORE_FILENAME = ".gitignore"
+    protected static readonly NPM_IGNORE_FILENAME = ".npmignore"
+    protected static readonly FERN_IGNORE_FILENAME = ".fernignore"
+    protected static readonly REFERENCE_FILENAME = "reference.md"
+    protected static readonly README_FILENAME = "README.md"
+    protected static readonly LICENSE_FILENAME = "LICENSE"
 
-    protected static readonly FORMAT_SCRIPT_NAME = 'format'
-    protected static readonly COMPILE_SCRIPT_NAME = 'compile'
-    protected static readonly BUNDLE_SCRIPT_NAME = 'bundle'
-    protected static readonly BUILD_SCRIPT_NAME = 'build'
-    protected static readonly BUILD_CJS_SCRIPT_NAME = 'build:cjs'
-    protected static readonly BUILD_ESM_SCRIPT_NAME = 'build:esm'
+    protected static readonly FORMAT_SCRIPT_NAME = "format"
+    protected static readonly COMPILE_SCRIPT_NAME = "compile"
+    protected static readonly BUNDLE_SCRIPT_NAME = "bundle"
+    protected static readonly BUILD_SCRIPT_NAME = "build"
+    protected static readonly BUILD_CJS_SCRIPT_NAME = "build:cjs"
+    protected static readonly BUILD_ESM_SCRIPT_NAME = "build:esm"
 
     private readonly exportSerde: boolean
     protected readonly npmPackage: NpmPackage | undefined
@@ -122,7 +122,7 @@ export abstract class TypescriptProject {
     public getFoldersForExports(): string[] {
         const exports = []
         if (this.exportSerde) {
-            exports.push('serialization')
+            exports.push("serialization")
         }
         return exports
     }
@@ -131,7 +131,7 @@ export abstract class TypescriptProject {
         // write to disk
         const directoryOnDiskToWriteTo = AbsoluteFilePath.of((await tmp.dir()).path)
         // biome-ignore lint/suspicious/noConsole: allow console
-        console.log('Persisted typescript project to ' + directoryOnDiskToWriteTo)
+        console.log("Persisted typescript project to " + directoryOnDiskToWriteTo)
 
         await this.writeSrcToVolume()
 
@@ -168,7 +168,7 @@ export abstract class TypescriptProject {
     private async writeVolumeToDisk(directoryOnDiskToWriteTo: AbsoluteFilePath): Promise<void> {
         await this.writeVolumeToDiskRecursive({
             directoryOnDiskToWriteTo,
-            directoryInVolume: '/'
+            directoryInVolume: "/"
         })
     }
 
@@ -192,7 +192,7 @@ export abstract class TypescriptProject {
             } else {
                 const contents = await this.volume.promises.readFile(fullPathInVolume)
                 await mkdir(path.dirname(fullPathOnDisk), { recursive: true })
-                await writeFile(fullPathOnDisk, typeof contents === 'string' ? contents : new Uint8Array(contents))
+                await writeFile(fullPathOnDisk, typeof contents === "string" ? contents : new Uint8Array(contents))
             }
         }
     }

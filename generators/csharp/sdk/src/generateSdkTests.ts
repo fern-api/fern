@@ -1,10 +1,10 @@
-import { CSharpFile } from '@fern-api/csharp-base'
+import { CSharpFile } from "@fern-api/csharp-base"
 
-import { ExampleEndpointCall, HttpEndpoint } from '@fern-fern/ir-sdk/api'
+import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api"
 
-import { SdkGeneratorContext } from './SdkGeneratorContext'
-import { BaseMockServerTestGenerator } from './test-generation/mock-server/BaseMockServerTestGenerator'
-import { MockServerTestGenerator } from './test-generation/mock-server/MockServerTestGenerator'
+import { SdkGeneratorContext } from "./SdkGeneratorContext"
+import { BaseMockServerTestGenerator } from "./test-generation/mock-server/BaseMockServerTestGenerator"
+import { MockServerTestGenerator } from "./test-generation/mock-server/MockServerTestGenerator"
 
 export function generateSdkTests({ context }: { context: SdkGeneratorContext }): CSharpFile[] {
     const files: CSharpFile[] = []
@@ -31,7 +31,7 @@ function generateMockServerTests({ context }: { context: SdkGeneratorContext }):
             // TODO: support other response body types
             const useableExamples = allExamples.filter((example): example is ExampleEndpointCall => {
                 const response = example?.response
-                return response?.type === 'ok' && response.value.type === 'body'
+                return response?.type === "ok" && response.value.type === "body"
             })
             if (useableExamples.length === 0) {
                 continue
@@ -52,13 +52,13 @@ function generateMockServerTests({ context }: { context: SdkGeneratorContext }):
 
 function shouldSkipMockServerTestForEndpoint({ endpoint }: { endpoint: HttpEndpoint }): boolean {
     const responseBodyType = endpoint.response?.body?.type
-    if (responseBodyType === 'fileDownload' || responseBodyType === 'streamParameter') {
+    if (responseBodyType === "fileDownload" || responseBodyType === "streamParameter") {
         return true
     }
-    if (endpoint.response?.body?.type === 'json' && endpoint.response.body.value.type === 'nestedPropertyAsResponse') {
+    if (endpoint.response?.body?.type === "json" && endpoint.response.body.value.type === "nestedPropertyAsResponse") {
         return true
     }
-    if (endpoint.requestBody?.type === 'bytes' || endpoint.requestBody?.type === 'fileUpload') {
+    if (endpoint.requestBody?.type === "bytes" || endpoint.requestBody?.type === "fileUpload") {
         return true
     }
     return false
@@ -78,14 +78,14 @@ function shouldSkipMockServerTestsForService({
     // don't support base properties on unions
     if (
         Object.values(context.ir.types).find(
-            (typeReference) => typeReference.shape.type === 'union' && typeReference.shape.baseProperties.length > 0
+            (typeReference) => typeReference.shape.type === "union" && typeReference.shape.baseProperties.length > 0
         )
     ) {
         return true
     }
     // snippets don't support setting environment
     if (
-        context.ir.environments?.environments.type === 'multipleBaseUrls' &&
+        context.ir.environments?.environments.type === "multipleBaseUrls" &&
         context.ir.environments.defaultEnvironment == null
     ) {
         return true

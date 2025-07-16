@@ -1,12 +1,12 @@
-import { assertNever } from '@fern-api/core-utils'
+import { assertNever } from "@fern-api/core-utils"
 
-import { CodeBlock } from './CodeBlock'
-import { FuncInvocation } from './FuncInvocation'
-import { GoTypeReference } from './GoTypeReference'
-import { MethodInvocation } from './MethodInvocation'
-import { Type } from './Type'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { CodeBlock } from "./CodeBlock"
+import { FuncInvocation } from "./FuncInvocation"
+import { GoTypeReference } from "./GoTypeReference"
+import { MethodInvocation } from "./MethodInvocation"
+import { Type } from "./Type"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 type InternalTypeInstantiation =
     | Any_
@@ -29,57 +29,57 @@ type InternalTypeInstantiation =
     | Uuid
 
 interface Any_ {
-    type: 'any'
+    type: "any"
     value: unknown
 }
 
 interface Bool {
-    type: 'bool'
+    type: "bool"
     value: boolean
 }
 
 interface Bytes {
-    type: 'bytes'
+    type: "bytes"
     value: string
 }
 
 interface Date {
-    type: 'date'
+    type: "date"
     value: string
 }
 
 interface DateTime {
-    type: 'dateTime'
+    type: "dateTime"
     value: string
 }
 
 interface Enum {
-    type: 'enum'
+    type: "enum"
     typeReference: GoTypeReference
 }
 
 interface Float64 {
-    type: 'float64'
+    type: "float64"
     value: number
 }
 
 interface Int {
-    type: 'int'
+    type: "int"
     value: number
 }
 
 interface Int64 {
-    type: 'int64'
+    type: "int64"
     value: number
 }
 
 interface Optional {
-    type: 'optional'
+    type: "optional"
     value: TypeInstantiation
 }
 
 interface Map {
-    type: 'map'
+    type: "map"
     keyType: Type
     valueType: Type
     entries: MapEntry[]
@@ -91,26 +91,26 @@ interface MapEntry {
 }
 
 interface Nil {
-    type: 'nil'
+    type: "nil"
 }
 
 interface Nop {
-    type: 'nop'
+    type: "nop"
 }
 
 interface Reference {
-    type: 'reference'
+    type: "reference"
     value: AstNode
 }
 
 interface Slice {
-    type: 'slice'
+    type: "slice"
     valueType: Type
     values: TypeInstantiation[]
 }
 
 interface Struct {
-    type: 'struct'
+    type: "struct"
     typeReference: GoTypeReference
     fields: StructField[]
     generics?: Type[]
@@ -122,17 +122,17 @@ export interface StructField {
 }
 
 interface String_ {
-    type: 'string'
+    type: "string"
     value: string
 }
 
 interface Uuid {
-    type: 'uuid'
+    type: "uuid"
     value: string
 }
 
-const POINTER_HELPER_TYPES = new Set<string>(['bool', 'date', 'dateTime', 'float64', 'int', 'int64', 'string', 'uuid'])
-const ADDRESSABLE_TYPES = new Set<string>(['any', 'bytes', 'map', 'slice'])
+const POINTER_HELPER_TYPES = new Set<string>(["bool", "date", "dateTime", "float64", "int", "int64", "string", "uuid"])
+const ADDRESSABLE_TYPES = new Set<string>(["any", "bytes", "map", "slice"])
 
 export class TypeInstantiation extends AstNode {
     private constructor(public readonly internalType: InternalTypeInstantiation) {
@@ -141,57 +141,57 @@ export class TypeInstantiation extends AstNode {
 
     public write(writer: Writer): void {
         switch (this.internalType.type) {
-            case 'any':
+            case "any":
                 this.writeAny({ writer, value: this.internalType.value })
                 break
-            case 'bool':
+            case "bool":
                 writer.write(this.internalType.value.toString())
                 break
-            case 'bytes':
+            case "bytes":
                 writer.write(`[]byte("${this.internalType.value}")`)
                 break
-            case 'date':
-            case 'dateTime':
+            case "date":
+            case "dateTime":
                 writer.writeNode(invokeMustParseDate({ writer, type: this.internalType }))
                 break
-            case 'enum':
+            case "enum":
                 writer.writeNode(this.internalType.typeReference)
                 break
-            case 'float64':
+            case "float64":
                 writer.write(this.internalType.value.toString())
                 break
-            case 'int':
-            case 'int64':
+            case "int":
+            case "int64":
                 writer.write(this.internalType.value.toString())
                 break
-            case 'map':
+            case "map":
                 this.writeMap({ writer, map: this.internalType })
                 break
-            case 'nil':
-                writer.write('nil')
+            case "nil":
+                writer.write("nil")
                 break
-            case 'nop':
+            case "nop":
                 break // no-op
-            case 'optional':
+            case "optional":
                 this.writeOptional({ writer, type: this.internalType.value })
                 break
-            case 'reference':
+            case "reference":
                 writer.writeNode(this.internalType.value)
                 break
-            case 'slice':
+            case "slice":
                 this.writeSlice({ writer, slice: this.internalType })
                 break
-            case 'string':
+            case "string":
                 writer.write(
-                    this.internalType.value.includes('"') || this.internalType.value.includes('\n')
+                    this.internalType.value.includes('"') || this.internalType.value.includes("\n")
                         ? `\`${this.internalType.value}\``
                         : `"${this.internalType.value}"`
                 )
                 break
-            case 'struct':
+            case "struct":
                 this.writeStruct({ writer, struct: this.internalType })
                 break
-            case 'uuid':
+            case "uuid":
                 writer.writeNode(invokeMustParseUUID({ value: this.internalType.value }))
                 break
             default:
@@ -202,63 +202,63 @@ export class TypeInstantiation extends AstNode {
     /* Static factory methods for creating a TypeInstantiation */
     public static any(value: unknown): TypeInstantiation {
         return new this({
-            type: 'any',
+            type: "any",
             value
         })
     }
 
     public static bool(value: boolean): TypeInstantiation {
         return new this({
-            type: 'bool',
+            type: "bool",
             value
         })
     }
 
     public static bytes(value: string): TypeInstantiation {
         return new this({
-            type: 'bytes',
+            type: "bytes",
             value
         })
     }
 
     public static date(value: string): TypeInstantiation {
         return new this({
-            type: 'date',
+            type: "date",
             value
         })
     }
 
     public static dateTime(value: string): TypeInstantiation {
         return new this({
-            type: 'dateTime',
+            type: "dateTime",
             value
         })
     }
 
     public static enum(typeReference: GoTypeReference): TypeInstantiation {
         return new this({
-            type: 'enum',
+            type: "enum",
             typeReference
         })
     }
 
     public static float64(value: number): TypeInstantiation {
         return new this({
-            type: 'float64',
+            type: "float64",
             value
         })
     }
 
     public static int(value: number): TypeInstantiation {
         return new this({
-            type: 'int',
+            type: "int",
             value
         })
     }
 
     public static int64(value: number): TypeInstantiation {
         return new this({
-            type: 'int64',
+            type: "int64",
             value
         })
     }
@@ -273,7 +273,7 @@ export class TypeInstantiation extends AstNode {
         entries: MapEntry[]
     }): TypeInstantiation {
         return new this({
-            type: 'map',
+            type: "map",
             keyType,
             valueType,
             entries
@@ -282,13 +282,13 @@ export class TypeInstantiation extends AstNode {
 
     public static nil(): TypeInstantiation {
         return new this({
-            type: 'nil'
+            type: "nil"
         })
     }
 
     public static nop(): TypeInstantiation {
         return new this({
-            type: 'nop'
+            type: "nop"
         })
     }
 
@@ -298,21 +298,21 @@ export class TypeInstantiation extends AstNode {
             return value
         }
         return new this({
-            type: 'optional',
+            type: "optional",
             value
         })
     }
 
     public static reference(value: AstNode): TypeInstantiation {
         return new this({
-            type: 'reference',
+            type: "reference",
             value
         })
     }
 
     public static slice({ valueType, values }: { valueType: Type; values: TypeInstantiation[] }): TypeInstantiation {
         return new this({
-            type: 'slice',
+            type: "slice",
             valueType,
             values
         })
@@ -320,7 +320,7 @@ export class TypeInstantiation extends AstNode {
 
     public static string(value: string): TypeInstantiation {
         return new this({
-            type: 'string',
+            type: "string",
             value
         })
     }
@@ -333,7 +333,7 @@ export class TypeInstantiation extends AstNode {
         fields: StructField[]
     }): TypeInstantiation {
         return new this({
-            type: 'struct',
+            type: "struct",
             typeReference,
             fields
         })
@@ -349,9 +349,9 @@ export class TypeInstantiation extends AstNode {
         generics?: Type[]
     }): TypeInstantiation {
         return new this({
-            type: 'optional',
+            type: "optional",
             value: new this({
-                type: 'struct',
+                type: "struct",
                 typeReference,
                 fields,
                 generics
@@ -361,32 +361,32 @@ export class TypeInstantiation extends AstNode {
 
     public static uuid(value: string): TypeInstantiation {
         return new this({
-            type: 'uuid',
+            type: "uuid",
             value
         })
     }
 
     public static isNop(typeInstantiation: TypeInstantiation): boolean {
-        if (typeInstantiation.internalType.type === 'optional') {
+        if (typeInstantiation.internalType.type === "optional") {
             return this.isNop(typeInstantiation.internalType.value)
         }
-        return typeInstantiation.internalType.type === 'nop'
+        return typeInstantiation.internalType.type === "nop"
     }
 
     private writeAny({ writer, value }: { writer: Writer; value: unknown }): void {
         switch (typeof value) {
-            case 'boolean':
+            case "boolean":
                 writer.write(value.toString())
                 return
-            case 'string':
+            case "string":
                 writer.write(value.includes('"') ? `\`${value}\`` : `"${value}"`)
                 return
-            case 'number':
+            case "number":
                 writer.write(value.toString())
                 return
-            case 'object':
+            case "object":
                 if (value == null) {
-                    writer.write('nil')
+                    writer.write("nil")
                     return
                 }
                 if (Array.isArray(value)) {
@@ -408,61 +408,61 @@ export class TypeInstantiation extends AstNode {
         // biome-ignore lint/suspicious/noExplicitAny: allow
         value: any[]
     }): void {
-        writer.write('[]any')
+        writer.write("[]any")
         if (value.length === 0) {
-            writer.write('{}')
+            writer.write("{}")
             return
         }
-        writer.writeLine('{')
+        writer.writeLine("{")
         writer.indent()
         for (const element of value) {
             writer.writeNode(TypeInstantiation.any(element))
-            writer.writeLine(',')
+            writer.writeLine(",")
         }
         writer.dedent()
-        writer.write('}')
+        writer.write("}")
     }
 
     private writeAnyObject({ writer, value }: { writer: Writer; value: object }): void {
-        writer.write('map[string]any')
+        writer.write("map[string]any")
         const entries = Object.entries(value)
         if (entries.length === 0) {
-            writer.write('{}')
+            writer.write("{}")
             return
         }
-        writer.writeLine('{')
+        writer.writeLine("{")
         writer.indent()
         for (const [key, val] of entries) {
             writer.write(`"${key}": `)
             writer.writeNode(TypeInstantiation.any(val))
-            writer.writeLine(',')
+            writer.writeLine(",")
         }
         writer.dedent()
-        writer.write('}')
+        writer.write("}")
     }
 
     private writeMap({ writer, map }: { writer: Writer; map: Map }): void {
-        writer.write('map[')
+        writer.write("map[")
         writer.writeNode(map.keyType)
-        writer.write(']')
+        writer.write("]")
         writer.writeNode(map.valueType)
 
         const entries = filterNopMapEntries({ entries: map.entries })
         if (entries.length === 0) {
-            writer.write('{}')
+            writer.write("{}")
             return
         }
 
-        writer.writeLine('{')
+        writer.writeLine("{")
         writer.indent()
         for (const entry of entries) {
             entry.key.write(writer)
-            writer.write(': ')
+            writer.write(": ")
             entry.value.write(writer)
-            writer.writeLine(',')
+            writer.writeLine(",")
         }
         writer.dedent()
-        writer.write('}')
+        writer.write("}")
     }
 
     private writeOptional({ writer, type }: { writer: Writer; type: TypeInstantiation }): void {
@@ -474,73 +474,73 @@ export class TypeInstantiation extends AstNode {
             type.write(writer)
             return
         }
-        if (type.internalType.type === 'enum') {
+        if (type.internalType.type === "enum") {
             writer.writeNode(
                 new MethodInvocation({
                     on: type.internalType.typeReference,
-                    method: 'Ptr',
+                    method: "Ptr",
                     arguments_: []
                 })
             )
             return
         }
-        writer.write('&')
+        writer.write("&")
         type.write(writer)
     }
 
     private static isAlreadyOptional(value: TypeInstantiation) {
-        return value.internalType.type === 'optional' || ADDRESSABLE_TYPES.has(value.internalType.type)
+        return value.internalType.type === "optional" || ADDRESSABLE_TYPES.has(value.internalType.type)
     }
 
     private writeSlice({ writer, slice }: { writer: Writer; slice: Slice }): void {
-        writer.write('[]')
+        writer.write("[]")
         writer.writeNode(slice.valueType)
 
         const values = filterNopValues({ values: slice.values })
         if (values.length === 0) {
-            writer.write('{}')
+            writer.write("{}")
             return
         }
 
-        writer.writeLine('{')
+        writer.writeLine("{")
         writer.indent()
         for (const value of values) {
             value.write(writer)
-            writer.writeLine(',')
+            writer.writeLine(",")
         }
         writer.dedent()
-        writer.write('}')
+        writer.write("}")
     }
 
     private writeStruct({ writer, struct }: { writer: Writer; struct: Struct }): void {
         writer.writeNode(struct.typeReference)
 
         if (struct.generics != null) {
-            writer.write('[')
+            writer.write("[")
             struct.generics.forEach((generic, index) => {
                 if (index > 0) {
-                    writer.write(', ')
+                    writer.write(", ")
                 }
                 writer.writeNode(generic)
             })
-            writer.write(']')
+            writer.write("]")
         }
 
         const fields = filterNopStructFields({ fields: struct.fields })
         if (fields.length === 0) {
-            writer.write('{}')
+            writer.write("{}")
             return
         }
 
-        writer.writeLine('{')
+        writer.writeLine("{")
         writer.indent()
         for (const field of fields) {
             writer.write(`${field.name}: `)
             field.value.write(writer)
-            writer.writeLine(',')
+            writer.writeLine(",")
         }
         writer.dedent()
-        writer.write('}')
+        writer.write("}")
     }
 }
 
@@ -556,28 +556,28 @@ function invokePointerHelper({ writer, type }: { writer: Writer; type: TypeInsta
 
 function getPointerHelperFuncName({ type }: { type: TypeInstantiation }): string {
     switch (type.internalType.type) {
-        case 'bool':
-            return 'Bool'
-        case 'date':
-        case 'dateTime':
-            return 'Time'
-        case 'float64':
-            return 'Float64'
-        case 'int':
-            return 'Int'
-        case 'int64':
-            return 'Int64'
-        case 'string':
-            return 'String'
-        case 'uuid':
-            return 'UUID'
+        case "bool":
+            return "Bool"
+        case "date":
+        case "dateTime":
+            return "Time"
+        case "float64":
+            return "Float64"
+        case "int":
+            return "Int"
+        case "int64":
+            return "Int64"
+        case "string":
+            return "String"
+        case "uuid":
+            return "UUID"
         default:
-            return ''
+            return ""
     }
 }
 
 function invokeMustParseDate({ writer, type }: { writer: Writer; type: Date | DateTime }): FuncInvocation {
-    const funcName = type instanceof Date ? 'MustParseDate' : 'MustParseDateTime'
+    const funcName = type instanceof Date ? "MustParseDate" : "MustParseDateTime"
     return new FuncInvocation({
         func: new GoTypeReference({
             name: funcName,
@@ -590,8 +590,8 @@ function invokeMustParseDate({ writer, type }: { writer: Writer; type: Date | Da
 function invokeMustParseUUID({ value }: { value: string }): FuncInvocation {
     return new FuncInvocation({
         func: new GoTypeReference({
-            name: 'MustParse',
-            importPath: 'github.com/google/uuid'
+            name: "MustParse",
+            importPath: "github.com/google/uuid"
         }),
         arguments_: [new CodeBlock(`"${value}"`)]
     })

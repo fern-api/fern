@@ -1,10 +1,10 @@
-import { PackageId, convertHttpPathToExpressRoute, getPropertyKey, getTextOfTsNode } from '@fern-typescript/commons'
-import { ExpressContext, GeneratedExpressRegister } from '@fern-typescript/contexts'
-import { PackageResolver } from '@fern-typescript/resolvers'
-import { partition } from 'lodash-es'
-import { ts } from 'ts-morph'
+import { PackageId, convertHttpPathToExpressRoute, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons"
+import { ExpressContext, GeneratedExpressRegister } from "@fern-typescript/contexts"
+import { PackageResolver } from "@fern-typescript/resolvers"
+import { partition } from "lodash-es"
+import { ts } from "ts-morph"
 
-import { IntermediateRepresentation, Name, Package } from '@fern-fern/ir-sdk/api'
+import { IntermediateRepresentation, Name, Package } from "@fern-fern/ir-sdk/api"
 
 export declare namespace GeneratedExpressRegisterImpl {
     export interface Init {
@@ -16,8 +16,8 @@ export declare namespace GeneratedExpressRegisterImpl {
 }
 
 export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
-    private static EXPRESS_APP_PARAMETER_NAME = 'expressApp'
-    private static EXPRESS_SERVICES_PARAMETER_NAME = 'services'
+    private static EXPRESS_APP_PARAMETER_NAME = "expressApp"
+    private static EXPRESS_SERVICES_PARAMETER_NAME = "services"
 
     private intermediateRepresentation: IntermediateRepresentation
     private registerFunctionName: string
@@ -61,7 +61,7 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
                     )
                 }
             ],
-            returnType: 'void',
+            returnType: "void",
             statements: this.packageResolver
                 .getAllPackageIds()
                 .flatMap((packageId) => {
@@ -127,7 +127,7 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
 
     private getServiceKey(packageId: PackageId) {
         const subpackage = this.packageResolver.resolvePackage(packageId)
-        return subpackage.fernFilepath.file != null ? subpackage.fernFilepath.file.camelCase.unsafeName : '_root'
+        return subpackage.fernFilepath.file != null ? subpackage.fernFilepath.file.camelCase.unsafeName : "_root"
     }
 
     private getPackagePathKey(part: Name): string {
@@ -198,7 +198,7 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
             ...package_.fernFilepath.packagePath.map((part) => part.camelCase.unsafeName),
             package_.fernFilepath.file != null
                 ? `${package_.fernFilepath.file.pascalCase.unsafeName}Service`
-                : 'RootService'
-        ].join('_')
+                : "RootService"
+        ].join("_")
     }
 }

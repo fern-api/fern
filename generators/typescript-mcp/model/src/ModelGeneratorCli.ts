@@ -1,11 +1,11 @@
-import { GeneratorConfig, GeneratorNotificationService } from '@fern-api/base-generator'
-import { TypescriptCustomConfigSchema } from '@fern-api/typescript-ast'
-import { AbstractTypescriptMcpGeneratorCli } from '@fern-api/typescript-mcp-base'
+import { GeneratorConfig, GeneratorNotificationService } from "@fern-api/base-generator"
+import { TypescriptCustomConfigSchema } from "@fern-api/typescript-ast"
+import { AbstractTypescriptMcpGeneratorCli } from "@fern-api/typescript-mcp-base"
 
-import { IntermediateRepresentation } from '@fern-fern/ir-sdk/api'
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api"
 
-import { ModelGeneratorContext } from './ModelGeneratorContext'
-import { generateModels } from './generateModels'
+import { ModelGeneratorContext } from "./ModelGeneratorContext"
+import { generateModels } from "./generateModels"
 
 export class ModelGeneratorCLI extends AbstractTypescriptMcpGeneratorCli<
     TypescriptCustomConfigSchema,
@@ -30,7 +30,7 @@ export class ModelGeneratorCLI extends AbstractTypescriptMcpGeneratorCli<
     }
 
     protected async publishPackage(context: ModelGeneratorContext): Promise<void> {
-        throw new Error('Method not implemented.')
+        throw new Error("Method not implemented.")
     }
 
     protected async writeForGithub(context: ModelGeneratorContext): Promise<void> {

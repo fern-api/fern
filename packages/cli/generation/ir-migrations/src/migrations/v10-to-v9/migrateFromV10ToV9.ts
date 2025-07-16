@@ -1,16 +1,16 @@
-import { mapValues } from 'lodash-es'
+import { mapValues } from "lodash-es"
 
-import { GeneratorName } from '@fern-api/configuration-loader'
+import { GeneratorName } from "@fern-api/configuration-loader"
 
-import { IrVersions } from '../../ir-versions'
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
+import { IrVersions } from "../../ir-versions"
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
 
 export const V10_TO_V9_MIGRATION: IrMigration<
     IrVersions.V10.ir.IntermediateRepresentation,
     IrVersions.V9.ir.IntermediateRepresentation
 > = {
-    laterVersion: 'v10',
-    earlierVersion: 'v9',
+    laterVersion: "v10",
+    earlierVersion: "v9",
     firstGeneratorVersionToConsumeNewIR: {
         [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNotCreatedYet,
@@ -54,7 +54,7 @@ export const V10_TO_V9_MIGRATION: IrMigration<
             if (subpackage.docs != null && subpackage.service != null) {
                 const service = v9Services[subpackage.service]
                 if (service == null) {
-                    throw new Error('Service does not exist: ' + subpackage.service)
+                    throw new Error("Service does not exist: " + subpackage.service)
                 }
                 service.docs = subpackage.docs
             }

@@ -1,15 +1,15 @@
-import { getTextOfTsNode } from '@fern-typescript/commons'
-import { SdkContext } from '@fern-typescript/contexts'
-import { readFileSync } from 'fs'
-import { template } from 'lodash-es'
-import { Code, code } from 'ts-poet'
+import { getTextOfTsNode } from "@fern-typescript/commons"
+import { SdkContext } from "@fern-typescript/contexts"
+import { readFileSync } from "fs"
+import { template } from "lodash-es"
+import { Code, code } from "ts-poet"
 
-import { AbstractReadmeSnippetBuilder } from '@fern-api/base-generator'
-import { isNonNullish } from '@fern-api/core-utils'
+import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator"
+import { isNonNullish } from "@fern-api/core-utils"
 
-import { FernGeneratorCli } from '@fern-fern/generator-cli-sdk'
-import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
-import { EndpointId, FeatureId, FernFilepath, HttpEndpoint, SdkRequestWrapper } from '@fern-fern/ir-sdk/api'
+import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk"
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
+import { EndpointId, FeatureId, FernFilepath, HttpEndpoint, SdkRequestWrapper } from "@fern-fern/ir-sdk/api"
 
 interface EndpointWithFilepath {
     endpoint: HttpEndpoint
@@ -22,16 +22,16 @@ interface EndpointWithRequest {
 }
 
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
-    private static readonly ABORTING_REQUESTS_FEATURE_ID: FernGeneratorCli.FeatureId = 'ABORTING_REQUESTS'
-    private static readonly EXCEPTION_HANDLING_FEATURE_ID: FernGeneratorCli.FeatureId = 'EXCEPTION_HANDLING'
+    private static readonly ABORTING_REQUESTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ABORTING_REQUESTS"
+    private static readonly EXCEPTION_HANDLING_FEATURE_ID: FernGeneratorCli.FeatureId = "EXCEPTION_HANDLING"
     private static readonly REQUEST_AND_RESPONSE_TYPES_FEATURE_ID: FernGeneratorCli.FeatureId =
-        'REQUEST_AND_RESPONSE_TYPES'
-    private static readonly RUNTIME_COMPATIBILITY_FEATURE_ID: FernGeneratorCli.FeatureId = 'RUNTIME_COMPATIBILITY'
-    private static readonly STREAMING_FEATURE_ID: FernGeneratorCli.FeatureId = 'STREAMING'
-    private static readonly PAGINATION_FEATURE_ID: FernGeneratorCli.FeatureId = 'PAGINATION'
-    private static readonly RAW_RESPONSES_FEATURE_ID: FernGeneratorCli.FeatureId = 'ACCESS_RAW_RESPONSE_DATA'
-    private static readonly ADDITIONAL_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = 'ADDITIONAL_HEADERS'
-    public static readonly BINARY_RESPONSE_FEATURE_ID: FernGeneratorCli.FeatureId = 'BINARY_RESPONSE'
+        "REQUEST_AND_RESPONSE_TYPES"
+    private static readonly RUNTIME_COMPATIBILITY_FEATURE_ID: FernGeneratorCli.FeatureId = "RUNTIME_COMPATIBILITY"
+    private static readonly STREAMING_FEATURE_ID: FernGeneratorCli.FeatureId = "STREAMING"
+    private static readonly PAGINATION_FEATURE_ID: FernGeneratorCli.FeatureId = "PAGINATION"
+    private static readonly RAW_RESPONSES_FEATURE_ID: FernGeneratorCli.FeatureId = "ACCESS_RAW_RESPONSE_DATA"
+    private static readonly ADDITIONAL_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "ADDITIONAL_HEADERS"
+    public static readonly BINARY_RESPONSE_FEATURE_ID: FernGeneratorCli.FeatureId = "BINARY_RESPONSE"
 
     private readonly context: SdkContext
     private readonly isPaginationEnabled: boolean
@@ -42,7 +42,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private readonly rootClientConstructorName: string
     private readonly clientVariableName: string
     private readonly genericAPISdkErrorName: string
-    private readonly fileResponseType: 'stream' | 'binary-response'
+    private readonly fileResponseType: "stream" | "binary-response"
 
     constructor({
         context,
@@ -51,7 +51,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }: {
         context: SdkContext
         endpointSnippets: FernGeneratorExec.Endpoint[]
-        fileResponseType: 'stream' | 'binary-response'
+        fileResponseType: "stream" | "binary-response"
     }) {
         super({ endpointSnippets })
         this.context = context
@@ -226,13 +226,13 @@ const response = await ${this.getMethodCall(headerEndpoint)}(..., {
     }
 
     private buildBinaryResponseSnippet(): string[] {
-        if (this.fileResponseType !== 'binary-response') {
+        if (this.fileResponseType !== "binary-response") {
             return []
         }
 
         const binaryResponseEndpoints = Object.values(this.context.ir.services).flatMap((service) =>
             service.endpoints
-                .filter((endpoint) => endpoint.response?.body?.type === 'fileDownload')
+                .filter((endpoint) => endpoint.response?.body?.type === "fileDownload")
                 .map((endpoint) => ({
                     endpoint,
                     fernFilepath: service.name.fernFilepath
@@ -259,13 +259,13 @@ const bodyUsed = response.bodyUsed;
     }
 
     private buildBinaryResponseAddendum(): string | undefined {
-        if (this.fileResponseType !== 'binary-response') {
+        if (this.fileResponseType !== "binary-response") {
             return undefined
         }
 
         const binaryResponseEndpoints = Object.values(this.context.ir.services).flatMap((service) =>
             service.endpoints
-                .filter((endpoint) => endpoint.response?.body?.type === 'fileDownload')
+                .filter((endpoint) => endpoint.response?.body?.type === "fileDownload")
                 .map((endpoint) => ({
                     endpoint,
                     fernFilepath: service.name.fernFilepath
@@ -276,7 +276,7 @@ const bodyUsed = response.bodyUsed;
         }
         const binaryResponseEndpoint = binaryResponseEndpoints[0] as EndpointWithFilepath
 
-        const templateFile = readFileSync('/assets/readme/binary-response-addendum.md', 'utf-8')
+        const templateFile = readFileSync("/assets/readme/binary-response-addendum.md", "utf-8")
         const compileTemplate = template(templateFile)
         return compileTemplate({
             snippet: this.writeCode(code`const response = await ${this.getMethodCall(binaryResponseEndpoint)}(...);`)
@@ -374,7 +374,7 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
         const snippets: Record<EndpointId, string> = {}
         for (const endpointSnippet of Object.values(endpointSnippets)) {
             if (endpointSnippet.id.identifierOverride == null) {
-                throw new Error('Internal error; snippets must define the endpoint id to generate README.md')
+                throw new Error("Internal error; snippets must define the endpoint id to generate README.md")
             }
             snippets[endpointSnippet.id.identifierOverride] = this.getEndpointSnippetString(endpointSnippet)
         }
@@ -404,7 +404,7 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
 
     private getEndpointWithStreaming(): EndpointWithFilepath | undefined {
         return this.filterEndpoint((endpointWithFilepath) => {
-            if (endpointWithFilepath.endpoint.response?.body?.type === 'streaming') {
+            if (endpointWithFilepath.endpoint.response?.body?.type === "streaming") {
                 return endpointWithFilepath
             }
             return undefined
@@ -413,7 +413,7 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
 
     private getEndpointWithRequest(): EndpointWithRequest | undefined {
         return this.filterEndpoint((endpointWithFilepath) => {
-            if (endpointWithFilepath.endpoint.sdkRequest?.shape?.type === 'wrapper') {
+            if (endpointWithFilepath.endpoint.sdkRequest?.shape?.type === "wrapper") {
                 return {
                     endpoint: endpointWithFilepath.endpoint,
                     requestWrapper: endpointWithFilepath.endpoint.sdkRequest.shape
@@ -434,7 +434,7 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
     }
 
     private getEndpointSnippetString(endpoint: FernGeneratorExec.Endpoint): string {
-        if (endpoint.snippet.type !== 'typescript') {
+        if (endpoint.snippet.type !== "typescript") {
             throw new Error(`Internal error; expected TypeScript snippet but got: ${endpoint.snippet.type}`)
         }
         return endpoint.snippet.client
@@ -460,7 +460,7 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
         const errorName = getTextOfTsNode(
             this.context.genericAPISdkError.getReferenceToGenericAPISdkError().getEntityName()
         )
-        const split = errorName.split('.')
+        const split = errorName.split(".")
         return split[1] ?? errorName
     }
 
@@ -471,7 +471,7 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
     private getAccessFromRootClient(fernFilepath: FernFilepath): string {
         const clientAccessParts = fernFilepath.allParts.map((part) => part.camelCase.unsafeName)
         return clientAccessParts.length > 0
-            ? `${this.clientVariableName}.${clientAccessParts.join('.')}`
+            ? `${this.clientVariableName}.${clientAccessParts.join(".")}`
             : this.clientVariableName
     }
 
@@ -480,6 +480,6 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
     }
 
     private writeCode(code: Code): string {
-        return code.toString({ dprintOptions: { indentWidth: 4 } }).trim() + '\n'
+        return code.toString({ dprintOptions: { indentWidth: 4 } }).trim() + "\n"
     }
 }

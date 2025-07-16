@@ -1,7 +1,7 @@
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { VariableId } from '@fern-api/ir-sdk'
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { VariableId } from "@fern-api/ir-sdk"
 
-import { FernFileContext, constructRootApiFileContext } from '../FernFileContext'
+import { FernFileContext, constructRootApiFileContext } from "../FernFileContext"
 
 export interface VariableResolver {
     getDeclarationOrThrow(
@@ -17,7 +17,7 @@ export interface VariableResolver {
 }
 
 export class VariableResolverImpl implements VariableResolver {
-    public static VARIABLE_PREFIX = '$'
+    public static VARIABLE_PREFIX = "$"
 
     public getDeclarationOrThrow(
         referenceToVariable: string,
@@ -25,7 +25,7 @@ export class VariableResolverImpl implements VariableResolver {
     ): { declaration: RawSchemas.VariableDeclarationSchema; file: FernFileContext } {
         const declaration = this.getDeclaration(referenceToVariable, file)
         if (declaration == null) {
-            throw new Error('Variable does not exist: ' + referenceToVariable)
+            throw new Error("Variable does not exist: " + referenceToVariable)
         }
         return declaration
     }
@@ -55,7 +55,7 @@ export class VariableResolverImpl implements VariableResolver {
     public getVariableIdOrThrow(referenceToVariable: string): VariableId {
         const variableId = this.getVariableId(referenceToVariable)
         if (variableId == null) {
-            throw new Error('Variable reference does not start with ' + VariableResolverImpl.VARIABLE_PREFIX)
+            throw new Error("Variable reference does not start with " + VariableResolverImpl.VARIABLE_PREFIX)
         }
         return variableId
     }

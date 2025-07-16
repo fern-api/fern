@@ -6,12 +6,12 @@ import {
     Reference,
     getReferenceToExportFromPackage,
     getReferenceToExportViaNamespaceImport
-} from '@fern-typescript/commons'
-import { SourceFile } from 'ts-morph'
+} from "@fern-typescript/commons"
+import { SourceFile } from "ts-morph"
 
-import { EnvironmentsConfig, MultipleBaseUrlsEnvironments, SingleBaseUrlEnvironments } from '@fern-fern/ir-sdk/api'
+import { EnvironmentsConfig, MultipleBaseUrlsEnvironments, SingleBaseUrlEnvironments } from "@fern-fern/ir-sdk/api"
 
-import { AbstractDeclarationReferencer } from './AbstractDeclarationReferencer'
+import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer"
 
 export declare namespace EnvironmentsDeclarationReferencer {
     export interface Init extends AbstractDeclarationReferencer.Init {
@@ -44,7 +44,7 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
 
     public getExportedFilepath(): ExportedFilePath {
         const namedExports = [this.getExportedNameOfEnvironmentsEnum()]
-        if (this.environmentsConfig?.environments.type === 'multipleBaseUrls') {
+        if (this.environmentsConfig?.environments.type === "multipleBaseUrls") {
             namedExports.push(this.getExportedNameOfEnvironmentUrls())
         }
 
@@ -60,7 +60,7 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
     }
 
     public getFilename(): string {
-        return 'environments.ts'
+        return "environments.ts"
     }
 
     public getExportedNameOfEnvironmentsEnum(): string {
@@ -128,7 +128,7 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
             exportedName: firstEnvironmentEnum.exportedName,
             filepathToNamespaceImport: this.getExportedFilepath(),
             filepathInsideNamespaceImport: undefined,
-            namespaceImport: 'environments',
+            namespaceImport: "environments",
             importsManager,
             exportsManager,
             referencedIn: sourceFile
@@ -188,7 +188,7 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
             exportedName,
             filepathToNamespaceImport: this.getExportedFilepath(),
             filepathInsideNamespaceImport: undefined,
-            namespaceImport: 'environments',
+            namespaceImport: "environments",
             importsManager,
             exportsManager,
             referencedIn: sourceFile
@@ -197,9 +197,9 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
 
     private getFirstEnvironmentName(environmentsConfig: EnvironmentsConfig): string | undefined {
         switch (environmentsConfig.environments.type) {
-            case 'singleBaseUrl':
+            case "singleBaseUrl":
                 return this.getFirstEnvironmentNameFromSingleEnvironment(environmentsConfig.environments)
-            case 'multipleBaseUrls':
+            case "multipleBaseUrls":
                 return this.getFirstEnvironmentNameFromMultiEnvironment(environmentsConfig.environments)
         }
     }

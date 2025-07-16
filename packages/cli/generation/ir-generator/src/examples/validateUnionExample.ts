@@ -1,15 +1,15 @@
-import { FernWorkspace } from '@fern-api/api-workspace-commons'
-import { isPlainObject } from '@fern-api/core-utils'
-import { RawSchemas, isRawObjectDefinition } from '@fern-api/fern-definition-schema'
+import { FernWorkspace } from "@fern-api/api-workspace-commons"
+import { isPlainObject } from "@fern-api/core-utils"
+import { RawSchemas, isRawObjectDefinition } from "@fern-api/fern-definition-schema"
 
-import { FernFileContext } from '../FernFileContext'
-import { getUnionDiscriminant } from '../converters/type-declarations/convertDiscriminatedUnionTypeDeclaration'
-import { ExampleResolver } from '../resolvers/ExampleResolver'
-import { TypeResolver } from '../resolvers/TypeResolver'
-import { ExampleViolation } from './exampleViolation'
-import { getViolationsForMisshapenExample } from './getViolationsForMisshapenExample'
-import { validateObjectExample } from './validateObjectExample'
-import { validateTypeReferenceExample } from './validateTypeReferenceExample'
+import { FernFileContext } from "../FernFileContext"
+import { getUnionDiscriminant } from "../converters/type-declarations/convertDiscriminatedUnionTypeDeclaration"
+import { ExampleResolver } from "../resolvers/ExampleResolver"
+import { TypeResolver } from "../resolvers/TypeResolver"
+import { ExampleViolation } from "./exampleViolation"
+import { getViolationsForMisshapenExample } from "./getViolationsForMisshapenExample"
+import { validateObjectExample } from "./validateObjectExample"
+import { validateTypeReferenceExample } from "./validateTypeReferenceExample"
 
 export function validateUnionExample({
     typeName,
@@ -33,7 +33,7 @@ export function validateUnionExample({
     depth: number
 }): ExampleViolation[] {
     if (!isPlainObject(example)) {
-        return getViolationsForMisshapenExample(example, 'an object')
+        return getViolationsForMisshapenExample(example, "an object")
     }
 
     const discriminant = getUnionDiscriminant(rawUnion)
@@ -47,8 +47,8 @@ export function validateUnionExample({
         ]
     }
 
-    if (typeof discriminantValue !== 'string') {
-        return getViolationsForMisshapenExample(discriminantValue, 'a string')
+    if (typeof discriminantValue !== "string") {
+        return getViolationsForMisshapenExample(discriminantValue, "a string")
     }
 
     const singleUnionTypeDefinition = rawUnion.union[discriminantValue]
@@ -59,22 +59,22 @@ export function validateUnionExample({
                     `Invalid discriminant property: "${discriminantValue}". Allowed discriminant values:\n` +
                     Object.keys(rawUnion.union)
                         .map((otherDiscriminantValue) => `  - ${otherDiscriminantValue}`)
-                        .join('\n')
+                        .join("\n")
             }
         ]
     }
 
-    if (rawUnion['base-properties'] != null) {
+    if (rawUnion["base-properties"] != null) {
         const example = Object.fromEntries(
             Object.entries(nonDiscriminantPropertyExamples).filter(
-                ([key]) => rawUnion['base-properties']?.[key] != null
+                ([key]) => rawUnion["base-properties"]?.[key] != null
             )
         )
         const basePropertyViolations = validateObjectExample({
             typeName,
             typeNameForBreadcrumb: typeName,
             rawObject: {
-                properties: rawUnion['base-properties']
+                properties: rawUnion["base-properties"]
             },
             file,
             example,
@@ -90,9 +90,9 @@ export function validateUnionExample({
     }
 
     const type =
-        typeof singleUnionTypeDefinition === 'string' ? singleUnionTypeDefinition : singleUnionTypeDefinition.type
+        typeof singleUnionTypeDefinition === "string" ? singleUnionTypeDefinition : singleUnionTypeDefinition.type
 
-    if (typeof type !== 'string') {
+    if (typeof type !== "string") {
         return getRuleViolationForExtraProperties(nonDiscriminantPropertyExamples)
     }
 
@@ -106,10 +106,10 @@ export function validateUnionExample({
         return []
     }
 
-    if (resolvedType._type === 'named' && isRawObjectDefinition(resolvedType.declaration)) {
+    if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
         const example = Object.fromEntries(
             Object.entries(nonDiscriminantPropertyExamples).filter(
-                ([key]) => rawUnion['base-properties']?.[key] == null
+                ([key]) => rawUnion["base-properties"]?.[key] == null
             )
         )
         return validateObjectExample({
@@ -127,7 +127,7 @@ export function validateUnionExample({
     }
 
     const singlePropertyKey =
-        typeof singleUnionTypeDefinition !== 'string' && typeof singleUnionTypeDefinition.key === 'string'
+        typeof singleUnionTypeDefinition !== "string" && typeof singleUnionTypeDefinition.key === "string"
             ? singleUnionTypeDefinition.key
             : undefined
 
@@ -165,7 +165,7 @@ export function validateUnionExample({
 
 function getRuleViolationForExtraProperties(extraProperties: Record<string, unknown>): ExampleViolation[] {
     return Object.keys(extraProperties).map((key) => ({
-        severity: 'fatal',
+        severity: "fatal",
         message: `Unexpected property "${key}"`
     }))
 }

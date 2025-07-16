@@ -1,10 +1,10 @@
-import { camelCase, compact, isEqual } from 'lodash-es'
+import { camelCase, compact, isEqual } from "lodash-es"
 
-import { FERN_PACKAGE_MARKER_FILENAME } from '@fern-api/configuration'
-import { Endpoint, HttpMethod } from '@fern-api/openapi-ir'
-import { RelativeFilePath, join } from '@fern-api/path-utils'
+import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration"
+import { Endpoint, HttpMethod } from "@fern-api/openapi-ir"
+import { RelativeFilePath, join } from "@fern-api/path-utils"
 
-import { convertEndpointSdkNameToFileWithoutExtension } from './convertSdkGroupName'
+import { convertEndpointSdkNameToFileWithoutExtension } from "./convertSdkGroupName"
 
 export interface EndpointLocation {
     file: RelativeFilePath
@@ -42,7 +42,7 @@ function getUnresolvedEndpointLocation(endpoint: Endpoint): EndpointLocation {
                 endpointId:
                     endpoint.summary != null
                         ? camelCase(endpoint.summary)
-                        : camelCase(`${endpoint.method}_${endpoint.path.split('/').join('_')}`)
+                        : camelCase(`${endpoint.method}_${endpoint.path.split("/").join("_")}`)
             }
         }
 
@@ -57,7 +57,7 @@ function getUnresolvedEndpointLocation(endpoint: Endpoint): EndpointLocation {
         // TODO(dsinghvi): warn that using path and method to generate id
         return {
             file: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
-            endpointId: camelCase(`${endpoint.method}_${endpoint.path.split('/').join('_')}`)
+            endpointId: camelCase(`${endpoint.method}_${endpoint.path.split("/").join("_")}`)
         }
     }
 
@@ -76,7 +76,7 @@ function getUnresolvedEndpointLocation(endpoint: Endpoint): EndpointLocation {
     // add to __package__.yml if equal
     if (isEqual(tagTokens, operationIdTokens)) {
         return {
-            file: RelativeFilePath.of('__package__.yml'),
+            file: RelativeFilePath.of("__package__.yml"),
             endpointId: tag
         }
     }
@@ -113,8 +113,8 @@ function getUnresolvedEndpointLocation(endpoint: Endpoint): EndpointLocation {
     }
 
     return {
-        file: RelativeFilePath.of(camelCase(fileParts.join('_')) + '.yml'),
-        endpointId: camelCase(operationIdTokens.slice(fileParts.length).join('_')),
+        file: RelativeFilePath.of(camelCase(fileParts.join("_")) + ".yml"),
+        endpointId: camelCase(operationIdTokens.slice(fileParts.length).join("_")),
         tag
     }
 }
@@ -128,7 +128,7 @@ export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
         })
         const filename = `${filenameWithoutExtension}.yml`
         // only if the tag lines up with `x-fern-sdk-group-name` do we use it
-        const isTagApplicable = filenameWithoutExtension.toLowerCase() === tag?.toLowerCase().replaceAll(' ', '')
+        const isTagApplicable = filenameWithoutExtension.toLowerCase() === tag?.toLowerCase().replaceAll(" ", "")
         return {
             file: RelativeFilePath.of(filename),
             endpointId: endpoint.sdkName.methodName,
@@ -164,8 +164,8 @@ export function tokenizeString(input: string): string[] {
 }
 
 // When the url is /users/{userId}/sign-in we want the split to be ["users", "{userId}", "sign", "in"]
-const NON_ALPHANUMERIC_EXCEPT_BRACES_REGEX = new RegExp('[^a-zA-Z0-9{}]+')
-const BRACE_REGEX = new RegExp('[{}]', 'g')
+const NON_ALPHANUMERIC_EXCEPT_BRACES_REGEX = new RegExp("[^a-zA-Z0-9{}]+")
+const BRACE_REGEX = new RegExp("[{}]", "g")
 
 function maybeGetFastApiEndpointLocation({
     operationId,
@@ -178,11 +178,11 @@ function maybeGetFastApiEndpointLocation({
     path: string
     method: HttpMethod
 }): EndpointLocation | undefined {
-    const pathSegment = path.split(NON_ALPHANUMERIC_EXCEPT_BRACES_REGEX).join('_').replaceAll(BRACE_REGEX, '_')
+    const pathSegment = path.split(NON_ALPHANUMERIC_EXCEPT_BRACES_REGEX).join("_").replaceAll(BRACE_REGEX, "_")
     const operationIdSuffix = `${pathSegment}_${method.toLowerCase()}`
     if (operationId.endsWith(operationIdSuffix)) {
         return {
-            file: RelativeFilePath.of(camelCase(tag) + '.yml'),
+            file: RelativeFilePath.of(camelCase(tag) + ".yml"),
             endpointId: camelCase(operationId.slice(0, -1 * operationIdSuffix.length)),
             tag
         }

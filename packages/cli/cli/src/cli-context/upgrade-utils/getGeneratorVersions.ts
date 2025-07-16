@@ -3,16 +3,16 @@ import {
     getGeneratorNameOrThrow,
     getLatestGeneratorVersion,
     loadGeneratorsConfiguration
-} from '@fern-api/configuration-loader'
-import { Logger } from '@fern-api/logger'
-import { Project } from '@fern-api/project-loader'
-import { isVersionAhead } from '@fern-api/semver-utils'
-import { TaskContext } from '@fern-api/task-context'
-import { AbstractAPIWorkspace } from '@fern-api/workspace-loader'
+} from "@fern-api/configuration-loader"
+import { Logger } from "@fern-api/logger"
+import { Project } from "@fern-api/project-loader"
+import { isVersionAhead } from "@fern-api/semver-utils"
+import { TaskContext } from "@fern-api/task-context"
+import { AbstractAPIWorkspace } from "@fern-api/workspace-loader"
 
-import { ReleaseType } from '@fern-fern/generators-sdk/api/resources/generators'
+import { ReleaseType } from "@fern-fern/generators-sdk/api/resources/generators"
 
-import { CliContext } from '../CliContext'
+import { CliContext } from "../CliContext"
 
 export interface FernGeneratorUpgradeInfo {
     generatorName: string
@@ -31,12 +31,12 @@ interface VersionDiff {
 // This type is effectively a map of api name > group name > generator name > version diff
 export type GroupedGeneratorVersions = Record<string, Record<string, VersionDiff>>
 interface SingleApiWorkspaceGeneratorVersions {
-    type: 'singleApi'
+    type: "singleApi"
     versions: GroupedGeneratorVersions
 }
 
 interface MultiApiWorkspaceGeneratorVersions {
-    type: 'multiApi'
+    type: "multiApi"
     versions: Record<string, GroupedGeneratorVersions>
 }
 export type GeneratorVersions = MultiApiWorkspaceGeneratorVersions | SingleApiWorkspaceGeneratorVersions
@@ -57,7 +57,7 @@ export async function getLatestGeneratorVersions({
     includeMajor?: boolean
 }): Promise<GeneratorVersions> {
     if (apiWorkspaces.length === 1) {
-        const versions: SingleApiWorkspaceGeneratorVersions = { type: 'singleApi', versions: {} }
+        const versions: SingleApiWorkspaceGeneratorVersions = { type: "singleApi", versions: {} }
         await processGeneratorsYml({
             cliContext,
             apiWorkspaces,
@@ -91,7 +91,7 @@ export async function getLatestGeneratorVersions({
         return versions
     }
 
-    const versions: MultiApiWorkspaceGeneratorVersions = { type: 'multiApi', versions: {} }
+    const versions: MultiApiWorkspaceGeneratorVersions = { type: "multiApi", versions: {} }
     await processGeneratorsYml({
         cliContext,
         apiWorkspaces,
@@ -196,7 +196,7 @@ export function processGeneratorGroups(
 
             logger.debug(
                 `Latest version: ${generatorVersions.latestVersion}. ` +
-                    (isUpgradeAvailable ? 'Upgrade available.' : 'No upgrade available.')
+                    (isUpgradeAvailable ? "Upgrade available." : "No upgrade available.")
             )
 
             upgradeInfo.push({
@@ -238,7 +238,7 @@ export async function getProjectGeneratorUpgrades({
             includeMajor
         })
 
-        if (latestVersions.type === 'multiApi') {
+        if (latestVersions.type === "multiApi") {
             for (const [apiName, groups] of Object.entries(latestVersions.versions)) {
                 generatorUpgrades.push(...processGeneratorGroups(groups, apiName, cliContext.logger))
             }

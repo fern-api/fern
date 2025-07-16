@@ -1,15 +1,15 @@
-import { LogLevel } from '@fern-api/logger'
-import { Project, loadProject } from '@fern-api/project-loader'
+import { LogLevel } from "@fern-api/logger"
+import { Project, loadProject } from "@fern-api/project-loader"
 
-import { CliContext } from './cli-context/CliContext'
+import { CliContext } from "./cli-context/CliContext"
 
 export interface GlobalCliOptions {
-    'log-level': LogLevel
+    "log-level": LogLevel
 }
 
 export async function loadProjectAndRegisterWorkspacesWithContext(
     cliContext: CliContext,
-    args: Omit<loadProject.Args, 'context' | 'cliName' | 'cliVersion'>,
+    args: Omit<loadProject.Args, "context" | "cliName" | "cliVersion">,
     registerDocsWorkspace = false
 ): Promise<Project> {
     const context = cliContext.addTask().start()

@@ -1,6 +1,6 @@
-import { IrVersions } from '../../ir-versions'
-import { convertFernFilepathV1, convertFernFilepathV2 } from './convertFernFilepath'
-import { convertNameToV1, convertNameToV2 } from './convertName'
+import { IrVersions } from "../../ir-versions"
+import { convertFernFilepathV1, convertFernFilepathV2 } from "./convertFernFilepath"
+import { convertNameToV1, convertNameToV2 } from "./convertName"
 
 export function convertDeclaredTypeName(
     typeName: IrVersions.V5.types.DeclaredTypeName

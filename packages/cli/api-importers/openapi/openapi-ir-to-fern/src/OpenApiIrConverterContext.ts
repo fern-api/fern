@@ -1,7 +1,7 @@
-import { assertNever } from '@fern-api/core-utils'
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { FernDefinitionBuilder, FernDefinitionBuilderImpl } from '@fern-api/importer-commons'
-import { Logger } from '@fern-api/logger'
+import { assertNever } from "@fern-api/core-utils"
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { FernDefinitionBuilder, FernDefinitionBuilderImpl } from "@fern-api/importer-commons"
+import { Logger } from "@fern-api/logger"
 import {
     HttpMethod,
     ObjectSchema,
@@ -9,12 +9,12 @@ import {
     OpenApiIntermediateRepresentation,
     Schema,
     SchemaId
-} from '@fern-api/openapi-ir'
-import { isSchemaEqual } from '@fern-api/openapi-ir'
-import { TaskContext } from '@fern-api/task-context'
+} from "@fern-api/openapi-ir"
+import { isSchemaEqual } from "@fern-api/openapi-ir"
+import { TaskContext } from "@fern-api/task-context"
 
-import { ConvertOpenAPIOptions } from './ConvertOpenAPIOptions'
-import { State } from './State'
+import { ConvertOpenAPIOptions } from "./ConvertOpenAPIOptions"
+import { State } from "./State"
 
 export interface OpenApiIrConverterContextOpts {
     taskContext: TaskContext
@@ -205,34 +205,34 @@ export class OpenApiIrConverterContext {
      */
     public markSchemaAsReferenced(schema: Schema, namespace: string | undefined): void {
         switch (schema.type) {
-            case 'primitive':
+            case "primitive":
                 return
-            case 'object':
+            case "object":
                 this.markObjectSchemaAsReferenced(schema, namespace)
                 return
-            case 'array':
+            case "array":
                 this.markSchemaAsReferenced(schema.value, namespace)
                 return
-            case 'map':
+            case "map":
                 this.markSchemaAsReferenced(schema.value, namespace)
                 return
-            case 'optional':
+            case "optional":
                 this.markSchemaAsReferenced(schema.value, namespace)
                 return
-            case 'reference':
+            case "reference":
                 this.markSchemaIdAsReferenced(schema.schema, namespace)
                 return
-            case 'oneOf':
+            case "oneOf":
                 this.markOneofSchemaAsReferenced(schema.value, namespace)
                 return
-            case 'nullable':
+            case "nullable":
                 this.markSchemaAsReferenced(schema.value, namespace)
                 return
-            case 'enum':
+            case "enum":
                 return
-            case 'literal':
+            case "literal":
                 return
-            case 'unknown':
+            case "unknown":
                 return
             default:
                 assertNever(schema)
@@ -250,12 +250,12 @@ export class OpenApiIrConverterContext {
 
     private markOneofSchemaAsReferenced(schema: OneOfSchema, namespace: string | undefined): void {
         switch (schema.type) {
-            case 'discriminated':
+            case "discriminated":
                 for (const oneOf of Object.values(schema.schemas)) {
                     this.markSchemaAsReferenced(oneOf, namespace)
                 }
                 return
-            case 'undiscriminated':
+            case "undiscriminated":
                 for (const oneOf of schema.schemas) {
                     this.markSchemaAsReferenced(oneOf, namespace)
                 }

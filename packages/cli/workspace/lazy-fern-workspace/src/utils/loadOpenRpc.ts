@@ -1,11 +1,11 @@
-import { OpenrpcDocument } from '@open-rpc/meta-schema'
-import { readFile } from 'fs/promises'
-import yaml from 'js-yaml'
+import { OpenrpcDocument } from "@open-rpc/meta-schema"
+import { readFile } from "fs/promises"
+import yaml from "js-yaml"
 
-import { AbsoluteFilePath } from '@fern-api/fs-utils'
-import { TaskContext } from '@fern-api/task-context'
+import { AbsoluteFilePath } from "@fern-api/fs-utils"
+import { TaskContext } from "@fern-api/task-context"
 
-import { mergeWithOverrides } from '../loaders/mergeWithOverrides'
+import { mergeWithOverrides } from "../loaders/mergeWithOverrides"
 
 export async function loadOpenRpc({
     context,

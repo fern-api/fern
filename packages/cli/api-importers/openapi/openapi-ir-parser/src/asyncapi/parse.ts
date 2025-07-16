@@ -1,15 +1,15 @@
-import { Schemas, Source, WebsocketChannel } from '@fern-api/openapi-ir'
-import { TaskContext } from '@fern-api/task-context'
+import { Schemas, Source, WebsocketChannel } from "@fern-api/openapi-ir"
+import { TaskContext } from "@fern-api/task-context"
 
-import { ParseOpenAPIOptions } from '../options'
-import { ParseAsyncAPIOptions } from './options'
-import { ServerContext } from './sharedTypes'
-import { AsyncAPIV2 } from './v2'
-import { AsyncAPIV2ParserContext } from './v2/AsyncAPIV2ParserContext'
-import { parseAsyncAPIV2 } from './v2/parseAsyncAPIV2'
-import { AsyncAPIV3 } from './v3'
-import { AsyncAPIV3ParserContext } from './v3/AsyncAPIV3ParserContext'
-import { parseAsyncAPIV3 } from './v3/parseAsyncAPIV3'
+import { ParseOpenAPIOptions } from "../options"
+import { ParseAsyncAPIOptions } from "./options"
+import { ServerContext } from "./sharedTypes"
+import { AsyncAPIV2 } from "./v2"
+import { AsyncAPIV2ParserContext } from "./v2/AsyncAPIV2ParserContext"
+import { parseAsyncAPIV2 } from "./v2/parseAsyncAPIV2"
+import { AsyncAPIV3 } from "./v3"
+import { AsyncAPIV3ParserContext } from "./v3/AsyncAPIV3ParserContext"
+import { parseAsyncAPIV3 } from "./v3/parseAsyncAPIV3"
 
 export interface AsyncAPIIntermediateRepresentation {
     groupedSchemas: Schemas
@@ -41,11 +41,11 @@ export function parseAsyncAPI({
         const v2Document = document as AsyncAPIV2.DocumentV2
         if (v2Document.tags?.[0] != null) {
             breadcrumbs.push(v2Document.tags[0].name)
-        } else if (asyncApiOptions.naming !== 'v2') {
+        } else if (asyncApiOptions.naming !== "v2") {
             // In improved naming, we allow you to not have any prefixes here at all
             // by not specifying tags. Without useImprovedMessageNaming, and no tags,
             // we do still prefix with "Websocket".
-            breadcrumbs.push('websocket')
+            breadcrumbs.push("websocket")
         }
         const context = new AsyncAPIV2ParserContext({
             document: v2Document,

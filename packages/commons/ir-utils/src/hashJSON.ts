@@ -5,33 +5,33 @@ export function hashJSON(obj: unknown): string {
 
     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     function traverse(value: any, currentDepth: number) {
-        if (typeof value === 'object' && value != null) {
+        if (typeof value === "object" && value != null) {
             if (currentDepth > MAX_DEPTH) {
-                updateHash('[MaxDepthExceeded]')
+                updateHash("[MaxDepthExceeded]")
                 return
             }
 
             if (Array.isArray(value)) {
-                updateHash('[')
+                updateHash("[")
                 for (let i = 0; i < value.length; i++) {
                     if (i > 0) {
-                        updateHash(',')
+                        updateHash(",")
                     }
                     traverse(value[i], currentDepth + 1)
                 }
-                updateHash(']')
+                updateHash("]")
             } else {
-                updateHash('{')
+                updateHash("{")
                 const keys = Object.keys(value).sort()
                 keys.forEach((key, index) => {
                     if (index > 0) {
-                        updateHash(',')
+                        updateHash(",")
                     }
                     updateHash(key)
-                    updateHash(':')
+                    updateHash(":")
                     traverse(value[key], currentDepth + 1)
                 })
-                updateHash('}')
+                updateHash("}")
             }
         } else {
             updateHash(String(value))

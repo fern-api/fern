@@ -1,9 +1,9 @@
-import { GeneratedExpressRegister } from '@fern-typescript/contexts'
-import { PackageResolver } from '@fern-typescript/resolvers'
+import { GeneratedExpressRegister } from "@fern-typescript/contexts"
+import { PackageResolver } from "@fern-typescript/resolvers"
 
-import { IntermediateRepresentation } from '@fern-fern/ir-sdk/api'
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api"
 
-import { GeneratedExpressRegisterImpl } from './GeneratedExpressRegisterImpl'
+import { GeneratedExpressRegisterImpl } from "./GeneratedExpressRegisterImpl"
 
 export declare namespace ExpressRegisterGenerator {
     export interface Init {

@@ -1,19 +1,19 @@
-import { OpenAPIV3 } from 'openapi-types'
+import { OpenAPIV3 } from "openapi-types"
 
-import { EnumSchema, SecurityScheme, Source } from '@fern-api/openapi-ir'
+import { EnumSchema, SecurityScheme, Source } from "@fern-api/openapi-ir"
 
-import { getExtension } from '../../../getExtension'
-import { convertEnum } from '../../../schema/convertEnum'
-import { convertSchemaWithExampleToSchema } from '../../../schema/utils/convertSchemaWithExampleToSchema'
-import { isReferenceObject } from '../../../schema/utils/isReferenceObject'
-import { OpenAPIExtension } from '../extensions/extensions'
-import { FernOpenAPIExtension } from '../extensions/fernExtensions'
-import { getBasicSecuritySchemeNames } from '../extensions/getBasicSecuritySchemeNames'
+import { getExtension } from "../../../getExtension"
+import { convertEnum } from "../../../schema/convertEnum"
+import { convertSchemaWithExampleToSchema } from "../../../schema/utils/convertSchemaWithExampleToSchema"
+import { isReferenceObject } from "../../../schema/utils/isReferenceObject"
+import { OpenAPIExtension } from "../extensions/extensions"
+import { FernOpenAPIExtension } from "../extensions/fernExtensions"
+import { getBasicSecuritySchemeNames } from "../extensions/getBasicSecuritySchemeNames"
 import {
     HeaderSecuritySchemeNames,
     SecuritySchemeNames,
     getBasicSecuritySchemeNameAndEnvvar
-} from '../extensions/getSecuritySchemeNameAndEnvvars'
+} from "../extensions/getSecuritySchemeNameAndEnvvars"
 
 export function convertSecurityScheme(
     securityScheme: OpenAPIV3.SecuritySchemeObject | OpenAPIV3.ReferenceObject,
@@ -29,7 +29,7 @@ function convertSecuritySchemeHelper(
     securityScheme: OpenAPIV3.SecuritySchemeObject,
     source: Source
 ): SecurityScheme | undefined {
-    if (securityScheme.type === 'apiKey' && securityScheme.in === 'header') {
+    if (securityScheme.type === "apiKey" && securityScheme.in === "header") {
         const bearerFormat = getExtension<string>(securityScheme, OpenAPIExtension.BEARER_FORMAT)
         const headerNames = getExtension<HeaderSecuritySchemeNames>(
             securityScheme,
@@ -37,12 +37,12 @@ function convertSecuritySchemeHelper(
         )
         return SecurityScheme.header({
             headerName: securityScheme.name,
-            prefix: bearerFormat != null ? 'Bearer' : headerNames?.prefix,
+            prefix: bearerFormat != null ? "Bearer" : headerNames?.prefix,
             headerVariableName:
                 headerNames?.name ?? getExtension<string>(securityScheme, FernOpenAPIExtension.HEADER_VARIABLE_NAME),
             headerEnvVar: headerNames?.env
         })
-    } else if (securityScheme.type === 'http' && securityScheme.scheme === 'bearer') {
+    } else if (securityScheme.type === "http" && securityScheme.scheme === "bearer") {
         const bearerNames = getExtension<SecuritySchemeNames>(securityScheme, FernOpenAPIExtension.FERN_BEARER_TOKEN)
         return SecurityScheme.bearer({
             tokenVariableName:
@@ -50,7 +50,7 @@ function convertSecuritySchemeHelper(
                 getExtension<string>(securityScheme, FernOpenAPIExtension.BEARER_TOKEN_VARIABLE_NAME),
             tokenEnvVar: bearerNames?.env
         })
-    } else if (securityScheme.type === 'http' && securityScheme.scheme === 'basic') {
+    } else if (securityScheme.type === "http" && securityScheme.scheme === "basic") {
         const basicSecuritySchemeNamingAndEnvvar = getBasicSecuritySchemeNameAndEnvvar(securityScheme)
         const basicSecuritySchemeNaming = getBasicSecuritySchemeNames(securityScheme)
         return SecurityScheme.basic({
@@ -61,12 +61,12 @@ function convertSecuritySchemeHelper(
                 basicSecuritySchemeNamingAndEnvvar?.password?.name ?? basicSecuritySchemeNaming.passwordVariable,
             passwordEnvVar: basicSecuritySchemeNamingAndEnvvar?.password?.env
         })
-    } else if (securityScheme.type === 'openIdConnect') {
+    } else if (securityScheme.type === "openIdConnect") {
         return SecurityScheme.bearer({
             tokenVariableName: undefined,
             tokenEnvVar: undefined
         })
-    } else if (securityScheme.type === 'oauth2') {
+    } else if (securityScheme.type === "oauth2") {
         return SecurityScheme.oauth({
             scopesEnum: getScopes(securityScheme, source)
         })
@@ -83,7 +83,7 @@ function getScopes(oauthSecurityScheme: OpenAPIV3.OAuth2SecurityScheme, source: 
     if (scopes != null) {
         const schemaWithExample = convertEnum({
             nameOverride: undefined,
-            generatedName: 'OauthScope',
+            generatedName: "OauthScope",
             title: undefined,
             enumValues: Object.keys(scopes),
             fernEnum: Object.fromEntries(
@@ -108,7 +108,7 @@ function getScopes(oauthSecurityScheme: OpenAPIV3.OAuth2SecurityScheme, source: 
             inline: undefined
         })
         const schema = convertSchemaWithExampleToSchema(schemaWithExample)
-        if (schema.type === 'enum') {
+        if (schema.type === "enum") {
             return schema
         }
     }

@@ -1,9 +1,9 @@
-import path from 'path'
-import { Directory, SourceFile } from 'ts-morph'
+import path from "path"
+import { Directory, SourceFile } from "ts-morph"
 
-import { RelativeFilePath } from '@fern-api/fs-utils'
+import { RelativeFilePath } from "@fern-api/fs-utils"
 
-import { ModuleSpecifier, getRelativePathAsModuleSpecifierTo } from '../referencing'
+import { ModuleSpecifier, getRelativePathAsModuleSpecifierTo } from "../referencing"
 
 export interface ExportedFilePath {
     directories: ExportedDirectory[]
@@ -42,7 +42,7 @@ interface CombinedExportDeclarations {
 
 type PathToDirectory = string
 
-const DEFAULT_PACKAGE_PATH = 'src'
+const DEFAULT_PACKAGE_PATH = "src"
 
 export class ExportsManager {
     private exports: Record<PathToDirectory, Record<ModuleSpecifier, CombinedExportDeclarations>> = {}
@@ -73,7 +73,7 @@ export class ExportsManager {
     ): string {
         return path.join(
             // within a ts-morph Project, we treat "/src" as the root of the project
-            '/' + packagePath,
+            "/" + packagePath,
             ...exportedDirectoryPath.map((directory) => RelativeFilePath.of(directory.nameOnDisk))
         )
     }
@@ -83,9 +83,9 @@ export class ExportsManager {
         exportDeclaration: ExportDeclaration | undefined,
         addExportTypeModifier?: boolean
     ): void {
-        const fromPath = typeof from === 'string' ? from : from.getFilePath()
+        const fromPath = typeof from === "string" ? from : from.getFilePath()
         if (path.extname(fromPath).length === 0) {
-            throw new Error('Cannot export from directory: ' + fromPath)
+            throw new Error("Cannot export from directory: " + fromPath)
         }
 
         const pathToDirectory = path.dirname(fromPath)
@@ -152,7 +152,7 @@ export class ExportsManager {
         exportDeclaration: ExportDeclaration | undefined
         addExportTypeModifier: boolean | undefined
     }): void {
-        const pathToDirectory = typeof directory === 'string' ? directory : directory.getPath()
+        const pathToDirectory = typeof directory === "string" ? directory : directory.getPath()
         const exportsForDirectory = (this.exports[pathToDirectory] ??= {})
 
         const exportsForModuleSpecifier = (exportsForDirectory[moduleSpecifierToExport] ??= {
@@ -173,13 +173,13 @@ export class ExportsManager {
             exportsForModuleSpecifier.namespaceExports.add(exportDeclaration.namespaceExport)
         }
         if (exportDeclaration.defaultExport != null) {
-            exportsForModuleSpecifier.namespaceExports.add('default')
+            exportsForModuleSpecifier.namespaceExports.add("default")
         }
 
         if (exportDeclaration.namedExports != null) {
             for (const namedExport of exportDeclaration.namedExports) {
                 if (addExportTypeModifier) {
-                    exportsForModuleSpecifier.namedExports.add('type ' + namedExport)
+                    exportsForModuleSpecifier.namedExports.add("type " + namedExport)
                 } else {
                     exportsForModuleSpecifier.namedExports.add(namedExport)
                 }
@@ -228,6 +228,6 @@ function getExportsFileForDirectory({
     pathToDirectory: PathToDirectory
     rootDirectory: Directory
 }): SourceFile {
-    const filepath = path.join(pathToDirectory, 'index.ts')
+    const filepath = path.join(pathToDirectory, "index.ts")
     return rootDirectory.getSourceFile(filepath) ?? rootDirectory.createSourceFile(filepath)
 }

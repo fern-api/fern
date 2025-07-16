@@ -1,4 +1,4 @@
-import { ApiConfigurationSchemaInternal, NamespacedApiConfigurationSchema } from '../schemas'
+import { ApiConfigurationSchemaInternal, NamespacedApiConfigurationSchema } from "../schemas"
 
 export function isNamespacedApiConfiguration(
     api: ApiConfigurationSchemaInternal | NamespacedApiConfigurationSchema

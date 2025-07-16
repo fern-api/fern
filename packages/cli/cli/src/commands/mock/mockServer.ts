@@ -1,12 +1,12 @@
-import { SourceResolverImpl } from '@fern-api/cli-source-resolver'
-import { generateIntermediateRepresentation } from '@fern-api/ir-generator'
-import { MockServer } from '@fern-api/mock'
-import { Project } from '@fern-api/project-loader'
-import { AbstractAPIWorkspace, FernWorkspace } from '@fern-api/workspace-loader'
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver"
+import { generateIntermediateRepresentation } from "@fern-api/ir-generator"
+import { MockServer } from "@fern-api/mock"
+import { Project } from "@fern-api/project-loader"
+import { AbstractAPIWorkspace, FernWorkspace } from "@fern-api/workspace-loader"
 
-import { CliContext } from '../../cli-context/CliContext'
-import { API_CLI_OPTION } from '../../constants'
-import { validateAPIWorkspaceAndLogIssues } from '../validate/validateAPIWorkspaceAndLogIssues'
+import { CliContext } from "../../cli-context/CliContext"
+import { API_CLI_OPTION } from "../../constants"
+import { validateAPIWorkspaceAndLogIssues } from "../validate/validateAPIWorkspaceAndLogIssues"
 
 export async function mockServer({
     cliContext,
@@ -19,7 +19,7 @@ export async function mockServer({
 }): Promise<void> {
     await cliContext.instrumentPostHogEvent({
         orgId: project.config.organization,
-        command: 'fern mock'
+        command: "fern mock"
     })
 
     if (project.apiWorkspaces.length !== 1 || project.apiWorkspaces[0] == null) {
@@ -39,7 +39,7 @@ export async function mockServer({
 
         const ir = generateIntermediateRepresentation({
             workspace: fernWorkspace,
-            audiences: { type: 'all' },
+            audiences: { type: "all" },
             generationLanguage: undefined,
             keywords: undefined,
             smartCasing: false,

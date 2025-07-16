@@ -1,7 +1,7 @@
-import { AbstractAstNode } from '@fern-api/browser-compatible-base-generator'
+import { AbstractAstNode } from "@fern-api/browser-compatible-base-generator"
 
-import { BasePhpCustomConfigSchema } from '../../custom-config/BasePhpCustomConfigSchema'
-import { Writer } from './Writer'
+import { BasePhpCustomConfigSchema } from "../../custom-config/BasePhpCustomConfigSchema"
+import { Writer } from "./Writer"
 
 export abstract class AstNode extends AbstractAstNode {
     /**
@@ -20,7 +20,7 @@ export abstract class AstNode extends AbstractAstNode {
             //  - `${astNode}`
             //  - "Foo<" + astNode + ">"
 
-            throw new Error('Internal error; AstNode.toString method called incorrectly.')
+            throw new Error("Internal error; AstNode.toString method called incorrectly.")
         }
         const { namespace, rootNamespace, customConfig, skipImports = false } = param
 

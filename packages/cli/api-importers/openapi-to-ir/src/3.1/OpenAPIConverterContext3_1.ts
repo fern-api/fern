@@ -1,9 +1,9 @@
-import { OpenAPIV3, OpenAPIV3_1 } from 'openapi-types'
+import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types"
 
-import { FernIr, TypeReference } from '@fern-api/ir-sdk'
-import { AbstractConverterContext, Converters, DisplayNameOverrideSource } from '@fern-api/v2-importer-commons'
+import { FernIr, TypeReference } from "@fern-api/ir-sdk"
+import { AbstractConverterContext, Converters, DisplayNameOverrideSource } from "@fern-api/v2-importer-commons"
 
-import { DisplayNameExtension } from '../extensions/x-display-name'
+import { DisplayNameExtension } from "../extensions/x-display-name"
 
 /**
  * Context class for converting OpenAPI 3.1 specifications
@@ -25,7 +25,7 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
             | OpenAPIV3.RequestBodyObject
             | OpenAPIV3.SecuritySchemeObject
     ): parameter is OpenAPIV3.ReferenceObject | OpenAPIV3_1.ReferenceObject {
-        return parameter != null && typeof parameter === 'object' && '$ref' in parameter
+        return parameter != null && typeof parameter === "object" && "$ref" in parameter
     }
 
     public convertReferenceToTypeReference({
@@ -56,11 +56,11 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
 
         let displayName: string | undefined
 
-        if (displayNameOverrideSource === 'reference_identifier') {
+        if (displayNameOverrideSource === "reference_identifier") {
             displayName = displayNameOverride ?? resolvedReference.value.title
         } else if (
-            displayNameOverrideSource === 'discriminator_key' ||
-            displayNameOverrideSource === 'schema_identifier'
+            displayNameOverrideSource === "discriminator_key" ||
+            displayNameOverrideSource === "schema_identifier"
         ) {
             displayName = resolvedReference.value.title ?? displayNameOverride
         }
@@ -70,7 +70,7 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
         // If the typeId has a "/" then we can assume that it is actually a reference to
         // an inlined schema ($ref: /components/schemas/MySchema/properties/foo).
         // In this case we want to create an inlined type for the schema of the property foo.
-        if (typeId.includes('/')) {
+        if (typeId.includes("/")) {
             const schemaConverter = new Converters.SchemaConverters.SchemaConverter({
                 context: this,
                 breadcrumbs: breadcrumbs ?? [],
@@ -109,7 +109,7 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
         if (Object.keys(this.tagToDisplayName).length === 0) {
             for (const tag of this.spec.tags ?? []) {
                 const displayNameExtension = new DisplayNameExtension({
-                    breadcrumbs: ['tags', tag.name],
+                    breadcrumbs: ["tags", tag.name],
                     tag,
                     context: this
                 })

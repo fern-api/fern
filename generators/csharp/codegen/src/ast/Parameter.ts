@@ -1,7 +1,7 @@
-import { Type } from './Type'
-import { TypeParameter } from './TypeParameter'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { Type } from "./Type"
+import { TypeParameter } from "./TypeParameter"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export declare namespace Parameter {
     interface Args {
@@ -38,10 +38,10 @@ export class Parameter extends AstNode {
 
     public write(writer: Writer): void {
         if (this.ref) {
-            writer.write('ref ')
+            writer.write("ref ")
         }
         if (this.out) {
-            writer.write('out ')
+            writer.write("out ")
         }
         writer.writeNode(this.type)
         writer.write(` ${this.name}`)

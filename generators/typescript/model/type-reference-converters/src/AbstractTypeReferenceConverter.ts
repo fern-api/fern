@@ -1,6 +1,6 @@
-import { TypeReferenceNode } from '@fern-typescript/commons'
-import { BaseContext } from '@fern-typescript/contexts'
-import { ts } from 'ts-morph'
+import { TypeReferenceNode } from "@fern-typescript/commons"
+import { BaseContext } from "@fern-typescript/contexts"
+import { ts } from "ts-morph"
 
 import {
     ContainerType,
@@ -11,7 +11,7 @@ import {
     PrimitiveTypeV1,
     ShapeType,
     TypeReference
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
 export declare namespace AbstractTypeReferenceConverter {
     export interface Init {
@@ -33,13 +33,13 @@ export type ConvertTypeReferenceParams =
 
 export namespace ConvertTypeReferenceParams {
     export function isInlinePropertyParams(params: ConvertTypeReferenceParams): params is InlinePropertyTypeParams {
-        return params.type === 'inlinePropertyParams'
+        return params.type === "inlinePropertyParams"
     }
     export function isInlineAliasParams(params: ConvertTypeReferenceParams): params is InlineAliasTypeParams {
-        return params.type === 'inlineAliasParams'
+        return params.type === "inlineAliasParams"
     }
     export function isForInlineUnionParams(params: ConvertTypeReferenceParams): params is ForInlineUnionTypeParams {
-        return params.type === 'forInlineUnionParams'
+        return params.type === "forInlineUnionParams"
     }
     export function hasGenericIn(
         params: ConvertTypeReferenceParams
@@ -55,18 +55,18 @@ export namespace ConvertTypeReferenceParams {
      * Metadata for converting inline types
      */
     export interface InlinePropertyTypeParams extends WithGenericIn, WithTypeReference, WithNullable {
-        type: 'inlinePropertyParams'
+        type: "inlinePropertyParams"
         parentTypeName: string
         propertyName: string
     }
 
     export interface InlineAliasTypeParams extends WithGenericIn, WithTypeReference, WithNullable {
-        type: 'inlineAliasParams'
+        type: "inlineAliasParams"
         aliasTypeName: string
     }
 
     export interface ForInlineUnionTypeParams extends WithTypeReference, WithNullable {
-        type: 'forInlineUnionParams'
+        type: "forInlineUnionParams"
     }
 
     export interface WithGenericIn {
@@ -82,9 +82,9 @@ export namespace ConvertTypeReferenceParams {
     }
 
     export const GenericIn = {
-        List: 'list',
-        Map: 'map',
-        Set: 'set'
+        List: "list",
+        Map: "map",
+        Set: "set"
     } as const
     export type GenericIn = (typeof GenericIn)[keyof typeof GenericIn]
 }
@@ -125,7 +125,7 @@ export abstract class AbstractTypeReferenceConverter<T> {
             container: (type) => this.container(type, params),
             unknown: () => (this.treatUnknownAsAny ? this.any() : this.unknown()),
             _other: () => {
-                throw new Error('Unexpected type reference: ' + params.typeReference.type)
+                throw new Error("Unexpected type reference: " + params.typeReference.type)
             }
         })
     }
@@ -139,7 +139,7 @@ export abstract class AbstractTypeReferenceConverter<T> {
             optional: (type) => this.optional(type, params),
             literal: (type) => this.literal(type, params),
             _other: () => {
-                throw new Error('Unexpected container type: ' + container.type)
+                throw new Error("Unexpected container type: " + container.type)
             }
         })
     }
@@ -175,14 +175,14 @@ export abstract class AbstractTypeReferenceConverter<T> {
             base64: this.string.bind(this),
             bigInteger: () => this.bigInteger(params),
             _other: () => {
-                throw new Error('Unexpected primitive type: ' + primitive.v1)
+                throw new Error("Unexpected primitive type: " + primitive.v1)
             }
         })
     }
 
     protected map(mapType: MapType, params: ConvertTypeReferenceParams): T {
         const resolvedKeyType = this.context.type.resolveTypeReference(mapType.keyType)
-        if (resolvedKeyType.type === 'named' && resolvedKeyType.shape === ShapeType.Enum) {
+        if (resolvedKeyType.type === "named" && resolvedKeyType.shape === ShapeType.Enum) {
             return this.mapWithEnumKeys(mapType, params)
         } else {
             return this.mapWithNonEnumKeys(mapType, params)
@@ -194,10 +194,10 @@ export abstract class AbstractTypeReferenceConverter<T> {
 
     protected isTypeReferencePrimitive(typeReference: TypeReference): boolean {
         const resolvedType = this.context.type.resolveTypeReference(typeReference)
-        if (resolvedType.type === 'primitive') {
+        if (resolvedType.type === "primitive") {
             return true
         }
-        if (resolvedType.type === 'named' && resolvedType.shape === ShapeType.Enum) {
+        if (resolvedType.type === "named" && resolvedType.shape === ShapeType.Enum) {
             return true
         }
         return false

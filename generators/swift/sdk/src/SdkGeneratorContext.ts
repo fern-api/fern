@@ -1,9 +1,9 @@
-import { GeneratorNotificationService } from '@fern-api/base-generator'
-import { RelativeFilePath } from '@fern-api/fs-utils'
-import { AbstractSwiftGeneratorContext } from '@fern-api/swift-base'
-import { swift } from '@fern-api/swift-codegen'
+import { GeneratorNotificationService } from "@fern-api/base-generator"
+import { RelativeFilePath } from "@fern-api/fs-utils"
+import { AbstractSwiftGeneratorContext } from "@fern-api/swift-base"
+import { swift } from "@fern-api/swift-codegen"
 
-import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
 import {
     EndpointId,
     ExampleEndpointCall,
@@ -15,9 +15,9 @@ import {
     ServiceId,
     Subpackage,
     SubpackageId
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { SdkCustomConfigSchema } from './SdkCustomConfig'
+import { SdkCustomConfigSchema } from "./SdkCustomConfig"
 
 export class SdkGeneratorContext extends AbstractSwiftGeneratorContext<SdkCustomConfigSchema> {
     public constructor(
@@ -78,7 +78,7 @@ export class SdkGeneratorContext extends AbstractSwiftGeneratorContext<SdkCustom
     }
 
     public getDirectoryForFernFilepath(fernFilepath: FernFilepath): string {
-        return RelativeFilePath.of([...fernFilepath.allParts.map((path) => path.pascalCase.safeName)].join('/'))
+        return RelativeFilePath.of([...fernFilepath.allParts.map((path) => path.pascalCase.safeName)].join("/"))
     }
 
     public getSubpackageForServiceId(serviceId: ServiceId): Subpackage | undefined {

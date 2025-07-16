@@ -1,8 +1,8 @@
-import { Class_ } from './Class'
-import { Comment } from './Comment'
-import { TypeParameter } from './TypeParameter'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { Class_ } from "./Class"
+import { Comment } from "./Comment"
+import { TypeParameter } from "./TypeParameter"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export declare namespace Module {
     export interface Args {
@@ -57,9 +57,9 @@ export class Module extends AstNode {
             })
 
             writer.dedent()
-            writer.write('end')
+            writer.write("end")
         } else {
-            writer.write('; end')
+            writer.write("; end")
         }
         writer.newLine()
     }
@@ -68,15 +68,15 @@ export class Module extends AstNode {
         writer.write(`module ${this.name}`)
 
         if (this.typeParameters.length) {
-            writer.write('[')
+            writer.write("[")
 
             writer.delimit({
                 nodes: this.typeParameters,
-                delimiter: ', ',
+                delimiter: ", ",
                 writeFunction: (argument) => argument.writeTypeDefinition(writer)
             })
 
-            writer.write(']')
+            writer.write("]")
         }
 
         writer.newLine()
@@ -90,7 +90,7 @@ export class Module extends AstNode {
             writer.dedent()
         }
 
-        writer.write('end')
+        writer.write("end")
     }
 
     /**
@@ -110,6 +110,6 @@ export class Module extends AstNode {
      * `"Grandparent::Parent::Child"`
      */
     public get fullyQualifiedNamespace(): string {
-        return [...this.namespace, this].map((klass) => klass.name).join('::')
+        return [...this.namespace, this].map((klass) => klass.name).join("::")
     }
 }

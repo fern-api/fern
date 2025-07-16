@@ -1,5 +1,5 @@
 /* eslint-disable jest/no-export */
-import { Schema, SchemaOptions, ValidationError } from '../../../../src/core/schemas/Schema'
+import { Schema, SchemaOptions, ValidationError } from "../../../../src/core/schemas/Schema"
 
 export function itValidate<Raw, Parsed>(
     title: string,
@@ -9,10 +9,10 @@ export function itValidate<Raw, Parsed>(
     opts?: SchemaOptions
 ): void {
     // eslint-disable-next-line jest/valid-title
-    describe('parse()', () => {
+    describe("parse()", () => {
         itValidateParse(title, schema, input, errors, opts)
     })
-    describe('json()', () => {
+    describe("json()", () => {
         itValidateJson(title, schema, input, errors, opts)
     })
 }
@@ -24,12 +24,12 @@ export function itValidateParse<Raw, Parsed>(
     errors: ValidationError[],
     opts?: SchemaOptions
 ): void {
-    describe('parse', () => {
+    describe("parse", () => {
         // eslint-disable-next-line jest/valid-title
         it(title, async () => {
             const maybeValid = await schema.parse(raw, opts)
             if (maybeValid.ok) {
-                throw new Error('Value passed validation')
+                throw new Error("Value passed validation")
             }
             expect(maybeValid.errors).toStrictEqual(errors)
         })
@@ -43,12 +43,12 @@ export function itValidateJson<Raw, Parsed>(
     errors: ValidationError[],
     opts?: SchemaOptions
 ): void {
-    describe('json', () => {
+    describe("json", () => {
         // eslint-disable-next-line jest/valid-title
         it(title, async () => {
             const maybeValid = await schema.json(parsed, opts)
             if (maybeValid.ok) {
-                throw new Error('Value passed validation')
+                throw new Error("Value passed validation")
             }
             expect(maybeValid.errors).toStrictEqual(errors)
         })

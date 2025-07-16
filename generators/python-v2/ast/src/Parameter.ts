@@ -1,7 +1,7 @@
-import { CodeBlock } from './CodeBlock'
-import { Type } from './Type'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { CodeBlock } from "./CodeBlock"
+import { Type } from "./Type"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export declare namespace Parameter {
     interface Args {
@@ -30,12 +30,12 @@ export class Parameter extends AstNode {
         writer.write(this.name)
 
         if (this.type) {
-            writer.write(': ')
+            writer.write(": ")
             this.type.write(writer)
         }
 
         if (this.initializer !== undefined) {
-            writer.write(' = ')
+            writer.write(" = ")
             this.initializer.write(writer)
         }
     }

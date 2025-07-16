@@ -1,9 +1,9 @@
-import { FernGeneratorExec } from '@fern-api/browser-compatible-base-generator'
-import { basename } from '@fern-api/path-utils'
+import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator"
+import { basename } from "@fern-api/path-utils"
 
-import { BaseGoCustomConfigSchema } from './BaseGoCustomConfigSchema'
+import { BaseGoCustomConfigSchema } from "./BaseGoCustomConfigSchema"
 
-const DEFAULT_MODULE_PATH = 'sdk'
+const DEFAULT_MODULE_PATH = "sdk"
 
 export function resolveRootImportPath({
     config,
@@ -27,15 +27,15 @@ function getImportPath({
     return (
         customConfig?.importPath ??
         customConfig?.module?.path ??
-        (config.output.mode.type === 'github'
-            ? trimPrefix(config.output.mode.repoUrl, 'https://')
+        (config.output.mode.type === "github"
+            ? trimPrefix(config.output.mode.repoUrl, "https://")
             : DEFAULT_MODULE_PATH)
     )
 }
 
 function getMajorVersionSuffix({ config }: { config: FernGeneratorExec.config.GeneratorConfig }): string | undefined {
     const majorVersion = parseMajorVersion({ config })
-    if (majorVersion == null || majorVersion === 'v0' || majorVersion === 'v1') {
+    if (majorVersion == null || majorVersion === "v0" || majorVersion === "v1") {
         return undefined
     }
     return `${majorVersion}`
@@ -48,12 +48,12 @@ function parseMajorVersion({ config }: { config: FernGeneratorExec.config.Genera
     if (version == null) {
         return undefined
     }
-    const split = version.split('.')
+    const split = version.split(".")
     if (split[0] == null) {
         return undefined
     }
     const majorVersion = split[0]
-    if (majorVersion.startsWith('v')) {
+    if (majorVersion.startsWith("v")) {
         return majorVersion
     }
     return `v${majorVersion}`
@@ -84,5 +84,5 @@ function getVersion(config: FernGeneratorExec.GeneratorConfig): string | undefin
     if (mode == null) {
         return undefined
     }
-    return mode.type === 'github' || mode.type === 'publish' ? mode.version : undefined
+    return mode.type === "github" || mode.type === "publish" ? mode.version : undefined
 }

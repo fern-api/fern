@@ -1,4 +1,4 @@
-import { AbstractExtension } from '../AbstractExtension'
+import { AbstractExtension } from "../AbstractExtension"
 
 export declare namespace AudienceExtension {
     export interface Args extends AbstractExtension.Args {
@@ -12,7 +12,7 @@ export declare namespace AudienceExtension {
 
 export class AudienceExtension extends AbstractExtension<AudienceExtension.Output> {
     private readonly operation: object
-    public readonly key = 'x-fern-audiences'
+    public readonly key = "x-fern-audiences"
 
     constructor({ breadcrumbs, operation, context }: AudienceExtension.Args) {
         super({ breadcrumbs, context })
@@ -26,8 +26,8 @@ export class AudienceExtension extends AbstractExtension<AudienceExtension.Outpu
         }
 
         const audiences = Array.isArray(extensionValue)
-            ? extensionValue.filter((name): name is string => typeof name === 'string')
-            : typeof extensionValue === 'string'
+            ? extensionValue.filter((name): name is string => typeof name === "string")
+            : typeof extensionValue === "string"
               ? [extensionValue]
               : []
 

@@ -1,10 +1,10 @@
-import path from 'path'
+import path from "path"
 
-import { File } from '@fern-api/base-generator'
-import { AbsoluteFilePath, RelativeFilePath } from '@fern-api/fs-utils'
-import { BasePhpCustomConfigSchema, php } from '@fern-api/php-codegen'
+import { File } from "@fern-api/base-generator"
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils"
+import { BasePhpCustomConfigSchema, php } from "@fern-api/php-codegen"
 
-import { FernFilepath } from '@fern-fern/ir-sdk/api'
+import { FernFilepath } from "@fern-fern/ir-sdk/api"
 
 export type Namespace = string
 
@@ -53,7 +53,7 @@ function phpFileContent({
     customConfig: BasePhpCustomConfigSchema
 }): string {
     return (
-        '<?php\n\n' +
+        "<?php\n\n" +
         clazz.toString({
             namespace: clazz.namespace,
             rootNamespace,

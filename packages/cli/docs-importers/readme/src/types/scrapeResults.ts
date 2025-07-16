@@ -1,7 +1,7 @@
-import { docsYml } from '@fern-api/configuration'
+import { docsYml } from "@fern-api/configuration"
 
-import { scrapedNavigation } from './scrapedNavigation'
-import { scrapedTab } from './scrapedTab'
+import { scrapedNavigation } from "./scrapedNavigation"
+import { scrapedTab } from "./scrapedTab"
 
 export interface ScrapeResult {
     success: boolean

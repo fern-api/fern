@@ -1,8 +1,8 @@
-import { GetReferenceOpts } from '@fern-typescript/commons'
-import { BaseContext, GeneratedTypeReferenceExample } from '@fern-typescript/contexts'
-import { ts } from 'ts-morph'
+import { GetReferenceOpts } from "@fern-typescript/commons"
+import { BaseContext, GeneratedTypeReferenceExample } from "@fern-typescript/contexts"
+import { ts } from "ts-morph"
 
-import { assertNever } from '@fern-api/core-utils'
+import { assertNever } from "@fern-api/core-utils"
 
 import {
     ExampleContainer,
@@ -11,7 +11,7 @@ import {
     ExampleTypeReferenceShape,
     ShapeType,
     TypeReference
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
 export declare namespace GeneratedTypeReferenceExampleImpl {
     export interface Init {
@@ -73,14 +73,14 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                         if (!context.includeSerdeLayer && datetimeExample.raw != null) {
                             return ts.factory.createStringLiteral(datetimeExample.raw)
                         } else {
-                            return ts.factory.createNewExpression(ts.factory.createIdentifier('Date'), undefined, [
+                            return ts.factory.createNewExpression(ts.factory.createIdentifier("Date"), undefined, [
                                 ts.factory.createStringLiteral(datetimeExample.datetime.toISOString())
                             ])
                         }
                     },
                     date: (dateExample) => ts.factory.createStringLiteral(dateExample),
                     _other: () => {
-                        throw new Error('Unknown primitive example: ' + primitiveExample.type)
+                        throw new Error("Unknown primitive example: " + primitiveExample.type)
                     }
                 }),
             container: (exampleContainer) => {
@@ -93,7 +93,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                         ),
                     set: (exampleItems) => {
                         if (this.includeSerdeLayer && this.isTypeReferencePrimitive(exampleItems.itemType, context)) {
-                            return ts.factory.createNewExpression(ts.factory.createIdentifier('Set'), undefined, [
+                            return ts.factory.createNewExpression(ts.factory.createIdentifier("Set"), undefined, [
                                 ts.factory.createArrayLiteralExpression(
                                     exampleItems.set.map((exampleItem) =>
                                         this.buildExample({ example: exampleItem, context, opts })
@@ -121,11 +121,11 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                     nullable: (exampleItem) =>
                         exampleItem.nullable != null
                             ? this.buildExample({ example: exampleItem.nullable, context, opts })
-                            : ts.factory.createIdentifier('null'),
+                            : ts.factory.createIdentifier("null"),
                     optional: (exampleItem) =>
                         exampleItem.optional != null
                             ? this.buildExample({ example: exampleItem.optional, context, opts })
-                            : ts.factory.createIdentifier('undefined'),
+                            : ts.factory.createIdentifier("undefined"),
                     literal: (exampleItem) =>
                         exampleItem != null
                             ? this.buildExample({
@@ -136,9 +136,9 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                                   context,
                                   opts
                               })
-                            : ts.factory.createIdentifier('undefined'),
+                            : ts.factory.createIdentifier("undefined"),
                     _other: () => {
-                        throw new Error('Unknown example container type: ' + exampleContainer.type)
+                        throw new Error("Unknown example container type: " + exampleContainer.type)
                     }
                 })
             },
@@ -146,45 +146,45 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                 return context.type.getGeneratedType(typeName).buildExample(example, context, opts)
             },
             unknown: (value) => {
-                const parsed = ts.parseJsonText('example.json', JSON.stringify(value, undefined, 4)).statements[0]
+                const parsed = ts.parseJsonText("example.json", JSON.stringify(value, undefined, 4)).statements[0]
                 if (parsed == null) {
-                    throw new Error('Could not parse unknown example')
+                    throw new Error("Could not parse unknown example")
                 }
                 return parsed.expression
             },
             _other: () => {
-                throw new Error('Unknown example type: ' + example.shape.type)
+                throw new Error("Unknown example type: " + example.shape.type)
             }
         })
     }
 
     private getJsonExampleForPrimitive(primitiveExample: ExamplePrimitive): unknown {
         switch (primitiveExample.type) {
-            case 'string':
+            case "string":
                 return `"${primitiveExample.string.original}"`
-            case 'integer':
+            case "integer":
                 return primitiveExample.integer
-            case 'double':
+            case "double":
                 return primitiveExample.double
-            case 'long':
+            case "long":
                 return primitiveExample.long
-            case 'boolean':
+            case "boolean":
                 return primitiveExample.boolean
-            case 'uuid':
+            case "uuid":
                 return `"${primitiveExample.uuid}"`
-            case 'datetime':
+            case "datetime":
                 return `"${primitiveExample.datetime.toISOString()}"`
-            case 'date':
+            case "date":
                 return `"${primitiveExample.date}"`
-            case 'uint':
+            case "uint":
                 return primitiveExample.uint
-            case 'uint64':
+            case "uint64":
                 return primitiveExample.uint64
-            case 'float':
+            case "float":
                 return primitiveExample.float
-            case 'bigInteger':
+            case "bigInteger":
                 return `"${primitiveExample.bigInteger}"`
-            case 'base64':
+            case "base64":
                 return `"${primitiveExample.base64}"`
             default:
                 assertNever(primitiveExample)
@@ -208,7 +208,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                     double: (doubleExample) => ts.factory.createNumericLiteral(doubleExample),
                     long: (longExample) => ts.factory.createNumericLiteral(longExample),
                     boolean: (booleanExample) =>
-                        booleanExample ? ts.factory.createIdentifier('true') : ts.factory.createIdentifier('false'),
+                        booleanExample ? ts.factory.createIdentifier("true") : ts.factory.createIdentifier("false"),
                     uint: (uintExample) => ts.factory.createNumericLiteral(uintExample),
                     uint64: (uint64Example) => ts.factory.createNumericLiteral(uint64Example),
                     float: (floatExample) => ts.factory.createNumericLiteral(floatExample),
@@ -216,16 +216,16 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                     base64: (base64Example) => ts.factory.createStringLiteral(base64Example),
                     uuid: (uuidExample) => ts.factory.createStringLiteral(uuidExample),
                     datetime: () => {
-                        throw new Error('Cannot convert datetime to property name')
+                        throw new Error("Cannot convert datetime to property name")
                     },
                     date: (dateExample) => ts.factory.createStringLiteral(dateExample),
                     _other: () => {
-                        throw new Error('Unknown primitive example: ' + primitiveExample.type)
+                        throw new Error("Unknown primitive example: " + primitiveExample.type)
                     }
                 }),
             container: (containerExample) => {
                 switch (containerExample.type) {
-                    case 'literal':
+                    case "literal":
                         return this.getExampleAsPropertyName({
                             example: {
                                 shape: ExampleTypeReferenceShape.primitive(containerExample.literal),
@@ -235,24 +235,24 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                             opts
                         })
                 }
-                throw new Error('Cannot convert container to property name')
+                throw new Error("Cannot convert container to property name")
             },
             named: ({ shape: example, typeName }) => {
                 switch (example.type) {
-                    case 'object':
-                        throw new Error('Cannot convert object to property name')
-                    case 'union':
-                        throw new Error('Cannot convert union to property name')
-                    case 'enum': {
+                    case "object":
+                        throw new Error("Cannot convert object to property name")
+                    case "union":
+                        throw new Error("Cannot convert union to property name")
+                    case "enum": {
                         const generatedType = context.type.getGeneratedType(typeName)
-                        if (generatedType.type !== 'enum') {
-                            throw new Error('Type is not an enum: ' + typeName.name.originalName)
+                        if (generatedType.type !== "enum") {
+                            throw new Error("Type is not an enum: " + typeName.name.originalName)
                         }
                         return ts.factory.createComputedPropertyName(generatedType.buildExample(example, context, opts))
                     }
-                    case 'alias':
+                    case "alias":
                         return this.getExampleAsPropertyName({ example: example.value, context, opts })
-                    case 'undiscriminatedUnion':
+                    case "undiscriminatedUnion":
                         return this.getExampleAsPropertyName({
                             example: example.singleUnionType,
                             context,
@@ -263,20 +263,20 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                 }
             },
             unknown: () => {
-                throw new Error('Cannot convert unknown to property name')
+                throw new Error("Cannot convert unknown to property name")
             },
             _other: () => {
-                throw new Error('Unknown example type: ' + example.shape.type)
+                throw new Error("Unknown example type: " + example.shape.type)
             }
         })
     }
 
     protected isTypeReferencePrimitive(typeReference: TypeReference, context: BaseContext): boolean {
         const resolvedType = context.type.resolveTypeReference(typeReference)
-        if (resolvedType.type === 'primitive') {
+        if (resolvedType.type === "primitive") {
             return true
         }
-        if (resolvedType.type === 'named' && resolvedType.shape === ShapeType.Enum) {
+        if (resolvedType.type === "named" && resolvedType.shape === ShapeType.Enum) {
             return true
         }
         return false
@@ -284,7 +284,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
 }
 
 function createBigIntLiteral(value: string | number): ts.Expression {
-    return ts.factory.createCallExpression(ts.factory.createIdentifier('BigInt'), undefined, [
+    return ts.factory.createCallExpression(ts.factory.createIdentifier("BigInt"), undefined, [
         ts.factory.createStringLiteral(value.toString())
     ])
 }

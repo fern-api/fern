@@ -1,7 +1,7 @@
-import { JSONSchema4 } from 'json-schema'
+import { JSONSchema4 } from "json-schema"
 
-import { IntermediateRepresentation, TypeDeclaration, TypeId, TypeReference } from '@fern-api/ir-sdk'
-import { TaskContext } from '@fern-api/task-context'
+import { IntermediateRepresentation, TypeDeclaration, TypeId, TypeReference } from "@fern-api/ir-sdk"
+import { TaskContext } from "@fern-api/task-context"
 
 export class JsonSchemaConverterContext {
     private readonly buildingTypeIds: Set<TypeId> = new Set()
@@ -26,12 +26,12 @@ export class JsonSchemaConverterContext {
     }
 
     public isOptional(typeReference: TypeReference): boolean {
-        if (typeReference.type === 'container' && typeReference.container.type === 'optional') {
+        if (typeReference.type === "container" && typeReference.container.type === "optional") {
             return true
         }
-        if (typeReference.type === 'named') {
+        if (typeReference.type === "named") {
             const typeDeclaration = this.getTypeDeclarationForId({ typeId: typeReference.typeId })
-            if (typeDeclaration.shape.type === 'alias') {
+            if (typeDeclaration.shape.type === "alias") {
                 return this.isOptional(typeDeclaration.shape.aliasOf)
             }
         }
@@ -57,7 +57,7 @@ export class JsonSchemaConverterContext {
         return [
             ...typeDeclaration.name.fernFilepath.allParts.map((part) => part.originalName),
             typeDeclaration.name.name.originalName
-        ].join('.')
+        ].join(".")
     }
 
     public buildingTypeDeclaration(typeId: TypeId): void {

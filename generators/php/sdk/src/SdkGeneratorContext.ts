@@ -1,11 +1,11 @@
-import { camelCase, upperFirst } from 'lodash-es'
+import { camelCase, upperFirst } from "lodash-es"
 
-import { GeneratorNotificationService } from '@fern-api/base-generator'
-import { assertNever } from '@fern-api/core-utils'
-import { AbstractPhpGeneratorContext, AsIsFiles, FileLocation } from '@fern-api/php-base'
-import { php } from '@fern-api/php-codegen'
+import { GeneratorNotificationService } from "@fern-api/base-generator"
+import { assertNever } from "@fern-api/core-utils"
+import { AbstractPhpGeneratorContext, AsIsFiles, FileLocation } from "@fern-api/php-base"
+import { php } from "@fern-api/php-codegen"
 
-import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
 import {
     FernFilepath,
     HttpEndpoint,
@@ -18,17 +18,17 @@ import {
     SubpackageId,
     TypeId,
     UserAgent
-} from '@fern-fern/ir-sdk/api'
-import { IntermediateRepresentation } from '@fern-fern/ir-sdk/api'
-import { ErrorDeclaration, ErrorId } from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api"
+import { ErrorDeclaration, ErrorId } from "@fern-fern/ir-sdk/api"
 
-import { PhpGeneratorAgent } from './PhpGeneratorAgent'
-import { SdkCustomConfigSchema } from './SdkCustomConfig'
-import { EXCEPTIONS_DIRECTORY, REQUESTS_DIRECTORY, RESERVED_METHOD_NAMES, TYPES_DIRECTORY } from './constants'
-import { RawClient } from './core/RawClient'
-import { EndpointGenerator } from './endpoint/EndpointGenerator'
-import { GuzzleClient } from './external/GuzzleClient'
-import { ReadmeConfigBuilder } from './readme/ReadmeConfigBuilder'
+import { PhpGeneratorAgent } from "./PhpGeneratorAgent"
+import { SdkCustomConfigSchema } from "./SdkCustomConfig"
+import { EXCEPTIONS_DIRECTORY, REQUESTS_DIRECTORY, RESERVED_METHOD_NAMES, TYPES_DIRECTORY } from "./constants"
+import { RawClient } from "./core/RawClient"
+import { EndpointGenerator } from "./endpoint/EndpointGenerator"
+import { GuzzleClient } from "./external/GuzzleClient"
+import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder"
 
 export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomConfigSchema> {
     public endpointGenerator: EndpointGenerator
@@ -110,79 +110,79 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     public getSubpackageField(subpackage: Subpackage): php.Field {
         return php.field({
             name: `$${subpackage.name.camelCase.safeName}`,
-            access: 'public',
+            access: "public",
             type: php.Type.reference(this.getSubpackageClassReference(subpackage))
         })
     }
 
     public getEnvironmentsClassReference(): php.ClassReference {
         return php.classReference({
-            name: 'Environments',
+            name: "Environments",
             namespace: this.getRootNamespace()
         })
     }
 
     public getExceptionClassReference(): php.ClassReference {
         return php.classReference({
-            name: 'Exception',
+            name: "Exception",
             namespace: this.getGlobalNamespace()
         })
     }
 
     public getBaseExceptionClassReference(): php.ClassReference {
         return php.classReference({
-            name: this.getOrganizationPascalCase() + 'Exception',
+            name: this.getOrganizationPascalCase() + "Exception",
             namespace: this.getLocationForBaseException().namespace
         })
     }
 
     public getBaseApiExceptionClassReference(): php.ClassReference {
         return php.classReference({
-            name: this.getOrganizationPascalCase() + 'ApiException',
+            name: this.getOrganizationPascalCase() + "ApiException",
             namespace: this.getLocationForBaseException().namespace
         })
     }
 
     public getJsonExceptionClassReference(): php.ClassReference {
         return php.classReference({
-            name: 'JsonException',
+            name: "JsonException",
             namespace: this.getGlobalNamespace()
         })
     }
 
     public getClientExceptionInterfaceClassReference(): php.ClassReference {
         return php.classReference({
-            name: 'ClientExceptionInterface',
-            namespace: 'Psr\\Http\\Client'
+            name: "ClientExceptionInterface",
+            namespace: "Psr\\Http\\Client"
         })
     }
 
     public getJsonApiRequestClassReference(): php.ClassReference {
-        return this.getCoreJsonClassReference('JsonApiRequest')
+        return this.getCoreJsonClassReference("JsonApiRequest")
     }
 
     public getJsonDecoderClassReference(): php.ClassReference {
-        return this.getCoreJsonClassReference('JsonDecoder')
+        return this.getCoreJsonClassReference("JsonDecoder")
     }
 
     public getJsonEncoderClassReference(): php.ClassReference {
-        return this.getCoreJsonClassReference('JsonEncoder')
+        return this.getCoreJsonClassReference("JsonEncoder")
     }
 
     public getJsonSerializerClassReference(): php.ClassReference {
-        return this.getCoreJsonClassReference('JsonSerializer')
+        return this.getCoreJsonClassReference("JsonSerializer")
     }
 
     public getMultipartApiRequestClassReference(): php.ClassReference {
-        return this.getCoreMultipartClassReference('MultipartApiRequest')
+        return this.getCoreMultipartClassReference("MultipartApiRequest")
     }
 
     public getMultipartFormDataClassReference(): php.ClassReference {
-        return this.getCoreMultipartClassReference('MultipartFormData')
+        return this.getCoreMultipartClassReference("MultipartFormData")
     }
 
     public getFileClassReference(): php.ClassReference {
-        return this.getUtilsClassReference('File')
+        return this.getUtilsClassReference("File")
     }
 
     public getRequestWrapperReference(serviceId: ServiceId, requestName: Name): php.ClassReference {
@@ -193,12 +193,12 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     public getHttpMethodClassReference(): php.ClassReference {
-        return this.getCoreClientClassReference('HttpMethod')
+        return this.getCoreClientClassReference("HttpMethod")
     }
 
     public getPagerClassReference(itemType: php.Type): php.ClassReference {
         return php.classReference({
-            name: 'Pager',
+            name: "Pager",
             namespace: this.getCorePaginationNamespace(),
             generics: [itemType]
         })
@@ -206,14 +206,14 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
 
     public getOffsetPagerClassReference(): php.ClassReference {
         return php.classReference({
-            name: 'OffsetPager',
+            name: "OffsetPager",
             namespace: this.getCorePaginationNamespace()
         })
     }
 
     public getCursorPagerClassReference(): php.ClassReference {
         return php.classReference({
-            name: 'CursorPager',
+            name: "CursorPager",
             namespace: this.getCorePaginationNamespace()
         })
     }
@@ -236,38 +236,38 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         if (this.customConfig.clientName != null) {
             return this.customConfig.clientName
         }
-        if (this.customConfig['client-class-name'] != null) {
-            return this.customConfig['client-class-name']
+        if (this.customConfig["client-class-name"] != null) {
+            return this.customConfig["client-class-name"]
         }
         return this.getComputedClientName()
     }
 
     public getBaseUrlOptionName(): string {
-        return 'baseUrl'
+        return "baseUrl"
     }
 
     public getMaxRetriesOptionName(): string {
-        return 'maxRetries'
+        return "maxRetries"
     }
 
     public getGuzzleClientOptionName(): string {
-        return 'client'
+        return "client"
     }
 
     public getHeadersOptionName(): string {
-        return 'headers'
+        return "headers"
     }
 
     public getBodyPropertiesOptionName(): string {
-        return 'bodyProperties'
+        return "bodyProperties"
     }
 
     public getQueryParametersOptionName(): string {
-        return 'queryParameters'
+        return "queryParameters"
     }
 
     public getTimeoutOptionName(): string {
-        return 'timeout'
+        return "timeout"
     }
 
     public getClientOptionsName(): string {
@@ -279,7 +279,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     public getOptionsName(): string {
-        return 'options'
+        return "options"
     }
 
     public getClientOptionsType(): php.Type {
@@ -367,15 +367,15 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     public createRequestWithDefaults(reference: php.ClassReference | php.CodeBlock): php.AstNode {
         return php.invokeMethod({
             on: php.classReference({
-                name: 'PaginationHelper',
+                name: "PaginationHelper",
                 namespace: this.getCorePaginationNamespace()
             }),
-            method: 'createRequestWithDefaults',
+            method: "createRequestWithDefaults",
             arguments_: [
                 php.codeblock((writer) => {
                     if (reference instanceof php.ClassReference) {
                         writer.writeNode(reference)
-                        writer.write('::class')
+                        writer.write("::class")
                         return
                     }
                     writer.writeNode(reference)
@@ -391,7 +391,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         valueVarToSet: php.AstNode
     ): php.AstNode {
         if (setterPath.length === 0) {
-            throw new Error('setterPath cannot be empty')
+            throw new Error("setterPath cannot be empty")
         }
         if (setterPath.length === 1) {
             const singleSetter = setterPath[0] as Name
@@ -402,13 +402,13 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         }
         return php.invokeMethod({
             on: php.classReference({
-                name: 'PaginationHelper',
+                name: "PaginationHelper",
                 namespace: this.getCorePaginationNamespace()
             }),
-            method: 'setDeep',
+            method: "setDeep",
             arguments_: [
                 objectVarToSetOn,
-                php.codeblock(`[${setterPath.map((path) => `"${this.getPropertyName(path)}"`).join(', ')}]`),
+                php.codeblock(`[${setterPath.map((path) => `"${this.getPropertyName(path)}"`).join(", ")}]`),
                 valueVarToSet
             ],
             static_: true
@@ -425,7 +425,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         }
         if (this.version != null) {
             return {
-                header: 'User-Agent',
+                header: "User-Agent",
                 value: `${this.getPackageName()}/${this.version}`
             }
         }
@@ -446,12 +446,12 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return php.codeblock((writer) => {
             if (this.shouldGenerateGetterMethods()) {
                 writer.write(`->${this.getPropertySetterName(propertyName)}`)
-                writer.write('(')
+                writer.write("(")
                 writer.writeNode(valueVarToSet)
-                writer.write(')')
+                writer.write(")")
             } else {
                 writer.write(`->${this.getPropertyName(propertyName)}`)
-                writer.write(' = ')
+                writer.write(" = ")
                 writer.writeNode(valueVarToSet)
             }
         })
@@ -506,12 +506,12 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         const clientVariableName = this.getClientVariableName()
         const clientAccessParts = fernFilepath.allParts.map((part) => part.camelCase.safeName)
         return clientAccessParts.length > 0
-            ? `${clientVariableName}->${clientAccessParts.join('->')}`
+            ? `${clientVariableName}->${clientAccessParts.join("->")}`
             : clientVariableName
     }
 
     public getClientVariableName(): string {
-        return '$client'
+        return "$client"
     }
 
     public getRawAsIsFiles(): string[] {
@@ -645,7 +645,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     private isMultipartEndpoint(endpoint: HttpEndpoint): boolean {
-        return endpoint.requestBody?.type === 'fileUpload'
+        return endpoint.requestBody?.type === "fileUpload"
     }
 
     public hasPagination(): boolean {

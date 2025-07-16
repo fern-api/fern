@@ -1,11 +1,11 @@
-import { SchemaType } from '../../Schema'
-import { createIdentitySchemaCreator } from '../../utils/createIdentitySchemaCreator'
-import { getErrorMessageForIncorrectType } from '../../utils/getErrorMessageForIncorrectType'
+import { SchemaType } from "../../Schema"
+import { createIdentitySchemaCreator } from "../../utils/createIdentitySchemaCreator"
+import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType"
 
 export const number = createIdentitySchemaCreator<number>(
     SchemaType.NUMBER,
     (value, { breadcrumbsPrefix = [] } = {}) => {
-        if (typeof value === 'number') {
+        if (typeof value === "number") {
             return {
                 ok: true,
                 value
@@ -16,7 +16,7 @@ export const number = createIdentitySchemaCreator<number>(
                 errors: [
                     {
                         path: breadcrumbsPrefix,
-                        message: getErrorMessageForIncorrectType(value, 'number')
+                        message: getErrorMessageForIncorrectType(value, "number")
                     }
                 ]
             }

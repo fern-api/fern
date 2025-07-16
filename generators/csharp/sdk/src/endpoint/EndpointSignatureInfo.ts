@@ -1,6 +1,6 @@
-import { csharp } from '@fern-api/csharp-codegen'
+import { csharp } from "@fern-api/csharp-codegen"
 
-import { EndpointRequest } from './request/EndpointRequest'
+import { EndpointRequest } from "./request/EndpointRequest"
 
 export interface EndpointSignatureInfo {
     baseParameters: csharp.Parameter[] // Includes both pathParameters and the requestParameter (if any).

@@ -1,7 +1,7 @@
-import { GoTypeReference } from './GoTypeReference'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
-import { writeArguments } from './utils/writeArguments'
+import { GoTypeReference } from "./GoTypeReference"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
+import { writeArguments } from "./utils/writeArguments"
 
 export declare namespace FuncInvocation {
     interface Args {

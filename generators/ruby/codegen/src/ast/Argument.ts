@@ -1,4 +1,4 @@
-import { AstNode } from './core/AstNode'
+import { AstNode } from "./core/AstNode"
 
 export declare namespace Argument {
     export interface Named extends AstNode.Init {
@@ -21,16 +21,16 @@ export class Argument extends AstNode {
 
     constructor({ value, shouldExpandValue, ...rest }: Argument.Named | Argument.Unnamed) {
         super(rest)
-        this.name = 'name' in rest ? rest.name : undefined
+        this.name = "name" in rest ? rest.name : undefined
         this.value = value
         this.shouldExpandValue = shouldExpandValue ?? false
     }
 
     public writeInternal(): void {
-        this.addText({ stringContent: this.name, templateString: '%s: ' })
+        this.addText({ stringContent: this.name, templateString: "%s: " })
         this.addText({
             stringContent: this.value instanceof AstNode ? this.value.write({}) : this.value,
-            templateString: this.shouldExpandValue ? '*%s' : undefined,
+            templateString: this.shouldExpandValue ? "*%s" : undefined,
             appendToLastString: true
         })
     }

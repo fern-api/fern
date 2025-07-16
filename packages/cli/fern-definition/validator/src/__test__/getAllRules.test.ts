@@ -1,15 +1,15 @@
-import { readdir } from 'fs/promises'
-import { camelCase, upperFirst } from 'lodash-es'
+import { readdir } from "fs/promises"
+import { camelCase, upperFirst } from "lodash-es"
 
-import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
 
-import { Rule } from '../Rule'
-import { getAllRules } from '../getAllRules'
+import { Rule } from "../Rule"
+import { getAllRules } from "../getAllRules"
 
-const RULES_DIRECTORY = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of('../rules'))
+const RULES_DIRECTORY = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("../rules"))
 
-describe('getAllRules', () => {
-    it('ensure all rules are registered', async () => {
+describe("getAllRules", () => {
+    it("ensure all rules are registered", async () => {
         const allRulesPromises = (await readdir(RULES_DIRECTORY, { withFileTypes: true }))
             .filter((item) => item.isDirectory())
             .map(async (item) => {
@@ -18,7 +18,7 @@ describe('getAllRules', () => {
                 const ruleName = `${upperFirst(camelCase(item.name))}Rule`
                 const rule = imported[ruleName]
                 if (rule == null) {
-                    throw new Error('Rule does not exist: ' + ruleName)
+                    throw new Error("Rule does not exist: " + ruleName)
                 }
                 return rule as Rule
             })
@@ -36,7 +36,7 @@ describe('getAllRules', () => {
         }
     })
 
-    it('ensure rule names are unique', () => {
+    it("ensure rule names are unique", () => {
         const rules = getAllRules()
         for (const { name } of rules) {
             const rulesWithName = rules.filter((rule) => rule.name === name)

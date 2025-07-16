@@ -1,12 +1,12 @@
-import { ExportedFilePath, PackageId } from '@fern-typescript/commons'
-import { ts } from 'ts-morph'
+import { ExportedFilePath, PackageId } from "@fern-typescript/commons"
+import { ts } from "ts-morph"
 
-import { RelativeFilePath } from '@fern-api/fs-utils'
+import { RelativeFilePath } from "@fern-api/fs-utils"
 
-import { HttpEndpoint } from '@fern-fern/ir-sdk/api'
+import { HttpEndpoint } from "@fern-fern/ir-sdk/api"
 
-import { AbstractSdkClientClassDeclarationReferencer } from './AbstractSdkClientClassDeclarationReferencer'
-import { DeclarationReferencer } from './DeclarationReferencer'
+import { AbstractSdkClientClassDeclarationReferencer } from "./AbstractSdkClientClassDeclarationReferencer"
+import { DeclarationReferencer } from "./DeclarationReferencer"
 
 export declare namespace RequestWrapperDeclarationReferencer {
     export interface Name {
@@ -15,7 +15,7 @@ export declare namespace RequestWrapperDeclarationReferencer {
     }
 }
 
-const REQUESTS_DIRECTORY_NAME = 'requests'
+const REQUESTS_DIRECTORY_NAME = "requests"
 
 export class RequestWrapperDeclarationReferencer extends AbstractSdkClientClassDeclarationReferencer<RequestWrapperDeclarationReferencer.Name> {
     public getExportedFilepath(name: RequestWrapperDeclarationReferencer.Name): ExportedFilePath {
@@ -45,8 +45,8 @@ export class RequestWrapperDeclarationReferencer extends AbstractSdkClientClassD
     }
 
     public getExportedName(name: RequestWrapperDeclarationReferencer.Name): string {
-        if (name.endpoint.sdkRequest == null || name.endpoint.sdkRequest.shape.type !== 'wrapper') {
-            throw new Error('Cannot get exported name for request wrapper, because endpoint request is not wrapped')
+        if (name.endpoint.sdkRequest == null || name.endpoint.sdkRequest.shape.type !== "wrapper") {
+            throw new Error("Cannot get exported name for request wrapper, because endpoint request is not wrapped")
         }
         return name.endpoint.sdkRequest.shape.wrapperName.pascalCase.unsafeName
     }

@@ -1,4 +1,4 @@
-import { OpenAPIV3_1 } from 'openapi-types'
+import { OpenAPIV3_1 } from "openapi-types"
 
 import {
     ContainerType,
@@ -8,9 +8,9 @@ import {
     PrimitiveTypeV2,
     StringValidationRules,
     TypeReference
-} from '@fern-api/ir-sdk'
+} from "@fern-api/ir-sdk"
 
-import { AbstractConverter, AbstractConverterContext } from '../..'
+import { AbstractConverter, AbstractConverterContext } from "../.."
 
 export declare namespace PrimitiveSchemaConverter {
     export interface Args extends AbstractConverter.AbstractArgs {
@@ -28,19 +28,19 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
 
     public convert(): TypeReference | undefined {
         switch (this.schema.type) {
-            case 'string': {
+            case "string": {
                 const stringConst = this.context.getAsString(this.schema.const)
                 if (stringConst != null) {
                     return TypeReference.container(ContainerType.literal(Literal.string(stringConst)))
                 }
 
                 if (this.context.settings.typeDatesAsStrings === false) {
-                    if (this.schema.format === 'date') {
+                    if (this.schema.format === "date") {
                         return TypeReference.primitive({
                             v1: PrimitiveTypeV1.Date,
                             v2: PrimitiveTypeV2.date({})
                         })
-                    } else if (this.schema.format === 'date-time') {
+                    } else if (this.schema.format === "date-time") {
                         return TypeReference.primitive({
                             v1: PrimitiveTypeV1.DateTime,
                             v2: PrimitiveTypeV2.dateTime({})
@@ -49,60 +49,60 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                 }
 
                 return TypeReference.primitive({
-                    v1: 'STRING',
+                    v1: "STRING",
                     v2: PrimitiveTypeV2.string({
                         default: this.context.getAsString(this.schema.default),
                         validation: this.getStringValidation(this.schema)
                     })
                 })
             }
-            case 'number': {
+            case "number": {
                 switch (this.schema.format) {
-                    case 'double': {
+                    case "double": {
                         return TypeReference.primitive({
-                            v1: 'DOUBLE',
+                            v1: "DOUBLE",
                             v2: PrimitiveTypeV2.double({
                                 default: this.context.getAsNumber(this.schema.default),
                                 validation: this.getNumberValidation(this.schema)
                             })
                         })
                     }
-                    case 'float': {
+                    case "float": {
                         return TypeReference.primitive({
-                            v1: 'FLOAT',
+                            v1: "FLOAT",
                             v2: PrimitiveTypeV2.float({
                                 default: this.context.getAsNumber(this.schema.default),
                                 validation: this.getNumberValidation(this.schema)
                             })
                         })
                     }
-                    case 'int32':
+                    case "int32":
                         return TypeReference.primitive({
-                            v1: 'INTEGER',
+                            v1: "INTEGER",
                             v2: PrimitiveTypeV2.integer({
                                 default: this.context.getAsNumber(this.schema.default),
                                 validation: this.getNumberValidation(this.schema)
                             })
                         })
-                    case 'int64':
+                    case "int64":
                         return TypeReference.primitive({
-                            v1: 'LONG',
+                            v1: "LONG",
                             v2: PrimitiveTypeV2.long({
                                 default: this.context.getAsNumber(this.schema.default)
                                 // TODO: add validation here
                             })
                         })
-                    case 'uint32':
+                    case "uint32":
                         return TypeReference.primitive({
-                            v1: 'UINT',
+                            v1: "UINT",
                             v2: PrimitiveTypeV2.uint({
                                 default: this.context.getAsNumber(this.schema.default),
                                 validation: this.getNumberValidation(this.schema)
                             })
                         })
-                    case 'uint64':
+                    case "uint64":
                         return TypeReference.primitive({
-                            v1: 'UINT_64',
+                            v1: "UINT_64",
                             v2: PrimitiveTypeV2.uint64({
                                 default: this.context.getAsNumber(this.schema.default),
                                 validation: this.getNumberValidation(this.schema)
@@ -110,7 +110,7 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                         })
                     default:
                         return TypeReference.primitive({
-                            v1: 'DOUBLE',
+                            v1: "DOUBLE",
                             v2: PrimitiveTypeV2.double({
                                 default: this.context.getAsNumber(this.schema.default),
                                 validation: this.getNumberValidation(this.schema)
@@ -118,51 +118,51 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                         })
                 }
             }
-            case 'integer':
+            case "integer":
                 switch (this.schema.format) {
-                    case 'double':
+                    case "double":
                         return TypeReference.primitive({
-                            v1: 'DOUBLE',
+                            v1: "DOUBLE",
                             v2: PrimitiveTypeV2.double({
                                 default: this.context.getAsNumber(this.schema.default),
                                 validation: this.getNumberValidation(this.schema)
                             })
                         })
-                    case 'float':
+                    case "float":
                         return TypeReference.primitive({
-                            v1: 'FLOAT',
+                            v1: "FLOAT",
                             v2: PrimitiveTypeV2.float({
                                 default: this.context.getAsNumber(this.schema.default),
                                 validation: this.getNumberValidation(this.schema)
                             })
                         })
-                    case 'int32':
+                    case "int32":
                         return TypeReference.primitive({
-                            v1: 'INTEGER',
+                            v1: "INTEGER",
                             v2: PrimitiveTypeV2.integer({
                                 default: this.context.getAsNumber(this.schema.default),
                                 validation: this.getNumberValidation(this.schema)
                             })
                         })
-                    case 'int64':
+                    case "int64":
                         return TypeReference.primitive({
-                            v1: 'LONG',
+                            v1: "LONG",
                             v2: PrimitiveTypeV2.long({
                                 default: this.context.getAsNumber(this.schema.default)
                                 // TODO: add validation here
                             })
                         })
-                    case 'uint32':
+                    case "uint32":
                         return TypeReference.primitive({
-                            v1: 'UINT',
+                            v1: "UINT",
                             v2: PrimitiveTypeV2.uint({
                                 default: this.context.getAsNumber(this.schema.default),
                                 validation: this.getNumberValidation(this.schema)
                             })
                         })
-                    case 'uint64':
+                    case "uint64":
                         return TypeReference.primitive({
-                            v1: 'UINT_64',
+                            v1: "UINT_64",
                             v2: PrimitiveTypeV2.uint64({
                                 default: this.context.getAsNumber(this.schema.default),
                                 validation: this.getNumberValidation(this.schema)
@@ -170,20 +170,20 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                         })
                     default:
                         return TypeReference.primitive({
-                            v1: 'INTEGER',
+                            v1: "INTEGER",
                             v2: PrimitiveTypeV2.integer({
                                 default: this.context.getAsNumber(this.schema.default),
                                 validation: this.getNumberValidation(this.schema)
                             })
                         })
                 }
-            case 'boolean': {
+            case "boolean": {
                 const booleanConst = this.context.getAsBoolean(this.schema.const)
                 if (booleanConst != null) {
                     return TypeReference.container(ContainerType.literal(Literal.boolean(booleanConst)))
                 }
                 return TypeReference.primitive({
-                    v1: 'BOOLEAN',
+                    v1: "BOOLEAN",
                     v2: PrimitiveTypeV2.boolean({
                         default: this.schema.default as boolean | undefined
                     })
@@ -198,8 +198,8 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
         return {
             max: schema.maximum,
             min: schema.minimum,
-            exclusiveMax: typeof schema.exclusiveMaximum === 'boolean' ? schema.exclusiveMaximum : undefined,
-            exclusiveMin: typeof schema.exclusiveMinimum === 'boolean' ? schema.exclusiveMinimum : undefined,
+            exclusiveMax: typeof schema.exclusiveMaximum === "boolean" ? schema.exclusiveMaximum : undefined,
+            exclusiveMin: typeof schema.exclusiveMinimum === "boolean" ? schema.exclusiveMinimum : undefined,
             multipleOf: schema.multipleOf
         }
     }

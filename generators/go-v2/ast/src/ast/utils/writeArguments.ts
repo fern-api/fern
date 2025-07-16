@@ -1,7 +1,7 @@
-import { UnnamedArgument } from '@fern-api/browser-compatible-base-generator'
+import { UnnamedArgument } from "@fern-api/browser-compatible-base-generator"
 
-import { TypeInstantiation } from '../TypeInstantiation'
-import { Writer } from '../core/Writer'
+import { TypeInstantiation } from "../TypeInstantiation"
+import { Writer } from "../core/Writer"
 
 export function writeArguments({
     writer,
@@ -14,7 +14,7 @@ export function writeArguments({
 }): void {
     const filteredArguments = filterNopArguments(arguments_)
     if (filteredArguments.length === 0) {
-        writer.write('()')
+        writer.write("()")
         return
     }
     if (multiline) {
@@ -25,25 +25,25 @@ export function writeArguments({
 }
 
 function writeMultiline({ writer, arguments_ }: { writer: Writer; arguments_: UnnamedArgument[] }): void {
-    writer.writeLine('(')
+    writer.writeLine("(")
     writer.indent()
     for (const argument of arguments_) {
         argument.write(writer)
-        writer.writeLine(',')
+        writer.writeLine(",")
     }
     writer.dedent()
-    writer.write(')')
+    writer.write(")")
 }
 
 function writeCompact({ writer, arguments_ }: { writer: Writer; arguments_: UnnamedArgument[] }): void {
-    writer.write('(')
+    writer.write("(")
     arguments_.forEach((argument, index) => {
         if (index > 0) {
-            writer.write(', ')
+            writer.write(", ")
         }
         argument.write(writer)
     })
-    writer.write(')')
+    writer.write(")")
 }
 
 function filterNopArguments(arguments_: UnnamedArgument[]): UnnamedArgument[] {

@@ -1,27 +1,27 @@
-import { python } from '..'
-import { Writer } from '../core/Writer'
+import { python } from ".."
+import { Writer } from "../core/Writer"
 
-describe('CodeBlock', () => {
+describe("CodeBlock", () => {
     let writer: Writer
 
     beforeEach(() => {
         writer = new Writer()
     })
 
-    describe('toString', () => {
-        it('returns an empty string for an empty code block', async () => {
-            const codeBlock = python.codeBlock('')
+    describe("toString", () => {
+        it("returns an empty string for an empty code block", async () => {
+            const codeBlock = python.codeBlock("")
             codeBlock.write(writer)
             expect(writer.toString()).toMatchSnapshot()
         })
 
-        it('returns a single line of code', async () => {
+        it("returns a single line of code", async () => {
             const codeBlock = python.codeBlock('print("Hello, World!")')
             codeBlock.write(writer)
             expect(writer.toString()).toMatchSnapshot()
         })
 
-        it('returns multiple lines of code', async () => {
+        it("returns multiple lines of code", async () => {
             const codeBlock = python.codeBlock(`\
 def greet(name):
     return f"Hello, {name}!"
@@ -32,7 +32,7 @@ print(greet("Alice"))\
             expect(writer.toString()).toMatchSnapshot()
         })
 
-        it('preserves indentation', async () => {
+        it("preserves indentation", async () => {
             const codeBlock = python.codeBlock(`\
 if True:
     print("Indented")

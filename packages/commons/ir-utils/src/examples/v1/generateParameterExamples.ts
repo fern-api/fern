@@ -3,12 +3,12 @@ import {
     ExamplePathParameter,
     ExampleQueryParameter,
     ExampleQueryParameterShape
-} from '@fern-api/ir-sdk'
-import { HttpHeader, PathParameter, QueryParameter, TypeDeclaration, TypeId } from '@fern-api/ir-sdk'
+} from "@fern-api/ir-sdk"
+import { HttpHeader, PathParameter, QueryParameter, TypeDeclaration, TypeId } from "@fern-api/ir-sdk"
 
-import { isTypeReferenceOptional } from '../../utils/isTypeReferenceOptional'
-import { ExampleGenerationResult } from './ExampleGenerationResult'
-import { generateTypeReferenceExample } from './generateTypeReferenceExample'
+import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional"
+import { ExampleGenerationResult } from "./ExampleGenerationResult"
+import { generateTypeReferenceExample } from "./generateTypeReferenceExample"
 
 export interface GenerateParamsOptions {
     typeDeclarations: Record<TypeId, TypeDeclaration>
@@ -34,7 +34,7 @@ export function generatePathParameterExamples(
             typeReference: p.valueType,
             skipOptionalProperties: options.skipOptionalRequestProperties
         })
-        if (generatedExample.type === 'failure') {
+        if (generatedExample.type === "failure") {
             return generatedExample // short-circuit failure
         }
         result.push({
@@ -44,7 +44,7 @@ export function generatePathParameterExamples(
     }
 
     // On success, return the array and no JSON example needed
-    return { type: 'success', example: result, jsonExample: undefined }
+    return { type: "success", example: result, jsonExample: undefined }
 }
 
 /**
@@ -76,7 +76,7 @@ export function generateHeaderExamples(
             typeReference: h.valueType,
             skipOptionalProperties: options.skipOptionalRequestProperties
         })
-        if (generatedExample.type === 'failure') {
+        if (generatedExample.type === "failure") {
             return generatedExample
         }
         result.push({
@@ -85,7 +85,7 @@ export function generateHeaderExamples(
         })
     }
 
-    return { type: 'success', example: result, jsonExample: undefined }
+    return { type: "success", example: result, jsonExample: undefined }
 }
 
 /**
@@ -118,7 +118,7 @@ export function generateQueryParameterExamples(
             skipOptionalProperties: options.skipOptionalRequestProperties
         })
 
-        if (generatedExample.type === 'failure') {
+        if (generatedExample.type === "failure") {
             return generatedExample
         }
 
@@ -129,5 +129,5 @@ export function generateQueryParameterExamples(
         })
     }
 
-    return { type: 'success', example: result, jsonExample: undefined }
+    return { type: "success", example: result, jsonExample: undefined }
 }

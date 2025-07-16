@@ -3,7 +3,7 @@
  * (i.e. it includes the required '$' prefix).
  */
 export function convertToPhpVariableName(name: string): string {
-    if (name.startsWith('$')) {
+    if (name.startsWith("$")) {
         return name
     }
     return `$${name}`

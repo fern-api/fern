@@ -1,12 +1,12 @@
-import { snakeCase } from 'lodash-es'
+import { snakeCase } from "lodash-es"
 
-import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from '@fern-api/base-generator'
+import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator"
 
-import { IntermediateRepresentation, Name, TypeDeclaration, TypeId, TypeReference } from '@fern-fern/ir-sdk/api'
+import { IntermediateRepresentation, Name, TypeDeclaration, TypeId, TypeReference } from "@fern-fern/ir-sdk/api"
 
-import { BasePythonCustomConfigSchema } from '../custom-config/BasePythonCustomConfigSchema'
-import { PythonProject } from '../project'
-import { PythonTypeMapper } from './PythonTypeMapper'
+import { BasePythonCustomConfigSchema } from "../custom-config/BasePythonCustomConfigSchema"
+import { PythonProject } from "../project"
+import { PythonTypeMapper } from "./PythonTypeMapper"
 
 export abstract class AbstractPythonGeneratorContext<
     CustomConfig extends BasePythonCustomConfigSchema
@@ -36,12 +36,12 @@ export abstract class AbstractPythonGeneratorContext<
     }
 
     public isTypeReferenceOptional(typeReference: TypeReference): boolean {
-        if (typeReference.type === 'container' && typeReference.container.type === 'optional') {
+        if (typeReference.type === "container" && typeReference.container.type === "optional") {
             return true
         }
-        if (typeReference.type === 'named') {
+        if (typeReference.type === "named") {
             const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId)
-            if (typeDeclaration.shape.type === 'alias') {
+            if (typeDeclaration.shape.type === "alias") {
                 return this.isTypeReferenceOptional(typeDeclaration.shape.aliasOf)
             }
         }
@@ -63,7 +63,7 @@ export abstract class AbstractPythonGeneratorContext<
     public getModulePathForId(typeId: string): string[] {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId)
         const fernFilepath = typeDeclaration.name.fernFilepath
-        return [...fernFilepath.allParts.flatMap((part) => ['resources', this.getSnakeCaseSafeName(part)]), 'types']
+        return [...fernFilepath.allParts.flatMap((part) => ["resources", this.getSnakeCaseSafeName(part)]), "types"]
     }
 
     public abstract getRawAsIsFiles(): string[]

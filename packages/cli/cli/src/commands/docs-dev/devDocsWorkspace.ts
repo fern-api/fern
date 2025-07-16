@@ -1,9 +1,9 @@
-import { runAppPreviewServer, runPreviewServer } from '@fern-api/docs-preview'
-import { filterOssWorkspaces } from '@fern-api/docs-resolver'
-import { Project } from '@fern-api/project-loader'
+import { runAppPreviewServer, runPreviewServer } from "@fern-api/docs-preview"
+import { filterOssWorkspaces } from "@fern-api/docs-resolver"
+import { Project } from "@fern-api/project-loader"
 
-import { CliContext } from '../../cli-context/CliContext'
-import { validateDocsWorkspaceWithoutExiting } from '../validate/validateDocsWorkspaceAndLogIssues'
+import { CliContext } from "../../cli-context/CliContext"
+import { validateDocsWorkspaceWithoutExiting } from "../validate/validateDocsWorkspaceAndLogIssues"
 
 export async function previewDocsWorkspace({
     loadProject,
@@ -31,7 +31,7 @@ export async function previewDocsWorkspace({
     if (legacyPreview) {
         await cliContext.instrumentPostHogEvent({
             orgId: project.config.organization,
-            command: 'fern docs dev --legacy'
+            command: "fern docs dev --legacy"
         })
 
         await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
@@ -45,7 +45,7 @@ export async function previewDocsWorkspace({
                     if (docsWorkspace == null) {
                         return
                     }
-                    const excludeRules = brokenLinks ? [] : ['valid-markdown-links']
+                    const excludeRules = brokenLinks ? [] : ["valid-markdown-links"]
                     const openapiParserV3 = docsWorkspace.config.experimental?.openapiParserV3
                     const useV3Parser = openapiParserV3 == null || openapiParserV3
                     if (useV3Parser) {
@@ -79,7 +79,7 @@ export async function previewDocsWorkspace({
 
     await cliContext.instrumentPostHogEvent({
         orgId: project.config.organization,
-        command: 'fern docs dev --beta'
+        command: "fern docs dev --beta"
     })
 
     await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
@@ -93,7 +93,7 @@ export async function previewDocsWorkspace({
                 if (docsWorkspace == null) {
                     return
                 }
-                const excludeRules = brokenLinks ? [] : ['valid-markdown-links']
+                const excludeRules = brokenLinks ? [] : ["valid-markdown-links"]
                 const openapiParserV3 = docsWorkspace.config.experimental?.openapiParserV3
                 const useV3Parser = openapiParserV3 == null || openapiParserV3
                 if (useV3Parser) {

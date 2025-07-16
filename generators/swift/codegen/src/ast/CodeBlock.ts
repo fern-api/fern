@@ -1,8 +1,8 @@
-import { CodeBlock as CommonCodeBlock } from '@fern-api/browser-compatible-base-generator'
-import { noop } from '@fern-api/core-utils'
+import { CodeBlock as CommonCodeBlock } from "@fern-api/browser-compatible-base-generator"
+import { noop } from "@fern-api/core-utils"
 
-import { Statement } from './Statement'
-import { AstNode, Writer } from './core'
+import { Statement } from "./Statement"
+import { AstNode, Writer } from "./core"
 
 export declare namespace CodeBlock {
     /* Write arbitrary code */
@@ -19,12 +19,12 @@ export class CodeBlock extends AstNode {
 
     public write(writer: Writer): void {
         const commonCodeBlock = new CommonCodeBlock(this.args)
-        writer.write('{')
+        writer.write("{")
         writer.newLine()
         writer.indent()
         commonCodeBlock.write(writer)
         writer.dedent()
-        writer.write('}')
+        writer.write("}")
     }
 
     public static empty(): CodeBlock {

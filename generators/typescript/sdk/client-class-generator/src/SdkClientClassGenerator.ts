@@ -1,12 +1,12 @@
-import { ImportsManager, NpmPackage, PackageId } from '@fern-typescript/commons'
-import { ExportsManager } from '@fern-typescript/commons'
-import { GeneratedSdkClientClass } from '@fern-typescript/contexts'
-import { ErrorResolver, PackageResolver } from '@fern-typescript/resolvers'
+import { ImportsManager, NpmPackage, PackageId } from "@fern-typescript/commons"
+import { ExportsManager } from "@fern-typescript/commons"
+import { GeneratedSdkClientClass } from "@fern-typescript/contexts"
+import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers"
 
-import { IntermediateRepresentation } from '@fern-fern/ir-sdk/api'
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api"
 
-import { GeneratedSdkClientClassImpl } from './GeneratedSdkClientClassImpl'
-import { OAuthTokenProviderGenerator } from './oauth-generator/OAuthTokenProviderGenerator'
+import { GeneratedSdkClientClassImpl } from "./GeneratedSdkClientClassImpl"
+import { OAuthTokenProviderGenerator } from "./oauth-generator/OAuthTokenProviderGenerator"
 
 export declare namespace SdkClientClassGenerator {
     export interface Init {
@@ -18,7 +18,7 @@ export declare namespace SdkClientClassGenerator {
         allowCustomFetcher: boolean
         shouldGenerateWebsocketClients: boolean
         requireDefaultEnvironment: boolean
-        defaultTimeoutInSeconds: number | 'infinity' | undefined
+        defaultTimeoutInSeconds: number | "infinity" | undefined
         npmPackage: NpmPackage | undefined
         includeContentHeadersOnFileDownloadResponse: boolean
         includeSerdeLayer: boolean
@@ -27,9 +27,9 @@ export declare namespace SdkClientClassGenerator {
         omitUndefined: boolean
         allowExtraFields: boolean
         oauthTokenProviderGenerator: OAuthTokenProviderGenerator
-        streamType: 'wrapper' | 'web'
-        fileResponseType: 'stream' | 'binary-response'
-        formDataSupport: 'Node16' | 'Node18'
+        streamType: "wrapper" | "web"
+        fileResponseType: "stream" | "binary-response"
+        formDataSupport: "Node16" | "Node18"
         exportsManager: ExportsManager
         omitFernHeaders: boolean
         useDefaultRequestParameterValues: boolean
@@ -54,7 +54,7 @@ export class SdkClientClassGenerator {
     private allowCustomFetcher: boolean
     private shouldGenerateWebsocketClients: boolean
     private requireDefaultEnvironment: boolean
-    private defaultTimeoutInSeconds: number | 'infinity' | undefined
+    private defaultTimeoutInSeconds: number | "infinity" | undefined
     private npmPackage: NpmPackage | undefined
     private includeContentHeadersOnFileDownloadResponse: boolean
     private includeSerdeLayer: boolean
@@ -63,9 +63,9 @@ export class SdkClientClassGenerator {
     private omitUndefined: boolean
     private allowExtraFields: boolean
     private oauthTokenProviderGenerator: OAuthTokenProviderGenerator
-    private streamType: 'wrapper' | 'web'
-    private readonly formDataSupport: 'Node16' | 'Node18'
-    private readonly fileResponseType: 'stream' | 'binary-response'
+    private streamType: "wrapper" | "web"
+    private readonly formDataSupport: "Node16" | "Node18"
+    private readonly fileResponseType: "stream" | "binary-response"
     private exportsManager: ExportsManager
     private omitFernHeaders: boolean
     private useDefaultRequestParameterValues: boolean

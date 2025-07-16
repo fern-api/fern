@@ -1,6 +1,6 @@
-import { OpenAPIV3_1 } from 'openapi-types'
+import { OpenAPIV3_1 } from "openapi-types"
 
-import { MediaType } from '@fern-api/core-utils'
+import { MediaType } from "@fern-api/core-utils"
 import {
     FileProperty,
     FileUploadBodyPropertyEncoding,
@@ -8,10 +8,10 @@ import {
     HttpRequestBody,
     ObjectProperty,
     TypeReference
-} from '@fern-api/ir-sdk'
-import { Converters } from '@fern-api/v2-importer-commons'
+} from "@fern-api/ir-sdk"
+import { Converters } from "@fern-api/v2-importer-commons"
 
-import { FernStreamingExtension } from '../../extensions/x-fern-streaming'
+import { FernStreamingExtension } from "../../extensions/x-fern-streaming"
 
 export declare namespace RequestBodyConverter {
     export interface Args extends Converters.AbstractConverters.AbstractMediaTypeObjectConverter.Args {
@@ -33,7 +33,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
     constructor({ context, breadcrumbs, requestBody, group, method, streamingExtension }: RequestBodyConverter.Args) {
         super({ context, breadcrumbs, group, method })
         this.requestBody = requestBody
-        this.schemaId = [...this.group, this.method, 'Request'].join('_')
+        this.schemaId = [...this.group, this.method, "Request"].join("_")
         this.streamingExtension = streamingExtension
     }
 
@@ -42,7 +42,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
             return undefined
         }
 
-        if (this.streamingExtension?.type == 'streamCondition') {
+        if (this.streamingExtension?.type == "streamCondition") {
             return this.convertStreamConditionRequestBody()
         }
         return this.convertNonStreamConditionRequestBody()
@@ -120,7 +120,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         }
 
         const requestBodyTypeShape = convertedSchema.schema?.typeDeclaration.shape
-        if (requestBodyTypeShape?.type === 'object') {
+        if (requestBodyTypeShape?.type === "object") {
             return {
                 requestBody: HttpRequestBody.inlinedRequestBody({
                     contentType,
@@ -132,7 +132,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                     extraProperties: requestBodyTypeShape.extraProperties,
                     v2Examples: this.convertMediaTypeObjectExamples({
                         mediaTypeObject,
-                        exampleGenerationStrategy: 'request'
+                        exampleGenerationStrategy: "request"
                     })
                 }),
                 streamRequestBody: undefined,
@@ -149,7 +149,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                     requestBodyType: convertedSchema.type,
                     v2Examples: this.convertMediaTypeObjectExamples({
                         mediaTypeObject,
-                        exampleGenerationStrategy: 'request'
+                        exampleGenerationStrategy: "request"
                     })
                 }),
                 streamRequestBody: undefined,
@@ -174,7 +174,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         }
 
         const requestBodyTypeShape = convertedSchema.schema?.typeDeclaration.shape
-        if (requestBodyTypeShape?.type === 'object') {
+        if (requestBodyTypeShape?.type === "object") {
             return {
                 requestBody: HttpRequestBody.fileUpload({
                     contentType,
@@ -186,7 +186,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                     }),
                     v2Examples: this.convertMediaTypeObjectExamples({
                         mediaTypeObject,
-                        exampleGenerationStrategy: 'request'
+                        exampleGenerationStrategy: "request"
                     })
                 }),
                 streamRequestBody: undefined,
@@ -222,7 +222,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                 docs: this.requestBody.description,
                 v2Examples: this.convertMediaTypeObjectExamples({
                     mediaTypeObject,
-                    exampleGenerationStrategy: 'request'
+                    exampleGenerationStrategy: "request"
                 })
             }),
             streamRequestBody: undefined,
@@ -277,7 +277,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
     }: {
         contentType: string
     }): RequestBodyConverter.Output | undefined {
-        if (this.streamingExtension?.type !== 'streamCondition') {
+        if (this.streamingExtension?.type !== "streamCondition") {
             return undefined
         }
         const mediaTypeObject = this.requestBody.content[contentType]
@@ -287,7 +287,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
 
         const resolvedMediaTypeSchema = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
             schemaOrReference: mediaTypeObject.schema,
-            breadcrumbs: [...this.breadcrumbs, 'content', contentType, 'schema']
+            breadcrumbs: [...this.breadcrumbs, "content", contentType, "schema"]
         })
         if (resolvedMediaTypeSchema == null) {
             return undefined
@@ -350,7 +350,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
               inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema>
           }
         | undefined {
-        if (this.streamingExtension == null || this.streamingExtension.type !== 'streamCondition') {
+        if (this.streamingExtension == null || this.streamingExtension.type !== "streamCondition") {
             return undefined
         }
         const modifiedSchema = {
@@ -358,7 +358,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
             properties: {
                 ...resolvedMediaTypeSchema.properties,
                 [this.streamingExtension.streamConditionProperty]: {
-                    type: 'boolean',
+                    type: "boolean",
                     const: isStreaming,
                     ...streamConditionProperty
                 } as OpenAPIV3_1.SchemaObject
@@ -381,7 +381,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
             return undefined
         }
         const requestBodyTypeShape = convertedSchema.schema?.typeDeclaration.shape
-        if (requestBodyTypeShape?.type === 'object') {
+        if (requestBodyTypeShape?.type === "object") {
             return {
                 requestBody: HttpRequestBody.inlinedRequestBody({
                     contentType,
@@ -395,7 +395,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                     extraProperties: requestBodyTypeShape.extraProperties,
                     v2Examples: this.convertMediaTypeObjectExamples({
                         mediaTypeObject: modifiedMediaTypeObject,
-                        exampleGenerationStrategy: 'request'
+                        exampleGenerationStrategy: "request"
                     })
                 }),
                 inlinedTypes: convertedSchema.inlinedTypes
@@ -448,7 +448,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
 }
 
 const CONTENT_TYPE_TO_ENCODING_MAP: Record<string, FileUploadBodyPropertyEncoding> = {
-    'application/json': 'json'
+    "application/json": "json"
 }
 
 function getMultipartPartEncoding({
@@ -461,11 +461,11 @@ function getMultipartPartEncoding({
     }
 
     if (encoding.explode) {
-        return 'exploded'
+        return "exploded"
     }
 
-    if (encoding.style === 'form') {
-        return 'form'
+    if (encoding.style === "form") {
+        return "form"
     }
 
     if (encoding.contentType) {

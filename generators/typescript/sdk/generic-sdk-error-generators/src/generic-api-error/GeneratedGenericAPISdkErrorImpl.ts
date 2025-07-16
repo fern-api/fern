@@ -1,17 +1,17 @@
-import { AbstractErrorClassGenerator } from '@fern-typescript/abstract-error-class-generator'
-import { getTextOfTsKeyword, getTextOfTsNode } from '@fern-typescript/commons'
-import { GeneratedGenericAPISdkError, SdkContext } from '@fern-typescript/contexts'
-import { OptionalKind, ParameterDeclarationStructure, PropertyDeclarationStructure, Scope, ts } from 'ts-morph'
+import { AbstractErrorClassGenerator } from "@fern-typescript/abstract-error-class-generator"
+import { getTextOfTsKeyword, getTextOfTsNode } from "@fern-typescript/commons"
+import { GeneratedGenericAPISdkError, SdkContext } from "@fern-typescript/contexts"
+import { OptionalKind, ParameterDeclarationStructure, PropertyDeclarationStructure, Scope, ts } from "ts-morph"
 
 export class GeneratedGenericAPISdkErrorImpl
     extends AbstractErrorClassGenerator<SdkContext>
     implements GeneratedGenericAPISdkError
 {
-    private static readonly STATUS_CODE_PROPERTY_NAME = 'statusCode'
-    private static readonly RESPONSE_BODY_PROPERTY_NAME = 'body'
-    private static readonly RAW_RESPONSE_PROPERTY_NAME = 'rawResponse'
+    private static readonly STATUS_CODE_PROPERTY_NAME = "statusCode"
+    private static readonly RESPONSE_BODY_PROPERTY_NAME = "body"
+    private static readonly RAW_RESPONSE_PROPERTY_NAME = "rawResponse"
 
-    private static readonly MESSAGE_CONSTRUCTOR_PARAMETER_NAME = 'message'
+    private static readonly MESSAGE_CONSTRUCTOR_PARAMETER_NAME = "message"
     private static readonly STATUS_CODE_CONSTRUCTOR_PARAMETER_NAME =
         GeneratedGenericAPISdkErrorImpl.STATUS_CODE_PROPERTY_NAME
     private static readonly RESPONSE_BODY_CONSTRUCTOR_PARAMETER_NAME =
@@ -19,7 +19,7 @@ export class GeneratedGenericAPISdkErrorImpl
     private static readonly RAW_RESPONSE_CONSTRUCTOR_PARAMETER_NAME =
         GeneratedGenericAPISdkErrorImpl.RAW_RESPONSE_PROPERTY_NAME
 
-    private static readonly BUILD_MESSAGE_FUNCTION_NAME = 'buildMessage'
+    private static readonly BUILD_MESSAGE_FUNCTION_NAME = "buildMessage"
 
     public writeToFile(context: SdkContext): void {
         super.writeToSourceFile(context)
@@ -270,7 +270,7 @@ export class GeneratedGenericAPISdkErrorImpl
     }
 
     private writeBuildMessageFunctionToFile(context: SdkContext): void {
-        const LINES_VARIABLE_NAME = 'lines'
+        const LINES_VARIABLE_NAME = "lines"
 
         context.sourceFile.addFunction({
             name: GeneratedGenericAPISdkErrorImpl.BUILD_MESSAGE_FUNCTION_NAME,
@@ -331,7 +331,7 @@ export class GeneratedGenericAPISdkErrorImpl
                     )
                 }
             ],
-            returnType: 'string',
+            returnType: "string",
             statements: [
                 ts.factory.createVariableStatement(
                     undefined,
@@ -361,7 +361,7 @@ export class GeneratedGenericAPISdkErrorImpl
                                 ts.factory.createCallExpression(
                                     ts.factory.createPropertyAccessExpression(
                                         ts.factory.createIdentifier(LINES_VARIABLE_NAME),
-                                        ts.factory.createIdentifier('push')
+                                        ts.factory.createIdentifier("push")
                                     ),
                                     undefined,
                                     [
@@ -388,12 +388,12 @@ export class GeneratedGenericAPISdkErrorImpl
                                 ts.factory.createCallExpression(
                                     ts.factory.createPropertyAccessExpression(
                                         ts.factory.createIdentifier(LINES_VARIABLE_NAME),
-                                        ts.factory.createIdentifier('push')
+                                        ts.factory.createIdentifier("push")
                                     ),
                                     undefined,
                                     [
                                         ts.factory.createTemplateExpression(
-                                            ts.factory.createTemplateHead('Status code: '),
+                                            ts.factory.createTemplateHead("Status code: "),
                                             [
                                                 ts.factory.createTemplateSpan(
                                                     ts.factory.createCallExpression(
@@ -401,12 +401,12 @@ export class GeneratedGenericAPISdkErrorImpl
                                                             ts.factory.createIdentifier(
                                                                 GeneratedGenericAPISdkErrorImpl.STATUS_CODE_PROPERTY_NAME
                                                             ),
-                                                            ts.factory.createIdentifier('toString')
+                                                            ts.factory.createIdentifier("toString")
                                                         ),
                                                         undefined,
                                                         []
                                                     ),
-                                                    ts.factory.createTemplateTail('')
+                                                    ts.factory.createTemplateTail("")
                                                 )
                                             ]
                                         )
@@ -432,11 +432,11 @@ export class GeneratedGenericAPISdkErrorImpl
                                 ts.factory.createCallExpression(
                                     ts.factory.createPropertyAccessExpression(
                                         ts.factory.createIdentifier(LINES_VARIABLE_NAME),
-                                        ts.factory.createIdentifier('push')
+                                        ts.factory.createIdentifier("push")
                                     ),
                                     undefined,
                                     [
-                                        ts.factory.createTemplateExpression(ts.factory.createTemplateHead('Body: '), [
+                                        ts.factory.createTemplateExpression(ts.factory.createTemplateHead("Body: "), [
                                             ts.factory.createTemplateSpan(
                                                 ts.factory.createCallExpression(
                                                     context.jsonContext.getReferenceToToJson().getExpression(),
@@ -445,11 +445,11 @@ export class GeneratedGenericAPISdkErrorImpl
                                                         ts.factory.createIdentifier(
                                                             GeneratedGenericAPISdkErrorImpl.RESPONSE_BODY_CONSTRUCTOR_PARAMETER_NAME
                                                         ),
-                                                        ts.factory.createIdentifier('undefined'),
-                                                        ts.factory.createNumericLiteral('2')
+                                                        ts.factory.createIdentifier("undefined"),
+                                                        ts.factory.createNumericLiteral("2")
                                                     ]
                                                 ),
-                                                ts.factory.createTemplateTail('')
+                                                ts.factory.createTemplateTail("")
                                             )
                                         ])
                                     ]
@@ -464,10 +464,10 @@ export class GeneratedGenericAPISdkErrorImpl
                     ts.factory.createCallExpression(
                         ts.factory.createPropertyAccessExpression(
                             ts.factory.createIdentifier(LINES_VARIABLE_NAME),
-                            ts.factory.createIdentifier('join')
+                            ts.factory.createIdentifier("join")
                         ),
                         undefined,
-                        [ts.factory.createStringLiteral('\n')]
+                        [ts.factory.createStringLiteral("\n")]
                     )
                 )
             ].map(getTextOfTsNode)

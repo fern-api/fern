@@ -1,12 +1,12 @@
-import { FernWorkspace } from '@fern-api/api-workspace-commons'
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { ErrorDeclaration, FernIr } from '@fern-api/ir-sdk'
+import { FernWorkspace } from "@fern-api/api-workspace-commons"
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { ErrorDeclaration, FernIr } from "@fern-api/ir-sdk"
 
-import { FernFileContext } from '../FernFileContext'
-import { ExampleResolver } from '../resolvers/ExampleResolver'
-import { TypeResolver } from '../resolvers/TypeResolver'
-import { parseErrorName } from '../utils/parseErrorName'
-import { convertTypeReferenceExample } from './type-declarations/convertExampleType'
+import { FernFileContext } from "../FernFileContext"
+import { ExampleResolver } from "../resolvers/ExampleResolver"
+import { TypeResolver } from "../resolvers/TypeResolver"
+import { parseErrorName } from "../utils/parseErrorName"
+import { convertTypeReferenceExample } from "./type-declarations/convertExampleType"
 
 export function convertErrorDeclaration({
     errorName,
@@ -55,8 +55,8 @@ export function convertErrorDeclaration({
             wireValue: errorName,
             name: errorName
         }),
-        docs: typeof errorDeclaration !== 'string' ? errorDeclaration.docs : undefined,
-        statusCode: errorDeclaration['status-code'],
+        docs: typeof errorDeclaration !== "string" ? errorDeclaration.docs : undefined,
+        statusCode: errorDeclaration["status-code"],
         type: errorDeclaration.type != null ? file.parseTypeReference(errorDeclaration.type) : undefined,
         examples,
         v2Examples: undefined,

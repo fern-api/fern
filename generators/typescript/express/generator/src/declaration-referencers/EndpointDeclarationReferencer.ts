@@ -1,9 +1,9 @@
-import { ExportedFilePath, PackageId, Reference } from '@fern-typescript/commons'
+import { ExportedFilePath, PackageId, Reference } from "@fern-typescript/commons"
 
-import { HttpEndpoint } from '@fern-fern/ir-sdk/api'
+import { HttpEndpoint } from "@fern-fern/ir-sdk/api"
 
-import { AbstractExpressServiceDeclarationReferencer } from './AbstractExpressServiceDeclarationReferencer'
-import { DeclarationReferencer } from './DeclarationReferencer'
+import { AbstractExpressServiceDeclarationReferencer } from "./AbstractExpressServiceDeclarationReferencer"
+import { DeclarationReferencer } from "./DeclarationReferencer"
 
 export declare namespace EndpointDeclarationReferencer {
     export interface Name {

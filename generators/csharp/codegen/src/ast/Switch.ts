@@ -1,5 +1,5 @@
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export declare namespace Switch {
     interface Args {
@@ -30,15 +30,15 @@ export class Switch extends AstNode {
 
     public write(writer: Writer): void {
         writer.writeNode(this.condition)
-        writer.write(' switch {')
+        writer.write(" switch {")
         writer.indent()
         for (const { label, value } of this.cases) {
             writer.writeNode(label)
-            writer.write(' => ')
+            writer.write(" => ")
             writer.writeNode(value)
-            writer.writeLine(',')
+            writer.writeLine(",")
         }
         writer.dedent()
-        writer.write('}')
+        writer.write("}")
     }
 }

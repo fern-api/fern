@@ -1,6 +1,6 @@
-import { AbstractExtension } from '../AbstractExtension'
-import { FernEnumConfigSchema } from '../schemas/EnumSchema'
-import { FernEnumConfig } from '../types/FernEnumConfig'
+import { AbstractExtension } from "../AbstractExtension"
+import { FernEnumConfigSchema } from "../schemas/EnumSchema"
+import { FernEnumConfig } from "../types/FernEnumConfig"
 
 export declare namespace FernEnumExtension {
     export interface Args extends AbstractExtension.Args {
@@ -12,7 +12,7 @@ export declare namespace FernEnumExtension {
 
 export class FernEnumExtension extends AbstractExtension<FernEnumExtension.Output> {
     private readonly schema: object
-    public readonly key = 'x-fern-enum'
+    public readonly key = "x-fern-enum"
 
     constructor({ breadcrumbs, schema, context }: FernEnumExtension.Args) {
         super({ breadcrumbs, context })

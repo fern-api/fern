@@ -1,17 +1,17 @@
-import { size } from 'lodash-es'
+import { size } from "lodash-es"
 
-import { FernDefinition, ParsedFernFile } from '@fern-api/api-workspace-commons'
-import { dependenciesYml } from '@fern-api/configuration-loader'
-import { entries, keys } from '@fern-api/core-utils'
-import { PackageMarkerFileSchema } from '@fern-api/fern-definition-schema'
-import { RelativeFilePath, dirname } from '@fern-api/fs-utils'
-import { TaskContext } from '@fern-api/task-context'
+import { FernDefinition, ParsedFernFile } from "@fern-api/api-workspace-commons"
+import { dependenciesYml } from "@fern-api/configuration-loader"
+import { entries, keys } from "@fern-api/core-utils"
+import { PackageMarkerFileSchema } from "@fern-api/fern-definition-schema"
+import { RelativeFilePath, dirname } from "@fern-api/fs-utils"
+import { TaskContext } from "@fern-api/task-context"
 
-import { OSSWorkspace } from '../OSSWorkspace'
-import { WorkspaceLoader, WorkspaceLoaderFailureType } from './Result'
-import { LoadAPIWorkspace } from './loadAPIWorkspace'
-import { loadDependency } from './loadDependency'
-import { validateStructureOfYamlFiles } from './validateStructureOfYamlFiles'
+import { OSSWorkspace } from "../OSSWorkspace"
+import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./Result"
+import { LoadAPIWorkspace } from "./loadAPIWorkspace"
+import { loadDependency } from "./loadDependency"
+import { validateStructureOfYamlFiles } from "./validateStructureOfYamlFiles"
 
 export declare namespace processPackageMarkers {
     export type Return = SuccessfulResult | FailedResult
@@ -76,7 +76,7 @@ export async function processPackageMarkers({
                     } else {
                         const loadDependencyResult = await loadDependency({
                             dependencyName:
-                                typeof packageMarker.contents.export === 'string'
+                                typeof packageMarker.contents.export === "string"
                                     ? packageMarker.contents.export
                                     : packageMarker.contents.export.dependency,
                             dependenciesConfiguration,
@@ -90,7 +90,7 @@ export async function processPackageMarkers({
                             importedDefinitions[dirname(pathOfPackageMarker)] = {
                                 definition: loadDependencyResult.definition,
                                 url:
-                                    typeof packageMarker.contents.export === 'object'
+                                    typeof packageMarker.contents.export === "object"
                                         ? packageMarker.contents.export.url
                                         : undefined
                             }

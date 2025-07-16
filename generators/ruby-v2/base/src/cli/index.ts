@@ -1,1 +1,1 @@
-export { AbstractRubyGeneratorCli } from './AbstractRubyGeneratorCli'
+export { AbstractRubyGeneratorCli } from "./AbstractRubyGeneratorCli"

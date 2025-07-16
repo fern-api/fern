@@ -1,5 +1,5 @@
-import { assertNever } from '@fern-api/core-utils'
-import { php } from '@fern-api/php-codegen'
+import { assertNever } from "@fern-api/core-utils"
+import { php } from "@fern-api/php-codegen"
 
 import {
     FileProperty,
@@ -16,15 +16,15 @@ import {
     SdkRequestWrapper,
     ServiceId,
     TypeReference
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { SdkGeneratorContext } from '../../SdkGeneratorContext'
+import { SdkGeneratorContext } from "../../SdkGeneratorContext"
 import {
     EndpointRequest,
     HeaderParameterCodeBlock,
     QueryParameterCodeBlock,
     RequestBodyCodeBlock
-} from './EndpointRequest'
+} from "./EndpointRequest"
 
 export declare namespace WrappedEndpointRequest {
     interface Args {
@@ -37,8 +37,8 @@ export declare namespace WrappedEndpointRequest {
     }
 }
 
-const QUERY_PARAMETER_BAG_NAME = '$query'
-const HEADER_BAG_NAME = '$headers'
+const QUERY_PARAMETER_BAG_NAME = "$query"
+const HEADER_BAG_NAME = "$headers"
 
 export class WrappedEndpointRequest extends EndpointRequest {
     private serviceId: ServiceId
@@ -81,7 +81,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                         requestParameterName: this.requestParameterName,
                         propertyName: query.name.name
                     })
-                    writer.controlFlow('if', php.codeblock(`${queryParameterReference} != null`))
+                    writer.controlFlow("if", php.codeblock(`${queryParameterReference} != null`))
                     this.writeQueryParameter(writer, query)
                     writer.endControlFlow()
                 }
@@ -116,7 +116,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                         requestParameterName: this.requestParameterName,
                         propertyName: header.name.name
                     })
-                    writer.controlFlow('if', php.codeblock(`${headerParameterReference} != null`))
+                    writer.controlFlow("if", php.codeblock(`${headerParameterReference} != null`))
                     this.writeHeader(writer, header)
                     writer.endControlFlow()
                 }
@@ -142,7 +142,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         writer: php.Writer
         property: FileUploadRequestProperty
     }): void {
-        if (property.type !== 'bodyProperty') {
+        if (property.type !== "bodyProperty") {
             return
         }
         let paramRef = this.context.accessRequestProperty({
@@ -153,38 +153,38 @@ export class WrappedEndpointRequest extends EndpointRequest {
         const isOptional = this.context.isOptional(propType)
 
         if (isOptional) {
-            writer.controlFlow('if', php.codeblock(`${paramRef} != null`))
+            writer.controlFlow("if", php.codeblock(`${paramRef} != null`))
             propType = this.context.dereferenceOptional(propType)
         }
 
         const isCollection = this.context.isCollection(propType)
         if (isCollection) {
-            writer.controlFlow('foreach', php.codeblock(`${paramRef} as $element`))
-            paramRef = '$element'
+            writer.controlFlow("foreach", php.codeblock(`${paramRef} as $element`))
+            paramRef = "$element"
             propType = this.context.dereferenceCollection(propType)
         }
 
         const arguments_ = [
             {
-                name: 'name',
+                name: "name",
                 assignment: php.codeblock(`'${property.name.wireValue}'`)
             },
             {
-                name: 'value',
+                name: "value",
                 assignment: this.getMultipartBodyParameterValueAssignment(paramRef, propType)
             }
         ]
 
         if (property.contentType != null) {
             arguments_.push({
-                name: 'contentType',
+                name: "contentType",
                 assignment: php.codeblock(`'${property.contentType}'`)
             })
         }
 
         writer.writeNodeStatement(
             php.invokeMethod({
-                method: 'add',
+                method: "add",
                 arguments_,
                 on: this.getRequestBodyArgument(),
                 multiline: arguments_.length > 2
@@ -203,14 +203,14 @@ export class WrappedEndpointRequest extends EndpointRequest {
     private getMultipartBodyParameterValueAssignment(paramRef: string, typeReference: TypeReference): php.AstNode {
         if (this.context.isJsonEncodable(typeReference)) {
             return php.invokeMethod({
-                method: 'encode',
+                method: "encode",
                 arguments_: [php.codeblock(paramRef)],
                 on: this.context.getJsonEncoderClassReference(),
                 static_: true
             })
         } else if (this.context.hasToJsonMethod(typeReference)) {
             return php.invokeMethod({
-                method: 'toJson',
+                method: "toJson",
                 arguments_: [],
                 on: php.codeblock(paramRef)
             })
@@ -232,21 +232,21 @@ export class WrappedEndpointRequest extends EndpointRequest {
             property.contentType != null
                 ? [
                       {
-                          name: 'name',
+                          name: "name",
                           assignment: php.codeblock(`'${property.key.wireValue}'`)
                       },
                       {
-                          name: 'contentType',
+                          name: "contentType",
                           assignment: php.codeblock(`'${property.contentType}'`)
                       }
                   ]
                 : [php.codeblock(`'${property.key.wireValue}'`)]
         writer.writeNodeStatement(
             php.invokeMethod({
-                method: 'addPart',
+                method: "addPart",
                 arguments_: [
                     php.invokeMethod({
-                        method: 'toMultipartFormDataPart',
+                        method: "toMultipartFormDataPart",
                         arguments_,
                         on: php.codeblock(paramRef),
                         multiline: arguments_.length > 1
@@ -266,8 +266,8 @@ export class WrappedEndpointRequest extends EndpointRequest {
         property: FilePropertyArray
     }): void {
         const paramRef = `${this.getRequestParameterName()}->${this.context.getPropertyName(property.key.name)}`
-        writer.controlFlow('foreach', php.codeblock(`${paramRef} as $file`))
-        this.writeMultipartPart({ writer, paramRef: '$file', property: FileProperty.fileArray(property) })
+        writer.controlFlow("foreach", php.codeblock(`${paramRef} as $file`))
+        this.writeMultipartPart({ writer, paramRef: "$file", property: FileProperty.fileArray(property) })
         writer.endControlFlow()
     }
 
@@ -280,14 +280,14 @@ export class WrappedEndpointRequest extends EndpointRequest {
             return php.codeblock((writer) => {
                 writer.write(`${parameter}->format(`)
                 writer.writeNode(this.context.getDateTimeFormat())
-                writer.write(')')
+                writer.write(")")
             })
         }
         if (this.context.isDate(reference)) {
             return php.codeblock((writer) => {
                 writer.write(`${parameter}->format(`)
                 writer.writeNode(this.context.getDateFormat())
-                writer.write(')')
+                writer.write(")")
             })
         }
         const maybeLiteral = this.context.maybeLiteral(reference)
@@ -296,7 +296,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         }
         const type = this.context.phpTypeMapper.convert({ reference })
         const underlyingInternalType = type.underlyingType().internalType
-        if (underlyingInternalType.type === 'union') {
+        if (underlyingInternalType.type === "union") {
             return this.serializeJsonForUnion({
                 bodyArgument: php.codeblock(parameter),
                 types: underlyingInternalType.types,
@@ -313,7 +313,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         }
 
         const requestBodyReference =
-            this.endpoint.requestBody.type === 'fileUpload' ? bodyArgument : this.serializeJsonRequest({ bodyArgument })
+            this.endpoint.requestBody.type === "fileUpload" ? bodyArgument : this.serializeJsonRequest({ bodyArgument })
 
         return {
             code: this.getRequestBodyCode(),
@@ -367,11 +367,11 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
             for (const property of fileUpload.properties) {
                 switch (property.type) {
-                    case 'file': {
+                    case "file": {
                         this.writeFile(writer, property.value)
                         break
                     }
-                    case 'bodyProperty': {
+                    case "bodyProperty": {
                         this.writeMultipartBodyParameter({ writer, property })
                         break
                     }
@@ -385,11 +385,11 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
     private writeFile(writer: php.Writer, file: FileProperty): void {
         switch (file.type) {
-            case 'file': {
+            case "file": {
                 this.writeSingleFile(writer, file)
                 break
             }
-            case 'fileArray': {
+            case "fileArray": {
                 this.writeFileArray(writer, file)
                 break
             }
@@ -405,7 +405,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
             propertyName: file.key.name
         })
         if (file.isOptional) {
-            writer.controlFlow('if', php.codeblock(`${paramRef} != null`))
+            writer.controlFlow("if", php.codeblock(`${paramRef} != null`))
             this.writeMultipartPart({ writer, paramRef, property: FileProperty.file(file) })
             writer.endControlFlow()
         } else {
@@ -419,7 +419,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 requestParameterName: this.sdkRequest.requestParameterName,
                 propertyName: fileArray.key.name
             })
-            writer.controlFlow('if', php.codeblock(`${ref} != null`))
+            writer.controlFlow("if", php.codeblock(`${ref} != null`))
             this.writeMultipartPartFileArray({ writer, property: fileArray })
             writer.endControlFlow()
         } else {

@@ -1,4 +1,4 @@
-import { ts } from '@fern-api/typescript-ast'
+import { ts } from "@fern-api/typescript-ast"
 
 export declare namespace MethodInvocationNode {
     interface Args {
@@ -17,17 +17,17 @@ export class MethodInvocationNode extends ts.AstNode {
 
     public write(writer: ts.Writer): void {
         if (this.args.async) {
-            writer.write('await ')
+            writer.write("await ")
         }
         this.args.on.write(writer)
-        writer.write('.')
+        writer.write(".")
         writer.write(this.args.method)
-        writer.write('(')
+        writer.write("(")
         writer.delimit({
             nodes: this.args.arguments_,
-            delimiter: ', ',
+            delimiter: ", ",
             writeFunction: (argument) => argument.write(writer)
         })
-        writer.write(')')
+        writer.write(")")
     }
 }

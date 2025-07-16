@@ -1,4 +1,4 @@
-import { Writer } from './Writer'
+import { Writer } from "./Writer"
 
 export declare namespace RubyFile {
     interface Args extends Writer.Args {}
@@ -45,6 +45,6 @@ ${this.buffer}`
     private stringifyRequires(): string {
         return Array.from(this.requires)
             .map((requirePath) => `require "${requirePath}"`)
-            .join('\n')
+            .join("\n")
     }
 }

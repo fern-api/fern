@@ -1,18 +1,18 @@
-import { cp } from 'fs/promises'
-import tmp from 'tmp-promise'
+import { cp } from "fs/promises"
+import tmp from "tmp-promise"
 
-import { AbsoluteFilePath, RelativeFilePath, getDirectoryContentsForSnapshot, join } from '@fern-api/fs-utils'
-import { createMockTaskContext } from '@fern-api/task-context'
+import { AbsoluteFilePath, RelativeFilePath, getDirectoryContentsForSnapshot, join } from "@fern-api/fs-utils"
+import { createMockTaskContext } from "@fern-api/task-context"
 
-import { migration } from '../migration'
+import { migration } from "../migration"
 
-const FIXTURES_PATH = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of('fixtures'))
+const FIXTURES_PATH = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"))
 
-const FIXTURES = ['single-api', 'single-api-with-docs', 'multiple-apis', 'multiple-apis-with-docs'].map(
+const FIXTURES = ["single-api", "single-api-with-docs", "multiple-apis", "multiple-apis-with-docs"].map(
     RelativeFilePath.of
 )
 
-describe('update-directory-structure', () => {
+describe("update-directory-structure", () => {
     for (const fixture of FIXTURES) {
         // eslint-disable-next-line jest/valid-title
         it(fixture, async () => {
@@ -32,8 +32,8 @@ describe('update-directory-structure', () => {
         })
     }
 
-    it('multiple-apis-with-multiple-docs', async () => {
-        const pathToFixture = join(FIXTURES_PATH, RelativeFilePath.of('multiple-apis-with-multiple-docs'))
+    it("multiple-apis-with-multiple-docs", async () => {
+        const pathToFixture = join(FIXTURES_PATH, RelativeFilePath.of("multiple-apis-with-multiple-docs"))
         const tmpDir = await tmp.dir()
 
         await cp(pathToFixture, tmpDir.path, { recursive: true })

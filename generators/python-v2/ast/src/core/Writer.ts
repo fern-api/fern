@@ -1,7 +1,7 @@
-import { AbstractFormatter, AbstractWriter } from '@fern-api/browser-compatible-base-generator'
+import { AbstractFormatter, AbstractWriter } from "@fern-api/browser-compatible-base-generator"
 
-import { Reference } from '../Reference'
-import { ImportedName } from './types'
+import { Reference } from "../Reference"
+import { ImportedName } from "./types"
 
 export class Writer extends AbstractWriter {
     private fullyQualifiedModulePathsToImportedNames: Record<string, ImportedName> = {}

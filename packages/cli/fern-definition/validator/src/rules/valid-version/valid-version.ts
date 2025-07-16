@@ -1,10 +1,10 @@
-import { RootApiFileSchema } from '@fern-api/fern-definition-schema'
-import { TypeResolver, TypeResolverImpl } from '@fern-api/ir-generator'
+import { RootApiFileSchema } from "@fern-api/fern-definition-schema"
+import { TypeResolver, TypeResolverImpl } from "@fern-api/ir-generator"
 
-import { Rule, RuleViolation } from '../../Rule'
+import { Rule, RuleViolation } from "../../Rule"
 
 export const ValidVersionRule: Rule = {
-    name: 'valid-version',
+    name: "valid-version",
     create: ({ workspace }) => {
         const typeResolver = new TypeResolverImpl(workspace)
         return {
@@ -32,11 +32,11 @@ function validateApiVersionSchema({
         return []
     }
     const enumValues = new Set<string>(
-        root.version.values.map((enumValue) => (typeof enumValue === 'string' ? enumValue : enumValue.value))
+        root.version.values.map((enumValue) => (typeof enumValue === "string" ? enumValue : enumValue.value))
     )
     if (!enumValues.has(root.version.default)) {
         violations.push({
-            severity: 'fatal',
+            severity: "fatal",
             message: `Default version "${root.version.default}" not found in version values`
         })
     }

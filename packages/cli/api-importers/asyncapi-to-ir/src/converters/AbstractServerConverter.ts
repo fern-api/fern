@@ -1,8 +1,8 @@
-import { Environments, EnvironmentsConfig, SingleBaseUrlEnvironment } from '@fern-api/ir-sdk'
-import { AbstractConverter } from '@fern-api/v2-importer-commons'
+import { Environments, EnvironmentsConfig, SingleBaseUrlEnvironment } from "@fern-api/ir-sdk"
+import { AbstractConverter } from "@fern-api/v2-importer-commons"
 
-import { AsyncAPIConverter } from '../AsyncAPIConverter'
-import { AsyncAPIConverterContext } from '../AsyncAPIConverterContext'
+import { AsyncAPIConverter } from "../AsyncAPIConverter"
+import { AsyncAPIConverterContext } from "../AsyncAPIConverterContext"
 
 export declare namespace AbstractServerConverter {
     export interface Args<TServer> extends AsyncAPIConverter.AbstractArgs {
@@ -57,7 +57,7 @@ export abstract class AbstractServerConverter<TServer> extends AbstractConverter
     ): SingleBaseUrlEnvironment
 
     protected constructServerUrl(protocol: string, url: string): string {
-        if (url.includes('://')) {
+        if (url.includes("://")) {
             return url
         }
         return `${protocol}://${url}`

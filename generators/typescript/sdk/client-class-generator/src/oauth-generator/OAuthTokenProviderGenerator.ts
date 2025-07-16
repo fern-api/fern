@@ -1,6 +1,6 @@
-import { ExportedFilePath, getTextOfTsNode } from '@fern-typescript/commons'
-import { SdkContext } from '@fern-typescript/contexts'
-import { Code, code } from 'ts-poet'
+import { ExportedFilePath, getTextOfTsNode } from "@fern-typescript/commons"
+import { SdkContext } from "@fern-typescript/contexts"
+import { Code, code } from "ts-poet"
 
 import {
     HttpEndpoint,
@@ -13,16 +13,16 @@ import {
     OAuthClientCredentials,
     OAuthScheme,
     ResponseProperty
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
 export class OAuthTokenProviderGenerator {
-    public static readonly OAUTH_TOKEN_PROVIDER_CLASS_NAME = 'OAuthTokenProvider'
-    public static readonly OAUTH_TOKEN_PROVIDER_PROPERTY_NAME = '_oauthTokenProvider'
-    public static readonly OAUTH_TOKEN_PROPERTY_NAME = 'token'
-    public static readonly OAUTH_GET_TOKEN_METHOD_NAME = 'getToken'
-    public static readonly OAUTH_CLIENT_ID_PROPERTY_NAME = 'clientId'
-    public static readonly OAUTH_CLIENT_SECRET_PROPERTY_NAME = 'clientSecret'
-    public static readonly OAUTH_AUTH_CLIENT_PROPERTY_NAME = 'authClient'
+    public static readonly OAUTH_TOKEN_PROVIDER_CLASS_NAME = "OAuthTokenProvider"
+    public static readonly OAUTH_TOKEN_PROVIDER_PROPERTY_NAME = "_oauthTokenProvider"
+    public static readonly OAUTH_TOKEN_PROPERTY_NAME = "token"
+    public static readonly OAUTH_GET_TOKEN_METHOD_NAME = "getToken"
+    public static readonly OAUTH_CLIENT_ID_PROPERTY_NAME = "clientId"
+    public static readonly OAUTH_CLIENT_SECRET_PROPERTY_NAME = "clientSecret"
+    public static readonly OAUTH_AUTH_CLIENT_PROPERTY_NAME = "authClient"
 
     private ir: IntermediateRepresentation
     private neverThrowErrors: boolean
@@ -46,14 +46,14 @@ export class OAuthTokenProviderGenerator {
         return {
             directories: [
                 {
-                    nameOnDisk: 'core'
+                    nameOnDisk: "core"
                 },
                 {
-                    nameOnDisk: 'auth'
+                    nameOnDisk: "auth"
                 }
             ],
             file: {
-                nameOnDisk: 'OAuthTokenProvider.ts'
+                nameOnDisk: "OAuthTokenProvider.ts"
             }
         }
     }
@@ -68,7 +68,7 @@ export class OAuthTokenProviderGenerator {
 
     public buildFile({ context, oauthScheme }: { context: SdkContext; oauthScheme: OAuthScheme }): Code {
         switch (oauthScheme.configuration.type) {
-            case 'clientCredentials':
+            case "clientCredentials":
                 return this.buildClientCredentialsFile({
                     context,
                     clientCredentials: oauthScheme.configuration,
@@ -324,26 +324,26 @@ export class OAuthTokenProviderGenerator {
     }: {
         responseProperty: ResponseProperty
     }): string {
-        const prefix = this.neverThrowErrors ? 'body.' : ''
+        const prefix = this.neverThrowErrors ? "body." : ""
         const propertyPath = responseProperty.propertyPath
         if (propertyPath == null || propertyPath.length === 0) {
             return prefix + this.getName(responseProperty.property.name)
         }
         return (
             prefix +
-            propertyPath.map((name) => this.getName(name)).join('.') +
-            '.' +
+            propertyPath.map((name) => this.getName(name)).join(".") +
+            "." +
             this.getName(responseProperty.property.name)
         )
     }
     private getName(name: Name | NameAndWireValue): string {
         if (this.includeSerdeLayer) {
-            if ('name' in name) {
+            if ("name" in name) {
                 return name.name.camelCase.unsafeName
             }
             return name.camelCase.unsafeName
         }
-        if ('name' in name) {
+        if ("name" in name) {
             return name.name.originalName
         }
         return name.originalName

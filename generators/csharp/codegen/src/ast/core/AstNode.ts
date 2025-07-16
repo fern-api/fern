@@ -1,7 +1,7 @@
-import { AbstractAstNode, AbstractFormatter } from '@fern-api/browser-compatible-base-generator'
+import { AbstractAstNode, AbstractFormatter } from "@fern-api/browser-compatible-base-generator"
 
-import { BaseCsharpCustomConfigSchema } from '../../custom-config'
-import { Writer } from './Writer'
+import { BaseCsharpCustomConfigSchema } from "../../custom-config"
+import { Writer } from "./Writer"
 
 type Namespace = string
 
@@ -89,7 +89,7 @@ export abstract class AstNode extends AbstractAstNode {
         skipImports: boolean
     }): FormattedAstNodeSnippet {
         const writer = new Writer({
-            namespace: '',
+            namespace: "",
             allNamespaceSegments,
             allTypeClassReferences,
             rootNamespace,
@@ -119,7 +119,7 @@ export abstract class AstNode extends AbstractAstNode {
         skipImports?: boolean
     }): Promise<FormattedAstNodeSnippet> {
         const writer = new Writer({
-            namespace: '',
+            namespace: "",
             allNamespaceSegments,
             allTypeClassReferences,
             rootNamespace,

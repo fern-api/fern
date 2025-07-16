@@ -1,5 +1,5 @@
-import { CodeBlock, Parameter } from '../csharp'
-import { Writer } from './core/Writer'
+import { CodeBlock, Parameter } from "../csharp"
+import { Writer } from "./core/Writer"
 
 export declare namespace AnonymousFunction {
     interface Args {
@@ -24,21 +24,21 @@ export class AnonymousFunction {
 
     public write(writer: Writer): void {
         if (this.isAsync) {
-            writer.write('async ')
+            writer.write("async ")
         }
-        writer.write('(')
+        writer.write("(")
         this.parameters.forEach((parameter, idx) => {
             parameter.write(writer)
             if (idx < this.parameters.length - 1) {
-                writer.write(', ')
+                writer.write(", ")
             }
         })
-        writer.writeLine(') => {')
+        writer.writeLine(") => {")
 
         writer.indent()
         this.body?.write(writer)
         writer.dedent()
 
-        writer.writeLine('}')
+        writer.writeLine("}")
     }
 }

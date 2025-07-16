@@ -11,7 +11,7 @@ import {
     Parameter,
     Property,
     StringClassReference
-} from '@fern-api/ruby-codegen'
+} from "@fern-api/ruby-codegen"
 
 import {
     ApiAuth,
@@ -21,10 +21,10 @@ import {
     HeaderAuthScheme,
     HttpHeader,
     OAuthScheme
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { isTypeOptional } from './TypeUtilities'
-import { OauthTokenProvider } from './oauth/OauthTokenProvider'
+import { isTypeOptional } from "./TypeUtilities"
+import { OauthTokenProvider } from "./oauth/OauthTokenProvider"
 
 export interface BasicAuth {
     username: string
@@ -36,7 +36,7 @@ export interface BearerAuth {
 
 // For global headers + auth headers
 export class HeadersGenerator {
-    BASIC_AUTH_VARIABLE_NAME = 'basic_auth_token'
+    BASIC_AUTH_VARIABLE_NAME = "basic_auth_token"
     public headers: HttpHeader[]
     public crf: ClassReferenceFactory
     public auth: ApiAuth
@@ -53,7 +53,7 @@ export class HeadersGenerator {
             all: () => true,
             any: () => false,
             _other: () => {
-                throw new Error('Unrecognized auth requirement.')
+                throw new Error("Unrecognized auth requirement.")
             }
         })
         this.shouldGeneratOauth = shouldGeneratOauth
@@ -118,7 +118,7 @@ export class HeadersGenerator {
                                   forRootClient
                                       ? [
                                             new Parameter({
-                                                name: 'client_id',
+                                                name: "client_id",
                                                 type: StringClassReference,
                                                 isOptional: cc.clientIdEnvVar !== undefined || !this.isAuthRequired,
                                                 example: '"YOUR_CLIENT_ID"',
@@ -128,7 +128,7 @@ export class HeadersGenerator {
                                                         : undefined
                                             }),
                                             new Parameter({
-                                                name: 'client_secret',
+                                                name: "client_secret",
                                                 type: StringClassReference,
                                                 isOptional: cc.clientSecretEnvVar !== undefined || !this.isAuthRequired,
                                                 example: '"YOUR_CLIENT_SECRET"',
@@ -148,7 +148,7 @@ export class HeadersGenerator {
                                             })
                                         ],
                               _other: () => {
-                                  throw new Error('Unrecognized auth scheme.')
+                                  throw new Error("Unrecognized auth scheme.")
                               }
                           })
                         : [
@@ -172,7 +172,7 @@ export class HeadersGenerator {
                     })
                 ],
                 _other: () => {
-                    throw new Error('Unrecognized auth scheme.')
+                    throw new Error("Unrecognized auth scheme.")
                 }
             })
         )
@@ -203,7 +203,7 @@ export class HeadersGenerator {
                         //     If there's an envvar it should be optional
                         //     If there's not an envvar then check if auth is required
                         isOptional: isOptionalOverride ?? (bas.tokenEnvVar !== undefined || !this.isAuthRequired),
-                        wireValue: 'Authorization'
+                        wireValue: "Authorization"
                     })
                 ],
                 basic: (bas: BasicAuthScheme) => [
@@ -217,7 +217,7 @@ export class HeadersGenerator {
                             isOptionalOverride ??
                             ((bas.usernameEnvVar !== undefined && bas.passwordEnvVar !== undefined) ||
                                 !this.isAuthRequired),
-                        wireValue: 'Authorization'
+                        wireValue: "Authorization"
                     })
                 ],
                 header: (has: HeaderAuthScheme) => [
@@ -233,11 +233,11 @@ export class HeadersGenerator {
                         name: OauthTokenProvider.FIELD_NAME,
                         type: [StringClassReference, MethodClassReference],
                         isOptional: true,
-                        wireValue: 'Authorization'
+                        wireValue: "Authorization"
                     })
                 ],
                 _other: () => {
-                    throw new Error('Unrecognized auth scheme.')
+                    throw new Error("Unrecognized auth scheme.")
                 }
             })
         )
@@ -268,7 +268,7 @@ export class HeadersGenerator {
                       ]
                   },
                   _other: () => {
-                      throw new Error('Unrecognized auth scheme.')
+                      throw new Error("Unrecognized auth scheme.")
                   }
               })
             : [`@${OauthTokenProvider.FIELD_NAME}`, `"Bearer #{${OauthTokenProvider.FIELD_NAME}}"`]
@@ -279,8 +279,8 @@ export class HeadersGenerator {
         const password = new Expression({ rightSide: bas.password.snakeCase.safeName, isAssignment: false })
 
         const b64 = new FunctionInvocation({
-            onObject: new ClassReference({ name: 'Base64', import_: new Import({ from: 'base64', isExternal: true }) }),
-            baseFunction: new Function_({ name: 'encode64', functionBody: [] }),
+            onObject: new ClassReference({ name: "Base64", import_: new Import({ from: "base64", isExternal: true }) }),
+            baseFunction: new Function_({ name: "encode64", functionBody: [] }),
             arguments_: [
                 new Argument({
                     isNamed: false,
@@ -318,7 +318,7 @@ export class HeadersGenerator {
                 header: (has: HeaderAuthScheme) => this.getCustomAuthorizationHeader(has),
                 oauth: (oas: OAuthScheme) => this.getOAuthBearerAuthorizationHeader(oas),
                 _other: () => {
-                    throw new Error('Unrecognized auth scheme.')
+                    throw new Error("Unrecognized auth scheme.")
                 }
             })
         )

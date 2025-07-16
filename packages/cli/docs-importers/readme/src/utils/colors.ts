@@ -1,9 +1,9 @@
-import type { Root as HastRoot } from 'hast'
-import { CONTINUE, visit } from 'unist-util-visit'
+import type { Root as HastRoot } from "hast"
+import { CONTINUE, visit } from "unist-util-visit"
 
-import { docsYml } from '@fern-api/configuration'
+import { docsYml } from "@fern-api/configuration"
 
-import { defaultColors } from '../constants'
+import { defaultColors } from "../constants"
 
 function rgbToHex(color: string): string | undefined {
     if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(color)) {
@@ -23,7 +23,7 @@ function rgbToHex(color: string): string | undefined {
     if (!r || !g || !b || r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255) {
         return undefined
     }
-    const toHex = (n: number) => Math.round(n).toString(16).padStart(2, '0')
+    const toHex = (n: number) => Math.round(n).toString(16).padStart(2, "0")
     return `#${toHex(r)}${toHex(g)}${toHex(b)}`.toUpperCase()
 }
 
@@ -31,20 +31,20 @@ export async function getColors(hast: HastRoot): Promise<docsYml.RawSchemas.Colo
     let primaryHexCode: string | undefined
     let lightHexCode: string | undefined
 
-    visit(hast, 'element', function (node) {
+    visit(hast, "element", function (node) {
         if (
-            node.tagName !== 'style' ||
-            node.properties.title !== 'rm-custom-css' ||
+            node.tagName !== "style" ||
+            node.properties.title !== "rm-custom-css" ||
             node.children.length !== 1 ||
             !node.children[0] ||
-            node.children[0].type !== 'text'
+            node.children[0].type !== "text"
         ) {
             return CONTINUE
         }
 
         const cssStr = node.children[0].value
-        const colorKey = '--color-link-primary'
-        const regex = new RegExp(`${colorKey}\\s*[:|,]\\s*([^;)]+)`, 'i')
+        const colorKey = "--color-link-primary"
+        const regex = new RegExp(`${colorKey}\\s*[:|,]\\s*([^;)]+)`, "i")
 
         const primaryCssColorValue = cssStr.match(regex)?.[1]?.trim()
         const lightCssColorValue = cssStr.match(regex)?.[1]?.trim()

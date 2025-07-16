@@ -1,13 +1,13 @@
-import { UnnamedArgument } from '@fern-api/browser-compatible-base-generator'
+import { UnnamedArgument } from "@fern-api/browser-compatible-base-generator"
 
-import { CodeBlock } from './CodeBlock'
-import { Comment } from './Comment'
-import { GoTypeReference } from './GoTypeReference'
-import { Parameter } from './Parameter'
-import { Type } from './Type'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
-import { writeArguments } from './utils/writeArguments'
+import { CodeBlock } from "./CodeBlock"
+import { Comment } from "./Comment"
+import { GoTypeReference } from "./GoTypeReference"
+import { Parameter } from "./Parameter"
+import { Type } from "./Type"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
+import { writeArguments } from "./utils/writeArguments"
 
 export declare namespace Method {
     interface Args {
@@ -54,7 +54,7 @@ export class Method extends AstNode {
 
     public write(writer: Writer): void {
         writer.writeNode(new Comment({ docs: this.docs }))
-        writer.write('func')
+        writer.write("func")
         if (this.typeReference != null) {
             this.writeReceiver({ writer, typeReference: this.typeReference })
         }
@@ -67,35 +67,35 @@ export class Method extends AstNode {
             multiline: this.multiline
         })
         if (this.return_ != null) {
-            writer.write(' ')
+            writer.write(" ")
             if (this.return_.length > 1) {
-                writer.write('(')
+                writer.write("(")
             }
             this.return_.forEach((returnType, index) => {
                 if (index > 0) {
-                    writer.write(', ')
+                    writer.write(", ")
                 }
                 writer.writeNode(returnType)
             })
             if (this.return_.length > 1) {
-                writer.write(')')
+                writer.write(")")
             }
         }
-        writer.writeLine('{')
+        writer.writeLine("{")
         writer.indent()
         this.body?.write(writer)
         writer.dedent()
         writer.writeNewLineIfLastLineNot()
-        writer.write('}')
+        writer.write("}")
     }
 
     private writeReceiver({ writer, typeReference }: { writer: Writer; typeReference: GoTypeReference }): void {
         writer.write(` (${this.getReceiverName(typeReference.name)} `)
         if (this.pointerReceiver) {
-            writer.write('*')
+            writer.write("*")
         }
         typeReference.write(writer)
-        writer.write(')')
+        writer.write(")")
     }
 
     private getReceiverName(s: string): string {

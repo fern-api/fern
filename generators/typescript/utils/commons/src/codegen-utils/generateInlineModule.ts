@@ -5,13 +5,13 @@ import {
     StructureKind,
     TypeAliasDeclarationStructure,
     WriterFunction
-} from 'ts-morph'
+} from "ts-morph"
 
-import { assertNever } from '@fern-api/core-utils'
+import { assertNever } from "@fern-api/core-utils"
 
-import { DeclaredTypeName, MapType, NamedType, TypeDeclaration, TypeReference } from '@fern-fern/ir-sdk/api'
+import { DeclaredTypeName, MapType, NamedType, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api"
 
-import { InlineConsts } from './inlineConsts'
+import { InlineConsts } from "./inlineConsts"
 
 export function generateInlinePropertiesModule({
     generateStatements,
@@ -227,29 +227,29 @@ function generateTypeVisitor<TOut>(
 
 function getNamedType(typeReference: TypeReference): NamedType | undefined {
     switch (typeReference.type) {
-        case 'named':
+        case "named":
             return typeReference
-        case 'container':
+        case "container":
             switch (typeReference.container.type) {
-                case 'nullable':
+                case "nullable":
                     return getNamedType(typeReference.container.nullable)
-                case 'optional':
+                case "optional":
                     return getNamedType(typeReference.container.optional)
-                case 'list':
+                case "list":
                     return getNamedType(typeReference.container.list)
-                case 'map':
+                case "map":
                     return getNamedType(typeReference.container.valueType)
-                case 'set':
+                case "set":
                     return getNamedType(typeReference.container.set)
-                case 'literal':
+                case "literal":
                     return undefined
                 default:
                     assertNever(typeReference.container)
             }
         // fallthrough
-        case 'primitive':
+        case "primitive":
             return undefined
-        case 'unknown':
+        case "unknown":
             return undefined
         default:
             assertNever(typeReference)

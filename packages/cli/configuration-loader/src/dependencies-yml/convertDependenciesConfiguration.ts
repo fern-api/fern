@@ -1,8 +1,8 @@
-import path from 'path'
+import path from "path"
 
-import { dependenciesYml } from '@fern-api/configuration'
-import { AbsoluteFilePath, doesPathExist } from '@fern-api/fs-utils'
-import { TaskContext, TaskResult } from '@fern-api/task-context'
+import { dependenciesYml } from "@fern-api/configuration"
+import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils"
+import { TaskContext, TaskResult } from "@fern-api/task-context"
 
 const EMPTY_DEPENDENCIES_CONFIGURATION: dependenciesYml.DependenciesConfiguration = {
     dependencies: {}
@@ -27,7 +27,7 @@ export async function convertDependenciesConfiguration({
             const pathToApi = AbsoluteFilePath.of(path.join(absolutePathToWorkspace, versionOrPath))
             if (await doesPathExist(pathToApi)) {
                 dependencies[coordinate] = {
-                    type: 'local',
+                    type: "local",
                     absoluteFilepath: pathToApi,
                     path: versionOrPath
                 }
@@ -37,12 +37,12 @@ export async function convertDependenciesConfiguration({
             }
         } else {
             const unprefixedCoordinate = coordinate.substring(1)
-            const splitCoordinate = unprefixedCoordinate.split('/')
+            const splitCoordinate = unprefixedCoordinate.split("/")
             const organization = splitCoordinate[0]
             const apiName = splitCoordinate[1]
             if (organization != null && apiName != null) {
                 dependencies[coordinate] = {
-                    type: 'version',
+                    type: "version",
                     organization,
                     apiName,
                     version: versionOrPath

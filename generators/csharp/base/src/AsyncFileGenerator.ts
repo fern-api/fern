@@ -1,8 +1,8 @@
-import { File } from '@fern-api/base-generator'
-import { BaseCsharpCustomConfigSchema } from '@fern-api/csharp-codegen'
-import { RelativeFilePath } from '@fern-api/fs-utils'
+import { File } from "@fern-api/base-generator"
+import { BaseCsharpCustomConfigSchema } from "@fern-api/csharp-codegen"
+import { RelativeFilePath } from "@fern-api/fs-utils"
 
-import { AbstractCsharpGeneratorContext } from './context/AbstractCsharpGeneratorContext'
+import { AbstractCsharpGeneratorContext } from "./context/AbstractCsharpGeneratorContext"
 
 export abstract class AsyncFileGenerator<
     GeneratedFile extends File,

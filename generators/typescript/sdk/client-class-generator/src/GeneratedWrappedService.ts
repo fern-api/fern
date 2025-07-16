@@ -1,13 +1,13 @@
-import { Reference, getTextOfTsNode } from '@fern-typescript/commons'
-import { SdkContext } from '@fern-typescript/contexts'
-import { ClassDeclarationStructure, Scope, ts } from 'ts-morph'
+import { Reference, getTextOfTsNode } from "@fern-typescript/commons"
+import { SdkContext } from "@fern-typescript/contexts"
+import { ClassDeclarationStructure, Scope, ts } from "ts-morph"
 
-import { SetRequired } from '@fern-api/core-utils'
+import { SetRequired } from "@fern-api/core-utils"
 
-import { Subpackage, SubpackageId } from '@fern-fern/ir-sdk/api'
+import { Subpackage, SubpackageId } from "@fern-fern/ir-sdk/api"
 
-import { GeneratedSdkClientClassImpl } from './GeneratedSdkClientClassImpl'
-import { OAuthTokenProviderGenerator } from './oauth-generator/OAuthTokenProviderGenerator'
+import { GeneratedSdkClientClassImpl } from "./GeneratedSdkClientClassImpl"
+import { OAuthTokenProviderGenerator } from "./oauth-generator/OAuthTokenProviderGenerator"
 
 export declare namespace GeneratedWrappedService {
     interface Init {
@@ -34,7 +34,7 @@ export class GeneratedWrappedService {
         context
     }: {
         isRoot: boolean
-        class_: SetRequired<ClassDeclarationStructure, 'properties' | 'ctors' | 'methods' | 'getAccessors'>
+        class_: SetRequired<ClassDeclarationStructure, "properties" | "ctors" | "methods" | "getAccessors">
         context: SdkContext
     }): void {
         const referenceToWrapped = this.getReferenceToWrappedService(class_, context)
@@ -150,13 +150,13 @@ export class GeneratedWrappedService {
         const lastFernFilepathPart =
             this.wrappedSubpackage.fernFilepath.allParts[this.wrappedSubpackage.fernFilepath.allParts.length - 1]
         if (lastFernFilepathPart == null) {
-            throw new Error('Cannot generate wrapped service because FernFilepath is empty')
+            throw new Error("Cannot generate wrapped service because FernFilepath is empty")
         }
         return lastFernFilepathPart.camelCase.unsafeName
     }
 
     private getReferenceToWrappedService(
-        serviceClass: SetRequired<ClassDeclarationStructure, 'properties' | 'ctors' | 'methods'>,
+        serviceClass: SetRequired<ClassDeclarationStructure, "properties" | "ctors" | "methods">,
         context: SdkContext
     ): Reference {
         const reference = context.sdkClientClass.getReferenceToClientClass({

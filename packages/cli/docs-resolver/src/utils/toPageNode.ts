@@ -1,12 +1,12 @@
-import { kebabCase } from 'lodash-es'
+import { kebabCase } from "lodash-es"
 
-import { docsYml } from '@fern-api/configuration-loader'
-import { FernNavigation } from '@fern-api/fdr-sdk'
-import { AbsoluteFilePath } from '@fern-api/fs-utils'
-import { DocsWorkspace } from '@fern-api/workspace-loader'
+import { docsYml } from "@fern-api/configuration-loader"
+import { FernNavigation } from "@fern-api/fdr-sdk"
+import { AbsoluteFilePath } from "@fern-api/fs-utils"
+import { DocsWorkspace } from "@fern-api/workspace-loader"
 
-import { NodeIdGenerator } from '../NodeIdGenerator'
-import { toRelativeFilepath } from './toRelativeFilepath'
+import { NodeIdGenerator } from "../NodeIdGenerator"
+import { toRelativeFilepath } from "./toRelativeFilepath"
 
 export function toPageNode({
     docsWorkspace,
@@ -27,12 +27,12 @@ export function toPageNode({
 }): FernNavigation.V1.PageNode {
     const pageId = FernNavigation.V1.PageId(toRelativeFilepath(docsWorkspace, page.absolutePath))
     const pageSlug = parentSlug.apply({
-        fullSlug: markdownFilesToFullSlugs.get(page.absolutePath)?.split('/'),
+        fullSlug: markdownFilesToFullSlugs.get(page.absolutePath)?.split("/"),
         urlSlug: page.slug ?? kebabCase(page.title)
     })
     return {
         id: idgen.get(pageId),
-        type: 'page',
+        type: "page",
         pageId,
         title: page.title,
         slug: pageSlug.get(),

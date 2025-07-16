@@ -1,1 +1,1 @@
-export { CompatibleIrVersionsRule } from './compatible-ir-versions'
+export { CompatibleIrVersionsRule } from "./compatible-ir-versions"

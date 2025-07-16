@@ -1,6 +1,6 @@
-import type { Root as MdastRoot } from 'mdast'
-import type { MdxJsxAttribute } from 'mdast-util-mdx-jsx'
-import { CONTINUE, visit } from 'unist-util-visit'
+import type { Root as MdastRoot } from "mdast"
+import type { MdxJsxAttribute } from "mdast-util-mdx-jsx"
+import { CONTINUE, visit } from "unist-util-visit"
 
 export declare namespace getImagesUsedInFile {
     interface Output {
@@ -16,11 +16,11 @@ export async function getImagesUsedInFile(root: MdastRoot, url: string | URL): P
 
     visit(root, function (node) {
         let imageUrl: string | undefined = undefined
-        if (node.type === 'image') {
+        if (node.type === "image") {
             imageUrl = node.url
-        } else if (node.type === 'mdxJsxFlowElement') {
+        } else if (node.type === "mdxJsxFlowElement") {
             imageUrl = node.attributes.find(
-                (attr) => attr.type === 'mdxJsxAttribute' && (attr.name === 'src' || attr.name === 'img')
+                (attr) => attr.type === "mdxJsxAttribute" && (attr.name === "src" || attr.name === "img")
             )?.value as string | undefined
         }
 
@@ -28,7 +28,7 @@ export async function getImagesUsedInFile(root: MdastRoot, url: string | URL): P
             return CONTINUE
         }
 
-        if (imageUrl.startsWith('/')) {
+        if (imageUrl.startsWith("/")) {
             imageUrl = new URL(imageUrl, url.origin).toString()
         }
         imageURLs.push(imageUrl)
@@ -43,10 +43,10 @@ export async function getImagesUsedInFile(root: MdastRoot, url: string | URL): P
             const pathname = urlObj.pathname
 
             // Get the filename from the path
-            let filename = pathname.split('/').pop() || ''
+            let filename = pathname.split("/").pop() || ""
 
             // Clean the filename and ensure it has an extension
-            if (!filename.includes('.')) {
+            if (!filename.includes(".")) {
                 // If no extension, default to .png
                 filename = `${filename}.png`
             }
@@ -60,25 +60,25 @@ export async function getImagesUsedInFile(root: MdastRoot, url: string | URL): P
     }
 
     visit(root, function (node, index, parent) {
-        if (node.type === 'image') {
-            if (node.url.startsWith('/')) {
+        if (node.type === "image") {
+            if (node.url.startsWith("/")) {
                 node.url = imageURLToFilename[new URL(node.url, url.origin).toString()] ?? node.url
             } else {
                 node.url = imageURLToFilename[node.url] ?? node.url
             }
-            if (parent && typeof index === 'number') {
+            if (parent && typeof index === "number") {
                 parent.children[index] = node
             }
-        } else if (node.type === 'mdxJsxFlowElement') {
+        } else if (node.type === "mdxJsxFlowElement") {
             const urlAttr = (node.attributes as Array<MdxJsxAttribute>).find(
-                (attr) => attr.type === 'mdxJsxAttribute' && (attr.name === 'src' || attr.name === 'img')
+                (attr) => attr.type === "mdxJsxAttribute" && (attr.name === "src" || attr.name === "img")
             )
             if (!urlAttr) {
                 return CONTINUE
             }
 
             urlAttr.value = imageURLToFilename[urlAttr.value as string] ?? urlAttr.value
-            if (parent && typeof index === 'number') {
+            if (parent && typeof index === "number") {
                 parent.children[index] = node
             }
         }

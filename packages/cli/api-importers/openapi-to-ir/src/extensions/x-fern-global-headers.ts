@@ -1,4 +1,4 @@
-import { AbstractExtension } from '@fern-api/v2-importer-commons'
+import { AbstractExtension } from "@fern-api/v2-importer-commons"
 
 export declare namespace FernGlobalHeadersExtension {
     export interface Args extends AbstractExtension.Args {
@@ -16,7 +16,7 @@ export declare namespace FernGlobalHeadersExtension {
 
 export class FernGlobalHeadersExtension extends AbstractExtension<FernGlobalHeadersExtension.GlobalHeaderExtension[]> {
     private readonly document: object
-    public readonly key = 'x-fern-global-headers'
+    public readonly key = "x-fern-global-headers"
 
     constructor({ breadcrumbs, document, context }: FernGlobalHeadersExtension.Args) {
         super({ breadcrumbs, context })
@@ -31,7 +31,7 @@ export class FernGlobalHeadersExtension extends AbstractExtension<FernGlobalHead
 
         if (!Array.isArray(extensionValue)) {
             this.context.errorCollector.collect({
-                message: 'Received unexpected non-array value for x-fern-global-headers',
+                message: "Received unexpected non-array value for x-fern-global-headers",
                 path: this.breadcrumbs
             })
             return undefined

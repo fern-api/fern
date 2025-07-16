@@ -1,4 +1,4 @@
-import { generatorsYml } from '@fern-api/configuration'
+import { generatorsYml } from "@fern-api/configuration"
 
 export interface ParseOpenAPIOptions {
     /* Whether or not to disable OpenAPI example generation */
@@ -33,7 +33,7 @@ export interface ParseOpenAPIOptions {
     /* Whether or not to use idiomatic request names for endpoints. */
     shouldUseIdiomaticRequestNames: boolean
     /* What the default encoding should be for form data parameters. */
-    defaultFormParameterEncoding: 'form' | 'json' | undefined
+    defaultFormParameterEncoding: "form" | "json" | undefined
     /* Whether or not to use the `bytes` type for binary responses. */
     useBytesForBinaryResponse: boolean
     /* Whether or not to respect forward compatible enums in OpenAPI specifications. */
@@ -44,7 +44,7 @@ export interface ParseOpenAPIOptions {
 
     // For now, we include an AsyncAPI-specific option here, but this is better
     // handled with a discriminated union.
-    asyncApiNaming: 'v1' | 'v2'
+    asyncApiNaming: "v1" | "v2"
 
     exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined
 
@@ -81,9 +81,9 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     shouldUseUndiscriminatedUnionsWithLiterals: false,
     shouldUseIdiomaticRequestNames: false,
     filter: undefined,
-    asyncApiNaming: 'v1',
+    asyncApiNaming: "v1",
     exampleGeneration: undefined,
-    defaultFormParameterEncoding: 'json',
+    defaultFormParameterEncoding: "json",
     useBytesForBinaryResponse: false,
     respectForwardCompatibleEnums: false,
     additionalPropertiesDefaultsTo: false,

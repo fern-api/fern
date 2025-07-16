@@ -1,16 +1,16 @@
-import { CSharpFile, FileGenerator } from '@fern-api/csharp-base'
-import { csharp } from '@fern-api/csharp-codegen'
-import { RelativeFilePath, join } from '@fern-api/fs-utils'
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base"
+import { csharp } from "@fern-api/csharp-codegen"
+import { RelativeFilePath, join } from "@fern-api/fs-utils"
 
-import { Name } from '@fern-fern/ir-sdk/api'
+import { Name } from "@fern-fern/ir-sdk/api"
 
-import { SdkCustomConfigSchema } from '../SdkCustomConfig'
-import { SdkGeneratorContext } from '../SdkGeneratorContext'
-import { BASE_URL_FIELD_NAME, BASE_URL_SUMMARY, BaseOptionsGenerator, OptionArgs } from './BaseOptionsGenerator'
+import { SdkCustomConfigSchema } from "../SdkCustomConfig"
+import { SdkGeneratorContext } from "../SdkGeneratorContext"
+import { BASE_URL_FIELD_NAME, BASE_URL_SUMMARY, BaseOptionsGenerator, OptionArgs } from "./BaseOptionsGenerator"
 
-export const CLIENT_OPTIONS_CLASS_NAME = 'ClientOptions'
-export const GLOBAL_TEST_SETUP_NAME = 'GlobalTestSetup'
-export const EXCEPTION_HANDLER_MEMBER_NAME = 'ExceptionHandler'
+export const CLIENT_OPTIONS_CLASS_NAME = "ClientOptions"
+export const GLOBAL_TEST_SETUP_NAME = "GlobalTestSetup"
+export const EXCEPTION_HANDLER_MEMBER_NAME = "ExceptionHandler"
 
 export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     private baseOptionsGenerator: BaseOptionsGenerator
@@ -44,7 +44,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
         class_.addField(
             this.baseOptionsGenerator.getAdditionalHeadersField({
                 summary:
-                    'Additional headers to be sent with HTTP requests.\nHeaders with matching keys will be overwritten by headers set on the request.',
+                    "Additional headers to be sent with HTTP requests.\nHeaders with matching keys will be overwritten by headers set on the request.",
                 includeInitializer: true
             })
         )
@@ -58,7 +58,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
         if (this.context.includeExceptionHandler()) {
             class_.addField(
                 csharp.field({
-                    summary: 'A handler that will handle exceptions thrown by the client.',
+                    summary: "A handler that will handle exceptions thrown by the client.",
                     access: csharp.Access.Internal,
                     name: EXCEPTION_HANDLER_MEMBER_NAME,
                     type: csharp.Type.reference(this.context.getExceptionHandlerClassReference()),
@@ -68,7 +68,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
                         writer.writeNode(
                             csharp.instantiateClass({
                                 classReference: this.context.getExceptionHandlerClassReference(),
-                                arguments_: [csharp.codeblock('null')]
+                                arguments_: [csharp.codeblock("null")]
                             })
                         )
                     })
@@ -114,7 +114,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
             })
         }
         const defaultEnvironmentName =
-            (this.context.customConfig['pascal-case-environments'] ?? true)
+            (this.context.customConfig["pascal-case-environments"] ?? true)
                 ? defaultEnvironment?.pascalCase.safeName
                 : defaultEnvironment?.screamingSnakeCase.safeName
 
@@ -141,19 +141,19 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
                 multipleBaseUrls: () => {
                     return csharp.field({
                         access: csharp.Access.Public,
-                        name: 'Environment',
+                        name: "Environment",
                         get: true,
                         init: true,
                         useRequired: defaultEnvironment != null,
                         type: csharp.Type.reference(this.context.getEnvironmentsClassReference()),
-                        summary: 'The Environment for the API.',
+                        summary: "The Environment for the API.",
                         initializer:
                             defaultEnvironment != null
                                 ? csharp.codeblock((writer) => {
                                       writer.writeNode(this.context.getEnvironmentsClassReference())
                                       writer.write(`.${defaultEnvironmentName}`)
                                   })
-                                : csharp.codeblock('null') // TODO: remove this logic since it sets url to null
+                                : csharp.codeblock("null") // TODO: remove this logic since it sets url to null
                     })
                 },
                 _other: () => undefined
@@ -188,7 +188,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
             get: true,
             init: true,
             type: csharp.Type.optional(csharp.Type.reference(this.context.getGrpcChannelOptionsClassReference())),
-            summary: 'The options used for gRPC client endpoints.'
+            summary: "The options used for gRPC client endpoints."
         })
     }
 
@@ -196,8 +196,8 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
         // TODO: add the GRPC options here eventually
         return csharp.method({
             access: csharp.Access.Internal,
-            summary: 'Clones this and returns a new instance',
-            name: 'Clone',
+            summary: "Clones this and returns a new instance",
+            name: "Clone",
             return_: csharp.Type.reference(this.context.getClientOptionsClassReference()),
             body: csharp.codeblock((writer) => {
                 writer.writeTextStatement(
@@ -206,18 +206,18 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
 ` +
                         // TODO: iterate over all public fields and generate the clone logic
                         // for Headers, we should add a `.Clone` method on it and call that
-                        (class_.getFields().find((field) => field.name === 'Environment') !== undefined
-                            ? '    Environment = Environment,'
-                            : '') +
+                        (class_.getFields().find((field) => field.name === "Environment") !== undefined
+                            ? "    Environment = Environment,"
+                            : "") +
                         (class_.getFields().find((field) => field.name === BASE_URL_FIELD_NAME) !== undefined
                             ? `    ${BASE_URL_FIELD_NAME} = ${BASE_URL_FIELD_NAME},`
-                            : '') +
+                            : "") +
                         `
     HttpClient = HttpClient,
     MaxRetries = MaxRetries,
     Timeout = Timeout,
     Headers = new Headers(new Dictionary<string, HeaderValue>(Headers)),
-    ${this.context.includeExceptionHandler() ? 'ExceptionHandler = ExceptionHandler.Clone(),' : ''}
+    ${this.context.includeExceptionHandler() ? "ExceptionHandler = ExceptionHandler.Clone()," : ""}
 }`
                 )
             }),

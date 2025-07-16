@@ -1,6 +1,6 @@
-import { ts } from '@fern-api/typescript-ast'
+import { ts } from "@fern-api/typescript-ast"
 
-import { ExportNode } from './'
+import { ExportNode } from "./"
 
 export declare namespace ReExportAsNamedNode {
     interface Args {
@@ -20,13 +20,13 @@ export class ReExportAsNamedNode extends ts.AstNode {
             new ExportNode({
                 initializer: ts.codeblock((writer) => {
                     switch (this.args.importFrom.type) {
-                        case 'default':
+                        case "default":
                             writer.write(`{ default as ${this.args.name} }`)
                             break
-                        case 'star':
+                        case "star":
                             writer.write(`{ * as ${this.args.name} }`)
                             break
-                        case 'named':
+                        case "named":
                             writer.write(this.args.name)
                             break
                     }

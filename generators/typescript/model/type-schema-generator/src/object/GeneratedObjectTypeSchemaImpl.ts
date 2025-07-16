@@ -1,22 +1,22 @@
-import { AbstractGeneratedSchema } from '@fern-typescript/abstract-schema-generator'
-import { Zurg, getPropertyKey, getTextOfTsNode } from '@fern-typescript/commons'
-import { GeneratedObjectTypeSchema, ModelContext } from '@fern-typescript/contexts'
-import { ModuleDeclaration, ts } from 'ts-morph'
+import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator"
+import { Zurg, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons"
+import { GeneratedObjectTypeSchema, ModelContext } from "@fern-typescript/contexts"
+import { ModuleDeclaration, ts } from "ts-morph"
 
-import { ObjectTypeDeclaration } from '@fern-fern/ir-sdk/api'
+import { ObjectTypeDeclaration } from "@fern-fern/ir-sdk/api"
 
-import { AbstractGeneratedTypeSchema } from '../AbstractGeneratedTypeSchema'
+import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema"
 
 export class GeneratedObjectTypeSchemaImpl<Context extends ModelContext>
     extends AbstractGeneratedTypeSchema<ObjectTypeDeclaration, Context>
     implements GeneratedObjectTypeSchema<Context>
 {
-    public readonly type = 'object'
+    public readonly type = "object"
 
     protected override buildSchema(context: Context): Zurg.Schema {
         const generatedType = this.getGeneratedType()
-        if (generatedType.type !== 'object') {
-            throw new Error('Type is not an object: ' + this.typeName)
+        if (generatedType.type !== "object") {
+            throw new Error("Type is not an object: " + this.typeName)
         }
 
         const properties = this.shape.properties.map(
@@ -64,8 +64,8 @@ export class GeneratedObjectTypeSchemaImpl<Context extends ModelContext>
                 ...(this.shape.extraProperties
                     ? [
                           {
-                              name: '[key: string]',
-                              type: 'any'
+                              name: "[key: string]",
+                              type: "any"
                           }
                       ]
                     : [])

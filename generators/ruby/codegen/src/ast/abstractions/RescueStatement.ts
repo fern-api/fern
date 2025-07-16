@@ -1,6 +1,6 @@
-import { BLOCK_END } from '../../utils/RubyConstants'
-import { Import } from '../Import'
-import { AstNode } from '../core/AstNode'
+import { BLOCK_END } from "../../utils/RubyConstants"
+import { Import } from "../Import"
+import { AstNode } from "../core/AstNode"
 
 export declare namespace RescueStatement {
     export interface Init extends AstNode.Init {
@@ -19,11 +19,11 @@ export class RescueStatement extends AstNode {
     }
 
     public writeInternal(startingTabSpaces: number): void {
-        this.addText({ stringContent: 'begin', startingTabSpaces })
+        this.addText({ stringContent: "begin", startingTabSpaces })
         this.begin.forEach((exp) =>
             this.addText({ stringContent: exp.write({}), startingTabSpaces: this.tabSizeSpaces + startingTabSpaces })
         )
-        this.addText({ stringContent: 'rescue StandardError', startingTabSpaces })
+        this.addText({ stringContent: "rescue StandardError", startingTabSpaces })
         this.rescue.forEach((exp) =>
             this.addText({ stringContent: exp.write({}), startingTabSpaces: this.tabSizeSpaces + startingTabSpaces })
         )

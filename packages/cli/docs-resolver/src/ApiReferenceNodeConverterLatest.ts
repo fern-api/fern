@@ -1,27 +1,27 @@
-import { kebabCase } from 'lodash-es'
-import urlJoin from 'url-join'
+import { kebabCase } from "lodash-es"
+import urlJoin from "url-join"
 
-import { docsYml } from '@fern-api/configuration-loader'
-import { isNonNullish } from '@fern-api/core-utils'
-import { APIV1Read, FdrAPI, FernNavigation } from '@fern-api/fdr-sdk'
-import { AbsoluteFilePath } from '@fern-api/fs-utils'
-import { OSSWorkspace } from '@fern-api/lazy-fern-workspace'
-import { TaskContext } from '@fern-api/task-context'
-import { titleCase, visitDiscriminatedUnion } from '@fern-api/ui-core-utils'
-import { DocsWorkspace } from '@fern-api/workspace-loader'
+import { docsYml } from "@fern-api/configuration-loader"
+import { isNonNullish } from "@fern-api/core-utils"
+import { APIV1Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk"
+import { AbsoluteFilePath } from "@fern-api/fs-utils"
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace"
+import { TaskContext } from "@fern-api/task-context"
+import { titleCase, visitDiscriminatedUnion } from "@fern-api/ui-core-utils"
+import { DocsWorkspace } from "@fern-api/workspace-loader"
 
-import { ApiDefinitionHolderLatest } from './ApiDefinitionHolderLatest'
-import { ChangelogNodeConverter } from './ChangelogNodeConverter'
-import { NodeIdGenerator } from './NodeIdGenerator'
-import { convertPlaygroundSettings } from './utils/convertPlaygroundSettings'
-import { enrichApiPackageChild } from './utils/enrichApiPackageChild'
-import { cannotFindSubpackageByLocatorError, packageReuseError } from './utils/errorMessages'
-import { getApiLatestToNavigationNodeUrlSlug } from './utils/getApiLatestToNavigationNodeUrlSlug'
-import { mergeAndFilterChildren } from './utils/mergeAndFilterChildren'
-import { mergeEndpointPairs } from './utils/mergeEndpointPairs'
-import { stringifyEndpointPathParts, stringifyEndpointPathPartsWithMethod } from './utils/stringifyEndpointPathParts'
-import { toPageNode } from './utils/toPageNode'
-import { toRelativeFilepath } from './utils/toRelativeFilepath'
+import { ApiDefinitionHolderLatest } from "./ApiDefinitionHolderLatest"
+import { ChangelogNodeConverter } from "./ChangelogNodeConverter"
+import { NodeIdGenerator } from "./NodeIdGenerator"
+import { convertPlaygroundSettings } from "./utils/convertPlaygroundSettings"
+import { enrichApiPackageChild } from "./utils/enrichApiPackageChild"
+import { cannotFindSubpackageByLocatorError, packageReuseError } from "./utils/errorMessages"
+import { getApiLatestToNavigationNodeUrlSlug } from "./utils/getApiLatestToNavigationNodeUrlSlug"
+import { mergeAndFilterChildren } from "./utils/mergeAndFilterChildren"
+import { mergeEndpointPairs } from "./utils/mergeEndpointPairs"
+import { stringifyEndpointPathParts, stringifyEndpointPathPartsWithMethod } from "./utils/stringifyEndpointPathParts"
+import { toPageNode } from "./utils/toPageNode"
+import { toRelativeFilepath } from "./utils/toRelativeFilepath"
 
 export class ApiReferenceNodeConverterLatest {
     apiDefinitionId: FernNavigation.V1.ApiDefinitionId
@@ -70,7 +70,7 @@ export class ApiReferenceNodeConverterLatest {
                 : undefined
 
         this.#slug = parentSlug.apply({
-            fullSlug: maybeFullSlug?.split('/'),
+            fullSlug: maybeFullSlug?.split("/"),
             skipUrlSlug: this.apiSection.skipUrlSlug,
             urlSlug: this.apiSection.slug ?? kebabCase(this.apiSection.title)
         })
@@ -98,7 +98,7 @@ export class ApiReferenceNodeConverterLatest {
         ).orUndefined()
         return {
             id: this.#idgen.get(this.apiDefinitionId),
-            type: 'apiReference',
+            type: "apiReference",
             title: this.apiSection.title,
             apiDefinitionId: this.apiDefinitionId,
             overviewPageId: this.#overviewPageId,
@@ -137,7 +137,7 @@ export class ApiReferenceNodeConverterLatest {
                 visitDiscriminatedUnion(item)._visit<FernNavigation.V1.ApiPackageChild | undefined>({
                     link: (link) => ({
                         id: this.#idgen.get(link.url),
-                        type: 'link',
+                        type: "link",
                         title: link.text,
                         icon: link.icon,
                         url: FernNavigation.Url(link.url)
@@ -194,14 +194,14 @@ export class ApiReferenceNodeConverterLatest {
             this.#nodeIdToSubpackageId.set(subpackageNodeId, [subpackage.id])
             const urlSlug = pkg.slug ?? kebabCase(subpackage.name)
             const slug = parentSlug.apply({
-                fullSlug: maybeFullSlug?.split('/'),
+                fullSlug: maybeFullSlug?.split("/"),
                 skipUrlSlug: pkg.skipUrlSlug,
                 urlSlug
             })
             const convertedItems = this.#convertApiReferenceLayoutItems(pkg.contents, subpackage.id, slug)
             const subpackageNode: FernNavigation.V1.ApiPackageNode = {
                 id: subpackageNodeId,
-                type: 'apiPackage',
+                type: "apiPackage",
                 children: convertedItems,
                 title: pkg.title ?? subpackage.displayName ?? titleCase(subpackage.name),
                 slug: slug.get(),
@@ -227,14 +227,14 @@ export class ApiReferenceNodeConverterLatest {
             )
             const urlSlug = pkg.slug ?? kebabCase(pkg.package)
             const slug = parentSlug.apply({
-                fullSlug: maybeFullSlug?.split('/'),
+                fullSlug: maybeFullSlug?.split("/"),
                 skipUrlSlug: pkg.skipUrlSlug,
                 urlSlug
             })
             const convertedItems = this.#convertApiReferenceLayoutItems(pkg.contents, pkg.package, slug)
             const sectionNode: FernNavigation.V1.ApiPackageNode = {
                 id: this.#idgen.get(overviewPageId ?? `${this.apiDefinitionId}:${kebabCase(pkg.package)}`),
-                type: 'apiPackage',
+                type: "apiPackage",
                 children: convertedItems,
                 title: pkg.title ?? pkg.package,
                 slug: slug.get(),
@@ -298,14 +298,14 @@ export class ApiReferenceNodeConverterLatest {
 
         const urlSlug = section.slug ?? kebabCase(section.title)
         const slug = parentSlug.apply({
-            fullSlug: maybeFullSlug?.split('/'),
+            fullSlug: maybeFullSlug?.split("/"),
             skipUrlSlug: section.skipUrlSlug,
             urlSlug
         })
         const convertedItems = this.#convertApiReferenceLayoutItems(section.contents, section.title, slug)
         const sectionNode: FernNavigation.V1.ApiPackageNode = {
             id: nodeId,
-            type: 'apiPackage',
+            type: "apiPackage",
             children: convertedItems,
             title: section.title,
             slug: slug.get(),
@@ -357,7 +357,7 @@ export class ApiReferenceNodeConverterLatest {
             const slug = parentSlug.apply({ urlSlug })
             const subpackageNode: FernNavigation.V1.ApiPackageNode = {
                 id: subpackageNodeId,
-                type: 'apiPackage',
+                type: "apiPackage",
                 children: [],
                 title: subpackage.displayName ?? titleCase(subpackage.name),
                 slug: slug.get(),
@@ -382,7 +382,7 @@ export class ApiReferenceNodeConverterLatest {
         // if the unknownIdentifier is not a subpackage, it could be an http endpoint, websocket, or webhook.
         return this.#convertEndpoint(
             {
-                type: 'endpoint',
+                type: "endpoint",
                 endpoint: unknownIdentifier,
                 title: undefined,
                 icon: undefined,
@@ -424,12 +424,12 @@ export class ApiReferenceNodeConverterLatest {
                         : getApiLatestToNavigationNodeUrlSlug({ item: endpoint, parentSlug })
                 return {
                     id: this.#idgen.get(`${this.apiDefinitionId}:${endpoint.id}`),
-                    type: 'endpoint',
+                    type: "endpoint",
                     method: endpoint.method,
                     endpointId: endpoint.id,
                     apiDefinitionId: this.apiDefinitionId,
                     availability: FernNavigation.V1.convertAvailability(endpoint.availability),
-                    isResponseStream: endpoint.responses?.[0]?.body.type === 'stream',
+                    isResponseStream: endpoint.responses?.[0]?.body.type === "stream",
                     title: endpointItem.title ?? endpoint.displayName ?? stringifyEndpointPathParts(endpoint.path),
                     slug: endpointSlug,
                     icon: endpointItem.icon,
@@ -459,7 +459,7 @@ export class ApiReferenceNodeConverterLatest {
                 this.#visitedWebSockets.add(webSocket.id)
                 return {
                     id: this.#idgen.get(`${this.apiDefinitionId}:${webSocket.id}`),
-                    type: 'webSocket',
+                    type: "webSocket",
                     webSocketId: webSocket.id,
                     title: endpointItem.title ?? webSocket.displayName ?? stringifyEndpointPathParts(webSocket.path),
                     slug:
@@ -491,10 +491,10 @@ export class ApiReferenceNodeConverterLatest {
                 this.#visitedWebhooks.add(webhook.id)
                 return {
                     id: this.#idgen.get(`${this.apiDefinitionId}:${webhook.id}`),
-                    type: 'webhook',
+                    type: "webhook",
                     webhookId: webhook.id,
                     method: webhook.method,
-                    title: endpointItem.title ?? webhook.displayName ?? urlJoin('/', ...webhook.path),
+                    title: endpointItem.title ?? webhook.displayName ?? urlJoin("/", ...webhook.path),
                     slug:
                         endpointItem.slug != null
                             ? parentSlug.append(endpointItem.slug).get()
@@ -511,7 +511,7 @@ export class ApiReferenceNodeConverterLatest {
             }
         }
 
-        this.taskContext.logger.error('Unknown identifier in the API Reference layout: ', endpointItem.endpoint)
+        this.taskContext.logger.error("Unknown identifier in the API Reference layout: ", endpointItem.endpoint)
 
         return
     }
@@ -568,7 +568,7 @@ export class ApiReferenceNodeConverterLatest {
             }
             if (
                 !this.#visitedEndpoints.has(FdrAPI.EndpointId(endpointId)) &&
-                (endpoint.namespace?.join('.') ?? this.#api.id) === pkg.id
+                (endpoint.namespace?.join(".") ?? this.#api.id) === pkg.id
             ) {
                 this.#addEndpointToHierarchy(endpointId, endpoint, parentSlug, additionalChildren)
             }
@@ -582,7 +582,7 @@ export class ApiReferenceNodeConverterLatest {
             }
             if (
                 !this.#visitedWebSockets.has(FdrAPI.WebSocketId(webSocketId)) &&
-                (webSocket.namespace?.join('.') ?? this.#api.id) === pkg.id
+                (webSocket.namespace?.join(".") ?? this.#api.id) === pkg.id
             ) {
                 this.#addWebSocketToHierarchy(webSocketId, webSocket, parentSlug, additionalChildren)
             }
@@ -596,7 +596,7 @@ export class ApiReferenceNodeConverterLatest {
             }
             if (
                 !this.#visitedWebhooks.has(FdrAPI.WebhookId(webhookId)) &&
-                (webhook.namespace?.join('.') ?? this.#api.id) === pkg.id
+                (webhook.namespace?.join(".") ?? this.#api.id) === pkg.id
             ) {
                 this.#addWebhookToHierarchy(webhookId, webhook, parentSlug, additionalChildren)
             }
@@ -606,8 +606,8 @@ export class ApiReferenceNodeConverterLatest {
 
         if (this.apiSection.alphabetized) {
             additionalChildren.sort((a, b) => {
-                const aTitle = a.type === 'endpointPair' ? a.nonStream.title : a.title
-                const bTitle = b.type === 'endpointPair' ? b.nonStream.title : b.title
+                const aTitle = a.type === "endpointPair" ? a.nonStream.title : a.title
+                const bTitle = b.type === "endpointPair" ? b.nonStream.title : b.title
                 return aTitle.localeCompare(bTitle)
             })
         }
@@ -627,7 +627,7 @@ export class ApiReferenceNodeConverterLatest {
 
         const node: FernNavigation.V1.ApiPackageNode = {
             id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${subpackageId}`),
-            type: 'apiPackage',
+            type: "apiPackage",
             children,
             title: metadata.displayName ?? titleCase(metadata.name),
             slug: slug.get(),
@@ -676,12 +676,12 @@ export class ApiReferenceNodeConverterLatest {
     ) {
         const endpointNode: FernNavigation.V1.EndpointNode = {
             id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${endpointId}`),
-            type: 'endpoint',
+            type: "endpoint",
             method: endpoint.method,
             endpointId: FdrAPI.EndpointId(endpointId),
             apiDefinitionId: this.apiDefinitionId,
             availability: FernNavigation.V1.convertAvailability(endpoint.availability),
-            isResponseStream: endpoint.responses?.[0]?.body.type === 'stream',
+            isResponseStream: endpoint.responses?.[0]?.body.type === "stream",
             title: endpoint.displayName ?? stringifyEndpointPathParts(endpoint.path),
             slug: parentSlug.get(),
             icon: undefined,
@@ -704,7 +704,7 @@ export class ApiReferenceNodeConverterLatest {
     ) {
         const webSocketNode: FernNavigation.V1.WebSocketNode = {
             id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${webSocketId}`),
-            type: 'webSocket',
+            type: "webSocket",
             webSocketId: FdrAPI.WebSocketId(webSocketId),
             title: webSocket.displayName ?? stringifyEndpointPathParts(webSocket.path),
             slug: parentSlug.get(),
@@ -730,7 +730,7 @@ export class ApiReferenceNodeConverterLatest {
     ) {
         const webhookNode: FernNavigation.V1.WebhookNode = {
             id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${webhookId}`),
-            type: 'webhook',
+            type: "webhook",
             webhookId: FdrAPI.WebhookId(webhookId),
             method: webhook.method,
             title: webhook.displayName ?? titleCase(webhook.id),
@@ -753,32 +753,32 @@ export class ApiReferenceNodeConverterLatest {
         const subpackages = Object.fromEntries(
             Object.entries(this.#api?.subpackages ?? {}).filter(([_, subpackage]) =>
                 subpackageId === this.#api.id
-                    ? subpackage.id.split('.').length === 1
+                    ? subpackage.id.split(".").length === 1
                     : subpackage.id != null &&
                       subpackage.id.includes(subpackageId) &&
                       subpackage.id !== subpackageId &&
-                      subpackage.id.split('.').length === subpackageId.split('.').length + 1
+                      subpackage.id.split(".").length === subpackageId.split(".").length + 1
             )
         )
         const endpoints = Object.fromEntries(
             Object.entries(this.#api?.endpoints ?? {}).filter(
                 ([_, endpoint]) =>
                     endpoint.namespace != null &&
-                    endpoint.namespace.join('.') === FdrAPI.api.v1.SubpackageId(subpackageId)
+                    endpoint.namespace.join(".") === FdrAPI.api.v1.SubpackageId(subpackageId)
             )
         )
         const websockets = Object.fromEntries(
             Object.entries(this.#api?.websockets ?? {}).filter(
                 ([_, webSocket]) =>
                     webSocket.namespace != null &&
-                    webSocket.namespace.join('.') === FdrAPI.api.v1.SubpackageId(subpackageId)
+                    webSocket.namespace.join(".") === FdrAPI.api.v1.SubpackageId(subpackageId)
             )
         )
         const webhooks = Object.fromEntries(
             Object.entries(this.#api?.webhooks ?? {}).filter(
                 ([_, webhook]) =>
                     webhook.namespace != null &&
-                    webhook.namespace.join('.') === FdrAPI.api.v1.SubpackageId(subpackageId)
+                    webhook.namespace.join(".") === FdrAPI.api.v1.SubpackageId(subpackageId)
             )
         )
         return {
@@ -801,7 +801,7 @@ export class ApiReferenceNodeConverterLatest {
         const pkg = packageId != null ? this.#resolveSubpackage(packageId) : undefined
 
         if (pkg == null) {
-            this.taskContext.logger.error(cannotFindSubpackageByLocatorError(packageId || 'unknown', []))
+            this.taskContext.logger.error(cannotFindSubpackageByLocatorError(packageId || "unknown", []))
             return []
         }
 

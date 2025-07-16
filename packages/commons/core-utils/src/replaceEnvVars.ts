@@ -1,5 +1,5 @@
-import { isPlainObject } from './objects/isPlainObject'
-import { mapValues } from './objects/mapValues'
+import { isPlainObject } from "./objects/isPlainObject"
+import { mapValues } from "./objects/mapValues"
 
 /**
  * Captures templates inside "${}"
@@ -28,16 +28,16 @@ export function replaceEnvVariables<T>(
     context: { onError: (message?: string) => unknown | void | never },
     options: { substituteAsEmpty?: boolean } = {}
 ): T {
-    if (typeof content === 'string') {
+    if (typeof content === "string") {
         const transformed = (content as string).replace(ENV_VAR_REGEX, (_substring, envVarName) => {
             if (options.substituteAsEmpty) {
-                return ''
+                return ""
             }
             const envVarValue = process.env[envVarName]
             if (envVarValue == null) {
                 context.onError(`Environment variable ${envVarName} is not defined.`)
             }
-            return envVarValue ?? ''
+            return envVarValue ?? ""
         })
         return transformed as unknown as T
     }

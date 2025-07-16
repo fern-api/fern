@@ -1,4 +1,4 @@
-import { EnumValue } from '@fern-fern/ir-sdk/api'
+import { EnumValue } from "@fern-fern/ir-sdk/api"
 
 export function generateEnumName(enumValue: EnumValue): string {
     return enumValue.name.name.screamingSnakeCase.safeName

@@ -1,6 +1,6 @@
-import { php } from '@fern-api/php-codegen'
+import { php } from "@fern-api/php-codegen"
 
-import { EndpointRequest } from './request/EndpointRequest'
+import { EndpointRequest } from "./request/EndpointRequest"
 
 export interface EndpointSignatureInfo {
     baseParameters: php.Parameter[] // Includes both pathParameters and the requestParameter (if any).

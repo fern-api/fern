@@ -1,37 +1,37 @@
-import { mapValues } from 'lodash-es'
+import { mapValues } from "lodash-es"
 
-import { GeneratorName } from '@fern-api/configuration-loader'
+import { GeneratorName } from "@fern-api/configuration-loader"
 
-import { IrMigrationContext } from '../../IrMigrationContext'
-import { IrVersions } from '../../ir-versions'
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
+import { IrMigrationContext } from "../../IrMigrationContext"
+import { IrVersions } from "../../ir-versions"
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
 
 export const V20_TO_V19_MIGRATION: IrMigration<
     IrVersions.V20.ir.IntermediateRepresentation,
     IrVersions.V19.ir.IntermediateRepresentation
 > = {
-    laterVersion: 'v20',
-    earlierVersion: 'v19',
+    laterVersion: "v20",
+    earlierVersion: "v19",
     firstGeneratorVersionToConsumeNewIR: {
-        [GeneratorName.TYPESCRIPT_NODE_SDK]: '0.5.26-rc0-3-gdfabd674',
-        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: '0.5.26-rc0-3-gdfabd674',
+        [GeneratorName.TYPESCRIPT_NODE_SDK]: "0.5.26-rc0-3-gdfabd674",
+        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: "0.5.26-rc0-3-gdfabd674",
         [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_SDK]: '0.5.26-rc0-3-gdfabd674',
-        [GeneratorName.TYPESCRIPT_EXPRESS]: '0.5.20-3-g2505487f',
+        [GeneratorName.TYPESCRIPT_SDK]: "0.5.26-rc0-3-gdfabd674",
+        [GeneratorName.TYPESCRIPT_EXPRESS]: "0.5.20-3-g2505487f",
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_MODEL]: '0.3.10-rc2-1-g1c0d853',
-        [GeneratorName.JAVA_SDK]: '0.3.10-rc2-1-g1c0d853',
-        [GeneratorName.JAVA_SPRING]: '0.3.10-rc2-1-g1c0d853',
-        [GeneratorName.PYTHON_FASTAPI]: '0.3.6-rc1-2-g6050f7f8',
-        [GeneratorName.PYTHON_PYDANTIC]: '0.3.6-rc1-2-g6050f7f8',
+        [GeneratorName.JAVA_MODEL]: "0.3.10-rc2-1-g1c0d853",
+        [GeneratorName.JAVA_SDK]: "0.3.10-rc2-1-g1c0d853",
+        [GeneratorName.JAVA_SPRING]: "0.3.10-rc2-1-g1c0d853",
+        [GeneratorName.PYTHON_FASTAPI]: "0.3.6-rc1-2-g6050f7f8",
+        [GeneratorName.PYTHON_PYDANTIC]: "0.3.6-rc1-2-g6050f7f8",
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.OPENAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.STOPLIGHT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.PYTHON_SDK]: '0.3.6-rc1-2-g6050f7f8',
+        [GeneratorName.PYTHON_SDK]: "0.3.6-rc1-2-g6050f7f8",
         [GeneratorName.GO_FIBER]: GeneratorWasNotCreatedYet,
-        [GeneratorName.GO_MODEL]: '0.0.0',
-        [GeneratorName.GO_SDK]: '0.0.0',
+        [GeneratorName.GO_MODEL]: "0.0.0",
+        [GeneratorName.GO_SDK]: "0.0.0",
         [GeneratorName.RUBY_MODEL]: GeneratorWasNotCreatedYet,
         [GeneratorName.RUBY_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.CSHARP_MODEL]: GeneratorWasNotCreatedYet,
@@ -83,7 +83,7 @@ function convertResponse(
         },
         json: (jsonResponse) => jsonResponse,
         _unknown: () => {
-            throw new Error('Unknown HttpResponse: ' + response.type)
+            throw new Error("Unknown HttpResponse: " + response.type)
         }
     })
 }
@@ -105,7 +105,7 @@ function convertSdkResponse(
             }),
         json: IrVersions.V19.http.SdkResponse.nonStreaming,
         _unknown: () => {
-            throw new Error('Unknown SdkResponse: ' + sdkResponse.type)
+            throw new Error("Unknown SdkResponse: " + sdkResponse.type)
         }
     })
 }
@@ -114,9 +114,9 @@ function throwFileDownloadNotSupported({ targetGenerator, taskContext }: IrMigra
     return taskContext.failAndThrow(
         targetGenerator != null
             ? `Generator ${targetGenerator.name}@${targetGenerator.version}` +
-                  ' does not support file download.' +
+                  " does not support file download." +
                   ` If you'd like to use this feature, please upgrade ${targetGenerator.name}` +
-                  ' to a compatible version.'
-            : 'Cannot backwards-migrate IR because this IR contains file download.'
+                  " to a compatible version."
+            : "Cannot backwards-migrate IR because this IR contains file download."
     )
 }

@@ -1,13 +1,13 @@
-import { CSharpFile, FileGenerator } from '@fern-api/csharp-base'
-import { csharp } from '@fern-api/csharp-codegen'
-import { RelativeFilePath, join } from '@fern-api/fs-utils'
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base"
+import { csharp } from "@fern-api/csharp-codegen"
+import { RelativeFilePath, join } from "@fern-api/fs-utils"
 
-import { SdkCustomConfigSchema } from '../SdkCustomConfig'
-import { SdkGeneratorContext } from '../SdkGeneratorContext'
-import { BaseOptionsGenerator } from './BaseOptionsGenerator'
+import { SdkCustomConfigSchema } from "../SdkCustomConfig"
+import { SdkGeneratorContext } from "../SdkGeneratorContext"
+import { BaseOptionsGenerator } from "./BaseOptionsGenerator"
 
-export const REQUEST_OPTIONS_INTERFACE_NAME = 'IRequestOptions'
-export const REQUEST_OPTIONS_PARAMETER_NAME = 'options'
+export const REQUEST_OPTIONS_INTERFACE_NAME = "IRequestOptions"
+export const REQUEST_OPTIONS_PARAMETER_NAME = "options"
 
 export class RequestOptionsInterfaceGenerator extends FileGenerator<
     CSharpFile,

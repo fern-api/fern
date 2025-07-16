@@ -1,4 +1,4 @@
-import { OpenAPIV3 } from 'openapi-types'
+import { OpenAPIV3 } from "openapi-types"
 
 import {
     HeaderWithExample,
@@ -9,18 +9,18 @@ import {
     QueryParameterWithExample,
     SchemaWithExample,
     Source
-} from '@fern-api/openapi-ir'
+} from "@fern-api/openapi-ir"
 
-import { getExtension } from '../../../../getExtension'
-import { convertAvailability } from '../../../../schema/convertAvailability'
-import { convertSchema } from '../../../../schema/convertSchemas'
-import { getExamplesString } from '../../../../schema/examples/getExample'
-import { getGeneratedTypeName } from '../../../../schema/utils/getSchemaName'
-import { isReferenceObject } from '../../../../schema/utils/isReferenceObject'
-import { AbstractOpenAPIV3ParserContext } from '../../AbstractOpenAPIV3ParserContext'
-import { FernOpenAPIExtension } from '../../extensions/fernExtensions'
-import { getParameterName } from '../../extensions/getParameterName'
-import { getVariableReference } from '../../extensions/getVariableReference'
+import { getExtension } from "../../../../getExtension"
+import { convertAvailability } from "../../../../schema/convertAvailability"
+import { convertSchema } from "../../../../schema/convertSchemas"
+import { getExamplesString } from "../../../../schema/examples/getExample"
+import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName"
+import { isReferenceObject } from "../../../../schema/utils/isReferenceObject"
+import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext"
+import { FernOpenAPIExtension } from "../../extensions/fernExtensions"
+import { getParameterName } from "../../extensions/getParameterName"
+import { getVariableReference } from "../../extensions/getVariableReference"
 
 export interface ConvertedParameters {
     pathParameters: PathParameterWithExample[]
@@ -135,7 +135,7 @@ export function convertParameters({
                         inline: undefined
                     })
         if (
-            resolvedParameter.in === 'header' &&
+            resolvedParameter.in === "header" &&
             resolvedParameter.schema != null &&
             !isReferenceObject(resolvedParameter.schema) &&
             // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
@@ -143,7 +143,7 @@ export function convertParameters({
         ) {
             // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
             const defaultValue = (resolvedParameter.schema as any).default
-            if (typeof defaultValue === 'string' && defaultValue.length > 0) {
+            if (typeof defaultValue === "string" && defaultValue.length > 0) {
                 schema = SchemaWithExample.literal({
                     nameOverride: undefined,
                     generatedName,
@@ -165,14 +165,14 @@ export function convertParameters({
             availability,
             source
         }
-        if (resolvedParameter.in === 'query') {
+        if (resolvedParameter.in === "query") {
             convertedParameters.queryParameters.push(convertedParameter)
-        } else if (resolvedParameter.in === 'path') {
+        } else if (resolvedParameter.in === "path") {
             convertedParameters.pathParameters.push({
                 ...convertedParameter,
                 variableReference: getVariableReference(resolvedParameter)
             })
-        } else if (resolvedParameter.in === 'header') {
+        } else if (resolvedParameter.in === "header") {
             if (
                 !HEADERS_TO_SKIP.has(resolvedParameter.name.toLowerCase()) &&
                 !context.authHeaders.has(resolvedParameter.name)
@@ -196,12 +196,12 @@ export function convertParameters({
 }
 
 const HEADERS_TO_SKIP = new Set([
-    'user-agent',
-    'content-length',
-    'content-type',
-    'x-forwarded-for',
-    'cookie',
-    'origin',
-    'content-disposition',
-    'x-ping-custom-domain'
+    "user-agent",
+    "content-length",
+    "content-type",
+    "x-forwarded-for",
+    "cookie",
+    "origin",
+    "content-disposition",
+    "x-ping-custom-domain"
 ])

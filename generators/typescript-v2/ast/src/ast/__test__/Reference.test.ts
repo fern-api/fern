@@ -1,66 +1,66 @@
-import { ts } from '../..'
+import { ts } from "../.."
 
-describe('Reference', () => {
-    describe('toStringWithDefaultImport', () => {
-        it('Should generate a simple reference with a default-exported reference', async () => {
+describe("Reference", () => {
+    describe("toStringWithDefaultImport", () => {
+        it("Should generate a simple reference with a default-exported reference", async () => {
             const reference = ts.reference({
-                name: 'defaultReference',
+                name: "defaultReference",
                 importFrom: {
-                    moduleName: 'Module',
-                    type: 'default'
+                    moduleName: "Module",
+                    type: "default"
                 }
             })
             expect(await reference.toStringAsync({ customConfig: {} })).toMatchSnapshot()
         })
     })
 
-    describe('toStringSameReferenceTwice', () => {
-        it('Should generate a simple snippet using duplicate references', async () => {
+    describe("toStringSameReferenceTwice", () => {
+        it("Should generate a simple snippet using duplicate references", async () => {
             const references = ts.codeblock((writer) => {
                 writer.writeNodeStatement(
                     ts.reference({
-                        name: 'defaultReference',
+                        name: "defaultReference",
                         importFrom: {
-                            moduleName: 'module',
-                            type: 'default'
+                            moduleName: "module",
+                            type: "default"
                         }
                     })
                 )
                 writer.writeNodeStatement(
                     ts.reference({
-                        name: 'defaultReference',
+                        name: "defaultReference",
                         importFrom: {
-                            moduleName: 'module',
-                            type: 'default'
+                            moduleName: "module",
+                            type: "default"
                         }
                     })
                 )
                 writer.writeNodeStatement(
                     ts.reference({
-                        name: 'nonDefaultReference',
+                        name: "nonDefaultReference",
                         importFrom: {
-                            moduleName: 'module',
-                            type: 'named'
+                            moduleName: "module",
+                            type: "named"
                         }
                     })
                 )
                 writer.writeNodeStatement(
                     ts.reference({
-                        name: 'nonDefaultReference',
+                        name: "nonDefaultReference",
                         importFrom: {
-                            moduleName: 'module',
-                            type: 'named'
+                            moduleName: "module",
+                            type: "named"
                         }
                     })
                 )
                 writer.writeNodeStatement(
                     ts.reference({
-                        name: 'localReference'
+                        name: "localReference"
                     })
                 )
                 writer.writeNodeStatement(
                     ts.reference({
-                        name: 'localReference'
+                        name: "localReference"
                     })
                 )
             })
@@ -68,46 +68,46 @@ describe('Reference', () => {
         })
     })
 
-    describe('toStringWithSingleNonDefaultImport', () => {
-        it('Should generate a simple reference with a single named reference', async () => {
+    describe("toStringWithSingleNonDefaultImport", () => {
+        it("Should generate a simple reference with a single named reference", async () => {
             const reference = ts.reference({
-                name: 'Reference',
+                name: "Reference",
                 importFrom: {
-                    type: 'named',
-                    moduleName: 'module'
+                    type: "named",
+                    moduleName: "module"
                 }
             })
             expect(await reference.toStringAsync({ customConfig: {} })).toMatchSnapshot()
         })
     })
 
-    describe('toStringWithMultipleNonDefaultImport', () => {
-        it('Should generate a simple reference with multiple named references', async () => {
+    describe("toStringWithMultipleNonDefaultImport", () => {
+        it("Should generate a simple reference with multiple named references", async () => {
             const references = ts.codeblock((writer) => {
                 writer.writeNodeStatement(
                     ts.reference({
-                        name: 'Reference1',
+                        name: "Reference1",
                         importFrom: {
-                            moduleName: 'module',
-                            type: 'named'
+                            moduleName: "module",
+                            type: "named"
                         }
                     })
                 )
                 writer.writeNodeStatement(
                     ts.reference({
-                        name: 'Reference2',
+                        name: "Reference2",
                         importFrom: {
-                            moduleName: 'module',
-                            type: 'named'
+                            moduleName: "module",
+                            type: "named"
                         }
                     })
                 )
                 writer.writeNodeStatement(
                     ts.reference({
-                        name: 'Reference3',
+                        name: "Reference3",
                         importFrom: {
-                            moduleName: 'module',
-                            type: 'named'
+                            moduleName: "module",
+                            type: "named"
                         }
                     })
                 )
@@ -116,51 +116,51 @@ describe('Reference', () => {
         })
     })
 
-    describe('toStringWithDefaultAndNamed', () => {
-        it('Should generate a simple reference with multiple default, starred, and named references', async () => {
+    describe("toStringWithDefaultAndNamed", () => {
+        it("Should generate a simple reference with multiple default, starred, and named references", async () => {
             const references = ts.codeblock((writer) => {
                 writer.writeNodeStatement(
                     ts.reference({
-                        name: 'ReferenceA1',
+                        name: "ReferenceA1",
                         importFrom: {
-                            moduleName: 'moduleA',
-                            type: 'default'
+                            moduleName: "moduleA",
+                            type: "default"
                         }
                     })
                 )
                 writer.writeNodeStatement(
                     ts.reference({
-                        name: 'ReferenceA2',
+                        name: "ReferenceA2",
                         importFrom: {
-                            moduleName: 'moduleA',
-                            type: 'named'
+                            moduleName: "moduleA",
+                            type: "named"
                         }
                     })
                 )
                 writer.writeNodeStatement(
                     ts.reference({
-                        name: 'ReferenceA3',
+                        name: "ReferenceA3",
                         importFrom: {
-                            moduleName: 'moduleA',
-                            type: 'named'
+                            moduleName: "moduleA",
+                            type: "named"
                         }
                     })
                 )
                 writer.writeNodeStatement(
                     ts.reference({
-                        name: 'ReferenceB1',
+                        name: "ReferenceB1",
                         importFrom: {
-                            moduleName: 'moduleB',
-                            type: 'default'
+                            moduleName: "moduleB",
+                            type: "default"
                         }
                     })
                 )
                 writer.writeNodeStatement(
                     ts.reference({
-                        name: 'ReferenceC1',
+                        name: "ReferenceC1",
                         importFrom: {
-                            moduleName: 'moduleC',
-                            type: 'named'
+                            moduleName: "moduleC",
+                            type: "named"
                         }
                     })
                 )
@@ -169,64 +169,64 @@ describe('Reference', () => {
         })
     })
 
-    describe('toStringWithDefaultAndStar', () => {
-        it('Should generate a simple reference with multiple default, starred, and star references', async () => {
+    describe("toStringWithDefaultAndStar", () => {
+        it("Should generate a simple reference with multiple default, starred, and star references", async () => {
             const references = ts.codeblock((writer) => {
                 writer.writeNodeStatement(
                     ts.reference({
-                        name: 'ReferenceA1',
+                        name: "ReferenceA1",
                         importFrom: {
-                            moduleName: 'moduleA',
-                            type: 'default'
+                            moduleName: "moduleA",
+                            type: "default"
                         }
                     })
                 )
                 writer.writeNodeStatement(
                     ts.reference({
-                        name: 'ReferenceA2',
+                        name: "ReferenceA2",
                         importFrom: {
-                            moduleName: 'moduleA',
-                            type: 'star',
-                            starImportAlias: 'alias'
+                            moduleName: "moduleA",
+                            type: "star",
+                            starImportAlias: "alias"
                         }
                     })
                 )
                 writer.writeNodeStatement(
                     ts.reference({
-                        name: 'ReferenceA3',
+                        name: "ReferenceA3",
                         importFrom: {
-                            moduleName: 'moduleA',
-                            type: 'star',
-                            starImportAlias: 'alias'
+                            moduleName: "moduleA",
+                            type: "star",
+                            starImportAlias: "alias"
                         }
                     })
                 )
                 writer.writeNodeStatement(
                     ts.reference({
-                        name: 'ReferenceB1',
+                        name: "ReferenceB1",
                         importFrom: {
-                            moduleName: 'moduleB',
-                            type: 'default'
+                            moduleName: "moduleB",
+                            type: "default"
                         }
                     })
                 )
                 writer.writeNodeStatement(
                     ts.reference({
-                        name: 'ReferenceC1',
+                        name: "ReferenceC1",
                         importFrom: {
-                            moduleName: 'moduleC',
-                            type: 'star',
-                            starImportAlias: 'alias2'
+                            moduleName: "moduleC",
+                            type: "star",
+                            starImportAlias: "alias2"
                         }
                     })
                 )
                 writer.writeNodeStatement(
                     ts.reference({
-                        name: 'ReferenceC2',
+                        name: "ReferenceC2",
                         importFrom: {
-                            moduleName: 'moduleC',
-                            type: 'star',
-                            starImportAlias: 'alias2'
+                            moduleName: "moduleC",
+                            type: "star",
+                            starImportAlias: "alias2"
                         }
                     })
                 )

@@ -1,19 +1,19 @@
-import { cloneDeep } from 'lodash-es'
+import { cloneDeep } from "lodash-es"
 
-import { assertNever } from '@fern-api/core-utils'
+import { assertNever } from "@fern-api/core-utils"
 
-import { PrimitiveTypeV1 } from '@fern-fern/ir-sdk/api'
+import { PrimitiveTypeV1 } from "@fern-fern/ir-sdk/api"
 
 import {
     ClassReference,
     OneOfBaseClassReference,
     OneOfClassReference,
     StringEnumClassReference
-} from './ClassReference'
-import { CoreClassReference } from './CoreClassReference'
-import { TypeParameter } from './TypeParameter'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+} from "./ClassReference"
+import { CoreClassReference } from "./CoreClassReference"
+import { TypeParameter } from "./TypeParameter"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 type InternalType =
     | Integer
@@ -47,75 +47,75 @@ type InternalType =
     | CsharpType
 
 interface Integer {
-    type: 'int'
+    type: "int"
 }
 
 interface Long {
-    type: 'long'
+    type: "long"
 }
 
 interface Uint {
-    type: 'uint'
+    type: "uint"
 }
 
 interface Ulong {
-    type: 'ulong'
+    type: "ulong"
 }
 
 interface String_ {
-    type: 'string'
+    type: "string"
 }
 
 interface Boolean_ {
-    type: 'bool'
+    type: "bool"
 }
 
 interface Float {
-    type: 'float'
+    type: "float"
 }
 
 interface Double {
-    type: 'double'
+    type: "double"
 }
 
 interface DateOnly {
-    type: 'dateOnly'
+    type: "dateOnly"
 }
 
 interface DateTime {
-    type: 'dateTime'
+    type: "dateTime"
 }
 
 interface Uuid {
-    type: 'uuid'
+    type: "uuid"
 }
 
 interface Object_ {
-    type: 'object'
+    type: "object"
 }
 
 interface Array_ {
-    type: 'array'
+    type: "array"
     value: Type
 }
 
 interface ListType {
-    type: 'listType'
+    type: "listType"
     value: Type
 }
 
 interface List {
-    type: 'list'
+    type: "list"
     value: Type
 }
 
 interface Set {
-    type: 'set'
+    type: "set"
     value: Type
 }
 
 interface Map {
-    type: 'map'
+    type: "map"
     keyType: Type
     valueType: Type
     options?: Map.Options
@@ -128,7 +128,7 @@ export namespace Map {
 }
 
 interface IDictionary {
-    type: 'idictionary'
+    type: "idictionary"
     keyType: Type
     valueType: Type
     options?: IDictionary.Options
@@ -141,59 +141,59 @@ export namespace IDictionary {
 }
 
 interface KeyValuePair {
-    type: 'keyValuePair'
+    type: "keyValuePair"
     keyType: Type
     valueType: Type
 }
 
 interface Optional {
-    type: 'optional'
+    type: "optional"
     value: Type
 }
 
 interface Reference {
-    type: 'reference'
+    type: "reference"
     value: ClassReference
 }
 
 interface CoreReference {
-    type: 'coreReference'
+    type: "coreReference"
     value: CoreClassReference
 }
 
 interface OneOf {
-    type: 'oneOf'
+    type: "oneOf"
     memberValues: Type[]
 }
 
 interface OneOfBase {
-    type: 'oneOfBase'
+    type: "oneOfBase"
     memberValues: Type[]
 }
 
 interface StringEnum {
-    type: 'stringEnum'
+    type: "stringEnum"
     value: ClassReference
 }
 
 interface Action {
-    type: 'action'
+    type: "action"
     typeParameters: (Type | TypeParameter)[]
 }
 
 interface Func {
-    type: 'func'
+    type: "func"
     typeParameters: (Type | TypeParameter)[]
     returnType: Type | TypeParameter
 }
 
 interface FileParameter {
-    type: 'fileParam'
+    type: "fileParam"
     value: ClassReference
 }
 
 interface CsharpType {
-    type: 'csharpType'
+    type: "csharpType"
 }
 
 /* A C# parameter to a method */
@@ -204,174 +204,174 @@ export class Type extends AstNode {
 
     public write(writer: Writer, parentType: Type | undefined = undefined): void {
         switch (this.internalType.type) {
-            case 'int':
-                writer.write('int')
+            case "int":
+                writer.write("int")
                 break
-            case 'long':
-                writer.write('long')
+            case "long":
+                writer.write("long")
                 break
-            case 'uint':
-                writer.write('uint')
+            case "uint":
+                writer.write("uint")
                 break
-            case 'ulong':
-                writer.write('ulong')
+            case "ulong":
+                writer.write("ulong")
                 break
-            case 'string':
-                writer.write('string')
+            case "string":
+                writer.write("string")
                 break
-            case 'bool':
-                writer.write('bool')
+            case "bool":
+                writer.write("bool")
                 break
-            case 'float':
-                writer.write('float')
+            case "float":
+                writer.write("float")
                 break
-            case 'double':
-                writer.write('double')
+            case "double":
+                writer.write("double")
                 break
-            case 'dateOnly':
-                writer.write('DateOnly')
+            case "dateOnly":
+                writer.write("DateOnly")
                 break
-            case 'dateTime':
-                writer.write('DateTime')
+            case "dateTime":
+                writer.write("DateTime")
                 break
-            case 'uuid':
-                writer.write('string')
+            case "uuid":
+                writer.write("string")
                 break
-            case 'object':
-                writer.write('object')
+            case "object":
+                writer.write("object")
                 break
-            case 'array':
+            case "array":
                 if (isReadOnlyMemoryType({ writer, value: this.internalType.value })) {
                     this.writeReadOnlyMemoryType({ writer, value: this.internalType.value })
                     break
                 }
                 this.internalType.value.write(writer)
-                writer.write('[]')
+                writer.write("[]")
                 break
-            case 'listType':
+            case "listType":
                 if (isReadOnlyMemoryType({ writer, value: this.internalType.value })) {
                     this.writeReadOnlyMemoryType({ writer, value: this.internalType.value })
                     break
                 }
-                writer.write('List<')
+                writer.write("List<")
                 this.internalType.value.write(writer)
-                writer.write('>')
+                writer.write(">")
                 break
-            case 'list':
+            case "list":
                 if (isReadOnlyMemoryType({ writer, value: this.internalType.value })) {
                     this.writeReadOnlyMemoryType({ writer, value: this.internalType.value })
                     break
                 }
-                writer.write('IEnumerable<')
+                writer.write("IEnumerable<")
                 this.internalType.value.write(writer)
-                writer.write('>')
+                writer.write(">")
                 break
-            case 'set':
-                writer.write('HashSet<')
+            case "set":
+                writer.write("HashSet<")
                 this.internalType.value.write(writer)
-                writer.write('>')
+                writer.write(">")
                 break
-            case 'idictionary':
-            case 'map': {
+            case "idictionary":
+            case "map": {
                 const keyType = this.internalType.keyType
                 const valueType = this.internalType.valueType
                 if (
                     this.internalType.options?.dontSimplify !== true &&
                     writer.getSimplifyObjectDictionaries() &&
-                    keyType.internalType.type === 'string' &&
-                    valueType.internalType.type === 'optional' &&
-                    valueType.internalType.value.internalType.type === 'object'
+                    keyType.internalType.type === "string" &&
+                    valueType.internalType.type === "optional" &&
+                    valueType.internalType.value.internalType.type === "object"
                 ) {
-                    writer.write('object')
+                    writer.write("object")
                     break
                 }
-                const typeName = this.internalType.type === 'idictionary' ? 'IDictionary' : 'Dictionary'
+                const typeName = this.internalType.type === "idictionary" ? "IDictionary" : "Dictionary"
                 writer.write(`${typeName}<`)
                 keyType.write(writer)
-                writer.write(', ')
+                writer.write(", ")
                 valueType.write(writer)
-                writer.write('>')
+                writer.write(">")
                 break
             }
-            case 'keyValuePair': {
+            case "keyValuePair": {
                 const keyType = this.internalType.keyType
                 const valueType = this.internalType.valueType
-                writer.write('KeyValuePair<')
+                writer.write("KeyValuePair<")
                 keyType.write(writer)
-                writer.write(', ')
+                writer.write(", ")
                 valueType.write(writer)
-                writer.write('>')
+                writer.write(">")
                 break
             }
-            case 'optional':
+            case "optional":
                 this.internalType.value.write(writer, this)
                 // avoid double optional
-                if (parentType?.internalType?.type !== 'optional') {
-                    writer.write('?')
+                if (parentType?.internalType?.type !== "optional") {
+                    writer.write("?")
                 }
                 break
-            case 'reference':
+            case "reference":
                 writer.writeNode(this.internalType.value)
                 break
-            case 'coreReference':
+            case "coreReference":
                 writer.write(this.internalType.value.name)
                 break
-            case 'oneOf':
+            case "oneOf":
                 writer.addReference(OneOfClassReference)
-                writer.write('OneOf<')
+                writer.write("OneOf<")
                 this.internalType.memberValues.forEach((value, index) => {
                     if (index !== 0) {
-                        writer.write(', ')
+                        writer.write(", ")
                     }
                     value.write(writer)
                 })
-                writer.write('>')
+                writer.write(">")
                 break
-            case 'oneOfBase':
+            case "oneOfBase":
                 writer.addReference(OneOfBaseClassReference)
-                writer.write('OneOfBase<')
+                writer.write("OneOfBase<")
                 this.internalType.memberValues.forEach((value, index) => {
                     if (index !== 0) {
-                        writer.write(', ')
+                        writer.write(", ")
                     }
                     value.write(writer)
                 })
-                writer.write('>')
+                writer.write(">")
                 break
-            case 'stringEnum':
+            case "stringEnum":
                 writer.addReference(StringEnumClassReference)
-                writer.write('StringEnum<')
+                writer.write("StringEnum<")
                 this.internalType.value.write(writer)
-                writer.write('>')
+                writer.write(">")
                 break
-            case 'action':
-                writer.write('Action')
+            case "action":
+                writer.write("Action")
                 if (this.internalType.typeParameters.length > 0) {
-                    writer.write('<')
+                    writer.write("<")
                     this.internalType.typeParameters.forEach((type, index) => {
                         if (index !== 0) {
-                            writer.write(', ')
+                            writer.write(", ")
                         }
                         type.write(writer)
                     })
-                    writer.write('>')
+                    writer.write(">")
                 }
                 break
-            case 'func':
-                writer.write('Func')
-                writer.write('<')
+            case "func":
+                writer.write("Func")
+                writer.write("<")
                 ;[...this.internalType.typeParameters, this.internalType.returnType].forEach((type, index) => {
                     if (index !== 0) {
-                        writer.write(', ')
+                        writer.write(", ")
                     }
                     type.write(writer)
                 })
-                writer.write('>')
+                writer.write(">")
                 break
-            case 'csharpType':
-                writer.write('global::System.Type')
+            case "csharpType":
+                writer.write("global::System.Type")
                 break
-            case 'fileParam':
+            case "fileParam":
                 writer.writeNode(this.internalType.value)
                 break
             default:
@@ -381,41 +381,41 @@ export class Type extends AstNode {
 
     public writeEmptyCollectionInitializer(writer: Writer): void {
         switch (this.internalType.type) {
-            case 'list':
+            case "list":
                 if (isReadOnlyMemoryType({ writer, value: this.internalType.value })) {
                     return
                 }
-                writer.write(' = new List<')
+                writer.write(" = new List<")
                 this.internalType.value.write(writer)
-                writer.write('>();')
+                writer.write(">();")
                 break
-            case 'set':
-                writer.write(' = new HashSet<')
+            case "set":
+                writer.write(" = new HashSet<")
                 this.internalType.value.write(writer)
-                writer.write('>();')
+                writer.write(">();")
                 break
-            case 'map':
-                writer.write(' = new Dictionary<')
+            case "map":
+                writer.write(" = new Dictionary<")
                 this.internalType.keyType.write(writer)
-                writer.write(', ')
+                writer.write(", ")
                 this.internalType.valueType.write(writer)
-                writer.write('>();')
+                writer.write(">();")
                 break
         }
     }
 
     public isCollection(): boolean {
-        return ['list', 'listType', 'set', 'map', 'array'].includes(this.internalType.type)
+        return ["list", "listType", "set", "map", "array"].includes(this.internalType.type)
     }
 
     public getCollectionItemType(): Type | undefined {
         switch (this.internalType.type) {
-            case 'list':
-            case 'listType':
-            case 'set':
-            case 'array':
+            case "list":
+            case "listType":
+            case "set":
+            case "array":
                 return this.internalType.value
-            case 'map':
+            case "map":
                 return Type.keyValuePair(this.internalType.keyType, this.internalType.valueType)
             default:
                 return undefined
@@ -424,71 +424,71 @@ export class Type extends AstNode {
 
     public isReferenceType(): boolean | undefined {
         switch (this.internalType.type) {
-            case 'int':
-            case 'long':
-            case 'uint':
-            case 'ulong':
-            case 'bool':
-            case 'float':
-            case 'double':
-            case 'dateOnly':
-            case 'dateTime':
-            case 'keyValuePair':
-            case 'stringEnum':
-            case 'oneOf':
+            case "int":
+            case "long":
+            case "uint":
+            case "ulong":
+            case "bool":
+            case "float":
+            case "double":
+            case "dateOnly":
+            case "dateTime":
+            case "keyValuePair":
+            case "stringEnum":
+            case "oneOf":
                 return false
-            case 'string':
-            case 'uuid': // C# GUID is a value type, but we use string for UUID
-            case 'object':
-            case 'array':
-            case 'listType':
-            case 'list':
-            case 'set':
-            case 'map':
-            case 'optional':
-            case 'action':
-            case 'func':
-            case 'oneOfBase':
-            case 'csharpType':
-            case 'idictionary':
-            case 'fileParam':
+            case "string":
+            case "uuid": // C# GUID is a value type, but we use string for UUID
+            case "object":
+            case "array":
+            case "listType":
+            case "list":
+            case "set":
+            case "map":
+            case "optional":
+            case "action":
+            case "func":
+            case "oneOfBase":
+            case "csharpType":
+            case "idictionary":
+            case "fileParam":
                 return true
-            case 'reference':
-            case 'coreReference':
+            case "reference":
+            case "coreReference":
                 return undefined
         }
     }
 
     public toOptionalIfNotAlready(): Type {
-        if (this.internalType.type === 'optional') {
+        if (this.internalType.type === "optional") {
             return this
         }
         return Type.optional(this)
     }
 
     public underlyingTypeIfOptional(): Type | undefined {
-        if (this.internalType.type === 'optional') {
+        if (this.internalType.type === "optional") {
             return (this.internalType as Optional).value
         }
         return undefined
     }
 
     public unwrapIfOptional(): Type {
-        if (this.internalType.type === 'optional') {
+        if (this.internalType.type === "optional") {
             return (this.internalType as Optional).value
         }
         return this
     }
 
     public isOptional(): boolean {
-        return this.internalType.type === 'optional'
+        return this.internalType.type === "optional"
     }
 
     public cloneOptionalWithUnderlyingType(underlyingType: Type): Type {
         switch (this.internalType.type) {
-            case 'optional':
+            case "optional":
                 return new Type({
-                    type: 'optional',
+                    type: "optional",
                     value: this.internalType.value.cloneOptionalWithUnderlyingType(underlyingType)
                 })
             default:
@@ -499,107 +499,107 @@ export class Type extends AstNode {
     /* Static factory methods for creating a Type */
     public static string(): Type {
         return new this({
-            type: 'string'
+            type: "string"
         })
     }
 
     public static boolean(): Type {
         return new this({
-            type: 'bool'
+            type: "bool"
         })
     }
 
     public static integer(): Type {
         return new this({
-            type: 'int'
+            type: "int"
         })
     }
 
     public static long(): Type {
         return new this({
-            type: 'long'
+            type: "long"
         })
     }
 
     public static uint(): Type {
         return new this({
-            type: 'uint'
+            type: "uint"
         })
     }
 
     public static ulong(): Type {
         return new this({
-            type: 'ulong'
+            type: "ulong"
         })
     }
 
     public static float(): Type {
         return new this({
-            type: 'float'
+            type: "float"
         })
     }
 
     public static double(): Type {
         return new this({
-            type: 'double'
+            type: "double"
         })
     }
 
     public static dateOnly(): Type {
         return new this({
-            type: 'dateOnly'
+            type: "dateOnly"
         })
     }
 
     public static dateTime(): Type {
         return new this({
-            type: 'dateTime'
+            type: "dateTime"
         })
     }
 
     public static uuid(): Type {
         return new this({
-            type: 'uuid'
+            type: "uuid"
         })
     }
 
     public static object(): Type {
         return new this({
-            type: 'object'
+            type: "object"
         })
     }
 
     public static array(value: Type): Type {
         return new this({
-            type: 'array',
+            type: "array",
             value
         })
     }
 
     public static listType(value: Type): Type {
         return new this({
-            type: 'listType',
+            type: "listType",
             value
         })
     }
 
     public static list(value: Type): Type {
         return new this({
-            type: 'list',
+            type: "list",
             value
         })
     }
 
     public static set(value: Type): Type {
         return new this({
-            type: 'set',
+            type: "set",
             value
         })
     }
 
     public static map(keyType: Type, valueType: Type, options?: Map.Options): Type {
         return new this({
-            type: 'map',
+            type: "map",
             keyType,
             valueType,
             options
@@ -608,7 +608,7 @@ export class Type extends AstNode {
 
     public static idictionary(keyType: Type, valueType: Type, options?: IDictionary.Options): Type {
         return new this({
-            type: 'idictionary',
+            type: "idictionary",
             keyType,
             valueType,
             options
@@ -616,7 +616,7 @@ export class Type extends AstNode {
     }
     public static keyValuePair(keyType: Type, valueType: Type): Type {
         return new this({
-            type: 'keyValuePair',
+            type: "keyValuePair",
             keyType,
             valueType
         })
@@ -628,49 +628,49 @@ export class Type extends AstNode {
             return value
         }
         return new this({
-            type: 'optional',
+            type: "optional",
             value
         })
     }
 
     public static reference(value: ClassReference): Type {
         return new this({
-            type: 'reference',
+            type: "reference",
             value
         })
     }
 
     public static coreClass(value: CoreClassReference): Type {
         return new this({
-            type: 'coreReference',
+            type: "coreReference",
             value
         })
     }
 
     public static oneOf(memberValues: Type[]): Type {
         return new this({
-            type: 'oneOf',
+            type: "oneOf",
             memberValues
         })
     }
 
     public static oneOfBase(memberValues: Type[]): Type {
         return new this({
-            type: 'oneOfBase',
+            type: "oneOfBase",
             memberValues
         })
     }
 
     public static stringEnum(value: ClassReference): Type {
         return new this({
-            type: 'stringEnum',
+            type: "stringEnum",
             value
         })
     }
 
     public static action({ typeParameters }: { typeParameters: (Type | TypeParameter)[] }): Type {
         return new this({
-            type: 'action',
+            type: "action",
             typeParameters
         })
     }
@@ -683,7 +683,7 @@ export class Type extends AstNode {
         returnType: Type | TypeParameter
     }): Type {
         return new this({
-            type: 'func',
+            type: "func",
             typeParameters,
             returnType
         })
@@ -691,25 +691,25 @@ export class Type extends AstNode {
 
     public static csharpType(): Type {
         return new this({
-            type: 'csharpType'
+            type: "csharpType"
         })
     }
 
     public static fileParam(classReference: ClassReference): Type {
         return new this({
-            type: 'fileParam',
+            type: "fileParam",
             value: classReference
         })
     }
 
     private writeReadOnlyMemoryType({ writer, value }: { writer: Writer; value: Type }): void {
-        writer.write('ReadOnlyMemory<')
+        writer.write("ReadOnlyMemory<")
         value.write(writer)
-        writer.write('>')
+        writer.write(">")
     }
 
     private static isAlreadyOptional(value: Type) {
-        return value.internalType.type === 'optional'
+        return value.internalType.type === "optional"
     }
 }
 
@@ -736,21 +736,21 @@ export const VALID_READ_ONLY_MEMORY_TYPES = new Set<string>([
 export function convertReadOnlyPrimitiveTypes(readOnlyMemoryTypeNames: string[]): PrimitiveTypeV1[] {
     return readOnlyMemoryTypeNames.map((typeName) => {
         switch (typeName) {
-            case 'int':
+            case "int":
                 return PrimitiveTypeV1.Integer
-            case 'long':
+            case "long":
                 return PrimitiveTypeV1.Long
-            case 'uint':
+            case "uint":
                 return PrimitiveTypeV1.Uint
-            case 'ulong':
+            case "ulong":
                 return PrimitiveTypeV1.Uint64
-            case 'string':
+            case "string":
                 return PrimitiveTypeV1.String
-            case 'bool':
+            case "bool":
                 return PrimitiveTypeV1.Boolean
-            case 'float':
+            case "float":
                 return PrimitiveTypeV1.Float
-            case 'double':
+            case "double":
                 return PrimitiveTypeV1.Double
             default:
                 // This should be unreachable; the ReadOnlyMemory types should have already
@@ -761,7 +761,7 @@ export function convertReadOnlyPrimitiveTypes(readOnlyMemoryTypeNames: string[])
 }
 
 function isReadOnlyMemoryType({ writer, value }: { writer: Writer; value: Type }): boolean {
-    if (value.internalType.type === 'optional') {
+    if (value.internalType.type === "optional") {
         return isReadOnlyMemoryType({ writer, value: value.internalType.value })
     }
     return writer.isReadOnlyMemoryType(value.internalType.type)

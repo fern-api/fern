@@ -1,12 +1,12 @@
-import yaml from 'js-yaml'
+import yaml from "js-yaml"
 
-import { AbstractAPIWorkspace, FernDefinition, FernWorkspace } from '@fern-api/api-workspace-commons'
-import { FERN_PACKAGE_MARKER_FILENAME } from '@fern-api/configuration-loader'
-import { ConjureImporter } from '@fern-api/conjure-to-fern'
-import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
-import { TaskContext } from '@fern-api/task-context'
+import { AbstractAPIWorkspace, FernDefinition, FernWorkspace } from "@fern-api/api-workspace-commons"
+import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration-loader"
+import { ConjureImporter } from "@fern-api/conjure-to-fern"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { TaskContext } from "@fern-api/task-context"
 
-import { mapValues } from './utils/mapValues'
+import { mapValues } from "./utils/mapValues"
 
 export declare namespace ConjureWorkspace {
     export interface Args extends AbstractAPIWorkspace.Args {
@@ -18,7 +18,7 @@ export declare namespace ConjureWorkspace {
 }
 
 export class ConjureWorkspace extends AbstractAPIWorkspace<ConjureWorkspace.Settings> {
-    public type: string = 'conjure'
+    public type: string = "conjure"
     private absolutePathToConjureFolder: AbsoluteFilePath
 
     constructor({ relativePathToConjureDirectory, ...superArgs }: ConjureWorkspace.Args) {
@@ -64,22 +64,22 @@ export class ConjureWorkspace extends AbstractAPIWorkspace<ConjureWorkspace.Sett
         })
         return {
             // these files doesn't live on disk, so there's no absolute filepath
-            absoluteFilePath: AbsoluteFilePath.of('/DUMMY_PATH'),
+            absoluteFilePath: AbsoluteFilePath.of("/DUMMY_PATH"),
             rootApiFile: {
-                defaultUrl: definition.rootApiFile['default-url'],
+                defaultUrl: definition.rootApiFile["default-url"],
                 contents: definition.rootApiFile,
                 rawContents: yaml.dump(definition.rootApiFile)
             },
             namedDefinitionFiles: {
                 ...mapValues(definition.definitionFiles, (definitionFile) => ({
                     // these files doesn't live on disk, so there's no absolute filepath
-                    absoluteFilepath: AbsoluteFilePath.of('/DUMMY_PATH'),
+                    absoluteFilepath: AbsoluteFilePath.of("/DUMMY_PATH"),
                     rawContents: yaml.dump(definitionFile),
                     contents: definitionFile
                 })),
                 [RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME)]: {
                     // these files doesn't live on disk, so there's no absolute filepath
-                    absoluteFilepath: AbsoluteFilePath.of('/DUMMY_PATH'),
+                    absoluteFilepath: AbsoluteFilePath.of("/DUMMY_PATH"),
                     rawContents: yaml.dump(definition.packageMarkerFile),
                     contents: definition.packageMarkerFile
                 }

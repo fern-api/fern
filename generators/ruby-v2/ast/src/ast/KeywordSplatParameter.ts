@@ -1,8 +1,8 @@
-import { AbstractWriter } from '@fern-api/browser-compatible-base-generator'
+import { AbstractWriter } from "@fern-api/browser-compatible-base-generator"
 
-import { AstNode } from '../ruby'
-import { Parameter } from './Parameter'
-import { Writer } from './core/Writer'
+import { AstNode } from "../ruby"
+import { Parameter } from "./Parameter"
+import { Writer } from "./core/Writer"
 
 export declare namespace KeywordSplatParameter {
     interface Args extends Parameter.Args {}
@@ -16,7 +16,7 @@ export class KeywordSplatParameter extends Parameter {
     }
 
     public writeTypeDefinition(writer: Writer): void {
-        writer.write('**')
+        writer.write("**")
         this.type.writeTypeDefinition(writer)
     }
 }

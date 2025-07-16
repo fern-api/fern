@@ -1,10 +1,10 @@
-import { RelativeFilePath, join } from '@fern-api/fs-utils'
-import { TypescriptCustomConfigSchema, ts } from '@fern-api/typescript-ast'
-import { ArrayLiteralNode, ExportNode, FileGenerator, TypescriptFile } from '@fern-api/typescript-mcp-base'
+import { RelativeFilePath, join } from "@fern-api/fs-utils"
+import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast"
+import { ArrayLiteralNode, ExportNode, FileGenerator, TypescriptFile } from "@fern-api/typescript-mcp-base"
 
-import { TypeDeclaration, UnionTypeDeclaration } from '@fern-fern/ir-sdk/api'
+import { TypeDeclaration, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api"
 
-import { ModelGeneratorContext } from '../ModelGeneratorContext'
+import { ModelGeneratorContext } from "../ModelGeneratorContext"
 
 export class UnionGenerator extends FileGenerator<TypescriptFile, TypescriptCustomConfigSchema, ModelGeneratorContext> {
     private readonly schemaVariableName: string
@@ -28,7 +28,7 @@ export class UnionGenerator extends FileGenerator<TypescriptFile, TypescriptCust
                     new ExportNode({
                         initializer: ts.invokeMethod({
                             on: this.context.project.builder.zodReference,
-                            method: 'union',
+                            method: "union",
                             arguments_: [
                                 new ArrayLiteralNode({
                                     values: this.unionDeclaration.types.map((type) =>
@@ -52,7 +52,7 @@ export class UnionGenerator extends FileGenerator<TypescriptFile, TypescriptCust
     }
 
     protected getDirectory(): RelativeFilePath {
-        return RelativeFilePath.of('')
+        return RelativeFilePath.of("")
     }
 
     protected getFilename(): string {

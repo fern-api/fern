@@ -1,5 +1,5 @@
-import { CasingsGenerator } from '@fern-api/casings-generator'
-import * as FernIr from '@fern-api/ir-sdk'
+import { CasingsGenerator } from "@fern-api/casings-generator"
+import * as FernIr from "@fern-api/ir-sdk"
 
 export function mergeIntermediateRepresentation(
     ir1: FernIr.IntermediateRepresentation,
@@ -157,8 +157,8 @@ function mergeEnvironments(
     if (
         isWebsocketEnvironment1 &&
         isWebsocketEnvironment2 &&
-        environmentConfig1.environments.type === 'singleBaseUrl' &&
-        environmentConfig2.environments.type === 'singleBaseUrl'
+        environmentConfig1.environments.type === "singleBaseUrl" &&
+        environmentConfig2.environments.type === "singleBaseUrl"
     ) {
         return {
             environments: {
@@ -181,7 +181,7 @@ function mergeEnvironments(
     const environments1 = environmentConfig1.environments
     const environments2 = environmentConfig2.environments
 
-    if (environments1.type === 'singleBaseUrl' && environments2.type === 'singleBaseUrl') {
+    if (environments1.type === "singleBaseUrl" && environments2.type === "singleBaseUrl") {
         const singleBaseUrlEnvironments1 = isWebsocketEnvironment1 ? environments2 : environments1
         const singleBaseUrlEnvironments2 = isWebsocketEnvironment1 ? environments1 : environments2
 
@@ -200,8 +200,8 @@ function mergeEnvironments(
             }
         }
 
-        const environmentId = 'Base'
-        const environmentName = casingsGenerator.generateName('Base')
+        const environmentId = "Base"
+        const environmentName = casingsGenerator.generateName("Base")
 
         singleBaseUrlEnvironments1.environments.forEach((env) => {
             changedBaseUrlIds1[env.id] = environmentId
@@ -234,15 +234,15 @@ function mergeEnvironments(
     }
 
     if (
-        (environments1.type === 'multipleBaseUrls' && environments2.type === 'singleBaseUrl') ||
-        (environments1.type === 'singleBaseUrl' && environments2.type === 'multipleBaseUrls')
+        (environments1.type === "multipleBaseUrls" && environments2.type === "singleBaseUrl") ||
+        (environments1.type === "singleBaseUrl" && environments2.type === "multipleBaseUrls")
     ) {
         const singleBaseUrlEnvironment =
-            environments1.type === 'singleBaseUrl'
+            environments1.type === "singleBaseUrl"
                 ? (environments1 as FernIr.Environments.SingleBaseUrl)
                 : (environments2 as FernIr.Environments.SingleBaseUrl)
         const multipleBaseUrlsEnvironment =
-            environments1.type === 'multipleBaseUrls'
+            environments1.type === "multipleBaseUrls"
                 ? (environments1 as FernIr.Environments.MultipleBaseUrls)
                 : (environments2 as FernIr.Environments.MultipleBaseUrls)
 
@@ -271,12 +271,12 @@ function mergeEnvironments(
                     }))
                 })
             },
-            changedBaseUrlIds1: environments1.type === 'singleBaseUrl' ? changedBaseUrlIds1 : undefined,
-            changedBaseUrlIds2: environments1.type === 'singleBaseUrl' ? undefined : changedBaseUrlIds1
+            changedBaseUrlIds1: environments1.type === "singleBaseUrl" ? changedBaseUrlIds1 : undefined,
+            changedBaseUrlIds2: environments1.type === "singleBaseUrl" ? undefined : changedBaseUrlIds1
         }
     }
 
-    if (environments1.type === 'multipleBaseUrls' && environments2.type === 'multipleBaseUrls') {
+    if (environments1.type === "multipleBaseUrls" && environments2.type === "multipleBaseUrls") {
         const { deconflictedEnvironments, changedBaseUrlIds } = deconflictMultipleEnvironments(
             environments1,
             environments2,
@@ -505,13 +505,13 @@ function deconflictMultipleEnvironments(
 }
 
 function isWebsocketEnvironment(environment: FernIr.EnvironmentsConfig): boolean {
-    if (environment.environments.type === 'singleBaseUrl') {
+    if (environment.environments.type === "singleBaseUrl") {
         return environment.environments.environments.some(
-            (env) => env.url && (env.url.startsWith('ws://') || env.url.startsWith('wss://'))
+            (env) => env.url && (env.url.startsWith("ws://") || env.url.startsWith("wss://"))
         )
-    } else if (environment.environments.type === 'multipleBaseUrls') {
+    } else if (environment.environments.type === "multipleBaseUrls") {
         return environment.environments.environments.some((env) =>
-            Object.values(env.urls).some((url) => url && (url.startsWith('ws://') || url.startsWith('wss://')))
+            Object.values(env.urls).some((url) => url && (url.startsWith("ws://") || url.startsWith("wss://")))
         )
     }
     return false

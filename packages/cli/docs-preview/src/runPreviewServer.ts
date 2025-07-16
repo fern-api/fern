@@ -1,19 +1,19 @@
-import chalk from 'chalk'
-import cors from 'cors'
-import express from 'express'
-import http from 'http'
-import path from 'path'
-import Watcher from 'watcher'
-import { type WebSocket, WebSocketServer } from 'ws'
+import chalk from "chalk"
+import cors from "cors"
+import express from "express"
+import http from "http"
+import path from "path"
+import Watcher from "watcher"
+import { type WebSocket, WebSocketServer } from "ws"
 
-import { wrapWithHttps } from '@fern-api/docs-resolver'
-import { DocsV1Read, DocsV2Read, FernNavigation } from '@fern-api/fdr-sdk'
-import { AbsoluteFilePath, dirname, doesPathExist } from '@fern-api/fs-utils'
-import { Project } from '@fern-api/project-loader'
-import { TaskContext } from '@fern-api/task-context'
+import { wrapWithHttps } from "@fern-api/docs-resolver"
+import { DocsV1Read, DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk"
+import { AbsoluteFilePath, dirname, doesPathExist } from "@fern-api/fs-utils"
+import { Project } from "@fern-api/project-loader"
+import { TaskContext } from "@fern-api/task-context"
 
-import { downloadBundle, getPathToBundleFolder } from './downloadLocalDocsBundle'
-import { getPreviewDocsDefinition } from './previewDocs'
+import { downloadBundle, getPathToBundleFolder } from "./downloadLocalDocsBundle"
+import { getPreviewDocsDefinition } from "./previewDocs"
 
 const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
     pages: {},
@@ -70,7 +70,7 @@ export async function runPreviewServer({
             const url = process.env.DOCS_PREVIEW_BUCKET
             if (url == null) {
                 throw new Error(
-                    'Failed to connect to the docs preview server. Please contact support@buildwithfern.com'
+                    "Failed to connect to the docs preview server. Please contact support@buildwithfern.com"
                 )
             }
             await downloadBundle({ bucketUrl: url, logger: context.logger, preferCached: true, tryTar: false })
@@ -80,9 +80,9 @@ export async function runPreviewServer({
                 context.logger.debug(`Failed to download latest docs bundle: ${(err as Error).message}`)
             }
             if (await doesPathExist(pathToBundle)) {
-                context.logger.warn('Falling back to cached bundle...')
+                context.logger.warn("Falling back to cached bundle...")
             } else {
-                context.logger.warn('Please reach out to support@buildwithfern.com.')
+                context.logger.warn("Please reach out to support@buildwithfern.com.")
                 return
             }
         }
@@ -101,10 +101,10 @@ export async function runPreviewServer({
         }
     }
 
-    wss.on('connection', function connection(ws) {
+    wss.on("connection", function connection(ws) {
         connections.add(ws)
 
-        ws.on('close', function close() {
+        ws.on("close", function close() {
             connections.delete(ws)
         })
     })
@@ -123,11 +123,11 @@ export async function runPreviewServer({
     const RELOAD_DEBOUNCE_MS = 1000
 
     const reloadDocsDefinition = async (editedAbsoluteFilepaths?: AbsoluteFilePath[]) => {
-        context.logger.info('Reloading docs...')
+        context.logger.info("Reloading docs...")
         const startTime = Date.now()
         try {
             project = await reloadProject()
-            context.logger.info('Validating docs...')
+            context.logger.info("Validating docs...")
             await validateProject(project)
             const newDocsDefinition = await getPreviewDocsDefinition({
                 domain: `${instance.host}${instance.pathname}`,
@@ -140,9 +140,9 @@ export async function runPreviewServer({
             return newDocsDefinition
         } catch (err) {
             if (docsDefinition == null) {
-                context.logger.error('Failed to read docs configuration. Rendering blank page.')
+                context.logger.error("Failed to read docs configuration. Rendering blank page.")
             } else {
-                context.logger.error('Failed to read docs configuration. Rendering last successful configuration.')
+                context.logger.error("Failed to read docs configuration. Rendering last successful configuration.")
             }
             if (err instanceof Error) {
                 context.logger.error(err.message)
@@ -170,7 +170,7 @@ export async function runPreviewServer({
     const editedAbsoluteFilepaths: AbsoluteFilePath[] = []
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    watcher.on('all', async (event: string, targetPath: string, _targetPathNext: string) => {
+    watcher.on("all", async (event: string, targetPath: string, _targetPathNext: string) => {
         context.logger.info(chalk.dim(`[${event}] ${targetPath}`))
 
         // Don't schedule another reload if one is in progress
@@ -191,7 +191,7 @@ export async function runPreviewServer({
                 isReloading = true
                 sendData({
                     version: 1,
-                    type: 'startReload'
+                    type: "startReload"
                 })
 
                 const reloadedDocsDefinition = await reloadDocsDefinition(editedAbsoluteFilepaths)
@@ -203,7 +203,7 @@ export async function runPreviewServer({
 
                 sendData({
                     version: 1,
-                    type: 'finishReload'
+                    type: "finishReload"
                 })
                 isReloading = false
             })()
@@ -211,7 +211,7 @@ export async function runPreviewServer({
     })
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    app.post('/v2/registry/docs/load-with-url', async (_, res) => {
+    app.post("/v2/registry/docs/load-with-url", async (_, res) => {
         try {
             // set to empty in case docsDefinition is null which happens when the initial docs definition is invalid
             const definition = docsDefinition ?? EMPTY_DOCS_DEFINITION
@@ -221,13 +221,13 @@ export async function runPreviewServer({
                     basePath: instance.pathname
                 },
                 definition,
-                lightModeEnabled: definition.config.colorsV3?.type !== 'dark',
+                lightModeEnabled: definition.config.colorsV3?.type !== "dark",
                 orgId: FernNavigation.OrgId(initialProject.config.organization)
             }
             res.send(response)
         } catch (error) {
-            context.logger.error('Stack trace:', (error as Error).stack ?? '')
-            context.logger.error('Error loading docs', (error as Error).message)
+            context.logger.error("Stack trace:", (error as Error).stack ?? "")
+            context.logger.error("Error loading docs", (error as Error).message)
             res.status(500).send()
         }
     })
@@ -236,20 +236,20 @@ export async function runPreviewServer({
         return res.sendFile(`/${req.params[0]}`)
     })
 
-    app.get('/', (req, _res, next) => {
-        if (req.headers.upgrade === 'websocket') {
+    app.get("/", (req, _res, next) => {
+        if (req.headers.upgrade === "websocket") {
             return wss.handleUpgrade(req, req.socket, Buffer.alloc(0), (ws) => {
-                wss.emit('connection', ws, req)
+                wss.emit("connection", ws, req)
             })
         }
         return next()
     })
 
-    app.use('/_next', express.static(path.join(bundleRoot, '/_next')))
+    app.use("/_next", express.static(path.join(bundleRoot, "/_next")))
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    app.use('*', async (_req, res) => {
-        return res.sendFile(path.join(bundleRoot, '/[[...slug]].html'))
+    app.use("*", async (_req, res) => {
+        return res.sendFile(path.join(bundleRoot, "/[[...slug]].html"))
     })
 
     app.listen(port)

@@ -1,5 +1,5 @@
-import { recursivelyVisitRawTypeReference } from '@fern-api/fern-definition-schema'
-import * as FernIr from '@fern-api/ir-sdk'
+import { recursivelyVisitRawTypeReference } from "@fern-api/fern-definition-schema"
+import * as FernIr from "@fern-api/ir-sdk"
 
 export function createTypeReferenceFromFernType(fernType: string): FernIr.TypeReference | undefined {
     return recursivelyVisitRawTypeReference<FernIr.TypeReference | undefined>({
@@ -9,82 +9,82 @@ export function createTypeReferenceFromFernType(fernType: string): FernIr.TypeRe
         visitor: {
             primitive: (primitive) => {
                 switch (primitive.v1) {
-                    case 'BASE_64':
+                    case "BASE_64":
                         return FernIr.TypeReference.primitive({
-                            v1: 'BASE_64',
+                            v1: "BASE_64",
                             v2: FernIr.PrimitiveTypeV2.base64({})
                         })
-                    case 'BOOLEAN':
+                    case "BOOLEAN":
                         return FernIr.TypeReference.primitive({
-                            v1: 'BOOLEAN',
+                            v1: "BOOLEAN",
                             v2: FernIr.PrimitiveTypeV2.boolean({
                                 default: undefined
                             })
                         })
-                    case 'DATE':
+                    case "DATE":
                         return FernIr.TypeReference.primitive({
-                            v1: 'DATE',
+                            v1: "DATE",
                             v2: FernIr.PrimitiveTypeV2.date({})
                         })
-                    case 'DATE_TIME':
+                    case "DATE_TIME":
                         return FernIr.TypeReference.primitive({
-                            v1: 'DATE_TIME',
+                            v1: "DATE_TIME",
                             v2: FernIr.PrimitiveTypeV2.dateTime({})
                         })
-                    case 'FLOAT':
+                    case "FLOAT":
                         return FernIr.TypeReference.primitive({
-                            v1: 'FLOAT',
+                            v1: "FLOAT",
                             v2: FernIr.PrimitiveTypeV2.float({})
                         })
-                    case 'DOUBLE':
+                    case "DOUBLE":
                         return FernIr.TypeReference.primitive({
-                            v1: 'DOUBLE',
+                            v1: "DOUBLE",
                             v2: FernIr.PrimitiveTypeV2.double({
                                 default: undefined,
                                 validation: undefined
                             })
                         })
-                    case 'UINT':
+                    case "UINT":
                         return FernIr.TypeReference.primitive({
-                            v1: 'UINT',
+                            v1: "UINT",
                             v2: FernIr.PrimitiveTypeV2.uint({})
                         })
-                    case 'UINT_64':
+                    case "UINT_64":
                         return FernIr.TypeReference.primitive({
-                            v1: 'UINT_64',
+                            v1: "UINT_64",
                             v2: FernIr.PrimitiveTypeV2.uint64({})
                         })
-                    case 'INTEGER':
+                    case "INTEGER":
                         return FernIr.TypeReference.primitive({
-                            v1: 'INTEGER',
+                            v1: "INTEGER",
                             v2: FernIr.PrimitiveTypeV2.integer({
                                 default: undefined,
                                 validation: undefined
                             })
                         })
-                    case 'LONG':
+                    case "LONG":
                         return FernIr.TypeReference.primitive({
-                            v1: 'LONG',
+                            v1: "LONG",
                             v2: FernIr.PrimitiveTypeV2.long({
                                 default: undefined
                             })
                         })
-                    case 'STRING':
+                    case "STRING":
                         return FernIr.TypeReference.primitive({
-                            v1: 'STRING',
+                            v1: "STRING",
                             v2: FernIr.PrimitiveTypeV2.string({
                                 default: undefined,
                                 validation: undefined
                             })
                         })
-                    case 'UUID':
+                    case "UUID":
                         return FernIr.TypeReference.primitive({
-                            v1: 'UUID',
+                            v1: "UUID",
                             v2: FernIr.PrimitiveTypeV2.uuid({})
                         })
-                    case 'BIG_INTEGER':
+                    case "BIG_INTEGER":
                         return FernIr.TypeReference.primitive({
-                            v1: 'BIG_INTEGER',
+                            v1: "BIG_INTEGER",
                             v2: FernIr.PrimitiveTypeV2.bigInteger({
                                 default: undefined
                             })
@@ -138,7 +138,7 @@ export function createTypeReferenceFromFernType(fernType: string): FernIr.TypeRe
                             string: (value) => FernIr.Literal.string(value),
                             boolean: (value) => FernIr.Literal.boolean(value),
                             _other: () => {
-                                throw new Error('Unexpected literal type')
+                                throw new Error("Unexpected literal type")
                             }
                         })
                     )

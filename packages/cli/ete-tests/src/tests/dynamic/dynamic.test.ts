@@ -1,13 +1,13 @@
-import { generatorsYml } from '@fern-api/configuration'
-import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
+import { generatorsYml } from "@fern-api/configuration"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
 
-import { generateDynamicIrAsString } from './generateDynamicIrAsString'
+import { generateDynamicIrAsString } from "./generateDynamicIrAsString"
 
-const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of('fixtures'))
+const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"))
 
 const FIXTURES: Fixture[] = [
     {
-        name: 'simple'
+        name: "simple"
     }
 ]
 
@@ -19,7 +19,7 @@ interface Fixture {
     only?: boolean
 }
 
-describe('fdr', () => {
+describe("fdr", () => {
     for (const fixture of FIXTURES) {
         const { only = false } = fixture
         ;(only ? it.only : it)(

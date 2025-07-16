@@ -1,6 +1,6 @@
-import { GeneratedGenericAPIExpressError } from '@fern-typescript/contexts'
+import { GeneratedGenericAPIExpressError } from "@fern-typescript/contexts"
 
-import { GeneratedGenericAPIExpressErrorImpl } from './GeneratedGenericAPIExpressErrorImpl'
+import { GeneratedGenericAPIExpressErrorImpl } from "./GeneratedGenericAPIExpressErrorImpl"
 
 export declare namespace GenericAPIExpressErrorGenerator {
     export namespace generateGenericAPIExpressError {

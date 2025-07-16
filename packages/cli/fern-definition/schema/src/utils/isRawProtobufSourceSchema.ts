@@ -1,4 +1,4 @@
-import { ProtobufSourceSchema, SourceSchema } from '../schemas'
+import { ProtobufSourceSchema, SourceSchema } from "../schemas"
 
 export function isRawProtobufSourceSchema(
     rawSourceSchema: SourceSchema | null | undefined

@@ -1,13 +1,13 @@
-import { ExportsManager, ImportsManager, PackageId, Reference } from '@fern-typescript/commons'
-import { ExpressEndpointTypeSchemasContext, GeneratedExpressEndpointTypeSchemas } from '@fern-typescript/contexts'
-import { ExpressEndpointTypeSchemasGenerator } from '@fern-typescript/express-endpoint-type-schemas-generator'
-import { PackageResolver } from '@fern-typescript/resolvers'
-import { SourceFile } from 'ts-morph'
+import { ExportsManager, ImportsManager, PackageId, Reference } from "@fern-typescript/commons"
+import { ExpressEndpointTypeSchemasContext, GeneratedExpressEndpointTypeSchemas } from "@fern-typescript/contexts"
+import { ExpressEndpointTypeSchemasGenerator } from "@fern-typescript/express-endpoint-type-schemas-generator"
+import { PackageResolver } from "@fern-typescript/resolvers"
+import { SourceFile } from "ts-morph"
 
-import { Name } from '@fern-fern/ir-sdk/api'
+import { Name } from "@fern-fern/ir-sdk/api"
 
-import { EndpointDeclarationReferencer } from '../../declaration-referencers/EndpointDeclarationReferencer'
-import { getSchemaImportStrategy } from '../getSchemaImportStrategy'
+import { EndpointDeclarationReferencer } from "../../declaration-referencers/EndpointDeclarationReferencer"
+import { getSchemaImportStrategy } from "../getSchemaImportStrategy"
 
 export declare namespace ExpressEndpointTypeSchemasContextImpl {
     export interface Init {
@@ -80,7 +80,7 @@ export class ExpressEndpointTypeSchemasContextImpl implements ExpressEndpointTyp
             importsManager: this.importsManager,
             exportsManager: this.exportsManager,
             importStrategy: getSchemaImportStrategy({ useDynamicImport: false }),
-            subImport: typeof export_ === 'string' ? [export_] : export_
+            subImport: typeof export_ === "string" ? [export_] : export_
         })
     }
 }

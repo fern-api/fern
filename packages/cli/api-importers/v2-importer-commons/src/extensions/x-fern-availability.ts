@@ -1,6 +1,6 @@
-import { AvailabilityStatus } from '@fern-api/ir-sdk'
+import { AvailabilityStatus } from "@fern-api/ir-sdk"
 
-import { AbstractExtension } from '../AbstractExtension'
+import { AbstractExtension } from "../AbstractExtension"
 
 export declare namespace FernAvailabilityExtension {
     export interface Args extends AbstractExtension.Args {
@@ -10,7 +10,7 @@ export declare namespace FernAvailabilityExtension {
 
 export class FernAvailabilityExtension extends AbstractExtension<AvailabilityStatus | undefined> {
     private readonly node: unknown
-    public readonly key = 'x-fern-availability'
+    public readonly key = "x-fern-availability"
 
     constructor({ breadcrumbs, node, context }: FernAvailabilityExtension.Args) {
         super({ breadcrumbs, context })
@@ -23,21 +23,21 @@ export class FernAvailabilityExtension extends AbstractExtension<AvailabilitySta
             return undefined
         }
 
-        if (typeof extensionValue !== 'string') {
+        if (typeof extensionValue !== "string") {
             return undefined
         }
 
-        const normalizedValue = extensionValue.toUpperCase().replace(/[-_\s]/g, '_')
+        const normalizedValue = extensionValue.toUpperCase().replace(/[-_\s]/g, "_")
         switch (normalizedValue) {
-            case 'IN_DEVELOPMENT':
+            case "IN_DEVELOPMENT":
                 return AvailabilityStatus.InDevelopment
-            case 'PRE_RELEASE':
-            case 'BETA':
+            case "PRE_RELEASE":
+            case "BETA":
                 return AvailabilityStatus.PreRelease
-            case 'GENERAL_AVAILABILITY':
-            case 'GA':
+            case "GENERAL_AVAILABILITY":
+            case "GA":
                 return AvailabilityStatus.GeneralAvailability
-            case 'DEPRECATED':
+            case "DEPRECATED":
                 return AvailabilityStatus.Deprecated
             default:
                 return undefined

@@ -1,15 +1,15 @@
-import { mkdir, rm, writeFile } from 'fs/promises'
-import yaml from 'js-yaml'
+import { mkdir, rm, writeFile } from "fs/promises"
+import yaml from "js-yaml"
 
-import { AbsoluteFilePath, RelativeFilePath, join, moveFolder } from '@fern-api/fs-utils'
+import { AbsoluteFilePath, RelativeFilePath, join, moveFolder } from "@fern-api/fs-utils"
 
-import { getAbsolutePathToGeneratorsConfiguration, loadRawGeneratorsConfiguration } from './generators-configuration'
+import { getAbsolutePathToGeneratorsConfiguration, loadRawGeneratorsConfiguration } from "./generators-configuration"
 import {
     PathModificationStrategy,
     convertLegacyGeneratorsConfiguration
-} from './generators-configuration/convertLegacyGeneratorsConfiguration'
+} from "./generators-configuration/convertLegacyGeneratorsConfiguration"
 
-const APIS_DIRECTORY = 'apis'
+const APIS_DIRECTORY = "apis"
 
 /**
  * fern/  <------ path to fern directory

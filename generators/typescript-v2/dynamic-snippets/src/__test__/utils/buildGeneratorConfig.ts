@@ -1,19 +1,19 @@
-import { FernGeneratorExec } from '@fern-api/browser-compatible-base-generator'
-import { TypescriptCustomConfigSchema } from '@fern-api/typescript-ast'
+import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator"
+import { TypescriptCustomConfigSchema } from "@fern-api/typescript-ast"
 
 const NPM_CONFIG = {
-    packageName: 'acme',
-    registryUrl: 'https://registry.npmjs.org',
-    token: 'dummy'
+    packageName: "acme",
+    registryUrl: "https://registry.npmjs.org",
+    token: "dummy"
 }
 
 const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
     dryRun: false,
-    irFilepath: '<placeholder>',
+    irFilepath: "<placeholder>",
     output: {
-        path: '<placeholder>',
+        path: "<placeholder>",
         mode: FernGeneratorExec.OutputMode.publish({
-            version: '1.0.0',
+            version: "1.0.0",
             publishTarget: FernGeneratorExec.GeneratorPublishTarget.npm(NPM_CONFIG),
             registries: {
                 npm: NPM_CONFIG
@@ -25,14 +25,14 @@ const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
             } as any
         })
     },
-    organization: 'acme',
-    workspaceName: 'acme',
+    organization: "acme",
+    workspaceName: "acme",
     environment: FernGeneratorExec.GeneratorEnvironment.local(),
     whitelabel: false,
     writeUnitTests: false,
     generateOauthClients: false,
     customConfig: {
-        namespaceExport: 'Acme',
+        namespaceExport: "Acme",
         inlineFileProperties: true,
         inlinePathParameters: true,
         useBigInt: true

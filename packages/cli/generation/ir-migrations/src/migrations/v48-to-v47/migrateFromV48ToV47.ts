@@ -1,22 +1,22 @@
-import { GeneratorName } from '@fern-api/configuration-loader'
-import { assertNever } from '@fern-api/core-utils'
+import { GeneratorName } from "@fern-api/configuration-loader"
+import { assertNever } from "@fern-api/core-utils"
 
-import { IrSerialization } from '../../ir-serialization'
-import { IrVersions } from '../../ir-versions'
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
+import { IrSerialization } from "../../ir-serialization"
+import { IrVersions } from "../../ir-versions"
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
 
 export const V48_TO_V47_MIGRATION: IrMigration<
     IrVersions.V48.ir.IntermediateRepresentation,
     IrVersions.V47.ir.IntermediateRepresentation
 > = {
-    laterVersion: 'v48',
-    earlierVersion: 'v47',
+    laterVersion: "v48",
+    earlierVersion: "v47",
     firstGeneratorVersionToConsumeNewIR: {
-        [GeneratorName.TYPESCRIPT_NODE_SDK]: '0.29.0',
-        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: '0.29.0',
+        [GeneratorName.TYPESCRIPT_NODE_SDK]: "0.29.0",
+        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: "0.29.0",
         [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_SDK]: '0.29.0',
-        [GeneratorName.TYPESCRIPT_EXPRESS]: '0.17.0',
+        [GeneratorName.TYPESCRIPT_SDK]: "0.29.0",
+        [GeneratorName.TYPESCRIPT_EXPRESS]: "0.17.0",
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -42,7 +42,7 @@ export const V48_TO_V47_MIGRATION: IrMigration<
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V47.IntermediateRepresentation.jsonOrThrow(ir, {
-            unrecognizedObjectKeys: 'strip',
+            unrecognizedObjectKeys: "strip",
             skipValidation: true
         }),
     migrateBackwards: (v48): IrVersions.V47.ir.IntermediateRepresentation => {
@@ -88,11 +88,11 @@ function hasPaginatedEndpoints(services: Record<string, IrVersions.V47.HttpServi
 
 function convertPagination(pagination: IrVersions.V48.Pagination): IrVersions.V47.Pagination | undefined {
     switch (pagination.type) {
-        case 'cursor': {
+        case "cursor": {
             const cursorPagination = convertCursorPagination(pagination)
             return cursorPagination != null ? IrVersions.V47.Pagination.cursor(cursorPagination) : undefined
         }
-        case 'offset': {
+        case "offset": {
             const offsetPagination = convertOffsetPagination(pagination)
             return offsetPagination != null ? IrVersions.V47.Pagination.offset(offsetPagination) : undefined
         }
@@ -135,7 +135,7 @@ function convertRequestPropertyToQueryParameter(
     requestProperty: IrVersions.V48.RequestProperty
 ): IrVersions.V47.QueryParameter | undefined {
     switch (requestProperty.property.type) {
-        case 'query':
+        case "query":
             return requestProperty.property
     }
     // If the property is not a query parameter, there's nothing for us to

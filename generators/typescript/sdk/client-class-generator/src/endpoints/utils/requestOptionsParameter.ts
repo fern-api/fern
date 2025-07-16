@@ -1,7 +1,7 @@
-import { getTextOfTsNode } from '@fern-typescript/commons'
-import { OptionalKind, ParameterDeclarationStructure, ts } from 'ts-morph'
+import { getTextOfTsNode } from "@fern-typescript/commons"
+import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph"
 
-export const REQUEST_OPTIONS_PARAMETER_NAME = 'requestOptions'
+export const REQUEST_OPTIONS_PARAMETER_NAME = "requestOptions"
 
 export const getRequestOptionsParameter = ({
     requestOptionsReference
@@ -19,7 +19,7 @@ export const getTimeoutExpression = ({
     defaultTimeoutInSeconds,
     timeoutInSecondsReference
 }: {
-    defaultTimeoutInSeconds: number | 'infinity' | undefined
+    defaultTimeoutInSeconds: number | "infinity" | undefined
     timeoutInSecondsReference: (args: {
         referenceToRequestOptions: ts.Expression
         isNullable: boolean
@@ -32,7 +32,7 @@ export const getTimeoutExpression = ({
                 isNullable: true
             }),
             ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
-            ts.factory.createIdentifier('null')
+            ts.factory.createIdentifier("null")
         ),
         ts.factory.createToken(ts.SyntaxKind.QuestionToken),
         ts.factory.createParenthesizedExpression(
@@ -42,14 +42,14 @@ export const getTimeoutExpression = ({
                     isNullable: false
                 }),
                 ts.factory.createToken(ts.SyntaxKind.AsteriskToken),
-                ts.factory.createNumericLiteral('1000')
+                ts.factory.createNumericLiteral("1000")
             )
         ),
         ts.factory.createToken(ts.SyntaxKind.ColonToken),
         // If defaultTimeoutInSeconds is set to infinity, fall back to undefined if requestOptions.timeoutInSeconds is not set
-        defaultTimeoutInSeconds !== 'infinity'
+        defaultTimeoutInSeconds !== "infinity"
             ? ts.factory.createNumericLiteral(defaultTimeoutInSeconds != null ? defaultTimeoutInSeconds * 1000 : 60000)
-            : ts.factory.createIdentifier('undefined')
+            : ts.factory.createIdentifier("undefined")
     )
 }
 

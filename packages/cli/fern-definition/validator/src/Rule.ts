@@ -1,9 +1,9 @@
-import { FernWorkspace } from '@fern-api/api-workspace-commons'
-import { DefinitionFileSchema, PackageMarkerFileSchema, RootApiFileSchema } from '@fern-api/fern-definition-schema'
-import { RelativeFilePath } from '@fern-api/fs-utils'
-import { Logger } from '@fern-api/logger'
+import { FernWorkspace } from "@fern-api/api-workspace-commons"
+import { DefinitionFileSchema, PackageMarkerFileSchema, RootApiFileSchema } from "@fern-api/fern-definition-schema"
+import { RelativeFilePath } from "@fern-api/fs-utils"
+import { Logger } from "@fern-api/logger"
 
-import { DefinitionFileAstNodeTypes, PackageMarkerAstNodeTypes, RootApiFileAstNodeTypes } from './ast'
+import { DefinitionFileAstNodeTypes, PackageMarkerAstNodeTypes, RootApiFileAstNodeTypes } from "./ast"
 
 export interface Rule {
     name: string
@@ -32,6 +32,6 @@ export interface RuleRunnerArgs<FileSchema> {
 }
 
 export interface RuleViolation {
-    severity: 'fatal' | 'error' | 'warning'
+    severity: "fatal" | "error" | "warning"
     message: string
 }

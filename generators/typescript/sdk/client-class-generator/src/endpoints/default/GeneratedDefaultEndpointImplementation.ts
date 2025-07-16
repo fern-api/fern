@@ -1,27 +1,27 @@
-import { Fetcher, GetReferenceOpts, getExampleEndpointCalls, getTextOfTsNode } from '@fern-typescript/commons'
-import { GeneratedEndpointImplementation, SdkContext } from '@fern-typescript/contexts'
-import { ts } from 'ts-morph'
+import { Fetcher, GetReferenceOpts, getExampleEndpointCalls, getTextOfTsNode } from "@fern-typescript/commons"
+import { GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts"
+import { ts } from "ts-morph"
 
-import { ExampleEndpointCall, HttpEndpoint } from '@fern-fern/ir-sdk/api'
+import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api"
 
-import { GeneratedSdkClientClassImpl } from '../../GeneratedSdkClientClassImpl'
-import { GeneratedEndpointRequest } from '../../endpoint-request/GeneratedEndpointRequest'
-import { buildUrl } from '../utils/buildUrl'
+import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl"
+import { GeneratedEndpointRequest } from "../../endpoint-request/GeneratedEndpointRequest"
+import { buildUrl } from "../utils/buildUrl"
 import {
     REQUEST_OPTIONS_PARAMETER_NAME,
     getAbortSignalExpression,
     getMaxRetriesExpression,
     getRequestOptionsParameter,
     getTimeoutExpression
-} from '../utils/requestOptionsParameter'
-import { GeneratedEndpointResponse } from './endpoint-response/GeneratedEndpointResponse'
+} from "../utils/requestOptionsParameter"
+import { GeneratedEndpointResponse } from "./endpoint-response/GeneratedEndpointResponse"
 
 export declare namespace GeneratedDefaultEndpointImplementation {
     export interface Init {
         endpoint: HttpEndpoint
         generatedSdkClientClass: GeneratedSdkClientClassImpl
         includeCredentialsOnCrossOriginRequests: boolean
-        defaultTimeoutInSeconds: number | 'infinity' | undefined
+        defaultTimeoutInSeconds: number | "infinity" | undefined
         request: GeneratedEndpointRequest
         response: GeneratedEndpointResponse
         includeSerdeLayer: boolean
@@ -30,14 +30,14 @@ export declare namespace GeneratedDefaultEndpointImplementation {
     }
 }
 
-const EXAMPLE_PREFIX = '    '
+const EXAMPLE_PREFIX = "    "
 
 export class GeneratedDefaultEndpointImplementation implements GeneratedEndpointImplementation {
     public readonly endpoint: HttpEndpoint
     public readonly response: GeneratedEndpointResponse
     private generatedSdkClientClass: GeneratedSdkClientClassImpl
     private includeCredentialsOnCrossOriginRequests: boolean
-    private defaultTimeoutInSeconds: number | 'infinity' | undefined
+    private defaultTimeoutInSeconds: number | "infinity" | undefined
     private request: GeneratedEndpointRequest
     private includeSerdeLayer: boolean
     private retainOriginalCasing: boolean
@@ -103,11 +103,11 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                 continue
             }
             const docsStrPrefix = `@param {${parameter.type}} ${parameter.name} - `
-            const docsStrings = parameter.docs.split('\n').map((line: string, index: number) => {
+            const docsStrings = parameter.docs.split("\n").map((line: string, index: number) => {
                 if (index === 0) {
                     return `${docsStrPrefix}${line}`
                 } else {
-                    return `${' '.repeat(docsStrPrefix.length)}${line}`
+                    return `${" ".repeat(docsStrPrefix.length)}${line}`
                 }
             })
             params.push(...docsStrings)
@@ -118,14 +118,14 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         params.push(
             `@param {${requestOptionsType}} ${REQUEST_OPTIONS_PARAMETER_NAME} - Request-specific configuration.`
         )
-        groups.push(params.join('\n'))
+        groups.push(params.join("\n"))
 
         const exceptions: string[] = []
         for (const errorName of this.response.getNamesOfThrownExceptions(context)) {
             exceptions.push(`@throws {@link ${errorName}}`)
         }
         if (exceptions.length > 0) {
-            groups.push(exceptions.join('\n'))
+            groups.push(exceptions.join("\n"))
         }
 
         const examples: string[] = []
@@ -139,8 +139,8 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             if (generatedExample == null) {
                 continue
             }
-            let exampleStr = '@example\n' + getTextOfTsNode(generatedExample)
-            exampleStr = exampleStr.replaceAll('\n', `\n${EXAMPLE_PREFIX}`)
+            let exampleStr = "@example\n" + getTextOfTsNode(generatedExample)
+            exampleStr = exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`)
             // Only add if it doesn't already exist
             if (!examples.includes(exampleStr)) {
                 examples.push(exampleStr)
@@ -151,7 +151,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             groups.push(...examples)
         }
 
-        return groups.join('\n\n')
+        return groups.join("\n\n")
     }
 
     public getExample(args: {
@@ -193,9 +193,9 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             return undefined
         }
 
-        const responseVariableName = 'response'
-        const pageVariableName = 'page'
-        const itemVariableName = 'item'
+        const responseVariableName = "response"
+        const pageVariableName = "page"
+        const itemVariableName = "item"
         return [
             ts.factory.createVariableStatement(
                 undefined,
@@ -230,8 +230,8 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                         ts.factory.createExpressionStatement(
                             ts.factory.createCallExpression(
                                 ts.factory.createPropertyAccessExpression(
-                                    ts.factory.createIdentifier('console'),
-                                    ts.factory.createIdentifier('log')
+                                    ts.factory.createIdentifier("console"),
+                                    ts.factory.createIdentifier("log")
                                 ),
                                 undefined,
                                 [ts.factory.createIdentifier(itemVariableName)]
@@ -242,7 +242,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                 )
             ),
             // Not ideal, but not seeing another way to write a comment.
-            ts.factory.createIdentifier('// Or you can manually iterate page-by-page'),
+            ts.factory.createIdentifier("// Or you can manually iterate page-by-page"),
             ts.factory.createVariableStatement(
                 undefined,
                 ts.factory.createVariableDeclarationList(
@@ -261,7 +261,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                 ts.factory.createCallExpression(
                     ts.factory.createPropertyAccessExpression(
                         ts.factory.createIdentifier(pageVariableName),
-                        ts.factory.createIdentifier('hasNextPage')
+                        ts.factory.createIdentifier("hasNextPage")
                     ),
                     undefined,
                     []
@@ -275,7 +275,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                                 ts.factory.createCallExpression(
                                     ts.factory.createPropertyAccessExpression(
                                         ts.factory.createIdentifier(pageVariableName),
-                                        ts.factory.createIdentifier('getNextPage')
+                                        ts.factory.createIdentifier("getNextPage")
                                     ),
                                     undefined,
                                     []
@@ -290,7 +290,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
     }
 
     public getStatements(context: SdkContext): ts.Statement[] {
-        const listFnName = 'list'
+        const listFnName = "list"
         const body = [
             ...this.request.getBuildRequestStatements(context),
             ...this.invokeFetcherAndReturnResponse(context)
@@ -315,13 +315,13 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                                         undefined,
                                         undefined,
                                         undefined,
-                                        ts.factory.createIdentifier('request'),
+                                        ts.factory.createIdentifier("request"),
                                         undefined,
                                         requestParameter,
                                         undefined
                                     )
                                 ],
-                                ts.factory.createTypeReferenceNode('Promise', [
+                                ts.factory.createTypeReferenceNode("Promise", [
                                     context.coreUtilities.fetcher.RawResponse.WithRawResponse._getReferenceToType(
                                         responseReturnType
                                     )
@@ -335,10 +335,10 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                 ts.NodeFlags.Const
             )
             const statements: ts.Statement[] = [ts.factory.createVariableStatement(undefined, listFn)]
-            if (paginationInfo.type === 'offset' || paginationInfo.type === 'offset-step') {
+            if (paginationInfo.type === "offset" || paginationInfo.type === "offset-step") {
                 statements.push(paginationInfo.initializeOffset)
             }
-            const initialResponseVar = ts.factory.createIdentifier('dataWithRawResponse')
+            const initialResponseVar = ts.factory.createIdentifier("dataWithRawResponse")
             statements.push(
                 ts.factory.createVariableStatement(
                     undefined,
@@ -354,9 +354,9 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                                             ts.factory.createCallExpression(
                                                 ts.factory.createIdentifier(listFnName),
                                                 undefined,
-                                                [ts.factory.createIdentifier('request')]
+                                                [ts.factory.createIdentifier("request")]
                                             ),
-                                            ts.factory.createIdentifier('withRawResponse')
+                                            ts.factory.createIdentifier("withRawResponse")
                                         ),
                                         undefined,
                                         []
@@ -373,13 +373,13 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                     context.coreUtilities.pagination.Pageable._construct({
                         responseType: paginationInfo.responseType,
                         itemType: paginationInfo.itemType,
-                        response: ts.factory.createPropertyAccessExpression(initialResponseVar, 'data'),
-                        rawResponse: ts.factory.createPropertyAccessExpression(initialResponseVar, 'rawResponse'),
+                        response: ts.factory.createPropertyAccessExpression(initialResponseVar, "data"),
+                        rawResponse: ts.factory.createPropertyAccessExpression(initialResponseVar, "rawResponse"),
                         hasNextPage: this.createLambdaWithResponse({ body: paginationInfo.hasNextPage }),
                         getItems: this.createLambdaWithResponse({ body: paginationInfo.getItems }),
                         loadPage: this.createLambdaWithResponse({
                             body: ts.factory.createBlock(paginationInfo.loadPage),
-                            ignoreResponse: paginationInfo.type === 'offset'
+                            ignoreResponse: paginationInfo.type === "offset"
                         })
                     })
                 )
@@ -396,7 +396,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         body: ts.ConciseBody
         ignoreResponse?: boolean
     }): ts.Expression {
-        const responseParameterName = ignoreResponse ? '_response' : 'response'
+        const responseParameterName = ignoreResponse ? "_response" : "response"
         return ts.factory.createArrowFunction(
             undefined,
             undefined,
@@ -466,8 +466,8 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             withCredentials: this.includeCredentialsOnCrossOriginRequests
         }
 
-        if (this.endpoint.response?.body?.type === 'text') {
-            fetcherArgs.responseType = 'text'
+        if (this.endpoint.response?.body?.type === "text") {
+            fetcherArgs.responseType = "text"
         }
 
         return [

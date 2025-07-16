@@ -1,5 +1,5 @@
-import { camelCase, startCase } from 'lodash-es'
-import { OpenAPIV3, OpenAPIV3_1 } from 'openapi-types'
+import { camelCase, startCase } from "lodash-es"
+import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types"
 
 import {
     HttpHeader,
@@ -8,16 +8,16 @@ import {
     TypeReference,
     WebSocketMessage,
     WebSocketMessageBody
-} from '@fern-api/ir-sdk'
-import { constructHttpPath } from '@fern-api/ir-utils'
-import { Converters } from '@fern-api/v2-importer-commons'
+} from "@fern-api/ir-sdk"
+import { constructHttpPath } from "@fern-api/ir-utils"
+import { Converters } from "@fern-api/v2-importer-commons"
 
-import { AsyncAPIV2 } from '..'
-import { AsyncAPIConverterContext } from '../../AsyncAPIConverterContext'
-import { AbstractChannelConverter } from '../../converters/AbstractChannelConverter'
-import { ParameterConverter } from '../../converters/ParameterConverter'
-import { ChannelAddressExtension } from '../../extensions/x-fern-channel-address'
-import { DisplayNameExtension } from '../../extensions/x-fern-display-name'
+import { AsyncAPIV2 } from ".."
+import { AsyncAPIConverterContext } from "../../AsyncAPIConverterContext"
+import { AbstractChannelConverter } from "../../converters/AbstractChannelConverter"
+import { ParameterConverter } from "../../converters/ParameterConverter"
+import { ChannelAddressExtension } from "../../extensions/x-fern-channel-address"
+import { DisplayNameExtension } from "../../extensions/x-fern-display-name"
 
 export declare namespace ChannelConverter2_X {
     export interface Args extends AbstractChannelConverter.Args<AsyncAPIV2.ChannelV2> {}
@@ -40,7 +40,7 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
             channel: this.channel,
             context: this.context
         })
-        const displayName = displayNameExtension.convert() ?? this.websocketGroup?.join('.')
+        const displayName = displayNameExtension.convert() ?? this.websocketGroup?.join(".")
 
         if (this.channel.parameters) {
             this.convertPathParameters({
@@ -65,7 +65,7 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
             subscribeMessage = this.convertMessage({
                 context: this.context,
                 operation: this.channel.subscribe,
-                origin: 'server'
+                origin: "server"
             })
         }
 
@@ -74,7 +74,7 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
             publishMessage = this.convertMessage({
                 context: this.context,
                 operation: this.channel.publish,
-                origin: 'client'
+                origin: "client"
             })
         }
 
@@ -125,7 +125,7 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                     userSpecifiedExamples: this.convertExamples({
                         fullPath: channelAddress,
                         baseUrl,
-                        asyncApiVersion: 'v2'
+                        asyncApiVersion: "v2"
                     })
                 }
             },
@@ -141,10 +141,10 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
     }: {
         context: AsyncAPIConverterContext
         operation: AsyncAPIV2.PublishEvent | AsyncAPIV2.SubscribeEvent
-        origin: 'server' | 'client'
+        origin: "server" | "client"
     }): WebSocketMessage | undefined {
         let convertedSchema: Converters.SchemaConverters.SchemaConverter.ConvertedSchema | undefined = undefined
-        const action = origin === 'server' ? 'subscribe' : 'publish'
+        const action = origin === "server" ? "subscribe" : "publish"
         const breadcrumbs = [...this.breadcrumbs, action]
 
         const resolvedMessage = context.resolveMaybeReference<OpenAPIV3.SchemaObject | AsyncAPIV2.MessageV2>({
@@ -155,9 +155,9 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
             operation.message = resolvedMessage
         }
 
-        const schemaId = startCase(camelCase(`${this.channelPath}_${action}`)).replace(/ /g, '')
+        const schemaId = startCase(camelCase(`${this.channelPath}_${action}`)).replace(/ /g, "")
 
-        if ('oneOf' in operation.message) {
+        if ("oneOf" in operation.message) {
             const schemaOrReferenceConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
                 context: this.context,
                 breadcrumbs,
@@ -212,7 +212,7 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                 docs: operation.description
             })
 
-            const messageType = origin === 'server' ? 'subscribe' : 'publish'
+            const messageType = origin === "server" ? "subscribe" : "publish"
             return {
                 type: messageType,
                 displayName: messageType,
@@ -250,7 +250,7 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                 parameter: {
                     ...parameterObject,
                     name,
-                    in: 'path',
+                    in: "path",
                     description: parameterObject.description,
                     required: parameterObject.required ?? true
                 }
@@ -258,7 +258,7 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
             const convertedParameter = parameterConverter.convert()
             if (convertedParameter != null) {
                 this.inlinedTypes = { ...this.inlinedTypes, ...convertedParameter.inlinedTypes }
-                if (convertedParameter.type === 'path') {
+                if (convertedParameter.type === "path") {
                     pathParameters.push(convertedParameter.parameter)
                 }
             }
@@ -282,15 +282,15 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                     breadcrumbs: [...this.breadcrumbs, name],
                     parameter: {
                         name,
-                        in: 'header',
+                        in: "header",
                         required: required.includes(name),
                         schema: resolvedHeader,
-                        description: 'description' in resolvedHeader ? resolvedHeader.description : undefined
+                        description: "description" in resolvedHeader ? resolvedHeader.description : undefined
                     }
                 })
 
                 const convertedParameter = parameterConverter.convert()
-                if (convertedParameter != null && convertedParameter.type === 'header') {
+                if (convertedParameter != null && convertedParameter.type === "header") {
                     this.inlinedTypes = { ...this.inlinedTypes, ...convertedParameter.inlinedTypes }
                     headers.push(convertedParameter.parameter)
                 }
@@ -321,16 +321,16 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                     breadcrumbs: [...this.breadcrumbs, name],
                     parameter: {
                         name,
-                        in: 'query',
+                        in: "query",
                         required: required.includes(name),
                         schema: resolvedQuery,
-                        description: 'description' in resolvedQuery ? resolvedQuery.description : undefined,
+                        description: "description" in resolvedQuery ? resolvedQuery.description : undefined,
                         deprecated: resolvedQuery.deprecated ?? false
                     }
                 })
 
                 const convertedParameter = parameterConverter.convert()
-                if (convertedParameter != null && convertedParameter.type === 'query') {
+                if (convertedParameter != null && convertedParameter.type === "query") {
                     this.inlinedTypes = { ...this.inlinedTypes, ...convertedParameter.inlinedTypes }
                     queryParameters.push(convertedParameter.parameter)
                 }

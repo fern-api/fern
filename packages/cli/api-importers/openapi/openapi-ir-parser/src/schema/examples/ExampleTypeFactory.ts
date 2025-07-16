@@ -1,4 +1,4 @@
-import { Examples, assertNever, isPlainObject, noop } from '@fern-api/core-utils'
+import { Examples, assertNever, isPlainObject, noop } from "@fern-api/core-utils"
 import {
     EnumSchemaWithExample,
     FernOpenapiIr,
@@ -10,11 +10,11 @@ import {
     PrimitiveSchemaValueWithExample,
     SchemaId,
     SchemaWithExample
-} from '@fern-api/openapi-ir'
+} from "@fern-api/openapi-ir"
 
-import { SchemaParserContext } from '../SchemaParserContext'
-import { convertToFullExample } from './convertToFullExample'
-import { getFullExampleAsArray, getFullExampleAsObject } from './getFullExample'
+import { SchemaParserContext } from "../SchemaParserContext"
+import { convertToFullExample } from "./convertToFullExample"
+import { getFullExampleAsArray, getFullExampleAsObject } from "./getFullExample"
 
 export declare namespace ExampleTypeFactory {
     interface Options {
@@ -83,14 +83,14 @@ export class ExampleTypeFactory {
         skipReadonly: boolean
     }): FullExample | undefined {
         switch (schema.type) {
-            case 'enum':
-                if (typeof example === 'string' && enumContainsValue({ schema, value: example })) {
+            case "enum":
+                if (typeof example === "string" && enumContainsValue({ schema, value: example })) {
                     return FullExample.enum(example)
                 }
                 return schema.values[0] != null ? FullExample.enum(schema.values[0]?.value) : undefined
-            case 'literal':
+            case "literal":
                 return FullExample.literal(schema.value)
-            case 'nullable': {
+            case "nullable": {
                 if (
                     example == null &&
                     !this.hasExample(schema.value, 0, visitedSchemaIds, options) &&
@@ -107,18 +107,18 @@ export class ExampleTypeFactory {
                     options,
                     skipReadonly
                 })
-                if (result != null && result.type === 'array' && result.value.length === 0) {
+                if (result != null && result.type === "array" && result.value.length === 0) {
                     return undefined
                 }
-                if (result != null && result.type === 'map' && result.value.length === 0) {
+                if (result != null && result.type === "map" && result.value.length === 0) {
                     return undefined
                 }
-                if (result != null && result.type === 'object' && Object.keys(result.properties).length === 0) {
+                if (result != null && result.type === "object" && Object.keys(result.properties).length === 0) {
                     return undefined
                 }
                 return result
             }
-            case 'optional': {
+            case "optional": {
                 if (
                     example == null &&
                     !this.hasExample(schema.value, 0, visitedSchemaIds, options) &&
@@ -138,28 +138,28 @@ export class ExampleTypeFactory {
                     options,
                     skipReadonly
                 })
-                if (result != null && result.type === 'array' && result.value.length === 0) {
+                if (result != null && result.type === "array" && result.value.length === 0) {
                     return undefined
                 }
-                if (result != null && result.type === 'map' && result.value.length === 0) {
+                if (result != null && result.type === "map" && result.value.length === 0) {
                     return undefined
                 }
-                if (result != null && result.type === 'object' && Object.keys(result.properties).length === 0) {
+                if (result != null && result.type === "object" && Object.keys(result.properties).length === 0) {
                     return undefined
                 }
                 return result
             }
-            case 'primitive': {
+            case "primitive": {
                 const primitiveExample = this.buildExampleFromPrimitive({ schema: schema.schema, example, options })
                 return FullExample.primitive(primitiveExample)
             }
-            case 'reference': {
+            case "reference": {
                 const referencedSchemaWithExample = this.schemas[schema.schema]
                 if (referencedSchemaWithExample != null && !visitedSchemaIds.has(schema.schema)) {
                     visitedSchemaIds.add(schema.schema)
 
                     const isInlinedRequest =
-                        referencedSchemaWithExample?.type === 'object' &&
+                        referencedSchemaWithExample?.type === "object" &&
                         !this.nonRequestReferencedSchemas.has(schema.schema)
 
                     const referencedExample = this.buildExampleHelper({
@@ -178,9 +178,9 @@ export class ExampleTypeFactory {
                 }
                 return undefined
             }
-            case 'oneOf':
+            case "oneOf":
                 switch (schema.value.type) {
-                    case 'discriminated': {
+                    case "discriminated": {
                         const result: Record<string, FullExample> = {}
 
                         let allProperties: Record<string, { schema: SchemaWithExample; readonly: boolean }> = {}
@@ -204,7 +204,7 @@ export class ExampleTypeFactory {
                             if (
                                 exampleDiscriminant != null &&
                                 exampleUnionVariantSchema != null &&
-                                exampleUnionVariantSchema.type === 'object'
+                                exampleUnionVariantSchema.type === "object"
                             ) {
                                 allProperties = this.getAllProperties(exampleUnionVariantSchema)
                                 requiredProperties = this.getAllRequiredProperties(exampleUnionVariantSchema)
@@ -235,7 +235,7 @@ export class ExampleTypeFactory {
                         for (const commonProperty of schema.value.commonProperties) {
                             allProperties[commonProperty.key] = { schema: commonProperty.schema, readonly: false }
                             const resolvedSchema = this.getResolvedSchema(commonProperty.schema)
-                            if (resolvedSchema.type !== 'optional' && resolvedSchema.type !== 'nullable') {
+                            if (resolvedSchema.type !== "optional" && resolvedSchema.type !== "nullable") {
                                 requiredProperties[commonProperty.key] = commonProperty.schema
                             }
                         }
@@ -276,7 +276,7 @@ export class ExampleTypeFactory {
                         }
                         return FullExample.oneOf(FullOneOfExample.discriminated(result))
                     }
-                    case 'undiscriminated': {
+                    case "undiscriminated": {
                         const unionVariantSchema = this.getUnDiscriminatedUnionVariantSchema(schema.value, example)
                         if (unionVariantSchema != null) {
                             // TODO (we should select the oneOf schema based on the example)
@@ -294,7 +294,7 @@ export class ExampleTypeFactory {
                     }
                 }
                 return undefined
-            case 'unknown':
+            case "unknown":
                 if (example != null) {
                     const fullExample = convertToFullExample(example)
                     if (fullExample != null) {
@@ -305,15 +305,15 @@ export class ExampleTypeFactory {
                     return undefined
                 }
                 if (options.isParameter) {
-                    return FullExample.primitive(PrimitiveExample.string(options.name ?? 'string'))
+                    return FullExample.primitive(PrimitiveExample.string(options.name ?? "string"))
                 }
                 return FullExample.map([
                     {
-                        key: PrimitiveExample.string('key'),
-                        value: FullExample.primitive(PrimitiveExample.string('value'))
+                        key: PrimitiveExample.string("key"),
+                        value: FullExample.primitive(PrimitiveExample.string("value"))
                     }
                 ])
-            case 'array': {
+            case "array": {
                 const fullExample = getFullExampleAsArray(example)
                 const itemExamples = []
                 // If you have a top-level example use that
@@ -365,7 +365,7 @@ export class ExampleTypeFactory {
                 }
                 return FullExample.array(itemExamples)
             }
-            case 'map': {
+            case "map": {
                 // use fullExample schema, with fallback to inlined example
                 const objectExample = getFullExampleAsObject(example ?? schema.example)
                 if (objectExample != null && Object.entries(objectExample).length > 0) {
@@ -397,11 +397,11 @@ export class ExampleTypeFactory {
                 // In this instance we have an unknown object, which becomes a map of string to unknown
                 // we special case this to not create a nested map, but rather have a cleaner "Any Object" example
                 // of: "object": {"key": "value"} as opposed to "object": {"object": {"key": "value"}}
-                if (schema.key.schema.type === 'string' && schema.value.type === 'unknown') {
+                if (schema.key.schema.type === "string" && schema.value.type === "unknown") {
                     return FullExample.map([
                         {
-                            key: PrimitiveExample.string('key'),
-                            value: FullExample.unknown(FullExample.primitive(PrimitiveExample.string('value')))
+                            key: PrimitiveExample.string("key"),
+                            value: FullExample.unknown(FullExample.primitive(PrimitiveExample.string("value")))
                         }
                     ])
                 }
@@ -412,7 +412,7 @@ export class ExampleTypeFactory {
                         ...options,
                         // override the name to be "key" for map keys otherwise you can start to get key name
                         // nesting since primitive examples use their name e.g. "metadata": {"metadata": {...}}
-                        name: 'key'
+                        name: "key"
                     }
                 })
                 const valueExample = this.buildExampleHelper({
@@ -425,7 +425,7 @@ export class ExampleTypeFactory {
                         ...options,
                         // override the name to be "value" for map value otherwise you can start to get key name
                         // nesting since primitive examples use their name e.g. "metadata": {"metadata": "metadata"}
-                        name: 'value'
+                        name: "value"
                     },
                     skipReadonly
                 })
@@ -439,7 +439,7 @@ export class ExampleTypeFactory {
                 }
                 return FullExample.map([])
             }
-            case 'object': {
+            case "object": {
                 const result: Record<string, FullExample> = {}
                 const foundObjectExample =
                     schema.fullExamples?.find((example) => example.name === exampleId) ??
@@ -458,8 +458,8 @@ export class ExampleTypeFactory {
                         schema.schema._visit<boolean>({
                             // ignores a property if it's deprecated and optional
                             optional: (optionalSchema) =>
-                                typeof optionalSchema.availability === 'string' &&
-                                optionalSchema.availability === 'Deprecated',
+                                typeof optionalSchema.availability === "string" &&
+                                optionalSchema.availability === "Deprecated",
                             // For all other schema types, do not skip
                             primitive: () => false,
                             object: () => false,
@@ -510,7 +510,7 @@ export class ExampleTypeFactory {
                                     title: undefined,
                                     availability: undefined,
                                     description: undefined,
-                                    generatedName: '',
+                                    generatedName: "",
                                     nameOverride: undefined,
                                     namespace: undefined,
                                     groupName: undefined
@@ -549,7 +549,7 @@ export class ExampleTypeFactory {
             map: (example) => {
                 for (const kvPair of example) {
                     const key = kvPair.key
-                    if (key.type !== 'string') {
+                    if (key.type !== "string") {
                         continue
                     }
                     result[key.value] = kvPair.value
@@ -561,7 +561,7 @@ export class ExampleTypeFactory {
                 }
             },
             oneOf: (example) => {
-                if (example.type === 'discriminated') {
+                if (example.type === "discriminated") {
                     for (const [property, value] of Object.entries(example.value)) {
                         result[property] = value
                     }
@@ -578,10 +578,10 @@ export class ExampleTypeFactory {
     private getObjectSchema(
         schema: FernOpenapiIr.SchemaWithExample
     ): FernOpenapiIr.ObjectSchemaWithExample | undefined {
-        if (schema.type === 'object') {
+        if (schema.type === "object") {
             return schema
         }
-        if (schema.type === 'reference') {
+        if (schema.type === "reference") {
             const referenceDeclaration = this.schemas[schema.schema]
             if (referenceDeclaration != null) {
                 return this.getObjectSchema(referenceDeclaration)
@@ -595,7 +595,7 @@ export class ExampleTypeFactory {
         fullExample: Record<string, unknown> | undefined
     ): [string, SchemaWithExample] | undefined {
         const discriminantValue = fullExample?.[schema.discriminantProperty]
-        if (discriminantValue == null || typeof discriminantValue !== 'string') {
+        if (discriminantValue == null || typeof discriminantValue !== "string") {
             return Object.entries(schema.schemas)[0]
         }
 
@@ -634,15 +634,15 @@ export class ExampleTypeFactory {
     // this doesn't account for objects that can have arbitrary properties, and overvalues schemas with more properties.
     private calcExampleHeuristic(schema: SchemaWithExample, fullExample: unknown): number {
         switch (schema.type) {
-            case 'literal': {
+            case "literal": {
                 // if the example is the same as the literal, return a high score
                 return schema.value.value === fullExample ? 5 : 0
             }
-            case 'enum': {
+            case "enum": {
                 // if the example is in the enum, return a high score
                 return enumContainsValue({ schema, value: fullExample as string }) ? 5 : 0
             }
-            case 'object': {
+            case "object": {
                 if (!isPlainObject(fullExample)) {
                     return 0
                 }
@@ -659,7 +659,7 @@ export class ExampleTypeFactory {
 
                 return heuristic
             }
-            case 'array': {
+            case "array": {
                 if (!Array.isArray(fullExample)) {
                     return 0
                 }
@@ -669,7 +669,7 @@ export class ExampleTypeFactory {
                 }
                 return heuristic
             }
-            case 'map': {
+            case "map": {
                 if (!isPlainObject(fullExample)) {
                     return 0
                 }
@@ -679,39 +679,39 @@ export class ExampleTypeFactory {
                 }
                 return heuristic
             }
-            case 'nullable':
-            case 'optional': {
+            case "nullable":
+            case "optional": {
                 return this.calcExampleHeuristic(schema.value, fullExample)
             }
-            case 'reference': {
+            case "reference": {
                 const resolvedSchema = this.getResolvedSchema(schema)
                 if (resolvedSchema == null) {
                     return 0
                 }
                 return this.calcExampleHeuristic(resolvedSchema, fullExample)
             }
-            case 'oneOf': {
+            case "oneOf": {
                 const matches = Object.values(schema.value.schemas).map((schema) =>
                     this.calcExampleHeuristic(schema, fullExample)
                 )
                 return matches.sort((a, b) => b - a)[0] ?? 0
             }
-            case 'primitive': {
+            case "primitive": {
                 if (fullExample == null) {
                     return 0
                 }
                 const matches = schema.schema._visit({
-                    int: () => typeof fullExample === 'number',
-                    int64: () => typeof fullExample === 'number',
-                    uint: () => typeof fullExample === 'number',
-                    uint64: () => typeof fullExample === 'number',
-                    float: () => typeof fullExample === 'number',
-                    double: () => typeof fullExample === 'number',
-                    string: () => typeof fullExample === 'string',
-                    datetime: () => typeof fullExample === 'string',
-                    date: () => typeof fullExample === 'string',
-                    base64: () => typeof fullExample === 'string',
-                    boolean: () => typeof fullExample === 'boolean',
+                    int: () => typeof fullExample === "number",
+                    int64: () => typeof fullExample === "number",
+                    uint: () => typeof fullExample === "number",
+                    uint64: () => typeof fullExample === "number",
+                    float: () => typeof fullExample === "number",
+                    double: () => typeof fullExample === "number",
+                    string: () => typeof fullExample === "string",
+                    datetime: () => typeof fullExample === "string",
+                    date: () => typeof fullExample === "string",
+                    base64: () => typeof fullExample === "string",
+                    boolean: () => typeof fullExample === "boolean",
                     _other: () => true
                 })
                 return matches ? 1 : -1
@@ -731,19 +731,19 @@ export class ExampleTypeFactory {
             return false
         }
         switch (schema.type) {
-            case 'array':
+            case "array":
                 return this.hasExample(schema.value, depth + 1, visitedSchemaIds, options)
-            case 'enum':
+            case "enum":
                 return schema.example != null
-            case 'literal':
+            case "literal":
                 return false
-            case 'map':
+            case "map":
                 return (
                     schema.example != null ||
                     (schema.key.schema.example != null &&
                         this.hasExample(schema.value, depth + 1, visitedSchemaIds, options))
                 )
-            case 'object': {
+            case "object": {
                 const objectExample = schema.fullExamples != null && schema.fullExamples.length > 0
                 if (objectExample) {
                     return true
@@ -755,9 +755,9 @@ export class ExampleTypeFactory {
                 }
                 return false
             }
-            case 'primitive':
+            case "primitive":
                 return schema.schema.example != null
-            case 'reference': {
+            case "reference": {
                 const resolvedSchema = this.schemas[schema.schema]
 
                 if (resolvedSchema != null && !visitedSchemaIds.has(schema.schema)) {
@@ -769,9 +769,9 @@ export class ExampleTypeFactory {
 
                 return false
             }
-            case 'unknown':
+            case "unknown":
                 return schema.example != null
-            case 'oneOf':
+            case "oneOf":
                 return Object.values(schema.value.schemas).some((schema) =>
                     this.hasExample(schema, depth, visitedSchemaIds, options)
                 )
@@ -801,7 +801,7 @@ export class ExampleTypeFactory {
                 continue
             }
             const resolvedAllOfSchema = this.getResolvedSchema(allOfSchema)
-            if (resolvedAllOfSchema.type !== 'object') {
+            if (resolvedAllOfSchema.type !== "object") {
                 continue
             }
             properties = {
@@ -816,7 +816,7 @@ export class ExampleTypeFactory {
         let requiredProperties: Record<string, SchemaWithExample> = {}
         for (const property of object.properties) {
             const resolvedSchema = this.getResolvedSchema(property.schema)
-            if (resolvedSchema.type !== 'optional' && resolvedSchema.type !== 'nullable') {
+            if (resolvedSchema.type !== "optional" && resolvedSchema.type !== "nullable") {
                 requiredProperties[property.key] = property.schema
             }
         }
@@ -826,7 +826,7 @@ export class ExampleTypeFactory {
                 continue
             }
             const resolvedAllOfSchema = this.getResolvedSchema(allOfSchema)
-            if (resolvedAllOfSchema.type !== 'object') {
+            if (resolvedAllOfSchema.type !== "object") {
                 continue
             }
             requiredProperties = {
@@ -838,7 +838,7 @@ export class ExampleTypeFactory {
     }
 
     private getResolvedSchema(schema: SchemaWithExample) {
-        while (schema.type === 'reference') {
+        while (schema.type === "reference") {
             const resolvedSchema = this.schemas[schema.schema]
             if (resolvedSchema == null) {
                 throw new Error(`Unexpected error: Failed to resolve schema reference: ${schema.schema}`)
@@ -858,88 +858,88 @@ export class ExampleTypeFactory {
         options: ExampleTypeFactory.Options
     }): PrimitiveExample {
         switch (schema.type) {
-            case 'string':
-                if (example != null && typeof example === 'string') {
+            case "string":
+                if (example != null && typeof example === "string") {
                     return PrimitiveExample.string(example)
                 } else if (schema.example != null) {
                     return PrimitiveExample.string(schema.example)
                 } else {
                     return PrimitiveExample.string(options.name ?? Examples.STRING)
                 }
-            case 'base64':
-                if (example != null && typeof example === 'string') {
+            case "base64":
+                if (example != null && typeof example === "string") {
                     return PrimitiveExample.base64(example)
                 } else if (schema.example != null) {
                     return PrimitiveExample.base64(schema.example)
                 } else {
                     return PrimitiveExample.base64(Examples.BASE64)
                 }
-            case 'boolean':
-                if (example != null && typeof example === 'boolean') {
+            case "boolean":
+                if (example != null && typeof example === "boolean") {
                     return PrimitiveExample.boolean(example)
                 } else if (schema.example != null) {
                     return PrimitiveExample.boolean(schema.example)
                 } else {
                     return PrimitiveExample.boolean(Examples.BOOLEAN)
                 }
-            case 'date':
-                if (example != null && typeof example === 'string') {
+            case "date":
+                if (example != null && typeof example === "string") {
                     return PrimitiveExample.date(example)
                 } else if (schema.example != null) {
                     return PrimitiveExample.date(schema.example)
                 } else {
                     return PrimitiveExample.date(Examples.DATE)
                 }
-            case 'datetime':
-                if (example != null && typeof example === 'string') {
+            case "datetime":
+                if (example != null && typeof example === "string") {
                     return PrimitiveExample.datetime(example)
                 } else if (schema.example != null) {
                     return PrimitiveExample.datetime(schema.example)
                 } else {
                     return PrimitiveExample.datetime(Examples.DATE_TIME)
                 }
-            case 'double':
-                if (example != null && typeof example === 'number') {
+            case "double":
+                if (example != null && typeof example === "number") {
                     return PrimitiveExample.double(example)
                 } else if (schema.example != null) {
                     return PrimitiveExample.double(schema.example)
                 } else {
                     return PrimitiveExample.double(Examples.DOUBLE)
                 }
-            case 'float':
-                if (example != null && typeof example === 'number') {
+            case "float":
+                if (example != null && typeof example === "number") {
                     return PrimitiveExample.float(example)
                 } else if (schema.example != null) {
                     return PrimitiveExample.float(schema.example)
                 } else {
                     return PrimitiveExample.float(Examples.FLOAT)
                 }
-            case 'int':
-                if (example != null && typeof example === 'number') {
+            case "int":
+                if (example != null && typeof example === "number") {
                     return PrimitiveExample.int(example)
                 } else if (schema.example != null) {
                     return PrimitiveExample.int(schema.example)
                 } else {
                     return PrimitiveExample.int(Examples.INT)
                 }
-            case 'int64':
-                if (example != null && typeof example === 'number') {
+            case "int64":
+                if (example != null && typeof example === "number") {
                     return PrimitiveExample.int64(example)
                 } else if (schema.example != null) {
                     return PrimitiveExample.int64(schema.example)
                 } else {
                     return PrimitiveExample.int64(Examples.INT64)
                 }
-            case 'uint':
-                if (example != null && typeof example === 'number') {
+            case "uint":
+                if (example != null && typeof example === "number") {
                     return PrimitiveExample.uint(example)
                 } else if (schema.example != null) {
                     return PrimitiveExample.uint(schema.example)
                 } else {
                     return PrimitiveExample.uint(Examples.UINT)
                 }
-            case 'uint64':
-                if (example != null && typeof example === 'number') {
+            case "uint64":
+                if (example != null && typeof example === "number") {
                     return PrimitiveExample.uint64(example)
                 } else if (schema.example != null) {
                     return PrimitiveExample.uint64(schema.example)

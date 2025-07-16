@@ -1,10 +1,10 @@
-import { hashJSON } from '../hashJSON'
+import { hashJSON } from "../hashJSON"
 
-describe('hashJSON Function', () => {
+describe("hashJSON Function", () => {
     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     const generateLargeObject = (depth: number, breadth: number): any => {
         if (depth === 0) {
-            return 'LARGE_STRING_VALUE'
+            return "LARGE_STRING_VALUE"
         }
         // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         const obj: any = {}
@@ -14,21 +14,21 @@ describe('hashJSON Function', () => {
         return obj
     }
 
-    it('should hash a reasonably large object without errors', () => {
+    it("should hash a reasonably large object without errors", () => {
         const largeObj = generateLargeObject(3, 5)
 
         expect(() => {
             const hash = hashJSON(largeObj)
-            expect(typeof hash).toBe('string')
+            expect(typeof hash).toBe("string")
         }).not.toThrow()
     })
 
-    it('should hash a very large object without errors', () => {
+    it("should hash a very large object without errors", () => {
         const largeObj = generateLargeObject(8, 10)
 
         expect(() => {
             const hash = hashJSON(largeObj)
-            expect(typeof hash).toBe('string')
+            expect(typeof hash).toBe("string")
         }).not.toThrow()
     })
 })

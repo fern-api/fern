@@ -1,15 +1,15 @@
-import { camelCase, upperFirst } from 'lodash-es'
+import { camelCase, upperFirst } from "lodash-es"
 
-import { AbstractDynamicSnippetsGeneratorContext, FernGeneratorExec } from '@fern-api/browser-compatible-base-generator'
-import { FernIr } from '@fern-api/dynamic-ir-sdk'
-import { BasePhpCustomConfigSchema, php } from '@fern-api/php-codegen'
+import { AbstractDynamicSnippetsGeneratorContext, FernGeneratorExec } from "@fern-api/browser-compatible-base-generator"
+import { FernIr } from "@fern-api/dynamic-ir-sdk"
+import { BasePhpCustomConfigSchema, php } from "@fern-api/php-codegen"
 
-import { DynamicTypeLiteralMapper } from './DynamicTypeLiteralMapper'
-import { FilePropertyMapper } from './FilePropertyMapper'
+import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper"
+import { FilePropertyMapper } from "./FilePropertyMapper"
 
-const RESERVED_METHOD_NAMES = ['use', 'clone', 'list']
-const REQUEST_NAMESPACE = 'Requests'
-const TYPES_NAMESPACE = 'Types'
+const RESERVED_METHOD_NAMES = ["use", "clone", "list"]
+const REQUEST_NAMESPACE = "Requests"
+const TYPES_NAMESPACE = "Types"
 
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
     public ir: FernIr.dynamic.DynamicIntermediateRepresentation
@@ -67,15 +67,15 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         if (this.customConfig?.clientName != null) {
             return this.customConfig.clientName
         }
-        if (this.customConfig?.['client-class-name'] != null) {
-            return this.customConfig?.['client-class-name']
+        if (this.customConfig?.["client-class-name"] != null) {
+            return this.customConfig?.["client-class-name"]
         }
         return this.getComputedClientName()
     }
 
     public getEnvironmentsClassReference(): php.ClassReference {
         return php.classReference({
-            name: 'Environments',
+            name: "Environments",
             namespace: this.rootNamespace
         })
     }
@@ -91,7 +91,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     public getNamespace(fernFilepath: FernIr.FernFilepath, suffix?: string): string {
         let parts = fernFilepath.allParts.map((path) => path.pascalCase.safeName)
         parts = suffix != null ? [...parts, suffix] : parts
-        return [this.rootNamespace, ...parts].join('\\')
+        return [this.rootNamespace, ...parts].join("\\")
     }
 
     public getEnvironmentClassAccessFromID(environmentID: string): php.AstNode | undefined {
@@ -101,14 +101,14 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         }
         return php.codeblock((writer) => {
             writer.writeNode(this.getEnvironmentClassReference(environmentName))
-            writer.write('::')
+            writer.write("::")
             writer.write(this.getClassName(environmentName))
         })
     }
 
     public getEnvironmentClassReference(name: FernIr.Name): php.ClassReference {
         return php.classReference({
-            name: 'Environments',
+            name: "Environments",
             namespace: this.rootNamespace
         })
     }

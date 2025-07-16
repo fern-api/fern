@@ -1,7 +1,7 @@
-import { readFile } from 'fs/promises'
-import { v4 as uuidv4 } from 'uuid'
+import { readFile } from "fs/promises"
+import { v4 as uuidv4 } from "uuid"
 
-import { DocsDefinitionResolver, filterOssWorkspaces } from '@fern-api/docs-resolver'
+import { DocsDefinitionResolver, filterOssWorkspaces } from "@fern-api/docs-resolver"
 import {
     APIV1Read,
     APIV1Write,
@@ -13,19 +13,19 @@ import {
     convertDbAPIDefinitionToRead,
     convertDbDocsConfigToRead,
     convertDocsDefinitionToDb
-} from '@fern-api/fdr-sdk'
-import { AbsoluteFilePath, convertToFernHostAbsoluteFilePath, relative } from '@fern-api/fs-utils'
-import { IntermediateRepresentation } from '@fern-api/ir-sdk'
-import { Project } from '@fern-api/project-loader'
-import { convertIrToFdrApi } from '@fern-api/register'
-import { TaskContext } from '@fern-api/task-context'
+} from "@fern-api/fdr-sdk"
+import { AbsoluteFilePath, convertToFernHostAbsoluteFilePath, relative } from "@fern-api/fs-utils"
+import { IntermediateRepresentation } from "@fern-api/ir-sdk"
+import { Project } from "@fern-api/project-loader"
+import { convertIrToFdrApi } from "@fern-api/register"
+import { TaskContext } from "@fern-api/task-context"
 
 import {
     replaceImagePathsAndUrls,
     replaceReferencedCode,
     replaceReferencedMarkdown
-} from '../../docs-markdown-utils/src'
-import { FernWorkspace } from '../../workspace/loader/src'
+} from "../../docs-markdown-utils/src"
+import { FernWorkspace } from "../../workspace/loader/src"
 
 export async function getPreviewDocsDefinition({
     domain,
@@ -43,12 +43,12 @@ export async function getPreviewDocsDefinition({
     const docsWorkspace = project.docsWorkspaces
     const apiWorkspaces = project.apiWorkspaces
     if (docsWorkspace == null) {
-        throw new Error('No docs workspace found in project')
+        throw new Error("No docs workspace found in project")
     }
 
     if (editedAbsoluteFilepaths != null && previousDocsDefinition != null) {
         const allMarkdownFiles = editedAbsoluteFilepaths.every(
-            (filepath) => filepath.endsWith('.mdx') || filepath.endsWith('.md')
+            (filepath) => filepath.endsWith(".mdx") || filepath.endsWith(".md")
         )
         for (const absoluteFilePath of editedAbsoluteFilepaths) {
             const relativePath = relative(docsWorkspace.absoluteFilePath, absoluteFilePath)
@@ -67,7 +67,7 @@ export async function getPreviewDocsDefinition({
 
             const fileIdsMap = new Map(
                 Object.entries(previousDocsDefinition.filesV2 ?? {}).map(([id, file]) => {
-                    const path = '/' + file.url.replace('/_local/', '')
+                    const path = "/" + file.url.replace("/_local/", "")
                     return [AbsoluteFilePath.of(path), id]
                 })
             )
@@ -120,7 +120,7 @@ export async function getPreviewDocsDefinition({
             files.map((file) => {
                 const fileId = uuidv4()
                 filesV2[fileId] = {
-                    type: 'url',
+                    type: "url",
                     url: FernNavigation.Url(`/_local${convertToFernHostAbsoluteFilePath(file.absoluteFilePath)}`)
                 }
                 return {
@@ -194,7 +194,7 @@ class ReferencedAPICollector {
             const err = e as Error
             this.context.logger.debug(`Failed to read referenced API: ${err?.message} ${err?.stack}`)
             this.context.logger.error(
-                'An error occurred while trying to read an API definition. Please reach out to support.'
+                "An error occurred while trying to read an API definition. Please reach out to support."
             )
             if (err.stack != null) {
                 this.context.logger.error(err?.stack)
@@ -229,7 +229,7 @@ class ReferencedAPICollectorV2 {
             const err = e as Error
             this.context.logger.debug(`Failed to read referenced API: ${err?.message} ${err?.stack}`)
             this.context.logger.error(
-                'An error occurred while trying to read an API definition. Please reach out to support.'
+                "An error occurred while trying to read an API definition. Please reach out to support."
             )
             if (err.stack != null) {
                 this.context.logger.error(err?.stack)

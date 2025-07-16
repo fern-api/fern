@@ -1,8 +1,8 @@
-import { Reference, Zurg } from '@fern-typescript/commons'
+import { Reference, Zurg } from "@fern-typescript/commons"
 
-import { DeclaredErrorName } from '@fern-fern/ir-sdk/api'
+import { DeclaredErrorName } from "@fern-fern/ir-sdk/api"
 
-import { GeneratedSdkErrorSchema } from './GeneratedSdkErrorSchema'
+import { GeneratedSdkErrorSchema } from "./GeneratedSdkErrorSchema"
 
 export interface SdkErrorSchemaContext {
     getGeneratedSdkErrorSchema: (errorName: DeclaredErrorName) => GeneratedSdkErrorSchema | undefined

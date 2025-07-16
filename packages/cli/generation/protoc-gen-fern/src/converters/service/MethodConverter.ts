@@ -1,4 +1,4 @@
-import { MethodDescriptorProto } from '@bufbuild/protobuf/wkt'
+import { MethodDescriptorProto } from "@bufbuild/protobuf/wkt"
 
 import {
     HttpEndpoint,
@@ -10,11 +10,11 @@ import {
     JsonResponse,
     ProtobufMethodType,
     V2HttpEndpointResponseBody
-} from '@fern-api/ir-sdk'
-import { AbstractConverter } from '@fern-api/v2-importer-commons'
+} from "@fern-api/ir-sdk"
+import { AbstractConverter } from "@fern-api/v2-importer-commons"
 
-import { ProtofileConverterContext } from '../ProtofileConverterContext'
-import { ExampleConverter } from '../message/ExampleConverter'
+import { ProtofileConverterContext } from "../ProtofileConverterContext"
+import { ExampleConverter } from "../message/ExampleConverter"
 
 export declare namespace MethodConverter {
     export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {
@@ -38,7 +38,7 @@ export declare namespace MethodConverter {
         responseExample: ExampleConverter.Output | undefined
     }
 
-    type BaseEndpoint = Omit<HttpEndpoint, 'requestBody' | 'response' | 'name' | 'docs' | 'id' | 'v2Examples'>
+    type BaseEndpoint = Omit<HttpEndpoint, "requestBody" | "response" | "name" | "docs" | "id" | "v2Examples">
 }
 
 export class MethodConverter extends AbstractConverter<ProtofileConverterContext, MethodConverter.Output> {
@@ -79,10 +79,10 @@ export class MethodConverter extends AbstractConverter<ProtofileConverterContext
                         HELLO: {
                             request: {
                                 endpoint: {
-                                    method: 'POST',
-                                    path: '/users'
+                                    method: "POST",
+                                    path: "/users"
                                 },
-                                baseUrl: '',
+                                baseUrl: "",
                                 environment: undefined,
                                 auth: undefined,
                                 pathParameters: {},
@@ -95,10 +95,10 @@ export class MethodConverter extends AbstractConverter<ProtofileConverterContext
                                 statusCode: 200,
                                 body: V2HttpEndpointResponseBody.json({
                                     value: {
-                                        id: 'foo',
-                                        name: 'foo',
-                                        email: 'foo',
-                                        createdAt: 'foo'
+                                        id: "foo",
+                                        name: "foo",
+                                        email: "foo",
+                                        createdAt: "foo"
                                     }
                                 }),
                                 docs: undefined
@@ -159,7 +159,7 @@ export class MethodConverter extends AbstractConverter<ProtofileConverterContext
         if (requestBodyType.ok) {
             return {
                 requestBody: HttpRequestBody.reference({
-                    contentType: 'application/proto',
+                    contentType: "application/proto",
                     docs: undefined,
                     requestBodyType: requestBodyType.reference,
                     v2Examples: undefined

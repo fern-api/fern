@@ -1,5 +1,5 @@
-import { NpmPackage, PersistedTypescriptProject, constructNpmPackage } from '@fern-typescript/commons'
-import { GeneratorContext } from '@fern-typescript/contexts'
+import { NpmPackage, PersistedTypescriptProject, constructNpmPackage } from "@fern-typescript/commons"
+import { GeneratorContext } from "@fern-typescript/contexts"
 
 import {
     FernGeneratorExec,
@@ -7,18 +7,18 @@ import {
     NopGeneratorNotificationService,
     parseGeneratorConfig,
     parseIR
-} from '@fern-api/base-generator'
-import { assertNever } from '@fern-api/core-utils'
-import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
-import { CONSOLE_LOGGER, LogLevel, Logger, createLogger } from '@fern-api/logger'
+} from "@fern-api/base-generator"
+import { assertNever } from "@fern-api/core-utils"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { CONSOLE_LOGGER, LogLevel, Logger, createLogger } from "@fern-api/logger"
 
-import { IntermediateRepresentation } from '@fern-fern/ir-sdk/api'
-import * as serializers from '@fern-fern/ir-sdk/serialization'
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api"
+import * as serializers from "@fern-fern/ir-sdk/serialization"
 
-import { publishPackage } from './publishPackage'
-import { writeGitHubWorkflows } from './writeGitHubWorkflows'
+import { publishPackage } from "./publishPackage"
+import { writeGitHubWorkflows } from "./writeGitHubWorkflows"
 
-const OUTPUT_ZIP_FILENAME = 'output.zip'
+const OUTPUT_ZIP_FILENAME = "output.zip"
 
 const LOG_LEVEL_CONVERSIONS: Record<LogLevel, FernGeneratorExec.logging.LogLevel> = {
     [LogLevel.Trace]: FernGeneratorExec.logging.LogLevel.Debug,
@@ -45,7 +45,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
     public async runCli(options?: AbstractGeneratorCli.Options): Promise<void> {
         const pathToConfig = process.argv[process.argv.length - 1]
         if (pathToConfig == null) {
-            throw new Error('No argument for config filepath.')
+            throw new Error("No argument for config filepath.")
         }
         await this.run(pathToConfig, options)
     }
@@ -65,7 +65,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 // kick off log, but don't wait for it
                 generatorNotificationService.bufferUpdate(
                     FernGeneratorExec.GeneratorUpdate.log({
-                        message: message.join(' '),
+                        message: message.join(" "),
                         level: LOG_LEVEL_CONVERSIONS[level]
                     })
                 )
@@ -104,12 +104,12 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 intermediateRepresentation: ir
             })
             if (!generatorContext.didSucceed()) {
-                throw new Error('Failed to generate TypeScript project.')
+                throw new Error("Failed to generate TypeScript project.")
             }
 
             const destinationPath = join(
                 AbsoluteFilePath.of(config.output.path),
-                RelativeFilePath.of(options?.outputSubDirectory ?? '')
+                RelativeFilePath.of(options?.outputSubDirectory ?? "")
             )
             await config.output.mode._visit<void | Promise<void>>({
                 publish: async () => {
@@ -187,7 +187,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 )
             )
             // biome-ignore lint/suspicious/noConsole: allow console
-            console.log('Sent success event to coordinator')
+            console.log("Sent success event to coordinator")
         } catch (e) {
             // This call tears down generator service
             // TODO: if using in conjunction with MCP server generator, MCP server generator to tear down the service?
@@ -195,12 +195,12 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             await generatorNotificationService.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(
                     FernGeneratorExec.ExitStatusUpdate.error({
-                        message: e instanceof Error ? e.message : 'Encountered error'
+                        message: e instanceof Error ? e.message : "Encountered error"
                     })
                 )
             )
             // biome-ignore lint/suspicious/noConsole: allow console
-            console.log('Sent error event to coordinator')
+            console.log("Sent error event to coordinator")
             throw e
         }
     }
@@ -224,10 +224,10 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             return false
         }
         switch (publishConfig.type) {
-            case 'filesystem':
+            case "filesystem":
                 return publishConfig.generateFullProject
-            case 'github':
-            case 'direct':
+            case "github":
+            case "direct":
                 return false
             default:
                 assertNever(publishConfig)

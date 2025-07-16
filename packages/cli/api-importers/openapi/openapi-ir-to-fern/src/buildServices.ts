@@ -1,10 +1,10 @@
-import { FernOpenapiIr } from '@fern-api/openapi-ir'
+import { FernOpenapiIr } from "@fern-api/openapi-ir"
 
-import { OpenApiIrConverterContext } from './OpenApiIrConverterContext'
-import { State } from './State'
-import { buildEndpoint } from './buildEndpoint'
-import { convertToSourceSchema } from './utils/convertToSourceSchema'
-import { getEndpointLocation } from './utils/getEndpointLocation'
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext"
+import { State } from "./State"
+import { buildEndpoint } from "./buildEndpoint"
+import { convertToSourceSchema } from "./utils/convertToSourceSchema"
+import { getEndpointLocation } from "./utils/getEndpointLocation"
 
 export interface ConvertedServicesResponse {
     schemaIdsToExclude: string[]
@@ -17,7 +17,7 @@ export function buildServices(context: OpenApiIrConverterContext): ConvertedServ
     let schemaIdsToExclude: string[] = []
     for (const endpoint of endpoints) {
         const { endpointId, file, tag } = getEndpointLocation(endpoint)
-        const sdkGroup = file.split('.')[0]
+        const sdkGroup = file.split(".")[0]
         if (sdkGroup != null) {
             sdkGroups.add(sdkGroup)
         }
@@ -25,7 +25,7 @@ export function buildServices(context: OpenApiIrConverterContext): ConvertedServ
         if (endpoint.sdkName != null) {
             const groupInfo: Record<string, FernOpenapiIr.SdkGroupInfo> = context.ir.groups
             for (const groupName of endpoint.sdkName.groupName) {
-                const trueGroupName = typeof groupName === 'string' ? groupName : groupName.name
+                const trueGroupName = typeof groupName === "string" ? groupName : groupName.name
                 const value = groupInfo[trueGroupName]
                 if (value == null) {
                     break
@@ -55,7 +55,7 @@ export function buildServices(context: OpenApiIrConverterContext): ConvertedServ
         })
         if (irTag?.id != null || irTag?.description != null) {
             context.builder.setServiceInfo(file, {
-                'display-name': group?.summary ?? irTag?.id,
+                "display-name": group?.summary ?? irTag?.id,
                 docs: group?.description ?? irTag?.description ?? undefined
             })
         }

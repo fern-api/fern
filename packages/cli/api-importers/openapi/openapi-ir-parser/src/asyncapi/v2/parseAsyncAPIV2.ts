@@ -1,4 +1,4 @@
-import { OpenAPIV3 } from 'openapi-types'
+import { OpenAPIV3 } from "openapi-types"
 
 import {
     HeaderWithExample,
@@ -11,26 +11,26 @@ import {
     WebsocketChannel,
     WebsocketMessageSchema,
     WebsocketSessionExample
-} from '@fern-api/openapi-ir'
+} from "@fern-api/openapi-ir"
 
-import { getExtension } from '../../getExtension'
-import { FernOpenAPIExtension } from '../../openapi/v3/extensions/fernExtensions'
-import { ParseOpenAPIOptions } from '../../options'
-import { convertAvailability } from '../../schema/convertAvailability'
-import { convertReferenceObject, convertSchema } from '../../schema/convertSchemas'
-import { UndiscriminatedOneOfPrefix, convertUndiscriminatedOneOf } from '../../schema/convertUndiscriminatedOneOf'
-import { convertSchemaWithExampleToSchema } from '../../schema/utils/convertSchemaWithExampleToSchema'
-import { isReferenceObject } from '../../schema/utils/isReferenceObject'
-import { getSchemas } from '../../utils/getSchemas'
-import { ExampleWebsocketSessionFactory, SessionExampleBuilderInput } from '../ExampleWebsocketSessionFactory'
-import { FernAsyncAPIExtension } from '../fernExtensions'
-import { WebsocketSessionExampleExtension, getFernExamples } from '../getFernExamples'
-import { ParseAsyncAPIOptions } from '../options'
-import { AsyncAPIIntermediateRepresentation } from '../parse'
-import { ServerContext } from '../sharedTypes'
-import { constructServerUrl, transformToValidPath } from '../sharedUtils'
-import { AsyncAPIV2 } from '../v2'
-import { AsyncAPIV2ParserContext } from './AsyncAPIV2ParserContext'
+import { getExtension } from "../../getExtension"
+import { FernOpenAPIExtension } from "../../openapi/v3/extensions/fernExtensions"
+import { ParseOpenAPIOptions } from "../../options"
+import { convertAvailability } from "../../schema/convertAvailability"
+import { convertReferenceObject, convertSchema } from "../../schema/convertSchemas"
+import { UndiscriminatedOneOfPrefix, convertUndiscriminatedOneOf } from "../../schema/convertUndiscriminatedOneOf"
+import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema"
+import { isReferenceObject } from "../../schema/utils/isReferenceObject"
+import { getSchemas } from "../../utils/getSchemas"
+import { ExampleWebsocketSessionFactory, SessionExampleBuilderInput } from "../ExampleWebsocketSessionFactory"
+import { FernAsyncAPIExtension } from "../fernExtensions"
+import { WebsocketSessionExampleExtension, getFernExamples } from "../getFernExamples"
+import { ParseAsyncAPIOptions } from "../options"
+import { AsyncAPIIntermediateRepresentation } from "../parse"
+import { ServerContext } from "../sharedTypes"
+import { constructServerUrl, transformToValidPath } from "../sharedUtils"
+import { AsyncAPIV2 } from "../v2"
+import { AsyncAPIV2ParserContext } from "./AsyncAPIV2ParserContext"
 
 export function parseAsyncAPIV2({
     context,
@@ -91,7 +91,7 @@ export function parseAsyncAPIV2({
                                   }),
                                   description: undefined,
                                   availability: undefined,
-                                  generatedName: '',
+                                  generatedName: "",
                                   title: undefined,
                                   namespace: undefined,
                                   groupName: undefined,
@@ -194,9 +194,9 @@ export function parseAsyncAPIV2({
 
         let publishSchema: SchemaWithExample | undefined = undefined
         if (channel.publish != null) {
-            if ('oneOf' in channel.publish.message) {
+            if ("oneOf" in channel.publish.message) {
                 publishSchema = convertOneOfToSchema({
-                    generatedName: channel.publish.operationId ?? 'PublishEvent',
+                    generatedName: channel.publish.operationId ?? "PublishEvent",
                     event: channel.publish,
                     breadcrumbs,
                     context,
@@ -206,7 +206,7 @@ export function parseAsyncAPIV2({
                 })
             } else {
                 publishSchema = convertMessageToSchema({
-                    action: 'Publish',
+                    action: "Publish",
                     channelPath,
                     message: channel.publish.message as AsyncAPIV2.MessageV2,
                     context,
@@ -217,9 +217,9 @@ export function parseAsyncAPIV2({
 
         let subscribeSchema: SchemaWithExample | undefined = undefined
         if (channel.subscribe != null) {
-            if ('oneOf' in channel.subscribe.message) {
+            if ("oneOf" in channel.subscribe.message) {
                 subscribeSchema = convertOneOfToSchema({
-                    generatedName: channel.subscribe.operationId ?? 'SubscribeEvent',
+                    generatedName: channel.subscribe.operationId ?? "SubscribeEvent",
                     event: channel.subscribe,
                     breadcrumbs,
                     context,
@@ -229,7 +229,7 @@ export function parseAsyncAPIV2({
                 })
             } else {
                 subscribeSchema = convertMessageToSchema({
-                    action: 'Subscribe',
+                    action: "Subscribe",
                     channelPath,
                     message: channel.subscribe.message as AsyncAPIV2.MessageV2,
                     context,
@@ -257,13 +257,13 @@ export function parseAsyncAPIV2({
                 const exampleBuilderInputs: SessionExampleBuilderInput[] = []
                 if (publishSchema != null) {
                     exampleBuilderInputs.push({
-                        type: 'publish',
+                        type: "publish",
                         payload: publishSchema
                     })
                 }
                 if (subscribeSchema != null) {
                     exampleBuilderInputs.push({
-                        type: 'subscribe',
+                        type: "subscribe",
                         payload: subscribeSchema
                     })
                 }
@@ -284,15 +284,15 @@ export function parseAsyncAPIV2({
             const messages: WebsocketMessageSchema[] = []
             if (publishSchema != null) {
                 messages.push({
-                    origin: 'client',
-                    name: 'publish',
+                    origin: "client",
+                    name: "publish",
                     body: convertSchemaWithExampleToSchema(publishSchema)
                 })
             }
             if (subscribeSchema != null) {
                 messages.push({
-                    origin: 'server',
-                    name: 'subscribe',
+                    origin: "server",
+                    name: "subscribe",
                     body: convertSchemaWithExampleToSchema(subscribeSchema)
                 })
             }
@@ -361,16 +361,16 @@ function convertOneOfToSchema({
     options: ParseOpenAPIOptions
     asyncApiOptions: ParseAsyncAPIOptions
 }): SchemaWithExample | undefined {
-    if ('oneOf' in event.message && event.message.oneOf != null) {
+    if ("oneOf" in event.message && event.message.oneOf != null) {
         const subtypes: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[] = []
         const prefixes: UndiscriminatedOneOfPrefix[] = []
         for (const schema of event.message.oneOf) {
             let resolvedSchema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject
-            let namePrefix: UndiscriminatedOneOfPrefix = { type: 'notFound' }
+            let namePrefix: UndiscriminatedOneOfPrefix = { type: "notFound" }
             if (isReferenceObject(schema)) {
                 const resolvedMessage = context.resolveMessageReference(schema)
-                if (!isReferenceObject(resolvedMessage.payload) && asyncApiOptions.naming === 'v2') {
-                    namePrefix = resolvedMessage.name ? { type: 'name', name: resolvedMessage.name } : namePrefix
+                if (!isReferenceObject(resolvedMessage.payload) && asyncApiOptions.naming === "v2") {
+                    namePrefix = resolvedMessage.name ? { type: "name", name: resolvedMessage.name } : namePrefix
                     resolvedSchema = {
                         ...resolvedMessage.payload,
                         title: resolvedMessage.name ?? resolvedMessage.payload.title,
@@ -399,7 +399,7 @@ function convertOneOfToSchema({
             encoding: undefined,
             source,
             namespace: context.namespace,
-            subtypePrefixOverrides: asyncApiOptions.naming === 'v2' ? prefixes : []
+            subtypePrefixOverrides: asyncApiOptions.naming === "v2" ? prefixes : []
         })
     }
     return undefined
@@ -412,7 +412,7 @@ function convertMessageToSchema({
     context,
     source
 }: {
-    action: 'Publish' | 'Subscribe'
+    action: "Publish" | "Subscribe"
     channelPath: string
     message: AsyncAPIV2.MessageV2
     context: AsyncAPIV2ParserContext

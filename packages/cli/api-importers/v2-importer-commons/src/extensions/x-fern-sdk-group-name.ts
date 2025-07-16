@@ -1,4 +1,4 @@
-import { AbstractExtension } from '../AbstractExtension'
+import { AbstractExtension } from "../AbstractExtension"
 
 export declare namespace SdkGroupNameExtension {
     export interface Args extends AbstractExtension.Args {
@@ -12,7 +12,7 @@ export declare namespace SdkGroupNameExtension {
 
 export class SdkGroupNameExtension extends AbstractExtension<SdkGroupNameExtension.Output> {
     private readonly operation: object
-    public readonly key = 'x-fern-sdk-group-name'
+    public readonly key = "x-fern-sdk-group-name"
 
     constructor({ breadcrumbs, operation, context }: SdkGroupNameExtension.Args) {
         super({ breadcrumbs, context })
@@ -26,8 +26,8 @@ export class SdkGroupNameExtension extends AbstractExtension<SdkGroupNameExtensi
         }
 
         const groups = Array.isArray(extensionValue)
-            ? extensionValue.filter((name): name is string => typeof name === 'string')
-            : typeof extensionValue === 'string'
+            ? extensionValue.filter((name): name is string => typeof name === "string")
+            : typeof extensionValue === "string"
               ? [extensionValue]
               : []
 

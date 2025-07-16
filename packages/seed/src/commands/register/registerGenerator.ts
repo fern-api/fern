@@ -1,11 +1,11 @@
-import { RelativeFilePath, doesPathExist, join } from '@fern-api/fs-utils'
-import { TaskContext } from '@fern-api/task-context'
+import { RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils"
+import { TaskContext } from "@fern-api/task-context"
 
-import { FernRegistryClient as FdrClient, FernRegistry } from '@fern-fern/generators-sdk'
+import { FernRegistryClient as FdrClient, FernRegistry } from "@fern-fern/generators-sdk"
 
-import { GeneratorType } from '../../config/api'
-import { GeneratorWorkspace } from '../../loadGeneratorWorkspaces'
-import { parseGeneratorReleasesFile } from '../../utils/convertVersionsFileToReleases'
+import { GeneratorType } from "../../config/api"
+import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces"
+import { parseGeneratorReleasesFile } from "../../utils/convertVersionsFileToReleases"
 
 // TODO: we should share the language and generator type with the FDR definition
 export async function registerGenerator({
@@ -76,19 +76,19 @@ export async function registerGenerator({
                 await fdrClient.generators.versions.upsertGeneratorRelease(release)
             }
         })
-        context.logger.info('Registration complete.')
+        context.logger.info("Registration complete.")
     }
 }
 
 function convertGeneratorType(generatorType: GeneratorType): FernRegistry.generators.GeneratorType {
     switch (generatorType) {
         case GeneratorType.Sdk:
-            return { type: 'sdk' }
+            return { type: "sdk" }
         case GeneratorType.Model:
-            return { type: 'model' }
+            return { type: "model" }
         case GeneratorType.Server:
-            return { type: 'server' }
+            return { type: "server" }
         default:
-            return { type: 'other' }
+            return { type: "other" }
     }
 }

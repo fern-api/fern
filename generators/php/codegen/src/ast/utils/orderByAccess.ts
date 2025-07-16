@@ -1,4 +1,4 @@
-import { Access } from '../Access'
+import { Access } from "../Access"
 
 interface Accessible {
     access: Access

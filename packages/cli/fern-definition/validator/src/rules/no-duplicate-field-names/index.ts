@@ -1,1 +1,1 @@
-export { NoDuplicateFieldNamesRule } from './no-duplicate-field-names'
+export { NoDuplicateFieldNamesRule } from "./no-duplicate-field-names"

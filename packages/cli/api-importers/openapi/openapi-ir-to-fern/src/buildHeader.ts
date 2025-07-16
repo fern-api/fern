@@ -1,13 +1,13 @@
-import { camelCase } from 'lodash-es'
+import { camelCase } from "lodash-es"
 
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { Header } from '@fern-api/openapi-ir'
-import { RelativeFilePath } from '@fern-api/path-utils'
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { Header } from "@fern-api/openapi-ir"
+import { RelativeFilePath } from "@fern-api/path-utils"
 
-import { OpenApiIrConverterContext } from './OpenApiIrConverterContext'
-import { buildTypeReference } from './buildTypeReference'
-import { convertAvailability } from './utils/convertAvailability'
-import { getTypeFromTypeReference } from './utils/getTypeFromTypeReference'
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext"
+import { buildTypeReference } from "./buildTypeReference"
+import { convertAvailability } from "./utils/convertAvailability"
+import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference"
 
 export function buildHeader({
     header,
@@ -28,7 +28,7 @@ export function buildHeader({
         declarationDepth: 0
     })
     const headerType = getTypeFromTypeReference(typeReference)
-    const headerWithoutXPrefix = header.name.replace(/^x-|^X-/, '')
+    const headerWithoutXPrefix = header.name.replace(/^x-|^X-/, "")
     const headerVariableName =
         header.parameterNameOverride != null ? header.parameterNameOverride : camelCase(headerWithoutXPrefix)
     if (

@@ -1,6 +1,6 @@
-import { RelativeFilePath } from '@fern-api/fs-utils'
-import { FileGenerator, PhpFile } from '@fern-api/php-base'
-import { STATIC, php } from '@fern-api/php-codegen'
+import { RelativeFilePath } from "@fern-api/fs-utils"
+import { FileGenerator, PhpFile } from "@fern-api/php-base"
+import { STATIC, php } from "@fern-api/php-codegen"
 
 import {
     Name,
@@ -9,11 +9,11 @@ import {
     SingleUnionType,
     TypeDeclaration,
     UnionTypeDeclaration
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { assertNever } from '../../../../../packages/commons/core-utils/src'
-import { ModelCustomConfigSchema } from '../ModelCustomConfig'
-import { ModelGeneratorContext } from '../ModelGeneratorContext'
+import { assertNever } from "../../../../../packages/commons/core-utils/src"
+import { ModelCustomConfigSchema } from "../ModelCustomConfig"
+import { ModelGeneratorContext } from "../ModelGeneratorContext"
 
 export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
     private readonly typeDeclaration: TypeDeclaration
@@ -33,7 +33,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             ...this.classReference,
             docs: this.typeDeclaration.docs,
             parentClassReference: this.context.getJsonSerializableTypeClassReference(),
-            constructorAccess: 'private'
+            constructorAccess: "private"
         })
 
         const { includeGetter, includeSetter } = {
@@ -104,21 +104,21 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
 
     private discriminantGetter(): php.CodeBlock {
         const discriminant = this.context.getPropertyName(this.unionTypeDeclaration.discriminant.name)
-        return php.codeblock('$this->' + discriminant)
+        return php.codeblock("$this->" + discriminant)
     }
 
     private valueGetter(): php.CodeBlock {
-        return php.codeblock('$this->value')
+        return php.codeblock("$this->value")
     }
 
     private getValueName(): Name {
         // TODO(ajgateno): We'll want to disambiguate here if e.g. there's a "value" property
         return {
-            originalName: 'value',
-            camelCase: { safeName: 'value', unsafeName: 'value' },
-            pascalCase: { safeName: 'Value', unsafeName: 'Value' },
-            snakeCase: { safeName: 'value', unsafeName: 'value' },
-            screamingSnakeCase: { safeName: 'VALUE', unsafeName: 'VALUE' }
+            originalName: "value",
+            camelCase: { safeName: "value", unsafeName: "value" },
+            pascalCase: { safeName: "Value", unsafeName: "Value" },
+            snakeCase: { safeName: "value", unsafeName: "value" },
+            screamingSnakeCase: { safeName: "VALUE", unsafeName: "VALUE" }
         }
     }
 
@@ -131,7 +131,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         this.unionTypeDeclaration.types.forEach((variant) =>
             discriminantValues.push(variant.discriminantValue.wireValue)
         )
-        discriminantValues.push('_unknown')
+        discriminantValues.push("_unknown")
         return php.field({
             name: this.context.getPropertyName(this.unionTypeDeclaration.discriminant.name),
             type: php.Type.union(discriminantValues.map((value) => php.Type.literalString(value))),
@@ -175,7 +175,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     private staticConstructor(variant: SingleUnionType): php.Method {
         return php.method({
             name: this.context.getPropertyName(variant.discriminantValue.name),
-            access: 'public',
+            access: "public",
             parameters: this.getStaticConstructorParameters(variant),
             return_: php.Type.reference(this.classReference),
             body: this.getStaticConstructorBody(variant),
@@ -196,8 +196,8 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         }
 
         switch (variant.shape.propertiesType) {
-            case 'samePropertiesAsObject':
-            case 'singleProperty':
+            case "samePropertiesAsObject":
+            case "singleProperty":
                 parameters.push(
                     php.parameter({
                         name: this.context.getPropertyName(variant.discriminantValue.name),
@@ -205,7 +205,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                     })
                 )
                 break
-            case 'noProperties':
+            case "noProperties":
                 break
             default:
                 assertNever(variant.shape)
@@ -231,17 +231,17 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             })
 
             switch (variant.shape.propertiesType) {
-                case 'samePropertiesAsObject':
-                case 'singleProperty':
+                case "samePropertiesAsObject":
+                case "singleProperty":
                     constructorArgs.push({
                         key: php.codeblock(`'${this.getValueFieldName()}'`),
                         value: php.codeblock(this.context.getVariableName(variant.discriminantValue.name))
                     })
                     break
-                case 'noProperties':
+                case "noProperties":
                     constructorArgs.push({
                         key: php.codeblock(`'${this.getValueFieldName()}'`),
-                        value: php.codeblock('null')
+                        value: php.codeblock("null")
                     })
                     break
                 default:
@@ -253,32 +253,32 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 arguments_: [php.map({ entries: constructorArgs, multiline: true })]
             })
 
-            writer.write('return ')
+            writer.write("return ")
             writer.writeNodeStatement(constructorCall)
         })
     }
 
     private isMethod(variant: SingleUnionType): php.Method {
-        const methodName = 'is' + variant.discriminantValue.name.pascalCase.safeName
+        const methodName = "is" + variant.discriminantValue.name.pascalCase.safeName
 
         return php.method({
             name: methodName,
-            access: 'public',
+            access: "public",
             parameters: [],
             return_: php.Type.bool(),
             body: php.codeblock((writer) => {
-                writer.write('return ')
+                writer.write("return ")
                 writer.writeNodeStatement(this.isMethodCheck(variant))
             })
         })
     }
 
     private asCastMethod(variant: SingleUnionType): php.Method | null {
-        if (variant.shape.propertiesType === 'noProperties') {
+        if (variant.shape.propertiesType === "noProperties") {
             return null
         }
 
-        const methodName = 'as' + variant.discriminantValue.name.pascalCase.safeName
+        const methodName = "as" + variant.discriminantValue.name.pascalCase.safeName
         const returnType = this.getReturnType(variant)
 
         const typeCheckConditional = this.getTypeCheckConditional(variant, this.valueGetter())
@@ -289,13 +289,13 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 writer.writeLine()
             }
 
-            writer.write('return ')
+            writer.write("return ")
             writer.writeNodeStatement(this.valueGetter())
         })
 
         return php.method({
             name: methodName,
-            access: 'public',
+            access: "public",
             parameters: [],
             return_: returnType,
             body
@@ -304,11 +304,11 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
 
     private getReturnType(variant: SingleUnionType): php.Type {
         switch (variant.shape.propertiesType) {
-            case 'samePropertiesAsObject':
+            case "samePropertiesAsObject":
                 return php.Type.reference(this.context.phpTypeMapper.convertToClassReference(variant.shape))
-            case 'singleProperty':
+            case "singleProperty":
                 return this.context.phpTypeMapper.convert({ reference: variant.shape.type })
-            case 'noProperties':
+            case "noProperties":
                 return php.Type.null()
             default:
                 assertNever(variant.shape)
@@ -317,14 +317,14 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
 
     private getTypeCheckConditional(variant: SingleUnionType, variableGetter: php.CodeBlock): php.CodeBlock | null {
         const negation = php.codeblock((writer) => {
-            writer.write('!')
-            writer.write('(')
+            writer.write("!")
+            writer.write("(")
             writer.writeNode(this.isMethodCheck(variant))
-            writer.write(')')
+            writer.write(")")
         })
 
         return php.codeblock((writer) => {
-            writer.controlFlow('if', negation)
+            writer.controlFlow("if", negation)
             writer.writeNodeStatement(this.getErrorThrow(this.getVariantTypeCheckErrorMessage(variant, variableGetter)))
             writer.endControlFlow()
         })
@@ -337,7 +337,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         return php.codeblock((writer) => {
             if (typeCheck) {
                 writer.writeNode(typeCheck)
-                writer.write('&& ')
+                writer.write("&& ")
             }
 
             writer.writeNode(discriminantCheck)
@@ -363,20 +363,20 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     private getVariantTypeCheckErrorMessage(variant: SingleUnionType, variableGetter: php.CodeBlock): php.CodeBlock {
         return php.codeblock((writer) => {
             writer.write('"')
-            writer.write('Expected ')
+            writer.write("Expected ")
             writer.write(variant.discriminantValue.wireValue)
-            writer.write('; got ')
+            writer.write("; got ")
             writer.write('"')
-            writer.write(' . ')
+            writer.write(" . ")
             writer.writeNode(this.discriminantGetter())
-            writer.write(' . ')
+            writer.write(" . ")
             writer.write('"')
-            writer.write(' with value of type ')
+            writer.write(" with value of type ")
             writer.write('"')
-            writer.write(' . ')
+            writer.write(" . ")
             writer.writeNode(
                 php.invokeMethod({
-                    method: 'get_debug_type',
+                    method: "get_debug_type",
                     arguments_: [variableGetter],
                     static_: true
                 })
@@ -390,7 +390,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
 
     private getDeserializationTypeCheckErrorMessage(propertyName: NameAndWireValue, type: php.Type): php.CodeBlock {
         return php.codeblock((writer) => {
-            if (type.internalType.type === 'literal') {
+            if (type.internalType.type === "literal") {
                 writer.write(
                     `"Expected property '${this.context.getPropertyName(propertyName.name)}' in JSON data to be `
                 )
@@ -403,7 +403,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             }
             writer.writeNode(
                 php.invokeMethod({
-                    method: 'get_debug_type',
+                    method: "get_debug_type",
                     arguments_: [php.codeblock(`$data['${propertyName.wireValue}']`)],
                     static_: true
                 })
@@ -414,147 +414,147 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     private getDiscriminantCheck(variableGetter: php.CodeBlock, variant: SingleUnionType): php.CodeBlock {
         return php.codeblock((writer) => {
             writer.writeNode(variableGetter)
-            writer.write(' === ')
+            writer.write(" === ")
             writer.write(`'${variant.discriminantValue.wireValue}'`)
         })
     }
 
     private getTypeCheck(variableGetter: php.CodeBlock, type: php.Type): php.CodeBlock {
         switch (type.internalType.type) {
-            case 'int':
+            case "int":
                 return php.codeblock((writer) =>
                     writer.writeNode(
                         php.invokeMethod({
-                            method: 'is_int',
+                            method: "is_int",
                             arguments_: [variableGetter],
                             static_: true
                         })
                     )
                 )
-            case 'string':
+            case "string":
                 return php.codeblock((writer) =>
                     writer.writeNode(
                         php.invokeMethod({
-                            method: 'is_string',
+                            method: "is_string",
                             arguments_: [variableGetter],
                             static_: true
                         })
                     )
                 )
-            case 'bool':
+            case "bool":
                 return php.codeblock((writer) =>
                     writer.writeNode(
                         php.invokeMethod({
-                            method: 'is_bool',
+                            method: "is_bool",
                             arguments_: [variableGetter],
                             static_: true
                         })
                     )
                 )
-            case 'float':
+            case "float":
                 return php.codeblock((writer) =>
                     writer.writeNode(
                         php.invokeMethod({
-                            method: 'is_float',
-                            arguments_: [variableGetter],
-                            static_: true
-                        })
-                    )
-                )
-
-            case 'object':
-            case 'map':
-            case 'array':
-                return php.codeblock((writer) =>
-                    writer.writeNode(
-                        php.invokeMethod({
-                            method: 'is_array',
+                            method: "is_float",
                             arguments_: [variableGetter],
                             static_: true
                         })
                     )
                 )
 
-            case 'null':
-            case 'mixed':
+            case "object":
+            case "map":
+            case "array":
                 return php.codeblock((writer) =>
                     writer.writeNode(
                         php.invokeMethod({
-                            method: 'is_null',
+                            method: "is_array",
                             arguments_: [variableGetter],
                             static_: true
                         })
                     )
                 )
 
-            case 'date':
-            case 'dateTime':
-            case 'enumString':
-            case 'reference':
+            case "null":
+            case "mixed":
+                return php.codeblock((writer) =>
+                    writer.writeNode(
+                        php.invokeMethod({
+                            method: "is_null",
+                            arguments_: [variableGetter],
+                            static_: true
+                        })
+                    )
+                )
+
+            case "date":
+            case "dateTime":
+            case "enumString":
+            case "reference":
                 return php.codeblock((writer) => {
                     writer.writeNode(variableGetter)
-                    writer.write(' instanceof ')
+                    writer.write(" instanceof ")
                     writer.writeNode(type.getClassReference())
                 })
 
-            case 'optional':
+            case "optional":
                 return php.codeblock((writer) => {
                     if (
-                        type.underlyingType().internalType.type === 'null' ||
-                        type.underlyingType().internalType.type === 'mixed'
+                        type.underlyingType().internalType.type === "null" ||
+                        type.underlyingType().internalType.type === "mixed"
                     ) {
                         writer.writeNode(
                             php.invokeMethod({
-                                method: 'is_null',
+                                method: "is_null",
                                 arguments_: [variableGetter],
                                 static_: true
                             })
                         )
                     } else {
-                        writer.write('(')
+                        writer.write("(")
                         writer.writeNode(
                             php.invokeMethod({
-                                method: 'is_null',
+                                method: "is_null",
                                 arguments_: [variableGetter],
                                 static_: true
                             })
                         )
-                        writer.write(' || ')
+                        writer.write(" || ")
                         writer.writeNode(this.getTypeCheck(variableGetter, type.underlyingType()))
-                        writer.write(')')
+                        writer.write(")")
                     }
                 })
 
-            case 'typeDict':
+            case "typeDict":
                 throw new Error(
-                    'Cannot get type check for type dict value because properties should never be typeDicts'
+                    "Cannot get type check for type dict value because properties should never be typeDicts"
                 )
-            case 'union': {
+            case "union": {
                 const checks: php.CodeBlock[] = type.internalType.types.map((item, index) => {
                     return php.codeblock((writer) => {
                         if (index > 0) {
-                            writer.write('|| ')
+                            writer.write("|| ")
                         }
                         writer.writeNode(this.getTypeCheck(variableGetter, item))
                     })
                 })
                 return php.codeblock((writer) => {
                     if (checks.length > 1) {
-                        writer.write('(')
+                        writer.write("(")
                     }
 
                     checks.forEach((check) => writer.writeNode(check))
 
                     if (checks.length > 1) {
-                        writer.write(')')
+                        writer.write(")")
                     }
                 })
             }
-            case 'literal': {
+            case "literal": {
                 const literalValue = type.internalType.value
                 return php.codeblock((writer) => {
                     writer.writeNode(variableGetter)
-                    writer.write(' === ')
+                    writer.write(" === ")
                     writer.writeNode(literalValue)
                 })
             }
@@ -565,12 +565,12 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
 
     private jsonSerializeMethod(): php.Method {
         return php.method({
-            name: 'jsonSerialize',
-            access: 'public',
+            name: "jsonSerialize",
+            access: "public",
             parameters: [],
             return_: php.Type.array(php.Type.mixed()),
             body: php.codeblock((writer) => {
-                writer.writeTextStatement('$result = []')
+                writer.writeTextStatement("$result = []")
                 writer.writeNodeStatement(
                     php.codeblock((_writer) => {
                         _writer.write(`$result['${this.unionTypeDeclaration.discriminant.wireValue}'] = `)
@@ -582,24 +582,24 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
 
                 writer.writeNodeStatement(
                     php.codeblock((_writer) => {
-                        _writer.write('$base = ')
+                        _writer.write("$base = ")
                         _writer.writeNode(
                             php.invokeMethod({
-                                method: 'jsonSerialize',
+                                method: "jsonSerialize",
                                 arguments_: [],
                                 static_: true,
-                                on: php.codeblock('parent')
+                                on: php.codeblock("parent")
                             })
                         )
                     })
                 )
                 writer.writeNodeStatement(
                     php.codeblock((_writer) => {
-                        _writer.write('$result = ')
+                        _writer.write("$result = ")
                         _writer.writeNode(
                             php.invokeMethod({
-                                method: 'array_merge',
-                                arguments_: [php.codeblock('$base'), php.codeblock('$result')],
+                                method: "array_merge",
+                                arguments_: [php.codeblock("$base"), php.codeblock("$result")],
                                 static_: true
                             })
                         )
@@ -618,38 +618,38 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
 
                 writer.writeLine()
 
-                writer.writeTextStatement('return $result')
+                writer.writeTextStatement("return $result")
             })
         })
     }
 
     private jsonSerializeCaseHandler(variant: SingleUnionType): php.CodeBlock {
         switch (variant.shape.propertiesType) {
-            case 'samePropertiesAsObject':
+            case "samePropertiesAsObject":
                 return php.codeblock((writer) => {
                     const type = this.getReturnType(variant)
                     writer.writeNode(this.jsonSerializeValueCall({ variant, type }))
                     writer.writeNode(this.jsonSerializeMaybeArrayMerge(variant, type))
-                    writer.writeTextStatement('break')
+                    writer.writeTextStatement("break")
                 })
-            case 'singleProperty':
+            case "singleProperty":
                 return php.codeblock((writer) => {
                     writer.writeNode(this.jsonSerializeValueCall({ variant, type: this.getReturnType(variant) }))
                     writer.writeNodeStatement(
                         php.codeblock((_writer) => {
-                            _writer.write('$result')
+                            _writer.write("$result")
                             _writer.write("['")
                             _writer.write(variant.discriminantValue.wireValue)
                             _writer.write("']")
-                            _writer.write(' = $value')
+                            _writer.write(" = $value")
                         })
                     )
-                    writer.writeTextStatement('break')
+                    writer.writeTextStatement("break")
                 })
-            case 'noProperties':
+            case "noProperties":
                 return php.codeblock((writer) => {
                     writer.writeTextStatement(`$result['${variant.discriminantValue.wireValue}'] = []`)
-                    writer.writeTextStatement('break')
+                    writer.writeTextStatement("break")
                 })
             default:
                 assertNever(variant.shape)
@@ -657,70 +657,70 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     }
 
     private jsonSerializeMaybeArrayMerge(variant: SingleUnionType, type: php.Type): php.CodeBlock {
-        const asCastMethodName = 'as' + variant.discriminantValue.name.pascalCase.safeName
+        const asCastMethodName = "as" + variant.discriminantValue.name.pascalCase.safeName
         switch (type.internalType.type) {
-            case 'reference':
-            case 'object':
-            case 'map':
-            case 'array':
+            case "reference":
+            case "object":
+            case "map":
+            case "array":
                 return php.codeblock((writer) => {
-                    writer.write('$result = ')
+                    writer.write("$result = ")
                     writer.writeNodeStatement(
                         php.invokeMethod({
-                            method: 'array_merge',
-                            arguments_: [php.codeblock('$value'), php.codeblock('$result')],
+                            method: "array_merge",
+                            arguments_: [php.codeblock("$value"), php.codeblock("$result")],
                             static_: true
                         })
                     )
                 })
 
-            case 'optional':
+            case "optional":
                 return php.codeblock((writer) => {
                     writer.write(asCastMethodName)
-                    writer.write(' = ')
+                    writer.write(" = ")
                     writer.writeNodeStatement(
                         php.invokeMethod({
                             method: asCastMethodName,
                             arguments_: [],
-                            on: php.codeblock('$this')
+                            on: php.codeblock("$this")
                         })
                     )
                     writer.controlFlow(
-                        'if',
+                        "if",
                         php.invokeMethod({
-                            method: 'is_array',
+                            method: "is_array",
                             arguments_: [php.codeblock(asCastMethodName)],
                             static_: true
                         })
                     )
-                    writer.write('$result')
+                    writer.write("$result")
                     writer.write("['")
                     writer.write(variant.discriminantValue.wireValue)
                     writer.write("']")
-                    writer.write(' = ')
+                    writer.write(" = ")
                     writer.writeTextStatement(asCastMethodName)
                     writer.endControlFlow()
                     writer.writeNode(this.jsonSerializeMaybeArrayMerge(variant, type.underlyingType()))
                 })
 
-            case 'date':
-            case 'dateTime':
-            case 'int':
-            case 'string':
-            case 'bool':
-            case 'float':
-            case 'null':
-            case 'mixed':
-            case 'typeDict':
-            case 'enumString':
-            case 'union':
-            case 'literal':
+            case "date":
+            case "dateTime":
+            case "int":
+            case "string":
+            case "bool":
+            case "float":
+            case "null":
+            case "mixed":
+            case "typeDict":
+            case "enumString":
+            case "union":
+            case "literal":
                 return php.codeblock((writer) => {
-                    writer.write('$result')
+                    writer.write("$result")
                     writer.write("['")
                     writer.write(variant.discriminantValue.wireValue)
                     writer.write("']")
-                    writer.writeTextStatement(' = $value')
+                    writer.writeTextStatement(" = $value")
                 })
             default:
                 assertNever(type.internalType)
@@ -736,23 +736,23 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         variant: SingleUnionType
         type: php.Type
     }): php.CodeBlock {
-        const asCastMethodName = 'as' + variant.discriminantValue.name.pascalCase.safeName
+        const asCastMethodName = "as" + variant.discriminantValue.name.pascalCase.safeName
         let argument: php.AstNode = php.invokeMethod({
             method: asCastMethodName,
             arguments_: [],
             static_: false,
-            on: php.codeblock('$this')
+            on: php.codeblock("$this")
         })
         switch (type.internalType.type) {
-            case 'date':
+            case "date":
                 if (declaredVariableName != null) {
                     argument = php.codeblock(declaredVariableName)
                 }
                 return php.codeblock((writer) => {
-                    writer.write('$value = ')
+                    writer.write("$value = ")
                     writer.writeNodeStatement(
                         php.invokeMethod({
-                            method: 'serializeDate',
+                            method: "serializeDate",
                             arguments_: [argument],
                             static_: true,
                             on: this.context.getJsonSerializerClassReference()
@@ -760,15 +760,15 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                     )
                 })
 
-            case 'dateTime':
+            case "dateTime":
                 if (declaredVariableName != null) {
                     argument = php.codeblock(declaredVariableName)
                 }
                 return php.codeblock((writer) => {
-                    writer.write('$value = ')
+                    writer.write("$value = ")
                     writer.writeNodeStatement(
                         php.invokeMethod({
-                            method: 'serializeDateTime',
+                            method: "serializeDateTime",
                             arguments_: [argument],
                             static_: true,
                             on: this.context.getJsonSerializerClassReference()
@@ -776,15 +776,15 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                     )
                 })
 
-            case 'reference':
+            case "reference":
                 if (declaredVariableName != null) {
                     argument = php.codeblock(declaredVariableName)
                 }
                 return php.codeblock((writer) => {
-                    writer.write('$value = ')
+                    writer.write("$value = ")
                     writer.writeNodeStatement(
                         php.invokeMethod({
-                            method: 'jsonSerialize',
+                            method: "jsonSerialize",
                             arguments_: [],
                             static_: false,
                             on: argument
@@ -792,26 +792,26 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                     )
                 })
 
-            case 'optional':
+            case "optional":
                 return php.codeblock((writer) => {
-                    writer.write('$value = ')
+                    writer.write("$value = ")
                     writer.writeNodeStatement(
                         php.invokeMethod({
                             method: asCastMethodName,
                             arguments_: [],
-                            on: php.codeblock('$this')
+                            on: php.codeblock("$this")
                         })
                     )
 
                     if (this.typeSerializationNeedsAdditionalCall(type.underlyingType())) {
                         writer.controlFlow(
-                            'if',
+                            "if",
                             php.codeblock((_writer) => {
-                                _writer.write('!')
+                                _writer.write("!")
                                 _writer.writeNode(
                                     php.invokeMethod({
-                                        method: 'is_null',
-                                        arguments_: [php.codeblock('$value')],
+                                        method: "is_null",
+                                        arguments_: [php.codeblock("$value")],
                                         static_: true
                                     })
                                 )
@@ -819,7 +819,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                         )
                         writer.writeNode(
                             this.jsonSerializeValueCall({
-                                declaredVariableName: '$value',
+                                declaredVariableName: "$value",
                                 variant,
                                 type: type.underlyingType()
                             })
@@ -828,21 +828,21 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                     }
                 })
 
-            case 'int':
-            case 'string':
-            case 'bool':
-            case 'float':
-            case 'object':
-            case 'map':
-            case 'array':
-            case 'null':
-            case 'mixed':
-            case 'typeDict':
-            case 'enumString':
-            case 'union':
-            case 'literal':
+            case "int":
+            case "string":
+            case "bool":
+            case "float":
+            case "object":
+            case "map":
+            case "array":
+            case "null":
+            case "mixed":
+            case "typeDict":
+            case "enumString":
+            case "union":
+            case "literal":
                 return php.codeblock((writer) => {
-                    writer.write('$value = ')
+                    writer.write("$value = ")
                     writer.writeNodeStatement(this.valueGetter())
                 })
             default:
@@ -852,24 +852,24 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
 
     private typeSerializationNeedsAdditionalCall(type: php.Type) {
         switch (type.internalType.type) {
-            case 'date':
-            case 'dateTime':
-            case 'reference':
-            case 'optional':
+            case "date":
+            case "dateTime":
+            case "reference":
+            case "optional":
                 return true
-            case 'int':
-            case 'string':
-            case 'bool':
-            case 'float':
-            case 'object':
-            case 'map':
-            case 'array':
-            case 'null':
-            case 'mixed':
-            case 'typeDict':
-            case 'enumString':
-            case 'union':
-            case 'literal':
+            case "int":
+            case "string":
+            case "bool":
+            case "float":
+            case "object":
+            case "map":
+            case "array":
+            case "null":
+            case "mixed":
+            case "typeDict":
+            case "enumString":
+            case "union":
+            case "literal":
                 return false
             default:
                 assertNever(type.internalType)
@@ -879,28 +879,28 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     private jsonSerializeDefaultHandler(): php.CodeBlock {
         return php.codeblock((writer) => {
             writer.controlFlow(
-                'if',
+                "if",
                 php.invokeMethod({
-                    method: 'is_null',
+                    method: "is_null",
                     arguments_: [this.valueGetter()],
                     static_: true
                 })
             )
-            writer.writeTextStatement('break')
+            writer.writeTextStatement("break")
             writer.endControlFlow()
 
             writer.controlFlow(
-                'if',
+                "if",
                 php.codeblock((_writer) => {
                     _writer.writeNode(this.valueGetter())
-                    _writer.write(' instanceof ')
+                    _writer.write(" instanceof ")
                     _writer.writeNode(php.classReference(this.context.getJsonSerializableTypeClassReference()))
                 })
             )
-            writer.write('$value = ')
+            writer.write("$value = ")
             writer.writeNodeStatement(
                 php.invokeMethod({
-                    method: 'jsonSerialize',
+                    method: "jsonSerialize",
                     arguments_: [],
                     static_: false,
                     on: this.valueGetter()
@@ -908,11 +908,11 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             )
             writer.writeNodeStatement(
                 php.codeblock((_writer) => {
-                    _writer.write('$result = ')
+                    _writer.write("$result = ")
                     _writer.writeNode(
                         php.invokeMethod({
-                            method: 'array_merge',
-                            arguments_: [php.codeblock('$value'), php.codeblock('$result')],
+                            method: "array_merge",
+                            arguments_: [php.codeblock("$value"), php.codeblock("$result")],
                             static_: true
                         })
                     )
@@ -920,20 +920,20 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             )
 
             writer.contiguousControlFlow(
-                'elseif',
+                "elseif",
                 php.invokeMethod({
-                    method: 'is_array',
+                    method: "is_array",
                     arguments_: [this.valueGetter()],
                     static_: true
                 })
             )
             writer.writeNodeStatement(
                 php.codeblock((_writer) => {
-                    _writer.write('$result = ')
+                    _writer.write("$result = ")
                     _writer.writeNode(
                         php.invokeMethod({
-                            method: 'array_merge',
-                            arguments_: [this.valueGetter(), php.codeblock('$result')],
+                            method: "array_merge",
+                            arguments_: [this.valueGetter(), php.codeblock("$result")],
                             static_: true
                         })
                     )
@@ -946,37 +946,37 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
 
     private fromJsonMethod(): php.Method {
         return php.method({
-            name: 'fromJson',
-            access: 'public',
+            name: "fromJson",
+            access: "public",
             parameters: [
                 php.parameter({
-                    name: 'json',
+                    name: "json",
                     type: php.Type.string()
                 })
             ],
             return_: STATIC,
             body: php.codeblock((writer) => {
-                writer.write('$decodedJson = ')
+                writer.write("$decodedJson = ")
                 writer.writeNodeStatement(
                     php.invokeMethod({
-                        method: 'decode',
-                        arguments_: [php.codeblock('$json')],
+                        method: "decode",
+                        arguments_: [php.codeblock("$json")],
                         static_: true,
                         on: this.context.getJsonDecoderClassReference()
                     })
                 )
 
                 const negation = php.codeblock((_writer) => {
-                    _writer.write('!')
+                    _writer.write("!")
                     _writer.writeNode(
                         php.invokeMethod({
-                            method: 'is_array',
-                            arguments_: [php.codeblock('$decodedJson')],
+                            method: "is_array",
+                            arguments_: [php.codeblock("$decodedJson")],
                             static_: true
                         })
                     )
                 })
-                writer.controlFlow('if', negation)
+                writer.controlFlow("if", negation)
                 writer.writeNodeStatement(
                     php.throwException({
                         classReference: this.context.getExceptionClassReference(),
@@ -984,13 +984,13 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                     })
                 )
                 writer.endControlFlow()
-                writer.write('return ')
+                writer.write("return ")
                 writer.writeNodeStatement(
                     php.invokeMethod({
-                        method: 'jsonDeserialize',
-                        arguments_: [php.codeblock('$decodedJson')],
+                        method: "jsonDeserialize",
+                        arguments_: [php.codeblock("$decodedJson")],
                         static_: true,
-                        on: php.codeblock('self')
+                        on: php.codeblock("self")
                     })
                 )
             }),
@@ -1002,7 +1002,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         const discriminantPropertyName = this.context.getPropertyName(this.unionTypeDeclaration.discriminant.name)
         const discriminantVariableName = this.context.getVariableName(this.unionTypeDeclaration.discriminant.name)
         const body: php.CodeBlock = php.codeblock((writer) => {
-            writer.writeTextStatement('$args = []')
+            writer.writeTextStatement("$args = []")
             writer.writeNode(this.jsonDeserializeBaseProperties())
             writer.writeNode(this.jsonDeserializeCheckDiscriminant())
 
@@ -1015,16 +1015,16 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 )
             )
             writer.writeLine()
-            writer.writeLine('// @phpstan-ignore-next-line')
-            writer.writeTextStatement('return new static($args)')
+            writer.writeLine("// @phpstan-ignore-next-line")
+            writer.writeTextStatement("return new static($args)")
         })
 
         return php.method({
-            name: 'jsonDeserialize',
-            access: 'public',
+            name: "jsonDeserialize",
+            access: "public",
             parameters: [
                 php.parameter({
-                    name: 'data',
+                    name: "data",
                     type: php.Type.map(php.Type.string(), php.Type.mixed())
                 })
             ],
@@ -1039,16 +1039,16 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         return php.codeblock((writer) => {
             for (const property of this.unionTypeDeclaration.baseProperties) {
                 const arrayKeyDoesNotExist = php.codeblock((_writer) => {
-                    _writer.write('!')
+                    _writer.write("!")
                     _writer.writeNode(
                         php.invokeMethod({
-                            method: 'array_key_exists',
-                            arguments_: [php.codeblock(`'${property.name.wireValue}'`), php.codeblock('$data')]
+                            method: "array_key_exists",
+                            arguments_: [php.codeblock(`'${property.name.wireValue}'`), php.codeblock("$data")]
                         })
                     )
                 })
 
-                writer.controlFlow('if', arrayKeyDoesNotExist)
+                writer.controlFlow("if", arrayKeyDoesNotExist)
                 writer.writeNodeStatement(
                     this.getErrorThrow(this.getDeserializationArrayKeyExistsErrorMessage(property.name))
                 )
@@ -1058,15 +1058,15 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 const typeCheck = this.getTypeCheck(php.codeblock(`$data['${property.name.wireValue}']`), type)
 
                 const isNotType = php.codeblock((_writer) => {
-                    _writer.write('!')
-                    _writer.write('(')
+                    _writer.write("!")
+                    _writer.write("(")
                     _writer.writeNode(typeCheck)
-                    _writer.write(')')
+                    _writer.write(")")
                 })
 
                 writer.writeNode(
                     php.codeblock((_writer) => {
-                        _writer.controlFlow('if', isNotType)
+                        _writer.controlFlow("if", isNotType)
                         _writer.writeNodeStatement(
                             this.getErrorThrow(this.getDeserializationTypeCheckErrorMessage(property.name, type))
                         )
@@ -1087,16 +1087,16 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         const discriminant: NameAndWireValue = this.unionTypeDeclaration.discriminant
         return php.codeblock((writer) => {
             const arrayKeyDoesNotExist = php.codeblock((_writer) => {
-                _writer.write('!')
+                _writer.write("!")
                 _writer.writeNode(
                     php.invokeMethod({
-                        method: 'array_key_exists',
-                        arguments_: [php.codeblock(`'${discriminant.wireValue}'`), php.codeblock('$data')]
+                        method: "array_key_exists",
+                        arguments_: [php.codeblock(`'${discriminant.wireValue}'`), php.codeblock("$data")]
                     })
                 )
             })
 
-            writer.controlFlow('if', arrayKeyDoesNotExist)
+            writer.controlFlow("if", arrayKeyDoesNotExist)
             writer.writeNodeStatement(
                 this.getErrorThrow(this.getDeserializationArrayKeyExistsErrorMessage(discriminant))
             )
@@ -1110,15 +1110,15 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             )
 
             const isNotType = php.codeblock((_writer) => {
-                _writer.write('!')
-                _writer.write('(')
+                _writer.write("!")
+                _writer.write("(")
                 _writer.writeNode(typeCheck)
-                _writer.write(')')
+                _writer.write(")")
             })
 
             writer.writeNode(
                 php.codeblock((_writer) => {
-                    _writer.controlFlow('if', isNotType)
+                    _writer.controlFlow("if", isNotType)
                     _writer.writeNodeStatement(
                         this.getErrorThrow(
                             this.getDeserializationTypeCheckErrorMessage(discriminant, php.Type.string())
@@ -1143,40 +1143,40 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
 
     private jsonDeserializeCaseHandler(variant: SingleUnionType): php.CodeBlock {
         switch (variant.shape.propertiesType) {
-            case 'samePropertiesAsObject':
+            case "samePropertiesAsObject":
                 return php.codeblock((writer) => {
                     const type = this.getReturnType(variant)
-                    if (type.internalType.type !== 'reference') {
-                        throw new Error('samePropertiesAsObject must be a reference type.')
+                    if (type.internalType.type !== "reference") {
+                        throw new Error("samePropertiesAsObject must be a reference type.")
                     }
 
                     writer.write(`$args['${this.getValueFieldName()}'] = `)
                     writer.writeNodeStatement(
                         php.invokeMethod({
-                            method: 'jsonDeserialize',
-                            arguments_: [php.codeblock('$data')],
+                            method: "jsonDeserialize",
+                            arguments_: [php.codeblock("$data")],
                             static_: true,
                             on: type.getClassReference()
                         })
                     )
-                    writer.writeTextStatement('break')
+                    writer.writeTextStatement("break")
                 })
-            case 'singleProperty':
+            case "singleProperty":
                 return php.codeblock((writer) => {
                     const arrayKeyDoesNotExist = php.codeblock((_writer) => {
-                        _writer.write('!')
+                        _writer.write("!")
                         _writer.writeNode(
                             php.invokeMethod({
-                                method: 'array_key_exists',
+                                method: "array_key_exists",
                                 arguments_: [
                                     php.codeblock(`'${variant.discriminantValue.wireValue}'`),
-                                    php.codeblock('$data')
+                                    php.codeblock("$data")
                                 ]
                             })
                         )
                     })
 
-                    writer.controlFlow('if', arrayKeyDoesNotExist)
+                    writer.controlFlow("if", arrayKeyDoesNotExist)
                     writer.writeNodeStatement(
                         this.getErrorThrow(this.getDeserializationArrayKeyExistsErrorMessage(variant.discriminantValue))
                     )
@@ -1186,12 +1186,12 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
 
                     writer.writeNode(this.jsonDeserializeTypeCall(variant, this.getReturnType(variant)))
 
-                    writer.writeTextStatement('break')
+                    writer.writeTextStatement("break")
                 })
-            case 'noProperties':
+            case "noProperties":
                 return php.codeblock((writer) => {
                     writer.writeTextStatement(`$args['${this.getValueFieldName()}'] = null`)
-                    writer.writeTextStatement('break')
+                    writer.writeTextStatement("break")
                 })
             default:
                 assertNever(variant.shape)
@@ -1201,20 +1201,20 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     private jsonDeserializeTypeCall(variant: SingleUnionType, type: php.Type): php.CodeBlock {
         const discriminantGetter = php.codeblock(`$data['${variant.discriminantValue.wireValue}']`)
         switch (type.internalType.type) {
-            case 'reference':
+            case "reference":
                 return php.codeblock((writer) => {
                     const typeCheck = this.getTypeCheck(discriminantGetter, php.Type.array(php.Type.mixed()))
 
                     const isNotType = php.codeblock((_writer) => {
-                        _writer.write('!')
-                        _writer.write('(')
+                        _writer.write("!")
+                        _writer.write("(")
                         _writer.writeNode(typeCheck)
-                        _writer.write(')')
+                        _writer.write(")")
                     })
 
                     writer.writeNode(
                         php.codeblock((_writer) => {
-                            _writer.controlFlow('if', isNotType)
+                            _writer.controlFlow("if", isNotType)
                             _writer.writeNodeStatement(
                                 this.getErrorThrow(
                                     this.getDeserializationTypeCheckErrorMessage(
@@ -1230,7 +1230,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                     writer.write(`$args['${this.getValueFieldName()}'] = `)
                     writer.writeNodeStatement(
                         php.invokeMethod({
-                            method: 'jsonDeserialize',
+                            method: "jsonDeserialize",
                             arguments_: [discriminantGetter],
                             static_: true,
                             on: type.getClassReference()
@@ -1238,43 +1238,43 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                     )
                 })
 
-            case 'optional':
+            case "optional":
                 return php.codeblock((writer) => {
-                    if (type.underlyingType().internalType.type === 'reference') {
+                    if (type.underlyingType().internalType.type === "reference") {
                         writer.controlFlow(
-                            'if',
+                            "if",
                             php.invokeMethod({
-                                method: 'is_null',
+                                method: "is_null",
                                 arguments_: [discriminantGetter],
                                 static_: true
                             })
                         )
                         writer.writeTextStatement(`$args['${this.getValueFieldName()}'] = null`)
-                        writer.alternativeControlFlow('else')
+                        writer.alternativeControlFlow("else")
                     }
 
                     writer.writeNode(this.jsonDeserializeTypeCall(variant, type.underlyingType()))
 
-                    if (type.underlyingType().internalType.type === 'reference') {
+                    if (type.underlyingType().internalType.type === "reference") {
                         writer.endControlFlow()
                     }
                 })
 
-            case 'date':
-            case 'dateTime':
-            case 'int':
-            case 'string':
-            case 'bool':
-            case 'float':
-            case 'object':
-            case 'map':
-            case 'array':
-            case 'null':
-            case 'mixed':
-            case 'typeDict':
-            case 'enumString':
-            case 'union':
-            case 'literal':
+            case "date":
+            case "dateTime":
+            case "int":
+            case "string":
+            case "bool":
+            case "float":
+            case "object":
+            case "map":
+            case "array":
+            case "null":
+            case "mixed":
+            case "typeDict":
+            case "enumString":
+            case "union":
+            case "literal":
                 return php.codeblock((writer) => {
                     writer.write(`$args['${this.getValueFieldName()}'] = `)
                     writer.writeNodeStatement(discriminantGetter)
@@ -1290,19 +1290,19 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
         defaultHandler: php.CodeBlock
     ): php.CodeBlock {
         return php.codeblock((writer) => {
-            writer.controlFlow('switch', variableGetter)
+            writer.controlFlow("switch", variableGetter)
 
             for (const variant of this.unionTypeDeclaration.types) {
-                writer.write('case ')
+                writer.write("case ")
                 writer.write(`'${variant.discriminantValue.wireValue}'`)
-                writer.writeLine(':')
+                writer.writeLine(":")
                 writer.indent()
                 writer.writeNode(caseMapper(variant))
                 writer.dedent()
             }
 
             writer.writeLine("case '_unknown':")
-            writer.writeLine('default:')
+            writer.writeLine("default:")
             writer.indent()
             writer.writeNode(defaultHandler)
             writer.dedent()

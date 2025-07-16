@@ -1,27 +1,27 @@
-import axios from 'axios'
-import { createWriteStream } from 'fs'
-import { mkdir, readFile, writeFile } from 'fs/promises'
-import { isEqual } from 'lodash-es'
-import { homedir } from 'os'
-import path from 'path'
-import { pipeline } from 'stream/promises'
-import { extract as extractTar } from 'tar'
-import tmp from 'tmp-promise'
+import axios from "axios"
+import { createWriteStream } from "fs"
+import { mkdir, readFile, writeFile } from "fs/promises"
+import { isEqual } from "lodash-es"
+import { homedir } from "os"
+import path from "path"
+import { pipeline } from "stream/promises"
+import { extract as extractTar } from "tar"
+import tmp from "tmp-promise"
 
-import { FernDefinition, FernWorkspace } from '@fern-api/api-workspace-commons'
-import { dependenciesYml } from '@fern-api/configuration-loader'
-import { createFiddleService } from '@fern-api/core'
-import { assertNever, noop, visitObject } from '@fern-api/core-utils'
-import { RootApiFileSchema, YAML_SCHEMA_VERSION } from '@fern-api/fern-definition-schema'
-import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from '@fern-api/fs-utils'
-import { parseVersion } from '@fern-api/semver-utils'
-import { TaskContext } from '@fern-api/task-context'
+import { FernDefinition, FernWorkspace } from "@fern-api/api-workspace-commons"
+import { dependenciesYml } from "@fern-api/configuration-loader"
+import { createFiddleService } from "@fern-api/core"
+import { assertNever, noop, visitObject } from "@fern-api/core-utils"
+import { RootApiFileSchema, YAML_SCHEMA_VERSION } from "@fern-api/fern-definition-schema"
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils"
+import { parseVersion } from "@fern-api/semver-utils"
+import { TaskContext } from "@fern-api/task-context"
 
-import { FernFiddle } from '@fern-fern/fiddle-sdk'
+import { FernFiddle } from "@fern-fern/fiddle-sdk"
 
-import { OSSWorkspace } from '../OSSWorkspace'
-import { WorkspaceLoader, WorkspaceLoaderFailureType } from './Result'
-import { LoadAPIWorkspace } from './loadAPIWorkspace'
+import { OSSWorkspace } from "../OSSWorkspace"
+import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./Result"
+import { LoadAPIWorkspace } from "./loadAPIWorkspace"
 
 const FIDDLE = createFiddleService()
 
@@ -74,7 +74,7 @@ export async function loadDependency({
             { name: `Download ${stringifyDependency(dependency)}` },
             async (contextForDependency) => {
                 switch (dependency.type) {
-                    case 'version':
+                    case "version":
                         definition = await validateVersionedDependencyAndGetDefinition({
                             context: contextForDependency,
                             dependency,
@@ -83,7 +83,7 @@ export async function loadDependency({
                             loadAPIWorkspace
                         })
                         return
-                    case 'local':
+                    case "local":
                         definition = await validateLocalDependencyAndGetDefinition({
                             context: contextForDependency,
                             dependency,
@@ -106,10 +106,10 @@ export async function loadDependency({
     }
 }
 
-const DEPENDENCIES_FOLDER_NAME = 'dependencies'
-const DEFINITION_FOLDER_NAME = 'definition'
-const METADATA_RESPONSE_FILENAME = 'metadata.json'
-const LOCAL_STORAGE_FOLDER = process.env.LOCAL_STORAGE_FOLDER ?? '.fern'
+const DEPENDENCIES_FOLDER_NAME = "dependencies"
+const DEFINITION_FOLDER_NAME = "definition"
+const METADATA_RESPONSE_FILENAME = "metadata.json"
+const LOCAL_STORAGE_FOLDER = process.env.LOCAL_STORAGE_FOLDER ?? ".fern"
 
 function getPathToLocalStorageDependency(dependency: dependenciesYml.VersionedDependency): AbsoluteFilePath {
     return join(
@@ -136,12 +136,12 @@ async function validateLocalDependencyAndGetDefinition({
     settings?: OSSWorkspace.Settings
 }): Promise<FernDefinition | undefined> {
     if (loadAPIWorkspace == null) {
-        context.failWithoutThrowing('Failed to load api definition')
+        context.failWithoutThrowing("Failed to load api definition")
         return undefined
     }
 
     // parse workspace
-    context.logger.info('Parsing...')
+    context.logger.info("Parsing...")
     const loadDependencyWorkspaceResult = await loadAPIWorkspace({
         absolutePathToWorkspace: dependency.absoluteFilepath,
         context,
@@ -149,11 +149,11 @@ async function validateLocalDependencyAndGetDefinition({
         workspaceName: undefined
     })
     if (!loadDependencyWorkspaceResult.didSucceed) {
-        context.failWithoutThrowing('Failed to load api definition', loadDependencyWorkspaceResult.failures)
+        context.failWithoutThrowing("Failed to load api definition", loadDependencyWorkspaceResult.failures)
         return undefined
     }
 
-    context.logger.info('Modifying source filepath ...')
+    context.logger.info("Modifying source filepath ...")
     const definition = await loadDependencyWorkspaceResult.workspace.getDefinition(
         {
             context,
@@ -161,7 +161,7 @@ async function validateLocalDependencyAndGetDefinition({
         },
         settings
     )
-    context.logger.info('Loaded...')
+    context.logger.info("Loaded...")
 
     return definition
 }
@@ -186,7 +186,7 @@ async function validateVersionedDependencyAndGetDefinition({
     let metadata: FernFiddle.Api
     if (!(await doesPathExist(pathToDefinition)) || !(await doesPathExist(pathToMetadata))) {
         // load API
-        context.logger.info('Downloading manifest...')
+        context.logger.info("Downloading manifest...")
         const response = await FIDDLE.definitionRegistry.get(
             FernFiddle.OrganizationId(dependency.organization),
             FernFiddle.ApiId(dependency.apiName),
@@ -195,16 +195,16 @@ async function validateVersionedDependencyAndGetDefinition({
         if (!response.ok) {
             response.error._visit({
                 orgDoesNotExistError: () => {
-                    context.failWithoutThrowing('Organization does not exist')
+                    context.failWithoutThrowing("Organization does not exist")
                 },
                 apiDoesNotExistError: () => {
-                    context.failWithoutThrowing('API does not exist')
+                    context.failWithoutThrowing("API does not exist")
                 },
                 versionDoesNotExistError: () => {
-                    context.failWithoutThrowing('Version does not exist')
+                    context.failWithoutThrowing("Version does not exist")
                 },
                 _other: (error) => {
-                    context.failWithoutThrowing('Failed to download API manifest', error)
+                    context.failWithoutThrowing("Failed to download API manifest", error)
                 }
             })
             return undefined
@@ -241,8 +241,8 @@ async function validateVersionedDependencyAndGetDefinition({
         }
 
         // download API
-        context.logger.info('Downloading...')
-        context.logger.debug('Remote URL: ' + response.body.definitionS3DownloadUrl)
+        context.logger.info("Downloading...")
+        context.logger.debug("Remote URL: " + response.body.definitionS3DownloadUrl)
 
         await mkdir(pathToDefinition, { recursive: true })
 
@@ -252,7 +252,7 @@ async function validateVersionedDependencyAndGetDefinition({
                 absolutePathToLocalOutput: pathToDefinition
             })
         } catch (error) {
-            context.failWithoutThrowing('Failed to download API', error)
+            context.failWithoutThrowing("Failed to download API", error)
             return undefined
         }
 
@@ -262,9 +262,9 @@ async function validateVersionedDependencyAndGetDefinition({
         metadata = JSON.parse((await readFile(pathToMetadata)).toString())
     }
     // parse workspace
-    context.logger.info('Parsing...')
+    context.logger.info("Parsing...")
     if (loadAPIWorkspace == null) {
-        context.failWithoutThrowing('Failed to load API')
+        context.failWithoutThrowing("Failed to load API")
         return undefined
     }
     const loadDependencyWorkspaceResult = await loadAPIWorkspace({
@@ -276,15 +276,15 @@ async function validateVersionedDependencyAndGetDefinition({
 
     if (!loadDependencyWorkspaceResult.didSucceed) {
         context.failWithoutThrowing(
-            'Failed to parse dependency after downloading',
+            "Failed to parse dependency after downloading",
             loadDependencyWorkspaceResult.failures
         )
         return undefined
     }
 
     const workspaceOfDependency = loadDependencyWorkspaceResult.workspace
-    if (workspaceOfDependency.type === 'oss') {
-        context.failWithoutThrowing('Dependency must be a fern workspace.')
+    if (workspaceOfDependency.type === "oss") {
+        context.failWithoutThrowing("Dependency must be a fern workspace.")
         return undefined
     }
 
@@ -302,50 +302,50 @@ async function getAreRootApiFilesEquivalent(
         product: noop,
         name: noop,
         imports: noop,
-        'default-url': noop,
-        'display-name': noop,
+        "default-url": noop,
+        "display-name": noop,
         auth: (auth) => {
             const isAuthEquals = isEqual(auth, workspaceOfDependency.definition.rootApiFile.contents.auth)
             if (!isAuthEquals) {
-                differences.push('auth')
+                differences.push("auth")
             }
             areRootApiFilesEquivalent &&= isAuthEquals
         },
-        'auth-schemes': (auth) => {
+        "auth-schemes": (auth) => {
             const authSchemeEquals = isEqual(
                 auth,
-                removeUndefined(workspaceOfDependency.definition.rootApiFile.contents['auth-schemes'])
+                removeUndefined(workspaceOfDependency.definition.rootApiFile.contents["auth-schemes"])
             )
             if (!authSchemeEquals) {
-                differences.push('auth-schemes')
+                differences.push("auth-schemes")
             }
             areRootApiFilesEquivalent &&= authSchemeEquals
         },
         docs: noop,
         headers: noop,
-        'idempotency-headers': noop,
-        'default-environment': noop,
+        "idempotency-headers": noop,
+        "default-environment": noop,
         environments: noop,
-        'error-discrimination': (errorDiscrimination) => {
+        "error-discrimination": (errorDiscrimination) => {
             const errorDiscriminationIsEqual = isEqual(
                 errorDiscrimination,
-                removeUndefined(workspaceOfDependency.definition.rootApiFile.contents['error-discrimination'])
+                removeUndefined(workspaceOfDependency.definition.rootApiFile.contents["error-discrimination"])
             )
             if (!errorDiscriminationIsEqual) {
-                differences.push('error-discrimination')
+                differences.push("error-discrimination")
             }
             areRootApiFilesEquivalent &&= errorDiscriminationIsEqual
         },
         audiences: noop,
         errors: noop,
-        'base-path': (basePath) => {
-            const basePathsAreEqual = basePath === workspaceOfDependency.definition.rootApiFile.contents['base-path']
+        "base-path": (basePath) => {
+            const basePathsAreEqual = basePath === workspaceOfDependency.definition.rootApiFile.contents["base-path"]
             if (!basePathsAreEqual) {
-                differences.push('base-path')
+                differences.push("base-path")
             }
             areRootApiFilesEquivalent &&= basePathsAreEqual
         },
-        'path-parameters': noop,
+        "path-parameters": noop,
         variables: noop,
         pagination: noop
     })
@@ -364,12 +364,12 @@ async function downloadDependency({
 }) {
     // initiate request
     const request = await axios.get(s3PreSignedReadUrl, {
-        responseType: 'stream'
+        responseType: "stream"
     })
 
     // pipe to tgz
     const tmpDir = await tmp.dir()
-    const outputTarPath = path.join(tmpDir.path, 'api.tgz')
+    const outputTarPath = path.join(tmpDir.path, "api.tgz")
     await pipeline(request.data, createWriteStream(outputTarPath))
 
     // decompress to specified location
@@ -378,9 +378,9 @@ async function downloadDependency({
 
 function stringifyDependency(dependency: dependenciesYml.Dependency): string {
     switch (dependency.type) {
-        case 'version':
+        case "version":
             return `@${dependency.organization}/${dependency.apiName}`
-        case 'local':
+        case "local":
             return `${dependency.path}`
         default:
             assertNever(dependency)

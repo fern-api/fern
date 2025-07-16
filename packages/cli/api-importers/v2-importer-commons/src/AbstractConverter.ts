@@ -1,8 +1,8 @@
-import { FernIr, IntermediateRepresentation } from '@fern-api/ir-sdk'
+import { FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk"
 
-import { AbstractConverterContext } from './AbstractConverterContext'
+import { AbstractConverterContext } from "./AbstractConverterContext"
 
-export type BaseIntermediateRepresentation = Omit<IntermediateRepresentation, 'apiName' | 'constants'>
+export type BaseIntermediateRepresentation = Omit<IntermediateRepresentation, "apiName" | "constants">
 
 export declare namespace AbstractConverter {
     export interface Args<Context> {
@@ -26,7 +26,7 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
      * String primitive type constant
      */
     public static STRING = FernIr.TypeReference.primitive({
-        v1: 'STRING',
+        v1: "STRING",
         v2: FernIr.PrimitiveTypeV2.string({
             default: undefined,
             validation: undefined

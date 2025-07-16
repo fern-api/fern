@@ -1,9 +1,9 @@
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { Pagination } from '@fern-api/ir-sdk'
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { Pagination } from "@fern-api/ir-sdk"
 
-import { FernFileContext } from '../../FernFileContext'
-import { PropertyResolver } from '../../resolvers/PropertyResolver'
-import { OffsetPaginationPropertyComponents } from './convertPaginationUtils'
+import { FernFileContext } from "../../FernFileContext"
+import { PropertyResolver } from "../../resolvers/PropertyResolver"
+import { OffsetPaginationPropertyComponents } from "./convertPaginationUtils"
 
 export function convertOffsetPagination({
     propertyResolver,

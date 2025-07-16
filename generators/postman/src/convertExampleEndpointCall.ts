@@ -1,4 +1,4 @@
-import { isEqual, startCase, values } from 'lodash'
+import { isEqual, startCase, values } from "lodash"
 
 import {
     ErrorDeclaration,
@@ -7,10 +7,10 @@ import {
     HttpService,
     IntermediateRepresentation,
     TypeDeclaration
-} from '@fern-fern/ir-sdk/api'
-import { PostmanExampleResponse, PostmanHeader } from '@fern-fern/postman-sdk/api'
+} from "@fern-fern/ir-sdk/api"
+import { PostmanExampleResponse, PostmanHeader } from "@fern-fern/postman-sdk/api"
 
-import { GeneratedExampleRequest } from './request/GeneratedExampleRequest'
+import { GeneratedExampleRequest } from "./request/GeneratedExampleRequest"
 
 export function convertExampleEndpointCall({
     ir,
@@ -56,21 +56,21 @@ export function convertExampleEndpointCall({
                     body: (value) => maybeStringify({ jsonExample: value?.jsonExample }),
                     sse: (value) => maybeStringify({ jsonExample: value.map((event) => event?.data.jsonExample) }),
                     stream: (value) => maybeStringify({ jsonExample: value.map((event) => event.jsonExample) }),
-                    _other: () => ''
+                    _other: () => ""
                 })
             },
             error: (value) => {
                 return maybeStringify({ jsonExample: value?.body?.jsonExample })
             },
-            _other: () => ''
+            _other: () => ""
         }),
-        postmanPreviewlanguage: 'json'
+        postmanPreviewlanguage: "json"
     }
 }
 
 function maybeStringify({ jsonExample }: { jsonExample?: unknown }): string {
     if (jsonExample == null) {
-        return ''
+        return ""
     }
     return JSON.stringify(jsonExample, undefined, 4)
 }
@@ -81,18 +81,18 @@ function getNameAndStatus({
 }: {
     example: ExampleEndpointCall
     allErrors: ErrorDeclaration[]
-}): Pick<PostmanExampleResponse, 'name' | 'status' | 'code'> {
-    if (example.response.type === 'ok') {
+}): Pick<PostmanExampleResponse, "name" | "status" | "code"> {
+    if (example.response.type === "ok") {
         return {
-            name: 'Success',
-            status: 'OK',
+            name: "Success",
+            status: "OK",
             code: 200
         }
     } else {
         const errorName = example.response.error
         const errorDeclaration = allErrors.find((error) => isEqual(error.name, errorName))
         if (errorDeclaration == null) {
-            throw new Error('Cannot find error: ' + errorName.name.originalName)
+            throw new Error("Cannot find error: " + errorName.name.originalName)
         }
 
         const errorDisplayName = startCase(errorName.name.originalName)

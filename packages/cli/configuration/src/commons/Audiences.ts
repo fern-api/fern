@@ -1,23 +1,23 @@
-import { assertNever } from '@fern-api/core-utils'
+import { assertNever } from "@fern-api/core-utils"
 
 export type Audiences = AllAudiences | SelectAudiences
 
 export interface AllAudiences {
-    type: 'all'
+    type: "all"
 }
 
 export interface SelectAudiences {
-    type: 'select'
+    type: "select"
     audiences: string[]
 }
 
 export function combineAudiences(...allAudiences: [Audiences, ...Audiences[]]): Audiences {
     return allAudiences.reduce((combined, audiences) => {
-        if (combined.type === 'all' && audiences.type === 'all') {
-            return { type: 'all' }
+        if (combined.type === "all" && audiences.type === "all") {
+            return { type: "all" }
         }
         return {
-            type: 'select',
+            type: "select",
             audiences: [...getAudienceStrings(combined), ...getAudienceStrings(audiences)]
         }
     })
@@ -25,9 +25,9 @@ export function combineAudiences(...allAudiences: [Audiences, ...Audiences[]]): 
 
 function getAudienceStrings(audiences: Audiences): string[] {
     switch (audiences.type) {
-        case 'all':
+        case "all":
             return []
-        case 'select':
+        case "select":
             return audiences.audiences
         default:
             assertNever(audiences)

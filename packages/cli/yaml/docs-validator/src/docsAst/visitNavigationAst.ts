@@ -1,15 +1,15 @@
-import { readFile, readdir } from 'fs/promises'
+import { readFile, readdir } from "fs/promises"
 
-import { docsYml } from '@fern-api/configuration-loader'
-import { noop, visitObjectAsync } from '@fern-api/core-utils'
-import { parseImagePaths } from '@fern-api/docs-markdown-utils'
-import { NodePath } from '@fern-api/fern-definition-schema'
-import { AbsoluteFilePath, dirname, doesPathExist, relative, resolve } from '@fern-api/fs-utils'
-import { TaskContext } from '@fern-api/task-context'
-import { AbstractAPIWorkspace, FernWorkspace } from '@fern-api/workspace-loader'
+import { docsYml } from "@fern-api/configuration-loader"
+import { noop, visitObjectAsync } from "@fern-api/core-utils"
+import { parseImagePaths } from "@fern-api/docs-markdown-utils"
+import { NodePath } from "@fern-api/fern-definition-schema"
+import { AbsoluteFilePath, dirname, doesPathExist, relative, resolve } from "@fern-api/fs-utils"
+import { TaskContext } from "@fern-api/task-context"
+import { AbstractAPIWorkspace, FernWorkspace } from "@fern-api/workspace-loader"
 
-import { DocsConfigFileAstVisitor } from './DocsConfigFileAstVisitor'
-import { visitFilepath } from './visitFilepath'
+import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor"
+import { visitFilepath } from "./visitFilepath"
 
 export declare namespace visitNavigationAst {
     interface Args {
@@ -42,7 +42,7 @@ export async function visitNavigationAst({
                                 absolutePathToFernFolder,
                                 navigationItem: item,
                                 visitor,
-                                nodePath: [...nodePath, `${tabIdx}`, 'layout', `${itemIdx}`],
+                                nodePath: [...nodePath, `${tabIdx}`, "layout", `${itemIdx}`],
                                 absoluteFilepathToConfiguration,
                                 apiWorkspaces,
                                 context
@@ -99,7 +99,7 @@ async function visitNavigationItem({
                 absoluteFilepathToConfiguration,
                 rawUnresolvedFilepath: path,
                 visitor,
-                nodePath: [...nodePath, 'openrpc'],
+                nodePath: [...nodePath, "openrpc"],
                 willBeUploaded: false
             })
         },
@@ -125,7 +125,7 @@ async function visitNavigationItem({
                 absoluteFilepathToConfiguration,
                 rawUnresolvedFilepath: path,
                 visitor,
-                nodePath: [...nodePath, 'path'],
+                nodePath: [...nodePath, "path"],
                 willBeUploaded: false
             })
         },
@@ -140,7 +140,7 @@ async function visitNavigationItem({
                         absolutePathToFernFolder,
                         navigationItem: item,
                         visitor,
-                        nodePath: [...nodePath, 'contents', `${idx}`],
+                        nodePath: [...nodePath, "contents", `${idx}`],
                         absoluteFilepathToConfiguration,
                         apiWorkspaces,
                         context
@@ -148,9 +148,9 @@ async function visitNavigationItem({
                 })
             )
         },
-        viewers: async (viewers: docsYml.RawSchemas.WithPermissions['viewers']): Promise<void> => {
+        viewers: async (viewers: docsYml.RawSchemas.WithPermissions["viewers"]): Promise<void> => {
             if (viewers != null && viewers.length > 0) {
-                await visitor.permissions?.({ viewers }, [...nodePath, 'viewers'])
+                await visitor.permissions?.({ viewers }, [...nodePath, "viewers"])
             }
         },
         orphaned: noop
@@ -200,7 +200,7 @@ async function visitNavigationItem({
                     workspace,
                     context
                 },
-                [...nodePath, 'api']
+                [...nodePath, "api"]
             )
         }
     }
@@ -215,7 +215,7 @@ async function visitNavigationItem({
 
             await Promise.all(
                 files
-                    .filter((file) => file.endsWith('.md') || file.endsWith('.mdx'))
+                    .filter((file) => file.endsWith(".md") || file.endsWith(".mdx"))
                     .map(async (file) => {
                         const absoluteFilepath = resolve(changelogDir, file)
                         const content = (await readFile(absoluteFilepath)).toString()
@@ -227,7 +227,7 @@ async function visitNavigationItem({
                                 content,
                                 absoluteFilepath
                             },
-                            [...nodePath, 'changelog', file]
+                            [...nodePath, "changelog", file]
                         )
                     })
             )

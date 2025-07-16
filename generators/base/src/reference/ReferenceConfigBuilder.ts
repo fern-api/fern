@@ -1,4 +1,4 @@
-import { FernGeneratorCli } from '@fern-fern/generator-cli-sdk'
+import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk"
 
 export class ReferenceConfigBuilder {
     private rootSection: FernGeneratorCli.RootPackageReferenceSection | undefined

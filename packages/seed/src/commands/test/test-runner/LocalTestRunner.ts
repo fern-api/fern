@@ -1,32 +1,32 @@
-import { writeFile } from 'fs/promises'
-import path from 'path'
-import tmp from 'tmp-promise'
+import { writeFile } from "fs/promises"
+import path from "path"
+import tmp from "tmp-promise"
 
-import { FernWorkspace } from '@fern-api/api-workspace-commons'
-import { SNIPPET_JSON_FILENAME, SNIPPET_TEMPLATES_JSON_FILENAME } from '@fern-api/configuration'
-import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
-import { ApiDefinitionSource, SourceConfig } from '@fern-api/ir-sdk'
+import { FernWorkspace } from "@fern-api/api-workspace-commons"
+import { SNIPPET_JSON_FILENAME, SNIPPET_TEMPLATES_JSON_FILENAME } from "@fern-api/configuration"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { ApiDefinitionSource, SourceConfig } from "@fern-api/ir-sdk"
 import {
     LocalTaskHandler,
     generateDynamicSnippetTests,
     getGeneratorConfig,
     getIntermediateRepresentation
-} from '@fern-api/local-workspace-runner'
-import { CONSOLE_LOGGER } from '@fern-api/logger'
+} from "@fern-api/local-workspace-runner"
+import { CONSOLE_LOGGER } from "@fern-api/logger"
 
-import * as GeneratorExecSerialization from '@fern-fern/generator-exec-sdk/serialization'
+import * as GeneratorExecSerialization from "@fern-fern/generator-exec-sdk/serialization"
 
-import { LocalBuildInfo } from '../../../config/api'
-import { runScript } from '../../../runScript'
-import { DUMMY_ORGANIZATION } from '../../../utils/constants'
-import { getGeneratorInvocation } from '../../../utils/getGeneratorInvocation'
-import { TestRunner } from './TestRunner'
+import { LocalBuildInfo } from "../../../config/api"
+import { runScript } from "../../../runScript"
+import { DUMMY_ORGANIZATION } from "../../../utils/constants"
+import { getGeneratorInvocation } from "../../../utils/getGeneratorInvocation"
+import { TestRunner } from "./TestRunner"
 
 export class LocalTestRunner extends TestRunner {
     async build(): Promise<void> {
         const localConfig = await this.getLocalConfigOrthrow()
         const workingDir = AbsoluteFilePath.of(
-            path.join(__dirname, RelativeFilePath.of('../../..'), RelativeFilePath.of(localConfig.workingDirectory))
+            path.join(__dirname, RelativeFilePath.of("../../.."), RelativeFilePath.of(localConfig.workingDirectory))
         )
         const result = await runScript({
             commands: localConfig.buildCommand,
@@ -78,7 +78,7 @@ export class LocalTestRunner extends TestRunner {
         const ir = await getIntermediateRepresentation({
             workspace: fernWorkspace,
             audiences: {
-                type: 'all'
+                type: "all"
             },
             context: taskContext,
             irVersionOverride: irVersion,
@@ -128,7 +128,7 @@ export class LocalTestRunner extends TestRunner {
 
         const localConfig = await this.getLocalConfigOrthrow()
         const workingDir = AbsoluteFilePath.of(
-            path.join(__dirname, RelativeFilePath.of('../../..'), RelativeFilePath.of(localConfig.workingDirectory))
+            path.join(__dirname, RelativeFilePath.of("../../.."), RelativeFilePath.of(localConfig.workingDirectory))
         )
         const result = await runScript({
             commands: [`${localConfig.runCommand} ${absolutePathToGeneratorConfig}`],
@@ -190,7 +190,7 @@ export class LocalTestRunner extends TestRunner {
     private getSourceConfig(workspace: FernWorkspace): SourceConfig {
         return {
             sources: workspace.getSources().map((source) => {
-                if (source.type === 'protobuf') {
+                if (source.type === "protobuf") {
                     return ApiDefinitionSource.proto({
                         id: source.id,
                         protoRootUrl: `file:///${source.absoluteFilePath}`

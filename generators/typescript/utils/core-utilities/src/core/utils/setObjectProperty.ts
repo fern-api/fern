@@ -13,7 +13,7 @@ export function setObjectProperty<T extends object>(object: T, path: string, val
         return object
     }
 
-    const keys: string[] = path.split('.')
+    const keys: string[] = path.split(".")
     if (keys.length === 0) {
         // Invalid path; do nothing.
         return object
@@ -26,7 +26,7 @@ export function setObjectProperty<T extends object>(object: T, path: string, val
             // Unreachable.
             continue
         }
-        if (!current[key] || typeof current[key] !== 'object') {
+        if (!current[key] || typeof current[key] !== "object") {
             current[key] = {}
         }
         current = current[key] as Record<string, any>

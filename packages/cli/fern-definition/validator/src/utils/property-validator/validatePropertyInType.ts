@@ -1,7 +1,7 @@
-import { RawSchemas, isRawObjectDefinition } from '@fern-api/fern-definition-schema'
-import { FernFileContext, ResolvedType, TypeResolver } from '@fern-api/ir-generator'
+import { RawSchemas, isRawObjectDefinition } from "@fern-api/fern-definition-schema"
+import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator"
 
-import { RuleViolation } from '../../Rule'
+import { RuleViolation } from "../../Rule"
 
 export declare namespace ValidatePropertyInType {
     interface Args {
@@ -57,7 +57,7 @@ export function getAllPropertiesForRawObjectSchema({
     objectSchema: RawSchemas.ObjectSchema
 }): Record<string, string> {
     let extendedTypes: string[] = []
-    if (typeof objectSchema.extends === 'string') {
+    if (typeof objectSchema.extends === "string") {
         extendedTypes = [objectSchema.extends]
     } else if (Array.isArray(objectSchema.extends)) {
         extendedTypes = objectSchema.extends
@@ -77,7 +77,7 @@ export function getAllPropertiesForRawObjectSchema({
 
     if (objectSchema.properties != null) {
         Object.entries(objectSchema.properties).map(([propertyKey, propertyType]) => {
-            properties[propertyKey] = typeof propertyType === 'string' ? propertyType : propertyType.type
+            properties[propertyKey] = typeof propertyType === "string" ? propertyType : propertyType.type
         })
     }
 
@@ -97,7 +97,7 @@ function getAllPropertiesForExtendedType({
         referenceToNamedType: extendedType,
         file
     })
-    if (resolvedType._type === 'named' && isRawObjectDefinition(resolvedType.declaration)) {
+    if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
         return getAllPropertiesForRawObjectSchema({
             typeResolver,
             file: maybeFileFromResolvedType(resolvedType) ?? file,
@@ -111,12 +111,12 @@ export function maybeFileFromResolvedType(resolvedType: ResolvedType | undefined
     if (resolvedType == null) {
         return undefined
     }
-    if (resolvedType._type === 'named') {
+    if (resolvedType._type === "named") {
         return resolvedType.file
     }
     if (
-        resolvedType._type === 'container' &&
-        (resolvedType.container._type === 'optional' || resolvedType.container._type === 'nullable')
+        resolvedType._type === "container" &&
+        (resolvedType.container._type === "optional" || resolvedType.container._type === "nullable")
     ) {
         return maybeFileFromResolvedType(resolvedType.container.itemType)
     }
@@ -127,12 +127,12 @@ function getMaybeObject(resolvedType: ResolvedType | undefined): RawSchemas.Obje
     if (resolvedType == null) {
         return undefined
     }
-    if (resolvedType._type === 'named' && isRawObjectDefinition(resolvedType.declaration)) {
+    if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
         return resolvedType.declaration
     }
     if (
-        resolvedType._type === 'container' &&
-        (resolvedType.container._type === 'optional' || resolvedType.container._type === 'nullable')
+        resolvedType._type === "container" &&
+        (resolvedType.container._type === "optional" || resolvedType.container._type === "nullable")
     ) {
         return getMaybeObject(resolvedType.container.itemType)
     }

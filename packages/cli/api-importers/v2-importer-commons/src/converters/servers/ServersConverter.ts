@@ -1,17 +1,17 @@
-import { OpenAPIV3_1 } from 'openapi-types'
+import { OpenAPIV3_1 } from "openapi-types"
 
-import { isNonNullish } from '@fern-api/core-utils'
+import { isNonNullish } from "@fern-api/core-utils"
 import {
     Environments,
     EnvironmentsConfig,
     MultipleBaseUrlsEnvironment,
     SingleBaseUrlEnvironment
-} from '@fern-api/ir-sdk'
+} from "@fern-api/ir-sdk"
 
-import { AbstractConverter, AbstractConverterContext } from '../..'
-import { ServerNameExtension } from '../../extensions/x-fern-server-name'
+import { AbstractConverter, AbstractConverterContext } from "../.."
+import { ServerNameExtension } from "../../extensions/x-fern-server-name"
 
-const DEFAULT_BASE_URL_ID = 'Base'
+const DEFAULT_BASE_URL_ID = "Base"
 
 export declare namespace ServersConverter {
     export interface Args extends AbstractConverter.AbstractArgs {
@@ -206,7 +206,7 @@ export class ServersConverter extends AbstractConverter<
                         ...server,
                         url: newUrl,
                         variables: Object.keys(newVariables).length > 0 ? newVariables : undefined,
-                        'x-fern-server-name': server.description
+                        "x-fern-server-name": server.description
                             ? `${server.description}_${enumValue}`
                             : `${enumValue}`,
                         description: server.description
@@ -232,6 +232,6 @@ export class ServersConverter extends AbstractConverter<
     }
 
     private maybeRemoveTrailingSlashIfNotEmpty(url: string): string {
-        return url.endsWith('/') && url !== '/' ? url.slice(0, -1) : url
+        return url.endsWith("/") && url !== "/" ? url.slice(0, -1) : url
     }
 }

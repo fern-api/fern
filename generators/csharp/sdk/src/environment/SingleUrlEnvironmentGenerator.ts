@@ -1,11 +1,11 @@
-import { CSharpFile, FileGenerator } from '@fern-api/csharp-base'
-import { csharp } from '@fern-api/csharp-codegen'
-import { RelativeFilePath, join } from '@fern-api/fs-utils'
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base"
+import { csharp } from "@fern-api/csharp-codegen"
+import { RelativeFilePath, join } from "@fern-api/fs-utils"
 
-import { SingleBaseUrlEnvironments } from '@fern-fern/ir-sdk/api'
+import { SingleBaseUrlEnvironments } from "@fern-fern/ir-sdk/api"
 
-import { SdkCustomConfigSchema } from '../SdkCustomConfig'
-import { SdkGeneratorContext } from '../SdkGeneratorContext'
+import { SdkCustomConfigSchema } from "../SdkCustomConfig"
+import { SdkGeneratorContext } from "../SdkGeneratorContext"
 
 export declare namespace SingleUrlEnvironmentGenerator {
     interface Args {
@@ -40,7 +40,7 @@ export class SingleUrlEnvironmentGenerator extends FileGenerator<
                     access: csharp.Access.Public,
                     const_: true,
                     name:
-                        (this.context.customConfig['pascal-case-environments'] ?? true)
+                        (this.context.customConfig["pascal-case-environments"] ?? true)
                             ? environment.name.pascalCase.safeName
                             : environment.name.screamingSnakeCase.safeName,
                     type: csharp.Type.string(),

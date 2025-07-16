@@ -1,16 +1,16 @@
-import { FernWorkspace, getDefinitionFile } from '@fern-api/api-workspace-commons'
+import { FernWorkspace, getDefinitionFile } from "@fern-api/api-workspace-commons"
 import {
     RawSchemas,
     isRawAliasDefinition,
     parseGeneric,
     recursivelyVisitRawTypeReference
-} from '@fern-api/fern-definition-schema'
-import { ContainerType, TypeReference } from '@fern-api/ir-sdk'
+} from "@fern-api/fern-definition-schema"
+import { ContainerType, TypeReference } from "@fern-api/ir-sdk"
 
-import { FernFileContext, constructFernFileContext } from '../FernFileContext'
-import { parseInlineType } from '../utils/parseInlineType'
-import { parseReferenceToTypeName } from '../utils/parseReferenceToTypeName'
-import { ObjectPathItem, ResolvedType } from './ResolvedType'
+import { FernFileContext, constructFernFileContext } from "../FernFileContext"
+import { parseInlineType } from "../utils/parseInlineType"
+import { parseReferenceToTypeName } from "../utils/parseReferenceToTypeName"
+import { ObjectPathItem, ResolvedType } from "./ResolvedType"
 
 export interface TypeResolver {
     resolveType: (args: { type: string; file: FernFileContext }) => ResolvedType | undefined
@@ -39,7 +39,7 @@ export class TypeResolverImpl implements TypeResolver {
     public resolveTypeOrThrow({ type, file }: { type: string; file: FernFileContext }): ResolvedType {
         const resolvedType = this.resolveType({ type, file })
         if (resolvedType == null) {
-            throw new Error('Cannot resolve type: ' + type + ' in file ' + file.relativeFilepath)
+            throw new Error("Cannot resolve type: " + type + " in file " + file.relativeFilepath)
         }
         return resolvedType
     }
@@ -54,7 +54,7 @@ export class TypeResolverImpl implements TypeResolver {
         const declaration = this.getDeclarationOfNamedType({ referenceToNamedType, file })
         if (declaration == null) {
             throw new Error(
-                'Cannot find declaration of type: ' + referenceToNamedType + ' in file ' + file.relativeFilepath
+                "Cannot find declaration of type: " + referenceToNamedType + " in file " + file.relativeFilepath
             )
         }
         return declaration
@@ -86,7 +86,7 @@ export class TypeResolverImpl implements TypeResolver {
             const parsedGeneric = parseGeneric(parsedReference.typeName)
             if (parsedGeneric != null) {
                 for (const type of Object.keys(definitionFile.types ?? {}) ?? []) {
-                    if (parsedGeneric.name && type.startsWith(parsedGeneric.name) && type.endsWith('>')) {
+                    if (parsedGeneric.name && type.startsWith(parsedGeneric.name) && type.endsWith(">")) {
                         const genericDeclaration = definitionFile.types?.[type]
                         return genericDeclaration != null
                             ? {
@@ -133,17 +133,17 @@ export class TypeResolverImpl implements TypeResolver {
             validation: undefined,
             visitor: {
                 primitive: (primitive) => ({
-                    _type: 'primitive',
+                    _type: "primitive",
                     primitive,
                     originalTypeReference: TypeReference.primitive(primitive)
                 }),
-                unknown: () => ({ _type: 'unknown', originalTypeReference: TypeReference.unknown() }),
+                unknown: () => ({ _type: "unknown", originalTypeReference: TypeReference.unknown() }),
                 map: ({ keyType, valueType }) =>
                     keyType != null && valueType != null
                         ? {
-                              _type: 'container',
+                              _type: "container",
                               container: {
-                                  _type: 'map',
+                                  _type: "map",
                                   keyType,
                                   valueType
                               },
@@ -158,9 +158,9 @@ export class TypeResolverImpl implements TypeResolver {
                 list: (itemType) =>
                     itemType != null
                         ? {
-                              _type: 'container',
+                              _type: "container",
                               container: {
-                                  _type: 'list',
+                                  _type: "list",
                                   itemType
                               },
                               originalTypeReference: TypeReference.container(
@@ -171,9 +171,9 @@ export class TypeResolverImpl implements TypeResolver {
                 optional: (itemType) =>
                     itemType != null
                         ? {
-                              _type: 'container',
+                              _type: "container",
                               container: {
-                                  _type: 'optional',
+                                  _type: "optional",
                                   itemType
                               },
                               originalTypeReference: TypeReference.container(
@@ -184,9 +184,9 @@ export class TypeResolverImpl implements TypeResolver {
                 nullable: (itemType) =>
                     itemType != null
                         ? {
-                              _type: 'container',
+                              _type: "container",
                               container: {
-                                  _type: 'nullable',
+                                  _type: "nullable",
                                   itemType
                               },
                               originalTypeReference: TypeReference.container(
@@ -197,9 +197,9 @@ export class TypeResolverImpl implements TypeResolver {
                 set: (itemType) =>
                     itemType != null
                         ? {
-                              _type: 'container',
+                              _type: "container",
                               container: {
-                                  _type: 'set',
+                                  _type: "set",
                                   itemType
                               },
                               originalTypeReference: TypeReference.container(
@@ -208,9 +208,9 @@ export class TypeResolverImpl implements TypeResolver {
                           }
                         : undefined,
                 literal: (literal) => ({
-                    _type: 'container',
+                    _type: "container",
                     container: {
-                        _type: 'literal',
+                        _type: "literal",
                         literal
                     },
                     originalTypeReference: TypeReference.container(ContainerType.literal(literal))
@@ -261,7 +261,7 @@ export class TypeResolverImpl implements TypeResolver {
     }): ResolvedType {
         const resolvedType = this.resolveNamedType({ referenceToNamedType, file })
         if (resolvedType == null) {
-            throw new Error('Cannot resolve type: ' + referenceToNamedType)
+            throw new Error("Cannot resolve type: " + referenceToNamedType)
         }
         return resolvedType
     }
@@ -302,7 +302,7 @@ export class TypeResolverImpl implements TypeResolver {
 
         if (isRawAliasDefinition(declaration)) {
             return this.resolveType({
-                type: typeof declaration === 'string' ? declaration : declaration.type,
+                type: typeof declaration === "string" ? declaration : declaration.type,
                 file: fileOfResolvedDeclaration,
                 objectPath
             })
@@ -314,7 +314,7 @@ export class TypeResolverImpl implements TypeResolver {
             validation: undefined,
             file: referencedIn
         })
-        if (parsedTypeReference.type !== 'named') {
+        if (parsedTypeReference.type !== "named") {
             return undefined
         }
 
@@ -324,7 +324,7 @@ export class TypeResolverImpl implements TypeResolver {
         }
 
         return {
-            _type: 'named',
+            _type: "named",
             rawName: rawDeclaration.typeName,
             name: parsedTypeReference,
             declaration,

@@ -1,13 +1,13 @@
-import { NamedFullExample, Source, Webhook, WebhookExampleCall, WebhookWithExample } from '@fern-api/openapi-ir'
+import { NamedFullExample, Source, Webhook, WebhookExampleCall, WebhookWithExample } from "@fern-api/openapi-ir"
 
-import { getExtension } from '../../../../getExtension'
-import { convertToFullExample } from '../../../../schema/examples/convertToFullExample'
-import { getGeneratedTypeName } from '../../../../schema/utils/getSchemaName'
-import { AbstractOpenAPIV3ParserContext } from '../../AbstractOpenAPIV3ParserContext'
-import { FernOpenAPIExtension } from '../../extensions/fernExtensions'
-import { OperationContext } from '../contexts'
-import { convertParameters } from '../endpoint/convertParameters'
-import { convertRequest } from '../endpoint/convertRequest'
+import { getExtension } from "../../../../getExtension"
+import { convertToFullExample } from "../../../../schema/examples/convertToFullExample"
+import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName"
+import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext"
+import { FernOpenAPIExtension } from "../../extensions/fernExtensions"
+import { OperationContext } from "../contexts"
+import { convertParameters } from "../endpoint/convertParameters"
+import { convertRequest } from "../endpoint/convertRequest"
 
 export function convertWebhookOperation({
     context,
@@ -19,7 +19,7 @@ export function convertWebhookOperation({
     source: Source
 }): WebhookWithExample | undefined {
     const { document, operation, path, method, baseBreadcrumbs, sdkMethodName } = operationContext
-    const payloadBreadcrumbs = [...baseBreadcrumbs, 'Payload']
+    const payloadBreadcrumbs = [...baseBreadcrumbs, "Payload"]
 
     const convertedParameters = convertParameters({
         parameters: [...operationContext.pathItemParameters, ...operationContext.operationParameters],
@@ -35,7 +35,7 @@ export function convertWebhookOperation({
         return undefined
     }
 
-    if (method !== 'POST' && method !== 'GET') {
+    if (method !== "POST" && method !== "GET") {
         context.logger.error(`Skipping webhook ${method.toUpperCase()} ${path}: Not POST or GET`)
         return undefined
     }
@@ -44,12 +44,12 @@ export function convertWebhookOperation({
         requestBody: operation.requestBody,
         document,
         context,
-        requestBreadcrumbs: [...baseBreadcrumbs, 'Payload'],
+        requestBreadcrumbs: [...baseBreadcrumbs, "Payload"],
         source,
         namespace: context.namespace
     })
 
-    if (convertedPayload == null || convertedPayload.type !== 'json') {
+    if (convertedPayload == null || convertedPayload.type !== "json") {
         context.logger.error(`Skipping webhook ${path} because non-json request body`)
         return undefined
     }

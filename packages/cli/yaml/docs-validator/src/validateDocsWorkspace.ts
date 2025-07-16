@@ -1,15 +1,15 @@
-import { DOCS_CONFIGURATION_FILENAME } from '@fern-api/configuration-loader'
-import { RelativeFilePath, join } from '@fern-api/fs-utils'
-import { OSSWorkspace } from '@fern-api/lazy-fern-workspace'
-import { TaskContext } from '@fern-api/task-context'
-import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from '@fern-api/workspace-loader'
+import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader"
+import { RelativeFilePath, join } from "@fern-api/fs-utils"
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace"
+import { TaskContext } from "@fern-api/task-context"
+import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader"
 
-import { Rule } from './Rule'
-import { ValidationViolation } from './ValidationViolation'
-import { createDocsConfigFileAstVisitorForRules } from './createDocsConfigFileAstVisitorForRules'
-import { visitDocsConfigFileYamlAst } from './docsAst/visitDocsConfigFileYamlAst'
-import { getAllRules } from './getAllRules'
-import { ValidMarkdownLinks } from './rules/valid-markdown-link'
+import { Rule } from "./Rule"
+import { ValidationViolation } from "./ValidationViolation"
+import { createDocsConfigFileAstVisitorForRules } from "./createDocsConfigFileAstVisitorForRules"
+import { visitDocsConfigFileYamlAst } from "./docsAst/visitDocsConfigFileYamlAst"
+import { getAllRules } from "./getAllRules"
+import { ValidMarkdownLinks } from "./rules/valid-markdown-link"
 
 export async function validateDocsWorkspace(
     workspace: DocsWorkspace,

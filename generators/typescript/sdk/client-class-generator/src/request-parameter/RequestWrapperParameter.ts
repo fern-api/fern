@@ -1,8 +1,8 @@
-import { GetReferenceOpts } from '@fern-typescript/commons'
-import { GeneratedRequestWrapper, RequestWrapperNonBodyProperty, SdkContext } from '@fern-typescript/contexts'
-import { ts } from 'ts-morph'
+import { GetReferenceOpts } from "@fern-typescript/commons"
+import { GeneratedRequestWrapper, RequestWrapperNonBodyProperty, SdkContext } from "@fern-typescript/contexts"
+import { ts } from "ts-morph"
 
-import { ExampleEndpointCall, HttpHeader, QueryParameter } from '@fern-fern/ir-sdk/api'
+import { ExampleEndpointCall, HttpHeader, QueryParameter } from "@fern-fern/ir-sdk/api"
 import {
     BigIntegerType,
     BooleanType,
@@ -11,16 +11,16 @@ import {
     LongType,
     StringType,
     TypeReference
-} from '@fern-fern/ir-sdk/api/resources/types/types'
+} from "@fern-fern/ir-sdk/api/resources/types/types"
 
-import { AbstractRequestParameter } from './AbstractRequestParameter'
+import { AbstractRequestParameter } from "./AbstractRequestParameter"
 
 type DefaultNonBodyKeyName = string & {
     __DefaultNonBodyKeyName: void
 }
 
 export class RequestWrapperParameter extends AbstractRequestParameter {
-    private static BODY_VARIABLE_NAME = '_body'
+    private static BODY_VARIABLE_NAME = "_body"
 
     private nonBodyKeyAliases: Record<DefaultNonBodyKeyName, string> = {}
 
@@ -74,7 +74,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
             let defaultValue: ts.Expression | undefined
             if (useDefaultValues) {
                 if (nonBodyKey.originalParameter != null) {
-                    if (nonBodyKey.originalParameter.type !== 'file') {
+                    if (nonBodyKey.originalParameter.type !== "file") {
                         defaultValue = this.extractDefaultValue(
                             nonBodyKey.originalParameter.parameter.valueType,
                             context
@@ -182,7 +182,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
             (pathParam) => pathParam.name.originalName === pathParameterKey
         )
         if (pathParameter == null) {
-            throw new Error('Path parameter does not exist: ' + pathParameterKey)
+            throw new Error("Path parameter does not exist: " + pathParameterKey)
         }
         const generatedRequestWrapper = this.getGeneratedRequestWrapper(context)
         return ts.factory.createIdentifier(
@@ -195,7 +195,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
             (queryParam) => queryParam.name.wireValue === queryParameterKey
         )
         if (queryParameter == null) {
-            throw new Error('Query parameter does not exist: ' + queryParameterKey)
+            throw new Error("Query parameter does not exist: " + queryParameterKey)
         }
         const generatedRequestWrapper = this.getGeneratedRequestWrapper(context)
         return ts.factory.createIdentifier(
@@ -225,7 +225,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         const defaultName = this.getDefaultVariableNameForNonBodyProperty(nonBodyProperty)
         const alias = this.nonBodyKeyAliases[defaultName]
         if (alias == null) {
-            throw new Error('Could not locate alias for: ' + defaultName)
+            throw new Error("Could not locate alias for: " + defaultName)
         }
         return alias
     }
@@ -233,13 +233,13 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
     private extractDefaultValue(typeReference: TypeReference, context: SdkContext): ts.Expression | undefined {
         const resolvedType = context.type.resolveTypeReference(typeReference)
 
-        if (resolvedType.type === 'container' && resolvedType.container.type === 'optional') {
+        if (resolvedType.type === "container" && resolvedType.container.type === "optional") {
             return this.extractDefaultValue(resolvedType.container.optional, context)
         }
 
         const useBigInt = (context.config.customConfig as { useBigInt?: boolean })?.useBigInt
 
-        if (resolvedType.type === 'primitive' && resolvedType.primitive.v2 != null) {
+        if (resolvedType.type === "primitive" && resolvedType.primitive.v2 != null) {
             return resolvedType.primitive.v2._visit<ts.Expression | undefined>({
                 integer: (integerType: IntegerType) => {
                     if (integerType.default != null) {
@@ -250,7 +250,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
                 long: (longType: LongType) => {
                     if (longType.default != null) {
                         if (useBigInt) {
-                            return ts.factory.createCallExpression(ts.factory.createIdentifier('BigInt'), undefined, [
+                            return ts.factory.createCallExpression(ts.factory.createIdentifier("BigInt"), undefined, [
                                 ts.factory.createStringLiteral(longType.default.toString())
                             ])
                         }
@@ -279,7 +279,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
                 bigInteger: (bigIntegerType: BigIntegerType) => {
                     if (bigIntegerType.default != null) {
                         if (useBigInt) {
-                            return ts.factory.createCallExpression(ts.factory.createIdentifier('BigInt'), undefined, [
+                            return ts.factory.createCallExpression(ts.factory.createIdentifier("BigInt"), undefined, [
                                 ts.factory.createStringLiteral(bigIntegerType.default)
                             ])
                         }

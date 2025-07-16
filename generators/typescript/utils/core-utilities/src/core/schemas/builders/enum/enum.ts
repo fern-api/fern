@@ -1,6 +1,6 @@
-import { Schema, SchemaType } from '../../Schema'
-import { createIdentitySchemaCreator } from '../../utils/createIdentitySchemaCreator'
-import { getErrorMessageForIncorrectType } from '../../utils/getErrorMessageForIncorrectType'
+import { Schema, SchemaType } from "../../Schema"
+import { createIdentitySchemaCreator } from "../../utils/createIdentitySchemaCreator"
+import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType"
 
 export function enum_<U extends string, E extends U[]>(values: E): Schema<E[number], E[number]> {
     const validValues = new Set<string>(values)
@@ -8,13 +8,13 @@ export function enum_<U extends string, E extends U[]>(values: E): Schema<E[numb
     const schemaCreator = createIdentitySchemaCreator(
         SchemaType.ENUM,
         (value, { allowUnrecognizedEnumValues, breadcrumbsPrefix = [] } = {}) => {
-            if (typeof value !== 'string') {
+            if (typeof value !== "string") {
                 return {
                     ok: false,
                     errors: [
                         {
                             path: breadcrumbsPrefix,
-                            message: getErrorMessageForIncorrectType(value, 'string')
+                            message: getErrorMessageForIncorrectType(value, "string")
                         }
                     ]
                 }
@@ -26,7 +26,7 @@ export function enum_<U extends string, E extends U[]>(values: E): Schema<E[numb
                     errors: [
                         {
                             path: breadcrumbsPrefix,
-                            message: getErrorMessageForIncorrectType(value, 'enum')
+                            message: getErrorMessageForIncorrectType(value, "enum")
                         }
                     ]
                 }

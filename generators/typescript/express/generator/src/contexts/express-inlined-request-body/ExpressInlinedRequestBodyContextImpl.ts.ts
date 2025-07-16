@@ -1,12 +1,12 @@
-import { ExportsManager, ImportsManager, PackageId, Reference } from '@fern-typescript/commons'
-import { ExpressInlinedRequestBodyContext, GeneratedExpressInlinedRequestBody } from '@fern-typescript/contexts'
-import { ExpressInlinedRequestBodyGenerator } from '@fern-typescript/express-inlined-request-body-generator'
-import { PackageResolver } from '@fern-typescript/resolvers'
-import { SourceFile } from 'ts-morph'
+import { ExportsManager, ImportsManager, PackageId, Reference } from "@fern-typescript/commons"
+import { ExpressInlinedRequestBodyContext, GeneratedExpressInlinedRequestBody } from "@fern-typescript/contexts"
+import { ExpressInlinedRequestBodyGenerator } from "@fern-typescript/express-inlined-request-body-generator"
+import { PackageResolver } from "@fern-typescript/resolvers"
+import { SourceFile } from "ts-morph"
 
-import { Name } from '@fern-fern/ir-sdk/api'
+import { Name } from "@fern-fern/ir-sdk/api"
 
-import { ExpressInlinedRequestBodyDeclarationReferencer } from '../../declaration-referencers/ExpressInlinedRequestBodyDeclarationReferencer'
+import { ExpressInlinedRequestBodyDeclarationReferencer } from "../../declaration-referencers/ExpressInlinedRequestBodyDeclarationReferencer"
 
 export declare namespace ExpressInlinedRequestBodyContextImpl {
     export interface Init {
@@ -62,8 +62,8 @@ export class ExpressInlinedRequestBodyContextImpl implements ExpressInlinedReque
         if (endpoint == null) {
             throw new Error(`Endpoint ${endpointName.originalName} does not exist`)
         }
-        if (endpoint.requestBody?.type !== 'inlinedRequestBody') {
-            throw new Error('Request is not inlined')
+        if (endpoint.requestBody?.type !== "inlinedRequestBody") {
+            throw new Error("Request is not inlined")
         }
         return this.expressInlinedRequestBodyGenerator.generateInlinedRequestBody({
             requestBody: endpoint.requestBody,
@@ -89,7 +89,7 @@ export class ExpressInlinedRequestBodyContextImpl implements ExpressInlinedReque
             importsManager: this.importsManager,
             exportsManager: this.exportsManager,
             importStrategy: {
-                type: 'fromRoot',
+                type: "fromRoot",
                 namespaceImport: this.expressInlinedRequestBodyDeclarationReferencer.namespaceExport
             },
             referencedIn: this.sourceFile

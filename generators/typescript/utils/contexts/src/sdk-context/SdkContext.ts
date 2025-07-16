@@ -1,26 +1,26 @@
-import { ExportsManager, ImportsManager, NpmPackage } from '@fern-typescript/commons'
-import { ts } from 'ts-morph'
+import { ExportsManager, ImportsManager, NpmPackage } from "@fern-typescript/commons"
+import { ts } from "ts-morph"
 
-import { GeneratorNotificationService } from '@fern-api/base-generator'
-import { Logger } from '@fern-api/logger'
+import { GeneratorNotificationService } from "@fern-api/base-generator"
+import { Logger } from "@fern-api/logger"
 
-import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
-import { IntermediateRepresentation } from '@fern-fern/ir-sdk/api'
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api"
 
-import { BaseContext } from '../base-context'
-import { EndpointErrorUnionContext } from './endpoint-error-union'
-import { EnvironmentsContext } from './environments'
-import { GenericAPISdkErrorContext } from './generic-api-sdk-error'
-import { RequestWrapperContext } from './request-wrapper'
-import { SdkClientClassContext } from './sdk-client-class'
-import { SdkEndpointTypeSchemasContext } from './sdk-endpoint-type-schemas'
-import { SdkErrorContext } from './sdk-error'
-import { SdkErrorSchemaContext } from './sdk-error-schema'
-import { SdkInlinedRequestBodySchemaContext } from './sdk-inlined-request-body-schema'
-import { TimeoutSdkErrorContext } from './timeout-sdk-error'
-import { VersionContext } from './version'
-import { WebsocketClassContext } from './websocket-class'
-import { WebsocketTypeSchemaContext } from './websocket-type-schema'
+import { BaseContext } from "../base-context"
+import { EndpointErrorUnionContext } from "./endpoint-error-union"
+import { EnvironmentsContext } from "./environments"
+import { GenericAPISdkErrorContext } from "./generic-api-sdk-error"
+import { RequestWrapperContext } from "./request-wrapper"
+import { SdkClientClassContext } from "./sdk-client-class"
+import { SdkEndpointTypeSchemasContext } from "./sdk-endpoint-type-schemas"
+import { SdkErrorContext } from "./sdk-error"
+import { SdkErrorSchemaContext } from "./sdk-error-schema"
+import { SdkInlinedRequestBodySchemaContext } from "./sdk-inlined-request-body-schema"
+import { TimeoutSdkErrorContext } from "./timeout-sdk-error"
+import { VersionContext } from "./version"
+import { WebsocketClassContext } from "./websocket-class"
+import { WebsocketTypeSchemaContext } from "./websocket-type-schema"
 
 export interface SdkContext extends BaseContext {
     logger: Logger

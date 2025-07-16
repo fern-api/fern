@@ -1,4 +1,4 @@
-import { FernIr } from '@fern-api/dynamic-ir-sdk'
+import { FernIr } from "@fern-api/dynamic-ir-sdk"
 
 /**
  * A type instance that can be converted into a language-specific AST node.

@@ -1,4 +1,4 @@
-import { Ternary } from '@fern-api/browser-compatible-base-generator'
+import { Ternary } from "@fern-api/browser-compatible-base-generator"
 
 import {
     Array as Array_,
@@ -14,11 +14,11 @@ import {
     MethodInvocation,
     Parameter,
     Trait
-} from './ast'
-import { DataClass } from './ast/DataClass'
-import { MergeArrays } from './ast/MergeArrays'
-import { AstNode } from './ast/core/AstNode'
-import { convertToPhpVariableName } from './ast/utils/convertToPhpVariableName'
+} from "./ast"
+import { DataClass } from "./ast/DataClass"
+import { MergeArrays } from "./ast/MergeArrays"
+import { AstNode } from "./ast/core/AstNode"
+import { convertToPhpVariableName } from "./ast/utils/convertToPhpVariableName"
 
 export function array(args: Array_.Args): Array_ {
     return new Array_(args)
@@ -66,7 +66,7 @@ export function invokeMethod(args: MethodInvocation.Args): MethodInvocation {
 
 export function throwException(args: ClassInstantiation.Args): AstNode {
     return codeblock((writer) => {
-        writer.write('throw ')
+        writer.write("throw ")
         writer.writeNode(instantiateClass(args))
     })
 }
@@ -90,7 +90,7 @@ export function ternary(args: Ternary.Args): Ternary {
 export function assignVariable(variableRef: AstNode, variableValue: string | AstNode): AstNode {
     return codeblock((writer) => {
         writer.writeNodeOrString(variableRef)
-        writer.write(' = ')
+        writer.write(" = ")
         writer.writeNodeOrString(variableValue)
     })
 }
@@ -109,11 +109,11 @@ export function mergeArrays(...args: MergeArrays.Args): MergeArrays {
 
 export function this_(): AstNode {
     return new CodeBlock((writer) => {
-        writer.write('$this')
+        writer.write("$this")
     })
 }
 
-export { AstNode } from './ast/core/AstNode'
+export { AstNode } from "./ast/core/AstNode"
 export {
     Access,
     Array,
@@ -134,4 +134,4 @@ export {
     Type,
     TypeLiteral,
     Writer
-} from './ast'
+} from "./ast"

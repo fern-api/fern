@@ -1,13 +1,13 @@
-import { mkdir } from 'fs/promises'
+import { mkdir } from "fs/promises"
 
-import { AbstractProject } from '@fern-api/base-generator'
-import { RelativeFilePath, join } from '@fern-api/fs-utils'
-import { BaseSwiftCustomConfigSchema } from '@fern-api/swift-codegen'
+import { AbstractProject } from "@fern-api/base-generator"
+import { RelativeFilePath, join } from "@fern-api/fs-utils"
+import { BaseSwiftCustomConfigSchema } from "@fern-api/swift-codegen"
 
-import { AbstractSwiftGeneratorContext } from '../context/AbstractSwiftGeneratorContext'
-import { SwiftFile } from './SwiftFile'
+import { AbstractSwiftGeneratorContext } from "../context/AbstractSwiftGeneratorContext"
+import { SwiftFile } from "./SwiftFile"
 
-const SRC_DIRECTORY_NAME = 'src'
+const SRC_DIRECTORY_NAME = "src"
 
 export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<BaseSwiftCustomConfigSchema>> {
     private name: string

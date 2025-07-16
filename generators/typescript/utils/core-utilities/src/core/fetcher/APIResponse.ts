@@ -1,4 +1,4 @@
-import { RawResponse } from './RawResponse'
+import { RawResponse } from "./RawResponse"
 
 /**
  * The response of an API call.

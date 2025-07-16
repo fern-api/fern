@@ -1,12 +1,12 @@
-import { compact } from 'lodash-es'
-import { z } from 'zod'
+import { compact } from "lodash-es"
+import { z } from "zod"
 
-import { Logger } from '@fern-api/logger'
+import { Logger } from "@fern-api/logger"
 
-import { OpenAPIExtension } from './openapi/v3/extensions/extensions'
-import { FernOpenAPIExtension } from './openapi/v3/extensions/fernExtensions'
-import { TypedExtensionId } from './openapi/v3/extensions/id'
-import { ReadmeOpenAPIExtension } from './openapi/v3/extensions/readmeExtensions'
+import { OpenAPIExtension } from "./openapi/v3/extensions/extensions"
+import { FernOpenAPIExtension } from "./openapi/v3/extensions/fernExtensions"
+import { TypedExtensionId } from "./openapi/v3/extensions/id"
+import { ReadmeOpenAPIExtension } from "./openapi/v3/extensions/readmeExtensions"
 
 type Extension<T> =
     | FernOpenAPIExtension
@@ -48,8 +48,8 @@ export function getExtensionAndValidate<T>(
             return schema.parse(extensionValue)
         }
     } catch (e) {
-        const breadcrumb = compact(breadcrumbs).join(' -> ')
-        logger.error(`${breadcrumb.length > 0 ? `${breadcrumb}: ` : ''}Failed to parse ${extension}`)
+        const breadcrumb = compact(breadcrumbs).join(" -> ")
+        logger.error(`${breadcrumb.length > 0 ? `${breadcrumb}: ` : ""}Failed to parse ${extension}`)
     }
     return undefined
 }

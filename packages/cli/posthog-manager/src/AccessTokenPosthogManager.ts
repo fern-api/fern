@@ -1,8 +1,8 @@
-import { PostHog } from 'posthog-node'
+import { PostHog } from "posthog-node"
 
-import { PosthogEvent } from '@fern-api/task-context'
+import { PosthogEvent } from "@fern-api/task-context"
 
-import { PosthogManager } from './PosthogManager'
+import { PosthogManager } from "./PosthogManager"
 
 export class AccessTokenPosthogManager implements PosthogManager {
     private posthog: PostHog
@@ -19,7 +19,7 @@ export class AccessTokenPosthogManager implements PosthogManager {
         if (event.orgId != null) {
             this.posthog.capture({
                 distinctId: event.orgId,
-                event: 'CLI',
+                event: "CLI",
                 properties: {
                     ...event,
                     ...event.properties,

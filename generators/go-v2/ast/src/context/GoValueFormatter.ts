@@ -1,10 +1,10 @@
-import { assertNever } from '@fern-api/core-utils'
+import { assertNever } from "@fern-api/core-utils"
 
-import { PrimitiveTypeV1, TypeReference } from '@fern-fern/ir-sdk/api'
+import { PrimitiveTypeV1, TypeReference } from "@fern-fern/ir-sdk/api"
 
-import { go } from '../'
-import { BaseGoCustomConfigSchema } from '../custom-config/BaseGoCustomConfigSchema'
-import { AbstractGoGeneratorContext } from './AbstractGoGeneratorContext'
+import { go } from "../"
+import { BaseGoCustomConfigSchema } from "../custom-config/BaseGoCustomConfigSchema"
+import { AbstractGoGeneratorContext } from "./AbstractGoGeneratorContext"
 
 export declare namespace GoValueFormatter {
     interface Args {
@@ -46,7 +46,7 @@ export class GoValueFormatter {
         const optionalOrNullableType = this.context.maybeUnwrapOptionalOrNullable(reference)
         if (optionalOrNullableType != null) {
             if (this.context.needsOptionalDereference(optionalOrNullableType)) {
-                prefix = go.codeblock('*')
+                prefix = go.codeblock("*")
             }
             isOptional = true
         }
@@ -54,20 +54,20 @@ export class GoValueFormatter {
         const primitive = this.context.maybePrimitive(reference)
         if (primitive != null) {
             if (isOptional) {
-                prefix = go.codeblock('*')
+                prefix = go.codeblock("*")
             }
             switch (primitive) {
                 case PrimitiveTypeV1.DateTime:
                     prefix = undefined
                     suffix = go.codeblock((writer) => {
-                        writer.write('.Format(')
+                        writer.write(".Format(")
                         writer.writeNode(
                             go.typeReference({
-                                name: 'RFC3339',
-                                importPath: 'time'
+                                name: "RFC3339",
+                                importPath: "time"
                             })
                         )
-                        writer.write(')')
+                        writer.write(")")
                     })
                     break
                 case PrimitiveTypeV1.Date:
@@ -78,13 +78,13 @@ export class GoValueFormatter {
                     prefix = go.codeblock((writer) => {
                         writer.writeNode(
                             go.typeReference({
-                                name: 'StdEncoding',
-                                importPath: 'encoding/base64'
+                                name: "StdEncoding",
+                                importPath: "encoding/base64"
                             })
                         )
-                        writer.write('.EncodeToString(')
+                        writer.write(".EncodeToString(")
                     })
-                    suffix = go.codeblock(')')
+                    suffix = go.codeblock(")")
                     break
                 case PrimitiveTypeV1.Uuid:
                 case PrimitiveTypeV1.BigInteger:
@@ -98,13 +98,13 @@ export class GoValueFormatter {
                     prefix = go.codeblock((writer) => {
                         writer.writeNode(
                             go.typeReference({
-                                name: 'Sprintf',
-                                importPath: 'fmt'
+                                name: "Sprintf",
+                                importPath: "fmt"
                             })
                         )
                         writer.write('("%v", ')
                     })
-                    suffix = go.codeblock(')')
+                    suffix = go.codeblock(")")
                     break
                 case PrimitiveTypeV1.String:
                     break

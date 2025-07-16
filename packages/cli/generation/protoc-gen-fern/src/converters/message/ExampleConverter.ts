@@ -5,18 +5,18 @@ import {
     FieldDescriptorProto_Label,
     FieldDescriptorProto_Type,
     FileDescriptorProto
-} from '@bufbuild/protobuf/wkt'
+} from "@bufbuild/protobuf/wkt"
 
-import { AbstractConverter } from '@fern-api/v2-importer-commons'
+import { AbstractConverter } from "@fern-api/v2-importer-commons"
 
-import { Logger } from '../../commons/logging'
-import { ProtofileConverterContext } from '../ProtofileConverterContext'
-import { initializeGlobalCommentsStore } from '../utils/CreateGlobalCommentsStore'
+import { Logger } from "../../commons/logging"
+import { ProtofileConverterContext } from "../ProtofileConverterContext"
+import { initializeGlobalCommentsStore } from "../utils/CreateGlobalCommentsStore"
 
 export declare namespace ExampleConverter {
     export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {
         message: DescriptorProto
-        type: 'request' | 'response'
+        type: "request" | "response"
         depth?: number
         seenMessages?: Set<string>
     }
@@ -31,13 +31,13 @@ export declare namespace ExampleConverter {
 
 export class ExampleConverter extends AbstractConverter<ProtofileConverterContext, ExampleConverter.Output> {
     private readonly MAX_DEPTH = 12
-    private readonly EXAMPLE_STRING = 'example'
+    private readonly EXAMPLE_STRING = "example"
     private readonly EXAMPLE_NUMBER = 42
     private readonly EXAMPLE_BOOL = true
-    private readonly EXAMPLE_BYTES = 'bytes'
+    private readonly EXAMPLE_BYTES = "bytes"
 
     private readonly message: DescriptorProto
-    private readonly type: 'request' | 'response'
+    private readonly type: "request" | "response"
     private readonly depth: number
     private readonly seenMessages: Set<string>
 
@@ -87,8 +87,8 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
     }
 
     private getFullyQualifiedMessageName(message: DescriptorProto): string {
-        const packageName = this.context.spec.package || ''
-        const messageName = message.name || ''
+        const packageName = this.context.spec.package || ""
+        const messageName = message.name || ""
 
         if (packageName) {
             return `${packageName}.${messageName}`
@@ -112,7 +112,7 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
 
         // Select one field per oneof
         for (const field of this.message.field) {
-            const hasOneofIndex = Object.hasOwn(field, 'oneofIndex')
+            const hasOneofIndex = Object.hasOwn(field, "oneofIndex")
             if (hasOneofIndex && field.oneofIndex != null) {
                 if (!oneofChoices.has(field.oneofIndex)) {
                     oneofChoices.set(field.oneofIndex, field)
@@ -121,12 +121,12 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
         }
 
         for (const field of this.message.field) {
-            const fieldName = field.name ?? ''
+            const fieldName = field.name ?? ""
             if (!fieldName) {
                 continue
             }
 
-            const hasOneofIndex = Object.hasOwn(field, 'oneofIndex')
+            const hasOneofIndex = Object.hasOwn(field, "oneofIndex")
             if (hasOneofIndex && field.oneofIndex != null) {
                 const chosenField = oneofChoices.get(field.oneofIndex)
                 if (chosenField !== field) {
@@ -167,7 +167,7 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
                 continue
             }
 
-            const hasOneofIndex = Object.hasOwn(field, 'oneofIndex')
+            const hasOneofIndex = Object.hasOwn(field, "oneofIndex")
             if (hasOneofIndex && field.oneofIndex != null && oneofGroups.has(field.oneofIndex)) {
                 const groupName = oneofGroups.get(field.oneofIndex) ?? undefined
                 if (groupName != null) {
@@ -320,7 +320,7 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
     }
 
     private convertEnum(field: FieldDescriptorProto): ExampleConverter.Output {
-        const typeName = field.typeName ?? ''
+        const typeName = field.typeName ?? ""
         const normalizedTypeName = this.context.maybeRemoveLeadingPeriod(typeName)
 
         const enumType = this.findEnumType(normalizedTypeName)
@@ -429,10 +429,10 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
     }
 
     private findEnumInFile(typeName: string, file: FileDescriptorProto): EnumDescriptorProto | undefined {
-        const packageName = file.package || ''
+        const packageName = file.package || ""
 
         for (const enumType of file.enumType) {
-            const fullName = packageName ? `${packageName}.${enumType.name}` : enumType.name || ''
+            const fullName = packageName ? `${packageName}.${enumType.name}` : enumType.name || ""
             if (fullName === typeName || enumType.name === typeName) {
                 return enumType
             }
@@ -453,7 +453,7 @@ export class ExampleConverter extends AbstractConverter<ProtofileConverterContex
         message: DescriptorProto,
         packagePrefix: string
     ): EnumDescriptorProto | undefined {
-        const messagePrefix = packagePrefix ? `${packagePrefix}.${message.name}` : message.name || ''
+        const messagePrefix = packagePrefix ? `${packagePrefix}.${message.name}` : message.name || ""
 
         for (const enumType of message.enumType) {
             const fullName = `${messagePrefix}.${enumType.name}`

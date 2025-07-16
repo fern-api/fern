@@ -1,6 +1,6 @@
-import { FileDescriptorProto } from '@bufbuild/protobuf/dist/cjs/wkt/gen/google/protobuf/descriptor_pb'
+import { FileDescriptorProto } from "@bufbuild/protobuf/dist/cjs/wkt/gen/google/protobuf/descriptor_pb"
 
-import { SOURCE_CODE_INFO_PATH_STARTERS } from './PathFieldNumbers'
+import { SOURCE_CODE_INFO_PATH_STARTERS } from "./PathFieldNumbers"
 
 export type PathStarterValues = (typeof SOURCE_CODE_INFO_PATH_STARTERS)[keyof typeof SOURCE_CODE_INFO_PATH_STARTERS]
 
@@ -20,7 +20,7 @@ export function initializeGlobalCommentsStore(): Record<PathStarterValues, Comme
 export function createGlobalCommentsStore(spec: FileDescriptorProto): Record<PathStarterValues, CommentNode> {
     const commentsByStartingNodeType = initializeGlobalCommentsStore()
 
-    if (spec.package?.startsWith('google.protobuf')) {
+    if (spec.package?.startsWith("google.protobuf")) {
         return commentsByStartingNodeType
     }
 
@@ -36,7 +36,7 @@ export function createGlobalCommentsStore(spec: FileDescriptorProto): Record<Pat
             return
         }
 
-        const comment = sourceCodeInfoLocation.leadingComments || sourceCodeInfoLocation.trailingComments || ''
+        const comment = sourceCodeInfoLocation.leadingComments || sourceCodeInfoLocation.trailingComments || ""
 
         if (!comment) {
             return

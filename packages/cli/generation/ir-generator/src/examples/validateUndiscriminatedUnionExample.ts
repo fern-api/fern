@@ -1,11 +1,11 @@
-import { FernWorkspace } from '@fern-api/api-workspace-commons'
-import { RawSchemas } from '@fern-api/fern-definition-schema'
+import { FernWorkspace } from "@fern-api/api-workspace-commons"
+import { RawSchemas } from "@fern-api/fern-definition-schema"
 
-import { FernFileContext } from '../FernFileContext'
-import { ExampleResolver } from '../resolvers/ExampleResolver'
-import { TypeResolver } from '../resolvers/TypeResolver'
-import { ExampleViolation } from './exampleViolation'
-import { validateTypeReferenceExample } from './validateTypeReferenceExample'
+import { FernFileContext } from "../FernFileContext"
+import { ExampleResolver } from "../resolvers/ExampleResolver"
+import { TypeResolver } from "../resolvers/TypeResolver"
+import { ExampleViolation } from "./exampleViolation"
+import { validateTypeReferenceExample } from "./validateTypeReferenceExample"
 
 export function validateUndiscriminatedUnionExample({
     rawUnion,
@@ -29,7 +29,7 @@ export function validateUndiscriminatedUnionExample({
     const violations: ExampleViolation[] = []
     for (const member of rawUnion.union) {
         const violationsForMember = validateTypeReferenceExample({
-            rawTypeReference: typeof member === 'string' ? member : member.type,
+            rawTypeReference: typeof member === "string" ? member : member.type,
             example,
             typeResolver,
             exampleResolver,

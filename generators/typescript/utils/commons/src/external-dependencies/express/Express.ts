@@ -1,12 +1,12 @@
-import { ts } from 'ts-morph'
+import { ts } from "ts-morph"
 
-export type ExpressHttpVerb = 'get' | 'post' | 'put' | 'patch' | 'delete' | 'head'
+export type ExpressHttpVerb = "get" | "post" | "put" | "patch" | "delete" | "head"
 
 export interface Express {
     Express: () => ts.TypeNode
     RequestHandler: () => ts.TypeNode
     Request: {
-        body: 'body'
+        body: "body"
         _getReferenceToType: (args: {
             pathParameters: ts.TypeNode | undefined
             request: ts.TypeNode | undefined

@@ -5,9 +5,9 @@ import {
     PackageId,
     getParameterNameForPositionalPathParameter,
     getTextOfTsNode
-} from '@fern-typescript/commons'
-import { SdkContext } from '@fern-typescript/contexts'
-import { OptionalKind, ParameterDeclarationStructure, ts } from 'ts-morph'
+} from "@fern-typescript/commons"
+import { SdkContext } from "@fern-typescript/contexts"
+import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph"
 
 import {
     ExampleEndpointCall,
@@ -16,16 +16,16 @@ import {
     HttpRequestBody,
     HttpService,
     IntermediateRepresentation
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { GeneratedSdkClientClassImpl } from '../GeneratedSdkClientClassImpl'
-import { GeneratedQueryParams } from '../endpoints/utils/GeneratedQueryParams'
-import { appendPropertyToFormData } from '../endpoints/utils/appendPropertyToFormData'
-import { generateHeaders } from '../endpoints/utils/generateHeaders'
-import { getParameterNameForFile } from '../endpoints/utils/getParameterNameForFile'
-import { getPathParametersForEndpointSignature } from '../endpoints/utils/getPathParametersForEndpointSignature'
-import { FileUploadRequestParameter } from '../request-parameter/FileUploadRequestParameter'
-import { GeneratedEndpointRequest } from './GeneratedEndpointRequest'
+import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl"
+import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams"
+import { appendPropertyToFormData } from "../endpoints/utils/appendPropertyToFormData"
+import { generateHeaders } from "../endpoints/utils/generateHeaders"
+import { getParameterNameForFile } from "../endpoints/utils/getParameterNameForFile"
+import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature"
+import { FileUploadRequestParameter } from "../request-parameter/FileUploadRequestParameter"
+import { GeneratedEndpointRequest } from "./GeneratedEndpointRequest"
 
 export declare namespace GeneratedFileUploadEndpointRequest {
     export interface Init {
@@ -41,13 +41,13 @@ export declare namespace GeneratedFileUploadEndpointRequest {
         includeSerdeLayer: boolean
         allowExtraFields: boolean
         omitUndefined: boolean
-        formDataSupport: 'Node16' | 'Node18'
+        formDataSupport: "Node16" | "Node18"
     }
 }
 
 export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequest {
-    private static FORM_DATA_VARIABLE_NAME = '_request'
-    private static FORM_DATA_REQUEST_OPTIONS_VARIABLE_NAME = '_maybeEncodedRequest'
+    private static FORM_DATA_VARIABLE_NAME = "_request"
+    private static FORM_DATA_REQUEST_OPTIONS_VARIABLE_NAME = "_maybeEncodedRequest"
 
     private importsManager: ImportsManager
     private ir: IntermediateRepresentation
@@ -62,7 +62,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
     private includeSerdeLayer: boolean
     private allowExtraFields: boolean
     private omitUndefined: boolean
-    private readonly formDataSupport: 'Node16' | 'Node18'
+    private readonly formDataSupport: "Node16" | "Node18"
 
     constructor({
         ir,
@@ -93,14 +93,14 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         this.formDataSupport = formDataSupport
         if (
             this.inlineFileProperties ||
-            requestBody.properties.some((property) => property.type === 'bodyProperty') ||
+            requestBody.properties.some((property) => property.type === "bodyProperty") ||
             endpoint.queryParameters.length > 0
         ) {
             if (this.endpoint.sdkRequest == null) {
-                throw new Error('SdkRequest is not defined for file upload endpoint')
+                throw new Error("SdkRequest is not defined for file upload endpoint")
             }
-            if (this.endpoint.sdkRequest.shape.type !== 'wrapper') {
-                throw new Error('SdkRequest is not a wrapper for file upload endpoint')
+            if (this.endpoint.sdkRequest.shape.type !== "wrapper") {
+                throw new Error("SdkRequest is not a wrapper for file upload endpoint")
             }
             this.requestParameter = new FileUploadRequestParameter({
                 packageId,
@@ -128,11 +128,11 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         const result: ts.Expression[] = []
         if (!context.inlineFileProperties) {
             for (const property of this.requestBody.properties) {
-                if (property.type === 'file') {
+                if (property.type === "file") {
                     const createReadStream = context.externalDependencies.fs.createReadStream(
-                        ts.factory.createStringLiteral('/path/to/your/file')
+                        ts.factory.createStringLiteral("/path/to/your/file")
                     )
-                    if (property.value.type === 'fileArray') {
+                    if (property.value.type === "fileArray") {
                         result.push(ts.factory.createArrayLiteralExpression([createReadStream]))
                     } else {
                         result.push(createReadStream)
@@ -149,7 +149,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                 (param) => param.name.originalName === pathParameter.name.originalName
             )
             if (exampleParameter == null) {
-                result.push(ts.factory.createIdentifier('undefined'))
+                result.push(ts.factory.createIdentifier("undefined"))
             } else {
                 const generatedExample = context.type.getGeneratedExample(exampleParameter.value)
                 result.push(generatedExample.build(context, opts))
@@ -159,7 +159,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
             const requestParameterExample = this.requestParameter.generateExample({ context, example, opts })
             if (
                 requestParameterExample != null &&
-                getTextOfTsNode(requestParameterExample) === '{}' &&
+                getTextOfTsNode(requestParameterExample) === "{}" &&
                 this.requestParameter.isOptional({ context })
             ) {
                 // pass
@@ -176,11 +176,11 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         const parameters: OptionalKind<ParameterDeclarationStructure>[] = []
         if (!context.inlineFileProperties) {
             for (const property of this.requestBody.properties) {
-                if (property.type === 'file') {
+                if (property.type === "file") {
                     parameters.push({
                         name: getParameterNameForFile({
                             property: property.value,
-                            wrapperName: this.endpoint.sdkRequest?.requestParameterName.camelCase.safeName ?? 'request',
+                            wrapperName: this.endpoint.sdkRequest?.requestParameterName.camelCase.safeName ?? "request",
                             includeSerdeLayer: context.includeSerdeLayer,
                             retainOriginalCasing: context.retainOriginalCasing,
                             inlineFileProperties: context.inlineFileProperties
@@ -213,11 +213,11 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
     private getFileParameterType(property: FileProperty, context: SdkContext): ts.TypeNode {
         const types: ts.TypeNode[] = []
 
-        if (this.formDataSupport === 'Node16') {
+        if (this.formDataSupport === "Node16") {
             types.push(
                 this.maybeWrapFileArray({
                     property,
-                    value: ts.factory.createTypeReferenceNode('File')
+                    value: ts.factory.createTypeReferenceNode("File")
                 })
             )
             types.push(
@@ -250,7 +250,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
     }
 
     private maybeWrapFileArray({ property, value }: { property: FileProperty; value: ts.TypeNode }): ts.TypeNode {
-        return property.type === 'fileArray' ? ts.factory.createArrayTypeNode(value) : value
+        return property.type === "fileArray" ? ts.factory.createArrayTypeNode(value) : value
     }
 
     public getBuildRequestStatements(context: SdkContext): ts.Statement[] {
@@ -289,7 +289,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                     referenceToFormData: ts.factory.createIdentifier(
                         GeneratedFileUploadEndpointRequest.FORM_DATA_VARIABLE_NAME
                     ),
-                    wrapperName: this.endpoint.sdkRequest?.requestParameterName.camelCase.safeName ?? 'request',
+                    wrapperName: this.endpoint.sdkRequest?.requestParameterName.camelCase.safeName ?? "request",
                     requestParameter: this.requestParameter,
                     includeSerdeLayer: this.includeSerdeLayer,
                     allowExtraFields: this.allowExtraFields,
@@ -326,12 +326,12 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
 
     public getFetcherRequestArgs(
         context: SdkContext
-    ): Pick<Fetcher.Args, 'headers' | 'queryParameters' | 'body' | 'contentType' | 'requestType' | 'duplex'> {
+    ): Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType" | "requestType" | "duplex"> {
         const queryParams = this.getQueryParams(context)
         return {
             headers: this.getHeaders(context),
             queryParameters: queryParams != null ? queryParams.getReferenceTo() : undefined,
-            requestType: 'file',
+            requestType: "file",
             body: context.coreUtilities.formDataUtils.getBody({
                 referenceToFormData: ts.factory.createIdentifier(
                     GeneratedFileUploadEndpointRequest.FORM_DATA_REQUEST_OPTIONS_VARIABLE_NAME
@@ -370,14 +370,14 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
 
     public getReferenceToPathParameter(pathParameterKey: string, context: SdkContext): ts.Expression {
         if (this.requestParameter == null) {
-            throw new Error('Cannot get reference to path parameter because request parameter is not defined.')
+            throw new Error("Cannot get reference to path parameter because request parameter is not defined.")
         }
         return this.requestParameter.getReferenceToPathParameter(pathParameterKey, context)
     }
 
     public getReferenceToQueryParameter(queryParameterKey: string, context: SdkContext): ts.Expression {
         if (this.requestParameter == null) {
-            throw new Error('Cannot get reference to query parameter because request parameter is not defined.')
+            throw new Error("Cannot get reference to query parameter because request parameter is not defined.")
         }
         return this.requestParameter.getReferenceToQueryParameter(queryParameterKey, context)
     }

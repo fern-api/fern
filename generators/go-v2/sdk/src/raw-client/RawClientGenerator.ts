@@ -1,11 +1,11 @@
-import { RelativeFilePath, join } from '@fern-api/fs-utils'
-import { go } from '@fern-api/go-ast'
-import { FileGenerator, GoFile } from '@fern-api/go-base'
+import { RelativeFilePath, join } from "@fern-api/fs-utils"
+import { go } from "@fern-api/go-ast"
+import { FileGenerator, GoFile } from "@fern-api/go-base"
 
-import { HttpService, ServiceId, Subpackage } from '@fern-fern/ir-sdk/api'
+import { HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api"
 
-import { SdkCustomConfigSchema } from '../SdkCustomConfig'
-import { SdkGeneratorContext } from '../SdkGeneratorContext'
+import { SdkCustomConfigSchema } from "../SdkCustomConfig"
+import { SdkGeneratorContext } from "../SdkGeneratorContext"
 
 export declare namespace RawClientGenerator {
     interface Args {
@@ -37,12 +37,12 @@ export class RawClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSch
 
         struct.addField(
             go.field({
-                name: 'baseURL',
+                name: "baseURL",
                 type: go.Type.string()
             }),
             this.context.caller.getField(),
             go.field({
-                name: 'header',
+                name: "header",
                 type: go.Type.reference(this.context.getNetHttpHeaderTypeReference())
             })
         )
@@ -75,50 +75,50 @@ export class RawClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSch
         return {
             parameters: [
                 go.parameter({
-                    name: 'options',
+                    name: "options",
                     type: this.context.getRequestOptionsType()
                 })
             ],
             body: go.codeblock((writer) => {
-                writer.write('return ')
+                writer.write("return ")
                 writer.writeNode(
                     go.TypeInstantiation.structPointer({
                         typeReference: this.getClassReference(),
                         fields: [
                             {
-                                name: 'baseURL',
+                                name: "baseURL",
                                 value: go.TypeInstantiation.reference(
                                     go.selector({
-                                        on: go.codeblock('options'),
-                                        selector: go.codeblock('BaseURL')
+                                        on: go.codeblock("options"),
+                                        selector: go.codeblock("BaseURL")
                                     })
                                 )
                             },
                             {
-                                name: 'caller',
+                                name: "caller",
                                 value: go.TypeInstantiation.reference(
                                     this.context.caller.instantiate({
                                         client: go.TypeInstantiation.reference(
                                             go.selector({
-                                                on: go.codeblock('options'),
-                                                selector: go.codeblock('HTTPClient')
+                                                on: go.codeblock("options"),
+                                                selector: go.codeblock("HTTPClient")
                                             })
                                         ),
                                         maxAttempts: go.TypeInstantiation.reference(
                                             go.selector({
-                                                on: go.codeblock('options'),
-                                                selector: go.codeblock('MaxAttempts')
+                                                on: go.codeblock("options"),
+                                                selector: go.codeblock("MaxAttempts")
                                             })
                                         )
                                     })
                                 )
                             },
                             {
-                                name: 'header',
+                                name: "header",
                                 value: go.TypeInstantiation.reference(
                                     go.selector({
-                                        on: go.codeblock('options'),
-                                        selector: go.codeblock('ToHeader()')
+                                        on: go.codeblock("options"),
+                                        selector: go.codeblock("ToHeader()")
                                     })
                                 )
                             }

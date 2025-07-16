@@ -1,8 +1,8 @@
-import { BaseContext } from '@fern-typescript/contexts'
-import { SingleUnionTypeGenerator } from '@fern-typescript/union-generator'
-import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from 'ts-morph'
+import { BaseContext } from "@fern-typescript/contexts"
+import { SingleUnionTypeGenerator } from "@fern-typescript/union-generator"
+import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph"
 
-import { DeclaredTypeName } from '@fern-fern/ir-sdk/api'
+import { DeclaredTypeName } from "@fern-fern/ir-sdk/api"
 
 export declare namespace SamePropertiesAsObjectSingleUnionTypeGenerator {
     export interface Init {
@@ -14,7 +14,7 @@ export declare namespace SamePropertiesAsObjectSingleUnionTypeGenerator {
 export class SamePropertiesAsObjectSingleUnionTypeGenerator<Context extends BaseContext>
     implements SingleUnionTypeGenerator<Context>
 {
-    private static BUILDER_PARAMETER_NAME = 'value'
+    private static BUILDER_PARAMETER_NAME = "value"
 
     private extended: DeclaredTypeName
     private enableInlineTypes: boolean
@@ -46,7 +46,7 @@ export class SamePropertiesAsObjectSingleUnionTypeGenerator<Context extends Base
         const typeDeclaration = context.type.getTypeDeclaration(this.extended)
         if (this.enableInlineTypes && typeDeclaration.inline) {
             const type = context.type.getGeneratedType(typeDeclaration.name)
-            if (type.type === 'object') {
+            if (type.type === "object") {
                 return type.generateProperties(context)
             }
         }

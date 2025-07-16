@@ -1,15 +1,15 @@
-import { GeneratorConfig } from '@fern-api/base-generator'
+import { GeneratorConfig } from "@fern-api/base-generator"
 
 export interface FernOpenapiCustomConfig {
-    format: 'yaml' | 'json'
+    format: "yaml" | "json"
     customOverrides: Record<string, unknown>
     filename?: string
 }
 
 const DEFAULT_FERN_OPENAPI_CUSTOM_CONFIG: FernOpenapiCustomConfig = {
-    format: 'yaml',
+    format: "yaml",
     customOverrides: {},
-    filename: 'openapi.yml'
+    filename: "openapi.yml"
 }
 
 export function getCustomConfig(generatorConfig: GeneratorConfig): FernOpenapiCustomConfig {

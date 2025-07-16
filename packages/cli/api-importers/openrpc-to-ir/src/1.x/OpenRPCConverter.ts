@@ -1,14 +1,14 @@
-import { MethodObject, OpenrpcDocument, ServerObject } from '@open-rpc/meta-schema'
+import { MethodObject, OpenrpcDocument, ServerObject } from "@open-rpc/meta-schema"
 
-import { HttpHeader, IntermediateRepresentation, PathParameter, QueryParameter } from '@fern-api/ir-sdk'
-import { AbstractSpecConverter, Converters, ServersConverter } from '@fern-api/v2-importer-commons'
+import { HttpHeader, IntermediateRepresentation, PathParameter, QueryParameter } from "@fern-api/ir-sdk"
+import { AbstractSpecConverter, Converters, ServersConverter } from "@fern-api/v2-importer-commons"
 
-import { OpenRPCConverterContext3_1 } from './OpenRPCConverterContext3_1'
-import { ParameterConverter } from './ParameterConverter'
-import { FernParametersExtension } from './extensions/x-fern-parameters'
-import { MethodConverter } from './methods/MethodConverter'
+import { OpenRPCConverterContext3_1 } from "./OpenRPCConverterContext3_1"
+import { ParameterConverter } from "./ParameterConverter"
+import { FernParametersExtension } from "./extensions/x-fern-parameters"
+import { MethodConverter } from "./methods/MethodConverter"
 
-export type BaseIntermediateRepresentation = Omit<IntermediateRepresentation, 'apiName' | 'constants'>
+export type BaseIntermediateRepresentation = Omit<IntermediateRepresentation, "apiName" | "constants">
 
 export declare namespace OpenRPCConverter {
     type Args = AbstractSpecConverter.Args<OpenRPCConverterContext3_1>
@@ -40,7 +40,7 @@ export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterCont
     } {
         const serversConverter = new ServersConverter({
             context: this.context,
-            breadcrumbs: ['servers'],
+            breadcrumbs: ["servers"],
             servers: this.context.spec.servers,
             endpointLevelServers
         })
@@ -56,7 +56,7 @@ export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterCont
             const schemaConverter = new Converters.SchemaConverters.SchemaConverter({
                 context: this.context,
                 id,
-                breadcrumbs: ['components', 'schemas', id],
+                breadcrumbs: ["components", "schemas", id],
                 schema
             })
             const convertedSchema = schemaConverter.convert()
@@ -77,7 +77,7 @@ export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterCont
 
         const fernParametersExtension = new FernParametersExtension({
             context: this.context,
-            breadcrumbs: ['methods'],
+            breadcrumbs: ["methods"],
             operation: this.context.spec
         })
 
@@ -100,15 +100,15 @@ export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterCont
                     continue
                 }
                 switch (convertedParameter.type) {
-                    case 'path': {
+                    case "path": {
                         pathParameters.push(convertedParameter.parameter)
                         break
                     }
-                    case 'query': {
+                    case "query": {
                         queryParameters.push(convertedParameter.parameter)
                         break
                     }
-                    case 'header': {
+                    case "header": {
                         headers.push(convertedParameter.parameter)
                         break
                     }
@@ -124,7 +124,7 @@ export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterCont
         for (const method of this.context.spec.methods ?? []) {
             const resolvedMethod = this.context.resolveMaybeReference<MethodObject>({
                 schemaOrReference: method,
-                breadcrumbs: ['methods']
+                breadcrumbs: ["methods"]
             })
             if (resolvedMethod == null) {
                 continue
@@ -132,7 +132,7 @@ export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterCont
 
             const methodConverter = new MethodConverter({
                 context: this.context,
-                breadcrumbs: ['methods'],
+                breadcrumbs: ["methods"],
                 method: resolvedMethod,
                 pathParameters,
                 queryParameters,
@@ -147,7 +147,7 @@ export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterCont
                     endpoint: convertedMethod.endpoint,
                     audiences: convertedMethod.audiences,
                     endpointGroup: group,
-                    serviceName: 'service_root'
+                    serviceName: "service_root"
                 })
 
                 this.addTypesToIr(convertedMethod.inlinedTypes)
@@ -158,7 +158,7 @@ export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterCont
                             this.shouldAddServerToCollectedServers({
                                 server,
                                 currentServers: endpointLevelServers,
-                                specType: 'openrpc'
+                                specType: "openrpc"
                             })
                         ) {
                             endpointLevelServers.push(this.maybeDeduplicateServerName(server))

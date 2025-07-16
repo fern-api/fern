@@ -1,13 +1,13 @@
-import dedent from 'dedent'
+import dedent from "dedent"
 
-import { AbstractReadmeSnippetBuilder } from '@fern-api/base-generator'
-import { FernIr } from '@fern-api/dynamic-ir-sdk'
+import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator"
+import { FernIr } from "@fern-api/dynamic-ir-sdk"
 
-import { FernGeneratorCli } from '@fern-fern/generator-cli-sdk'
-import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
-import { EndpointId, FeatureId, FernFilepath, HttpEndpoint } from '@fern-fern/ir-sdk/api'
+import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk"
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
+import { EndpointId, FeatureId, FernFilepath, HttpEndpoint } from "@fern-fern/ir-sdk/api"
 
-import { SdkGeneratorContext } from '../SdkGeneratorContext'
+import { SdkGeneratorContext } from "../SdkGeneratorContext"
 
 interface EndpointWithFilepath {
     endpoint: HttpEndpoint
@@ -15,10 +15,10 @@ interface EndpointWithFilepath {
 }
 
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
-    private static CLIENT_VARIABLE_NAME = 'client'
+    private static CLIENT_VARIABLE_NAME = "client"
 
-    private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = 'ENVIRONMENTS'
-    private static RESPONSE_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = 'RESPONSE_HEADERS'
+    private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS"
+    private static RESPONSE_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "RESPONSE_HEADERS"
 
     private readonly context: SdkGeneratorContext
     private readonly endpointsById: Record<EndpointId, EndpointWithFilepath> = {}
@@ -252,9 +252,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const snippets: Record<EndpointId, string> = {}
         for (const endpointSnippet of Object.values(endpointSnippets)) {
             if (endpointSnippet.id.identifierOverride == null) {
-                throw new Error('Internal error; snippets must define the endpoint id to generate README.md')
+                throw new Error("Internal error; snippets must define the endpoint id to generate README.md")
             }
-            if (endpointSnippet.snippet.type !== 'go') {
+            if (endpointSnippet.snippet.type !== "go") {
                 throw new Error(`Internal error; expected go snippet but got: ${endpointSnippet.snippet.type}`)
             }
             snippets[endpointSnippet.id.identifierOverride] = endpointSnippet.snippet.client
@@ -300,7 +300,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private getAccessFromRootClient(fernFilepath: FernFilepath): string {
         const clientAccessParts = fernFilepath.allParts.map((part) => part.pascalCase.unsafeName)
         return clientAccessParts.length > 0
-            ? `${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME}.${clientAccessParts.join('.')}`
+            ? `${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME}.${clientAccessParts.join(".")}`
             : ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME
     }
 
@@ -341,10 +341,10 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private getRootPackageClientName(): string {
-        return 'client'
+        return "client"
     }
 
     private writeCode(s: string): string {
-        return s.trim() + '\n'
+        return s.trim() + "\n"
     }
 }

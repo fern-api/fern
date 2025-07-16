@@ -1,6 +1,6 @@
-import { BaseSchema, Schema, SchemaOptions, SchemaType } from '../../Schema'
-import { JsonError } from './JsonError'
-import { ParseError } from './ParseError'
+import { BaseSchema, Schema, SchemaOptions, SchemaType } from "../../Schema"
+import { JsonError } from "./JsonError"
+import { ParseError } from "./ParseError"
 
 export interface SchemaUtils<Raw, Parsed> {
     nullable: () => Schema<Raw | null, Parsed | null>

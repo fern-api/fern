@@ -1,6 +1,6 @@
-import { unknown } from '../../../../src/core/schemas/builders'
-import { itSchemaIdentity } from '../utils/itSchema'
+import { unknown } from "../../../../src/core/schemas/builders"
+import { itSchemaIdentity } from "../utils/itSchema"
 
-describe('unknown', () => {
+describe("unknown", () => {
     itSchemaIdentity(unknown(), true)
 })

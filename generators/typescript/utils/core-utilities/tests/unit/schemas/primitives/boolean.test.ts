@@ -1,14 +1,14 @@
-import { boolean } from '../../../../src/core/schemas/builders'
-import { itSchemaIdentity } from '../utils/itSchema'
-import { itValidate } from '../utils/itValidate'
+import { boolean } from "../../../../src/core/schemas/builders"
+import { itSchemaIdentity } from "../utils/itSchema"
+import { itValidate } from "../utils/itValidate"
 
-describe('boolean', () => {
+describe("boolean", () => {
     itSchemaIdentity(boolean(), true)
 
-    itValidate('non-boolean', boolean(), {}, [
+    itValidate("non-boolean", boolean(), {}, [
         {
             path: [],
-            message: 'Expected boolean. Received object.'
+            message: "Expected boolean. Received object."
         }
     ])
 })

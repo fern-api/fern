@@ -1,4 +1,4 @@
-import { AstNode } from './core/AstNode'
+import { AstNode } from "./core/AstNode"
 
 export declare namespace EnvironmentVariable {
     export interface Init {

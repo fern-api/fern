@@ -1,20 +1,20 @@
-import { ImportsManager, Reference, TypeReferenceNode, Zurg } from '@fern-typescript/commons'
-import { CoreUtilities } from '@fern-typescript/commons/src/core-utilities/CoreUtilities'
-import { ExportsManager } from '@fern-typescript/commons/src/exports-manager/ExportsManager'
-import { BaseContext, GeneratedTypeSchema, TypeSchemaContext } from '@fern-typescript/contexts'
-import { TypeResolver } from '@fern-typescript/resolvers'
-import { TypeGenerator } from '@fern-typescript/type-generator'
+import { ImportsManager, Reference, TypeReferenceNode, Zurg } from "@fern-typescript/commons"
+import { CoreUtilities } from "@fern-typescript/commons/src/core-utilities/CoreUtilities"
+import { ExportsManager } from "@fern-typescript/commons/src/exports-manager/ExportsManager"
+import { BaseContext, GeneratedTypeSchema, TypeSchemaContext } from "@fern-typescript/contexts"
+import { TypeResolver } from "@fern-typescript/resolvers"
+import { TypeGenerator } from "@fern-typescript/type-generator"
 import {
     TypeReferenceToRawTypeNodeConverter,
     TypeReferenceToSchemaConverter
-} from '@fern-typescript/type-reference-converters'
-import { TypeSchemaGenerator } from '@fern-typescript/type-schema-generator'
-import { SourceFile, ts } from 'ts-morph'
+} from "@fern-typescript/type-reference-converters"
+import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator"
+import { SourceFile, ts } from "ts-morph"
 
-import { DeclaredTypeName, ShapeType, TypeReference } from '@fern-fern/ir-sdk/api'
+import { DeclaredTypeName, ShapeType, TypeReference } from "@fern-fern/ir-sdk/api"
 
-import { TypeDeclarationReferencer } from '../../declaration-referencers/TypeDeclarationReferencer'
-import { getSchemaImportStrategy } from '../getSchemaImportStrategy'
+import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer"
+import { getSchemaImportStrategy } from "../getSchemaImportStrategy"
 
 export declare namespace TypeSchemaContextImpl {
     export interface Init {
@@ -135,7 +135,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
                         exportsManager: this.exportsManager,
                         referencedIn: this.sourceFile,
                         importStrategy: {
-                            type: 'fromRoot',
+                            type: "fromRoot",
                             namespaceImport: this.typeDeclarationReferencer.namespaceExport
                         }
                     })
@@ -163,7 +163,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
                 useDynamicImport: false
             }),
             // TODO this should not be hardcoded here
-            subImport: ['Raw'],
+            subImport: ["Raw"],
             importsManager: this.importsManager,
             exportsManager: this.exportsManager,
             referencedIn: this.sourceFile
@@ -171,7 +171,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
     }
 
     private generateForInlineUnion(typeName: DeclaredTypeName): ts.TypeNode {
-        throw new Error('Inline unions are not supported in Express Schemas')
+        throw new Error("Inline unions are not supported in Express Schemas")
     }
 
     public getSchemaOfTypeReference(typeReference: TypeReference): Zurg.Schema {
@@ -206,7 +206,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
 
     private wrapSchemaWithLazy(schema: Zurg.Schema, typeName: DeclaredTypeName): Zurg.Schema {
         const resolvedType = this.context.type.resolveTypeName(typeName)
-        return resolvedType.type === 'named' && resolvedType.shape === ShapeType.Object
+        return resolvedType.type === "named" && resolvedType.shape === ShapeType.Object
             ? this.coreUtilities.zurg.lazyObject(schema)
             : this.coreUtilities.zurg.lazy(schema)
     }

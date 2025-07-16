@@ -1,6 +1,6 @@
-import { SourceFile } from 'ts-morph'
+import { SourceFile } from "ts-morph"
 
-import { ModuleSpecifier } from '../referencing/ModuleSpecifier'
+import { ModuleSpecifier } from "../referencing/ModuleSpecifier"
 
 export interface ImportDeclaration {
     namespaceImport?: string
@@ -30,18 +30,18 @@ export class ImportsManager {
 
     public addImportFromRoot(modulePath: string, importDeclaration: ImportDeclaration, packagePath?: string): void {
         if (packagePath) {
-            packagePath += '/'
+            packagePath += "/"
         } else {
-            packagePath = this.packagePath ? `${this.packagePath}/` : ''
+            packagePath = this.packagePath ? `${this.packagePath}/` : ""
         }
 
         this.addImport(`@root/${packagePath}${modulePath}`, importDeclaration)
     }
     public addImportFromSrc(modulePath: string, importDeclaration: ImportDeclaration, packagePath?: string): void {
         if (packagePath) {
-            packagePath += '/'
+            packagePath += "/"
         } else {
-            packagePath = this.packagePath ? `${this.packagePath}/` : ''
+            packagePath = this.packagePath ? `${this.packagePath}/` : ""
         }
 
         this.addImport(`@src/${packagePath}${modulePath}`, importDeclaration)
@@ -60,7 +60,7 @@ export class ImportsManager {
 
         if (importDeclaration.namedImports != null) {
             for (const namedImport of importDeclaration.namedImports) {
-                const convertedNamedImport = typeof namedImport === 'string' ? { name: namedImport } : namedImport
+                const convertedNamedImport = typeof namedImport === "string" ? { name: namedImport } : namedImport
                 if (
                     !importsForModuleSpecifier.namedImports.some(
                         (otherNamedImport) =>
@@ -80,12 +80,12 @@ export class ImportsManager {
 
     public writeImportsToSourceFile(sourceFile: SourceFile): void {
         const sourceFileDirPath = sourceFile.getDirectoryPath()
-        const sourcePathSegments = sourceFileDirPath.split('/').filter((segment) => segment.length > 0)
+        const sourcePathSegments = sourceFileDirPath.split("/").filter((segment) => segment.length > 0)
         for (const [originalModuleSpecifier, combinedImportDeclarations] of Object.entries(this.imports)) {
             let moduleSpecifier = originalModuleSpecifier
-            if (moduleSpecifier.startsWith('@root/')) {
-                const targetPath = moduleSpecifier.replace('@root/', '')
-                const targetPathSegments = targetPath.split('/').filter((segment) => segment.length > 0)
+            if (moduleSpecifier.startsWith("@root/")) {
+                const targetPath = moduleSpecifier.replace("@root/", "")
+                const targetPathSegments = targetPath.split("/").filter((segment) => segment.length > 0)
                 // Find common prefix
                 let commonPrefixLength = 0
                 const minLength = Math.min(sourcePathSegments.length, targetPathSegments.length)
@@ -99,15 +99,15 @@ export class ImportsManager {
                 let relativePath
                 if (upSteps === 0 && targetPathSegments.slice(commonPrefixLength).length === 0) {
                     // Same directory
-                    relativePath = '.'
+                    relativePath = "."
                 } else {
-                    relativePath = [...Array(upSteps).fill('..'), ...targetPathSegments.slice(commonPrefixLength)].join(
-                        '/'
+                    relativePath = [...Array(upSteps).fill(".."), ...targetPathSegments.slice(commonPrefixLength)].join(
+                        "/"
                     )
 
                     // If there are no ".." segments, add a "./" prefix
-                    if (!relativePath.startsWith('..') && upSteps === 0) {
-                        relativePath = './' + relativePath
+                    if (!relativePath.startsWith("..") && upSteps === 0) {
+                        relativePath = "./" + relativePath
                     }
                 }
                 moduleSpecifier = relativePath
@@ -117,7 +117,7 @@ export class ImportsManager {
             if (namespaceImports.length > 1) {
                 throw new Error(
                     `Multiple namespace imports from ${moduleSpecifier} in ${sourceFile.getFilePath()}: ${namespaceImports.join(
-                        ', '
+                        ", "
                     )}`
                 )
             }

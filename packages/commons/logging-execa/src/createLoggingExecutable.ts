@@ -1,6 +1,6 @@
-import { Logger } from '@fern-api/logger'
+import { Logger } from "@fern-api/logger"
 
-import { loggingExeca } from './loggingExeca'
+import { loggingExeca } from "./loggingExeca"
 
 export type LoggingExecutable = (args?: string[], options?: loggingExeca.Options) => Promise<loggingExeca.ReturnValue>
 

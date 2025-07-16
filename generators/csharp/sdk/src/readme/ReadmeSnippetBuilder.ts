@@ -1,10 +1,10 @@
-import { AbstractReadmeSnippetBuilder } from '@fern-api/base-generator'
+import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator"
 
-import { FernGeneratorCli } from '@fern-fern/generator-cli-sdk'
-import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
-import { EndpointId, FeatureId, FernFilepath, HttpEndpoint } from '@fern-fern/ir-sdk/api'
+import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk"
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
+import { EndpointId, FeatureId, FernFilepath, HttpEndpoint } from "@fern-fern/ir-sdk/api"
 
-import { SdkGeneratorContext } from '../SdkGeneratorContext'
+import { SdkGeneratorContext } from "../SdkGeneratorContext"
 
 interface EndpointWithFilepath {
     endpoint: HttpEndpoint
@@ -12,7 +12,7 @@ interface EndpointWithFilepath {
 }
 
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
-    private static EXCEPTION_HANDLING_FEATURE_ID: FernGeneratorCli.FeatureId = 'EXCEPTION_HANDLING'
+    private static EXCEPTION_HANDLING_FEATURE_ID: FernGeneratorCli.FeatureId = "EXCEPTION_HANDLING"
 
     private readonly context: SdkGeneratorContext
     private readonly endpoints: Record<EndpointId, EndpointWithFilepath> = {}
@@ -165,7 +165,7 @@ try {
         const snippets: Record<EndpointId, string> = {}
         for (const endpointSnippet of Object.values(endpointSnippets)) {
             if (endpointSnippet.id.identifierOverride == null) {
-                throw new Error('Internal error; snippets must define the endpoint id to generate README.md')
+                throw new Error("Internal error; snippets must define the endpoint id to generate README.md")
             }
             snippets[endpointSnippet.id.identifierOverride] = this.getEndpointSnippetString(endpointSnippet)
         }
@@ -200,7 +200,7 @@ try {
     }
 
     private getEndpointSnippetString(endpoint: FernGeneratorExec.Endpoint): string {
-        if (endpoint.snippet.type !== 'csharp') {
+        if (endpoint.snippet.type !== "csharp") {
             throw new Error(`Internal error; expected csharp snippet but got: ${endpoint.snippet.type}`)
         }
         return endpoint.snippet.client
@@ -213,6 +213,6 @@ try {
     }
 
     private writeCode(s: string): string {
-        return s.trim() + '\n'
+        return s.trim() + "\n"
     }
 }

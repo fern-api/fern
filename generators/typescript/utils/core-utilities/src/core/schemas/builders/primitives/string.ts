@@ -1,11 +1,11 @@
-import { SchemaType } from '../../Schema'
-import { createIdentitySchemaCreator } from '../../utils/createIdentitySchemaCreator'
-import { getErrorMessageForIncorrectType } from '../../utils/getErrorMessageForIncorrectType'
+import { SchemaType } from "../../Schema"
+import { createIdentitySchemaCreator } from "../../utils/createIdentitySchemaCreator"
+import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType"
 
 export const string = createIdentitySchemaCreator<string>(
     SchemaType.STRING,
     (value, { breadcrumbsPrefix = [] } = {}) => {
-        if (typeof value === 'string') {
+        if (typeof value === "string") {
             return {
                 ok: true,
                 value
@@ -16,7 +16,7 @@ export const string = createIdentitySchemaCreator<string>(
                 errors: [
                     {
                         path: breadcrumbsPrefix,
-                        message: getErrorMessageForIncorrectType(value, 'string')
+                        message: getErrorMessageForIncorrectType(value, "string")
                     }
                 ]
             }

@@ -1,4 +1,4 @@
-import { camelCase, upperFirst } from 'lodash-es'
+import { camelCase, upperFirst } from "lodash-es"
 
 export function getPackageName(
     organization: string,
@@ -10,5 +10,5 @@ export function getPackageName(
 }
 
 export function getClientName(organization: string, apiName: string, clientClassName?: string): string {
-    return clientClassName ?? upperFirst(camelCase(organization)) + upperFirst(camelCase(apiName)) + 'Client'
+    return clientClassName ?? upperFirst(camelCase(organization)) + upperFirst(camelCase(apiName)) + "Client"
 }

@@ -1,5 +1,5 @@
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export declare namespace Or {
     interface Args {
@@ -19,7 +19,7 @@ export class Or extends AstNode {
     public write(writer: Writer): void {
         this.conditions.forEach((condition, index) => {
             if (index > 0) {
-                writer.write(' || ')
+                writer.write(" || ")
             }
             writer.writeNode(condition)
         })

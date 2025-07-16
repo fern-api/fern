@@ -1,8 +1,8 @@
-import { NameAndWireValue, SingleUnionTypeProperties, SingleUnionTypeProperty } from '@fern-fern/ir-sdk/api'
+import { NameAndWireValue, SingleUnionTypeProperties, SingleUnionTypeProperty } from "@fern-fern/ir-sdk/api"
 
-import { Argument } from '../Argument'
-import { Parameter } from '../Parameter'
-import { Property } from '../Property'
+import { Argument } from "../Argument"
+import { Parameter } from "../Parameter"
+import { Property } from "../Property"
 import {
     BooleanClassReference,
     ClassReference,
@@ -11,16 +11,16 @@ import {
     JsonClassReference,
     StringClassReference,
     VoidClassReference
-} from '../classes/ClassReference'
-import { Class_ } from '../classes/Class_'
-import { AstNode } from '../core/AstNode'
-import { Expression } from '../expressions/Expression'
-import { FunctionInvocation } from '../functions/FunctionInvocation'
-import { Function_ } from '../functions/Function_'
-import { CaseStatement } from './CaseStatement'
+} from "../classes/ClassReference"
+import { Class_ } from "../classes/Class_"
+import { AstNode } from "../core/AstNode"
+import { Expression } from "../expressions/Expression"
+import { FunctionInvocation } from "../functions/FunctionInvocation"
+import { Function_ } from "../functions/Function_"
+import { CaseStatement } from "./CaseStatement"
 
 export declare namespace DiscriminatedUnion {
-    export interface Init extends Omit<Class_.Init, 'functions' | 'includeInitializer' | 'expressions'> {
+    export interface Init extends Omit<Class_.Init, "functions" | "includeInitializer" | "expressions"> {
         discriminantField: string
         namedSubclasses: Subclass[]
         defaultSubclassReference?: ClassReference
@@ -33,8 +33,8 @@ export declare namespace DiscriminatedUnion {
 }
 export class DiscriminatedUnion extends Class_ {
     constructor({ discriminantField, namedSubclasses, defaultSubclassReference, ...rest }: DiscriminatedUnion.Init) {
-        const memberProperty = new Property({ name: 'member', type: GenericClassReference })
-        const discriminantProperty = new Property({ name: 'discriminant', type: StringClassReference })
+        const memberProperty = new Property({ name: "member", type: GenericClassReference })
+        const discriminantProperty = new Property({ name: "discriminant", type: StringClassReference })
         const properties = [memberProperty, discriminantProperty, ...(rest.properties ?? [])]
 
         super({
@@ -66,9 +66,9 @@ export class DiscriminatedUnion extends Class_ {
             ],
             expressions: [
                 // Hide the initializer for union classes
-                new Expression({ rightSide: 'private_class_method :new', isAssignment: false }),
+                new Expression({ rightSide: "private_class_method :new", isAssignment: false }),
                 // Since we're overriding is_a, we also alias kind_of to it
-                new Expression({ rightSide: 'alias kind_of? is_a?', isAssignment: false })
+                new Expression({ rightSide: "alias kind_of? is_a?", isAssignment: false })
             ],
             includeInitializer: true
         })
@@ -84,9 +84,9 @@ export class DiscriminatedUnion extends Class_ {
             singleProperty: (sutp: SingleUnionTypeProperty) =>
                 unionSubclass.classReference?.fromJson(`${jsonParameter}.${sutp.name.wireValue}`) ??
                 `${jsonParameter}.${sutp.name.wireValue}`,
-            noProperties: () => 'nil',
+            noProperties: () => "nil",
             _other: () => {
-                throw new Error('Unknown SingleUnionProperties: ' + unionSubclass.unionPropertiesType.propertiesType)
+                throw new Error("Unknown SingleUnionProperties: " + unionSubclass.unionPropertiesType.propertiesType)
             }
         })
 
@@ -105,21 +105,21 @@ export class DiscriminatedUnion extends Class_ {
         unionClassReference: ClassReference,
         defaultSubclassReference?: ClassReference
     ): Function_ {
-        const jsonObjectParamName = 'json_object'
+        const jsonObjectParamName = "json_object"
         const functionBody = [
             new Expression({
-                leftSide: 'struct',
+                leftSide: "struct",
                 rightSide: new FunctionInvocation({
                     onObject: JsonClassReference,
-                    baseFunction: new Function_({ name: 'parse', functionBody: [] }),
+                    baseFunction: new Function_({ name: "parse", functionBody: [] }),
                     arguments_: [
                         new Argument({
                             value: jsonObjectParamName,
                             isNamed: false
                         }),
                         new Argument({
-                            name: 'object_class',
-                            value: 'OpenStruct',
+                            name: "object_class",
+                            value: "OpenStruct",
                             isNamed: true
                         })
                     ]
@@ -143,7 +143,7 @@ export class DiscriminatedUnion extends Class_ {
                 ]
             }),
             new FunctionInvocation({
-                baseFunction: new Function_({ name: 'new', functionBody: [] }),
+                baseFunction: new Function_({ name: "new", functionBody: [] }),
                 arguments_: [
                     memberProperty.toArgument(memberProperty.name, true),
                     discriminantProperty.toArgument(`struct.${discriminantField}`, true)
@@ -153,7 +153,7 @@ export class DiscriminatedUnion extends Class_ {
         const parameters = [new Parameter({ name: jsonObjectParamName, type: StringClassReference })]
         const fromJsonDocumentation = `Deserialize a JSON object to an instance of ${unionClassReference.name}`
         return new Function_({
-            name: 'from_json',
+            name: "from_json",
             returnValue: unionClassReference,
             parameters,
             functionBody,
@@ -176,7 +176,7 @@ export class DiscriminatedUnion extends Class_ {
                     additionalHashes: [
                         {
                             value: new FunctionInvocation({
-                                baseFunction: new Function_({ name: 'to_json', functionBody: [] }),
+                                baseFunction: new Function_({ name: "to_json", functionBody: [] }),
                                 onObject: memberProperty.toVariable()
                             })
                         }
@@ -192,12 +192,12 @@ export class DiscriminatedUnion extends Class_ {
             noProperties: () =>
                 new HashInstance({ contents: new Map([[discriminantField, discriminantProperty.toVariable()]]) }),
             _other: () => {
-                throw new Error('Unknown SingleUnionProperties: ' + unionSubclass.unionPropertiesType.propertiesType)
+                throw new Error("Unknown SingleUnionProperties: " + unionSubclass.unionPropertiesType.propertiesType)
             }
         })
 
         return new FunctionInvocation({
-            baseFunction: new Function_({ name: 'to_json', functionBody: [] }),
+            baseFunction: new Function_({ name: "to_json", functionBody: [] }),
             onObject: objectHash
         })
     }
@@ -208,10 +208,10 @@ export class DiscriminatedUnion extends Class_ {
         discriminantField: string,
         namedSubclasses: DiscriminatedUnion.Subclass[]
     ): Function_ {
-        const toJsonDocumentation = 'For Union Types, to_json functionality is delegated to the wrapped member.'
+        const toJsonDocumentation = "For Union Types, to_json functionality is delegated to the wrapped member."
 
         return new Function_({
-            name: 'to_json',
+            name: "to_json",
             functionBody: [
                 new CaseStatement({
                     case_: discriminantProperty.toVariable(),
@@ -230,18 +230,18 @@ export class DiscriminatedUnion extends Class_ {
                     ),
                     else_: [
                         new FunctionInvocation({
-                            baseFunction: new Function_({ name: 'to_json', functionBody: [] }),
+                            baseFunction: new Function_({ name: "to_json", functionBody: [] }),
                             onObject: new HashInstance({
                                 contents: new Map([
                                     [`"${discriminantField}"`, discriminantProperty.toVariable()],
-                                    ['value', memberProperty.toVariable()]
+                                    ["value", memberProperty.toVariable()]
                                 ])
                             })
                         })
                     ]
                 }),
                 new FunctionInvocation({
-                    baseFunction: new Function_({ name: 'to_json', functionBody: [] }),
+                    baseFunction: new Function_({ name: "to_json", functionBody: [] }),
                     onObject: memberProperty.toVariable()
                 })
             ],
@@ -254,7 +254,7 @@ export class DiscriminatedUnion extends Class_ {
         discriminantField: string,
         namedSubclasses: DiscriminatedUnion.Subclass[]
     ): Function_ {
-        const parameterName = 'obj'
+        const parameterName = "obj"
         const functionBody = [
             new CaseStatement({
                 case_: `${parameterName}.${discriminantField}`,
@@ -263,7 +263,7 @@ export class DiscriminatedUnion extends Class_ {
                         `"${sc.discriminantValue.wireValue}"`,
                         [
                             new Expression({
-                                rightSide: sc.classReference?.validateRaw(parameterName) ?? '# noop',
+                                rightSide: sc.classReference?.validateRaw(parameterName) ?? "# noop",
                                 isAssignment: false
                             })
                         ]
@@ -281,7 +281,7 @@ export class DiscriminatedUnion extends Class_ {
             "Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions."
 
         return new Function_({
-            name: 'validate_raw',
+            name: "validate_raw",
             returnValue: VoidClassReference,
             parameters: [new Parameter({ name: parameterName, type: GenericClassReference })],
             functionBody,
@@ -296,15 +296,15 @@ export class DiscriminatedUnion extends Class_ {
         discriminantProperty: Property,
         classReference: ClassReference
     ): Function_[] {
-        const parameterName = 'member'
+        const parameterName = "member"
         return namedSubclasses.map((sc) => {
             return new Function_({
                 name: sc.discriminantValue.name.snakeCase.safeName,
                 functionBody: [
                     new FunctionInvocation({
-                        baseFunction: new Function_({ name: 'new', functionBody: [] }),
+                        baseFunction: new Function_({ name: "new", functionBody: [] }),
                         arguments_: [
-                            memberProperty.toArgument(sc.classReference !== undefined ? parameterName : 'nil', true),
+                            memberProperty.toArgument(sc.classReference !== undefined ? parameterName : "nil", true),
                             discriminantProperty.toArgument(`"${sc.discriminantValue.wireValue}"`, true)
                         ]
                     })
@@ -320,14 +320,14 @@ export class DiscriminatedUnion extends Class_ {
     }
 
     private static createIsAFunction(memberProperty: Property): Function_ {
-        const isADocumentation = 'For Union Types, is_a? functionality is delegated to the wrapped member.'
+        const isADocumentation = "For Union Types, is_a? functionality is delegated to the wrapped member."
 
-        const parameterName = 'obj'
+        const parameterName = "obj"
         return new Function_({
-            name: 'is_a?',
+            name: "is_a?",
             functionBody: [
                 new FunctionInvocation({
-                    baseFunction: new Function_({ name: 'is_a?', functionBody: [] }),
+                    baseFunction: new Function_({ name: "is_a?", functionBody: [] }),
                     onObject: memberProperty.toVariable(),
                     arguments_: [new Argument({ isNamed: false, value: parameterName })]
                 })

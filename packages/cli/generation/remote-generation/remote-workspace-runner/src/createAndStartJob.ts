@@ -1,13 +1,13 @@
-import axios, { AxiosError } from 'axios'
-import FormData from 'form-data'
-import { mkdir, readFile, writeFile } from 'fs/promises'
-import yaml from 'js-yaml'
-import { relative } from 'path'
-import { create as createTar } from 'tar'
-import tmp from 'tmp-promise'
-import urlJoin from 'url-join'
+import axios, { AxiosError } from "axios"
+import FormData from "form-data"
+import { mkdir, readFile, writeFile } from "fs/promises"
+import yaml from "js-yaml"
+import { relative } from "path"
+import { create as createTar } from "tar"
+import tmp from "tmp-promise"
+import urlJoin from "url-join"
 
-import { FernToken } from '@fern-api/auth'
+import { FernToken } from "@fern-api/auth"
 import {
     DEFINITION_DIRECTORY,
     FERN_DIRECTORY,
@@ -15,19 +15,19 @@ import {
     ROOT_API_FILENAME,
     fernConfigJson,
     generatorsYml
-} from '@fern-api/configuration'
-import { createFiddleService, getFiddleOrigin } from '@fern-api/core'
-import { AbsoluteFilePath, RelativeFilePath, dirname, join, stringifyLargeObject } from '@fern-api/fs-utils'
+} from "@fern-api/configuration"
+import { createFiddleService, getFiddleOrigin } from "@fern-api/core"
+import { AbsoluteFilePath, RelativeFilePath, dirname, join, stringifyLargeObject } from "@fern-api/fs-utils"
 import {
     migrateIntermediateRepresentationForGenerator,
     migrateIntermediateRepresentationToVersionForGenerator
-} from '@fern-api/ir-migrations'
-import { IntermediateRepresentation } from '@fern-api/ir-sdk'
-import { TaskContext } from '@fern-api/task-context'
-import { FernDefinition, FernWorkspace } from '@fern-api/workspace-loader'
+} from "@fern-api/ir-migrations"
+import { IntermediateRepresentation } from "@fern-api/ir-sdk"
+import { TaskContext } from "@fern-api/task-context"
+import { FernDefinition, FernWorkspace } from "@fern-api/workspace-loader"
 
-import { FernFiddle } from '@fern-fern/fiddle-sdk'
-import { Fetcher } from '@fern-fern/fiddle-sdk/core'
+import { FernFiddle } from "@fern-fern/fiddle-sdk"
+import { Fetcher } from "@fern-fern/fiddle-sdk/core"
 
 export async function createAndStartJob({
     projectConfig,
@@ -107,7 +107,7 @@ async function createJob({
 
     let fernDefinitionMetadata: FernFiddle.remoteGen.FernDefinitionMetadata | undefined
     // Only write definition if output mode is github
-    if (generatorInvocation.outputMode.type.startsWith('github')) {
+    if (generatorInvocation.outputMode.type.startsWith("github")) {
         try {
             const tmpDir = await tmp.dir()
 
@@ -158,11 +158,11 @@ async function createJob({
                 context.logger.debug(`Failed to write source files to disk, continuing: ${error}`)
             }
 
-            const tarPath = join(absolutePathToTmpDir, RelativeFilePath.of('definition.tgz'))
-            await createTar({ file: tarPath, cwd: absolutePathToTmpFernDirectory }, ['.'])
+            const tarPath = join(absolutePathToTmpDir, RelativeFilePath.of("definition.tgz"))
+            await createTar({ file: tarPath, cwd: absolutePathToTmpFernDirectory }, ["."])
 
             // Upload definition to S3
-            context.logger.debug('Getting upload URL for Fern definition.')
+            context.logger.debug("Getting upload URL for Fern definition.")
             const definitionUploadUrlRequest = await remoteGenerationService.remoteGen.getDefinitionUploadUrl({
                 apiName: workspace.definition.rootApiFile.contents.name,
                 organizationName: organization,
@@ -170,27 +170,27 @@ async function createJob({
             })
 
             if (!definitionUploadUrlRequest.ok) {
-                if (definitionUploadUrlRequest.error.content.reason === 'status-code') {
+                if (definitionUploadUrlRequest.error.content.reason === "status-code") {
                     context.logger.debug(
                         `Failed with status-code to get upload URL with status code ${definitionUploadUrlRequest.error.content.statusCode}, continuing: ${definitionUploadUrlRequest.error.content.body}`
                     )
-                } else if (definitionUploadUrlRequest.error.content.reason === 'non-json') {
+                } else if (definitionUploadUrlRequest.error.content.reason === "non-json") {
                     context.logger.debug(
                         `Failed with non-json to get upload URL with status code ${definitionUploadUrlRequest.error.content.statusCode}, continuing: ${definitionUploadUrlRequest.error.content.rawBody}`
                     )
-                } else if (definitionUploadUrlRequest.error.content.reason === 'unknown') {
+                } else if (definitionUploadUrlRequest.error.content.reason === "unknown") {
                     context.logger.debug(
                         `Failed to get upload URL as unknown error occurred continuing: ${definitionUploadUrlRequest.error.content.errorMessage}`
                     )
                 }
             } else {
-                context.logger.debug('Uploading definition...')
+                context.logger.debug("Uploading definition...")
                 await axios.put(definitionUploadUrlRequest.body.s3Url, await readFile(tarPath))
 
                 // Create definition metadata
                 fernDefinitionMetadata = {
                     definitionS3DownloadUrl: definitionUploadUrlRequest.body.s3Url,
-                    outputPath: '.mock',
+                    outputPath: ".mock",
                     cliVersion: projectConfig.version
                 }
             }
@@ -218,10 +218,10 @@ async function createJob({
     if (!createResponse.ok) {
         return convertCreateJobError(createResponse.error as unknown as Fetcher.Error)._visit({
             illegalApiNameError: () => {
-                return context.failAndThrow('API name is invalid: ' + workspace.definition.rootApiFile.contents.name)
+                return context.failAndThrow("API name is invalid: " + workspace.definition.rootApiFile.contents.name)
             },
             illegalApiVersionError: () => {
-                return context.failAndThrow('API version is invalid: ' + version)
+                return context.failAndThrow("API version is invalid: " + version)
             },
             cannotPublishToNpmScope: ({ validScope, invalidScope }) => {
                 return context.failAndThrow(
@@ -240,22 +240,22 @@ async function createJob({
             },
             generatorsDoNotExistError: (value) => {
                 return context.failAndThrow(
-                    'Generators do not exist: ' +
+                    "Generators do not exist: " +
                         value.nonExistentGenerators
                             .map((generator) => `${generator.id}@${generator.version}`)
-                            .join(', ')
+                            .join(", ")
                 )
             },
             insufficientPermissions: () => {
-                return context.failAndThrow('Insufficient permissions.')
+                return context.failAndThrow("Insufficient permissions.")
             },
             orgNotConfiguredForWhitelabel: () => {
                 return context.failAndThrow(
-                    'Your org is not configured for white-labeling. Please reach out to support@buildwithfern.com.'
+                    "Your org is not configured for white-labeling. Please reach out to support@buildwithfern.com."
                 )
             },
             _other: (content) => {
-                return context.failAndThrow('Failed to create job', content)
+                return context.failAndThrow("Failed to create job", content)
             }
         })
     }
@@ -337,10 +337,10 @@ async function startJob({
 
     const irAsString = await stringifyLargeObject(migratedIntermediateRepresentation, {
         onWrite: (irFilepath) => {
-            context.logger.debug('Wrote IR to disk: ' + irFilepath)
+            context.logger.debug("Wrote IR to disk: " + irFilepath)
         }
     })
-    formData.append('file', irAsString)
+    formData.append("file", irAsString)
 
     const url = urlJoin(getFiddleOrigin(), `/api/remote-gen/jobs/${job.jobId}/start`)
     try {
@@ -352,7 +352,7 @@ async function startJob({
     } catch (error) {
         const errorBody = error instanceof AxiosError ? error.response?.data : error
         context.logger.debug(`POST ${url} failed with ${JSON.stringify(error)}`)
-        context.failAndThrow('Failed to start job', errorBody)
+        context.failAndThrow("Failed to start job", errorBody)
     }
 }
 
@@ -360,19 +360,19 @@ async function startJob({
 // java generator to support the new implementation, we manually migrate
 // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
 function convertCreateJobError(error: any): FernFiddle.remoteGen.createJobV3.Error {
-    if (error?.reason === 'status-code') {
+    if (error?.reason === "status-code") {
         // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         const body = error.body as any
         switch (body?._error) {
-            case 'IllegalApiNameError':
+            case "IllegalApiNameError":
                 return FernFiddle.remoteGen.createJobV3.Error.illegalApiNameError()
-            case 'GeneratorsDoNotExistError':
+            case "GeneratorsDoNotExistError":
                 return FernFiddle.remoteGen.createJobV3.Error.generatorsDoNotExistError(body.body)
-            case 'CannotPublishToNpmScope':
+            case "CannotPublishToNpmScope":
                 return FernFiddle.remoteGen.createJobV3.Error.cannotPublishToNpmScope(body.body)
-            case 'CannotPublishToMavenScope':
+            case "CannotPublishToMavenScope":
                 return FernFiddle.remoteGen.createJobV3.Error.cannotPublishToMavenGroup(body.body)
-            case 'InsufficientPermissions':
+            case "InsufficientPermissions":
                 return FernFiddle.remoteGen.createJobV3.Error.insufficientPermissions(body.body)
         }
     }
@@ -391,7 +391,7 @@ function shouldUploadToS3({
     shouldLogS3Url: boolean
 }): boolean {
     return (
-        outputMode.type === 'downloadFiles' ||
+        outputMode.type === "downloadFiles" ||
         generatorInvocation.absolutePathToLocalSnippets != null ||
         absolutePathToPreview != null ||
         shouldLogS3Url

@@ -1,5 +1,5 @@
-import { ExpressRegisterContext, GeneratedExpressRegister } from '@fern-typescript/contexts'
-import { ExpressRegisterGenerator } from '@fern-typescript/express-register-generator'
+import { ExpressRegisterContext, GeneratedExpressRegister } from "@fern-typescript/contexts"
+import { ExpressRegisterGenerator } from "@fern-typescript/express-register-generator"
 
 export declare namespace ExpressRegisterContextImpl {
     export interface Init {

@@ -1,15 +1,15 @@
-import { GeneratorName } from '@fern-api/configuration-loader'
+import { GeneratorName } from "@fern-api/configuration-loader"
 
-import { IrSerialization } from '../../ir-serialization'
-import { IrVersions } from '../../ir-versions'
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
+import { IrSerialization } from "../../ir-serialization"
+import { IrVersions } from "../../ir-versions"
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
 
 export const V25_TO_V24_MIGRATION: IrMigration<
     IrVersions.V25.ir.IntermediateRepresentation,
     IrVersions.V24.ir.IntermediateRepresentation
 > = {
-    laterVersion: 'v25',
-    earlierVersion: 'v24',
+    laterVersion: "v25",
+    earlierVersion: "v24",
     firstGeneratorVersionToConsumeNewIR: {
         [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -17,9 +17,9 @@ export const V25_TO_V24_MIGRATION: IrMigration<
         [GeneratorName.TYPESCRIPT_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.TYPESCRIPT_EXPRESS]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_MODEL]: '0.4.9-1-ge0997b3',
-        [GeneratorName.JAVA_SDK]: '0.4.9-1-ge0997b3',
-        [GeneratorName.JAVA_SPRING]: '0.4.9-1-ge0997b3',
+        [GeneratorName.JAVA_MODEL]: "0.4.9-1-ge0997b3",
+        [GeneratorName.JAVA_SDK]: "0.4.9-1-ge0997b3",
+        [GeneratorName.JAVA_SPRING]: "0.4.9-1-ge0997b3",
         [GeneratorName.PYTHON_FASTAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_PYDANTIC]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -41,7 +41,7 @@ export const V25_TO_V24_MIGRATION: IrMigration<
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V24.IntermediateRepresentation.jsonOrThrow(ir, {
-            unrecognizedObjectKeys: 'strip'
+            unrecognizedObjectKeys: "strip"
         }),
     migrateBackwards: (v25, context): IrVersions.V24.ir.IntermediateRepresentation => {
         const bytesEndpoints: IrVersions.V25.HttpEndpoint[] = []
@@ -72,7 +72,7 @@ export const V25_TO_V24_MIGRATION: IrMigration<
                             })
                         },
                         _other: () => {
-                            throw new Error('Encountered unknown response type')
+                            throw new Error("Encountered unknown response type")
                         }
                     })
                     v24CompatibleEndpoints.push({
@@ -96,7 +96,7 @@ export const V25_TO_V24_MIGRATION: IrMigration<
         if (textHttpEndpoints.length > 0) {
             context.taskContext.logger.warn(
                 `Generator ${context.targetGenerator?.name}@${context.targetGenerator?.version}` +
-                    ' does not support text/plain responses. '
+                    " does not support text/plain responses. "
             )
             if (textHttpEndpoints.length === 1 && textHttpEndpoints[0] != null) {
                 context.taskContext.logger.warn(
@@ -106,14 +106,14 @@ export const V25_TO_V24_MIGRATION: IrMigration<
                 context.taskContext.logger.warn(
                     `Therefore, endpoints ${textHttpEndpoints
                         .map((endpoint) => endpoint.name.originalName)
-                        .join(', ')} response types will be casted to unknown.`
+                        .join(", ")} response types will be casted to unknown.`
                 )
             }
         }
         if (bytesEndpoints.length > 0) {
             context.taskContext.logger.warn(
                 `Generator ${context.targetGenerator?.name}@${context.targetGenerator?.version}` +
-                    ' does not support bytes requests. '
+                    " does not support bytes requests. "
             )
             if (bytesEndpoints.length === 1 && bytesEndpoints[0] != null) {
                 context.taskContext.logger.warn(
@@ -123,7 +123,7 @@ export const V25_TO_V24_MIGRATION: IrMigration<
                 context.taskContext.logger.warn(
                     `Therefore, endpoints ${bytesEndpoints
                         .map((endpoint) => endpoint.name.originalName)
-                        .join(', ')} will be skipped.`
+                        .join(", ")} will be skipped.`
                 )
             }
         }
@@ -136,7 +136,7 @@ export const V25_TO_V24_MIGRATION: IrMigration<
 
 function getV24SDKRequest(sdkRequest: IrVersions.V25.SdkRequest): IrVersions.V24.SdkRequest | undefined {
     const shape = sdkRequest.shape
-    if (shape.type === 'wrapper') {
+    if (shape.type === "wrapper") {
         return {
             shape: IrVersions.V24.SdkRequestShape.wrapper({
                 ...shape
@@ -144,7 +144,7 @@ function getV24SDKRequest(sdkRequest: IrVersions.V25.SdkRequest): IrVersions.V24
             requestParameterName: sdkRequest.requestParameterName
         }
     }
-    if (shape.value.type === 'typeReference') {
+    if (shape.value.type === "typeReference") {
         return {
             shape: IrVersions.V24.SdkRequestShape.justRequestBody({
                 ...shape.value

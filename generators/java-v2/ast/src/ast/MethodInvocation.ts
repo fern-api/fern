@@ -1,6 +1,6 @@
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
-import { writeArguments } from './utils/writeArguments'
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
+import { writeArguments } from "./utils/writeArguments"
 
 export declare namespace MethodInvocation {
     interface Args {
@@ -28,7 +28,7 @@ export class MethodInvocation extends AstNode {
 
     public write(writer: Writer): void {
         this.on.write(writer)
-        writer.write('.')
+        writer.write(".")
         writer.write(this.method)
         writeArguments({ writer, arguments_: this.arguments_ })
     }

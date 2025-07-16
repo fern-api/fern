@@ -1,16 +1,16 @@
-import { mapValues } from 'lodash-es'
+import { mapValues } from "lodash-es"
 
-import { GeneratorName } from '@fern-api/configuration-loader'
+import { GeneratorName } from "@fern-api/configuration-loader"
 
-import { IrVersions } from '../../ir-versions'
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
+import { IrVersions } from "../../ir-versions"
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
 
 export const V15_TO_V14_MIGRATION: IrMigration<
     IrVersions.V15.ir.IntermediateRepresentation,
     IrVersions.V14.ir.IntermediateRepresentation
 > = {
-    laterVersion: 'v15',
-    earlierVersion: 'v14',
+    laterVersion: "v15",
+    earlierVersion: "v14",
     firstGeneratorVersionToConsumeNewIR: {
         [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNotCreatedYet,
@@ -21,13 +21,13 @@ export const V15_TO_V14_MIGRATION: IrMigration<
         [GeneratorName.JAVA_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_SPRING]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.PYTHON_FASTAPI]: '0.0.52-3-gd9df38df',
-        [GeneratorName.PYTHON_PYDANTIC]: '0.0.52-3-gd9df38df',
+        [GeneratorName.PYTHON_FASTAPI]: "0.0.52-3-gd9df38df",
+        [GeneratorName.PYTHON_PYDANTIC]: "0.0.52-3-gd9df38df",
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.OPENAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.STOPLIGHT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.PYTHON_SDK]: '0.0.52-3-gd9df38df',
+        [GeneratorName.PYTHON_SDK]: "0.0.52-3-gd9df38df",
         [GeneratorName.GO_FIBER]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet,
@@ -84,7 +84,7 @@ export const V15_TO_V14_MIGRATION: IrMigration<
                             )
                         },
                         _unknown: () => {
-                            throw new Error('Encountered unknown shape')
+                            throw new Error("Encountered unknown shape")
                         }
                     })
                 }
@@ -106,7 +106,7 @@ function convertAuth(auth: IrVersions.V15.auth.ApiAuth): IrVersions.V14.auth.Api
         docs: auth.docs,
         requirement: auth.requirement,
         schemes: auth.schemes.map((scheme) => {
-            if (scheme._type !== 'header') {
+            if (scheme._type !== "header") {
                 return scheme
             }
             return IrVersions.V14.auth.AuthScheme.header(convertHeader(scheme))
@@ -136,7 +136,7 @@ function convertTypeReference(typeReference: IrVersions.V15.types.TypeReference)
     return IrVersions.V15.types.TypeReference._visit<IrVersions.V14.types.TypeReference>(typeReference, {
         container: (container) => IrVersions.V14.types.TypeReference.container(convertContainerType(container)),
         primitive: (primitiveType) => {
-            if (primitiveType === 'BASE_64') {
+            if (primitiveType === "BASE_64") {
                 return IrVersions.V14.types.TypeReference.primitive(IrVersions.V14.types.PrimitiveType.String)
             }
             return IrVersions.V14.types.TypeReference.primitive(primitiveType)
@@ -144,7 +144,7 @@ function convertTypeReference(typeReference: IrVersions.V15.types.TypeReference)
         named: IrVersions.V14.types.TypeReference.named,
         unknown: IrVersions.V14.types.TypeReference.unknown,
         _unknown: () => {
-            throw new Error('Unknown type reference: ' + typeReference._type)
+            throw new Error("Unknown type reference: " + typeReference._type)
         }
     })
 }
@@ -161,7 +161,7 @@ function convertContainerType(container: IrVersions.V15.types.ContainerType): Ir
             }),
         literal: IrVersions.V14.types.ContainerType.literal,
         _unknown: () => {
-            throw new Error('Unknown ContainerType: ' + container._type)
+            throw new Error("Unknown ContainerType: " + container._type)
         }
     })
 }
@@ -191,7 +191,7 @@ function convertSingleUnionTypeProperties(
                 }),
             noProperties: IrVersions.V14.types.SingleUnionTypeProperties.noProperties,
             _unknown: () => {
-                throw new Error('Unknown SingleUnionTypeProperties: ' + properties._type)
+                throw new Error("Unknown SingleUnionTypeProperties: " + properties._type)
             }
         }
     )
@@ -204,14 +204,14 @@ function convertResolvedType(
         container: (container) => IrVersions.V14.types.ResolvedTypeReference.container(convertContainerType(container)),
         named: IrVersions.V14.types.ResolvedTypeReference.named,
         primitive: (primitiveType) => {
-            if (primitiveType === 'BASE_64') {
+            if (primitiveType === "BASE_64") {
                 return IrVersions.V14.types.ResolvedTypeReference.primitive(IrVersions.V14.types.PrimitiveType.String)
             }
             return IrVersions.V14.types.ResolvedTypeReference.primitive(primitiveType)
         },
         unknown: IrVersions.V14.types.ResolvedTypeReference.unknown,
         _unknown: () => {
-            throw new Error('Unknown ResolvedTypeReference: ' + resolvedType._type)
+            throw new Error("Unknown ResolvedTypeReference: " + resolvedType._type)
         }
     })
 }
@@ -300,7 +300,7 @@ function convertSdkRequestShape(shape: IrVersions.V15.http.SdkRequestShape): IrV
             }),
         wrapper: IrVersions.V14.http.SdkRequestShape.wrapper,
         _unknown: () => {
-            throw new Error('Unknown SdkRequestShape: ' + shape.type)
+            throw new Error("Unknown SdkRequestShape: " + shape.type)
         }
     })
 }
@@ -326,7 +326,7 @@ function convertRequestBody(requestBody: IrVersions.V15.http.HttpRequestBody): I
             IrVersions.V14.http.HttpRequestBody.fileUpload({
                 name: fileUpload.name,
                 properties: fileUpload.properties.map((fileUploadRequestProperty) => {
-                    if (fileUploadRequestProperty.type === 'bodyProperty') {
+                    if (fileUploadRequestProperty.type === "bodyProperty") {
                         return {
                             ...fileUploadRequestProperty,
                             valueType: convertTypeReference(fileUploadRequestProperty.valueType)
@@ -336,7 +336,7 @@ function convertRequestBody(requestBody: IrVersions.V15.http.HttpRequestBody): I
                 })
             }),
         _unknown: () => {
-            throw new Error('Unknown HttpRequestBody: ' + requestBody.type)
+            throw new Error("Unknown HttpRequestBody: " + requestBody.type)
         }
     })
 }
@@ -372,7 +372,7 @@ function convertSdkResponse(sdkResponse: IrVersions.V15.http.SdkResponse): IrVer
                 streaming: convertStreamingResponse(maybeStreamingResponse.streaming)
             }),
         _unknown: () => {
-            throw new Error('Encountered unknown sdk response')
+            throw new Error("Encountered unknown sdk response")
         }
     })
 }

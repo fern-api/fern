@@ -1,11 +1,11 @@
-import { RelativeFilePath, join } from '@fern-api/fs-utils'
-import { FileGenerator, PhpFile } from '@fern-api/php-base'
-import { php } from '@fern-api/php-codegen'
+import { RelativeFilePath, join } from "@fern-api/fs-utils"
+import { FileGenerator, PhpFile } from "@fern-api/php-base"
+import { php } from "@fern-api/php-codegen"
 
-import { SingleBaseUrlEnvironments } from '@fern-fern/ir-sdk/api'
+import { SingleBaseUrlEnvironments } from "@fern-fern/ir-sdk/api"
 
-import { SdkCustomConfigSchema } from '../SdkCustomConfig'
-import { SdkGeneratorContext } from '../SdkGeneratorContext'
+import { SdkCustomConfigSchema } from "../SdkCustomConfig"
+import { SdkGeneratorContext } from "../SdkGeneratorContext"
 
 export declare namespace SingleUrlEnvironmentGenerator {
     interface Args {
@@ -25,7 +25,7 @@ export class SingleUrlEnvironmentGenerator extends FileGenerator<PhpFile, SdkCus
     public doGenerate(): PhpFile {
         const enum_ = php.enum_({
             ...this.context.getEnvironmentsClassReference(),
-            backing: 'string'
+            backing: "string"
         })
 
         for (const environment of this.singleUrlEnvironments.environments) {
@@ -37,7 +37,7 @@ export class SingleUrlEnvironmentGenerator extends FileGenerator<PhpFile, SdkCus
 
         return new PhpFile({
             clazz: enum_,
-            directory: RelativeFilePath.of(''),
+            directory: RelativeFilePath.of(""),
             rootNamespace: this.context.getRootNamespace(),
             customConfig: this.context.customConfig
         })

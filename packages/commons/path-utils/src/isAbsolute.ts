@@ -1,3 +1,3 @@
 export function isAbsolute(value: string): boolean {
-    return value.startsWith('/')
+    return value.startsWith("/")
 }

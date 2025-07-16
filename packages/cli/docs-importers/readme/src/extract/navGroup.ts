@@ -1,9 +1,9 @@
-import { scrapedNavigationGroup } from '../types/scrapedNavigation'
+import { scrapedNavigationGroup } from "../types/scrapedNavigation"
 
 export function getFirstTabFromNavigationGroup({ navItem }: { navItem: scrapedNavigationGroup }): string | undefined {
     const findFirstPage = (item: scrapedNavigationGroup): string | undefined => {
         for (const page of item.pages) {
-            if (page.type === 'page') {
+            if (page.type === "page") {
                 return page.slug
             } else {
                 const firstPage = findFirstPage(page)
@@ -19,6 +19,6 @@ export function getFirstTabFromNavigationGroup({ navItem }: { navItem: scrapedNa
     if (firstPage == null) {
         return undefined
     }
-    const segments = firstPage.split('/')
+    const segments = firstPage.split("/")
     return segments[0]
 }

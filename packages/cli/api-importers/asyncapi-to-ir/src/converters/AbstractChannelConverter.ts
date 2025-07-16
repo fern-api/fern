@@ -1,9 +1,9 @@
-import { FernIr, WebSocketChannel } from '@fern-api/ir-sdk'
-import { AbstractConverter, Converters } from '@fern-api/v2-importer-commons'
+import { FernIr, WebSocketChannel } from "@fern-api/ir-sdk"
+import { AbstractConverter, Converters } from "@fern-api/v2-importer-commons"
 
-import { AsyncAPIConverter } from '../AsyncAPIConverter'
-import { AsyncAPIConverterContext } from '../AsyncAPIConverterContext'
-import { FernExamplesExtension } from '../extensions/x-fern-examples'
+import { AsyncAPIConverter } from "../AsyncAPIConverter"
+import { AsyncAPIConverterContext } from "../AsyncAPIConverterContext"
+import { FernExamplesExtension } from "../extensions/x-fern-examples"
 
 export declare namespace AbstractChannelConverter {
     export interface Args<TChannel> extends AsyncAPIConverter.AbstractArgs {
@@ -50,7 +50,7 @@ export abstract class AbstractChannelConverter<TChannel> extends AbstractConvert
     }: {
         fullPath: string
         baseUrl: string | undefined
-        asyncApiVersion: 'v2' | 'v3'
+        asyncApiVersion: "v2" | "v3"
     }): Record<string, FernIr.V2WebSocketSessionExample> {
         const fernExamplesExtension = new FernExamplesExtension({
             context: this.context,
@@ -67,7 +67,7 @@ export abstract class AbstractChannelConverter<TChannel> extends AbstractConvert
                     index.toString(),
                     {
                         channel: {
-                            method: 'GET',
+                            method: "GET",
                             path: fullPath
                         },
                         baseUrl: fullPath,
@@ -77,7 +77,7 @@ export abstract class AbstractChannelConverter<TChannel> extends AbstractConvert
                         queryParameters: example.queryParameters,
                         headers: example.headers,
                         messages: example.messages.map((message) => ({
-                            type: asyncApiVersion === 'v2' ? message.type : message.messageId,
+                            type: asyncApiVersion === "v2" ? message.type : message.messageId,
                             body: message.value
                         }))
                     }
@@ -87,8 +87,8 @@ export abstract class AbstractChannelConverter<TChannel> extends AbstractConvert
     }
 
     protected transformToValidPath(path: string): string {
-        if (!path.startsWith('/')) {
-            return '/' + path
+        if (!path.startsWith("/")) {
+            return "/" + path
         }
         return path
     }

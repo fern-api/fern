@@ -1,18 +1,18 @@
-import { Node18UniversalStreamWrapper } from '../../../../src/core/fetcher/stream-wrappers/Node18UniversalStreamWrapper'
-import { NodePre18StreamWrapper } from '../../../../src/core/fetcher/stream-wrappers/NodePre18StreamWrapper'
-import { UndiciStreamWrapper } from '../../../../src/core/fetcher/stream-wrappers/UndiciStreamWrapper'
-import { chooseStreamWrapper } from '../../../../src/core/fetcher/stream-wrappers/chooseStreamWrapper'
-import { RUNTIME } from '../../../../src/core/runtime'
+import { Node18UniversalStreamWrapper } from "../../../../src/core/fetcher/stream-wrappers/Node18UniversalStreamWrapper"
+import { NodePre18StreamWrapper } from "../../../../src/core/fetcher/stream-wrappers/NodePre18StreamWrapper"
+import { UndiciStreamWrapper } from "../../../../src/core/fetcher/stream-wrappers/UndiciStreamWrapper"
+import { chooseStreamWrapper } from "../../../../src/core/fetcher/stream-wrappers/chooseStreamWrapper"
+import { RUNTIME } from "../../../../src/core/runtime"
 
-describe('chooseStreamWrapper', () => {
+describe("chooseStreamWrapper", () => {
     beforeEach(() => {
-        RUNTIME.type = 'unknown'
+        RUNTIME.type = "unknown"
         RUNTIME.parsedVersion = 0
     })
 
     it('should return a Node18UniversalStreamWrapper when RUNTIME.type is "node" and RUNTIME.parsedVersion is not null and RUNTIME.parsedVersion is greater than or equal to 18', async () => {
         const expected = new Node18UniversalStreamWrapper(new ReadableStream())
-        RUNTIME.type = 'node'
+        RUNTIME.type = "node"
         RUNTIME.parsedVersion = 18
 
         const result = await chooseStreamWrapper(new ReadableStream())
@@ -21,10 +21,10 @@ describe('chooseStreamWrapper', () => {
     })
 
     it('should return a NodePre18StreamWrapper when RUNTIME.type is "node" and RUNTIME.parsedVersion is not null and RUNTIME.parsedVersion is less than 18', async () => {
-        const stream = await import('readable-stream')
+        const stream = await import("readable-stream")
         const expected = new NodePre18StreamWrapper(new stream.Readable())
 
-        RUNTIME.type = 'node'
+        RUNTIME.type = "node"
         RUNTIME.parsedVersion = 16
 
         const result = await chooseStreamWrapper(new stream.Readable())
@@ -34,7 +34,7 @@ describe('chooseStreamWrapper', () => {
 
     it('should return a Undici when RUNTIME.type is not "node"', async () => {
         const expected = new UndiciStreamWrapper(new ReadableStream())
-        RUNTIME.type = 'browser'
+        RUNTIME.type = "browser"
 
         const result = await chooseStreamWrapper(new ReadableStream())
 

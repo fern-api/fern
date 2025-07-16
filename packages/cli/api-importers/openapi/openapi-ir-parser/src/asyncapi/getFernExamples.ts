@@ -1,7 +1,7 @@
-import { getExtension } from '../getExtension'
-import { FernAsyncAPIExtension } from './fernExtensions'
-import { AsyncAPIV2 } from './v2'
-import { AsyncAPIV3 } from './v3'
+import { getExtension } from "../getExtension"
+import { FernAsyncAPIExtension } from "./fernExtensions"
+import { AsyncAPIV2 } from "./v2"
+import { AsyncAPIV3 } from "./v3"
 
 export interface WebsocketSessionExampleMessage {
     type: string

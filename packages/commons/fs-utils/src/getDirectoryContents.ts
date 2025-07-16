@@ -1,21 +1,21 @@
-import { readFile, readdir } from 'fs/promises'
-import path from 'path'
+import { readFile, readdir } from "fs/promises"
+import path from "path"
 
-import { AbsoluteFilePath } from './AbsoluteFilePath'
-import { RelativeFilePath } from './RelativeFilePath'
-import { join } from './join'
+import { AbsoluteFilePath } from "./AbsoluteFilePath"
+import { RelativeFilePath } from "./RelativeFilePath"
+import { join } from "./join"
 
 export type FileOrDirectory = File | Directory
 
 export interface File {
-    type: 'file'
+    type: "file"
     name: string
     contents: string
     absolutePath: AbsoluteFilePath
 }
 
 export interface Directory {
-    type: 'directory'
+    type: "directory"
     name: string
     contents: FileOrDirectory[]
     absolutePath: AbsoluteFilePath
@@ -36,7 +36,7 @@ export async function getDirectoryContents(
         options.fileExtensions != null
             ? new Set(
                   options.fileExtensions.map((fileExtension) =>
-                      fileExtension.startsWith('.') ? fileExtension : `.${fileExtension}`
+                      fileExtension.startsWith(".") ? fileExtension : `.${fileExtension}`
                   )
               )
             : undefined
@@ -49,14 +49,14 @@ export async function getDirectoryContents(
             const absolutePathToItem = join(absolutePath, RelativeFilePath.of(item.name))
             if (item.isDirectory()) {
                 contents.push({
-                    type: 'directory',
+                    type: "directory",
                     name: item.name,
                     absolutePath: absolutePathToItem,
                     contents: await getDirectoryContents(absolutePathToItem, options)
                 })
             } else if (fileExtensionsWithPeriods == null || fileExtensionsWithPeriods.has(path.extname(item.name))) {
                 contents.push({
-                    type: 'file',
+                    type: "file",
                     name: item.name,
                     absolutePath: absolutePathToItem,
                     contents: (await readFile(path.join(absolutePath, item.name))).toString()
@@ -71,18 +71,18 @@ export async function getDirectoryContents(
 export type SnapshotFileOrDirectory = SnapshotFile | SnapshotDirectory
 
 export interface SnapshotFile {
-    type: 'file'
+    type: "file"
     name: string
     contents: string
 }
 
 export interface SnapshotDirectory {
-    type: 'directory'
+    type: "directory"
     name: string
     contents: SnapshotFileOrDirectory[]
 }
 
-const BINARY_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.gif', '.ico', '.bin']
+const BINARY_EXTENSIONS = [".png", ".jpg", ".jpeg", ".gif", ".ico", ".bin"]
 
 export async function getDirectoryContentsForSnapshot(
     absolutePath: AbsoluteFilePath,
@@ -90,14 +90,14 @@ export async function getDirectoryContentsForSnapshot(
 ): Promise<SnapshotFileOrDirectory[]> {
     const contents = await getDirectoryContents(absolutePath, options)
     const removeAbsolutePath = (fileOrDir: FileOrDirectory): SnapshotFileOrDirectory => {
-        if (fileOrDir.type === 'file') {
+        if (fileOrDir.type === "file") {
             if (options.skipBinaryContents && BINARY_EXTENSIONS.includes(path.extname(fileOrDir.name))) {
-                return { type: 'file', name: fileOrDir.name, contents: '<binary>' }
+                return { type: "file", name: fileOrDir.name, contents: "<binary>" }
             }
-            return { type: 'file', name: fileOrDir.name, contents: fileOrDir.contents }
+            return { type: "file", name: fileOrDir.name, contents: fileOrDir.contents }
         } else {
             return {
-                type: 'directory',
+                type: "directory",
                 name: fileOrDir.name,
                 contents: fileOrDir.contents.map((item) => removeAbsolutePath(item))
             }

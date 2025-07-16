@@ -1,20 +1,20 @@
-import axios from 'axios'
-import chalk from 'chalk'
-import decompress from 'decompress'
-import { createWriteStream } from 'fs'
-import { mkdir, rm } from 'fs/promises'
-import path from 'path'
-import { pipeline } from 'stream/promises'
-import terminalLink from 'terminal-link'
-import tmp from 'tmp-promise'
+import axios from "axios"
+import chalk from "chalk"
+import decompress from "decompress"
+import { createWriteStream } from "fs"
+import { mkdir, rm } from "fs/promises"
+import path from "path"
+import { pipeline } from "stream/promises"
+import terminalLink from "terminal-link"
+import tmp from "tmp-promise"
 
-import { generatorsYml } from '@fern-api/configuration'
-import { noop } from '@fern-api/core-utils'
-import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from '@fern-api/fs-utils'
-import { LogLevel } from '@fern-api/logger'
-import { InteractiveTaskContext } from '@fern-api/task-context'
+import { generatorsYml } from "@fern-api/configuration"
+import { noop } from "@fern-api/core-utils"
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils"
+import { LogLevel } from "@fern-api/logger"
+import { InteractiveTaskContext } from "@fern-api/task-context"
 
-import { FernFiddle } from '@fern-fern/fiddle-sdk'
+import { FernFiddle } from "@fern-fern/fiddle-sdk"
 
 export declare namespace RemoteTaskHandler {
     export interface Init {
@@ -46,7 +46,7 @@ export class RemoteTaskHandler {
         remoteTask: FernFiddle.remoteGen.Task | undefined
     ): Promise<RemoteTaskHandler.Response | undefined> {
         if (remoteTask == null) {
-            this.context.failAndThrow('Task is missing on job status')
+            this.context.failAndThrow("Task is missing on job status")
         }
 
         const coordinates = remoteTask.packages.map((p) => {
@@ -56,7 +56,7 @@ export class RemoteTaskHandler {
                 pypi: (pypiPackage) => `${pypiPackage.name} ${pypiPackage.version}`,
                 ruby: (rubyGem) => `${rubyGem.name}:${rubyGem.version}`,
                 nuget: (nugetPackage) => `${nugetPackage.name} ${nugetPackage.version}`,
-                _other: () => '<unknown package>'
+                _other: () => "<unknown package>"
             })
         })
 
@@ -67,7 +67,7 @@ export class RemoteTaskHandler {
                           .map((coordinate) => {
                               return `◦ ${coordinate}`
                           })
-                          .join('\n')
+                          .join("\n")
                     : undefined
             )
         }
@@ -79,7 +79,7 @@ export class RemoteTaskHandler {
 
         const logS3Url = (s3Url: string) => {
             this.context.logger.debug(
-                `Generated files. ${terminalLink('View here', s3Url, {
+                `Generated files. ${terminalLink("View here", s3Url, {
                     fallback: (text, url) => `${text}: ${url}`
                 })}`
             )
@@ -116,7 +116,7 @@ export class RemoteTaskHandler {
                 this.#snippetsS3PreSignedReadUrl = finishedStatus.snippetsS3PreSignedReadUrl
             },
             _other: () => {
-                this.context.logger.warn('Received unknown update type: ' + remoteTask.status.type)
+                this.context.logger.warn("Received unknown update type: " + remoteTask.status.type)
             }
         })
 
@@ -167,7 +167,7 @@ async function downloadFilesForTask({
 
         context.logger.info(chalk.green(`Downloaded to ${absolutePathToLocalOutput}`))
     } catch (e) {
-        context.failAndThrow('Failed to download files', e)
+        context.failAndThrow("Failed to download files", e)
     }
 }
 
@@ -180,12 +180,12 @@ async function downloadZipForTask({
 }): Promise<void> {
     // initiate request
     const request = await axios.get(s3PreSignedReadUrl, {
-        responseType: 'stream'
+        responseType: "stream"
     })
 
     // pipe to zip
-    const tmpDir = await tmp.dir({ prefix: 'fern', unsafeCleanup: true })
-    const outputZipPath = path.join(tmpDir.path, 'output.zip')
+    const tmpDir = await tmp.dir({ prefix: "fern", unsafeCleanup: true })
+    const outputZipPath = path.join(tmpDir.path, "output.zip")
     await pipeline(request.data, createWriteStream(outputZipPath))
 
     // decompress to user-specified location
@@ -198,13 +198,13 @@ async function downloadZipForTask({
 
 function convertLogLevel(logLevel: FernFiddle.LogLevel): LogLevel {
     switch (logLevel) {
-        case 'DEBUG':
+        case "DEBUG":
             return LogLevel.Debug
-        case 'INFO':
+        case "INFO":
             return LogLevel.Info
-        case 'WARN':
+        case "WARN":
             return LogLevel.Warn
-        case 'ERROR':
+        case "ERROR":
             return LogLevel.Error
         default:
             return LogLevel.Info

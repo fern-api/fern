@@ -1,18 +1,18 @@
-import fs from 'fs'
-import { difference } from 'lodash-es'
-import path from 'path'
+import fs from "fs"
+import { difference } from "lodash-es"
+import path from "path"
 
-import { APIS_DIRECTORY, FERN_DIRECTORY } from '@fern-api/configuration'
-import { CONSOLE_LOGGER } from '@fern-api/logger'
+import { APIS_DIRECTORY, FERN_DIRECTORY } from "@fern-api/configuration"
+import { CONSOLE_LOGGER } from "@fern-api/logger"
 
-import { GeneratorWorkspace } from '../../loadGeneratorWorkspaces'
-import { printTestCases } from './printTestCases'
-import { TestRunner } from './test-runner'
+import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces"
+import { printTestCases } from "./printTestCases"
+import { TestRunner } from "./test-runner"
 
-export const LANGUAGE_SPECIFIC_FIXTURE_PREFIXES = ['csharp', 'go', 'java', 'python', 'ruby', 'ts']
+export const LANGUAGE_SPECIFIC_FIXTURE_PREFIXES = ["csharp", "go", "java", "python", "ruby", "ts"]
 
 export const FIXTURES = readDirectories(
-    path.join(__dirname, '../../../test-definitions', FERN_DIRECTORY, APIS_DIRECTORY)
+    path.join(__dirname, "../../../test-definitions", FERN_DIRECTORY, APIS_DIRECTORY)
 )
 
 export async function testGenerator({
@@ -62,7 +62,7 @@ export async function testGenerator({
     printTestCases(results)
 
     const failedFixtures = results
-        .filter((res) => res.type === 'failure')
+        .filter((res) => res.type === "failure")
         .map((res) => (res.id === res.outputFolder ? res.id : `${res.id}:${res.outputFolder}`))
     const unexpectedFixtures = difference(failedFixtures, generator.workspaceConfig.allowedFailures ?? [])
 
@@ -72,13 +72,13 @@ export async function testGenerator({
         CONSOLE_LOGGER.info(
             `${failedFixtures.length}/${
                 results.length
-            } test cases failed. The failed fixtures include ${failedFixtures.join(', ')}.`
+            } test cases failed. The failed fixtures include ${failedFixtures.join(", ")}.`
         )
         if (unexpectedFixtures.length > 0) {
-            CONSOLE_LOGGER.info(`Unexpected fixtures include ${unexpectedFixtures.join(', ')}.`)
+            CONSOLE_LOGGER.info(`Unexpected fixtures include ${unexpectedFixtures.join(", ")}.`)
             return false
         } else {
-            CONSOLE_LOGGER.info('All failures were expected.')
+            CONSOLE_LOGGER.info("All failures were expected.")
         }
     }
     return true

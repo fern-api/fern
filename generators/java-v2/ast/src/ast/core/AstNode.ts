@@ -1,7 +1,7 @@
-import { AbstractAstNode, AbstractFormatter } from '@fern-api/browser-compatible-base-generator'
+import { AbstractAstNode, AbstractFormatter } from "@fern-api/browser-compatible-base-generator"
 
-import { BaseJavaCustomConfigSchema } from '../../custom-config/BaseJavaCustomConfigSchema'
-import { JavaFile } from './JavaFile'
+import { BaseJavaCustomConfigSchema } from "../../custom-config/BaseJavaCustomConfigSchema"
+import { JavaFile } from "./JavaFile"
 
 export abstract class AstNode extends AbstractAstNode {
     /**

@@ -1,9 +1,9 @@
-import { RawSchemas, isRawMultipleBaseUrlsEnvironment } from '@fern-api/fern-definition-schema'
+import { RawSchemas, isRawMultipleBaseUrlsEnvironment } from "@fern-api/fern-definition-schema"
 
-import { OpenApiIrConverterContext } from './OpenApiIrConverterContext'
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext"
 
-const DEFAULT_URL_NAME = 'Base'
-const DEFAULT_ENVIRONMENT_NAME = 'Default'
+const DEFAULT_URL_NAME = "Base"
+const DEFAULT_ENVIRONMENT_NAME = "Default"
 
 function extractUrlsFromEnvironmentSchema(
     record: Record<string, RawSchemas.EnvironmentSchema>
@@ -14,7 +14,7 @@ function extractUrlsFromEnvironmentSchema(
                 acc[urlsName] = urlsValue
             })
         } else {
-            acc[name] = typeof schemaOrUrl === 'string' ? schemaOrUrl : schemaOrUrl.url
+            acc[name] = typeof schemaOrUrl === "string" ? schemaOrUrl : schemaOrUrl.url
         }
 
         return acc
@@ -31,11 +31,11 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                 schema: environmentDeclaration
             })
         }
-        if (context.environmentOverrides['default-environment'] != null) {
-            context.builder.setDefaultEnvironment(context.environmentOverrides['default-environment'])
+        if (context.environmentOverrides["default-environment"] != null) {
+            context.builder.setDefaultEnvironment(context.environmentOverrides["default-environment"])
         }
-        if (context.environmentOverrides['default-url'] != null) {
-            context.builder.setDefaultUrl(context.environmentOverrides['default-url'])
+        if (context.environmentOverrides["default-url"] != null) {
+            context.builder.setDefaultUrl(context.environmentOverrides["default-url"])
         }
         return
     }
@@ -120,8 +120,8 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
     if (endpointLevelSkippedServers.length > 0) {
         context.logger.error(
             `Skipping endpoint level servers ${endpointLevelSkippedServers
-                .map((server) => (typeof server === 'string' ? server : server.url))
-                .join(', ')} because x-fern-server-name was not provided.`
+                .map((server) => (typeof server === "string" ? server : server.url))
+                .join(", ")} because x-fern-server-name was not provided.`
         )
     }
 
@@ -142,17 +142,17 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
 
     // We now log an error for all skipped servers that we didn't have a name or construct a name for.
     const topLevelServerUrls = Object.values(topLevelServersWithName).map((schema) =>
-        typeof schema === 'string' ? schema : schema.url
+        typeof schema === "string" ? schema : schema.url
     )
     const filteredSkippedServers = topLevelSkippedServers.filter((server) => {
-        const serverUrl = typeof server === 'string' ? server : server.url
+        const serverUrl = typeof server === "string" ? server : server.url
         return !topLevelServerUrls.includes(serverUrl)
     })
     if (filteredSkippedServers.length > 0) {
         context.logger.error(
             `Skipping top level servers ${filteredSkippedServers
-                .map((server) => (typeof server === 'string' ? server : server.url))
-                .join(', ')} because x-fern-server-name was not provided.`
+                .map((server) => (typeof server === "string" ? server : server.url))
+                .join(", ")} because x-fern-server-name was not provided.`
         )
     }
 
@@ -166,7 +166,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                         name,
                         schema: {
                             urls: {
-                                ...{ [DEFAULT_URL_NAME]: typeof schema === 'string' ? schema : schema.url },
+                                ...{ [DEFAULT_URL_NAME]: typeof schema === "string" ? schema : schema.url },
                                 ...extractUrlsFromEnvironmentSchema(websocketServersWithName)
                             }
                         }
@@ -185,7 +185,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                         name,
                         schema: {
                             urls: {
-                                ...{ [DEFAULT_URL_NAME]: typeof schema === 'string' ? schema : schema.url },
+                                ...{ [DEFAULT_URL_NAME]: typeof schema === "string" ? schema : schema.url },
                                 ...extractUrlsFromEnvironmentSchema(websocketServersWithName)
                             }
                         }
@@ -208,7 +208,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                 | string
                 | RawSchemas.SingleBaseUrlEnvironmentSchema
             const topLevelServerUrl =
-                typeof topLevelServerSchema === 'string' ? topLevelServerSchema : topLevelServerSchema.url
+                typeof topLevelServerSchema === "string" ? topLevelServerSchema : topLevelServerSchema.url
             context.builder.addEnvironment({
                 name: environmentName,
                 schema: {
@@ -229,7 +229,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                         name,
                         schema: {
                             urls: {
-                                ...{ [DEFAULT_URL_NAME]: typeof schema === 'string' ? schema : schema.url },
+                                ...{ [DEFAULT_URL_NAME]: typeof schema === "string" ? schema : schema.url },
                                 ...extractUrlsFromEnvironmentSchema(endpointLevelServersWithName),
                                 ...extractUrlsFromEnvironmentSchema(websocketServersWithName)
                             }
@@ -243,7 +243,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                         schema: {
                             urls: {
                                 ...{
-                                    [DEFAULT_URL_NAME]: typeof schema === 'string' ? schema : schema.url
+                                    [DEFAULT_URL_NAME]: typeof schema === "string" ? schema : schema.url
                                 },
                                 ...extractUrlsFromEnvironmentSchema(endpointLevelServersWithName),
                                 ...extractUrlsFromEnvironmentSchema(websocketServersWithName)

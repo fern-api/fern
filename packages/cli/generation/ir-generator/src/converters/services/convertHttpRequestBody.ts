@@ -3,7 +3,7 @@ import {
     isInlineRequestBody,
     parseBytesRequest,
     parseFileUploadRequest
-} from '@fern-api/fern-definition-schema'
+} from "@fern-api/fern-definition-schema"
 import {
     Availability,
     FileProperty,
@@ -12,12 +12,12 @@ import {
     HttpRequestBody,
     HttpRequestBodyReference,
     InlinedRequestBodyProperty
-} from '@fern-api/ir-sdk'
+} from "@fern-api/ir-sdk"
 
-import { FernFileContext } from '../../FernFileContext'
-import { parseTypeName } from '../../utils/parseTypeName'
-import { convertAvailability } from '../convertDeclaration'
-import { getExtensionsAsList, getPropertyName } from '../type-declarations/convertObjectTypeDeclaration'
+import { FernFileContext } from "../../FernFileContext"
+import { parseTypeName } from "../../utils/parseTypeName"
+import { convertAvailability } from "../convertDeclaration"
+import { getExtensionsAsList, getPropertyName } from "../type-declarations/convertObjectTypeDeclaration"
 
 export function convertHttpRequestBody({
     request,
@@ -30,13 +30,13 @@ export function convertHttpRequestBody({
     if (bytesRequest != null) {
         return HttpRequestBody.bytes({
             isOptional: bytesRequest.isOptional,
-            contentType: typeof request === 'string' ? undefined : request?.['content-type'],
-            docs: typeof request === 'string' ? undefined : request?.docs,
+            contentType: typeof request === "string" ? undefined : request?.["content-type"],
+            docs: typeof request === "string" ? undefined : request?.docs,
             v2Examples: undefined
         })
     }
 
-    if (typeof request === 'string') {
+    if (typeof request === "string") {
         return HttpRequestBody.reference(
             convertReferenceHttpRequestBody({
                 requestBody: request,
@@ -52,7 +52,7 @@ export function convertHttpRequestBody({
     const fileUploadRequest = parseFileUploadRequest(request)
     if (fileUploadRequest != null) {
         return HttpRequestBody.fileUpload({
-            contentType: request['content-type'],
+            contentType: request["content-type"],
             name: file.casingsGenerator.generateName(fileUploadRequest.name),
             properties: fileUploadRequest.properties.map((property) => {
                 if (property.isFile) {
@@ -102,7 +102,7 @@ export function convertHttpRequestBody({
 
     if (isInlineRequestBody(request.body)) {
         if (request.name == null) {
-            throw new Error('Name is missing for inlined request')
+            throw new Error("Name is missing for inlined request")
         }
 
         return HttpRequestBody.inlinedRequestBody({
@@ -110,7 +110,7 @@ export function convertHttpRequestBody({
             extends: getExtensionsAsList(request.body.extends).map((extended) =>
                 parseTypeName({ typeName: extended, file })
             ),
-            contentType: request['content-type'],
+            contentType: request["content-type"],
             docs: request.docs,
             properties:
                 request.body.properties != null
@@ -118,16 +118,16 @@ export function convertHttpRequestBody({
                           convertInlinedRequestProperty({
                               propertyKey,
                               propertyDefinition,
-                              docs: typeof propertyDefinition !== 'string' ? propertyDefinition.docs : undefined,
+                              docs: typeof propertyDefinition !== "string" ? propertyDefinition.docs : undefined,
                               availability:
-                                  typeof propertyDefinition !== 'string'
+                                  typeof propertyDefinition !== "string"
                                       ? convertAvailability(propertyDefinition.availability)
                                       : undefined,
                               file
                           })
                       )
                     : [],
-            extraProperties: request.body['extra-properties'] ?? false,
+            extraProperties: request.body["extra-properties"] ?? false,
             extendedProperties: undefined,
             v2Examples: undefined
         })
@@ -137,13 +137,13 @@ export function convertHttpRequestBody({
         convertReferenceHttpRequestBody({
             requestBody: request.body,
             file,
-            contentType: request['content-type']
+            contentType: request["content-type"]
         })
     )
 }
 
 const CONTENT_TYPE_TO_ENCODING_MAP: Record<string, FileUploadBodyPropertyEncoding> = {
-    'application/json': 'json'
+    "application/json": "json"
 }
 function getMultipartPartEncodingFromContentType(
     contentType: string | undefined
@@ -165,7 +165,7 @@ export function convertReferenceHttpRequestBody({
     contentType?: string
 }): HttpRequestBodyReference {
     return {
-        docs: typeof requestBody !== 'string' ? requestBody.docs : undefined,
+        docs: typeof requestBody !== "string" ? requestBody.docs : undefined,
         requestBodyType: file.parseTypeReference(requestBody),
         contentType,
         v2Examples: undefined

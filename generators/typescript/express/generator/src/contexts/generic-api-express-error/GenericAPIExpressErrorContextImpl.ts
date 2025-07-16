@@ -1,9 +1,9 @@
-import { ExportsManager, ImportsManager, Reference } from '@fern-typescript/commons'
-import { GeneratedGenericAPIExpressError, GenericAPIExpressErrorContext } from '@fern-typescript/contexts'
-import { GenericAPIExpressErrorGenerator } from '@fern-typescript/generic-express-error-generators'
-import { SourceFile } from 'ts-morph'
+import { ExportsManager, ImportsManager, Reference } from "@fern-typescript/commons"
+import { GeneratedGenericAPIExpressError, GenericAPIExpressErrorContext } from "@fern-typescript/contexts"
+import { GenericAPIExpressErrorGenerator } from "@fern-typescript/generic-express-error-generators"
+import { SourceFile } from "ts-morph"
 
-import { GenericAPIExpressErrorDeclarationReferencer } from '../../declaration-referencers/GenericAPIExpressErrorDeclarationReferencer'
+import { GenericAPIExpressErrorDeclarationReferencer } from "../../declaration-referencers/GenericAPIExpressErrorDeclarationReferencer"
 
 export declare namespace GenericAPIExpressErrorContextImpl {
     export interface Init {

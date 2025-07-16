@@ -1,6 +1,6 @@
-import { Comment } from './Comment'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { Comment } from "./Comment"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export declare namespace Enum {
     interface Args {

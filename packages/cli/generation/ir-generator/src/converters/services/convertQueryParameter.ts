@@ -1,8 +1,8 @@
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { QueryParameter } from '@fern-api/ir-sdk'
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { QueryParameter } from "@fern-api/ir-sdk"
 
-import { FernFileContext } from '../../FernFileContext'
-import { convertDeclaration } from '../convertDeclaration'
+import { FernFileContext } from "../../FernFileContext"
+import { convertDeclaration } from "../convertDeclaration"
 
 export function convertQueryParameter({
     file,
@@ -23,8 +23,8 @@ export function convertQueryParameter({
         }),
         valueType,
         allowMultiple:
-            typeof queryParameter !== 'string' && queryParameter['allow-multiple'] != null
-                ? queryParameter['allow-multiple']
+            typeof queryParameter !== "string" && queryParameter["allow-multiple"] != null
+                ? queryParameter["allow-multiple"]
                 : false,
         v2Examples: {
             userSpecifiedExamples: {},
@@ -40,7 +40,7 @@ export function getQueryParameterName({
     queryParameterKey: string
     queryParameter: RawSchemas.HttpQueryParameterSchema
 }): { name: string; wasExplicitlySet: boolean } {
-    if (typeof queryParameter !== 'string') {
+    if (typeof queryParameter !== "string") {
         if (queryParameter.name != null) {
             return { name: queryParameter.name, wasExplicitlySet: true }
         }

@@ -1,5 +1,5 @@
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { AbstractExtension } from '@fern-api/v2-importer-commons'
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { AbstractExtension } from "@fern-api/v2-importer-commons"
 
 export declare namespace FernExamplesExtension {
     export interface Args extends AbstractExtension.Args {
@@ -12,7 +12,7 @@ export declare namespace FernExamplesExtension {
 export class FernExamplesExtension extends AbstractExtension<FernExamplesExtension.Output> {
     private readonly operation: object
 
-    public readonly key = 'x-fern-examples'
+    public readonly key = "x-fern-examples"
 
     constructor({ context, breadcrumbs, operation }: FernExamplesExtension.Args) {
         super({ breadcrumbs, context })
@@ -32,7 +32,7 @@ export class FernExamplesExtension extends AbstractExtension<FernExamplesExtensi
                 const maybeFernExample = RawSchemas.serialization.ExampleEndpointCallSchema.parse(example)
                 if (!maybeFernExample.ok) {
                     this.context.errorCollector.collect({
-                        message: `Failed to parse x-fern-example in ${this.breadcrumbs.join('.')}`,
+                        message: `Failed to parse x-fern-example in ${this.breadcrumbs.join(".")}`,
                         path: this.breadcrumbs
                     })
                 }

@@ -1,8 +1,8 @@
-import { BLOCK_END } from '../../utils/RubyConstants'
-import { Import } from '../Import'
-import { AstNode } from '../core/AstNode'
-import { Expression } from '../expressions/Expression'
-import { FunctionInvocation } from '../functions/FunctionInvocation'
+import { BLOCK_END } from "../../utils/RubyConstants"
+import { Import } from "../Import"
+import { AstNode } from "../core/AstNode"
+import { Expression } from "../expressions/Expression"
+import { FunctionInvocation } from "../functions/FunctionInvocation"
 
 export declare namespace CaseStatement {
     export interface Init extends AstNode.Init {
@@ -29,8 +29,8 @@ export class CaseStatement extends AstNode {
         when_?: string
     ): void {
         this.addText({
-            stringContent: when_ ?? 'else',
-            templateString: when_ !== undefined ? 'when %s' : undefined,
+            stringContent: when_ ?? "else",
+            templateString: when_ !== undefined ? "when %s" : undefined,
             startingTabSpaces
         })
         expressions.forEach((exp) =>
@@ -41,7 +41,7 @@ export class CaseStatement extends AstNode {
     public writeInternal(startingTabSpaces: number): void {
         this.addText({
             stringContent: this.case_ instanceof AstNode ? this.case_.write({}) : this.case_,
-            templateString: 'case %s',
+            templateString: "case %s",
             startingTabSpaces
         })
         this.whenBlocks.forEach((block, when_) => this.writeWhenBlock(startingTabSpaces, block, when_))

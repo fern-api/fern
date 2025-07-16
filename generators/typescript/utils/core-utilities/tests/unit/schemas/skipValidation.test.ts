@@ -1,14 +1,14 @@
 /* eslint-disable no-console */
-import { boolean, number, object, property, string, undiscriminatedUnion } from '../../../src/core/schemas/builders'
+import { boolean, number, object, property, string, undiscriminatedUnion } from "../../../src/core/schemas/builders"
 
-describe('skipValidation', () => {
+describe("skipValidation", () => {
     it("allows data that doesn't conform to the schema", async () => {
         const warningLogs: string[] = []
         const originalConsoleWarn = console.warn
-        console.warn = (...args) => warningLogs.push(args.join(' '))
+        console.warn = (...args) => warningLogs.push(args.join(" "))
 
         const schema = object({
-            camelCase: property('snake_case', string()),
+            camelCase: property("snake_case", string()),
             numberProperty: number(),
             requiredProperty: boolean(),
             anyPrimitive: undiscriminatedUnion([string(), number(), boolean()])
@@ -16,8 +16,8 @@ describe('skipValidation', () => {
 
         const parsed = await schema.parse(
             {
-                snake_case: 'hello',
-                numberProperty: 'oops',
+                snake_case: "hello",
+                numberProperty: "oops",
                 anyPrimitive: true
             },
             {
@@ -28,8 +28,8 @@ describe('skipValidation', () => {
         expect(parsed).toEqual({
             ok: true,
             value: {
-                camelCase: 'hello',
-                numberProperty: 'oops',
+                camelCase: "hello",
+                numberProperty: "oops",
                 anyPrimitive: true
             }
         })

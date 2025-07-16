@@ -1,4 +1,4 @@
-import { Headers } from './Headers'
+import { Headers } from "./Headers"
 
 /**
  * The raw response from the fetch call excluding the body.
@@ -7,7 +7,7 @@ export type RawResponse = Omit<
     {
         [K in keyof Response as Response[K] extends Function ? never : K]: Response[K] // strips out functions
     },
-    'ok' | 'body' | 'bodyUsed'
+    "ok" | "body" | "bodyUsed"
 > // strips out body and bodyUsed
 
 /**
@@ -17,9 +17,9 @@ export const abortRawResponse: RawResponse = {
     headers: new Headers(),
     redirected: false,
     status: 499,
-    statusText: 'Client Closed Request',
-    type: 'error',
-    url: ''
+    statusText: "Client Closed Request",
+    type: "error",
+    url: ""
 } as const
 
 /**
@@ -29,9 +29,9 @@ export const unknownRawResponse: RawResponse = {
     headers: new Headers(),
     redirected: false,
     status: 0,
-    statusText: 'Unknown Error',
-    type: 'error',
-    url: ''
+    statusText: "Unknown Error",
+    type: "error",
+    url: ""
 } as const
 
 /**

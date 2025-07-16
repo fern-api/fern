@@ -1,9 +1,9 @@
-import urlJoin from 'url-join'
-import { v4 as uuidv4 } from 'uuid'
+import urlJoin from "url-join"
+import { v4 as uuidv4 } from "uuid"
 
-import { CasingsGenerator, constructCasingsGenerator } from '@fern-api/casings-generator'
-import { generatorsYml } from '@fern-api/configuration'
-import { assertNever } from '@fern-api/core-utils'
+import { CasingsGenerator, constructCasingsGenerator } from "@fern-api/casings-generator"
+import { generatorsYml } from "@fern-api/configuration"
+import { assertNever } from "@fern-api/core-utils"
 import {
     AliasTypeDeclaration,
     ApiAuth,
@@ -38,9 +38,9 @@ import {
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration,
     dynamic
-} from '@fern-api/ir-sdk'
+} from "@fern-api/ir-sdk"
 
-import { Version } from './version'
+import { Version } from "./version"
 
 interface EndpointWithFilepath extends HttpEndpoint {
     servicePathParameters: PathParameter[]
@@ -145,12 +145,12 @@ export class DynamicSnippetsConverter {
             throw new Error(`Internal error; endpoint "${endpoint.id}" has a request body but no SDK request`)
         }
         switch (endpoint.sdkRequest.shape.type) {
-            case 'justRequestBody':
+            case "justRequestBody":
                 return DynamicSnippets.Request.body({
                     pathParameters,
                     body: this.convertReferencedRequestBodyType({ body: endpoint.sdkRequest.shape.value })
                 })
-            case 'wrapper':
+            case "wrapper":
                 return this.convertInlinedRequest({
                     fernFilepath: endpoint.fernFilepath,
                     wrapper: endpoint.sdkRequest.shape,
@@ -172,9 +172,9 @@ export class DynamicSnippetsConverter {
         body: SdkRequestBodyType
     }): DynamicSnippets.ReferencedRequestBodyType {
         switch (body.type) {
-            case 'bytes':
+            case "bytes":
                 return DynamicSnippets.ReferencedRequestBodyType.bytes()
-            case 'typeReference':
+            case "typeReference":
                 return DynamicSnippets.ReferencedRequestBodyType.typeReference(
                     this.convertTypeReference(body.requestBodyType)
                 )
@@ -227,25 +227,25 @@ export class DynamicSnippetsConverter {
         body: HttpRequestBody
     }): DynamicSnippets.InlinedRequestBody {
         switch (body.type) {
-            case 'inlinedRequestBody': {
+            case "inlinedRequestBody": {
                 const properties = [...(body.extendedProperties ?? []), ...body.properties]
                 return DynamicSnippets.InlinedRequestBody.properties(
                     this.convertWireValueParameters({ wireValueParameters: properties })
                 )
             }
-            case 'reference':
+            case "reference":
                 return DynamicSnippets.InlinedRequestBody.referenced({
                     bodyKey: wrapper.bodyKey,
                     bodyType: DynamicSnippets.ReferencedRequestBodyType.typeReference(
                         this.convertTypeReference(body.requestBodyType)
                     )
                 })
-            case 'bytes':
+            case "bytes":
                 return DynamicSnippets.InlinedRequestBody.referenced({
                     bodyKey: wrapper.bodyKey,
                     bodyType: DynamicSnippets.ReferencedRequestBodyType.bytes()
                 })
-            case 'fileUpload':
+            case "fileUpload":
                 return this.convertFileUploadRequestBody({ properties: body.properties })
             default:
                 assertNever(body)
@@ -269,9 +269,9 @@ export class DynamicSnippetsConverter {
     }): DynamicSnippets.FileUploadRequestBodyProperty[] {
         return properties.map((property) => {
             switch (property.type) {
-                case 'file':
+                case "file":
                     return this.convertFileUploadRequestBodyFileProperty({ fileProperty: property.value })
-                case 'bodyProperty':
+                case "bodyProperty":
                     return DynamicSnippets.FileUploadRequestBodyProperty.bodyProperty({
                         name: property.name,
                         typeReference: this.convertTypeReference(property.valueType)
@@ -288,9 +288,9 @@ export class DynamicSnippetsConverter {
         fileProperty: FileProperty
     }): DynamicSnippets.FileUploadRequestBodyProperty {
         switch (fileProperty.type) {
-            case 'file':
+            case "file":
                 return DynamicSnippets.FileUploadRequestBodyProperty.file(fileProperty.key)
-            case 'fileArray':
+            case "fileArray":
                 return DynamicSnippets.FileUploadRequestBodyProperty.fileArray(fileProperty.key)
             default:
                 assertNever(fileProperty)
@@ -349,13 +349,13 @@ export class DynamicSnippetsConverter {
 
     private convertTypeReference(typeReference: TypeReference): DynamicSnippets.TypeReference {
         switch (typeReference.type) {
-            case 'container':
+            case "container":
                 return this.convertContainerType(typeReference.container)
-            case 'named':
+            case "named":
                 return this.convertNamedType(typeReference)
-            case 'primitive':
+            case "primitive":
                 return this.convertPrimitiveType(typeReference.primitive)
-            case 'unknown':
+            case "unknown":
                 return this.convertUnknownType()
             default:
                 assertNever(typeReference)
@@ -364,20 +364,20 @@ export class DynamicSnippetsConverter {
 
     private convertContainerType(container: ContainerType): DynamicSnippets.TypeReference {
         switch (container.type) {
-            case 'list':
+            case "list":
                 return DynamicSnippets.TypeReference.list(this.convertTypeReference(container.list))
-            case 'map':
+            case "map":
                 return DynamicSnippets.TypeReference.map({
                     key: this.convertTypeReference(container.keyType),
                     value: this.convertTypeReference(container.valueType)
                 })
-            case 'optional':
+            case "optional":
                 return DynamicSnippets.TypeReference.optional(this.convertTypeReference(container.optional))
-            case 'nullable':
+            case "nullable":
                 return DynamicSnippets.TypeReference.nullable(this.convertTypeReference(container.nullable))
-            case 'set':
+            case "set":
                 return DynamicSnippets.TypeReference.set(this.convertTypeReference(container.set))
-            case 'literal':
+            case "literal":
                 return DynamicSnippets.TypeReference.literal(this.convertLiteral(container.literal))
             default:
                 assertNever(container)
@@ -391,15 +391,15 @@ export class DynamicSnippetsConverter {
     private convertTypeDeclaration(typeDeclaration: TypeDeclaration): DynamicSnippets.NamedType {
         const declaration = this.convertDeclaration(typeDeclaration.name)
         switch (typeDeclaration.shape.type) {
-            case 'alias':
+            case "alias":
                 return this.convertAlias({ declaration, alias: typeDeclaration.shape })
-            case 'enum':
+            case "enum":
                 return this.convertEnum({ declaration, enum_: typeDeclaration.shape })
-            case 'object':
+            case "object":
                 return this.convertObject({ declaration, object: typeDeclaration.shape })
-            case 'union':
+            case "union":
                 return this.convertDiscriminatedUnion({ declaration, union: typeDeclaration.shape })
-            case 'undiscriminatedUnion':
+            case "undiscriminatedUnion":
                 return this.convertUndiscriminatedUnion({ declaration, union: typeDeclaration.shape })
             default:
                 assertNever(typeDeclaration.shape)
@@ -497,19 +497,19 @@ export class DynamicSnippetsConverter {
         singleUnionTypeProperties: SingleUnionTypeProperties
     }): DynamicSnippets.SingleDiscriminatedUnionType {
         switch (singleUnionTypeProperties.propertiesType) {
-            case 'samePropertiesAsObject':
+            case "samePropertiesAsObject":
                 return this.convertDiscriminatedUnionTypeObject({
                     inheritedProperties,
                     discriminantValue,
                     declaredTypeName: singleUnionTypeProperties
                 })
-            case 'singleProperty':
+            case "singleProperty":
                 return this.convertDiscriminatedUnionTypeSingleProperty({
                     inheritedProperties,
                     discriminantValue,
                     singleUnionTypeProperty: singleUnionTypeProperties
                 })
-            case 'noProperties':
+            case "noProperties":
                 return this.convertDiscriminatedUnionTypeNoProperties({
                     inheritedProperties,
                     discriminantValue
@@ -585,9 +585,9 @@ export class DynamicSnippetsConverter {
 
     private convertLiteral(literal: Literal): DynamicSnippets.LiteralType {
         switch (literal.type) {
-            case 'boolean':
+            case "boolean":
                 return DynamicSnippets.LiteralType.boolean(literal.boolean)
-            case 'string':
+            case "string":
                 return DynamicSnippets.LiteralType.string(literal.string)
             default:
                 assertNever(literal)
@@ -608,21 +608,21 @@ export class DynamicSnippetsConverter {
         }
         const scheme = auth.schemes[0]
         switch (scheme.type) {
-            case 'basic':
+            case "basic":
                 return DynamicSnippets.Auth.basic(scheme)
-            case 'bearer':
+            case "bearer":
                 return DynamicSnippets.Auth.bearer(scheme)
-            case 'header':
+            case "header":
                 return DynamicSnippets.Auth.header({
                     header: {
                         name: scheme.name,
                         typeReference: this.convertTypeReference(scheme.valueType)
                     }
                 })
-            case 'oauth':
+            case "oauth":
                 return DynamicSnippets.Auth.oauth({
-                    clientId: this.casingsGenerator.generateName('clientId'),
-                    clientSecret: this.casingsGenerator.generateName('clientSecret')
+                    clientId: this.casingsGenerator.generateName("clientId"),
+                    clientSecret: this.casingsGenerator.generateName("clientSecret")
                 })
             default:
                 assertNever(scheme)
@@ -635,23 +635,23 @@ export class DynamicSnippetsConverter {
             return undefined
         }
         switch (scheme.type) {
-            case 'bearer':
+            case "bearer":
                 return DynamicSnippets.AuthValues.bearer({
-                    token: '<token>'
+                    token: "<token>"
                 })
-            case 'basic':
+            case "basic":
                 return DynamicSnippets.AuthValues.basic({
-                    username: '<username>',
-                    password: '<password>'
+                    username: "<username>",
+                    password: "<password>"
                 })
-            case 'header':
+            case "header":
                 return DynamicSnippets.AuthValues.header({
-                    value: '<value>'
+                    value: "<value>"
                 })
-            case 'oauth':
+            case "oauth":
                 return DynamicSnippets.AuthValues.oauth({
-                    clientId: '<clientId>',
-                    clientSecret: '<clientSecret>'
+                    clientId: "<clientId>",
+                    clientSecret: "<clientSecret>"
                 })
             default:
                 assertNever(scheme)
@@ -704,24 +704,24 @@ export class DynamicSnippetsConverter {
         if (typeDeclaration == null) {
             throw new Error(`Internal error; type "${typeId}" not found`)
         }
-        if (typeDeclaration.shape.type !== 'object') {
+        if (typeDeclaration.shape.type !== "object") {
             throw new Error(`Internal error; type "${typeId}" is not an object`)
         }
         return typeDeclaration.shape
     }
 
     private getFullPathForEndpoint(endpoint: HttpEndpoint): string {
-        let url = ''
+        let url = ""
         if (endpoint.fullPath.head.length > 0) {
             url = urlJoin(url, endpoint.fullPath.head)
         }
         for (const part of endpoint.fullPath.parts) {
-            url = urlJoin(url, '{' + part.pathParameter + '}')
+            url = urlJoin(url, "{" + part.pathParameter + "}")
             if (part.tail.length > 0) {
                 url = urlJoin(url, part.tail)
             }
         }
-        return url.startsWith('/') ? url : `/${url}`
+        return url.startsWith("/") ? url : `/${url}`
     }
 
     private getEndpointSnippetRequests({

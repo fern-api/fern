@@ -1,12 +1,12 @@
-import { OAuthTokenEndpoint } from '@fern-api/ir-sdk'
-import { IdGenerator } from '@fern-api/ir-utils'
+import { OAuthTokenEndpoint } from "@fern-api/ir-sdk"
+import { IdGenerator } from "@fern-api/ir-utils"
 
-import { FernFileContext } from '../FernFileContext'
-import { EndpointResolver } from '../resolvers/EndpointResolver'
-import { PropertyResolver } from '../resolvers/PropertyResolver'
-import { generateEndpointIdFromResolvedEndpoint } from '../resolvers/generateEndpointIdFromResolvedEndpoint'
-import { isRootFernFilepath } from '../utils/isRootFernFilepath'
-import { TokenEndpoint } from './convertOAuthUtils'
+import { FernFileContext } from "../FernFileContext"
+import { EndpointResolver } from "../resolvers/EndpointResolver"
+import { PropertyResolver } from "../resolvers/PropertyResolver"
+import { generateEndpointIdFromResolvedEndpoint } from "../resolvers/generateEndpointIdFromResolvedEndpoint"
+import { isRootFernFilepath } from "../utils/isRootFernFilepath"
+import { TokenEndpoint } from "./convertOAuthUtils"
 
 export function convertOAuthTokenEndpoint({
     endpointResolver,
@@ -25,10 +25,10 @@ export function convertOAuthTokenEndpoint({
     })
 
     const requestBodyProperties =
-        typeof resolvedEndpoint.endpoint.request === 'object' &&
+        typeof resolvedEndpoint.endpoint.request === "object" &&
         resolvedEndpoint.endpoint.request.body != null &&
-        typeof resolvedEndpoint.endpoint.request.body === 'object' &&
-        'properties' in resolvedEndpoint.endpoint.request.body
+        typeof resolvedEndpoint.endpoint.request.body === "object" &&
+        "properties" in resolvedEndpoint.endpoint.request.body
             ? (resolvedEndpoint.endpoint.request.body.properties ?? {})
             : {}
 

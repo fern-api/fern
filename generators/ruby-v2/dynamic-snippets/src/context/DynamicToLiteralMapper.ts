@@ -1,9 +1,9 @@
-import { Severity } from '@fern-api/browser-compatible-base-generator'
-import { assertNever } from '@fern-api/core-utils'
-import { FernIr } from '@fern-api/dynamic-ir-sdk'
-import { ruby } from '@fern-api/ruby-ast'
+import { Severity } from "@fern-api/browser-compatible-base-generator"
+import { assertNever } from "@fern-api/core-utils"
+import { FernIr } from "@fern-api/dynamic-ir-sdk"
+import { ruby } from "@fern-api/ruby-ast"
 
-import { DynamicSnippetsGeneratorContext } from './DynamicSnippetsGeneratorContext'
+import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext"
 
 export declare namespace DynamicTypeLiteralMapper {
     interface Args {
@@ -14,7 +14,7 @@ export declare namespace DynamicTypeLiteralMapper {
 
     // Identifies what the type is being converted as, which sometimes influences how
     // the type is instantiated.
-    type ConvertedAs = 'key'
+    type ConvertedAs = "key"
 }
 
 export class DynamicTypeLiteralMapper {
@@ -32,7 +32,7 @@ export class DynamicTypeLiteralMapper {
             }
             this.context.errors.add({
                 severity: Severity.Critical,
-                message: 'Expected non-null value, but got null'
+                message: "Expected non-null value, but got null"
             })
             return ruby.TypeLiteral.nop()
         }
@@ -40,28 +40,28 @@ export class DynamicTypeLiteralMapper {
             return ruby.TypeLiteral.nop()
         }
         switch (args.typeReference.type) {
-            case 'list':
+            case "list":
                 return this.convertList({ list: args.typeReference.value, value: args.value })
-            case 'literal':
+            case "literal":
                 return this.convertLiteral({ literalType: args.typeReference.value, value: args.value })
-            case 'map':
+            case "map":
                 return this.convertMap({ map: args.typeReference, value: args.value })
-            case 'named': {
+            case "named": {
                 const named = this.context.resolveNamedType({ typeId: args.typeReference.value })
                 if (named == null) {
                     return ruby.TypeLiteral.nop()
                 }
                 return this.convertNamed({ named, value: args.value, as: args.as })
             }
-            case 'optional':
+            case "optional":
                 return this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as })
-            case 'nullable':
+            case "nullable":
                 return this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as })
-            case 'primitive':
+            case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value, value: args.value, as: args.as })
-            case 'set':
+            case "set":
                 return this.convertSet({ set: args.typeReference.value, value: args.value })
-            case 'unknown':
+            case "unknown":
                 return ruby.TypeLiteral.nop()
             default:
                 assertNever(args.typeReference)
@@ -76,14 +76,14 @@ export class DynamicTypeLiteralMapper {
         value: unknown
     }): ruby.AstNode {
         switch (literalType.type) {
-            case 'boolean': {
+            case "boolean": {
                 const bool = this.context.getValueAsBoolean({ value })
                 if (bool == null) {
                     return ruby.TypeLiteral.nop()
                 }
                 return ruby.TypeLiteral.boolean(bool)
             }
-            case 'string': {
+            case "string": {
                 const str = this.context.getValueAsString({ value })
                 if (str == null) {
                     return ruby.TypeLiteral.nop()
@@ -136,10 +136,10 @@ export class DynamicTypeLiteralMapper {
     }
 
     private convertMap({ map, value }: { map: FernIr.dynamic.MapType; value: unknown }): ruby.AstNode {
-        if (typeof value !== 'object' || value == null) {
+        if (typeof value !== "object" || value == null) {
             this.context.errors.add({
                 severity: Severity.Critical,
-                message: `Expected object but got: ${value == null ? 'null' : typeof value}`
+                message: `Expected object but got: ${value == null ? "null" : typeof value}`
             })
             return ruby.TypeLiteral.nop()
         }
@@ -148,7 +148,7 @@ export class DynamicTypeLiteralMapper {
                 this.context.errors.scope(key)
                 try {
                     return {
-                        key: this.convert({ typeReference: map.key, value: key, as: 'key' }),
+                        key: this.convert({ typeReference: map.key, value: key, as: "key" }),
                         value: this.convert({ typeReference: map.value, value })
                     }
                 } finally {
@@ -168,19 +168,19 @@ export class DynamicTypeLiteralMapper {
         as?: DynamicTypeLiteralMapper.ConvertedAs
     }): ruby.AstNode {
         switch (named.type) {
-            case 'alias': {
+            case "alias": {
                 return this.convert({ typeReference: named.typeReference, value, as })
             }
-            case 'discriminatedUnion':
+            case "discriminatedUnion":
                 // Not implemented
                 return ruby.TypeLiteral.nop()
-            case 'object':
+            case "object":
                 // Not implemented
                 return this.convertObject({ object: named, value })
-            case 'enum':
+            case "enum":
                 // Not implemented
                 return ruby.TypeLiteral.nop()
-            case 'undiscriminatedUnion':
+            case "undiscriminatedUnion":
                 // Not implemented
                 return ruby.TypeLiteral.nop()
             default:
@@ -198,55 +198,55 @@ export class DynamicTypeLiteralMapper {
         as?: DynamicTypeLiteralMapper.ConvertedAs
     }): ruby.AstNode {
         switch (primitive) {
-            case 'INTEGER':
-            case 'LONG':
-            case 'UINT':
-            case 'UINT_64': {
+            case "INTEGER":
+            case "LONG":
+            case "UINT":
+            case "UINT_64": {
                 const num = this.getValueAsNumber({ value, as })
                 if (num == null) {
                     return ruby.TypeLiteral.nop()
                 }
                 return ruby.TypeLiteral.integer(num)
             }
-            case 'FLOAT':
-            case 'DOUBLE': {
+            case "FLOAT":
+            case "DOUBLE": {
                 const num = this.getValueAsNumber({ value })
                 if (num == null) {
                     return ruby.TypeLiteral.nop()
                 }
                 return ruby.TypeLiteral.float(num)
             }
-            case 'BOOLEAN': {
+            case "BOOLEAN": {
                 const bool = this.getValueAsBoolean({ value, as })
                 if (bool == null) {
                     return ruby.TypeLiteral.nop()
                 }
                 return ruby.TypeLiteral.boolean(bool)
             }
-            case 'BASE_64':
-            case 'BIG_INTEGER':
-            case 'STRING': {
+            case "BASE_64":
+            case "BIG_INTEGER":
+            case "STRING": {
                 const str = this.context.getValueAsString({ value })
                 if (str == null) {
                     return ruby.TypeLiteral.nop()
                 }
                 return ruby.TypeLiteral.string(str)
             }
-            case 'UUID': {
+            case "UUID": {
                 const str = this.context.getValueAsString({ value })
                 if (str == null) {
                     return ruby.TypeLiteral.nop()
                 }
                 return ruby.TypeLiteral.string(str)
             }
-            case 'DATE': {
+            case "DATE": {
                 const str = this.context.getValueAsString({ value })
                 if (str == null) {
                     return ruby.TypeLiteral.nop()
                 }
                 return ruby.TypeLiteral.string(str)
             }
-            case 'DATE_TIME': {
+            case "DATE_TIME": {
                 const str = this.context.getValueAsString({ value })
                 if (str == null) {
                     return ruby.TypeLiteral.nop()
@@ -259,10 +259,10 @@ export class DynamicTypeLiteralMapper {
     }
 
     private convertObject({ object, value }: { object: FernIr.dynamic.ObjectType; value: unknown }): ruby.AstNode {
-        if (typeof value !== 'object' || value == null) {
+        if (typeof value !== "object" || value == null) {
             this.context.errors.add({
                 severity: Severity.Critical,
-                message: `Expected object but got: ${value == null ? 'null' : typeof value}`
+                message: `Expected object but got: ${value == null ? "null" : typeof value}`
             })
             return ruby.TypeLiteral.nop()
         }
@@ -271,7 +271,7 @@ export class DynamicTypeLiteralMapper {
             Object.entries(value as Record<string, unknown>).map(([key, val]) => {
                 this.context.errors.scope(key)
                 const property = object.properties.find((p) => p.name.wireValue === key)
-                const typeReference = property?.typeReference ?? { type: 'unknown' }
+                const typeReference = property?.typeReference ?? { type: "unknown" }
                 const astNode = {
                     key: ruby.TypeLiteral.string(key),
                     value: this.convert({ typeReference, value: val })
@@ -289,7 +289,7 @@ export class DynamicTypeLiteralMapper {
         value: unknown
         as?: DynamicTypeLiteralMapper.ConvertedAs
     }): number | undefined {
-        const num = as === 'key' ? (typeof value === 'string' ? Number(value) : value) : value
+        const num = as === "key" ? (typeof value === "string" ? Number(value) : value) : value
         return this.context.getValueAsNumber({ value: num })
     }
 
@@ -300,7 +300,7 @@ export class DynamicTypeLiteralMapper {
         value: unknown
         as?: DynamicTypeLiteralMapper.ConvertedAs
     }): boolean | undefined {
-        const bool = as === 'key' ? (typeof value === 'string' ? value === 'true' : Boolean(value)) : value
+        const bool = as === "key" ? (typeof value === "string" ? value === "true" : Boolean(value)) : value
         return this.context.getValueAsBoolean({ value: bool })
     }
 }

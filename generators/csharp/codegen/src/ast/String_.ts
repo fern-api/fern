@@ -1,6 +1,6 @@
-import { escapeForCSharpString } from '..'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { escapeForCSharpString } from ".."
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export declare namespace String_ {
     interface Args {

@@ -1,7 +1,7 @@
-import { FernIr } from '@fern-api/ir-sdk'
-import { AbstractConverter, AbstractConverterContext, ExampleConverter } from '@fern-api/v2-importer-commons'
+import { FernIr } from "@fern-api/ir-sdk"
+import { AbstractConverter, AbstractConverterContext, ExampleConverter } from "@fern-api/v2-importer-commons"
 
-import { FernGlobalHeadersExtension } from '../extensions/x-fern-global-headers'
+import { FernGlobalHeadersExtension } from "../extensions/x-fern-global-headers"
 
 export function convertGlobalHeadersExtension({
     globalHeaders,
@@ -12,7 +12,7 @@ export function convertGlobalHeadersExtension({
 }): FernIr.HttpHeader[] {
     return globalHeaders.map((header) => ({
         name: context.casingsGenerator.generateNameAndWireValue({
-            name: header.name ?? '',
+            name: header.name ?? "",
             wireValue: header.header
         }),
         valueType: header.optional ? AbstractConverter.OPTIONAL_STRING : AbstractConverter.STRING,
@@ -33,7 +33,7 @@ function constructGlobalHeaderExample({
     const globalHeaderExampleConverter = new ExampleConverter({
         breadcrumbs: [],
         context,
-        schema: { type: 'string' },
+        schema: { type: "string" },
         example: header.header
     })
     const { validExample: example } = globalHeaderExampleConverter.convert()

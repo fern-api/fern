@@ -1,26 +1,26 @@
-import { mkdir, readFile, writeFile } from 'fs/promises'
-import { cloneDeep, isArray, mergeWith, template } from 'lodash-es'
-import path from 'path'
+import { mkdir, readFile, writeFile } from "fs/promises"
+import { cloneDeep, isArray, mergeWith, template } from "lodash-es"
+import path from "path"
 
-import { AbstractProject, File } from '@fern-api/base-generator'
-import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
-import { loggingExeca } from '@fern-api/logging-execa'
-import { BasePhpCustomConfigSchema } from '@fern-api/php-codegen'
+import { AbstractProject, File } from "@fern-api/base-generator"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { loggingExeca } from "@fern-api/logging-execa"
+import { BasePhpCustomConfigSchema } from "@fern-api/php-codegen"
 
-import { AsIsFiles } from '../AsIs'
-import { AbstractPhpGeneratorContext } from '../context/AbstractPhpGeneratorContext'
-import { PhpFile } from './PhpFile'
+import { AsIsFiles } from "../AsIs"
+import { AbstractPhpGeneratorContext } from "../context/AbstractPhpGeneratorContext"
+import { PhpFile } from "./PhpFile"
 
-const AS_IS_DIRECTORY = path.join(__dirname, 'asIs')
-const CORE_DIRECTORY_NAME = 'Core'
-const UTILS_DIRECTORY_NAME = 'Utils'
-const SRC_DIRECTORY_NAME = 'src'
-const TESTS_DIRECTORY_NAME = 'tests'
+const AS_IS_DIRECTORY = path.join(__dirname, "asIs")
+const CORE_DIRECTORY_NAME = "Core"
+const UTILS_DIRECTORY_NAME = "Utils"
+const SRC_DIRECTORY_NAME = "src"
+const TESTS_DIRECTORY_NAME = "tests"
 
 // https://github.com/composer/spdx-licenses/blob/614a1b86ff628ca7e0713f733ee09f94569548b0/src/SpdxLicenses.php#L317
-const CUSTOM_LICENSE_NAME = 'LicenseRef-LICENSE'
+const CUSTOM_LICENSE_NAME = "LicenseRef-LICENSE"
 
-const COMPOSER_JSON_FILENAME = 'composer.json'
+const COMPOSER_JSON_FILENAME = "composer.json"
 
 /**
  * In memory representation of a PHP project.
@@ -73,13 +73,13 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
 
     private static getPackagePathPrefix(packagePath?: string): string {
         if (!packagePath) {
-            return ''
+            return ""
         }
-        if (!packagePath.endsWith('/')) {
-            packagePath += '/'
+        if (!packagePath.endsWith("/")) {
+            packagePath += "/"
         }
-        if (!packagePath.startsWith('/')) {
-            packagePath = '/' + packagePath
+        if (!packagePath.startsWith("/")) {
+            packagePath = "/" + packagePath
         }
         return packagePath
     }
@@ -113,15 +113,15 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
 
     private async createRawAsIsFile({ filename }: { filename: string }): Promise<File> {
         const contents = (await readFile(getAsIsFilepath(filename))).toString()
-        return new File(filename, RelativeFilePath.of(''), contents)
+        return new File(filename, RelativeFilePath.of(""), contents)
     }
 
     private async createAsIsFile({ filename, namespace }: { filename: string; namespace: string }): Promise<File> {
         const contents = (await readFile(getAsIsFilepath(filename))).toString()
 
         return new File(
-            filename.replace('.Template', ''),
-            RelativeFilePath.of(''),
+            filename.replace(".Template", ""),
+            RelativeFilePath.of(""),
             this.replaceTemplate({
                 contents,
                 namespace: this.getNestedNamespace({ namespace, filename })
@@ -133,10 +133,10 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
         const githubWorkflow = (await readFile(getAsIsFilepath(AsIsFiles.GithubCiYml))).toString()
         const githubWorkflowsDirectoryPath = join(
             this.absolutePathToOutputDirectory,
-            RelativeFilePath.of('.github/workflows')
+            RelativeFilePath.of(".github/workflows")
         )
         await this.mkdir(githubWorkflowsDirectoryPath)
-        await writeFile(join(githubWorkflowsDirectoryPath, RelativeFilePath.of('ci.yml')), githubWorkflow)
+        await writeFile(join(githubWorkflowsDirectoryPath, RelativeFilePath.of("ci.yml")), githubWorkflow)
     }
 
     private async createSourceDirectory(): Promise<AbsoluteFilePath> {
@@ -199,11 +199,11 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
     }
 
     private getNestedNamespace({ namespace, filename }: { namespace: string; filename: string }): string {
-        const parts = filename.split('/')
+        const parts = filename.split("/")
         if (parts.length <= 1) {
             return namespace
         }
-        return [namespace, ...parts.slice(0, -1)].join('\\')
+        return [namespace, ...parts.slice(0, -1)].join("\\")
     }
 
     private async createPhpDirectory({
@@ -216,7 +216,7 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
         await this.mkdir(absolutePathToDirectory)
         await Promise.all(files.map(async (file) => await file.write(absolutePathToDirectory)))
         if (files.length > 0) {
-            await loggingExeca(this.context.logger, 'php-cs-fixer', ['fix', '.'], {
+            await loggingExeca(this.context.logger, "php-cs-fixer", ["fix", "."], {
                 doNotPipeOutput: true,
                 cwd: absolutePathToDirectory
             })
@@ -287,40 +287,40 @@ class ComposerJson {
         this.context = context
         this.projectName = projectName
         this.license = license
-        this.packagePathPrefix = this.context.customConfig.packagePath ? packagePathPrefix : '/'
+        this.packagePathPrefix = this.context.customConfig.packagePath ? packagePathPrefix : "/"
     }
 
     private build(): Record<string, unknown> {
         let composerJson: Record<string, unknown> = {
             name: this.context.getPackageName(),
-            version: this.context.version ?? '0.0.0',
+            version: this.context.version ?? "0.0.0",
             description: `${this.projectName} PHP Library`,
-            keywords: [this.context.config.organization, 'api', 'sdk'],
+            keywords: [this.context.config.organization, "api", "sdk"],
             license: this.license ?? [],
             require: {
-                php: '^8.1',
-                'ext-json': '*',
-                'guzzlehttp/guzzle': '^7.4'
+                php: "^8.1",
+                "ext-json": "*",
+                "guzzlehttp/guzzle": "^7.4"
             },
-            'require-dev': {
-                'phpunit/phpunit': '^9.0',
-                'friendsofphp/php-cs-fixer': '3.5.0',
-                'phpstan/phpstan': '^1.12'
+            "require-dev": {
+                "phpunit/phpunit": "^9.0",
+                "friendsofphp/php-cs-fixer": "3.5.0",
+                "phpstan/phpstan": "^1.12"
             },
             autoload: {
-                'psr-4': {
+                "psr-4": {
                     [`${this.projectName}\\`]: `${SRC_DIRECTORY_NAME}` + this.packagePathPrefix
                 }
             },
-            'autoload-dev': {
-                'psr-4': {
+            "autoload-dev": {
+                "psr-4": {
                     [`${this.projectName}\\Tests\\`]: `${TESTS_DIRECTORY_NAME}` + this.packagePathPrefix
                 }
             },
             scripts: {
                 build: [`@php -l ${SRC_DIRECTORY_NAME}`, `@php -l ${TESTS_DIRECTORY_NAME}`],
-                test: 'phpunit',
-                analyze: 'phpstan analyze src tests --memory-limit=1G'
+                test: "phpunit",
+                analyze: "phpstan analyze src tests --memory-limit=1G"
             }
         }
         composerJson = mergeExtraConfigs(composerJson, this.context.customConfig.composerJson)
@@ -343,7 +343,7 @@ export function mergeExtraConfigs(
     function customizer(objValue: unknown, srcValue: unknown) {
         if (isArray(objValue) && isArray(srcValue)) {
             return [...new Set(srcValue.concat(objValue))]
-        } else if (typeof objValue === 'object' && typeof srcValue === 'object') {
+        } else if (typeof objValue === "object" && typeof srcValue === "object") {
             return {
                 ...objValue,
                 ...srcValue

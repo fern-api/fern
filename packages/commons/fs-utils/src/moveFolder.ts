@@ -1,11 +1,11 @@
-import { mkdir, rename } from 'fs/promises'
+import { mkdir, rename } from "fs/promises"
 
-import { AbsoluteFilePath } from './AbsoluteFilePath'
-import { RelativeFilePath } from './RelativeFilePath'
-import { dirname } from './dirname'
-import { doesPathExist } from './doesPathExist'
-import { FileOrDirectory, getDirectoryContents } from './getDirectoryContents'
-import { join } from './join'
+import { AbsoluteFilePath } from "./AbsoluteFilePath"
+import { RelativeFilePath } from "./RelativeFilePath"
+import { dirname } from "./dirname"
+import { doesPathExist } from "./doesPathExist"
+import { FileOrDirectory, getDirectoryContents } from "./getDirectoryContents"
+import { join } from "./join"
 
 export async function moveFolder({ src, dest }: { src: AbsoluteFilePath; dest: AbsoluteFilePath }): Promise<void> {
     const contents = await getDirectoryContents(src)
@@ -22,7 +22,7 @@ async function moveDirectoryContentsFromFolder({
     contents: FileOrDirectory[]
 }): Promise<void> {
     for (const content of contents) {
-        if (content.type === 'file') {
+        if (content.type === "file") {
             const originalPath = join(src, RelativeFilePath.of(content.name))
             const destinationPath = join(dest, RelativeFilePath.of(content.name))
 

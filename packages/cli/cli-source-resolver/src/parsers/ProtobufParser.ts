@@ -1,6 +1,6 @@
-import { readFileSync } from 'fs'
+import { readFileSync } from "fs"
 
-import { AbsoluteFilePath } from '@fern-api/fs-utils'
+import { AbsoluteFilePath } from "@fern-api/fs-utils"
 
 export interface ProtobufFileInfo {
     csharpNamespace: string | undefined
@@ -10,7 +10,7 @@ export interface ProtobufFileInfo {
 
 export class ProtobufParser {
     public parse({ absoluteFilePath }: { absoluteFilePath: AbsoluteFilePath }): ProtobufFileInfo {
-        const content = readFileSync(absoluteFilePath, 'utf-8')
+        const content = readFileSync(absoluteFilePath, "utf-8")
 
         const csharpNamespaceMatch = content.match(/option\s+csharp_namespace\s*=\s*"([^"]+)";/)
         const packageNameMatch = content.match(/package\s+([a-zA-Z_][\w.]*);/)

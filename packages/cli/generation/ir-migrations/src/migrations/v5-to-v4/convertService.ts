@@ -1,16 +1,16 @@
-import { IrVersions } from '../../ir-versions'
-import { ErrorResolver } from './ErrorResolver'
-import { convertDeclaredTypeName } from './convertDeclaredTypeName'
-import { convertExampleTypeReference } from './convertExampleTypeReference'
-import { convertFernFilepathV1, convertFernFilepathV2 } from './convertFernFilepath'
-import { convertHeader } from './convertHeader'
+import { IrVersions } from "../../ir-versions"
+import { ErrorResolver } from "./ErrorResolver"
+import { convertDeclaredTypeName } from "./convertDeclaredTypeName"
+import { convertExampleTypeReference } from "./convertExampleTypeReference"
+import { convertFernFilepathV1, convertFernFilepathV2 } from "./convertFernFilepath"
+import { convertHeader } from "./convertHeader"
 import {
     convertNameAndWireValueToV1,
     convertNameAndWireValueToV2,
     convertNameToV1,
     convertNameToV2
-} from './convertName'
-import { convertTypeReference } from './convertTypeReference'
+} from "./convertName"
+import { convertTypeReference } from "./convertTypeReference"
 
 export function convertService({
     service,
@@ -123,7 +123,7 @@ function convertRequestBody(
                 requestBodyType: convertTypeReference(reference.requestBodyType)
             }),
         _unknown: () => {
-            throw new Error('Unknown HttpRequestBody type: ' + requestBody.type)
+            throw new Error("Unknown HttpRequestBody type: " + requestBody.type)
         }
     })
 }
@@ -145,7 +145,7 @@ function convertSdkRequest(sdkRequest: IrVersions.V5.http.SdkRequest): IrVersion
                         bodyKey: convertNameToV2(wrapper.bodyKey)
                     }),
                 _unknown: () => {
-                    throw new Error('Unknown SdkRequestShape type: ' + sdkRequest.shape.type)
+                    throw new Error("Unknown SdkRequestShape type: " + sdkRequest.shape.type)
                 }
             }
         )
@@ -179,12 +179,12 @@ function convertResponseErrorsV2({
 }): IrVersions.V4.services.commons.ResponseErrorsV2 {
     return {
         discriminant: {
-            originalValue: 'errorName',
-            camelCase: 'errorName',
-            snakeCase: 'error_name',
-            pascalCase: 'ErrorName',
-            screamingSnakeCase: 'ERROR_NAME',
-            wireValue: 'errorName'
+            originalValue: "errorName",
+            camelCase: "errorName",
+            snakeCase: "error_name",
+            pascalCase: "ErrorName",
+            screamingSnakeCase: "ERROR_NAME",
+            wireValue: "errorName"
         },
         types: responseErrors.map((responseError) => convertResponseErrorV2({ responseError, errorResolver }))
     }
@@ -217,12 +217,12 @@ function convertResponseErrorShape({
     }
     return IrVersions.V4.services.commons.ResponseErrorShape.singleProperty({
         name: {
-            originalValue: 'content',
-            camelCase: 'content',
-            snakeCase: 'content',
-            pascalCase: 'Content',
-            screamingSnakeCase: 'CONTENT',
-            wireValue: 'content'
+            originalValue: "content",
+            camelCase: "content",
+            snakeCase: "content",
+            pascalCase: "Content",
+            screamingSnakeCase: "CONTENT",
+            wireValue: "content"
         },
         error: convertDeclaredErrorName(responseError.error)
     })
@@ -299,7 +299,7 @@ function convertExampleRequest(
         reference: (reference) =>
             IrVersions.V4.services.http.ExampleRequestBody.reference(convertExampleTypeReference(reference)),
         _unknown: () => {
-            throw new Error('Unknown ExampleRequestBody: ' + request.type)
+            throw new Error("Unknown ExampleRequestBody: " + request.type)
         }
     })
 }
@@ -331,7 +331,7 @@ function convertExampleResponse(
                 body: errorResponse.body != null ? convertExampleTypeReference(errorResponse.body) : undefined
             }),
         _unknown: () => {
-            throw new Error('Unknown ExampleResponse: ' + response.type)
+            throw new Error("Unknown ExampleResponse: " + response.type)
         }
     })
 }

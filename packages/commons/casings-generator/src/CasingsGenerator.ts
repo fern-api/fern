@@ -1,10 +1,10 @@
-import { camelCase, snakeCase, upperFirst, words } from 'lodash-es'
+import { camelCase, snakeCase, upperFirst, words } from "lodash-es"
 
-import { generatorsYml } from '@fern-api/configuration'
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { Name, NameAndWireValue, SafeAndUnsafeString } from '@fern-api/ir-sdk'
+import { generatorsYml } from "@fern-api/configuration"
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { Name, NameAndWireValue, SafeAndUnsafeString } from "@fern-api/ir-sdk"
 
-import { RESERVED_KEYWORDS } from './reserved'
+import { RESERVED_KEYWORDS } from "./reserved"
 
 export interface CasingsGenerator {
     generateName(name: string, opts?: { casingOverrides?: RawSchemas.CasingOverridesSchema }): Name
@@ -15,7 +15,7 @@ export interface CasingsGenerator {
     }): NameAndWireValue
 }
 
-const CAPITALIZE_INITIALISM: generatorsYml.GenerationLanguage[] = ['go', 'ruby']
+const CAPITALIZE_INITIALISM: generatorsYml.GenerationLanguage[] = ["go", "ruby"]
 
 export function constructCasingsGenerator({
     generationLanguage,
@@ -58,7 +58,7 @@ export function constructCasingsGenerator({
                             }
                             return word
                         })
-                        .join('')
+                        .join("")
                     pascalCaseName = upperFirst(
                         camelCaseWords
                             .map((word, index) => {
@@ -74,7 +74,7 @@ export function constructCasingsGenerator({
                                 }
                                 return word
                             })
-                            .join('')
+                            .join("")
                     )
                 }
 
@@ -82,9 +82,9 @@ export function constructCasingsGenerator({
                 // _.snakeCase("v2") = "v_2"
                 // smartCasing("v2") = "v2", other examples: "test2This2 2v22" => "test2this2_2v22", "applicationV1" => "application_v1"
                 snakeCaseName = name
-                    .split(' ')
-                    .map((part) => part.split(/(\d+)/).map(snakeCase).join(''))
-                    .join('_')
+                    .split(" ")
+                    .map((part) => part.split(/(\d+)/).map(snakeCase).join(""))
+                    .join("_")
             }
 
             return {
@@ -92,7 +92,7 @@ export function constructCasingsGenerator({
                 camelCase: generateSafeAndUnsafeString(opts?.casingOverrides?.camel ?? camelCaseName),
                 snakeCase: generateSafeAndUnsafeString(opts?.casingOverrides?.snake ?? snakeCaseName),
                 screamingSnakeCase: generateSafeAndUnsafeString(
-                    opts?.casingOverrides?.['screaming-snake'] ?? snakeCaseName.toUpperCase()
+                    opts?.casingOverrides?.["screaming-snake"] ?? snakeCaseName.toUpperCase()
                 ),
                 pascalCase: generateSafeAndUnsafeString(opts?.casingOverrides?.pascal ?? pascalCaseName)
             }
@@ -110,9 +110,9 @@ function sanitizeName({ name, keywords }: { name: string; keywords: Set<string> 
         return name
     }
     if (keywords.has(name)) {
-        return name + '_'
+        return name + "_"
     } else if (startsWithNumber(name)) {
-        return '_' + name
+        return "_" + name
     } else {
         return name
     }
@@ -167,60 +167,60 @@ function isCommonInitialism(name: string): boolean {
 //
 // Ref: https://github.com/golang/lint/blob/6edffad5e6160f5949cdefc81710b2706fbcd4f6/lint.go#L767C1-L809C2
 const COMMON_INITIALISMS = new Set<string>([
-    'ACL',
-    'API',
-    'ASCII',
-    'CPU',
-    'CSS',
-    'DNS',
-    'EOF',
-    'GUID',
-    'HTML',
-    'HTTP',
-    'HTTPS',
-    'ID',
-    'IP',
-    'JSON',
-    'LHS',
-    'QPS',
-    'RAM',
-    'RHS',
-    'RPC',
-    'SAML',
-    'SCIM',
-    'SLA',
-    'SMTP',
-    'SQL',
-    'SSH',
-    'SSO',
-    'TCP',
-    'TLS',
-    'TTL',
-    'UDP',
-    'UI',
-    'UID',
-    'UUID',
-    'URI',
-    'URL',
-    'UTF8',
-    'VM',
-    'XML',
-    'XMPP',
-    'XSRF',
-    'XSS'
+    "ACL",
+    "API",
+    "ASCII",
+    "CPU",
+    "CSS",
+    "DNS",
+    "EOF",
+    "GUID",
+    "HTML",
+    "HTTP",
+    "HTTPS",
+    "ID",
+    "IP",
+    "JSON",
+    "LHS",
+    "QPS",
+    "RAM",
+    "RHS",
+    "RPC",
+    "SAML",
+    "SCIM",
+    "SLA",
+    "SMTP",
+    "SQL",
+    "SSH",
+    "SSO",
+    "TCP",
+    "TLS",
+    "TTL",
+    "UDP",
+    "UI",
+    "UID",
+    "UUID",
+    "URI",
+    "URL",
+    "UTF8",
+    "VM",
+    "XML",
+    "XMPP",
+    "XSRF",
+    "XSS"
 ])
 
 // A subset of the COMMON_INITIALISMS that require special handling. We want
 // the plural equivalent to be specified with a lowercase trailing 's', such
 // as 'APIs' and 'UUIDs'.
 const PLURAL_COMMON_INITIALISMS = new Map<string, string>([
-    ['ACLS', 'ACLs'],
-    ['APIS', 'APIs'],
-    ['CPUS', 'CPUs'],
-    ['GUIDS', 'GUIDs'],
-    ['IDS', 'IDs'],
-    ['UIDS', 'UIDs'],
-    ['UUIDS', 'UUIDs'],
-    ['URIS', 'URIs'],
-    ['URLS', 'URLs']
+    ["ACLS", "ACLs"],
+    ["APIS", "APIs"],
+    ["CPUS", "CPUs"],
+    ["GUIDS", "GUIDs"],
+    ["IDS", "IDs"],
+    ["UIDS", "UIDs"],
+    ["UUIDS", "UUIDs"],
+    ["URIS", "URIs"],
+    ["URLS", "URLs"]
 ])

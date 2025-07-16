@@ -1,8 +1,8 @@
-import { ts } from 'ts-morph'
+import { ts } from "ts-morph"
 
-import { DependencyManager, DependencyType } from '../dependency-manager/DependencyManager'
-import { CoreUtility } from './CoreUtility'
-import { MANIFEST as RuntimeManifest } from './Runtime'
+import { DependencyManager, DependencyType } from "../dependency-manager/DependencyManager"
+import { CoreUtility } from "./CoreUtility"
+import { MANIFEST as RuntimeManifest } from "./Runtime"
 
 export interface Websocket {
     readonly ReconnectingWebSocket: {
@@ -35,15 +35,15 @@ export declare namespace Websocket {
 }
 
 export const MANIFEST: CoreUtility.Manifest = {
-    name: 'websocket',
-    pathInCoreUtilities: { nameOnDisk: 'websocket', exportDeclaration: { exportAll: true } },
+    name: "websocket",
+    pathInCoreUtilities: { nameOnDisk: "websocket", exportDeclaration: { exportAll: true } },
     addDependencies: (dependencyManager: DependencyManager): void => {
-        dependencyManager.addDependency('ws', '^8.16.0')
-        dependencyManager.addDependency('@types/ws', '^8.5.10', { type: DependencyType.DEV })
+        dependencyManager.addDependency("ws", "^8.16.0")
+        dependencyManager.addDependency("@types/ws", "^8.5.10", { type: DependencyType.DEV })
     },
     dependsOn: [RuntimeManifest],
     getFilesPatterns: () => {
-        return { patterns: 'src/core/websocket/**' }
+        return { patterns: "src/core/websocket/**" }
     }
 }
 export class WebsocketImpl extends CoreUtility implements Websocket {
@@ -51,11 +51,11 @@ export class WebsocketImpl extends CoreUtility implements Websocket {
 
     public ReconnectingWebSocket = {
         _getReferenceToType: this.withExportedName(
-            'ReconnectingWebSocket',
+            "ReconnectingWebSocket",
             (ReconnectingWebSocket) => () => ReconnectingWebSocket.getTypeNode()
         ),
         _connect: this.withExportedName(
-            'ReconnectingWebSocket',
+            "ReconnectingWebSocket",
             (ReconnectingWebSocket) =>
                 (args: {
                     url: ts.Expression
@@ -66,21 +66,21 @@ export class WebsocketImpl extends CoreUtility implements Websocket {
                 }) =>
                     ts.factory.createNewExpression(ReconnectingWebSocket.getExpression(), undefined, [
                         ts.factory.createObjectLiteralExpression([
-                            ts.factory.createPropertyAssignment('url', args.url),
-                            ts.factory.createPropertyAssignment('protocols', args.protocols),
-                            ts.factory.createPropertyAssignment('queryParameters', args.queryParameters),
-                            ts.factory.createPropertyAssignment('headers', args.headers),
-                            ts.factory.createPropertyAssignment('options', args.options)
+                            ts.factory.createPropertyAssignment("url", args.url),
+                            ts.factory.createPropertyAssignment("protocols", args.protocols),
+                            ts.factory.createPropertyAssignment("queryParameters", args.queryParameters),
+                            ts.factory.createPropertyAssignment("headers", args.headers),
+                            ts.factory.createPropertyAssignment("options", args.options)
                         ])
                     ])
         )
     }
 
     public CloseEvent = {
-        _getReferenceToType: this.withExportedName('CloseEvent', (CloseEvent) => () => CloseEvent.getTypeNode())
+        _getReferenceToType: this.withExportedName("CloseEvent", (CloseEvent) => () => CloseEvent.getTypeNode())
     }
 
     public ErrorEvent = {
-        _getReferenceToType: this.withExportedName('ErrorEvent', (ErrorEvent) => () => ErrorEvent.getTypeNode())
+        _getReferenceToType: this.withExportedName("ErrorEvent", (ErrorEvent) => () => ErrorEvent.getTypeNode())
     }
 }

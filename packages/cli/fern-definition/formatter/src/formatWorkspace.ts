@@ -1,11 +1,11 @@
-import chalk from 'chalk'
-import { writeFile } from 'fs/promises'
+import chalk from "chalk"
+import { writeFile } from "fs/promises"
 
-import { FernWorkspace } from '@fern-api/api-workspace-commons'
-import { entries } from '@fern-api/core-utils'
-import { TaskContext } from '@fern-api/task-context'
+import { FernWorkspace } from "@fern-api/api-workspace-commons"
+import { entries } from "@fern-api/core-utils"
+import { TaskContext } from "@fern-api/task-context"
 
-import { formatDefinitionFile } from './formatDefinitionFile'
+import { formatDefinitionFile } from "./formatDefinitionFile"
 
 export async function formatFernWorkspace({
     workspace,

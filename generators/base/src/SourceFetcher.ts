@@ -1,14 +1,14 @@
-import { createWriteStream } from 'fs'
-import { mkdir, readdir } from 'fs/promises'
-import { pipeline } from 'stream'
-import { promisify } from 'util'
+import { createWriteStream } from "fs"
+import { mkdir, readdir } from "fs/promises"
+import { pipeline } from "stream"
+import { promisify } from "util"
 
-import { AbstractGeneratorContext } from '@fern-api/browser-compatible-base-generator'
-import { AbsoluteFilePath, RelativeFilePath, join, relative } from '@fern-api/fs-utils'
-import { loggingExeca } from '@fern-api/logging-execa'
+import { AbstractGeneratorContext } from "@fern-api/browser-compatible-base-generator"
+import { AbsoluteFilePath, RelativeFilePath, join, relative } from "@fern-api/fs-utils"
+import { loggingExeca } from "@fern-api/logging-execa"
 
-const LOCAL_FILE_SCHEME = 'file:///'
-const PROTOBUF_ZIP_FILENAME = 'proto.zip'
+const LOCAL_FILE_SCHEME = "file:///"
+const PROTOBUF_ZIP_FILENAME = "proto.zip"
 
 export interface SourceConfig {
     sources: ApiDefinitionSource[]
@@ -17,12 +17,12 @@ export interface SourceConfig {
 export type ApiDefinitionSource = ProtoDefinitionSource | OpenAPIDefinitionSource
 
 export interface ProtoDefinitionSource {
-    type: 'proto'
+    type: "proto"
     protoRootUrl: string
 }
 
 export interface OpenAPIDefinitionSource {
-    type: 'openapi'
+    type: "openapi"
 }
 
 export class SourceFetcher {
@@ -44,7 +44,7 @@ export class SourceFetcher {
     public async copyProtobufSources(absolutePathToProtoDirectory: AbsoluteFilePath): Promise<RelativeFilePath[]> {
         const protobufSourceURLs: string[] = []
         for (const source of this.sourceConfig?.sources ?? []) {
-            if (source.type === 'proto') {
+            if (source.type === "proto") {
                 protobufSourceURLs.push(source.protoRootUrl)
             }
         }
@@ -53,14 +53,14 @@ export class SourceFetcher {
             return []
         }
 
-        this.context.logger.debug('Copying protobuf source files ...')
+        this.context.logger.debug("Copying protobuf source files ...")
 
         this.context.logger.debug(`mkdir ${absolutePathToProtoDirectory}`)
         await mkdir(absolutePathToProtoDirectory, { recursive: true })
 
         for (const protobufSourceURL of protobufSourceURLs) {
             if (this.isLocalSourceURL(protobufSourceURL)) {
-                const cleanProtobufSourceURL = protobufSourceURL.replace(LOCAL_FILE_SCHEME, '')
+                const cleanProtobufSourceURL = protobufSourceURL.replace(LOCAL_FILE_SCHEME, "")
                 await this.copyLocalProtobufSource({
                     absolutePathToProtoDirectory,
                     protobufSourceURL: cleanProtobufSourceURL
@@ -88,9 +88,9 @@ export class SourceFetcher {
         this.context.logger.debug(`Copying source from ${protobufSourceURL} to ${absolutePathToProtoDirectory}`)
         await loggingExeca(
             this.context.logger,
-            'sh',
+            "sh",
             [
-                '-c',
+                "-c",
                 `find ${protobufSourceURL} -mindepth 1 -maxdepth 1 -exec cp -r {} ${absolutePathToProtoDirectory}/ \\;`
             ],
             {
@@ -114,15 +114,15 @@ export class SourceFetcher {
         this.context.logger.debug(`Unzipping source from ${PROTOBUF_ZIP_FILENAME} to ${absolutePathToProtoDirectory}`)
         await loggingExeca(
             this.context.logger,
-            'unzip',
-            ['-o', PROTOBUF_ZIP_FILENAME, '-d', absolutePathToProtoDirectory],
+            "unzip",
+            ["-o", PROTOBUF_ZIP_FILENAME, "-d", absolutePathToProtoDirectory],
             {
                 doNotPipeOutput: true
             }
         )
 
         this.context.logger.debug(`Removing ${PROTOBUF_ZIP_FILENAME}`)
-        await loggingExeca(this.context.logger, 'rm', ['-f', PROTOBUF_ZIP_FILENAME], {
+        await loggingExeca(this.context.logger, "rm", ["-f", PROTOBUF_ZIP_FILENAME], {
             doNotPipeOutput: true
         })
     }

@@ -1,13 +1,13 @@
-import fs from 'fs/promises'
-import { glob } from 'glob'
-import path from 'path'
-import { Project } from 'ts-morph'
+import fs from "fs/promises"
+import { glob } from "glob"
+import path from "path"
+import { Project } from "ts-morph"
 
-import { AbsoluteFilePath } from '@fern-api/fs-utils'
+import { AbsoluteFilePath } from "@fern-api/fs-utils"
 
-const filePathOnDockerContainer = AbsoluteFilePath.of('/assets/asIs')
+const filePathOnDockerContainer = AbsoluteFilePath.of("/assets/asIs")
 
-const DEFAULT_PACKAGE_PATH = 'src'
+const DEFAULT_PACKAGE_PATH = "src"
 export namespace AsIsManager {
     export interface Init {
         useBigInt: boolean
@@ -35,24 +35,24 @@ export class AsIsManager {
     private getAsIsFiles() {
         return {
             core: {
-                mergeHeaders: { 'core/headers.ts': `${this.relativePackagePath}/core/headers.ts` },
+                mergeHeaders: { "core/headers.ts": `${this.relativePackagePath}/core/headers.ts` },
                 json: {
-                    vanilla: { 'core/json.vanilla.ts': `${this.relativePackagePath}/core/json.ts` },
-                    bigint: { 'core/json.bigint.ts': `${this.relativePackagePath}/core/json.ts` }
+                    vanilla: { "core/json.vanilla.ts": `${this.relativePackagePath}/core/json.ts` },
+                    bigint: { "core/json.bigint.ts": `${this.relativePackagePath}/core/json.ts` }
                 }
             },
             tests: {
                 mockServer: {
-                    ['tests/mock-server/*']: `${this.relativeTestPath}/mock-server/`
+                    ["tests/mock-server/*"]: `${this.relativeTestPath}/mock-server/`
                 },
-                bigintSetup: { ['tests/bigint.setup.ts']: `${this.relativeTestPath}/bigint.setup.ts` },
+                bigintSetup: { ["tests/bigint.setup.ts"]: `${this.relativeTestPath}/bigint.setup.ts` },
                 BrowserEnvironment: {
-                    ['tests/BrowserTestEnvironment.ts']: `${this.relativeTestPath}/BrowserTestEnvironment.ts`
+                    ["tests/BrowserTestEnvironment.ts"]: `${this.relativeTestPath}/BrowserTestEnvironment.ts`
                 }
             },
             scripts: {
                 renameToEsmFiles: {
-                    'scripts/rename-to-esm-files.js': 'scripts/rename-to-esm-files.js'
+                    "scripts/rename-to-esm-files.js": "scripts/rename-to-esm-files.js"
                 }
             }
         }
@@ -76,7 +76,7 @@ export class AsIsManager {
         }
 
         for (const [sourcePattern, targetPattern] of filesToCopy.flatMap(Object.entries) as [string, string][]) {
-            if (sourcePattern.includes('*')) {
+            if (sourcePattern.includes("*")) {
                 const matches = await glob(sourcePattern, {
                     cwd: filePathOnDockerContainer,
                     absolute: false
@@ -86,16 +86,16 @@ export class AsIsManager {
                     const sourceFilePath = path.join(filePathOnDockerContainer, match)
                     const relativePath = path.relative(filePathOnDockerContainer, match)
                     const targetFilePath = path.join(targetPattern, relativePath)
-                    let fileContent = await fs.readFile(sourceFilePath, 'utf-8')
+                    let fileContent = await fs.readFile(sourceFilePath, "utf-8")
 
                     // Transform import paths in test files
-                    if (sourcePattern.includes('tests')) {
+                    if (sourcePattern.includes("tests")) {
                         // Only change the import paths if the relativePackagePath is not "src"
                         if (this.relativePackagePath !== DEFAULT_PACKAGE_PATH) {
                             // Calculate the relative path from the test file to the package path
                             const testDir = path.dirname(targetFilePath)
                             const relativePathToPackage = path.relative(testDir, this.relativePackagePath)
-                            const normalizedPath = relativePathToPackage.replace(/\\/g, '/') // Normalize for Windows paths
+                            const normalizedPath = relativePathToPackage.replace(/\\/g, "/") // Normalize for Windows paths
 
                             // Replace the import path with the calculated relative path
                             fileContent = fileContent.replace(
@@ -109,7 +109,7 @@ export class AsIsManager {
                 }
             } else {
                 // Handle direct file mapping
-                const fileContent = await fs.readFile(path.join(filePathOnDockerContainer, sourcePattern), 'utf-8')
+                const fileContent = await fs.readFile(path.join(filePathOnDockerContainer, sourcePattern), "utf-8")
                 project.createSourceFile(targetPattern, fileContent, { overwrite: true })
             }
         }

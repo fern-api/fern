@@ -1,6 +1,6 @@
-import { camelCase } from 'lodash-es'
+import { camelCase } from "lodash-es"
 
-import { BaseCsharpCustomConfigSchema, csharp } from '@fern-api/csharp-codegen'
+import { BaseCsharpCustomConfigSchema, csharp } from "@fern-api/csharp-codegen"
 
 import {
     ProtobufFile,
@@ -9,11 +9,11 @@ import {
     ServiceId,
     TypeId,
     WellKnownProtobufType
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { ResolvedWellKnownProtobufType } from '../ResolvedWellKnownProtobufType'
-import { AbstractCsharpGeneratorContext } from '../context/AbstractCsharpGeneratorContext'
-import { CsharpTypeMapper } from '../context/CsharpTypeMapper'
+import { ResolvedWellKnownProtobufType } from "../ResolvedWellKnownProtobufType"
+import { AbstractCsharpGeneratorContext } from "../context/AbstractCsharpGeneratorContext"
+import { CsharpTypeMapper } from "../context/CsharpTypeMapper"
 
 export class ProtobufResolver {
     private context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>
@@ -44,21 +44,21 @@ export class ProtobufResolver {
     public getProtobufClassReferenceOrThrow(typeId: TypeId): csharp.ClassReference {
         const protobufType = this.getProtobufTypeForTypeIdOrThrow(typeId)
         switch (protobufType.type) {
-            case 'wellKnown': {
+            case "wellKnown": {
                 return this.csharpTypeMapper.convertToClassReference(
                     this.context.getTypeDeclarationOrThrow(typeId).name
                 )
             }
-            case 'userDefined': {
+            case "userDefined": {
                 const protoNamespace = this.context.protobufResolver.getNamespaceFromProtobufFileOrThrow(
                     protobufType.file
                 )
                 const rootNamespace = this.context.getNamespace()
                 const aliasSuffix = camelCase(
                     protoNamespace
-                        .split('.')
-                        .filter((segment) => !rootNamespace.split('.').includes(segment))
-                        .join('_')
+                        .split(".")
+                        .filter((segment) => !rootNamespace.split(".").includes(segment))
+                        .join("_")
                 )
                 return csharp.classReference({
                     name: protobufType.name.originalName,
@@ -75,9 +75,9 @@ export class ProtobufResolver {
             return undefined
         }
         switch (transport.type) {
-            case 'grpc':
+            case "grpc":
                 return transport.service
-            case 'http':
+            case "http":
                 return undefined
         }
     }
@@ -119,7 +119,7 @@ export class ProtobufResolver {
     }): boolean {
         const protobufType = this.getProtobufTypeForTypeId(typeId)
         return (
-            protobufType?.type === 'wellKnown' &&
+            protobufType?.type === "wellKnown" &&
             wellKnownProtobufTypes.some(
                 (wellKnownProtobufType) => protobufType.value.type === wellKnownProtobufType.type
             )
@@ -139,6 +139,6 @@ export class ProtobufResolver {
         if (typeDeclaration?.source == null) {
             return undefined
         }
-        return typeDeclaration.source.type === 'proto' ? typeDeclaration.source.value : undefined
+        return typeDeclaration.source.type === "proto" ? typeDeclaration.source.value : undefined
     }
 }

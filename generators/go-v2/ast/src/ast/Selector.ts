@@ -1,5 +1,5 @@
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export declare namespace Selector {
     interface Args {
@@ -22,7 +22,7 @@ export class Selector extends AstNode {
 
     public write(writer: Writer): void {
         writer.writeNode(this.on)
-        writer.write('.')
+        writer.write(".")
         writer.writeNode(this.selector)
     }
 }

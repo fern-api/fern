@@ -1,10 +1,10 @@
-import { TypeReferenceNode } from '@fern-typescript/commons'
-import { ts } from 'ts-morph'
+import { TypeReferenceNode } from "@fern-typescript/commons"
+import { ts } from "ts-morph"
 
-import { TypeReference } from '@fern-fern/ir-sdk/api'
+import { TypeReference } from "@fern-fern/ir-sdk/api"
 
-import { ConvertTypeReferenceParams } from './AbstractTypeReferenceConverter'
-import { AbstractTypeReferenceToTypeNodeConverter } from './AbstractTypeReferenceToTypeNodeConverter'
+import { ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter"
+import { AbstractTypeReferenceToTypeNodeConverter } from "./AbstractTypeReferenceToTypeNodeConverter"
 
 export class TypeReferenceToRawTypeNodeConverter extends AbstractTypeReferenceToTypeNodeConverter {
     protected override set(itemType: TypeReference, params: ConvertTypeReferenceParams): TypeReferenceNode {

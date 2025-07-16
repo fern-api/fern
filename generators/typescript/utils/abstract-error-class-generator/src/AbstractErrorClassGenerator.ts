@@ -1,12 +1,12 @@
-import { getTextOfTsNode } from '@fern-typescript/commons'
-import { BaseContext } from '@fern-typescript/contexts'
+import { getTextOfTsNode } from "@fern-typescript/commons"
+import { BaseContext } from "@fern-typescript/contexts"
 import {
     ClassDeclaration,
     OptionalKind,
     ParameterDeclarationStructure,
     PropertyDeclarationStructure,
     ts
-} from 'ts-morph'
+} from "ts-morph"
 
 export declare namespace AbstractErrorClassGenerator {
     export interface Init {
@@ -43,15 +43,15 @@ export abstract class AbstractErrorClassGenerator<Context extends BaseContext> {
                 ts.factory.createExpressionStatement(
                     ts.factory.createCallExpression(
                         ts.factory.createPropertyAccessExpression(
-                            ts.factory.createIdentifier('Object'),
-                            ts.factory.createIdentifier('setPrototypeOf')
+                            ts.factory.createIdentifier("Object"),
+                            ts.factory.createIdentifier("setPrototypeOf")
                         ),
                         undefined,
                         [
                             ts.factory.createThis(),
                             ts.factory.createPropertyAccessExpression(
                                 ts.factory.createIdentifier(this.errorClassName),
-                                ts.factory.createIdentifier('prototype')
+                                ts.factory.createIdentifier("prototype")
                             )
                         ]
                     )
@@ -64,7 +64,7 @@ export abstract class AbstractErrorClassGenerator<Context extends BaseContext> {
     }
 
     protected getBaseClass(_context: Context): ts.TypeNode {
-        return ts.factory.createTypeReferenceNode('Error')
+        return ts.factory.createTypeReferenceNode("Error")
     }
 
     protected abstract getClassProperties(context: Context): OptionalKind<PropertyDeclarationStructure>[]

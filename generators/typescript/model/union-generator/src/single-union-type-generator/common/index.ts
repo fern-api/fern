@@ -1,2 +1,2 @@
-export { NoPropertiesSingleUnionTypeGenerator } from './NoPropertiesSingleUnionTypeGenerator'
-export { SinglePropertySingleUnionTypeGenerator } from './SinglePropertySingleUnionTypeGenerator'
+export { NoPropertiesSingleUnionTypeGenerator } from "./NoPropertiesSingleUnionTypeGenerator"
+export { SinglePropertySingleUnionTypeGenerator } from "./SinglePropertySingleUnionTypeGenerator"

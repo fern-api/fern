@@ -1,23 +1,23 @@
-import { RawSchemas } from '@fern-api/fern-definition-schema'
+import { RawSchemas } from "@fern-api/fern-definition-schema"
 import {
     FernFileContext,
     ResolvedType,
     TypeResolver,
     TypeResolverImpl,
     constructFernFileContext
-} from '@fern-api/ir-generator'
+} from "@fern-api/ir-generator"
 
-import { Rule, RuleViolation } from '../../Rule'
-import { CASINGS_GENERATOR } from '../../utils/casingsGenerator'
+import { Rule, RuleViolation } from "../../Rule"
+import { CASINGS_GENERATOR } from "../../utils/casingsGenerator"
 import {
     RequestPropertyValidator,
     getRequestPropertyComponents,
     maybePrimitiveType,
     requestTypeHasProperty
-} from '../../utils/propertyValidatorUtils'
+} from "../../utils/propertyValidatorUtils"
 
 export const ValidStreamConditionRule: Rule = {
-    name: 'valid-stream-condition',
+    name: "valid-stream-condition",
     create: ({ workspace }) => {
         return {
             definitionFile: {
@@ -34,15 +34,15 @@ export const ValidStreamConditionRule: Rule = {
                         rootApiFile: workspace.definition.rootApiFile.contents
                     })
 
-                    if (endpoint.response == null || endpoint['response-stream'] == null) {
+                    if (endpoint.response == null || endpoint["response-stream"] == null) {
                         if (rawStreamCondition == null) {
                             return []
                         }
                         return [
                             {
-                                severity: 'fatal',
+                                severity: "fatal",
                                 message:
-                                    'stream-condition can only be used if both response and response-stream are specified.'
+                                    "stream-condition can only be used if both response and response-stream are specified."
                             }
                         ]
                     }
@@ -50,9 +50,9 @@ export const ValidStreamConditionRule: Rule = {
                     if (rawStreamCondition == null) {
                         return [
                             {
-                                severity: 'fatal',
+                                severity: "fatal",
                                 message:
-                                    'stream-condition must be specified when both response and response-stream are specified.'
+                                    "stream-condition must be specified when both response and response-stream are specified."
                             }
                         ]
                     }
@@ -63,7 +63,7 @@ export const ValidStreamConditionRule: Rule = {
                         file,
                         requestProperty: rawStreamCondition,
                         propertyValidator: {
-                            propertyID: 'stream-condition',
+                            propertyID: "stream-condition",
                             validate: isValidStreamCondition
                         }
                     })
@@ -78,7 +78,7 @@ function isValidStreamCondition({ resolvedType }: { resolvedType: ResolvedType |
     if (primitiveType == null) {
         return false
     }
-    return primitiveType === 'BOOLEAN'
+    return primitiveType === "BOOLEAN"
 }
 
 export function validateRequestProperty({
@@ -101,8 +101,8 @@ export function validateRequestProperty({
     if (requestPropertyComponents == null) {
         return [
             {
-                severity: 'fatal',
-                message: 'Please specify path to a valid property (e.g. $request.stream)'
+                severity: "fatal",
+                message: "Please specify path to a valid property (e.g. $request.stream)"
             }
         ]
     }
@@ -118,7 +118,7 @@ export function validateRequestProperty({
     ) {
         return [
             {
-                severity: 'fatal',
+                severity: "fatal",
                 message: `Property "${requestProperty}" does not exist on the request.`
             }
         ]

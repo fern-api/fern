@@ -1,18 +1,18 @@
-import { OpenAPIV3 } from 'openapi-types'
+import { OpenAPIV3 } from "openapi-types"
 
-import { MediaType, assertNever } from '@fern-api/core-utils'
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { EndpointExample, EndpointWithExample } from '@fern-api/openapi-ir'
+import { MediaType, assertNever } from "@fern-api/core-utils"
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { EndpointExample, EndpointWithExample } from "@fern-api/openapi-ir"
 
-import { getSchemaIdFromReference } from '../../../../schema/convertSchemas'
-import { isReferenceObject } from '../../../../schema/utils/isReferenceObject'
-import { AbstractOpenAPIV3ParserContext } from '../../AbstractOpenAPIV3ParserContext'
-import { FernStreamingExtension, StreamConditionEndpoint } from '../../extensions/getFernStreamingExtension'
-import { OperationContext } from '../contexts'
-import { getApplicationJsonSchemaMediaObject } from '../endpoint/getApplicationJsonSchema'
-import { convertHttpOperation } from './convertHttpOperation'
+import { getSchemaIdFromReference } from "../../../../schema/convertSchemas"
+import { isReferenceObject } from "../../../../schema/utils/isReferenceObject"
+import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext"
+import { FernStreamingExtension, StreamConditionEndpoint } from "../../extensions/getFernStreamingExtension"
+import { OperationContext } from "../contexts"
+import { getApplicationJsonSchemaMediaObject } from "../endpoint/getApplicationJsonSchema"
+import { convertHttpOperation } from "./convertHttpOperation"
 
-const STREAM_SUFFIX = 'stream'
+const STREAM_SUFFIX = "stream"
 
 export interface StreamingEndpoints {
     streaming: EndpointWithExample
@@ -29,7 +29,7 @@ export function convertStreamingOperation({
     streamingExtension: FernStreamingExtension
 }): StreamingEndpoints | undefined {
     switch (streamingExtension.type) {
-        case 'stream': {
+        case "stream": {
             const streamingOperation = convertHttpOperation({
                 operationContext,
                 context,
@@ -41,7 +41,7 @@ export function convertStreamingOperation({
                 nonStreaming: undefined
             }
         }
-        case 'streamCondition': {
+        case "streamCondition": {
             const streamingRequestBody = getRequestBody({
                 context,
                 operation: operationContext.operation,
@@ -65,7 +65,7 @@ export function convertStreamingOperation({
                         operationContext.sdkMethodName != null
                             ? {
                                   groupName: operationContext.sdkMethodName.groupName,
-                                  methodName: operationContext.sdkMethodName.methodName + '_' + STREAM_SUFFIX
+                                  methodName: operationContext.sdkMethodName.methodName + "_" + STREAM_SUFFIX
                               }
                             : undefined,
                     operation: {
@@ -170,8 +170,8 @@ function getRequestBody({
         properties: {
             ...resolvedRequestBodySchema.properties,
             [streamingExtension.streamConditionProperty]: {
-                type: 'boolean',
-                'x-fern-boolean-literal': isStreaming,
+                type: "boolean",
+                "x-fern-boolean-literal": isStreaming,
                 ...(streamingProperty ?? {})
                 // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
             } as any
@@ -203,8 +203,8 @@ function getResponses({
 }): OpenAPIV3.ResponsesObject {
     return {
         ...operation.responses,
-        '200': {
-            description: '',
+        "200": {
+            description: "",
             content: {
                 [MediaType.APPLICATION_JSON]: {
                     schema: response

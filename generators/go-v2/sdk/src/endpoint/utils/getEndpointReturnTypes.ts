@@ -1,9 +1,9 @@
-import { assertNever } from '@fern-api/core-utils'
-import { go } from '@fern-api/go-ast'
+import { assertNever } from "@fern-api/core-utils"
+import { go } from "@fern-api/go-ast"
 
-import { HttpEndpoint } from '@fern-fern/ir-sdk/api'
+import { HttpEndpoint } from "@fern-fern/ir-sdk/api"
 
-import { SdkGeneratorContext } from '../../SdkGeneratorContext'
+import { SdkGeneratorContext } from "../../SdkGeneratorContext"
 
 export function getEndpointReturnTypes({
     context,
@@ -18,17 +18,17 @@ export function getEndpointReturnTypes({
     }
     const body = response.body
     switch (body.type) {
-        case 'bytes':
+        case "bytes":
             return go.Type.bytes()
-        case 'streamParameter':
+        case "streamParameter":
             return go.Type.any()
-        case 'fileDownload':
+        case "fileDownload":
             return go.Type.reference(context.getIoReaderTypeReference())
-        case 'json':
+        case "json":
             return context.goTypeMapper.convert({ reference: body.value.responseBodyType })
-        case 'streaming':
+        case "streaming":
             return go.Type.reference(context.getStreamTypeReference(context.getStreamPayload(body.value)))
-        case 'text':
+        case "text":
             return go.Type.string()
         default:
             assertNever(body)

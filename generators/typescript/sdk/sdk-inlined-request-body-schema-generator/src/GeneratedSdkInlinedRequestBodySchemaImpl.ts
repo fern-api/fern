@@ -1,9 +1,9 @@
-import { AbstractGeneratedSchema } from '@fern-typescript/abstract-schema-generator'
-import { PackageId, Reference, Zurg, getPropertyKey, getSchemaOptions, getTextOfTsNode } from '@fern-typescript/commons'
-import { GeneratedSdkInlinedRequestBodySchema, SdkContext } from '@fern-typescript/contexts'
-import { ModuleDeclaration, ts } from 'ts-morph'
+import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator"
+import { PackageId, Reference, Zurg, getPropertyKey, getSchemaOptions, getTextOfTsNode } from "@fern-typescript/commons"
+import { GeneratedSdkInlinedRequestBodySchema, SdkContext } from "@fern-typescript/contexts"
+import { ModuleDeclaration, ts } from "ts-morph"
 
-import { HttpEndpoint, InlinedRequestBody, InlinedRequestBodyProperty } from '@fern-fern/ir-sdk/api'
+import { HttpEndpoint, InlinedRequestBody, InlinedRequestBodyProperty } from "@fern-fern/ir-sdk/api"
 
 export declare namespace GeneratedSdkInlinedRequestBodySchemaImpl {
     export interface Init extends AbstractGeneratedSchema.Init {
@@ -100,7 +100,7 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
         if (nonBodyKeys.length === 0) {
             return referenceToRequestWrapper
         } else {
-            return ts.factory.createTypeReferenceNode('Omit', [
+            return ts.factory.createTypeReferenceNode("Omit", [
                 referenceToRequestWrapper,
                 ts.factory.createUnionTypeNode(
                     nonBodyKeys.map((nonBodyKey) =>
@@ -144,7 +144,7 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
     }): InlinedRequestBodyProperty[] {
         return inlinedRequestBody.properties.filter((property) => {
             const resolvedType = context.type.resolveTypeReference(property.valueType)
-            const isLiteral = resolvedType.type === 'container' && resolvedType.container.type === 'literal'
+            const isLiteral = resolvedType.type === "container" && resolvedType.container.type === "literal"
             return !isLiteral
         })
     }

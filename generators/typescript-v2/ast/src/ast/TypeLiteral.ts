@@ -1,6 +1,6 @@
-import { assertNever } from '@fern-api/core-utils'
+import { assertNever } from "@fern-api/core-utils"
 
-import { AstNode, Writer } from './core'
+import { AstNode, Writer } from "./core"
 
 type InternalTypeLiteral =
     | Array_
@@ -20,37 +20,37 @@ type InternalTypeLiteral =
     | Nop
 
 interface Array_ {
-    type: 'array'
+    type: "array"
     values: TypeLiteral[]
 }
 
 interface Blob_ {
-    type: 'blob'
+    type: "blob"
     value: string
 }
 
 interface Boolean_ {
-    type: 'boolean'
+    type: "boolean"
     value: boolean
 }
 
 interface Number_ {
-    type: 'number'
+    type: "number"
     value: number
 }
 
 interface BigInt_ {
-    type: 'bigint'
+    type: "bigint"
     value: bigint
 }
 
 interface DateTime {
-    type: 'datetime'
+    type: "datetime"
     value: string
 }
 
 interface Object_ {
-    type: 'object'
+    type: "object"
     fields: ObjectField[]
 }
 
@@ -60,7 +60,7 @@ export interface ObjectField {
 }
 
 interface Record_ {
-    type: 'record'
+    type: "record"
     entries: RecordEntry[]
 }
 
@@ -70,36 +70,36 @@ interface RecordEntry {
 }
 
 interface Reference {
-    type: 'reference'
+    type: "reference"
     value: AstNode
 }
 
 interface Set_ {
-    type: 'set'
+    type: "set"
     values: TypeLiteral[]
 }
 
 interface String_ {
-    type: 'string'
+    type: "string"
     value: string
 }
 
 interface Tuple {
-    type: 'tuple'
+    type: "tuple"
     values: TypeLiteral[]
 }
 
 interface Unknown_ {
-    type: 'unknown'
+    type: "unknown"
     value: unknown
 }
 
 interface Null_ {
-    type: 'null'
+    type: "null"
 }
 
 interface Nop {
-    type: 'nop'
+    type: "nop"
 }
 
 export class TypeLiteral extends AstNode {
@@ -111,25 +111,25 @@ export class TypeLiteral extends AstNode {
         const noSerdeLayer = !!writer.customConfig?.noSerdeLayer
         const useBigInt = !!writer.customConfig?.useBigInt
         switch (this.internalType.type) {
-            case 'array': {
+            case "array": {
                 this.writeIterable({ writer, iterable: this.internalType })
                 break
             }
-            case 'blob': {
+            case "blob": {
                 if (noSerdeLayer) {
                     writer.writeNode(TypeLiteral.string(this.internalType.value))
                     return
                 }
-                writer.write('new Blob([')
+                writer.write("new Blob([")
                 writer.writeNode(TypeLiteral.string(this.internalType.value))
-                writer.write('])')
+                writer.write("])")
                 break
             }
-            case 'boolean': {
+            case "boolean": {
                 writer.write(this.internalType.value.toString())
                 break
             }
-            case 'bigint': {
+            case "bigint": {
                 if (useBigInt) {
                     writer.write(`BigInt("${this.internalType.value.toString()}")`)
                     return
@@ -137,63 +137,63 @@ export class TypeLiteral extends AstNode {
                 writer.write(`"${this.internalType.value.toString()}"`)
                 return
             }
-            case 'datetime': {
+            case "datetime": {
                 if (noSerdeLayer) {
                     writer.writeNode(TypeLiteral.string(this.internalType.value))
                     return
                 }
-                writer.write('new Date(')
+                writer.write("new Date(")
                 writer.writeNode(TypeLiteral.string(this.internalType.value))
-                writer.write(')')
+                writer.write(")")
                 break
             }
-            case 'number': {
+            case "number": {
                 writer.write(this.internalType.value.toString())
                 break
             }
-            case 'object': {
+            case "object": {
                 this.writeObject({ writer, object: this.internalType })
                 break
             }
-            case 'record': {
+            case "record": {
                 this.writeRecord({ writer, record: this.internalType })
                 break
             }
-            case 'reference': {
+            case "reference": {
                 writer.writeNode(this.internalType.value)
                 break
             }
-            case 'set': {
+            case "set": {
                 if (noSerdeLayer || this.isSetOfObjects()) {
                     writer.writeNode(TypeLiteral.array({ values: this.internalType.values }))
                     return
                 }
-                writer.write('new Set(')
+                writer.write("new Set(")
                 this.writeIterable({ writer, iterable: this.internalType })
-                writer.write(')')
+                writer.write(")")
                 break
             }
-            case 'string': {
-                if (this.internalType.value.includes('\n')) {
+            case "string": {
+                if (this.internalType.value.includes("\n")) {
                     this.writeStringWithBackticks({ writer, value: this.internalType.value })
                 } else {
                     writer.write(`"${this.internalType.value.replaceAll('"', '\\"')}"`)
                 }
                 break
             }
-            case 'tuple': {
+            case "tuple": {
                 this.writeIterable({ writer, iterable: this.internalType })
                 break
             }
-            case 'unknown': {
+            case "unknown": {
                 this.writeUnknown({ writer, value: this.internalType.value })
                 break
             }
-            case 'null': {
-                writer.write('null')
+            case "null": {
+                writer.write("null")
                 break
             }
-            case 'nop':
+            case "nop":
                 break
             default:
                 assertNever(this.internalType)
@@ -201,25 +201,25 @@ export class TypeLiteral extends AstNode {
     }
 
     public isObject(): this is Object_ {
-        return (this.internalType as Object_).type === 'object'
+        return (this.internalType as Object_).type === "object"
     }
 
     public asObjectOrThrow(): Object_ {
         if (this.isObject()) {
             return this.internalType as Object_
         }
-        throw new Error('Internal error; ts.TypeLiteral is not an object')
+        throw new Error("Internal error; ts.TypeLiteral is not an object")
     }
 
     private isSet(): this is Set_ {
-        return (this.internalType as Set_).type === 'set'
+        return (this.internalType as Set_).type === "set"
     }
 
     private asSetOrThrow(): Set_ {
         if (this.isSet()) {
             return this.internalType as Set_
         }
-        throw new Error('Internal error; ts.TypeLiteral is not a set')
+        throw new Error("Internal error; ts.TypeLiteral is not a set")
     }
 
     private isSetOfObjects(): boolean {
@@ -227,169 +227,169 @@ export class TypeLiteral extends AstNode {
     }
 
     private writeStringWithBackticks({ writer, value }: { writer: Writer; value: string }): void {
-        writer.write('`')
-        const parts = value.split('\n')
-        const head = parts[0] + '\n'
-        const tail = parts.slice(1).join('\n')
-        writer.write(head.replaceAll('`', '\\`'))
-        writer.writeNoIndent(tail.replaceAll('`', '\\`'))
-        writer.write('`')
+        writer.write("`")
+        const parts = value.split("\n")
+        const head = parts[0] + "\n"
+        const tail = parts.slice(1).join("\n")
+        writer.write(head.replaceAll("`", "\\`"))
+        writer.writeNoIndent(tail.replaceAll("`", "\\`"))
+        writer.write("`")
     }
 
     private writeIterable({ writer, iterable }: { writer: Writer; iterable: Array_ | Tuple | Set_ }): void {
         const values = filterNopValues({ values: iterable.values })
         if (values.length === 0) {
-            writer.write('[]')
+            writer.write("[]")
             return
         }
 
-        writer.writeLine('[')
+        writer.writeLine("[")
         writer.indent()
         for (const value of values) {
             value.write(writer)
-            writer.writeLine(',')
+            writer.writeLine(",")
         }
         writer.dedent()
-        writer.write(']')
+        writer.write("]")
     }
 
     private writeRecord({ writer, record }: { writer: Writer; record: Record_ }): void {
         const entries = filterNopRecordEntries({ entries: record.entries })
         if (entries.length === 0) {
-            writer.write('{}')
+            writer.write("{}")
             return
         }
 
-        writer.writeLine('{')
+        writer.writeLine("{")
         writer.indent()
         for (const entry of entries) {
             entry.key.write(writer)
-            writer.write(': ')
+            writer.write(": ")
             entry.value.write(writer)
-            writer.writeLine(',')
+            writer.writeLine(",")
         }
         writer.dedent()
-        writer.write('}')
+        writer.write("}")
     }
 
     private writeObject({ writer, object }: { writer: Writer; object: Object_ }): void {
         const fields = filterNopObjectFields({ fields: object.fields })
         if (fields.length === 0) {
-            writer.write('{}')
+            writer.write("{}")
             return
         }
 
-        writer.writeLine('{')
+        writer.writeLine("{")
         writer.indent()
         for (const field of fields) {
             writer.write(`${field.name}: `)
             field.value.write(writer)
-            writer.writeLine(',')
+            writer.writeLine(",")
         }
         writer.dedent()
-        writer.write('}')
+        writer.write("}")
     }
 
     /* Static factory methods for creating a TypeLiteral */
     public static array({ values }: { values: TypeLiteral[] }): TypeLiteral {
         return new this({
-            type: 'array',
+            type: "array",
             values
         })
     }
 
     public static bigint(value: bigint): TypeLiteral {
-        return new this({ type: 'bigint', value })
+        return new this({ type: "bigint", value })
     }
 
     public static blob(value: string): TypeLiteral {
-        return new this({ type: 'blob', value })
+        return new this({ type: "blob", value })
     }
 
     public static boolean(value: boolean): TypeLiteral {
-        return new this({ type: 'boolean', value })
+        return new this({ type: "boolean", value })
     }
 
     public static datetime(value: string): TypeLiteral {
-        return new this({ type: 'datetime', value })
+        return new this({ type: "datetime", value })
     }
 
     public static number(value: number): TypeLiteral {
-        return new this({ type: 'number', value })
+        return new this({ type: "number", value })
     }
 
     public static object({ fields }: { fields: ObjectField[] }): TypeLiteral {
         return new this({
-            type: 'object',
+            type: "object",
             fields
         })
     }
 
     public static record({ entries }: { entries: RecordEntry[] }): TypeLiteral {
         return new this({
-            type: 'record',
+            type: "record",
             entries
         })
     }
 
     public static reference(value: AstNode): TypeLiteral {
         return new this({
-            type: 'reference',
+            type: "reference",
             value
         })
     }
 
     public static set({ values }: { values: TypeLiteral[] }): TypeLiteral {
         return new this({
-            type: 'set',
+            type: "set",
             values
         })
     }
 
     public static string(value: string): TypeLiteral {
         return new this({
-            type: 'string',
+            type: "string",
             value
         })
     }
 
     public static tuple({ values }: { values: TypeLiteral[] }): TypeLiteral {
         return new this({
-            type: 'tuple',
+            type: "tuple",
             values
         })
     }
 
     public static unknown(value: unknown): TypeLiteral {
-        return new this({ type: 'unknown', value })
+        return new this({ type: "unknown", value })
     }
 
     public static null(): TypeLiteral {
-        return new this({ type: 'null' })
+        return new this({ type: "null" })
     }
 
     public static nop(): TypeLiteral {
-        return new this({ type: 'nop' })
+        return new this({ type: "nop" })
     }
 
     public static isNop(typeLiteral: TypeLiteral): boolean {
-        return typeLiteral.internalType.type === 'nop'
+        return typeLiteral.internalType.type === "nop"
     }
 
     private writeUnknown({ writer, value }: { writer: Writer; value: unknown }): void {
         switch (typeof value) {
-            case 'boolean':
+            case "boolean":
                 writer.write(value.toString())
                 return
-            case 'string':
+            case "string":
                 writer.write(value.includes('"') ? `\`${value}\`` : `"${value}"`)
                 return
-            case 'number':
+            case "number":
                 writer.write(value.toString())
                 return
-            case 'object':
+            case "object":
                 if (value == null) {
-                    writer.write('null')
+                    writer.write("null")
                     return
                 }
                 if (Array.isArray(value)) {
@@ -412,34 +412,34 @@ export class TypeLiteral extends AstNode {
         value: any[]
     }): void {
         if (value.length === 0) {
-            writer.write('[]')
+            writer.write("[]")
             return
         }
-        writer.writeLine('[')
+        writer.writeLine("[")
         writer.indent()
         for (const element of value) {
             writer.writeNode(TypeLiteral.unknown(element))
-            writer.writeLine(',')
+            writer.writeLine(",")
         }
         writer.dedent()
-        writer.write(']')
+        writer.write("]")
     }
 
     private writeUnknownObject({ writer, value }: { writer: Writer; value: object }): void {
         const entries = Object.entries(value)
         if (entries.length === 0) {
-            writer.write('{}')
+            writer.write("{}")
             return
         }
-        writer.writeLine('{')
+        writer.writeLine("{")
         writer.indent()
         for (const [key, val] of entries) {
             writer.write(`${key}: `)
             writer.writeNode(TypeLiteral.unknown(val))
-            writer.writeLine(',')
+            writer.writeLine(",")
         }
         writer.dedent()
-        writer.write('}')
+        writer.write("}")
     }
 }
 

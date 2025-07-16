@@ -1,17 +1,17 @@
-import chalk from 'chalk'
-import { writeFile } from 'fs/promises'
-import { produce } from 'immer'
+import chalk from "chalk"
+import { writeFile } from "fs/promises"
+import { produce } from "immer"
 
-import { runMigrations } from '@fern-api/cli-migrations'
-import { FERN_DIRECTORY, fernConfigJson, getFernDirectory, loadProjectConfig } from '@fern-api/configuration-loader'
-import { loggingExeca } from '@fern-api/logging-execa'
-import { isVersionAhead } from '@fern-api/semver-utils'
+import { runMigrations } from "@fern-api/cli-migrations"
+import { FERN_DIRECTORY, fernConfigJson, getFernDirectory, loadProjectConfig } from "@fern-api/configuration-loader"
+import { loggingExeca } from "@fern-api/logging-execa"
+import { isVersionAhead } from "@fern-api/semver-utils"
 
-import { CliContext } from '../../cli-context/CliContext'
-import { doesVersionOfCliExist } from '../../cli-context/upgrade-utils/doesVersionOfCliExist'
-import { rerunFernCliAtVersion } from '../../rerunFernCliAtVersion'
+import { CliContext } from "../../cli-context/CliContext"
+import { doesVersionOfCliExist } from "../../cli-context/upgrade-utils/doesVersionOfCliExist"
+import { rerunFernCliAtVersion } from "../../rerunFernCliAtVersion"
 
-export const PREVIOUS_VERSION_ENV_VAR = 'FERN_PRE_UPGRADE_VERSION'
+export const PREVIOUS_VERSION_ENV_VAR = "FERN_PRE_UPGRADE_VERSION"
 
 /**
  * there are 3 relevant versions:
@@ -82,7 +82,7 @@ export async function upgrade({
     if (fernCliUpgradeInfo && !fernCliUpgradeInfo.isUpgradeAvailable) {
         const previousVersion = process.env[PREVIOUS_VERSION_ENV_VAR]
         if (previousVersion == null) {
-            cliContext.logger.info('No upgrade available.')
+            cliContext.logger.info("No upgrade available.")
             return
         }
         await runPostUpgradeSteps({ cliContext, previousVersion, newVersion: fernCliUpgradeInfo.targetVersion })
@@ -107,16 +107,16 @@ export async function upgrade({
         )
 
         // special case: if we're running the local-dev version of the CLI, simulate a re-run
-        if (cliContext.environment.packageVersion === '0.0.0') {
+        if (cliContext.environment.packageVersion === "0.0.0") {
             await runPostUpgradeSteps({
                 cliContext,
                 previousVersion: projectConfig.version,
                 newVersion: fernCliUpgradeInfo.targetVersion
             })
         } else {
-            await loggingExeca(cliContext.logger, 'npm', [
-                'install',
-                '-g',
+            await loggingExeca(cliContext.logger, "npm", [
+                "install",
+                "-g",
                 `${cliContext.environment.packageName}@${fernCliUpgradeInfo.targetVersion}`
             ])
 

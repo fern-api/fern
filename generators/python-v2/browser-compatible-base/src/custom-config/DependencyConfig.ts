@@ -1,6 +1,6 @@
-import { z } from 'zod'
+import { z } from "zod"
 
-import { BaseDependencyConfig } from './BaseDependencyConfig'
+import { BaseDependencyConfig } from "./BaseDependencyConfig"
 
 export const DependencyConfig = BaseDependencyConfig.extend({
     python: z.string().optional(),

@@ -1,10 +1,10 @@
 export type FernToken = FernOrganizationToken | FernUserToken
 
 export interface FernOrganizationToken {
-    type: 'organization'
+    type: "organization"
     value: string
 }
 export interface FernUserToken {
-    type: 'user'
+    type: "user"
     value: string
 }

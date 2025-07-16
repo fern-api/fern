@@ -1,1 +1,1 @@
-export { convertToPostmanCollection } from './convertToPostmanCollection'
+export { convertToPostmanCollection } from "./convertToPostmanCollection"

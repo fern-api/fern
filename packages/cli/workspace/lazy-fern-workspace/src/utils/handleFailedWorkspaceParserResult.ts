@@ -1,14 +1,14 @@
-import chalk from 'chalk'
-import { YAMLException } from 'js-yaml'
-import { ZodIssue, ZodIssueCode } from 'zod'
+import chalk from "chalk"
+import { YAMLException } from "js-yaml"
+import { ZodIssue, ZodIssueCode } from "zod"
 
-import { formatLog } from '@fern-api/cli-logger'
-import { DEPENDENCIES_FILENAME } from '@fern-api/configuration-loader'
-import { assertNever, entries } from '@fern-api/core-utils'
-import { RelativeFilePath } from '@fern-api/fs-utils'
-import { Logger } from '@fern-api/logger'
+import { formatLog } from "@fern-api/cli-logger"
+import { DEPENDENCIES_FILENAME } from "@fern-api/configuration-loader"
+import { assertNever, entries } from "@fern-api/core-utils"
+import { RelativeFilePath } from "@fern-api/fs-utils"
+import { Logger } from "@fern-api/logger"
 
-import { WorkspaceLoader, WorkspaceLoaderFailureType } from './Result'
+import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./Result"
 
 export function handleFailedWorkspaceParserResult(result: WorkspaceLoader.FailedResult, logger: Logger): void {
     for (const [relativeFilepath, failure] of entries(result.failures)) {
@@ -37,14 +37,14 @@ function handleWorkspaceParserFailureForFile({
     switch (failure.type) {
         case WorkspaceLoaderFailureType.MISCONFIGURED_DIRECTORY:
             logger.error(
-                'Misconfigured fern directory: please see the docs at https://buildwithfern.com/learn/api-definition/introduction/what-is-the-fern-folder'
+                "Misconfigured fern directory: please see the docs at https://buildwithfern.com/learn/api-definition/introduction/what-is-the-fern-folder"
             )
             break
         case WorkspaceLoaderFailureType.FILE_READ:
-            logger.error('Failed to open file: ' + relativeFilepath)
+            logger.error("Failed to open file: " + relativeFilepath)
             break
         case WorkspaceLoaderFailureType.FILE_MISSING:
-            logger.error('Missing file: ' + relativeFilepath)
+            logger.error("Missing file: " + relativeFilepath)
             break
         case WorkspaceLoaderFailureType.FILE_PARSE:
             if (failure.error instanceof YAMLException) {
@@ -55,7 +55,7 @@ function handleWorkspaceParserFailureForFile({
                     })
                 )
             } else {
-                logger.error('Failed to parse file: ' + relativeFilepath)
+                logger.error("Failed to parse file: " + relativeFilepath)
             }
             break
         case WorkspaceLoaderFailureType.STRUCTURE_VALIDATION:
@@ -72,13 +72,13 @@ function handleWorkspaceParserFailureForFile({
             }
             break
         case WorkspaceLoaderFailureType.FAILED_TO_LOAD_DEPENDENCY:
-            logger.error('Failed to load dependency: ' + failure.dependencyName)
+            logger.error("Failed to load dependency: " + failure.dependencyName)
             break
         case WorkspaceLoaderFailureType.DEPENDENCY_NOT_LISTED:
             logger.error(`Dependency is not listed in ${DEPENDENCIES_FILENAME}: ` + failure.dependencyName)
             break
         case WorkspaceLoaderFailureType.EXPORT_PACKAGE_HAS_DEFINITIONS:
-            logger.error('Exported package contains API definitions: ' + failure.pathToPackage)
+            logger.error("Exported package contains API definitions: " + failure.pathToPackage)
             break
         case WorkspaceLoaderFailureType.EXPORTING_PACKAGE_MARKER_OTHER_KEYS:
             logger.error(`${failure.pathOfPackageMarker} has an export so it cannot define other keys.`)
@@ -87,10 +87,10 @@ function handleWorkspaceParserFailureForFile({
             if (failure.error.error != null) {
                 logger.error(
                     formatLog({
-                        title: failure.error.error.message ?? 'Unknown error',
+                        title: failure.error.error.message ?? "Unknown error",
                         breadcrumbs: [
                             relativeFilepath,
-                            ...failure.error.error.instancePath.split('/').filter((part) => part !== '')
+                            ...failure.error.error.instancePath.split("/").filter((part) => part !== "")
                         ]
                     })
                 )
@@ -99,10 +99,10 @@ function handleWorkspaceParserFailureForFile({
                 if (error !== failure.error.error) {
                     logger.debug(
                         formatLog({
-                            title: error.message ?? 'Unknown error',
+                            title: error.message ?? "Unknown error",
                             breadcrumbs: [
                                 relativeFilepath,
-                                ...error.instancePath.split('/').filter((part) => part !== '')
+                                ...error.instancePath.split("/").filter((part) => part !== "")
                             ]
                         })
                     )
@@ -124,7 +124,7 @@ function parseZodIssue(issue: ZodIssue): ParsedIssue[] {
         case ZodIssueCode.invalid_type:
             return [
                 {
-                    title: 'Incorrect type',
+                    title: "Incorrect type",
                     subtitle: `Expected ${chalk.underline(issue.expected)} but received ${chalk.underline(
                         issue.received
                     )}`
@@ -132,14 +132,14 @@ function parseZodIssue(issue: ZodIssue): ParsedIssue[] {
             ]
         case ZodIssueCode.unrecognized_keys:
             return issue.keys.map((key) => ({
-                title: 'Unexpected key',
+                title: "Unexpected key",
                 subtitle: `Encountered unexpected key ${chalk.underline(key)}`
             }))
         case ZodIssueCode.invalid_enum_value:
             return [
                 {
-                    title: 'Unrecognized value',
-                    subtitle: `Allowed values: ${issue.options.map((option) => chalk.underline(option)).join(', ')}`
+                    title: "Unrecognized value",
+                    subtitle: `Allowed values: ${issue.options.map((option) => chalk.underline(option)).join(", ")}`
                 }
             ]
         case ZodIssueCode.invalid_union:

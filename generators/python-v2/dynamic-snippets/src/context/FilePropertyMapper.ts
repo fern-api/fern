@@ -1,8 +1,8 @@
-import { assertNever } from '@fern-api/core-utils'
-import { FernIr } from '@fern-api/dynamic-ir-sdk'
-import { python } from '@fern-api/python-ast'
+import { assertNever } from "@fern-api/core-utils"
+import { FernIr } from "@fern-api/dynamic-ir-sdk"
+import { python } from "@fern-api/python-ast"
 
-import { DynamicSnippetsGeneratorContext } from './DynamicSnippetsGeneratorContext'
+import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext"
 
 export interface FilePropertyInfo {
     fileFields: python.NamedValue[]
@@ -30,7 +30,7 @@ export class FilePropertyMapper {
         const record = this.context.getRecord(value) ?? {}
         for (const property of body.properties) {
             switch (property.type) {
-                case 'file': {
+                case "file": {
                     const value = this.getSingleFileProperty({ property, record })
                     if (python.TypeInstantiation.isNop(value)) {
                         break
@@ -41,7 +41,7 @@ export class FilePropertyMapper {
                     })
                     break
                 }
-                case 'fileArray': {
+                case "fileArray": {
                     const value = this.getArrayFileProperty({ property, record })
                     if (python.TypeInstantiation.isNop(value)) {
                         break
@@ -52,7 +52,7 @@ export class FilePropertyMapper {
                     })
                     break
                 }
-                case 'bodyProperty': {
+                case "bodyProperty": {
                     const value = this.getBodyProperty({ property, record })
                     if (python.TypeInstantiation.isNop(value)) {
                         break

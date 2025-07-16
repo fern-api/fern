@@ -1,28 +1,28 @@
-import { cp, mkdir, readFile, writeFile } from 'fs/promises'
-import { glob } from 'glob'
-import path from 'path'
-import { SourceFile } from 'ts-morph'
+import { cp, mkdir, readFile, writeFile } from "fs/promises"
+import { glob } from "glob"
+import path from "path"
+import { SourceFile } from "ts-morph"
 
-import { AbsoluteFilePath, RelativeFilePath } from '@fern-api/fs-utils'
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils"
 
-import { DependencyManager } from '../dependency-manager/DependencyManager'
-import { ExportsManager } from '../exports-manager'
-import { ImportsManager } from '../imports-manager'
-import { getReferenceToExportViaNamespaceImport } from '../referencing'
-import { AuthImpl } from './Auth'
-import { CallbackQueueImpl } from './CallbackQueue'
-import { CoreUtilities } from './CoreUtilities'
-import { CoreUtility, CoreUtilityName } from './CoreUtility'
-import { FetcherImpl } from './Fetcher'
-import { FileUtilsImpl } from './FileUtils'
-import { FormDataUtilsImpl } from './FormDataUtils'
-import { PaginationImpl } from './Pagination'
-import { RuntimeImpl } from './Runtime'
-import { StreamImpl } from './Stream'
-import { UrlUtilsImpl } from './UrlUtils'
-import { UtilsImpl } from './Utils'
-import { WebsocketImpl } from './Websocket'
-import { ZurgImpl } from './Zurg'
+import { DependencyManager } from "../dependency-manager/DependencyManager"
+import { ExportsManager } from "../exports-manager"
+import { ImportsManager } from "../imports-manager"
+import { getReferenceToExportViaNamespaceImport } from "../referencing"
+import { AuthImpl } from "./Auth"
+import { CallbackQueueImpl } from "./CallbackQueue"
+import { CoreUtilities } from "./CoreUtilities"
+import { CoreUtility, CoreUtilityName } from "./CoreUtility"
+import { FetcherImpl } from "./Fetcher"
+import { FileUtilsImpl } from "./FileUtils"
+import { FormDataUtilsImpl } from "./FormDataUtils"
+import { PaginationImpl } from "./Pagination"
+import { RuntimeImpl } from "./Runtime"
+import { StreamImpl } from "./Stream"
+import { UrlUtilsImpl } from "./UrlUtils"
+import { UtilsImpl } from "./Utils"
+import { WebsocketImpl } from "./Websocket"
+import { ZurgImpl } from "./Zurg"
 
 export declare namespace CoreUtilitiesManager {
     namespace getCoreUtilities {
@@ -36,17 +36,17 @@ export declare namespace CoreUtilitiesManager {
     }
 }
 
-const PATH_ON_CONTAINER = '/assets/core-utilities'
+const PATH_ON_CONTAINER = "/assets/core-utilities"
 
-const DEFAULT_PACKAGE_PATH = 'src'
-const DEFAULT_TEST_PATH = 'tests'
+const DEFAULT_PACKAGE_PATH = "src"
+const DEFAULT_TEST_PATH = "tests"
 
 export class CoreUtilitiesManager {
     private readonly referencedCoreUtilities: Record<CoreUtilityName, CoreUtility.Manifest> = {}
     private readonly authOverrides: Record<RelativeFilePath, string> = {}
-    private readonly streamType: 'wrapper' | 'web'
-    private readonly formDataSupport: 'Node16' | 'Node18'
-    private readonly fetchSupport: 'node-fetch' | 'native'
+    private readonly streamType: "wrapper" | "web"
+    private readonly formDataSupport: "Node16" | "Node18"
+    private readonly fetchSupport: "node-fetch" | "native"
 
     private readonly relativePackagePath: string
     private readonly relativeTestPath: string
@@ -58,9 +58,9 @@ export class CoreUtilitiesManager {
         relativePackagePath = DEFAULT_PACKAGE_PATH,
         relativeTestPath = DEFAULT_TEST_PATH
     }: {
-        streamType: 'wrapper' | 'web'
-        formDataSupport: 'Node16' | 'Node18'
-        fetchSupport: 'node-fetch' | 'native'
+        streamType: "wrapper" | "web"
+        formDataSupport: "Node16" | "Node18"
+        fetchSupport: "node-fetch" | "native"
         relativePackagePath?: string
         relativeTestPath?: string
     }) {
@@ -107,7 +107,7 @@ export class CoreUtilitiesManager {
             exportsManager.addExportsForDirectories(
                 [
                     {
-                        nameOnDisk: 'core'
+                        nameOnDisk: "core"
                     },
                     utility.pathInCoreUtilities
                 ],
@@ -197,10 +197,10 @@ export class CoreUtilitiesManager {
         )
 
         // Handle auth overrides
-        if (this.referencedCoreUtilities['auth'] != null) {
+        if (this.referencedCoreUtilities["auth"] != null) {
             await Promise.all(
                 Object.entries(this.authOverrides).map(async ([filepath, content]) => {
-                    const destPath = path.join(pathToSrc, 'core', 'auth', filepath)
+                    const destPath = path.join(pathToSrc, "core", "auth", filepath)
                     await writeFile(destPath, content)
                 })
             )
@@ -212,15 +212,15 @@ export class CoreUtilitiesManager {
         filePath: string,
         findAndReplace: Record<string, { importPath: string; body: string }>
     ) {
-        const contents = await readFile(filePath, 'utf8')
-        const lines = contents.split('\n')
+        const contents = await readFile(filePath, "utf8")
+        const lines = contents.split("\n")
         let hasReplaced = false
 
         const updatedLines = lines.map((line) => {
             let updatedLine = line
             for (const [find, { importPath, body }] of Object.entries(findAndReplace)) {
                 if (line.includes(find)) {
-                    if (line.includes('import')) {
+                    if (line.includes("import")) {
                         updatedLine = updatedLine.replaceAll(find, importPath)
                         hasReplaced = true
                     } else {
@@ -233,7 +233,7 @@ export class CoreUtilitiesManager {
         })
 
         if (hasReplaced) {
-            const updatedContent = updatedLines.join('\n')
+            const updatedContent = updatedLines.join("\n")
             await writeFile(filePath, updatedContent)
         }
     }
@@ -267,12 +267,12 @@ export class CoreUtilitiesManager {
                 filepathToNamespaceImport: {
                     directories: [
                         {
-                            nameOnDisk: 'core'
+                            nameOnDisk: "core"
                         }
                     ],
                     file: undefined
                 },
-                namespaceImport: 'core',
+                namespaceImport: "core",
                 referencedIn: sourceFile,
                 importsManager,
                 exportsManager
@@ -285,8 +285,8 @@ export class CoreUtilitiesManager {
             return DEFAULT_PACKAGE_PATH
         }
 
-        const levelsOfNesting = this.relativePackagePath.split('/').length
-        const path = '../'.repeat(levelsOfNesting)
+        const levelsOfNesting = this.relativePackagePath.split("/").length
+        const path = "../".repeat(levelsOfNesting)
 
         return `${path}${this.relativePackagePath}`
     }
@@ -296,8 +296,8 @@ export class CoreUtilitiesManager {
             return DEFAULT_TEST_PATH
         }
 
-        const levelsOfNesting = this.relativeTestPath.split('/').length + 1
-        const path = '../'.repeat(levelsOfNesting)
+        const levelsOfNesting = this.relativeTestPath.split("/").length + 1
+        const path = "../".repeat(levelsOfNesting)
 
         return `${path}${this.relativeTestPath}`
     }

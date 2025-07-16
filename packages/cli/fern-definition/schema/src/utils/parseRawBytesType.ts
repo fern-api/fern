@@ -1,10 +1,10 @@
-import { FernContainerRegex } from './visitRawTypeReference'
+import { FernContainerRegex } from "./visitRawTypeReference"
 
 export interface RawBytesType {
     isOptional: boolean
 }
 
-export const BYTES_TYPE = 'bytes'
+export const BYTES_TYPE = "bytes"
 
 export function parseRawBytesType(typeReference: string): RawBytesType | undefined {
     if (typeReference === BYTES_TYPE) {

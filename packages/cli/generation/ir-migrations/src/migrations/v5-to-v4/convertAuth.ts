@@ -1,5 +1,5 @@
-import { IrVersions } from '../../ir-versions'
-import { convertHeader } from './convertHeader'
+import { IrVersions } from "../../ir-versions"
+import { convertHeader } from "./convertHeader"
 
 export function convertAuth(auth: IrVersions.V5.auth.ApiAuth): IrVersions.V4.auth.ApiAuth {
     return {
@@ -15,7 +15,7 @@ function convertAuthScheme(scheme: IrVersions.V5.auth.AuthScheme): IrVersions.V4
         bearer: IrVersions.V4.auth.AuthScheme.bearer,
         header: (header) => IrVersions.V4.auth.AuthScheme.header(convertHeader(header)),
         _unknown: () => {
-            throw new Error('Unknown AuthScheme: ' + scheme._type)
+            throw new Error("Unknown AuthScheme: " + scheme._type)
         }
     })
 }

@@ -1,9 +1,9 @@
-import { OpenAPIV3_1 } from 'openapi-types'
+import { OpenAPIV3_1 } from "openapi-types"
 
-import { TypeId, TypeReference } from '@fern-api/ir-sdk'
-import { Converters, Extensions } from '@fern-api/v2-importer-commons'
+import { TypeId, TypeReference } from "@fern-api/ir-sdk"
+import { Converters, Extensions } from "@fern-api/v2-importer-commons"
 
-import { AsyncAPIParameter } from '../sharedTypes'
+import { AsyncAPIParameter } from "../sharedTypes"
 
 export class ParameterConverter extends Converters.AbstractConverters.AbstractParameterConverter<AsyncAPIParameter> {
     private readonly parameterNamePrefix?: string
@@ -31,7 +31,7 @@ export class ParameterConverter extends Converters.AbstractConverters.AbstractPa
         const parameterIsOptional = fernOptional ?? this.parameter.required === false
         const maybeParameterSchema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject = this.parameter.schema ?? {
             ...this.parameter,
-            type: 'string',
+            type: "string",
             enum: this.parameter.enum,
             default: this.parameter.default,
             example: this.parameter.example ?? this.parameter.name,
@@ -42,7 +42,7 @@ export class ParameterConverter extends Converters.AbstractConverters.AbstractPa
 
         const schemaOrReferenceConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
             context: this.context,
-            breadcrumbs: [...this.breadcrumbs, 'schema'],
+            breadcrumbs: [...this.breadcrumbs, "schema"],
             schemaIdOverride: this.parameterNamePrefix
                 ? `${this.parameterNamePrefix}_${this.parameter.name}`
                 : this.parameter.name,

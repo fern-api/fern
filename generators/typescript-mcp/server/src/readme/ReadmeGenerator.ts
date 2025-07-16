@@ -1,9 +1,9 @@
-import { File } from '@fern-api/base-generator'
-import { RelativeFilePath, join } from '@fern-api/fs-utils'
-import { TypescriptCustomConfigSchema } from '@fern-api/typescript-ast'
-import { FileGenerator } from '@fern-api/typescript-mcp-base'
+import { File } from "@fern-api/base-generator"
+import { RelativeFilePath, join } from "@fern-api/fs-utils"
+import { TypescriptCustomConfigSchema } from "@fern-api/typescript-ast"
+import { FileGenerator } from "@fern-api/typescript-mcp-base"
 
-import { ServerGeneratorContext } from '../ServerGeneratorContext'
+import { ServerGeneratorContext } from "../ServerGeneratorContext"
 
 export class ReadmeGenerator extends FileGenerator<File, TypescriptCustomConfigSchema, ServerGeneratorContext> {
     public doGenerate(): File {
@@ -11,11 +11,11 @@ export class ReadmeGenerator extends FileGenerator<File, TypescriptCustomConfigS
     }
 
     protected getDirectory(): RelativeFilePath {
-        return RelativeFilePath.of('../')
+        return RelativeFilePath.of("../")
     }
 
     protected getFilename(): string {
-        return 'README.md'
+        return "README.md"
     }
 
     protected getFilepath(): RelativeFilePath {
@@ -25,9 +25,9 @@ export class ReadmeGenerator extends FileGenerator<File, TypescriptCustomConfigS
     private getFileContents(): string {
         return (
             `# ${this.context.project.builder.packageName}` +
-            '\n\n' +
+            "\n\n" +
             this.getFernShield() +
-            '\n\n' +
+            "\n\n" +
             this.context.project.builder.description
         )
     }

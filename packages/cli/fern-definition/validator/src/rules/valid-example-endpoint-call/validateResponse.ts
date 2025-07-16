@@ -1,16 +1,16 @@
-import chalk from 'chalk'
+import chalk from "chalk"
 
-import { FernWorkspace } from '@fern-api/api-workspace-commons'
-import { RawSchemas, visitExampleResponseSchema } from '@fern-api/fern-definition-schema'
+import { FernWorkspace } from "@fern-api/api-workspace-commons"
+import { RawSchemas, visitExampleResponseSchema } from "@fern-api/fern-definition-schema"
 import {
     ErrorResolver,
     ExampleResolver,
     ExampleValidators,
     FernFileContext,
     TypeResolver
-} from '@fern-api/ir-generator'
+} from "@fern-api/ir-generator"
 
-import { RuleViolation } from '../../Rule'
+import { RuleViolation } from "../../Rule"
 
 export function validateResponse({
     example,
@@ -70,7 +70,7 @@ function validateBodyResponse({
     if (example.error == null) {
         if (endpoint.response != null) {
             const responseTypeReference =
-                typeof endpoint.response !== 'string' ? endpoint.response.type : endpoint.response
+                typeof endpoint.response !== "string" ? endpoint.response.type : endpoint.response
             if (responseTypeReference == null) {
                 return violations
             }
@@ -82,20 +82,20 @@ function validateBodyResponse({
                     exampleResolver,
                     file,
                     workspace,
-                    breadcrumbs: ['response', 'body'],
+                    breadcrumbs: ["response", "body"],
                     depth: 0
                 }).map((val): RuleViolation => {
                     return {
-                        severity: 'fatal',
+                        severity: "fatal",
                         message: val.message
                     }
                 })
             )
         } else if (example.body != null) {
             violations.push({
-                severity: 'fatal',
+                severity: "fatal",
                 message:
-                    'Unexpected response in example. If you\'re adding an example of an error response, set the "error" property to the error\'s name'
+                    "Unexpected response in example. If you're adding an example of an error response, set the \"error\" property to the error's name"
             })
         }
     } else {
@@ -106,12 +106,12 @@ function validateBodyResponse({
             const endpointAllowsForError =
                 endpoint.errors != null &&
                 endpoint.errors.some((error) => {
-                    const specifiedErrorName = typeof error !== 'string' ? error.error : error
+                    const specifiedErrorName = typeof error !== "string" ? error.error : error
                     return specifiedErrorName === example.error
                 })
             if (!endpointAllowsForError) {
                 violations.push({
-                    severity: 'fatal',
+                    severity: "fatal",
                     message: `${chalk.bold(
                         example.error
                     )} is not specified as an allowed error for this endpoint. Add ${chalk.bold(
@@ -129,15 +129,15 @@ function validateBodyResponse({
                         exampleResolver,
                         file: errorDeclaration.file,
                         workspace,
-                        breadcrumbs: ['response', 'body'],
+                        breadcrumbs: ["response", "body"],
                         depth: 0
                     }).map((val): RuleViolation => {
-                        return { severity: 'fatal', message: val.message }
+                        return { severity: "fatal", message: val.message }
                     })
                 )
             } else if (example.body != null) {
                 violations.push({
-                    severity: 'fatal',
+                    severity: "fatal",
                     message: `Unexpected response in example. ${chalk.bold(example.error)} does not have a body.`
                 })
             }
@@ -163,40 +163,40 @@ function validateStreamResponse({
     workspace: FernWorkspace
 }): RuleViolation[] {
     const violations: RuleViolation[] = []
-    if (endpoint['response-stream'] == null) {
+    if (endpoint["response-stream"] == null) {
         violations.push({
-            severity: 'fatal',
+            severity: "fatal",
             message: "Unexpected streaming response in example. Endpoint's schema is missing `response-stream` key."
         })
     } else if (
-        typeof endpoint['response-stream'] === 'string' ||
-        endpoint['response-stream'].format == null ||
-        endpoint['response-stream'].format === 'json'
+        typeof endpoint["response-stream"] === "string" ||
+        endpoint["response-stream"].format == null ||
+        endpoint["response-stream"].format === "json"
     ) {
         for (const event of example.stream) {
             violations.push(
                 ...ExampleValidators.validateTypeReferenceExample({
                     rawTypeReference:
-                        typeof endpoint['response-stream'] !== 'string'
-                            ? endpoint['response-stream'].type
-                            : endpoint['response-stream'],
+                        typeof endpoint["response-stream"] !== "string"
+                            ? endpoint["response-stream"].type
+                            : endpoint["response-stream"],
                     example: event,
                     typeResolver,
                     exampleResolver,
                     file,
                     workspace,
-                    breadcrumbs: ['response', 'body'],
+                    breadcrumbs: ["response", "body"],
                     depth: 0
                 }).map((val): RuleViolation => {
-                    return { severity: 'fatal', message: val.message }
+                    return { severity: "fatal", message: val.message }
                 })
             )
         }
     } else {
         violations.push({
-            severity: 'fatal',
+            severity: "fatal",
             message:
-                'Endpoint response expects server-sent events (`response-stream.format: sse`), but the provided example is a regular stream. Use the `events` key to provide an list of server-sent event examples.'
+                "Endpoint response expects server-sent events (`response-stream.format: sse`), but the provided example is a regular stream. Use the `events` key to provide an list of server-sent event examples."
         })
     }
 
@@ -219,36 +219,36 @@ function validateSseResponse({
     workspace: FernWorkspace
 }): RuleViolation[] {
     const violations: RuleViolation[] = []
-    if (endpoint['response-stream'] == null) {
+    if (endpoint["response-stream"] == null) {
         violations.push({
-            severity: 'fatal',
+            severity: "fatal",
             message: "Unexpected streaming response in example. Endpoint's schema is missing `response-stream` key."
         })
-    } else if (typeof endpoint['response-stream'] !== 'string' && endpoint['response-stream'].format === 'sse') {
+    } else if (typeof endpoint["response-stream"] !== "string" && endpoint["response-stream"].format === "sse") {
         for (const event of example.stream) {
             violations.push(
                 ...ExampleValidators.validateTypeReferenceExample({
                     rawTypeReference:
-                        typeof endpoint['response-stream'] !== 'string'
-                            ? endpoint['response-stream'].type
-                            : endpoint['response-stream'],
+                        typeof endpoint["response-stream"] !== "string"
+                            ? endpoint["response-stream"].type
+                            : endpoint["response-stream"],
                     example: event.data,
                     typeResolver,
                     exampleResolver,
                     file,
                     workspace,
-                    breadcrumbs: ['response', 'body'],
+                    breadcrumbs: ["response", "body"],
                     depth: 0
                 }).map((val): RuleViolation => {
-                    return { severity: 'fatal', message: val.message }
+                    return { severity: "fatal", message: val.message }
                 })
             )
         }
     } else {
         violations.push({
-            severity: 'fatal',
+            severity: "fatal",
             message:
-                'Endpoint response expects a regular stream, but the provided example is a server-sent event. Use the `stream` key to provide a list of stream examples.'
+                "Endpoint response expects a regular stream, but the provided example is a server-sent event. Use the `stream` key to provide a list of stream examples."
         })
     }
     return violations

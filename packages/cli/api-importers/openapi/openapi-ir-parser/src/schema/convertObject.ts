@@ -1,4 +1,4 @@
-import { OpenAPIV3 } from 'openapi-types'
+import { OpenAPIV3 } from "openapi-types"
 
 import {
     AllOfPropertyConflict,
@@ -12,18 +12,18 @@ import {
     SchemaWithExample,
     SdkGroupName,
     Source
-} from '@fern-api/openapi-ir'
+} from "@fern-api/openapi-ir"
 
-import { getExtension } from '../getExtension'
-import { FernOpenAPIExtension } from '../openapi/v3/extensions/fernExtensions'
-import { SchemaParserContext } from './SchemaParserContext'
-import { isAdditionalPropertiesAny } from './convertAdditionalProperties'
-import { convertAvailability } from './convertAvailability'
-import { convertSchema, convertToReferencedSchema, getSchemaIdFromReference } from './convertSchemas'
-import { getBreadcrumbsFromReference } from './utils/getBreadcrumbsFromReference'
-import { getGeneratedPropertyName } from './utils/getSchemaName'
-import { isReferenceObject } from './utils/isReferenceObject'
-import { isSchemaWithExampleEqual } from './utils/isSchemaWithExampleEqual'
+import { getExtension } from "../getExtension"
+import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions"
+import { SchemaParserContext } from "./SchemaParserContext"
+import { isAdditionalPropertiesAny } from "./convertAdditionalProperties"
+import { convertAvailability } from "./convertAvailability"
+import { convertSchema, convertToReferencedSchema, getSchemaIdFromReference } from "./convertSchemas"
+import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference"
+import { getGeneratedPropertyName } from "./utils/getSchemaName"
+import { isReferenceObject } from "./utils/isReferenceObject"
+import { isSchemaWithExampleEqual } from "./utils/isSchemaWithExampleEqual"
 
 interface ReferencedAllOfInfo {
     schemaId: SchemaId
@@ -96,15 +96,15 @@ export function convertObject({
                         source,
                         namespace
                     )
-                    if (convertedOneOfSchema.type === 'object') {
+                    if (convertedOneOfSchema.type === "object") {
                         inlinedParentProperties.push(
                             ...convertedOneOfSchema.properties.map((property) => {
-                                if (property.schema.type !== 'optional' && property.schema.type !== 'nullable') {
+                                if (property.schema.type !== "optional" && property.schema.type !== "nullable") {
                                     return {
                                         ...property,
                                         schema: SchemaWithExample.optional({
                                             nameOverride: undefined,
-                                            generatedName: '',
+                                            generatedName: "",
                                             title: undefined,
                                             value: property.schema,
                                             description: undefined,
@@ -141,7 +141,7 @@ export function convertObject({
             context.markSchemaAsReferencedByNonRequest(schemaId)
         } else {
             const allOfSchema = convertSchema(allOfElement, false, context, breadcrumbs, source, namespace)
-            if (allOfSchema.type === 'object') {
+            if (allOfSchema.type === "object") {
                 inlinedParentProperties.push(...allOfSchema.properties)
             }
         }

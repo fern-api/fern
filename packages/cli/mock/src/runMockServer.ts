@@ -1,15 +1,15 @@
-import express, { Request, Response } from 'express'
-import getPort from 'get-port'
-import { Server } from 'http'
-import { noop } from 'lodash-es'
-import urlJoin from 'url-join'
+import express, { Request, Response } from "express"
+import getPort from "get-port"
+import { Server } from "http"
+import { noop } from "lodash-es"
+import urlJoin from "url-join"
 
-import { isPlainObject } from '@fern-api/core-utils'
-import { HttpEndpoint, IntermediateRepresentation } from '@fern-api/ir-sdk'
-import { TaskContext } from '@fern-api/task-context'
+import { isPlainObject } from "@fern-api/core-utils"
+import { HttpEndpoint, IntermediateRepresentation } from "@fern-api/ir-sdk"
+import { TaskContext } from "@fern-api/task-context"
 
-import { NotEqual } from './equal/EqualRequestResponse'
-import { requestEqual } from './equal/requestEqual'
+import { NotEqual } from "./equal/EqualRequestResponse"
+import { requestEqual } from "./equal/requestEqual"
 
 type RequestHandler = (req: Request, res: Response) => void
 
@@ -31,7 +31,7 @@ export class MockServer {
         port: number | undefined
     }) {
         this.context = context
-        this.app.use(express.json({ limit: '50mb', strict: false }))
+        this.app.use(express.json({ limit: "50mb", strict: false }))
         this.port = port
 
         // Map of endpoint path to map of HTTP method to endpoints that fall into both
@@ -60,8 +60,8 @@ export class MockServer {
             const path2 = endpoint2[0]
 
             // Split the paths into components
-            const components1 = path1.split('/')
-            const components2 = path2.split('/')
+            const components1 = path1.split("/")
+            const components2 = path2.split("/")
 
             // If one path is a prefix of the other, the shorter one should come first
             if (components1.length !== components2.length) {
@@ -81,8 +81,8 @@ export class MockServer {
                 }
 
                 // Literal takes precedence over parameter
-                const isComp1Param = comp1.startsWith(':')
-                const isComp2Param = comp2.startsWith(':')
+                const isComp1Param = comp1.startsWith(":")
+                const isComp2Param = comp2.startsWith(":")
 
                 if (isComp1Param && !isComp2Param) {
                     return 1
@@ -103,19 +103,19 @@ export class MockServer {
         for (const [endpointPath, methodToEndpoints] of sortedEndpoints) {
             for (const [method, endpoints] of methodToEndpoints) {
                 switch (method) {
-                    case 'GET':
+                    case "GET":
                         this.app.get(endpointPath, getRequestHandler(endpoints))
                         break
-                    case 'POST':
+                    case "POST":
                         this.app.post(endpointPath, getRequestHandler(endpoints))
                         break
-                    case 'PUT':
+                    case "PUT":
                         this.app.put(endpointPath, getRequestHandler(endpoints))
                         break
-                    case 'PATCH':
+                    case "PATCH":
                         this.app.patch(endpointPath, getRequestHandler(endpoints))
                         break
-                    case 'DELETE':
+                    case "DELETE":
                         this.app.delete(endpointPath, getRequestHandler(endpoints))
                         break
                 }
@@ -143,7 +143,7 @@ export class MockServer {
 }
 
 function getFullPathForEndpoint(endpoint: HttpEndpoint): string {
-    let url = ''
+    let url = ""
     if (endpoint.fullPath.head.length > 0) {
         url = urlJoin(url, endpoint.fullPath.head)
     }
@@ -153,12 +153,12 @@ function getFullPathForEndpoint(endpoint: HttpEndpoint): string {
         //
         //  /movie/:movieId
         //
-        url = urlJoin(url, ':' + part.pathParameter)
+        url = urlJoin(url, ":" + part.pathParameter)
         if (part.tail.length > 0) {
             url = urlJoin(url, part.tail)
         }
     }
-    return url.startsWith('/') ? url : `/${url}`
+    return url.startsWith("/") ? url : `/${url}`
 }
 
 function getRequestHandler(endpoints: HttpEndpoint[]): RequestHandler {
@@ -173,7 +173,7 @@ function getRequestHandler(endpoints: HttpEndpoint[]): RequestHandler {
                 if (example.example != null) {
                     const match = requestEqual({ request: req, example: example.example })
 
-                    if (match.type === 'notEqual') {
+                    if (match.type === "notEqual") {
                         notEqualReasons.push(match)
                         continue
                     }
@@ -187,8 +187,8 @@ function getRequestHandler(endpoints: HttpEndpoint[]): RequestHandler {
                                         return
                                     }
 
-                                    if (endpoint.response?.body?.type === 'text') {
-                                        res.contentType('text/plain')
+                                    if (endpoint.response?.body?.type === "text") {
+                                        res.contentType("text/plain")
                                         res.send(body.jsonExample)
                                         return
                                     }
@@ -202,7 +202,7 @@ function getRequestHandler(endpoints: HttpEndpoint[]): RequestHandler {
                                     res.end()
                                 },
                                 sse: (sse) => {
-                                    res.setHeader('Content-Type', 'text/event-stream')
+                                    res.setHeader("Content-Type", "text/event-stream")
                                     sse.forEach((event) => {
                                         res.write(`event: ${event.event}\n`)
                                         res.write(`data: ${JSON.stringify(event.data.jsonExample)}\n\n`)
@@ -231,7 +231,7 @@ function getRequestHandler(endpoints: HttpEndpoint[]): RequestHandler {
             return
         }
         res.status(404).send({
-            message: 'Failed to match request with example',
+            message: "Failed to match request with example",
             request: {
                 url: req.url,
                 headers: req.headers,

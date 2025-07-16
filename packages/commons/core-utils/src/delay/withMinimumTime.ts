@@ -1,4 +1,4 @@
-import { delay } from './delay'
+import { delay } from "./delay"
 
 /**
  * if the promise resolves:

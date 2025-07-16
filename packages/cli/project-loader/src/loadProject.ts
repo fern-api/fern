@@ -1,7 +1,7 @@
-import chalk from 'chalk'
-import { readdir } from 'fs/promises'
+import chalk from "chalk"
+import { readdir } from "fs/promises"
 
-import { AbstractAPIWorkspace } from '@fern-api/api-workspace-commons'
+import { AbstractAPIWorkspace } from "@fern-api/api-workspace-commons"
 import {
     APIS_DIRECTORY,
     ASYNCAPI_DIRECTORY,
@@ -13,12 +13,12 @@ import {
     generatorsYml,
     getFernDirectory,
     loadProjectConfig
-} from '@fern-api/configuration-loader'
-import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from '@fern-api/fs-utils'
-import { TaskContext } from '@fern-api/task-context'
-import { handleFailedWorkspaceParserResult, loadAPIWorkspace, loadDocsWorkspace } from '@fern-api/workspace-loader'
+} from "@fern-api/configuration-loader"
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils"
+import { TaskContext } from "@fern-api/task-context"
+import { handleFailedWorkspaceParserResult, loadAPIWorkspace, loadDocsWorkspace } from "@fern-api/workspace-loader"
 
-import { Project } from './Project'
+import { Project } from "./Project"
 
 export declare namespace loadProject {
     export interface Args {
@@ -126,23 +126,23 @@ export async function loadApis({
 
         if (commandLineApiWorkspace != null) {
             if (!apiWorkspaceDirectoryNames.includes(commandLineApiWorkspace)) {
-                return context.failAndThrow('API does not exist: ' + commandLineApiWorkspace)
+                return context.failAndThrow("API does not exist: " + commandLineApiWorkspace)
             }
         } else if (apiWorkspaceDirectoryNames.length === 0) {
-            return context.failAndThrow('No APIs found.')
+            return context.failAndThrow("No APIs found.")
         } else if (apiWorkspaceDirectoryNames.length > 1 && !defaultToAllApiWorkspaces) {
-            let message = 'There are multiple workspaces. You must specify one with --api:\n'
+            let message = "There are multiple workspaces. You must specify one with --api:\n"
             const longestWorkspaceName = Math.max(
                 ...apiWorkspaceDirectoryNames.map((workspaceName) => workspaceName.length)
             )
             message += apiWorkspaceDirectoryNames
                 .map((workspaceName) => {
-                    const suggestedCommand = `${cliName} ${process.argv.slice(2).join(' ')} --api ${workspaceName}`
+                    const suggestedCommand = `${cliName} ${process.argv.slice(2).join(" ")} --api ${workspaceName}`
                     return ` › ${chalk.bold(workspaceName.padEnd(longestWorkspaceName))}  ${chalk.dim(
                         suggestedCommand
                     )}`
                 })
-                .join('\n')
+                .join("\n")
             return context.failAndThrow(message)
         }
 

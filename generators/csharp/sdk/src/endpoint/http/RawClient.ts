@@ -1,16 +1,16 @@
-import { Arguments } from '@fern-api/base-generator'
-import { assertNever } from '@fern-api/core-utils'
-import { csharp } from '@fern-api/csharp-codegen'
+import { Arguments } from "@fern-api/base-generator"
+import { assertNever } from "@fern-api/core-utils"
+import { csharp } from "@fern-api/csharp-codegen"
 
-import { FernIr } from '@fern-fern/ir-sdk'
-import { HttpEndpoint, HttpMethod } from '@fern-fern/ir-sdk/api'
+import { FernIr } from "@fern-fern/ir-sdk"
+import { HttpEndpoint, HttpMethod } from "@fern-fern/ir-sdk/api"
 
-import { SdkGeneratorContext } from '../../SdkGeneratorContext'
-import { EndpointRequest } from '../request/EndpointRequest'
-import { getContentTypeFromRequestBody } from '../utils/getContentTypeFromRequestBody'
+import { SdkGeneratorContext } from "../../SdkGeneratorContext"
+import { EndpointRequest } from "../request/EndpointRequest"
+import { getContentTypeFromRequestBody } from "../utils/getContentTypeFromRequestBody"
 
 export declare namespace RawClient {
-    export type RequestBodyType = 'json' | 'bytes' | 'multipartform'
+    export type RequestBodyType = "json" | "bytes" | "multipartform"
 
     export interface CreateHttpRequestArgs {
         /** The reference to the client */
@@ -85,15 +85,15 @@ export class RawClient {
     }: RawClient.CreateHttpRequestWrapperArgs): RawClient.CreateHttpRequestWrapperCodeBlock {
         const args: Arguments = [
             {
-                name: 'BaseUrl',
+                name: "BaseUrl",
                 assignment: baseUrl
             },
             {
-                name: 'Method',
+                name: "Method",
                 assignment: this.getCsharpHttpMethod(endpoint.method)
             },
             {
-                name: 'Path',
+                name: "Path",
                 assignment: csharp.codeblock(
                     (writer) =>
                         `${this.writePathString({
@@ -106,64 +106,64 @@ export class RawClient {
         ]
         if (bodyReference != null) {
             args.push({
-                name: 'Body',
+                name: "Body",
                 assignment: csharp.codeblock(bodyReference)
             })
         }
         if (queryBagReference != null) {
             args.push({
-                name: 'Query',
+                name: "Query",
                 assignment: csharp.codeblock(queryBagReference)
             })
         }
         if (headerBagReference != null) {
             args.push({
-                name: 'Headers',
+                name: "Headers",
                 assignment: csharp.codeblock(headerBagReference)
             })
         }
         const requestContentType = getContentTypeFromRequestBody(endpoint)
         if (requestContentType) {
             args.push({
-                name: 'ContentType',
+                name: "ContentType",
                 assignment: csharp.codeblock(`"${requestContentType}"`)
             })
         }
         if (endpoint.idempotent) {
             args.push({
-                name: 'Options',
+                name: "Options",
                 assignment: csharp.codeblock(this.context.getIdempotentRequestOptionsParameterName())
             })
         } else {
             args.push({
-                name: 'Options',
+                name: "Options",
                 assignment: csharp.codeblock(this.context.getRequestOptionsParameterName())
             })
         }
         switch (requestType) {
-            case 'bytes':
+            case "bytes":
                 return {
                     requestReference: csharp.instantiateClass({
                         arguments_: args,
                         classReference: csharp.classReference({
-                            name: 'StreamRequest',
+                            name: "StreamRequest",
                             namespace: this.context.getCoreNamespace()
                         })
                     })
                 }
-            case 'multipartform': {
-                if (endpoint.requestBody?.type !== 'fileUpload') {
-                    throw new Error('Internal error; Multipart form requests are only supported for file uploads')
+            case "multipartform": {
+                if (endpoint.requestBody?.type !== "fileUpload") {
+                    throw new Error("Internal error; Multipart form requests are only supported for file uploads")
                 }
                 const requestBody = endpoint.requestBody
-                const varName = 'multipartFormRequest_'
+                const varName = "multipartFormRequest_"
                 const createMultipartFormRequest = csharp.codeblock((writer) => {
                     writer.write(`var ${varName} = `)
                     writer.writeNode(
                         csharp.instantiateClass({
                             arguments_: args,
                             classReference: csharp.classReference({
-                                name: 'MultipartFormRequest',
+                                name: "MultipartFormRequest",
                                 namespace: this.context.getCoreNamespace()
                             })
                         })
@@ -174,14 +174,14 @@ export class RawClient {
                         const { propertyName, partName, contentType, csharpType, encoding } =
                             this.getMultipartPartParameters(property)
                         const addMultipartPartMethodName = this.getAddMultipartPartMethodName({ csharpType, encoding })
-                        const requestReference = endpointRequest?.getParameterName() ?? 'request'
+                        const requestReference = endpointRequest?.getParameterName() ?? "request"
                         writer.write(
                             `multipartFormRequest_.${addMultipartPartMethodName}("${partName}", ${requestReference}.${propertyName}`
                         )
                         if (contentType != null) {
                             writer.write(`, "${contentType}"`)
                         }
-                        writer.writeTextStatement(')')
+                        writer.writeTextStatement(")")
                     }
                 })
                 return {
@@ -189,13 +189,13 @@ export class RawClient {
                     requestReference: csharp.codeblock(varName)
                 }
             }
-            case 'json':
+            case "json":
             default:
                 return {
                     requestReference: csharp.instantiateClass({
                         arguments_: args,
                         classReference: csharp.classReference({
-                            name: 'JsonRequest',
+                            name: "JsonRequest",
                             namespace: this.context.getCoreNamespace()
                         })
                     })
@@ -216,13 +216,13 @@ export class RawClient {
         let csharpType: csharp.Type
         let encoding: FernIr.FileUploadBodyPropertyEncoding | undefined
         switch (property.type) {
-            case 'file':
+            case "file":
                 propertyName = property.value.key.name.pascalCase.safeName
                 partName = property.value.key.wireValue
                 contentType = property.value.contentType
                 csharpType = this.context.csharpTypeMapper.convertFromFileProperty({ property: property.value })
                 break
-            case 'bodyProperty': {
+            case "bodyProperty": {
                 propertyName = property.name.name.pascalCase.safeName
                 partName = property.name.wireValue
                 contentType = property.contentType
@@ -255,12 +255,12 @@ export class RawClient {
         const isCollection = csharpType.isCollection()
         if (encoding != null) {
             switch (encoding) {
-                case 'exploded':
-                    return isCollection ? 'AddExplodedFormEncodedParts' : 'AddExplodedFormEncodedPart'
-                case 'form':
-                    return isCollection ? 'AddFormEncodedParts' : 'AddFormEncodedPart'
-                case 'json':
-                    return isCollection ? 'AddJsonParts' : 'AddJsonPart'
+                case "exploded":
+                    return isCollection ? "AddExplodedFormEncodedParts" : "AddExplodedFormEncodedPart"
+                case "form":
+                    return isCollection ? "AddFormEncodedParts" : "AddFormEncodedPart"
+                case "json":
+                    return isCollection ? "AddJsonParts" : "AddJsonPart"
                 default:
                     assertNever(encoding)
             }
@@ -268,41 +268,41 @@ export class RawClient {
             csharpType = csharpType.getCollectionItemType() ?? csharpType
             csharpType = csharpType.underlyingTypeIfOptional() ?? csharpType
             switch (csharpType.internalType.type) {
-                case 'fileParam':
-                    return isCollection ? 'AddFileParameterParts' : 'AddFileParameterPart'
-                case 'oneOf':
-                case 'oneOfBase':
+                case "fileParam":
+                    return isCollection ? "AddFileParameterParts" : "AddFileParameterPart"
+                case "oneOf":
+                case "oneOfBase":
                     // TODO: handle this in @ .NET runtime to detect whether struct/string/enum/string enum which should become string part,
                     // or anything else which should become json part.
-                    return isCollection ? 'AddJsonParts' : 'AddJsonPart'
-                case 'int':
-                case 'long':
-                case 'uint':
-                case 'ulong':
-                case 'bool':
-                case 'float':
-                case 'double':
-                case 'dateOnly':
-                case 'dateTime':
-                case 'stringEnum':
-                case 'string':
-                case 'uuid':
-                    return isCollection ? 'AddStringParts' : 'AddStringPart'
-                case 'object':
-                case 'listType':
-                case 'list':
-                case 'set':
-                case 'map':
-                case 'array':
-                case 'idictionary':
-                case 'reference':
-                case 'coreReference':
-                case 'keyValuePair':
-                    return isCollection ? 'AddJsonParts' : 'AddJsonPart'
-                case 'optional':
-                case 'csharpType':
-                case 'action':
-                case 'func':
+                    return isCollection ? "AddJsonParts" : "AddJsonPart"
+                case "int":
+                case "long":
+                case "uint":
+                case "ulong":
+                case "bool":
+                case "float":
+                case "double":
+                case "dateOnly":
+                case "dateTime":
+                case "stringEnum":
+                case "string":
+                case "uuid":
+                    return isCollection ? "AddStringParts" : "AddStringPart"
+                case "object":
+                case "listType":
+                case "list":
+                case "set":
+                case "map":
+                case "array":
+                case "idictionary":
+                case "reference":
+                case "coreReference":
+                case "keyValuePair":
+                    return isCollection ? "AddJsonParts" : "AddJsonPart"
+                case "optional":
+                case "csharpType":
+                case "action":
+                case "func":
                     throw new Error(`Internal error; cannot add ${csharpType.internalType.type} to multipart form`)
                 default:
                     assertNever(csharpType.internalType)
@@ -316,7 +316,7 @@ export class RawClient {
     public createHttpRequest({ clientReference, request }: RawClient.CreateHttpRequestArgs): csharp.MethodInvocation {
         return csharp.invokeMethod({
             on: csharp.codeblock(clientReference),
-            method: 'CreateHttpRequest',
+            method: "CreateHttpRequest",
             arguments_: [request]
         })
     }
@@ -330,7 +330,7 @@ export class RawClient {
     }: RawClient.SendRequestArgsWithRequestWrapper): csharp.MethodInvocation {
         return csharp.invokeMethod({
             on: csharp.codeblock(clientReference),
-            method: 'SendRequestAsync',
+            method: "SendRequestAsync",
             arguments_: [request, csharp.codeblock(this.context.getCancellationTokenParameterName())],
             async: true
         })
@@ -347,7 +347,7 @@ export class RawClient {
     }: RawClient.SendRequestWithHttpRequestArgs): csharp.MethodInvocation {
         return csharp.invokeMethod({
             on: csharp.codeblock(clientReference),
-            method: 'SendRequestAsync',
+            method: "SendRequestAsync",
             arguments_: [request, options, csharp.codeblock(this.context.getCancellationTokenParameterName())],
             async: true
         })
@@ -356,31 +356,31 @@ export class RawClient {
     private getCsharpHttpMethod(irMethod: HttpMethod): csharp.CodeBlock {
         let method: string
         switch (irMethod) {
-            case 'POST':
-                method = 'Post'
+            case "POST":
+                method = "Post"
                 break
-            case 'DELETE':
-                method = 'Delete'
+            case "DELETE":
+                method = "Delete"
                 break
-            case 'PATCH':
+            case "PATCH":
                 return csharp.codeblock((writer) => {
-                    writer.writeNode(csharp.coreClassReference({ name: 'HttpMethodExtensions' }))
-                    writer.write('.Patch')
+                    writer.writeNode(csharp.coreClassReference({ name: "HttpMethodExtensions" }))
+                    writer.write(".Patch")
                 })
-            case 'GET':
-                method = 'Get'
+            case "GET":
+                method = "Get"
                 break
-            case 'PUT':
-                method = 'Put'
+            case "PUT":
+                method = "Put"
                 break
-            case 'HEAD':
-                method = 'Head'
+            case "HEAD":
+                method = "Head"
                 break
             default:
                 assertNever(irMethod)
         }
         return csharp.codeblock((writer) => {
-            writer.writeNode(csharp.classReference({ name: 'HttpMethod', namespace: 'System.Net.Http' }))
+            writer.writeNode(csharp.classReference({ name: "HttpMethod", namespace: "System.Net.Http" }))
             writer.write(`.${method}`)
         })
     }
@@ -420,14 +420,14 @@ export class RawClient {
         }
         writer.write('"')
         if (formatParams.length > 0) {
-            writer.write(', ')
+            writer.write(", ")
             for (let i = 0; i < formatParams.length; i++) {
                 writer.writeNode(formatParams[i] as csharp.AstNode)
                 if (i < formatParams.length - 1) {
-                    writer.write(', ')
+                    writer.write(", ")
                 }
             }
         }
-        writer.write(')')
+        writer.write(")")
     }
 }

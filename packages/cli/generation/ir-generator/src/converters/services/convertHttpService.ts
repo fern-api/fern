@@ -1,8 +1,8 @@
-import urlJoin from 'url-join'
+import urlJoin from "url-join"
 
-import { FernWorkspace } from '@fern-api/api-workspace-commons'
-import { assertNever } from '@fern-api/core-utils'
-import { RawSchemas, isVariablePathParameter } from '@fern-api/fern-definition-schema'
+import { FernWorkspace } from "@fern-api/api-workspace-commons"
+import { assertNever } from "@fern-api/core-utils"
+import { RawSchemas, isVariablePathParameter } from "@fern-api/fern-definition-schema"
 import {
     Encoding,
     HttpEndpoint,
@@ -14,27 +14,27 @@ import {
     ResponseErrors,
     Transport,
     TypeReference
-} from '@fern-api/ir-sdk'
-import { IdGenerator, constructHttpPath } from '@fern-api/ir-utils'
-import { SourceResolver } from '@fern-api/source-resolver'
+} from "@fern-api/ir-sdk"
+import { IdGenerator, constructHttpPath } from "@fern-api/ir-utils"
+import { SourceResolver } from "@fern-api/source-resolver"
 
-import { FernFileContext } from '../../FernFileContext'
-import { ErrorResolver } from '../../resolvers/ErrorResolver'
-import { ExampleResolver } from '../../resolvers/ExampleResolver'
-import { PropertyResolver } from '../../resolvers/PropertyResolver'
-import { TypeResolver } from '../../resolvers/TypeResolver'
-import { VariableResolver } from '../../resolvers/VariableResolver'
-import { getEndpointPathParameters } from '../../utils/getEndpointPathParameters'
-import { convertAvailability, convertDeclaration } from '../convertDeclaration'
-import { convertCodeSample } from './convertCodeSamples'
-import { convertExampleEndpointCall } from './convertExampleEndpointCall'
-import { convertHttpRequestBody } from './convertHttpRequestBody'
-import { convertHttpResponse } from './convertHttpResponse'
-import { convertHttpSdkRequest } from './convertHttpSdkRequest'
-import { convertPagination } from './convertPagination'
-import { convertQueryParameter } from './convertQueryParameter'
-import { convertResponseErrors } from './convertResponseErrors'
-import { getTransportForEndpoint, getTransportForService } from './convertTransport'
+import { FernFileContext } from "../../FernFileContext"
+import { ErrorResolver } from "../../resolvers/ErrorResolver"
+import { ExampleResolver } from "../../resolvers/ExampleResolver"
+import { PropertyResolver } from "../../resolvers/PropertyResolver"
+import { TypeResolver } from "../../resolvers/TypeResolver"
+import { VariableResolver } from "../../resolvers/VariableResolver"
+import { getEndpointPathParameters } from "../../utils/getEndpointPathParameters"
+import { convertAvailability, convertDeclaration } from "../convertDeclaration"
+import { convertCodeSample } from "./convertCodeSamples"
+import { convertExampleEndpointCall } from "./convertExampleEndpointCall"
+import { convertHttpRequestBody } from "./convertHttpRequestBody"
+import { convertHttpResponse } from "./convertHttpResponse"
+import { convertHttpSdkRequest } from "./convertHttpSdkRequest"
+import { convertPagination } from "./convertPagination"
+import { convertQueryParameter } from "./convertQueryParameter"
+import { convertResponseErrors } from "./convertResponseErrors"
+import { getTransportForEndpoint, getTransportForService } from "./convertTransport"
 
 export function convertHttpService({
     rootDefaultUrl,
@@ -64,7 +64,7 @@ export function convertHttpService({
     workspace: FernWorkspace
 }): HttpService {
     const servicePathParameters = convertPathParameters({
-        pathParameters: serviceDefinition['path-parameters'],
+        pathParameters: serviceDefinition["path-parameters"],
         location: PathParameterLocation.Service,
         file,
         variableResolver
@@ -80,8 +80,8 @@ export function convertHttpService({
     const service: HttpService = {
         availability: convertAvailability(serviceDefinition.availability),
         name: serviceName,
-        displayName: serviceDefinition['display-name'] ?? undefined,
-        basePath: constructHttpPath(serviceDefinition['base-path']),
+        displayName: serviceDefinition["display-name"] ?? undefined,
+        basePath: constructHttpPath(serviceDefinition["base-path"]),
         headers:
             serviceDefinition.headers != null
                 ? Object.entries(serviceDefinition.headers).map(([headerKey, header]) =>
@@ -100,31 +100,31 @@ export function convertHttpService({
             })
             const httpEndpoint: HttpEndpoint = {
                 ...convertDeclaration(endpoint),
-                id: '',
+                id: "",
                 name: file.casingsGenerator.generateName(endpointKey),
-                displayName: endpoint['display-name'],
+                displayName: endpoint["display-name"],
                 auth: endpoint.auth ?? serviceDefinition.auth,
                 idempotent: endpoint.idempotent ?? serviceDefinition.idempotent ?? false,
                 baseUrl: endpoint.url ?? serviceDefinition.url ?? rootDefaultUrl,
                 v2BaseUrls: undefined,
                 method: endpoint.method != null ? convertHttpMethod(endpoint.method) : HttpMethod.Post,
-                basePath: endpoint['base-path'] != null ? constructHttpPath(endpoint['base-path']) : undefined,
+                basePath: endpoint["base-path"] != null ? constructHttpPath(endpoint["base-path"]) : undefined,
                 path: constructHttpPath(endpoint.path),
                 fullPath: constructHttpPath(
-                    endpoint['base-path'] != null
-                        ? urlJoin(endpoint['base-path'], endpoint.path)
-                        : file.rootApiFile['base-path'] != null
-                          ? urlJoin(file.rootApiFile['base-path'], serviceDefinition['base-path'], endpoint.path)
-                          : urlJoin(serviceDefinition['base-path'], endpoint.path)
+                    endpoint["base-path"] != null
+                        ? urlJoin(endpoint["base-path"], endpoint.path)
+                        : file.rootApiFile["base-path"] != null
+                          ? urlJoin(file.rootApiFile["base-path"], serviceDefinition["base-path"], endpoint.path)
+                          : urlJoin(serviceDefinition["base-path"], endpoint.path)
                 ),
                 pathParameters: endpointPathParameters,
                 allPathParameters:
-                    endpoint['base-path'] != null
+                    endpoint["base-path"] != null
                         ? endpointPathParameters
                         : [...rootPathParameters, ...servicePathParameters, ...endpointPathParameters],
                 queryParameters:
-                    typeof endpoint.request !== 'string' && endpoint.request?.['query-parameters'] != null
-                        ? Object.entries(endpoint.request['query-parameters']).map(
+                    typeof endpoint.request !== "string" && endpoint.request?.["query-parameters"] != null
+                        ? Object.entries(endpoint.request["query-parameters"]).map(
                               ([queryParameterKey, queryParameter]) => {
                                   return convertQueryParameter({
                                       file,
@@ -135,7 +135,7 @@ export function convertHttpService({
                           )
                         : [],
                 headers:
-                    typeof endpoint.request !== 'string' && endpoint.request?.headers != null
+                    typeof endpoint.request !== "string" && endpoint.request?.headers != null
                         ? Object.entries(endpoint.request.headers).map(([headerKey, header]) =>
                               convertHttpHeader({ headerKey, header, file })
                           )
@@ -167,7 +167,7 @@ export function convertHttpService({
                                       file,
                                       workspace
                                   }),
-                                  codeSamples: example['code-samples']?.map((codeSample) =>
+                                  codeSamples: example["code-samples"]?.map((codeSample) =>
                                       convertCodeSample({ codeSample, file })
                                   )
                               }
@@ -242,7 +242,7 @@ function convertPathParameter({
         valueType: getPathParameterType({ parameter, variableResolver, file }),
         location,
         variable: isVariablePathParameter(parameter)
-            ? variableResolver.getVariableIdOrThrow(typeof parameter === 'string' ? parameter : parameter.variable)
+            ? variableResolver.getVariableIdOrThrow(typeof parameter === "string" ? parameter : parameter.variable)
             : undefined,
         v2Examples: {
             userSpecifiedExamples: {},
@@ -283,7 +283,7 @@ export function resolvePathParameterOrThrow({
         file
     })
     if (resolved == null) {
-        throw new Error('Cannot resolve path parameter')
+        throw new Error("Cannot resolve path parameter")
     }
     return resolved
 }
@@ -298,7 +298,7 @@ export function resolvePathParameter({
     file: FernFileContext
 }): { rawType: string; file: FernFileContext } | undefined {
     if (isVariablePathParameter(parameter)) {
-        const variable = typeof parameter === 'string' ? parameter : parameter.variable
+        const variable = typeof parameter === "string" ? parameter : parameter.variable
 
         const resolvedVariable = variableResolver.getDeclaration(variable, file)
         if (resolvedVariable == null) {
@@ -306,7 +306,7 @@ export function resolvePathParameter({
         }
 
         const rawType =
-            typeof resolvedVariable.declaration === 'string'
+            typeof resolvedVariable.declaration === "string"
                 ? resolvedVariable.declaration
                 : resolvedVariable.declaration.type
 
@@ -317,24 +317,24 @@ export function resolvePathParameter({
     } else {
         return {
             file,
-            rawType: typeof parameter === 'string' ? parameter : parameter.type
+            rawType: typeof parameter === "string" ? parameter : parameter.type
         }
     }
 }
 
-function convertHttpMethod(method: Exclude<RawSchemas.HttpEndpointSchema['method'], null | undefined>): HttpMethod {
+function convertHttpMethod(method: Exclude<RawSchemas.HttpEndpointSchema["method"], null | undefined>): HttpMethod {
     switch (method) {
-        case 'GET':
+        case "GET":
             return HttpMethod.Get
-        case 'POST':
+        case "POST":
             return HttpMethod.Post
-        case 'PUT':
+        case "PUT":
             return HttpMethod.Put
-        case 'PATCH':
+        case "PATCH":
             return HttpMethod.Patch
-        case 'DELETE':
+        case "DELETE":
             return HttpMethod.Delete
-        case 'HEAD':
+        case "HEAD":
             return HttpMethod.Head
         default:
             assertNever(method)
@@ -358,7 +358,7 @@ export function convertHttpHeader({
             name
         }),
         valueType: file.parseTypeReference(header),
-        env: typeof header === 'string' ? undefined : header.env,
+        env: typeof header === "string" ? undefined : header.env,
         v2Examples: {
             userSpecifiedExamples: {},
             autogeneratedExamples: {}
@@ -370,7 +370,7 @@ export function getHeaderName({ headerKey, header }: { headerKey: string; header
     name: string
     wasExplicitlySet: boolean
 } {
-    if (typeof header !== 'string') {
+    if (typeof header !== "string") {
         if (header.name != null) {
             return {
                 name: header.name,
@@ -386,12 +386,12 @@ export function getHeaderName({ headerKey, header }: { headerKey: string; header
 
 function convertTransportToEncoding(transport: Transport, service: RawSchemas.HttpServiceSchema): Encoding {
     switch (transport.type) {
-        case 'http':
+        case "http":
             return {
                 json: {},
                 proto: undefined
             }
-        case 'grpc':
+        case "grpc":
             return {
                 json: undefined,
                 proto: {}

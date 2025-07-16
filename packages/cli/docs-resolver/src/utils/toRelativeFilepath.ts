@@ -1,5 +1,5 @@
-import { AbsoluteFilePath, RelativeFilePath, relative } from '@fern-api/fs-utils'
-import { DocsWorkspace } from '@fern-api/workspace-loader'
+import { AbsoluteFilePath, RelativeFilePath, relative } from "@fern-api/fs-utils"
+import { DocsWorkspace } from "@fern-api/workspace-loader"
 
 export function toRelativeFilepath(docsWorkspace: DocsWorkspace, filepath: AbsoluteFilePath): RelativeFilePath
 export function toRelativeFilepath(

@@ -1,7 +1,7 @@
-import { mapValues } from 'lodash-es'
-import { OpenAPIV3 } from 'openapi-types'
+import { mapValues } from "lodash-es"
+import { OpenAPIV3 } from "openapi-types"
 
-import { assertNever, isNonNullish } from '@fern-api/core-utils'
+import { assertNever, isNonNullish } from "@fern-api/core-utils"
 import {
     Endpoint,
     EndpointExample,
@@ -20,36 +20,36 @@ import {
     Webhook,
     WebhookExampleCall,
     WebhookWithExample
-} from '@fern-api/openapi-ir'
-import { TaskContext } from '@fern-api/task-context'
+} from "@fern-api/openapi-ir"
+import { TaskContext } from "@fern-api/task-context"
 
-import { getExtension } from '../../getExtension'
-import { ParseOpenAPIOptions } from '../../options'
-import { convertSchema } from '../../schema/convertSchemas'
-import { ExampleTypeFactory } from '../../schema/examples/ExampleTypeFactory'
-import { convertToFullExample } from '../../schema/examples/convertToFullExample'
-import { convertSchemaWithExampleToSchema } from '../../schema/utils/convertSchemaWithExampleToSchema'
-import { getGeneratedTypeName } from '../../schema/utils/getSchemaName'
-import { isReferenceObject } from '../../schema/utils/isReferenceObject'
-import { getSchemas } from '../../utils/getSchemas'
-import { AbstractOpenAPIV3ParserContext } from './AbstractOpenAPIV3ParserContext'
-import { OpenAPIV3ParserContext } from './OpenAPIV3ParserContext'
-import { ExampleEndpointFactory } from './converters/ExampleEndpointFactory'
-import { convertPathItem, convertPathItemToWebhooks } from './converters/convertPathItem'
-import { convertSecurityScheme } from './converters/convertSecurityScheme'
-import { convertServer } from './converters/convertServer'
-import { ERROR_NAMES } from './converters/convertToHttpError'
-import { ConvertedOperation } from './converters/operation/convertOperation'
-import { FernOpenAPIExtension } from './extensions/fernExtensions'
-import { getFernBasePath } from './extensions/getFernBasePath'
-import { getFernGroups } from './extensions/getFernGroups'
-import { getFernVersion } from './extensions/getFernVersion'
-import { getGlobalHeaders } from './extensions/getGlobalHeaders'
-import { getIdempotencyHeaders } from './extensions/getIdempotencyHeaders'
-import { getVariableDefinitions } from './extensions/getVariableDefinitions'
-import { getWebhooksPathsObject } from './getWebhookPathsObject'
-import { hasIncompleteExample } from './hasIncompleteExample'
-import { runResolutions } from './runResolutions'
+import { getExtension } from "../../getExtension"
+import { ParseOpenAPIOptions } from "../../options"
+import { convertSchema } from "../../schema/convertSchemas"
+import { ExampleTypeFactory } from "../../schema/examples/ExampleTypeFactory"
+import { convertToFullExample } from "../../schema/examples/convertToFullExample"
+import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema"
+import { getGeneratedTypeName } from "../../schema/utils/getSchemaName"
+import { isReferenceObject } from "../../schema/utils/isReferenceObject"
+import { getSchemas } from "../../utils/getSchemas"
+import { AbstractOpenAPIV3ParserContext } from "./AbstractOpenAPIV3ParserContext"
+import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext"
+import { ExampleEndpointFactory } from "./converters/ExampleEndpointFactory"
+import { convertPathItem, convertPathItemToWebhooks } from "./converters/convertPathItem"
+import { convertSecurityScheme } from "./converters/convertSecurityScheme"
+import { convertServer } from "./converters/convertServer"
+import { ERROR_NAMES } from "./converters/convertToHttpError"
+import { ConvertedOperation } from "./converters/operation/convertOperation"
+import { FernOpenAPIExtension } from "./extensions/fernExtensions"
+import { getFernBasePath } from "./extensions/getFernBasePath"
+import { getFernGroups } from "./extensions/getFernGroups"
+import { getFernVersion } from "./extensions/getFernVersion"
+import { getGlobalHeaders } from "./extensions/getGlobalHeaders"
+import { getIdempotencyHeaders } from "./extensions/getIdempotencyHeaders"
+import { getVariableDefinitions } from "./extensions/getVariableDefinitions"
+import { getWebhooksPathsObject } from "./getWebhookPathsObject"
+import { hasIncompleteExample } from "./hasIncompleteExample"
+import { runResolutions } from "./runResolutions"
 
 export function generateIr({
     openApi,
@@ -77,9 +77,9 @@ export function generateIr({
     )
     const authHeaders = new Set(
         ...Object.entries(securitySchemes).map(([_, securityScheme]) => {
-            if (securityScheme.type === 'basic' || securityScheme.type === 'bearer') {
-                return 'Authorization'
-            } else if (securityScheme.type === 'header') {
+            if (securityScheme.type === "basic" || securityScheme.type === "bearer") {
+                return "Authorization"
+            } else if (securityScheme.type === "header") {
                 return securityScheme.headerName
             }
             return null
@@ -102,7 +102,7 @@ export function generateIr({
     })
 
     if (context.filter.hasEndpoints()) {
-        taskContext.logger.debug('Endpoint filter applied...')
+        taskContext.logger.debug("Endpoint filter applied...")
     }
 
     Object.entries(openApi.paths ?? {}).forEach(([path, pathItem]) => {
@@ -117,20 +117,20 @@ export function generateIr({
                 continue
             }
             switch (operation.type) {
-                case 'async':
+                case "async":
                     endpointsWithExample.push(operation.sync)
                     endpointsWithExample.push(operation.async)
                     break
-                case 'http':
+                case "http":
                     endpointsWithExample.push(operation.value)
                     break
-                case 'streaming':
+                case "streaming":
                     endpointsWithExample.push(operation.streaming)
                     if (operation.nonStreaming) {
                         endpointsWithExample.push(operation.nonStreaming)
                     }
                     break
-                case 'webhook':
+                case "webhook":
                     webhooksWithExample.push(operation.value)
                     break
                 default:
@@ -167,7 +167,7 @@ export function generateIr({
                             key,
                             convertSchema(
                                 // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-                                { ...schema, 'x-fern-type-name': `${key}Body` } as any as OpenAPIV3.SchemaObject,
+                                { ...schema, "x-fern-type-name": `${key}Body` } as any as OpenAPIV3.SchemaObject,
                                 false,
                                 context,
                                 [key],
@@ -259,14 +259,14 @@ export function generateIr({
         return {
             ...endpointWithExample,
             request:
-                request?.type === 'json'
+                request?.type === "json"
                     ? {
                           ...request,
                           schema: convertSchemaWithExampleToSchema(request.schema)
                       }
                     : request,
             response:
-                response?.type === 'json'
+                response?.type === "json"
                     ? {
                           ...response,
                           schema: convertSchemaWithExampleToSchema(response.schema)
@@ -362,7 +362,7 @@ export function generateIr({
             document: openApi
         }),
         basePath: getFernBasePath(openApi),
-        title: openApi.info.title ?? '',
+        title: openApi.info.title ?? "",
         description: openApi.info.description,
         groups: Object.fromEntries(
             Object.entries(groupInfo ?? {}).map(([key, value]) => {
@@ -401,7 +401,7 @@ function maybeRemoveDiscriminantsFromSchemas(
 ): Record<string, SchemaWithExample> {
     const result: Record<string, SchemaWithExample> = {}
     for (const [schemaId, schema] of Object.entries(schemas)) {
-        if (schema.type !== 'object') {
+        if (schema.type !== "object") {
             result[schemaId] = schema
             continue
         }
@@ -416,7 +416,7 @@ function maybeRemoveDiscriminantsFromSchemas(
 
         const schemaWithoutDiscriminants: SchemaWithExample.Object_ = {
             ...schema,
-            type: 'object',
+            type: "object",
             properties: schema.properties.filter((objectProperty) => {
                 return !discriminatedUnionReference.discriminants.has(objectProperty.key)
             }),
@@ -430,12 +430,12 @@ function maybeRemoveDiscriminantsFromSchemas(
         const parentSchemaIds = getAllParentSchemaIds({ schema, schemas })
         for (const parentSchemaId of [...new Set(parentSchemaIds)]) {
             const parentSchema = result[parentSchemaId] ?? schemas[parentSchemaId]
-            if (parentSchema == null || parentSchema.type !== 'object') {
+            if (parentSchema == null || parentSchema.type !== "object") {
                 continue
             }
             result[parentSchemaId] = {
                 ...parentSchema,
-                type: 'object',
+                type: "object",
                 properties: parentSchema.properties.filter((objectProperty) => {
                     return !discriminatedUnionReference.discriminants.has(objectProperty.key)
                 }),
@@ -454,7 +454,7 @@ function maybeAddBackDiscriminantsFromSchemas(
 ): Record<string, SchemaWithExample> {
     const result: Record<string, SchemaWithExample> = {}
     for (const [schemaId, schema] of Object.entries(schemas)) {
-        if (schema.type !== 'object') {
+        if (schema.type !== "object") {
             result[schemaId] = schema
             continue
         }
@@ -496,7 +496,7 @@ function maybeAddBackDiscriminantsFromSchemas(
 
         const schemaWithoutDiscriminants: SchemaWithExample.Object_ = {
             ...schema,
-            type: 'object',
+            type: "object",
             properties: propertiesWithDiscriminants
         }
         result[schemaId] = schemaWithoutDiscriminants
@@ -515,7 +515,7 @@ function getAllParentSchemaIds({
     for (const allOfSchema of schema.allOf) {
         result.push(allOfSchema.schema)
         const allOfSchemaDefinition = schemas[allOfSchema.schema]
-        if (allOfSchemaDefinition != null && allOfSchemaDefinition.type === 'object') {
+        if (allOfSchemaDefinition != null && allOfSchemaDefinition.type === "object") {
             result.push(...getAllParentSchemaIds({ schema: allOfSchemaDefinition, schemas }))
         }
     }
@@ -525,16 +525,16 @@ function getAllParentSchemaIds({
 function getAudiences({ operation }: { operation: ConvertedOperation }): string[] {
     let endpointAudiences: string[] = []
     switch (operation.type) {
-        case 'async':
+        case "async":
             endpointAudiences = operation.async.audiences
             break
-        case 'http':
+        case "http":
             endpointAudiences = operation.value.audiences
             break
-        case 'streaming':
+        case "streaming":
             endpointAudiences = operation.streaming.audiences
             break
-        case 'webhook':
+        case "webhook":
             endpointAudiences = operation.value.audiences
             break
         default:

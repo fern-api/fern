@@ -1,11 +1,11 @@
-import decompress from 'decompress'
-import { cp, readFile, readdir, rm, rmdir } from 'fs/promises'
-import tmp from 'tmp-promise'
+import decompress from "decompress"
+import { cp, readFile, readdir, rm, rmdir } from "fs/promises"
+import tmp from "tmp-promise"
 
-import { FERNIGNORE_FILENAME } from '@fern-api/configuration'
-import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from '@fern-api/fs-utils'
-import { loggingExeca } from '@fern-api/logging-execa'
-import { TaskContext } from '@fern-api/task-context'
+import { FERNIGNORE_FILENAME } from "@fern-api/configuration"
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils"
+import { loggingExeca } from "@fern-api/logging-execa"
+import { TaskContext } from "@fern-api/task-context"
 
 export declare namespace LocalTaskHandler {
     export interface Init {
@@ -96,28 +96,28 @@ export class LocalTaskHandler {
         await cp(this.absolutePathToLocalOutput, tmpOutputResolutionDir, { recursive: true })
 
         // In tmp directory initialize a `.git` directory
-        await this.runGitCommand(['init'], tmpOutputResolutionDir)
-        await this.runGitCommand(['add', '.'], tmpOutputResolutionDir)
+        await this.runGitCommand(["init"], tmpOutputResolutionDir)
+        await this.runGitCommand(["add", "."], tmpOutputResolutionDir)
 
-        const response = await this.runGitCommand(['config', '--list'], tmpOutputResolutionDir)
-        if (!response.includes('user.name')) {
-            await this.runGitCommand(['config', 'user.name', 'fern-api'], tmpOutputResolutionDir)
-            await this.runGitCommand(['config', 'user.email', 'info@buildwithfern.com'], tmpOutputResolutionDir)
+        const response = await this.runGitCommand(["config", "--list"], tmpOutputResolutionDir)
+        if (!response.includes("user.name")) {
+            await this.runGitCommand(["config", "user.name", "fern-api"], tmpOutputResolutionDir)
+            await this.runGitCommand(["config", "user.email", "info@buildwithfern.com"], tmpOutputResolutionDir)
         }
-        await this.runGitCommand(['commit', '--allow-empty', '-m', '"init"'], tmpOutputResolutionDir)
+        await this.runGitCommand(["commit", "--allow-empty", "-m", '"init"'], tmpOutputResolutionDir)
 
         // Stage deletions `git rm -rf .`
-        await this.runGitCommand(['rm', '-rf', '.'], tmpOutputResolutionDir)
+        await this.runGitCommand(["rm", "-rf", "."], tmpOutputResolutionDir)
 
         // Copy all files from generated temp dir
         await this.copyGeneratedFilesToDirectory(tmpOutputResolutionDir)
 
         // Undo changes to fernignore paths
-        await this.runGitCommand(['reset', '--', ...fernIgnorePaths], tmpOutputResolutionDir)
-        await this.runGitCommand(['restore', '.'], tmpOutputResolutionDir)
+        await this.runGitCommand(["reset", "--", ...fernIgnorePaths], tmpOutputResolutionDir)
+        await this.runGitCommand(["restore", "."], tmpOutputResolutionDir)
 
         // remove .git dir before copying files over
-        await rmdir(join(tmpOutputResolutionDir, RelativeFilePath.of('.git')), { recursive: true })
+        await rmdir(join(tmpOutputResolutionDir, RelativeFilePath.of(".git")), { recursive: true })
 
         // Delete local output directory and copy all files from the generated directory
         await rmdir(this.absolutePathToLocalOutput, { recursive: true })
@@ -142,7 +142,7 @@ export class LocalTaskHandler {
             return
         }
         this.context.logger.debug(`Copying generated files to ${outputPath}`)
-        if (firstLocalOutputItem.endsWith('.zip')) {
+        if (firstLocalOutputItem.endsWith(".zip")) {
             await decompress(
                 join(this.absolutePathToTmpOutputDirectory, RelativeFilePath.of(firstLocalOutputItem)),
                 outputPath
@@ -171,7 +171,7 @@ export class LocalTaskHandler {
     }
 
     private async runGitCommand(options: string[], cwd: AbsoluteFilePath): Promise<string> {
-        const response = await loggingExeca(this.context.logger, 'git', options, {
+        const response = await loggingExeca(this.context.logger, "git", options, {
             cwd,
             doNotPipeOutput: true
         })
@@ -192,6 +192,6 @@ async function getFernIgnorePaths({
         ...fernIgnoreFileContents
             .trim()
             .split(NEW_LINE_REGEX)
-            .filter((line) => !line.startsWith('#') && line.length > 0)
+            .filter((line) => !line.startsWith("#") && line.length > 0)
     ]
 }

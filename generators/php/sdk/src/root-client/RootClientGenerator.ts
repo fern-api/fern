@@ -1,7 +1,7 @@
-import { assertNever } from '@fern-api/core-utils'
-import { RelativeFilePath, join } from '@fern-api/fs-utils'
-import { FileGenerator, PhpFile } from '@fern-api/php-base'
-import { php } from '@fern-api/php-codegen'
+import { assertNever } from "@fern-api/core-utils"
+import { RelativeFilePath, join } from "@fern-api/fs-utils"
+import { FileGenerator, PhpFile } from "@fern-api/php-base"
+import { php } from "@fern-api/php-codegen"
 
 import {
     AuthScheme,
@@ -11,10 +11,10 @@ import {
     PrimitiveTypeV1,
     Subpackage,
     TypeReference
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { SdkCustomConfigSchema } from '../SdkCustomConfig'
-import { SdkGeneratorContext } from '../SdkGeneratorContext'
+import { SdkCustomConfigSchema } from "../SdkCustomConfig"
+import { SdkGeneratorContext } from "../SdkGeneratorContext"
 
 interface ConstructorParameters {
     all: ConstructorParameter[]
@@ -51,15 +51,15 @@ const STRING_TYPE_REFERENCE = TypeReference.primitive({
 })
 
 const BEARER_HEADER_INFO: HeaderInfo = {
-    name: 'Authorization',
-    prefix: 'Bearer'
+    name: "Authorization",
+    prefix: "Bearer"
 }
 
-const GET_FROM_ENV_OR_THROW = 'getFromEnvOrThrow'
+const GET_FROM_ENV_OR_THROW = "getFromEnvOrThrow"
 
 export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     protected getFilepath(): RelativeFilePath {
-        return join(RelativeFilePath.of(this.context.getRootClientClassName() + '.php'))
+        return join(RelativeFilePath.of(this.context.getRootClientClassName() + ".php"))
     }
 
     public doGenerate(): PhpFile {
@@ -75,7 +75,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         class_.addField(
             php.field({
                 name: `$${this.context.getClientOptionsName()}`,
-                access: 'private',
+                access: "private",
                 type: this.context.getClientOptionsType()
             })
         )
@@ -145,7 +145,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             php.parameter({
                 name: this.context.getClientOptionsName(),
                 type: php.Type.optional(this.context.getClientOptionsType()),
-                initializer: php.codeblock('null')
+                initializer: php.codeblock("null")
             })
         )
 
@@ -204,7 +204,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             multiline: true
         })
         return {
-            access: 'public',
+            access: "public",
             parameters,
             body: php.codeblock((writer) => {
                 for (const param of constructorParameters.optional) {
@@ -224,11 +224,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     }
                 }
 
-                writer.write('$defaultHeaders = ')
+                writer.write("$defaultHeaders = ")
                 writer.writeNodeStatement(headers)
                 for (const param of constructorParameters.optional) {
                     if (param.header != null && param.environmentVariable == null) {
-                        writer.controlFlow('if', php.codeblock(`$${param.name} != null`))
+                        writer.controlFlow("if", php.codeblock(`$${param.name} != null`))
                         writer.write(`$defaultHeaders['${param.header.name}'] = `)
                         writer.writeNodeStatement(
                             this.getHeaderValue({ prefix: param.header.prefix, parameterName: param.name })
@@ -238,7 +238,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 }
                 for (const param of constructorParameters.literal) {
                     if (param.header != null) {
-                        writer.controlFlow('if', php.codeblock(`$${param.name} != null`))
+                        writer.controlFlow("if", php.codeblock(`$${param.name} != null`))
                         writer.write(`$defaultHeaders['${param.header.name}'] = `)
                         writer.writeNodeStatement(
                             this.getHeaderValue({ prefix: param.header.prefix, parameterName: param.name })
@@ -252,7 +252,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     php.codeblock((writer) => {
                         writer.write(`$this->${this.context.getClientOptionsName()} = `)
                         writer.writeNode(php.variable(this.context.getClientOptionsName()))
-                        writer.write(' ?? []')
+                        writer.write(" ?? []")
                     })
                 )
                 writer.write(
@@ -260,9 +260,9 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 )
                 writer.writeNodeStatement(
                     php.invokeMethod({
-                        method: 'array_merge',
+                        method: "array_merge",
                         arguments_: [
-                            php.codeblock('$defaultHeaders'),
+                            php.codeblock("$defaultHeaders"),
                             php.codeblock(
                                 `$this->${this.context.getClientOptionsName()}['${this.context.getHeadersOptionName()}'] ?? []`
                             )
@@ -272,12 +272,12 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 )
                 writer.writeLine()
 
-                writer.write('$this->client = ')
+                writer.write("$this->client = ")
                 writer.writeNodeStatement(
                     this.context.rawClient.instantiate({
                         arguments_: [
                             {
-                                name: 'options',
+                                name: "options",
                                 assignment: php.codeblock((writer) => {
                                     const clientOptions = `$this->${this.context.getClientOptionsName()}`
                                     writer.write(clientOptions)
@@ -309,24 +309,24 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
     private getFromEnvOrThrowMethod(): php.Method {
         return php.method({
-            access: 'private',
+            access: "private",
             name: GET_FROM_ENV_OR_THROW,
             return_: php.Type.string(),
             parameters: [
                 php.parameter({
-                    name: 'env',
+                    name: "env",
                     type: php.Type.string()
                 }),
                 php.parameter({
-                    name: 'message',
+                    name: "message",
                     type: php.Type.string()
                 })
             ],
             body: php.codeblock((writer) => {
-                writer.writeTextStatement('$value = getenv($env)')
-                writer.write('return $value ? (string) $value : throw new ')
+                writer.writeTextStatement("$value = getenv($env)")
+                writer.write("return $value ? (string) $value : throw new ")
                 writer.writeNode(this.context.getExceptionClassReference())
-                writer.writeTextStatement('($message)')
+                writer.writeTextStatement("($message)")
             })
         })
     }
@@ -375,7 +375,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
     private getParameterForAuthScheme(scheme: AuthScheme): ConstructorParameter[] {
         const isOptional = !this.context.ir.sdkConfig.isAuthMandatory
         switch (scheme.type) {
-            case 'bearer': {
+            case "bearer": {
                 const name = this.context.getParameterName(scheme.token)
                 return [
                     {
@@ -392,7 +392,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     }
                 ]
             }
-            case 'basic': {
+            case "basic": {
                 const username = this.context.getParameterName(scheme.username)
                 const password = this.context.getParameterName(scheme.password)
                 return [
@@ -420,7 +420,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     }
                 ]
             }
-            case 'header': {
+            case "header": {
                 const name = this.context.getParameterName(scheme.name.name)
                 return [
                     {
@@ -440,12 +440,12 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     }
                 ]
             }
-            case 'oauth': {
+            case "oauth": {
                 // Fallback to the default bearer token scheme if the user hasn't already configured it.
-                if (this.context.ir.auth.schemes.some((s) => s.type === 'bearer')) {
+                if (this.context.ir.auth.schemes.some((s) => s.type === "bearer")) {
                     return []
                 }
-                const name = 'token'
+                const name = "token"
                 return [
                     {
                         name,
@@ -501,9 +501,9 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
     private getLiteralRootClientParameterType({ literal }: { literal: Literal }): php.Type {
         switch (literal.type) {
-            case 'string':
+            case "string":
                 return php.Type.optional(php.Type.string())
-            case 'boolean':
+            case "boolean":
                 return php.Type.optional(php.Type.bool())
             default:
                 assertNever(literal)
@@ -525,7 +525,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
     private newRootClientFile(class_: php.Class): PhpFile {
         return new PhpFile({
             clazz: class_,
-            directory: RelativeFilePath.of(''),
+            directory: RelativeFilePath.of(""),
             rootNamespace: this.context.getRootNamespace(),
             customConfig: this.context.customConfig
         })

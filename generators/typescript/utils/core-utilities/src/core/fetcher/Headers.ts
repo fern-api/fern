@@ -1,6 +1,6 @@
 let Headers: typeof globalThis.Headers
 
-if (typeof globalThis.Headers !== 'undefined') {
+if (typeof globalThis.Headers !== "undefined") {
     Headers = globalThis.Headers
 } else {
     Headers = class Headers implements Headers {
@@ -14,18 +14,18 @@ if (typeof globalThis.Headers !== 'undefined') {
                     init.forEach((value, key) => this.append(key, value))
                 } else if (Array.isArray(init)) {
                     for (const [key, value] of init) {
-                        if (typeof key === 'string' && typeof value === 'string') {
+                        if (typeof key === "string" && typeof value === "string") {
                             this.append(key, value)
                         } else {
-                            throw new TypeError('Each header entry must be a [string, string] tuple')
+                            throw new TypeError("Each header entry must be a [string, string] tuple")
                         }
                     }
                 } else {
                     for (const [key, value] of Object.entries(init)) {
-                        if (typeof value === 'string') {
+                        if (typeof value === "string") {
                             this.append(key, value)
                         } else {
-                            throw new TypeError('Header values must be strings')
+                            throw new TypeError("Header values must be strings")
                         }
                     }
                 }
@@ -46,7 +46,7 @@ if (typeof globalThis.Headers !== 'undefined') {
         get(name: string): string | null {
             const key = name.toLowerCase()
             const values = this.headers.get(key)
-            return values ? values.join(', ') : null
+            return values ? values.join(", ") : null
         }
 
         has(name: string): boolean {
@@ -61,16 +61,16 @@ if (typeof globalThis.Headers !== 'undefined') {
 
         forEach(callbackfn: (value: string, key: string, parent: Headers) => void, thisArg?: unknown): void {
             const boundCallback = thisArg ? callbackfn.bind(thisArg) : callbackfn
-            this.headers.forEach((values, key) => boundCallback(values.join(', '), key, this))
+            this.headers.forEach((values, key) => boundCallback(values.join(", "), key, this))
         }
 
         getSetCookie(): string[] {
-            return this.headers.get('set-cookie') || []
+            return this.headers.get("set-cookie") || []
         }
 
         *entries(): HeadersIterator<[string, string]> {
             for (const [key, values] of this.headers.entries()) {
-                yield [key, values.join(', ')]
+                yield [key, values.join(", ")]
             }
         }
 
@@ -80,7 +80,7 @@ if (typeof globalThis.Headers !== 'undefined') {
 
         *values(): HeadersIterator<string> {
             for (const values of this.headers.values()) {
-                yield values.join(', ')
+                yield values.join(", ")
             }
         }
 

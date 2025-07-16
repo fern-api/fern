@@ -1,14 +1,14 @@
-import { php } from '@fern-api/php-codegen'
+import { php } from "@fern-api/php-codegen"
 
-import { HttpEndpoint, HttpService, SdkRequest, TypeReference } from '@fern-fern/ir-sdk/api'
+import { HttpEndpoint, HttpService, SdkRequest, TypeReference } from "@fern-fern/ir-sdk/api"
 
-import { SdkGeneratorContext } from '../../SdkGeneratorContext'
+import { SdkGeneratorContext } from "../../SdkGeneratorContext"
 import {
     EndpointRequest,
     HeaderParameterCodeBlock,
     QueryParameterCodeBlock,
     RequestBodyCodeBlock
-} from './EndpointRequest'
+} from "./EndpointRequest"
 
 export class ReferencedEndpointRequest extends EndpointRequest {
     private requestBodyShape: TypeReference

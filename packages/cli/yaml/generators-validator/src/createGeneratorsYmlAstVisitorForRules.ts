@@ -1,11 +1,11 @@
-import { generatorsYml } from '@fern-api/configuration-loader'
-import { NodePath } from '@fern-api/fern-definition-schema'
-import { RelativeFilePath } from '@fern-api/fs-utils'
+import { generatorsYml } from "@fern-api/configuration-loader"
+import { NodePath } from "@fern-api/fern-definition-schema"
+import { RelativeFilePath } from "@fern-api/fs-utils"
 
-import { RuleVisitors } from './Rule'
-import { ValidationViolation } from './ValidationViolation'
-import { GeneratorsYmlFileAstNodeTypes, GeneratorsYmlFileAstNodeVisitor } from './ast/GeneratorsYmlAstVisitor'
-import { GeneratorsYmlFileAstVisitor } from './ast/GeneratorsYmlAstVisitor'
+import { RuleVisitors } from "./Rule"
+import { ValidationViolation } from "./ValidationViolation"
+import { GeneratorsYmlFileAstNodeTypes, GeneratorsYmlFileAstNodeVisitor } from "./ast/GeneratorsYmlAstVisitor"
+import { GeneratorsYmlFileAstVisitor } from "./ast/GeneratorsYmlAstVisitor"
 
 export function createGeneratorsYmlAstVisitorForRules({
     relativeFilepath,
@@ -45,7 +45,7 @@ export function createGeneratorsYmlAstVisitorForRules({
     }
 
     return {
-        ...createAstNodeVisitor('file'),
-        ...createAstNodeVisitor('generatorInvocation')
+        ...createAstNodeVisitor("file"),
+        ...createAstNodeVisitor("generatorInvocation")
     }
 }

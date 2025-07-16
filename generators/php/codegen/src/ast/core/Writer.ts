@@ -1,8 +1,8 @@
-import { AbstractWriter } from '@fern-api/browser-compatible-base-generator'
+import { AbstractWriter } from "@fern-api/browser-compatible-base-generator"
 
-import { BasePhpCustomConfigSchema } from '../../custom-config/BasePhpCustomConfigSchema'
-import { ClassReference } from '../ClassReference'
-import { GLOBAL_NAMESPACE } from './Constant'
+import { BasePhpCustomConfigSchema } from "../../custom-config/BasePhpCustomConfigSchema"
+import { ClassReference } from "../ClassReference"
+import { GLOBAL_NAMESPACE } from "./Constant"
 
 /* A fully qualified type name _without_ the initial backslash */
 type FullyQualifiedName = string
@@ -14,8 +14,8 @@ interface ParsedFullyQualifiedName {
 
 function parseFullyQualifiedName(rawFullyQualifiedName: string): ParsedFullyQualifiedName {
     return {
-        namespace: rawFullyQualifiedName.substring(0, rawFullyQualifiedName.lastIndexOf('\\')),
-        name: rawFullyQualifiedName.substring(rawFullyQualifiedName.lastIndexOf('\\') + 1)
+        namespace: rawFullyQualifiedName.substring(0, rawFullyQualifiedName.lastIndexOf("\\")),
+        name: rawFullyQualifiedName.substring(rawFullyQualifiedName.lastIndexOf("\\") + 1)
     }
 }
 
@@ -87,20 +87,20 @@ ${imports}
 
 ${this.buffer}`
         }
-        return namespace + '\n\n' + this.buffer
+        return namespace + "\n\n" + this.buffer
     }
 
     private stringifyImports(): string {
         const referenceKeys = Object.keys(this.references)
         if (referenceKeys.length === 0) {
-            return ''
+            return ""
         }
         return (
             referenceKeys
                 // Filter out the current namespace.
                 .filter((reference) => parseFullyQualifiedName(reference).namespace !== this.namespace)
                 .map((ref) => `use ${ref};`)
-                .join('\n')
+                .join("\n")
         )
     }
 }

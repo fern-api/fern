@@ -1,6 +1,6 @@
-import { noop } from '@fern-api/core-utils'
+import { noop } from "@fern-api/core-utils"
 
-import { IrVersions } from '../../ir-versions'
+import { IrVersions } from "../../ir-versions"
 
 type StringifiedTypeId = string
 
@@ -35,7 +35,7 @@ export function getReferencedTypesForInlinedRequest({
     return [...referencedTypes].reduce<IrVersions.V2.types.DeclaredTypeName[]>((names, id) => {
         const declaration = typeNameToDeclaration[id]
         if (declaration == null) {
-            throw new Error('Cannot find declaration for ID: ' + id)
+            throw new Error("Cannot find declaration for ID: " + id)
         }
         return [...names, declaration.name]
     }, [])
@@ -61,7 +61,7 @@ function getReferencedTypesFromReference({
         unknown: noop,
         void: noop,
         _unknown: () => {
-            throw new Error('Unknown TypeReference: ' + reference._type)
+            throw new Error("Unknown TypeReference: " + reference._type)
         }
     })
 }
@@ -91,7 +91,7 @@ function getReferencedTypesFromContainer({
         },
         literal: noop,
         _unknown: () => {
-            throw new Error('Unknown ContainerType: ' + container._type)
+            throw new Error("Unknown ContainerType: " + container._type)
         }
     })
 }
@@ -109,7 +109,7 @@ function getReferencedTypesFromTypeName({
     referencedTypes.add(typeId)
     const declaration = typeNameToDeclaration[typeId]
     if (declaration == null) {
-        throw new Error('Cannot locate type: ' + typeId)
+        throw new Error("Cannot locate type: " + typeId)
     }
     for (const referencedType of declaration.referencedTypes) {
         referencedTypes.add(stringifyTypeName(referencedType))
@@ -120,5 +120,5 @@ function stringifyTypeName(typeName: IrVersions.V2.types.DeclaredTypeName): stri
     return [
         ...typeName.fernFilepathV2.map((part) => part.unsafeName.originalValue),
         typeName.nameV3.unsafeName.originalValue
-    ].join('.')
+    ].join(".")
 }

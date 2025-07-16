@@ -1,5 +1,5 @@
-import { IrVersions } from '../../ir-versions'
-import { convertDeclaredTypeName } from './convertDeclaredTypeName'
+import { IrVersions } from "../../ir-versions"
+import { convertDeclaredTypeName } from "./convertDeclaredTypeName"
 
 export function convertExampleTypeReference(
     example: IrVersions.V5.types.ExampleTypeReference
@@ -22,7 +22,7 @@ function convertExampleTypeReferenceShape(
             unknown: IrVersions.V4.types.ExampleTypeReferenceShape.unknown,
             named: (named) => IrVersions.V4.types.ExampleTypeReferenceShape.named(convertExampleNamedType(named)),
             _unknown: () => {
-                throw new Error('Unknown ExampleTypeReferenceShape: ' + example.type)
+                throw new Error("Unknown ExampleTypeReferenceShape: " + example.type)
             }
         }
     )
@@ -51,7 +51,7 @@ function convertExampleContainer(example: IrVersions.V5.types.ExampleContainer):
                 }))
             ),
         _unknown: () => {
-            throw new Error('Unknown ExampleContainer: ' + example.type)
+            throw new Error("Unknown ExampleContainer: " + example.type)
         }
     })
 }
@@ -92,7 +92,7 @@ export function convertExampleTypeShape(
                             noProperties: IrVersions.V4.types.ExampleSingleUnionTypeProperties.noProperties,
                             _unknown: () => {
                                 throw new Error(
-                                    'Unknown ExampleSingleUnionTypeProperties: ' + unionExample.properties.type
+                                    "Unknown ExampleSingleUnionTypeProperties: " + unionExample.properties.type
                                 )
                             }
                         }
@@ -103,7 +103,7 @@ export function convertExampleTypeShape(
                 wireValue: enumExample.wireValue
             }),
         _unknown: () => {
-            throw new Error('Unknown ExampleTypeShape: ' + example.type)
+            throw new Error("Unknown ExampleTypeShape: " + example.type)
         }
     })
 }

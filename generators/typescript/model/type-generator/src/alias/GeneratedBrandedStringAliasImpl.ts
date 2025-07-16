@@ -6,8 +6,8 @@ import {
     maybeAddDocsNode,
     maybeAddDocsStructure,
     writerToString
-} from '@fern-typescript/commons'
-import { BaseContext, BrandedGeneratedAliasType } from '@fern-typescript/contexts'
+} from "@fern-typescript/commons"
+import { BaseContext, BrandedGeneratedAliasType } from "@fern-typescript/contexts"
 import {
     FunctionDeclarationStructure,
     ModuleDeclarationStructure,
@@ -16,17 +16,17 @@ import {
     TypeAliasDeclarationStructure,
     WriterFunction,
     ts
-} from 'ts-morph'
+} from "ts-morph"
 
-import { ExampleTypeShape, TypeReference } from '@fern-fern/ir-sdk/api'
+import { ExampleTypeShape, TypeReference } from "@fern-fern/ir-sdk/api"
 
-import { AbstractGeneratedType } from '../AbstractGeneratedType'
+import { AbstractGeneratedType } from "../AbstractGeneratedType"
 
 export class GeneratedBrandedStringAliasImpl<Context extends BaseContext>
     extends AbstractGeneratedType<TypeReference, Context>
     implements BrandedGeneratedAliasType<Context>
 {
-    public readonly type = 'alias'
+    public readonly type = "alias"
     public readonly isBranded = true
 
     public generateStatements(
@@ -49,8 +49,8 @@ export class GeneratedBrandedStringAliasImpl<Context extends BaseContext>
     }
 
     public buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {
-        if (example.type !== 'alias') {
-            throw new Error('Example is not for an alias')
+        if (example.type !== "alias") {
+            throw new Error("Example is not for an alias")
         }
         return ts.factory.createCallExpression(this.getReferenceToCreator(context, opts), undefined, [
             context.type.getGeneratedExample(example.value).build(context, opts)
@@ -82,7 +82,7 @@ export class GeneratedBrandedStringAliasImpl<Context extends BaseContext>
     }
 
     private generateBuilderFunction(context: Context): FunctionDeclarationStructure {
-        const VALUE_PARAMETER_NAME = 'value'
+        const VALUE_PARAMETER_NAME = "value"
         const builderFunction: FunctionDeclarationStructure = {
             kind: StructureKind.Function,
             name: this.typeName,
@@ -112,6 +112,6 @@ export class GeneratedBrandedStringAliasImpl<Context extends BaseContext>
     }
 
     private getStringBrand(): string {
-        return [...this.fernFilepath.packagePath.map((part) => part.camelCase.unsafeName), this.typeName].join('_')
+        return [...this.fernFilepath.packagePath.map((part) => part.camelCase.unsafeName), this.typeName].join("_")
     }
 }

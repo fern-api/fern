@@ -1,18 +1,18 @@
-import { FernGeneratorExec } from '@fern-api/browser-compatible-base-generator'
-import { BaseRubyCustomConfigSchema } from '@fern-api/ruby-ast'
+import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator"
+import { BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast"
 
 const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
     dryRun: false,
-    irFilepath: '<placeholder>',
+    irFilepath: "<placeholder>",
     output: {
-        path: '<placeholder>',
+        path: "<placeholder>",
         mode: FernGeneratorExec.OutputMode.github({
-            version: 'v1.0.0',
-            repoUrl: 'https://github.com/acme/acme-ruby'
+            version: "v1.0.0",
+            repoUrl: "https://github.com/acme/acme-ruby"
         })
     },
-    organization: 'acme',
-    workspaceName: 'acme',
+    organization: "acme",
+    workspaceName: "acme",
     environment: FernGeneratorExec.GeneratorEnvironment.local(),
     whitelabel: false,
     writeUnitTests: false,

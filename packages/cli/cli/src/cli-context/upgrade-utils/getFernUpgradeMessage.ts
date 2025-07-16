@@ -1,11 +1,11 @@
-import boxen from 'boxen'
-import chalk from 'chalk'
+import boxen from "boxen"
+import chalk from "chalk"
 
-import { FernRegistryClient } from '@fern-fern/generators-sdk'
+import { FernRegistryClient } from "@fern-fern/generators-sdk"
 
-import { FernUpgradeInfo } from '../CliContext'
-import { CliEnvironment } from '../CliEnvironment'
-import { FernGeneratorUpgradeInfo } from './getGeneratorVersions'
+import { FernUpgradeInfo } from "../CliContext"
+import { CliEnvironment } from "../CliEnvironment"
+import { FernGeneratorUpgradeInfo } from "./getGeneratorVersions"
 
 function hasGeneratorUpgrade(generatorUpgradeInfo: FernGeneratorUpgradeInfo[]): boolean {
     return generatorUpgradeInfo.filter((gui) => gui.isUpgradeAvailable).length > 0
@@ -29,17 +29,17 @@ export async function getFernUpgradeMessage({
         return
     }
 
-    let message = `${chalk.underline('Upgrades available')}\n\n`
+    let message = `${chalk.underline("Upgrades available")}\n\n`
 
     if (upgradeInfo.cliUpgradeInfo?.isUpgradeAvailable) {
         message +=
-            'Fern ' +
+            "Fern " +
             chalk.dim(cliEnvironment.packageVersion) +
-            chalk.reset(' → ') +
+            chalk.reset(" → ") +
             chalk.green(upgradeInfo.cliUpgradeInfo.latestVersion) +
-            ' \n(Run ' +
+            " \n(Run " +
             chalk.cyan(`${cliEnvironment.cliName} upgrade`) +
-            ' to update)'
+            " to update)"
     }
 
     // To start we're truncating the list and recommending the user use a different command
@@ -55,20 +55,20 @@ export async function getFernUpgradeMessage({
 
     const generatorsNeedingUpgrades = upgradeInfo.generatorUpgradeInfo.filter((gui) => gui.isUpgradeAvailable)
     if (generatorsNeedingUpgrades.length > 0) {
-        message += `\nRun ${chalk.cyan('fern generator upgrade')} to upgrade your generators.`
+        message += `\nRun ${chalk.cyan("fern generator upgrade")} to upgrade your generators.`
     }
     if (generatorsNeedingUpgrades.length > 2) {
         message +=
-            `\nRun ${chalk.cyan('fern generator upgrade --list')}` +
-            ' to see the full list of generator upgrades available.'
+            `\nRun ${chalk.cyan("fern generator upgrade --list")}` +
+            " to see the full list of generator upgrades available."
     }
 
     return boxen(message, {
         padding: 1,
-        float: 'center',
-        textAlignment: 'center',
-        borderColor: 'yellow',
-        borderStyle: 'round'
+        float: "center",
+        textAlignment: "center",
+        borderColor: "yellow",
+        borderStyle: "round"
     })
 }
 
@@ -87,7 +87,7 @@ export async function getGeneratorUpgradeMessage({
         return
     }
 
-    let message = header ?? ''
+    let message = header ?? ""
 
     let generatorsNeedingUpgrades = generatorUpgradeInfo.filter((gui) => gui.isUpgradeAvailable)
     if (limit != null) {
@@ -102,29 +102,29 @@ export async function getGeneratorUpgradeMessage({
         // ex: "Python SDK 1.0.0 → 1.1.0 (API: myApi, Group: myGroup)"
         message +=
             `\n${await normalizeGeneratorName(generatorUpgrade.generatorName)} (${
-                generatorUpgrade.apiName != null ? 'API: ' + generatorUpgrade.apiName + ', ' : ''
+                generatorUpgrade.apiName != null ? "API: " + generatorUpgrade.apiName + ", " : ""
             }Group: ${generatorUpgrade.generatorGroup}) ` +
             chalk.dim(generatorUpgrade.currentVersion) +
-            chalk.reset(' → ') +
+            chalk.reset(" → ") +
             chalk.green(generatorUpgrade.latestVersion)
     }
 
-    message += '\n'
+    message += "\n"
 
     return includeBoxen
         ? boxen(message, {
               padding: 1,
-              float: 'center',
-              textAlignment: 'center',
-              borderColor: 'yellow',
-              borderStyle: 'round'
+              float: "center",
+              textAlignment: "center",
+              borderColor: "yellow",
+              borderStyle: "round"
           })
         : message
 }
 
 async function normalizeGeneratorName(generatorImage: string): Promise<string> {
     const client = new FernRegistryClient({
-        environment: process.env.DEFAULT_FDR_ORIGIN ?? 'https://registry.buildwithfern.com'
+        environment: process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com"
     })
     const generatorResponse = await client.generators.getGeneratorByImage({ dockerImage: generatorImage })
     if (!generatorResponse.ok || generatorResponse.body == null) {

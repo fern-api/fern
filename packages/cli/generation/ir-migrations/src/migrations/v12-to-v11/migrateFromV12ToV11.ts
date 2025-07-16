@@ -1,32 +1,32 @@
-import { mapValues } from 'lodash-es'
+import { mapValues } from "lodash-es"
 
-import { GeneratorName } from '@fern-api/configuration-loader'
+import { GeneratorName } from "@fern-api/configuration-loader"
 
-import { IrMigrationContext } from '../../IrMigrationContext'
-import { IrVersions } from '../../ir-versions'
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
+import { IrMigrationContext } from "../../IrMigrationContext"
+import { IrVersions } from "../../ir-versions"
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
 
 export const V12_TO_V11_MIGRATION: IrMigration<
     IrVersions.V12.ir.IntermediateRepresentation,
     IrVersions.V11.ir.IntermediateRepresentation
 > = {
-    laterVersion: 'v12',
-    earlierVersion: 'v11',
+    laterVersion: "v12",
+    earlierVersion: "v11",
     firstGeneratorVersionToConsumeNewIR: {
         [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_SDK]: '0.5.0-rc0-6-g80f89f98',
-        [GeneratorName.TYPESCRIPT_EXPRESS]: '0.5.0-rc0-6-g80f89f98',
+        [GeneratorName.TYPESCRIPT_SDK]: "0.5.0-rc0-6-g80f89f98",
+        [GeneratorName.TYPESCRIPT_EXPRESS]: "0.5.0-rc0-6-g80f89f98",
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_MODEL]: '0.1.0-1-gdb5c636',
-        [GeneratorName.JAVA_SDK]: '0.1.0-1-gdb5c636',
-        [GeneratorName.JAVA_SPRING]: '0.1.0-1-gdb5c636',
+        [GeneratorName.JAVA_MODEL]: "0.1.0-1-gdb5c636",
+        [GeneratorName.JAVA_SDK]: "0.1.0-1-gdb5c636",
+        [GeneratorName.JAVA_SPRING]: "0.1.0-1-gdb5c636",
         [GeneratorName.PYTHON_FASTAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_PYDANTIC]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.STOPLIGHT]: '0.0.23-8-g479c860',
-        [GeneratorName.OPENAPI]: '0.0.22-1-g1c86b58',
+        [GeneratorName.STOPLIGHT]: "0.0.23-8-g479c860",
+        [GeneratorName.OPENAPI]: "0.0.22-1-g1c86b58",
         [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_FIBER]: GeneratorWasNotCreatedYet,
@@ -62,7 +62,7 @@ export const V12_TO_V11_MIGRATION: IrMigration<
                                             container: IrVersions.V11.types.ResolvedTypeReference.container,
                                             primitive: IrVersions.V11.types.ResolvedTypeReference.primitive,
                                             named: (namedType) => {
-                                                if (namedType.shape === 'UNDISCRIMINATED_UNION') {
+                                                if (namedType.shape === "UNDISCRIMINATED_UNION") {
                                                     return taskContext.failAndThrow(
                                                         getUndiscriminatedUnionsErrorMessage({
                                                             taskContext,
@@ -78,7 +78,7 @@ export const V12_TO_V11_MIGRATION: IrMigration<
                                             },
                                             unknown: IrVersions.V11.types.ResolvedTypeReference.unknown,
                                             _unknown: () => {
-                                                throw new Error('Encountered unknown alias')
+                                                throw new Error("Encountered unknown alias")
                                             }
                                         }
                                     )
@@ -90,7 +90,7 @@ export const V12_TO_V11_MIGRATION: IrMigration<
                             )
                         },
                         _unknown: () => {
-                            throw new Error('Encountered unknown shape')
+                            throw new Error("Encountered unknown shape")
                         }
                     })
                 }
@@ -109,12 +109,12 @@ function getUndiscriminatedUnionsErrorMessage(context: IrMigrationContext): stri
     if (context.targetGenerator != null) {
         return (
             `Generator ${context.targetGenerator.name}@${context.targetGenerator.version}` +
-            ' does not support undiscriminated unions' +
+            " does not support undiscriminated unions" +
             ` If you'd like to use this feature, please upgrade ${context.targetGenerator.name}` +
-            ' to a compatible version.'
+            " to a compatible version."
         )
     } else {
-        return 'Cannot backwards-migrate IR because this IR contains an undiscriminated union.'
+        return "Cannot backwards-migrate IR because this IR contains an undiscriminated union."
     }
 }
 
@@ -136,10 +136,10 @@ function convertEndpoint(
         return taskContext.failAndThrow(
             targetGenerator != null
                 ? `Generator ${targetGenerator.name}@${targetGenerator.version}` +
-                      ' does not support streaming responses.' +
+                      " does not support streaming responses." +
                       ` If you'd like to use this feature, please upgrade ${targetGenerator.name}` +
-                      ' to a compatible version.'
-                : 'Cannot backwards-migrate IR because this IR contains a streaming response.'
+                      " to a compatible version."
+                : "Cannot backwards-migrate IR because this IR contains a streaming response."
         )
     }
 
@@ -156,14 +156,14 @@ function convertEndpoint(
                               return taskContext.failAndThrow(
                                   targetGenerator != null
                                       ? `Generator ${targetGenerator.name}@${targetGenerator.version}` +
-                                            ' does not support file upload requests.' +
+                                            " does not support file upload requests." +
                                             ` If you'd like to use this feature, please upgrade ${targetGenerator.name}` +
-                                            ' to a compatible version.'
-                                      : 'Cannot backwards-migrate IR because this IR contains a file upload request.'
+                                            " to a compatible version."
+                                      : "Cannot backwards-migrate IR because this IR contains a file upload request."
                               )
                           },
                           _unknown: () => {
-                              throw new Error('Unknown HttpRequestBody type: ' + endpoint.requestBody?.type)
+                              throw new Error("Unknown HttpRequestBody type: " + endpoint.requestBody?.type)
                           }
                       }
                   )

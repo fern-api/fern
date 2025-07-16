@@ -1,4 +1,4 @@
-import http from 'http'
+import http from "http"
 
 // this must align with the allowed ports in Auth0
 const PORTS = [3129]
@@ -21,7 +21,7 @@ export async function createServer(): Promise<ServerAndPort> {
 
 function listenOnPort(server: http.Server, port: number): Promise<void> {
     return new Promise((resolve, reject) => {
-        server.on('error', reject)
+        server.on("error", reject)
         server.listen(port, undefined, undefined, resolve)
     })
 }

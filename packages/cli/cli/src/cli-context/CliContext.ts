@@ -1,24 +1,24 @@
-import { confirm, input } from '@inquirer/prompts'
-import chalk from 'chalk'
-import { maxBy } from 'lodash-es'
+import { confirm, input } from "@inquirer/prompts"
+import chalk from "chalk"
+import { maxBy } from "lodash-es"
 
-import { LOG_LEVELS, LogLevel, createLogger } from '@fern-api/logger'
-import { getPosthogManager } from '@fern-api/posthog-manager'
-import { Project } from '@fern-api/project-loader'
-import { isVersionAhead } from '@fern-api/semver-utils'
-import { FernCliError, Finishable, PosthogEvent, Startable, TaskContext, TaskResult } from '@fern-api/task-context'
-import { Workspace } from '@fern-api/workspace-loader'
+import { LOG_LEVELS, LogLevel, createLogger } from "@fern-api/logger"
+import { getPosthogManager } from "@fern-api/posthog-manager"
+import { Project } from "@fern-api/project-loader"
+import { isVersionAhead } from "@fern-api/semver-utils"
+import { FernCliError, Finishable, PosthogEvent, Startable, TaskContext, TaskResult } from "@fern-api/task-context"
+import { Workspace } from "@fern-api/workspace-loader"
 
-import { CliEnvironment } from './CliEnvironment'
-import { Log } from './Log'
-import { TaskContextImpl } from './TaskContextImpl'
-import { TtyAwareLogger } from './TtyAwareLogger'
-import { logErrorMessage } from './logErrorMessage'
-import { getFernUpgradeMessage } from './upgrade-utils/getFernUpgradeMessage'
-import { FernGeneratorUpgradeInfo, getProjectGeneratorUpgrades } from './upgrade-utils/getGeneratorVersions'
-import { getLatestVersionOfCli } from './upgrade-utils/getLatestVersionOfCli'
+import { CliEnvironment } from "./CliEnvironment"
+import { Log } from "./Log"
+import { TaskContextImpl } from "./TaskContextImpl"
+import { TtyAwareLogger } from "./TtyAwareLogger"
+import { logErrorMessage } from "./logErrorMessage"
+import { getFernUpgradeMessage } from "./upgrade-utils/getFernUpgradeMessage"
+import { FernGeneratorUpgradeInfo, getProjectGeneratorUpgrades } from "./upgrade-utils/getGeneratorVersions"
+import { getLatestVersionOfCli } from "./upgrade-utils/getLatestVersionOfCli"
 
-const WORKSPACE_NAME_COLORS = ['#2E86AB', '#A23B72', '#F18F01', '#C73E1D', '#CCE2A3']
+const WORKSPACE_NAME_COLORS = ["#2E86AB", "#A23B72", "#F18F01", "#C73E1D", "#CCE2A3"]
 
 export interface FernCliUpgradeInfo {
     isUpgradeAvailable: boolean
@@ -60,21 +60,21 @@ export class CliContext {
 
     private getPackageName() {
         if (process.env.CLI_PACKAGE_NAME == null) {
-            this.logger.error('CLI_PACKAGE_NAME is not defined')
+            this.logger.error("CLI_PACKAGE_NAME is not defined")
         }
         return process.env.CLI_PACKAGE_NAME
     }
 
     private getPackageVersion() {
         if (process.env.CLI_VERSION == null) {
-            this.logger.error('CLI_VERSION is not defined')
+            this.logger.error("CLI_VERSION is not defined")
         }
         return process.env.CLI_VERSION
     }
 
     private getCliName() {
         if (process.env.CLI_NAME == null) {
-            this.logger.error('CLI_NAME is not defined')
+            this.logger.error("CLI_NAME is not defined")
         }
         return process.env.CLI_NAME
     }
@@ -115,7 +115,7 @@ export class CliContext {
         try {
             const upgradeInfo = await Promise.race<[Promise<FernUpgradeInfo>, Promise<never>]>([
                 this.isUpgradeAvailable(),
-                new Promise((_resolve, reject) => setTimeout(() => reject('Request timed out'), 300))
+                new Promise((_resolve, reject) => setTimeout(() => reject("Request timed out"), 300))
             ])
 
             let upgradeMessage = await getFernUpgradeMessage({
@@ -123,8 +123,8 @@ export class CliContext {
                 upgradeInfo
             })
             if (upgradeMessage != null) {
-                if (!upgradeMessage.endsWith('\n')) {
-                    upgradeMessage += '\n'
+                if (!upgradeMessage.endsWith("\n")) {
+                    upgradeMessage += "\n"
                 }
                 this.stderr.info(upgradeMessage)
             }
@@ -146,7 +146,7 @@ export class CliContext {
     private longestWorkspaceName: string | undefined
     public registerWorkspaces(workspaces: readonly Workspace[]): void {
         const longestWorkspaceName = maxBy(
-            workspaces.map((workspace) => (workspace.type === 'docs' ? 'docs' : (workspace.workspaceName ?? 'api'))),
+            workspaces.map((workspace) => (workspace.type === "docs" ? "docs" : (workspace.workspaceName ?? "api"))),
             (name) => name.length
         )
         if (longestWorkspaceName != null) {
@@ -180,7 +180,7 @@ export class CliContext {
         return context
     }
 
-    private readonly USE_NODE_18_OR_ABOVE_MESSAGE = 'The Fern CLI requires Node 18+ or above.'
+    private readonly USE_NODE_18_OR_ABOVE_MESSAGE = "The Fern CLI requires Node 18+ or above."
     private async runTaskWithInit<T>(
         init: TaskContextImpl.Init,
         run: (context: TaskContext) => T | Promise<T>
@@ -190,7 +190,7 @@ export class CliContext {
         try {
             result = await run(context)
         } catch (error) {
-            if ((error as Error).message.includes('globalThis')) {
+            if ((error as Error).message.includes("globalThis")) {
                 context.logger.error(this.USE_NODE_18_OR_ABOVE_MESSAGE)
                 context.failWithoutThrowing()
             } else {
@@ -214,7 +214,7 @@ export class CliContext {
 
     private constructTaskInitForWorkspace(workspace: Workspace): TaskContextImpl.Init {
         const prefixWithoutPadding = wrapWorkspaceNameForPrefix(
-            workspace.type === 'docs' ? 'docs' : (workspace.workspaceName ?? 'api')
+            workspace.type === "docs" ? "docs" : (workspace.workspaceName ?? "api")
         )
 
         // we want all the prefixes to be the same length, so use this.longestWorkspaceName
@@ -307,7 +307,7 @@ export class CliContext {
 
             this.logger.debug(
                 `Latest version: ${latestPackageVersion}. ` +
-                    (isUpgradeAvailable ? 'Upgrade available.' : 'No upgrade available.')
+                    (isUpgradeAvailable ? "Upgrade available." : "No upgrade available.")
             )
 
             const cliUpgrade: FernCliUpgradeInfo = {

@@ -1,17 +1,17 @@
-import { PackageId } from '@fern-typescript/commons'
-import { GeneratedEndpointErrorUnion, GeneratedSdkEndpointTypeSchemas, SdkContext } from '@fern-typescript/contexts'
-import { ErrorResolver } from '@fern-typescript/resolvers'
-import { ts } from 'ts-morph'
+import { PackageId } from "@fern-typescript/commons"
+import { GeneratedEndpointErrorUnion, GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts"
+import { ErrorResolver } from "@fern-typescript/resolvers"
+import { ts } from "ts-morph"
 
 import {
     ErrorDiscriminationByPropertyStrategy,
     ErrorDiscriminationStrategy,
     HttpEndpoint,
     HttpResponseBody
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { GeneratedEndpointResponse, PaginationResponseInfo } from './GeneratedEndpointResponse'
-import { getSuccessReturnType } from './getSuccessReturnType'
+import { GeneratedEndpointResponse, PaginationResponseInfo } from "./GeneratedEndpointResponse"
+import { getSuccessReturnType } from "./getSuccessReturnType"
 
 export declare namespace GeneratedNonThrowingEndpointResponse {
     export interface Init {
@@ -26,13 +26,13 @@ export declare namespace GeneratedNonThrowingEndpointResponse {
         errorDiscriminationStrategy: ErrorDiscriminationStrategy
         errorResolver: ErrorResolver
         includeSerdeLayer: boolean
-        streamType: 'wrapper' | 'web'
-        fileResponseType: 'stream' | 'binary-response'
+        streamType: "wrapper" | "web"
+        fileResponseType: "stream" | "binary-response"
     }
 }
 
 export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointResponse {
-    private static RESPONSE_VARIABLE_NAME = '_response'
+    private static RESPONSE_VARIABLE_NAME = "_response"
 
     private packageId: PackageId
     private endpoint: HttpEndpoint
@@ -45,8 +45,8 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
     private errorDiscriminationStrategy: ErrorDiscriminationStrategy
     private errorResolver: ErrorResolver
     private includeSerdeLayer: boolean
-    private streamType: 'wrapper' | 'web'
-    private readonly fileResponseType: 'stream' | 'binary-response'
+    private streamType: "wrapper" | "web"
+    private readonly fileResponseType: "stream" | "binary-response"
 
     constructor({
         packageId,
@@ -102,7 +102,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
         return ts.factory.createIfStatement(
             ts.factory.createPropertyAccessExpression(
                 ts.factory.createIdentifier(GeneratedNonThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
-                ts.factory.createIdentifier('ok')
+                ts.factory.createIdentifier("ok")
             ),
             ts.factory.createBlock(
                 [
@@ -110,17 +110,17 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
                         ts.factory.createObjectLiteralExpression(
                             [
                                 ts.factory.createPropertyAssignment(
-                                    ts.factory.createIdentifier('data'),
+                                    ts.factory.createIdentifier("data"),
                                     this.getReturnValueForOkResponse(context) ??
-                                        ts.factory.createIdentifier('undefined')
+                                        ts.factory.createIdentifier("undefined")
                                 ),
                                 ts.factory.createPropertyAssignment(
-                                    ts.factory.createIdentifier('rawResponse'),
+                                    ts.factory.createIdentifier("rawResponse"),
                                     ts.factory.createPropertyAccessExpression(
                                         ts.factory.createIdentifier(
                                             GeneratedNonThrowingEndpointResponse.RESPONSE_VARIABLE_NAME
                                         ),
-                                        ts.factory.createIdentifier('rawResponse')
+                                        ts.factory.createIdentifier("rawResponse")
                                     )
                                 )
                             ],
@@ -166,7 +166,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
         return context.coreUtilities.fetcher.APIResponse.SuccessfulResponse._build(
             this.endpoint.response?.body != null
                 ? this.getOkResponseBody(context)
-                : ts.factory.createIdentifier('undefined'),
+                : ts.factory.createIdentifier("undefined"),
             ts.factory.createPropertyAccessExpression(
                 ts.factory.createIdentifier(GeneratedNonThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
                 context.coreUtilities.fetcher.APIResponse.SuccessfulResponse.headers
@@ -211,7 +211,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
                 }),
             statusCode: () => this.getSwitchStatementForStatusCodeDiscriminatedErrors(context),
             _other: () => {
-                throw new Error('Unknown ErrorDiscriminationStrategy: ' + this.errorDiscriminationStrategy.type)
+                throw new Error("Unknown ErrorDiscriminationStrategy: " + this.errorDiscriminationStrategy.type)
             }
         })
     }
@@ -224,7 +224,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
         propertyErrorDiscriminationStrategy: ErrorDiscriminationByPropertyStrategy
     }) {
         if (this.endpoint.errors.length === 0) {
-            throw new Error('Cannot generate switch because there are no errors defined')
+            throw new Error("Cannot generate switch because there are no errors defined")
         }
 
         const generatedEndpointTypeSchemas = this.getGeneratedEndpointTypeSchemas(context)
@@ -259,7 +259,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
                                       ts.factory.createObjectLiteralExpression(
                                           [
                                               ts.factory.createPropertyAssignment(
-                                                  ts.factory.createIdentifier('data'),
+                                                  ts.factory.createIdentifier("data"),
                                                   context.coreUtilities.fetcher.APIResponse.FailedResponse._build(
                                                       generatedEndpointTypeSchemas.deserializeError(
                                                           ts.factory.createAsExpression(
@@ -272,7 +272,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
                                                   )
                                               ),
                                               ts.factory.createPropertyAssignment(
-                                                  ts.factory.createIdentifier('rawResponse'),
+                                                  ts.factory.createIdentifier("rawResponse"),
                                                   rawResponseAccessor
                                               )
                                           ],
@@ -309,7 +309,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
                             ts.factory.createObjectLiteralExpression(
                                 [
                                     ts.factory.createPropertyAssignment(
-                                        ts.factory.createIdentifier('data'),
+                                        ts.factory.createIdentifier("data"),
                                         context.coreUtilities.fetcher.APIResponse.FailedResponse._build(
                                             context.endpointErrorUnion
                                                 .getGeneratedEndpointErrorUnion(this.packageId, this.endpoint.name)
@@ -328,7 +328,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
                                         )
                                     ),
                                     ts.factory.createPropertyAssignment(
-                                        ts.factory.createIdentifier('rawResponse'),
+                                        ts.factory.createIdentifier("rawResponse"),
                                         rawResponseAccessor
                                     )
                                 ],
@@ -351,7 +351,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
             ts.factory.createObjectLiteralExpression(
                 [
                     ts.factory.createPropertyAssignment(
-                        ts.factory.createIdentifier('data'),
+                        ts.factory.createIdentifier("data"),
                         context.coreUtilities.fetcher.APIResponse.FailedResponse._build(
                             this.getGeneratedEndpointErrorUnion(context).getErrorUnion().buildUnknown({
                                 existingValue: referenceToError,
@@ -360,7 +360,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
                             rawResponseAccessor
                         )
                     ),
-                    ts.factory.createPropertyAssignment(ts.factory.createIdentifier('rawResponse'), rawResponseAccessor)
+                    ts.factory.createPropertyAssignment(ts.factory.createIdentifier("rawResponse"), rawResponseAccessor)
                 ],
                 false
             )

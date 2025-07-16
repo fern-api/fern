@@ -5,11 +5,11 @@ import {
     MethodObject,
     OpenrpcDocument,
     ReferenceObject
-} from '@open-rpc/meta-schema'
-import { OpenAPIV3_1 } from 'openapi-types'
+} from "@open-rpc/meta-schema"
+import { OpenAPIV3_1 } from "openapi-types"
 
-import { TypeReference } from '@fern-api/ir-sdk'
-import { AbstractConverterContext, DisplayNameOverrideSource } from '@fern-api/v2-importer-commons'
+import { TypeReference } from "@fern-api/ir-sdk"
+import { AbstractConverterContext, DisplayNameOverrideSource } from "@fern-api/v2-importer-commons"
 
 /**
  * Context class for converting OpenAPI 3.1 specifications
@@ -18,7 +18,7 @@ export class OpenRPCConverterContext3_1 extends AbstractConverterContext<Openrpc
     public isReferenceObject(
         parameter: ExampleObject | ExamplePairingObject | MethodObject | ContentDescriptorObject | ReferenceObject
     ): parameter is ReferenceObject {
-        return parameter != null && '$ref' in parameter
+        return parameter != null && "$ref" in parameter
     }
 
     public convertReferenceToTypeReference({
@@ -43,11 +43,11 @@ export class OpenRPCConverterContext3_1 extends AbstractConverterContext<Openrpc
 
         let displayName: string | undefined
 
-        if (displayNameOverrideSource === 'reference_identifier') {
+        if (displayNameOverrideSource === "reference_identifier") {
             displayName = displayNameOverride ?? resolvedReference.value.title
         } else if (
-            displayNameOverrideSource === 'discriminator_key' ||
-            displayNameOverrideSource === 'schema_identifier'
+            displayNameOverrideSource === "discriminator_key" ||
+            displayNameOverrideSource === "schema_identifier"
         ) {
             displayName = resolvedReference.value.title ?? displayNameOverride
         }

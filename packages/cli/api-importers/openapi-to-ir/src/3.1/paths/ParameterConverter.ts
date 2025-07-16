@@ -1,7 +1,7 @@
-import { OpenAPIV3_1 } from 'openapi-types'
+import { OpenAPIV3_1 } from "openapi-types"
 
-import { TypeId, TypeReference } from '@fern-api/ir-sdk'
-import { Converters } from '@fern-api/v2-importer-commons'
+import { TypeId, TypeReference } from "@fern-api/ir-sdk"
+import { Converters } from "@fern-api/v2-importer-commons"
 
 export class ParameterConverter extends Converters.AbstractConverters
     .AbstractParameterConverter<OpenAPIV3_1.ParameterObject> {
@@ -22,7 +22,7 @@ export class ParameterConverter extends Converters.AbstractConverters
 
             const schemaOrReferenceConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
                 context: this.context,
-                breadcrumbs: [...this.breadcrumbs, this.parameter.name, 'schema'],
+                breadcrumbs: [...this.breadcrumbs, this.parameter.name, "schema"],
                 schemaOrReference: this.parameter.schema,
                 wrapAsOptional: this.parameter.required == null || !this.parameter.required,
                 schemaIdOverride
@@ -35,7 +35,7 @@ export class ParameterConverter extends Converters.AbstractConverters
         }
 
         return this.convertToOutput({
-            schema: this.parameter.schema ?? { type: 'string' },
+            schema: this.parameter.schema ?? { type: "string" },
             typeReference,
             inlinedTypes
         })

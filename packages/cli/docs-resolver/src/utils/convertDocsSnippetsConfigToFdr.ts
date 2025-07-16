@@ -1,5 +1,5 @@
-import { docsYml } from '@fern-api/configuration-loader'
-import { APIV1Write } from '@fern-api/fdr-sdk'
+import { docsYml } from "@fern-api/configuration-loader"
+import { APIV1Write } from "@fern-api/fdr-sdk"
 
 export function convertDocsSnippetsConfigToFdr(
     snippetsConfiguration: docsYml.RawSchemas.SnippetsConfiguration | undefined
@@ -12,11 +12,11 @@ export function convertDocsSnippetsConfigToFdr(
             snippetsConfiguration.python != null
                 ? {
                       package:
-                          typeof snippetsConfiguration.python === 'string'
+                          typeof snippetsConfiguration.python === "string"
                               ? snippetsConfiguration.python
                               : snippetsConfiguration.python.package,
                       version:
-                          typeof snippetsConfiguration.python === 'string'
+                          typeof snippetsConfiguration.python === "string"
                               ? undefined
                               : snippetsConfiguration.python.version
                   }
@@ -25,11 +25,11 @@ export function convertDocsSnippetsConfigToFdr(
             snippetsConfiguration.typescript != null
                 ? {
                       package:
-                          typeof snippetsConfiguration.typescript === 'string'
+                          typeof snippetsConfiguration.typescript === "string"
                               ? snippetsConfiguration.typescript
                               : snippetsConfiguration.typescript.package,
                       version:
-                          typeof snippetsConfiguration.typescript === 'string'
+                          typeof snippetsConfiguration.typescript === "string"
                               ? undefined
                               : snippetsConfiguration.typescript.version
                   }
@@ -38,22 +38,22 @@ export function convertDocsSnippetsConfigToFdr(
             snippetsConfiguration.go != null
                 ? {
                       githubRepo:
-                          typeof snippetsConfiguration.go === 'string'
+                          typeof snippetsConfiguration.go === "string"
                               ? snippetsConfiguration.go
                               : snippetsConfiguration.go.package,
                       version:
-                          typeof snippetsConfiguration.go === 'string' ? undefined : snippetsConfiguration.go.version
+                          typeof snippetsConfiguration.go === "string" ? undefined : snippetsConfiguration.go.version
                   }
                 : undefined,
         javaSdk:
             snippetsConfiguration.java != null
                 ? {
                       coordinate:
-                          typeof snippetsConfiguration.java === 'string'
+                          typeof snippetsConfiguration.java === "string"
                               ? snippetsConfiguration.java
                               : snippetsConfiguration.java.package,
                       version:
-                          typeof snippetsConfiguration.java === 'string'
+                          typeof snippetsConfiguration.java === "string"
                               ? undefined
                               : snippetsConfiguration.java.version
                   }
@@ -62,11 +62,11 @@ export function convertDocsSnippetsConfigToFdr(
             snippetsConfiguration.ruby != null
                 ? {
                       gem:
-                          typeof snippetsConfiguration.ruby === 'string'
+                          typeof snippetsConfiguration.ruby === "string"
                               ? snippetsConfiguration.ruby
                               : snippetsConfiguration.ruby.package,
                       version:
-                          typeof snippetsConfiguration.ruby === 'string'
+                          typeof snippetsConfiguration.ruby === "string"
                               ? undefined
                               : snippetsConfiguration.ruby.version
                   }
@@ -75,11 +75,11 @@ export function convertDocsSnippetsConfigToFdr(
             snippetsConfiguration.csharp != null
                 ? {
                       package:
-                          typeof snippetsConfiguration.csharp === 'string'
+                          typeof snippetsConfiguration.csharp === "string"
                               ? snippetsConfiguration.csharp
                               : snippetsConfiguration.csharp.package,
                       version:
-                          typeof snippetsConfiguration.csharp === 'string'
+                          typeof snippetsConfiguration.csharp === "string"
                               ? undefined
                               : snippetsConfiguration.csharp.version
                   }

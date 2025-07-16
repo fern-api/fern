@@ -1,16 +1,16 @@
-import chalk from 'chalk'
-import { mkdir, writeFile } from 'fs/promises'
+import chalk from "chalk"
+import { mkdir, writeFile } from "fs/promises"
 
-import { constructCasingsGenerator } from '@fern-api/casings-generator'
-import { SourceResolverImpl } from '@fern-api/cli-source-resolver'
-import { FERN_PACKAGE_MARKER_FILENAME } from '@fern-api/configuration-loader'
-import { AbsoluteFilePath, RelativeFilePath, dirname, doesPathExist } from '@fern-api/fs-utils'
-import { convertToFernFilepath, generateIntermediateRepresentation } from '@fern-api/ir-generator'
-import { convertIRtoJsonSchema } from '@fern-api/ir-to-jsonschema'
-import { IdGenerator } from '@fern-api/ir-utils'
-import { Project } from '@fern-api/project-loader'
+import { constructCasingsGenerator } from "@fern-api/casings-generator"
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver"
+import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration-loader"
+import { AbsoluteFilePath, RelativeFilePath, dirname, doesPathExist } from "@fern-api/fs-utils"
+import { convertToFernFilepath, generateIntermediateRepresentation } from "@fern-api/ir-generator"
+import { convertIRtoJsonSchema } from "@fern-api/ir-to-jsonschema"
+import { IdGenerator } from "@fern-api/ir-utils"
+import { Project } from "@fern-api/project-loader"
 
-import { CliContext } from '../../cli-context/CliContext'
+import { CliContext } from "../../cli-context/CliContext"
 
 export async function generateJsonschemaForWorkspaces({
     typeLocator,
@@ -33,7 +33,7 @@ export async function generateJsonschemaForWorkspaces({
                     workspace: fernWorkspace,
                     context,
                     generationLanguage: undefined,
-                    audiences: { type: 'all' },
+                    audiences: { type: "all" },
                     keywords: undefined,
                     smartCasing: false,
                     exampleGeneration: { disabled: true },
@@ -44,7 +44,7 @@ export async function generateJsonschemaForWorkspaces({
                     sourceResolver: new SourceResolverImpl(context, fernWorkspace)
                 })
 
-                const splitTypeLocator = typeLocator.split('.')
+                const splitTypeLocator = typeLocator.split(".")
                 const casingsGenerator = constructCasingsGenerator({
                     generationLanguage: undefined,
                     keywords: undefined,
@@ -53,11 +53,11 @@ export async function generateJsonschemaForWorkspaces({
                 const typeName = splitTypeLocator[splitTypeLocator.length - 1] ?? typeLocator
                 const relativeFilepath =
                     splitTypeLocator.length > 1
-                        ? `${splitTypeLocator.slice(0, -1).join('/')}.yml`
+                        ? `${splitTypeLocator.slice(0, -1).join("/")}.yml`
                         : FERN_PACKAGE_MARKER_FILENAME
                 const typeId = IdGenerator.generateTypeId({
                     fernFilepath: convertToFernFilepath({
-                        relativeFilepath: RelativeFilePath.of(`${splitTypeLocator.slice(0, -1).join('/')}.yml`),
+                        relativeFilepath: RelativeFilePath.of(`${splitTypeLocator.slice(0, -1).join("/")}.yml`),
                         casingsGenerator
                     }),
                     name: casingsGenerator.generateName(typeName),

@@ -1,27 +1,27 @@
-import { camelCase, compact, isEqual } from 'lodash-es'
-import { OpenAPIV3_1 } from 'openapi-types'
+import { camelCase, compact, isEqual } from "lodash-es"
+import { OpenAPIV3_1 } from "openapi-types"
 
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { HttpHeader, HttpMethod, HttpRequestBody, PathParameter, QueryParameter } from '@fern-api/ir-sdk'
-import { AbstractConverter, Converters, Extensions } from '@fern-api/v2-importer-commons'
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { HttpHeader, HttpMethod, HttpRequestBody, PathParameter, QueryParameter } from "@fern-api/ir-sdk"
+import { AbstractConverter, Converters, Extensions } from "@fern-api/v2-importer-commons"
 
-import { FernStreamingExtension } from '../../../extensions/x-fern-streaming'
-import { GroupNameAndLocation } from '../../../types/GroupNameAndLocation'
-import { OpenAPIConverterContext3_1 } from '../../OpenAPIConverterContext3_1'
-import { ParameterConverter } from '../ParameterConverter'
-import { RequestBodyConverter } from '../RequestBodyConverter'
+import { FernStreamingExtension } from "../../../extensions/x-fern-streaming"
+import { GroupNameAndLocation } from "../../../types/GroupNameAndLocation"
+import { OpenAPIConverterContext3_1 } from "../../OpenAPIConverterContext3_1"
+import { ParameterConverter } from "../ParameterConverter"
+import { RequestBodyConverter } from "../RequestBodyConverter"
 
 const PATH_PARAM_REGEX = /{([^}]+)}/g
 
 const HEADERS_TO_SKIP = new Set([
-    'user-agent',
-    'content-length',
-    'content-type',
-    'x-forwarded-for',
-    'cookie',
-    'origin',
-    'content-disposition',
-    'x-ping-custom-domain'
+    "user-agent",
+    "content-length",
+    "content-type",
+    "x-forwarded-for",
+    "cookie",
+    "origin",
+    "content-disposition",
+    "x-ping-custom-domain"
 ])
 
 export declare namespace AbstractOperationConverter {
@@ -63,17 +63,17 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
 
     protected convertHttpMethod(): HttpMethod | undefined {
         switch (this.method) {
-            case 'get':
+            case "get":
                 return HttpMethod.Get
-            case 'post':
+            case "post":
                 return HttpMethod.Post
-            case 'put':
+            case "put":
                 return HttpMethod.Put
-            case 'delete':
+            case "delete":
                 return HttpMethod.Delete
-            case 'patch':
+            case "patch":
                 return HttpMethod.Patch
-            case 'head':
+            case "head":
                 return HttpMethod.Head
             default:
                 return undefined
@@ -113,18 +113,18 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
             if (convertedParameter != null) {
                 this.inlinedTypes = { ...this.inlinedTypes, ...convertedParameter.inlinedTypes }
                 switch (convertedParameter.type) {
-                    case 'path':
+                    case "path":
                         pathParameters.push(convertedParameter.parameter)
                         break
-                    case 'query':
+                    case "query":
                         queryParameters.push(convertedParameter.parameter)
                         break
-                    case 'header': {
+                    case "header": {
                         const headerName = convertedParameter.parameter.name.name.originalName
                         const headerWireValue = convertedParameter.parameter.name.wireValue
 
                         let duplicateHeader = false
-                        const authSchemes = this.context.authOverrides?.['auth-schemes']
+                        const authSchemes = this.context.authOverrides?.["auth-schemes"]
                         if (authSchemes != null) {
                             for (const authScheme of Object.values(authSchemes)) {
                                 if (
@@ -174,7 +174,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                 name: this.context.casingsGenerator.generateName(param),
                 valueType: AbstractConverter.STRING,
                 docs: undefined,
-                location: 'ENDPOINT',
+                location: "ENDPOINT",
                 variable: undefined,
                 v2Examples: {
                     userSpecifiedExamples: {},
@@ -262,7 +262,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         if (operationId == null) {
             return this.operation.summary != null
                 ? camelCase(this.operation.summary)
-                : camelCase(`${this.method}_${this.path.split('/').join('_')}`)
+                : camelCase(`${this.method}_${this.path.split("/").join("_")}`)
         }
         return operationId
     }
@@ -314,7 +314,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         const methodTokens = methodNameTokens.slice(tagTokens.length)
         return {
             group: [tag],
-            method: camelCase(methodTokens.join('_'))
+            method: camelCase(methodTokens.join("_"))
         }
     }
 
@@ -322,7 +322,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         const exampleConverter = new Converters.ExampleConverter({
             breadcrumbs: this.breadcrumbs,
             context: this.context,
-            schema: { type: 'string' },
+            schema: { type: "string" },
             example
         })
         const { validExample } = exampleConverter.convert()

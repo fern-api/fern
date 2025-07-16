@@ -1,7 +1,7 @@
-import { OpenAPIV3_1 } from 'openapi-types'
+import { OpenAPIV3_1 } from "openapi-types"
 
-import { FernFilepath, ResponseError, TypeReference } from '@fern-api/ir-sdk'
-import { Converters, ERROR_NAMES_BY_STATUS_CODE } from '@fern-api/v2-importer-commons'
+import { FernFilepath, ResponseError, TypeReference } from "@fern-api/ir-sdk"
+import { Converters, ERROR_NAMES_BY_STATUS_CODE } from "@fern-api/v2-importer-commons"
 
 export declare namespace ResponseErrorConverter {
     export interface Args extends Converters.AbstractConverters.AbstractMediaTypeObjectConverter.Args {
@@ -71,7 +71,7 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
             }
         }
 
-        const jsonContentTypes = Object.keys(this.responseError.content).filter((type) => type.includes('json'))
+        const jsonContentTypes = Object.keys(this.responseError.content).filter((type) => type.includes("json"))
         const errorName = ERROR_NAMES_BY_STATUS_CODE[this.statusCode]
         if (errorName == null) {
             this.context.logger.warn(`No error name found for status code ${this.statusCode}`)
@@ -98,7 +98,7 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
                     fernFilepath: convertedSchema.schema.typeDeclaration.name.fernFilepath,
                     convertedSchema
                 })
-            } else if (convertedSchema.type.type === 'named') {
+            } else if (convertedSchema.type.type === "named") {
                 return this.constructErrorConverterOutput({
                     errorName,
                     errorId,

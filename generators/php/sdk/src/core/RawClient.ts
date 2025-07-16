@@ -1,9 +1,9 @@
-import { Arguments, NamedArgument } from '@fern-api/base-generator'
-import { php } from '@fern-api/php-codegen'
+import { Arguments, NamedArgument } from "@fern-api/base-generator"
+import { php } from "@fern-api/php-codegen"
 
-import { HttpEndpoint } from '@fern-fern/ir-sdk/api'
+import { HttpEndpoint } from "@fern-fern/ir-sdk/api"
 
-import { SdkGeneratorContext } from '../SdkGeneratorContext'
+import { SdkGeneratorContext } from "../SdkGeneratorContext"
 
 export declare namespace RawClient {
     export interface SendRequestArgs {
@@ -32,9 +32,9 @@ export declare namespace RawClient {
  * Utility class that helps make calls to the RawClient.
  */
 export class RawClient {
-    public static CLASS_NAME = 'RawClient'
-    public static FIELD_NAME = 'client'
-    public static SEND_REQUEST_METHOD_NAME = 'sendRequest'
+    public static CLASS_NAME = "RawClient"
+    public static FIELD_NAME = "client"
+    public static SEND_REQUEST_METHOD_NAME = "sendRequest"
 
     private context: SdkGeneratorContext
 
@@ -55,7 +55,7 @@ export class RawClient {
 
     public getField(): php.Field {
         return php.field({
-            access: 'private',
+            access: "private",
             name: `$${this.getFieldName()}`,
             type: php.Type.reference(this.context.rawClient.getClassReference())
         })
@@ -72,11 +72,11 @@ export class RawClient {
     public sendRequest(args: RawClient.SendRequestArgs): php.AstNode {
         const arguments_: NamedArgument[] = [
             {
-                name: 'baseUrl',
+                name: "baseUrl",
                 assignment: args.baseUrl
             },
             {
-                name: 'path',
+                name: "path",
                 assignment: php.codeblock(
                     `"${this.getPathString({
                         endpoint: args.endpoint,
@@ -85,25 +85,25 @@ export class RawClient {
                 )
             },
             {
-                name: 'method',
+                name: "method",
                 assignment: this.context.getHttpMethod(args.endpoint.method)
             }
         ]
         if (args.headerBagReference != null) {
             arguments_.push({
-                name: 'headers',
+                name: "headers",
                 assignment: php.codeblock(args.headerBagReference)
             })
         }
         if (args.queryBagReference != null) {
             arguments_.push({
-                name: 'query',
+                name: "query",
                 assignment: php.codeblock(args.queryBagReference)
             })
         }
         if (args.bodyReference != null) {
             arguments_.push({
-                name: 'body',
+                name: "body",
                 assignment: args.bodyReference
             })
         }
@@ -118,7 +118,7 @@ export class RawClient {
                             arguments_,
                             multiline: true
                         }),
-                        args.optionsArgument ?? php.codeblock('[]')
+                        args.optionsArgument ?? php.codeblock("[]")
                     ],
                     multiline: true
                 })

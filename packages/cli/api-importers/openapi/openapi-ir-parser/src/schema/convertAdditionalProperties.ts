@@ -1,6 +1,6 @@
-import { OpenAPIV3 } from 'openapi-types'
+import { OpenAPIV3 } from "openapi-types"
 
-import { assertNever } from '@fern-api/core-utils'
+import { assertNever } from "@fern-api/core-utils"
 import {
     Availability,
     Encoding,
@@ -9,12 +9,12 @@ import {
     SchemaWithExample,
     SdkGroupName,
     Source
-} from '@fern-api/openapi-ir'
+} from "@fern-api/openapi-ir"
 
-import { ParseOpenAPIOptions } from '../options'
-import { SchemaParserContext } from './SchemaParserContext'
-import { convertSchema } from './convertSchemas'
-import { isReferenceObject } from './utils/isReferenceObject'
+import { ParseOpenAPIOptions } from "../options"
+import { SchemaParserContext } from "./SchemaParserContext"
+import { convertSchema } from "./convertSchemas"
+import { isReferenceObject } from "./utils/isReferenceObject"
 
 export function convertAdditionalProperties({
     nameOverride,
@@ -51,7 +51,7 @@ export function convertAdditionalProperties({
         additionalProperties = context.options.additionalPropertiesDefaultsTo
     }
 
-    if (typeof additionalProperties === 'boolean' || isAdditionalPropertiesAny(additionalProperties, context.options)) {
+    if (typeof additionalProperties === "boolean" || isAdditionalPropertiesAny(additionalProperties, context.options)) {
         return wrapMap({
             nameOverride,
             generatedName,
@@ -124,7 +124,7 @@ export function convertAdditionalProperties({
                 additionalProperties,
                 context.options.optionalAdditionalProperties ? wrapAsNullable : false,
                 context,
-                [...breadcrumbs, 'Value'],
+                [...breadcrumbs, "Value"],
                 source,
                 namespace,
                 undefined,
@@ -141,23 +141,23 @@ export function convertAdditionalProperties({
 
 function addInline(schema: SchemaWithExample): SchemaWithExample {
     switch (schema.type) {
-        case 'array':
-        case 'enum':
-        case 'map':
-        case 'object':
+        case "array":
+        case "enum":
+        case "map":
+        case "object":
             schema.inline = true
             break
-        case 'literal':
-        case 'primitive':
-        case 'reference':
-        case 'unknown':
+        case "literal":
+        case "primitive":
+        case "reference":
+        case "unknown":
             break
-        case 'nullable':
-        case 'optional':
+        case "nullable":
+        case "optional":
             schema.inline = true
             schema.value = addInline(schema.value)
             break
-        case 'oneOf':
+        case "oneOf":
             schema.value.inline = true
             break
         default:
@@ -243,7 +243,7 @@ export function isAdditionalPropertiesAny(
     if (additionalProperties == null) {
         return options.additionalPropertiesDefaultsTo
     }
-    if (typeof additionalProperties === 'boolean') {
+    if (typeof additionalProperties === "boolean") {
         return additionalProperties
     }
     return !isReferenceObject(additionalProperties) && Object.keys(additionalProperties).length === 0

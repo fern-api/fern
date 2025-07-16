@@ -1,5 +1,5 @@
-import type { Code, InlineCode, Root as MdastRoot, Parent } from 'mdast'
-import { CONTINUE, visit } from 'unist-util-visit'
+import type { Code, InlineCode, Root as MdastRoot, Parent } from "mdast"
+import { CONTINUE, visit } from "unist-util-visit"
 
 export function remarkRemoveCodeBlocksInCells(): (root: MdastRoot) => void {
     return function (root: MdastRoot): void {
@@ -8,13 +8,13 @@ export function remarkRemoveCodeBlocksInCells(): (root: MdastRoot) => void {
 }
 
 function removeCodeBlocksInCells(root: MdastRoot): void {
-    visit(root, 'tableCell', function (node) {
-        visit(node, 'code', function (subNode: Code, index, parent: Parent | undefined) {
-            if (!parent || typeof index !== 'number') {
+    visit(root, "tableCell", function (node) {
+        visit(node, "code", function (subNode: Code, index, parent: Parent | undefined) {
+            if (!parent || typeof index !== "number") {
                 return CONTINUE
             }
             const newNode: InlineCode = {
-                type: 'inlineCode',
+                type: "inlineCode",
                 value: subNode.value
             }
             ;(parent as Parent).children[index] = newNode

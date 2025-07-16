@@ -1,12 +1,12 @@
-import { cp, writeFile } from 'fs/promises'
-import tmp from 'tmp-promise'
+import { cp, writeFile } from "fs/promises"
+import tmp from "tmp-promise"
 
-import { AbsoluteFilePath, RelativeFilePath, join, relative } from '@fern-api/fs-utils'
-import { createLoggingExecutable } from '@fern-api/logging-execa'
-import { TaskContext } from '@fern-api/task-context'
+import { AbsoluteFilePath, RelativeFilePath, join, relative } from "@fern-api/fs-utils"
+import { createLoggingExecutable } from "@fern-api/logging-execa"
+import { TaskContext } from "@fern-api/task-context"
 
-const PROTOBUF_GENERATOR_CONFIG_FILENAME = 'buf.gen.yaml'
-const PROTOBUF_GENERATOR_OUTPUT_PATH = 'output'
+const PROTOBUF_GENERATOR_CONFIG_FILENAME = "buf.gen.yaml"
+const PROTOBUF_GENERATOR_OUTPUT_PATH = "output"
 const PROTOBUF_GENERATOR_OUTPUT_FILEPATH = `${PROTOBUF_GENERATOR_OUTPUT_PATH}/openapi.yaml`
 
 export class ProtobufOpenAPIGenerator {
@@ -80,13 +80,13 @@ export class ProtobufOpenAPIGenerator {
         cwd: AbsoluteFilePath
         target: RelativeFilePath
     }): Promise<AbsoluteFilePath> {
-        const which = createLoggingExecutable('which', {
+        const which = createLoggingExecutable("which", {
             cwd,
             logger: this.context.logger
         })
 
         try {
-            await which(['buf'])
+            await which(["buf"])
         } catch (err) {
             this.context.failAndThrow(
                 "Missing required dependency; please install 'buf' to continue (e.g. 'brew install buf')."
@@ -94,24 +94,24 @@ export class ProtobufOpenAPIGenerator {
         }
 
         try {
-            await which(['protoc-gen-openapi'])
+            await which(["protoc-gen-openapi"])
         } catch (err) {
             this.context.failAndThrow(
                 "Missing required dependency; please install 'protoc-gen-openapi' to continue (e.g. 'brew install go && go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest')."
             )
         }
 
-        const buf = createLoggingExecutable('buf', {
+        const buf = createLoggingExecutable("buf", {
             cwd,
             logger: this.context.logger
         })
-        await buf(['config', 'init'])
-        await buf(['generate', target])
+        await buf(["config", "init"])
+        await buf(["generate", target])
         return join(cwd, RelativeFilePath.of(PROTOBUF_GENERATOR_OUTPUT_FILEPATH))
     }
 
     private async generateRemote(): Promise<AbsoluteFilePath> {
-        this.context.failAndThrow('Remote Protobuf generation is unimplemented.')
+        this.context.failAndThrow("Remote Protobuf generation is unimplemented.")
     }
 }
 

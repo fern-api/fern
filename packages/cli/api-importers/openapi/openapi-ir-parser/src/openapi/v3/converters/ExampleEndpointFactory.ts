@@ -1,6 +1,6 @@
-import { assertNever, isNonNullish } from '@fern-api/core-utils'
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { Logger } from '@fern-api/logger'
+import { assertNever, isNonNullish } from "@fern-api/core-utils"
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { Logger } from "@fern-api/logger"
 import {
     CustomCodeSample,
     EndpointExample,
@@ -18,14 +18,14 @@ import {
     ResponseWithExample,
     SchemaWithExample,
     SupportedSdkLanguage
-} from '@fern-api/openapi-ir'
+} from "@fern-api/openapi-ir"
 
-import { ExampleTypeFactory } from '../../../schema/examples/ExampleTypeFactory'
-import { convertSchemaToSchemaWithExample } from '../../../schema/utils/convertSchemaToSchemaWithExample'
-import { isSchemaRequired } from '../../../schema/utils/isSchemaRequired'
-import { shouldSkipReadOnly } from '../../../utils/shouldSkipReadOnly'
-import { OpenAPIV3ParserContext } from '../OpenAPIV3ParserContext'
-import { hasIncompleteExample } from '../hasIncompleteExample'
+import { ExampleTypeFactory } from "../../../schema/examples/ExampleTypeFactory"
+import { convertSchemaToSchemaWithExample } from "../../../schema/utils/convertSchemaToSchemaWithExample"
+import { isSchemaRequired } from "../../../schema/utils/isSchemaRequired"
+import { shouldSkipReadOnly } from "../../../utils/shouldSkipReadOnly"
+import { OpenAPIV3ParserContext } from "../OpenAPIV3ParserContext"
+import { hasIncompleteExample } from "../hasIncompleteExample"
 
 export class ExampleEndpointFactory {
     private exampleTypeFactory: ExampleTypeFactory
@@ -49,14 +49,14 @@ export class ExampleEndpointFactory {
         const requestSchemaIdResponse = getRequestSchema(endpoint.request)
         const responseSchemaIdResponse = getResponseSchema(endpoint.response)
 
-        if (requestSchemaIdResponse?.type === 'unsupported' || responseSchemaIdResponse?.type === 'unsupported') {
+        if (requestSchemaIdResponse?.type === "unsupported" || responseSchemaIdResponse?.type === "unsupported") {
             return []
         }
 
         // build the request examples. if there are no examples, build an example from the schema.
         // if all the built examples are null, skip building, warn, and return undefined.
         const requestExamples: [id: string | undefined, example: FernOpenapiIr.FullExample][] = []
-        if (requestSchemaIdResponse != null && requestSchemaIdResponse.type === 'present') {
+        if (requestSchemaIdResponse != null && requestSchemaIdResponse.type === "present") {
             const required = this.isSchemaRequired(requestSchemaIdResponse.schema)
 
             if (requestSchemaIdResponse.examples.length === 0) {
@@ -104,7 +104,7 @@ export class ExampleEndpointFactory {
         }
 
         const responseExamples: [id: string | undefined, example: FernOpenapiIr.EndpointResponseExample][] = []
-        if (responseSchemaIdResponse != null && responseSchemaIdResponse.type === 'present') {
+        if (responseSchemaIdResponse != null && responseSchemaIdResponse.type === "present") {
             const required = this.isSchemaRequired(responseSchemaIdResponse.schema)
 
             if (responseSchemaIdResponse.examples.length === 0) {
@@ -114,22 +114,22 @@ export class ExampleEndpointFactory {
                     exampleId: undefined,
                     example: undefined,
                     options: {
-                        maxDepth: this.context.options.exampleGeneration?.response?.['max-depth'] ?? 3,
+                        maxDepth: this.context.options.exampleGeneration?.response?.["max-depth"] ?? 3,
                         isParameter: false,
                         ignoreOptionals: false
                     }
                 })
                 if (example != null) {
-                    if (endpoint.response?.type === 'json') {
+                    if (endpoint.response?.type === "json") {
                         responseExamples.push([undefined, EndpointResponseExample.withoutStreaming(example)])
                     } else if (
-                        endpoint.response?.type === 'streamingJson' ||
-                        endpoint.response?.type === 'streamingSse'
+                        endpoint.response?.type === "streamingJson" ||
+                        endpoint.response?.type === "streamingSse"
                     ) {
                         responseExamples.push([
                             undefined,
                             EndpointResponseExample.withStreaming({
-                                sse: endpoint.response?.type === 'streamingSse',
+                                sse: endpoint.response?.type === "streamingSse",
                                 events: [example]
                             })
                         ])
@@ -143,22 +143,22 @@ export class ExampleEndpointFactory {
                         exampleId,
                         example: rawExample,
                         options: {
-                            maxDepth: this.context.options.exampleGeneration?.response?.['max-depth'] ?? 3,
+                            maxDepth: this.context.options.exampleGeneration?.response?.["max-depth"] ?? 3,
                             isParameter: false,
                             ignoreOptionals: false
                         }
                     })
                     if (example != null) {
-                        if (endpoint.response?.type === 'json') {
+                        if (endpoint.response?.type === "json") {
                             responseExamples.push([exampleId, EndpointResponseExample.withoutStreaming(example)])
                         } else if (
-                            endpoint.response?.type === 'streamingJson' ||
-                            endpoint.response?.type === 'streamingSse'
+                            endpoint.response?.type === "streamingJson" ||
+                            endpoint.response?.type === "streamingSse"
                         ) {
                             responseExamples.push([
                                 undefined,
                                 EndpointResponseExample.withStreaming({
-                                    sse: endpoint.response?.type === 'streamingSse',
+                                    sse: endpoint.response?.type === "streamingSse",
                                     events: [example]
                                 })
                             ])
@@ -276,7 +276,7 @@ export class ExampleEndpointFactory {
                     ? convertSchemaToSchemaWithExample(globalHeader.schema)
                     : SchemaWithExample.primitive({
                           nameOverride: undefined,
-                          generatedName: '',
+                          generatedName: "",
                           title: undefined,
                           description: undefined,
                           availability: undefined,
@@ -338,9 +338,9 @@ export class ExampleEndpointFactory {
         const codeSamples = endpoint.examples
             .filter((ex) => hasIncompleteExample(ex))
             .flatMap((ex) => {
-                if (ex.type === 'unknown') {
+                if (ex.type === "unknown") {
                     if (ex.value != null) {
-                        const samples = (ex.value as RawSchemas.ExampleEndpointCallSchema)['code-samples']
+                        const samples = (ex.value as RawSchemas.ExampleEndpointCallSchema)["code-samples"]
                         if (samples != null) {
                             return this.convertCodeSamples(samples)
                         }
@@ -384,7 +384,7 @@ export class ExampleEndpointFactory {
     private convertCodeSamples(codeSamples: RawSchemas.ExampleCodeSampleSchema[]): CustomCodeSample[] {
         return codeSamples
             .map((codeSample) => {
-                if ('language' in codeSample) {
+                if ("language" in codeSample) {
                     return CustomCodeSample.language({
                         name: codeSample.name ?? undefined,
                         description: codeSample.docs ?? undefined,
@@ -396,7 +396,7 @@ export class ExampleEndpointFactory {
                     return CustomCodeSample.sdk({
                         name: codeSample.name ?? undefined,
                         description: codeSample.docs ?? undefined,
-                        sdk: codeSample.sdk === 'c#' ? SupportedSdkLanguage.Csharp : codeSample.sdk,
+                        sdk: codeSample.sdk === "c#" ? SupportedSdkLanguage.Csharp : codeSample.sdk,
                         code: codeSample.code
                     })
                 }
@@ -543,60 +543,60 @@ function consolidateRequestResponseExamples(
 
 type SchemaIdResponse =
     | {
-          type: 'present'
+          type: "present"
           schema: SchemaWithExample
           // in a majority of cases, there should only be 1 or no example, and we
           examples: NamedFullExample[]
       }
-    | { type: 'unsupported' }
+    | { type: "unsupported" }
 
 function getRequestSchema(request: RequestWithExample | null | undefined): SchemaIdResponse | undefined {
     if (request == null) {
         return undefined
     }
 
-    if (request.type === 'multipart') {
+    if (request.type === "multipart") {
         return {
-            type: 'present',
+            type: "present",
             schema: convertMultipartRequestToSchema(request),
             examples: []
         }
     }
 
-    if (request.type === 'json') {
-        return { type: 'present', schema: request.schema, examples: request.fullExamples ?? [] }
+    if (request.type === "json") {
+        return { type: "present", schema: request.schema, examples: request.fullExamples ?? [] }
     }
 
-    return { type: 'unsupported' }
+    return { type: "unsupported" }
 }
 
 function getResponseSchema(response: ResponseWithExample | null | undefined): SchemaIdResponse | undefined {
     if (response == null) {
         return undefined
     }
-    if (response.type !== 'json' && response.type !== 'streamingJson' && response.type !== 'streamingSse') {
-        return { type: 'unsupported' }
+    if (response.type !== "json" && response.type !== "streamingJson" && response.type !== "streamingSse") {
+        return { type: "unsupported" }
     }
-    return { type: 'present', schema: response.schema, examples: response.fullExamples ?? [] }
+    return { type: "present", schema: response.schema, examples: response.fullExamples ?? [] }
 }
 
 export function isExamplePrimitive(example: FullExample): boolean {
     switch (example.type) {
-        case 'primitive':
-        case 'enum':
-        case 'literal':
+        case "primitive":
+        case "enum":
+        case "literal":
             return true
-        case 'unknown':
+        case "unknown":
             return isExamplePrimitive(example)
-        case 'array':
-        case 'object':
-        case 'map':
+        case "array":
+        case "object":
+        case "map":
             return false
-        case 'oneOf':
+        case "oneOf":
             switch (example.value.type) {
-                case 'discriminated':
+                case "discriminated":
                     return false
-                case 'undiscriminated':
+                case "undiscriminated":
                     return isExamplePrimitive(example.value.value)
                 default:
                     return false
@@ -608,23 +608,23 @@ export function isExamplePrimitive(example: FullExample): boolean {
 
 export function getNameFromSchemaWithExample(schema: SchemaWithExample): string | undefined {
     switch (schema.type) {
-        case 'primitive':
-        case 'enum':
-        case 'literal':
-        case 'unknown':
-        case 'array':
-        case 'map':
-        case 'optional':
-        case 'nullable':
-        case 'reference':
+        case "primitive":
+        case "enum":
+        case "literal":
+        case "unknown":
+        case "array":
+        case "map":
+        case "optional":
+        case "nullable":
+        case "reference":
             return undefined
-        case 'object':
+        case "object":
             return schema.fullExamples?.[0]?.name ?? undefined
-        case 'oneOf':
+        case "oneOf":
             switch (schema.value.type) {
-                case 'discriminated':
+                case "discriminated":
                     return undefined
-                case 'undiscriminated':
+                case "undiscriminated":
                     return undefined
                 default:
                     return undefined
@@ -637,7 +637,7 @@ function convertMultipartRequestToSchema(request: RequestWithExample.Multipart):
     return SchemaWithExample.object({
         properties: request.properties
             .map((property) => {
-                if (property.schema.type === 'file') {
+                if (property.schema.type === "file") {
                     // TODO: Handle file property examples in the Fern Definition
                     return null
                 }
@@ -663,7 +663,7 @@ function convertMultipartRequestToSchema(request: RequestWithExample.Multipart):
         fullExamples: undefined,
         description: request.description,
         nameOverride: undefined,
-        generatedName: '',
+        generatedName: "",
         title: undefined,
         namespace: undefined,
         groupName: undefined,

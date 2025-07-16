@@ -1,11 +1,11 @@
-import { OpenAPIV3 } from 'openapi-types'
+import { OpenAPIV3 } from "openapi-types"
 
-import { PrimitiveSchema, PrimitiveSchemaValue } from '@fern-api/openapi-ir'
+import { PrimitiveSchema, PrimitiveSchemaValue } from "@fern-api/openapi-ir"
 
-import { getExtension } from '../../../getExtension'
-import { getDefaultAsString } from '../../../schema/defaults/getDefault'
-import { getGeneratedTypeName } from '../../../schema/utils/getSchemaName'
-import { FernOpenAPIExtension } from './fernExtensions'
+import { getExtension } from "../../../getExtension"
+import { getDefaultAsString } from "../../../schema/defaults/getDefault"
+import { getGeneratedTypeName } from "../../../schema/utils/getSchemaName"
+import { FernOpenAPIExtension } from "./fernExtensions"
 
 export function getVariableDefinitions(
     document: OpenAPIV3.Document,
@@ -19,7 +19,7 @@ export function getVariableDefinitions(
 
     return Object.fromEntries(
         Object.entries(variables).map(([variableName, schema]) => {
-            if (schema.type === 'string') {
+            if (schema.type === "string") {
                 return [
                     variableName,
                     {

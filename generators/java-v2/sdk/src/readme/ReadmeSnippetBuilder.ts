@@ -1,12 +1,12 @@
-import { AbstractReadmeSnippetBuilder } from '@fern-api/base-generator'
-import { FernIr } from '@fern-api/dynamic-ir-sdk'
-import { java } from '@fern-api/java-ast'
+import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator"
+import { FernIr } from "@fern-api/dynamic-ir-sdk"
+import { java } from "@fern-api/java-ast"
 
-import { FernGeneratorCli } from '@fern-fern/generator-cli-sdk'
-import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
-import { EndpointId, FeatureId, FernFilepath, HttpEndpoint, Name } from '@fern-fern/ir-sdk/api'
+import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk"
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
+import { EndpointId, FeatureId, FernFilepath, HttpEndpoint, Name } from "@fern-fern/ir-sdk/api"
 
-import { SdkGeneratorContext } from '../SdkGeneratorContext'
+import { SdkGeneratorContext } from "../SdkGeneratorContext"
 
 interface EndpointWithFilepath {
     endpoint: HttpEndpoint
@@ -14,12 +14,12 @@ interface EndpointWithFilepath {
 }
 
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
-    private static CLIENT_VARIABLE_NAME = 'client'
-    private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = 'ENVIRONMENTS'
-    private static EXCEPTION_HANDLING_FEATURE_ID: FernGeneratorCli.FeatureId = 'EXCEPTION_HANDLING'
-    private static BASE_URL_FEATURE_ID: FernGeneratorCli.FeatureId = 'BASE_URL'
-    private static SNIPPET_PACKAGE_NAME = 'com.example.usage'
-    private static ELLIPSES = java.codeblock('...')
+    private static CLIENT_VARIABLE_NAME = "client"
+    private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS"
+    private static EXCEPTION_HANDLING_FEATURE_ID: FernGeneratorCli.FeatureId = "EXCEPTION_HANDLING"
+    private static BASE_URL_FEATURE_ID: FernGeneratorCli.FeatureId = "BASE_URL"
+    private static SNIPPET_PACKAGE_NAME = "com.example.usage"
+    private static ELLIPSES = java.codeblock("...")
 
     private readonly context: SdkGeneratorContext
     private readonly endpointsById: Record<EndpointId, EndpointWithFilepath> = {}
@@ -132,7 +132,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
         const snippet = java.codeblock((writer) => {
             writer.writeNode(clientClassReference)
-            writer.write(' client = ')
+            writer.write(" client = ")
             writer.writeNodeStatement(clientBuilder)
             writer.newLine()
             writer.writeNodeStatement(endpointMethodInvocation)
@@ -150,12 +150,12 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         // This should never happen because the precondition prevents this code from running
         // if we don't have a default environment ID, but we need this check for the linter.
         if (defaultEnvironmentId == null) {
-            throw new Error('Could not get default environment ID for README snippet')
+            throw new Error("Could not get default environment ID for README snippet")
         }
 
         const productionEnvironment = java.codeblock((writer) => {
             writer.writeNode(this.context.getEnvironmentClassReference())
-            writer.write('.')
+            writer.write(".")
             writer.write(defaultEnvironmentId)
         })
 
@@ -163,7 +163,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             classReference: clientClassReference,
             parameters: [
                 {
-                    name: 'environment',
+                    name: "environment",
                     value: java.TypeLiteral.raw(productionEnvironment)
                 }
             ]
@@ -190,7 +190,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             classReference: clientClassReference,
             parameters: [
                 {
-                    name: 'url',
+                    name: "url",
                     value: java.TypeLiteral.raw(baseUrl)
                 }
             ]
@@ -215,14 +215,14 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const apiExceptionClassReference = this.context.getApiExceptionClassReference()
         const exceptionDeclarationBlock = java.codeblock((writer) => {
             writer.writeNode(apiExceptionClassReference)
-            writer.write(' e')
+            writer.write(" e")
         })
 
         const snippet = java.codeblock((writer) => {
-            writer.controlFlowWithoutStatement('try')
+            writer.controlFlowWithoutStatement("try")
             writer.writeNodeStatement(endpointMethodInvocation)
-            writer.contiguousControlFlow('catch', exceptionDeclarationBlock)
-            writer.writeLine('// Do something with the API exception...')
+            writer.contiguousControlFlow("catch", exceptionDeclarationBlock)
+            writer.writeLine("// Do something with the API exception...")
             writer.endControlFlow()
         })
 
@@ -233,7 +233,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const okHttpClientClassReference = this.context.getOkHttpClientClassReference()
         const okHttpClientAssignment = java.codeblock((writer) => {
             writer.writeNode(okHttpClientClassReference)
-            writer.write(' customClient = ...')
+            writer.write(" customClient = ...")
         })
 
         const clientClassReference = this.context.getRootClientClassReference()
@@ -242,8 +242,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             classReference: clientClassReference,
             parameters: [
                 {
-                    name: 'httpClient',
-                    value: java.TypeLiteral.raw(java.codeblock('customClient'))
+                    name: "httpClient",
+                    value: java.TypeLiteral.raw(java.codeblock("customClient"))
                 }
             ]
         })
@@ -270,8 +270,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             classReference: clientClassReference,
             parameters: [
                 {
-                    name: 'maxRetries',
-                    value: java.TypeLiteral.raw(java.codeblock('1'))
+                    name: "maxRetries",
+                    value: java.TypeLiteral.raw(java.codeblock("1"))
                 }
             ]
         })
@@ -291,8 +291,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             classReference: requestOptionsClassReference,
             parameters: [
                 {
-                    name: 'timeout',
-                    value: java.TypeLiteral.raw(java.codeblock('10'))
+                    name: "timeout",
+                    value: java.TypeLiteral.raw(java.codeblock("10"))
                 }
             ]
         })
@@ -307,8 +307,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             classReference: clientClassReference,
             parameters: [
                 {
-                    name: 'timeout',
-                    value: java.TypeLiteral.raw(java.codeblock('10'))
+                    name: "timeout",
+                    value: java.TypeLiteral.raw(java.codeblock("10"))
                 }
             ]
         })
@@ -320,10 +320,10 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         })
 
         const snippet = java.codeblock((writer) => {
-            writer.writeLine('// Client level')
+            writer.writeLine("// Client level")
             writer.writeNodeStatement(clientWithTimeout)
             writer.newLine()
-            writer.writeLine('// Request level')
+            writer.writeLine("// Request level")
             writer.writeNodeStatement(endpointMethodInvocation)
         })
 
@@ -345,30 +345,30 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const endpointMethodCall = this.getMethodCall(endpoint, [ReadmeSnippetBuilder.ELLIPSES])
 
         const streamItemsMethodCall = java.invokeMethod({
-            on: java.codeblock('response'),
-            method: 'streamItems',
+            on: java.codeblock("response"),
+            method: "streamItems",
             arguments_: []
         })
 
         const mapMethodCall = java.invokeMethod({
             on: streamItemsMethodCall,
-            method: 'map',
-            arguments_: [java.codeblock('item -> ...')]
+            method: "map",
+            arguments_: [java.codeblock("item -> ...")]
         })
 
         const manualPaginationSnippet = java.codeblock((writer) => {
-            writer.writeLine('for (')
+            writer.writeLine("for (")
             writer.indent()
             writer.indent()
             writer.writeNode(java.Type.list(returnTypeClassReference))
-            writer.writeTextStatement(' items = response.getItems')
-            writer.writeTextStatement('response.hasNext()')
-            writer.write('items = items.nextPage().getItems()')
-            writer.writeLine(') {')
+            writer.writeTextStatement(" items = response.getItems")
+            writer.writeTextStatement("response.hasNext()")
+            writer.write("items = items.nextPage().getItems()")
+            writer.writeLine(") {")
             writer.dedent()
-            writer.writeLine('// Do something with items')
+            writer.writeLine("// Do something with items")
             writer.dedent()
-            writer.writeLine('}')
+            writer.writeLine("}")
         })
 
         const snippet = java.codeblock((writer) => {
@@ -377,18 +377,18 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             writer.writeNodeStatement(clientInitialization)
             writer.newLine()
             writer.writeNode(paginationClassReference)
-            writer.write(' response = ')
+            writer.write(" response = ")
             writer.writeNodeStatement(endpointMethodCall)
             writer.newLine()
-            writer.writeLine('// Iterator')
-            writer.controlFlow('for', java.codeblock('item : response'))
-            writer.writeLine('// Do something with item')
+            writer.writeLine("// Iterator")
+            writer.controlFlow("for", java.codeblock("item : response"))
+            writer.writeLine("// Do something with item")
             writer.endControlFlow()
             writer.newLine()
-            writer.writeLine('// Streaming')
+            writer.writeLine("// Streaming")
             writer.writeNodeStatement(mapMethodCall)
             writer.newLine()
-            writer.writeLine('// Manual pagination')
+            writer.writeLine("// Manual pagination")
             writer.writeNode(manualPaginationSnippet)
         })
 
@@ -414,9 +414,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const snippets: Record<EndpointId, string> = {}
         for (const endpointSnippet of Object.values(endpointSnippets)) {
             if (endpointSnippet.id.identifierOverride == null) {
-                throw new Error('Internal error; snippets must define the endpoint id to generate README.md')
+                throw new Error("Internal error; snippets must define the endpoint id to generate README.md")
             }
-            if (endpointSnippet.snippet.type !== 'java') {
+            if (endpointSnippet.snippet.type !== "java") {
                 throw new Error(`Internal error; expected java snippet but got: ${endpointSnippet.snippet.type}`)
             }
             snippets[endpointSnippet.id.identifierOverride] = endpointSnippet.snippet.syncClient
@@ -450,9 +450,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private getAccessFromRootClient(fernFilepath: FernFilepath): java.AstNode {
-        const clientAccessParts = fernFilepath.allParts.map((part) => part.camelCase.safeName + '()')
+        const clientAccessParts = fernFilepath.allParts.map((part) => part.camelCase.safeName + "()")
         return clientAccessParts.length > 0
-            ? java.codeblock(`${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME}.${clientAccessParts.join('.')}`)
+            ? java.codeblock(`${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME}.${clientAccessParts.join(".")}`)
             : java.codeblock(ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME)
     }
 
@@ -472,7 +472,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private getRootPackageClientName(): string {
-        return 'client'
+        return "client"
     }
 
     private getDefaultEndpointIdWithMaybeEmptySnippets(endpointSnippets: FernGeneratorExec.Endpoint[]): EndpointId {
@@ -485,13 +485,13 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const dynamicIr = this.context.ir.dynamic
 
         if (dynamicIr == null) {
-            throw new Error('Cannot generate README without dynamic IR')
+            throw new Error("Cannot generate README without dynamic IR")
         }
 
         const endpoints = Object.entries(dynamicIr.endpoints)
 
         if (endpoints.length == 0) {
-            throw new Error('Cannot generate README without endpoints.')
+            throw new Error("Cannot generate README without endpoints.")
         }
 
         // Prefer endpoints with a request body.
@@ -502,7 +502,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 return false
             }
 
-            return endpoint.request.body.type === 'referenced'
+            return endpoint.request.body.type === "referenced"
         })
 
         if (endpointsWithReferencedRequestBody.length > 0 && endpointsWithReferencedRequestBody[0] != null) {
@@ -512,7 +512,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
         // Need this check for the linter
         if (endpoints[0] == null) {
-            throw new Error('Cannot generate README with null endpoint.')
+            throw new Error("Cannot generate README with null endpoint.")
         }
 
         return endpoints[0][0]
@@ -526,10 +526,10 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             packageName: ReadmeSnippetBuilder.SNIPPET_PACKAGE_NAME,
             customConfig: this.context.customConfig
         })
-        if (asString.split('\n').length < 3) {
+        if (asString.split("\n").length < 3) {
             return asString
         } else {
-            return asString.split('\n').slice(2).join('\n')
+            return asString.split("\n").slice(2).join("\n")
         }
     }
 }

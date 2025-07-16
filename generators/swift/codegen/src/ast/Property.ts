@@ -1,8 +1,8 @@
-import { AccessLevel } from './AccessLevel'
-import { DeclarationType } from './DeclarationType'
-import { Type } from './Type'
-import { AstNode, Writer } from './core'
-import { isReservedKeyword } from './syntax'
+import { AccessLevel } from "./AccessLevel"
+import { DeclarationType } from "./DeclarationType"
+import { Type } from "./Type"
+import { AstNode, Writer } from "./core"
+import { isReservedKeyword } from "./syntax"
 
 export declare namespace Property {
     interface Args {
@@ -36,22 +36,22 @@ export class Property extends AstNode {
     public write(writer: Writer): void {
         if (this.accessLevel != null) {
             writer.write(this.accessLevel)
-            writer.write(' ')
+            writer.write(" ")
         }
         if (this.static_) {
-            writer.write('static ')
+            writer.write("static ")
         }
         writer.write(this.declarationType)
-        writer.write(' ')
+        writer.write(" ")
         if (isReservedKeyword(this.unsafeName)) {
             writer.write(`\`${this.unsafeName}\``)
         } else {
             writer.write(this.unsafeName)
         }
-        writer.write(': ')
+        writer.write(": ")
         this.type.write(writer)
         if (this.optional) {
-            writer.write('?')
+            writer.write("?")
         }
     }
 }

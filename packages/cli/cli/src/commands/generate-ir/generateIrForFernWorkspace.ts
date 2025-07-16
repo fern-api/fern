@@ -1,12 +1,12 @@
-import { FernWorkspace } from '@fern-api/api-workspace-commons'
-import { SourceResolverImpl } from '@fern-api/cli-source-resolver'
-import { Audiences, generatorsYml } from '@fern-api/configuration-loader'
-import { generateIntermediateRepresentation } from '@fern-api/ir-generator'
-import { IntermediateRepresentation } from '@fern-api/ir-sdk'
-import { OSSWorkspace } from '@fern-api/lazy-fern-workspace'
-import { TaskContext } from '@fern-api/task-context'
+import { FernWorkspace } from "@fern-api/api-workspace-commons"
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver"
+import { Audiences, generatorsYml } from "@fern-api/configuration-loader"
+import { generateIntermediateRepresentation } from "@fern-api/ir-generator"
+import { IntermediateRepresentation } from "@fern-api/ir-sdk"
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace"
+import { TaskContext } from "@fern-api/task-context"
 
-import { validateAPIWorkspaceAndLogIssues } from '../validate/validateAPIWorkspaceAndLogIssues'
+import { validateAPIWorkspaceAndLogIssues } from "../validate/validateAPIWorkspaceAndLogIssues"
 
 export async function generateIrForFernWorkspace({
     workspace,

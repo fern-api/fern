@@ -1,6 +1,6 @@
-import semverDiff from 'semver-diff'
+import semverDiff from "semver-diff"
 
-import { ParsedVersion, parseVersion } from './parseVersion'
+import { ParsedVersion, parseVersion } from "./parseVersion"
 
 /**
  * returns whether version a came after version b
@@ -18,21 +18,21 @@ export function isVersionAhead(a: string, b: string): boolean {
         return semverDiff(getReleaseVersion(aVersion), getReleaseVersion(bVersion)) == null
     }
 
-    if (aVersion.type === 'post-release-commit') {
-        return bVersion.type !== 'post-release-commit' || aVersion.commitIndex > bVersion.commitIndex
+    if (aVersion.type === "post-release-commit") {
+        return bVersion.type !== "post-release-commit" || aVersion.commitIndex > bVersion.commitIndex
     }
 
-    if (aVersion.type === 'release') {
-        return bVersion.type !== 'post-release-commit'
+    if (aVersion.type === "release") {
+        return bVersion.type !== "post-release-commit"
     }
 
-    if (aVersion.type === 'rc') {
+    if (aVersion.type === "rc") {
         switch (bVersion.type) {
-            case 'release':
-            case 'post-release-commit':
+            case "release":
+            case "post-release-commit":
                 return false
-            case 'alpha':
-            case 'beta':
+            case "alpha":
+            case "beta":
                 return true
         }
 
@@ -42,17 +42,17 @@ export function isVersionAhead(a: string, b: string): boolean {
         )
     }
 
-    if (aVersion.type === 'post-rc-commit') {
+    if (aVersion.type === "post-rc-commit") {
         switch (bVersion.type) {
-            case 'release':
-            case 'post-release-commit':
+            case "release":
+            case "post-release-commit":
                 return false
-            case 'alpha':
-            case 'beta':
+            case "alpha":
+            case "beta":
                 return true
         }
 
-        if (bVersion.type === 'post-rc-commit') {
+        if (bVersion.type === "post-rc-commit") {
             if (aVersion.releaseCandidateIndex !== bVersion.releaseCandidateIndex) {
                 return aVersion.releaseCandidateIndex > bVersion.releaseCandidateIndex
             }
@@ -60,26 +60,26 @@ export function isVersionAhead(a: string, b: string): boolean {
         }
     }
 
-    if (aVersion.type === 'beta') {
+    if (aVersion.type === "beta") {
         switch (bVersion.type) {
-            case 'release':
-            case 'post-release-commit':
-            case 'rc':
-            case 'post-rc-commit':
+            case "release":
+            case "post-release-commit":
+            case "rc":
+            case "post-rc-commit":
                 return false
-            case 'alpha':
+            case "alpha":
                 return true
         }
 
         return aVersion.index > bVersion.index
     }
 
-    if (aVersion.type === 'alpha') {
+    if (aVersion.type === "alpha") {
         switch (bVersion.type) {
-            case 'release':
-            case 'post-release-commit':
-            case 'rc':
-            case 'post-rc-commit':
+            case "release":
+            case "post-release-commit":
+            case "rc":
+            case "post-rc-commit":
                 return false
         }
 

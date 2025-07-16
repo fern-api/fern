@@ -1,6 +1,6 @@
-import { CSharpFile, FileGenerator } from '@fern-api/csharp-base'
-import { csharp } from '@fern-api/csharp-codegen'
-import { RelativeFilePath, join } from '@fern-api/fs-utils'
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base"
+import { csharp } from "@fern-api/csharp-codegen"
+import { RelativeFilePath, join } from "@fern-api/fs-utils"
 
 import {
     EndpointReference,
@@ -10,10 +10,10 @@ import {
     OAuthScheme,
     ObjectProperty,
     ResponseProperty
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { SdkCustomConfigSchema } from '../SdkCustomConfig'
-import { SdkGeneratorContext } from '../SdkGeneratorContext'
+import { SdkCustomConfigSchema } from "../SdkCustomConfig"
+import { SdkGeneratorContext } from "../SdkGeneratorContext"
 
 export declare namespace OauthTokenProviderGenerator {
     interface Args {
@@ -33,32 +33,32 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
     private static readonly BUFFER_IN_MINUTES_FIELD = csharp.field({
         access: csharp.Access.Private,
         const_: true,
-        name: 'BufferInMinutes',
+        name: "BufferInMinutes",
         type: csharp.Type.double(),
-        initializer: csharp.codeblock('2')
+        initializer: csharp.codeblock("2")
     })
 
     private static readonly ACCESS_TOKEN_FIELD = csharp.field({
         access: csharp.Access.Private,
-        name: '_accessToken',
+        name: "_accessToken",
         type: csharp.Type.optional(csharp.Type.string())
     })
 
     private static readonly EXPIRES_AT_FIELD = csharp.field({
         access: csharp.Access.Private,
-        name: '_expiresAt',
+        name: "_expiresAt",
         type: csharp.Type.optional(csharp.Type.dateTime())
     })
 
     private static readonly CLIENT_ID_FIELD = csharp.field({
         access: csharp.Access.Private,
-        name: '_clientId',
+        name: "_clientId",
         type: csharp.Type.string()
     })
 
     private static readonly CLIENT_SECRET_FIELD = csharp.field({
         access: csharp.Access.Private,
-        name: '_clientSecret',
+        name: "_clientSecret",
         type: csharp.Type.string()
     })
 
@@ -75,7 +75,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
         this.tokenEndpoint = httpEndpoint
         this.clientField = csharp.field({
             access: csharp.Access.Private,
-            name: '_client',
+            name: "_client",
             type: csharp.Type.reference(
                 this.context.getSubpackageClassReferenceForServiceIdOrThrow(this.tokenEndpointReference.serviceId)
             )
@@ -107,15 +107,15 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
             access: csharp.Access.Public,
             parameters: [
                 csharp.parameter({
-                    name: 'clientId',
+                    name: "clientId",
                     type: csharp.Type.string()
                 }),
                 csharp.parameter({
-                    name: 'clientSecret',
+                    name: "clientSecret",
                     type: csharp.Type.string()
                 }),
                 csharp.parameter({
-                    name: 'client',
+                    name: "client",
                     type: this.clientField.type
                 })
             ],
@@ -140,7 +140,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
         return join(this.context.getCoreDirectory(), RelativeFilePath.of(`${this.classReference.name}.cs`))
     }
 
-    public static readonly GET_ACCESS_TOKEN_ASYNC_METHOD_NAME = 'GetAccessTokenAsync'
+    public static readonly GET_ACCESS_TOKEN_ASYNC_METHOD_NAME = "GetAccessTokenAsync"
 
     private getAccessTokenMethod(): csharp.Method {
         return csharp.method({
@@ -159,7 +159,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
 
         return csharp.codeblock((writer) => {
             writer.controlFlow(
-                'if',
+                "if",
                 csharp.codeblock((writer) => {
                     writer.write(`${OauthTokenProviderGenerator.ACCESS_TOKEN_FIELD.name} == null`)
                     // check expiresIn if present in the IR
@@ -187,11 +187,11 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
                         bytes: (value) => undefined,
                         _other: (value) => undefined
                     })
-                    if (requestType == null || requestType.internalType.type !== 'reference') {
-                        throw new Error('Failed to get request class reference')
+                    if (requestType == null || requestType.internalType.type !== "reference") {
+                        throw new Error("Failed to get request class reference")
                     }
 
-                    writer.write('var tokenResponse = ')
+                    writer.write("var tokenResponse = ")
                     writer.writeNode(
                         csharp.invokeMethod({
                             async: true,
@@ -259,7 +259,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
 
     private dotAccess(property: ObjectProperty, path?: Name[]): string {
         if (path != null && path.length > 0) {
-            return `${path.map((val) => val.pascalCase).join('.')}.${property.name.name.pascalCase.safeName}`
+            return `${path.map((val) => val.pascalCase).join(".")}.${property.name.name.pascalCase.safeName}`
         }
         return property.name.name.pascalCase.safeName
     }

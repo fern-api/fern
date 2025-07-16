@@ -1,11 +1,11 @@
-import { ExportedFilePath, PackageId, Reference } from '@fern-typescript/commons'
+import { ExportedFilePath, PackageId, Reference } from "@fern-typescript/commons"
 
-import { RelativeFilePath } from '@fern-api/fs-utils'
+import { RelativeFilePath } from "@fern-api/fs-utils"
 
-import { HttpEndpoint } from '@fern-fern/ir-sdk/api'
+import { HttpEndpoint } from "@fern-fern/ir-sdk/api"
 
-import { AbstractSdkClientClassDeclarationReferencer } from './AbstractSdkClientClassDeclarationReferencer'
-import { DeclarationReferencer } from './DeclarationReferencer'
+import { AbstractSdkClientClassDeclarationReferencer } from "./AbstractSdkClientClassDeclarationReferencer"
+import { DeclarationReferencer } from "./DeclarationReferencer"
 
 export declare namespace SdkInlinedRequestBodyDeclarationReferencer {
     export interface Name {
@@ -14,7 +14,7 @@ export declare namespace SdkInlinedRequestBodyDeclarationReferencer {
     }
 }
 
-const REQUESTS_DIRECTORY_NAME = 'requests'
+const REQUESTS_DIRECTORY_NAME = "requests"
 
 export class SdkInlinedRequestBodyDeclarationReferencer extends AbstractSdkClientClassDeclarationReferencer<SdkInlinedRequestBodyDeclarationReferencer.Name> {
     public getExportedFilepath(name: SdkInlinedRequestBodyDeclarationReferencer.Name): ExportedFilePath {
@@ -44,8 +44,8 @@ export class SdkInlinedRequestBodyDeclarationReferencer extends AbstractSdkClien
     }
 
     public getExportedName(name: SdkInlinedRequestBodyDeclarationReferencer.Name): string {
-        if (name.endpoint.requestBody?.type !== 'inlinedRequestBody') {
-            throw new Error('Cannot get exported name for inlined request, because endpoint request is not inlined')
+        if (name.endpoint.requestBody?.type !== "inlinedRequestBody") {
+            throw new Error("Cannot get exported name for inlined request, because endpoint request is not inlined")
         }
         return name.endpoint.requestBody.name.pascalCase.unsafeName
     }

@@ -1,9 +1,9 @@
-import { OpenAPIV3 } from 'openapi-types'
+import { OpenAPIV3 } from "openapi-types"
 
-import { Logger } from '@fern-api/logger'
+import { Logger } from "@fern-api/logger"
 
-import { getExtension } from '../../getExtension'
-import { getExamples } from '../../openapi/v3/extensions/getExamples'
+import { getExtension } from "../../getExtension"
+import { getExamples } from "../../openapi/v3/extensions/getExamples"
 
 export function getExampleAsNumber({
     schema,
@@ -14,16 +14,16 @@ export function getExampleAsNumber({
     logger: Logger
     fallback?: unknown
 }): number | undefined {
-    if (schema.example != null && typeof schema.example === 'number') {
+    if (schema.example != null && typeof schema.example === "number") {
         return schema.example
     }
     const examples = getExamples(schema)
     for (const example of examples ?? []) {
-        if (typeof example === 'number') {
+        if (typeof example === "number") {
             return example
         }
     }
-    if (fallback && typeof fallback === 'number') {
+    if (fallback && typeof fallback === "number") {
         return fallback
     }
     return undefined
@@ -38,16 +38,16 @@ export function getExampleAsBoolean({
     logger: Logger
     fallback?: unknown
 }): boolean | undefined {
-    if (schema.example != null && typeof schema.example === 'boolean') {
+    if (schema.example != null && typeof schema.example === "boolean") {
         return schema.example
     }
     const examples = getExamples(schema)
     for (const example of examples ?? []) {
-        if (typeof example === 'boolean') {
+        if (typeof example === "boolean") {
             return example
         }
     }
-    if (fallback && typeof fallback === 'boolean') {
+    if (fallback && typeof fallback === "boolean") {
         return fallback
     }
     return undefined
@@ -62,16 +62,16 @@ export function getExamplesString({
     logger: Logger
     fallback?: unknown
 }): string | undefined {
-    if (schema.example != null && typeof schema.example === 'string') {
+    if (schema.example != null && typeof schema.example === "string") {
         return schema.example
     }
     const examples = getExamples(schema)
     for (const example of examples ?? []) {
-        if (typeof example === 'string') {
+        if (typeof example === "string") {
             return example
         }
     }
-    if (fallback && typeof fallback === 'string') {
+    if (fallback && typeof fallback === "string") {
         return fallback
     }
     return undefined

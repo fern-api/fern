@@ -1,12 +1,12 @@
-import { CSharpFile } from '@fern-api/csharp-base'
+import { CSharpFile } from "@fern-api/csharp-base"
 
-import { EnumTypeDeclaration } from '@fern-fern/ir-sdk/api'
+import { EnumTypeDeclaration } from "@fern-fern/ir-sdk/api"
 
-import { ModelGeneratorContext } from './ModelGeneratorContext'
-import { EnumGenerator } from './enum/EnumGenerator'
-import { StringEnumGenerator } from './enum/StringEnumGenerator'
-import { ObjectGenerator } from './object/ObjectGenerator'
-import { UnionGenerator } from './union/UnionGenerator'
+import { ModelGeneratorContext } from "./ModelGeneratorContext"
+import { EnumGenerator } from "./enum/EnumGenerator"
+import { StringEnumGenerator } from "./enum/StringEnumGenerator"
+import { ObjectGenerator } from "./object/ObjectGenerator"
+import { UnionGenerator } from "./union/UnionGenerator"
 
 export function generateModels({ context }: { context: ModelGeneratorContext }): CSharpFile[] {
     const files: CSharpFile[] = []

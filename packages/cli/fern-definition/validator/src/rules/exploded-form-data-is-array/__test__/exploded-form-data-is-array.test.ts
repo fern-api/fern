@@ -1,16 +1,16 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
 
-import { getViolationsForRule } from '../../../testing-utils/getViolationsForRule'
-import { ExplodedFormDataIsArrayRule } from '../exploded-form-data-is-array'
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule"
+import { ExplodedFormDataIsArrayRule } from "../exploded-form-data-is-array"
 
-describe('exploded-form-data-is-array', () => {
-    it('simple', async () => {
+describe("exploded-form-data-is-array", () => {
+    it("simple", async () => {
         const violations = await getViolationsForRule({
             rule: ExplodedFormDataIsArrayRule,
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),
-                RelativeFilePath.of('fixtures'),
-                RelativeFilePath.of('simple')
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("simple")
             )
         })
 

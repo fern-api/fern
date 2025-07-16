@@ -1,6 +1,6 @@
-import { csharp } from '..'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { csharp } from ".."
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 type InternalPrimitiveInstantiation =
     | IntegerInstantiation
@@ -17,63 +17,63 @@ type InternalPrimitiveInstantiation =
     | NullInstantiation
 
 interface IntegerInstantiation {
-    type: 'integer'
+    type: "integer"
     value: number
 }
 
 interface LongInstantiation {
-    type: 'long'
+    type: "long"
     value: number
 }
 
 interface UintInstantiation {
-    type: 'uint'
+    type: "uint"
     value: number
 }
 
 interface UlongInstantiation {
-    type: 'ulong'
+    type: "ulong"
     value: number
 }
 
 interface StringInstantiation {
-    type: 'string'
+    type: "string"
     value: string
 }
 
 interface BooleanInstantiation {
-    type: 'boolean'
+    type: "boolean"
     value: boolean
 }
 
 interface FloatInstanation {
-    type: 'float'
+    type: "float"
     value: number
 }
 
 interface DoubleInstantiation {
-    type: 'double'
+    type: "double"
     value: number
 }
 
 interface DateInstantiation {
-    type: 'date'
+    type: "date"
     value: string
 }
 
 interface DateTimeInstantiation {
-    type: 'dateTime'
+    type: "dateTime"
     value: Date
     parse: boolean
 }
 
 interface GuidInstantiation {
-    type: 'uuid'
+    type: "uuid"
     value: string
 }
 
 interface NullInstantiation {
-    type: 'null'
+    type: "null"
 }
 
 export class PrimitiveInstantiation extends AstNode {
@@ -83,31 +83,31 @@ export class PrimitiveInstantiation extends AstNode {
 
     public write(writer: Writer): void {
         switch (this.internalType.type) {
-            case 'integer':
+            case "integer":
                 writer.write(this.internalType.value.toString())
                 break
-            case 'long':
+            case "long":
                 writer.write(`${this.internalType.value.toString()}`)
                 break
-            case 'uint':
+            case "uint":
                 writer.write(`${this.internalType.value.toString()}`)
                 break
-            case 'ulong':
+            case "ulong":
                 writer.write(`${this.internalType.value.toString()}`)
                 break
-            case 'string':
+            case "string":
                 writer.writeNode(csharp.string_({ string: this.internalType.value }))
                 break
-            case 'boolean':
+            case "boolean":
                 writer.write(this.internalType.value.toString())
                 break
-            case 'float':
+            case "float":
                 writer.write(`${this.internalType.value.toString()}f`)
                 break
-            case 'double':
+            case "double":
                 writer.write(`${this.internalType.value.toString()}`)
                 break
-            case 'date': {
+            case "date": {
                 const date = new Date(this.internalType.value)
                 const year = date.getUTCFullYear()
                 const month = date.getUTCMonth() + 1
@@ -115,96 +115,96 @@ export class PrimitiveInstantiation extends AstNode {
                 writer.write(`new DateOnly(${year}, ${month}, ${day})`)
                 break
             }
-            case 'dateTime': {
+            case "dateTime": {
                 if (this.internalType.parse) {
                     writer.write(`DateTime.Parse("${this.internalType.value.toISOString()}", null, DateTimeStyles.`)
                     writer.writeNode(
                         csharp.classReference({
-                            name: 'AdjustToUniversal',
-                            namespace: 'System.Globalization'
+                            name: "AdjustToUniversal",
+                            namespace: "System.Globalization"
                         })
                     )
-                    writer.write(')')
+                    writer.write(")")
                 } else {
                     writer.write(this.constructDatetimeWithoutParse(this.internalType.value))
                 }
                 break
             }
-            case 'uuid':
+            case "uuid":
                 writer.write(`"${this.internalType.value.toString()}"`)
                 break
-            case 'null':
-                writer.write('null')
+            case "null":
+                writer.write("null")
                 break
         }
     }
 
     public static string(value: string): PrimitiveInstantiation {
         return new this({
-            type: 'string',
+            type: "string",
             value
         })
     }
 
     public static boolean(value: boolean): PrimitiveInstantiation {
         return new this({
-            type: 'boolean',
+            type: "boolean",
             value
         })
     }
 
     public static integer(value: number): PrimitiveInstantiation {
         return new this({
-            type: 'integer',
+            type: "integer",
             value
         })
     }
 
     public static long(value: number): PrimitiveInstantiation {
         return new this({
-            type: 'long',
+            type: "long",
             value
         })
     }
 
     public static uint(value: number): PrimitiveInstantiation {
         return new this({
-            type: 'uint',
+            type: "uint",
             value
         })
     }
 
     public static ulong(value: number): PrimitiveInstantiation {
         return new this({
-            type: 'ulong',
+            type: "ulong",
             value
         })
     }
 
     public static float(value: number): PrimitiveInstantiation {
         return new this({
-            type: 'float',
+            type: "float",
             value
         })
     }
 
     public static double(value: number): PrimitiveInstantiation {
         return new this({
-            type: 'double',
+            type: "double",
             value
         })
     }
 
     public static date(value: string): PrimitiveInstantiation {
         return new this({
-            type: 'date',
+            type: "date",
             value
         })
     }
 
     public static dateTime(value: Date, parse = true): PrimitiveInstantiation {
         return new this({
-            type: 'dateTime',
+            type: "dateTime",
             value,
             parse
         })
@@ -212,14 +212,14 @@ export class PrimitiveInstantiation extends AstNode {
 
     public static uuid(value: string): PrimitiveInstantiation {
         return new this({
-            type: 'uuid',
+            type: "uuid",
             value
         })
     }
 
     public static null(): PrimitiveInstantiation {
         return new this({
-            type: 'null'
+            type: "null"
         })
     }
 
@@ -228,12 +228,12 @@ export class PrimitiveInstantiation extends AstNode {
      */
     private constructDatetimeWithoutParse(datetime: Date): string {
         const dateTimeYear = datetime.getUTCFullYear()
-        const dateTimeMonth = (datetime.getUTCMonth() + 1).toString().padStart(2, '0')
-        const dateTimeDay = datetime.getUTCDate().toString().padStart(2, '0')
-        const hours = datetime.getUTCHours().toString().padStart(2, '0')
-        const minutes = datetime.getUTCMinutes().toString().padStart(2, '0')
-        const seconds = datetime.getUTCSeconds().toString().padStart(2, '0')
-        const milliseconds = datetime.getUTCMilliseconds().toString().padStart(3, '0')
+        const dateTimeMonth = (datetime.getUTCMonth() + 1).toString().padStart(2, "0")
+        const dateTimeDay = datetime.getUTCDate().toString().padStart(2, "0")
+        const hours = datetime.getUTCHours().toString().padStart(2, "0")
+        const minutes = datetime.getUTCMinutes().toString().padStart(2, "0")
+        const seconds = datetime.getUTCSeconds().toString().padStart(2, "0")
+        const milliseconds = datetime.getUTCMilliseconds().toString().padStart(3, "0")
         return `new DateTime(${dateTimeYear}, ${dateTimeMonth}, ${dateTimeDay}, ${hours}, ${minutes}, ${seconds}, ${milliseconds})`
     }
 }

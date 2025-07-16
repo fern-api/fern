@@ -1,8 +1,8 @@
-import { ClassReference } from '../'
+import { ClassReference } from "../"
 
-const NUNIT_FRAMEWORK_NAMESPACE = 'NUnit.Framework'
+const NUNIT_FRAMEWORK_NAMESPACE = "NUnit.Framework"
 
 export const TestFixture: ClassReference = new ClassReference({
-    name: 'TestFixture',
+    name: "TestFixture",
     namespace: NUNIT_FRAMEWORK_NAMESPACE
 })

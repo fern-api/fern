@@ -1,13 +1,13 @@
-import { CONSOLE_LOGGER, Logger } from '@fern-api/logger'
+import { CONSOLE_LOGGER, Logger } from "@fern-api/logger"
 
-import { FernCliError } from './FernCliError'
-import { TaskContext, TaskResult } from './TaskContext'
+import { FernCliError } from "./FernCliError"
+import { TaskContext, TaskResult } from "./TaskContext"
 
 export function createMockTaskContext({ logger = CONSOLE_LOGGER }: { logger?: Logger } = {}): TaskContext {
     const context = {
         logger,
         takeOverTerminal: () => {
-            throw new Error('Not implemented')
+            throw new Error("Not implemented")
         },
         failAndThrow: (message?: string, error?: unknown) => {
             const parts = []
@@ -28,13 +28,13 @@ export function createMockTaskContext({ logger = CONSOLE_LOGGER }: { logger?: Lo
         },
         getResult: () => TaskResult.Success,
         addInteractiveTask: () => {
-            throw new Error('Not implemented')
+            throw new Error("Not implemented")
         },
         runInteractiveTask: () => {
-            throw new Error('Not implemented')
+            throw new Error("Not implemented")
         },
         instrumentPostHogEvent: () => {
-            throw new Error('Not implemented')
+            throw new Error("Not implemented")
         }
     }
     return context

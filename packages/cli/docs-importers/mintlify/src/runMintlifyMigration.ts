@@ -1,11 +1,11 @@
-import { writeFile } from 'fs/promises'
+import { writeFile } from "fs/promises"
 
-import { FERN_DIRECTORY, PROJECT_CONFIG_FILENAME } from '@fern-api/configuration'
-import { FernDocsBuilderImpl } from '@fern-api/docs-importer-commons'
-import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
-import { TaskContext } from '@fern-api/task-context'
+import { FERN_DIRECTORY, PROJECT_CONFIG_FILENAME } from "@fern-api/configuration"
+import { FernDocsBuilderImpl } from "@fern-api/docs-importer-commons"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { TaskContext } from "@fern-api/task-context"
 
-import { MintlifyImporter } from './MintlifyImporter'
+import { MintlifyImporter } from "./MintlifyImporter"
 
 interface RunMintlifyMigrationParams {
     absolutePathToMintJson: AbsoluteFilePath

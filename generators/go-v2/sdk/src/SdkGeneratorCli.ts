@@ -1,19 +1,19 @@
-import { File, GeneratorNotificationService } from '@fern-api/base-generator'
-import { RelativeFilePath } from '@fern-api/fs-utils'
-import { DefaultBaseGoCustomConfigSchema } from '@fern-api/go-ast'
-import { AbstractGoGeneratorCli } from '@fern-api/go-base'
-import { DynamicSnippetsGenerator } from '@fern-api/go-dynamic-snippets'
+import { File, GeneratorNotificationService } from "@fern-api/base-generator"
+import { RelativeFilePath } from "@fern-api/fs-utils"
+import { DefaultBaseGoCustomConfigSchema } from "@fern-api/go-ast"
+import { AbstractGoGeneratorCli } from "@fern-api/go-base"
+import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets"
 
-import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
-import { Endpoint } from '@fern-fern/generator-exec-sdk/api'
-import { IntermediateRepresentation } from '@fern-fern/ir-sdk/api'
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
+import { Endpoint } from "@fern-fern/generator-exec-sdk/api"
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api"
 
-import { SdkCustomConfigSchema } from './SdkCustomConfig'
-import { SdkGeneratorContext } from './SdkGeneratorContext'
-import { ModuleConfigWriter } from './module/ModuleConfigWriter'
-import { RawClientGenerator } from './raw-client/RawClientGenerator'
-import { convertDynamicEndpointSnippetRequest } from './utils/convertEndpointSnippetRequest'
-import { convertIr } from './utils/convertIr'
+import { SdkCustomConfigSchema } from "./SdkCustomConfig"
+import { SdkGeneratorContext } from "./SdkGeneratorContext"
+import { ModuleConfigWriter } from "./module/ModuleConfigWriter"
+import { RawClientGenerator } from "./raw-client/RawClientGenerator"
+import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest"
+import { convertIr } from "./utils/convertIr"
 
 export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -42,7 +42,7 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
     }
 
     protected async publishPackage(context: SdkGeneratorContext): Promise<void> {
-        throw new Error('Method not implemented.')
+        throw new Error("Method not implemented.")
     }
 
     protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {
@@ -65,7 +65,7 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
                     endpointSnippets
                 })
             } catch (e) {
-                context.logger.warn('Failed to generate README.md, this is OK.')
+                context.logger.warn("Failed to generate README.md, this is OK.")
             }
         }
 
@@ -111,7 +111,7 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
 
         const dynamicIr = context.ir.dynamic
         if (dynamicIr == null) {
-            throw new Error('Cannot generate dynamic snippets without dynamic IR')
+            throw new Error("Cannot generate dynamic snippets without dynamic IR")
         }
 
         const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
@@ -149,21 +149,21 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
         endpointSnippets: Endpoint[]
     }): Promise<void> {
         if (endpointSnippets.length === 0) {
-            context.logger.debug('No snippets were produced; skipping README.md generation.')
+            context.logger.debug("No snippets were produced; skipping README.md generation.")
             return
         }
         const content = await context.generatorAgent.generateReadme({ context, endpointSnippets })
-        context.project.addRawFiles(new File(context.generatorAgent.README_FILENAME, RelativeFilePath.of('.'), content))
+        context.project.addRawFiles(new File(context.generatorAgent.README_FILENAME, RelativeFilePath.of("."), content))
     }
 
     private shouldGenerateReadme(context: SdkGeneratorContext): boolean {
         const hasSnippetFilepath = context.config.output.snippetFilepath != null
         const publishConfig = context.ir.publishConfig
         switch (publishConfig?.type) {
-            case 'filesystem':
+            case "filesystem":
                 return publishConfig.generateFullProject || hasSnippetFilepath
-            case 'github':
-            case 'direct':
+            case "github":
+            case "direct":
             default:
                 return hasSnippetFilepath
         }

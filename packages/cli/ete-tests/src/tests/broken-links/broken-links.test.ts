@@ -1,14 +1,14 @@
-import stripAnsi from 'strip-ansi'
+import stripAnsi from "strip-ansi"
 
-import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
 
-import { runFernCli } from '../../utils/runFernCli'
+import { runFernCli } from "../../utils/runFernCli"
 
-const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of('fixtures'))
-describe('fern docs broken-links', () => {
-    it('simple broken links', async () => {
-        const { stdout } = await runFernCli(['docs', 'broken-links'], {
-            cwd: join(fixturesDir, RelativeFilePath.of('simple')),
+const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"))
+describe("fern docs broken-links", () => {
+    it("simple broken links", async () => {
+        const { stdout } = await runFernCli(["docs", "broken-links"], {
+            cwd: join(fixturesDir, RelativeFilePath.of("simple")),
             reject: false
         })
         expect(

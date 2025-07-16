@@ -1,8 +1,8 @@
-import { snakeCase } from 'lodash-es'
+import { snakeCase } from "lodash-es"
 
-import { DeclaredServiceName, DeclaredTypeName, FernFilepath } from '@fern-fern/ir-sdk/api'
+import { DeclaredServiceName, DeclaredTypeName, FernFilepath } from "@fern-fern/ir-sdk/api"
 
-import { TYPES_DIRECTORY, TYPES_MODULE } from './RubyConstants'
+import { TYPES_DIRECTORY, TYPES_MODULE } from "./RubyConstants"
 
 export class LocationGenerator {
     public rootModule: string
@@ -21,7 +21,7 @@ export class LocationGenerator {
             ...declaredTypeName.fernFilepath.allParts.map((pathPart) => pathPart.snakeCase.safeName),
             TYPES_DIRECTORY,
             declaredTypeName.name.snakeCase.safeName
-        ].join('/')
+        ].join("/")
     }
 
     public getLocationForServiceDeclaration(declaredServiceName: DeclaredServiceName): string {
@@ -29,10 +29,10 @@ export class LocationGenerator {
             snakeCase(this.directoryPrefix),
             ...declaredServiceName.fernFilepath.packagePath.map((pathPart) => pathPart.snakeCase.safeName),
             declaredServiceName.fernFilepath.file?.snakeCase.safeName,
-            'client'
+            "client"
         ]
             .filter((p) => p !== undefined)
-            .join('/')
+            .join("/")
     }
 
     // Note: this assumes the file is in a directory of the same name
@@ -43,7 +43,7 @@ export class LocationGenerator {
             fileName
         ]
             .filter((p) => p !== undefined)
-            .join('/')
+            .join("/")
     }
 
     public getModuleBreadcrumbs({

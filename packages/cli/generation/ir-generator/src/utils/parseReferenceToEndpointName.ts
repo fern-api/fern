@@ -1,6 +1,6 @@
-import { RelativeFilePath } from '@fern-api/path-utils'
+import { RelativeFilePath } from "@fern-api/path-utils"
 
-import { getResolvedPathOfImportedFile } from './getResolvedPathOfImportedFile'
+import { getResolvedPathOfImportedFile } from "./getResolvedPathOfImportedFile"
 
 export interface ReferenceToEndpointName {
     endpointName: string
@@ -16,7 +16,7 @@ export function parseReferenceToEndpointName({
     referencedIn: RelativeFilePath
     imports: Record<string, RelativeFilePath>
 }): ReferenceToEndpointName | undefined {
-    const [firstPart, secondPart, ...rest] = reference.split('.')
+    const [firstPart, secondPart, ...rest] = reference.split(".")
 
     if (firstPart == null || rest.length > 0) {
         return undefined

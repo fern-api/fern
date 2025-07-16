@@ -1,9 +1,9 @@
-import chalk from 'chalk'
-import { writeFile } from 'fs/promises'
-import yaml from 'js-yaml'
-import YAML from 'yaml'
+import chalk from "chalk"
+import { writeFile } from "fs/promises"
+import yaml from "js-yaml"
+import YAML from "yaml"
 
-import { getFernDirectory } from '@fern-api/configuration-loader'
+import { getFernDirectory } from "@fern-api/configuration-loader"
 import {
     AbsoluteFilePath,
     Directory,
@@ -12,24 +12,24 @@ import {
     getDirectoryContents,
     join,
     relativize
-} from '@fern-api/fs-utils'
-import { TaskContext } from '@fern-api/task-context'
+} from "@fern-api/fs-utils"
+import { TaskContext } from "@fern-api/task-context"
 
-import { Migration } from '../../../types/Migration'
+import { Migration } from "../../../types/Migration"
 
 export const migration: Migration = {
-    name: 'require-generators-yml',
-    summary: 'A generators.yml file is now required if you are using OpenAPI, AsyncAPI, or gRPC.',
+    name: "require-generators-yml",
+    summary: "A generators.yml file is now required if you are using OpenAPI, AsyncAPI, or gRPC.",
     run: async ({ context }) => {
         const absolutePathToFernDirectory = await getFernDirectory()
         if (absolutePathToFernDirectory == null) {
-            context.failAndThrow('Fern directory not found. Failed to run migration')
+            context.failAndThrow("Fern directory not found. Failed to run migration")
             return
         }
 
         const { files, directories } = await getFilesAndDirectories(absolutePathToFernDirectory)
 
-        const apisDirectory = directories.find((dir) => dir.name === 'apis')
+        const apisDirectory = directories.find((dir) => dir.name === "apis")
         if (apisDirectory == null) {
             // Single workspaces
             await addApiConfigurationToSingleWorkspace({
@@ -42,12 +42,12 @@ export const migration: Migration = {
         } else {
             // Multiple workspaces
             for (const workspace of apisDirectory.contents) {
-                if (workspace.type !== 'directory') {
+                if (workspace.type !== "directory") {
                     continue
                 }
                 const absoluteFilepathToWorkspace = join(
                     absolutePathToFernDirectory,
-                    RelativeFilePath.of('apis'),
+                    RelativeFilePath.of("apis"),
                     RelativeFilePath.of(workspace.name)
                 )
                 await addApiConfigurationToSingleWorkspace({
@@ -75,13 +75,13 @@ async function addApiConfigurationToSingleWorkspace({
     directories: Directory[]
 }): Promise<void> {
     const existingGeneratorsYml = files.find(
-        (file) => file.name === 'generators.yml' || file.name === 'generators.yaml'
+        (file) => file.name === "generators.yml" || file.name === "generators.yaml"
     )
-    const openapiDirectory = directories.find((dir) => dir.name === 'openapi')
+    const openapiDirectory = directories.find((dir) => dir.name === "openapi")
 
     if (existingGeneratorsYml == null) {
         if (openapiDirectory != null && openapiDirectory.contents[0] != null) {
-            const absolutePathToGeneratorsYml = join(absoluteFilepathToWorkspace, RelativeFilePath.of('generators.yml'))
+            const absolutePathToGeneratorsYml = join(absoluteFilepathToWorkspace, RelativeFilePath.of("generators.yml"))
             await writeFile(
                 absolutePathToGeneratorsYml,
                 yaml.dump({
@@ -104,7 +104,7 @@ async function addApiConfigurationToSingleWorkspace({
         } else if (openapiDirectory != null && openapiDirectory.contents[0] != null) {
             // add api config to existing generators.yml
             const parsedDocument = YAML.parseDocument(existingGeneratorsYml.contents)
-            parsedDocument.set('api', {
+            parsedDocument.set("api", {
                 path: join(
                     relativize(absolutePathToFernDirectory, absoluteFilepathToWorkspace),
                     RelativeFilePath.of(openapiDirectory.name),
@@ -125,7 +125,7 @@ async function getFilesAndDirectories(
     const files: File[] = []
     const directories: Directory[] = []
     for (const fileOrFolder of contents) {
-        if (fileOrFolder.type === 'directory') {
+        if (fileOrFolder.type === "directory") {
             directories.push(fileOrFolder)
         } else {
             files.push(fileOrFolder)

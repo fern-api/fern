@@ -1,4 +1,4 @@
-import { Writer } from './Writer'
+import { Writer } from "./Writer"
 
 export declare namespace GoFile {
     interface Args extends Writer.Args {}
@@ -47,8 +47,8 @@ ${this.buffer}`
         const result = Object.entries(this.imports)
             .filter(([importPath, _]) => importPath !== this.importPath) // Skip the target import path
             .map(([importPath, alias]) => `    ${alias} "${importPath}"`)
-            .join('\n')
+            .join("\n")
 
-        return result ? `import (\n${result}\n)` : ''
+        return result ? `import (\n${result}\n)` : ""
     }
 }

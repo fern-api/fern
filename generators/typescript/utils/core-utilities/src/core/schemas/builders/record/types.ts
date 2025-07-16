@@ -1,5 +1,5 @@
-import { BaseSchema } from '../../Schema'
-import { SchemaUtils } from '../schema-utils'
+import { BaseSchema } from "../../Schema"
+import { SchemaUtils } from "../schema-utils"
 
 export type RecordSchema<
     RawKey extends string | number,

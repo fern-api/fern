@@ -1,12 +1,12 @@
-import { TypeReferenceNode } from '@fern-typescript/commons'
-import { InlineConsts } from '@fern-typescript/commons/src/codegen-utils/inlineConsts'
-import { ts } from 'ts-morph'
+import { TypeReferenceNode } from "@fern-typescript/commons"
+import { InlineConsts } from "@fern-typescript/commons/src/codegen-utils/inlineConsts"
+import { ts } from "ts-morph"
 
-import { assertNever } from '@fern-api/core-utils'
+import { assertNever } from "@fern-api/core-utils"
 
-import { DeclaredTypeName, Literal, MapType, ResolvedTypeReference, TypeReference } from '@fern-fern/ir-sdk/api'
+import { DeclaredTypeName, Literal, MapType, ResolvedTypeReference, TypeReference } from "@fern-fern/ir-sdk/api"
 
-import { AbstractTypeReferenceConverter, ConvertTypeReferenceParams } from './AbstractTypeReferenceConverter'
+import { AbstractTypeReferenceConverter, ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter"
 
 export declare namespace AbstractTypeReferenceToTypeNodeConverter {
     export interface Init extends AbstractTypeReferenceConverter.Init {
@@ -37,7 +37,7 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
             named: () => false,
             unknown: () => this.unknown().isOptional,
             _other: () => {
-                throw new Error('Unexpected ResolvedTypeReference type: ' + resolvedType.type)
+                throw new Error("Unexpected ResolvedTypeReference type: " + resolvedType.type)
             }
         })
 
@@ -82,13 +82,13 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
     ): ts.TypeNode {
         let name: ts.EntityName = ts.factory.createIdentifier(params.aliasTypeName)
         switch (params.genericIn) {
-            case 'list':
+            case "list":
                 name = ts.factory.createQualifiedName(name, InlineConsts.LIST_ITEM_TYPE_NAME)
                 break
-            case 'map':
+            case "map":
                 name = ts.factory.createQualifiedName(name, InlineConsts.MAP_VALUE_TYPE_NAME)
                 break
-            case 'set':
+            case "set":
                 name = ts.factory.createQualifiedName(name, InlineConsts.LIST_ITEM_TYPE_NAME)
                 break
             default:
@@ -108,13 +108,13 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
             ts.factory.createIdentifier(propertyName)
         )
         switch (genericIn) {
-            case 'list':
+            case "list":
                 name = ts.factory.createQualifiedName(name, InlineConsts.LIST_ITEM_TYPE_NAME)
                 break
-            case 'map':
+            case "map":
                 name = ts.factory.createQualifiedName(name, InlineConsts.MAP_VALUE_TYPE_NAME)
                 break
-            case 'set':
+            case "set":
                 name = ts.factory.createQualifiedName(name, InlineConsts.LIST_ITEM_TYPE_NAME)
                 break
             case undefined:
@@ -243,7 +243,7 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
                 }
             },
             _other: () => {
-                throw new Error('Unknown literal: ' + literal.type)
+                throw new Error("Unknown literal: " + literal.type)
             }
         })
     }
@@ -254,7 +254,7 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
 
     protected override mapWithNonEnumKeys(map: MapType, params: ConvertTypeReferenceParams): TypeReferenceNode {
         return this.generateNonOptionalTypeReferenceNode(
-            ts.factory.createTypeReferenceNode('Record', [
+            ts.factory.createTypeReferenceNode("Record", [
                 this.convert({ ...params, typeReference: map.keyType }).typeNode,
                 this.convert({ ...params, typeReference: map.valueType }).typeNode
             ])
@@ -264,7 +264,7 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
     protected mapWithOptionalValues(map: MapType, params: ConvertTypeReferenceParams): TypeReferenceNode {
         const valueType = this.convert({ ...params, typeReference: map.valueType })
         return this.generateNonOptionalTypeReferenceNode(
-            ts.factory.createTypeReferenceNode('Record', [
+            ts.factory.createTypeReferenceNode("Record", [
                 this.convert({ ...params, typeReference: map.keyType }).typeNode,
                 (valueType.isOptional ? valueType : this.optional(map.valueType, params)).typeNode
             ])

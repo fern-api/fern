@@ -1,12 +1,12 @@
-import decompress from 'decompress'
-import { cp, readdir, rm } from 'fs/promises'
-import tmp from 'tmp-promise'
-import urlJoin from 'url-join'
+import decompress from "decompress"
+import { cp, readdir, rm } from "fs/promises"
+import tmp from "tmp-promise"
+import urlJoin from "url-join"
 
-import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
-import { Logger } from '@fern-api/logger'
-import { createLoggingExecutable } from '@fern-api/logging-execa'
-import { PublishInfo } from '@fern-api/typescript-base'
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { Logger } from "@fern-api/logger"
+import { createLoggingExecutable } from "@fern-api/logging-execa"
+import { PublishInfo } from "@fern-api/typescript-base"
 
 export declare namespace PersistedTypescriptProject {
     export interface Init {
@@ -69,15 +69,15 @@ export class PersistedTypescriptProject {
             return
         }
 
-        const yarn = createLoggingExecutable('yarn', {
+        const yarn = createLoggingExecutable("yarn", {
             cwd: this.directory,
             logger
         })
 
-        await yarn(['install'], {
+        await yarn(["install"], {
             env: {
                 // set enableImmutableInstalls=false so we can modify yarn.lock, even when in CI
-                YARN_ENABLE_IMMUTABLE_INSTALLS: 'false'
+                YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
             }
         })
 
@@ -95,7 +95,7 @@ export class PersistedTypescriptProject {
 
         await this.installDependencies(logger)
 
-        const yarn = createLoggingExecutable('yarn', {
+        const yarn = createLoggingExecutable("yarn", {
             cwd: this.directory,
             logger
         })
@@ -115,7 +115,7 @@ export class PersistedTypescriptProject {
 
         await this.format(logger)
 
-        const yarn = createLoggingExecutable('yarn', {
+        const yarn = createLoggingExecutable("yarn", {
             cwd: this.directory,
             logger
         })
@@ -151,20 +151,20 @@ export class PersistedTypescriptProject {
     }): Promise<void> {
         await this.build(logger)
 
-        const npm = createLoggingExecutable('npm', {
+        const npm = createLoggingExecutable("npm", {
             cwd: this.directory,
             logger
         })
 
         // pack to tmp dir
         const directoryContainingPack = AbsoluteFilePath.of((await tmp.dir()).path)
-        await npm(['pack', '--pack-destination', directoryContainingPack])
+        await npm(["pack", "--pack-destination", directoryContainingPack])
 
         // decompress pack to a new tmp dir
         const directoryContainingPackItems = await readdir(directoryContainingPack)
-        const packName = directoryContainingPackItems.find((item) => item.endsWith('.tgz'))
+        const packName = directoryContainingPackItems.find((item) => item.endsWith(".tgz"))
         if (packName == null) {
-            throw new Error('Failed to find pack')
+            throw new Error("Failed to find pack")
         }
         const pathToPack = join(directoryContainingPack, RelativeFilePath.of(packName))
         const directoryOfDecompressedPack = AbsoluteFilePath.of((await tmp.dir()).path)
@@ -230,7 +230,7 @@ export class PersistedTypescriptProject {
             unzipOutput
         }: { destinationPath: AbsoluteFilePath; zipFilename: string; logger: Logger; unzipOutput?: boolean }
     ) {
-        const zip = createLoggingExecutable('zip', {
+        const zip = createLoggingExecutable("zip", {
             cwd: directoryToZip,
             logger,
             // zip is noisy
@@ -238,8 +238,8 @@ export class PersistedTypescriptProject {
         })
         const destinationZip = join(destinationPath, RelativeFilePath.of(zipFilename))
 
-        const tmpZipLocation = join(AbsoluteFilePath.of((await tmp.dir()).path), RelativeFilePath.of('output.zip'))
-        await zip(['-r', tmpZipLocation, ...(await readdir(directoryToZip))])
+        const tmpZipLocation = join(AbsoluteFilePath.of((await tmp.dir()).path), RelativeFilePath.of("output.zip"))
+        await zip(["-r", tmpZipLocation, ...(await readdir(directoryToZip))])
         await cp(tmpZipLocation, destinationZip)
 
         if (unzipOutput) {
@@ -265,7 +265,7 @@ export class PersistedTypescriptProject {
     }): Promise<void> {
         await this.build(logger)
 
-        const npm = createLoggingExecutable('npm', {
+        const npm = createLoggingExecutable("npm", {
             cwd: this.directory,
             logger
         })
@@ -275,42 +275,42 @@ export class PersistedTypescriptProject {
 
         // intentionally not writing these to the project config with `--location project`,
         // so the registry url and token aren't persisted
-        await npm(['config', 'set', 'registry', publishInfo.registryUrl], {
+        await npm(["config", "set", "registry", publishInfo.registryUrl], {
             secrets: [publishInfo.registryUrl]
         })
-        await npm(['config', 'set', `//${registryUrlWithoutProtocol}:_authToken`, publishInfo.token], {
+        await npm(["config", "set", `//${registryUrlWithoutProtocol}:_authToken`, publishInfo.token], {
             secrets: [registryUrlWithoutProtocol, publishInfo.token]
         })
 
-        const publishCommand = ['publish']
+        const publishCommand = ["publish"]
         if (dryRun) {
-            publishCommand.push('--dry-run')
+            publishCommand.push("--dry-run")
         }
         if (shouldTolerateRepublish) {
-            publishCommand.push('--tolerate-republish')
+            publishCommand.push("--tolerate-republish")
         }
         await npm(publishCommand)
     }
 
     public async deleteGitIgnoredFiles(logger: Logger): Promise<void> {
-        const git = createLoggingExecutable('git', {
+        const git = createLoggingExecutable("git", {
             cwd: this.directory,
             logger
         })
-        await git(['init'])
-        await git(['add', '.'])
+        await git(["init"])
+        await git(["add", "."])
         await git([
-            '-c',
+            "-c",
             "user.name='fern'",
-            '-c',
+            "-c",
             "user.email='hey@buildwithfern.com'",
-            'commit',
-            '-m',
+            "commit",
+            "-m",
             '"Initial commit"'
         ])
-        await git(['clean', '-fdx'])
+        await git(["clean", "-fdx"])
 
-        await rm(join(this.directory, RelativeFilePath.of('.git')), { recursive: true })
+        await rm(join(this.directory, RelativeFilePath.of(".git")), { recursive: true })
     }
 
     public async writeArbitraryFiles(run: (pathToProject: AbsoluteFilePath) => Promise<void>): Promise<void> {

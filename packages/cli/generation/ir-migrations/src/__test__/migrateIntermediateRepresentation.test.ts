@@ -1,21 +1,21 @@
-import { GeneratorName } from '@fern-api/configuration-loader'
-import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
-import { IntermediateRepresentation } from '@fern-api/ir-sdk'
-import { isVersionAhead } from '@fern-api/semver-utils'
-import { createMockTaskContext } from '@fern-api/task-context'
+import { GeneratorName } from "@fern-api/configuration-loader"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { IntermediateRepresentation } from "@fern-api/ir-sdk"
+import { isVersionAhead } from "@fern-api/semver-utils"
+import { createMockTaskContext } from "@fern-api/task-context"
 
-import { getIntermediateRepresentationMigrator } from '../IntermediateRepresentationMigrator'
-import { IrVersions } from '../ir-versions'
-import { migrateIntermediateRepresentationForGenerator } from '../migrateIntermediateRepresentationForGenerator'
+import { getIntermediateRepresentationMigrator } from "../IntermediateRepresentationMigrator"
+import { IrVersions } from "../ir-versions"
+import { migrateIntermediateRepresentationForGenerator } from "../migrateIntermediateRepresentationForGenerator"
 import {
     GeneratorVersion,
     GeneratorWasNeverUpdatedToConsumeNewIR,
     GeneratorWasNotCreatedYet
-} from '../types/IrMigration'
-import { getIrForApi } from './utils/getIrForApi'
+} from "../types/IrMigration"
+import { getIrForApi } from "./utils/getIrForApi"
 
-describe('migrateIntermediateRepresentation', () => {
-    describe('migrations are in order', () => {
+describe("migrateIntermediateRepresentation", () => {
+    describe("migrations are in order", () => {
         const migrations = getIntermediateRepresentationMigrator().migrations
         for (const generatorName of Object.values(GeneratorName)) {
             // eslint-disable-next-line jest/valid-title
@@ -52,8 +52,8 @@ describe('migrateIntermediateRepresentation', () => {
             intermediateRepresentation: await getIrForSimpleApi(),
             context: createMockTaskContext(),
             targetGenerator: {
-                name: 'fernapi/fern-typescript-sdk',
-                version: '0.0.246'
+                name: "fernapi/fern-typescript-sdk",
+                version: "0.0.246"
             }
         })
         expect(
@@ -67,18 +67,18 @@ describe('migrateIntermediateRepresentation', () => {
             intermediateRepresentation: await getIrForSimpleApi(),
             context: createMockTaskContext(),
             targetGenerator: {
-                name: 'fernapi/fern-typescript-sdk',
-                version: '0.0.245-1-ga1ce47f'
+                name: "fernapi/fern-typescript-sdk",
+                version: "0.0.245-1-ga1ce47f"
             }
         })
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         expect((migrated as IrVersions.V1.ir.IntermediateRepresentation)?.errors?.[0]?.discriminantValue).toEqual({
-            camelCase: 'blogNotFoundError',
-            originalValue: 'BlogNotFoundError',
-            pascalCase: 'BlogNotFoundError',
-            screamingSnakeCase: 'BLOG_NOT_FOUND_ERROR',
-            snakeCase: 'blog_not_found_error',
-            wireValue: 'BlogNotFoundError'
+            camelCase: "blogNotFoundError",
+            originalValue: "BlogNotFoundError",
+            pascalCase: "BlogNotFoundError",
+            screamingSnakeCase: "BLOG_NOT_FOUND_ERROR",
+            snakeCase: "blog_not_found_error",
+            wireValue: "BlogNotFoundError"
         })
     })
 
@@ -87,18 +87,18 @@ describe('migrateIntermediateRepresentation', () => {
             intermediateRepresentation: await getIrForSimpleApi(),
             context: createMockTaskContext(),
             targetGenerator: {
-                name: 'fernapi/fern-typescript-sdk',
-                version: '0.0.245'
+                name: "fernapi/fern-typescript-sdk",
+                version: "0.0.245"
             }
         })
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         expect((migrated as IrVersions.V1.ir.IntermediateRepresentation)?.errors?.[0]?.discriminantValue).toEqual({
-            camelCase: 'blogNotFoundError',
-            originalValue: 'BlogNotFoundError',
-            pascalCase: 'BlogNotFoundError',
-            screamingSnakeCase: 'BLOG_NOT_FOUND_ERROR',
-            snakeCase: 'blog_not_found_error',
-            wireValue: 'BlogNotFoundError'
+            camelCase: "blogNotFoundError",
+            originalValue: "BlogNotFoundError",
+            pascalCase: "BlogNotFoundError",
+            screamingSnakeCase: "BLOG_NOT_FOUND_ERROR",
+            snakeCase: "blog_not_found_error",
+            wireValue: "BlogNotFoundError"
         })
     })
 
@@ -107,8 +107,8 @@ describe('migrateIntermediateRepresentation', () => {
             intermediateRepresentation: await getIrForSimpleApi(),
             context: createMockTaskContext(),
             targetGenerator: {
-                name: 'fernapi/fern-typescript-sdk',
-                version: '0.0.246-1-ga1ce47f'
+                name: "fernapi/fern-typescript-sdk",
+                version: "0.0.246-1-ga1ce47f"
             }
         })
 
@@ -120,8 +120,8 @@ describe('migrateIntermediateRepresentation', () => {
             intermediateRepresentation: await getIrForSimpleApi(),
             context: createMockTaskContext(),
             targetGenerator: {
-                name: 'fernapi/fern-typescript-sdk',
-                version: '0.0.247'
+                name: "fernapi/fern-typescript-sdk",
+                version: "0.0.247"
             }
         })
 
@@ -130,5 +130,5 @@ describe('migrateIntermediateRepresentation', () => {
 })
 
 function getIrForSimpleApi(): Promise<IntermediateRepresentation> {
-    return getIrForApi(join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of('./fixtures/simple')))
+    return getIrForApi(join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/simple")))
 }

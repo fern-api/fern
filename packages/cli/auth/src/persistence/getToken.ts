@@ -1,11 +1,11 @@
-import { readFile } from 'fs/promises'
+import { readFile } from "fs/promises"
 
-import { doesPathExist } from '@fern-api/fs-utils'
+import { doesPathExist } from "@fern-api/fs-utils"
 
-import { FernOrganizationToken, FernToken, FernUserToken } from '../FernToken'
-import { getPathToTokenFile } from './getPathToTokenFile'
+import { FernOrganizationToken, FernToken, FernUserToken } from "../FernToken"
+import { getPathToTokenFile } from "./getPathToTokenFile"
 
-const FERN_TOKEN_ENV_VAR = 'FERN_TOKEN'
+const FERN_TOKEN_ENV_VAR = "FERN_TOKEN"
 
 export async function getToken(): Promise<FernToken | undefined> {
     return (await getAccessToken()) ?? (await getUserToken())
@@ -17,7 +17,7 @@ export async function getAccessToken(): Promise<FernOrganizationToken | undefine
         return undefined
     }
     return {
-        type: 'organization',
+        type: "organization",
         value: tokenFromEnvVar
     }
 }
@@ -36,7 +36,7 @@ export async function getUserToken(): Promise<FernUserToken | undefined> {
     }
 
     return {
-        type: 'user',
+        type: "user",
         value: tokenString
     }
 }

@@ -1,15 +1,15 @@
-import { csharp } from '@fern-api/csharp-codegen'
+import { csharp } from "@fern-api/csharp-codegen"
 
-import { HttpEndpoint, SdkRequest, TypeReference } from '@fern-fern/ir-sdk/api'
+import { HttpEndpoint, SdkRequest, TypeReference } from "@fern-fern/ir-sdk/api"
 
-import { SdkGeneratorContext } from '../../SdkGeneratorContext'
-import { RawClient } from '../http/RawClient'
+import { SdkGeneratorContext } from "../../SdkGeneratorContext"
+import { RawClient } from "../http/RawClient"
 import {
     EndpointRequest,
     HeaderParameterCodeBlock,
     QueryParameterCodeBlock,
     RequestBodyCodeBlock
-} from './EndpointRequest'
+} from "./EndpointRequest"
 
 export class ReferencedEndpointRequest extends EndpointRequest {
     private requestBodyShape: TypeReference
@@ -43,6 +43,6 @@ export class ReferencedEndpointRequest extends EndpointRequest {
     }
 
     public getRequestType(): RawClient.RequestBodyType | undefined {
-        return 'json'
+        return "json"
     }
 }

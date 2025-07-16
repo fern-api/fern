@@ -1,8 +1,8 @@
-import { z } from 'zod'
+import { z } from "zod"
 
-import { GeneratorGroupSchema } from './GeneratorGroupSchema'
+import { GeneratorGroupSchema } from "./GeneratorGroupSchema"
 
-export const DEFAULT_GROUP_GENERATORS_CONFIG_KEY = 'default-group'
+export const DEFAULT_GROUP_GENERATORS_CONFIG_KEY = "default-group"
 
 export const GeneratorsConfigurationSchema = z.strictObject({
     [DEFAULT_GROUP_GENERATORS_CONFIG_KEY]: z.optional(z.string()),

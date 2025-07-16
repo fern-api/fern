@@ -1,8 +1,8 @@
-import { assertNever } from '@fern-api/core-utils'
-import { csharp } from '@fern-api/csharp-codegen'
-import { FernIr } from '@fern-api/dynamic-ir-sdk'
+import { assertNever } from "@fern-api/core-utils"
+import { csharp } from "@fern-api/csharp-codegen"
+import { FernIr } from "@fern-api/dynamic-ir-sdk"
 
-import { DynamicSnippetsGeneratorContext } from './DynamicSnippetsGeneratorContext'
+import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext"
 
 export declare namespace DynamicTypeMapper {
     interface Args {
@@ -20,33 +20,33 @@ export class DynamicTypeMapper {
 
     public convert(args: DynamicTypeMapper.Args): csharp.Type {
         switch (args.typeReference.type) {
-            case 'list':
+            case "list":
                 return csharp.Type.list(this.convert({ typeReference: args.typeReference, unboxOptionals: true }))
-            case 'literal':
+            case "literal":
                 return this.convertLiteral({ literal: args.typeReference.value })
-            case 'map': {
+            case "map": {
                 return csharp.Type.map(
                     this.convert({ typeReference: args.typeReference.key }),
                     this.convert({ typeReference: args.typeReference.value })
                 )
             }
-            case 'named': {
+            case "named": {
                 const named = this.context.resolveNamedType({ typeId: args.typeReference.value })
                 if (named == null) {
                     return this.convertUnknown()
                 }
                 return this.convertNamed({ named })
             }
-            case 'optional':
-            case 'nullable': {
+            case "optional":
+            case "nullable": {
                 const value = this.convert({ typeReference: args.typeReference.value })
                 return args.unboxOptionals ? value : csharp.Type.optional(value)
             }
-            case 'primitive':
+            case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value })
-            case 'set':
+            case "set":
                 return csharp.Type.set(this.convert({ typeReference: args.typeReference, unboxOptionals: true }))
-            case 'unknown':
+            case "unknown":
                 return this.convertUnknown()
             default:
                 assertNever(args.typeReference)
@@ -55,17 +55,17 @@ export class DynamicTypeMapper {
 
     private convertNamed({ named }: { named: FernIr.dynamic.NamedType }): csharp.Type {
         switch (named.type) {
-            case 'alias':
+            case "alias":
                 return this.convert({ typeReference: named.typeReference })
-            case 'enum':
-            case 'object':
+            case "enum":
+            case "object":
                 return csharp.Type.reference(
                     csharp.classReference({
                         name: this.context.getClassName(named.declaration.name),
                         namespace: this.context.getNamespace(named.declaration.fernFilepath)
                     })
                 )
-            case 'discriminatedUnion':
+            case "discriminatedUnion":
                 if (!this.context.shouldUseDiscriminatedUnions()) {
                     return csharp.Type.object()
                 }
@@ -75,7 +75,7 @@ export class DynamicTypeMapper {
                         namespace: this.context.getNamespace(named.declaration.fernFilepath)
                     })
                 )
-            case 'undiscriminatedUnion':
+            case "undiscriminatedUnion":
                 return csharp.Type.oneOf(
                     named.types.map((typeReference) => {
                         return this.convert({ typeReference })
@@ -88,9 +88,9 @@ export class DynamicTypeMapper {
 
     private convertLiteral({ literal }: { literal: FernIr.dynamic.LiteralType }): csharp.Type {
         switch (literal.type) {
-            case 'boolean':
+            case "boolean":
                 return csharp.Type.boolean()
-            case 'string':
+            case "string":
                 return csharp.Type.string()
         }
     }
@@ -101,31 +101,31 @@ export class DynamicTypeMapper {
 
     private convertPrimitive({ primitive }: { primitive: FernIr.PrimitiveTypeV1 }): csharp.Type {
         switch (primitive) {
-            case 'INTEGER':
+            case "INTEGER":
                 return csharp.Type.integer()
-            case 'UINT':
+            case "UINT":
                 return csharp.Type.uint()
-            case 'LONG':
+            case "LONG":
                 return csharp.Type.long()
-            case 'UINT_64':
+            case "UINT_64":
                 return csharp.Type.ulong()
-            case 'FLOAT':
+            case "FLOAT":
                 return csharp.Type.float()
-            case 'DOUBLE':
+            case "DOUBLE":
                 return csharp.Type.double()
-            case 'BOOLEAN':
+            case "BOOLEAN":
                 return csharp.Type.boolean()
-            case 'STRING':
+            case "STRING":
                 return csharp.Type.string()
-            case 'DATE':
+            case "DATE":
                 return csharp.Type.dateOnly()
-            case 'DATE_TIME':
+            case "DATE_TIME":
                 return csharp.Type.dateTime()
-            case 'UUID':
+            case "UUID":
                 return csharp.Type.string()
-            case 'BASE_64':
+            case "BASE_64":
                 return csharp.Type.string()
-            case 'BIG_INTEGER':
+            case "BIG_INTEGER":
                 return csharp.Type.string()
             default:
                 assertNever(primitive)

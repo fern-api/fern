@@ -1,22 +1,22 @@
-import { GeneratorName } from '@fern-api/configuration-loader'
-import { assertNever } from '@fern-api/core-utils'
+import { GeneratorName } from "@fern-api/configuration-loader"
+import { assertNever } from "@fern-api/core-utils"
 
-import { IrSerialization } from '../../ir-serialization'
-import { IrVersions } from '../../ir-versions'
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
+import { IrSerialization } from "../../ir-serialization"
+import { IrVersions } from "../../ir-versions"
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
 
 export const V28_TO_V27_MIGRATION: IrMigration<
     IrVersions.V28.ir.IntermediateRepresentation,
     IrVersions.V27.ir.IntermediateRepresentation
 > = {
-    laterVersion: 'v28',
-    earlierVersion: 'v27',
+    laterVersion: "v28",
+    earlierVersion: "v27",
     firstGeneratorVersionToConsumeNewIR: {
-        [GeneratorName.TYPESCRIPT_NODE_SDK]: '0.8.1-1-g0f40bf18',
-        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: '0.8.1-1-g0f40bf18',
+        [GeneratorName.TYPESCRIPT_NODE_SDK]: "0.8.1-1-g0f40bf18",
+        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: "0.8.1-1-g0f40bf18",
         [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_SDK]: '0.8.1-1-g0f40bf18',
-        [GeneratorName.TYPESCRIPT_EXPRESS]: '0.8.1-1-g0f40bf18',
+        [GeneratorName.TYPESCRIPT_SDK]: "0.8.1-1-g0f40bf18",
+        [GeneratorName.TYPESCRIPT_EXPRESS]: "0.8.1-1-g0f40bf18",
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -28,9 +28,9 @@ export const V28_TO_V27_MIGRATION: IrMigration<
         [GeneratorName.STOPLIGHT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.GO_FIBER]: '0.9.0-2-g6b0be0e',
-        [GeneratorName.GO_MODEL]: '0.9.0-2-g6b0be0e',
-        [GeneratorName.GO_SDK]: '0.9.0-2-g6b0be0e',
+        [GeneratorName.GO_FIBER]: "0.9.0-2-g6b0be0e",
+        [GeneratorName.GO_MODEL]: "0.9.0-2-g6b0be0e",
+        [GeneratorName.GO_SDK]: "0.9.0-2-g6b0be0e",
         [GeneratorName.RUBY_MODEL]: GeneratorWasNotCreatedYet,
         [GeneratorName.RUBY_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.CSHARP_MODEL]: GeneratorWasNotCreatedYet,
@@ -42,7 +42,7 @@ export const V28_TO_V27_MIGRATION: IrMigration<
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V27.IntermediateRepresentation.jsonOrThrow(ir, {
-            unrecognizedObjectKeys: 'strip'
+            unrecognizedObjectKeys: "strip"
         }),
     migrateBackwards: (v28): IrVersions.V27.ir.IntermediateRepresentation => {
         return {
@@ -111,9 +111,9 @@ function convertWebhook(val: IrVersions.V28.Webhook): IrVersions.V27.Webhook {
 
 function convertWebhookPayload(val: IrVersions.V28.WebhookPayload): IrVersions.V27.WebhookPayload {
     switch (val.type) {
-        case 'inlinedPayload':
+        case "inlinedPayload":
             return IrVersions.V27.WebhookPayload.inlinedPayload(convertInlinedWebhookPayload(val))
-        case 'reference':
+        case "reference":
             return IrVersions.V27.WebhookPayload.reference({
                 ...val,
                 payloadType: maybeConvertBooleanLiteralForTypeReference(val.payloadType)
@@ -175,13 +175,13 @@ function convertHttpEndpoint(val: IrVersions.V28.HttpEndpoint): IrVersions.V27.H
 
 function convertHttpResponse(val: IrVersions.V28.HttpResponse): IrVersions.V27.HttpResponse {
     switch (val.type) {
-        case 'json':
+        case "json":
             return IrVersions.V27.HttpResponse.json(convertJsonResponse(val.value))
-        case 'fileDownload':
+        case "fileDownload":
             return IrVersions.V27.HttpResponse.fileDownload(val)
-        case 'text':
+        case "text":
             return IrVersions.V27.HttpResponse.text(val)
-        case 'streaming':
+        case "streaming":
             return IrVersions.V27.HttpResponse.streaming(convertStreamingResponse(val))
         default:
             assertNever(val)
@@ -199,9 +199,9 @@ function convertStreamingResponseChunkType(
     val: IrVersions.V28.StreamingResponseChunkType
 ): IrVersions.V27.StreamingResponseChunkType {
     switch (val.type) {
-        case 'json':
+        case "json":
             return IrVersions.V27.StreamingResponseChunkType.json(maybeConvertBooleanLiteralForTypeReference(val.json))
-        case 'text':
+        case "text":
             return IrVersions.V27.StreamingResponseChunkType.text()
         default:
             assertNever(val)
@@ -210,12 +210,12 @@ function convertStreamingResponseChunkType(
 
 function convertJsonResponse(val: IrVersions.V28.JsonResponse): IrVersions.V27.JsonResponse {
     switch (val.type) {
-        case 'response':
+        case "response":
             return IrVersions.V27.JsonResponse.response({
                 ...val,
                 responseBodyType: maybeConvertBooleanLiteralForTypeReference(val.responseBodyType)
             })
-        case 'nestedPropertyAsResponse':
+        case "nestedPropertyAsResponse":
             return IrVersions.V27.JsonResponse.nestedPropertyAsResponse({
                 ...val,
                 responseBodyType: maybeConvertBooleanLiteralForTypeReference(val.responseBodyType),
@@ -235,9 +235,9 @@ function convertSdkRequest(val: IrVersions.V28.SdkRequest): IrVersions.V27.SdkRe
 
 function convertSdkRequestShape(val: IrVersions.V28.SdkRequestShape): IrVersions.V27.SdkRequestShape {
     switch (val.type) {
-        case 'justRequestBody':
+        case "justRequestBody":
             return IrVersions.V27.SdkRequestShape.justRequestBody(convertSdkRequestBodyType(val.value))
-        case 'wrapper':
+        case "wrapper":
             return IrVersions.V27.SdkRequestShape.wrapper(val)
         default:
             assertNever(val)
@@ -246,9 +246,9 @@ function convertSdkRequestShape(val: IrVersions.V28.SdkRequestShape): IrVersions
 
 function convertSdkRequestBodyType(val: IrVersions.V28.SdkRequestBodyType): IrVersions.V27.SdkRequestBodyType {
     switch (val.type) {
-        case 'typeReference':
+        case "typeReference":
             return IrVersions.V27.SdkRequestBodyType.typeReference(convertHttpRequestBodyReference(val))
-        case 'bytes':
+        case "bytes":
             return IrVersions.V27.SdkRequestBodyType.bytes(val)
         default:
             assertNever(val)
@@ -257,13 +257,13 @@ function convertSdkRequestBodyType(val: IrVersions.V28.SdkRequestBodyType): IrVe
 
 function convertHttpRequestBody(val: IrVersions.V28.HttpRequestBody): IrVersions.V27.HttpRequestBody {
     switch (val.type) {
-        case 'inlinedRequestBody':
+        case "inlinedRequestBody":
             return IrVersions.V27.HttpRequestBody.inlinedRequestBody(convertInlinedRequestBody(val))
-        case 'reference':
+        case "reference":
             return IrVersions.V27.HttpRequestBody.reference(convertHttpRequestBodyReference(val))
-        case 'fileUpload':
+        case "fileUpload":
             return IrVersions.V27.HttpRequestBody.fileUpload(convertFileUploadRequest(val))
-        case 'bytes':
+        case "bytes":
             return IrVersions.V27.HttpRequestBody.bytes(val)
         default:
             assertNever(val)
@@ -289,9 +289,9 @@ function convertFileUploadRequestProperty(
     val: IrVersions.V28.FileUploadRequestProperty
 ): IrVersions.V27.FileUploadRequestProperty {
     switch (val.type) {
-        case 'file':
+        case "file":
             return IrVersions.V27.FileUploadRequestProperty.file(val)
-        case 'bodyProperty':
+        case "bodyProperty":
             return IrVersions.V27.FileUploadRequestProperty.bodyProperty(convertInlinedRequestBodyProperty(val))
         default:
             assertNever(val)
@@ -372,11 +372,11 @@ function convertAuthSchemes(val: IrVersions.V28.AuthScheme[]): IrVersions.V27.Au
 
 function convertAuthScheme(val: IrVersions.V28.AuthScheme): IrVersions.V27.AuthScheme {
     switch (val.type) {
-        case 'basic':
+        case "basic":
             return IrVersions.V27.AuthScheme.basic(val)
-        case 'bearer':
+        case "bearer":
             return IrVersions.V27.AuthScheme.bearer(val)
-        case 'header':
+        case "header":
             return convertHeaderAuthScheme(val)
         default:
             assertNever(val)
@@ -412,15 +412,15 @@ function convertTypeDeclaration(val: IrVersions.V28.TypeDeclaration): IrVersions
 
 function convertType(val: IrVersions.V28.Type): IrVersions.V27.Type {
     switch (val.type) {
-        case 'alias':
+        case "alias":
             return IrVersions.V27.Type.alias(convertAliasTypeDeclaration(val))
-        case 'enum':
+        case "enum":
             return IrVersions.V27.Type.enum(val)
-        case 'object':
+        case "object":
             return IrVersions.V27.Type.object(convertObjectTypeDeclaration(val))
-        case 'union':
+        case "union":
             return IrVersions.V27.Type.union(convertUnionTypeDeclaration(val))
-        case 'undiscriminatedUnion':
+        case "undiscriminatedUnion":
             return IrVersions.V27.Type.undiscriminatedUnion(convertUndiscriminatedUnionTypeDeclaration(val))
         default:
             assertNever(val)
@@ -483,14 +483,14 @@ function convertSingleUnionTypeProperties(
     val: IrVersions.V28.SingleUnionTypeProperties
 ): IrVersions.V27.SingleUnionTypeProperties {
     switch (val.propertiesType) {
-        case 'samePropertiesAsObject':
+        case "samePropertiesAsObject":
             return IrVersions.V27.SingleUnionTypeProperties.samePropertiesAsObject(val)
-        case 'singleProperty':
+        case "singleProperty":
             return IrVersions.V27.SingleUnionTypeProperties.singleProperty({
                 name: val.name,
                 type: maybeConvertBooleanLiteralForTypeReference(val.type)
             })
-        case 'noProperties':
+        case "noProperties":
             return IrVersions.V27.SingleUnionTypeProperties.noProperties()
         default:
             assertNever(val)
@@ -510,9 +510,9 @@ function convertUndiscriminatedUnionMembers(
 
 function convertResolvedTypeReference(val: IrVersions.V28.ResolvedTypeReference): IrVersions.V27.ResolvedTypeReference {
     switch (val.type) {
-        case 'container':
-            if (val.container.type === 'literal') {
-                if (val.container.literal.type === 'boolean') {
+        case "container":
+            if (val.container.type === "literal") {
+                if (val.container.literal.type === "boolean") {
                     return IrVersions.V27.ResolvedTypeReference.primitive(IrVersions.V27.PrimitiveType.Boolean)
                 }
                 return IrVersions.V27.ResolvedTypeReference.container(
@@ -520,11 +520,11 @@ function convertResolvedTypeReference(val: IrVersions.V28.ResolvedTypeReference)
                 )
             }
             return IrVersions.V27.ResolvedTypeReference.container(maybeConvertBooleanLiteralForContainer(val.container))
-        case 'named':
+        case "named":
             return IrVersions.V27.ResolvedTypeReference.named(val)
-        case 'primitive':
+        case "primitive":
             return IrVersions.V27.ResolvedTypeReference.primitive(val.primitive)
-        case 'unknown':
+        case "unknown":
             return IrVersions.V27.ResolvedTypeReference.unknown()
         default:
             assertNever(val)
@@ -533,9 +533,9 @@ function convertResolvedTypeReference(val: IrVersions.V28.ResolvedTypeReference)
 
 function maybeConvertBooleanLiteralForTypeReference(val: IrVersions.V28.TypeReference): IrVersions.V27.TypeReference {
     switch (val.type) {
-        case 'container':
-            if (val.container.type === 'literal') {
-                if (val.container.literal.type === 'boolean') {
+        case "container":
+            if (val.container.type === "literal") {
+                if (val.container.literal.type === "boolean") {
                     return IrVersions.V27.TypeReference.primitive(IrVersions.V27.PrimitiveType.Boolean)
                 }
                 return IrVersions.V27.TypeReference.container(
@@ -543,11 +543,11 @@ function maybeConvertBooleanLiteralForTypeReference(val: IrVersions.V28.TypeRefe
                 )
             }
             return IrVersions.V27.TypeReference.container(maybeConvertBooleanLiteralForContainer(val.container))
-        case 'named':
+        case "named":
             return IrVersions.V27.TypeReference.named(val)
-        case 'primitive':
+        case "primitive":
             return IrVersions.V27.TypeReference.primitive(val.primitive)
-        case 'unknown':
+        case "unknown":
             return IrVersions.V27.TypeReference.unknown()
         default:
             assertNever(val)
@@ -556,22 +556,22 @@ function maybeConvertBooleanLiteralForTypeReference(val: IrVersions.V28.TypeRefe
 
 function maybeConvertBooleanLiteralForContainer(container: IrVersions.V28.ContainerType): IrVersions.V27.ContainerType {
     switch (container.type) {
-        case 'list':
+        case "list":
             return IrVersions.V27.ContainerType.list(maybeConvertBooleanLiteralForTypeReference(container.list))
-        case 'map':
+        case "map":
             return IrVersions.V27.ContainerType.map({
                 keyType: maybeConvertBooleanLiteralForTypeReference(container.keyType),
                 valueType: maybeConvertBooleanLiteralForTypeReference(container.valueType)
             })
-        case 'optional':
+        case "optional":
             return IrVersions.V27.ContainerType.optional(maybeConvertBooleanLiteralForTypeReference(container.optional))
-        case 'set':
+        case "set":
             return IrVersions.V27.ContainerType.set(maybeConvertBooleanLiteralForTypeReference(container.set))
-        case 'literal':
-            if (container.literal.type === 'boolean') {
+        case "literal":
+            if (container.literal.type === "boolean") {
                 // We throw an error here because the transformation is handled elsewhere.
                 // This makes it possible to always return a ContainerType here.
-                throw new Error('Internal error; failed to transform boolean literal between IR versions')
+                throw new Error("Internal error; failed to transform boolean literal between IR versions")
             }
             return IrVersions.V27.ContainerType.literal(IrVersions.V27.Literal.string(container.literal.string))
         default:

@@ -1,15 +1,15 @@
-import { noop } from 'lodash-es'
+import { noop } from "lodash-es"
 
-import { FernWorkspace, visitAllDefinitionFiles } from '@fern-api/api-workspace-commons'
-import { RawSchemas } from '@fern-api/fern-definition-schema'
+import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/api-workspace-commons"
+import { RawSchemas } from "@fern-api/fern-definition-schema"
 
-import { Rule, RuleViolation } from '../../Rule'
-import { visitDefinitionFileYamlAst } from '../../ast'
+import { Rule, RuleViolation } from "../../Rule"
+import { visitDefinitionFileYamlAst } from "../../ast"
 
 export const NoErrorStatusCodeConflictRule: Rule = {
-    name: 'no-error-status-code-conflict',
+    name: "no-error-status-code-conflict",
     create: ({ workspace }) => {
-        if (workspace.definition.rootApiFile.contents['error-discrimination']?.strategy !== 'status-code') {
+        if (workspace.definition.rootApiFile.contents["error-discrimination"]?.strategy !== "status-code") {
             return {}
         }
         const errorDeclarations = getErrorDeclarations(workspace)
@@ -21,12 +21,12 @@ export const NoErrorStatusCodeConflictRule: Rule = {
                     }
                     const statusCodeToError: Record<number, string[]> = {}
                     for (const error of endpoint.errors) {
-                        const errorName = typeof error === 'string' ? error : error.error
+                        const errorName = typeof error === "string" ? error : error.error
                         const errorDeclaration = errorDeclarations[errorName]
                         if (errorDeclaration == null) {
                             continue
                         }
-                        const statusCode = errorDeclaration['status-code']
+                        const statusCode = errorDeclaration["status-code"]
                         if (statusCode in statusCodeToError) {
                             statusCodeToError[statusCode]?.push(errorName)
                         } else {
@@ -37,8 +37,8 @@ export const NoErrorStatusCodeConflictRule: Rule = {
                     for (const [statusCode, errorNames] of Object.entries(statusCodeToError)) {
                         if (errorNames.length > 1) {
                             result.push({
-                                severity: 'fatal',
-                                message: `Multiple errors have status-code ${statusCode}: ${errorNames.join(', ')}`
+                                severity: "fatal",
+                                message: `Multiple errors have status-code ${statusCode}: ${errorNames.join(", ")}`
                             })
                         }
                     }

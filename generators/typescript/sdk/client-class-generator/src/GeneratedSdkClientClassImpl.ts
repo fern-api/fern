@@ -7,14 +7,14 @@ import {
     getPropertyKey,
     getTextOfTsNode,
     maybeAddDocsStructure
-} from '@fern-typescript/commons'
+} from "@fern-typescript/commons"
 import {
     GeneratedEndpointImplementation,
     GeneratedSdkClientClass,
     GeneratedWebsocketImplementation,
     SdkContext
-} from '@fern-typescript/contexts'
-import { ErrorResolver, PackageResolver } from '@fern-typescript/resolvers'
+} from "@fern-typescript/contexts"
+import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers"
 import {
     ClassDeclarationStructure,
     InterfaceDeclarationStructure,
@@ -25,10 +25,10 @@ import {
     Scope,
     StructureKind,
     ts
-} from 'ts-morph'
-import { Code, code } from 'ts-poet'
+} from "ts-morph"
+import { Code, code } from "ts-poet"
 
-import { SetRequired, assertNever } from '@fern-api/core-utils'
+import { SetRequired, assertNever } from "@fern-api/core-utils"
 
 import {
     AuthScheme,
@@ -47,22 +47,22 @@ import {
     SubpackageId,
     VariableDeclaration,
     VariableId
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { GeneratedHeader } from './GeneratedHeader'
-import { GeneratedWrappedService } from './GeneratedWrappedService'
-import { GeneratedBytesEndpointRequest } from './endpoint-request/GeneratedBytesEndpointRequest'
-import { GeneratedDefaultEndpointRequest } from './endpoint-request/GeneratedDefaultEndpointRequest'
-import { GeneratedFileUploadEndpointRequest } from './endpoint-request/GeneratedFileUploadEndpointRequest'
-import { GeneratedFileDownloadEndpointImplementation } from './endpoints/GeneratedFileDownloadEndpointImplementation'
-import { GeneratedStreamingEndpointImplementation } from './endpoints/GeneratedStreamingEndpointImplementation'
-import { GeneratedDefaultEndpointImplementation } from './endpoints/default/GeneratedDefaultEndpointImplementation'
-import { GeneratedNonThrowingEndpointResponse } from './endpoints/default/endpoint-response/GeneratedNonThrowingEndpointResponse'
-import { GeneratedThrowingEndpointResponse } from './endpoints/default/endpoint-response/GeneratedThrowingEndpointResponse'
-import { getNonVariablePathParameters } from './endpoints/utils/getNonVariablePathParameters'
-import { getLiteralValueForHeader, isLiteralHeader } from './endpoints/utils/isLiteralHeader'
-import { OAuthTokenProviderGenerator } from './oauth-generator/OAuthTokenProviderGenerator'
-import { GeneratedDefaultWebsocketImplementation } from './websocket/GeneratedDefaultWebsocketImplementation'
+import { GeneratedHeader } from "./GeneratedHeader"
+import { GeneratedWrappedService } from "./GeneratedWrappedService"
+import { GeneratedBytesEndpointRequest } from "./endpoint-request/GeneratedBytesEndpointRequest"
+import { GeneratedDefaultEndpointRequest } from "./endpoint-request/GeneratedDefaultEndpointRequest"
+import { GeneratedFileUploadEndpointRequest } from "./endpoint-request/GeneratedFileUploadEndpointRequest"
+import { GeneratedFileDownloadEndpointImplementation } from "./endpoints/GeneratedFileDownloadEndpointImplementation"
+import { GeneratedStreamingEndpointImplementation } from "./endpoints/GeneratedStreamingEndpointImplementation"
+import { GeneratedDefaultEndpointImplementation } from "./endpoints/default/GeneratedDefaultEndpointImplementation"
+import { GeneratedNonThrowingEndpointResponse } from "./endpoints/default/endpoint-response/GeneratedNonThrowingEndpointResponse"
+import { GeneratedThrowingEndpointResponse } from "./endpoints/default/endpoint-response/GeneratedThrowingEndpointResponse"
+import { getNonVariablePathParameters } from "./endpoints/utils/getNonVariablePathParameters"
+import { getLiteralValueForHeader, isLiteralHeader } from "./endpoints/utils/isLiteralHeader"
+import { OAuthTokenProviderGenerator } from "./oauth-generator/OAuthTokenProviderGenerator"
+import { GeneratedDefaultWebsocketImplementation } from "./websocket/GeneratedDefaultWebsocketImplementation"
 
 export declare namespace GeneratedSdkClientClassImpl {
     export interface Init {
@@ -79,7 +79,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         allowCustomFetcher: boolean
         shouldGenerateWebsocketClients: boolean
         requireDefaultEnvironment: boolean
-        defaultTimeoutInSeconds: number | 'infinity' | undefined
+        defaultTimeoutInSeconds: number | "infinity" | undefined
         npmPackage: NpmPackage | undefined
         includeContentHeadersOnFileDownloadResponse: boolean
         includeSerdeLayer: boolean
@@ -88,27 +88,27 @@ export declare namespace GeneratedSdkClientClassImpl {
         omitUndefined: boolean
         allowExtraFields: boolean
         oauthTokenProviderGenerator: OAuthTokenProviderGenerator
-        streamType: 'wrapper' | 'web'
-        fileResponseType: 'stream' | 'binary-response'
-        formDataSupport: 'Node16' | 'Node18'
+        streamType: "wrapper" | "web"
+        fileResponseType: "stream" | "binary-response"
+        formDataSupport: "Node16" | "Node18"
         omitFernHeaders: boolean
         useDefaultRequestParameterValues: boolean
     }
 }
 
 export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
-    private static readonly REQUEST_OPTIONS_INTERFACE_NAME = 'RequestOptions'
-    private static readonly IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME = 'IdempotentRequestOptions'
-    private static readonly TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME = 'timeoutInSeconds'
-    private static readonly ABORT_SIGNAL_PROPERTY_NAME = 'abortSignal'
-    private static readonly MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME = 'maxRetries'
-    private static readonly CUSTOM_FETCHER_PROPERTY_NAME = 'fetcher'
-    public static readonly BASE_URL_OPTION_PROPERTY_NAME = 'baseUrl'
-    public static readonly ENVIRONMENT_OPTION_PROPERTY_NAME = 'environment'
-    public static readonly OPTIONS_INTERFACE_NAME = 'Options'
-    public static readonly OPTIONS_PRIVATE_MEMBER = '_options'
-    public static readonly AUTHORIZATION_HEADER_HELPER_METHOD_NAME = '_getAuthorizationHeader'
-    public static readonly CUSTOM_AUTHORIZATION_HEADER_HELPER_METHOD_NAME = '_getCustomAuthorizationHeaders'
+    private static readonly REQUEST_OPTIONS_INTERFACE_NAME = "RequestOptions"
+    private static readonly IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME = "IdempotentRequestOptions"
+    private static readonly TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME = "timeoutInSeconds"
+    private static readonly ABORT_SIGNAL_PROPERTY_NAME = "abortSignal"
+    private static readonly MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME = "maxRetries"
+    private static readonly CUSTOM_FETCHER_PROPERTY_NAME = "fetcher"
+    public static readonly BASE_URL_OPTION_PROPERTY_NAME = "baseUrl"
+    public static readonly ENVIRONMENT_OPTION_PROPERTY_NAME = "environment"
+    public static readonly OPTIONS_INTERFACE_NAME = "Options"
+    public static readonly OPTIONS_PRIVATE_MEMBER = "_options"
+    public static readonly AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getAuthorizationHeader"
+    public static readonly CUSTOM_AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getCustomAuthorizationHeaders"
 
     private readonly isRoot: boolean
     private readonly intermediateRepresentation: IntermediateRepresentation
@@ -127,7 +127,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly inlineFileProperties: boolean
     private readonly includeSerdeLayer: boolean
     private readonly omitUndefined: boolean
-    private readonly formDataSupport: 'Node16' | 'Node18'
+    private readonly formDataSupport: "Node16" | "Node18"
     private readonly allowExtraFields: boolean
     private readonly importsManager: ImportsManager
     private readonly exportsManager: ExportsManager
@@ -205,7 +205,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 const requestBody = endpoint.requestBody ?? undefined
 
                 const getGeneratedEndpointRequest = () => {
-                    if (requestBody?.type === 'bytes') {
+                    if (requestBody?.type === "bytes") {
                         return new GeneratedBytesEndpointRequest({
                             ir: this.intermediateRepresentation,
                             packageId,
@@ -217,7 +217,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             exportsManager: this.exportsManager
                         })
                     }
-                    if (requestBody?.type === 'fileUpload') {
+                    if (requestBody?.type === "fileUpload") {
                         return new GeneratedFileUploadEndpointRequest({
                             importsManager: this.importsManager,
                             ir: this.intermediateRepresentation,
@@ -367,10 +367,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         })
                     },
                     bytes: (bytesResponse) => {
-                        throw new Error('Bytes response type is not supported yet')
+                        throw new Error("Bytes response type is not supported yet")
                     },
                     _other: () => {
-                        throw new Error('Unknown Response type: ' + endpoint.response?.body?.type)
+                        throw new Error("Unknown Response type: " + endpoint.response?.body?.type)
                     }
                 })
             })
@@ -429,7 +429,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     this.oauthAuthScheme = oauthScheme
                 },
                 _other: () => {
-                    throw new Error('Unknown auth scheme: ' + authScheme.type)
+                    throw new Error("Unknown auth scheme: " + authScheme.type)
                 }
             })
         }
@@ -533,7 +533,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
         const serviceClass: SetRequired<
             ClassDeclarationStructure,
-            'properties' | 'ctors' | 'methods' | 'getAccessors'
+            "properties" | "ctors" | "methods" | "getAccessors"
         > = {
             kind: StructureKind.Class,
             name: this.serviceClassName,
@@ -647,7 +647,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         )
                     ),
                     initializer: optionsInterface.properties?.every((property) => property.hasQuestionToken)
-                        ? '{}'
+                        ? "{}"
                         : undefined
                 }
             ]
@@ -723,7 +723,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             )
                         ),
                         initializer: optionsInterface.properties?.every((property) => property.hasQuestionToken)
-                            ? '{}'
+                            ? "{}"
                             : undefined
                     }
                 ]
@@ -782,7 +782,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 name: internalMethodName,
                 parameters: signature.parameters,
                 returnType: getTextOfTsNode(
-                    ts.factory.createTypeReferenceNode('Promise', [
+                    ts.factory.createTypeReferenceNode("Promise", [
                         isPaginated
                             ? signature.returnTypeWithoutPromise
                             : context.coreUtilities.fetcher.RawResponse.WithRawResponse._getReferenceToType(
@@ -796,7 +796,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 overloads: overloads.map((overload) => ({
                     parameters: overload.parameters,
                     returnType: getTextOfTsNode(
-                        ts.factory.createTypeReferenceNode('Promise', [
+                        ts.factory.createTypeReferenceNode("Promise", [
                             isPaginated
                                 ? overload.returnTypeWithoutPromise
                                 : context.coreUtilities.fetcher.RawResponse.WithRawResponse._getReferenceToType(
@@ -825,11 +825,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
             const method: MethodDeclarationStructure = {
                 kind: StructureKind.Method,
-                name: 'connect',
+                name: "connect",
                 isAsync: true,
                 parameters: signature.parameters,
                 returnType: getTextOfTsNode(
-                    ts.factory.createTypeReferenceNode('Promise', [signature.returnTypeWithoutPromise])
+                    ts.factory.createTypeReferenceNode("Promise", [signature.returnTypeWithoutPromise])
                 ),
                 scope: Scope.Public,
                 statements: classStatements.map(getTextOfTsNode)
@@ -854,13 +854,13 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             const returnsMaybeAuth =
                 !this.intermediateRepresentation.sdkConfig.isAuthMandatory || this.basicAuthScheme != null
             const returnType = returnsMaybeAuth
-                ? ts.factory.createTypeReferenceNode('Promise', [
+                ? ts.factory.createTypeReferenceNode("Promise", [
                       ts.factory.createUnionTypeNode([
                           ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
                           ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
                       ])
                   ])
-                : ts.factory.createTypeReferenceNode('Promise', [
+                : ts.factory.createTypeReferenceNode("Promise", [
                       ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
                   ])
 
@@ -890,8 +890,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         const rootHeaders = this.isRoot ? this.getRootHeaders(context) : []
         const shouldGenerateRootHeaders = this.isRoot && rootHeaders.length > 0
         if (shouldGenerateRootHeaders) {
-            context.importsManager.addImportFromRoot('core/headers', {
-                namedImports: ['mergeHeaders']
+            context.importsManager.addImportFromRoot("core/headers", {
+                namedImports: ["mergeHeaders"]
             })
             return code`this._options = {
                     ..._options,
@@ -942,7 +942,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
         if (this.requireDefaultEnvironment) {
             if (defaultEnvironment == null) {
-                throw new Error('Cannot use default environment because none exists')
+                throw new Error("Cannot use default environment because none exists")
             }
             return defaultEnvironment
         }
@@ -1006,7 +1006,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
                     let value: ts.Expression
                     if (literalValue != null) {
-                        if (typeof literalValue === 'boolean') {
+                        if (typeof literalValue === "boolean") {
                             const booleanLiteral = literalValue ? ts.factory.createTrue() : ts.factory.createFalse()
                             value = ts.factory.createCallExpression(
                                 ts.factory.createPropertyAccessExpression(
@@ -1023,7 +1023,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                             booleanLiteral
                                         )
                                     ),
-                                    ts.factory.createIdentifier('toString')
+                                    ts.factory.createIdentifier("toString")
                                 ),
                                 undefined,
                                 []
@@ -1058,7 +1058,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         if (includeFernHeaders) {
             headers.push({
                 header: this.intermediateRepresentation.sdkConfig.platformHeaders.language,
-                value: ts.factory.createStringLiteral('JavaScript')
+                value: ts.factory.createStringLiteral("JavaScript")
             })
 
             if (this.npmPackage != null) {
@@ -1112,11 +1112,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
             headers.push(
                 {
-                    header: 'X-Fern-Runtime',
+                    header: "X-Fern-Runtime",
                     value: context.coreUtilities.runtime.type._getReferenceTo()
                 },
                 {
-                    header: 'X-Fern-Runtime-Version',
+                    header: "X-Fern-Runtime-Version",
                     value: context.coreUtilities.runtime.version._getReferenceTo()
                 }
             )
@@ -1136,7 +1136,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     }
 
     private generateRequestOptionsInterface(context: SdkContext): InterfaceDeclarationStructure {
-        const requestOptions: SetRequired<InterfaceDeclarationStructure, 'properties'> = {
+        const requestOptions: SetRequired<InterfaceDeclarationStructure, "properties"> = {
             kind: StructureKind.Interface,
             name: GeneratedSdkClientClassImpl.REQUEST_OPTIONS_INTERFACE_NAME,
             properties: [
@@ -1144,19 +1144,19 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     name: getPropertyKey(GeneratedSdkClientClassImpl.TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME),
                     type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)),
                     hasQuestionToken: true,
-                    docs: ['The maximum time to wait for a response in seconds.']
+                    docs: ["The maximum time to wait for a response in seconds."]
                 },
                 {
                     name: getPropertyKey(GeneratedSdkClientClassImpl.MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME),
                     type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)),
                     hasQuestionToken: true,
-                    docs: ['The number of times to retry the request. Defaults to 2.']
+                    docs: ["The number of times to retry the request. Defaults to 2."]
                 },
                 {
                     name: getPropertyKey(GeneratedSdkClientClassImpl.ABORT_SIGNAL_PROPERTY_NAME),
-                    type: getTextOfTsNode(ts.factory.createIdentifier('AbortSignal')),
+                    type: getTextOfTsNode(ts.factory.createIdentifier("AbortSignal")),
                     hasQuestionToken: true,
-                    docs: ['A hook to abort the request.']
+                    docs: ["A hook to abort the request."]
                 },
                 ...this.intermediateRepresentation.headers.map((header) => {
                     return {
@@ -1167,10 +1167,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     }
                 }),
                 {
-                    name: 'headers',
-                    type: 'Record<string, string | core.Supplier<string | undefined> | undefined>',
+                    name: "headers",
+                    type: "Record<string, string | core.Supplier<string | undefined> | undefined>",
                     hasQuestionToken: true,
-                    docs: ['Additional headers to include in the request.']
+                    docs: ["Additional headers to include in the request."]
                 }
             ],
             isExported: true
@@ -1226,7 +1226,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             const environment =
                 firstEnvironment != null
                     ? firstEnvironment.getExpression()
-                    : ts.factory.createStringLiteral('YOUR_BASE_URL')
+                    : ts.factory.createStringLiteral("YOUR_BASE_URL")
             properties.push(
                 ts.factory.createPropertyAssignment(
                     GeneratedSdkClientClassImpl.ENVIRONMENT_OPTION_PROPERTY_NAME,
@@ -1239,13 +1239,13 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             properties.push(
                 ts.factory.createPropertyAssignment(
                     OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME,
-                    ts.factory.createStringLiteral('YOUR_CLIENT_ID')
+                    ts.factory.createStringLiteral("YOUR_CLIENT_ID")
                 )
             )
             properties.push(
                 ts.factory.createPropertyAssignment(
                     OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME,
-                    ts.factory.createStringLiteral('YOUR_CLIENT_SECRET')
+                    ts.factory.createStringLiteral("YOUR_CLIENT_SECRET")
                 )
             )
         }
@@ -1336,7 +1336,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 )
             ),
             hasQuestionToken: true,
-            docs: ['Specify a custom URL to connect the client to.']
+            docs: ["Specify a custom URL to connect the client to."]
         })
 
         if (this.isRoot && this.oauthAuthScheme != null && context.generateOAuthClients) {
@@ -1516,9 +1516,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         }
 
         properties.push({
-            docs: ['Additional headers to include in requests.'],
-            name: 'headers',
-            type: 'Record<string, string | core.Supplier<string | undefined> | undefined>',
+            docs: ["Additional headers to include in requests."],
+            name: "headers",
+            type: "Record<string, string | core.Supplier<string | undefined> | undefined>",
             hasQuestionToken: true
         })
 
@@ -1668,7 +1668,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         const statements: ts.Statement[] = []
 
         if (this.oauthAuthScheme != null) {
-            const BEARER_TOKEN_VARIABLE_NAME = 'bearer'
+            const BEARER_TOKEN_VARIABLE_NAME = "bearer"
             statements.push(
                 ts.factory.createVariableStatement(
                     undefined,
@@ -1698,10 +1698,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     ts.factory.createBlock(
                         [
                             ts.factory.createReturnStatement(
-                                ts.factory.createTemplateExpression(ts.factory.createTemplateHead('Bearer '), [
+                                ts.factory.createTemplateExpression(ts.factory.createTemplateHead("Bearer "), [
                                     ts.factory.createTemplateSpan(
                                         ts.factory.createIdentifier(BEARER_TOKEN_VARIABLE_NAME),
-                                        ts.factory.createTemplateTail('', '')
+                                        ts.factory.createTemplateTail("", "")
                                     )
                                 ])
                             )
@@ -1711,13 +1711,13 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 )
             )
 
-            statements.push(ts.factory.createReturnStatement(ts.factory.createIdentifier('undefined')))
+            statements.push(ts.factory.createReturnStatement(ts.factory.createIdentifier("undefined")))
 
             return statements
         }
         if (this.bearerAuthScheme != null) {
             if (this.bearerAuthScheme.tokenEnvVar != null) {
-                const BEARER_TOKEN_VARIABLE_NAME = 'bearer'
+                const BEARER_TOKEN_VARIABLE_NAME = "bearer"
                 statements.push(
                     ts.factory.createVariableStatement(
                         undefined,
@@ -1738,9 +1738,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                         ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
                                         ts.factory.createElementAccessExpression(
                                             ts.factory.createPropertyAccessChain(
-                                                ts.factory.createIdentifier('process'),
+                                                ts.factory.createIdentifier("process"),
                                                 ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                                ts.factory.createIdentifier('env')
+                                                ts.factory.createIdentifier("env")
                                             ),
                                             ts.factory.createStringLiteral(this.bearerAuthScheme.tokenEnvVar)
                                         )
@@ -1780,10 +1780,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
                     statements.push(
                         ts.factory.createReturnStatement(
-                            ts.factory.createTemplateExpression(ts.factory.createTemplateHead('Bearer '), [
+                            ts.factory.createTemplateExpression(ts.factory.createTemplateHead("Bearer "), [
                                 ts.factory.createTemplateSpan(
                                     ts.factory.createIdentifier(BEARER_TOKEN_VARIABLE_NAME),
-                                    ts.factory.createTemplateTail('', '')
+                                    ts.factory.createTemplateTail("", "")
                                 )
                             ])
                         )
@@ -1799,10 +1799,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             ts.factory.createBlock(
                                 [
                                     ts.factory.createReturnStatement(
-                                        ts.factory.createTemplateExpression(ts.factory.createTemplateHead('Bearer '), [
+                                        ts.factory.createTemplateExpression(ts.factory.createTemplateHead("Bearer "), [
                                             ts.factory.createTemplateSpan(
                                                 ts.factory.createIdentifier(BEARER_TOKEN_VARIABLE_NAME),
-                                                ts.factory.createTemplateTail('', '')
+                                                ts.factory.createTemplateTail("", "")
                                             )
                                         ])
                                     )
@@ -1815,18 +1815,18 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             } else if (this.intermediateRepresentation.sdkConfig.isAuthMandatory) {
                 statements.push(
                     ts.factory.createReturnStatement(
-                        ts.factory.createTemplateExpression(ts.factory.createTemplateHead('Bearer '), [
+                        ts.factory.createTemplateExpression(ts.factory.createTemplateHead("Bearer "), [
                             ts.factory.createTemplateSpan(
                                 context.coreUtilities.fetcher.Supplier.get(
                                     this.getReferenceToOption(this.getBearerAuthOptionKey(this.bearerAuthScheme))
                                 ),
-                                ts.factory.createTemplateTail('', '')
+                                ts.factory.createTemplateTail("", "")
                             )
                         ])
                     )
                 )
             } else {
-                const BEARER_TOKEN_VARIABLE_NAME = 'bearer'
+                const BEARER_TOKEN_VARIABLE_NAME = "bearer"
                 statements.push(
                     ts.factory.createVariableStatement(
                         undefined,
@@ -1856,10 +1856,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         ts.factory.createBlock(
                             [
                                 ts.factory.createReturnStatement(
-                                    ts.factory.createTemplateExpression(ts.factory.createTemplateHead('Bearer '), [
+                                    ts.factory.createTemplateExpression(ts.factory.createTemplateHead("Bearer "), [
                                         ts.factory.createTemplateSpan(
                                             ts.factory.createIdentifier(BEARER_TOKEN_VARIABLE_NAME),
-                                            ts.factory.createTemplateTail('', '')
+                                            ts.factory.createTemplateTail("", "")
                                         )
                                     ])
                                 )
@@ -1883,9 +1883,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                           ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
                           ts.factory.createElementAccessExpression(
                               ts.factory.createPropertyAccessChain(
-                                  ts.factory.createIdentifier('process'),
+                                  ts.factory.createIdentifier("process"),
                                   ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                  ts.factory.createIdentifier('env')
+                                  ts.factory.createIdentifier("env")
                               ),
                               ts.factory.createStringLiteral(this.basicAuthScheme.usernameEnvVar)
                           )
@@ -1905,9 +1905,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                           ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
                           ts.factory.createElementAccessExpression(
                               ts.factory.createPropertyAccessChain(
-                                  ts.factory.createIdentifier('process'),
+                                  ts.factory.createIdentifier("process"),
                                   ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                  ts.factory.createIdentifier('env')
+                                  ts.factory.createIdentifier("env")
                               ),
                               ts.factory.createStringLiteral(this.basicAuthScheme.passwordEnvVar)
                           )
@@ -2079,7 +2079,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         }
 
         if (!this.intermediateRepresentation.sdkConfig.isAuthMandatory) {
-            statements.push(ts.factory.createReturnStatement(ts.factory.createIdentifier('undefined')))
+            statements.push(ts.factory.createReturnStatement(ts.factory.createIdentifier("undefined")))
         }
 
         return statements
@@ -2091,7 +2091,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         for (const header of this.getCustomAuthorizationHeaders()) {
             const headerVariableName = `${header.header.name.name.camelCase.unsafeName}Value`
             const headerExpression =
-                header.type === 'authScheme' && header.header.headerEnvVar != null
+                header.type === "authScheme" && header.header.headerEnvVar != null
                     ? ts.factory.createBinaryExpression(
                           ts.factory.createParenthesizedExpression(
                               context.coreUtilities.fetcher.Supplier.get(
@@ -2101,9 +2101,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                           ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
                           ts.factory.createElementAccessExpression(
                               ts.factory.createPropertyAccessChain(
-                                  ts.factory.createIdentifier('process'),
+                                  ts.factory.createIdentifier("process"),
                                   ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                  ts.factory.createIdentifier('env')
+                                  ts.factory.createIdentifier("env")
                               ),
                               ts.factory.createStringLiteral(header.header.headerEnvVar)
                           )
@@ -2129,13 +2129,13 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             )
 
             const headerValue =
-                header.type === 'authScheme' && header.header.prefix != null
+                header.type === "authScheme" && header.header.prefix != null
                     ? ts.factory.createTemplateExpression(
                           ts.factory.createTemplateHead(`${header.header.prefix.trim()} `),
                           [
                               ts.factory.createTemplateSpan(
                                   ts.factory.createIdentifier(headerVariableName),
-                                  ts.factory.createTemplateTail('', '')
+                                  ts.factory.createTemplateTail("", "")
                               )
                           ]
                       )
@@ -2163,26 +2163,26 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
         for (const header of this.intermediateRepresentation.headers) {
             if (this.isAuthorizationHeader(header)) {
-                headers.push({ type: 'global', header })
+                headers.push({ type: "global", header })
             }
         }
 
         for (const header of this.authHeaders) {
-            headers.push({ type: 'authScheme', header })
+            headers.push({ type: "authScheme", header })
         }
 
         return headers
     }
 
     private isAuthorizationHeader(header: HttpHeader | HeaderAuthScheme): boolean {
-        return header.name.wireValue.toLowerCase() === 'authorization'
+        return header.name.wireValue.toLowerCase() === "authorization"
     }
 
     private getKeyForCustomHeader(header: CustomHeader): string {
         switch (header.type) {
-            case 'authScheme':
+            case "authScheme":
                 return this.getOptionKeyForAuthHeader(header.header)
-            case 'global':
+            case "global":
                 return this.getOptionKeyForHeader(header.header)
             default:
                 assertNever(header)
@@ -2201,7 +2201,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     public getReferenceToVariable(variableId: VariableId): ts.Expression {
         const variable = this.intermediateRepresentation.variables.find((v) => v.id === variableId)
         if (variable == null) {
-            throw new Error('Variable does not exist: ' + variableId)
+            throw new Error("Variable does not exist: " + variableId)
         }
         return this.getReferenceToOption(this.getOptionNameForVariable(variable))
     }
@@ -2211,4 +2211,4 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     }
 }
 
-type CustomHeader = { type: 'global'; header: HttpHeader } | { type: 'authScheme'; header: HeaderAuthScheme }
+type CustomHeader = { type: "global"; header: HttpHeader } | { type: "authScheme"; header: HeaderAuthScheme }

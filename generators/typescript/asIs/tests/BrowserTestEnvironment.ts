@@ -1,4 +1,4 @@
-import { TestEnvironment } from 'jest-environment-jsdom'
+import { TestEnvironment } from "jest-environment-jsdom"
 
 class BrowserTestEnvironment extends TestEnvironment {
     async setup() {

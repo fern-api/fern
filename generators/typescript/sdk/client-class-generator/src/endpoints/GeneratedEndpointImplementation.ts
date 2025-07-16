@@ -1,10 +1,10 @@
-import { GetReferenceOpts } from '@fern-typescript/commons'
-import { SdkContext } from '@fern-typescript/contexts'
-import { OptionalKind, ParameterDeclarationStructure, ts } from 'ts-morph'
+import { GetReferenceOpts } from "@fern-typescript/commons"
+import { SdkContext } from "@fern-typescript/contexts"
+import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph"
 
-import { ExampleEndpointCall, HttpEndpoint } from '@fern-fern/ir-sdk/api'
+import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api"
 
-import { GeneratedEndpointResponse } from './default/endpoint-response/GeneratedEndpointResponse'
+import { GeneratedEndpointResponse } from "./default/endpoint-response/GeneratedEndpointResponse"
 
 export interface EndpointSignature {
     parameters: OptionalKind<ParameterDeclarationStructure>[]

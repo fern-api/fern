@@ -1,16 +1,16 @@
-import { FernWorkspace } from '@fern-api/api-workspace-commons'
-import { FernToken } from '@fern-api/auth'
-import { SourceResolverImpl } from '@fern-api/cli-source-resolver'
-import { Audiences } from '@fern-api/configuration'
-import { createFdrService } from '@fern-api/core'
-import { generateIntermediateRepresentation } from '@fern-api/ir-generator'
-import { IntermediateRepresentation } from '@fern-api/ir-sdk'
-import { TaskContext } from '@fern-api/task-context'
+import { FernWorkspace } from "@fern-api/api-workspace-commons"
+import { FernToken } from "@fern-api/auth"
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver"
+import { Audiences } from "@fern-api/configuration"
+import { createFdrService } from "@fern-api/core"
+import { generateIntermediateRepresentation } from "@fern-api/ir-generator"
+import { IntermediateRepresentation } from "@fern-api/ir-sdk"
+import { TaskContext } from "@fern-api/task-context"
 
-import { FernRegistry as FdrCjsSdk } from '@fern-fern/fdr-cjs-sdk'
+import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk"
 
-import { PlaygroundConfig } from './ir-to-fdr-converter/convertAuth'
-import { convertIrToFdrApi } from './ir-to-fdr-converter/convertIrToFdrApi'
+import { PlaygroundConfig } from "./ir-to-fdr-converter/convertAuth"
+import { convertIrToFdrApi } from "./ir-to-fdr-converter/convertIrToFdrApi"
 
 export async function registerApi({
     organization,
@@ -59,14 +59,14 @@ export async function registerApi({
         return { id: response.body.apiDefinitionId, ir }
     } else {
         switch (response.error.error) {
-            case 'UnauthorizedError':
-            case 'UserNotInOrgError': {
+            case "UnauthorizedError":
+            case "UserNotInOrgError": {
                 return context.failAndThrow(
-                    'You do not have permissions to register the docs. Reach out to support@buildwithfern.com'
+                    "You do not have permissions to register the docs. Reach out to support@buildwithfern.com"
                 )
             }
             default:
-                return context.failAndThrow('Failed to register API', response.error)
+                return context.failAndThrow("Failed to register API", response.error)
         }
     }
 }

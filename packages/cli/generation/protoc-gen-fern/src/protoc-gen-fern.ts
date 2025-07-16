@@ -1,15 +1,15 @@
-import { create, protoInt64 } from '@bufbuild/protobuf'
-import { type SupportedEdition, maximumEdition, minimumEdition } from '@bufbuild/protobuf'
-import type { CodeGeneratorRequest, CodeGeneratorResponse } from '@bufbuild/protobuf/wkt'
-import { CodeGeneratorResponseSchema, CodeGeneratorResponse_Feature } from '@bufbuild/protobuf/wkt'
-import { FileInfo, Plugin } from '@bufbuild/protoplugin'
+import { create, protoInt64 } from "@bufbuild/protobuf"
+import { type SupportedEdition, maximumEdition, minimumEdition } from "@bufbuild/protobuf"
+import type { CodeGeneratorRequest, CodeGeneratorResponse } from "@bufbuild/protobuf/wkt"
+import { CodeGeneratorResponseSchema, CodeGeneratorResponse_Feature } from "@bufbuild/protobuf/wkt"
+import { FileInfo, Plugin } from "@bufbuild/protoplugin"
 
-import { version } from '../package.json'
-import { generateIr } from './generateIr'
-import { Options, parseOptions } from './parseOptions'
+import { version } from "../package.json"
+import { generateIr } from "./generateIr"
+import { Options, parseOptions } from "./parseOptions"
 
 export const protocGenFern = createPlugin({
-    name: 'protoc-gen-fern',
+    name: "protoc-gen-fern",
     version: `v${String(version)}`,
     run: generateIr
 })

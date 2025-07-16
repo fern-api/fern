@@ -1,12 +1,12 @@
-import { mapValues } from '@fern-api/core-utils'
+import { mapValues } from "@fern-api/core-utils"
 
-import { dynamic } from '@fern-fern/ir-sdk/api'
+import { dynamic } from "@fern-fern/ir-sdk/api"
 
-export type Endpoint = Omit<dynamic.Endpoint, 'examples'> & {
+export type Endpoint = Omit<dynamic.Endpoint, "examples"> & {
     examples: EndpointExample[] | undefined
 }
 
-export type EndpointExample = Omit<dynamic.EndpointExample, 'baseUrl'> & {
+export type EndpointExample = Omit<dynamic.EndpointExample, "baseUrl"> & {
     baseURL: string | undefined
 }
 

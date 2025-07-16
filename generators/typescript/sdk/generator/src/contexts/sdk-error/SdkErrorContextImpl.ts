@@ -1,12 +1,12 @@
-import { ExportsManager, ImportsManager, Reference } from '@fern-typescript/commons'
-import { GeneratedSdkError, SdkErrorContext } from '@fern-typescript/contexts'
-import { ErrorResolver } from '@fern-typescript/resolvers'
-import { SdkErrorGenerator } from '@fern-typescript/sdk-error-generator'
-import { SourceFile } from 'ts-morph'
+import { ExportsManager, ImportsManager, Reference } from "@fern-typescript/commons"
+import { GeneratedSdkError, SdkErrorContext } from "@fern-typescript/contexts"
+import { ErrorResolver } from "@fern-typescript/resolvers"
+import { SdkErrorGenerator } from "@fern-typescript/sdk-error-generator"
+import { SourceFile } from "ts-morph"
 
-import { DeclaredErrorName, ErrorDeclaration } from '@fern-fern/ir-sdk/api'
+import { DeclaredErrorName, ErrorDeclaration } from "@fern-fern/ir-sdk/api"
 
-import { SdkErrorDeclarationReferencer } from '../../declaration-referencers/SdkErrorDeclarationReferencer'
+import { SdkErrorDeclarationReferencer } from "../../declaration-referencers/SdkErrorDeclarationReferencer"
 
 export declare namespace SdkErrorContextImpl {
     export interface Init {
@@ -46,7 +46,7 @@ export class SdkErrorContextImpl implements SdkErrorContext {
     public getReferenceToError(errorName: DeclaredErrorName): Reference {
         return this.errorDeclarationReferencer.getReferenceToError({
             name: errorName,
-            importStrategy: { type: 'fromRoot', namespaceImport: this.errorDeclarationReferencer.namespaceExport },
+            importStrategy: { type: "fromRoot", namespaceImport: this.errorDeclarationReferencer.namespaceExport },
             referencedIn: this.sourceFile,
             importsManager: this.importsManager,
             exportsManager: this.exportsManager

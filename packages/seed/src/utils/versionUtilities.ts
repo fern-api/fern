@@ -1,10 +1,10 @@
-import semver from 'semver'
+import semver from "semver"
 
-import { TaskContext } from '@fern-api/task-context'
+import { TaskContext } from "@fern-api/task-context"
 
-import { CliReleaseRequest } from '@fern-fern/generators-sdk/api/resources/generators'
+import { CliReleaseRequest } from "@fern-fern/generators-sdk/api/resources/generators"
 
-import { parseCliReleasesFile } from './convertVersionsFileToReleases'
+import { parseCliReleasesFile } from "./convertVersionsFileToReleases"
 
 export interface VersionFilePair {
     latestChangelogPath: string

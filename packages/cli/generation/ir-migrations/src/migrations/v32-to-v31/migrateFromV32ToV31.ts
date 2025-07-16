@@ -1,16 +1,16 @@
-import { GeneratorName } from '@fern-api/configuration-loader'
-import { assertNever } from '@fern-api/core-utils'
+import { GeneratorName } from "@fern-api/configuration-loader"
+import { assertNever } from "@fern-api/core-utils"
 
-import { IrSerialization } from '../../ir-serialization'
-import { IrVersions } from '../../ir-versions'
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
+import { IrSerialization } from "../../ir-serialization"
+import { IrVersions } from "../../ir-versions"
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
 
 export const V32_TO_V31_MIGRATION: IrMigration<
     IrVersions.V32.ir.IntermediateRepresentation,
     IrVersions.V31.ir.IntermediateRepresentation
 > = {
-    laterVersion: 'v32',
-    earlierVersion: 'v31',
+    laterVersion: "v32",
+    earlierVersion: "v31",
     firstGeneratorVersionToConsumeNewIR: {
         [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -28,11 +28,11 @@ export const V32_TO_V31_MIGRATION: IrMigration<
         [GeneratorName.STOPLIGHT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.GO_FIBER]: '0.9.4-2-g139cf36',
-        [GeneratorName.GO_MODEL]: '0.9.4-2-g139cf36',
-        [GeneratorName.GO_SDK]: '0.9.4-2-g139cf36',
-        [GeneratorName.RUBY_MODEL]: '0.0.0',
-        [GeneratorName.RUBY_SDK]: '0.0.0',
+        [GeneratorName.GO_FIBER]: "0.9.4-2-g139cf36",
+        [GeneratorName.GO_MODEL]: "0.9.4-2-g139cf36",
+        [GeneratorName.GO_SDK]: "0.9.4-2-g139cf36",
+        [GeneratorName.RUBY_MODEL]: "0.0.0",
+        [GeneratorName.RUBY_SDK]: "0.0.0",
         [GeneratorName.CSHARP_MODEL]: GeneratorWasNotCreatedYet,
         [GeneratorName.CSHARP_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.SWIFT_MODEL]: GeneratorWasNotCreatedYet,
@@ -42,7 +42,7 @@ export const V32_TO_V31_MIGRATION: IrMigration<
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V31.IntermediateRepresentation.jsonOrThrow(ir, {
-            unrecognizedObjectKeys: 'strip',
+            unrecognizedObjectKeys: "strip",
             skipValidation: true
         }),
     migrateBackwards: (v32): IrVersions.V31.ir.IntermediateRepresentation => {
@@ -138,7 +138,7 @@ function convertExampleRequestBody(
     example: IrVersions.V32.ExampleRequestBody
 ): IrVersions.V31.ExampleRequestBody | undefined {
     switch (example.type) {
-        case 'inlinedRequestBody': {
+        case "inlinedRequestBody": {
             const convertedProperties = []
             for (const objectProperty of example.properties) {
                 const convertedTypeReference = convertExampleTypeReference(objectProperty.value)
@@ -155,7 +155,7 @@ function convertExampleRequestBody(
                 properties: convertedProperties
             })
         }
-        case 'reference': {
+        case "reference": {
             const convertedExampleShape = convertExampleTypeReferenceShape(example.shape)
             if (convertedExampleShape == null) {
                 return undefined
@@ -172,7 +172,7 @@ function convertExampleRequestBody(
 
 function convertExampleResponse(example: IrVersions.V32.ExampleResponse): IrVersions.V31.ExampleResponse | undefined {
     switch (example.type) {
-        case 'ok': {
+        case "ok": {
             if (example.body == null) {
                 return IrVersions.V31.ExampleResponse.ok({
                     body: undefined
@@ -186,7 +186,7 @@ function convertExampleResponse(example: IrVersions.V32.ExampleResponse): IrVers
                 body: convertedBody
             })
         }
-        case 'error': {
+        case "error": {
             if (example.body == null) {
                 return IrVersions.V31.ExampleResponse.error({
                     ...example,
@@ -268,9 +268,9 @@ function convertExampleTypeShape(
     example: IrVersions.V32.ExampleTypeShape
 ): IrVersions.V31.ExampleTypeShape | undefined {
     switch (example.type) {
-        case 'enum':
+        case "enum":
             return IrVersions.V31.ExampleTypeShape.enum(example)
-        case 'alias': {
+        case "alias": {
             const convertedTypeReference = convertExampleTypeReference(example.value)
             if (convertedTypeReference == null) {
                 return undefined
@@ -279,7 +279,7 @@ function convertExampleTypeShape(
                 value: convertedTypeReference
             })
         }
-        case 'object': {
+        case "object": {
             const convertedProperties = []
             for (const objectProperty of example.properties) {
                 const convertedTypeReference = convertExampleTypeReference(objectProperty.value)
@@ -295,7 +295,7 @@ function convertExampleTypeShape(
                 properties: convertedProperties
             })
         }
-        case 'union': {
+        case "union": {
             const convertedSingleUnionTypeShape = convertExampleSingleUnionType(example.singleUnionType)
             if (convertedSingleUnionTypeShape == null) {
                 return undefined
@@ -305,7 +305,7 @@ function convertExampleTypeShape(
                 singleUnionType: convertedSingleUnionTypeShape
             })
         }
-        case 'undiscriminatedUnion':
+        case "undiscriminatedUnion":
             return undefined
         default:
             assertNever(example)
@@ -342,9 +342,9 @@ function convertExampleSingleUnionTypeProperties(
     example: IrVersions.V32.ExampleSingleUnionTypeProperties
 ): IrVersions.V31.ExampleSingleUnionTypeProperties | undefined {
     switch (example.type) {
-        case 'noProperties':
+        case "noProperties":
             return IrVersions.V31.ExampleSingleUnionTypeProperties.noProperties()
-        case 'singleProperty': {
+        case "singleProperty": {
             const convertedSingleProperty = convertExampleTypeReferenceShape(example.shape)
             if (convertedSingleProperty == null) {
                 return
@@ -354,7 +354,7 @@ function convertExampleSingleUnionTypeProperties(
                 shape: convertedSingleProperty
             })
         }
-        case 'samePropertiesAsObject': {
+        case "samePropertiesAsObject": {
             const convertedProperties = []
             for (const objectProperty of example.object.properties) {
                 const convertedTypeReference = convertExampleTypeReference(objectProperty.value)
@@ -382,14 +382,14 @@ function convertExampleTypeReferenceShape(
     example: IrVersions.V32.ExampleTypeReferenceShape
 ): IrVersions.V31.ExampleTypeReferenceShape | undefined {
     switch (example.type) {
-        case 'container': {
+        case "container": {
             const convertedExampleContainer = convertExampleContainer(example.container)
             if (convertedExampleContainer == null) {
                 return undefined
             }
             return IrVersions.V31.ExampleTypeReferenceShape.container(convertedExampleContainer)
         }
-        case 'named': {
+        case "named": {
             const convertedShape = convertExampleTypeShape(example.shape)
             if (convertedShape == null) {
                 return undefined
@@ -399,9 +399,9 @@ function convertExampleTypeReferenceShape(
                 shape: convertedShape
             })
         }
-        case 'primitive':
+        case "primitive":
             return IrVersions.V31.ExampleTypeReferenceShape.primitive(example.primitive)
-        case 'unknown':
+        case "unknown":
             return IrVersions.V31.ExampleTypeReferenceShape.unknown(example.unknown)
         default:
             assertNever(example)
@@ -412,7 +412,7 @@ function convertExampleContainer(
     example: IrVersions.V32.ExampleContainer
 ): IrVersions.V31.ExampleContainer | undefined {
     switch (example.type) {
-        case 'list': {
+        case "list": {
             const items = []
             for (const item of example.list) {
                 const convertedItem = convertExampleTypeReference(item)
@@ -422,7 +422,7 @@ function convertExampleContainer(
             }
             return IrVersions.V31.ExampleContainer.list(items)
         }
-        case 'set': {
+        case "set": {
             const items = []
             for (const item of example.set) {
                 const convertedItem = convertExampleTypeReference(item)
@@ -432,7 +432,7 @@ function convertExampleContainer(
             }
             return IrVersions.V31.ExampleContainer.set(items)
         }
-        case 'map': {
+        case "map": {
             const entries = []
             for (const entry of example.map) {
                 const convertedKey = convertExampleTypeReference(entry.key)
@@ -446,7 +446,7 @@ function convertExampleContainer(
             }
             return IrVersions.V31.ExampleContainer.map(entries)
         }
-        case 'optional': {
+        case "optional": {
             if (example.optional == null) {
                 return IrVersions.V31.ExampleContainer.optional()
             }

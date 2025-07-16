@@ -1,7 +1,7 @@
-import { AbstractFormatter, File } from '@fern-api/base-generator'
-import { RelativeFilePath } from '@fern-api/fs-utils'
-import { TypescriptCustomConfigSchema, ts } from '@fern-api/typescript-ast'
-import { TypeScriptFormatter } from '@fern-api/typescript-formatter'
+import { AbstractFormatter, File } from "@fern-api/base-generator"
+import { RelativeFilePath } from "@fern-api/fs-utils"
+import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast"
+import { TypeScriptFormatter } from "@fern-api/typescript-formatter"
 
 export declare namespace TypescriptFile {
     interface Args {

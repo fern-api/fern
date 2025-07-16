@@ -1,9 +1,9 @@
-import { mkdir } from 'fs/promises'
+import { mkdir } from "fs/promises"
 
-import { AbstractProject, File } from '@fern-api/base-generator'
-import { AbsoluteFilePath } from '@fern-api/fs-utils'
-import { AbstractGoGeneratorContext, BaseGoCustomConfigSchema } from '@fern-api/go-ast'
-import { loggingExeca } from '@fern-api/logging-execa'
+import { AbstractProject, File } from "@fern-api/base-generator"
+import { AbsoluteFilePath } from "@fern-api/fs-utils"
+import { AbstractGoGeneratorContext, BaseGoCustomConfigSchema } from "@fern-api/go-ast"
+import { loggingExeca } from "@fern-api/logging-execa"
 
 /**
  * In memory representation of a Go project.
@@ -43,7 +43,7 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
         await this.mkdir(absolutePathToDirectory)
         await Promise.all(files.map(async (file) => await file.write(absolutePathToDirectory)))
         if (files.length > 0) {
-            await loggingExeca(this.context.logger, 'go', ['fmt', './...'], {
+            await loggingExeca(this.context.logger, "go", ["fmt", "./..."], {
                 doNotPipeOutput: true,
                 cwd: absolutePathToDirectory
             })

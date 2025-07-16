@@ -1,15 +1,15 @@
-import { mkdir, writeFile } from 'fs/promises'
-import path from 'path'
+import { mkdir, writeFile } from "fs/promises"
+import path from "path"
 
-import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
-import { DynamicSnippetsGenerator } from '@fern-api/go-dynamic-snippets'
-import { dynamic } from '@fern-api/ir-sdk'
-import { TaskContext } from '@fern-api/task-context'
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets"
+import { dynamic } from "@fern-api/ir-sdk"
+import { TaskContext } from "@fern-api/task-context"
 
-import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
 
-import { convertDynamicEndpointSnippetRequest } from '../utils/convertEndpointSnippetRequest'
-import { convertIr } from '../utils/convertIr'
+import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest"
+import { convertIr } from "../utils/convertIr"
 
 export class DynamicSnippetsGoTestGenerator {
     private dynamicSnippetsGenerator: DynamicSnippetsGenerator
@@ -32,7 +32,7 @@ export class DynamicSnippetsGoTestGenerator {
         outputDir: AbsoluteFilePath
         requests: dynamic.EndpointSnippetRequest[]
     }): Promise<void> {
-        this.context.logger.debug('Generating dynamic snippet tests...')
+        this.context.logger.debug("Generating dynamic snippet tests...")
         for (const [idx, request] of requests.entries()) {
             try {
                 const convertedRequest = convertDynamicEndpointSnippetRequest(request)
@@ -49,7 +49,7 @@ export class DynamicSnippetsGoTestGenerator {
                 )
             }
         }
-        this.context.logger.debug('Done generating dynamic snippet tests')
+        this.context.logger.debug("Done generating dynamic snippet tests")
     }
 
     private getTestFilePath({ outputDir, idx }: { outputDir: AbsoluteFilePath; idx: number }): AbsoluteFilePath {

@@ -1,25 +1,25 @@
-import { assertNever } from '@fern-api/core-utils'
+import { assertNever } from "@fern-api/core-utils"
 
-import { FunctionArgument } from './FunctionArgument'
-import { AstNode, Writer } from './core'
-import { escapeReservedKeyword } from './syntax/reserved-keywords'
+import { FunctionArgument } from "./FunctionArgument"
+import { AstNode, Writer } from "./core"
+import { escapeReservedKeyword } from "./syntax/reserved-keywords"
 
 /**
  * A reference to a variable or constant.
  */
 type Reference = {
-    type: 'reference'
+    type: "reference"
     unsafeName: string
 }
 
 type FunctionCall = {
-    type: 'function-call'
+    type: "function-call"
     unsafeName: string
     arguments_?: FunctionArgument[]
 }
 
 type RawValue = {
-    type: 'raw-value'
+    type: "raw-value"
     value: string
 }
 
@@ -35,21 +35,21 @@ export class Expression extends AstNode {
 
     public write(writer: Writer): void {
         switch (this.internalExpression.type) {
-            case 'reference':
+            case "reference":
                 writer.write(escapeReservedKeyword(this.internalExpression.unsafeName))
                 break
-            case 'function-call':
+            case "function-call":
                 writer.write(escapeReservedKeyword(this.internalExpression.unsafeName))
-                writer.write('(')
+                writer.write("(")
                 this.internalExpression.arguments_?.forEach((argument, argumentIdx) => {
                     if (argumentIdx > 0) {
-                        writer.write(', ')
+                        writer.write(", ")
                     }
                     argument.write(writer)
                 })
-                writer.write(')')
+                writer.write(")")
                 break
-            case 'raw-value':
+            case "raw-value":
                 writer.write(this.internalExpression.value)
                 break
             default:
@@ -58,18 +58,18 @@ export class Expression extends AstNode {
     }
 
     public static reference(unsafeName: string): Expression {
-        return new this({ type: 'reference', unsafeName })
+        return new this({ type: "reference", unsafeName })
     }
 
     public static functionCall(unsafeName: string, arguments_?: FunctionArgument[]): Expression {
-        return new this({ type: 'function-call', unsafeName, arguments_ })
+        return new this({ type: "function-call", unsafeName, arguments_ })
     }
 
     public static rawStringValue(value: string): Expression {
-        return new this({ type: 'raw-value', value: `"${value}"` })
+        return new this({ type: "raw-value", value: `"${value}"` })
     }
 
     public static rawValue(value: string): Expression {
-        return new this({ type: 'raw-value', value })
+        return new this({ type: "raw-value", value })
     }
 }

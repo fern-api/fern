@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from "zod"
 
 export const ModuleExport = z.object({
     from: z.string().optional(),

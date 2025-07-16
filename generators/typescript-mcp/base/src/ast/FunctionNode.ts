@@ -1,6 +1,6 @@
-import { ts } from '@fern-api/typescript-ast'
+import { ts } from "@fern-api/typescript-ast"
 
-import { FunctionParameterNode } from './'
+import { FunctionParameterNode } from "./"
 
 export declare namespace FunctionNode {
     interface Args {
@@ -15,7 +15,7 @@ export declare namespace FunctionNode {
 
 // TODO: generalize and move into @fern-api/typescript-ast
 export class FunctionNode extends ts.AstNode {
-    readonly ['async']: boolean
+    readonly ["async"]: boolean
 
     constructor(private readonly args: FunctionNode.Args) {
         super()
@@ -25,37 +25,37 @@ export class FunctionNode extends ts.AstNode {
     public write(writer: ts.Writer): void {
         writer.writeNode(new ts.Comment({ docs: this.args.docs }))
         if (this.async) {
-            writer.write('async ')
+            writer.write("async ")
         }
-        writer.write('function ')
+        writer.write("function ")
         if (this.args.name) {
             writer.write(`${this.args.name}`)
         }
         this.writeParameters(writer)
         if (this.args.return_ != null) {
-            writer.write(': ')
+            writer.write(": ")
             writer.writeNode(this.async ? ts.Type.promise(this.args.return_) : this.args.return_)
         }
-        writer.writeLine(' {')
+        writer.writeLine(" {")
         writer.indent()
         this.args.body.write(writer)
         writer.dedent()
         writer.writeNewLineIfLastLineNot()
-        writer.writeLine('}')
+        writer.writeLine("}")
     }
 
     private writeParameters(writer: ts.Writer): void {
         if (this.args.parameters.length === 0) {
-            writer.write('()')
+            writer.write("()")
             return
         }
         writer.indent()
-        writer.writeLine('(')
+        writer.writeLine("(")
         for (const parameter of this.args.parameters) {
             writer.writeNode(parameter)
-            writer.writeLine(',')
+            writer.writeLine(",")
         }
         writer.dedent()
-        writer.write(')')
+        writer.write(")")
     }
 }

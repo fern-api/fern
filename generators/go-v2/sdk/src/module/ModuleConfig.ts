@@ -1,13 +1,13 @@
 export namespace ModuleConfig {
-    export const FILENAME = 'go.mod'
+    export const FILENAME = "go.mod"
 
     export const DEFAULT: ModuleConfig = {
-        path: 'sdk',
-        version: '1.18',
+        path: "sdk",
+        version: "1.18",
         imports: {
-            'github.com/google/uuid': 'v1.4.0',
-            'github.com/testify/stretchr': 'v1.7.0',
-            'gopkg.in/yaml.v3': 'v3.0.1'
+            "github.com/google/uuid": "v1.4.0",
+            "github.com/testify/stretchr": "v1.7.0",
+            "gopkg.in/yaml.v3": "v3.0.1"
         }
     }
 }

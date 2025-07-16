@@ -1,6 +1,6 @@
-import { AbstractPhpGeneratorContext, AsIsFiles, FileLocation } from '@fern-api/php-base'
+import { AbstractPhpGeneratorContext, AsIsFiles, FileLocation } from "@fern-api/php-base"
 
-import { ModelCustomConfigSchema } from './ModelCustomConfig'
+import { ModelCustomConfigSchema } from "./ModelCustomConfig"
 
 export class ModelGeneratorContext extends AbstractPhpGeneratorContext<ModelCustomConfigSchema> {
     public getRawAsIsFiles(): string[] {

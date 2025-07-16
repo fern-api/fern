@@ -1,14 +1,14 @@
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { TypeResolverImpl, constructFernFileContext } from '@fern-api/ir-generator'
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { TypeResolverImpl, constructFernFileContext } from "@fern-api/ir-generator"
 
-import { Rule } from '../../Rule'
-import { CASINGS_GENERATOR } from '../../utils/casingsGenerator'
-import { validateCursorPagination } from './validateCursorPagination'
-import { validateCustomPagination } from './validateCustomPagination'
-import { validateOffsetPagination } from './validateOffsetPagination'
+import { Rule } from "../../Rule"
+import { CASINGS_GENERATOR } from "../../utils/casingsGenerator"
+import { validateCursorPagination } from "./validateCursorPagination"
+import { validateCustomPagination } from "./validateCustomPagination"
+import { validateOffsetPagination } from "./validateOffsetPagination"
 
 export const ValidPaginationRule: Rule = {
-    name: 'valid-pagination',
+    name: "valid-pagination",
     create: ({ workspace }) => {
         const typeResolver = new TypeResolverImpl(workspace)
         const defaultPagination = workspace.definition.rootApiFile.contents.pagination
@@ -17,7 +17,7 @@ export const ValidPaginationRule: Rule = {
             definitionFile: {
                 httpEndpoint: ({ endpointId, endpoint }, { relativeFilepath, contents: definitionFile }) => {
                     const endpointPagination =
-                        typeof endpoint.pagination === 'boolean' ? defaultPagination : endpoint.pagination
+                        typeof endpoint.pagination === "boolean" ? defaultPagination : endpoint.pagination
                     if (!endpointPagination) {
                         return []
                     }
@@ -54,7 +54,7 @@ export const ValidPaginationRule: Rule = {
                             customPagination: endpointPagination
                         })
                     }
-                    throw new Error('Invalid pagination schema')
+                    throw new Error("Invalid pagination schema")
                 }
             }
         }
@@ -80,5 +80,5 @@ function isRawCursorPaginationSchema(
 function isRawCustomPaginationSchema(
     rawPaginationSchema: RawSchemas.PaginationSchema
 ): rawPaginationSchema is RawSchemas.CustomPaginationSchema {
-    return 'type' in rawPaginationSchema && rawPaginationSchema.type === 'custom'
+    return "type" in rawPaginationSchema && rawPaginationSchema.type === "custom"
 }

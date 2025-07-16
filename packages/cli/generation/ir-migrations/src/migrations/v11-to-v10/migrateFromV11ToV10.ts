@@ -1,31 +1,31 @@
-import { GeneratorName } from '@fern-api/configuration-loader'
+import { GeneratorName } from "@fern-api/configuration-loader"
 
-import { IrMigrationContext } from '../../IrMigrationContext'
-import { IrVersions } from '../../ir-versions'
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
+import { IrMigrationContext } from "../../IrMigrationContext"
+import { IrVersions } from "../../ir-versions"
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
 
 export const V11_TO_V10_MIGRATION: IrMigration<
     IrVersions.V11.ir.IntermediateRepresentation,
     IrVersions.V10.ir.IntermediateRepresentation
 > = {
-    laterVersion: 'v11',
-    earlierVersion: 'v10',
+    laterVersion: "v11",
+    earlierVersion: "v10",
     firstGeneratorVersionToConsumeNewIR: {
         [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_SDK]: '0.5.0-rc0-1-g83a12940',
-        [GeneratorName.TYPESCRIPT_EXPRESS]: '0.5.0-rc0-1-g83a12940',
+        [GeneratorName.TYPESCRIPT_SDK]: "0.5.0-rc0-1-g83a12940",
+        [GeneratorName.TYPESCRIPT_EXPRESS]: "0.5.0-rc0-1-g83a12940",
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_MODEL]: '0.0.134-15-ge1ac358',
-        [GeneratorName.JAVA_SDK]: '0.0.134-15-ge1ac358',
-        [GeneratorName.JAVA_SPRING]: '0.0.134-15-ge1ac358',
+        [GeneratorName.JAVA_MODEL]: "0.0.134-15-ge1ac358",
+        [GeneratorName.JAVA_SDK]: "0.0.134-15-ge1ac358",
+        [GeneratorName.JAVA_SPRING]: "0.0.134-15-ge1ac358",
         [GeneratorName.PYTHON_FASTAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_PYDANTIC]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.STOPLIGHT]: GeneratorWasNotCreatedYet,
         [GeneratorName.OPENAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.POSTMAN]: '0.0.40-1-g9aa2117',
+        [GeneratorName.POSTMAN]: "0.0.40-1-g9aa2117",
         [GeneratorName.PYTHON_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_FIBER]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
@@ -67,10 +67,10 @@ function convertAuthScheme(
                 return taskContext.failAndThrow(
                     targetGenerator != null
                         ? `Generator ${targetGenerator.name}@${targetGenerator.version}` +
-                              ' does not support specifying an auth header prefix.' +
+                              " does not support specifying an auth header prefix." +
                               ` If you'd like to use this feature, please upgrade ${targetGenerator.name}` +
-                              ' to a compatible version.'
-                        : 'Cannot backwards-migrate IR because this IR contains an auth header prefix.'
+                              " to a compatible version."
+                        : "Cannot backwards-migrate IR because this IR contains an auth header prefix."
                 )
             }
             return IrVersions.V10.auth.AuthScheme.header({
@@ -87,7 +87,7 @@ function convertAuthScheme(
             })
         },
         _unknown: () => {
-            throw new Error('Unknown auth scheme: ' + scheme._type)
+            throw new Error("Unknown auth scheme: " + scheme._type)
         }
     })
 }

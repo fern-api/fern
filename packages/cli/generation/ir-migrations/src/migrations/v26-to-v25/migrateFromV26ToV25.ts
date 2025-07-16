@@ -1,15 +1,15 @@
-import { GeneratorName } from '@fern-api/configuration-loader'
+import { GeneratorName } from "@fern-api/configuration-loader"
 
-import { IrSerialization } from '../../ir-serialization'
-import { IrVersions } from '../../ir-versions'
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
+import { IrSerialization } from "../../ir-serialization"
+import { IrVersions } from "../../ir-versions"
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
 
 export const V26_TO_V25_MIGRATION: IrMigration<
     IrVersions.V26.ir.IntermediateRepresentation,
     IrVersions.V25.ir.IntermediateRepresentation
 > = {
-    laterVersion: 'v26',
-    earlierVersion: 'v25',
+    laterVersion: "v26",
+    earlierVersion: "v25",
     firstGeneratorVersionToConsumeNewIR: {
         [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -20,13 +20,13 @@ export const V26_TO_V25_MIGRATION: IrMigration<
         [GeneratorName.JAVA_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_SPRING]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.PYTHON_FASTAPI]: '0.5.0-rc2-16-g4177fafd',
-        [GeneratorName.PYTHON_PYDANTIC]: '0.5.0-rc2-16-g4177fafd',
+        [GeneratorName.PYTHON_FASTAPI]: "0.5.0-rc2-16-g4177fafd",
+        [GeneratorName.PYTHON_PYDANTIC]: "0.5.0-rc2-16-g4177fafd",
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.OPENAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.STOPLIGHT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.PYTHON_SDK]: '0.5.0-rc2-16-g4177fafd',
+        [GeneratorName.PYTHON_SDK]: "0.5.0-rc2-16-g4177fafd",
         [GeneratorName.GO_FIBER]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -41,7 +41,7 @@ export const V26_TO_V25_MIGRATION: IrMigration<
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V25.IntermediateRepresentation.jsonOrThrow(ir, {
-            unrecognizedObjectKeys: 'strip'
+            unrecognizedObjectKeys: "strip"
         }),
     migrateBackwards: (v26): IrVersions.V25.ir.IntermediateRepresentation => {
         return {
@@ -158,7 +158,7 @@ function convertTypeDeclaration(val: IrVersions.V26.TypeDeclaration): IrVersions
             alias: (val) => IrVersions.V25.Type.alias(val),
             undiscriminatedUnion: (val) => IrVersions.V25.Type.undiscriminatedUnion(val),
             _other: () => {
-                throw new Error('Encountered unknown shape')
+                throw new Error("Encountered unknown shape")
             }
         }),
         availability:

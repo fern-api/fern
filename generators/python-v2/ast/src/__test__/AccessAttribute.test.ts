@@ -1,17 +1,17 @@
-import { python } from '..'
-import { Writer } from '../core/Writer'
+import { python } from ".."
+import { Writer } from "../core/Writer"
 
-describe('AccessAttribute', () => {
+describe("AccessAttribute", () => {
     let writer: Writer
 
     beforeEach(() => {
         writer = new Writer()
     })
 
-    it('should handle the basic case', async () => {
+    it("should handle the basic case", async () => {
         const attribute = python.accessAttribute({
-            lhs: python.reference({ name: 'MyClass' }),
-            rhs: python.reference({ name: 'my_attribute' })
+            lhs: python.reference({ name: "MyClass" }),
+            rhs: python.reference({ name: "my_attribute" })
         })
 
         const writer = new Writer()

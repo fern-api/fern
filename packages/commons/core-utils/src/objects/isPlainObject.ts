@@ -1,6 +1,6 @@
 // https://github.com/lodash/lodash/blob/master/isPlainObject.js
 export function isPlainObject(value: unknown): value is Record<string, unknown> {
-    if (!isObjectLike(value) || toString.call(value) !== '[object Object]') {
+    if (!isObjectLike(value) || toString.call(value) !== "[object Object]") {
         return false
     }
     if (Object.getPrototypeOf(value) == null) {
@@ -14,5 +14,5 @@ export function isPlainObject(value: unknown): value is Record<string, unknown> 
 }
 
 function isObjectLike(value: unknown) {
-    return typeof value === 'object' && value != null
+    return typeof value === "object" && value != null
 }

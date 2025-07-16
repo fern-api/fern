@@ -3,14 +3,14 @@ import {
     getDefinitionFile,
     visitAllDefinitionFiles,
     visitAllPackageMarkers
-} from '@fern-api/api-workspace-commons'
-import { HttpEndpointReferenceParser } from '@fern-api/fern-definition-schema'
-import { HttpMethod } from '@fern-api/ir-sdk'
+} from "@fern-api/api-workspace-commons"
+import { HttpEndpointReferenceParser } from "@fern-api/fern-definition-schema"
+import { HttpMethod } from "@fern-api/ir-sdk"
 
-import { FernFileContext, constructFernFileContext } from '../FernFileContext'
-import { CASINGS_GENERATOR } from '../utils/getAllPropertiesForObject'
-import { parseReferenceToEndpointName } from '../utils/parseReferenceToEndpointName'
-import { ResolvedEndpoint } from './ResolvedEndpoint'
+import { FernFileContext, constructFernFileContext } from "../FernFileContext"
+import { CASINGS_GENERATOR } from "../utils/getAllPropertiesForObject"
+import { parseReferenceToEndpointName } from "../utils/parseReferenceToEndpointName"
+import { ResolvedEndpoint } from "./ResolvedEndpoint"
 
 export interface EndpointResolver {
     // Resolves an endpoint reference specified in a Fern definition (e.g. "auth.getToken").
@@ -29,7 +29,7 @@ export class EndpointResolverImpl implements EndpointResolver {
     public resolveEndpointOrThrow({ endpoint, file }: { endpoint: string; file: FernFileContext }): ResolvedEndpoint {
         const resolvedEndpoint = this.resolveEndpoint({ endpoint, file })
         if (resolvedEndpoint == null) {
-            throw new Error('Cannot resolve endpoint: ' + endpoint + ' in file ' + file.relativeFilepath)
+            throw new Error("Cannot resolve endpoint: " + endpoint + " in file " + file.relativeFilepath)
         }
         return resolvedEndpoint
     }

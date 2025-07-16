@@ -1,5 +1,5 @@
-import { ModelGeneratorContext } from './ModelGeneratorContext'
-import { TraitGenerator } from './trait/TraitGenerator'
+import { ModelGeneratorContext } from "./ModelGeneratorContext"
+import { TraitGenerator } from "./trait/TraitGenerator"
 
 export function generateTraits(context: ModelGeneratorContext): void {
     const extendedTypeIdsFromTypes = Object.values(context.ir.types).flatMap((typeDeclaration) =>
@@ -15,7 +15,7 @@ export function generateTraits(context: ModelGeneratorContext): void {
     const extendedTypeIdsFromInlinedRequests = Object.values(context.ir.services)
         .flatMap((service) => service.endpoints)
         .flatMap((endpoint) => {
-            return endpoint.requestBody?.type === 'inlinedRequestBody'
+            return endpoint.requestBody?.type === "inlinedRequestBody"
                 ? endpoint.requestBody.extends.map((declaredTypeName) => declaredTypeName.typeId)
                 : []
         })

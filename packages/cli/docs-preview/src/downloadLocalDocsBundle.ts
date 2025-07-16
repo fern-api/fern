@@ -1,19 +1,19 @@
-import decompress from 'decompress'
-import { mkdir, readFile, rm, writeFile } from 'fs/promises'
-import { homedir } from 'os'
-import tmp from 'tmp-promise'
-import xml2js from 'xml2js'
+import decompress from "decompress"
+import { mkdir, readFile, rm, writeFile } from "fs/promises"
+import { homedir } from "os"
+import tmp from "tmp-promise"
+import xml2js from "xml2js"
 
-import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from '@fern-api/fs-utils'
-import { Logger } from '@fern-api/logger'
-import { loggingExeca } from '@fern-api/logging-execa'
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils"
+import { Logger } from "@fern-api/logger"
+import { loggingExeca } from "@fern-api/logging-execa"
 
-const ETAG_FILENAME = 'etag'
-const PREVIEW_FOLDER_NAME = 'preview'
-const APP_PREVIEW_FOLDER_NAME = 'app-preview'
-const BUNDLE_FOLDER_NAME = 'bundle'
-const NEXT_BUNDLE_FOLDER_NAME = '.next'
-const LOCAL_STORAGE_FOLDER = process.env.LOCAL_STORAGE_FOLDER ?? '.fern'
+const ETAG_FILENAME = "etag"
+const PREVIEW_FOLDER_NAME = "preview"
+const APP_PREVIEW_FOLDER_NAME = "app-preview"
+const BUNDLE_FOLDER_NAME = "bundle"
+const NEXT_BUNDLE_FOLDER_NAME = ".next"
+const LOCAL_STORAGE_FOLDER = process.env.LOCAL_STORAGE_FOLDER ?? ".fern"
 
 export function getLocalStorageFolder(): AbsoluteFilePath {
     return join(AbsoluteFilePath.of(homedir()), RelativeFilePath.of(LOCAL_STORAGE_FOLDER))
@@ -49,11 +49,11 @@ export declare namespace DownloadLocalBundle {
     type Result = SuccessResult | FailureResult
 
     interface SuccessResult {
-        type: 'success'
+        type: "success"
     }
 
     interface FailureResult {
-        type: 'failure'
+        type: "failure"
     }
 }
 
@@ -70,11 +70,11 @@ export async function downloadBundle({
     app?: boolean
     tryTar?: boolean
 }): Promise<DownloadLocalBundle.Result> {
-    logger.debug('Setting up docs preview bundle...')
+    logger.debug("Setting up docs preview bundle...")
     const response = await fetch(bucketUrl)
     if (!response.ok) {
         return {
-            type: 'failure'
+            type: "failure"
         }
     }
     const body = await response.text()
@@ -88,28 +88,28 @@ export async function downloadBundle({
         const currentETagExists = await doesPathExist(eTagFilepath)
         let currentETag = undefined
         if (currentETagExists) {
-            logger.debug('Reading existing ETag')
+            logger.debug("Reading existing ETag")
             currentETag = (await readFile(eTagFilepath)).toString()
         }
         if (currentETag != null && currentETag === eTag) {
-            logger.debug('ETag matches. Using already downloaded bundle')
+            logger.debug("ETag matches. Using already downloaded bundle")
             // The bundle is already downloaded
             return {
-                type: 'success'
+                type: "success"
             }
         } else {
-            logger.debug('ETag is different. Downloading latest preview bundle')
+            logger.debug("ETag is different. Downloading latest preview bundle")
             if (app) {
                 logger.info(
-                    'Setting up docs preview bundle...\nPlease wait while the installation completes. This may take a few minutes depending on your connection speed.'
+                    "Setting up docs preview bundle...\nPlease wait while the installation completes. This may take a few minutes depending on your connection speed."
                 )
             }
         }
     }
 
-    logger.debug('Creating tmp directory to download docs preview bundle')
+    logger.debug("Creating tmp directory to download docs preview bundle")
     // create tmp directory
-    const dir = await tmp.dir({ prefix: 'fern' })
+    const dir = await tmp.dir({ prefix: "fern" })
     const absoluteDirectoryToTmpDir = AbsoluteFilePath.of(dir.path)
 
     const docsBundleUrl = new URL(key, bucketUrl).href
@@ -120,23 +120,23 @@ export async function downloadBundle({
         if (!docsBundleZipResponse.ok) {
             logger.error(`Failed to download docs preview bundle. Status code: ${docsBundleZipResponse.status}`)
             return {
-                type: 'failure'
+                type: "failure"
             }
         }
         const outputZipPath = join(
             absoluteDirectoryToTmpDir,
-            RelativeFilePath.of(tryTar ? 'output.tar.gz' : 'output.zip')
+            RelativeFilePath.of(tryTar ? "output.tar.gz" : "output.zip")
         )
 
         if (docsBundleZipResponse.body == null) {
             return {
-                type: 'failure'
+                type: "failure"
             }
         }
 
         const nodeBuffer = Buffer.from(await docsBundleZipResponse.arrayBuffer())
         await writeFile(outputZipPath, new Uint8Array(nodeBuffer))
-        logger.debug(`Wrote ${tryTar ? 'output.tar.gz' : 'output.zip'} to ${outputZipPath}`)
+        logger.debug(`Wrote ${tryTar ? "output.tar.gz" : "output.zip"} to ${outputZipPath}`)
 
         const absolutePathToPreviewFolder = getPathToPreviewFolder({ app })
         if (await doesPathExist(absolutePathToPreviewFolder)) {
@@ -155,28 +155,28 @@ export async function downloadBundle({
 
         if (app) {
             // check if pnpm exists
-            logger.debug('Checking if pnpm is installed')
+            logger.debug("Checking if pnpm is installed")
             try {
-                await loggingExeca(logger, process.platform === 'win32' ? 'where' : 'which', ['pnpm'], {
+                await loggingExeca(logger, process.platform === "win32" ? "where" : "which", ["pnpm"], {
                     cwd: absolutePathToBundleFolder,
                     doNotPipeOutput: true
                 })
             } catch (error) {
-                logger.debug('pnpm not found, installing pnpm')
-                await loggingExeca(logger, 'npm', ['install', '-g', 'pnpm'], {
+                logger.debug("pnpm not found, installing pnpm")
+                await loggingExeca(logger, "npm", ["install", "-g", "pnpm"], {
                     doNotPipeOutput: true
                 })
             }
 
             // if pnpm still hasn't been installed, user should install themselves
             try {
-                await loggingExeca(logger, process.platform === 'win32' ? 'where' : 'which', ['pnpm'], {
+                await loggingExeca(logger, process.platform === "win32" ? "where" : "which", ["pnpm"], {
                     cwd: absolutePathToBundleFolder,
                     doNotPipeOutput: true
                 })
             } catch (error) {
                 logger.error(
-                    'Requires [pnpm] to run local development. Please run: npm install -g pnpm, and then: fern docs dev'
+                    "Requires [pnpm] to run local development. Please run: npm install -g pnpm, and then: fern docs dev"
                 )
 
                 // remove incomplete bundle
@@ -185,19 +185,19 @@ export async function downloadBundle({
                 }
                 logger.debug(`rm -rf ${absolutePathToPreviewFolder}`)
                 return {
-                    type: 'failure'
+                    type: "failure"
                 }
             }
 
             try {
                 // install esbuild
-                logger.debug('Installing esbuild')
-                await loggingExeca(logger, 'pnpm', ['i', 'esbuild'], {
+                logger.debug("Installing esbuild")
+                await loggingExeca(logger, "pnpm", ["i", "esbuild"], {
                     cwd: absolutePathToBundleFolder,
                     doNotPipeOutput: true
                 })
             } catch (error) {
-                logger.error('Failed to install required package. Please reach out to support@buildwithfern.com.')
+                logger.error("Failed to install required package. Please reach out to support@buildwithfern.com.")
 
                 // remove incomplete bundle
                 if (await doesPathExist(absolutePathToPreviewFolder)) {
@@ -205,19 +205,19 @@ export async function downloadBundle({
                 }
                 logger.debug(`rm -rf ${absolutePathToPreviewFolder}`)
                 return {
-                    type: 'failure'
+                    type: "failure"
                 }
             }
 
             try {
                 // resolve imports
-                logger.debug('Resolve esbuild imports')
-                await loggingExeca(logger, 'node', ['install-esbuild.js'], {
+                logger.debug("Resolve esbuild imports")
+                await loggingExeca(logger, "node", ["install-esbuild.js"], {
                     cwd: absolutePathToBundleFolder,
                     doNotPipeOutput: true
                 })
             } catch (error) {
-                logger.error('Failed to resolve imports. Please reach out to support@buildwithfern.com.')
+                logger.error("Failed to resolve imports. Please reach out to support@buildwithfern.com.")
 
                 // remove incomplete bundle
                 if (await doesPathExist(absolutePathToPreviewFolder)) {
@@ -225,18 +225,18 @@ export async function downloadBundle({
                 }
                 logger.debug(`rm -rf ${absolutePathToPreviewFolder}`)
                 return {
-                    type: 'failure'
+                    type: "failure"
                 }
             }
         }
 
         return {
-            type: 'success'
+            type: "success"
         }
     } catch (error) {
         logger.error(`Failed to download docs preview bundle. Error: ${error}`)
         return {
-            type: 'failure'
+            type: "failure"
         }
     }
 }

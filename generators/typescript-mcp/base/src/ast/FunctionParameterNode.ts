@@ -1,4 +1,4 @@
-import { ts } from '@fern-api/typescript-ast'
+import { ts } from "@fern-api/typescript-ast"
 
 export declare namespace FunctionParameterNode {
     interface Args {
@@ -20,7 +20,7 @@ export class FunctionParameterNode extends ts.AstNode {
         }
         writer.write(this.args.name)
         if (this.args.type) {
-            writer.write(': ')
+            writer.write(": ")
             this.args.type.write(writer)
         }
     }

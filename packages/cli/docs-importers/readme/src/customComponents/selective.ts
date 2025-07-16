@@ -1,17 +1,17 @@
-import type { Element, Root as HastRoot } from 'hast'
-import type { Handle, State } from 'hast-util-to-mdast'
-import { defaultHandlers, toMdast } from 'hast-util-to-mdast'
-import type { BlockContent, DefinitionContent, Root as MdastRoot } from 'mdast'
-import type { MdxJsxFlowElement } from 'mdast-util-mdx-jsx'
+import type { Element, Root as HastRoot } from "hast"
+import type { Handle, State } from "hast-util-to-mdast"
+import { defaultHandlers, toMdast } from "hast-util-to-mdast"
+import type { BlockContent, DefinitionContent, Root as MdastRoot } from "mdast"
+import type { MdxJsxFlowElement } from "mdast-util-mdx-jsx"
 
-import { ESCAPED_COMPONENTS } from '../constants.js'
+import { ESCAPED_COMPONENTS } from "../constants.js"
 
 export function mdxJsxFlowElementHandler(_: State, node: Element): MdxJsxFlowElement {
     return {
-        type: 'mdxJsxFlowElement',
+        type: "mdxJsxFlowElement",
         name: node.tagName,
         attributes: Object.entries(node.properties ?? {}).map(([key, value]) => ({
-            type: 'mdxJsxAttribute',
+            type: "mdxJsxAttribute",
             name: key,
             value: value as string
         })),

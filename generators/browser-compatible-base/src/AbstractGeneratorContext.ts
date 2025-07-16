@@ -1,7 +1,7 @@
-import { CONSOLE_LOGGER, LogLevel, Logger, createLogger } from '@fern-api/logger'
+import { CONSOLE_LOGGER, LogLevel, Logger, createLogger } from "@fern-api/logger"
 
-import { FernGeneratorExec, GeneratorNotificationService } from './GeneratorNotificationService'
-import { getSdkVersion } from './utils'
+import { FernGeneratorExec, GeneratorNotificationService } from "./GeneratorNotificationService"
+import { getSdkVersion } from "./utils"
 
 const LOG_LEVEL_CONVERSIONS: Record<LogLevel, FernGeneratorExec.logging.LogLevel> = {
     [LogLevel.Trace]: FernGeneratorExec.logging.LogLevel.Debug,
@@ -25,13 +25,13 @@ export abstract class AbstractGeneratorContext {
             try {
                 generatorNotificationService.bufferUpdate(
                     FernGeneratorExec.GeneratorUpdate.log({
-                        message: message.join(' '),
+                        message: message.join(" "),
                         level: LOG_LEVEL_CONVERSIONS[level]
                     })
                 )
             } catch (e) {
                 // biome-ignore lint/suspicious/noConsole: allow console
-                console.warn('Encountered error when sending update', e)
+                console.warn("Encountered error when sending update", e)
             }
         })
 

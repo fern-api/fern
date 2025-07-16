@@ -1,5 +1,5 @@
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export declare namespace AccessAttribute {
     interface Args {
@@ -24,7 +24,7 @@ export class AccessAttribute extends AstNode {
 
     public write(writer: Writer): void {
         this.lhs.write(writer)
-        writer.write('.')
+        writer.write(".")
         this.rhs.write(writer)
     }
 }

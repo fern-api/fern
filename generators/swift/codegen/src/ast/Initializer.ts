@@ -1,7 +1,7 @@
-import { AccessLevel } from './AccessLevel'
-import { CodeBlock } from './CodeBlock'
-import { FunctionParameter } from './FunctionParameter'
-import { AstNode, Writer } from './core'
+import { AccessLevel } from "./AccessLevel"
+import { CodeBlock } from "./CodeBlock"
+import { FunctionParameter } from "./FunctionParameter"
+import { AstNode, Writer } from "./core"
 
 export declare namespace Initializer {
     interface Args {
@@ -29,20 +29,20 @@ export class Initializer extends AstNode {
     public write(writer: Writer): void {
         if (this.accessLevel != null) {
             writer.write(this.accessLevel)
-            writer.write(' ')
+            writer.write(" ")
         }
-        writer.write('init')
+        writer.write("init")
         if (this.failable) {
-            writer.write('?')
+            writer.write("?")
         }
-        writer.write('(')
+        writer.write("(")
         this.parameters?.forEach((parameter, parameterIdx) => {
             if (parameterIdx > 0) {
-                writer.write(', ')
+                writer.write(", ")
             }
             parameter.write(writer)
         })
-        writer.write(') ')
+        writer.write(") ")
         this.body.write(writer)
     }
 }

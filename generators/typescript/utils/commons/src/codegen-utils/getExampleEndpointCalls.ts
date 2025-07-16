@@ -1,4 +1,4 @@
-import { ExampleEndpointCall, HttpEndpoint } from '@fern-fern/ir-sdk/api'
+import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api"
 
 export function getExampleEndpointCalls(endpoint: HttpEndpoint): ExampleEndpointCall[] {
     // If any of the examples are user provided, we should only include those.

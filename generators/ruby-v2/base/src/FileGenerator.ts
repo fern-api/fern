@@ -1,6 +1,6 @@
-import { File } from '@fern-api/base-generator'
-import { RelativeFilePath } from '@fern-api/fs-utils'
-import { AbstractRubyGeneratorContext, BaseRubyCustomConfigSchema } from '@fern-api/ruby-ast'
+import { File } from "@fern-api/base-generator"
+import { RelativeFilePath } from "@fern-api/fs-utils"
+import { AbstractRubyGeneratorContext, BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast"
 
 export abstract class FileGenerator<
     GeneratedFile extends File,

@@ -1,7 +1,7 @@
-import chalk from 'chalk'
+import chalk from "chalk"
 
-import { addPrefixToString } from '@fern-api/core-utils'
-import { LogLevel, createLogger } from '@fern-api/logger'
+import { addPrefixToString } from "@fern-api/core-utils"
+import { LogLevel, createLogger } from "@fern-api/logger"
 import {
     CreateInteractiveTaskParams,
     FernCliError,
@@ -11,10 +11,10 @@ import {
     Startable,
     TaskContext,
     TaskResult
-} from '@fern-api/task-context'
+} from "@fern-api/task-context"
 
-import { Log } from './Log'
-import { logErrorMessage } from './logErrorMessage'
+import { Log } from "./Log"
+import { logErrorMessage } from "./logErrorMessage"
 
 export declare namespace TaskContextImpl {
     export interface Init {
@@ -37,7 +37,7 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
     protected subtasks: InteractiveTaskContextImpl[] = []
     private shouldBufferLogs: boolean
     private bufferedLogs: Log[] = []
-    protected status: 'notStarted' | 'running' | 'finished' = 'notStarted'
+    protected status: "notStarted" | "running" | "finished" = "notStarted"
     private onResult: ((result: TaskResult) => void) | undefined
     private instrumentPostHogEventImpl: (event: PosthogEvent) => Promise<void>
     public constructor({
@@ -49,7 +49,7 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
         instrumentPostHogEvent
     }: TaskContextImpl.Init) {
         this.logImmediately = logImmediately
-        this.logPrefix = logPrefix ?? ''
+        this.logPrefix = logPrefix ?? ""
         this.takeOverTerminal = takeOverTerminal
         this.onResult = onResult
         this.shouldBufferLogs = shouldBufferLogs
@@ -57,22 +57,22 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
     }
 
     public start(): Finishable & TaskContext {
-        this.status = 'running'
+        this.status = "running"
         return this
     }
 
     public isStarted(): boolean {
-        return this.status !== 'notStarted'
+        return this.status !== "notStarted"
     }
 
     public finish(): void {
-        this.status = 'finished'
+        this.status = "finished"
         this.flushLogs()
         this.onResult?.(this.getResult())
     }
 
     public isFinished(): boolean {
-        return this.status === 'finished'
+        return this.status === "finished"
     }
 
     public takeOverTerminal: (run: () => void | Promise<void>) => Promise<void>
@@ -100,7 +100,7 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
         this.logAtLevelWithOverrides(level, parts)
     }
 
-    protected logAtLevelWithOverrides(level: LogLevel, parts: string[], overrides: Pick<Log, 'omitOnTTY'> = {}): void {
+    protected logAtLevelWithOverrides(level: LogLevel, parts: string[], overrides: Pick<Log, "omitOnTTY"> = {}): void {
         this.log({
             parts,
             level,
@@ -157,7 +157,7 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
     }
 
     public printInteractiveTasks({ spinner }: { spinner: string }): string {
-        return this.subtasks.map((subtask) => subtask.print({ spinner })).join('\n')
+        return this.subtasks.map((subtask) => subtask.print({ spinner })).join("\n")
     }
 }
 
@@ -188,7 +188,7 @@ export class InteractiveTaskContextImpl
 
     public start(): Finishable & InteractiveTaskContext {
         super.start()
-        this.logAtLevelWithOverrides(LogLevel.Info, ['Started.'], {
+        this.logAtLevelWithOverrides(LogLevel.Info, ["Started."], {
             omitOnTTY: true
         })
         this.flushLogs()
@@ -196,16 +196,16 @@ export class InteractiveTaskContextImpl
     }
 
     public isStarted(): boolean {
-        return this.status !== 'notStarted'
+        return this.status !== "notStarted"
     }
 
     public finish(): void {
         if (this.result === TaskResult.Success) {
-            this.logAtLevelWithOverrides(LogLevel.Info, ['Finished.'], {
+            this.logAtLevelWithOverrides(LogLevel.Info, ["Finished."], {
                 omitOnTTY: true
             })
         } else {
-            this.logAtLevelWithOverrides(LogLevel.Error, ['Failed.'], {
+            this.logAtLevelWithOverrides(LogLevel.Error, ["Failed."], {
                 omitOnTTY: true
             })
         }
@@ -225,7 +225,7 @@ export class InteractiveTaskContextImpl
 
         return addPrefixToString({
             prefix: `${this.getIcon({ spinner }).padEnd(spinner.length)} `,
-            content: lines.join('\n')
+            content: lines.join("\n")
         })
     }
 
@@ -235,16 +235,16 @@ export class InteractiveTaskContextImpl
 
     private getIcon({ spinner }: { spinner: string }): string {
         switch (this.status) {
-            case 'notStarted':
-                return chalk.dim('◦')
-            case 'running':
+            case "notStarted":
+                return chalk.dim("◦")
+            case "running":
                 return spinner
-            case 'finished':
+            case "finished":
                 switch (this.getResult()) {
                     case TaskResult.Success:
-                        return chalk.green('✓')
+                        return chalk.green("✓")
                     case TaskResult.Failure:
-                        return chalk.red('x')
+                        return chalk.red("x")
                 }
         }
     }

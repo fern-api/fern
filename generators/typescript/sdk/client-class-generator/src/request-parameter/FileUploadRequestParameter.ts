@@ -1,10 +1,10 @@
-import { GetReferenceOpts } from '@fern-typescript/commons'
-import { GeneratedRequestWrapper, SdkContext } from '@fern-typescript/contexts'
-import { ts } from 'ts-morph'
+import { GetReferenceOpts } from "@fern-typescript/commons"
+import { GeneratedRequestWrapper, SdkContext } from "@fern-typescript/contexts"
+import { ts } from "ts-morph"
 
-import { ExampleEndpointCall, HttpHeader, InlinedRequestBodyProperty, QueryParameter } from '@fern-fern/ir-sdk/api'
+import { ExampleEndpointCall, HttpHeader, InlinedRequestBodyProperty, QueryParameter } from "@fern-fern/ir-sdk/api"
 
-import { AbstractRequestParameter } from './AbstractRequestParameter'
+import { AbstractRequestParameter } from "./AbstractRequestParameter"
 
 export class FileUploadRequestParameter extends AbstractRequestParameter {
     protected getParameterType(context: SdkContext): {
@@ -27,7 +27,7 @@ export class FileUploadRequestParameter extends AbstractRequestParameter {
     }
 
     public getReferenceToRequestBody(): ts.Expression | undefined {
-        throw new Error('Cannot get reference to request body in file upload request')
+        throw new Error("Cannot get reference to request body in file upload request")
     }
 
     public generateExample({
@@ -74,7 +74,7 @@ export class FileUploadRequestParameter extends AbstractRequestParameter {
             (pathParam) => pathParam.name.originalName === pathParameterKey
         )
         if (pathParameter == null) {
-            throw new Error('Path parameter does not exist: ' + pathParameterKey)
+            throw new Error("Path parameter does not exist: " + pathParameterKey)
         }
         const generatedRequestWrapper = this.getGeneratedRequestWrapper(context)
         return this.getReferenceToProperty(
@@ -87,7 +87,7 @@ export class FileUploadRequestParameter extends AbstractRequestParameter {
             (queryParam) => queryParam.name.wireValue === queryParameterKey
         )
         if (queryParameter == null) {
-            throw new Error('Query parameter does not exist: ' + queryParameterKey)
+            throw new Error("Query parameter does not exist: " + queryParameterKey)
         }
         const generatedRequestWrapper = this.getGeneratedRequestWrapper(context)
         return this.getReferenceToProperty(

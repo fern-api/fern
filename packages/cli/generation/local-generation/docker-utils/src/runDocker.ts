@@ -1,9 +1,9 @@
-import { writeFile } from 'fs/promises'
-import tmp from 'tmp-promise'
+import { writeFile } from "fs/promises"
+import tmp from "tmp-promise"
 
-import { ContainerRunner } from '@fern-api/core-utils'
-import { Logger } from '@fern-api/logger'
-import { loggingExeca } from '@fern-api/logging-execa'
+import { ContainerRunner } from "@fern-api/core-utils"
+import { Logger } from "@fern-api/logger"
+import { loggingExeca } from "@fern-api/logging-execa"
 
 export declare namespace runDocker {
     export interface Args {
@@ -35,7 +35,7 @@ export async function runDocker({
     try {
         await tryRun()
     } catch (e) {
-        if (e instanceof Error && e.message.includes('No such image')) {
+        if (e instanceof Error && e.message.includes("No such image")) {
             await pullImage(imageName)
             await tryRun()
         } else {
@@ -62,18 +62,18 @@ async function tryRunDocker({
     runner?: ContainerRunner
 }): Promise<void> {
     const dockerArgs = [
-        'run',
-        '--user',
-        'root',
-        ...binds.flatMap((bind) => ['-v', bind]),
-        removeAfterCompletion ? '--rm' : '',
+        "run",
+        "--user",
+        "root",
+        ...binds.flatMap((bind) => ["-v", bind]),
+        removeAfterCompletion ? "--rm" : "",
         imageName,
         ...args
     ].filter(Boolean)
     // This filters out any falsy values (empty strings, null, undefined) from the dockerArgs array
     // In this case, it removes empty strings that may be present when removeAfterCompletion is false
 
-    const { stdout, stderr, exitCode } = await loggingExeca(logger, runner ?? 'docker', dockerArgs, {
+    const { stdout, stderr, exitCode } = await loggingExeca(logger, runner ?? "docker", dockerArgs, {
         reject: false,
         all: true,
         doNotPipeOutput: true
@@ -93,7 +93,7 @@ async function tryRunDocker({
 }
 
 async function pullImage(imageName: string): Promise<void> {
-    await loggingExeca(undefined, 'docker', ['pull', imageName], {
+    await loggingExeca(undefined, "docker", ["pull", imageName], {
         all: true,
         doNotPipeOutput: true
     })

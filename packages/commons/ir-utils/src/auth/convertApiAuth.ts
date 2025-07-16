@@ -1,5 +1,5 @@
-import { CasingsGenerator } from '@fern-api/casings-generator'
-import { RawSchemas, visitRawApiAuth, visitRawAuthSchemeDeclaration } from '@fern-api/fern-definition-schema'
+import { CasingsGenerator } from "@fern-api/casings-generator"
+import { RawSchemas, visitRawApiAuth, visitRawAuthSchemeDeclaration } from "@fern-api/fern-definition-schema"
 import {
     ApiAuth,
     AuthScheme,
@@ -7,7 +7,7 @@ import {
     PrimitiveTypeV1,
     PrimitiveTypeV2,
     TypeReference
-} from '@fern-api/ir-sdk'
+} from "@fern-api/ir-sdk"
 
 export function convertApiAuth({
     rawApiFileSchema,
@@ -24,12 +24,12 @@ export function convertApiAuth({
         }
     }
 
-    const docs = typeof rawApiFileSchema.auth !== 'string' ? rawApiFileSchema.auth.docs : undefined
+    const docs = typeof rawApiFileSchema.auth !== "string" ? rawApiFileSchema.auth.docs : undefined
     return visitRawApiAuth<ApiAuth>(rawApiFileSchema.auth, {
         single: (authScheme) => {
             const schemaReference = convertSchemeReference({
                 reference: authScheme,
-                authSchemeDeclarations: rawApiFileSchema['auth-schemes'],
+                authSchemeDeclarations: rawApiFileSchema["auth-schemes"],
                 casingsGenerator
             })
             return {
@@ -44,7 +44,7 @@ export function convertApiAuth({
             schemes: any.map((schemeReference) =>
                 convertSchemeReference({
                     reference: schemeReference,
-                    authSchemeDeclarations: rawApiFileSchema['auth-schemes'],
+                    authSchemeDeclarations: rawApiFileSchema["auth-schemes"],
                     casingsGenerator
                 })
             )
@@ -64,7 +64,7 @@ function convertSchemeReference({
     const convertNamedAuthSchemeReference = (reference: string, docs: string | undefined) => {
         const declaration = authSchemeDeclarations?.[reference]
         if (declaration == null) {
-            throw new Error('Unknown auth scheme: ' + reference)
+            throw new Error("Unknown auth scheme: " + reference)
         }
         return visitRawAuthSchemeDeclaration<AuthScheme>(declaration, {
             header: (rawHeader) =>
@@ -102,24 +102,24 @@ function convertSchemeReference({
         })
     }
 
-    const scheme = typeof reference === 'string' ? reference : reference.scheme
+    const scheme = typeof reference === "string" ? reference : reference.scheme
 
     switch (scheme) {
-        case 'bearer':
-        case 'oauth':
+        case "bearer":
+        case "oauth":
             return generateBearerAuth({
                 casingsGenerator,
                 docs: undefined,
                 rawScheme: undefined
             })
-        case 'basic':
+        case "basic":
             return generateBasicAuth({
                 casingsGenerator,
                 docs: undefined,
                 rawScheme: undefined
             })
         default:
-            return convertNamedAuthSchemeReference(scheme, typeof reference !== 'string' ? reference.docs : undefined)
+            return convertNamedAuthSchemeReference(scheme, typeof reference !== "string" ? reference.docs : undefined)
     }
 }
 
@@ -134,7 +134,7 @@ function generateBearerAuth({
 }): AuthScheme.Bearer {
     return AuthScheme.bearer({
         docs,
-        token: casingsGenerator.generateName(rawScheme?.token?.name ?? 'token'),
+        token: casingsGenerator.generateName(rawScheme?.token?.name ?? "token"),
         tokenEnvVar: rawScheme?.token?.env
     })
 }
@@ -150,9 +150,9 @@ function generateBasicAuth({
 }): AuthScheme.Basic {
     return AuthScheme.basic({
         docs,
-        username: casingsGenerator.generateName(rawScheme?.username?.name ?? 'username'),
+        username: casingsGenerator.generateName(rawScheme?.username?.name ?? "username"),
         usernameEnvVar: rawScheme?.username?.env,
-        password: casingsGenerator.generateName(rawScheme?.password?.name ?? 'password'),
+        password: casingsGenerator.generateName(rawScheme?.password?.name ?? "password"),
         passwordEnvVar: rawScheme?.password?.env
     })
 }

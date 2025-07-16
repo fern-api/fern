@@ -1,21 +1,21 @@
-import { GeneratorName } from '@fern-api/configuration-loader'
-import { assertNever } from '@fern-api/core-utils'
+import { GeneratorName } from "@fern-api/configuration-loader"
+import { assertNever } from "@fern-api/core-utils"
 
-import { IrSerialization } from '../../ir-serialization'
-import { IrVersions } from '../../ir-versions'
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
+import { IrSerialization } from "../../ir-serialization"
+import { IrVersions } from "../../ir-versions"
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
 
 export const V33_TO_V32_MIGRATION: IrMigration<
     IrVersions.V33.ir.IntermediateRepresentation,
     IrVersions.V32.ir.IntermediateRepresentation
 > = {
-    laterVersion: 'v33',
-    earlierVersion: 'v32',
+    laterVersion: "v33",
+    earlierVersion: "v32",
     firstGeneratorVersionToConsumeNewIR: {
-        [GeneratorName.TYPESCRIPT_NODE_SDK]: '0.12.0',
-        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: '0.12.0',
+        [GeneratorName.TYPESCRIPT_NODE_SDK]: "0.12.0",
+        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: "0.12.0",
         [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_SDK]: '0.12.0',
+        [GeneratorName.TYPESCRIPT_SDK]: "0.12.0",
         [GeneratorName.TYPESCRIPT_EXPRESS]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -28,13 +28,13 @@ export const V33_TO_V32_MIGRATION: IrMigration<
         [GeneratorName.STOPLIGHT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.GO_FIBER]: '0.13.0-3-g8c56a41',
-        [GeneratorName.GO_MODEL]: '0.13.0-3-g8c56a41',
-        [GeneratorName.GO_SDK]: '0.13.0-3-g8c56a41',
+        [GeneratorName.GO_FIBER]: "0.13.0-3-g8c56a41",
+        [GeneratorName.GO_MODEL]: "0.13.0-3-g8c56a41",
+        [GeneratorName.GO_SDK]: "0.13.0-3-g8c56a41",
         [GeneratorName.RUBY_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.RUBY_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.CSHARP_MODEL]: '0.0.0',
-        [GeneratorName.CSHARP_SDK]: '0.0.0',
+        [GeneratorName.CSHARP_MODEL]: "0.0.0",
+        [GeneratorName.CSHARP_SDK]: "0.0.0",
         [GeneratorName.SWIFT_MODEL]: GeneratorWasNotCreatedYet,
         [GeneratorName.SWIFT_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.PHP_MODEL]: GeneratorWasNotCreatedYet,
@@ -42,7 +42,7 @@ export const V33_TO_V32_MIGRATION: IrMigration<
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V32.IntermediateRepresentation.jsonOrThrow(ir, {
-            unrecognizedObjectKeys: 'strip',
+            unrecognizedObjectKeys: "strip",
             skipValidation: true
         }),
     migrateBackwards: (v33): IrVersions.V32.ir.IntermediateRepresentation => {
@@ -82,7 +82,7 @@ class Converter {
                               ...queryParameter,
                               valueType: IrVersions.V33.TypeReference.container(
                                   IrVersions.V33.ContainerType.optional(
-                                      IrVersions.V33.TypeReference.primitive('STRING')
+                                      IrVersions.V33.TypeReference.primitive("STRING")
                                   )
                               )
                           }
@@ -97,13 +97,13 @@ class Converter {
 
     private isTypeReferenceObject(typeReference: IrVersions.V33.TypeReference): boolean {
         switch (typeReference.type) {
-            case 'container':
+            case "container":
                 return this.isContainerObject(typeReference.container)
-            case 'named':
+            case "named":
                 return this.isNamedTypeObject(typeReference)
-            case 'primitive':
+            case "primitive":
                 return false
-            case 'unknown':
+            case "unknown":
                 return true
             default:
                 assertNever(typeReference)
@@ -112,13 +112,13 @@ class Converter {
 
     private isContainerObject(containerType: IrVersions.V33.ContainerType): boolean {
         switch (containerType.type) {
-            case 'map':
-            case 'list':
-            case 'set':
+            case "map":
+            case "list":
+            case "set":
                 return true
-            case 'optional':
+            case "optional":
                 return this.isTypeReferenceObject(containerType.optional)
-            case 'literal':
+            case "literal":
                 return false
             default:
                 assertNever(containerType)
@@ -132,13 +132,13 @@ class Converter {
             return true
         }
         switch (typeDeclaration.shape.type) {
-            case 'alias':
+            case "alias":
                 return this.isTypeReferenceObject(typeDeclaration.shape.aliasOf)
-            case 'enum':
+            case "enum":
                 return false
-            case 'object':
-            case 'union':
-            case 'undiscriminatedUnion':
+            case "object":
+            case "union":
+            case "undiscriminatedUnion":
                 return true
             default:
                 assertNever(typeDeclaration.shape)
@@ -177,13 +177,13 @@ function convertExampleEndpointCall(
 
 function isExampleTypeReferenceObject(exampleTypeReference: IrVersions.V33.ExampleTypeReference): boolean {
     switch (exampleTypeReference.shape.type) {
-        case 'container':
+        case "container":
             return isExampleContainerObject(exampleTypeReference.shape.container)
-        case 'named':
+        case "named":
             return isExampleNamedTypeObject(exampleTypeReference.shape)
-        case 'primitive':
+        case "primitive":
             return false
-        case 'unknown':
+        case "unknown":
             return true
         default:
             assertNever(exampleTypeReference.shape)
@@ -192,11 +192,11 @@ function isExampleTypeReferenceObject(exampleTypeReference: IrVersions.V33.Examp
 
 function isExampleContainerObject(exampleContainer: IrVersions.V33.ExampleContainer): boolean {
     switch (exampleContainer.type) {
-        case 'map':
-        case 'list':
-        case 'set':
+        case "map":
+        case "list":
+        case "set":
             return true
-        case 'optional':
+        case "optional":
             return exampleContainer.optional != null && isExampleTypeReferenceObject(exampleContainer.optional)
         default:
             assertNever(exampleContainer)
@@ -205,13 +205,13 @@ function isExampleContainerObject(exampleContainer: IrVersions.V33.ExampleContai
 
 function isExampleNamedTypeObject(exampleNamedType: IrVersions.V33.ExampleNamedType): boolean {
     switch (exampleNamedType.shape.type) {
-        case 'alias':
+        case "alias":
             return isExampleTypeReferenceObject(exampleNamedType.shape.value)
-        case 'enum':
+        case "enum":
             return false
-        case 'object':
-        case 'union':
-        case 'undiscriminatedUnion':
+        case "object":
+        case "union":
+        case "undiscriminatedUnion":
             return true
         default:
             assertNever(exampleNamedType.shape)

@@ -1,13 +1,13 @@
-import { FernWorkspace } from '@fern-api/api-workspace-commons'
-import { SourceResolverImpl } from '@fern-api/cli-source-resolver'
-import { Audiences, generatorsYml } from '@fern-api/configuration'
-import { generateIntermediateRepresentation } from '@fern-api/ir-generator'
+import { FernWorkspace } from "@fern-api/api-workspace-commons"
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver"
+import { Audiences, generatorsYml } from "@fern-api/configuration"
+import { generateIntermediateRepresentation } from "@fern-api/ir-generator"
 import {
     migrateIntermediateRepresentationForGenerator,
     migrateIntermediateRepresentationThroughVersion
-} from '@fern-api/ir-migrations'
-import { IntermediateRepresentation, SourceConfig } from '@fern-api/ir-sdk'
-import { TaskContext } from '@fern-api/task-context'
+} from "@fern-api/ir-migrations"
+import { IntermediateRepresentation, SourceConfig } from "@fern-api/ir-sdk"
+import { TaskContext } from "@fern-api/task-context"
 
 export declare namespace getIntermediateRepresentation {
     interface Return {
@@ -60,7 +60,7 @@ export async function getIntermediateRepresentation({
     if (sourceConfig != null) {
         intermediateRepresentation.sourceConfig = sourceConfig
     }
-    context.logger.debug('Generated IR')
+    context.logger.debug("Generated IR")
     const migratedIntermediateRepresentation =
         irVersionOverride != null
             ? await migrateIntermediateRepresentationThroughVersion({

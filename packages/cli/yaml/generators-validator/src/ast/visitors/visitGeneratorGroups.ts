@@ -1,7 +1,7 @@
-import { generatorsYml } from '@fern-api/configuration-loader'
-import { NodePath } from '@fern-api/fern-definition-schema'
+import { generatorsYml } from "@fern-api/configuration-loader"
+import { NodePath } from "@fern-api/fern-definition-schema"
 
-import { GeneratorsYmlFileAstVisitor } from '../GeneratorsYmlAstVisitor'
+import { GeneratorsYmlFileAstVisitor } from "../GeneratorsYmlAstVisitor"
 
 export async function visitGeneratorGroups({
     groups,
@@ -38,7 +38,7 @@ async function visitGeneratorGroup({
             async (generator, idx) =>
                 await visitor.generatorInvocation?.({ invocation: generator, cliVersion }, [
                     ...nodePath,
-                    'generators',
+                    "generators",
                     idx.toString(),
                     generator.name
                 ])

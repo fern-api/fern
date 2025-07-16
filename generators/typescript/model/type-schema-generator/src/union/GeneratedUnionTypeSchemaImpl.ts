@@ -1,17 +1,17 @@
-import { Zurg } from '@fern-typescript/commons'
-import { GeneratedUnionType, GeneratedUnionTypeSchema, ModelContext } from '@fern-typescript/contexts'
+import { Zurg } from "@fern-typescript/commons"
+import { GeneratedUnionType, GeneratedUnionTypeSchema, ModelContext } from "@fern-typescript/contexts"
 import {
     GeneratedUnionSchema,
     RawNoPropertiesSingleUnionType,
     RawSingleUnionType
-} from '@fern-typescript/union-schema-generator'
-import { ModuleDeclaration, ts } from 'ts-morph'
+} from "@fern-typescript/union-schema-generator"
+import { ModuleDeclaration, ts } from "ts-morph"
 
-import { SingleUnionTypeProperties, UnionTypeDeclaration } from '@fern-fern/ir-sdk/api'
+import { SingleUnionTypeProperties, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api"
 
-import { AbstractGeneratedTypeSchema } from '../AbstractGeneratedTypeSchema'
-import { RawSamePropertiesAsObjectSingleUnionType } from './RawSamePropertiesAsObjectSingleUnionType'
-import { RawSinglePropertySingleUnionType } from './RawSinglePropertySingleUnionType'
+import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema"
+import { RawSamePropertiesAsObjectSingleUnionType } from "./RawSamePropertiesAsObjectSingleUnionType"
+import { RawSinglePropertySingleUnionType } from "./RawSinglePropertySingleUnionType"
 
 export declare namespace GeneratedUnionTypeSchemaImpl {
     export interface Init<Context extends ModelContext>
@@ -24,7 +24,7 @@ export class GeneratedUnionTypeSchemaImpl<Context extends ModelContext>
     extends AbstractGeneratedTypeSchema<UnionTypeDeclaration, Context>
     implements GeneratedUnionTypeSchema<Context>
 {
-    public readonly type = 'union'
+    public readonly type = "union"
 
     private generatedUnionSchema: GeneratedUnionSchema<Context>
 
@@ -63,7 +63,7 @@ export class GeneratedUnionTypeSchemaImpl<Context extends ModelContext>
                         }),
                     _other: () => {
                         throw new Error(
-                            'Unknown SingleUnionTypeProperties type: ' + singleUnionType.shape.propertiesType
+                            "Unknown SingleUnionTypeProperties type: " + singleUnionType.shape.propertiesType
                         )
                     }
                 })
@@ -85,8 +85,8 @@ export class GeneratedUnionTypeSchemaImpl<Context extends ModelContext>
 
     private getGeneratedUnionType(): GeneratedUnionType<Context> {
         const generatedType = this.getGeneratedType()
-        if (generatedType.type !== 'union') {
-            throw new Error('Type is not an union: ' + this.typeName)
+        if (generatedType.type !== "union") {
+            throw new Error("Type is not an union: " + this.typeName)
         }
         return generatedType
     }

@@ -1,4 +1,4 @@
-import { FernNavigation } from '@fern-api/fdr-sdk'
+import { FernNavigation } from "@fern-api/fdr-sdk"
 
 export function mergeEndpointPairs<EndpointType extends { method: string }>({
     children,
@@ -21,7 +21,7 @@ export function mergeEndpointPairs<EndpointType extends { method: string }>({
 
     const methodAndPathToEndpointNode = new Map<string, FernNavigation.V1.EndpointNode>()
     children.forEach((child) => {
-        if (child.type !== 'endpoint') {
+        if (child.type !== "endpoint") {
             toRet.push(child)
             return
         }
@@ -46,7 +46,7 @@ export function mergeEndpointPairs<EndpointType extends { method: string }>({
         const nonStream = child.isResponseStream ? existing : child
         const pairNode: FernNavigation.V1.EndpointPairNode = {
             id: FernNavigation.V1.NodeId(`${apiDefinitionId}:${nonStream.endpointId}+${stream.endpointId}`),
-            type: 'endpointPair',
+            type: "endpointPair",
             stream,
             nonStream
         }

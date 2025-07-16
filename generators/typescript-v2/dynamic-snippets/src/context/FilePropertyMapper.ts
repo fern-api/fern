@@ -1,8 +1,8 @@
-import { assertNever } from '@fern-api/core-utils'
-import { FernIr } from '@fern-api/dynamic-ir-sdk'
-import { ts } from '@fern-api/typescript-ast'
+import { assertNever } from "@fern-api/core-utils"
+import { FernIr } from "@fern-api/dynamic-ir-sdk"
+import { ts } from "@fern-api/typescript-ast"
 
-import { DynamicSnippetsGeneratorContext } from './DynamicSnippetsGeneratorContext'
+import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext"
 
 export interface FilePropertyInfo {
     fileFields: ts.ObjectField[]
@@ -30,19 +30,19 @@ export class FilePropertyMapper {
         const record = this.context.getRecord(value) ?? {}
         for (const property of body.properties) {
             switch (property.type) {
-                case 'file':
+                case "file":
                     result.fileFields.push({
                         name: this.context.getPropertyName(property.name),
                         value: this.getSingleFileProperty({ property, record })
                     })
                     break
-                case 'fileArray':
+                case "fileArray":
                     result.fileFields.push({
                         name: this.context.getPropertyName(property.name),
                         value: this.getArrayFileProperty({ property, record })
                     })
                     break
-                case 'bodyProperty':
+                case "bodyProperty":
                     result.bodyPropertyFields.push({
                         name: this.context.getPropertyName(property.name.name),
                         value: this.getBodyProperty({ property, record })

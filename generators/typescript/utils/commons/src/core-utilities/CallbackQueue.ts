@@ -1,6 +1,6 @@
-import { ts } from 'ts-morph'
+import { ts } from "ts-morph"
 
-import { CoreUtility } from './CoreUtility'
+import { CoreUtility } from "./CoreUtility"
 
 export interface CallbackQueue {
     _instantiate: () => ts.NewExpression
@@ -8,10 +8,10 @@ export interface CallbackQueue {
 }
 
 export const MANIFEST: CoreUtility.Manifest = {
-    name: 'callback-queue',
-    pathInCoreUtilities: { nameOnDisk: 'callback-queue', exportDeclaration: { exportAll: true } },
+    name: "callback-queue",
+    pathInCoreUtilities: { nameOnDisk: "callback-queue", exportDeclaration: { exportAll: true } },
     getFilesPatterns: () => {
-        return { patterns: ['src/core/callback-queue/**', 'tests/unit/callback-queue/**'] }
+        return { patterns: ["src/core/callback-queue/**", "tests/unit/callback-queue/**"] }
     }
 }
 
@@ -19,7 +19,7 @@ export class CallbackQueueImpl extends CoreUtility implements CallbackQueue {
     public readonly MANIFEST = MANIFEST
 
     public readonly _instantiate = this.withExportedName(
-        'CallbackQueue',
+        "CallbackQueue",
         (CallbackQueue) => () => ts.factory.createNewExpression(CallbackQueue.getExpression(), undefined, undefined)
     )
 
@@ -31,7 +31,7 @@ export class CallbackQueueImpl extends CoreUtility implements CallbackQueue {
         functionToWrap: ts.Expression
     }): ts.Expression => {
         return ts.factory.createCallExpression(
-            ts.factory.createPropertyAccessExpression(referenceToCallbackQueue, 'wrap'),
+            ts.factory.createPropertyAccessExpression(referenceToCallbackQueue, "wrap"),
             undefined,
             [functionToWrap]
         )

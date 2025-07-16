@@ -1,16 +1,16 @@
-import path from 'path'
+import path from "path"
 
-import { AbstractAPIWorkspace } from '@fern-api/api-workspace-commons'
-import { Audiences, generatorsYml } from '@fern-api/configuration-loader'
-import { AbsoluteFilePath, streamObjectToFile } from '@fern-api/fs-utils'
-import { migrateIntermediateRepresentationThroughVersion } from '@fern-api/ir-migrations'
-import { serialization as IrSerialization } from '@fern-api/ir-sdk'
-import { OSSWorkspace } from '@fern-api/lazy-fern-workspace'
-import { Project } from '@fern-api/project-loader'
-import { TaskContext } from '@fern-api/task-context'
+import { AbstractAPIWorkspace } from "@fern-api/api-workspace-commons"
+import { Audiences, generatorsYml } from "@fern-api/configuration-loader"
+import { AbsoluteFilePath, streamObjectToFile } from "@fern-api/fs-utils"
+import { migrateIntermediateRepresentationThroughVersion } from "@fern-api/ir-migrations"
+import { serialization as IrSerialization } from "@fern-api/ir-sdk"
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace"
+import { Project } from "@fern-api/project-loader"
+import { TaskContext } from "@fern-api/task-context"
 
-import { CliContext } from '../../cli-context/CliContext'
-import { generateIrForFernWorkspace } from './generateIrForFernWorkspace'
+import { CliContext } from "../../cli-context/CliContext"
+import { generateIrForFernWorkspace } from "./generateIrForFernWorkspace"
 
 export async function generateIrForWorkspaces({
     project,
@@ -40,7 +40,7 @@ export async function generateIrForWorkspaces({
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                cliContext.logger.info(`Generating IR for workspace ${workspace.workspaceName ?? 'api'}`)
+                cliContext.logger.info(`Generating IR for workspace ${workspace.workspaceName ?? "api"}`)
 
                 const intermediateRepresentation = await getIntermediateRepresentation({
                     workspace,
@@ -112,7 +112,7 @@ async function getIntermediateRepresentation({
 
     if (version == null) {
         return IrSerialization.IntermediateRepresentation.jsonOrThrow(intermediateRepresentation, {
-            unrecognizedObjectKeys: 'strip'
+            unrecognizedObjectKeys: "strip"
         })
     }
 

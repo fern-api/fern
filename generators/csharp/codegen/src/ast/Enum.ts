@@ -1,10 +1,10 @@
-import { csharp } from '..'
-import { Access } from './Access'
-import { Annotation } from './Annotation'
-import { ClassReference } from './ClassReference'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
-import { ENUM_MEMBER } from './dependencies/System'
+import { csharp } from ".."
+import { Access } from "./Access"
+import { Annotation } from "./Annotation"
+import { ClassReference } from "./ClassReference"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
+import { ENUM_MEMBER } from "./dependencies/System"
 
 export declare namespace Enum {
     interface Args {
@@ -66,7 +66,7 @@ export class Enum extends AstNode {
             value: new Annotation({
                 reference: ENUM_MEMBER,
                 argument: csharp.codeblock((writer) => {
-                    writer.write('Value = ')
+                    writer.write("Value = ")
                     writer.writeNode(csharp.string_({ string: field.value }))
                 })
             })
@@ -83,21 +83,21 @@ export class Enum extends AstNode {
         writer.writeNewLineIfLastLineNot()
 
         writer.write(`${this.access} `)
-        writer.write('enum ')
+        writer.write("enum ")
         writer.writeLine(`${this.name}`)
-        writer.writeLine('{')
+        writer.writeLine("{")
 
         writer.indent()
         this.fields.forEach((field, index) => {
             field.value.write(writer)
             writer.write(field.name)
             if (index < this.fields.length - 1) {
-                writer.writeLine(',')
+                writer.writeLine(",")
                 writer.newLine()
             }
         })
         writer.writeNewLineIfLastLineNot()
         writer.dedent()
-        writer.writeLine('}')
+        writer.writeLine("}")
     }
 }

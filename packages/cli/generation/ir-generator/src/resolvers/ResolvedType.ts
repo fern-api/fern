@@ -1,8 +1,8 @@
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { DeclaredTypeName, Literal as IrLiteral, PrimitiveType, TypeReference } from '@fern-api/ir-sdk'
-import { RelativeFilePath } from '@fern-api/path-utils'
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { DeclaredTypeName, Literal as IrLiteral, PrimitiveType, TypeReference } from "@fern-api/ir-sdk"
+import { RelativeFilePath } from "@fern-api/path-utils"
 
-import { FernFileContext } from '../FernFileContext'
+import { FernFileContext } from "../FernFileContext"
 
 export declare type ResolvedType =
     | ResolvedType.Container
@@ -12,13 +12,13 @@ export declare type ResolvedType =
 
 export declare namespace ResolvedType {
     interface Container {
-        _type: 'container'
+        _type: "container"
         container: ResolvedContainerType
         originalTypeReference: TypeReference.Container
     }
 
     interface Named {
-        _type: 'named'
+        _type: "named"
         rawName: string
         name: DeclaredTypeName
         declaration:
@@ -34,13 +34,13 @@ export declare namespace ResolvedType {
     }
 
     interface Primitive {
-        _type: 'primitive'
+        _type: "primitive"
         primitive: PrimitiveType
         originalTypeReference: TypeReference.Primitive
     }
 
     interface Unknown {
-        _type: 'unknown'
+        _type: "unknown"
         originalTypeReference: TypeReference.Unknown
     }
 }
@@ -55,33 +55,33 @@ export declare type ResolvedContainerType =
 
 export declare namespace ResolvedContainerType {
     interface Map {
-        _type: 'map'
+        _type: "map"
         keyType: ResolvedType
         valueType: ResolvedType
     }
 
     interface List {
-        _type: 'list'
+        _type: "list"
         itemType: ResolvedType
     }
 
     interface Optional {
-        _type: 'optional'
+        _type: "optional"
         itemType: ResolvedType
     }
 
     interface Nullable {
-        _type: 'nullable'
+        _type: "nullable"
         itemType: ResolvedType
     }
 
     interface Set {
-        _type: 'set'
+        _type: "set"
         itemType: ResolvedType
     }
 
     interface Literal {
-        _type: 'literal'
+        _type: "literal"
         literal: IrLiteral
     }
 }

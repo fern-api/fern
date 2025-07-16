@@ -1,5 +1,5 @@
-import type { Element } from 'hast'
-import { visit } from 'unist-util-visit'
+import type { Element } from "hast"
+import { visit } from "unist-util-visit"
 
 export function unifiedRemovePositions(): (node: Element) => void {
     return function (node: Element): void {

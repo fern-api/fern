@@ -1,1 +1,1 @@
-export const RESPONSE_VARIABLE_NAME = 'response'
+export const RESPONSE_VARIABLE_NAME = "response"

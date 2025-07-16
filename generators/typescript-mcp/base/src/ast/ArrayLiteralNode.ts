@@ -1,4 +1,4 @@
-import { ts } from '@fern-api/typescript-ast'
+import { ts } from "@fern-api/typescript-ast"
 
 export declare namespace ArrayLiteralNode {
     interface Args {
@@ -13,14 +13,14 @@ export class ArrayLiteralNode extends ts.AstNode {
     }
 
     public write(writer: ts.Writer): void {
-        writer.write('[')
+        writer.write("[")
         writer.newLine()
         writer.indent()
         for (const value of this.args.values) {
             writer.writeNode(value)
-            writer.writeLine(',')
+            writer.writeLine(",")
         }
         writer.dedent()
-        writer.write(']')
+        writer.write("]")
     }
 }

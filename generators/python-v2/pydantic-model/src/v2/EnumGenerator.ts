@@ -1,10 +1,10 @@
-import { RelativeFilePath } from '@fern-api/fs-utils'
-import { python } from '@fern-api/python-ast'
-import { WriteablePythonFile } from '@fern-api/python-base'
+import { RelativeFilePath } from "@fern-api/fs-utils"
+import { python } from "@fern-api/python-ast"
+import { WriteablePythonFile } from "@fern-api/python-base"
 
-import { EnumTypeDeclaration, TypeDeclaration, TypeId } from '@fern-fern/ir-sdk/api'
+import { EnumTypeDeclaration, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api"
 
-import { PydanticModelGeneratorContext } from '../ModelGeneratorContext'
+import { PydanticModelGeneratorContext } from "../ModelGeneratorContext"
 
 export class EnumGenerator {
     constructor(
@@ -20,7 +20,7 @@ export class EnumGenerator {
         const enumClass = python.class_({
             name: className,
             docs: this.typeDeclaration.docs,
-            extends_: [python.reference({ name: 'str' }), python.reference({ name: 'enum.Enum' })],
+            extends_: [python.reference({ name: "str" }), python.reference({ name: "enum.Enum" })],
             decorators: []
         })
 
@@ -39,7 +39,7 @@ export class EnumGenerator {
         }
 
         // Add visit method
-        enumClass.add(python.codeBlock(''))
+        enumClass.add(python.codeBlock(""))
         enumClass.add(this.generateVisitMethod(className))
 
         const path = this.context.getModulePathForId(this.typeId)
@@ -52,17 +52,17 @@ export class EnumGenerator {
 
         return new WriteablePythonFile({
             contents: file,
-            directory: RelativeFilePath.of(path.join('/')),
+            directory: RelativeFilePath.of(path.join("/")),
             filename
         })
     }
 
     private generateVisitMethod(className: string): python.Method {
         const visitMethod = python.method({
-            name: 'visit',
+            name: "visit",
             parameters: [
                 python.parameter({
-                    name: 'self',
+                    name: "self",
                     type: undefined
                 }),
                 ...this.enumDeclaration.values.map((enumValue) => {
@@ -71,7 +71,7 @@ export class EnumGenerator {
                         name: parameterName,
                         type: python.Type.reference(
                             python.reference({
-                                name: 'typing.Callable[[], T_Result]'
+                                name: "typing.Callable[[], T_Result]"
                             })
                         )
                     })
@@ -79,7 +79,7 @@ export class EnumGenerator {
             ],
             return_: python.Type.reference(
                 python.reference({
-                    name: 'T_Result'
+                    name: "T_Result"
                 })
             )
         })
@@ -92,7 +92,7 @@ export class EnumGenerator {
             visitMethod.addStatement(
                 python.codeBlock((writer) => {
                     writer.write(`if self is ${className}.${memberName}:`)
-                    writer.write('\n')
+                    writer.write("\n")
                     writer.write(`    return ${parameterName}()`)
                 })
             )

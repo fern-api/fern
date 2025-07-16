@@ -1,8 +1,8 @@
-import { SwiftFile } from '@fern-api/swift-base'
+import { SwiftFile } from "@fern-api/swift-base"
 
-import { ModelGeneratorContext } from './ModelGeneratorContext'
-import { StringEnumGenerator } from './enum'
-import { ObjectGenerator } from './object'
+import { ModelGeneratorContext } from "./ModelGeneratorContext"
+import { StringEnumGenerator } from "./enum"
+import { ObjectGenerator } from "./object"
 
 export function generateModels({ context }: { context: ModelGeneratorContext }): SwiftFile[] {
     const files: SwiftFile[] = []

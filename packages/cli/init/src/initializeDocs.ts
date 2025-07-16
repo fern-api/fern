@@ -1,15 +1,15 @@
-import chalk from 'chalk'
-import fs from 'fs-extra'
-import { writeFile } from 'fs/promises'
-import yaml from 'js-yaml'
+import chalk from "chalk"
+import fs from "fs-extra"
+import { writeFile } from "fs/promises"
+import yaml from "js-yaml"
 
-import { DOCS_CONFIGURATION_FILENAME } from '@fern-api/configuration-loader'
-import { docsYml } from '@fern-api/configuration-loader'
-import { RelativeFilePath, doesPathExist, join } from '@fern-api/fs-utils'
-import { TaskContext } from '@fern-api/task-context'
+import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader"
+import { docsYml } from "@fern-api/configuration-loader"
+import { RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils"
+import { TaskContext } from "@fern-api/task-context"
 
-import { titleCase } from '../../../commons/core-utils/src'
-import { createFernDirectoryAndWorkspace } from './createFernDirectoryAndOrganization'
+import { titleCase } from "../../../commons/core-utils/src"
+import { createFernDirectoryAndWorkspace } from "./createFernDirectoryAndOrganization"
 
 export async function initializeDocs({
     organization,
@@ -38,12 +38,12 @@ export async function initializeDocs({
         } else {
             try {
                 await writeFile(docsYmlPath, yaml.dump(getDocsConfig(createDirectoryResponse.organization)))
-                taskContext.logger.info(chalk.green('Created docs configuration'))
+                taskContext.logger.info(chalk.green("Created docs configuration"))
                 return
             } catch (writeError) {
                 const errorMessage = writeError instanceof Error ? writeError.message : String(writeError)
                 taskContext.logger.debug(`Encountered an error while writing docs configuration: ${errorMessage}`)
-                taskContext.logger.error(chalk.red('Failed to write docs configuration'))
+                taskContext.logger.error(chalk.red("Failed to write docs configuration"))
                 throw writeError
             }
         }
@@ -58,10 +58,10 @@ function getDocsConfig(organization: string): docsYml.RawSchemas.DocsConfigurati
             }
         ],
         title: `${titleCase(organization)} | Documentation`,
-        navigation: [{ api: 'API Reference', paginated: true }],
+        navigation: [{ api: "API Reference", paginated: true }],
         colors: {
-            accentPrimary: '#ffffff',
-            background: '#000000'
+            accentPrimary: "#ffffff",
+            background: "#000000"
         }
     }
 }

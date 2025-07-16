@@ -1,5 +1,5 @@
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export declare namespace Map {
     interface Args {
@@ -32,28 +32,28 @@ export class Map extends AstNode {
     }
 
     private writeMultiline(writer: Writer): void {
-        writer.writeLine('[')
+        writer.writeLine("[")
         writer.indent()
         for (const { key, value } of this.entries) {
             key.write(writer)
-            writer.write(' => ')
+            writer.write(" => ")
             value.write(writer)
-            writer.writeLine(',')
+            writer.writeLine(",")
         }
         writer.dedent()
-        writer.write(']')
+        writer.write("]")
     }
 
     private writeCompact(writer: Writer): void {
-        writer.write('[')
+        writer.write("[")
         for (const [index, { key, value }] of this.entries.entries()) {
             if (index > 0) {
-                writer.write(', ')
+                writer.write(", ")
             }
             key.write(writer)
-            writer.write(' => ')
+            writer.write(" => ")
             value.write(writer)
         }
-        writer.write(']')
+        writer.write("]")
     }
 }

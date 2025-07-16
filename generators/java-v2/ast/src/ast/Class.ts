@@ -1,7 +1,7 @@
-import { Access } from './Access'
-import { Method } from './Method'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { Access } from "./Access"
+import { Method } from "./Method"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export declare namespace Class {
     interface Args {
@@ -28,17 +28,17 @@ export class Class extends AstNode {
     public write(writer: Writer): void {
         writer.write(`${this.access} class ${this.name}`)
         if (this.isEmpty()) {
-            writer.writeLine(' {}')
+            writer.writeLine(" {}")
             return
         }
-        writer.writeLine(' {')
+        writer.writeLine(" {")
         writer.indent()
         for (const method of this.methods) {
             writer.writeNode(method)
             writer.newLine()
         }
         writer.dedent()
-        writer.write('}')
+        writer.write("}")
     }
 
     public addMethod(method: Method): void {

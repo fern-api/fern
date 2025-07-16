@@ -1,21 +1,21 @@
-import { assertNever } from '@fern-api/core-utils'
-import { CSharpFile, FileGenerator, convertExampleTypeReferenceToTypeReference } from '@fern-api/csharp-base'
-import { csharp } from '@fern-api/csharp-codegen'
-import { RelativeFilePath, join } from '@fern-api/fs-utils'
+import { assertNever } from "@fern-api/core-utils"
+import { CSharpFile, FileGenerator, convertExampleTypeReferenceToTypeReference } from "@fern-api/csharp-base"
+import { csharp } from "@fern-api/csharp-codegen"
+import { RelativeFilePath, join } from "@fern-api/fs-utils"
 
-import { FernIr } from '@fern-fern/ir-sdk'
+import { FernIr } from "@fern-fern/ir-sdk"
 import {
     ExampleEndpointCall,
     ExampleResponse,
     ExampleTypeReference,
     HttpEndpoint,
     ServiceId
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { SdkCustomConfigSchema } from '../../SdkCustomConfig'
-import { MOCK_SERVER_TEST_FOLDER, SdkGeneratorContext } from '../../SdkGeneratorContext'
-import { HttpEndpointGenerator } from '../../endpoint/http/HttpEndpointGenerator'
-import { MockEndpointGenerator } from './MockEndpointGenerator'
+import { SdkCustomConfigSchema } from "../../SdkCustomConfig"
+import { MOCK_SERVER_TEST_FOLDER, SdkGeneratorContext } from "../../SdkGeneratorContext"
+import { HttpEndpointGenerator } from "../../endpoint/http/HttpEndpointGenerator"
+import { MockEndpointGenerator } from "./MockEndpointGenerator"
 
 export declare namespace TestClass {
     interface TestInput {
@@ -38,7 +38,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
         super(context)
 
         this.classReference = csharp.classReference({
-            name: this.endpoint.name.pascalCase.safeName + 'Test',
+            name: this.endpoint.name.pascalCase.safeName + "Test",
             namespace: this.getTestNamespace()
         })
 
@@ -47,7 +47,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
     }
 
     public override shouldGenerate(): boolean {
-        if (this.endpoint.pagination?.type === 'custom') {
+        if (this.endpoint.pagination?.type === "custom") {
             return false
         }
         return true
@@ -62,7 +62,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
         return [
             this.context.getMockServerTestNamespace(),
             ...this.context.getChildNamespaceSegments(subpackage.fernFilepath)
-        ].join('.')
+        ].join(".")
     }
 
     protected doGenerate(): CSharpFile {
@@ -74,8 +74,8 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
         this.exampleEndpointCalls.forEach((example, index) => {
             let jsonExampleResponse: unknown | undefined = undefined
             if (example.response != null) {
-                if (example.response.type !== 'ok' || example.response.value.type !== 'body') {
-                    throw new Error('Unexpected error response type')
+                if (example.response.type !== "ok" || example.response.value.type !== "body") {
+                    throw new Error("Unexpected error response type")
                 }
                 jsonExampleResponse = example.response.value.value?.jsonExample
             }
@@ -92,7 +92,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                 isAsyncTest = true
             }
             const isSupportedResponse =
-                jsonExampleResponse != null && (responseBodyType === 'json' || responseBodyType === 'text')
+                jsonExampleResponse != null && (responseBodyType === "json" || responseBodyType === "text")
             if (isSupportedResponse) {
                 isAsyncTest = true
             }
@@ -104,94 +104,94 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                 const endpointSnippet = this.endpointGenerator.generateEndpointSnippet({
                     example,
                     endpoint: this.endpoint,
-                    clientVariableName: 'Client',
+                    clientVariableName: "Client",
                     serviceId: this.serviceId,
                     getResult: true,
                     parseDatetimes: true
                 })
                 if (endpointSnippet == null) {
-                    throw new Error('Endpoint snippet is null')
+                    throw new Error("Endpoint snippet is null")
                 }
                 if (this.endpoint.pagination) {
-                    writer.write('var pager = ')
+                    writer.write("var pager = ")
                     writer.writeNode(endpointSnippet)
-                    writer.write(';')
+                    writer.write(";")
                     writer.newLine()
-                    writer.write('await foreach (var item in pager)')
+                    writer.write("await foreach (var item in pager)")
                     writer.newLine()
-                    writer.write('{')
+                    writer.write("{")
                     writer.newLine()
                     writer.indent()
 
-                    writer.writeTextStatement('Assert.That(item, Is.Not.Null)')
-                    writer.write('break; // Only check the first item')
+                    writer.writeTextStatement("Assert.That(item, Is.Not.Null)")
+                    writer.write("break; // Only check the first item")
 
                     writer.dedent()
                     writer.newLine()
-                    writer.write('}')
+                    writer.write("}")
                 } else if (isHeadEndpoint) {
                     isAsyncTest = true
-                    writer.write('var headers = ')
+                    writer.write("var headers = ")
                     writer.writeNodeStatement(endpointSnippet)
-                    writer.writeTextStatement('Assert.That(headers, Is.Not.Null)')
-                    writer.write('Assert.That(headers, Is.InstanceOf<')
+                    writer.writeTextStatement("Assert.That(headers, Is.Not.Null)")
+                    writer.write("Assert.That(headers, Is.InstanceOf<")
                     writer.writeNode(this.context.getHttpResponseHeadersReference())
-                    writer.writeTextStatement('>())')
+                    writer.writeTextStatement(">())")
                 } else {
                     if (isSupportedResponse) {
                         isAsyncTest = true
-                        writer.write('var response = ')
+                        writer.write("var response = ")
                         writer.writeNodeStatement(endpointSnippet)
-                        if (responseBodyType === 'json') {
+                        if (responseBodyType === "json") {
                             const responseType = this.getCsharpTypeFromResponse(example.response)
                             const deserializeResponseNode = csharp.invokeMethod({
                                 on: this.context.getJsonUtilsClassReference(),
-                                method: 'Deserialize',
+                                method: "Deserialize",
                                 generics: [responseType],
-                                arguments_: [csharp.codeblock('mockResponse')]
+                                arguments_: [csharp.codeblock("mockResponse")]
                             })
                             switch (responseType.unwrapIfOptional().internalType.type) {
-                                case 'object':
-                                case 'reference':
-                                case 'coreReference':
-                                case 'listType':
-                                case 'set':
-                                case 'map':
-                                case 'list':
-                                case 'array':
+                                case "object":
+                                case "reference":
+                                case "coreReference":
+                                case "listType":
+                                case "set":
+                                case "map":
+                                case "list":
+                                case "array":
                                     writer.writeLine(`Assert.That(
                                         response,
                                         Is.EqualTo(`)
                                     writer.writeNode(deserializeResponseNode)
-                                    writer.writeLine(').UsingDefaults()')
+                                    writer.writeLine(").UsingDefaults()")
                                     break
-                                case 'oneOf':
-                                case 'oneOfBase':
+                                case "oneOf":
+                                case "oneOfBase":
                                     writer.writeLine(`Assert.That(
                                         response.Value,
                                         Is.EqualTo(`)
                                     writer.writeNode(deserializeResponseNode)
-                                    writer.writeLine('.Value).UsingDefaults()')
+                                    writer.writeLine(".Value).UsingDefaults()")
                                     break
                                 default:
                                     writer.writeLine(`Assert.That(
                                         response,
                                         Is.EqualTo(`)
                                     writer.writeNode(deserializeResponseNode)
-                                    writer.writeLine(')')
+                                    writer.writeLine(")")
                             }
-                            writer.writeTextStatement(')')
-                        } else if (responseBodyType === 'text') {
-                            writer.writeTextStatement('Assert.That(response, Is.EqualTo(mockResponse))')
+                            writer.writeTextStatement(")")
+                        } else if (responseBodyType === "text") {
+                            writer.writeTextStatement("Assert.That(response, Is.EqualTo(mockResponse))")
                         }
                     } else {
-                        writer.write('Assert.DoesNotThrowAsync(async () => ')
+                        writer.write("Assert.DoesNotThrowAsync(async () => ")
                         writer.writeNode(endpointSnippet)
-                        writer.write(');')
+                        writer.write(");")
                     }
                 }
             })
-            const testNumber = this.exampleEndpointCalls.length > 1 ? `_${index + 1}` : ''
+            const testNumber = this.exampleEndpointCalls.length > 1 ? `_${index + 1}` : ""
             testClass.addTestMethod({
                 name: `MockServerTest${testNumber}`,
                 body: methodBody,
@@ -232,11 +232,11 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
      and normalize the string so that we can match it in wire tests.
      */
     private exampleToQueryOrHeaderValue({ value }: { value: ExampleTypeReference }): string | undefined {
-        if (typeof value.jsonExample === 'string') {
+        if (typeof value.jsonExample === "string") {
             const maybeDatetime = this.getDateTime(value)
             return maybeDatetime != null ? maybeDatetime.toISOString() : value.jsonExample
         }
-        if (typeof value.jsonExample === 'number') {
+        if (typeof value.jsonExample === "number") {
             return value.jsonExample.toString()
         }
         return undefined
@@ -248,24 +248,24 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
 
     private getDateTime(exampleTypeReference: ExampleTypeReference): Date | undefined {
         switch (exampleTypeReference.shape.type) {
-            case 'container':
-                if (exampleTypeReference.shape.container.type !== 'optional') {
+            case "container":
+                if (exampleTypeReference.shape.container.type !== "optional") {
                     return undefined
                 }
                 if (exampleTypeReference.shape.container.optional == null) {
                     return undefined
                 }
                 return this.getDateTime(exampleTypeReference.shape.container.optional)
-            case 'named':
-                if (exampleTypeReference.shape.shape.type !== 'alias') {
+            case "named":
+                if (exampleTypeReference.shape.shape.type !== "alias") {
                     return undefined
                 }
                 return this.getDateTime(exampleTypeReference.shape.shape.value)
-            case 'primitive':
-                return exampleTypeReference.shape.primitive.type === 'datetime'
+            case "primitive":
+                return exampleTypeReference.shape.primitive.type === "datetime"
                     ? exampleTypeReference.shape.primitive.datetime
                     : undefined
-            case 'unknown':
+            case "unknown":
                 return undefined
         }
     }
@@ -273,14 +273,14 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
     normalizeDatetimes(obj: unknown): unknown {
         function isValidDateString(datetimeString: string): boolean {
             const date = new Date(datetimeString)
-            return !isNaN(date.getTime()) && datetimeString.includes('T')
+            return !isNaN(date.getTime()) && datetimeString.includes("T")
         }
 
-        if (typeof obj === 'string' && isValidDateString(obj)) {
+        if (typeof obj === "string" && isValidDateString(obj)) {
             return new Date(obj).toISOString()
         } else if (Array.isArray(obj)) {
             return obj.map((item) => this.normalizeDatetimes(item))
-        } else if (obj != null && typeof obj === 'object') {
+        } else if (obj != null && typeof obj === "object") {
             const result: Record<string, unknown> = {}
             for (const [key, value] of Object.entries(obj)) {
                 result[key] = this.normalizeDatetimes(value)
@@ -298,8 +298,8 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
 
     getCsharpTypeFromResponse(exampleResponse: ExampleResponse): csharp.Type {
         switch (exampleResponse.type) {
-            case 'ok':
-                if (exampleResponse.value.type === 'body') {
+            case "ok":
+                if (exampleResponse.value.type === "body") {
                     if (exampleResponse.value.value) {
                         const typeReference = convertExampleTypeReferenceToTypeReference(exampleResponse.value.value)
                         const type = this.context.csharpTypeMapper.convert({
@@ -308,8 +308,8 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                         return type
                     }
                 }
-                throw new Error('Internal error; could not convert example response to C# type')
-            case 'error':
+                throw new Error("Internal error; could not convert example response to C# type")
+            case "error":
                 if (exampleResponse.body) {
                     const typeReference = convertExampleTypeReferenceToTypeReference(exampleResponse.body)
                     const type = this.context.csharpTypeMapper.convert({
@@ -317,7 +317,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     })
                     return type
                 }
-                throw new Error('Internal error; could not convert example response to C# type')
+                throw new Error("Internal error; could not convert example response to C# type")
             default:
                 assertNever(exampleResponse)
         }

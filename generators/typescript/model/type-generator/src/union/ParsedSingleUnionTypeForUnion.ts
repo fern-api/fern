@@ -1,10 +1,10 @@
-import { BaseContext } from '@fern-typescript/contexts'
+import { BaseContext } from "@fern-typescript/contexts"
 import {
     AbstractKnownSingleUnionType,
     NoPropertiesSingleUnionTypeGenerator,
     SinglePropertySingleUnionTypeGenerator,
     SingleUnionTypeGenerator
-} from '@fern-typescript/union-generator'
+} from "@fern-typescript/union-generator"
 
 import {
     NameAndWireValue,
@@ -12,9 +12,9 @@ import {
     SingleUnionTypeProperties,
     SingleUnionTypeProperty,
     UnionTypeDeclaration
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { SamePropertiesAsObjectSingleUnionTypeGenerator } from './SamePropertiesAsObjectSingleUnionTypeGenerator'
+import { SamePropertiesAsObjectSingleUnionTypeGenerator } from "./SamePropertiesAsObjectSingleUnionTypeGenerator"
 
 export declare namespace ParsedSingleUnionTypeForUnion {
     export interface Init {
@@ -64,7 +64,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
                             enableInlineTypes
                         }),
                     _other: () => {
-                        throw new Error('Unknown SingleUnionTypeProperties: ' + singleUnionType.shape.propertiesType)
+                        throw new Error("Unknown SingleUnionTypeProperties: " + singleUnionType.shape.propertiesType)
                     }
                 }
             ),

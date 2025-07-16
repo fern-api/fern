@@ -1,7 +1,7 @@
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { RelativeFilePath } from '@fern-api/fs-utils'
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { RelativeFilePath } from "@fern-api/fs-utils"
 
-import { getFullEndpointPath } from './getFullEndpointPath'
+import { getFullEndpointPath } from "./getFullEndpointPath"
 
 export interface EndpointReference {
     relativeFilepath: RelativeFilePath
@@ -33,7 +33,7 @@ export class EndpointPathRegistry {
             service: endpointReference.service,
             endpoint: endpointReference.endpoint
         })
-            .split('/')
+            .split("/")
             .filter((part) => part.length > 0)
     }
 }
@@ -87,6 +87,6 @@ class EndpointPathTreeNode {
     }
 
     private isPathParam(pathPart: string): boolean {
-        return pathPart.startsWith('{') && pathPart.endsWith('}')
+        return pathPart.startsWith("{") && pathPart.endsWith("}")
     }
 }

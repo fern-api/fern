@@ -1,6 +1,6 @@
-import { OpenAPIV3_1 } from 'openapi-types'
+import { OpenAPIV3_1 } from "openapi-types"
 
-import { AbstractExtension } from '../AbstractExtension'
+import { AbstractExtension } from "../AbstractExtension"
 
 export declare namespace SdkMethodNameExtension {
     export interface Args extends AbstractExtension.Args {
@@ -14,7 +14,7 @@ export declare namespace SdkMethodNameExtension {
 
 export class SdkMethodNameExtension extends AbstractExtension<SdkMethodNameExtension.Output> {
     private readonly operation: OpenAPIV3_1.OperationObject
-    public readonly key = 'x-fern-sdk-method-name'
+    public readonly key = "x-fern-sdk-method-name"
 
     constructor({ breadcrumbs, operation, context }: SdkMethodNameExtension.Args) {
         super({ breadcrumbs, context })
@@ -27,7 +27,7 @@ export class SdkMethodNameExtension extends AbstractExtension<SdkMethodNameExten
             return undefined
         }
 
-        if (typeof extensionValue !== 'string') {
+        if (typeof extensionValue !== "string") {
             return undefined
         }
 

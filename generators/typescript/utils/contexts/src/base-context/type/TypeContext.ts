@@ -1,5 +1,5 @@
-import { Reference, TypeReferenceNode } from '@fern-typescript/commons'
-import { ts } from 'ts-morph'
+import { Reference, TypeReferenceNode } from "@fern-typescript/commons"
+import { ts } from "ts-morph"
 
 import {
     DeclaredTypeName,
@@ -9,10 +9,10 @@ import {
     TypeDeclaration,
     TypeId,
     TypeReference
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { GeneratedType } from './GeneratedType'
-import { GeneratedTypeReferenceExample } from './GeneratedTypeReferenceExample'
+import { GeneratedType } from "./GeneratedType"
+import { GeneratedTypeReferenceExample } from "./GeneratedTypeReferenceExample"
 
 export interface TypeContext {
     getReferenceToType: (typeReference: TypeReference) => TypeReferenceNode

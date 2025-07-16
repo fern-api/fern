@@ -1,7 +1,7 @@
-import { mapValues } from 'lodash-es'
+import { mapValues } from "lodash-es"
 
-import { CasingsGenerator } from '@fern-api/casings-generator'
-import { RawSchemas, visitRawEnvironmentDeclaration } from '@fern-api/fern-definition-schema'
+import { CasingsGenerator } from "@fern-api/casings-generator"
+import { RawSchemas, visitRawEnvironmentDeclaration } from "@fern-api/fern-definition-schema"
 import {
     Environments,
     EnvironmentsConfig,
@@ -9,10 +9,10 @@ import {
     MultipleBaseUrlsEnvironments,
     SingleBaseUrlEnvironment,
     SingleBaseUrlEnvironments
-} from '@fern-api/ir-sdk'
+} from "@fern-api/ir-sdk"
 
 export function convertEnvironments({
-    rawApiFileSchema: { 'default-environment': defaultEnvironment, environments },
+    rawApiFileSchema: { "default-environment": defaultEnvironment, environments },
     casingsGenerator
 }: {
     rawApiFileSchema: RawSchemas.WithEnvironmentsSchema
@@ -47,7 +47,7 @@ export function convertEnvironments({
                 Object.entries(environments).map(([environmentName, rawEnvironment]) => [
                     environmentName,
                     visitRawEnvironmentDeclaration(rawEnvironment, {
-                        singleBaseUrl: (env) => [...(typeof env === 'string' ? [] : (env.audiences ?? []))],
+                        singleBaseUrl: (env) => [...(typeof env === "string" ? [] : (env.audiences ?? []))],
                         multipleBaseUrls: (env) => [...(env.audiences ?? [])]
                     })
                 ])
@@ -68,11 +68,11 @@ function convertSingleBaseUrlEnvironments({
             ([environmentName, rawEnvironment]): SingleBaseUrlEnvironment =>
                 visitRawEnvironmentDeclaration(rawEnvironment, {
                     singleBaseUrl: (singleBaseUrlEnvironment) => ({
-                        docs: typeof singleBaseUrlEnvironment === 'string' ? undefined : singleBaseUrlEnvironment.docs,
+                        docs: typeof singleBaseUrlEnvironment === "string" ? undefined : singleBaseUrlEnvironment.docs,
                         id: environmentName,
                         name: casingsGenerator.generateName(environmentName),
                         url: removeTrailingSlash(
-                            typeof singleBaseUrlEnvironment === 'string'
+                            typeof singleBaseUrlEnvironment === "string"
                                 ? singleBaseUrlEnvironment
                                 : singleBaseUrlEnvironment.url
                         )
@@ -117,5 +117,5 @@ function convertMultipleBaseUrlEnvironments({
 }
 
 function removeTrailingSlash(url: string): string {
-    return url.endsWith('/') ? url.slice(0, -1) : url
+    return url.endsWith("/") ? url.slice(0, -1) : url
 }

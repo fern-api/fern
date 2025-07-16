@@ -1,5 +1,5 @@
-import { assertNever } from '@fern-api/core-utils'
-import { RawSchemas } from '@fern-api/fern-definition-schema'
+import { assertNever } from "@fern-api/core-utils"
+import { RawSchemas } from "@fern-api/fern-definition-schema"
 import {
     FullExample,
     FullOneOfExample,
@@ -7,9 +7,9 @@ import {
     LiteralExample,
     PrimitiveExample,
     WebsocketSessionExample
-} from '@fern-api/openapi-ir'
+} from "@fern-api/openapi-ir"
 
-import { OpenApiIrConverterContext } from './OpenApiIrConverterContext'
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext"
 
 export function buildWebsocketSessionExample({
     websocketExample,
@@ -31,7 +31,7 @@ export function buildWebsocketSessionExample({
     }
 
     if (websocketExample.queryParameters != null && websocketExample.queryParameters.length > 0) {
-        example['query-parameters'] = convertQueryParameterExample(websocketExample.queryParameters)
+        example["query-parameters"] = convertQueryParameterExample(websocketExample.queryParameters)
     }
 
     if (websocketExample.headers != null && websocketExample.headers.length > 0) {
@@ -103,21 +103,21 @@ function convertHeaderExamples({
 
 function convertFullExample(fullExample: FullExample): RawSchemas.ExampleTypeReferenceSchema {
     switch (fullExample.type) {
-        case 'primitive':
+        case "primitive":
             return convertPrimitive(fullExample.value)
-        case 'object':
+        case "object":
             return convertObject(fullExample.properties)
-        case 'array':
+        case "array":
             return convertArrayExample(fullExample.value)
-        case 'map':
+        case "map":
             return convertMapExample(fullExample.value)
-        case 'oneOf':
+        case "oneOf":
             return convertOneOfExample(fullExample.value)
-        case 'enum':
+        case "enum":
             return fullExample.value
-        case 'literal':
+        case "literal":
             return convertLiteralExample(fullExample.value)
-        case 'unknown':
+        case "unknown":
             return convertFullExample(fullExample.value)
         default:
             assertNever(fullExample)
@@ -126,35 +126,35 @@ function convertFullExample(fullExample: FullExample): RawSchemas.ExampleTypeRef
 
 function convertPrimitive(primitiveExample: PrimitiveExample): RawSchemas.ExampleTypeReferenceSchema {
     switch (primitiveExample.type) {
-        case 'int':
+        case "int":
             return primitiveExample.value
-        case 'int64':
+        case "int64":
             return primitiveExample.value
-        case 'uint':
+        case "uint":
             return primitiveExample.value
-        case 'uint64':
+        case "uint64":
             return primitiveExample.value
-        case 'float':
+        case "float":
             return primitiveExample.value
-        case 'double':
+        case "double":
             return primitiveExample.value
-        case 'string': {
-            if (primitiveExample.value.startsWith('$')) {
+        case "string": {
+            if (primitiveExample.value.startsWith("$")) {
                 return `${primitiveExample.value.slice(1)}`
             }
             return primitiveExample.value
         }
-        case 'datetime':
+        case "datetime":
             try {
                 // remove milliseconds from the datetime
-                return new Date(primitiveExample.value).toISOString().replace(/\.\d{3}Z$/, 'Z')
+                return new Date(primitiveExample.value).toISOString().replace(/\.\d{3}Z$/, "Z")
             } catch (e) {
-                return '2024-01-15T09:30:00Z'
+                return "2024-01-15T09:30:00Z"
             }
-        case 'date':
+        case "date":
             return primitiveExample.value
-        case 'base64':
-        case 'boolean':
+        case "base64":
+        case "boolean":
             return primitiveExample.value
         default:
             assertNever(primitiveExample)
@@ -184,16 +184,16 @@ function convertMapExample(pairs: KeyValuePair[]): RawSchemas.ExampleTypeReferen
 }
 
 function convertOneOfExample(oneOf: FullOneOfExample): RawSchemas.ExampleTypeReferenceSchema {
-    if (oneOf.type === 'discriminated') {
+    if (oneOf.type === "discriminated") {
         return convertObject(oneOf.value)
     }
     return convertFullExample(oneOf.value)
 }
 function convertLiteralExample(literal: LiteralExample): RawSchemas.ExampleTypeReferenceSchema {
     switch (literal.type) {
-        case 'string':
+        case "string":
             return literal.value
-        case 'boolean':
+        case "boolean":
             return literal.value
         default:
             assertNever(literal)

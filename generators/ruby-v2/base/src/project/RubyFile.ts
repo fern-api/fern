@@ -1,6 +1,6 @@
-import { AbstractFormatter, File } from '@fern-api/base-generator'
-import { RelativeFilePath } from '@fern-api/fs-utils'
-import { BaseRubyCustomConfigSchema, ruby } from '@fern-api/ruby-ast'
+import { AbstractFormatter, File } from "@fern-api/base-generator"
+import { RelativeFilePath } from "@fern-api/fs-utils"
+import { BaseRubyCustomConfigSchema, ruby } from "@fern-api/ruby-ast"
 
 export declare namespace RubyFile {
     interface Args {

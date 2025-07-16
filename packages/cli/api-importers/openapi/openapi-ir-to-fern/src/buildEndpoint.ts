@@ -1,25 +1,25 @@
-import { FERN_PACKAGE_MARKER_FILENAME } from '@fern-api/configuration'
-import { MediaType, assertNever } from '@fern-api/core-utils'
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { Endpoint, EndpointExample, Request, Schema, SchemaId } from '@fern-api/openapi-ir'
-import { RelativeFilePath } from '@fern-api/path-utils'
+import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration"
+import { MediaType, assertNever } from "@fern-api/core-utils"
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { Endpoint, EndpointExample, Request, Schema, SchemaId } from "@fern-api/openapi-ir"
+import { RelativeFilePath } from "@fern-api/path-utils"
 
-import { OpenApiIrConverterContext } from './OpenApiIrConverterContext'
-import { State } from './State'
-import { buildEndpointExample } from './buildEndpointExample'
-import { ERROR_DECLARATIONS_FILENAME, EXTERNAL_AUDIENCE } from './buildFernDefinition'
-import { buildHeader } from './buildHeader'
-import { buildPathParameter } from './buildPathParameter'
-import { buildQueryParameter } from './buildQueryParameter'
-import { buildTypeReference } from './buildTypeReference'
-import { convertAvailability } from './utils/convertAvailability'
-import { convertFullExample } from './utils/convertFullExample'
-import { resolveLocationWithNamespace } from './utils/convertSdkGroupName'
-import { convertToHttpMethod } from './utils/convertToHttpMethod'
-import { convertToSourceSchema } from './utils/convertToSourceSchema'
-import { getEndpointNamespace } from './utils/getNamespaceFromGroup'
-import { getDocsFromTypeReference, getTypeFromTypeReference } from './utils/getTypeFromTypeReference'
-import { isWriteMethod } from './utils/isWriteMethod'
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext"
+import { State } from "./State"
+import { buildEndpointExample } from "./buildEndpointExample"
+import { ERROR_DECLARATIONS_FILENAME, EXTERNAL_AUDIENCE } from "./buildFernDefinition"
+import { buildHeader } from "./buildHeader"
+import { buildPathParameter } from "./buildPathParameter"
+import { buildQueryParameter } from "./buildQueryParameter"
+import { buildTypeReference } from "./buildTypeReference"
+import { convertAvailability } from "./utils/convertAvailability"
+import { convertFullExample } from "./utils/convertFullExample"
+import { resolveLocationWithNamespace } from "./utils/convertSdkGroupName"
+import { convertToHttpMethod } from "./utils/convertToHttpMethod"
+import { convertToSourceSchema } from "./utils/convertToSourceSchema"
+import { getEndpointNamespace } from "./utils/getNamespaceFromGroup"
+import { getDocsFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference"
+import { isWriteMethod } from "./utils/isWriteMethod"
 
 export interface ConvertedEndpoint {
     value: RawSchemas.HttpEndpointSchema
@@ -78,24 +78,24 @@ export function buildEndpoint({
     let pagination: RawSchemas.PaginationSchema | undefined = undefined
     if (endpoint.pagination != null) {
         switch (endpoint.pagination.type) {
-            case 'cursor':
+            case "cursor":
                 pagination = {
                     cursor: endpoint.pagination.cursor,
                     next_cursor: endpoint.pagination.nextCursor,
                     results: endpoint.pagination.results
                 }
                 break
-            case 'offset':
+            case "offset":
                 pagination = {
                     offset: endpoint.pagination.offset,
                     step: endpoint.pagination.step,
                     results: endpoint.pagination.results,
-                    'has-next-page': endpoint.pagination.hasNextPage
+                    "has-next-page": endpoint.pagination.hasNextPage
                 }
                 break
-            case 'custom':
+            case "custom":
                 pagination = {
-                    type: 'custom',
+                    type: "custom",
                     results: endpoint.pagination.results
                 }
                 break
@@ -117,11 +117,11 @@ export function buildEndpoint({
         !endpointRequestSupportsInlinedPathParameters({ context, request: endpoint.request }) &&
         Object.keys(pathParameters).length > 0
     ) {
-        convertedEndpoint['path-parameters'] = pathParameters
+        convertedEndpoint["path-parameters"] = pathParameters
     }
 
     if (endpoint.summary != null) {
-        convertedEndpoint['display-name'] = endpoint.summary
+        convertedEndpoint["display-name"] = endpoint.summary
     }
 
     const headers: Record<string, RawSchemas.HttpHeaderSchema> = {}
@@ -141,7 +141,7 @@ export function buildEndpoint({
             namespace: maybeEndpointNamespace
         })
         headers[header.name] = headerSchema
-        names.add(typeof headerSchema === 'string' ? header.name : (headerSchema.name ?? header.name))
+        names.add(typeof headerSchema === "string" ? header.name : (headerSchema.name ?? header.name))
     }
 
     if (endpoint.request != null) {
@@ -175,10 +175,10 @@ export function buildEndpoint({
             convertedRequest.name = endpoint.requestNameOverride ?? endpoint.generatedRequestName
         }
         if (hasPathParams) {
-            convertedRequest['path-parameters'] = pathParameters
+            convertedRequest["path-parameters"] = pathParameters
         }
         if (hasQueryParams) {
-            convertedRequest['query-parameters'] = queryParameters
+            convertedRequest["query-parameters"] = queryParameters
         }
         if (hasHeaders) {
             convertedRequest.headers = headers
@@ -204,7 +204,7 @@ export function buildEndpoint({
                     type: getTypeFromTypeReference(responseTypeReference)
                 }
                 if (jsonResponse.statusCode != null) {
-                    convertedEndpoint.response['status-code'] = jsonResponse.statusCode
+                    convertedEndpoint.response["status-code"] = jsonResponse.statusCode
                 }
                 if (jsonResponse.responseProperty != null) {
                     convertedEndpoint.response.property = jsonResponse.responseProperty
@@ -218,10 +218,10 @@ export function buildEndpoint({
                     namespace: maybeEndpointNamespace,
                     declarationDepth: 0
                 })
-                convertedEndpoint['response-stream'] = {
+                convertedEndpoint["response-stream"] = {
                     docs: jsonResponse.description ?? undefined,
                     type: getTypeFromTypeReference(responseTypeReference),
-                    format: 'json'
+                    format: "json"
                 }
             },
             streamingSse: (jsonResponse) => {
@@ -232,46 +232,46 @@ export function buildEndpoint({
                     namespace: maybeEndpointNamespace,
                     declarationDepth: 0
                 })
-                convertedEndpoint['response-stream'] = {
+                convertedEndpoint["response-stream"] = {
                     docs: jsonResponse.description ?? undefined,
                     type: getTypeFromTypeReference(responseTypeReference),
-                    format: 'sse'
+                    format: "sse"
                 }
             },
             file: (fileResponse) => {
                 convertedEndpoint.response = {
                     docs: fileResponse.description ?? undefined,
-                    type: 'file',
-                    'status-code': fileResponse.statusCode
+                    type: "file",
+                    "status-code": fileResponse.statusCode
                 }
             },
             bytes: (bytesResponse) => {
                 convertedEndpoint.response = {
                     docs: bytesResponse.description ?? undefined,
-                    type: 'bytes',
-                    'status-code': bytesResponse.statusCode
+                    type: "bytes",
+                    "status-code": bytesResponse.statusCode
                 }
             },
             streamingText: (textResponse) => {
-                convertedEndpoint['response-stream'] = {
+                convertedEndpoint["response-stream"] = {
                     docs: textResponse.description ?? undefined,
-                    type: 'text'
+                    type: "text"
                 }
             },
             text: (textResponse) => {
                 convertedEndpoint.response = {
                     docs: textResponse.description ?? undefined,
-                    type: 'text',
-                    'status-code': textResponse.statusCode
+                    type: "text",
+                    "status-code": textResponse.statusCode
                 }
             },
             _other: () => {
-                throw new Error('Unrecognized Response type: ' + endpoint.response?.type)
+                throw new Error("Unrecognized Response type: " + endpoint.response?.type)
             }
         })
     }
 
-    if (context.builder.getEnvironmentType() === 'multi') {
+    if (context.builder.getEnvironmentType() === "multi") {
         const defaultServer = context.getDefaultServerName()
         const serverOverride = endpoint.servers[0]
         if (serverOverride == null) {
@@ -297,9 +297,9 @@ export function buildEndpoint({
         if (context.builder.enableUniqueErrorsPerEndpoint) {
             errorName = `${endpoint.generatedRequestName}${httpError.generatedName}`
             if (httpError.schema != null) {
-                if (httpError.schema.type !== 'reference' && httpError.schema.type !== 'oneOf') {
+                if (httpError.schema.type !== "reference" && httpError.schema.type !== "oneOf") {
                     httpError.schema.generatedName = `${endpoint.generatedRequestName}${httpError.schema.generatedName}`
-                } else if (httpError.schema.type === 'oneOf') {
+                } else if (httpError.schema.type === "oneOf") {
                     httpError.schema.value.generatedName = `${endpoint.generatedRequestName}${httpError.schema.value.generatedName}`
                 }
             }
@@ -307,7 +307,7 @@ export function buildEndpoint({
         }
 
         const errorDeclaration: RawSchemas.ErrorDeclarationSchema = {
-            'status-code': parseInt(statusCode)
+            "status-code": parseInt(statusCode)
         }
 
         const errorDeclarationFile = resolveLocationWithNamespace({
@@ -331,7 +331,7 @@ export function buildEndpoint({
         context.builder.addError(errorDeclarationFile, {
             name: errorName,
             schema: context.isErrorUnknownSchema(parseInt(statusCode))
-                ? { ...errorDeclaration, type: 'unknown' }
+                ? { ...errorDeclaration, type: "unknown" }
                 : errorDeclaration
         })
 
@@ -431,14 +431,14 @@ function getRequest({
     usedNames: Set<string>
     namespace: string | undefined
 }): ConvertedRequest {
-    if (request.type === 'json') {
-        const maybeSchemaId = request.schema.type === 'reference' ? request.schema.schema : undefined
+    if (request.type === "json") {
+        const maybeSchemaId = request.schema.type === "reference" ? request.schema.schema : undefined
         const resolvedSchema =
-            request.schema.type === 'reference' ? context.getSchema(request.schema.schema, namespace) : request.schema
+            request.schema.type === "reference" ? context.getSchema(request.schema.schema, namespace) : request.schema
         // the request body is referenced if it is not an object or if other parts of the spec
         // refer to the same type
         if (
-            resolvedSchema?.type !== 'object' ||
+            resolvedSchema?.type !== "object" ||
             (maybeSchemaId != null && nonRequestReferencedSchemas.includes(maybeSchemaId))
         ) {
             const requestTypeReference = buildTypeReference({
@@ -460,10 +460,10 @@ function getRequest({
             const hasHeaders = Object.keys(headers ?? {}).length > 0
 
             if (hasPathParams) {
-                convertedRequest.value['path-parameters'] = pathParameters
+                convertedRequest.value["path-parameters"] = pathParameters
             }
             if (hasQueryParams) {
-                convertedRequest.value['query-parameters'] = queryParameters
+                convertedRequest.value["query-parameters"] = queryParameters
             }
             if (hasHeaders) {
                 convertedRequest.value.headers = headers
@@ -473,7 +473,7 @@ function getRequest({
             }
 
             if (request.contentType != null) {
-                convertedRequest.value['content-type'] = request.contentType
+                convertedRequest.value["content-type"] = request.contentType
             }
 
             if (request.description != null) {
@@ -523,7 +523,7 @@ function getRequest({
                             property.key,
                             availability
                                 ? {
-                                      ...(typeof propertyTypeReference === 'string'
+                                      ...(typeof propertyTypeReference === "string"
                                           ? { type: propertyTypeReference }
                                           : propertyTypeReference),
                                       availability
@@ -564,7 +564,7 @@ function getRequest({
                 })
                 return getTypeFromTypeReference(allOfTypeReference)
             })
-            .filter((schema) => schema !== 'unknown')
+            .filter((schema) => schema !== "unknown")
 
         const requestBodySchema: RawSchemas.HttpRequestBodySchema = {
             properties
@@ -573,18 +573,18 @@ function getRequest({
             requestBodySchema.extends = extendedSchemas
         }
         if (request.additionalProperties) {
-            requestBodySchema['extra-properties'] = true
+            requestBodySchema["extra-properties"] = true
         }
 
         const convertedRequestValue: RawSchemas.HttpRequestSchema = {
             name: requestNameOverride ?? resolvedSchema.nameOverride ?? resolvedSchema.generatedName,
-            'path-parameters': pathParameters,
-            'query-parameters': queryParameters,
+            "path-parameters": pathParameters,
+            "query-parameters": queryParameters,
             headers,
             body: requestBodySchema
         }
         if (request.contentType != null) {
-            convertedRequestValue['content-type'] = request.contentType
+            convertedRequestValue["content-type"] = request.contentType
         }
         if (request.description != null) {
             convertedRequestValue.docs = request.description
@@ -593,22 +593,22 @@ function getRequest({
             schemaIdsToExclude: maybeSchemaId != null ? [maybeSchemaId] : [],
             value: convertedRequestValue
         }
-    } else if (request.type === 'octetStream') {
+    } else if (request.type === "octetStream") {
         return {
             schemaIdsToExclude: [],
             value: {
-                body: 'bytes',
-                'content-type': MediaType.APPLICATION_OCTET_STREAM,
-                'query-parameters': queryParameters,
+                body: "bytes",
+                "content-type": MediaType.APPLICATION_OCTET_STREAM,
+                "query-parameters": queryParameters,
                 ...(request.description ? { docs: request.description } : {})
             }
         }
-    } else if (request.type === 'multipart') {
+    } else if (request.type === "multipart") {
         // multipart
         const properties = Object.fromEntries(
             request.properties.map((property) => {
-                if (property.schema.type === 'file') {
-                    let fileType = property.schema.isArray ? 'list<file>' : 'file'
+                if (property.schema.type === "file") {
+                    let fileType = property.schema.isArray ? "list<file>" : "file"
                     fileType = property.schema.isOptional ? `optional<${fileType}>` : fileType
                     if (property.description != null || property.contentType != null) {
                         const propertyTypeReference: RawSchemas.HttpInlineRequestBodyPropertySchema = {
@@ -618,8 +618,8 @@ function getRequest({
                             propertyTypeReference.docs = property.description
                         }
                         if (property.contentType != null) {
-                            const contentType = property.contentType.split(',')[0]
-                            propertyTypeReference['content-type'] = contentType
+                            const contentType = property.contentType.split(",")[0]
+                            propertyTypeReference["content-type"] = contentType
                         }
                         return [property.key, propertyTypeReference]
                     }
@@ -635,20 +635,20 @@ function getRequest({
 
                     if (property.contentType || property.exploded || property.encoding) {
                         const propertySchema: RawSchemas.HttpInlineRequestBodyPropertySchema =
-                            typeof propertyTypeReference === 'string'
+                            typeof propertyTypeReference === "string"
                                 ? { type: propertyTypeReference }
                                 : propertyTypeReference
 
                         if (property.contentType != null) {
-                            propertySchema['content-type'] = property.contentType
+                            propertySchema["content-type"] = property.contentType
                         }
 
-                        if (property.encoding === 'form') {
-                            propertySchema.style = 'form'
-                        } else if (property.encoding === 'json') {
-                            propertySchema.style = 'json'
+                        if (property.encoding === "form") {
+                            propertySchema.style = "form"
+                        } else if (property.encoding === "json") {
+                            propertySchema.style = "json"
                         } else if (property.exploded) {
-                            propertySchema.style = 'exploded'
+                            propertySchema.style = "exploded"
                         }
 
                         propertyTypeReference = propertySchema
@@ -661,13 +661,13 @@ function getRequest({
             schemaIdsToExclude: request.name == null ? [] : [request.name],
             value: {
                 name: requestNameOverride ?? request.name ?? generatedRequestName,
-                'path-parameters': pathParameters,
-                'query-parameters': queryParameters,
+                "path-parameters": pathParameters,
+                "query-parameters": queryParameters,
                 headers,
                 body: {
                     properties
                 },
-                'content-type': MediaType.MULTIPART_FORM_DATA,
+                "content-type": MediaType.MULTIPART_FORM_DATA,
                 ...(request.description ? { docs: request.description } : {})
             }
         }
@@ -690,13 +690,13 @@ function endpointRequestSupportsInlinedPathParameters({
         return true
     }
     switch (request.type) {
-        case 'octetStream':
+        case "octetStream":
             // octet-stream requests do not support named request wrappers,
             // so we can't inline path parameters for them.
             return false
-        case 'multipart':
+        case "multipart":
             return true
-        case 'json':
+        case "json":
             return true
         default:
             assertNever(request)

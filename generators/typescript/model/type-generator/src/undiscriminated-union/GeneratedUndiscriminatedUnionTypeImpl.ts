@@ -3,8 +3,8 @@ import {
     getWriterForMultiLineUnionType,
     maybeAddDocsNode,
     maybeAddDocsStructure
-} from '@fern-typescript/commons'
-import { BaseContext, GeneratedUndiscriminatedUnionType } from '@fern-typescript/contexts'
+} from "@fern-typescript/commons"
+import { BaseContext, GeneratedUndiscriminatedUnionType } from "@fern-typescript/contexts"
 import {
     ModuleDeclarationStructure,
     StatementStructures,
@@ -12,21 +12,21 @@ import {
     TypeAliasDeclarationStructure,
     WriterFunction,
     ts
-} from 'ts-morph'
+} from "ts-morph"
 
 import {
     ExampleTypeShape,
     UndiscriminatedUnionMember,
     UndiscriminatedUnionTypeDeclaration
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { AbstractGeneratedType } from '../AbstractGeneratedType'
+import { AbstractGeneratedType } from "../AbstractGeneratedType"
 
 export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
     extends AbstractGeneratedType<UndiscriminatedUnionTypeDeclaration, Context>
     implements GeneratedUndiscriminatedUnionType<Context>
 {
-    public readonly type = 'undiscriminatedUnion'
+    public readonly type = "undiscriminatedUnion"
 
     public generateStatements(
         context: Context
@@ -66,8 +66,8 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
     }
 
     public buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {
-        if (example.type !== 'undiscriminatedUnion') {
-            throw new Error('Example is not for an undiscriminated union')
+        if (example.type !== "undiscriminatedUnion") {
+            throw new Error("Example is not for an undiscriminated union")
         }
 
         return context.type.getGeneratedExample(example.singleUnionType).build(context, opts)

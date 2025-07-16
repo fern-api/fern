@@ -1,5 +1,5 @@
-import { assertNever } from '@fern-api/core-utils'
-import { go } from '@fern-api/go-ast'
+import { assertNever } from "@fern-api/core-utils"
+import { go } from "@fern-api/go-ast"
 
 import {
     HttpEndpoint,
@@ -12,16 +12,16 @@ import {
     ServiceId,
     StreamingResponse,
     Subpackage
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { SdkGeneratorContext } from '../../SdkGeneratorContext'
-import { AbstractEndpointGenerator } from '../AbstractEndpointGenerator'
-import { EndpointSignatureInfo } from '../EndpointSignatureInfo'
-import { EndpointRequest } from '../request/EndpointRequest'
-import { getEndpointRequest } from '../utils/getEndpointRequest'
+import { SdkGeneratorContext } from "../../SdkGeneratorContext"
+import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator"
+import { EndpointSignatureInfo } from "../EndpointSignatureInfo"
+import { EndpointRequest } from "../request/EndpointRequest"
+import { getEndpointRequest } from "../utils/getEndpointRequest"
 
 export declare namespace HttpEndpointGenerator {
-    export const OCTET_STREAM_CONTENT_TYPE = 'application/octet-stream'
+    export const OCTET_STREAM_CONTENT_TYPE = "application/octet-stream"
 
     export interface Args {
         endpoint: HttpEndpoint
@@ -158,25 +158,25 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             }
 
             writer.newLine()
-            writer.write('raw, err := ')
+            writer.write("raw, err := ")
             writer.writeNode(
                 this.context.caller.call({
                     endpoint,
                     clientReference: this.getCallerFieldReference(),
-                    optionsReference: go.codeblock('options'),
-                    url: go.codeblock('endpointURL'),
+                    optionsReference: go.codeblock("options"),
+                    url: go.codeblock("endpointURL"),
                     request: endpointRequest?.getRequestReference(),
                     response: this.getResponseParameterReference({ endpoint }),
-                    errorCodes: buildErrorDecoder != null ? go.codeblock('errorCodes') : undefined
+                    errorCodes: buildErrorDecoder != null ? go.codeblock("errorCodes") : undefined
                 })
             )
             writer.newLine()
-            writer.writeLine('if err != nil {')
+            writer.writeLine("if err != nil {")
             writer.indent()
             writer.writeNode(this.writeRawReturnZeroValueWithError())
             writer.newLine()
             writer.dedent()
-            writer.writeLine('}')
+            writer.writeLine("}")
 
             writer.writeNode(this.getRawResponseReturnStatement({ endpoint, signature }))
         })
@@ -184,27 +184,27 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
     private buildRequestOptions({ endpoint }: { endpoint: HttpEndpoint }): go.CodeBlock {
         const requestOptions = endpoint.idempotent
-            ? this.context.callNewIdempotentRequestOptions(go.codeblock('opts...'))
-            : this.context.callNewRequestOptions(go.codeblock('opts...'))
+            ? this.context.callNewIdempotentRequestOptions(go.codeblock("opts..."))
+            : this.context.callNewRequestOptions(go.codeblock("opts..."))
 
         return go.codeblock((writer) => {
-            writer.write('options := ')
+            writer.write("options := ")
             writer.writeNode(requestOptions)
         })
     }
 
     private buildBaseUrl({ endpoint }: { endpoint: HttpEndpoint }): go.CodeBlock {
         return go.codeblock((writer) => {
-            writer.write('baseURL := ')
+            writer.write("baseURL := ")
             writer.writeNode(
                 this.context.callResolveBaseURL([
                     go.selector({
-                        on: go.codeblock('options'),
-                        selector: go.codeblock('BaseURL')
+                        on: go.codeblock("options"),
+                        selector: go.codeblock("BaseURL")
                     }),
                     go.selector({
                         on: this.getRawClientReceiverCodeBlock(),
-                        selector: go.codeblock('baseURL')
+                        selector: go.codeblock("baseURL")
                     }),
                     this.context.getDefaultBaseUrlTypeInstantiation(endpoint)
                 ])
@@ -220,9 +220,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         signature: EndpointSignatureInfo
     }): go.CodeBlock {
         const pathSuffix = this.getPathSuffix({ endpoint })
-        const baseUrl = pathSuffix.length === 0 ? 'baseURL' : `baseURL + "/${pathSuffix}"`
+        const baseUrl = pathSuffix.length === 0 ? "baseURL" : `baseURL + "/${pathSuffix}"`
         return go.codeblock((writer) => {
-            writer.write('endpointURL := ')
+            writer.write("endpointURL := ")
             if (endpoint.allPathParameters.length === 0) {
                 writer.write(baseUrl)
                 return
@@ -252,15 +252,15 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             return undefined
         }
         return go.codeblock((writer) => {
-            writer.write('queryParams, err := ')
+            writer.write("queryParams, err := ")
             writer.writeNode(this.context.callQueryValues([go.codeblock(endpointRequest.getRequestParameterName())]))
             writer.newLine()
-            writer.writeLine('if err != nil {')
+            writer.writeLine("if err != nil {")
             writer.indent()
             writer.writeNode(this.writeRawReturnZeroValueWithError())
             writer.newLine()
             writer.dedent()
-            writer.writeLine('}')
+            writer.writeLine("}")
             for (const queryParameter of endpoint.queryParameters) {
                 const literal = this.context.maybeLiteral(queryParameter.valueType)
                 if (literal != null) {
@@ -274,21 +274,21 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     continue
                 }
             }
-            writer.writeLine('if len(queryParams) > 0 {')
+            writer.writeLine("if len(queryParams) > 0 {")
             writer.indent()
             writer.writeLine('endpointURL += "?" + queryParams.Encode()')
             writer.dedent()
-            writer.write('}')
+            writer.write("}")
         })
     }
 
     private buildHeaders({ endpoint }: { endpoint: HttpEndpoint }): go.CodeBlock {
         return go.codeblock((writer) => {
-            writer.write('headers := ')
+            writer.write("headers := ")
             writer.writeNode(
                 this.context.callMergeHeaders([
                     go.codeblock(`${this.getRawClientReceiver()}.header.Clone()`),
-                    go.codeblock('options.ToHeader()')
+                    go.codeblock("options.ToHeader()")
                 ])
             )
             for (const header of endpoint.headers) {
@@ -314,18 +314,18 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeNode(this.addHeaderValue({ wireValue: header.name.wireValue, value: format.formatted }))
                     writer.newLine()
                     writer.dedent()
-                    writer.writeLine('}')
+                    writer.writeLine("}")
                     continue
                 }
                 writer.writeNode(this.addHeaderValue({ wireValue: header.name.wireValue, value: format.formatted }))
             }
             const acceptHeader = this.getAcceptHeaderValue({ endpoint })
             if (acceptHeader != null) {
-                writer.writeNode(this.setHeaderValue({ wireValue: 'Accept', value: acceptHeader }))
+                writer.writeNode(this.setHeaderValue({ wireValue: "Accept", value: acceptHeader }))
             }
             const contentTypeHeader = this.getContentTypeHeaderValue({ endpoint })
             if (contentTypeHeader != null) {
-                writer.writeNode(this.setHeaderValue({ wireValue: 'Content-Type', value: contentTypeHeader }))
+                writer.writeNode(this.setHeaderValue({ wireValue: "Content-Type", value: contentTypeHeader }))
             }
         })
     }
@@ -335,7 +335,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             return undefined
         }
         return go.codeblock((writer) => {
-            writer.write('errorCodes := ')
+            writer.write("errorCodes := ")
             writer.writeNode(
                 go.TypeInstantiation.struct({
                     typeReference: this.context.getErrorCodesTypeReference(),
@@ -351,7 +351,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                                 go.func({
                                     parameters: [
                                         go.parameter({
-                                            name: 'apiError',
+                                            name: "apiError",
                                             type: go.Type.pointer(
                                                 go.Type.reference(this.context.getCoreApiErrorTypeReference())
                                             )
@@ -359,14 +359,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                                     ],
                                     return_: [go.Type.error()],
                                     body: go.codeblock((writer) => {
-                                        writer.write('return ')
+                                        writer.write("return ")
                                         writer.writeNode(
                                             go.TypeInstantiation.structPointer({
                                                 typeReference: errorTypeReference,
                                                 fields: [
                                                     {
-                                                        name: 'APIError',
-                                                        value: go.TypeInstantiation.reference(go.codeblock('apiError'))
+                                                        name: "APIError",
+                                                        value: go.TypeInstantiation.reference(go.codeblock("apiError"))
                                                     }
                                                 ]
                                             })
@@ -388,24 +388,24 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             return undefined
         }
         switch (responseBody.type) {
-            case 'json':
+            case "json":
                 return go.codeblock((writer) => {
-                    writer.write('var response ')
+                    writer.write("var response ")
                     writer.writeNode(
                         this.context.goTypeMapper.convert({ reference: responseBody.value.responseBodyType })
                     )
                 })
-            case 'fileDownload':
-            case 'text':
+            case "fileDownload":
+            case "text":
                 return go.codeblock((writer) => {
-                    writer.write('response := ')
+                    writer.write("response := ")
                     writer.writeNode(this.context.callBytesNewBuffer())
                 })
-            case 'streaming':
-            case 'streamParameter':
+            case "streaming":
+            case "streamParameter":
                 // TODO: Implement stream responses.
                 return undefined
-            case 'bytes':
+            case "bytes":
                 return undefined
             default:
                 assertNever(responseBody)
@@ -418,14 +418,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             return undefined
         }
         switch (responseBody.type) {
-            case 'json':
-                return go.codeblock('&response')
-            case 'bytes':
-            case 'fileDownload':
-            case 'text':
-            case 'streaming':
-            case 'streamParameter':
-                return go.codeblock('response')
+            case "json":
+                return go.codeblock("&response")
+            case "bytes":
+            case "fileDownload":
+            case "text":
+            case "streaming":
+            case "streamParameter":
+                return go.codeblock("response")
             default:
                 assertNever(responseBody)
         }
@@ -442,7 +442,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         const responseBodyReference =
             responseBody == null ? go.TypeInstantiation.nil() : this.getResponseBodyReference({ responseBody })
         return go.codeblock((writer) => {
-            writer.write('return ')
+            writer.write("return ")
             if (signature.rawReturnTypeReference != null) {
                 writer.writeNode(
                     this.wrapWithRawResponseType({
@@ -451,25 +451,25 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         responseBodyReference
                     })
                 )
-                writer.write(', ')
+                writer.write(", ")
             }
-            writer.write('nil')
+            writer.write("nil")
         })
     }
 
     private getResponseBodyReference({ responseBody }: { responseBody: HttpResponseBody }): go.CodeBlock {
         switch (responseBody.type) {
-            case 'json':
+            case "json":
                 return this.getResponseBodyReferenceForJson({ jsonResponse: responseBody.value })
-            case 'bytes':
-            case 'fileDownload':
-                return go.codeblock('response')
-            case 'text':
-                return go.codeblock('response.String()')
-            case 'streaming':
-            case 'streamParameter':
+            case "bytes":
+            case "fileDownload":
+                return go.codeblock("response")
+            case "text":
+                return go.codeblock("response.String()")
+            case "streaming":
+            case "streamParameter":
                 // TODO: Implement stream responses.
-                return go.codeblock('nil')
+                return go.codeblock("nil")
             default:
                 assertNever(responseBody)
         }
@@ -477,12 +477,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
     private getResponseBodyReferenceForJson({ jsonResponse }: { jsonResponse: JsonResponse }): go.CodeBlock {
         switch (jsonResponse.type) {
-            case 'response':
-                return go.codeblock('response')
-            case 'nestedPropertyAsResponse': {
+            case "response":
+                return go.codeblock("response")
+            case "nestedPropertyAsResponse": {
                 const responseProperty = jsonResponse.responseProperty
                 if (responseProperty == null) {
-                    return go.codeblock('response')
+                    return go.codeblock("response")
                 }
                 return go.codeblock(`response.${this.context.getFieldName(responseProperty.name.name)}`)
             }
@@ -504,15 +504,15 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             typeReference: rawReturnTypeReference,
             fields: [
                 {
-                    name: 'StatusCode',
-                    value: go.TypeInstantiation.reference(go.codeblock('raw.StatusCode'))
+                    name: "StatusCode",
+                    value: go.TypeInstantiation.reference(go.codeblock("raw.StatusCode"))
                 },
                 {
-                    name: 'Header',
-                    value: go.TypeInstantiation.reference(go.codeblock('raw.Header'))
+                    name: "Header",
+                    value: go.TypeInstantiation.reference(go.codeblock("raw.Header"))
                 },
                 {
-                    name: 'Body',
+                    name: "Body",
                     value: go.TypeInstantiation.reference(responseBodyReference)
                 }
             ]
@@ -520,14 +520,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }
 
     private getPathSuffix({ endpoint }: { endpoint: HttpEndpoint }): string {
-        let pathSuffix = endpoint.fullPath.head === '/' ? '' : endpoint.fullPath.head
+        let pathSuffix = endpoint.fullPath.head === "/" ? "" : endpoint.fullPath.head
         for (const part of endpoint.fullPath.parts) {
             if (part.pathParameter) {
-                pathSuffix += '%v'
+                pathSuffix += "%v"
             }
             pathSuffix += part.tail
         }
-        return pathSuffix.replace(/^\/+/, '')
+        return pathSuffix.replace(/^\/+/, "")
     }
 
     private getAcceptHeaderValue({ endpoint }: { endpoint: HttpEndpoint }): string | undefined {
@@ -536,13 +536,13 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             return undefined
         }
         switch (responseBody.type) {
-            case 'streaming':
+            case "streaming":
                 return this.getAcceptHeaderValueForStreaming({ streamingResponse: responseBody.value })
-            case 'bytes':
-            case 'fileDownload':
-            case 'json':
-            case 'streamParameter':
-            case 'text':
+            case "bytes":
+            case "fileDownload":
+            case "json":
+            case "streamParameter":
+            case "text":
                 return undefined
             default:
                 assertNever(responseBody)
@@ -555,10 +555,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         streamingResponse: StreamingResponse
     }): string | undefined {
         switch (streamingResponse.type) {
-            case 'sse':
-                return 'text/event-stream'
-            case 'json':
-            case 'text':
+            case "sse":
+                return "text/event-stream"
+            case "json":
+            case "text":
                 return undefined
             default:
                 assertNever(streamingResponse)
@@ -571,9 +571,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             return undefined
         }
         switch (sdkRequest.shape.type) {
-            case 'justRequestBody':
+            case "justRequestBody":
                 return this.getContentTypeHeaderValueForJustRequestBody({ justRequestBody: sdkRequest.shape.value })
-            case 'wrapper': {
+            case "wrapper": {
                 const requestBody = endpoint.requestBody
                 if (requestBody == null) {
                     return undefined
@@ -591,9 +591,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         justRequestBody: SdkRequestBodyType
     }): string | undefined {
         switch (justRequestBody.type) {
-            case 'bytes':
+            case "bytes":
                 return justRequestBody.contentType ?? HttpEndpointGenerator.OCTET_STREAM_CONTENT_TYPE
-            case 'typeReference':
+            case "typeReference":
                 return justRequestBody.contentType
             default:
                 assertNever(justRequestBody)
@@ -608,11 +608,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         requestBody: HttpRequestBody
     }): string | undefined {
         switch (requestBody.type) {
-            case 'bytes':
+            case "bytes":
                 return requestBody.contentType ?? HttpEndpointGenerator.OCTET_STREAM_CONTENT_TYPE
-            case 'fileUpload':
-            case 'inlinedRequestBody':
-            case 'reference':
+            case "fileUpload":
+            case "inlinedRequestBody":
+            case "reference":
                 return requestBody.contentType
             default:
                 assertNever(requestBody)
@@ -624,7 +624,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             writer.newLine()
             writer.write(`headers.Add("${wireValue}", `)
             writer.writeNode(value)
-            writer.write(')')
+            writer.write(")")
         })
     }
 
@@ -643,7 +643,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }
 
     private writeRawReturnZeroValueWithError(): go.CodeBlock {
-        return go.codeblock('return nil, err')
+        return go.codeblock("return nil, err")
     }
 
     private getRawClientReceiverCodeBlock(): go.AstNode {
@@ -653,19 +653,19 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     private getCallerFieldReference(): go.AstNode {
         return go.selector({
             on: this.getRawClientReceiverCodeBlock(),
-            selector: go.codeblock('caller')
+            selector: go.codeblock("caller")
         })
     }
 
     private getRequestParameterName({ endpoint }: { endpoint: HttpEndpoint }): string {
         const requestParameterName = endpoint.sdkRequest?.requestParameterName
         if (requestParameterName == null) {
-            return 'request'
+            return "request"
         }
         return this.context.getParameterName(requestParameterName)
     }
 
     private getRawClientReceiver(): string {
-        return 'r'
+        return "r"
     }
 }

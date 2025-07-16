@@ -1,13 +1,13 @@
-import { ExportsManager, ImportsManager, NpmPackage, Reference, TypeReferenceNode } from '@fern-typescript/commons'
-import { BaseContext, GeneratedType, GeneratedTypeReferenceExample, TypeContext } from '@fern-typescript/contexts'
-import { TypeResolver } from '@fern-typescript/resolvers'
-import { TypeGenerator } from '@fern-typescript/type-generator'
+import { ExportsManager, ImportsManager, NpmPackage, Reference, TypeReferenceNode } from "@fern-typescript/commons"
+import { BaseContext, GeneratedType, GeneratedTypeReferenceExample, TypeContext } from "@fern-typescript/contexts"
+import { TypeResolver } from "@fern-typescript/resolvers"
+import { TypeGenerator } from "@fern-typescript/type-generator"
 import {
     TypeReferenceToParsedTypeNodeConverter,
     TypeReferenceToStringExpressionConverter
-} from '@fern-typescript/type-reference-converters'
-import { TypeReferenceExampleGenerator } from '@fern-typescript/type-reference-example-generator'
-import { SourceFile, ts } from 'ts-morph'
+} from "@fern-typescript/type-reference-converters"
+import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator"
+import { SourceFile, ts } from "ts-morph"
 
 import {
     DeclaredTypeName,
@@ -15,9 +15,9 @@ import {
     ResolvedTypeReference,
     TypeDeclaration,
     TypeReference
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { TypeDeclarationReferencer } from '../../declaration-referencers/TypeDeclarationReferencer'
+import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer"
 
 export declare namespace TypeContextImpl {
     export interface Init {
@@ -126,7 +126,7 @@ export class TypeContextImpl implements TypeContext {
     ): TypeReferenceNode {
         return this.typeReferenceToParsedTypeNodeConverter.convert({
             typeReference,
-            type: 'inlinePropertyParams',
+            type: "inlinePropertyParams",
             parentTypeName,
             propertyName
         })
@@ -135,7 +135,7 @@ export class TypeContextImpl implements TypeContext {
     public getReferenceToInlineAliasType(typeReference: TypeReference, aliasTypeName: string): TypeReferenceNode {
         return this.typeReferenceToParsedTypeNodeConverter.convert({
             typeReference,
-            type: 'inlineAliasParams',
+            type: "inlineAliasParams",
             aliasTypeName
         })
     }
@@ -143,7 +143,7 @@ export class TypeContextImpl implements TypeContext {
     public getReferenceToTypeForInlineUnion(typeReference: TypeReference): TypeReferenceNode {
         return this.typeReferenceToParsedTypeNodeConverter.convert({
             typeReference,
-            type: 'forInlineUnionParams'
+            type: "forInlineUnionParams"
         })
     }
 
@@ -156,9 +156,9 @@ export class TypeContextImpl implements TypeContext {
             return this.typeDeclarationReferencer.getReferenceToType({
                 name: typeName,
                 importStrategy: {
-                    type: 'fromPackage',
+                    type: "fromPackage",
                     namespaceImport: this.typeDeclarationReferencer.namespaceExport,
-                    packageName: this.npmPackage?.packageName ?? 'api'
+                    packageName: this.npmPackage?.packageName ?? "api"
                 },
                 referencedIn: this.sourceFile,
                 importsManager: this.importsManager,
@@ -167,7 +167,7 @@ export class TypeContextImpl implements TypeContext {
         } else {
             return this.typeDeclarationReferencer.getReferenceToType({
                 name: typeName,
-                importStrategy: { type: 'fromRoot', namespaceImport: this.typeDeclarationReferencer.namespaceExport },
+                importStrategy: { type: "fromRoot", namespaceImport: this.typeDeclarationReferencer.namespaceExport },
                 referencedIn: this.sourceFile,
                 importsManager: this.importsManager,
                 exportsManager: this.exportsManager
@@ -238,20 +238,20 @@ export class TypeContextImpl implements TypeContext {
         }
 
         switch (typeReference.type) {
-            case 'named': {
+            case "named": {
                 const typeDeclaration = this.typeResolver.getTypeDeclarationFromId(typeReference.typeId)
                 switch (typeDeclaration.shape.type) {
-                    case 'alias':
+                    case "alias":
                         return this.isOptional(typeDeclaration.shape.aliasOf)
                     default:
                         return false
                 }
             }
-            case 'container': {
+            case "container": {
                 switch (typeReference.container.type) {
-                    case 'nullable':
+                    case "nullable":
                         return this.isOptional(typeReference.container.nullable)
-                    case 'optional':
+                    case "optional":
                         return true
                     default:
                         return false
@@ -264,20 +264,20 @@ export class TypeContextImpl implements TypeContext {
 
     public isNullable(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
-            case 'named': {
+            case "named": {
                 const typeDeclaration = this.typeResolver.getTypeDeclarationFromId(typeReference.typeId)
                 switch (typeDeclaration.shape.type) {
-                    case 'alias':
+                    case "alias":
                         return this.isNullable(typeDeclaration.shape.aliasOf)
                     default:
                         return false
                 }
             }
-            case 'container': {
+            case "container": {
                 switch (typeReference.container.type) {
-                    case 'nullable':
+                    case "nullable":
                         return true
-                    case 'optional':
+                    case "optional":
                         return this.isNullable(typeReference.container.optional)
                     default:
                         return false
@@ -290,24 +290,24 @@ export class TypeContextImpl implements TypeContext {
 
     public hasDefaultValue(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
-            case 'primitive':
+            case "primitive":
                 return (
                     typeReference.primitive.v2 != null &&
-                    typeof typeReference.primitive.v2 === 'object' &&
-                    'default' in typeReference.primitive.v2 &&
+                    typeof typeReference.primitive.v2 === "object" &&
+                    "default" in typeReference.primitive.v2 &&
                     typeReference.primitive.v2.default != null
                 )
-            case 'container':
-                if (typeReference.container.type === 'optional') {
+            case "container":
+                if (typeReference.container.type === "optional") {
                     return this.hasDefaultValue(typeReference.container.optional)
                 }
-                if (typeReference.container.type === 'nullable') {
+                if (typeReference.container.type === "nullable") {
                     return this.hasDefaultValue(typeReference.container.nullable)
                 }
                 return false
-            case 'named': {
+            case "named": {
                 const typeDeclaration = this.typeResolver.getTypeDeclarationFromId(typeReference.typeId)
-                if (typeDeclaration.shape.type === 'alias') {
+                if (typeDeclaration.shape.type === "alias") {
                     return this.hasDefaultValue(typeDeclaration.shape.aliasOf)
                 }
                 return false

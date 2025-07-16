@@ -1,18 +1,18 @@
-import { DescField, DescMessage } from '@bufbuild/protobuf'
-import { CodeGeneratorRequest } from '@bufbuild/protobuf/wkt'
-import { FileInfo, Printable } from '@bufbuild/protoplugin'
+import { DescField, DescMessage } from "@bufbuild/protobuf"
+import { CodeGeneratorRequest } from "@bufbuild/protobuf/wkt"
+import { FileInfo, Printable } from "@bufbuild/protoplugin"
 
-import { constructCasingsGenerator } from '@fern-api/casings-generator'
-import { IntermediateRepresentation } from '@fern-api/ir-sdk'
-import { serialization } from '@fern-api/ir-sdk'
-import { mergeIntermediateRepresentation } from '@fern-api/ir-utils'
-import { ErrorCollector } from '@fern-api/v2-importer-commons'
+import { constructCasingsGenerator } from "@fern-api/casings-generator"
+import { IntermediateRepresentation } from "@fern-api/ir-sdk"
+import { serialization } from "@fern-api/ir-sdk"
+import { mergeIntermediateRepresentation } from "@fern-api/ir-utils"
+import { ErrorCollector } from "@fern-api/v2-importer-commons"
 
-import { Logger } from './commons/logging'
-import { ProtofileConverter } from './converters/ProtofileConverter'
-import { ProtofileConverterContext } from './converters/ProtofileConverterContext'
-import { createGlobalCommentsStore } from './converters/utils/CreateGlobalCommentsStore'
-import { Options } from './parseOptions'
+import { Logger } from "./commons/logging"
+import { ProtofileConverter } from "./converters/ProtofileConverter"
+import { ProtofileConverterContext } from "./converters/ProtofileConverterContext"
+import { createGlobalCommentsStore } from "./converters/utils/CreateGlobalCommentsStore"
+import { Options } from "./parseOptions"
 
 export function generateIr({ req, options }: { req: CodeGeneratorRequest; options: Options }): FileInfo {
     let mergedIr: IntermediateRepresentation | undefined
@@ -49,7 +49,7 @@ export function generateIr({ req, options }: { req: CodeGeneratorRequest; option
             }),
             breadcrumbs: [],
             audiences: {
-                type: 'all'
+                type: "all"
             }
         })
         const convertedProtoFile = protoFileConverter.convert()
@@ -68,12 +68,12 @@ export function generateIr({ req, options }: { req: CodeGeneratorRequest; option
 
     if (serializedIr.ok) {
         return {
-            name: 'ir.json',
+            name: "ir.json",
             content: JSON.stringify(serializedIr.value, null, 2)
         }
     } else {
         return {
-            name: 'ir.json',
+            name: "ir.json",
             content: JSON.stringify(serializedIr.errors, null, 2)
         }
     }

@@ -1,10 +1,10 @@
-import { FernWorkspace } from '@fern-api/api-workspace-commons'
-import { RawSchemas, isRawProtobufSourceSchema } from '@fern-api/fern-definition-schema'
-import { AbsoluteFilePath, RelativeFilePath, doesPathExistSync, join } from '@fern-api/fs-utils'
-import { ResolvedSource, SourceResolver } from '@fern-api/source-resolver'
-import { TaskContext } from '@fern-api/task-context'
+import { FernWorkspace } from "@fern-api/api-workspace-commons"
+import { RawSchemas, isRawProtobufSourceSchema } from "@fern-api/fern-definition-schema"
+import { AbsoluteFilePath, RelativeFilePath, doesPathExistSync, join } from "@fern-api/fs-utils"
+import { ResolvedSource, SourceResolver } from "@fern-api/source-resolver"
+import { TaskContext } from "@fern-api/task-context"
 
-import { ProtobufParser } from './parsers/ProtobufParser'
+import { ProtobufParser } from "./parsers/ProtobufParser"
 
 export class SourceResolverImpl implements SourceResolver {
     private readonly context: TaskContext
@@ -53,7 +53,7 @@ export class SourceResolverImpl implements SourceResolver {
         const parser = new ProtobufParser()
         const protobufFileInfo = parser.parse({ absoluteFilePath: absoluteFilepath })
         const resolvedSource: ResolvedSource = {
-            type: 'protobuf',
+            type: "protobuf",
             absoluteFilePath: absoluteFilepath,
             relativeFilePath: RelativeFilePath.of(source.proto),
             csharpNamespace: protobufFileInfo.csharpNamespace,
@@ -73,7 +73,7 @@ export class SourceResolverImpl implements SourceResolver {
             return undefined
         }
         const resolvedSource: ResolvedSource = {
-            type: 'openapi',
+            type: "openapi",
             absoluteFilePath: absoluteFilepath,
             relativeFilePath: RelativeFilePath.of(source.openapi)
         }

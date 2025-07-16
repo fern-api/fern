@@ -5,8 +5,8 @@ import {
     getPropertyKey,
     getTextOfTsNode,
     maybeAddDocsStructure
-} from '@fern-typescript/commons'
-import { BaseContext, GeneratedObjectType } from '@fern-typescript/contexts'
+} from "@fern-typescript/commons"
+import { BaseContext, GeneratedObjectType } from "@fern-typescript/contexts"
 import {
     InterfaceDeclarationStructure,
     ModuleDeclarationStructure,
@@ -15,11 +15,11 @@ import {
     StructureKind,
     WriterFunction,
     ts
-} from 'ts-morph'
+} from "ts-morph"
 
-import { ExampleTypeShape, ObjectProperty, ObjectTypeDeclaration, TypeReference } from '@fern-fern/ir-sdk/api'
+import { ExampleTypeShape, ObjectProperty, ObjectTypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api"
 
-import { AbstractGeneratedType } from '../AbstractGeneratedType'
+import { AbstractGeneratedType } from "../AbstractGeneratedType"
 
 interface Property {
     name: string
@@ -34,7 +34,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
     implements GeneratedObjectType<Context>
 {
     private readonly allObjectProperties: ObjectProperty[]
-    public readonly type = 'object'
+    public readonly type = "object"
     constructor(init: AbstractGeneratedType.Init<ObjectTypeDeclaration, Context>) {
         super(init)
         this.allObjectProperties = [...this.shape.properties, ...(this.shape.extendedProperties ?? [])]
@@ -97,10 +97,10 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
         })
         if (this.shape.extraProperties) {
             props.push({
-                name: '[key: string]', // This is the simpler way to add an index signature
-                type: ts.factory.createTypeReferenceNode('any'),
+                name: "[key: string]", // This is the simpler way to add an index signature
+                type: ts.factory.createTypeReferenceNode("any"),
                 hasQuestionToken: false,
-                docs: 'Accepts any additional properties',
+                docs: "Accepts any additional properties",
                 irProperty: undefined
             })
         }
@@ -135,7 +135,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
     public getPropertyKey({ propertyWireKey }: { propertyWireKey: string }): string {
         const property = this.allObjectProperties.find((property) => property.name.wireValue === propertyWireKey)
         if (property == null) {
-            throw new Error('Property does not exist: ' + propertyWireKey)
+            throw new Error("Property does not exist: " + propertyWireKey)
         }
         return this.getPropertyKeyFromProperty(property)
     }
@@ -149,8 +149,8 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
     }
 
     public buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {
-        if (example.type !== 'object') {
-            throw new Error('Example is not for an object')
+        if (example.type !== "object") {
+            throw new Error("Example is not for an object")
         }
 
         return ts.factory.createObjectLiteralExpression(this.buildExampleProperties(example, context, opts), true)
@@ -161,13 +161,13 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
         context: Context,
         opts: GetReferenceOpts
     ): ts.ObjectLiteralElementLike[] {
-        if (example.type !== 'object') {
-            throw new Error('Example is not for an object')
+        if (example.type !== "object") {
+            throw new Error("Example is not for an object")
         }
 
         return example.properties.map((property) => {
             const originalTypeForProperty = context.type.getGeneratedType(property.originalTypeDeclaration)
-            if (originalTypeForProperty.type === 'union') {
+            if (originalTypeForProperty.type === "union") {
                 const propertyKey = originalTypeForProperty.getSinglePropertyKey({
                     name: property.name,
                     type: TypeReference.named({
@@ -181,8 +181,8 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                     context.type.getGeneratedExample(property.value).build(context, opts)
                 )
             }
-            if (originalTypeForProperty.type !== 'object') {
-                throw new Error('Property does not come from an object')
+            if (originalTypeForProperty.type !== "object") {
+                throw new Error("Property does not come from an object")
             }
             const key = originalTypeForProperty.getPropertyKey({ propertyWireKey: property.name.wireValue })
             return ts.factory.createPropertyAssignment(
@@ -203,8 +203,8 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
             })),
             ...this.shape.extends.flatMap((extension) => {
                 const generatedType = context.type.getGeneratedType(extension)
-                if (generatedType.type !== 'object') {
-                    throw new Error('Type extends non-object')
+                if (generatedType.type !== "object") {
+                    throw new Error("Type extends non-object")
                 }
                 return generatedType.getAllPropertiesIncludingExtensions(context)
             })

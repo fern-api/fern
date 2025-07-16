@@ -1,4 +1,4 @@
-import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from 'ts-morph'
+import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph"
 
 export interface SingleUnionTypeGenerator<Context> {
     generateForInlineUnion(context: Context): ts.TypeNode

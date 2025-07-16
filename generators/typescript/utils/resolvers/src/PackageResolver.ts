@@ -1,4 +1,4 @@
-import { PackageId } from '@fern-typescript/commons'
+import { PackageId } from "@fern-typescript/commons"
 
 import {
     HttpService,
@@ -8,7 +8,7 @@ import {
     SubpackageId,
     WebSocketChannel,
     WebSocketChannelId
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
 export class PackageResolver {
     constructor(private readonly intermediateRepresentation: IntermediateRepresentation) {}
@@ -36,7 +36,7 @@ export class PackageResolver {
     public resolveSubpackage(subpackageId: SubpackageId): Subpackage {
         const subpackage = this.intermediateRepresentation.subpackages[subpackageId]
         if (subpackage == null) {
-            throw new Error('Subpackage does not exist: ' + subpackageId)
+            throw new Error("Subpackage does not exist: " + subpackageId)
         }
         return subpackage
     }
@@ -44,7 +44,7 @@ export class PackageResolver {
     public resolveWebSocketChannel(channelId: WebSocketChannelId): WebSocketChannel {
         const channel = this.intermediateRepresentation.websocketChannels?.[channelId]
         if (channel == null) {
-            throw new Error('Channel does not exist: ' + channelId)
+            throw new Error("Channel does not exist: " + channelId)
         }
         return channel
     }
@@ -53,7 +53,7 @@ export class PackageResolver {
         const service = this.getServiceDeclaration(packageId)
         if (service == null) {
             throw new Error(
-                'Package does not have a service: ' + (packageId.isRoot ? '<Root package>' : packageId.subpackageId)
+                "Package does not have a service: " + (packageId.isRoot ? "<Root package>" : packageId.subpackageId)
             )
         }
         return service
@@ -74,7 +74,7 @@ export class PackageResolver {
         }
         const service = this.intermediateRepresentation.services[package_.service]
         if (service == null) {
-            throw new Error('Service does not exist: ' + package_.service)
+            throw new Error("Service does not exist: " + package_.service)
         }
         return service
     }

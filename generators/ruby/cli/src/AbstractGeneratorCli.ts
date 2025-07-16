@@ -1,25 +1,25 @@
-import { cp, readdir } from 'fs/promises'
-import tmp from 'tmp-promise'
+import { cp, readdir } from "fs/promises"
+import tmp from "tmp-promise"
 
 import {
     AbstractGeneratorContext,
     FernGeneratorExec,
     GeneratorNotificationService,
     parseGeneratorConfig
-} from '@fern-api/base-generator'
-import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
-import { Logger } from '@fern-api/logger'
-import { createLoggingExecutable } from '@fern-api/logging-execa'
+} from "@fern-api/base-generator"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { Logger } from "@fern-api/logger"
+import { createLoggingExecutable } from "@fern-api/logging-execa"
 
-import { IntermediateRepresentation } from '@fern-fern/ir-sdk/api'
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api"
 
-import { loadIntermediateRepresentation } from './loadIntermediateRepresentation'
+import { loadIntermediateRepresentation } from "./loadIntermediateRepresentation"
 
 export abstract class AbstractGeneratorCli<CustomConfig> {
     public async runCli(): Promise<void> {
         const pathToConfig = process.argv[process.argv.length - 1]
         if (pathToConfig == null) {
-            throw new Error('No argument for config filepath.')
+            throw new Error("No argument for config filepath.")
         }
         await this.run(pathToConfig)
     }
@@ -30,17 +30,17 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
 
         try {
             const generatorContext = new GeneratorContextImpl(config, generatorNotificationService)
-            generatorContext.logger.debug('[Ruby] Beginning generator-specific logic.')
+            generatorContext.logger.debug("[Ruby] Beginning generator-specific logic.")
             const customConfig = this.parseCustomConfig(config.customConfig)
-            generatorContext.logger.debug('[Ruby] Custom configuration has been parsed, beginning core execution.')
+            generatorContext.logger.debug("[Ruby] Custom configuration has been parsed, beginning core execution.")
 
             if (!generatorContext.didSucceed()) {
-                throw new Error('Failed to generate ruby project.')
+                throw new Error("Failed to generate ruby project.")
             }
 
             await config.output.mode._visit<void | Promise<void>>({
                 publish: async () => {
-                    generatorContext.logger.debug('[Ruby] Entering `publish` generation flow.')
+                    generatorContext.logger.debug("[Ruby] Entering `publish` generation flow.")
                     await this.publishPackage(
                         config,
                         customConfig,
@@ -49,7 +49,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                     )
                 },
                 github: async (githubOutputMode: FernGeneratorExec.GithubOutputMode) => {
-                    generatorContext.logger.debug('[Ruby] Entering `github` generation flow.')
+                    generatorContext.logger.debug("[Ruby] Entering `github` generation flow.")
                     await this.writeForGithub(
                         config,
                         customConfig,
@@ -59,7 +59,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                     )
                 },
                 downloadFiles: async () => {
-                    generatorContext.logger.debug('[Ruby] Entering `downloadFiles` generation flow.')
+                    generatorContext.logger.debug("[Ruby] Entering `downloadFiles` generation flow.")
                     await this.writeForDownload(
                         config,
                         customConfig,
@@ -79,7 +79,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             await generatorNotificationService.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(
                     FernGeneratorExec.ExitStatusUpdate.error({
-                        message: e instanceof Error ? e.message : 'Encountered error'
+                        message: e instanceof Error ? e.message : "Encountered error"
                     })
                 )
             )
@@ -123,15 +123,15 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
         destinationZip: AbsoluteFilePath
         logger: Logger
     }): Promise<void> {
-        const zip = createLoggingExecutable('zip', {
+        const zip = createLoggingExecutable("zip", {
             cwd: directoryToZip,
             logger,
             // zip is noisy
             doNotPipeOutput: true
         })
 
-        const tmpZipLocation = join(AbsoluteFilePath.of((await tmp.dir()).path), RelativeFilePath.of('output.zip'))
-        await zip(['-r', tmpZipLocation, ...(await readdir(directoryToZip))])
+        const tmpZipLocation = join(AbsoluteFilePath.of((await tmp.dir()).path), RelativeFilePath.of("output.zip"))
+        await zip(["-r", tmpZipLocation, ...(await readdir(directoryToZip))])
         await cp(tmpZipLocation, destinationZip)
     }
 }

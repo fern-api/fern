@@ -1,17 +1,17 @@
-import dayjs from 'dayjs'
-import utc from 'dayjs/plugin/utc'
-import { kebabCase, last } from 'lodash-es'
+import dayjs from "dayjs"
+import utc from "dayjs/plugin/utc"
+import { kebabCase, last } from "lodash-es"
 
-import { APIV1Write, FernNavigation } from '@fern-api/fdr-sdk'
-import { AbsoluteFilePath, RelativeFilePath, relative } from '@fern-api/fs-utils'
-import { DocsWorkspace } from '@fern-api/workspace-loader'
+import { APIV1Write, FernNavigation } from "@fern-api/fdr-sdk"
+import { AbsoluteFilePath, RelativeFilePath, relative } from "@fern-api/fs-utils"
+import { DocsWorkspace } from "@fern-api/workspace-loader"
 
-import { NodeIdGenerator } from './NodeIdGenerator'
-import { extractDatetimeFromChangelogTitle } from './utils/extractDatetimeFromChangelogTitle'
+import { NodeIdGenerator } from "./NodeIdGenerator"
+import { extractDatetimeFromChangelogTitle } from "./utils/extractDatetimeFromChangelogTitle"
 
 dayjs.extend(utc)
 
-const DEFAULT_CHANGELOG_TITLE = 'Changelog'
+const DEFAULT_CHANGELOG_TITLE = "Changelog"
 
 interface ConvertOptions {
     parentSlug: FernNavigation.V1.SlugGenerator
@@ -25,7 +25,7 @@ interface ConvertOptions {
 }
 
 // if the filename of the changelog file is one of these, it will be treated as an overview page
-const RESERVED_OVERVIEW_PAGE_NAMES = ['summary', 'index', 'overview']
+const RESERVED_OVERVIEW_PAGE_NAMES = ["summary", "index", "overview"]
 
 export class ChangelogNodeConverter {
     public constructor(
@@ -47,13 +47,13 @@ export class ChangelogNodeConverter {
 
         let overviewPagePath: AbsoluteFilePath | undefined = undefined
         for (const absoluteFilepath of this.changelogFiles ?? []) {
-            const filename = last(absoluteFilepath.split('/'))
+            const filename = last(absoluteFilepath.split("/"))
             if (filename == null) {
                 continue
             }
             const changelogDate = extractDatetimeFromChangelogTitle(filename)
             if (changelogDate == null) {
-                const nameWithoutExtension = filename.split('.')[0]?.toLowerCase()
+                const nameWithoutExtension = filename.split(".")[0]?.toLowerCase()
                 if (nameWithoutExtension != null && RESERVED_OVERVIEW_PAGE_NAMES.includes(nameWithoutExtension)) {
                     overviewPagePath = absoluteFilepath
                 }
@@ -69,7 +69,7 @@ export class ChangelogNodeConverter {
         }
 
         const slug = opts.parentSlug.apply({
-            fullSlug: overviewPagePath != null ? this.markdownToFullSlug.get(overviewPagePath)?.split('/') : undefined,
+            fullSlug: overviewPagePath != null ? this.markdownToFullSlug.get(overviewPagePath)?.split("/") : undefined,
             skipUrlSlug: false, // changelog pages should always have a url slug
             urlSlug: opts.slug ?? kebabCase(title)
         })
@@ -81,13 +81,13 @@ export class ChangelogNodeConverter {
             const date = dayjs.utc(item.date)
             return {
                 id: this.idgen.get(item.pageId),
-                type: 'changelogEntry',
-                title: date.format('MMMM D, YYYY'),
+                type: "changelogEntry",
+                title: date.format("MMMM D, YYYY"),
                 slug: slug
                     .apply({
-                        fullSlug: this.markdownToFullSlug.get(item.absoluteFilepath)?.split('/'),
+                        fullSlug: this.markdownToFullSlug.get(item.absoluteFilepath)?.split("/"),
                         // TODO: the url slug should be the markdown filename name, minus the extension
-                        urlSlug: date.format('YYYY/M/D')
+                        urlSlug: date.format("YYYY/M/D")
                     })
                     .get(),
                 icon: undefined,
@@ -102,15 +102,15 @@ export class ChangelogNodeConverter {
             }
         })
 
-        const entries = orderBy(changelogItems, (entry) => entry.date, 'desc')
+        const entries = orderBy(changelogItems, (entry) => entry.date, "desc")
         const overviewPageId =
             overviewPagePath != null ? FernNavigation.PageId(this.toRelativeFilepath(overviewPagePath)) : undefined
-        const id = this.idgen.get(overviewPageId ?? 'changelog')
+        const id = this.idgen.get(overviewPageId ?? "changelog")
         const changelogYears = this.groupByYear(id, entries, slug)
 
         return {
             id,
-            type: 'changelog',
+            type: "changelog",
             title,
             slug: slug.get(),
             icon: opts.icon,
@@ -147,7 +147,7 @@ export class ChangelogNodeConverter {
                 const id = this.idgen.get(`${prefix}/year/${year}`)
                 return {
                     id,
-                    type: 'changelogYear' as const,
+                    type: "changelogYear" as const,
                     title: year.toString(),
                     year,
                     slug,
@@ -160,8 +160,8 @@ export class ChangelogNodeConverter {
                     featureFlags: undefined
                 }
             }),
-            'year',
-            'desc'
+            "year",
+            "desc"
         )
     }
 
@@ -182,8 +182,8 @@ export class ChangelogNodeConverter {
                 const date = dayjs(new Date(0, month - 1))
                 return {
                     id: this.idgen.get(`${prefix}/month/${month}`),
-                    type: 'changelogMonth' as const,
-                    title: date.format('MMMM YYYY'),
+                    type: "changelogMonth" as const,
+                    title: date.format("MMMM YYYY"),
                     month,
                     slug: parentSlug.append(month.toString()).get(),
                     icon: undefined,
@@ -195,8 +195,8 @@ export class ChangelogNodeConverter {
                     featureFlags: undefined
                 }
             }),
-            'month',
-            'desc'
+            "month",
+            "desc"
         )
     }
 
@@ -213,21 +213,21 @@ export class ChangelogNodeConverter {
 function orderBy<K extends string, T extends Record<K, string | number>>(
     items: T[],
     key: K,
-    order?: 'asc' | 'desc'
+    order?: "asc" | "desc"
 ): T[]
-function orderBy<T>(items: T[], key: (item: T) => string | number, order?: 'asc' | 'desc'): T[]
+function orderBy<T>(items: T[], key: (item: T) => string | number, order?: "asc" | "desc"): T[]
 function orderBy<K extends string, T extends Record<K, string | number>>(
     items: T[],
     key: K | ((item: T) => string | number),
-    order: 'asc' | 'desc' = 'asc'
+    order: "asc" | "desc" = "asc"
 ): T[] {
     return items.concat().sort((a, b) => {
-        const aValue = typeof key === 'function' ? key(a) : a[key]
-        const bValue = typeof key === 'function' ? key(b) : b[key]
+        const aValue = typeof key === "function" ? key(a) : a[key]
+        const bValue = typeof key === "function" ? key(b) : b[key]
         if (aValue < bValue) {
-            return order === 'asc' ? -1 : 1
+            return order === "asc" ? -1 : 1
         } else if (aValue > bValue) {
-            return order === 'asc' ? 1 : -1
+            return order === "asc" ? 1 : -1
         }
         return 0
     })

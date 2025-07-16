@@ -1,18 +1,18 @@
-import { mapValues } from '@fern-api/core-utils'
-import { dynamic } from '@fern-api/ir-sdk'
+import { mapValues } from "@fern-api/core-utils"
+import { dynamic } from "@fern-api/ir-sdk"
 
-export type Endpoint = Omit<dynamic.Endpoint, 'examples' | 'location'> & {
+export type Endpoint = Omit<dynamic.Endpoint, "examples" | "location"> & {
     location: EndpointLocation
     examples: EndpointExample[] | undefined
 }
 
-export type EndpointExample = Omit<dynamic.EndpointExample, 'baseUrl' | 'endpoint'> & {
+export type EndpointExample = Omit<dynamic.EndpointExample, "baseUrl" | "endpoint"> & {
     baseURL: string | undefined
     endpoint: EndpointLocation
 }
 
-export type EndpointLocation = Omit<dynamic.EndpointLocation, 'method'> & {
-    method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
+export type EndpointLocation = Omit<dynamic.EndpointLocation, "method"> & {
+    method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH"
 }
 
 export function convertEndpoints(endpoints: Record<string, dynamic.Endpoint>): Record<string, Endpoint> {
@@ -25,7 +25,7 @@ export function convertEndpoints(endpoints: Record<string, dynamic.Endpoint>): R
 
 function convertEndpoint(endpoint: dynamic.Endpoint): Endpoint | undefined {
     const method = endpoint.location.method
-    if (method === 'HEAD') {
+    if (method === "HEAD") {
         return undefined
     }
     return {
@@ -45,7 +45,7 @@ function convertExamples(examples: dynamic.EndpointExample[]): EndpointExample[]
 
 function convertExample(example: dynamic.EndpointExample): EndpointExample | undefined {
     const method = example.endpoint.method
-    if (method === 'HEAD') {
+    if (method === "HEAD") {
         return undefined
     }
     return {

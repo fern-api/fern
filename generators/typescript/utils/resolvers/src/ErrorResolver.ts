@@ -1,4 +1,4 @@
-import { DeclaredErrorName, ErrorDeclaration, ErrorId, IntermediateRepresentation } from '@fern-fern/ir-sdk/api'
+import { DeclaredErrorName, ErrorDeclaration, ErrorId, IntermediateRepresentation } from "@fern-fern/ir-sdk/api"
 
 type SimpleErrorName = string
 
@@ -15,7 +15,7 @@ export class ErrorResolver {
     public getErrorDeclarationFromName(errorName: DeclaredErrorName): ErrorDeclaration {
         const resolvedError = this.resolvedErrors[errorName.errorId]?.[getSimpleErrorName(errorName)]
         if (resolvedError == null) {
-            throw new Error('Error not found: ' + errorName.errorId)
+            throw new Error("Error not found: " + errorName.errorId)
         }
         return resolvedError
     }

@@ -1,8 +1,8 @@
-import { assertNever } from '@fern-api/core-utils'
-import { HttpEndpoint, IntermediateRepresentation, V2HttpEndpointRequest } from '@fern-api/ir-sdk'
+import { assertNever } from "@fern-api/core-utils"
+import { HttpEndpoint, IntermediateRepresentation, V2HttpEndpointRequest } from "@fern-api/ir-sdk"
 
-import { getParameterExamples } from './getParameterExamples'
-import { getFirstExamples, getV2Examples } from './getV2Examples'
+import { getParameterExamples } from "./getParameterExamples"
+import { getFirstExamples, getV2Examples } from "./getV2Examples"
 
 export function getRequestBodyExamples({
     endpoint,
@@ -10,7 +10,7 @@ export function getRequestBodyExamples({
     skipOptionalRequestProperties
 }: {
     endpoint: HttpEndpoint
-    ir: Omit<IntermediateRepresentation, 'sdkConfig' | 'subpackages' | 'rootPackage'>
+    ir: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage">
     skipOptionalRequestProperties: boolean
 }): {
     userRequestExamples: Record<string, V2HttpEndpointRequest>
@@ -40,9 +40,9 @@ export function getRequestBodyExamples({
     }
     if (endpoint.requestBody != null) {
         switch (endpoint.requestBody.type) {
-            case 'bytes':
+            case "bytes":
                 break
-            case 'fileUpload': {
+            case "fileUpload": {
                 const { userExamples, autoExamples } = getV2Examples(endpoint.requestBody.v2Examples)
                 for (const [key, example] of Object.entries(userExamples)) {
                     userRequestExamples[key] = {
@@ -58,7 +58,7 @@ export function getRequestBodyExamples({
                 }
                 break
             }
-            case 'inlinedRequestBody': {
+            case "inlinedRequestBody": {
                 const { userExamples, autoExamples } = getV2Examples(endpoint.requestBody.v2Examples)
                 for (const [key, example] of Object.entries(userExamples)) {
                     userRequestExamples[key] = {
@@ -74,7 +74,7 @@ export function getRequestBodyExamples({
                 }
                 break
             }
-            case 'reference': {
+            case "reference": {
                 const { userExamples, autoExamples } = getV2Examples(endpoint.requestBody.v2Examples)
                 for (const [key, example] of Object.entries(userExamples)) {
                     userRequestExamples[key] = {
@@ -111,7 +111,7 @@ function getUrlForExample(endpoint: HttpEndpoint): string {
         if (value == null) {
             stringValue = pathParameter.name.originalName
         } else {
-            stringValue = typeof value === 'string' ? value : JSON.stringify(value)
+            stringValue = typeof value === "string" ? value : JSON.stringify(value)
         }
         pathParameters[pathParameter.name.originalName] = stringValue
     })
@@ -119,6 +119,6 @@ function getUrlForExample(endpoint: HttpEndpoint): string {
         endpoint.fullPath.head +
         endpoint.fullPath.parts
             .map((pathPart) => encodeURIComponent(`${pathParameters[pathPart.pathParameter]}`) + pathPart.tail)
-            .join('')
-    return url.startsWith('/') || url === '' ? url : `/${url}`
+            .join("")
+    return url.startsWith("/") || url === "" ? url : `/${url}`
 }

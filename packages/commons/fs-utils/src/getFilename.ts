@@ -1,9 +1,9 @@
-import { AbsoluteFilePath } from './AbsoluteFilePath'
-import { RelativeFilePath } from './RelativeFilePath'
-import { splitPath } from './splitPath'
+import { AbsoluteFilePath } from "./AbsoluteFilePath"
+import { RelativeFilePath } from "./RelativeFilePath"
+import { splitPath } from "./splitPath"
 
 export function getFilename(path: RelativeFilePath | AbsoluteFilePath): RelativeFilePath | undefined {
-    if (!path.includes('.')) {
+    if (!path.includes(".")) {
         return undefined
     }
     const segments = splitPath(path)

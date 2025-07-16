@@ -1,6 +1,6 @@
-import { readFile, writeFile } from 'fs/promises'
-import { startCase } from 'lodash'
-import path from 'path'
+import { readFile, writeFile } from "fs/promises"
+import { startCase } from "lodash"
+import path from "path"
 
 import {
     ExitStatusUpdate,
@@ -9,20 +9,20 @@ import {
     LogLevel,
     parseGeneratorConfig,
     parseIR
-} from '@fern-api/base-generator'
-import { AbsoluteFilePath } from '@fern-api/fs-utils'
+} from "@fern-api/base-generator"
+import { AbsoluteFilePath } from "@fern-api/fs-utils"
 
-import { IntermediateRepresentation } from '@fern-fern/ir-sdk/api'
-import * as IrSerialization from '@fern-fern/ir-sdk/serialization'
-import { FernPostmanClient } from '@fern-fern/postman-sdk'
-import * as PostmanParsing from '@fern-fern/postman-sdk/serialization'
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api"
+import * as IrSerialization from "@fern-fern/ir-sdk/serialization"
+import { FernPostmanClient } from "@fern-fern/postman-sdk"
+import * as PostmanParsing from "@fern-fern/postman-sdk/serialization"
 
-import { PostmanGeneratorConfigSchema } from './config/schemas/PostmanGeneratorConfigSchema'
-import { PublishConfigSchema } from './config/schemas/PublishConfigSchema'
-import { convertToPostmanCollection } from './convertToPostmanCollection'
-import { writePostmanGithubWorkflows } from './writePostmanGithubWorkflows'
+import { PostmanGeneratorConfigSchema } from "./config/schemas/PostmanGeneratorConfigSchema"
+import { PublishConfigSchema } from "./config/schemas/PublishConfigSchema"
+import { convertToPostmanCollection } from "./convertToPostmanCollection"
+import { writePostmanGithubWorkflows } from "./writePostmanGithubWorkflows"
 
-const DEFAULT_COLLECTION_OUTPUT_FILENAME = 'collection.json'
+const DEFAULT_COLLECTION_OUTPUT_FILENAME = "collection.json"
 
 export const getCollectionOutputFilename = (postmanGeneratorConfig?: PostmanGeneratorConfigSchema): string => {
     return postmanGeneratorConfig?.filename ?? DEFAULT_COLLECTION_OUTPUT_FILENAME
@@ -33,7 +33,7 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
 
     const generatorLoggingClient = new GeneratorNotificationService(config.environment)
     // biome-ignore lint/suspicious/noConsole: allow console
-    console.log('Initialized generator logging client')
+    console.log("Initialized generator logging client")
 
     try {
         // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
@@ -61,13 +61,13 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
             const _collectionDefinition = convertToPostmanCollection({
                 ir,
                 collectionName:
-                    postmanGeneratorConfig?.['collection-name'] ??
+                    postmanGeneratorConfig?.["collection-name"] ??
                     ir.apiDisplayName ??
                     startCase(ir.apiName.originalName)
             })
             const rawCollectionDefinition = PostmanParsing.PostmanCollectionSchema.jsonOrThrow(_collectionDefinition)
             // biome-ignore lint/suspicious/noConsole: allow console
-            console.log('Converted ir to postman collection')
+            console.log("Converted ir to postman collection")
 
             await writeFile(
                 path.join(config.output.path, collectionOutputFilename),
@@ -85,7 +85,7 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
             const outputMode = config.output.mode
 
             const publishConfig = ir.publishConfig
-            if (publishConfig?.type === 'direct' && publishConfig.target.type === 'postman') {
+            if (publishConfig?.type === "direct" && publishConfig.target.type === "postman") {
                 await publishConfig._visit({
                     _other: () => undefined,
                     direct: async () => {
@@ -100,8 +100,8 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
                     },
                     github: () => undefined
                 })
-            } else if (outputMode.type === 'publish' && outputMode.publishTarget != null) {
-                if (outputMode.publishTarget.type !== 'postman') {
+            } else if (outputMode.type === "publish" && outputMode.publishTarget != null) {
+                if (outputMode.publishTarget.type !== "postman") {
                     // biome-ignore lint/suspicious/noConsole: allow console
                     console.log(`Received incorrect publish config (type is ${outputMode.type}`)
                     await generatorLoggingClient.sendUpdate(
@@ -110,7 +110,7 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
                             message: `Received incorrect publish config (type is ${outputMode.type})`
                         })
                     )
-                    throw new Error('Received incorrect publish config!')
+                    throw new Error("Received incorrect publish config!")
                 }
                 await publishCollection({
                     publishConfig: {
@@ -119,23 +119,23 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
                     },
                     collection: rawCollectionDefinition
                 })
-            } else if (outputMode.type === 'github') {
+            } else if (outputMode.type === "github") {
                 // biome-ignore lint/suspicious/noConsole: allow console
-                console.log('Writing Github workflows...')
+                console.log("Writing Github workflows...")
                 await writePostmanGithubWorkflows({
                     config,
                     githubOutputMode: outputMode
                 })
             } else if (postmanGeneratorConfig?.publishing != null) {
                 // biome-ignore lint/suspicious/noConsole: allow console
-                console.log('Publishing postman collection via legacy custom config...')
+                console.log("Publishing postman collection via legacy custom config...")
                 await publishCollection({
                     publishConfig: postmanGeneratorConfig.publishing,
                     collection: rawCollectionDefinition
                 })
             } else {
                 // biome-ignore lint/suspicious/noConsole: allow console
-                console.log('Did not publish to postman or github')
+                console.log("Did not publish to postman or github")
             }
 
             await generatorLoggingClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful({})))
@@ -143,7 +143,7 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
             await generatorLoggingClient.sendUpdate(
                 GeneratorUpdate.exitStatusUpdate(
                     ExitStatusUpdate.error({
-                        message: e instanceof Error ? `${e.name}: ${e.message}\n${e.stack}` : 'Encountered error'
+                        message: e instanceof Error ? `${e.name}: ${e.message}\n${e.stack}` : "Encountered error"
                     })
                 )
             )
@@ -152,7 +152,7 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
         await generatorLoggingClient.sendUpdate(
             GeneratorUpdate.exitStatusUpdate(
                 ExitStatusUpdate.error({
-                    message: e instanceof Error ? `${e.name}: ${e.message}\n${e.stack}` : 'Encountered error'
+                    message: e instanceof Error ? `${e.name}: ${e.message}\n${e.stack}` : "Encountered error"
                 })
             )
         )
@@ -168,7 +168,7 @@ async function publishCollection({
     collection: PostmanParsing.PostmanCollectionSchema.Raw
 }) {
     // biome-ignore lint/suspicious/noConsole: allow console
-    console.log('Publishing postman collection...')
+    console.log("Publishing postman collection...")
     const postman = new FernPostmanClient({
         apiKey: publishConfig.apiKey
     })
@@ -185,7 +185,7 @@ async function publishCollection({
         })
         if (collectionsToUpdate.length === 0) {
             // biome-ignore lint/suspicious/noConsole: allow console
-            console.log('Creating new postman collection!')
+            console.log("Creating new postman collection!")
             await postman.collection.createCollection({
                 workspace,
                 body: { collection }
@@ -194,7 +194,7 @@ async function publishCollection({
             await Promise.all(
                 collectionsToUpdate.map(async (collectionMetadata) => {
                     // biome-ignore lint/suspicious/noConsole: allow console
-                    console.log('Updating postman collection!')
+                    console.log("Updating postman collection!")
                     await postman.collection.updateCollection(collectionMetadata.uid, {
                         collection
                     })

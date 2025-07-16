@@ -1,4 +1,4 @@
-import { HttpResponseResolver, passthrough } from 'msw'
+import { HttpResponseResolver, passthrough } from "msw"
 
 /**
  * Creates a request matcher that validates if request headers match specified criteria
@@ -26,7 +26,7 @@ export function withHeaders(
                 continue
             }
 
-            if (typeof expectedValue === 'function') {
+            if (typeof expectedValue === "function") {
                 if (!expectedValue(actualValue)) {
                     mismatches[key] = { actual: actualValue, expected: expectedValue }
                 }
@@ -41,7 +41,7 @@ export function withHeaders(
 
         if (Object.keys(mismatches).length > 0) {
             const formattedMismatches = formatHeaderMismatches(mismatches)
-            console.error('Header mismatch:', formattedMismatches)
+            console.error("Header mismatch:", formattedMismatches)
             return passthrough()
         }
 
@@ -60,8 +60,8 @@ function formatHeaderMismatches(
             expected:
                 expected instanceof RegExp
                     ? expected.toString()
-                    : typeof expected === 'function'
-                      ? '[Function]'
+                    : typeof expected === "function"
+                      ? "[Function]"
                       : expected
         }
     }

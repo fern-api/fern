@@ -1,25 +1,25 @@
-import type { Node as EstreeNode } from 'estree'
-import { walk } from 'estree-walker'
-import type { Root as HastRoot } from 'hast'
-import { toHast } from 'mdast-util-to-hast'
-import { readFileSync } from 'node:fs'
-import type { Position } from 'unist'
-import { visit } from 'unist-util-visit'
+import type { Node as EstreeNode } from "estree"
+import { walk } from "estree-walker"
+import type { Root as HastRoot } from "hast"
+import { toHast } from "mdast-util-to-hast"
+import { readFileSync } from "node:fs"
+import type { Position } from "unist"
+import { visit } from "unist-util-visit"
 
 import {
     extractAttributeValueLiteral,
     parseMarkdownToTree,
     walkEstreeJsxAttributes
-} from '@fern-api/docs-markdown-utils'
-import { extractSingleLiteral, isMdxJsxAttribute } from '@fern-api/docs-markdown-utils'
-import { AbsoluteFilePath, RelativeFilePath, dirname, resolve } from '@fern-api/fs-utils'
+} from "@fern-api/docs-markdown-utils"
+import { extractSingleLiteral, isMdxJsxAttribute } from "@fern-api/docs-markdown-utils"
+import { AbsoluteFilePath, RelativeFilePath, dirname, resolve } from "@fern-api/fs-utils"
 
 const MDX_NODE_TYPES = [
-    'mdxFlowExpression',
-    'mdxJsxFlowElement',
-    'mdxJsxTextElement',
-    'mdxTextExpression',
-    'mdxjsEsm'
+    "mdxFlowExpression",
+    "mdxJsxFlowElement",
+    "mdxJsxTextElement",
+    "mdxTextExpression",
+    "mdxjsEsm"
 ] as const
 
 interface HastLink {
@@ -35,7 +35,7 @@ interface HastSource {
 }
 
 export function collectLinksAndSources({
-    readFile = (path) => readFileSync(path, 'utf-8'),
+    readFile = (path) => readFileSync(path, "utf-8"),
     ...opts
 }: {
     readFile?: (path: AbsoluteFilePath) => string
@@ -62,7 +62,7 @@ export function collectLinksAndSources({
     do {
         loopCount++
         if (loopCount > LOOP_LIMIT) {
-            throw new Error('Infinite loop detected while collecting links and sources')
+            throw new Error("Infinite loop detected while collecting links and sources")
         }
         const popped = contentQueue.shift()
         if (popped == null) {
@@ -90,19 +90,19 @@ export function collectLinksAndSources({
             // if mdxjsEsm imports from a .md or .mdx file, we'll treat it as if it was a markdown snippet
             // this doesn't handle plain javascript imports (which is outside of the scope of this rule)
             // TODO: should we verify that the imported file is actually used in the current page?
-            if (node.type === 'mdxjsEsm' && absoluteFilepath != null) {
+            if (node.type === "mdxjsEsm" && absoluteFilepath != null) {
                 if (node.data?.estree) {
                     walk(node.data.estree, {
                         enter: (child) => {
                             if (
-                                child.type === 'ImportDeclaration' &&
-                                child.source.type === 'Literal' &&
-                                typeof child.source.value === 'string'
+                                child.type === "ImportDeclaration" &&
+                                child.source.type === "Literal" &&
+                                typeof child.source.value === "string"
                             ) {
                                 const importPath = RelativeFilePath.of(child.source.value)
                                 const resolvedImportPath = resolve(dirname(absoluteFilepath), importPath)
                                 // TODO: should we handle md files? what about other md extensions?
-                                if (resolvedImportPath.endsWith('.mdx') || resolvedImportPath.endsWith('.md')) {
+                                if (resolvedImportPath.endsWith(".mdx") || resolvedImportPath.endsWith(".md")) {
                                     contentQueue.push({
                                         content: readFile(resolvedImportPath),
                                         absoluteFilepath: resolvedImportPath
@@ -112,17 +112,17 @@ export function collectLinksAndSources({
                         }
                     })
                 }
-                return 'skip'
+                return "skip"
             }
 
-            if (node.type === 'element') {
+            if (node.type === "element") {
                 const href = node.properties.href
-                if (typeof href === 'string') {
+                if (typeof href === "string") {
                     links.push({ href, sourceFilepath: absoluteFilepath, position: node.position })
                 }
 
                 const src = node.properties.src
-                if (typeof src === 'string') {
+                if (typeof src === "string") {
                     sources.push({ src, sourceFilepath: absoluteFilepath, position: node.position })
                 }
             }
@@ -131,32 +131,32 @@ export function collectLinksAndSources({
                 walkEstreeJsxAttributes(estree, {
                     src: (attr) => {
                         const src = extractSingleLiteral(attr.value)
-                        if (typeof src === 'string') {
+                        if (typeof src === "string") {
                             sources.push({ src, sourceFilepath: absoluteFilepath, position })
                         }
                     },
                     href: (attr) => {
                         const href = extractSingleLiteral(attr.value)
-                        if (typeof href === 'string') {
+                        if (typeof href === "string") {
                             links.push({ href, sourceFilepath: absoluteFilepath, position })
                         }
                     }
                 })
             }
 
-            if (node.type === 'mdxJsxFlowElement' || node.type === 'mdxJsxTextElement') {
+            if (node.type === "mdxJsxFlowElement" || node.type === "mdxJsxTextElement") {
                 const href = extractAttributeValueLiteral(
-                    node.attributes.filter(isMdxJsxAttribute).find((attribute) => attribute.name === 'href')?.value
+                    node.attributes.filter(isMdxJsxAttribute).find((attribute) => attribute.name === "href")?.value
                 )
 
                 const src = extractAttributeValueLiteral(
-                    node.attributes.filter(isMdxJsxAttribute).find((attribute) => attribute.name === 'src')?.value
+                    node.attributes.filter(isMdxJsxAttribute).find((attribute) => attribute.name === "src")?.value
                 )
 
                 // this is a special case for the <Markdown> component
                 // which is our legacy support for markdown snippets. This should be deprecated soon.
-                if (node.name === 'Markdown') {
-                    if (absoluteFilepath && typeof src === 'string') {
+                if (node.name === "Markdown") {
+                    if (absoluteFilepath && typeof src === "string") {
                         const resolvedImportPath = resolve(dirname(absoluteFilepath), src)
                         contentQueue.push({
                             content: readFile(resolvedImportPath),
@@ -165,12 +165,12 @@ export function collectLinksAndSources({
                     }
 
                     // Markdown component are special: they shouldn't have children, so we can skip them
-                    return 'skip'
+                    return "skip"
                 }
 
                 // NOTE: this collects links if they are in the form of <a href="...">
                 // if they're in the form of <a href={"..."} /> or <a {...{ href: "..." }} />, they will be ignored
-                if (typeof href === 'string') {
+                if (typeof href === "string") {
                     links.push({
                         href,
                         sourceFilepath: absoluteFilepath,
@@ -178,7 +178,7 @@ export function collectLinksAndSources({
                     })
                 }
 
-                if (typeof src === 'string') {
+                if (typeof src === "string") {
                     sources.push({
                         src,
                         sourceFilepath: absoluteFilepath,
@@ -188,19 +188,19 @@ export function collectLinksAndSources({
 
                 node.attributes.forEach((attr) => {
                     if (
-                        attr.type === 'mdxJsxAttribute' &&
-                        typeof attr.value !== 'string' &&
+                        attr.type === "mdxJsxAttribute" &&
+                        typeof attr.value !== "string" &&
                         attr.value != null &&
                         attr.value.data?.estree
                     ) {
                         walkJsx(attr.value.data.estree, attr.position)
-                    } else if (attr.type === 'mdxJsxExpressionAttribute' && attr.data?.estree) {
+                    } else if (attr.type === "mdxJsxExpressionAttribute" && attr.data?.estree) {
                         walkJsx(attr.data.estree, attr.position)
                     }
                 })
             }
 
-            if (node.type === 'mdxFlowExpression' || node.type === 'mdxTextExpression') {
+            if (node.type === "mdxFlowExpression" || node.type === "mdxTextExpression") {
                 if (node.data?.estree) {
                     walkJsx(node.data.estree, node.position)
                 }

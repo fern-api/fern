@@ -1,12 +1,12 @@
-import dedent from 'dedent'
-import { mkdir, writeFile } from 'fs/promises'
+import dedent from "dedent"
+import { mkdir, writeFile } from "fs/promises"
 
-import { AbstractProject } from '@fern-api/base-generator'
-import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
-import { AbstractRubyGeneratorContext, BaseRubyCustomConfigSchema, RubyFile } from '@fern-api/ruby-ast'
+import { AbstractProject } from "@fern-api/base-generator"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { AbstractRubyGeneratorContext, BaseRubyCustomConfigSchema, RubyFile } from "@fern-api/ruby-ast"
 
-const GEMFILE_FILENAME = 'Gemfile'
-const RAKEFILE_FILENAME = 'Rakefile'
+const GEMFILE_FILENAME = "Gemfile"
+const RAKEFILE_FILENAME = "Rakefile"
 
 /**
  * In memory representation of a Ruby project.

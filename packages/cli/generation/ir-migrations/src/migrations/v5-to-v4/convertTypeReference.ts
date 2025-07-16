@@ -1,6 +1,6 @@
-import { IrVersions } from '../../ir-versions'
-import { convertContainerType } from './convertContainerType'
-import { convertDeclaredTypeName } from './convertDeclaredTypeName'
+import { IrVersions } from "../../ir-versions"
+import { convertContainerType } from "./convertContainerType"
+import { convertDeclaredTypeName } from "./convertDeclaredTypeName"
 
 export function convertTypeReference(
     typeReference: IrVersions.V5.types.TypeReference
@@ -11,7 +11,7 @@ export function convertTypeReference(
         primitive: (primitive) => IrVersions.V4.types.TypeReference.primitive(primitive),
         unknown: IrVersions.V4.types.TypeReference.unknown,
         _unknown: () => {
-            throw new Error('Unknown TypeReference: ' + typeReference._type)
+            throw new Error("Unknown TypeReference: " + typeReference._type)
         }
     })
 }

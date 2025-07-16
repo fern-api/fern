@@ -1,27 +1,27 @@
-import { GeneratorName } from '@fern-api/configuration-loader'
+import { GeneratorName } from "@fern-api/configuration-loader"
 
-import { IrVersions } from '../../ir-versions'
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
+import { IrVersions } from "../../ir-versions"
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
 
 export const V6_TO_V5_MIGRATION: IrMigration<
     IrVersions.V6.ir.IntermediateRepresentation,
     IrVersions.V5.ir.IntermediateRepresentation
 > = {
-    laterVersion: 'v6',
-    earlierVersion: 'v5',
+    laterVersion: "v6",
+    earlierVersion: "v5",
     firstGeneratorVersionToConsumeNewIR: {
         [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_SDK]: '0.0.257-4-ge56e5d2',
-        [GeneratorName.TYPESCRIPT_EXPRESS]: '0.0.264',
+        [GeneratorName.TYPESCRIPT_SDK]: "0.0.257-4-ge56e5d2",
+        [GeneratorName.TYPESCRIPT_EXPRESS]: "0.0.264",
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_SPRING]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.PYTHON_FASTAPI]: '0.0.35-1-g071a04a',
-        [GeneratorName.PYTHON_PYDANTIC]: '0.0.35-1-g071a04a',
-        [GeneratorName.OPENAPI]: '0.0.16-1-ga2c0ada',
+        [GeneratorName.PYTHON_FASTAPI]: "0.0.35-1-g071a04a",
+        [GeneratorName.PYTHON_PYDANTIC]: "0.0.35-1-g071a04a",
+        [GeneratorName.OPENAPI]: "0.0.16-1-ga2c0ada",
         [GeneratorName.STOPLIGHT]: GeneratorWasNotCreatedYet,
         [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_SDK]: GeneratorWasNotCreatedYet,
@@ -54,14 +54,14 @@ export const V6_TO_V5_MIGRATION: IrMigration<
                                   return taskContext.failAndThrow(
                                       targetGenerator != null
                                           ? `Generator ${targetGenerator.name}@${targetGenerator.version}` +
-                                                ' does not support specifying multiple URLs for a single environment.' +
+                                                " does not support specifying multiple URLs for a single environment." +
                                                 ` If you'd like to use this feature, please upgrade ${targetGenerator.name}` +
-                                                ' to a compatible version.'
-                                          : 'Cannot backwards-migrate IR because this IR contains a multiple URls for a single environment.'
+                                                " to a compatible version."
+                                          : "Cannot backwards-migrate IR because this IR contains a multiple URls for a single environment."
                                   )
                               },
                               _unknown: () => {
-                                  throw new Error('Unknown Environments: ' + v6.environments?.environments.type)
+                                  throw new Error("Unknown Environments: " + v6.environments?.environments.type)
                               }
                           }
                       )

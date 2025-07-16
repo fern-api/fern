@@ -5,12 +5,12 @@ import {
     ObjectProperty,
     ObjectTypeDeclaration,
     TypeDeclaration
-} from '@fern-api/ir-sdk'
-import { LoggableFernCliError } from '@fern-api/task-context'
+} from "@fern-api/ir-sdk"
+import { LoggableFernCliError } from "@fern-api/task-context"
 
-import { getTypeDeclaration } from '../utils/getTypeDeclaration'
+import { getTypeDeclaration } from "../utils/getTypeDeclaration"
 
-type TypesAndServices = Pick<IntermediateRepresentation, 'types' | 'services'>
+type TypesAndServices = Pick<IntermediateRepresentation, "types" | "services">
 
 export function addExtendedPropertiesToIr(ir: TypesAndServices): void {
     ir.types = Object.fromEntries(
@@ -40,7 +40,7 @@ function addExtendedPropertiesToEndpoint({
     endpoint: HttpEndpoint
     ir: TypesAndServices
 }): HttpEndpoint {
-    if (endpoint.requestBody?.type !== 'inlinedRequestBody') {
+    if (endpoint.requestBody?.type !== "inlinedRequestBody") {
         return endpoint
     }
     return {
@@ -62,7 +62,7 @@ function addExtendedPropertiesToType({
     ir: TypesAndServices
 }): TypeDeclaration {
     switch (typeDeclaration.shape.type) {
-        case 'object':
+        case "object":
             return {
                 ...typeDeclaration,
                 shape: {
@@ -87,10 +87,10 @@ function getExtendedPropertiesForDeclaredTypeName(
 function getObjectTypeDeclarationFromTypeId(typeId: string, ir: TypesAndServices): ObjectTypeDeclaration {
     const typeDeclaration = getTypeDeclaration(typeId, ir.types)
     switch (typeDeclaration.shape.type) {
-        case 'object':
+        case "object":
             return typeDeclaration.shape
-        case 'alias': {
-            if (typeDeclaration.shape.resolvedType.type === 'named') {
+        case "alias": {
+            if (typeDeclaration.shape.resolvedType.type === "named") {
                 return getObjectTypeDeclarationFromTypeId(typeDeclaration.shape.resolvedType.name.typeId, ir)
             }
         }

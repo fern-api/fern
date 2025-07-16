@@ -1,14 +1,14 @@
-import { produce } from 'immer'
-import yaml from 'js-yaml'
-import { IPackageJson } from 'package-json-type'
-import { CompilerOptions, ModuleKind, ModuleResolutionKind, ScriptTarget } from 'ts-morph'
+import { produce } from "immer"
+import yaml from "js-yaml"
+import { IPackageJson } from "package-json-type"
+import { CompilerOptions, ModuleKind, ModuleResolutionKind, ScriptTarget } from "ts-morph"
 
-import { RelativeFilePath } from '@fern-api/fs-utils'
+import { RelativeFilePath } from "@fern-api/fs-utils"
 
-import { DependencyType } from '../dependency-manager/DependencyManager'
-import { JSR } from './JSR'
-import { TypescriptProject } from './TypescriptProject'
-import { mergeExtraConfigs } from './mergeExtraConfigs'
+import { DependencyType } from "../dependency-manager/DependencyManager"
+import { JSR } from "./JSR"
+import { TypescriptProject } from "./TypescriptProject"
+import { mergeExtraConfigs } from "./mergeExtraConfigs"
 
 export declare namespace BundledTypescriptProject {
     export interface Init extends TypescriptProject.Init {}
@@ -82,7 +82,7 @@ async function bundle({ platform, target, format, outdir }) {
         )}\`,
     });`
         )
-        .join('\n    ')}
+        .join("\n    ")}
 }
 
 async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
@@ -106,20 +106,20 @@ async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
         await this.writeFileToVolume(
             RelativeFilePath.of(TypescriptProject.GIT_IGNORE_FILENAME),
             [
-                'node_modules',
-                '.DS_Store',
-                '*.d.ts',
-                'dist/',
-                '',
-                '# yarn berry',
-                '.pnp.*',
-                '.yarn/*',
-                '!.yarn/patches',
-                '!.yarn/plugins',
-                '!.yarn/releases',
-                '!.yarn/sdks',
-                '!.yarn/versions'
-            ].join('\n')
+                "node_modules",
+                ".DS_Store",
+                "*.d.ts",
+                "dist/",
+                "",
+                "# yarn berry",
+                ".pnp.*",
+                ".yarn/*",
+                "!.yarn/patches",
+                "!.yarn/plugins",
+                "!.yarn/releases",
+                "!.yarn/sdks",
+                "!.yarn/versions"
+            ].join("\n")
         )
     }
 
@@ -157,9 +157,9 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
         const compilerOptions: CompilerOptions = {
             extendedDiagnostics: true,
             strict: true,
-            target: 'ES6' as unknown as ScriptTarget,
-            module: 'esnext' as unknown as ModuleKind,
-            moduleResolution: 'node' as unknown as ModuleResolutionKind,
+            target: "ES6" as unknown as ScriptTarget,
+            module: "esnext" as unknown as ModuleKind,
+            moduleResolution: "node" as unknown as ModuleResolutionKind,
             esModuleInterop: true,
             skipLibCheck: true,
             declaration: true,
@@ -186,7 +186,7 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
 
     private async generatePackageJson(): Promise<void> {
         let packageJson: IPackageJson = {
-            name: this.npmPackage != null ? this.npmPackage.packageName : 'test-package'
+            name: this.npmPackage != null ? this.npmPackage.packageName : "test-package"
         }
 
         if (this.npmPackage != null) {
@@ -222,7 +222,7 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
                 ...this.getAllStubTypeFiles()
             ],
             exports: {
-                '.': this.getExportsForBundle({
+                ".": this.getExportsForBundle({
                     bundleFilename: BundledTypescriptProject.API_BUNDLE_FILENAME,
                     pathToTypesFile: `./${BundledTypescriptProject.TYPES_DIRECTORY}/index.d.ts`
                 }),
@@ -236,17 +236,17 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
                     }),
                     {}
                 ),
-                './package.json': './package.json'
+                "./package.json": "./package.json"
             },
             types: `./${BundledTypescriptProject.TYPES_DIRECTORY}/index.d.ts`,
             scripts: {
-                [BundledTypescriptProject.FORMAT_SCRIPT_NAME]: 'prettier . --write --ignore-unknown',
-                [BundledTypescriptProject.COMPILE_SCRIPT_NAME]: 'tsc',
+                [BundledTypescriptProject.FORMAT_SCRIPT_NAME]: "prettier . --write --ignore-unknown",
+                [BundledTypescriptProject.COMPILE_SCRIPT_NAME]: "tsc",
                 [BundledTypescriptProject.BUNDLE_SCRIPT_NAME]: `node ${BundledTypescriptProject.BUILD_SCRIPT_FILENAME}`,
                 [BundledTypescriptProject.BUILD_SCRIPT_NAME]: [
                     `yarn ${BundledTypescriptProject.COMPILE_SCRIPT_NAME}`,
                     `yarn ${BundledTypescriptProject.BUNDLE_SCRIPT_NAME}`
-                ].join(' && ')
+                ].join(" && ")
             }
         }
 
@@ -286,11 +286,11 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
                 // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
             } as any
 
-            draft['packageManager'] = 'yarn@1.22.22'
-            draft['engines'] = {
-                node: '>=18.0.0'
+            draft["packageManager"] = "yarn@1.22.22"
+            draft["engines"] = {
+                node: ">=18.0.0"
             }
-            draft['sideEffects'] = false
+            draft["sideEffects"] = false
         })
 
         packageJson = mergeExtraConfigs(packageJson, this.extraConfigs)
@@ -306,7 +306,7 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
             const jsr: JSR = {
                 name: this.npmPackage?.packageName,
                 version: this.npmPackage.version,
-                exports: 'src/index.ts'
+                exports: "src/index.ts"
             }
             await this.writeFileToVolume(
                 RelativeFilePath.of(TypescriptProject.JSR_JSON_FILENAME),
@@ -355,10 +355,10 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
 
     private getDevDependencies(): Record<string, string> {
         return {
-            '@types/node': '^18.19.70',
-            esbuild: '~0.24.2',
-            prettier: '^3.4.2',
-            typescript: '~5.7.2'
+            "@types/node": "^18.19.70",
+            esbuild: "~0.24.2",
+            prettier: "^3.4.2",
+            typescript: "~5.7.2"
         }
     }
 }

@@ -8,19 +8,19 @@ import {
     getParameterNameForRootExamplePathParameter,
     getParameterNameForRootPathParameter,
     getTextOfTsNode
-} from '@fern-typescript/commons'
-import { GeneratedSdkClientClass, SdkContext } from '@fern-typescript/contexts'
-import { OAuthTokenProviderGenerator } from '@fern-typescript/sdk-client-class-generator/src/oauth-generator/OAuthTokenProviderGenerator'
-import path from 'path'
-import { Directory, ts } from 'ts-morph'
-import { Code, arrayOf, code, literalOf } from 'ts-poet'
+} from "@fern-typescript/commons"
+import { GeneratedSdkClientClass, SdkContext } from "@fern-typescript/contexts"
+import { OAuthTokenProviderGenerator } from "@fern-typescript/sdk-client-class-generator/src/oauth-generator/OAuthTokenProviderGenerator"
+import path from "path"
+import { Directory, ts } from "ts-morph"
+import { Code, arrayOf, code, literalOf } from "ts-poet"
 
-import { assertNever } from '@fern-api/core-utils'
+import { assertNever } from "@fern-api/core-utils"
 
-import * as IR from '@fern-fern/ir-sdk/api'
-import { ExampleRequestBody } from '@fern-fern/ir-sdk/api'
+import * as IR from "@fern-fern/ir-sdk/api"
+import { ExampleRequestBody } from "@fern-fern/ir-sdk/api"
 
-const DEFAULT_PACKAGE_PATH = 'src'
+const DEFAULT_PACKAGE_PATH = "src"
 
 export declare namespace JestTestGenerator {
     interface Args {
@@ -80,7 +80,7 @@ export class JestTestGenerator {
         }
         if (this.generateWireTests || this.writeUnitTests) {
             const jestConfig = this.rootDirectory.createSourceFile(
-                'jest.config.mjs',
+                "jest.config.mjs",
                 code`
                 /** @type {import('jest').Config} */
                 export default {
@@ -111,7 +111,7 @@ export class JestTestGenerator {
                             testMatch: ["<rootDir>/tests/unit/**/?(*.)+(browser).(spec|test).[jt]s?(x)"],
                             setupFilesAfterEnv: ${arrayOf(...setupFilesAfterEnv)},
                         },`
-                                : ''
+                                : ""
                         },
                         ${
                             this.generateWireTests
@@ -125,10 +125,10 @@ export class JestTestGenerator {
                             roots: ["<rootDir>/${this.relativeTestPath}/wire"],
                             setupFilesAfterEnv: ${arrayOf(...setupFilesAfterEnv, `<rootDir>/${this.relativeTestPath}/mock-server/setup.ts`)},
                         }`
-                                : ''
+                                : ""
                         }
                     ],
-                    workerThreads: ${this.useBigInt ? 'true' : 'false'},
+                    workerThreads: ${this.useBigInt ? "true" : "false"},
                     passWithNoTests: true,
                 };
                 `.toString({ dprintOptions: { indentWidth: 4 } })
@@ -136,7 +136,7 @@ export class JestTestGenerator {
             await jestConfig.save()
         } else {
             const jestConfig = this.rootDirectory.createSourceFile(
-                'jest.config.mjs',
+                "jest.config.mjs",
                 code`
                 /** @type {import('jest').Config} */
                 export default {
@@ -148,7 +148,7 @@ export class JestTestGenerator {
                     roots: ["<rootDir>/${this.relativeTestPath}"],
                     testPathIgnorePatterns: ["\\.browser\\.(spec|test)\\.[jt]sx?$", "/tests/wire/"],
                     setupFilesAfterEnv: ${arrayOf(...setupFilesAfterEnv)},
-                    workerThreads: ${this.useBigInt ? 'true' : 'false'},
+                    workerThreads: ${this.useBigInt ? "true" : "false"},
                     passWithNoTests: true
                 };
                 `.toString({ dprintOptions: { indentWidth: 4 } })
@@ -159,9 +159,9 @@ export class JestTestGenerator {
 
     public getTestFile(service: IR.HttpService): ExportedFilePath {
         const folders = service.name.fernFilepath.packagePath.map((folder) => folder.originalName)
-        const filename = `${service.name.fernFilepath.file?.camelCase.unsafeName ?? 'main'}.test.ts`
+        const filename = `${service.name.fernFilepath.file?.camelCase.unsafeName ?? "main"}.test.ts`
 
-        const filePath = path.join('wire', ...folders, filename)
+        const filePath = path.join("wire", ...folders, filename)
 
         return {
             directories: [],
@@ -173,13 +173,13 @@ export class JestTestGenerator {
     }
 
     private addDependencies(): void {
-        this.dependencyManager.addDependency('jest', '^29.7.0', { type: DependencyType.DEV })
-        this.dependencyManager.addDependency('@jest/globals', '^29.7.0', { type: DependencyType.DEV })
-        this.dependencyManager.addDependency('@types/jest', '^29.5.14', { type: DependencyType.DEV })
-        this.dependencyManager.addDependency('ts-jest', '^29.3.4', { type: DependencyType.DEV })
-        this.dependencyManager.addDependency('jest-environment-jsdom', '^29.7.0', { type: DependencyType.DEV })
+        this.dependencyManager.addDependency("jest", "^29.7.0", { type: DependencyType.DEV })
+        this.dependencyManager.addDependency("@jest/globals", "^29.7.0", { type: DependencyType.DEV })
+        this.dependencyManager.addDependency("@types/jest", "^29.5.14", { type: DependencyType.DEV })
+        this.dependencyManager.addDependency("ts-jest", "^29.3.4", { type: DependencyType.DEV })
+        this.dependencyManager.addDependency("jest-environment-jsdom", "^29.7.0", { type: DependencyType.DEV })
         if (this.generateWireTests) {
-            this.dependencyManager.addDependency('msw', '^2.8.4', { type: DependencyType.DEV })
+            this.dependencyManager.addDependency("msw", "^2.8.4", { type: DependencyType.DEV })
         }
     }
 
@@ -190,14 +190,14 @@ export class JestTestGenerator {
 
     public get scripts(): Record<string, string> {
         const scripts: Record<string, string> = {
-            test: 'jest --config jest.config.mjs'
+            test: "jest --config jest.config.mjs"
         }
         if (this.writeUnitTests) {
-            scripts['test:unit'] = 'jest --selectProjects unit'
-            scripts['test:browser'] = 'jest --selectProjects browser'
+            scripts["test:unit"] = "jest --selectProjects unit"
+            scripts["test:browser"] = "jest --selectProjects browser"
         }
         if (this.generateWireTests) {
-            scripts['test:wire'] = 'jest --selectProjects wire'
+            scripts["test:wire"] = "jest --selectProjects wire"
         }
         return scripts
     }
@@ -205,8 +205,8 @@ export class JestTestGenerator {
     public get extraFiles(): Record<string, string> {
         const pathToRoot =
             this.relativePackagePath === DEFAULT_PACKAGE_PATH
-                ? '../'
-                : '../'.repeat(this.relativePackagePath.split('/').length + 1)
+                ? "../"
+                : "../".repeat(this.relativePackagePath.split("/").length + 1)
 
         const extendsPath = `${pathToRoot}tsconfig.base.json`
 
@@ -243,7 +243,7 @@ describe("test", () => {
     public createWireTestDirectory(): void {
         const wireTestPath = `${this.relativeTestPath}/wire`
         this.rootDirectory.createDirectory(wireTestPath)
-        this.rootDirectory.createSourceFile(`${wireTestPath}/.gitkeep`, '', { overwrite: true })
+        this.rootDirectory.createSourceFile(`${wireTestPath}/.gitkeep`, "", { overwrite: true })
     }
 
     public buildFile(
@@ -254,9 +254,9 @@ describe("test", () => {
         context: SdkContext
     ): Code | undefined {
         context.importsManager.addImportFromRoot(
-            'mock-server/MockServerPool',
+            "mock-server/MockServerPool",
             {
-                namedImports: ['mockServerPool']
+                namedImports: ["mockServerPool"]
             },
             this.relativeTestPath
         )
@@ -300,7 +300,7 @@ describe("test", () => {
         })
         this.ir.headers.forEach((header) => {
             // We don't need to include literal types because they will automatically be included
-            if (header.valueType.type === 'container' && header.valueType.container.type === 'literal') {
+            if (header.valueType.type === "container" && header.valueType.container.type === "literal") {
                 return
             }
             baseOptions[header.name.name.camelCase.unsafeName] = code`"test"`
@@ -354,7 +354,7 @@ describe("${serviceName}", () => {
         baseOptions: Record<string, Code>
     ): Code | undefined {
         const options: Record<string, Code> = { ...baseOptions }
-        const successfulExamples = getExampleEndpointCalls(endpoint).filter((example) => example.response.type === 'ok')
+        const successfulExamples = getExampleEndpointCalls(endpoint).filter((example) => example.response.type === "ok")
         const example = successfulExamples[0]
         if (!example) {
             return
@@ -374,15 +374,15 @@ describe("${serviceName}", () => {
                 isForSnippet: true,
                 isForComment: false
             },
-            clientReference: ts.factory.createIdentifier('client')
+            clientReference: ts.factory.createIdentifier("client")
         })
 
         if (!generatedExample) {
             return
         }
 
-        if (example.response.type !== 'ok') {
-            throw new Error('Only successful responses are supported')
+        if (example.response.type !== "ok") {
+            throw new Error("Only successful responses are supported")
         }
 
         const rawRequestBody = this.getRequestExample(example.request)
@@ -410,7 +410,7 @@ describe("${serviceName}", () => {
                 _other: () => code`server.baseUrl`
             })
         }
-        options['environment'] = generateEnvironment()
+        options["environment"] = generateEnvironment()
         example.rootPathParameters.forEach((pathParameter) => {
             options[
                 getParameterNameForRootExamplePathParameter({
@@ -426,8 +426,8 @@ describe("${serviceName}", () => {
     test("${endpoint.name.originalName}", async () => {
         const server = mockServerPool.createServer();
         const client = new ${getTextOfTsNode(importStatement.getEntityName())}(${literalOf(options)});
-        ${rawRequestBody ? code`const rawRequestBody = ${rawRequestBody};` : ''}
-        ${rawResponseBody ? code`const rawResponseBody = ${rawResponseBody};` : ''}
+        ${rawRequestBody ? code`const rawRequestBody = ${rawRequestBody};` : ""}
+        ${rawResponseBody ? code`const rawResponseBody = ${rawResponseBody};` : ""}
         server
             .mockEndpoint()
             .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders.map((h) => {
@@ -440,13 +440,13 @@ describe("${serviceName}", () => {
                 rawRequestBody
                     ? code`.jsonBody(rawRequestBody)
                 `
-                    : ''
+                    : ""
             }.respondWith()
             .statusCode(${responseStatusCode})${
                 rawResponseBody
                     ? code`.jsonBody(rawResponseBody)
                 `
-                    : ''
+                    : ""
             }.build();
             
         ${
@@ -464,11 +464,11 @@ describe("${serviceName}", () => {
         if (
             this.ir.auth.schemes.some((scheme) => {
                 switch (scheme.type) {
-                    case 'basic':
-                    case 'bearer':
-                    case 'header':
+                    case "basic":
+                    case "bearer":
+                    case "header":
                         return false // supported
-                    case 'oauth':
+                    case "oauth":
                         return true // not supported
                     default:
                         assertNever(scheme)
@@ -478,29 +478,29 @@ describe("${serviceName}", () => {
             return false
         }
 
-        const requestType = endpoint.requestBody?.type ?? 'undefined'
+        const requestType = endpoint.requestBody?.type ?? "undefined"
         switch (requestType) {
-            case 'bytes':
-            case 'fileUpload':
+            case "bytes":
+            case "fileUpload":
                 return false // not supported
-            case 'inlinedRequestBody':
-            case 'reference':
-            case 'undefined':
+            case "inlinedRequestBody":
+            case "reference":
+            case "undefined":
                 break // supported
             default:
                 assertNever(requestType)
         }
 
-        const responseType = endpoint.response?.body?.type ?? 'undefined'
+        const responseType = endpoint.response?.body?.type ?? "undefined"
         switch (responseType) {
-            case 'fileDownload':
-            case 'text':
-            case 'bytes':
-            case 'streaming':
-            case 'streamParameter':
+            case "fileDownload":
+            case "text":
+            case "bytes":
+            case "streaming":
+            case "streamParameter":
                 return false // not supported
-            case 'json':
-            case 'undefined':
+            case "json":
+            case "undefined":
                 break // supported
             default:
                 assertNever(responseType)
@@ -548,13 +548,13 @@ describe("${serviceName}", () => {
                         return createRawJsonExample(value)
                     },
                     stream: () => {
-                        throw new Error('Stream not supported in wire tests')
+                        throw new Error("Stream not supported in wire tests")
                     },
                     sse: () => {
-                        throw new Error('SSE not supported in wire tests')
+                        throw new Error("SSE not supported in wire tests")
                     },
                     _other: () => {
-                        throw new Error('Unsupported response type')
+                        throw new Error("Unsupported response type")
                     }
                 })
             },
@@ -565,7 +565,7 @@ describe("${serviceName}", () => {
                 return createRawJsonExample(value.body)
             },
             _other: () => {
-                throw new Error('Unsupported response type')
+                throw new Error("Unsupported response type")
             }
         })
     }
@@ -704,7 +704,7 @@ function getExampleResponseStatusCode(response: IR.ExampleResponse): number {
         ok: () => 200,
         error: () => 500,
         _other: () => {
-            throw new Error('Unsupported response type')
+            throw new Error("Unsupported response type")
         }
     })
 }
@@ -723,21 +723,21 @@ function getExpectedResponseBody(response: IR.ExampleResponse, context: SdkConte
                     return code`${getTextOfTsNode(example)}`
                 },
                 stream: () => {
-                    throw new Error('Stream not supported in wire tests')
+                    throw new Error("Stream not supported in wire tests")
                 },
                 sse: () => {
-                    throw new Error('SSE not supported in wire tests')
+                    throw new Error("SSE not supported in wire tests")
                 },
                 _other: () => {
-                    throw new Error('Unsupported response type')
+                    throw new Error("Unsupported response type")
                 }
             })
         },
         error: () => {
-            throw new Error('Error response not supported in wire tests')
+            throw new Error("Error response not supported in wire tests")
         },
         _other: () => {
-            throw new Error('Unsupported response type')
+            throw new Error("Unsupported response type")
         }
     })
 }

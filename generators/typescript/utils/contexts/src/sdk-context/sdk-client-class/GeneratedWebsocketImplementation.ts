@@ -1,8 +1,8 @@
-import { InterfaceDeclarationStructure, OptionalKind, ParameterDeclarationStructure, ts } from 'ts-morph'
+import { InterfaceDeclarationStructure, OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph"
 
-import { WebSocketChannel } from '@fern-fern/ir-sdk/api'
+import { WebSocketChannel } from "@fern-fern/ir-sdk/api"
 
-import { SdkContext } from '../SdkContext'
+import { SdkContext } from "../SdkContext"
 
 export interface ChannelSignature {
     parameters: OptionalKind<ParameterDeclarationStructure & { docs?: string }>[]

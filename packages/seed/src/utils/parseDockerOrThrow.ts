@@ -4,7 +4,7 @@ export interface ParsedDockerName {
 }
 
 export function parseDockerOrThrow(docker: string): ParsedDockerName {
-    const dockerArray: string[] = docker.split(':')
+    const dockerArray: string[] = docker.split(":")
     if (dockerArray.length === 2 && dockerArray[0] != null && dockerArray[1] != null) {
         return {
             name: dockerArray[0],

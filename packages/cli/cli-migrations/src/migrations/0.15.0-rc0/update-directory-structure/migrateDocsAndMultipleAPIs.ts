@@ -1,20 +1,20 @@
-import { mkdir, rm, writeFile } from 'fs/promises'
-import yaml from 'js-yaml'
+import { mkdir, rm, writeFile } from "fs/promises"
+import yaml from "js-yaml"
 
-import { docsYml } from '@fern-api/configuration-loader'
-import { AbsoluteFilePath, RelativeFilePath, join, moveFolder } from '@fern-api/fs-utils'
+import { docsYml } from "@fern-api/configuration-loader"
+import { AbsoluteFilePath, RelativeFilePath, join, moveFolder } from "@fern-api/fs-utils"
 
-import { getAbsolutePathToDocsFolder, getAbsolutePathToDocsYaml, loadRawDocsConfiguration } from './docs-config'
-import { convertLegacyDocsConfig } from './docs-config/convertLegacyDocsConfig'
+import { getAbsolutePathToDocsFolder, getAbsolutePathToDocsYaml, loadRawDocsConfiguration } from "./docs-config"
+import { convertLegacyDocsConfig } from "./docs-config/convertLegacyDocsConfig"
 import {
     convertLegacyGeneratorsConfiguration,
     getAbsolutePathToGeneratorsConfiguration,
     loadRawGeneratorsConfiguration
-} from './generators-configuration'
-import { PathModificationStrategy } from './generators-configuration/convertLegacyGeneratorsConfiguration'
-import { migrateDocsInstances } from './migrateDocsInstances'
+} from "./generators-configuration"
+import { PathModificationStrategy } from "./generators-configuration/convertLegacyGeneratorsConfiguration"
+import { migrateDocsInstances } from "./migrateDocsInstances"
 
-const APIS_DIRECTORY = 'apis'
+const APIS_DIRECTORY = "apis"
 
 type NewType = AbsoluteFilePath
 

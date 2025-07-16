@@ -15,7 +15,7 @@ import {
     PositionalSplatParameter,
     TypeParameter,
     YieldParameter
-} from './ast'
+} from "./ast"
 
 export {
     ClassInstantiation,
@@ -27,8 +27,8 @@ export {
     Parameter,
     TypeLiteral,
     TypeParameter
-} from './ast'
-export { AstNode } from './ast/core/AstNode'
+} from "./ast"
+export { AstNode } from "./ast/core/AstNode"
 
 export function codeblock(arg: CodeBlock.Arg): CodeBlock {
     return new CodeBlock(arg)

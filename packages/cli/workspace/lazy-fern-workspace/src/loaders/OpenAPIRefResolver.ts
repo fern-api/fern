@@ -1,8 +1,8 @@
-import { BaseResolver } from '@redocly/openapi-core'
-import path from 'path'
+import { BaseResolver } from "@redocly/openapi-core"
+import path from "path"
 
-import { doesPathExistSync } from '@fern-api/fs-utils'
-import { AbsoluteFilePath } from '@fern-api/fs-utils'
+import { doesPathExistSync } from "@fern-api/fs-utils"
+import { AbsoluteFilePath } from "@fern-api/fs-utils"
 
 /*
  * OpenAPIRefResolver is used to extend the behavior of the redocly OpenAPI parser.

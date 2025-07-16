@@ -1,16 +1,16 @@
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { RelativeFilePath } from '@fern-api/path-utils'
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { RelativeFilePath } from "@fern-api/path-utils"
 
-import { OpenApiIrConverterContext } from './OpenApiIrConverterContext'
-import { buildEnumTypeDeclaration } from './buildTypeDeclaration'
-import { getHeaderName } from './utils/getHeaderName'
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext"
+import { buildEnumTypeDeclaration } from "./buildTypeDeclaration"
+import { getHeaderName } from "./utils/getHeaderName"
 
-const BASIC_AUTH_SCHEME = 'BasicAuthScheme'
-const BEARER_AUTH_SCHEME = 'BearerAuthScheme'
+const BASIC_AUTH_SCHEME = "BasicAuthScheme"
+const BEARER_AUTH_SCHEME = "BearerAuthScheme"
 
 export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
     if (context.authOverrides != null) {
-        for (const [name, declaration] of Object.entries(context.authOverrides['auth-schemes'] ?? {})) {
+        for (const [name, declaration] of Object.entries(context.authOverrides["auth-schemes"] ?? {})) {
             context.builder.addAuthScheme({
                 name,
                 schema: declaration
@@ -25,9 +25,9 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
     let setAuth = false
 
     for (const [id, securityScheme] of Object.entries(context.ir.securitySchemes)) {
-        if (securityScheme.type === 'basic') {
+        if (securityScheme.type === "basic") {
             const basicAuthScheme: RawSchemas.BasicAuthSchemeSchema = {
-                scheme: 'basic'
+                scheme: "basic"
             }
 
             if (securityScheme.usernameVariableName != null) {
@@ -76,9 +76,9 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
                 context.builder.setAuth(BASIC_AUTH_SCHEME)
                 setAuth = true
             }
-        } else if (securityScheme.type === 'bearer') {
+        } else if (securityScheme.type === "bearer") {
             const bearerAuthScheme: RawSchemas.AuthSchemeDeclarationSchema = {
-                scheme: 'bearer'
+                scheme: "bearer"
             }
 
             if (securityScheme.tokenVariableName != null) {
@@ -108,12 +108,12 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
                 context.builder.setAuth(BEARER_AUTH_SCHEME)
                 setAuth = true
             }
-        } else if (securityScheme.type === 'header') {
+        } else if (securityScheme.type === "header") {
             if (!setAuth) {
                 const schema: RawSchemas.AuthSchemeDeclarationSchema = {
                     header: securityScheme.headerName,
-                    name: securityScheme.headerVariableName ?? 'apiKey',
-                    type: 'string'
+                    name: securityScheme.headerVariableName ?? "apiKey",
+                    type: "string"
                 }
                 if (securityScheme.headerEnvVar != null) {
                     schema.env = securityScheme.headerEnvVar
@@ -131,15 +131,15 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
                 context.builder.addGlobalHeader({
                     name: securityScheme.headerName,
                     schema: {
-                        type: 'string',
+                        type: "string",
                         name: securityScheme.headerVariableName ?? getHeaderName(securityScheme.headerName),
                         env: securityScheme.headerEnvVar
                     }
                 })
             }
-        } else if (securityScheme.type === 'oauth') {
+        } else if (securityScheme.type === "oauth") {
             const bearerAuthScheme: RawSchemas.AuthSchemeDeclarationSchema = {
-                scheme: 'bearer'
+                scheme: "bearer"
             }
             context.builder.addAuthScheme({
                 name: BEARER_AUTH_SCHEME,
@@ -150,8 +150,8 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
                 setAuth = true
             }
             if (securityScheme.scopesEnum != null && securityScheme.scopesEnum.values.length > 0) {
-                context.builder.addType(RelativeFilePath.of('__package__.yml'), {
-                    name: 'OauthScope',
+                context.builder.addType(RelativeFilePath.of("__package__.yml"), {
+                    name: "OauthScope",
                     schema: buildEnumTypeDeclaration(securityScheme.scopesEnum, 0).schema
                 })
             }

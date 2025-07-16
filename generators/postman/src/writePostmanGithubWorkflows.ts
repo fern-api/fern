@@ -1,11 +1,11 @@
-import endent from 'endent'
-import { mkdir, writeFile } from 'fs/promises'
-import path from 'path'
+import endent from "endent"
+import { mkdir, writeFile } from "fs/promises"
+import path from "path"
 
-import { GeneratorConfig, GithubOutputMode } from '@fern-api/base-generator'
+import { GeneratorConfig, GithubOutputMode } from "@fern-api/base-generator"
 
-import { PostmanGeneratorConfigSchema } from './config/schemas/PostmanGeneratorConfigSchema'
-import { getCollectionOutputFilename } from './writePostmanCollection'
+import { PostmanGeneratorConfigSchema } from "./config/schemas/PostmanGeneratorConfigSchema"
+import { getCollectionOutputFilename } from "./writePostmanCollection"
 
 export async function writePostmanGithubWorkflows({
     config,
@@ -17,7 +17,7 @@ export async function writePostmanGithubWorkflows({
     if (githubOutputMode.publishInfo == null) {
         return
     }
-    if (githubOutputMode.publishInfo.type !== 'postman') {
+    if (githubOutputMode.publishInfo.type !== "postman") {
         throw new Error(
             `Expected to receive npm publish info but received ${githubOutputMode.publishInfo.type} instead`
         )
@@ -46,7 +46,7 @@ export async function writePostmanGithubWorkflows({
               api-key: \${{ secrets.${githubOutputMode.publishInfo.apiKeyEnvironmentVariable} }}
               workspace-id: \${{ secrets.${githubOutputMode.publishInfo.workspaceIdEnvironmentVariable} }}
               collection-path: ${collectionOutputFilename}`
-    const githubWorkflowsDir = path.join(config.output.path, '.github', 'workflows')
+    const githubWorkflowsDir = path.join(config.output.path, ".github", "workflows")
     await mkdir(githubWorkflowsDir, { recursive: true })
     await writeFile(`${githubWorkflowsDir}/ci.yml`, workflowYaml)
 }

@@ -1,7 +1,7 @@
-import { ts } from 'ts-morph'
+import { ts } from "ts-morph"
 
-import { CoreUtility } from './CoreUtility'
-import { MANIFEST as FetcherManifest } from './Fetcher'
+import { CoreUtility } from "./CoreUtility"
+import { MANIFEST as FetcherManifest } from "./Fetcher"
 
 export interface Pagination {
     readonly Page: {
@@ -23,14 +23,14 @@ export interface Pagination {
 }
 
 export const MANIFEST: CoreUtility.Manifest = {
-    name: 'pagination',
-    pathInCoreUtilities: { nameOnDisk: 'pagination', exportDeclaration: { exportAll: true } },
+    name: "pagination",
+    pathInCoreUtilities: { nameOnDisk: "pagination", exportDeclaration: { exportAll: true } },
     addDependencies: (): void => {
         return
     },
     dependsOn: [FetcherManifest],
     getFilesPatterns: () => {
-        return { patterns: 'src/core/pagination/**' }
+        return { patterns: "src/core/pagination/**" }
     }
 }
 
@@ -38,14 +38,14 @@ export class PaginationImpl extends CoreUtility implements Pagination {
     public readonly MANIFEST = MANIFEST
     public Page = {
         _getReferenceToType: this.withExportedName(
-            'Page',
+            "Page",
             (APIResponse) => (itemType: ts.TypeNode) =>
                 ts.factory.createTypeReferenceNode(APIResponse.getEntityName(), [itemType])
         )
     }
     public Pageable = {
         _construct: this.withExportedName(
-            'Pageable',
+            "Pageable",
             (Pageable) =>
                 ({
                     responseType,
@@ -71,23 +71,23 @@ export class PaginationImpl extends CoreUtility implements Pagination {
                             ts.factory.createObjectLiteralExpression(
                                 [
                                     ts.factory.createPropertyAssignment(
-                                        ts.factory.createIdentifier('response'),
+                                        ts.factory.createIdentifier("response"),
                                         response
                                     ),
                                     ts.factory.createPropertyAssignment(
-                                        ts.factory.createIdentifier('rawResponse'),
+                                        ts.factory.createIdentifier("rawResponse"),
                                         rawResponse
                                     ),
                                     ts.factory.createPropertyAssignment(
-                                        ts.factory.createIdentifier('hasNextPage'),
+                                        ts.factory.createIdentifier("hasNextPage"),
                                         hasNextPage
                                     ),
                                     ts.factory.createPropertyAssignment(
-                                        ts.factory.createIdentifier('getItems'),
+                                        ts.factory.createIdentifier("getItems"),
                                         getItems
                                     ),
                                     ts.factory.createPropertyAssignment(
-                                        ts.factory.createIdentifier('loadPage'),
+                                        ts.factory.createIdentifier("loadPage"),
                                         loadPage
                                     )
                                 ],
@@ -98,7 +98,7 @@ export class PaginationImpl extends CoreUtility implements Pagination {
                 }
         ),
         _getReferenceToType: this.withExportedName(
-            'Pageable',
+            "Pageable",
             (APIResponse) => (itemType: ts.TypeNode, response: ts.TypeNode) =>
                 ts.factory.createTypeReferenceNode(APIResponse.getEntityName(), [response, itemType])
         )

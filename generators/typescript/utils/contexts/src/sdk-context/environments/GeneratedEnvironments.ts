@@ -1,9 +1,9 @@
-import { ts } from 'ts-morph'
+import { ts } from "ts-morph"
 
-import { EnvironmentBaseUrlId } from '@fern-fern/ir-sdk/api'
+import { EnvironmentBaseUrlId } from "@fern-fern/ir-sdk/api"
 
-import { GeneratedFile } from '../../commons/GeneratedFile'
-import { SdkContext } from '../SdkContext'
+import { GeneratedFile } from "../../commons/GeneratedFile"
+import { SdkContext } from "../SdkContext"
 
 export interface GeneratedEnvironments extends GeneratedFile<SdkContext> {
     hasDefaultEnvironment: () => boolean

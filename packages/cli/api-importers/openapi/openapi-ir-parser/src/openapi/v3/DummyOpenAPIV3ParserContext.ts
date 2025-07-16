@@ -1,15 +1,15 @@
-import { OpenAPIV3 } from 'openapi-types'
+import { OpenAPIV3 } from "openapi-types"
 
-import { SchemaId, Source } from '@fern-api/openapi-ir'
-import { TaskContext } from '@fern-api/task-context'
+import { SchemaId, Source } from "@fern-api/openapi-ir"
+import { TaskContext } from "@fern-api/task-context"
 
-import { ParseOpenAPIOptions } from '../../options'
-import { SchemaParserContext } from '../../schema/SchemaParserContext'
+import { ParseOpenAPIOptions } from "../../options"
+import { SchemaParserContext } from "../../schema/SchemaParserContext"
 import {
     AbstractOpenAPIV3ParserContext,
     DiscriminatedUnionMetadata,
     DiscriminatedUnionReference
-} from './AbstractOpenAPIV3ParserContext'
+} from "./AbstractOpenAPIV3ParserContext"
 
 export class DummyOpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
     constructor({

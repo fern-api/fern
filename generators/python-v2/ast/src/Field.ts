@@ -1,6 +1,6 @@
-import { Type } from './Type'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { Type } from "./Type"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export declare namespace Field {
     export interface BaseArgs {
@@ -43,12 +43,12 @@ export class Field extends AstNode {
         writer.write(this.name)
 
         if (this.type !== undefined) {
-            writer.write(': ')
+            writer.write(": ")
             this.type.write(writer)
         }
 
         if (this.initializer !== undefined) {
-            writer.write(' = ')
+            writer.write(" = ")
             this.initializer.write(writer)
         }
 

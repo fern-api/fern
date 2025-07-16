@@ -1,5 +1,5 @@
-import { GeneratedEnvironments } from '@fern-typescript/contexts'
-import { ts } from 'ts-morph'
+import { GeneratedEnvironments } from "@fern-typescript/contexts"
+import { ts } from "ts-morph"
 
 export class EmptyGeneratedEnvironmentsImpl implements GeneratedEnvironments {
     public writeToFile(): void {

@@ -1,13 +1,13 @@
-import { RawSchemas, isRawObjectDefinition } from '@fern-api/fern-definition-schema'
-import { ObjectProperty } from '@fern-api/ir-sdk'
+import { RawSchemas, isRawObjectDefinition } from "@fern-api/fern-definition-schema"
+import { ObjectProperty } from "@fern-api/ir-sdk"
 
-import { FernFileContext } from '../../FernFileContext'
-import { ResolvedType } from '../../resolvers/ResolvedType'
-import { TypeResolver } from '../../resolvers/TypeResolver'
+import { FernFileContext } from "../../FernFileContext"
+import { ResolvedType } from "../../resolvers/ResolvedType"
+import { TypeResolver } from "../../resolvers/TypeResolver"
 import {
     getObjectPropertyFromObjectSchema,
     getObjectPropertyFromResolvedType
-} from './getObjectPropertyFromResolvedType'
+} from "./getObjectPropertyFromResolvedType"
 
 export function getNestedObjectPropertyFromResolvedType({
     typeResolver,
@@ -28,7 +28,7 @@ export function getNestedObjectPropertyFromResolvedType({
             typeResolver,
             file,
             resolvedType,
-            property: propertyComponents[0] ?? ''
+            property: propertyComponents[0] ?? ""
         })
     }
     const objectSchema = maybeObjectSchema(resolvedType)
@@ -62,14 +62,14 @@ export function getNestedObjectPropertyFromObjectSchema({
             typeResolver,
             file,
             objectSchema,
-            property: propertyComponents[0] ?? ''
+            property: propertyComponents[0] ?? ""
         })
     }
     const propertyType = getPropertyTypeFromObjectSchema({
         typeResolver,
         file,
         objectSchema,
-        property: propertyComponents[0] ?? ''
+        property: propertyComponents[0] ?? ""
     })
     const resolvedTypeProperty = typeResolver.resolveTypeOrThrow({
         type: propertyType,
@@ -116,7 +116,7 @@ function getAllPropertiesForRawObjectSchema({
     objectSchema: RawSchemas.ObjectSchema
 }): Record<string, string> {
     let extendedTypes: string[] = []
-    if (typeof objectSchema.extends === 'string') {
+    if (typeof objectSchema.extends === "string") {
         extendedTypes = [objectSchema.extends]
     } else if (Array.isArray(objectSchema.extends)) {
         extendedTypes = objectSchema.extends
@@ -136,7 +136,7 @@ function getAllPropertiesForRawObjectSchema({
 
     if (objectSchema.properties != null) {
         Object.entries(objectSchema.properties).map(([propertyKey, propertyType]) => {
-            properties[propertyKey] = typeof propertyType === 'string' ? propertyType : propertyType.type
+            properties[propertyKey] = typeof propertyType === "string" ? propertyType : propertyType.type
         })
     }
 
@@ -156,7 +156,7 @@ function getAllPropertiesForExtendedType({
         referenceToNamedType: extendedType,
         file
     })
-    if (resolvedType._type === 'named' && isRawObjectDefinition(resolvedType.declaration)) {
+    if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
         return getAllPropertiesForRawObjectSchema({
             typeResolver,
             file: maybeFileFromResolvedType(resolvedType) ?? file,
@@ -171,10 +171,10 @@ export function maybeFileFromResolvedType(resolvedType: ResolvedType | undefined
     if (resolvedType == null) {
         return undefined
     }
-    if (resolvedType._type === 'named') {
+    if (resolvedType._type === "named") {
         return resolvedType.file
     }
-    if (resolvedType._type === 'container' && resolvedType.container._type === 'optional') {
+    if (resolvedType._type === "container" && resolvedType.container._type === "optional") {
         return maybeFileFromResolvedType(resolvedType.container.itemType)
     }
     return undefined
@@ -184,21 +184,21 @@ function maybeObjectSchema(resolvedType: ResolvedType | undefined): RawSchemas.O
     if (resolvedType == null) {
         return undefined
     }
-    if (resolvedType._type === 'named' && isRawObjectDefinition(resolvedType.declaration)) {
+    if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
         return resolvedType.declaration
     }
-    if (resolvedType._type === 'container' && resolvedType.container._type === 'optional') {
+    if (resolvedType._type === "container" && resolvedType.container._type === "optional") {
         return maybeObjectSchema(resolvedType.container.itemType)
     }
     return undefined
 }
 
 export function getRequestPropertyComponents(value: string): string[] {
-    const trimmed = value.substring('$request.'.length)
-    return trimmed?.split('.') ?? []
+    const trimmed = value.substring("$request.".length)
+    return trimmed?.split(".") ?? []
 }
 
 export function getResponsePropertyComponents(value: string): string[] {
-    const trimmed = value.substring('$response.'.length)
-    return trimmed?.split('.') ?? []
+    const trimmed = value.substring("$response.".length)
+    return trimmed?.split(".") ?? []
 }

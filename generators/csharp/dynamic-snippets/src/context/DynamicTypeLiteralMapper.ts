@@ -1,9 +1,9 @@
-import { DiscriminatedUnionTypeInstance, NamedArgument, Severity } from '@fern-api/browser-compatible-base-generator'
-import { assertNever } from '@fern-api/core-utils'
-import { csharp } from '@fern-api/csharp-codegen'
-import { FernIr } from '@fern-api/dynamic-ir-sdk'
+import { DiscriminatedUnionTypeInstance, NamedArgument, Severity } from "@fern-api/browser-compatible-base-generator"
+import { assertNever } from "@fern-api/core-utils"
+import { csharp } from "@fern-api/csharp-codegen"
+import { FernIr } from "@fern-api/dynamic-ir-sdk"
 
-import { DynamicSnippetsGeneratorContext } from './DynamicSnippetsGeneratorContext'
+import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext"
 
 export declare namespace DynamicTypeLiteralMapper {
     interface Args {
@@ -14,7 +14,7 @@ export declare namespace DynamicTypeLiteralMapper {
 
     // Identifies what the type is being converted as, which sometimes influences how
     // the type is instantiated.
-    type ConvertedAs = 'key'
+    type ConvertedAs = "key"
 }
 
 export class DynamicTypeLiteralMapper {
@@ -32,7 +32,7 @@ export class DynamicTypeLiteralMapper {
             }
             this.context.errors.add({
                 severity: Severity.Critical,
-                message: 'Expected non-null value, but got null'
+                message: "Expected non-null value, but got null"
             })
             return csharp.TypeLiteral.nop()
         }
@@ -40,28 +40,28 @@ export class DynamicTypeLiteralMapper {
             return csharp.TypeLiteral.nop()
         }
         switch (args.typeReference.type) {
-            case 'list':
+            case "list":
                 return this.convertList({ list: args.typeReference.value, value: args.value })
-            case 'literal':
+            case "literal":
                 return csharp.TypeLiteral.nop()
-            case 'map':
+            case "map":
                 return this.convertMap({ map: args.typeReference, value: args.value })
-            case 'named': {
+            case "named": {
                 const named = this.context.resolveNamedType({ typeId: args.typeReference.value })
                 if (named == null) {
                     return csharp.TypeLiteral.nop()
                 }
                 return this.convertNamed({ named, value: args.value, as: args.as })
             }
-            case 'nullable':
+            case "nullable":
                 return this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as })
-            case 'optional':
+            case "optional":
                 return this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as })
-            case 'primitive':
+            case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value, value: args.value, as: args.as })
-            case 'set':
+            case "set":
                 return this.convertSet({ set: args.typeReference.value, value: args.value })
-            case 'unknown':
+            case "unknown":
                 return this.convertUnknown({ value: args.value })
             default:
                 assertNever(args.typeReference)
@@ -111,10 +111,10 @@ export class DynamicTypeLiteralMapper {
     }
 
     private convertMap({ map, value }: { map: FernIr.dynamic.MapType; value: unknown }): csharp.TypeLiteral {
-        if (typeof value !== 'object' || value == null) {
+        if (typeof value !== "object" || value == null) {
             this.context.errors.add({
                 severity: Severity.Critical,
-                message: `Expected object but got: ${value == null ? 'null' : typeof value}`
+                message: `Expected object but got: ${value == null ? "null" : typeof value}`
             })
             return csharp.TypeLiteral.nop()
         }
@@ -125,7 +125,7 @@ export class DynamicTypeLiteralMapper {
                 this.context.errors.scope(key)
                 try {
                     return {
-                        key: this.convert({ typeReference: map.key, value: key, as: 'key' }),
+                        key: this.convert({ typeReference: map.key, value: key, as: "key" }),
                         value: this.convert({ typeReference: map.value, value })
                     }
                 } finally {
@@ -145,18 +145,18 @@ export class DynamicTypeLiteralMapper {
         as?: DynamicTypeLiteralMapper.ConvertedAs
     }): csharp.TypeLiteral {
         switch (named.type) {
-            case 'alias':
+            case "alias":
                 return this.convert({ typeReference: named.typeReference, value, as })
-            case 'discriminatedUnion':
+            case "discriminatedUnion":
                 if (this.context.shouldUseDiscriminatedUnions()) {
                     return this.convertDiscriminatedUnion({ discriminatedUnion: named, value })
                 }
                 return this.convertUnknown({ value })
-            case 'enum':
+            case "enum":
                 return this.convertEnum({ enum_: named, value })
-            case 'object':
+            case "object":
                 return this.convertObject({ object_: named, value })
-            case 'undiscriminatedUnion':
+            case "undiscriminatedUnion":
                 return this.convertUndiscriminatedUnion({ undiscriminatedUnion: named, value })
             default:
                 assertNever(named)
@@ -187,7 +187,7 @@ export class DynamicTypeLiteralMapper {
             singleDiscriminatedUnionType: unionVariant
         })
         switch (unionVariant.type) {
-            case 'samePropertiesAsObject': {
+            case "samePropertiesAsObject": {
                 const named = this.context.resolveNamedType({
                     typeId: unionVariant.typeId
                 })
@@ -200,7 +200,7 @@ export class DynamicTypeLiteralMapper {
                     arguments_: [this.convertNamed({ named, value: discriminatedUnionTypeInstance.value })]
                 })
             }
-            case 'singleProperty': {
+            case "singleProperty": {
                 const record = this.context.getRecord(discriminatedUnionTypeInstance.value)
                 if (record == null) {
                     return csharp.TypeLiteral.nop()
@@ -221,7 +221,7 @@ export class DynamicTypeLiteralMapper {
                     this.context.errors.unscope()
                 }
             }
-            case 'noProperties':
+            case "noProperties":
                 return this.instantiateUnionWithBaseProperties({
                     classReference,
                     baseProperties,
@@ -280,16 +280,16 @@ export class DynamicTypeLiteralMapper {
         return csharp.TypeLiteral.reference(
             csharp.codeblock((writer) => {
                 writer.writeNode(instantiation)
-                writer.writeLine(' {')
+                writer.writeLine(" {")
                 writer.indent()
                 for (const baseProperty of baseProperties) {
                     writer.write(baseProperty.name)
-                    writer.write(' = ')
+                    writer.write(" = ")
                     writer.writeNodeOrString(baseProperty.assignment)
-                    writer.writeLine(',')
+                    writer.writeLine(",")
                 }
                 writer.dedent()
-                writer.write('}')
+                writer.write("}")
             })
         )
     }
@@ -308,7 +308,7 @@ export class DynamicTypeLiteralMapper {
     }
 
     private getEnumValueName({ enum_, value }: { enum_: FernIr.dynamic.EnumType; value: unknown }): string | undefined {
-        if (typeof value !== 'string') {
+        if (typeof value !== "string") {
             this.context.errors.add({
                 severity: Severity.Critical,
                 message: `Expected enum value string, got: ${typeof value}`
@@ -409,91 +409,91 @@ export class DynamicTypeLiteralMapper {
         as?: DynamicTypeLiteralMapper.ConvertedAs
     }): csharp.TypeLiteral {
         switch (primitive) {
-            case 'INTEGER': {
+            case "INTEGER": {
                 const num = this.getValueAsNumber({ value, as })
                 if (num == null) {
                     return csharp.TypeLiteral.nop()
                 }
                 return csharp.TypeLiteral.integer(num)
             }
-            case 'LONG': {
+            case "LONG": {
                 const num = this.getValueAsNumber({ value, as })
                 if (num == null) {
                     return csharp.TypeLiteral.nop()
                 }
                 return csharp.TypeLiteral.long(num)
             }
-            case 'UINT': {
+            case "UINT": {
                 const num = this.getValueAsNumber({ value, as })
                 if (num == null) {
                     return csharp.TypeLiteral.nop()
                 }
                 return csharp.TypeLiteral.uint(num)
             }
-            case 'UINT_64': {
+            case "UINT_64": {
                 const num = this.getValueAsNumber({ value, as })
                 if (num == null) {
                     return csharp.TypeLiteral.nop()
                 }
                 return csharp.TypeLiteral.ulong(num)
             }
-            case 'FLOAT': {
+            case "FLOAT": {
                 const num = this.getValueAsNumber({ value, as })
                 if (num == null) {
                     return csharp.TypeLiteral.nop()
                 }
                 return csharp.TypeLiteral.float(num)
             }
-            case 'DOUBLE': {
+            case "DOUBLE": {
                 const num = this.getValueAsNumber({ value, as })
                 if (num == null) {
                     return csharp.TypeLiteral.nop()
                 }
                 return csharp.TypeLiteral.double(num)
             }
-            case 'BOOLEAN': {
+            case "BOOLEAN": {
                 const bool = this.getValueAsBoolean({ value, as })
                 if (bool == null) {
                     return csharp.TypeLiteral.nop()
                 }
                 return csharp.TypeLiteral.boolean(bool)
             }
-            case 'STRING': {
+            case "STRING": {
                 const str = this.context.getValueAsString({ value })
                 if (str == null) {
                     return csharp.TypeLiteral.nop()
                 }
                 return csharp.TypeLiteral.string(str)
             }
-            case 'DATE': {
+            case "DATE": {
                 const date = this.context.getValueAsString({ value })
                 if (date == null) {
                     return csharp.TypeLiteral.nop()
                 }
                 return csharp.TypeLiteral.date(date)
             }
-            case 'DATE_TIME': {
+            case "DATE_TIME": {
                 const dateTime = this.context.getValueAsString({ value })
                 if (dateTime == null) {
                     return csharp.TypeLiteral.nop()
                 }
                 return csharp.TypeLiteral.datetime(dateTime)
             }
-            case 'UUID': {
+            case "UUID": {
                 const uuid = this.context.getValueAsString({ value })
                 if (uuid == null) {
                     return csharp.TypeLiteral.nop()
                 }
                 return csharp.TypeLiteral.string(uuid)
             }
-            case 'BASE_64': {
+            case "BASE_64": {
                 const base64 = this.context.getValueAsString({ value })
                 if (base64 == null) {
                     return csharp.TypeLiteral.nop()
                 }
                 return csharp.TypeLiteral.string(base64)
             }
-            case 'BIG_INTEGER': {
+            case "BIG_INTEGER": {
                 const bigInt = this.context.getValueAsString({ value })
                 if (bigInt == null) {
                     return csharp.TypeLiteral.nop()
@@ -512,7 +512,7 @@ export class DynamicTypeLiteralMapper {
         value: unknown
         as?: DynamicTypeLiteralMapper.ConvertedAs
     }): number | undefined {
-        const num = as === 'key' ? (typeof value === 'string' ? Number(value) : value) : value
+        const num = as === "key" ? (typeof value === "string" ? Number(value) : value) : value
         return this.context.getValueAsNumber({ value: num })
     }
 
@@ -524,7 +524,7 @@ export class DynamicTypeLiteralMapper {
         as?: DynamicTypeLiteralMapper.ConvertedAs
     }): boolean | undefined {
         const bool =
-            as === 'key' ? (typeof value === 'string' ? value === 'true' : value === 'false' ? false : value) : value
+            as === "key" ? (typeof value === "string" ? value === "true" : value === "false" ? false : value) : value
         return this.context.getValueAsBoolean({ value: bool })
     }
 }

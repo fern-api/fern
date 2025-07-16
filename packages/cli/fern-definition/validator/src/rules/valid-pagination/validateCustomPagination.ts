@@ -1,11 +1,11 @@
-import chalk from 'chalk'
+import chalk from "chalk"
 
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { FernFileContext, TypeResolver } from '@fern-api/ir-generator'
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { FernFileContext, TypeResolver } from "@fern-api/ir-generator"
 
-import { RuleViolation } from '../../Rule'
-import { maybeFileFromResolvedType, resolveResponseType } from '../../utils/propertyValidatorUtils'
-import { validateResultsProperty } from './validateUtils'
+import { RuleViolation } from "../../Rule"
+import { maybeFileFromResolvedType, resolveResponseType } from "../../utils/propertyValidatorUtils"
+import { validateResultsProperty } from "./validateUtils"
 
 export function validateCustomPagination({
     endpointId,
@@ -25,7 +25,7 @@ export function validateCustomPagination({
     const resolvedResponseType = resolveResponseType({ endpoint, typeResolver, file })
     if (resolvedResponseType == null) {
         violations.push({
-            severity: 'fatal',
+            severity: "fatal",
             message: `Pagination configuration for endpoint ${chalk.bold(endpointId)} must define a response type.`
         })
         return violations

@@ -5,12 +5,12 @@ import {
     parseGeneric,
     recursivelyVisitRawTypeReference,
     visitRawTypeDeclaration
-} from '@fern-api/fern-definition-schema'
-import { DeclaredTypeName } from '@fern-api/ir-sdk'
+} from "@fern-api/fern-definition-schema"
+import { DeclaredTypeName } from "@fern-api/ir-sdk"
 
-import { FernFileContext } from '../../FernFileContext'
-import { TypeResolver } from '../../resolvers/TypeResolver'
-import { parseTypeName } from '../../utils/parseTypeName'
+import { FernFileContext } from "../../FernFileContext"
+import { TypeResolver } from "../../resolvers/TypeResolver"
+import { parseTypeName } from "../../utils/parseTypeName"
 
 interface SeenTypeNames {
     addTypeName: (typeName: DeclaredTypeName) => void
@@ -21,13 +21,13 @@ function getObjectRawTypeReferences(objectDeclaration: RawSchemas.ObjectSchema):
     const types: string[] = []
     if (objectDeclaration.extends != null) {
         const extendsArr =
-            typeof objectDeclaration.extends === 'string' ? [objectDeclaration.extends] : objectDeclaration.extends
+            typeof objectDeclaration.extends === "string" ? [objectDeclaration.extends] : objectDeclaration.extends
         types.push(...extendsArr)
     }
     if (objectDeclaration.properties != null) {
         types.push(
             ...Object.values(objectDeclaration.properties).map((property) =>
-                typeof property === 'string' ? property : property.type
+                typeof property === "string" ? property : property.type
             )
         )
     }
@@ -47,7 +47,7 @@ export function getReferencedTypesFromRawDeclaration({
 }): DeclaredTypeName[] {
     const rawTypeReferences = visitRawTypeDeclaration<string[]>(typeDeclaration, {
         alias: (aliasDeclaration) => {
-            const aliasTypeReference = typeof aliasDeclaration === 'string' ? aliasDeclaration : aliasDeclaration.type
+            const aliasTypeReference = typeof aliasDeclaration === "string" ? aliasDeclaration : aliasDeclaration.type
             const parsedGeneric = parseGeneric(aliasTypeReference)
             if (parsedGeneric != null) {
                 const rawTypeReferences = new Set<string>(parsedGeneric.arguments ?? [])
@@ -75,17 +75,17 @@ export function getReferencedTypesFromRawDeclaration({
         object: (objectDeclaration) => getObjectRawTypeReferences(objectDeclaration),
         discriminatedUnion: (unionDeclaration) => {
             const types: string[] = []
-            if (unionDeclaration['base-properties'] != null) {
+            if (unionDeclaration["base-properties"] != null) {
                 types.push(
-                    ...Object.values(unionDeclaration['base-properties']).map((property) =>
-                        typeof property === 'string' ? property : property.type
+                    ...Object.values(unionDeclaration["base-properties"]).map((property) =>
+                        typeof property === "string" ? property : property.type
                     )
                 )
             }
             types.push(
                 ...Object.values(unionDeclaration.union).reduce<string[]>((types, singleUnionType) => {
-                    const rawType = typeof singleUnionType === 'string' ? singleUnionType : singleUnionType.type
-                    if (typeof rawType === 'string') {
+                    const rawType = typeof singleUnionType === "string" ? singleUnionType : singleUnionType.type
+                    if (typeof rawType === "string") {
                         types.push(rawType)
                     }
                     return types
@@ -95,8 +95,8 @@ export function getReferencedTypesFromRawDeclaration({
         },
         undiscriminatedUnion: (unionDeclaration) => {
             return Object.values(unionDeclaration.union).reduce<string[]>((types, unionMember) => {
-                const rawType = typeof unionMember === 'string' ? unionMember : unionMember.type
-                if (typeof rawType === 'string') {
+                const rawType = typeof unionMember === "string" ? unionMember : unionMember.type
+                if (typeof rawType === "string") {
                     types.push(rawType)
                 }
                 return types
@@ -169,7 +169,7 @@ class SeenTypeNamesImpl implements SeenTypeNames {
 
     private computeCacheKey(typeName: DeclaredTypeName): string {
         return (
-            typeName.fernFilepath.allParts.map((part) => part.originalName).join('/') + ':' + typeName.name.originalName
+            typeName.fernFilepath.allParts.map((part) => part.originalName).join("/") + ":" + typeName.name.originalName
         )
     }
 }

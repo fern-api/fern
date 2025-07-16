@@ -3,11 +3,11 @@ import {
     Arguments,
     hasNamedArgument,
     isNamedArgument
-} from '@fern-api/browser-compatible-base-generator'
+} from "@fern-api/browser-compatible-base-generator"
 
-import { ClassReference } from './ClassReference'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { ClassReference } from "./ClassReference"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export declare namespace ClassInstantiation {
     interface Args {
@@ -51,15 +51,15 @@ export class ClassInstantiation extends AstNode {
         if (this.classReference.namespaceAlias != null) {
             writer.write(`new ${this.classReference.namespaceAlias}.${this.classReference.name}`)
         } else {
-            writer.write('new ')
+            writer.write("new ")
             writer.writeNode(this.classReference)
         }
 
         const hasNamedArguments = hasNamedArgument(this.arguments_)
         if (hasNamedArguments && !this.forceUseConstructor) {
-            writer.write('{')
+            writer.write("{")
         } else {
-            writer.write('(')
+            writer.write("(")
         }
 
         if (this.arguments_.length === 0) {
@@ -76,18 +76,18 @@ export class ClassInstantiation extends AstNode {
             if (isNamedArgument(argument)) {
                 writer.write(`${argument.name}`)
                 if (this.forceUseConstructor) {
-                    writer.write(': ')
+                    writer.write(": ")
                 } else {
-                    writer.write(' = ')
+                    writer.write(" = ")
                 }
                 writer.writeNodeOrString(argument.assignment)
             } else {
                 argument.write(writer)
             }
             if (idx < this.arguments_.length - 1) {
-                writer.write(',')
+                writer.write(",")
                 if (!this.multiline) {
-                    writer.write(' ')
+                    writer.write(" ")
                 }
             }
             if (this.multiline) {
@@ -101,28 +101,28 @@ export class ClassInstantiation extends AstNode {
 
     private writeEnd({ writer, hasNamedArguments }: { writer: Writer; hasNamedArguments: boolean }): void {
         if (hasNamedArguments && !this.forceUseConstructor) {
-            writer.write('}')
+            writer.write("}")
         } else {
-            writer.write(')')
+            writer.write(")")
         }
         if (this.properties.length > 0) {
-            writer.write('{')
+            writer.write("{")
             if (this.multiline) {
                 writer.newLine()
                 writer.indent()
             } else {
-                writer.write(' ')
+                writer.write(" ")
             }
             this.properties.forEach((property, idx) => {
                 writer.writeNodeOrString(property.name)
-                writer.write(' = ')
+                writer.write(" = ")
                 writer.writeNodeOrString(property.value)
                 if (idx < this.properties.length - 1) {
-                    writer.write(',')
+                    writer.write(",")
                     if (this.multiline) {
                         writer.newLine()
                     } else {
-                        writer.write(' ')
+                        writer.write(" ")
                     }
                 }
             })
@@ -130,7 +130,7 @@ export class ClassInstantiation extends AstNode {
                 writer.dedent()
                 writer.newLine()
             }
-            writer.write('}')
+            writer.write("}")
         }
     }
 }

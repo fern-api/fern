@@ -1,5 +1,5 @@
-import { generatorsYml } from '@fern-api/configuration'
-import { TaskContext } from '@fern-api/task-context'
+import { generatorsYml } from "@fern-api/configuration"
+import { TaskContext } from "@fern-api/task-context"
 
 export async function updateGeneratorGroup({
     generatorsConfiguration,
@@ -13,7 +13,7 @@ export async function updateGeneratorGroup({
     update: (draft: generatorsYml.GeneratorGroupSchema, groupName: string) => Promise<void>
 }): Promise<generatorsYml.GeneratorsConfigurationSchema> {
     if (groupName == null) {
-        return context.failAndThrow('No group specified.')
+        return context.failAndThrow("No group specified.")
     }
     const groups = (generatorsConfiguration.groups ??= {})
 

@@ -1,3 +1,3 @@
-import { SdkGeneratorCli } from './SdkGeneratorCli'
+import { SdkGeneratorCli } from "./SdkGeneratorCli"
 
 void new SdkGeneratorCli().runCli()

@@ -1,9 +1,9 @@
-import { parseFileUploadRequest } from '@fern-api/fern-definition-schema'
+import { parseFileUploadRequest } from "@fern-api/fern-definition-schema"
 
-import { Rule } from '../../Rule'
+import { Rule } from "../../Rule"
 
 export const NoExtensionsWithFileUploadRule: Rule = {
-    name: 'no-extensions-with-file-upload',
+    name: "no-extensions-with-file-upload",
     create: () => {
         return {
             definitionFile: {
@@ -19,8 +19,8 @@ export const NoExtensionsWithFileUploadRule: Rule = {
 
                     return [
                         {
-                            severity: 'fatal',
-                            message: 'Request body extensions are not supported for file-upload requests.'
+                            severity: "fatal",
+                            message: "Request body extensions are not supported for file-upload requests."
                         }
                     ]
                 }

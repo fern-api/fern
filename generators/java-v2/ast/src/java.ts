@@ -1,7 +1,7 @@
-import { ClassInstantiation, ClassReference, CodeBlock, MethodInvocation } from './ast'
-import { Class } from './ast/Class'
-import { Method } from './ast/Method'
-import { Parameter } from './ast/Parameter'
+import { ClassInstantiation, ClassReference, CodeBlock, MethodInvocation } from "./ast"
+import { Class } from "./ast/Class"
+import { Method } from "./ast/Method"
+import { Parameter } from "./ast/Parameter"
 
 export function codeblock(arg: CodeBlock.Arg): CodeBlock {
     return new CodeBlock(arg)
@@ -31,7 +31,7 @@ export function parameter(args: Parameter.Args): Parameter {
     return new Parameter(args)
 }
 
-export { AstNode } from './ast/core/AstNode'
+export { AstNode } from "./ast/core/AstNode"
 export {
     Access,
     type BuilderParameter,
@@ -46,4 +46,4 @@ export {
     Type,
     TypeLiteral,
     Writer
-} from './ast'
+} from "./ast"

@@ -1,4 +1,4 @@
-import { OpenAPIV3_1 } from 'openapi-types'
+import { OpenAPIV3_1 } from "openapi-types"
 
 import {
     ContainerType,
@@ -9,13 +9,13 @@ import {
     TypeId,
     TypeReference,
     UndiscriminatedUnionMember
-} from '@fern-api/ir-sdk'
+} from "@fern-api/ir-sdk"
 
-import { AbstractConverter, AbstractConverterContext } from '../..'
-import { FernDiscriminatedExtension } from '../../extensions/x-fern-discriminated'
-import { convertProperties } from '../../utils/ConvertProperties'
-import { SchemaConverter } from './SchemaConverter'
-import { SchemaOrReferenceConverter } from './SchemaOrReferenceConverter'
+import { AbstractConverter, AbstractConverterContext } from "../.."
+import { FernDiscriminatedExtension } from "../../extensions/x-fern-discriminated"
+import { convertProperties } from "../../utils/ConvertProperties"
+import { SchemaConverter } from "./SchemaConverter"
+import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter"
 
 export declare namespace OneOfSchemaConverter {
     export interface Args extends AbstractConverter.AbstractArgs {
@@ -98,7 +98,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
             const singleUnionTypeSchemaConverter = new SchemaOrReferenceConverter({
                 context: this.context,
                 schemaOrReference: { $ref: reference },
-                breadcrumbs: [...this.breadcrumbs, 'discriminator', 'mapping', discriminant]
+                breadcrumbs: [...this.breadcrumbs, "discriminator", "mapping", discriminant]
             })
             const typeId = this.context.getTypeIdFromSchemaReference({ $ref: reference })
             if (typeId != null) {
@@ -156,7 +156,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
 
         const extends_: DeclaredTypeName[] = []
         for (const [index, allOfSchema] of (this.schema.allOf ?? []).entries()) {
-            const breadcrumbs = [...this.breadcrumbs, 'allOf', index.toString()]
+            const breadcrumbs = [...this.breadcrumbs, "allOf", index.toString()]
 
             if (this.context.isReferenceObject(allOfSchema)) {
                 const maybeTypeReference = this.context.convertReferenceToTypeReference({
@@ -222,19 +222,19 @@ export class OneOfSchemaConverter extends AbstractConverter<
                     maybeTypeReference = this.context.convertReferenceToTypeReference({
                         reference: subSchema,
                         displayNameOverride: subSchema.title ?? subSchema.name ?? subSchema.messageId,
-                        displayNameOverrideSource: 'reference_identifier'
+                        displayNameOverrideSource: "reference_identifier"
                     })
                 } else if (this.getDiscriminatorKeyForRef(subSchema) != null) {
                     const mappingEntry = this.getDiscriminatorKeyForRef(subSchema)
                     maybeTypeReference = this.context.convertReferenceToTypeReference({
                         reference: subSchema,
                         displayNameOverride: mappingEntry,
-                        displayNameOverrideSource: 'discriminator_key'
+                        displayNameOverrideSource: "discriminator_key"
                     })
                 } else {
                     maybeTypeReference = this.context.convertReferenceToTypeReference({
                         reference: subSchema,
-                        displayNameOverrideSource: 'schema_identifier'
+                        displayNameOverrideSource: "schema_identifier"
                     })
                 }
 
@@ -265,12 +265,12 @@ export class OneOfSchemaConverter extends AbstractConverter<
             const convertedSchema = schemaConverter.convert()
             if (convertedSchema != null) {
                 const typeShape = convertedSchema.convertedSchema.typeDeclaration.shape
-                if (typeShape.type === 'alias' && this.typeReferenceIsWrappedPrimitive(typeShape.aliasOf)) {
+                if (typeShape.type === "alias" && this.typeReferenceIsWrappedPrimitive(typeShape.aliasOf)) {
                     unionTypes.push({
                         type: typeShape.aliasOf,
                         docs: subSchema.description
                     })
-                } else if (typeShape.type === 'object' && typeShape.properties.length === 0) {
+                } else if (typeShape.type === "object" && typeShape.properties.length === 0) {
                     unionTypes.push({
                         type: TypeReference.container(
                             ContainerType.map({
@@ -310,12 +310,12 @@ export class OneOfSchemaConverter extends AbstractConverter<
         if (this.schema.oneOf != null) {
             return this.schema.oneOf.some(
                 (subSchema) =>
-                    subSchema && typeof subSchema === 'object' && 'type' in subSchema && subSchema.type === 'null'
+                    subSchema && typeof subSchema === "object" && "type" in subSchema && subSchema.type === "null"
             )
         } else if (this.schema.anyOf != null) {
             return this.schema.anyOf.some(
                 (subSchema) =>
-                    subSchema && typeof subSchema === 'object' && 'type' in subSchema && subSchema.type === 'null'
+                    subSchema && typeof subSchema === "object" && "type" in subSchema && subSchema.type === "null"
             )
         }
         return false
@@ -323,13 +323,13 @@ export class OneOfSchemaConverter extends AbstractConverter<
 
     private removeNullFromOneOfOrAnyOf(): OpenAPIV3_1.SchemaObject | undefined {
         const schemaArray = this.schema.oneOf ?? this.schema.anyOf
-        const schemaType = this.schema.oneOf != null ? 'oneOf' : 'anyOf'
+        const schemaType = this.schema.oneOf != null ? "oneOf" : "anyOf"
 
         if (schemaArray == null) {
             return undefined
         }
 
-        const withoutNull = schemaArray.filter((subSchema) => !('type' in subSchema && subSchema.type === 'null'))
+        const withoutNull = schemaArray.filter((subSchema) => !("type" in subSchema && subSchema.type === "null"))
 
         if (withoutNull.length === 0) {
             this.context.errorCollector.collect({
@@ -382,13 +382,13 @@ export class OneOfSchemaConverter extends AbstractConverter<
 
     private typeReferenceIsWrappedPrimitive(type: TypeReference): boolean {
         switch (type.type) {
-            case 'container':
+            case "container":
                 return this.containerTypeIsWrappedPrimitive(type.container)
-            case 'named':
+            case "named":
                 return false
-            case 'primitive':
+            case "primitive":
                 return true
-            case 'unknown':
+            case "unknown":
                 return true
             default:
                 return false
@@ -397,20 +397,20 @@ export class OneOfSchemaConverter extends AbstractConverter<
 
     private containerTypeIsWrappedPrimitive(type: ContainerType): boolean {
         switch (type.type) {
-            case 'list':
+            case "list":
                 return this.typeReferenceIsWrappedPrimitive(type.list)
-            case 'map':
+            case "map":
                 return (
                     this.typeReferenceIsWrappedPrimitive(type.keyType) &&
                     this.typeReferenceIsWrappedPrimitive(type.valueType)
                 )
-            case 'nullable':
+            case "nullable":
                 return this.typeReferenceIsWrappedPrimitive(type.nullable)
-            case 'optional':
+            case "optional":
                 return this.typeReferenceIsWrappedPrimitive(type.optional)
-            case 'set':
+            case "set":
                 return this.typeReferenceIsWrappedPrimitive(type.set)
-            case 'literal':
+            case "literal":
                 return true
             default:
                 return false
@@ -439,13 +439,13 @@ export class OneOfSchemaConverter extends AbstractConverter<
             return subSchema
         }
 
-        if (subSchema.type === 'object') {
+        if (subSchema.type === "object") {
             return this.mergeIntoObjectSchema(subSchema, this.schema.properties ?? {})
         }
 
         if (!this.context.isObjectSchemaType(subSchema)) {
             this.context.errorCollector.collect({
-                message: 'Received additional object properties for oneOf/anyOf that are not objects',
+                message: "Received additional object properties for oneOf/anyOf that are not objects",
                 path: this.breadcrumbs
             })
         }

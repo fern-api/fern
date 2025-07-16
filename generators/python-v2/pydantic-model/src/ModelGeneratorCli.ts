@@ -1,12 +1,12 @@
-import { GeneratorNotificationService } from '@fern-api/base-generator'
-import { AbstractPythonGeneratorCli } from '@fern-api/python-base'
+import { GeneratorNotificationService } from "@fern-api/base-generator"
+import { AbstractPythonGeneratorCli } from "@fern-api/python-base"
 
-import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
-import { IntermediateRepresentation } from '@fern-fern/ir-sdk/api'
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api"
 
-import { PydanticModelCustomConfigSchema } from './ModelCustomConfig'
-import { PydanticModelGeneratorContext } from './ModelGeneratorContext'
-import { generateV2Models } from './v2/generateV2Models'
+import { PydanticModelCustomConfigSchema } from "./ModelCustomConfig"
+import { PydanticModelGeneratorContext } from "./ModelGeneratorContext"
+import { generateV2Models } from "./v2/generateV2Models"
 
 export class ModelGeneratorCLI extends AbstractPythonGeneratorCli<
     PydanticModelCustomConfigSchema,
@@ -47,9 +47,9 @@ export class ModelGeneratorCLI extends AbstractPythonGeneratorCli<
     }
 
     protected publishPackage(context: PydanticModelGeneratorContext): Promise<void> {
-        throw new Error('Method not implemented.')
+        throw new Error("Method not implemented.")
     }
     protected writeForGithub(context: PydanticModelGeneratorContext): Promise<void> {
-        throw new Error('Method not implemented.')
+        throw new Error("Method not implemented.")
     }
 }

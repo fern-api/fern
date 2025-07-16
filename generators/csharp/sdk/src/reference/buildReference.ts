@@ -1,14 +1,14 @@
-import path from 'path'
+import path from "path"
 
-import { ReferenceConfigBuilder } from '@fern-api/base-generator'
-import { csharp } from '@fern-api/csharp-codegen'
+import { ReferenceConfigBuilder } from "@fern-api/base-generator"
+import { csharp } from "@fern-api/csharp-codegen"
 
-import { FernGeneratorCli } from '@fern-fern/generator-cli-sdk'
-import { HttpEndpoint, HttpService, ServiceId } from '@fern-fern/ir-sdk/api'
+import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk"
+import { HttpEndpoint, HttpService, ServiceId } from "@fern-fern/ir-sdk/api"
 
-import { SdkGeneratorContext } from '../SdkGeneratorContext'
-import { EndpointSignatureInfo } from '../endpoint/EndpointSignatureInfo'
-import { SingleEndpointSnippet } from '../endpoint/snippets/EndpointSnippetsGenerator'
+import { SdkGeneratorContext } from "../SdkGeneratorContext"
+import { EndpointSignatureInfo } from "../endpoint/EndpointSignatureInfo"
+import { SingleEndpointSnippet } from "../endpoint/snippets/EndpointSnippetsGenerator"
 
 export function buildReference({ context }: { context: SdkGeneratorContext }): ReferenceConfigBuilder {
     const builder = new ReferenceConfigBuilder()
@@ -82,7 +82,7 @@ function getEndpointReference({
         title: {
             snippetParts: [
                 {
-                    text: context.getAccessFromRootClient(service.name.fernFilepath) + '.'
+                    text: context.getAccessFromRootClient(service.name.fernFilepath) + "."
                 },
                 {
                     text: context.getEndpointMethodName(endpoint),
@@ -122,16 +122,16 @@ function getReferenceEndpointInvocationParameters({
     context: SdkGeneratorContext
     endpointSignatureInfo: EndpointSignatureInfo
 }): string {
-    let result = ''
+    let result = ""
     endpointSignatureInfo.pathParameters.forEach((pathParameter, index) => {
         if (index > 0) {
-            result += ', '
+            result += ", "
         }
         result += pathParameter.name
     })
     if (endpointSignatureInfo.requestParameter != null) {
         if (result.length > 0) {
-            result += ', '
+            result += ", "
         }
         result += `${context.printType(endpointSignatureInfo.requestParameter.type)} { ... }`
     }
@@ -153,7 +153,7 @@ function getServiceFilepath({
         : context.getRootClientClassReferenceForSnippets()
 
     return (
-        '/' +
+        "/" +
         path.join(
             context.project.getProjectDirectory(),
             context.getDirectoryForFernFilepath(service.name.fernFilepath),
@@ -167,5 +167,5 @@ function isRootServiceId({ context, serviceId }: { context: SdkGeneratorContext;
 }
 
 function getSectionTitle({ service }: { service: HttpService }): string {
-    return service.displayName ?? service.name.fernFilepath.allParts.map((part) => part.pascalCase.safeName).join(' ')
+    return service.displayName ?? service.name.fernFilepath.allParts.map((part) => part.pascalCase.safeName).join(" ")
 }

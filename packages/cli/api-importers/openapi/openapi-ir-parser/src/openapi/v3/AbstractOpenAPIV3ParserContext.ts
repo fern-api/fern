@@ -1,19 +1,19 @@
-import { OpenAPIV3 } from 'openapi-types'
+import { OpenAPIV3 } from "openapi-types"
 
-import { Logger } from '@fern-api/logger'
-import { Namespace, SchemaId, SdkGroup, SdkGroupName, Source } from '@fern-api/openapi-ir'
-import { TaskContext } from '@fern-api/task-context'
+import { Logger } from "@fern-api/logger"
+import { Namespace, SchemaId, SdkGroup, SdkGroupName, Source } from "@fern-api/openapi-ir"
+import { TaskContext } from "@fern-api/task-context"
 
-import { ParseOpenAPIOptions } from '../../options'
-import { SchemaParserContext } from '../../schema/SchemaParserContext'
-import { getReferenceOccurrences } from '../../schema/utils/getReferenceOccurrences'
-import { isReferenceObject } from '../../schema/utils/isReferenceObject'
-import { OpenAPIFilter } from './OpenAPIFilter'
+import { ParseOpenAPIOptions } from "../../options"
+import { SchemaParserContext } from "../../schema/SchemaParserContext"
+import { getReferenceOccurrences } from "../../schema/utils/getReferenceOccurrences"
+import { isReferenceObject } from "../../schema/utils/isReferenceObject"
+import { OpenAPIFilter } from "./OpenAPIFilter"
 
-export const PARAMETER_REFERENCE_PREFIX = '#/components/parameters/'
-export const RESPONSE_REFERENCE_PREFIX = '#/components/responses/'
-export const EXAMPLES_REFERENCE_PREFIX = '#/components/examples/'
-export const REQUEST_BODY_REFERENCE_PREFIX = '#/components/requestBodies/'
+export const PARAMETER_REFERENCE_PREFIX = "#/components/parameters/"
+export const RESPONSE_REFERENCE_PREFIX = "#/components/responses/"
+export const EXAMPLES_REFERENCE_PREFIX = "#/components/examples/"
+export const REQUEST_BODY_REFERENCE_PREFIX = "#/components/requestBodies/"
 
 export interface DiscriminatedUnionReference {
     discriminants: Set<string>
@@ -80,7 +80,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         const tags: SdkGroup[] = []
         if (this.namespace != null) {
             const namespaceSegment: Namespace = {
-                type: 'namespace',
+                type: "namespace",
                 name: this.namespace
             }
 
@@ -91,7 +91,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
 
     public resolveGroupName(groupName: SdkGroupName): SdkGroupName {
         if (this.namespace != null) {
-            return [{ type: 'namespace', name: this.namespace }, ...groupName]
+            return [{ type: "namespace", name: this.namespace }, ...groupName]
         }
 
         return groupName
@@ -101,16 +101,16 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         // Step 1: Get keys
         const keys = schema.$ref
             .substring(2)
-            .split('/')
-            .map((key) => key.replace(/~1/g, '/'))
+            .split("/")
+            .map((key) => key.replace(/~1/g, "/"))
 
         // Step 2: Index recursively into the document with all the keys
         // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         let resolvedSchema: any = this.document
         for (const key of keys) {
-            if (typeof resolvedSchema !== 'object' || resolvedSchema == null) {
+            if (typeof resolvedSchema !== "object" || resolvedSchema == null) {
                 return {
-                    'x-fern-type': 'unknown'
+                    "x-fern-type": "unknown"
                     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                 } as any as OpenAPIV3.SchemaObject
             }
@@ -120,7 +120,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
                 const index = parseInt(key, 10)
                 if (isNaN(index) || index < 0 || index >= resolvedSchema.length) {
                     return {
-                        'x-fern-type': 'unknown'
+                        "x-fern-type": "unknown"
                         // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                     } as any as OpenAPIV3.SchemaObject
                 }
@@ -132,7 +132,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         if (resolvedSchema == null) {
             this.logger.warn(`Encountered undefined reference: ${schema.$ref}`)
             return {
-                'x-fern-type': 'unknown'
+                "x-fern-type": "unknown"
                 // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
             } as any as OpenAPIV3.SchemaObject
         }
@@ -226,14 +226,14 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         // Step 1: Get keys
         const keys = ref
             .substring(2)
-            .split('/')
-            .map((key) => key.replace(/~1/g, '/'))
+            .split("/")
+            .map((key) => key.replace(/~1/g, "/"))
 
         // Step 2: Index recursively into the document with all the keys
         // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         let resolvedSchema: any = this.document
         for (const key of keys) {
-            if (typeof resolvedSchema !== 'object' || resolvedSchema == null) {
+            if (typeof resolvedSchema !== "object" || resolvedSchema == null) {
                 return false
             }
             resolvedSchema = resolvedSchema[key]

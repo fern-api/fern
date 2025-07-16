@@ -1,6 +1,6 @@
-import type { Readable, Writable } from 'readable-stream'
+import type { Readable, Writable } from "readable-stream"
 
-import { EventCallback, StreamWrapper } from './chooseStreamWrapper'
+import { EventCallback, StreamWrapper } from "./chooseStreamWrapper"
 
 export class NodePre18StreamWrapper implements StreamWrapper<Writable, Buffer> {
     private readableStream: Readable
@@ -57,11 +57,11 @@ export class NodePre18StreamWrapper implements StreamWrapper<Writable, Buffer> {
             if (chunk) {
                 resolve(chunk)
             } else {
-                this.readableStream.once('readable', () => {
+                this.readableStream.once("readable", () => {
                     const chunk = this.readableStream.read()
                     resolve(chunk)
                 })
-                this.readableStream.once('error', reject)
+                this.readableStream.once("error", reject)
             }
         })
     }
@@ -74,13 +74,13 @@ export class NodePre18StreamWrapper implements StreamWrapper<Writable, Buffer> {
     public async text(): Promise<string> {
         const chunks: Uint8Array[] = []
         const encoder = new TextEncoder()
-        this.readableStream.setEncoding((this.encoding || 'utf-8') as BufferEncoding)
+        this.readableStream.setEncoding((this.encoding || "utf-8") as BufferEncoding)
 
         for await (const chunk of this.readableStream) {
             chunks.push(encoder.encode(chunk))
         }
 
-        const decoder = new TextDecoder(this.encoding || 'utf-8')
+        const decoder = new TextDecoder(this.encoding || "utf-8")
         return decoder.decode(Buffer.concat(chunks))
     }
 

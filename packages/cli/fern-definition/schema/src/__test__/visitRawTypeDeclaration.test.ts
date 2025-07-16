@@ -1,9 +1,9 @@
-import { ObjectSchema } from '../schemas'
-import { visitRawTypeDeclaration } from '../utils/visitRawTypeDeclaration'
+import { ObjectSchema } from "../schemas"
+import { visitRawTypeDeclaration } from "../utils/visitRawTypeDeclaration"
 
-describe('visitRawTypeDeclaration', () => {
-    it('extends with no properties', () => {
-        const declaration: ObjectSchema = { extends: 'SomeType' }
+describe("visitRawTypeDeclaration", () => {
+    it("extends with no properties", () => {
+        const declaration: ObjectSchema = { extends: "SomeType" }
         const isObject = visitRawTypeDeclaration(declaration, {
             object: () => true,
             discriminatedUnion: () => false,

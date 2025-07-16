@@ -1,1 +1,1 @@
-export { BasePythonCustomConfigSchema } from './BasePythonCustomConfigSchema'
+export { BasePythonCustomConfigSchema } from "./BasePythonCustomConfigSchema"

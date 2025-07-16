@@ -1,6 +1,6 @@
-import { OpenAPIV3 } from 'openapi-types'
+import { OpenAPIV3 } from "openapi-types"
 
-import { getFernResolutions } from './extensions/getFernResolutions'
+import { getFernResolutions } from "./extensions/getFernResolutions"
 
 export function runResolutions({ openapi }: { openapi: OpenAPIV3.Document }): OpenAPIV3.Document {
     const resolutions = getFernResolutions(openapi)
@@ -43,9 +43,9 @@ interface AddComponentSchemaArgs {
 
 function addComponentSchema({ openapi, schemaReference, schemaName }: AddComponentSchemaArgs): OpenAPIV3.Document {
     const keys = schemaReference
-        .replace('#/', '')
-        .split('/')
-        .map((key) => key.replaceAll('~1', '/'))
+        .replace("#/", "")
+        .split("/")
+        .map((key) => key.replaceAll("~1", "/"))
 
     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     let value = openapi as any
@@ -104,9 +104,9 @@ function replaceWithSchemaReference({
     }
 
     const keys = replaceReference
-        .replace('#/', '')
-        .split('/')
-        .map((key) => key.replaceAll('~1', '/'))
+        .replace("#/", "")
+        .split("/")
+        .map((key) => key.replaceAll("~1", "/"))
 
     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     let value = openapi as any

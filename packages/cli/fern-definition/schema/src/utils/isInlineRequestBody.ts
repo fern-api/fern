@@ -1,7 +1,7 @@
-import { HttpInlineRequestBodySchema, HttpRequestBodySchema } from '../schemas'
+import { HttpInlineRequestBodySchema, HttpRequestBodySchema } from "../schemas"
 
 export function isInlineRequestBody(requestBody: HttpRequestBodySchema): requestBody is HttpInlineRequestBodySchema {
-    if (typeof requestBody === 'string') {
+    if (typeof requestBody === "string") {
         return false
     }
     return (

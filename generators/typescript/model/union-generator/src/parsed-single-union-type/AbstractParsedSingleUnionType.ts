@@ -1,10 +1,10 @@
-import { getPropertyKey, getTextOfTsNode } from '@fern-typescript/commons'
-import { ModelContext } from '@fern-typescript/contexts'
-import { ts } from 'ts-morph'
+import { getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons"
+import { ModelContext } from "@fern-typescript/contexts"
+import { ts } from "ts-morph"
 
-import { GeneratedUnionImpl } from '../GeneratedUnionImpl'
-import { SingleUnionTypeGenerator } from '../single-union-type-generator/SingleUnionTypeGenerator'
-import { ParsedSingleUnionType } from './ParsedSingleUnionType'
+import { GeneratedUnionImpl } from "../GeneratedUnionImpl"
+import { SingleUnionTypeGenerator } from "../single-union-type-generator/SingleUnionTypeGenerator"
+import { ParsedSingleUnionType } from "./ParsedSingleUnionType"
 
 export declare namespace AbstractParsedSingleUnionType {
     export interface Init<Context extends ModelContext> {
@@ -16,7 +16,7 @@ export declare namespace AbstractParsedSingleUnionType {
 export abstract class AbstractParsedSingleUnionType<Context extends ModelContext>
     implements ParsedSingleUnionType<Context>
 {
-    private static VISITOR_PARAMETER_NAME = 'visitor'
+    private static VISITOR_PARAMETER_NAME = "visitor"
 
     protected singleUnionType: SingleUnionTypeGenerator<Context>
     private includeUtilsOnUnionMembers: boolean
@@ -82,7 +82,7 @@ export abstract class AbstractParsedSingleUnionType<Context extends ModelContext
                                                       undefined,
                                                       undefined,
                                                       undefined,
-                                                      'this',
+                                                      "this",
                                                       undefined,
                                                       referenceToBuiltType,
                                                       undefined
@@ -206,7 +206,7 @@ export abstract class AbstractParsedSingleUnionType<Context extends ModelContext
     public getDiscriminantValueOrThrow(): string | number {
         const discriminantValue = this.getDiscriminantValue()
         if (discriminantValue == null) {
-            throw new Error('Discriminant value is not defined')
+            throw new Error("Discriminant value is not defined")
         }
         return discriminantValue
     }

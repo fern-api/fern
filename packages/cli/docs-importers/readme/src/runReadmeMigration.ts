@@ -1,11 +1,11 @@
-import { writeFile } from 'fs/promises'
+import { writeFile } from "fs/promises"
 
-import { FERN_DIRECTORY, PROJECT_CONFIG_FILENAME } from '@fern-api/configuration'
-import { FernDocsBuilderImpl } from '@fern-api/docs-importer-commons'
-import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
-import { TaskContext } from '@fern-api/task-context'
+import { FERN_DIRECTORY, PROJECT_CONFIG_FILENAME } from "@fern-api/configuration"
+import { FernDocsBuilderImpl } from "@fern-api/docs-importer-commons"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { TaskContext } from "@fern-api/task-context"
 
-import { ReadmeImporter } from './ReadmeImporter'
+import { ReadmeImporter } from "./ReadmeImporter"
 
 interface RunReadmeMigrationParams {
     readmeUrl: string
@@ -29,7 +29,7 @@ export async function runReadmeMigration({
         url: readmeUrl,
         context: taskContext,
         builder,
-        absolutePathToFernDirectory: join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of('fern'))
+        absolutePathToFernDirectory: join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of("fern"))
     })
 
     await readmeImporter.import({

@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from "zod"
 
 export const CasingConfigSchema = z.object({
     snake: z.string().optional(),

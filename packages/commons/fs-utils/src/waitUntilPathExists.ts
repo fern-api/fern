@@ -1,7 +1,7 @@
-import { delay } from '@fern-api/core-utils'
+import { delay } from "@fern-api/core-utils"
 
-import { AbsoluteFilePath } from './AbsoluteFilePath'
-import { doesPathExist } from './doesPathExist'
+import { AbsoluteFilePath } from "./AbsoluteFilePath"
+import { doesPathExist } from "./doesPathExist"
 
 export async function waitUntilPathExists(filepath: AbsoluteFilePath, timeoutMs: number): Promise<boolean> {
     const controller = new AbortController()

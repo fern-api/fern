@@ -1,1 +1,1 @@
-export { ValidateVersionFileRule } from './validate-version-file'
+export { ValidateVersionFileRule } from "./validate-version-file"

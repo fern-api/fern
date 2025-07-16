@@ -1,7 +1,7 @@
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { RelativeFilePath } from '@fern-api/path-utils'
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { RelativeFilePath } from "@fern-api/path-utils"
 
-import { ResolvedSource } from './ResolvedSource'
+import { ResolvedSource } from "./ResolvedSource"
 
 export interface SourceResolver {
     resolveSource: (args: { source: RawSchemas.SourceSchema }) => ResolvedSource | undefined

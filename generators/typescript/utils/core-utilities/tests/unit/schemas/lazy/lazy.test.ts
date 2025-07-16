@@ -1,8 +1,8 @@
-import { Schema } from '../../../../src/core/schemas/Schema'
-import { lazy, list, object, string } from '../../../../src/core/schemas/builders'
-import { itSchemaIdentity } from '../utils/itSchema'
+import { Schema } from "../../../../src/core/schemas/Schema"
+import { lazy, list, object, string } from "../../../../src/core/schemas/builders"
+import { itSchemaIdentity } from "../utils/itSchema"
 
-describe('lazy', () => {
+describe("lazy", () => {
     it("doesn't run immediately", () => {
         let wasRun = false
         lazy(() => {
@@ -12,29 +12,29 @@ describe('lazy', () => {
         expect(wasRun).toBe(false)
     })
 
-    it('only runs first time', async () => {
+    it("only runs first time", async () => {
         let count = 0
         const schema = lazy(() => {
             count++
             return string()
         })
-        await schema.parse('hello')
-        await schema.json('world')
+        await schema.parse("hello")
+        await schema.json("world")
         expect(count).toBe(1)
     })
 
     itSchemaIdentity(
         lazy(() => object({})),
-        { foo: 'hello' },
+        { foo: "hello" },
         {
-            title: 'passes opts through',
-            opts: { unrecognizedObjectKeys: 'passthrough' }
+            title: "passes opts through",
+            opts: { unrecognizedObjectKeys: "passthrough" }
         }
     )
 
     itSchemaIdentity(
         lazy(() => object({ foo: string() })),
-        { foo: 'hello' }
+        { foo: "hello" }
     )
 
     // eslint-disable-next-line jest/expect-expect
@@ -46,7 +46,7 @@ describe('lazy', () => {
     })
 
     // eslint-disable-next-line jest/expect-expect
-    it('self-referencial compiles with explicit type', () => {
+    it("self-referencial compiles with explicit type", () => {
         ;() => {
             interface TreeNode {
                 children: TreeNode[]

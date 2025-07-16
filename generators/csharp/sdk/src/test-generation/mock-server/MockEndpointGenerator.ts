@@ -1,9 +1,9 @@
-import { csharp } from '@fern-api/csharp-codegen'
+import { csharp } from "@fern-api/csharp-codegen"
 
-import { ExampleEndpointCall, ExampleTypeReference, HttpEndpoint } from '@fern-fern/ir-sdk/api'
+import { ExampleEndpointCall, ExampleTypeReference, HttpEndpoint } from "@fern-fern/ir-sdk/api"
 
-import { SdkGeneratorContext } from '../../SdkGeneratorContext'
-import { getContentTypeFromRequestBody } from '../../endpoint/utils/getContentTypeFromRequestBody'
+import { SdkGeneratorContext } from "../../SdkGeneratorContext"
+import { getContentTypeFromRequestBody } from "../../endpoint/utils/getContentTypeFromRequestBody"
 
 export declare namespace TestClass {
     interface TestInput {
@@ -22,12 +22,12 @@ export class MockEndpointGenerator {
     public generateForExamples(endpoint: HttpEndpoint, examples: ExampleEndpointCall[]): csharp.CodeBlock {
         return csharp.codeblock((writer) => {
             examples.forEach((example, index) => {
-                const suffix = examples.length === 1 ? '' : `_${index}`
+                const suffix = examples.length === 1 ? "" : `_${index}`
                 let responseSupported = false
                 let jsonExampleResponse: unknown | undefined = undefined
                 if (example.response != null) {
-                    if (example.response.type !== 'ok' || example.response.value.type !== 'body') {
-                        throw new Error('Unexpected error response type')
+                    if (example.response.type !== "ok" || example.response.value.type !== "body") {
+                        throw new Error("Unexpected error response type")
                     }
                     jsonExampleResponse = example.response.value.value?.jsonExample
                 }
@@ -35,7 +35,7 @@ export class MockEndpointGenerator {
                 // whether or not we support this response type in this generator; the example json may
                 // have a response that we can return, but our generated method actually returns void
                 responseSupported =
-                    jsonExampleResponse != null && (responseBodyType === 'json' || responseBodyType === 'text')
+                    jsonExampleResponse != null && (responseBodyType === "json" || responseBodyType === "text")
 
                 if (example.request != null) {
                     writer.writeLine(`const string requestJson${suffix} = """`)
@@ -45,11 +45,11 @@ export class MockEndpointGenerator {
                 writer.newLine()
 
                 if (jsonExampleResponse != null) {
-                    if (responseBodyType === 'json') {
+                    if (responseBodyType === "json") {
                         writer.writeLine(`const string mockResponse${suffix} = """`)
                         writer.writeLine(JSON.stringify(this.normalizeDatetimes(jsonExampleResponse), null, 2))
                         writer.writeTextStatement('"""')
-                    } else if (responseBodyType === 'text') {
+                    } else if (responseBodyType === "text") {
                         writer.writeTextStatement(
                             `const string mockResponse${suffix} = "${jsonExampleResponse as string}"`
                         )
@@ -58,8 +58,8 @@ export class MockEndpointGenerator {
 
                 writer.newLine()
 
-                writer.write('Server.Given(WireMock.RequestBuilders.Request.Create()')
-                writer.write(`.WithPath("${example.url || '/'}")`)
+                writer.write("Server.Given(WireMock.RequestBuilders.Request.Create()")
+                writer.write(`.WithPath("${example.url || "/"}")`)
 
                 for (const parameter of example.queryParameters) {
                     const maybeParameterValue = this.exampleToQueryOrHeaderValue(parameter)
@@ -82,21 +82,21 @@ export class MockEndpointGenerator {
                     `.Using${endpoint.method.charAt(0).toUpperCase() + endpoint.method.slice(1).toLowerCase()}()`
                 )
                 if (example.request != null) {
-                    if (typeof example.request.jsonExample !== 'object') {
+                    if (typeof example.request.jsonExample !== "object") {
                         // Not entirely sure why we can't use BodyAsJson here, but it causes test failure
                         writer.write(`.WithBody(requestJson${suffix})`)
                     } else {
                         writer.write(`.WithBodyAsJson(requestJson${suffix})`)
                     }
                 }
-                writer.writeLine(')')
+                writer.writeLine(")")
                 writer.newLine()
-                writer.writeLine('.RespondWith(WireMock.ResponseBuilders.Response.Create()')
-                writer.writeLine('.WithStatusCode(200)')
+                writer.writeLine(".RespondWith(WireMock.ResponseBuilders.Response.Create()")
+                writer.writeLine(".WithStatusCode(200)")
                 if (responseSupported) {
                     writer.writeTextStatement(`.WithBody(mockResponse${suffix}))`)
                 } else {
-                    writer.writeTextStatement(')')
+                    writer.writeTextStatement(")")
                 }
             })
         })
@@ -107,11 +107,11 @@ export class MockEndpointGenerator {
      and normalize the string so that we can match it in wire tests.
      */
     private exampleToQueryOrHeaderValue({ value }: { value: ExampleTypeReference }): string | undefined {
-        if (typeof value.jsonExample === 'string') {
+        if (typeof value.jsonExample === "string") {
             const maybeDatetime = this.getDateTime(value)
             return maybeDatetime != null ? maybeDatetime.toISOString() : value.jsonExample
         }
-        if (typeof value.jsonExample === 'number') {
+        if (typeof value.jsonExample === "number") {
             return value.jsonExample.toString()
         }
         return undefined
@@ -119,24 +119,24 @@ export class MockEndpointGenerator {
 
     private getDateTime(exampleTypeReference: ExampleTypeReference): Date | undefined {
         switch (exampleTypeReference.shape.type) {
-            case 'container':
-                if (exampleTypeReference.shape.container.type !== 'optional') {
+            case "container":
+                if (exampleTypeReference.shape.container.type !== "optional") {
                     return undefined
                 }
                 if (exampleTypeReference.shape.container.optional == null) {
                     return undefined
                 }
                 return this.getDateTime(exampleTypeReference.shape.container.optional)
-            case 'named':
-                if (exampleTypeReference.shape.shape.type !== 'alias') {
+            case "named":
+                if (exampleTypeReference.shape.shape.type !== "alias") {
                     return undefined
                 }
                 return this.getDateTime(exampleTypeReference.shape.shape.value)
-            case 'primitive':
-                return exampleTypeReference.shape.primitive.type === 'datetime'
+            case "primitive":
+                return exampleTypeReference.shape.primitive.type === "datetime"
                     ? exampleTypeReference.shape.primitive.datetime
                     : undefined
-            case 'unknown':
+            case "unknown":
                 return undefined
         }
     }
@@ -144,14 +144,14 @@ export class MockEndpointGenerator {
     private normalizeDatetimes(obj: unknown): unknown {
         function isValidDateString(datetimeString: string): boolean {
             const date = new Date(datetimeString)
-            return !isNaN(date.getTime()) && datetimeString.includes('T')
+            return !isNaN(date.getTime()) && datetimeString.includes("T")
         }
 
-        if (typeof obj === 'string' && isValidDateString(obj)) {
+        if (typeof obj === "string" && isValidDateString(obj)) {
             return new Date(obj).toISOString()
         } else if (Array.isArray(obj)) {
             return obj.map((item) => this.normalizeDatetimes(item))
-        } else if (obj != null && typeof obj === 'object') {
+        } else if (obj != null && typeof obj === "object") {
             const result: Record<string, unknown> = {}
             for (const [key, value] of Object.entries(obj)) {
                 result[key] = this.normalizeDatetimes(value)

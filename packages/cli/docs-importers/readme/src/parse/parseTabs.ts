@@ -1,17 +1,17 @@
-import type { Element, Root as HastRoot } from 'hast'
-import { CONTINUE, EXIT, visit } from 'unist-util-visit'
+import type { Element, Root as HastRoot } from "hast"
+import { CONTINUE, EXIT, visit } from "unist-util-visit"
 
-import { findTitle, getTitleFromLink } from '../extract/title'
-import { scrapedTab } from '../types/scrapedTab'
+import { findTitle, getTitleFromLink } from "../extract/title"
+import { scrapedTab } from "../types/scrapedTab"
 
 export function parseTabLinks(rootNode: HastRoot): Array<scrapedTab> | undefined {
     let element: Element | undefined = undefined as Element | undefined
-    visit(rootNode, 'element', function (node) {
+    visit(rootNode, "element", function (node) {
         if (
-            node.tagName === 'header' &&
+            node.tagName === "header" &&
             node.properties.className &&
             Array.isArray(node.properties.className) &&
-            node.properties.className.includes('rm-Header')
+            node.properties.className.includes("rm-Header")
         ) {
             element = node
             return EXIT
@@ -24,25 +24,25 @@ export function parseTabLinks(rootNode: HastRoot): Array<scrapedTab> | undefined
     }
 
     const links: Array<scrapedTab> = []
-    visit(element as Element, 'element', function (node) {
+    visit(element as Element, "element", function (node) {
         if (
-            node.tagName !== 'nav' &&
+            node.tagName !== "nav" &&
             !(
-                node.tagName === 'div' &&
+                node.tagName === "div" &&
                 node.properties.className &&
                 Array.isArray(node.properties.className) &&
-                node.properties.className.includes('rm-Header-right')
+                node.properties.className.includes("rm-Header-right")
             )
         ) {
             return CONTINUE
         }
 
-        visit(node, 'element', function (subNode) {
+        visit(node, "element", function (subNode) {
             if (
-                subNode.tagName !== 'a' ||
+                subNode.tagName !== "a" ||
                 !subNode.properties.href ||
-                typeof subNode.properties.href !== 'string' ||
-                subNode.properties.href.startsWith('http')
+                typeof subNode.properties.href !== "string" ||
+                subNode.properties.href.startsWith("http")
             ) {
                 return CONTINUE
             }
@@ -50,7 +50,7 @@ export function parseTabLinks(rootNode: HastRoot): Array<scrapedTab> | undefined
             const tabTitle = title || getTitleFromLink(subNode.properties.href)
 
             // Skip if title is "Recipes"
-            if (tabTitle === 'Recipes') {
+            if (tabTitle === "Recipes") {
                 return CONTINUE
             }
 

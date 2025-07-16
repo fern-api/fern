@@ -1,10 +1,10 @@
-import { RelativeFilePath, join } from '@fern-api/fs-utils'
-import { TypescriptCustomConfigSchema, ts } from '@fern-api/typescript-ast'
-import { ExportNode, FileGenerator, TypescriptFile } from '@fern-api/typescript-mcp-base'
+import { RelativeFilePath, join } from "@fern-api/fs-utils"
+import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast"
+import { ExportNode, FileGenerator, TypescriptFile } from "@fern-api/typescript-mcp-base"
 
-import { EnumTypeDeclaration, TypeDeclaration } from '@fern-fern/ir-sdk/api'
+import { EnumTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api"
 
-import { ModelGeneratorContext } from '../ModelGeneratorContext'
+import { ModelGeneratorContext } from "../ModelGeneratorContext"
 
 export class EnumGenerator extends FileGenerator<TypescriptFile, TypescriptCustomConfigSchema, ModelGeneratorContext> {
     private readonly schemaVariableName: string
@@ -28,7 +28,7 @@ export class EnumGenerator extends FileGenerator<TypescriptFile, TypescriptCusto
                     new ExportNode({
                         initializer: ts.invokeMethod({
                             on: this.context.project.builder.zodReference,
-                            method: 'enum',
+                            method: "enum",
                             arguments_: [
                                 ts.TypeLiteral.array({
                                     values: this.enumDeclaration.values.map((value) =>
@@ -48,7 +48,7 @@ export class EnumGenerator extends FileGenerator<TypescriptFile, TypescriptCusto
     }
 
     protected getDirectory(): RelativeFilePath {
-        return RelativeFilePath.of('')
+        return RelativeFilePath.of("")
     }
 
     protected getFilename(): string {

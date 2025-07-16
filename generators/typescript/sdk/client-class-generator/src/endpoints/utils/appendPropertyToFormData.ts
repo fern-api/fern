@@ -1,10 +1,10 @@
-import { SdkContext } from '@fern-typescript/contexts'
-import { ts } from 'ts-morph'
+import { SdkContext } from "@fern-typescript/contexts"
+import { ts } from "ts-morph"
 
-import { ContainerType, FileUploadRequestProperty, Type, TypeReference } from '@fern-fern/ir-sdk/api'
+import { ContainerType, FileUploadRequestProperty, Type, TypeReference } from "@fern-fern/ir-sdk/api"
 
-import { FileUploadRequestParameter } from '../../request-parameter/FileUploadRequestParameter'
-import { getParameterNameForFile } from './getParameterNameForFile'
+import { FileUploadRequestParameter } from "../../request-parameter/FileUploadRequestParameter"
+import { getParameterNameForFile } from "./getParameterNameForFile"
 
 export function appendPropertyToFormData({
     property,
@@ -27,7 +27,7 @@ export function appendPropertyToFormData({
 }): ts.Statement {
     return FileUploadRequestProperty._visit(property, {
         file: (property) => {
-            const FOR_LOOP_ITEM_VARIABLE_NAME = '_file'
+            const FOR_LOOP_ITEM_VARIABLE_NAME = "_file"
 
             let statement = context.coreUtilities.formDataUtils.appendFile({
                 referenceToFormData,
@@ -43,7 +43,7 @@ export function appendPropertyToFormData({
                 )
             })
 
-            if (property.type === 'fileArray') {
+            if (property.type === "fileArray") {
                 statement = ts.factory.createForOfStatement(
                     undefined,
                     ts.factory.createVariableDeclarationList(
@@ -102,23 +102,23 @@ export function appendPropertyToFormData({
         },
         bodyProperty: (property) => {
             if (requestParameter == null) {
-                throw new Error('Cannot append body property to form data because requestParameter is not defined.')
+                throw new Error("Cannot append body property to form data because requestParameter is not defined.")
             }
-            const FOR_LOOP_ITEM_VARIABLE_NAME = '_item'
+            const FOR_LOOP_ITEM_VARIABLE_NAME = "_item"
 
             const referenceToBodyProperty = requestParameter.getReferenceToBodyProperty(property, context)
 
             let statement: ts.Statement
 
-            if (property.style === 'form') {
+            if (property.style === "form") {
                 statement = ts.factory.createForOfStatement(
                     undefined,
                     ts.factory.createVariableDeclarationList(
                         [
                             ts.factory.createVariableDeclaration(
                                 ts.factory.createArrayBindingPattern([
-                                    ts.factory.createBindingElement(undefined, undefined, 'key'),
-                                    ts.factory.createBindingElement(undefined, undefined, 'value')
+                                    ts.factory.createBindingElement(undefined, undefined, "key"),
+                                    ts.factory.createBindingElement(undefined, undefined, "value")
                                 ]),
                                 undefined,
                                 undefined,
@@ -129,8 +129,8 @@ export function appendPropertyToFormData({
                     ),
                     ts.factory.createCallExpression(
                         ts.factory.createPropertyAccessExpression(
-                            ts.factory.createIdentifier('Object'),
-                            ts.factory.createIdentifier('entries')
+                            ts.factory.createIdentifier("Object"),
+                            ts.factory.createIdentifier("entries")
                         ),
                         undefined,
                         [
@@ -148,14 +148,14 @@ export function appendPropertyToFormData({
                         [
                             context.coreUtilities.formDataUtils.append({
                                 referenceToFormData,
-                                key: ts.factory.createIdentifier('key'),
-                                value: ts.factory.createIdentifier('value')
+                                key: ts.factory.createIdentifier("key"),
+                                value: ts.factory.createIdentifier("value")
                             })
                         ],
                         true
                     )
                 )
-            } else if (property.style === 'json') {
+            } else if (property.style === "json") {
                 // if JSON, always serialize to JSON, regardless of whether the property is iterable or not
                 statement = context.coreUtilities.formDataUtils.append({
                     referenceToFormData,
@@ -203,8 +203,8 @@ export function appendPropertyToFormData({
                         conditions.push(
                             ts.factory.createCallExpression(
                                 ts.factory.createPropertyAccessExpression(
-                                    ts.factory.createIdentifier('Array'),
-                                    ts.factory.createIdentifier('isArray')
+                                    ts.factory.createIdentifier("Array"),
+                                    ts.factory.createIdentifier("isArray")
                                 ),
                                 undefined,
                                 [referenceToBodyProperty]
@@ -216,7 +216,7 @@ export function appendPropertyToFormData({
                             ts.factory.createBinaryExpression(
                                 referenceToBodyProperty,
                                 ts.factory.createToken(ts.SyntaxKind.InstanceOfKeyword),
-                                ts.factory.createIdentifier('Set')
+                                ts.factory.createIdentifier("Set")
                             )
                         )
                     }
@@ -251,7 +251,7 @@ export function appendPropertyToFormData({
             return statement
         },
         _other: () => {
-            throw new Error('Unknown addPropertyToFormData: ' + property.type)
+            throw new Error("Unknown addPropertyToFormData: " + property.type)
         }
     })
 }
@@ -267,7 +267,7 @@ function isMaybeIterable(typeReference: TypeReference, context: SdkContext): boo
                 nullable: (itemType) => isMaybeIterable(itemType, context),
                 optional: (itemType) => isMaybeIterable(itemType, context),
                 _other: () => {
-                    throw new Error('Unknown ContainerType: ' + container.type)
+                    throw new Error("Unknown ContainerType: " + container.type)
                 }
             }),
         named: (typeName) => {
@@ -279,14 +279,14 @@ function isMaybeIterable(typeReference: TypeReference, context: SdkContext): boo
                 alias: ({ aliasOf }) => isMaybeIterable(aliasOf, context),
                 undiscriminatedUnion: ({ members }) => members.some((member) => isMaybeIterable(member.type, context)),
                 _other: () => {
-                    throw new Error('Unknown Type: ' + typeDeclaration.shape.type)
+                    throw new Error("Unknown Type: " + typeDeclaration.shape.type)
                 }
             })
         },
         primitive: () => false,
         unknown: () => true,
         _other: () => {
-            throw new Error('Unknown TypeReference: ' + typeReference.type)
+            throw new Error("Unknown TypeReference: " + typeReference.type)
         }
     })
 }
@@ -298,43 +298,43 @@ function stringifyIterableItemType(value: ts.Expression, iterable: TypeReference
                 list: (itemType) => context.type.stringify(value, itemType, { includeNullCheckIfOptional: false }),
                 set: (itemType) => context.type.stringify(value, itemType, { includeNullCheckIfOptional: false }),
                 map: () => {
-                    throw new Error('Map is not iterable.')
+                    throw new Error("Map is not iterable.")
                 },
                 literal: () => {
-                    throw new Error('Literal is not iterable.')
+                    throw new Error("Literal is not iterable.")
                 },
                 nullable: (itemType) => stringifyIterableItemType(value, itemType, context),
                 optional: (itemType) => stringifyIterableItemType(value, itemType, context),
                 _other: () => {
-                    throw new Error('Unknown ContainerType: ' + container.type)
+                    throw new Error("Unknown ContainerType: " + container.type)
                 }
             }),
         named: (typeName) => {
             const typeDeclaration = context.type.getTypeDeclaration(typeName)
             return Type._visit(typeDeclaration.shape, {
                 object: () => {
-                    throw new Error('Object is not iterable.')
+                    throw new Error("Object is not iterable.")
                 },
                 enum: () => {
-                    throw new Error('Enum is not iterable.')
+                    throw new Error("Enum is not iterable.")
                 },
                 union: () => {
-                    throw new Error('Union is not iterable.')
+                    throw new Error("Union is not iterable.")
                 },
                 alias: ({ aliasOf }) => stringifyIterableItemType(value, aliasOf, context),
                 undiscriminatedUnion: () =>
                     context.type.stringify(value, TypeReference.unknown(), { includeNullCheckIfOptional: false }),
                 _other: () => {
-                    throw new Error('Unknown Type: ' + typeDeclaration.shape.type)
+                    throw new Error("Unknown Type: " + typeDeclaration.shape.type)
                 }
             })
         },
         primitive: () => {
-            throw new Error('Primitive is not iterable.')
+            throw new Error("Primitive is not iterable.")
         },
         unknown: () => context.type.stringify(value, TypeReference.unknown(), { includeNullCheckIfOptional: false }),
         _other: () => {
-            throw new Error('Unknown TypeReference: ' + iterable.type)
+            throw new Error("Unknown TypeReference: " + iterable.type)
         }
     })
 }
@@ -350,7 +350,7 @@ function isDefinitelyIterable(typeReference: TypeReference, context: SdkContext)
                 nullable: () => false,
                 optional: (itemType) => isDefinitelyIterable(itemType, context),
                 _other: () => {
-                    throw new Error('Unknown ContainerType: ' + container.type)
+                    throw new Error("Unknown ContainerType: " + container.type)
                 }
             }),
         named: (typeName) => {
@@ -363,14 +363,14 @@ function isDefinitelyIterable(typeReference: TypeReference, context: SdkContext)
                 undiscriminatedUnion: ({ members }) =>
                     members.every((member) => isDefinitelyIterable(member.type, context)),
                 _other: () => {
-                    throw new Error('Unknown Type: ' + typeDeclaration.shape.type)
+                    throw new Error("Unknown Type: " + typeDeclaration.shape.type)
                 }
             })
         },
         primitive: () => false,
         unknown: () => false,
         _other: () => {
-            throw new Error('Unknown TypeReference: ' + typeReference.type)
+            throw new Error("Unknown TypeReference: " + typeReference.type)
         }
     })
 }
@@ -386,7 +386,7 @@ function isMaybeList(typeReference: TypeReference, context: SdkContext): boolean
                 nullable: () => false,
                 optional: (itemType) => isMaybeList(itemType, context),
                 _other: () => {
-                    throw new Error('Unknown ContainerType: ' + container.type)
+                    throw new Error("Unknown ContainerType: " + container.type)
                 }
             }),
         named: (typeName) => {
@@ -398,14 +398,14 @@ function isMaybeList(typeReference: TypeReference, context: SdkContext): boolean
                 alias: ({ aliasOf }) => isMaybeList(aliasOf, context),
                 undiscriminatedUnion: ({ members }) => members.some((member) => isMaybeList(member.type, context)),
                 _other: () => {
-                    throw new Error('Unknown Type: ' + typeDeclaration.shape.type)
+                    throw new Error("Unknown Type: " + typeDeclaration.shape.type)
                 }
             })
         },
         primitive: () => false,
         unknown: () => true,
         _other: () => {
-            throw new Error('Unknown TypeReference: ' + typeReference.type)
+            throw new Error("Unknown TypeReference: " + typeReference.type)
         }
     })
 }
@@ -421,7 +421,7 @@ function isMaybeSet(typeReference: TypeReference, context: SdkContext): boolean 
                 nullable: () => false,
                 optional: (itemType) => isMaybeSet(itemType, context),
                 _other: () => {
-                    throw new Error('Unknown ContainerType: ' + container.type)
+                    throw new Error("Unknown ContainerType: " + container.type)
                 }
             }),
         named: (typeName) => {
@@ -433,14 +433,14 @@ function isMaybeSet(typeReference: TypeReference, context: SdkContext): boolean 
                 alias: ({ aliasOf }) => isMaybeSet(aliasOf, context),
                 undiscriminatedUnion: ({ members }) => members.some((member) => isMaybeSet(member.type, context)),
                 _other: () => {
-                    throw new Error('Unknown Type: ' + typeDeclaration.shape.type)
+                    throw new Error("Unknown Type: " + typeDeclaration.shape.type)
                 }
             })
         },
         primitive: () => false,
         unknown: () => true,
         _other: () => {
-            throw new Error('Unknown TypeReference: ' + typeReference.type)
+            throw new Error("Unknown TypeReference: " + typeReference.type)
         }
     })
 }

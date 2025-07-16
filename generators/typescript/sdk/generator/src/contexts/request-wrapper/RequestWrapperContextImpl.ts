@@ -1,14 +1,14 @@
-import { ExportsManager, ImportsManager, PackageId } from '@fern-typescript/commons'
-import { GeneratedRequestWrapper, RequestWrapperContext } from '@fern-typescript/contexts'
-import { RequestWrapperGenerator } from '@fern-typescript/request-wrapper-generator'
-import { PackageResolver } from '@fern-typescript/resolvers'
-import { SourceFile, ts } from 'ts-morph'
+import { ExportsManager, ImportsManager, PackageId } from "@fern-typescript/commons"
+import { GeneratedRequestWrapper, RequestWrapperContext } from "@fern-typescript/contexts"
+import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator"
+import { PackageResolver } from "@fern-typescript/resolvers"
+import { SourceFile, ts } from "ts-morph"
 
-import { assertNever } from '@fern-api/core-utils'
+import { assertNever } from "@fern-api/core-utils"
 
-import { Name, SdkRequest } from '@fern-fern/ir-sdk/api'
+import { Name, SdkRequest } from "@fern-fern/ir-sdk/api"
 
-import { RequestWrapperDeclarationReferencer } from '../../declaration-referencers/RequestWrapperDeclarationReferencer'
+import { RequestWrapperDeclarationReferencer } from "../../declaration-referencers/RequestWrapperDeclarationReferencer"
 
 export declare namespace RequestWrapperContextImpl {
     export interface Init {
@@ -23,7 +23,7 @@ export declare namespace RequestWrapperContextImpl {
         inlineFileProperties: boolean
         inlinePathParameters: boolean
         enableInlineTypes: boolean
-        formDataSupport: 'Node16' | 'Node18'
+        formDataSupport: "Node16" | "Node18"
     }
 }
 
@@ -39,7 +39,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
     private inlineFileProperties: boolean
     private inlinePathParameters: boolean
     private enableInlineTypes: boolean
-    private readonly formDataSupport: 'Node16' | 'Node18'
+    private readonly formDataSupport: "Node16" | "Node18"
 
     constructor({
         requestWrapperGenerator,
@@ -77,9 +77,9 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
             return false
         }
         switch (sdkRequest.shape.type) {
-            case 'justRequestBody':
+            case "justRequestBody":
                 return false
-            case 'wrapper':
+            case "wrapper":
                 break
             default:
                 assertNever(sdkRequest.shape)
@@ -131,7 +131,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
             importsManager: this.importsManager,
             exportsManager: this.exportsManager,
             importStrategy: {
-                type: 'fromRoot',
+                type: "fromRoot",
                 namespaceImport: this.requestWrapperDeclarationReferencer.namespaceExport
             },
             referencedIn: this.sourceFile

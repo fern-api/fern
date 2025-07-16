@@ -1,10 +1,10 @@
-import { assertNever } from '@fern-api/core-utils'
+import { assertNever } from "@fern-api/core-utils"
 
-import { ClassInstantiation } from './ClassInstantiation'
-import { ClassReference } from './ClassReference'
-import { CodeBlock } from './CodeBlock'
-import { MethodInvocation } from './MethodInvocation'
-import { AstNode, Writer } from './core'
+import { ClassInstantiation } from "./ClassInstantiation"
+import { ClassReference } from "./ClassReference"
+import { CodeBlock } from "./CodeBlock"
+import { MethodInvocation } from "./MethodInvocation"
+import { AstNode, Writer } from "./core"
 
 type InternalTypeLiteral =
     | Boolean_
@@ -22,12 +22,12 @@ type InternalTypeLiteral =
     | Nop
 
 interface Boolean_ {
-    type: 'boolean'
+    type: "boolean"
     value: boolean
 }
 
 interface Class_ {
-    type: 'class'
+    type: "class"
     reference: ClassReference
     fields: ConstructorField[]
 }
@@ -38,27 +38,27 @@ export interface ConstructorField {
 }
 
 interface DateTime {
-    type: 'datetime'
+    type: "datetime"
     value: string
 }
 
 interface File {
-    type: 'file'
+    type: "file"
     value: string
 }
 
 interface Float {
-    type: 'float'
+    type: "float"
     value: number
 }
 
 interface List {
-    type: 'list'
+    type: "list"
     values: TypeLiteral[]
 }
 
 interface Map {
-    type: 'map'
+    type: "map"
     entries: MapEntry[]
 }
 
@@ -68,31 +68,31 @@ interface MapEntry {
 }
 
 interface Number_ {
-    type: 'number'
+    type: "number"
     value: number
 }
 
 interface Reference {
-    type: 'reference'
+    type: "reference"
     value: AstNode
 }
 
 interface String_ {
-    type: 'string'
+    type: "string"
     value: string
 }
 
 interface Unknown_ {
-    type: 'unknown'
+    type: "unknown"
     value: unknown
 }
 
 interface Null_ {
-    type: 'null'
+    type: "null"
 }
 
 interface Nop {
-    type: 'nop'
+    type: "nop"
 }
 
 export class TypeLiteral extends AstNode {
@@ -102,44 +102,44 @@ export class TypeLiteral extends AstNode {
 
     public write(writer: Writer): void {
         switch (this.internalType.type) {
-            case 'list': {
+            case "list": {
                 this.writeList({ writer, list: this.internalType })
                 break
             }
-            case 'boolean': {
+            case "boolean": {
                 writer.write(this.internalType.value.toString())
                 break
             }
-            case 'class': {
+            case "class": {
                 this.writeClass({ writer, class_: this.internalType })
                 break
             }
-            case 'file': {
+            case "file": {
                 writer.writeNode(buildFileFromString({ writer, value: this.internalType.value }))
                 break
             }
-            case 'float': {
+            case "float": {
                 writer.write(this.internalType.value.toString())
                 break
             }
-            case 'number': {
+            case "number": {
                 writer.write(this.internalType.value.toString())
                 break
             }
-            case 'map': {
+            case "map": {
                 this.writeMap({ writer, map: this.internalType })
                 break
             }
-            case 'reference': {
+            case "reference": {
                 writer.writeNode(this.internalType.value)
                 break
             }
-            case 'datetime': {
+            case "datetime": {
                 writer.writeNode(buildDateTimeFromString({ writer, value: this.internalType.value }))
                 break
             }
-            case 'string': {
-                if (this.internalType.value.includes('\n')) {
+            case "string": {
+                if (this.internalType.value.includes("\n")) {
                     this.writeStringWithHeredoc({ writer, value: this.internalType.value })
                     break
                 }
@@ -150,15 +150,15 @@ export class TypeLiteral extends AstNode {
                 writer.write(`'${this.internalType.value}'`)
                 break
             }
-            case 'unknown': {
+            case "unknown": {
                 this.writeUnknown({ writer, value: this.internalType.value })
                 break
             }
-            case 'null': {
-                writer.write('null')
+            case "null": {
+                writer.write("null")
                 break
             }
-            case 'nop':
+            case "nop":
                 break
             default:
                 assertNever(this.internalType)
@@ -166,21 +166,21 @@ export class TypeLiteral extends AstNode {
     }
 
     public isClass(): this is Class_ {
-        return (this.internalType as Class_).type === 'class'
+        return (this.internalType as Class_).type === "class"
     }
 
     public asClassOrThrow(): Class_ {
         if (this.isClass()) {
             return this.internalType as Class_
         }
-        throw new Error('Internal error; ts.TypeLiteral is not a class')
+        throw new Error("Internal error; ts.TypeLiteral is not a class")
     }
 
     private writeStringWithHeredoc({ writer, value }: { writer: Writer; value: string }): void {
-        writer.writeLine('<<<EOT')
+        writer.writeLine("<<<EOT")
         writer.writeNoIndent(value)
         writer.newLine()
-        writer.writeNoIndent('EOT')
+        writer.writeNoIndent("EOT")
     }
 
     private writeClass({ writer, class_: class_ }: { writer: Writer; class_: Class_ }): void {
@@ -202,49 +202,49 @@ export class TypeLiteral extends AstNode {
     private writeList({ writer, list }: { writer: Writer; list: List }): void {
         const values = filterNopValues({ values: list.values })
         if (values.length === 0) {
-            writer.write('[]')
+            writer.write("[]")
             return
         }
 
-        writer.writeLine('[')
+        writer.writeLine("[")
         writer.indent()
         for (const value of values) {
             value.write(writer)
-            writer.writeLine(',')
+            writer.writeLine(",")
         }
         writer.dedent()
-        writer.write(']')
+        writer.write("]")
     }
 
     private writeMap({ writer, map }: { writer: Writer; map: Map }): void {
         const entries = filterNopMapEntries({ entries: map.entries })
         if (entries.length === 0) {
-            writer.write('[]')
+            writer.write("[]")
             return
         }
 
-        writer.writeLine('[')
+        writer.writeLine("[")
         writer.indent()
         for (const entry of entries) {
             entry.key.write(writer)
-            writer.write(' => ')
+            writer.write(" => ")
             entry.value.write(writer)
-            writer.writeLine(',')
+            writer.writeLine(",")
         }
         writer.dedent()
-        writer.write(']')
+        writer.write("]")
     }
 
     /* Static factory methods for creating a TypeLiteral */
     public static list({ values }: { values: TypeLiteral[] }): TypeLiteral {
         return new this({
-            type: 'list',
+            type: "list",
             values
         })
     }
 
     public static boolean(value: boolean): TypeLiteral {
-        return new this({ type: 'boolean', value })
+        return new this({ type: "boolean", value })
     }
 
     public static class_({
@@ -254,76 +254,76 @@ export class TypeLiteral extends AstNode {
         reference: ClassReference
         fields: ConstructorField[]
     }): TypeLiteral {
-        return new this({ type: 'class', reference, fields })
+        return new this({ type: "class", reference, fields })
     }
 
     public static file(value: string): TypeLiteral {
-        return new this({ type: 'file', value })
+        return new this({ type: "file", value })
     }
 
     public static float(value: number): TypeLiteral {
-        return new this({ type: 'float', value })
+        return new this({ type: "float", value })
     }
 
     public static datetime(value: string): TypeLiteral {
-        return new this({ type: 'datetime', value })
+        return new this({ type: "datetime", value })
     }
 
     public static number(value: number): TypeLiteral {
-        return new this({ type: 'number', value })
+        return new this({ type: "number", value })
     }
 
     public static map({ entries }: { entries: MapEntry[] }): TypeLiteral {
         return new this({
-            type: 'map',
+            type: "map",
             entries
         })
     }
 
     public static reference(value: AstNode): TypeLiteral {
         return new this({
-            type: 'reference',
+            type: "reference",
             value
         })
     }
 
     public static string(value: string): TypeLiteral {
         return new this({
-            type: 'string',
+            type: "string",
             value
         })
     }
 
     public static unknown(value: unknown): TypeLiteral {
-        return new this({ type: 'unknown', value })
+        return new this({ type: "unknown", value })
     }
 
     public static null(): TypeLiteral {
-        return new this({ type: 'null' })
+        return new this({ type: "null" })
     }
 
     public static nop(): TypeLiteral {
-        return new this({ type: 'nop' })
+        return new this({ type: "nop" })
     }
 
     public static isNop(typeLiteral: TypeLiteral): boolean {
-        return typeLiteral.internalType.type === 'nop'
+        return typeLiteral.internalType.type === "nop"
     }
 
     private writeUnknown({ writer, value }: { writer: Writer; value: unknown }): void {
         switch (typeof value) {
-            case 'boolean':
+            case "boolean":
                 writer.write(value.toString())
                 return
-            case 'string':
+            case "string":
                 writer.write(value.includes('"') ? `\`${value}\`` : `"${value}"`)
                 return
-            case 'number':
+            case "number":
                 writer.write(value.toString())
                 return
-            case 'object':
+            case "object":
                 if (value == null) {
-                    writer.write('null')
+                    writer.write("null")
                     return
                 }
                 if (Array.isArray(value)) {
@@ -346,42 +346,42 @@ export class TypeLiteral extends AstNode {
         value: any[]
     }): void {
         if (value.length === 0) {
-            writer.write('[]')
+            writer.write("[]")
             return
         }
-        writer.writeLine('[')
+        writer.writeLine("[")
         writer.indent()
         for (const element of value) {
             writer.writeNode(TypeLiteral.unknown(element))
-            writer.writeLine(',')
+            writer.writeLine(",")
         }
         writer.dedent()
-        writer.write(']')
+        writer.write("]")
     }
 
     private writeUnknownMap({ writer, value }: { writer: Writer; value: object }): void {
         const entries = Object.entries(value)
         if (entries.length === 0) {
-            writer.write('[]')
+            writer.write("[]")
             return
         }
-        writer.writeLine('[')
+        writer.writeLine("[")
         writer.indent()
         for (const [key, val] of entries) {
             writer.write(`'${key}' => `)
             writer.writeNode(TypeLiteral.unknown(val))
-            writer.writeLine(',')
+            writer.writeLine(",")
         }
         writer.dedent()
-        writer.write(']')
+        writer.write("]")
     }
 }
 
 function buildDateTimeFromString({ writer, value }: { writer: Writer; value: string }): ClassInstantiation {
     return new ClassInstantiation({
         classReference: new ClassReference({
-            name: 'DateTime',
-            namespace: ''
+            name: "DateTime",
+            namespace: ""
         }),
         arguments_: [new CodeBlock(`'${value}'`)]
     })
@@ -389,10 +389,10 @@ function buildDateTimeFromString({ writer, value }: { writer: Writer; value: str
 function buildFileFromString({ writer, value }: { writer: Writer; value: string }): MethodInvocation {
     return new MethodInvocation({
         on: new ClassReference({
-            name: 'File',
+            name: "File",
             namespace: `${writer.rootNamespace}\\Utils`
         }),
-        method: 'createFromString',
+        method: "createFromString",
         arguments_: [new CodeBlock(`"${value}"`)]
     })
 }

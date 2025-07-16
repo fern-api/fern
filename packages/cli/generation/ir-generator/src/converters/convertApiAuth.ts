@@ -1,11 +1,11 @@
-import { RawSchemas, visitRawApiAuth, visitRawAuthSchemeDeclaration } from '@fern-api/fern-definition-schema'
-import { ApiAuth, AuthScheme, AuthSchemesRequirement, OAuthConfiguration } from '@fern-api/ir-sdk'
+import { RawSchemas, visitRawApiAuth, visitRawAuthSchemeDeclaration } from "@fern-api/fern-definition-schema"
+import { ApiAuth, AuthScheme, AuthSchemesRequirement, OAuthConfiguration } from "@fern-api/ir-sdk"
 
-import { FernFileContext } from '../FernFileContext'
-import { EndpointResolver } from '../resolvers/EndpointResolver'
-import { PropertyResolver } from '../resolvers/PropertyResolver'
-import { convertOAuthClientCredentials } from './convertOAuthClientCredentials'
-import { getRefreshTokenEndpoint, getTokenEndpoint } from './convertOAuthUtils'
+import { FernFileContext } from "../FernFileContext"
+import { EndpointResolver } from "../resolvers/EndpointResolver"
+import { PropertyResolver } from "../resolvers/PropertyResolver"
+import { convertOAuthClientCredentials } from "./convertOAuthClientCredentials"
+import { getRefreshTokenEndpoint, getTokenEndpoint } from "./convertOAuthUtils"
 
 export function convertApiAuth({
     rawApiFileSchema,
@@ -26,12 +26,12 @@ export function convertApiAuth({
         }
     }
 
-    const docs = typeof rawApiFileSchema.auth !== 'string' ? rawApiFileSchema.auth.docs : undefined
+    const docs = typeof rawApiFileSchema.auth !== "string" ? rawApiFileSchema.auth.docs : undefined
     return visitRawApiAuth<ApiAuth>(rawApiFileSchema.auth, {
         single: (authScheme) => {
             const schemaReference = convertSchemeReference({
                 reference: authScheme,
-                authSchemeDeclarations: rawApiFileSchema['auth-schemes'],
+                authSchemeDeclarations: rawApiFileSchema["auth-schemes"],
                 file,
                 propertyResolver,
                 endpointResolver
@@ -48,7 +48,7 @@ export function convertApiAuth({
             schemes: any.map((schemeReference) =>
                 convertSchemeReference({
                     reference: schemeReference,
-                    authSchemeDeclarations: rawApiFileSchema['auth-schemes'],
+                    authSchemeDeclarations: rawApiFileSchema["auth-schemes"],
                     file,
                     propertyResolver,
                     endpointResolver
@@ -74,7 +74,7 @@ function convertSchemeReference({
     const convertNamedAuthSchemeReference = (reference: string, docs: string | undefined) => {
         const declaration = authSchemeDeclarations?.[reference]
         if (declaration == null) {
-            throw new Error('Unknown auth scheme: ' + reference)
+            throw new Error("Unknown auth scheme: " + reference)
         }
         return visitRawAuthSchemeDeclaration<AuthScheme>(declaration, {
             header: (rawHeader) =>
@@ -84,7 +84,7 @@ function convertSchemeReference({
                         name: rawHeader.name ?? reference,
                         wireValue: rawHeader.header
                     }),
-                    valueType: file.parseTypeReference(rawHeader.type ?? 'string'),
+                    valueType: file.parseTypeReference(rawHeader.type ?? "string"),
                     prefix: rawHeader.prefix,
                     headerEnvVar: rawHeader.env
                 }),
@@ -111,22 +111,22 @@ function convertSchemeReference({
         })
     }
 
-    const scheme = typeof reference === 'string' ? reference : reference.scheme
+    const scheme = typeof reference === "string" ? reference : reference.scheme
 
     switch (scheme) {
-        case 'bearer':
+        case "bearer":
             return generateBearerAuth({
                 file,
                 docs: undefined,
                 rawScheme: undefined
             })
-        case 'basic':
+        case "basic":
             return generateBasicAuth({
                 file,
                 docs: undefined,
                 rawScheme: undefined
             })
-        case 'oauth':
+        case "oauth":
             return generateOAuth({
                 file,
                 docs: undefined,
@@ -135,7 +135,7 @@ function convertSchemeReference({
                 endpointResolver
             })
         default:
-            return convertNamedAuthSchemeReference(scheme, typeof reference !== 'string' ? reference.docs : undefined)
+            return convertNamedAuthSchemeReference(scheme, typeof reference !== "string" ? reference.docs : undefined)
     }
 }
 
@@ -150,7 +150,7 @@ function generateBearerAuth({
 }): AuthScheme.Bearer {
     return AuthScheme.bearer({
         docs,
-        token: file.casingsGenerator.generateName(rawScheme?.token?.name ?? 'token'),
+        token: file.casingsGenerator.generateName(rawScheme?.token?.name ?? "token"),
         tokenEnvVar: rawScheme?.token?.env
     })
 }
@@ -166,9 +166,9 @@ function generateBasicAuth({
 }): AuthScheme.Basic {
     return AuthScheme.basic({
         docs,
-        username: file.casingsGenerator.generateName(rawScheme?.username?.name ?? 'username'),
+        username: file.casingsGenerator.generateName(rawScheme?.username?.name ?? "username"),
         usernameEnvVar: rawScheme?.username?.env,
-        password: file.casingsGenerator.generateName(rawScheme?.password?.name ?? 'password'),
+        password: file.casingsGenerator.generateName(rawScheme?.password?.name ?? "password"),
         passwordEnvVar: rawScheme?.password?.env
     })
 }
@@ -187,7 +187,7 @@ function generateOAuth({
     endpointResolver: EndpointResolver
 }): AuthScheme.Oauth {
     switch (rawScheme?.type) {
-        case 'client-credentials':
+        case "client-credentials":
             return AuthScheme.oauth({
                 docs,
                 configuration: OAuthConfiguration.clientCredentials(

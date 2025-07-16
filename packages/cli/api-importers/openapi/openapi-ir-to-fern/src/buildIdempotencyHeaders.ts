@@ -1,12 +1,12 @@
-import { ROOT_API_FILENAME } from '@fern-api/configuration'
-import { PrimitiveSchemaValue, Schema } from '@fern-api/openapi-ir'
-import { RelativeFilePath } from '@fern-api/path-utils'
+import { ROOT_API_FILENAME } from "@fern-api/configuration"
+import { PrimitiveSchemaValue, Schema } from "@fern-api/openapi-ir"
+import { RelativeFilePath } from "@fern-api/path-utils"
 
-import { OpenApiIrConverterContext } from './OpenApiIrConverterContext'
-import { buildHeader } from './buildHeader'
-import { getGroupNameForSchema } from './utils/getGroupNameForSchema'
-import { getNamespaceFromGroup } from './utils/getNamespaceFromGroup'
-import { wrapTypeReferenceAsOptional } from './utils/wrapTypeReferenceAsOptional'
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext"
+import { buildHeader } from "./buildHeader"
+import { getGroupNameForSchema } from "./utils/getGroupNameForSchema"
+import { getNamespaceFromGroup } from "./utils/getNamespaceFromGroup"
+import { wrapTypeReferenceAsOptional } from "./utils/wrapTypeReferenceAsOptional"
 
 export function buildIdempotencyHeaders(context: OpenApiIrConverterContext): void {
     for (const header of context.ir.idempotencyHeaders ?? []) {
@@ -20,7 +20,7 @@ export function buildIdempotencyHeaders(context: OpenApiIrConverterContext): voi
                     Schema.primitive({
                         description: undefined,
                         availability: undefined,
-                        generatedName: '',
+                        generatedName: "",
                         title: undefined,
                         namespace: undefined,
                         groupName: undefined,

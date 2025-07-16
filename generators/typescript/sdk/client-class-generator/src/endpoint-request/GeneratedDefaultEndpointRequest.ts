@@ -6,11 +6,11 @@ import {
     getParameterNameForPositionalPathParameter,
     getPropertyKey,
     getTextOfTsNode
-} from '@fern-typescript/commons'
-import { SdkContext } from '@fern-typescript/contexts'
-import { OptionalKind, ParameterDeclarationStructure, ts } from 'ts-morph'
+} from "@fern-typescript/commons"
+import { SdkContext } from "@fern-typescript/contexts"
+import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph"
 
-import { assertNever } from '@fern-api/core-utils'
+import { assertNever } from "@fern-api/core-utils"
 
 import {
     ExampleEndpointCall,
@@ -21,16 +21,16 @@ import {
     IntermediateRepresentation,
     SdkRequest,
     SdkRequestShape
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { GeneratedSdkClientClassImpl } from '../GeneratedSdkClientClassImpl'
-import { GeneratedQueryParams } from '../endpoints/utils/GeneratedQueryParams'
-import { generateHeaders } from '../endpoints/utils/generateHeaders'
-import { getPathParametersForEndpointSignature } from '../endpoints/utils/getPathParametersForEndpointSignature'
-import { RequestBodyParameter } from '../request-parameter/RequestBodyParameter'
-import { RequestParameter } from '../request-parameter/RequestParameter'
-import { RequestWrapperParameter } from '../request-parameter/RequestWrapperParameter'
-import { GeneratedEndpointRequest } from './GeneratedEndpointRequest'
+import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl"
+import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams"
+import { generateHeaders } from "../endpoints/utils/generateHeaders"
+import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature"
+import { RequestBodyParameter } from "../request-parameter/RequestBodyParameter"
+import { RequestParameter } from "../request-parameter/RequestParameter"
+import { RequestWrapperParameter } from "../request-parameter/RequestWrapperParameter"
+import { GeneratedEndpointRequest } from "./GeneratedEndpointRequest"
 
 export declare namespace GeneratedDefaultEndpointRequest {
     export interface Init {
@@ -85,8 +85,8 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             sdkRequest != null
                 ? SdkRequestShape._visit<RequestParameter>(sdkRequest.shape, {
                       justRequestBody: (requestBodyReference) => {
-                          if (requestBodyReference.type === 'bytes') {
-                              throw new Error('Bytes request is not supported')
+                          if (requestBodyReference.type === "bytes") {
+                              throw new Error("Bytes request is not supported")
                           }
                           return new RequestBodyParameter({
                               packageId,
@@ -98,7 +98,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                       },
                       wrapper: () => new RequestWrapperParameter({ packageId, service, endpoint, sdkRequest }),
                       _other: () => {
-                          throw new Error('Unknown SdkRequest: ' + this.endpoint.sdkRequest?.shape.type)
+                          throw new Error("Unknown SdkRequest: " + this.endpoint.sdkRequest?.shape.type)
                       }
                   })
                 : undefined
@@ -154,7 +154,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                 (param) => param.name.originalName === pathParameter.name.originalName
             )
             if (exampleParameter == null) {
-                result.push(ts.factory.createIdentifier('undefined'))
+                result.push(ts.factory.createIdentifier("undefined"))
             } else {
                 const generatedExample = context.type.getGeneratedExample(exampleParameter.value)
                 result.push(generatedExample.build(context, opts))
@@ -164,7 +164,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             const requestParameterExample = this.requestParameter.generateExample({ context, example, opts })
             if (
                 requestParameterExample != null &&
-                getTextOfTsNode(requestParameterExample) === '{}' &&
+                getTextOfTsNode(requestParameterExample) === "{}" &&
                 this.requestParameter.isOptional({ context })
             ) {
                 // pass
@@ -195,7 +195,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
 
     public getFetcherRequestArgs(
         context: SdkContext
-    ): Pick<Fetcher.Args, 'headers' | 'queryParameters' | 'body' | 'contentType' | 'requestType'> {
+    ): Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType" | "requestType"> {
         return {
             headers: this.getHeaders(context),
             queryParameters: this.getQueryParams(context).getReferenceTo(),
@@ -206,27 +206,27 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     }
 
     private getFallbackContentType(): string | undefined {
-        const requestBodyType = this.requestBody?.type ?? 'undefined'
+        const requestBodyType = this.requestBody?.type ?? "undefined"
         switch (requestBodyType) {
-            case 'inlinedRequestBody':
-                return 'application/json'
-            case 'reference':
-                return 'application/json'
-            case 'undefined':
+            case "inlinedRequestBody":
+                return "application/json"
+            case "reference":
+                return "application/json"
+            case "undefined":
                 return undefined
             default:
                 assertNever(requestBodyType)
         }
     }
 
-    private getRequestType(): 'json' | undefined {
-        const requestBodyType = this.requestBody?.type ?? 'undefined'
+    private getRequestType(): "json" | undefined {
+        const requestBodyType = this.requestBody?.type ?? "undefined"
         switch (requestBodyType) {
-            case 'inlinedRequestBody':
-                return 'json'
-            case 'reference':
-                return 'json'
-            case 'undefined':
+            case "inlinedRequestBody":
+                return "json"
+            case "reference":
+                return "json"
+            case "undefined":
                 return undefined
             default:
                 assertNever(requestBodyType)
@@ -270,7 +270,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                 ts.factory.createToken(ts.SyntaxKind.QuestionToken),
                 serializeExpression,
                 ts.factory.createToken(ts.SyntaxKind.ColonToken),
-                ts.factory.createIdentifier('undefined')
+                ts.factory.createIdentifier("undefined")
             )
         }
 
@@ -283,7 +283,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         context: SdkContext
     ): ts.Expression {
         switch (requestBody.type) {
-            case 'inlinedRequestBody': {
+            case "inlinedRequestBody": {
                 const serializeExpression = context.sdkInlinedRequestBodySchema
                     .getGeneratedInlinedRequestBodySchema(this.packageId, this.endpoint.name)
                     .serializeRequest(referenceToRequestBody, context)
@@ -293,7 +293,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                     context
                 })
             }
-            case 'reference':
+            case "reference":
                 return context.sdkEndpointTypeSchemas
                     .getGeneratedEndpointTypeSchemas(this.packageId, this.endpoint.name)
                     .serializeRequest(referenceToRequestBody, context)
@@ -318,7 +318,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                 ...literalProperties.map((property) => {
                     return ts.factory.createPropertyAssignment(
                         getPropertyKey(property.propertyWireKey),
-                        typeof property.propertyValue === 'string'
+                        typeof property.propertyValue === "string"
                             ? ts.factory.createStringLiteral(property.propertyValue)
                             : property.propertyValue
                               ? ts.factory.createTrue()
@@ -341,13 +341,13 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         const result: LiteralPropertyValue[] = []
         for (const property of inlinedRequestBody.properties) {
             const resolvedType = context.type.resolveTypeReference(property.valueType)
-            if (resolvedType.type === 'container' && resolvedType.container.type === 'literal') {
+            if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
                 result.push({
                     propertyValue: resolvedType.container.literal._visit<boolean | string>({
                         string: (val: string) => val,
                         boolean: (val: boolean) => val,
                         _other: () => {
-                            throw new Error('Encountered non-boolean, non-string literal')
+                            throw new Error("Encountered non-boolean, non-string literal")
                         }
                     }),
                     propertyWireKey: property.name.wireValue
@@ -362,9 +362,9 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         context: SdkContext
     ): boolean {
         switch (requestBody.type) {
-            case 'inlinedRequestBody':
+            case "inlinedRequestBody":
                 return false
-            case 'reference': {
+            case "reference": {
                 return (
                     context.type.isOptional(requestBody.requestBodyType) ||
                     context.type.isNullable(requestBody.requestBodyType)
@@ -381,14 +381,14 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
 
     public getReferenceToPathParameter(pathParameterKey: string, context: SdkContext): ts.Expression {
         if (this.requestParameter == null) {
-            throw new Error('Cannot get reference to path parameter because request parameter is not defined.')
+            throw new Error("Cannot get reference to path parameter because request parameter is not defined.")
         }
         return this.requestParameter.getReferenceToPathParameter(pathParameterKey, context)
     }
 
     public getReferenceToQueryParameter(queryParameterKey: string, context: SdkContext): ts.Expression {
         if (this.requestParameter == null) {
-            throw new Error('Cannot get reference to query parameter because request parameter is not defined.')
+            throw new Error("Cannot get reference to query parameter because request parameter is not defined.")
         }
         return this.requestParameter.getReferenceToQueryParameter(queryParameterKey, context)
     }

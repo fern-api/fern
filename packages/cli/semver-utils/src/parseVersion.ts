@@ -20,31 +20,31 @@ export type ParsedVersion =
     | BetaRelease
 
 export interface ReleaseCandidate extends BaseVersion {
-    type: 'rc'
+    type: "rc"
     releaseCandidateIndex: number
 }
 
 export interface PostReleaseCandidateCommit extends BaseVersion {
-    type: 'post-rc-commit'
+    type: "post-rc-commit"
     releaseCandidateIndex: number
     commitIndex: number
 }
 
 export interface Release extends BaseVersion {
-    type: 'release'
+    type: "release"
 }
 
 export interface PostReleaseCommit extends BaseVersion {
-    type: 'post-release-commit'
+    type: "post-release-commit"
     commitIndex: number
 }
 
 export interface AlphaRelease extends BaseVersion {
-    type: 'alpha'
+    type: "alpha"
     index: number
 }
 export interface BetaRelease extends BaseVersion {
-    type: 'beta'
+    type: "beta"
     index: number
 }
 
@@ -57,10 +57,10 @@ export function parseVersion(versionString: string): ParsedVersion {
         const parsedPatch = parseNumber(patch)
         const parsedIndex = parseNumber(index)
         if (parsedMajor == null || parsedMinor == null || parsedPatch == null || parsedIndex == null) {
-            throw new Error('Cannot parse alpha version: ' + versionString)
+            throw new Error("Cannot parse alpha version: " + versionString)
         }
         return {
-            type: 'alpha',
+            type: "alpha",
             major: parsedMajor,
             minor: parsedMinor,
             patch: parsedPatch,
@@ -76,10 +76,10 @@ export function parseVersion(versionString: string): ParsedVersion {
         const parsedPatch = parseNumber(patch)
         const parsedIndex = parseNumber(index)
         if (parsedMajor == null || parsedMinor == null || parsedPatch == null || parsedIndex == null) {
-            throw new Error('Cannot parse beta version: ' + versionString)
+            throw new Error("Cannot parse beta version: " + versionString)
         }
         return {
-            type: 'beta',
+            type: "beta",
             major: parsedMajor,
             minor: parsedMinor,
             patch: parsedPatch,
@@ -95,10 +95,10 @@ export function parseVersion(versionString: string): ParsedVersion {
         const parsedPatch = parseNumber(patch)
         const parsedCommitIndex = parseNumber(commitIndex)
         if (parsedMajor == null || parsedMinor == null || parsedPatch == null || parsedCommitIndex == null) {
-            throw new Error('Cannot parse post-release commit version: ' + versionString)
+            throw new Error("Cannot parse post-release commit version: " + versionString)
         }
         return {
-            type: 'post-release-commit',
+            type: "post-release-commit",
             major: parsedMajor,
             minor: parsedMinor,
             patch: parsedPatch,
@@ -114,10 +114,10 @@ export function parseVersion(versionString: string): ParsedVersion {
         const parsedPatch = parseNumber(patch)
         const parsedRcIndex = parseNumber(rcIndex)
         if (parsedMajor == null || parsedMinor == null || parsedPatch == null || parsedRcIndex == null) {
-            throw new Error('Cannot parse RC version: ' + versionString)
+            throw new Error("Cannot parse RC version: " + versionString)
         }
         return {
-            type: 'rc',
+            type: "rc",
             major: parsedMajor,
             minor: parsedMinor,
             patch: parsedPatch,
@@ -140,10 +140,10 @@ export function parseVersion(versionString: string): ParsedVersion {
             parsedRcIndex == null ||
             parsedCommitIndex == null
         ) {
-            throw new Error('Cannot parse post-RC version: ' + versionString)
+            throw new Error("Cannot parse post-RC version: " + versionString)
         }
         return {
-            type: 'post-rc-commit',
+            type: "post-rc-commit",
             major: parsedMajor,
             minor: parsedMinor,
             patch: parsedPatch,
@@ -159,17 +159,17 @@ export function parseVersion(versionString: string): ParsedVersion {
         const parsedMinor = parseNumber(minor)
         const parsedPatch = parseNumber(patch)
         if (parsedMajor == null || parsedMinor == null || parsedPatch == null) {
-            throw new Error('Cannot parse release version: ' + versionString)
+            throw new Error("Cannot parse release version: " + versionString)
         }
         return {
-            type: 'release',
+            type: "release",
             major: parsedMajor,
             minor: parsedMinor,
             patch: parsedPatch
         }
     }
 
-    throw new Error('Failed to parse version: ' + versionString)
+    throw new Error("Failed to parse version: " + versionString)
 }
 
 function parseNumber(maybeNumber: string | undefined): number | undefined {

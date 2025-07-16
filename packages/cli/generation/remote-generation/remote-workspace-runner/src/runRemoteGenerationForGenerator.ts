@@ -1,23 +1,23 @@
-import { FernToken } from '@fern-api/auth'
-import { SourceResolverImpl } from '@fern-api/cli-source-resolver'
-import { Audiences, fernConfigJson, generatorsYml } from '@fern-api/configuration'
-import { createFdrService } from '@fern-api/core'
-import { replaceEnvVariables } from '@fern-api/core-utils'
-import { AbsoluteFilePath } from '@fern-api/fs-utils'
-import { generateIntermediateRepresentation } from '@fern-api/ir-generator'
-import { FernIr } from '@fern-api/ir-sdk'
-import { convertIrToFdrApi } from '@fern-api/register'
-import { InteractiveTaskContext } from '@fern-api/task-context'
-import { FernWorkspace, IdentifiableSource } from '@fern-api/workspace-loader'
+import { FernToken } from "@fern-api/auth"
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver"
+import { Audiences, fernConfigJson, generatorsYml } from "@fern-api/configuration"
+import { createFdrService } from "@fern-api/core"
+import { replaceEnvVariables } from "@fern-api/core-utils"
+import { AbsoluteFilePath } from "@fern-api/fs-utils"
+import { generateIntermediateRepresentation } from "@fern-api/ir-generator"
+import { FernIr } from "@fern-api/ir-sdk"
+import { convertIrToFdrApi } from "@fern-api/register"
+import { InteractiveTaskContext } from "@fern-api/task-context"
+import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader"
 
-import { FernRegistry as FdrAPI, FernRegistryClient as FdrClient } from '@fern-fern/fdr-cjs-sdk'
-import { FernFiddle } from '@fern-fern/fiddle-sdk'
+import { FernRegistry as FdrAPI, FernRegistryClient as FdrClient } from "@fern-fern/fdr-cjs-sdk"
+import { FernFiddle } from "@fern-fern/fiddle-sdk"
 
-import { RemoteTaskHandler } from './RemoteTaskHandler'
-import { SourceUploader } from './SourceUploader'
-import { createAndStartJob } from './createAndStartJob'
-import { getDynamicGeneratorConfig } from './getDynamicGeneratorConfig'
-import { pollJobAndReportStatus } from './pollJobAndReportStatus'
+import { RemoteTaskHandler } from "./RemoteTaskHandler"
+import { SourceUploader } from "./SourceUploader"
+import { createAndStartJob } from "./createAndStartJob"
+import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig"
+import { pollJobAndReportStatus } from "./pollJobAndReportStatus"
 
 export async function runRemoteGenerationForGenerator({
     projectConfig,
@@ -115,7 +115,7 @@ export async function runRemoteGenerationForGenerator({
     }
 
     const sourceUploader = new SourceUploader(interactiveTaskContext, sources)
-    if (sourceUploads == null && sourceUploader.sourceTypes.has('protobuf')) {
+    if (sourceUploads == null && sourceUploader.sourceTypes.has("protobuf")) {
         if (!response.ok) {
             interactiveTaskContext.failAndThrow(
                 `Failed to register API definition: ${JSON.stringify(response.error.content)}`
@@ -123,14 +123,14 @@ export async function runRemoteGenerationForGenerator({
         }
         // We only fail hard if we need to upload Protobuf source files. Unlike OpenAPI, these
         // files are required for successful code generation.
-        interactiveTaskContext.failAndThrow('Did not successfully upload Protobuf source files.')
+        interactiveTaskContext.failAndThrow("Did not successfully upload Protobuf source files.")
     }
 
     if (sourceUploads != null) {
-        interactiveTaskContext.logger.debug('Uploading source files ...')
+        interactiveTaskContext.logger.debug("Uploading source files ...")
         const sourceConfig = await sourceUploader.uploadSources(sourceUploads)
 
-        interactiveTaskContext.logger.debug('Setting IR source configuration ...')
+        interactiveTaskContext.logger.debug("Setting IR source configuration ...")
         ir.sourceConfig = sourceConfig
     }
 
@@ -156,7 +156,7 @@ export async function runRemoteGenerationForGenerator({
 
     const taskId = job.taskIds[0]
     if (taskId == null) {
-        interactiveTaskContext.failAndThrow('Did not receive a task ID.')
+        interactiveTaskContext.failAndThrow("Did not receive a task ID.")
         return undefined
     }
     interactiveTaskContext.logger.debug(`Task ID: ${taskId}`)
@@ -196,8 +196,8 @@ function getPublishConfig({
                 rubyGemsOverride: () => undefined,
                 postman: (value) => {
                     let collectionId = undefined
-                    if (generatorInvocation.raw?.output?.location === 'postman') {
-                        collectionId = generatorInvocation.raw.output?.['collection-id']
+                    if (generatorInvocation.raw?.output?.location === "postman") {
+                        collectionId = generatorInvocation.raw.output?.["collection-id"]
                     }
                     return FernIr.PublishingConfig.direct({
                         target: FernIr.PublishTarget.postman({
@@ -227,23 +227,23 @@ async function computeSemanticVersion({
     }
     let language: FdrAPI.sdks.Language
     switch (generatorInvocation.language) {
-        case 'csharp':
-            language = 'Csharp'
+        case "csharp":
+            language = "Csharp"
             break
-        case 'go':
-            language = 'Go'
+        case "go":
+            language = "Go"
             break
-        case 'java':
-            language = 'Java'
+        case "java":
+            language = "Java"
             break
-        case 'python':
-            language = 'Python'
+        case "python":
+            language = "Python"
             break
-        case 'ruby':
-            language = 'Ruby'
+        case "ruby":
+            language = "Ruby"
             break
-        case 'typescript':
-            language = 'TypeScript'
+        case "typescript":
+            language = "TypeScript"
             break
         default:
             return undefined
@@ -253,7 +253,7 @@ async function computeSemanticVersion({
     }
     const response = await fdr.sdks.versions.computeSemanticVersion({
         githubRepository:
-            generatorInvocation.outputMode.type === 'githubV2'
+            generatorInvocation.outputMode.type === "githubV2"
                 ? `${generatorInvocation.outputMode.githubV2.owner}/${generatorInvocation.outputMode.githubV2.repo}`
                 : undefined,
         language,
@@ -272,7 +272,7 @@ function convertToFdrApiDefinitionSources(
         Object.values(sources).map((source) => [
             source.id,
             {
-                type: source.type === 'protobuf' ? 'proto' : source.type
+                type: source.type === "protobuf" ? "proto" : source.type
             }
         ])
     )
@@ -287,5 +287,5 @@ function isGithubSelfhosted(
     if (github == null) {
         return false
     }
-    return 'uri' in github && 'token' in github
+    return "uri" in github && "token" in github
 }

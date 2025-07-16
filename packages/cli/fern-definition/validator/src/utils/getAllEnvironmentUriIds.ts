@@ -1,5 +1,5 @@
-import { FernWorkspace } from '@fern-api/api-workspace-commons'
-import { isRawMultipleBaseUrlsEnvironment } from '@fern-api/fern-definition-schema'
+import { FernWorkspace } from "@fern-api/api-workspace-commons"
+import { isRawMultipleBaseUrlsEnvironment } from "@fern-api/fern-definition-schema"
 
 export function getAllEnvironmentUrlIds(workspace: FernWorkspace): string[] {
     if (workspace.definition.rootApiFile.contents.environments == null) {

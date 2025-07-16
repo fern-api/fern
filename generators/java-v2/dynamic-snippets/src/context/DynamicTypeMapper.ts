@@ -1,8 +1,8 @@
-import { assertNever } from '@fern-api/core-utils'
-import { FernIr } from '@fern-api/dynamic-ir-sdk'
-import { java } from '@fern-api/java-ast'
+import { assertNever } from "@fern-api/core-utils"
+import { FernIr } from "@fern-api/dynamic-ir-sdk"
+import { java } from "@fern-api/java-ast"
 
-import { DynamicSnippetsGeneratorContext } from './DynamicSnippetsGeneratorContext'
+import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext"
 
 export declare namespace DynamicTypeMapper {
     interface Args {
@@ -19,32 +19,32 @@ export class DynamicTypeMapper {
 
     public convert(args: DynamicTypeMapper.Args): java.Type {
         switch (args.typeReference.type) {
-            case 'list':
+            case "list":
                 return java.Type.list(this.convert({ typeReference: args.typeReference }))
-            case 'literal':
+            case "literal":
                 return this.convertLiteral({ literal: args.typeReference.value })
-            case 'map': {
+            case "map": {
                 return java.Type.map(
                     this.convert({ typeReference: args.typeReference.key }),
                     this.convert({ typeReference: args.typeReference.value })
                 )
             }
-            case 'named': {
+            case "named": {
                 const named = this.context.resolveNamedType({ typeId: args.typeReference.value })
                 if (named == null) {
                     return this.convertUnknown()
                 }
                 return this.convertNamed({ named })
             }
-            case 'optional':
-            case 'nullable': {
+            case "optional":
+            case "nullable": {
                 return java.Type.optional(this.convert({ typeReference: args.typeReference.value }))
             }
-            case 'primitive':
+            case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value })
-            case 'set':
+            case "set":
                 return java.Type.set(this.convert({ typeReference: args.typeReference }))
-            case 'unknown':
+            case "unknown":
                 return this.convertUnknown()
             default:
                 assertNever(args.typeReference)
@@ -53,12 +53,12 @@ export class DynamicTypeMapper {
 
     private convertNamed({ named }: { named: FernIr.dynamic.NamedType }): java.Type {
         switch (named.type) {
-            case 'alias':
+            case "alias":
                 return this.convert({ typeReference: named.typeReference })
-            case 'enum':
-            case 'discriminatedUnion':
-            case 'object':
-            case 'undiscriminatedUnion':
+            case "enum":
+            case "discriminatedUnion":
+            case "object":
+            case "undiscriminatedUnion":
                 return java.Type.reference(
                     java.classReference({
                         name: this.context.getClassName(named.declaration.name),
@@ -72,9 +72,9 @@ export class DynamicTypeMapper {
 
     private convertLiteral({ literal }: { literal: FernIr.dynamic.LiteralType }): java.Type {
         switch (literal.type) {
-            case 'boolean':
+            case "boolean":
                 return java.Type.boolean()
-            case 'string':
+            case "string":
                 return java.Type.string()
         }
     }
@@ -85,31 +85,31 @@ export class DynamicTypeMapper {
 
     private convertPrimitive({ primitive }: { primitive: FernIr.PrimitiveTypeV1 }): java.Type {
         switch (primitive) {
-            case 'INTEGER':
+            case "INTEGER":
                 return java.Type.integer()
-            case 'UINT':
+            case "UINT":
                 return java.Type.integer()
-            case 'LONG':
+            case "LONG":
                 return java.Type.long()
-            case 'UINT_64':
+            case "UINT_64":
                 return java.Type.long()
-            case 'FLOAT':
+            case "FLOAT":
                 return java.Type.float()
-            case 'DOUBLE':
+            case "DOUBLE":
                 return java.Type.double()
-            case 'BOOLEAN':
+            case "BOOLEAN":
                 return java.Type.boolean()
-            case 'STRING':
+            case "STRING":
                 return java.Type.string()
-            case 'DATE':
+            case "DATE":
                 return java.Type.date()
-            case 'DATE_TIME':
+            case "DATE_TIME":
                 return java.Type.dateTime()
-            case 'UUID':
+            case "UUID":
                 return java.Type.uuid()
-            case 'BASE_64':
+            case "BASE_64":
                 return java.Type.bytes()
-            case 'BIG_INTEGER':
+            case "BIG_INTEGER":
                 return java.Type.bigInteger()
             default:
                 assertNever(primitive)

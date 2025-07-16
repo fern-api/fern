@@ -1,7 +1,7 @@
-import { z } from 'zod'
+import { z } from "zod"
 
-import { DraftGeneratorInvocationSchema } from './DraftGeneratorInvocationSchema'
-import { ReleaseGeneratorInvocationSchema } from './ReleaseGeneratorInvocationSchema'
+import { DraftGeneratorInvocationSchema } from "./DraftGeneratorInvocationSchema"
+import { ReleaseGeneratorInvocationSchema } from "./ReleaseGeneratorInvocationSchema"
 
 export const GeneratorsConfigurationSchema = z.strictObject({
     draft: z.optional(z.array(DraftGeneratorInvocationSchema)),

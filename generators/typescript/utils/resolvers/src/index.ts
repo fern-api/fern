@@ -1,3 +1,3 @@
-export { ErrorResolver } from './ErrorResolver'
-export { PackageResolver } from './PackageResolver'
-export { TypeResolver } from './TypeResolver'
+export { ErrorResolver } from "./ErrorResolver"
+export { PackageResolver } from "./PackageResolver"
+export { TypeResolver } from "./TypeResolver"

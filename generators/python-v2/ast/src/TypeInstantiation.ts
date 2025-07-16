@@ -1,9 +1,9 @@
-import { assertNever } from '@fern-api/core-utils'
+import { assertNever } from "@fern-api/core-utils"
 
-import { Reference } from './Reference'
-import { Type } from './Type'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { Reference } from "./Reference"
+import { Type } from "./Type"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export interface NamedValue {
     name: string
@@ -41,67 +41,67 @@ interface StrConfig {
 }
 
 interface Int {
-    type: 'int'
+    type: "int"
     value: number
 }
 
 interface Float {
-    type: 'float'
+    type: "float"
     value: number
 }
 
 interface Bool {
-    type: 'bool'
+    type: "bool"
     value: boolean
 }
 
 interface Str {
-    type: 'str'
+    type: "str"
     value: string
     config?: StrConfig
 }
 
 interface Date {
-    type: 'date'
+    type: "date"
     value: string
 }
 
 interface DateTime {
-    type: 'datetime'
+    type: "datetime"
     value: string
 }
 
 interface Bytes {
-    type: 'bytes'
+    type: "bytes"
     value: string
 }
 
 interface TypedDict {
-    type: 'typedDict'
+    type: "typedDict"
     entries: NamedValue[]
     config?: IterableConfig
 }
 
 interface List {
-    type: 'list'
+    type: "list"
     values: AstNode[]
     config?: IterableConfig
 }
 
 interface Set {
-    type: 'set'
+    type: "set"
     values: AstNode[]
     config?: IterableConfig
 }
 
 interface Tuple {
-    type: 'tuple'
+    type: "tuple"
     values: AstNode[]
     config?: IterableConfig
 }
 
 interface Dict {
-    type: 'dict'
+    type: "dict"
     entries: DictEntry[]
     config?: IterableConfig
 }
@@ -112,26 +112,26 @@ interface DictEntry {
 }
 
 interface Reference_ {
-    type: 'reference'
+    type: "reference"
     value: AstNode
 }
 
 interface None {
-    type: 'none'
+    type: "none"
 }
 
 interface Unknown {
-    type: 'unknown'
+    type: "unknown"
     value: unknown
 }
 
 interface Uuid {
-    type: 'uuid'
+    type: "uuid"
     value: string
 }
 
 interface Nop {
-    type: 'nop'
+    type: "nop"
 }
 
 export class TypeInstantiation extends AstNode {
@@ -140,15 +140,15 @@ export class TypeInstantiation extends AstNode {
     }
 
     public static int(value: number): TypeInstantiation {
-        return new this({ type: 'int', value })
+        return new this({ type: "int", value })
     }
 
     public static float(value: number): TypeInstantiation {
-        return new this({ type: 'float', value })
+        return new this({ type: "float", value })
     }
 
     public static bool(value: boolean): TypeInstantiation {
-        return new this({ type: 'bool', value })
+        return new this({ type: "bool", value })
     }
 
     public static str(
@@ -159,27 +159,27 @@ export class TypeInstantiation extends AstNode {
             endWithNewLine: false
         }
     ): TypeInstantiation {
-        return new this({ type: 'str', value, config })
+        return new this({ type: "str", value, config })
     }
 
     public static bytes(value: string): TypeInstantiation {
-        return new this({ type: 'bytes', value })
+        return new this({ type: "bytes", value })
     }
 
     public static list(values: AstNode[], config: IterableConfig = { endWithComma: false }): TypeInstantiation {
-        const list = new this({ type: 'list', values, config })
+        const list = new this({ type: "list", values, config })
         values.forEach((value) => list.inheritReferences(value))
         return list
     }
 
     public static set(values: AstNode[], config: IterableConfig = { endWithComma: false }): TypeInstantiation {
-        const set = new this({ type: 'set', values, config })
+        const set = new this({ type: "set", values, config })
         values.forEach((value) => set.inheritReferences(value))
         return set
     }
 
     public static tuple(values: AstNode[], config: IterableConfig = { endWithComma: false }): TypeInstantiation {
-        const tuple = new this({ type: 'tuple', values, config })
+        const tuple = new this({ type: "tuple", values, config })
         values.forEach((value) => tuple.inheritReferences(value))
         return tuple
     }
@@ -188,25 +188,25 @@ export class TypeInstantiation extends AstNode {
         entries: NamedValue[],
         config: IterableConfig = { endWithComma: false }
     ): TypeInstantiation {
-        const typedDict = new this({ type: 'typedDict', entries, config })
+        const typedDict = new this({ type: "typedDict", entries, config })
         entries.forEach((entry) => typedDict.inheritReferences(entry.value))
         return typedDict
     }
 
     public static date(value: string): TypeInstantiation {
-        const date = new this({ type: 'date', value })
-        date.addReference(new Reference({ name: 'date', modulePath: ['datetime'] }))
+        const date = new this({ type: "date", value })
+        date.addReference(new Reference({ name: "date", modulePath: ["datetime"] }))
         return date
     }
 
     public static datetime(value: string): TypeInstantiation {
-        const datetime = new this({ type: 'datetime', value })
-        datetime.addReference(new Reference({ name: 'datetime', modulePath: ['datetime'] }))
+        const datetime = new this({ type: "datetime", value })
+        datetime.addReference(new Reference({ name: "datetime", modulePath: ["datetime"] }))
         return datetime
     }
 
     public static dict(entries: DictEntry[], config: IterableConfig = { endWithComma: false }): TypeInstantiation {
-        const dict = new this({ type: 'dict', entries, config })
+        const dict = new this({ type: "dict", entries, config })
         entries.forEach((entry) => {
             dict.inheritReferences(entry.key)
             dict.inheritReferences(entry.value)
@@ -215,60 +215,60 @@ export class TypeInstantiation extends AstNode {
     }
 
     public static reference(value: AstNode): TypeInstantiation {
-        const ref = new this({ type: 'reference', value })
+        const ref = new this({ type: "reference", value })
         ref.inheritReferences(value)
         return ref
     }
 
     public static none(): TypeInstantiation {
-        return new this({ type: 'none' })
+        return new this({ type: "none" })
     }
 
     public static unknown(value: unknown): TypeInstantiation {
-        return new this({ type: 'unknown', value })
+        return new this({ type: "unknown", value })
     }
 
     public static uuid(value: string): TypeInstantiation {
-        const uuid = new this({ type: 'uuid', value })
-        uuid.addReference(new Reference({ name: 'UUID', modulePath: ['uuid'] }))
+        const uuid = new this({ type: "uuid", value })
+        uuid.addReference(new Reference({ name: "UUID", modulePath: ["uuid"] }))
         return uuid
     }
 
     public static nop(): TypeInstantiation {
-        return new this({ type: 'nop' })
+        return new this({ type: "nop" })
     }
 
     public static isNop(typeInstantiation: AstNode): boolean {
-        return typeInstantiation instanceof TypeInstantiation && typeInstantiation.internalType.type === 'nop'
+        return typeInstantiation instanceof TypeInstantiation && typeInstantiation.internalType.type === "nop"
     }
 
     public isTypedDict(): this is TypedDict {
-        return (this.internalType as TypedDict).type === 'typedDict'
+        return (this.internalType as TypedDict).type === "typedDict"
     }
 
     public asTypedDictOrThrow(): TypedDict {
         if (this.isTypedDict()) {
             return this.internalType as TypedDict
         }
-        throw new Error('Internal error; python.TypeInstantiation is not a TypedDict')
+        throw new Error("Internal error; python.TypeInstantiation is not a TypedDict")
     }
 
     public write(writer: Writer): void {
         switch (this.internalType.type) {
-            case 'int':
+            case "int":
                 writer.write(this.internalType.value.toString())
                 break
-            case 'float':
+            case "float":
                 writer.write(this.internalType.value.toString())
                 break
-            case 'bool':
+            case "bool":
                 if (this.internalType.value) {
-                    writer.write('True')
+                    writer.write("True")
                 } else {
-                    writer.write('False')
+                    writer.write("False")
                 }
                 break
-            case 'str':
+            case "str":
                 if (this.internalType.config?.multiline) {
                     const { startOnNewLine, endWithNewLine } = this.internalType.config
                     this.writeStringWithTripleQuotes({
@@ -281,100 +281,100 @@ export class TypeInstantiation extends AstNode {
                     writer.write(`"${this.escapeString(this.internalType.value)}"`)
                 }
                 break
-            case 'date':
+            case "date":
                 writer.write(`date.fromisoformat("${this.internalType.value}")`)
                 break
-            case 'datetime':
+            case "datetime":
                 writer.write(`datetime.fromisoformat("${this.internalType.value}")`)
                 break
-            case 'bytes':
+            case "bytes":
                 writer.write(`b"${this.internalType.value}"`)
                 break
-            case 'list': {
+            case "list": {
                 const internalType = this.internalType
                 const values = filterNopValues({ values: internalType.values })
                 if (values.length === 0) {
-                    writer.write('[]')
+                    writer.write("[]")
                     break
                 }
-                writer.write('[')
+                writer.write("[")
                 if (internalType.config?.multiline) {
                     writer.newLine()
                     writer.indent()
                 }
                 values.forEach((value, index) => {
                     if (index > 0) {
-                        writer.write(',')
+                        writer.write(",")
                         if (internalType.config?.multiline) {
                             writer.newLine()
                         } else {
-                            writer.write(' ')
+                            writer.write(" ")
                         }
                     }
                     value.write(writer)
                     if (index === values.length - 1 && internalType.config?.endWithComma) {
-                        writer.write(',')
+                        writer.write(",")
                     }
                 })
                 if (internalType.config?.multiline) {
                     writer.newLine()
                     writer.dedent()
                 }
-                writer.write(']')
+                writer.write("]")
                 break
             }
-            case 'set': {
+            case "set": {
                 const internalType = this.internalType
                 const values = filterNopValues({ values: internalType.values })
                 if (values.length === 0) {
-                    writer.write('{}')
+                    writer.write("{}")
                     break
                 }
-                writer.write('{')
+                writer.write("{")
                 if (internalType.config?.multiline) {
                     writer.newLine()
                     writer.indent()
                 }
                 values.forEach((value, index) => {
                     if (index > 0) {
-                        writer.write(',')
+                        writer.write(",")
                         if (internalType.config?.multiline) {
                             writer.newLine()
                         } else {
-                            writer.write(' ')
+                            writer.write(" ")
                         }
                     }
                     value.write(writer)
                     if (index === values.length - 1 && internalType.config?.endWithComma) {
-                        writer.write(',')
+                        writer.write(",")
                     }
                 })
                 if (internalType.config?.multiline) {
                     writer.newLine()
                     writer.dedent()
                 }
-                writer.write('}')
+                writer.write("}")
                 break
             }
-            case 'tuple': {
+            case "tuple": {
                 const internalType = this.internalType
                 const values = filterNopValues({ values: internalType.values })
                 if (values.length === 0) {
-                    writer.write('()')
+                    writer.write("()")
                     break
                 }
-                writer.write('(')
+                writer.write("(")
                 if (internalType.config?.multiline) {
                     writer.newLine()
                     writer.indent()
                 }
                 values.forEach((value, index) => {
                     if (index > 0) {
-                        writer.write(',')
+                        writer.write(",")
                         if (internalType.config?.multiline) {
                             writer.newLine()
                         } else {
-                            writer.write(' ')
+                            writer.write(" ")
                         }
                     }
                     value.write(writer)
@@ -384,70 +384,70 @@ export class TypeInstantiation extends AstNode {
                         // Otherwise, check the config that was specified
                         (index === values.length - 1 && internalType.config?.endWithComma)
                     ) {
-                        writer.write(',')
+                        writer.write(",")
                     }
                 })
                 if (internalType.config?.multiline) {
                     writer.newLine()
                     writer.dedent()
                 }
-                writer.write(')')
+                writer.write(")")
                 break
             }
-            case 'dict': {
+            case "dict": {
                 const internalType = this.internalType
                 const entries = filterNopDictEntries({ entries: internalType.entries })
                 if (entries.length === 0) {
-                    writer.write('{}')
+                    writer.write("{}")
                     break
                 }
-                writer.write('{')
+                writer.write("{")
                 if (internalType.config?.multiline) {
                     writer.newLine()
                     writer.indent()
                 }
                 entries.forEach((entry, index) => {
                     if (index > 0) {
-                        writer.write(',')
+                        writer.write(",")
                         if (internalType.config?.multiline) {
                             writer.newLine()
                         } else {
-                            writer.write(' ')
+                            writer.write(" ")
                         }
                     }
                     entry.key.write(writer)
-                    writer.write(': ')
+                    writer.write(": ")
                     entry.value.write(writer)
                     if (index === entries.length - 1 && internalType.config?.endWithComma) {
-                        writer.write(',')
+                        writer.write(",")
                     }
                 })
                 if (internalType.config?.multiline) {
                     writer.newLine()
                     writer.dedent()
                 }
-                writer.write('}')
+                writer.write("}")
                 break
             }
-            case 'typedDict': {
+            case "typedDict": {
                 const internalType = this.internalType
                 const entries = filterNopNamedValues({ entries: internalType.entries })
                 if (entries.length === 0) {
-                    writer.write('{}')
+                    writer.write("{}")
                     break
                 }
-                writer.write('{')
+                writer.write("{")
                 if (internalType.config?.multiline) {
                     writer.writeLine()
                     writer.indent()
                 }
                 entries.forEach((entry, index) => {
                     if (index > 0) {
-                        writer.write(',')
+                        writer.write(",")
                         if (internalType.config?.multiline) {
                             writer.newLine()
                         } else {
-                            writer.write(' ')
+                            writer.write(" ")
                         }
                     }
                     writer.write(`"${entry.name}": `)
@@ -457,23 +457,23 @@ export class TypeInstantiation extends AstNode {
                     writer.newLine()
                     writer.dedent()
                 }
-                writer.write('}')
+                writer.write("}")
                 break
             }
-            case 'reference': {
+            case "reference": {
                 this.internalType.value.write(writer)
                 break
             }
-            case 'none':
-                writer.write('None')
+            case "none":
+                writer.write("None")
                 break
-            case 'unknown':
+            case "unknown":
                 this.writeUnknown({ writer, value: this.internalType.value })
                 break
-            case 'uuid':
+            case "uuid":
                 writer.write(`UUID("${this.internalType.value}")`)
                 break
-            case 'nop':
+            case "nop":
                 break
             default:
                 assertNever(this.internalType)
@@ -488,19 +488,19 @@ export class TypeInstantiation extends AstNode {
     }: {
         writer: Writer
         value: string
-    } & Pick<StrConfig, 'startOnNewLine' | 'endWithNewLine'>): void {
+    } & Pick<StrConfig, "startOnNewLine" | "endWithNewLine">): void {
         writer.write('"""')
-        const lines = value.split('\n')
+        const lines = value.split("\n")
 
         // If there is only one line, we can just write it as a single line string
         if (lines.length <= 1) {
-            writer.write(this.escapeString(lines[0] ?? ''))
+            writer.write(this.escapeString(lines[0] ?? ""))
             writer.write('"""')
             return
         }
 
         if (startOnNewLine) {
-            writer.writeNoIndent('\\\n')
+            writer.writeNoIndent("\\\n")
         }
 
         lines.forEach((line, idx) => {
@@ -509,10 +509,10 @@ export class TypeInstantiation extends AstNode {
             // If this is the last line, add a newline escape
             if (idx === lines.length - 1) {
                 if (endWithNewLine) {
-                    writer.writeNoIndent('\\\n')
+                    writer.writeNoIndent("\\\n")
                 }
             } else {
-                writer.writeNoIndent('\n')
+                writer.writeNoIndent("\n")
             }
         })
 
@@ -543,10 +543,10 @@ export class TypeInstantiation extends AstNode {
         const replacements: Record<string, string> = {
             '"': '\\"',
             "'": "\\'",
-            '\\': '\\\\',
-            '\t': '\\t',
-            '\n': '\\n',
-            '\r': '\\r'
+            "\\": "\\\\",
+            "\t": "\\t",
+            "\n": "\\n",
+            "\r": "\\r"
         }
 
         return input.replace(pattern, (char) => replacements[char] ?? char)
@@ -554,18 +554,18 @@ export class TypeInstantiation extends AstNode {
 
     private writeUnknown({ writer, value }: { writer: Writer; value: unknown }): void {
         switch (typeof value) {
-            case 'boolean':
-                writer.write(value ? 'True' : 'False')
+            case "boolean":
+                writer.write(value ? "True" : "False")
                 return
-            case 'string':
+            case "string":
                 writer.write(`"${this.escapeString(value)}"`)
                 return
-            case 'number':
+            case "number":
                 writer.write(value.toString())
                 return
-            case 'object':
+            case "object":
                 if (value == null) {
-                    writer.write('None')
+                    writer.write("None")
                     return
                 }
                 if (Array.isArray(value)) {
@@ -588,34 +588,34 @@ export class TypeInstantiation extends AstNode {
         value: any[]
     }): void {
         if (value.length === 0) {
-            writer.write('[]')
+            writer.write("[]")
             return
         }
-        writer.writeLine('[')
+        writer.writeLine("[")
         writer.indent()
         for (const element of value) {
             writer.writeNode(TypeInstantiation.unknown(element))
-            writer.writeLine(',')
+            writer.writeLine(",")
         }
         writer.dedent()
-        writer.write(']')
+        writer.write("]")
     }
 
     private writeUnknownObject({ writer, value }: { writer: Writer; value: object }): void {
         const entries = Object.entries(value)
         if (entries.length === 0) {
-            writer.write('{}')
+            writer.write("{}")
             return
         }
-        writer.writeLine('{')
+        writer.writeLine("{")
         writer.indent()
         for (const [key, val] of entries) {
             writer.write(`"${key}": `)
             writer.writeNode(TypeInstantiation.unknown(val))
-            writer.writeLine(',')
+            writer.writeLine(",")
         }
         writer.dedent()
-        writer.write('}')
+        writer.write("}")
     }
 }
 

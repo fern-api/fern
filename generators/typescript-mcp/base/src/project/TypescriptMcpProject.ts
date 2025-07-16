@@ -1,24 +1,24 @@
-import { mkdir, readFile, writeFile } from 'fs/promises'
-import { capitalize, kebabCase } from 'lodash-es'
-import path from 'path'
+import { mkdir, readFile, writeFile } from "fs/promises"
+import { capitalize, kebabCase } from "lodash-es"
+import path from "path"
 
-import { AbstractProject, File } from '@fern-api/base-generator'
-import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
-import { createLoggingExecutable } from '@fern-api/logging-execa'
-import { TypescriptCustomConfigSchema, ts } from '@fern-api/typescript-ast'
+import { AbstractProject, File } from "@fern-api/base-generator"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { createLoggingExecutable } from "@fern-api/logging-execa"
+import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast"
 
-import { FernFilepath, Name } from '@fern-fern/ir-sdk/api'
+import { FernFilepath, Name } from "@fern-fern/ir-sdk/api"
 
-import { Logger } from '../../../../../packages/cli/logger/src/Logger'
-import { AbstractTypescriptMcpGeneratorContext } from '../context/AbstractTypescriptMcpGeneratorContext'
+import { Logger } from "../../../../../packages/cli/logger/src/Logger"
+import { AbstractTypescriptMcpGeneratorContext } from "../context/AbstractTypescriptMcpGeneratorContext"
 
-const AS_IS_DIRECTORY = path.join(__dirname, 'asIs')
-const DIST_DIRECTORY_NAME = 'dist'
-const SRC_DIRECTORY_NAME = 'src'
-const SCHEMAS_DIRECTORY_NAME = 'schemas'
-const TOOLS_DIRECTORY_NAME = 'tools'
+const AS_IS_DIRECTORY = path.join(__dirname, "asIs")
+const DIST_DIRECTORY_NAME = "dist"
+const SRC_DIRECTORY_NAME = "src"
+const SCHEMAS_DIRECTORY_NAME = "schemas"
+const TOOLS_DIRECTORY_NAME = "tools"
 
-const PACKAGE_JSON_FILENAME = 'package.json'
+const PACKAGE_JSON_FILENAME = "package.json"
 
 /**
  * In memory representation of a typescript project.
@@ -67,12 +67,12 @@ export class TypescriptMcpProject extends AbstractProject<
     }
 
     private async installDependencies(logger: Logger): Promise<void> {
-        const npm = createLoggingExecutable('npm', {
+        const npm = createLoggingExecutable("npm", {
             cwd: this.absolutePathToOutputDirectory,
             logger
         })
 
-        await npm(['install'])
+        await npm(["install"])
     }
 
     private async createRawFiles(): Promise<void> {
@@ -84,7 +84,7 @@ export class TypescriptMcpProject extends AbstractProject<
 
     private async createRawAsIsFile({ filename }: { filename: string }): Promise<File> {
         const contents = (await readFile(getAsIsFilepath(filename))).toString()
-        return new File(filename, RelativeFilePath.of(''), contents)
+        return new File(filename, RelativeFilePath.of(""), contents)
     }
 
     private async createPackageJson(): Promise<void> {
@@ -168,8 +168,8 @@ class TypescriptMcpProjectBuilder {
         this.sdkModuleName = this.getSdkModuleName(organization, workspaceName)
         this.sdkClientClassName = this.getSdkClientClassName(organization, workspaceName)
         this.zodReference = ts.reference({
-            name: 'z',
-            importFrom: { type: 'default', moduleName: 'zod' }
+            name: "z",
+            importFrom: { type: "default", moduleName: "zod" }
         })
     }
 
@@ -183,24 +183,24 @@ class TypescriptMcpProjectBuilder {
 
     public getSdkMethodPath(name: Name, fernFilepath?: FernFilepath): string {
         const parts = [...(fernFilepath?.allParts ?? []), name].map((part) => part.camelCase.unsafeName)
-        return parts.join('.')
+        return parts.join(".")
     }
 
     public getSchemaVariableName(name: Name, fernFilepath?: FernFilepath): string {
         const parts = [...(fernFilepath?.allParts ?? []), name].map((part) => part.pascalCase.safeName)
-        return parts.join('')
+        return parts.join("")
     }
 
     public getToolVariableName(name: Name, fernFilepath?: FernFilepath): string {
         const parts = [...(fernFilepath?.allParts ?? []), name].map((part, index) =>
             index === 0 ? part.camelCase.safeName : part.pascalCase.safeName
         )
-        return parts.join('')
+        return parts.join("")
     }
 
     public getToolName(name: Name, fernFilepath?: FernFilepath): string {
         const parts = [...(fernFilepath?.allParts ?? []), name].map((part) => part.snakeCase.safeName)
-        return parts.join('_')
+        return parts.join("_")
     }
 }
 
@@ -221,31 +221,31 @@ class PackageJson {
         const packageJson: Record<string, unknown> = {
             name: this.context.project.builder.packageName,
             description: this.context.project.builder.description,
-            version: this.context.version ?? '0.0.0',
-            keywords: [this.context.config.organization, 'mcp', 'server'],
+            version: this.context.version ?? "0.0.0",
+            keywords: [this.context.config.organization, "mcp", "server"],
             bin: `${DIST_DIRECTORY_NAME}/index.js`,
             files: [DIST_DIRECTORY_NAME],
             scripts: {
-                preinstall: 'cd sdk && npm run build && npm run prepack',
+                preinstall: "cd sdk && npm run build && npm run prepack",
                 dev: `concurrently 'npm run build:watch' 'nodemon --env-file=.env -q --watch ${DIST_DIRECTORY_NAME} ${DIST_DIRECTORY_NAME}/index.js'`,
                 build: `tsup ${SRC_DIRECTORY_NAME}/index.ts --dts --clean`,
-                'build:watch': `tsup ${SRC_DIRECTORY_NAME}/index.ts --dts --watch`,
-                test: 'jest'
+                "build:watch": `tsup ${SRC_DIRECTORY_NAME}/index.ts --dts --watch`,
+                test: "jest"
             },
             dependencies: {
-                '@modelcontextprotocol/sdk': '^1.8.0',
-                [this.context.project.builder.sdkModuleName]: 'file:./sdk',
-                zod: '^3.24.2'
+                "@modelcontextprotocol/sdk": "^1.8.0",
+                [this.context.project.builder.sdkModuleName]: "file:./sdk",
+                zod: "^3.24.2"
             },
             devDependencies: {
-                '@types/jest': '^29.5.14',
-                '@types/node': '^22.13.13',
-                concurrently: '^9.1.2',
-                jest: '^29.7.0',
-                nodemon: '^3.1.9',
-                'ts-jest': '^29.3.1',
-                tsup: '^8.4.0',
-                typescript: '^5.8.2'
+                "@types/jest": "^29.5.14",
+                "@types/node": "^22.13.13",
+                concurrently: "^9.1.2",
+                jest: "^29.7.0",
+                nodemon: "^3.1.9",
+                "ts-jest": "^29.3.1",
+                tsup: "^8.4.0",
+                typescript: "^5.8.2"
             }
         }
         return packageJson

@@ -1,22 +1,22 @@
-import hash from 'object-hash'
+import hash from "object-hash"
 
-import { AbstractAPIWorkspace, FernDefinition, FernWorkspace } from '@fern-api/api-workspace-commons'
+import { AbstractAPIWorkspace, FernDefinition, FernWorkspace } from "@fern-api/api-workspace-commons"
 import {
     DEFINITION_DIRECTORY,
     dependenciesYml,
     generatorsYml,
     loadDependenciesConfiguration
-} from '@fern-api/configuration-loader'
-import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
-import { TaskContext } from '@fern-api/task-context'
+} from "@fern-api/configuration-loader"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { TaskContext } from "@fern-api/task-context"
 
-import { OSSWorkspace } from './OSSWorkspace'
-import { handleFailedWorkspaceParserResultRaw } from './utils/handleFailedWorkspaceParserResult'
-import { listFernFiles } from './utils/listFernFiles'
-import { LoadAPIWorkspace } from './utils/loadAPIWorkspace'
-import { parseYamlFiles } from './utils/parseYamlFiles'
-import { processPackageMarkers } from './utils/processPackageMarkers'
-import { validateStructureOfYamlFiles } from './utils/validateStructureOfYamlFiles'
+import { OSSWorkspace } from "./OSSWorkspace"
+import { handleFailedWorkspaceParserResultRaw } from "./utils/handleFailedWorkspaceParserResult"
+import { listFernFiles } from "./utils/listFernFiles"
+import { LoadAPIWorkspace } from "./utils/loadAPIWorkspace"
+import { parseYamlFiles } from "./utils/parseYamlFiles"
+import { processPackageMarkers } from "./utils/processPackageMarkers"
+import { validateStructureOfYamlFiles } from "./utils/validateStructureOfYamlFiles"
 
 export declare namespace LazyFernWorkspace {
     export interface Args extends AbstractAPIWorkspace.Args {
@@ -26,7 +26,7 @@ export declare namespace LazyFernWorkspace {
 }
 
 export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
-    public type: string = 'fern'
+    public type: string = "fern"
     private context: TaskContext
     private fernWorkspaces: Record<string, FernWorkspace> = {}
     private loadAPIWorkspace?: LoadAPIWorkspace
@@ -59,7 +59,7 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
                 context: defaultedContext
             })
 
-            const yamlFiles = await listFernFiles(absolutePathToDefinition, '{yml,yaml}')
+            const yamlFiles = await listFernFiles(absolutePathToDefinition, "{yml,yaml}")
 
             const parseResult = await parseYamlFiles(yamlFiles)
             if (!parseResult.didSucceed) {

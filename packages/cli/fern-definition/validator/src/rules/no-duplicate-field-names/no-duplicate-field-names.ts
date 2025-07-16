@@ -1,7 +1,7 @@
-import { groupBy, noop } from 'lodash-es'
+import { groupBy, noop } from "lodash-es"
 
-import { getDefinitionFile } from '@fern-api/api-workspace-commons'
-import { isRawObjectDefinition, visitRawTypeDeclaration } from '@fern-api/fern-definition-schema'
+import { getDefinitionFile } from "@fern-api/api-workspace-commons"
+import { isRawObjectDefinition, visitRawTypeDeclaration } from "@fern-api/fern-definition-schema"
 import {
     TypeResolverImpl,
     constructFernFileContext,
@@ -10,14 +10,14 @@ import {
     getEnumName,
     getSingleUnionTypeName,
     getUnionDiscriminantName
-} from '@fern-api/ir-generator'
+} from "@fern-api/ir-generator"
 
-import { Rule, RuleViolation } from '../../Rule'
-import { CASINGS_GENERATOR } from '../../utils/casingsGenerator'
-import { getTypeDeclarationNameAsString } from '../../utils/getTypeDeclarationNameAsString'
+import { Rule, RuleViolation } from "../../Rule"
+import { CASINGS_GENERATOR } from "../../utils/casingsGenerator"
+import { getTypeDeclarationNameAsString } from "../../utils/getTypeDeclarationNameAsString"
 
 export const NoDuplicateFieldNamesRule: Rule = {
-    name: 'no-duplicate-field-names',
+    name: "no-duplicate-field-names",
     create: ({ workspace }) => {
         const typeResolver = new TypeResolverImpl(workspace)
 
@@ -36,7 +36,7 @@ export const NoDuplicateFieldNamesRule: Rule = {
                             )
                             for (const duplicateName of duplicateNames) {
                                 violations.push({
-                                    severity: 'fatal',
+                                    severity: "fatal",
                                     message: `Name "${duplicateName}" is used by multiple values.`
                                 })
                             }
@@ -65,9 +65,9 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                                     prefixBreadcrumbs: [typeNameString]
                                                 })}`
                                         )
-                                    ].join('\n')
+                                    ].join("\n")
                                     violations.push({
-                                        severity: 'fatal',
+                                        severity: "fatal",
                                         message
                                     })
                                 }
@@ -84,22 +84,22 @@ export const NoDuplicateFieldNamesRule: Rule = {
                             )
                             for (const duplicateName of duplicateNames) {
                                 violations.push({
-                                    severity: 'fatal',
+                                    severity: "fatal",
                                     message: `Name ${duplicateName} is used by multiple subtypes of this union.`
                                 })
                             }
 
                             for (const [unionKey, singleUnionType] of Object.entries(unionDeclaration.union)) {
                                 const specifiedType =
-                                    typeof singleUnionType === 'string'
+                                    typeof singleUnionType === "string"
                                         ? singleUnionType
-                                        : typeof singleUnionType.type === 'string'
+                                        : typeof singleUnionType.type === "string"
                                           ? singleUnionType.type
                                           : undefined
 
                                 // if the union type has a key, we don't need to check for conflicts
                                 // because the variant is nested under the key
-                                if (typeof singleUnionType === 'object' && singleUnionType.key != null) {
+                                if (typeof singleUnionType === "object" && singleUnionType.key != null) {
                                     continue
                                 }
 
@@ -120,7 +120,7 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                     }
 
                                     if (
-                                        resolvedType._type === 'named' &&
+                                        resolvedType._type === "named" &&
                                         isRawObjectDefinition(resolvedType.declaration)
                                     ) {
                                         const discriminantName = getUnionDiscriminantName(unionDeclaration).name
@@ -144,8 +144,8 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                             const message = [
                                                 `Discriminant "${discriminantName}" conflicts with extended ${
                                                     propertiesWithSameNameAsDiscriminant.length === 1
-                                                        ? 'property'
-                                                        : 'properties'
+                                                        ? "property"
+                                                        : "properties"
                                                 }:`,
                                                 ...propertiesWithSameNameAsDiscriminant.map(
                                                     (property) =>
@@ -154,9 +154,9 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                                             prefixBreadcrumbs: [unionKey, specifiedType]
                                                         })}`
                                                 )
-                                            ].join('\n')
+                                            ].join("\n")
                                             violations.push({
-                                                severity: 'fatal',
+                                                severity: "fatal",
                                                 message
                                             })
                                         }

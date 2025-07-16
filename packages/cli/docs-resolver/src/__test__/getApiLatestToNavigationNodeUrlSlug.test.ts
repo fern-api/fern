@@ -1,21 +1,21 @@
-import { FdrAPI, FernNavigation } from '@fern-api/fdr-sdk'
+import { FdrAPI, FernNavigation } from "@fern-api/fdr-sdk"
 
-import { getApiLatestToNavigationNodeUrlSlug } from '../utils/getApiLatestToNavigationNodeUrlSlug'
+import { getApiLatestToNavigationNodeUrlSlug } from "../utils/getApiLatestToNavigationNodeUrlSlug"
 
-it.skip('generates slug for endpoint', () => {
+it.skip("generates slug for endpoint", () => {
     const endpoint: FdrAPI.api.latest.endpoint.EndpointDefinition = {
-        id: FdrAPI.EndpointId('endpoint_users.create'),
-        namespace: [FdrAPI.api.v1.SubpackageId('apiService')],
-        method: 'POST',
+        id: FdrAPI.EndpointId("endpoint_users.create"),
+        namespace: [FdrAPI.api.v1.SubpackageId("apiService")],
+        method: "POST",
         path: [
             {
-                type: 'literal',
-                value: '/users'
+                type: "literal",
+                value: "/users"
             }
         ],
-        displayName: 'Create User',
-        operationId: 'createUser',
-        description: 'Create a new user',
+        displayName: "Create User",
+        operationId: "createUser",
+        description: "Create a new user",
         pathParameters: [],
         responses: [],
         queryParameters: [],
@@ -34,21 +34,21 @@ it.skip('generates slug for endpoint', () => {
     expect(
         getApiLatestToNavigationNodeUrlSlug({
             item: endpoint,
-            parentSlug: FernNavigation.V1.SlugGenerator.init('')
+            parentSlug: FernNavigation.V1.SlugGenerator.init("")
         })
-    ).toBe('api-service/create')
+    ).toBe("api-service/create")
 })
 
-it.skip('generates slug for websocket', () => {
+it.skip("generates slug for websocket", () => {
     const websocket: FdrAPI.api.latest.websocket.WebSocketChannel = {
-        id: FdrAPI.WebSocketId('websocket_notifications.stream'),
-        namespace: [FdrAPI.api.v1.SubpackageId('realtime')],
-        displayName: 'Notifications Stream',
-        operationId: 'notificationsStream',
+        id: FdrAPI.WebSocketId("websocket_notifications.stream"),
+        namespace: [FdrAPI.api.v1.SubpackageId("realtime")],
+        displayName: "Notifications Stream",
+        operationId: "notificationsStream",
         path: [
             {
-                type: 'literal',
-                value: '/notifications/stream'
+                type: "literal",
+                value: "/notifications/stream"
             }
         ],
         messages: [],
@@ -65,19 +65,19 @@ it.skip('generates slug for websocket', () => {
     expect(
         getApiLatestToNavigationNodeUrlSlug({
             item: websocket,
-            parentSlug: FernNavigation.V1.SlugGenerator.init('')
+            parentSlug: FernNavigation.V1.SlugGenerator.init("")
         })
-    ).toBe('realtime/stream')
+    ).toBe("realtime/stream")
 })
 
-it.skip('generates slug for webhook', () => {
+it.skip("generates slug for webhook", () => {
     const webhook: FdrAPI.api.latest.webhook.WebhookDefinition = {
-        id: FdrAPI.WebhookId('webhook_payment.completed'),
-        namespace: [FdrAPI.api.v1.SubpackageId('webhooks')],
-        displayName: 'Payment Completed',
-        operationId: 'paymentCompleted',
-        method: 'POST',
-        path: ['/path/completed'],
+        id: FdrAPI.WebhookId("webhook_payment.completed"),
+        namespace: [FdrAPI.api.v1.SubpackageId("webhooks")],
+        displayName: "Payment Completed",
+        operationId: "paymentCompleted",
+        method: "POST",
+        path: ["/path/completed"],
         examples: [],
         availability: undefined,
         headers: [],
@@ -87,7 +87,7 @@ it.skip('generates slug for webhook', () => {
     expect(
         getApiLatestToNavigationNodeUrlSlug({
             item: webhook,
-            parentSlug: FernNavigation.V1.SlugGenerator.init('')
+            parentSlug: FernNavigation.V1.SlugGenerator.init("")
         })
-    ).toBe('webhooks/completed')
+    ).toBe("webhooks/completed")
 })

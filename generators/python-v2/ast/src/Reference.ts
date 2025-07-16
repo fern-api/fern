@@ -1,6 +1,6 @@
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
-import { AttrPath, ModulePath } from './core/types'
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
+import { AttrPath, ModulePath } from "./core/types"
 
 export declare namespace Reference {
     interface Args {
@@ -47,21 +47,21 @@ export class Reference extends AstNode {
         writer.write(nameOverride.name)
 
         if (this.genericTypes.length > 0) {
-            writer.write('[')
+            writer.write("[")
             this.genericTypes.forEach((genericType, index) => {
                 if (index > 0) {
-                    writer.write(', ')
+                    writer.write(", ")
                 }
                 genericType.write(writer)
             })
-            writer.write(']')
+            writer.write("]")
         }
 
         if (this.attribute.length > 0) {
-            writer.write('.')
+            writer.write(".")
             this.attribute.forEach((attr, index) => {
                 if (index > 0) {
-                    writer.write('.')
+                    writer.write(".")
                 }
                 writer.write(attr)
             })
@@ -69,7 +69,7 @@ export class Reference extends AstNode {
     }
 
     public getFullyQualifiedPath(): string {
-        return this.modulePath.join('.')
+        return this.modulePath.join(".")
     }
 
     public getFullyQualifiedModulePath(): string {

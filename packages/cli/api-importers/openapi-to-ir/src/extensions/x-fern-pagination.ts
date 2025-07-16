@@ -1,16 +1,16 @@
-import { OpenAPIV3 } from 'openapi-types'
-import { z } from 'zod'
+import { OpenAPIV3 } from "openapi-types"
+import { z } from "zod"
 
-import { AbstractConverterContext, AbstractExtension } from '@fern-api/v2-importer-commons'
+import { AbstractConverterContext, AbstractExtension } from "@fern-api/v2-importer-commons"
 
 import {
     CursorPaginationExtensionSchema,
     OffsetPaginationExtensionSchema,
     PaginationExtensionSchema
-} from '../schemas/PaginationSchema'
+} from "../schemas/PaginationSchema"
 
-const REQUEST_PREFIX = '$request.'
-const RESPONSE_PREFIX = '$response.'
+const REQUEST_PREFIX = "$request."
+const RESPONSE_PREFIX = "$response."
 
 export declare namespace FernPaginationExtension {
     export interface Args extends AbstractExtension.Args {
@@ -20,13 +20,13 @@ export declare namespace FernPaginationExtension {
 
     export type Output =
         | {
-              type: 'cursor'
+              type: "cursor"
               cursor: string
               nextCursor: string
               results: string
           }
         | {
-              type: 'offset'
+              type: "offset"
               offset: string
               results: string
               step: string | undefined
@@ -37,7 +37,7 @@ export declare namespace FernPaginationExtension {
 export class FernPaginationExtension extends AbstractExtension<FernPaginationExtension.Output> {
     private readonly operation: object
     private readonly document: OpenAPIV3.Document
-    public readonly key = 'x-fern-pagination'
+    public readonly key = "x-fern-pagination"
 
     constructor({ breadcrumbs, operation, document, context }: FernPaginationExtension.Args) {
         super({ breadcrumbs, context })
@@ -60,15 +60,15 @@ export class FernPaginationExtension extends AbstractExtension<FernPaginationExt
             return undefined
         }
 
-        if (typeof result.data === 'boolean') {
+        if (typeof result.data === "boolean") {
             const topLevelPagination = this.getExtensionValue(this.document)
             if (topLevelPagination == null) {
                 return undefined
             }
-            if (typeof topLevelPagination === 'boolean') {
+            if (typeof topLevelPagination === "boolean") {
                 this.context.errorCollector.collect({
                     message:
-                        'Global pagination extension is a boolean, expected an object. Only endpoints may declare a boolean for x-fern-pagination.',
+                        "Global pagination extension is a boolean, expected an object. Only endpoints may declare a boolean for x-fern-pagination.",
                     path: this.breadcrumbs
                 })
                 return undefined
@@ -81,9 +81,9 @@ export class FernPaginationExtension extends AbstractExtension<FernPaginationExt
                 })
                 return undefined
             }
-            if (typeof result.data === 'boolean') {
+            if (typeof result.data === "boolean") {
                 this.context.errorCollector.collect({
-                    message: 'Global pagination extension is a boolean, expected an object.',
+                    message: "Global pagination extension is a boolean, expected an object.",
                     path: this.breadcrumbs
                 })
                 return undefined
@@ -91,9 +91,9 @@ export class FernPaginationExtension extends AbstractExtension<FernPaginationExt
             return this.convertPaginationConfig({ config: result.data })
         }
 
-        if (typeof result.data === 'boolean') {
+        if (typeof result.data === "boolean") {
             this.context.errorCollector.collect({
-                message: 'Pagination extension is a boolean with no global configuration.',
+                message: "Pagination extension is a boolean with no global configuration.",
                 path: this.breadcrumbs
             })
             return undefined
@@ -108,9 +108,9 @@ export class FernPaginationExtension extends AbstractExtension<FernPaginationExt
         config: z.infer<typeof CursorPaginationExtensionSchema> | z.infer<typeof OffsetPaginationExtensionSchema>
     }): FernPaginationExtension.Output {
         const maybeCursorPagination = config as z.infer<typeof CursorPaginationExtensionSchema>
-        if ('cursor' in maybeCursorPagination) {
+        if ("cursor" in maybeCursorPagination) {
             return {
-                type: 'cursor',
+                type: "cursor",
                 cursor: AbstractConverterContext.maybeTrimPrefix(maybeCursorPagination.cursor, REQUEST_PREFIX),
                 nextCursor: AbstractConverterContext.maybeTrimPrefix(
                     maybeCursorPagination.next_cursor,
@@ -122,7 +122,7 @@ export class FernPaginationExtension extends AbstractExtension<FernPaginationExt
 
         const offsetPagination = config as z.infer<typeof OffsetPaginationExtensionSchema>
         return {
-            type: 'offset',
+            type: "offset",
             offset: AbstractConverterContext.maybeTrimPrefix(offsetPagination.offset, REQUEST_PREFIX),
             results: AbstractConverterContext.maybeTrimPrefix(offsetPagination.results, RESPONSE_PREFIX),
             step:
@@ -130,8 +130,8 @@ export class FernPaginationExtension extends AbstractExtension<FernPaginationExt
                     ? AbstractConverterContext.maybeTrimPrefix(offsetPagination.step, REQUEST_PREFIX)
                     : undefined,
             hasNextPage:
-                offsetPagination['has-next-page'] != null
-                    ? AbstractConverterContext.maybeTrimPrefix(offsetPagination['has-next-page'], RESPONSE_PREFIX)
+                offsetPagination["has-next-page"] != null
+                    ? AbstractConverterContext.maybeTrimPrefix(offsetPagination["has-next-page"], RESPONSE_PREFIX)
                     : undefined
         }
     }

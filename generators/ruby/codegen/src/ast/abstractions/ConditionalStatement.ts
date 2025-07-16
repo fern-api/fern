@@ -1,7 +1,7 @@
-import { BLOCK_END } from '../../utils/RubyConstants'
-import { Import } from '../Import'
-import { Class_ } from '../classes/Class_'
-import { AstNode } from '../core/AstNode'
+import { BLOCK_END } from "../../utils/RubyConstants"
+import { Import } from "../Import"
+import { Class_ } from "../classes/Class_"
+import { AstNode } from "../core/AstNode"
 
 export interface Condition {
     rightSide?: string | AstNode
@@ -29,11 +29,11 @@ export class ConditionalStatement extends AstNode {
         this.else_ = else_
     }
 
-    private writeCondition(startingTabSpaces: number, condition: Condition, type: 'if' | 'elsif' | 'else'): void {
+    private writeCondition(startingTabSpaces: number, condition: Condition, type: "if" | "elsif" | "else"): void {
         const updatedType =
             condition.negated === true ||
-            (condition.operation === '!' && (condition.leftSide === undefined || condition.rightSide === undefined))
-                ? 'unless'
+            (condition.operation === "!" && (condition.leftSide === undefined || condition.rightSide === undefined))
+                ? "unless"
                 : type
         const leftString = condition.leftSide instanceof AstNode ? condition.leftSide.write({}) : condition.leftSide
         const rightString = condition.rightSide instanceof AstNode ? condition.rightSide.write({}) : condition.rightSide
@@ -42,7 +42,7 @@ export class ConditionalStatement extends AstNode {
             templateString: `${updatedType} %s`,
             startingTabSpaces
         })
-        if (condition.leftSide !== undefined && condition.rightSide !== undefined && condition.operation !== '!') {
+        if (condition.leftSide !== undefined && condition.rightSide !== undefined && condition.operation !== "!") {
             this.addText({
                 templateString: ` ${condition.operation} %s`,
                 stringContent: rightString,
@@ -60,7 +60,7 @@ export class ConditionalStatement extends AstNode {
 
     private writeElse(startingTabSpaces: number, expressions: AstNode[]): void {
         this.addText({
-            stringContent: 'else',
+            stringContent: "else",
             startingTabSpaces
         })
         expressions.forEach((exp) =>
@@ -69,9 +69,9 @@ export class ConditionalStatement extends AstNode {
     }
 
     public writeInternal(startingTabSpaces: number): void {
-        this.writeCondition(startingTabSpaces, this.if_, 'if')
+        this.writeCondition(startingTabSpaces, this.if_, "if")
         if (this.elseIf !== undefined) {
-            this.elseIf.forEach((condition) => this.writeCondition(startingTabSpaces, condition, 'elsif'))
+            this.elseIf.forEach((condition) => this.writeCondition(startingTabSpaces, condition, "elsif"))
         }
         if (this.else_ !== undefined) {
             this.writeElse(startingTabSpaces, this.else_)

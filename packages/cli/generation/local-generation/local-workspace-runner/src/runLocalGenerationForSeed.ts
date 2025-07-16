@@ -1,24 +1,24 @@
-import chalk from 'chalk'
-import { readFile } from 'fs/promises'
-import { writeFile } from 'fs/promises'
-import * as prettier from 'prettier2'
+import chalk from "chalk"
+import { readFile } from "fs/promises"
+import { writeFile } from "fs/promises"
+import * as prettier from "prettier2"
 
-import { FernWorkspace } from '@fern-api/api-workspace-commons'
+import { FernWorkspace } from "@fern-api/api-workspace-commons"
 import {
     RESOLVED_SNIPPET_TEMPLATES_MD,
     SNIPPET_JSON_FILENAME,
     SNIPPET_TEMPLATES_JSON_FILENAME,
     generatorsYml
-} from '@fern-api/configuration'
-import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
-import { HttpEndpoint } from '@fern-api/ir-sdk'
-import { IntermediateRepresentation } from '@fern-api/ir-sdk'
-import { Fern, Template } from '@fern-api/sdk'
-import { TaskContext } from '@fern-api/task-context'
+} from "@fern-api/configuration"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { HttpEndpoint } from "@fern-api/ir-sdk"
+import { IntermediateRepresentation } from "@fern-api/ir-sdk"
+import { Fern, Template } from "@fern-api/sdk"
+import { TaskContext } from "@fern-api/task-context"
 
-import { generateDynamicSnippetTests } from './dynamic-snippets/generateDynamicSnippetTests'
-import { writeFilesToDiskAndRunGenerator } from './runGenerator'
-import { getWorkspaceTempDir } from './runLocalGenerationForWorkspace'
+import { generateDynamicSnippetTests } from "./dynamic-snippets/generateDynamicSnippetTests"
+import { writeFilesToDiskAndRunGenerator } from "./runGenerator"
+import { getWorkspaceTempDir } from "./runLocalGenerationForWorkspace"
 
 export async function runLocalGenerationForSeed({
     organization,
@@ -50,7 +50,7 @@ export async function runLocalGenerationForSeed({
             return context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
                 if (generatorInvocation.absolutePathToLocalOutput == null) {
                     interactiveTaskContext.failWithoutThrowing(
-                        'Cannot generate because output location is not local-file-system'
+                        "Cannot generate because output location is not local-file-system"
                     )
                 } else {
                     const absolutePathToLocalSnippetTemplateJSON = generatorInvocation.absolutePathToLocalOutput
@@ -107,7 +107,7 @@ export async function runLocalGenerationForSeed({
                         })
                     }
                     interactiveTaskContext.logger.info(
-                        chalk.green('Wrote files to ' + generatorInvocation.absolutePathToLocalOutput)
+                        chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)
                     )
 
                     if (shouldGenerateDynamicSnippetTests && generatorInvocation.language != null) {
@@ -209,14 +209,14 @@ export async function writeResolvedSnippetsJson({
                     requestBody: example.example?.request?.jsonExample
                 })
                 switch (snippet.type) {
-                    case 'typescript':
+                    case "typescript":
                         try {
-                            snippets.push(prettier.format(snippet.client, { parser: 'babel' }))
+                            snippets.push(prettier.format(snippet.client, { parser: "babel" }))
                         } catch {
                             snippets.push(snippet.client)
                         }
                         break
-                    case 'python':
+                    case "python":
                         snippets.push(snippet.sync_client)
                         break
                 }
@@ -224,7 +224,7 @@ export async function writeResolvedSnippetsJson({
             } catch (err) {}
         }
     }
-    let resolvedMd = ''
+    let resolvedMd = ""
     for (const snippet of snippets) {
         resolvedMd += `\`\`\`${generatorInvocation.language}
 ${snippet}
@@ -262,7 +262,7 @@ export async function writeIrAndConfigJson({
             return context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
                 if (generatorInvocation.absolutePathToLocalOutput == null) {
                     interactiveTaskContext.failWithoutThrowing(
-                        'Cannot generate because output location is not local-file-system'
+                        "Cannot generate because output location is not local-file-system"
                     )
                 } else {
                     await writeFilesToDiskAndRunGenerator({
@@ -294,7 +294,7 @@ export async function writeIrAndConfigJson({
                         generatePaginatedClients: true
                     })
                     interactiveTaskContext.logger.info(
-                        chalk.green('Wrote files to ' + generatorInvocation.absolutePathToLocalOutput)
+                        chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)
                     )
                 }
             })

@@ -1,11 +1,11 @@
-import { isRawObjectDefinition } from '@fern-api/fern-definition-schema'
-import { TypeResolverImpl, constructFernFileContext } from '@fern-api/ir-generator'
+import { isRawObjectDefinition } from "@fern-api/fern-definition-schema"
+import { TypeResolverImpl, constructFernFileContext } from "@fern-api/ir-generator"
 
-import { Rule } from '../../Rule'
-import { CASINGS_GENERATOR } from '../../utils/casingsGenerator'
+import { Rule } from "../../Rule"
+import { CASINGS_GENERATOR } from "../../utils/casingsGenerator"
 
 export const OnlyObjectExtensionsRule: Rule = {
-    name: 'only-object-extensions',
+    name: "only-object-extensions",
     create: ({ workspace }) => {
         const typeResolver = new TypeResolverImpl(workspace)
         return {
@@ -26,13 +26,13 @@ export const OnlyObjectExtensionsRule: Rule = {
                         return []
                     }
 
-                    if (resolvedType._type === 'named' && isRawObjectDefinition(resolvedType.declaration)) {
+                    if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
                         return []
                     }
 
                     return [
                         {
-                            severity: 'fatal',
+                            severity: "fatal",
                             message: `Objects can only extend other objects, and ${extension} is not an object.`
                         }
                     ]

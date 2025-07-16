@@ -1,11 +1,11 @@
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { ResolvedType, TypeResolverImpl, constructFernFileContext } from '@fern-api/ir-generator'
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { ResolvedType, TypeResolverImpl, constructFernFileContext } from "@fern-api/ir-generator"
 
-import { Rule, RuleViolation } from '../../Rule'
-import { CASINGS_GENERATOR } from '../../utils/casingsGenerator'
+import { Rule, RuleViolation } from "../../Rule"
+import { CASINGS_GENERATOR } from "../../utils/casingsGenerator"
 
 export const ExplodedFormDataIsArrayRule: Rule = {
-    name: 'exploded-form-data-is-array',
+    name: "exploded-form-data-is-array",
     create: ({ workspace }) => {
         const typeResolver = new TypeResolverImpl(workspace)
         return {
@@ -13,9 +13,9 @@ export const ExplodedFormDataIsArrayRule: Rule = {
                 httpEndpoint: ({ endpoint }, { relativeFilepath, contents: definitionFile }) => {
                     if (
                         endpoint.request == null ||
-                        typeof endpoint.request === 'string' ||
+                        typeof endpoint.request === "string" ||
                         endpoint.request?.body == null ||
-                        typeof endpoint.request.body === 'string'
+                        typeof endpoint.request.body === "string"
                     ) {
                         return []
                     }
@@ -27,11 +27,11 @@ export const ExplodedFormDataIsArrayRule: Rule = {
                     const violations: RuleViolation[] = []
 
                     for (const [propertyKey, propertyShape] of Object.entries(endpoint.request.body.properties ?? {})) {
-                        if (typeof propertyShape === 'string') {
+                        if (typeof propertyShape === "string") {
                             continue
                         }
 
-                        if (propertyShape.style !== 'exploded') {
+                        if (propertyShape.style !== "exploded") {
                             continue
                         }
 
@@ -55,7 +55,7 @@ export const ExplodedFormDataIsArrayRule: Rule = {
                         if (!isListType(resolvedType)) {
                             violations.push({
                                 message: `${propertyKey} is exploded and must be a list. Did you mean list<${propertyShape.type}>?`,
-                                severity: 'error'
+                                severity: "error"
                             })
                         }
                     }
@@ -68,13 +68,13 @@ export const ExplodedFormDataIsArrayRule: Rule = {
 }
 
 function isListType(type: ResolvedType): boolean {
-    if (type._type !== 'container') {
+    if (type._type !== "container") {
         return false
     }
-    if (type.container._type === 'list') {
+    if (type.container._type === "list") {
         return true
     }
-    if (type.container._type === 'optional' || type.container._type === 'nullable') {
+    if (type.container._type === "optional" || type.container._type === "nullable") {
         return isListType(type.container.itemType)
     }
     return false

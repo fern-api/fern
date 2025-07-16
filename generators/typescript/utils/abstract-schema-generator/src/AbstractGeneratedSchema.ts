@@ -1,6 +1,6 @@
-import { Reference, Zurg, getTextOfTsNode } from '@fern-typescript/commons'
-import { BaseContext } from '@fern-typescript/contexts'
-import { ModuleDeclaration, VariableDeclarationKind, ts } from 'ts-morph'
+import { Reference, Zurg, getTextOfTsNode } from "@fern-typescript/commons"
+import { BaseContext } from "@fern-typescript/contexts"
+import { ModuleDeclaration, VariableDeclarationKind, ts } from "ts-morph"
 
 export declare namespace AbstractGeneratedSchema {
     export interface Init {
@@ -9,7 +9,7 @@ export declare namespace AbstractGeneratedSchema {
 }
 
 export abstract class AbstractGeneratedSchema<Context extends BaseContext> {
-    protected static RAW_TYPE_NAME = 'Raw'
+    protected static RAW_TYPE_NAME = "Raw"
 
     protected typeName: string
 

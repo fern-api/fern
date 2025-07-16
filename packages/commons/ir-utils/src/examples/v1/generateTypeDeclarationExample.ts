@@ -6,11 +6,11 @@ import {
     ObjectTypeDeclaration,
     TypeDeclaration,
     TypeId
-} from '@fern-api/ir-sdk'
+} from "@fern-api/ir-sdk"
 
-import { isTypeReferenceOptional } from '../../utils/isTypeReferenceOptional'
-import { ExampleGenerationResult } from './ExampleGenerationResult'
-import { generateTypeReferenceExample } from './generateTypeReferenceExample'
+import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional"
+import { ExampleGenerationResult } from "./ExampleGenerationResult"
+import { generateTypeReferenceExample } from "./generateTypeReferenceExample"
 
 export declare namespace generateTypeDeclarationExample {
     interface Args {
@@ -35,7 +35,7 @@ export function generateTypeDeclarationExample({
     skipOptionalProperties
 }: generateTypeDeclarationExample.Args): ExampleGenerationResult<ExampleTypeShape> | undefined {
     switch (typeDeclaration.shape.type) {
-        case 'alias': {
+        case "alias": {
             const generatedExample = generateTypeReferenceExample({
                 fieldName,
                 typeDeclarations,
@@ -44,32 +44,32 @@ export function generateTypeDeclarationExample({
                 currentDepth,
                 skipOptionalProperties
             })
-            if (generatedExample.type === 'failure') {
+            if (generatedExample.type === "failure") {
                 return generatedExample
             }
             const { example, jsonExample } = generatedExample
             return {
-                type: 'success',
+                type: "success",
                 example: ExampleTypeShape.alias({
                     value: example
                 }),
                 jsonExample
             }
         }
-        case 'enum': {
+        case "enum": {
             const enumValue = typeDeclaration.shape.values[0]
             if (enumValue == null) {
-                return { type: 'failure', message: 'No enum values present' }
+                return { type: "failure", message: "No enum values present" }
             }
             return {
-                type: 'success',
+                type: "success",
                 example: ExampleTypeShape.enum({
                     value: enumValue.name
                 }),
                 jsonExample: enumValue.name.wireValue
             }
         }
-        case 'object': {
+        case "object": {
             const baseJsonExample: Record<string, unknown> = {}
             const baseProperties: ExampleObjectProperty[] = []
 
@@ -97,7 +97,7 @@ export function generateTypeDeclarationExample({
                     if (extendedExample == null) {
                         continue
                     }
-                    if (extendedExample.type === 'success' && extendedExample.example.type === 'object') {
+                    if (extendedExample.type === "success" && extendedExample.example.type === "object") {
                         Object.assign(baseJsonExample, extendedExample.jsonExample)
                         baseProperties.push(...extendedExample.example.properties)
                     }
@@ -112,19 +112,19 @@ export function generateTypeDeclarationExample({
                 maxDepth,
                 skipOptionalProperties
             })
-            if (objectExample.type === 'failure') {
+            if (objectExample.type === "failure") {
                 return objectExample
             }
             const { example, jsonExample } = objectExample
             return {
-                type: 'success',
+                type: "success",
                 example: ExampleTypeShape.object({
                     properties: [...baseProperties, ...example.properties]
                 }),
                 jsonExample: Object.assign({}, baseJsonExample, jsonExample)
             }
         }
-        case 'undiscriminatedUnion': {
+        case "undiscriminatedUnion": {
             let i = 0
             for (const variant of typeDeclaration.shape.members) {
                 const variantExample = generateTypeReferenceExample({
@@ -135,13 +135,13 @@ export function generateTypeDeclarationExample({
                     maxDepth,
                     skipOptionalProperties
                 })
-                if (variantExample.type === 'failure') {
+                if (variantExample.type === "failure") {
                     ++i
                     continue
                 }
                 const { example, jsonExample } = variantExample
                 return {
-                    type: 'success',
+                    type: "success",
                     example: ExampleTypeShape.undiscriminatedUnion({
                         index: i,
                         singleUnionType: example
@@ -151,7 +151,7 @@ export function generateTypeDeclarationExample({
             }
             break
         }
-        case 'union': {
+        case "union": {
             const discriminant = typeDeclaration.shape.discriminant
             const basePropertyExamples: Record<string, unknown> = {}
             if (typeDeclaration.shape.baseProperties != null) {
@@ -164,7 +164,7 @@ export function generateTypeDeclarationExample({
                         maxDepth,
                         skipOptionalProperties
                     })
-                    if (basePropertyExample.type === 'success') {
+                    if (basePropertyExample.type === "success") {
                         basePropertyExamples[baseProperty.name.wireValue] = basePropertyExample.jsonExample
                     }
                 }
@@ -174,7 +174,7 @@ export function generateTypeDeclarationExample({
                 const variantExample = variant.shape._visit<ExampleGenerationResult<ExampleTypeShape>>({
                     noProperties: () => {
                         return {
-                            type: 'success',
+                            type: "success",
                             example: ExampleTypeShape.union({
                                 discriminant,
                                 singleUnionType: {
@@ -192,7 +192,7 @@ export function generateTypeDeclarationExample({
                         const typeDeclaration = typeDeclarations[samePropertiesAsObject.typeId]
                         if (typeDeclaration == null) {
                             return {
-                                type: 'failure',
+                                type: "failure",
                                 message: `Failed to find type declaration with id ${samePropertiesAsObject.typeId}`
                             }
                         }
@@ -206,29 +206,29 @@ export function generateTypeDeclarationExample({
                             skipOptionalProperties
                         })
                         if (typeDeclarationExample == null) {
-                            return { type: 'failure', message: 'Failed to generate example for type reference' }
+                            return { type: "failure", message: "Failed to generate example for type reference" }
                         }
 
-                        if (typeDeclarationExample.type === 'failure') {
+                        if (typeDeclarationExample.type === "failure") {
                             return typeDeclarationExample
                         }
 
                         const { example, jsonExample } = typeDeclarationExample
                         return {
-                            type: 'success',
+                            type: "success",
                             example: ExampleTypeShape.union({
                                 discriminant,
                                 singleUnionType: {
                                     wireDiscriminantValue: variant.discriminantValue,
                                     shape: ExampleSingleUnionTypeProperties.samePropertiesAsObject({
                                         typeId: typeDeclaration.name.typeId,
-                                        object: example.type === 'object' ? example : { properties: [] }
+                                        object: example.type === "object" ? example : { properties: [] }
                                     })
                                 }
                             }),
                             jsonExample: {
                                 [discriminant.wireValue]: variant.discriminantValue.wireValue,
-                                ...(typeof jsonExample === 'object' ? jsonExample : {}),
+                                ...(typeof jsonExample === "object" ? jsonExample : {}),
                                 ...basePropertyExamples
                             }
                         }
@@ -242,12 +242,12 @@ export function generateTypeDeclarationExample({
                             typeDeclarations,
                             skipOptionalProperties
                         })
-                        if (singlePropertyExample.type === 'failure') {
+                        if (singlePropertyExample.type === "failure") {
                             return singlePropertyExample
                         }
                         const { example, jsonExample } = singlePropertyExample
                         return {
-                            type: 'success',
+                            type: "success",
                             example: ExampleTypeShape.union({
                                 discriminant,
                                 singleUnionType: {
@@ -263,17 +263,17 @@ export function generateTypeDeclarationExample({
                         }
                     },
                     _other: () => {
-                        throw new Error('Encountered unknown union type')
+                        throw new Error("Encountered unknown union type")
                     }
                 })
-                if (variantExample.type === 'failure') {
+                if (variantExample.type === "failure") {
                     continue
                 }
                 return variantExample
             }
         }
     }
-    return { type: 'failure', message: 'Failed to generate example for type reference' }
+    return { type: "failure", message: "Failed to generate example for type reference" }
 }
 
 function generateObjectDeclarationExample({
@@ -308,14 +308,14 @@ function generateObjectDeclarationExample({
             skipOptionalProperties
         })
         if (
-            propertyExample.type === 'failure' &&
+            propertyExample.type === "failure" &&
             !isTypeReferenceOptional({ typeDeclarations, typeReference: property.valueType })
         ) {
             return {
-                type: 'failure',
+                type: "failure",
                 message: `Failed to generate required property ${property.name.wireValue} b/c ${propertyExample.message}`
             }
-        } else if (propertyExample.type === 'failure') {
+        } else if (propertyExample.type === "failure") {
             continue
         }
         const { example, jsonExample: propertyJsonExample } = propertyExample
@@ -327,7 +327,7 @@ function generateObjectDeclarationExample({
         jsonExample[property.name.wireValue] = propertyJsonExample
     }
     return {
-        type: 'success',
+        type: "success",
         example: ExampleTypeShape.object({
             properties
         }),

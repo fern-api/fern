@@ -1,9 +1,9 @@
-import { readFile } from 'fs/promises'
-import yaml from 'js-yaml'
+import { readFile } from "fs/promises"
+import yaml from "js-yaml"
 
-import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
 
-import { LegacyDocs, LegacyDocsSerializers } from '.'
+import { LegacyDocs, LegacyDocsSerializers } from "."
 
 export async function loadRawDocsConfiguration({
     absolutePathToWorkspace
@@ -20,8 +20,8 @@ export async function loadRawDocsConfiguration({
     return undefined
 }
 
-const DOCS_FOLDER = 'docs'
-const DOCS_YML = 'docs.yml'
+const DOCS_FOLDER = "docs"
+const DOCS_YML = "docs.yml"
 
 export function getAbsolutePathToDocsYaml({
     absolutePathToWorkspace

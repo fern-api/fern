@@ -1,30 +1,30 @@
-import { writeFile } from 'fs/promises'
-import yargs, { Argv } from 'yargs'
-import { hideBin } from 'yargs/helpers'
+import { writeFile } from "fs/promises"
+import yargs, { Argv } from "yargs"
+import { hideBin } from "yargs/helpers"
 
-import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
-import { LOG_LEVELS, LogLevel } from '@fern-api/logger'
-import { askToLogin } from '@fern-api/login'
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { LOG_LEVELS, LogLevel } from "@fern-api/logger"
+import { askToLogin } from "@fern-api/login"
 
-import { FernRegistryClient as FdrClient } from '@fern-fern/generators-sdk'
+import { FernRegistryClient as FdrClient } from "@fern-fern/generators-sdk"
 
-import { Semaphore } from './Semaphore'
-import { generateCliChangelog } from './commands/generate/generateCliChangelog'
-import { generateGeneratorChangelog } from './commands/generate/generateGeneratorChangelog'
-import { getLatestCli } from './commands/latest/getLatestCli'
-import { getLatestGenerator } from './commands/latest/getLatestGenerator'
-import { publishCli } from './commands/publish/publishCli'
-import { publishGenerator } from './commands/publish/publishGenerator'
-import { registerCliRelease } from './commands/register/registerCliRelease'
-import { registerGenerator } from './commands/register/registerGenerator'
-import { runWithCustomFixture } from './commands/run/runWithCustomFixture'
-import { ScriptRunner } from './commands/test/ScriptRunner'
-import { TaskContextFactory } from './commands/test/TaskContextFactory'
-import { DockerTestRunner, LocalTestRunner } from './commands/test/test-runner'
-import { FIXTURES, testGenerator } from './commands/test/testWorkspaceFixtures'
-import { validateCliRelease } from './commands/validate/validateCliChangelog'
-import { validateGenerator } from './commands/validate/validateGeneratorChangelog'
-import { GeneratorWorkspace, loadGeneratorWorkspaces } from './loadGeneratorWorkspaces'
+import { Semaphore } from "./Semaphore"
+import { generateCliChangelog } from "./commands/generate/generateCliChangelog"
+import { generateGeneratorChangelog } from "./commands/generate/generateGeneratorChangelog"
+import { getLatestCli } from "./commands/latest/getLatestCli"
+import { getLatestGenerator } from "./commands/latest/getLatestGenerator"
+import { publishCli } from "./commands/publish/publishCli"
+import { publishGenerator } from "./commands/publish/publishGenerator"
+import { registerCliRelease } from "./commands/register/registerCliRelease"
+import { registerGenerator } from "./commands/register/registerGenerator"
+import { runWithCustomFixture } from "./commands/run/runWithCustomFixture"
+import { ScriptRunner } from "./commands/test/ScriptRunner"
+import { TaskContextFactory } from "./commands/test/TaskContextFactory"
+import { DockerTestRunner, LocalTestRunner } from "./commands/test/test-runner"
+import { FIXTURES, testGenerator } from "./commands/test/testWorkspaceFixtures"
+import { validateCliRelease } from "./commands/validate/validateCliChangelog"
+import { validateGenerator } from "./commands/validate/validateGeneratorChangelog"
+import { GeneratorWorkspace, loadGeneratorWorkspaces } from "./loadGeneratorWorkspaces"
 
 void tryRunCli()
 
@@ -53,60 +53,60 @@ export async function tryRunCli(): Promise<void> {
 
 function addTestCommand(cli: Argv) {
     cli.command(
-        'test',
-        'Run all snapshot tests for the generators',
+        "test",
+        "Run all snapshot tests for the generators",
         (yargs) =>
             yargs
-                .option('generator', {
-                    type: 'array',
+                .option("generator", {
+                    type: "array",
                     string: true,
                     demandOption: false,
-                    alias: 'g',
-                    description: 'The generators to run tests for'
+                    alias: "g",
+                    description: "The generators to run tests for"
                 })
-                .option('parallel', {
-                    type: 'number',
+                .option("parallel", {
+                    type: "number",
                     default: 4,
-                    alias: 'p'
+                    alias: "p"
                 })
-                .option('fixture', {
-                    type: 'array',
+                .option("fixture", {
+                    type: "array",
                     string: true,
                     default: FIXTURES,
                     choices: FIXTURES,
                     demandOption: false,
-                    description: 'Runs on all fixtures if not provided'
+                    description: "Runs on all fixtures if not provided"
                 })
-                .option('outputFolder', {
+                .option("outputFolder", {
                     string: true,
                     demandOption: false,
-                    description: 'Runs on a specific output folder. Only relevant if there are >1 folders configured.'
+                    description: "Runs on a specific output folder. Only relevant if there are >1 folders configured."
                 })
-                .option('keepDocker', {
-                    type: 'boolean',
+                .option("keepDocker", {
+                    type: "boolean",
                     demandOption: false,
                     default: false,
-                    description: 'Keeps the docker container after the tests are finished'
+                    description: "Keeps the docker container after the tests are finished"
                 })
-                .option('skip-scripts', {
-                    type: 'boolean',
+                .option("skip-scripts", {
+                    type: "boolean",
                     demandOption: false,
                     default: false
                 })
-                .option('local', {
-                    type: 'boolean',
+                .option("local", {
+                    type: "boolean",
                     demandOption: false,
                     default: false
                 })
-                .option('log-level', {
+                .option("log-level", {
                     default: LogLevel.Info,
                     choices: LOG_LEVELS
                 })
-                .option('allow-unexpected-failures', {
-                    type: 'boolean',
+                .option("allow-unexpected-failures", {
+                    type: "boolean",
                     demandOption: false,
                     default: false,
-                    description: 'Allow unexpected test failures without failing the command'
+                    description: "Allow unexpected test failures without failing the command"
                 }),
         async (argv) => {
             const generators = await loadGeneratorWorkspaces()
@@ -114,7 +114,7 @@ function addTestCommand(cli: Argv) {
                 throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: argv.generator })
             }
 
-            const taskContextFactory = new TaskContextFactory(argv['log-level'])
+            const taskContextFactory = new TaskContextFactory(argv["log-level"])
             const lock = new Semaphore(argv.parallel)
             const tests: Promise<boolean>[] = []
             const scriptRunners: ScriptRunner[] = []
@@ -127,7 +127,7 @@ function addTestCommand(cli: Argv) {
                 const scriptRunner = new ScriptRunner(
                     generator,
                     argv.skipScripts,
-                    taskContextFactory.create('script-runner')
+                    taskContextFactory.create("script-runner")
                 )
                 if (argv.local && generator.workspaceConfig.test.local != null) {
                     testRunner = new LocalTestRunner({
@@ -166,7 +166,7 @@ function addTestCommand(cli: Argv) {
             }
 
             // If any of the tests failed and allow-unexpected-failures is false, exit with a non-zero status code
-            if (results.includes(false) && !argv['allow-unexpected-failures']) {
+            if (results.includes(false) && !argv["allow-unexpected-failures"]) {
                 process.exit(1)
             }
         }
@@ -175,37 +175,37 @@ function addTestCommand(cli: Argv) {
 
 function addRunCommand(cli: Argv) {
     cli.command(
-        'run',
-        'Runs the generator on the given input',
+        "run",
+        "Runs the generator on the given input",
         (yargs) =>
             yargs
-                .option('generator', {
+                .option("generator", {
                     string: true,
                     demandOption: true,
-                    description: 'Generator to run'
+                    description: "Generator to run"
                 })
-                .option('path', {
-                    type: 'string',
+                .option("path", {
+                    type: "string",
                     string: true,
                     demandOption: true,
-                    description: 'Path to the fern definition'
+                    description: "Path to the fern definition"
                 })
-                .option('output-path', {
-                    type: 'string',
+                .option("output-path", {
+                    type: "string",
                     string: true,
                     demandOption: false,
-                    description: 'Path to output the generated files (defaults to tmp dir)'
+                    description: "Path to output the generated files (defaults to tmp dir)"
                 })
-                .option('log-level', {
+                .option("log-level", {
                     default: LogLevel.Info,
                     choices: LOG_LEVELS
                 })
-                .option('skip-scripts', {
-                    type: 'boolean',
+                .option("skip-scripts", {
+                    type: "boolean",
                     demandOption: false,
                     default: false
                 })
-                .option('audience', {
+                .option("audience", {
                     string: true,
                     demandOption: false
                 }),
@@ -221,17 +221,17 @@ function addRunCommand(cli: Argv) {
             }
 
             await runWithCustomFixture({
-                pathToFixture: argv.path.startsWith('/')
+                pathToFixture: argv.path.startsWith("/")
                     ? AbsoluteFilePath.of(argv.path)
                     : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(argv.path)),
                 workspace: generator,
-                logLevel: argv['log-level'],
+                logLevel: argv["log-level"],
                 audience: argv.audience,
                 skipScripts: argv.skipScripts,
-                outputPath: argv['output-path']
-                    ? argv['output-path'].startsWith('/')
-                        ? AbsoluteFilePath.of(argv['output-path'])
-                        : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(argv['output-path']))
+                outputPath: argv["output-path"]
+                    ? argv["output-path"].startsWith("/")
+                        ? AbsoluteFilePath.of(argv["output-path"])
+                        : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(argv["output-path"]))
                     : undefined
             })
         }
@@ -239,36 +239,36 @@ function addRunCommand(cli: Argv) {
 }
 
 function addPublishCommands(cli: Argv) {
-    cli.command('publish', 'Publish releases', (yargs) => {
+    cli.command("publish", "Publish releases", (yargs) => {
         yargs
             .command(
-                'cli',
-                'Publishes all latest versions the CLI to NPM.',
+                "cli",
+                "Publishes all latest versions the CLI to NPM.",
                 (yargs) =>
                     yargs
                         // Version is a reserved option in yargs...
-                        .option('ver', {
-                            type: 'string',
+                        .option("ver", {
+                            type: "string",
                             demandOption: false
                         })
-                        .option('changelog', {
-                            type: 'string',
+                        .option("changelog", {
+                            type: "string",
                             demandOption: false,
                             description:
-                                'Path to the latest changelog file, used along side `previous-changelog` to the most recent new version to publish.'
+                                "Path to the latest changelog file, used along side `previous-changelog` to the most recent new version to publish."
                         })
-                        .option('previous-changelog', {
-                            type: 'string',
+                        .option("previous-changelog", {
+                            type: "string",
                             demandOption: false,
                             description:
-                                'Path to the previous changelog file, used along side `changelog` to the most recent new version to publish.'
+                                "Path to the previous changelog file, used along side `changelog` to the most recent new version to publish."
                         })
-                        .option('log-level', {
+                        .option("log-level", {
                             default: LogLevel.Info,
                             choices: LOG_LEVELS
                         })
-                        .option('dev', {
-                            type: 'boolean',
+                        .option("dev", {
+                            type: "boolean",
                             default: false,
                             demandOption: false
                         })
@@ -279,8 +279,8 @@ function addPublishCommands(cli: Argv) {
                             )
                         }),
                 async (argv) => {
-                    const taskContextFactory = new TaskContextFactory(argv['log-level'])
-                    const context = taskContextFactory.create('Publish')
+                    const taskContextFactory = new TaskContextFactory(argv["log-level"])
+                    const context = taskContextFactory.create("Publish")
 
                     await publishCli({
                         version: argv.ver
@@ -299,33 +299,33 @@ function addPublishCommands(cli: Argv) {
                 }
             )
             .command(
-                'generator <generator>',
-                'Publishes all latest versions of the generators to DockerHub unless otherwise specified. To filter to certain generators pass in the generator IDs as a positional, space delimited list.',
+                "generator <generator>",
+                "Publishes all latest versions of the generators to DockerHub unless otherwise specified. To filter to certain generators pass in the generator IDs as a positional, space delimited list.",
                 (yargs) =>
                     yargs
-                        .positional('generator', {
-                            type: 'string',
+                        .positional("generator", {
+                            type: "string",
                             demandOption: true,
-                            description: 'Generator(s) to register'
+                            description: "Generator(s) to register"
                         })
                         // Version is a reserved option in yargs...
-                        .option('ver', {
-                            type: 'string',
+                        .option("ver", {
+                            type: "string",
                             demandOption: false
                         })
-                        .option('changelog', {
-                            type: 'string',
+                        .option("changelog", {
+                            type: "string",
                             demandOption: false,
                             description:
-                                'Path to the latest changelog file, used along side `previous-changelog` to the most recent new version to publish.'
+                                "Path to the latest changelog file, used along side `previous-changelog` to the most recent new version to publish."
                         })
-                        .option('previous-changelog', {
-                            type: 'string',
+                        .option("previous-changelog", {
+                            type: "string",
                             demandOption: false,
                             description:
-                                'Path to the previous changelog file, used along side `changelog` to the most recent new version to publish.'
+                                "Path to the previous changelog file, used along side `changelog` to the most recent new version to publish."
                         })
-                        .option('log-level', {
+                        .option("log-level", {
                             default: LogLevel.Info,
                             choices: LOG_LEVELS
                         })
@@ -341,8 +341,8 @@ function addPublishCommands(cli: Argv) {
                         throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [argv.generator] })
                     }
 
-                    const taskContextFactory = new TaskContextFactory(argv['log-level'])
-                    const context = taskContextFactory.create('Publish')
+                    const taskContextFactory = new TaskContextFactory(argv["log-level"])
+                    const context = taskContextFactory.create("Publish")
 
                     const maybeGeneratorWorkspace = generators.find((g) => g.workspaceName === argv.generator)
                     if (maybeGeneratorWorkspace == null) {
@@ -370,19 +370,19 @@ function addPublishCommands(cli: Argv) {
 }
 
 function addRegisterCommands(cli: Argv) {
-    cli.command('register', "Register releases within FDR's database", (yargs) => {
+    cli.command("register", "Register releases within FDR's database", (yargs) => {
         yargs
             .command(
-                'cli',
-                'Registers CLI releases',
+                "cli",
+                "Registers CLI releases",
                 (addtlYargs) =>
-                    addtlYargs.option('log-level', {
+                    addtlYargs.option("log-level", {
                         default: LogLevel.Info,
                         choices: LOG_LEVELS
                     }),
                 async (argv) => {
-                    const taskContextFactory = new TaskContextFactory(argv['log-level'])
-                    const context = taskContextFactory.create('Register')
+                    const taskContextFactory = new TaskContextFactory(argv["log-level"])
+                    const context = taskContextFactory.create("Register")
                     const token = await askToLogin(context)
 
                     const fdrClient = createFdrService({ token: token.value })
@@ -394,18 +394,18 @@ function addRegisterCommands(cli: Argv) {
                 }
             )
             .command(
-                'generator',
-                'Registers all of the generators to FDR unless otherwise specified. To filter to certain generators pass in the generator ids to `--generators`, space delimited list.',
+                "generator",
+                "Registers all of the generators to FDR unless otherwise specified. To filter to certain generators pass in the generator ids to `--generators`, space delimited list.",
                 (yargs) =>
                     yargs
                         // This would ideally be positional, but you can't have positional arguments that are arrays with yargs
-                        .option('generators', {
+                        .option("generators", {
                             array: true,
-                            type: 'string',
+                            type: "string",
                             demandOption: false,
-                            description: 'Generator(s) to register'
+                            description: "Generator(s) to register"
                         })
-                        .option('log-level', {
+                        .option("log-level", {
                             default: LogLevel.Info,
                             choices: LOG_LEVELS
                         }),
@@ -414,8 +414,8 @@ function addRegisterCommands(cli: Argv) {
                     if (argv.generators != null) {
                         throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: argv.generators })
                     }
-                    const taskContextFactory = new TaskContextFactory(argv['log-level'])
-                    const context = taskContextFactory.create('Register')
+                    const taskContextFactory = new TaskContextFactory(argv["log-level"])
+                    const context = taskContextFactory.create("Register")
                     const token = await askToLogin(context)
 
                     const fdrClient = createFdrService({ token: token.value })
@@ -438,33 +438,33 @@ function addRegisterCommands(cli: Argv) {
 }
 
 function addLatestCommands(cli: Argv) {
-    cli.command('latest', 'Get latest release', (yargs) => {
+    cli.command("latest", "Get latest release", (yargs) => {
         yargs
             .command(
-                'cli',
-                'Get latest CLI release.',
+                "cli",
+                "Get latest CLI release.",
                 (yargs) =>
                     yargs
-                        .option('log-level', {
+                        .option("log-level", {
                             default: LogLevel.Info,
                             choices: LOG_LEVELS
                         })
-                        .option('output', {
-                            alias: 'o',
-                            type: 'string',
+                        .option("output", {
+                            alias: "o",
+                            type: "string",
                             demandOption: false
                         })
-                        .option('changelog', {
-                            type: 'string',
+                        .option("changelog", {
+                            type: "string",
                             demandOption: false,
                             description:
-                                'Path to the latest changelog file, used along side `previous-changelog` to get the most recent new version.'
+                                "Path to the latest changelog file, used along side `previous-changelog` to get the most recent new version."
                         })
-                        .option('previous-changelog', {
-                            type: 'string',
+                        .option("previous-changelog", {
+                            type: "string",
                             demandOption: false,
                             description:
-                                'Path to the previous changelog file, used along side `changelog` to get the most recent new version.'
+                                "Path to the previous changelog file, used along side `changelog` to get the most recent new version."
                         })
                         .check((argv) => {
                             return (
@@ -473,8 +473,8 @@ function addLatestCommands(cli: Argv) {
                             )
                         }),
                 async (argv) => {
-                    const taskContextFactory = new TaskContextFactory(argv['log-level'])
-                    const context = taskContextFactory.create('Publish')
+                    const taskContextFactory = new TaskContextFactory(argv["log-level"])
+                    const context = taskContextFactory.create("Publish")
 
                     const ver = await getLatestCli({
                         context,
@@ -487,7 +487,7 @@ function addLatestCommands(cli: Argv) {
                                 : undefined
                     })
                     if (ver == null) {
-                        context.logger.error('No latest version found for CLI')
+                        context.logger.error("No latest version found for CLI")
                         return
                     }
 
@@ -499,22 +499,22 @@ function addLatestCommands(cli: Argv) {
                 }
             )
             .command(
-                'generator <generator>',
-                'Get latest release of the specified generator.',
+                "generator <generator>",
+                "Get latest release of the specified generator.",
                 (yargs) =>
                     yargs
-                        .positional('generator', {
-                            type: 'string',
+                        .positional("generator", {
+                            type: "string",
                             demandOption: true,
-                            description: 'Generator(s) to register'
+                            description: "Generator(s) to register"
                         })
-                        .option('log-level', {
+                        .option("log-level", {
                             default: LogLevel.Info,
                             choices: LOG_LEVELS
                         })
-                        .option('output', {
-                            alias: 'o',
-                            type: 'string',
+                        .option("output", {
+                            alias: "o",
+                            type: "string",
                             demandOption: false
                         }),
                 async (argv) => {
@@ -523,8 +523,8 @@ function addLatestCommands(cli: Argv) {
                         throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [argv.generator] })
                     }
 
-                    const taskContextFactory = new TaskContextFactory(argv['log-level'])
-                    const context = taskContextFactory.create('Publish')
+                    const taskContextFactory = new TaskContextFactory(argv["log-level"])
+                    const context = taskContextFactory.create("Publish")
 
                     const maybeGeneratorWorkspace = generators.find((g) => g.workspaceName === argv.generator)
                     if (maybeGeneratorWorkspace == null) {
@@ -551,19 +551,19 @@ function addLatestCommands(cli: Argv) {
 }
 
 function addValidateCommands(cli: Argv) {
-    cli.command('validate', 'Validate your changelog file', (yargs) => {
+    cli.command("validate", "Validate your changelog file", (yargs) => {
         yargs
             .command(
-                'cli',
-                'validate CLI releases',
+                "cli",
+                "validate CLI releases",
                 (addtlYargs) =>
-                    addtlYargs.option('log-level', {
+                    addtlYargs.option("log-level", {
                         default: LogLevel.Info,
                         choices: LOG_LEVELS
                     }),
                 async (argv) => {
-                    const taskContextFactory = new TaskContextFactory(argv['log-level'])
-                    const context = taskContextFactory.create('CLI')
+                    const taskContextFactory = new TaskContextFactory(argv["log-level"])
+                    const context = taskContextFactory.create("CLI")
 
                     await validateCliRelease({
                         context
@@ -571,16 +571,16 @@ function addValidateCommands(cli: Argv) {
                 }
             )
             .command(
-                'generator <generator>',
-                'validate generator releases.',
+                "generator <generator>",
+                "validate generator releases.",
                 (yargs) =>
                     yargs
-                        .positional('generator', {
-                            type: 'string',
+                        .positional("generator", {
+                            type: "string",
                             demandOption: true,
                             description: "Generator who's changelog you want to validate"
                         })
-                        .option('log-level', {
+                        .option("log-level", {
                             default: LogLevel.Info,
                             choices: LOG_LEVELS
                         }),
@@ -589,7 +589,7 @@ function addValidateCommands(cli: Argv) {
                     if (argv.generator != null) {
                         throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [argv.generator] })
                     }
-                    const taskContextFactory = new TaskContextFactory(argv['log-level'])
+                    const taskContextFactory = new TaskContextFactory(argv["log-level"])
 
                     for (const generator of generators) {
                         // If you've specified a list of generators, and the current generator is not in that list, skip it
@@ -608,34 +608,34 @@ function addValidateCommands(cli: Argv) {
 }
 
 function addGenerateCommands(cli: Argv) {
-    cli.command('generate', 'generate artifacts based on your seed declarations', (yargs) => {
-        yargs.command('changelog', 'generate a changelog in the Fern Docs format', (tlYargs) => {
+    cli.command("generate", "generate artifacts based on your seed declarations", (yargs) => {
+        yargs.command("changelog", "generate a changelog in the Fern Docs format", (tlYargs) => {
             tlYargs
                 .command(
-                    'cli',
-                    'Generate a changelog for CLI releases',
+                    "cli",
+                    "Generate a changelog for CLI releases",
                     (addtlYargs) =>
                         addtlYargs
-                            .option('log-level', {
+                            .option("log-level", {
                                 default: LogLevel.Info,
                                 choices: LOG_LEVELS
                             })
-                            .option('output', {
-                                alias: 'o',
+                            .option("output", {
+                                alias: "o",
                                 description:
-                                    'Path to write the changelog to, if not provided, will write to cwd. Note this should be a directory, not a filename.',
+                                    "Path to write the changelog to, if not provided, will write to cwd. Note this should be a directory, not a filename.",
                                 string: true,
                                 demandOption: false
                             })
-                            .option('clean-directory', {
-                                type: 'boolean',
+                            .option("clean-directory", {
+                                type: "boolean",
                                 demandOption: false,
                                 description:
-                                    'If true, we will delete the contents of the output directory before generating the changelog.'
+                                    "If true, we will delete the contents of the output directory before generating the changelog."
                             }),
                     async (argv) => {
-                        const taskContextFactory = new TaskContextFactory(argv['log-level'])
-                        const context = taskContextFactory.create('Changelog')
+                        const taskContextFactory = new TaskContextFactory(argv["log-level"])
+                        const context = taskContextFactory.create("Changelog")
 
                         const token = await askToLogin(context)
                         const fdrClient = createFdrService({ token: token.value })
@@ -649,41 +649,41 @@ function addGenerateCommands(cli: Argv) {
                     }
                 )
                 .command(
-                    'generator',
-                    'Generate a changelog for generator releases.',
+                    "generator",
+                    "Generate a changelog for generator releases.",
                     (yargs) =>
                         yargs
                             // This would ideally be positional, but you can't have positional arguments that are arrays with yargs
-                            .option('generators', {
+                            .option("generators", {
                                 array: true,
-                                type: 'string',
+                                type: "string",
                                 demandOption: false,
-                                description: 'Generator(s) to register'
+                                description: "Generator(s) to register"
                             })
-                            .option('output', {
-                                alias: 'o',
+                            .option("output", {
+                                alias: "o",
                                 description:
-                                    'Path to write the changelog to, if not provided, will write to cwd. Note this should be a directory, not a filename.',
+                                    "Path to write the changelog to, if not provided, will write to cwd. Note this should be a directory, not a filename.",
                                 string: true,
                                 demandOption: false
                             })
-                            .option('log-level', {
+                            .option("log-level", {
                                 default: LogLevel.Info,
                                 choices: LOG_LEVELS
                             })
-                            .option('clean-directory', {
-                                type: 'boolean',
+                            .option("clean-directory", {
+                                type: "boolean",
                                 demandOption: false,
                                 description:
-                                    'If true, we will delete the contents of the output directory before generating the changelog.'
+                                    "If true, we will delete the contents of the output directory before generating the changelog."
                             }),
                     async (argv) => {
                         const generators = await loadGeneratorWorkspaces()
                         if (argv.generators != null) {
                             throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: argv.generators })
                         }
-                        const taskContextFactory = new TaskContextFactory(argv['log-level'])
-                        const context = taskContextFactory.create('Changelog')
+                        const taskContextFactory = new TaskContextFactory(argv["log-level"])
+                        const context = taskContextFactory.create("Changelog")
 
                         const token = await askToLogin(context)
                         const fdrClient = createFdrService({ token: token.value })
@@ -697,7 +697,7 @@ function addGenerateCommands(cli: Argv) {
                             let outputPath = argv.output
                             if (argv.generators == null || argv.generators?.length > 1) {
                                 outputPath = join(
-                                    RelativeFilePath.of(argv.output ?? './'),
+                                    RelativeFilePath.of(argv.output ?? "./"),
                                     RelativeFilePath.of(generator.workspaceName)
                                 )
                             }
@@ -737,7 +737,7 @@ function throwIfGeneratorDoesNotExist({
     if (missingGenerators.length > 0) {
         throw new Error(
             `Generators ${missingGenerators.join(
-                ', '
+                ", "
             )} not found. Please make sure that there is a folder with those names in the seed directory.`
         )
     }
@@ -746,7 +746,7 @@ function throwIfGeneratorDoesNotExist({
 // Dummy clone of the function from @fern-api/core
 // because we're using different SDKs for these packages
 function createFdrService({
-    environment = process.env.DEFAULT_FDR_ORIGIN ?? 'https://registry.buildwithfern.com',
+    environment = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com",
     token
 }: {
     environment?: string

@@ -1,12 +1,12 @@
-import { Access } from './Access'
-import { ClassReference } from './ClassReference'
-import { CodeBlock } from './CodeBlock'
-import { Comment } from './Comment'
-import { Parameter } from './Parameter'
-import { Type } from './Type'
-import { AstNode } from './core/AstNode'
-import { SELF, STATIC } from './core/Constant'
-import { Writer } from './core/Writer'
+import { Access } from "./Access"
+import { ClassReference } from "./ClassReference"
+import { CodeBlock } from "./CodeBlock"
+import { Comment } from "./Comment"
+import { Parameter } from "./Parameter"
+import { Type } from "./Type"
+import { AstNode } from "./core/AstNode"
+import { SELF, STATIC } from "./core/Constant"
+import { Writer } from "./core/Writer"
 
 export declare namespace Method {
     interface Args {
@@ -57,7 +57,7 @@ export class Method extends AstNode {
 
     public write(writer: Writer): void {
         this.writeComment(writer)
-        writer.write(`${this.access}${this.static_ ? ' static' : ''} function ${this.name}(`)
+        writer.write(`${this.access}${this.static_ ? " static" : ""} function ${this.name}(`)
 
         // NOTE: Put all required parameters before all optional parameters
         // since this is required by PHPStan
@@ -68,30 +68,30 @@ export class Method extends AstNode {
 
         orderedParameters.forEach((parameter, index) => {
             if (index > 0) {
-                writer.write(', ')
+                writer.write(", ")
             }
             parameter.write(writer)
         })
-        writer.write('): ')
+        writer.write("): ")
         if (this.return_ != null) {
             writer.writeNodeOrString(this.return_)
         } else {
-            writer.write('void')
+            writer.write("void")
         }
-        writer.writeLine(' {')
+        writer.writeLine(" {")
 
         writer.indent()
         this.body?.write(writer)
         writer.dedent()
 
-        writer.writeLine('}')
+        writer.writeLine("}")
     }
 
     private writeComment(writer: Writer): void {
         const comment = new Comment({ docs: this.docs })
         for (const parameter of this.parameters) {
             comment.addTag({
-                tagType: 'param',
+                tagType: "param",
                 type: parameter.type,
                 name: parameter.name,
                 docs: parameter.docs
@@ -99,13 +99,13 @@ export class Method extends AstNode {
         }
         if (this.return_ != null && this.return_ !== SELF && this.return_ !== STATIC) {
             comment.addTag({
-                tagType: 'return',
+                tagType: "return",
                 type: this.return_
             })
         }
         for (const throw_ of this.throws) {
             comment.addTag({
-                tagType: 'throws',
+                tagType: "throws",
                 type: Type.reference(throw_)
             })
         }

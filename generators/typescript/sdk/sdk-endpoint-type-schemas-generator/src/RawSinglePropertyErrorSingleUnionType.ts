@@ -1,9 +1,9 @@
-import { Zurg, getPropertyKey, getTextOfTsNode } from '@fern-typescript/commons'
-import { SdkContext } from '@fern-typescript/contexts'
-import { AbstractRawSingleUnionType } from '@fern-typescript/union-schema-generator'
-import { OptionalKind, PropertySignatureStructure, ts } from 'ts-morph'
+import { Zurg, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons"
+import { SdkContext } from "@fern-typescript/contexts"
+import { AbstractRawSingleUnionType } from "@fern-typescript/union-schema-generator"
+import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph"
 
-import { DeclaredErrorName, ErrorDiscriminationByPropertyStrategy } from '@fern-fern/ir-sdk/api'
+import { DeclaredErrorName, ErrorDiscriminationByPropertyStrategy } from "@fern-fern/ir-sdk/api"
 
 export declare namespace RawSinglePropertyErrorSingleUnionType {
     export interface Init extends AbstractRawSingleUnionType.Init {
@@ -47,7 +47,7 @@ export class RawSinglePropertyErrorSingleUnionType extends AbstractRawSingleUnio
 
     protected getNonDiscriminantPropertiesForSchema(
         context: SdkContext
-    ): Zurg.union.SingleUnionType['nonDiscriminantProperties'] {
+    ): Zurg.union.SingleUnionType["nonDiscriminantProperties"] {
         const errorDeclaration = context.sdkError.getErrorDeclaration(this.errorName)
         if (errorDeclaration.type == null) {
             throw new Error(

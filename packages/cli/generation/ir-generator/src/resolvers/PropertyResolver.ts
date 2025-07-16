@@ -1,15 +1,15 @@
-import { RawSchemas, isInlineRequestBody } from '@fern-api/fern-definition-schema'
-import { Name, ObjectProperty, RequestProperty, RequestPropertyValue, ResponseProperty } from '@fern-api/ir-sdk'
+import { RawSchemas, isInlineRequestBody } from "@fern-api/fern-definition-schema"
+import { Name, ObjectProperty, RequestProperty, RequestPropertyValue, ResponseProperty } from "@fern-api/ir-sdk"
 
-import { FernFileContext } from '../FernFileContext'
+import { FernFileContext } from "../FernFileContext"
 import {
     getNestedObjectPropertyFromObjectSchema,
     getNestedObjectPropertyFromResolvedType,
     maybeFileFromResolvedType
-} from '../converters/services/convertProperty'
-import { convertQueryParameter } from '../converters/services/convertQueryParameter'
-import { EndpointResolver } from './EndpointResolver'
-import { TypeResolver } from './TypeResolver'
+} from "../converters/services/convertProperty"
+import { convertQueryParameter } from "../converters/services/convertQueryParameter"
+import { EndpointResolver } from "./EndpointResolver"
+import { TypeResolver } from "./TypeResolver"
 
 export interface PropertyResolver {
     resolveRequestProperty: (args: {
@@ -55,7 +55,7 @@ export class PropertyResolverImpl implements PropertyResolver {
         const resolvedRequestProperty = this.resolveRequestProperty({ file, endpoint, propertyComponents })
         if (resolvedRequestProperty == null) {
             throw new Error(
-                'Cannot resolve request property from endpoint: ' + endpoint + ' in file ' + file.relativeFilepath
+                "Cannot resolve request property from endpoint: " + endpoint + " in file " + file.relativeFilepath
             )
         }
         return resolvedRequestProperty
@@ -77,7 +77,7 @@ export class PropertyResolverImpl implements PropertyResolver {
         if (resolvedEndpoint.endpoint.request == null) {
             return undefined
         }
-        if (typeof resolvedEndpoint.endpoint.request !== 'string') {
+        if (typeof resolvedEndpoint.endpoint.request !== "string") {
             return this.resolveRequestPropertyFromInlinedRequest({
                 typeResolver: this.typeResolver,
                 file: resolvedEndpoint.file,
@@ -114,7 +114,7 @@ export class PropertyResolverImpl implements PropertyResolver {
         const resolvedResponseProperty = this.resolveResponseProperty({ file, endpoint, propertyComponents })
         if (resolvedResponseProperty == null) {
             throw new Error(
-                'Cannot resolve response property from endpoint: ' + endpoint + ' in file ' + file.relativeFilepath
+                "Cannot resolve response property from endpoint: " + endpoint + " in file " + file.relativeFilepath
             )
         }
         return resolvedResponseProperty
@@ -136,9 +136,9 @@ export class PropertyResolverImpl implements PropertyResolver {
         const objectProperty = this.resolveObjectProperty({
             file: resolvedEndpoint.file,
             typeName:
-                (typeof resolvedEndpoint.endpoint.response !== 'string'
+                (typeof resolvedEndpoint.endpoint.response !== "string"
                     ? resolvedEndpoint.endpoint.response?.type
-                    : resolvedEndpoint.endpoint.response) ?? '',
+                    : resolvedEndpoint.endpoint.response) ?? "",
             propertyComponents
         })
         if (objectProperty == null) {
@@ -166,8 +166,8 @@ export class PropertyResolverImpl implements PropertyResolver {
     }): RequestProperty | undefined {
         if (propertyComponents.length === 1) {
             // Query parameters can only be defined on the root level of the request.
-            const queryParameterKey = propertyComponents[0] ?? ''
-            const queryParameter = requestType['query-parameters']?.[queryParameterKey] ?? undefined
+            const queryParameterKey = propertyComponents[0] ?? ""
+            const queryParameter = requestType["query-parameters"]?.[queryParameterKey] ?? undefined
             if (queryParameter != null) {
                 return {
                     property: RequestPropertyValue.query(
@@ -203,7 +203,7 @@ export class PropertyResolverImpl implements PropertyResolver {
         if (requestType.body == null) {
             return undefined
         }
-        if (typeof requestType.body === 'string') {
+        if (typeof requestType.body === "string") {
             const objectProperty = this.resolveObjectProperty({
                 file,
                 typeName: requestType.body,

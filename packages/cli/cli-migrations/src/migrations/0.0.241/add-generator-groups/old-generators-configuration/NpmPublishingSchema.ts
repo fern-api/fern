@@ -1,6 +1,6 @@
-import { z } from 'zod'
+import { z } from "zod"
 
-import { NpmRegistryOutputSchema } from './NpmRegistryOutputSchema'
+import { NpmRegistryOutputSchema } from "./NpmRegistryOutputSchema"
 
 export const NpmPublishingSchema = z.strictObject({
     npm: NpmRegistryOutputSchema

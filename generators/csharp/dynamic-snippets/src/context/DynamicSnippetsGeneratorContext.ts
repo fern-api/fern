@@ -1,19 +1,19 @@
-import { camelCase, upperFirst } from 'lodash-es'
+import { camelCase, upperFirst } from "lodash-es"
 
 import {
     AbstractDynamicSnippetsGeneratorContext,
     FernGeneratorExec,
     Options
-} from '@fern-api/browser-compatible-base-generator'
-import { BaseCsharpCustomConfigSchema, csharp } from '@fern-api/csharp-codegen'
-import { FernIr } from '@fern-api/dynamic-ir-sdk'
+} from "@fern-api/browser-compatible-base-generator"
+import { BaseCsharpCustomConfigSchema, csharp } from "@fern-api/csharp-codegen"
+import { FernIr } from "@fern-api/dynamic-ir-sdk"
 
-import { DynamicTypeLiteralMapper } from './DynamicTypeLiteralMapper'
-import { DynamicTypeMapper } from './DynamicTypeMapper'
-import { FilePropertyMapper } from './FilePropertyMapper'
+import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper"
+import { DynamicTypeMapper } from "./DynamicTypeMapper"
+import { FilePropertyMapper } from "./FilePropertyMapper"
 
-const CLIENT_OPTIONS_CLASS_NAME = 'ClientOptions'
-const REQUEST_OPTIONS_CLASS_NAME = 'RequestOptions'
+const CLIENT_OPTIONS_CLASS_NAME = "ClientOptions"
+const REQUEST_OPTIONS_CLASS_NAME = "RequestOptions"
 
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
     public ir: FernIr.dynamic.DynamicIntermediateRepresentation
@@ -61,7 +61,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
                 arguments_: [],
                 properties: [
                     {
-                        name: 'Stream',
+                        name: "Stream",
                         value: this.getMemoryStreamForString(str)
                     }
                 ],
@@ -76,7 +76,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             arguments_: [
                 csharp.invokeMethod({
                     on: this.getEncodingUtf8ClassReference(),
-                    method: 'GetBytes',
+                    method: "GetBytes",
                     arguments_: [csharp.TypeLiteral.string(str)]
                 })
             ]
@@ -100,17 +100,17 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getEnvironmentClassName(): string {
-        return this.customConfig?.['environment-class-name'] ?? `${this.getClientPrefix()}Environment`
+        return this.customConfig?.["environment-class-name"] ?? `${this.getClientPrefix()}Environment`
     }
 
     public shouldUseDiscriminatedUnions(): boolean {
-        return this.customConfig?.['use-discriminated-unions'] ?? true
+        return this.customConfig?.["use-discriminated-unions"] ?? true
     }
 
     public getRootClientClassName(): string {
         return (
-            this.customConfig?.['exported-client-class-name'] ??
-            this.customConfig?.['client-class-name'] ??
+            this.customConfig?.["exported-client-class-name"] ??
+            this.customConfig?.["client-class-name"] ??
             `${this.getComputedClientName()}Client`
         )
     }
@@ -124,14 +124,14 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     public getBaseExceptionClassReference(): csharp.ClassReference {
         return csharp.classReference({
-            name: this.customConfig?.['base-exception-class-name'] ?? `${this.getClientPrefix()}Exception`,
+            name: this.customConfig?.["base-exception-class-name"] ?? `${this.getClientPrefix()}Exception`,
             namespace: this.getNamespaceForPublicCoreClasses()
         })
     }
 
     public getBaseApiExceptionClassReference(): csharp.ClassReference {
         return csharp.classReference({
-            name: this.customConfig?.['base-api-exception-class-name'] ?? `${this.getClientPrefix()}ApiException`,
+            name: this.customConfig?.["base-api-exception-class-name"] ?? `${this.getClientPrefix()}ApiException`,
             namespace: this.getNamespaceForPublicCoreClasses()
         })
     }
@@ -159,29 +159,29 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     public getFileParameterClassReference(): csharp.ClassReference {
         return csharp.classReference({
-            name: 'FileParameter',
+            name: "FileParameter",
             namespace: this.getNamespaceForPublicCoreClasses()
         })
     }
 
     public getMemoryStreamClassReference(): csharp.ClassReference {
         return csharp.classReference({
-            name: 'MemoryStream',
-            namespace: 'System.IO'
+            name: "MemoryStream",
+            namespace: "System.IO"
         })
     }
 
     public getEncodingUtf8ClassReference(): csharp.ClassReference {
         return csharp.classReference({
-            name: 'Encoding.UTF8',
-            namespace: 'System.Text'
+            name: "Encoding.UTF8",
+            namespace: "System.Text"
         })
     }
 
     public getNamespace(fernFilepath: FernIr.FernFilepath, suffix?: string): string {
         let parts = this.getNamespaceSegments(fernFilepath)
         parts = suffix != null ? [...parts, suffix] : parts
-        return [this.getRootNamespace(), ...parts].join('.')
+        return [this.getRootNamespace(), ...parts].join(".")
     }
 
     public getRootNamespace(): string {
@@ -193,7 +193,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getNamespaceForPublicCoreClasses(): string {
-        const rootNamespaceForCoreClasses = this.customConfig?.['root-namespace-for-core-classes']
+        const rootNamespaceForCoreClasses = this.customConfig?.["root-namespace-for-core-classes"]
         if (rootNamespaceForCoreClasses == null) {
             return this.getRootNamespace()
         }
@@ -224,14 +224,14 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     private getClientPrefix(): string {
         return (
-            this.customConfig?.['exported-client-class-name'] ??
-            this.customConfig?.['client-class-name'] ??
+            this.customConfig?.["exported-client-class-name"] ??
+            this.customConfig?.["client-class-name"] ??
             this.getComputedClientName()
         )
     }
 
     private getNamespaceSegments(fernFilepath: FernIr.FernFilepath): string[] {
-        const segments = this.customConfig?.['explicit-namespaces'] ? fernFilepath.allParts : fernFilepath.packagePath
+        const segments = this.customConfig?.["explicit-namespaces"] ? fernFilepath.allParts : fernFilepath.packagePath
         return segments.map((segment) => segment.pascalCase.safeName)
     }
 

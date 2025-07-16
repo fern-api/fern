@@ -1,4 +1,4 @@
-import { StatementStructures, WriterFunction } from 'ts-morph'
+import { StatementStructures, WriterFunction } from "ts-morph"
 
 export interface GeneratedStatements<Context> {
     generateStatements: (

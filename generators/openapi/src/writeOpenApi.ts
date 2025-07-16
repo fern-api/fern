@@ -1,6 +1,6 @@
-import { writeFile } from 'fs/promises'
-import yaml from 'js-yaml'
-import path from 'path'
+import { writeFile } from "fs/promises"
+import yaml from "js-yaml"
+import path from "path"
 
 import {
     ExitStatusUpdate,
@@ -8,17 +8,17 @@ import {
     GeneratorUpdate,
     parseGeneratorConfig,
     parseIR
-} from '@fern-api/base-generator'
-import { mergeWithOverrides } from '@fern-api/core-utils'
-import { AbsoluteFilePath } from '@fern-api/fs-utils'
+} from "@fern-api/base-generator"
+import { mergeWithOverrides } from "@fern-api/core-utils"
+import { AbsoluteFilePath } from "@fern-api/fs-utils"
 
-import { IntermediateRepresentation } from '@fern-fern/ir-sdk/api'
-import * as IrSerialization from '@fern-fern/ir-sdk/serialization'
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api"
+import * as IrSerialization from "@fern-fern/ir-sdk/serialization"
 
-import { convertToOpenApi } from './convertToOpenApi'
-import { getCustomConfig } from './customConfig'
+import { convertToOpenApi } from "./convertToOpenApi"
+import { getCustomConfig } from "./customConfig"
 
-export type Mode = 'stoplight' | 'openapi'
+export type Mode = "stoplight" | "openapi"
 
 export async function writeOpenApi(mode: Mode, pathToConfig: string): Promise<void> {
     try {
@@ -44,7 +44,7 @@ export async function writeOpenApi(mode: Mode, pathToConfig: string): Promise<vo
             })
 
             if (openapi == null) {
-                throw new Error('Failed to convert IR to OpenAPI')
+                throw new Error("Failed to convert IR to OpenAPI")
             }
 
             // biome-ignore lint/suspicious/noConsole: allow console
@@ -59,13 +59,13 @@ export async function writeOpenApi(mode: Mode, pathToConfig: string): Promise<vo
                 console.log(`openapi after override ${JSON.stringify(openapi)}`)
             }
 
-            let filename: string = customConfig.filename ?? 'openapi.yml'
-            if (customConfig.format === 'json') {
-                filename = path.join(config.output.path, replaceExtension(filename, 'json'))
+            let filename: string = customConfig.filename ?? "openapi.yml"
+            if (customConfig.format === "json") {
+                filename = path.join(config.output.path, replaceExtension(filename, "json"))
                 await writeFile(filename, JSON.stringify(openapi, undefined, 2))
             } else {
                 filename =
-                    filename.endsWith('yml') || filename.endsWith('yaml') ? filename : replaceExtension(filename, 'yml')
+                    filename.endsWith("yml") || filename.endsWith("yaml") ? filename : replaceExtension(filename, "yml")
                 await writeFile(path.join(config.output.path, filename), yaml.dump(openapi))
             }
             await generatorLoggingClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful({})))
@@ -79,14 +79,14 @@ export async function writeOpenApi(mode: Mode, pathToConfig: string): Promise<vo
             await generatorLoggingClient.sendUpdate(
                 GeneratorUpdate.exitStatusUpdate(
                     ExitStatusUpdate.error({
-                        message: e instanceof Error ? e.message : 'Encountered error'
+                        message: e instanceof Error ? e.message : "Encountered error"
                     })
                 )
             )
         }
     } catch (e) {
         // biome-ignore lint/suspicious/noConsole: allow console
-        console.log('Encountered error', e)
+        console.log("Encountered error", e)
         throw e
     }
 }
@@ -99,6 +99,6 @@ async function loadIntermediateRepresentation(pathToFile: string): Promise<Inter
 }
 
 function replaceExtension(filename: string, newExtension: string): string {
-    const baseName = filename.substring(0, filename.lastIndexOf('.'))
+    const baseName = filename.substring(0, filename.lastIndexOf("."))
     return `${baseName}.${newExtension}`
 }

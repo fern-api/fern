@@ -1,11 +1,11 @@
-import { ConjureAuthDefinitionType, DefinitionFile } from '@fern-api/conjure-sdk'
-import { parseEndpointLocator, removeSuffix } from '@fern-api/core-utils'
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { AbsoluteFilePath, RelativeFilePath, dirname, getFilename, join, relativize } from '@fern-api/fs-utils'
-import { APIDefinitionImporter, FernDefinitionBuilderImpl, HttpServiceInfo } from '@fern-api/importer-commons'
+import { ConjureAuthDefinitionType, DefinitionFile } from "@fern-api/conjure-sdk"
+import { parseEndpointLocator, removeSuffix } from "@fern-api/core-utils"
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { AbsoluteFilePath, RelativeFilePath, dirname, getFilename, join, relativize } from "@fern-api/fs-utils"
+import { APIDefinitionImporter, FernDefinitionBuilderImpl, HttpServiceInfo } from "@fern-api/importer-commons"
 
-import { listConjureFiles } from './utils/listConjureFiles'
-import { visitConjureTypeDeclaration } from './utils/visitConjureTypeDeclaration'
+import { listConjureFiles } from "./utils/listConjureFiles"
+import { visitConjureTypeDeclaration } from "./utils/visitConjureTypeDeclaration"
 
 export declare namespace ConjureImporter {
     interface Args {
@@ -27,7 +27,7 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
         globalHeaderOverrides
     }: ConjureImporter.Args): Promise<APIDefinitionImporter.Return> {
         if (authOverrides != null) {
-            for (const [name, declaration] of Object.entries(authOverrides['auth-schemes'] ?? {})) {
+            for (const [name, declaration] of Object.entries(authOverrides["auth-schemes"] ?? {})) {
                 this.fernDefinitionBuilder.addAuthScheme({
                     name,
                     schema: declaration
@@ -47,17 +47,17 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                     schema: environmentDeclaration
                 })
             }
-            if (environmentOverrides['default-environment'] != null) {
-                this.fernDefinitionBuilder.setDefaultEnvironment(environmentOverrides['default-environment'])
+            if (environmentOverrides["default-environment"] != null) {
+                this.fernDefinitionBuilder.setDefaultEnvironment(environmentOverrides["default-environment"])
             }
-            if (environmentOverrides['default-url'] != null) {
-                this.fernDefinitionBuilder.setDefaultUrl(environmentOverrides['default-url'])
+            if (environmentOverrides["default-url"] != null) {
+                this.fernDefinitionBuilder.setDefaultUrl(environmentOverrides["default-url"])
             }
         }
 
         await visitAllConjureDefinitionFiles(absolutePathToConjureFolder, (absoluteFilepath, filepath, definition) => {
             for (const [serviceName, _] of Object.entries(definition.services ?? {})) {
-                const unsuffixedServiceName = removeSuffix({ value: serviceName, suffix: 'Service' })
+                const unsuffixedServiceName = removeSuffix({ value: serviceName, suffix: "Service" })
                 this.conjureFilepathToFernFilepath[filepath] = RelativeFilePath.of(
                     `${unsuffixedServiceName}/__package__.yml`
                 )
@@ -65,7 +65,7 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
             }
 
             const filename = getFilename(filepath)
-            const filenameWithoutExtension = filename?.split('.')[0]
+            const filenameWithoutExtension = filename?.split(".")[0]
             if (filenameWithoutExtension != null) {
                 this.conjureFilepathToFernFilepath[filepath] = RelativeFilePath.of(
                     `${filenameWithoutExtension}/__package__.yml`
@@ -98,12 +98,12 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
             }
 
             for (const [serviceName, serviceDeclaration] of Object.entries(definition.services)) {
-                const unsuffixedServiceName = removeSuffix({ value: serviceName, suffix: 'Service' })
+                const unsuffixedServiceName = removeSuffix({ value: serviceName, suffix: "Service" })
                 const fernFilePath = RelativeFilePath.of(`${unsuffixedServiceName}/__package__.yml`)
 
                 const httpServiceInfo: HttpServiceInfo = {}
                 if (serviceDeclaration.basePath != null) {
-                    httpServiceInfo['base-path'] = serviceDeclaration.basePath
+                    httpServiceInfo["base-path"] = serviceDeclaration.basePath
                 }
                 if (serviceDeclaration.docs != null) {
                     httpServiceInfo.docs = serviceDeclaration.docs
@@ -128,7 +128,7 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                 for (const [endpointName, endpointDeclaration] of Object.entries(serviceDeclaration.endpoints ?? {})) {
                     const endpointLocator = parseEndpointLocator(endpointDeclaration.http)
 
-                    if (endpointLocator.type === 'failure') {
+                    if (endpointLocator.type === "failure") {
                         this.context?.logger.error(`Failed to parse ${endpointDeclaration.http}. Skipping.`)
                         continue
                     }
@@ -139,7 +139,7 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                         auth: auth === ConjureAuthDefinitionType.None ? false : true,
                         path: endpointLocator.path,
                         method: endpointLocator.method,
-                        response: endpointDeclaration.returns === 'binary' ? 'file' : endpointDeclaration.returns
+                        response: endpointDeclaration.returns === "binary" ? "file" : endpointDeclaration.returns
                     }
 
                     if (endpointDeclaration.docs != null) {
@@ -156,7 +156,7 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                                 )
                             }
                             pathParameters[pathParameter] =
-                                typeof pathParameterType === 'string'
+                                typeof pathParameterType === "string"
                                     ? pathParameterType
                                     : // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                                       { type: pathParameterType.type as any }
@@ -164,40 +164,40 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                     }
 
                     if (Object.entries(pathParameters).length > 0) {
-                        endpoint['path-parameters'] = pathParameters
+                        endpoint["path-parameters"] = pathParameters
                     }
 
                     for (const [arg, argDeclaration] of Object.entries(endpointDeclaration.args ?? {})) {
                         if (pathParameters[arg] != null) {
                             continue
                         }
-                        if (typeof argDeclaration === 'string') {
+                        if (typeof argDeclaration === "string") {
                             if (!endpoint.request) {
                                 endpoint.request = {}
-                            } else if (typeof endpoint.request === 'string') {
+                            } else if (typeof endpoint.request === "string") {
                                 endpoint.request = { body: endpoint.request }
                             }
-                            endpoint.request.body = argDeclaration === 'binary' ? 'bytes' : argDeclaration
+                            endpoint.request.body = argDeclaration === "binary" ? "bytes" : argDeclaration
                         } else {
                             switch (argDeclaration.paramType) {
-                                case 'body':
+                                case "body":
                                     endpoint.request = {
-                                        body: argDeclaration.type === 'binary' ? 'bytes' : argDeclaration.type
+                                        body: argDeclaration.type === "binary" ? "bytes" : argDeclaration.type
                                     }
                                     break
-                                case 'query': {
+                                case "query": {
                                     if (endpoint.request == null) {
-                                        endpoint.request = { 'query-parameters': { [arg]: argDeclaration.type } }
+                                        endpoint.request = { "query-parameters": { [arg]: argDeclaration.type } }
                                     } else if (
-                                        typeof endpoint.request !== 'string' &&
-                                        endpoint.request?.['query-parameters'] == null
+                                        typeof endpoint.request !== "string" &&
+                                        endpoint.request?.["query-parameters"] == null
                                     ) {
-                                        endpoint.request['query-parameters'] = { [arg]: argDeclaration.type }
+                                        endpoint.request["query-parameters"] = { [arg]: argDeclaration.type }
                                     } else if (
-                                        typeof endpoint.request !== 'string' &&
-                                        endpoint.request?.['query-parameters'] != null
+                                        typeof endpoint.request !== "string" &&
+                                        endpoint.request?.["query-parameters"] != null
                                     ) {
-                                        endpoint.request['query-parameters'][arg] = argDeclaration.type
+                                        endpoint.request["query-parameters"][arg] = argDeclaration.type
                                     }
                                 }
                             }
@@ -206,8 +206,8 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
 
                     if (
                         endpoint.request != null &&
-                        typeof endpoint.request !== 'string' &&
-                        endpoint.request?.['query-parameters'] != null
+                        typeof endpoint.request !== "string" &&
+                        endpoint.request?.["query-parameters"] != null
                     ) {
                         endpoint.request.name = `${endpointName}Request`
                     }
@@ -266,8 +266,8 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                                     return [
                                         key,
                                         {
-                                            type: typeof type === 'string' ? type : type.type,
-                                            docs: typeof type === 'string' ? undefined : type.docs,
+                                            type: typeof type === "string" ? type : type.type,
+                                            docs: typeof type === "string" ? undefined : type.docs,
                                             key
                                         }
                                     ]
@@ -315,7 +315,7 @@ export async function visitAllConjureDefinitionFiles(
         definitionFile: DefinitionFile
     ) => void | Promise<void>
 ): Promise<void> {
-    for (const conjureFile of await listConjureFiles(absolutePathToConjureFolder, '{yml,yaml}')) {
+    for (const conjureFile of await listConjureFiles(absolutePathToConjureFolder, "{yml,yaml}")) {
         await visitor(conjureFile.absoluteFilepath, conjureFile.relativeFilepath, conjureFile.fileContents)
     }
 }

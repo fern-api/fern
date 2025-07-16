@@ -1,8 +1,8 @@
-import { generatorsYml } from '@fern-api/configuration'
-import { assertNever } from '@fern-api/core-utils'
-import { dynamic } from '@fern-api/ir-sdk'
+import { generatorsYml } from "@fern-api/configuration"
+import { assertNever } from "@fern-api/core-utils"
+import { dynamic } from "@fern-api/ir-sdk"
 
-import { FernFiddle } from '@fern-fern/fiddle-sdk'
+import { FernFiddle } from "@fern-fern/fiddle-sdk"
 
 export function getDynamicGeneratorConfig({
     apiName,
@@ -30,21 +30,21 @@ function getDynamicGeneratorOutputConfig(
 ): dynamic.GeneratorOutputConfig | undefined {
     const outputMode = generatorInvocation.outputMode
     switch (outputMode.type) {
-        case 'downloadFiles':
+        case "downloadFiles":
             return dynamic.GeneratorOutputConfig.local()
-        case 'publishV2':
+        case "publishV2":
             return getDynamicGeneratorConfigPublishOutputMode({
                 publish: outputMode.publishV2,
                 version: generatorInvocation.version
             })
-        case 'githubV2':
+        case "githubV2":
             return getDynamicGeneratorConfigGithubOutputMode({
                 github: outputMode.githubV2,
                 language: generatorInvocation.language,
                 version: generatorInvocation.version
             })
-        case 'publish':
-        case 'github':
+        case "publish":
+        case "github":
             // These output modes are no longer supported.
             return undefined
         default:
@@ -60,7 +60,7 @@ function getDynamicGeneratorConfigPublishOutputMode({
     version: string
 }): dynamic.GeneratorOutputConfig | undefined {
     switch (publish.type) {
-        case 'npmOverride': {
+        case "npmOverride": {
             const override = publish.npmOverride
             if (override == null) {
                 return undefined
@@ -73,7 +73,7 @@ function getDynamicGeneratorConfigPublishOutputMode({
                 })
             )
         }
-        case 'mavenOverride': {
+        case "mavenOverride": {
             const override = publish.mavenOverride
             if (override == null) {
                 return undefined
@@ -86,7 +86,7 @@ function getDynamicGeneratorConfigPublishOutputMode({
                 })
             )
         }
-        case 'pypiOverride': {
+        case "pypiOverride": {
             const override = publish.pypiOverride
             if (override == null) {
                 return undefined
@@ -99,7 +99,7 @@ function getDynamicGeneratorConfigPublishOutputMode({
                 })
             )
         }
-        case 'rubyGemsOverride': {
+        case "rubyGemsOverride": {
             const override = publish.rubyGemsOverride
             if (override == null) {
                 return undefined
@@ -112,7 +112,7 @@ function getDynamicGeneratorConfigPublishOutputMode({
                 })
             )
         }
-        case 'nugetOverride': {
+        case "nugetOverride": {
             const override = publish.nugetOverride
             if (override == null) {
                 return undefined
@@ -125,7 +125,7 @@ function getDynamicGeneratorConfigPublishOutputMode({
                 })
             )
         }
-        case 'postman':
+        case "postman":
             return undefined
         default:
             assertNever(publish)
@@ -155,7 +155,7 @@ function getDynamicGeneratorConfigGithubOutputMode({
         return undefined
     }
     switch (publishInfo.type) {
-        case 'maven':
+        case "maven":
             return dynamic.GeneratorOutputConfig.publish(
                 dynamic.PublishInfo.maven({
                     version,
@@ -163,7 +163,7 @@ function getDynamicGeneratorConfigGithubOutputMode({
                     repoUrl
                 })
             )
-        case 'npm':
+        case "npm":
             return dynamic.GeneratorOutputConfig.publish(
                 dynamic.PublishInfo.npm({
                     version,
@@ -171,7 +171,7 @@ function getDynamicGeneratorConfigGithubOutputMode({
                     repoUrl
                 })
             )
-        case 'pypi':
+        case "pypi":
             return dynamic.GeneratorOutputConfig.publish(
                 dynamic.PublishInfo.pypi({
                     version,
@@ -179,7 +179,7 @@ function getDynamicGeneratorConfigGithubOutputMode({
                     repoUrl
                 })
             )
-        case 'rubygems':
+        case "rubygems":
             return dynamic.GeneratorOutputConfig.publish(
                 dynamic.PublishInfo.rubygems({
                     version,
@@ -187,7 +187,7 @@ function getDynamicGeneratorConfigGithubOutputMode({
                     repoUrl
                 })
             )
-        case 'nuget':
+        case "nuget":
             return dynamic.GeneratorOutputConfig.publish(
                 dynamic.PublishInfo.nuget({
                     version,
@@ -195,7 +195,7 @@ function getDynamicGeneratorConfigGithubOutputMode({
                     repoUrl
                 })
             )
-        case 'postman':
+        case "postman":
             return undefined
         default:
             assertNever(publishInfo)

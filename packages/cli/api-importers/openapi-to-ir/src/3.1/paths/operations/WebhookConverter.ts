@@ -1,6 +1,6 @@
-import { V2WebhookExample, Webhook, WebhookPayload } from '@fern-api/ir-sdk'
+import { V2WebhookExample, Webhook, WebhookPayload } from "@fern-api/ir-sdk"
 
-import { AbstractOperationConverter } from './AbstractOperationConverter'
+import { AbstractOperationConverter } from "./AbstractOperationConverter"
 
 export declare namespace WebhookConverter {
     export interface Output extends AbstractOperationConverter.Output {
@@ -17,7 +17,7 @@ export class WebhookConverter extends AbstractOperationConverter {
     public convert(): WebhookConverter.Output | undefined {
         if (this.operation.requestBody == null) {
             this.context.errorCollector.collect({
-                message: 'Skipping webhook because no request body present',
+                message: "Skipping webhook because no request body present",
                 path: this.breadcrumbs
             })
             return undefined
@@ -28,9 +28,9 @@ export class WebhookConverter extends AbstractOperationConverter {
             return undefined
         }
 
-        if (httpMethod !== 'POST' && httpMethod !== 'GET') {
+        if (httpMethod !== "POST" && httpMethod !== "GET") {
             this.context.errorCollector.collect({
-                message: 'Skipping webhook because non-POST or GET method',
+                message: "Skipping webhook because non-POST or GET method",
                 path: this.breadcrumbs
             })
             return undefined
@@ -39,7 +39,7 @@ export class WebhookConverter extends AbstractOperationConverter {
         const { group, method } =
             this.computeGroupNameAndLocationFromExtensions() ?? this.computeGroupNameFromTagAndOperationId()
 
-        const payloadBreadcrumbs = [...this.breadcrumbs, 'Payload']
+        const payloadBreadcrumbs = [...this.breadcrumbs, "Payload"]
         const { headers } = this.convertParameters({
             breadcrumbs: payloadBreadcrumbs
         })
@@ -56,13 +56,13 @@ export class WebhookConverter extends AbstractOperationConverter {
         const { requestBody } = convertedRequestBody
 
         let payload: WebhookPayload
-        if (requestBody.type === 'inlinedRequestBody') {
+        if (requestBody.type === "inlinedRequestBody") {
             payload = WebhookPayload.inlinedPayload({
                 name: requestBody.name,
                 extends: requestBody.extends,
                 properties: requestBody.properties
             })
-        } else if (requestBody.type === 'reference') {
+        } else if (requestBody.type === "reference") {
             payload = WebhookPayload.reference({
                 payloadType: requestBody.requestBodyType,
                 docs: requestBody.docs
@@ -79,7 +79,7 @@ export class WebhookConverter extends AbstractOperationConverter {
                 }) ?? [],
             group,
             webhook: {
-                id: `${group?.join('.') ?? ''}.${method}`,
+                id: `${group?.join(".") ?? ""}.${method}`,
                 name: this.context.casingsGenerator.generateName(method),
                 displayName: this.operation.summary,
                 method: httpMethod,

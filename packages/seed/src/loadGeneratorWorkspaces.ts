@@ -1,10 +1,10 @@
-import { findUp } from 'find-up'
-import { readFile, readdir } from 'fs/promises'
-import yaml from 'js-yaml'
+import { findUp } from "find-up"
+import { readFile, readdir } from "fs/promises"
+import yaml from "js-yaml"
 
-import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
 
-import { FernSeedConfig } from './config'
+import { FernSeedConfig } from "./config"
 
 export interface GeneratorWorkspace {
     workspaceName: string
@@ -18,15 +18,15 @@ export interface CliWorkspace {
     workspaceConfig: FernSeedConfig.CliSeedWorkspaceConfiguration
 }
 
-export const SEED_DIRECTORY = 'seed'
-export const SEED_CONFIG_FILENAME = 'seed.yml'
-export const CLI_SEED_DIRECTORY = 'fern-cli'
+export const SEED_DIRECTORY = "seed"
+export const SEED_CONFIG_FILENAME = "seed.yml"
+export const CLI_SEED_DIRECTORY = "fern-cli"
 
 export async function loadGeneratorWorkspaces(): Promise<GeneratorWorkspace[]> {
     const seedDirectory = await getSeedDirectory()
 
     if (seedDirectory == null) {
-        throw new Error('Failed to find seed folder')
+        throw new Error("Failed to find seed folder")
     }
 
     const seedDirectoryContents = await readdir(seedDirectory, { withFileTypes: true })
@@ -55,7 +55,7 @@ export async function loadGeneratorWorkspaces(): Promise<GeneratorWorkspace[]> {
 }
 
 async function getSeedDirectory(): Promise<AbsoluteFilePath | undefined> {
-    const seedDirectoryStr = await findUp(SEED_DIRECTORY, { type: 'directory' })
+    const seedDirectoryStr = await findUp(SEED_DIRECTORY, { type: "directory" })
     if (seedDirectoryStr == null) {
         return undefined
     }
@@ -63,7 +63,7 @@ async function getSeedDirectory(): Promise<AbsoluteFilePath | undefined> {
 }
 
 export async function getFernCliSeedDirectory(): Promise<AbsoluteFilePath | undefined> {
-    const seedDirectoryStr = await findUp(SEED_DIRECTORY, { type: 'directory' })
+    const seedDirectoryStr = await findUp(SEED_DIRECTORY, { type: "directory" })
     if (seedDirectoryStr == null) {
         return undefined
     }
@@ -74,7 +74,7 @@ export async function loadCliWorkspace(): Promise<CliWorkspace> {
     const seedDirectory = await getSeedDirectory()
 
     if (seedDirectory == null) {
-        throw new Error('Failed to find seed folder')
+        throw new Error("Failed to find seed folder")
     }
 
     const absolutePathToWorkspace = join(seedDirectory, RelativeFilePath.of(CLI_SEED_DIRECTORY))

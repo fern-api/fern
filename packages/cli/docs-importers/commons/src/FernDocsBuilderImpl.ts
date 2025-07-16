@@ -1,5 +1,5 @@
-import { cp, mkdir, writeFile } from 'fs/promises'
-import yaml from 'js-yaml'
+import { cp, mkdir, writeFile } from "fs/promises"
+import yaml from "js-yaml"
 
 import {
     DOCS_CONFIGURATION_FILENAME,
@@ -7,12 +7,12 @@ import {
     GENERATORS_CONFIGURATION_FILENAME,
     docsYml,
     generatorsYml
-} from '@fern-api/configuration'
-import { AbsoluteFilePath, RelativeFilePath, dirname, join } from '@fern-api/fs-utils'
+} from "@fern-api/configuration"
+import { AbsoluteFilePath, RelativeFilePath, dirname, join } from "@fern-api/fs-utils"
 
-import { FernRegistry as CjsFdrSdk } from '@fern-fern/fdr-cjs-sdk'
+import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk"
 
-import { FernDocsBuilder, FernDocsNavigationBuilder } from './FernDocsBuilder'
+import { FernDocsBuilder, FernDocsNavigationBuilder } from "./FernDocsBuilder"
 
 interface MarkdownPage {
     frontmatter: CjsFdrSdk.docs.latest.Frontmatter
@@ -90,7 +90,7 @@ export class FernDocsBuilderImpl extends FernDocsBuilder {
         versionConfig: docsYml.RawSchemas.VersionConfig
         navigation: docsYml.RawSchemas.VersionFileConfig
     }): void {
-        throw new Error('Method not implemented.')
+        throw new Error("Method not implemented.")
     }
 
     public addNavbarLink({ link }: { link: docsYml.RawSchemas.NavbarLink }): void {
@@ -143,7 +143,7 @@ export class FernDocsBuilderImpl extends FernDocsBuilder {
             this.docsYml.navigation = this.nonTabbedNavigation.items
         }
         if (Object.entries(this.openApiSpecs).length > 0 && this.generatorsYml?.api != null) {
-            if (typeof this.generatorsYml.api !== 'string') {
+            if (typeof this.generatorsYml.api !== "string") {
                 this.generatorsYml.api = {
                     specs: Object.entries(this.openApiSpecs).map(([relativePath]) => ({
                         openapi: relativePath
@@ -177,7 +177,7 @@ export class FernDocsBuilderImpl extends FernDocsBuilder {
                 const frontmatter =
                     Object.keys(page.frontmatter).length > 0
                         ? `---\n${yaml.dump(JSON.parse(JSON.stringify(page.frontmatter)))}---\n\n`
-                        : ''
+                        : ""
                 await writeFile(absoluteFilepathToMarkdownPage, `${frontmatter}${page.markdown}`)
             })
         )
@@ -195,7 +195,7 @@ export class FernDocsBuilderImpl extends FernDocsBuilder {
         // We may append a suffix to the company name string to make it harder for
         // other companies to build migrators for our docs. For now, we're not doing
         // so but we can add that easily in the future.
-        const formattedCompanyString = companyName.toLowerCase().replace(' ', '-')
+        const formattedCompanyString = companyName.toLowerCase().replace(" ", "-")
 
         const fernDocsUrl = `https://${formattedCompanyString}.docs.buildwithfern.com`
 

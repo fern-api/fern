@@ -1,9 +1,9 @@
-import { entries } from '@fern-api/core-utils'
-import { PackageMarkerFileSchema } from '@fern-api/fern-definition-schema'
-import { RelativeFilePath } from '@fern-api/path-utils'
+import { entries } from "@fern-api/core-utils"
+import { PackageMarkerFileSchema } from "@fern-api/fern-definition-schema"
+import { RelativeFilePath } from "@fern-api/path-utils"
 
-import { FernWorkspace } from '../FernWorkspace'
-import { getAllPackageMarkers } from './getAllPackageMarkers'
+import { FernWorkspace } from "../FernWorkspace"
+import { getAllPackageMarkers } from "./getAllPackageMarkers"
 
 export function visitAllPackageMarkers(
     workspace: FernWorkspace,

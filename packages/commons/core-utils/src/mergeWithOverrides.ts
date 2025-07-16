@@ -1,5 +1,5 @@
-import type { Dictionary, NumericDictionary, PartialObject, PropertyName, ValueKeyIteratee } from 'lodash'
-import { isNull, isPlainObject, mergeWith, omitBy } from 'lodash-es'
+import type { Dictionary, NumericDictionary, PartialObject, PropertyName, ValueKeyIteratee } from "lodash"
+import { isNull, isPlainObject, mergeWith, omitBy } from "lodash-es"
 
 type AncestorOmissionCriteria = {
     ancestorKeys: string[]
@@ -17,7 +17,7 @@ export function mergeWithOverrides<T extends object>({
 }): T {
     const merged = mergeWith(data, mergeWith, overrides, (obj, src) =>
         Array.isArray(obj) && Array.isArray(src)
-            ? src.every((element) => typeof element === 'object') && obj.every((element) => typeof element === 'object')
+            ? src.every((element) => typeof element === "object") && obj.every((element) => typeof element === "object")
                 ? // nested arrays of objects are merged
                   undefined
                 : // nested arrays of primitives are replaced

@@ -1,11 +1,11 @@
-import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from '@fern-api/base-generator'
-import { RelativeFilePath } from '@fern-api/fs-utils'
-import { TypescriptCustomConfigSchema } from '@fern-api/typescript-ast'
+import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator"
+import { RelativeFilePath } from "@fern-api/fs-utils"
+import { TypescriptCustomConfigSchema } from "@fern-api/typescript-ast"
 
-import { IntermediateRepresentation } from '@fern-fern/ir-sdk/api'
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api"
 
-import { TypescriptMcpProject } from '../project/TypescriptMcpProject'
-import { ZodTypeMapper } from './ZodTypeMapper'
+import { TypescriptMcpProject } from "../project/TypescriptMcpProject"
+import { ZodTypeMapper } from "./ZodTypeMapper"
 
 export interface FileLocation {
     importPath: string
@@ -32,7 +32,7 @@ export abstract class AbstractTypescriptMcpGeneratorContext<
         this.zodTypeMapper = new ZodTypeMapper(this)
         config.output.mode._visit<void>({
             github: (github) => {
-                if (github.publishInfo?.type === 'npm') {
+                if (github.publishInfo?.type === "npm") {
                     this.publishConfig = github.publishInfo
                 }
             },

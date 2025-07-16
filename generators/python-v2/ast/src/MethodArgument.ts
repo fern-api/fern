@@ -1,5 +1,5 @@
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export declare namespace MethodArgument {
     interface Args {
@@ -25,7 +25,7 @@ export class MethodArgument extends AstNode {
     public write(writer: Writer): void {
         if (this.name !== undefined) {
             writer.write(this.name)
-            writer.write('=')
+            writer.write("=")
         }
         this.value.write(writer)
     }

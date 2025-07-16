@@ -1,13 +1,13 @@
-import { readFile, writeFile } from 'fs/promises'
+import { readFile, writeFile } from "fs/promises"
 
-import { AbsoluteFilePath } from '@fern-api/fs-utils'
+import { AbsoluteFilePath } from "@fern-api/fs-utils"
 
-import { Migration } from '../../../types/Migration'
-import { getAllGeneratorYamlFiles } from './getAllGeneratorYamlFiles'
+import { Migration } from "../../../types/Migration"
+import { getAllGeneratorYamlFiles } from "./getAllGeneratorYamlFiles"
 
 export const migration: Migration = {
-    name: 'add-suffix-to-docs-domain',
-    summary: 'Adds a docs.buildwithfern.com suffix to the docs domain',
+    name: "add-suffix-to-docs-domain",
+    summary: "Adds a docs.buildwithfern.com suffix to the docs domain",
     run: async ({ context }) => {
         const generatorYamlFiles = await getAllGeneratorYamlFiles(context)
         for (const filepath of generatorYamlFiles) {
@@ -23,7 +23,7 @@ export const migration: Migration = {
 async function migrateYamlFile(filepath: AbsoluteFilePath): Promise<void> {
     const contents = await readFile(filepath)
 
-    const domainSuffix = process.env.DOMAIN_SUFFIX ?? 'docs.buildwithfern.com'
+    const domainSuffix = process.env.DOMAIN_SUFFIX ?? "docs.buildwithfern.com"
     const regex = /(docs:\s*domain:\s*)"([^"]*)"/g
 
     const updatedSnapshot = contents.toString().replace(regex, (_match, _prefix, domain) => {

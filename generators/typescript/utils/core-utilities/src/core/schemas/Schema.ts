@@ -1,4 +1,4 @@
-import { SchemaUtils } from './builders'
+import { SchemaUtils } from "./builders"
 
 export type Schema<Raw = unknown, Parsed = unknown> = BaseSchema<Raw, Parsed> & SchemaUtils<Raw, Parsed>
 
@@ -12,25 +12,25 @@ export interface BaseSchema<Raw, Parsed> {
 }
 
 export const SchemaType = {
-    BIGINT: 'bigint',
-    DATE: 'date',
-    ENUM: 'enum',
-    LIST: 'list',
-    STRING_LITERAL: 'stringLiteral',
-    BOOLEAN_LITERAL: 'booleanLiteral',
-    OBJECT: 'object',
-    ANY: 'any',
-    BOOLEAN: 'boolean',
-    NUMBER: 'number',
-    STRING: 'string',
-    UNKNOWN: 'unknown',
-    RECORD: 'record',
-    SET: 'set',
-    UNION: 'union',
-    UNDISCRIMINATED_UNION: 'undiscriminatedUnion',
-    NULLABLE: 'nullable',
-    OPTIONAL: 'optional',
-    OPTIONAL_NULLABLE: 'optionalNullable'
+    BIGINT: "bigint",
+    DATE: "date",
+    ENUM: "enum",
+    LIST: "list",
+    STRING_LITERAL: "stringLiteral",
+    BOOLEAN_LITERAL: "booleanLiteral",
+    OBJECT: "object",
+    ANY: "any",
+    BOOLEAN: "boolean",
+    NUMBER: "number",
+    STRING: "string",
+    UNKNOWN: "unknown",
+    RECORD: "record",
+    SET: "set",
+    UNION: "union",
+    UNDISCRIMINATED_UNION: "undiscriminatedUnion",
+    NULLABLE: "nullable",
+    OPTIONAL: "optional",
+    OPTIONAL_NULLABLE: "optionalNullable"
 } as const
 export type SchemaType = (typeof SchemaType)[keyof typeof SchemaType]
 
@@ -57,7 +57,7 @@ export interface SchemaOptions {
      *
      * @default "fail"
      */
-    unrecognizedObjectKeys?: 'fail' | 'passthrough' | 'strip'
+    unrecognizedObjectKeys?: "fail" | "passthrough" | "strip"
 
     /**
      * whether to fail when an unrecognized discriminant value is

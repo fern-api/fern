@@ -1,4 +1,4 @@
-import { AbsoluteFilePath } from '@fern-api/path-utils'
+import { AbsoluteFilePath } from "@fern-api/path-utils"
 
 export interface APIChangelog {
     files: ChangelogFile[]

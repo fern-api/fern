@@ -1,4 +1,4 @@
-import { ts } from 'ts-morph'
+import { ts } from "ts-morph"
 
 export interface Stream {
     Readable: {

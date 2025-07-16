@@ -1,7 +1,7 @@
-import { noop, visitObject } from '@fern-api/core-utils'
-import { PackageMarkerFileSchema } from '@fern-api/fern-definition-schema'
+import { noop, visitObject } from "@fern-api/core-utils"
+import { PackageMarkerFileSchema } from "@fern-api/fern-definition-schema"
 
-import { PackageMarkerAstVisitor } from './PackageMarkerAstVisitor'
+import { PackageMarkerAstVisitor } from "./PackageMarkerAstVisitor"
 
 export function visitPackageMarkerYamlAst(
     contents: PackageMarkerFileSchema,
@@ -16,10 +16,10 @@ export function visitPackageMarkerYamlAst(
         errors: noop,
         channel: noop,
         export: (export_) => {
-            visitor.export?.(typeof export_ === 'string' ? export_ : export_?.dependency, ['export'])
+            visitor.export?.(typeof export_ === "string" ? export_ : export_?.dependency, ["export"])
         },
         navigation: (navigation) => {
-            visitor.navigation?.(navigation, ['navigation'])
+            visitor.navigation?.(navigation, ["navigation"])
         }
     })
 }

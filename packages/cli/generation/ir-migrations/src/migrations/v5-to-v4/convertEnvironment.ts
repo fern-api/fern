@@ -1,5 +1,5 @@
-import { IrVersions } from '../../ir-versions'
-import { convertNameToV2 } from './convertName'
+import { IrVersions } from "../../ir-versions"
+import { convertNameToV2 } from "./convertName"
 
 export function convertEnvironment(
     environment: IrVersions.V5.environment.Environment

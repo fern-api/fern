@@ -12,7 +12,7 @@ import {
     Pointer,
     Selector,
     Struct
-} from './ast'
+} from "./ast"
 
 export function codeblock(arg: CodeBlock.Arg): CodeBlock {
     return new CodeBlock(arg)
@@ -66,7 +66,7 @@ export function typeReference(args: GoTypeReference.Args): GoTypeReference {
     return new GoTypeReference(args)
 }
 
-export { AstNode } from './ast/core/AstNode'
+export { AstNode } from "./ast/core/AstNode"
 export {
     CodeBlock,
     Enum,
@@ -85,4 +85,4 @@ export {
     TypeInstantiation,
     type StructField,
     Writer
-} from './ast'
+} from "./ast"

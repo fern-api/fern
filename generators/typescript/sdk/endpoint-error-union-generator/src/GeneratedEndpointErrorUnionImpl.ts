@@ -1,13 +1,13 @@
-import { PackageId } from '@fern-typescript/commons'
-import { GeneratedEndpointErrorUnion, GeneratedUnion, SdkContext } from '@fern-typescript/contexts'
-import { ErrorResolver } from '@fern-typescript/resolvers'
-import { GeneratedUnionImpl } from '@fern-typescript/union-generator'
+import { PackageId } from "@fern-typescript/commons"
+import { GeneratedEndpointErrorUnion, GeneratedUnion, SdkContext } from "@fern-typescript/contexts"
+import { ErrorResolver } from "@fern-typescript/resolvers"
+import { GeneratedUnionImpl } from "@fern-typescript/union-generator"
 
-import { ErrorDiscriminationStrategy, HttpEndpoint } from '@fern-fern/ir-sdk/api'
+import { ErrorDiscriminationStrategy, HttpEndpoint } from "@fern-fern/ir-sdk/api"
 
-import { ParsedSingleUnionTypeForError } from './error/ParsedSingleUnionTypeForError'
-import { UnknownErrorSingleUnionType } from './error/UnknownErrorSingleUnionType'
-import { UnknownErrorSingleUnionTypeGenerator } from './error/UnknownErrorSingleUnionTypeGenerator'
+import { ParsedSingleUnionTypeForError } from "./error/ParsedSingleUnionTypeForError"
+import { UnknownErrorSingleUnionType } from "./error/UnknownErrorSingleUnionType"
+import { UnknownErrorSingleUnionTypeGenerator } from "./error/UnknownErrorSingleUnionTypeGenerator"
 
 export declare namespace GeneratedEndpointErrorUnionImpl {
     export interface Init {
@@ -23,8 +23,8 @@ export declare namespace GeneratedEndpointErrorUnionImpl {
 }
 
 export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUnion {
-    private static ERROR_INTERFACE_NAME = 'Error'
-    private static STATUS_CODE_DISCRIMINANT = 'statusCode'
+    private static ERROR_INTERFACE_NAME = "Error"
+    private static STATUS_CODE_DISCRIMINANT = "statusCode"
 
     private endpoint: HttpEndpoint
     private errorUnion: GeneratedUnionImpl<SdkContext>
@@ -97,7 +97,7 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
                 retainOriginalCasing ? discriminant.name.originalName : discriminant.name.camelCase.unsafeName,
             statusCode: () => GeneratedEndpointErrorUnionImpl.STATUS_CODE_DISCRIMINANT,
             _other: () => {
-                throw new Error('Unknown error discrimination strategy: ' + errorDiscriminationStrategy.type)
+                throw new Error("Unknown error discrimination strategy: " + errorDiscriminationStrategy.type)
             }
         })
     }

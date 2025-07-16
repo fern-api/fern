@@ -1,17 +1,17 @@
-import { readFile, writeFile } from 'fs/promises'
-import yaml from 'js-yaml'
+import { readFile, writeFile } from "fs/promises"
+import yaml from "js-yaml"
 
-import { assertNever } from '@fern-api/core-utils'
-import { AbsoluteFilePath } from '@fern-api/fs-utils'
+import { assertNever } from "@fern-api/core-utils"
+import { AbsoluteFilePath } from "@fern-api/fs-utils"
 
-import { Migration } from '../../../types/Migration'
-import { getAllGeneratorYamlFiles } from './getAllGeneratorYamlFiles'
-import * as NewSchemas from './new-generators-configuration'
-import * as OldSchemas from './old-generators-configuration'
+import { Migration } from "../../../types/Migration"
+import { getAllGeneratorYamlFiles } from "./getAllGeneratorYamlFiles"
+import * as NewSchemas from "./new-generators-configuration"
+import * as OldSchemas from "./old-generators-configuration"
 
 export const migration: Migration = {
-    name: 'add-generator-groups',
-    summary: 'Adds groups to generators configuration',
+    name: "add-generator-groups",
+    summary: "Adds groups to generators configuration",
     run: async ({ context }) => {
         const generatorYamlFiles = await getAllGeneratorYamlFiles(context)
         for (const filepath of generatorYamlFiles) {
@@ -36,7 +36,7 @@ async function migrateGeneratorsYml(filepath: AbsoluteFilePath): Promise<void> {
             )
         }
         newGeneratorsConfiguration = {
-            'default-group': 'server',
+            "default-group": "server",
             ...newGeneratorsConfiguration
         }
     }
@@ -57,10 +57,10 @@ function convertDraftGeneratorInvocation(
         name: draftGeneratorInvocation.name,
         version: draftGeneratorInvocation.version
     }
-    if (draftGeneratorInvocation['output-path'] != null) {
+    if (draftGeneratorInvocation["output-path"] != null) {
         newSchema.output = {
-            location: 'local-file-system',
-            path: draftGeneratorInvocation['output-path']
+            location: "local-file-system",
+            path: draftGeneratorInvocation["output-path"]
         }
     }
     if (draftGeneratorInvocation.config != null) {
@@ -93,19 +93,19 @@ function convertReleaseGeneratorInvocation(
 function convertPublishingToOutput(publishing: OldSchemas.GeneratorPublishingSchema): NewSchemas.GeneratorOutputSchema {
     if (isNpmPublishing(publishing)) {
         return {
-            location: 'npm',
+            location: "npm",
             ...publishing.npm
         }
     }
     if (isMavenPublishing(publishing)) {
         return {
-            location: 'maven',
+            location: "maven",
             ...publishing.maven
         }
     }
     if (isPostmanPublishing(publishing)) {
         return {
-            location: 'postman',
+            location: "postman",
             ...publishing.postman
         }
     }

@@ -1,10 +1,10 @@
-import { RelativeFilePath } from '@fern-api/fs-utils'
-import { python } from '@fern-api/python-ast'
-import { WriteablePythonFile, core, dt, pydantic } from '@fern-api/python-base'
+import { RelativeFilePath } from "@fern-api/fs-utils"
+import { python } from "@fern-api/python-ast"
+import { WriteablePythonFile, core, dt, pydantic } from "@fern-api/python-base"
 
-import { NameAndWireValue, ObjectTypeDeclaration, TypeDeclaration, TypeId } from '@fern-fern/ir-sdk/api'
+import { NameAndWireValue, ObjectTypeDeclaration, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api"
 
-import { PydanticModelGeneratorContext } from '../ModelGeneratorContext'
+import { PydanticModelGeneratorContext } from "../ModelGeneratorContext"
 
 export class ObjectGenerator {
     constructor(
@@ -39,7 +39,7 @@ export class ObjectGenerator {
             const propertyType = this.context.pythonTypeMapper.convert({ reference: property.valueType })
 
             const value = this.context.isTypeReferenceOptional(property.valueType)
-                ? python.codeBlock('None')
+                ? python.codeBlock("None")
                 : undefined
 
             const wireValue = propertyName === property.name.wireValue ? undefined : property.name.wireValue
@@ -55,7 +55,7 @@ export class ObjectGenerator {
                     if (wireValue != null) {
                         arguments_.push(
                             python.methodArgument({
-                                name: 'alias',
+                                name: "alias",
                                 value: python.codeBlock(`"${wireValue}"`)
                             })
                         )
@@ -63,7 +63,7 @@ export class ObjectGenerator {
                     if (value != null) {
                         arguments_.push(
                             python.methodArgument({
-                                name: 'default',
+                                name: "default",
                                 value
                             })
                         )
@@ -96,7 +96,7 @@ export class ObjectGenerator {
 
         return new WriteablePythonFile({
             contents: file,
-            directory: RelativeFilePath.of(path.join('/')),
+            directory: RelativeFilePath.of(path.join("/")),
             filename
         })
     }
@@ -116,26 +116,26 @@ export class ObjectGenerator {
 
     private getConfigClass(): python.Class {
         const configClass = python.class_({
-            name: 'Config'
+            name: "Config"
         })
 
         configClass.addField(
             python.field({
-                name: 'frozen',
+                name: "frozen",
                 initializer: python.TypeInstantiation.bool(true)
             })
         )
 
         configClass.addField(
             python.field({
-                name: 'smart_union',
+                name: "smart_union",
                 initializer: python.TypeInstantiation.bool(true)
             })
         )
 
         configClass.addField(
             python.field({
-                name: 'json_encoders',
+                name: "json_encoders",
                 initializer: python.TypeInstantiation.dict([
                     {
                         key: dt.datetime,

@@ -1,4 +1,4 @@
-import { readFile } from 'fs/promises'
+import { readFile } from "fs/promises"
 
 import {
     AbstractGeneratorContext,
@@ -7,8 +7,8 @@ import {
     GeneratorExecParsing,
     GeneratorNotificationService,
     NopGeneratorNotificationService
-} from '@fern-api/browser-compatible-base-generator'
-import { assertNever } from '@fern-api/core-utils'
+} from "@fern-api/browser-compatible-base-generator"
+import { assertNever } from "@fern-api/core-utils"
 
 export declare namespace AbstractGeneratorCli {
     interface Options {
@@ -30,7 +30,7 @@ export abstract class AbstractGeneratorCli<
         try {
             await generatorNotificationService.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.initV2({
-                    publishingToRegistry: 'MAVEN'
+                    publishingToRegistry: "MAVEN"
                 })
             )
             const ir = await this.parseIntermediateRepresentation(config.irFilepath)
@@ -42,13 +42,13 @@ export abstract class AbstractGeneratorCli<
                 generatorNotificationService
             })
             switch (config.output.mode.type) {
-                case 'publish':
+                case "publish":
                     await this.publishPackage(context)
                     break
-                case 'github':
+                case "github":
                     await this.writeForGithub(context)
                     break
-                case 'downloadFiles':
+                case "downloadFiles":
                     await this.writeForDownload(context)
                     break
                 default:
@@ -61,7 +61,7 @@ export abstract class AbstractGeneratorCli<
             await generatorNotificationService.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(
                     FernGeneratorExec.ExitStatusUpdate.error({
-                        message: e instanceof Error ? e.message : 'Encountered error'
+                        message: e instanceof Error ? e.message : "Encountered error"
                     })
                 )
             )
@@ -120,17 +120,17 @@ export abstract class AbstractGeneratorCli<
 async function getGeneratorConfig(): Promise<FernGeneratorExec.GeneratorConfig> {
     const pathToConfig = process.argv[process.argv.length - 1]
     if (pathToConfig == null) {
-        throw new Error('No argument for config filepath was provided.')
+        throw new Error("No argument for config filepath was provided.")
     }
     const rawConfig = await readFile(pathToConfig)
     console.log(`Reading ${pathToConfig}`)
     const rawConfigString = rawConfig.toString()
     console.log(`Contents are ${rawConfigString}`)
     const validatedConfig = await GeneratorExecParsing.GeneratorConfig.parse(JSON.parse(rawConfigString), {
-        unrecognizedObjectKeys: 'passthrough'
+        unrecognizedObjectKeys: "passthrough"
     })
     if (!validatedConfig.ok) {
-        throw new Error(`The generator config failed to pass validation. ${validatedConfig.errors.join(', ')}`)
+        throw new Error(`The generator config failed to pass validation. ${validatedConfig.errors.join(", ")}`)
     }
     return validatedConfig.value
 }

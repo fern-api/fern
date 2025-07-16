@@ -1,4 +1,4 @@
-import { AbstractExtension } from '@fern-api/v2-importer-commons'
+import { AbstractExtension } from "@fern-api/v2-importer-commons"
 
 export declare namespace DisplayNameExtension {
     export interface Args extends AbstractExtension.Args {
@@ -12,7 +12,7 @@ export declare namespace DisplayNameExtension {
 
 export class DisplayNameExtension extends AbstractExtension<DisplayNameExtension.Output> {
     private readonly tag: object
-    public readonly key = 'x-displayName'
+    public readonly key = "x-displayName"
 
     constructor({ breadcrumbs, tag, context }: DisplayNameExtension.Args) {
         super({ breadcrumbs, context })
@@ -20,7 +20,7 @@ export class DisplayNameExtension extends AbstractExtension<DisplayNameExtension
     }
 
     public convert(): DisplayNameExtension.Output | undefined {
-        if (typeof this.tag !== 'object' || this.tag == null) {
+        if (typeof this.tag !== "object" || this.tag == null) {
             return undefined
         }
 
@@ -30,9 +30,9 @@ export class DisplayNameExtension extends AbstractExtension<DisplayNameExtension
             return undefined
         }
 
-        if (typeof extensionValue !== 'string') {
+        if (typeof extensionValue !== "string") {
             this.context.errorCollector.collect({
-                message: 'x-displayName extension must be a string',
+                message: "x-displayName extension must be a string",
                 path: this.breadcrumbs
             })
             return undefined

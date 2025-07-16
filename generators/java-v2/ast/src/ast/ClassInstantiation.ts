@@ -1,7 +1,7 @@
-import { ClassReference } from './ClassReference'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
-import { writeArguments } from './utils/writeArguments'
+import { ClassReference } from "./ClassReference"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
+import { writeArguments } from "./utils/writeArguments"
 
 export declare namespace ClassInstantiation {
     interface Args {

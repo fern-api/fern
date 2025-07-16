@@ -1,11 +1,11 @@
-import { ExportedFilePath, PackageId, Reference } from '@fern-typescript/commons'
+import { ExportedFilePath, PackageId, Reference } from "@fern-typescript/commons"
 
-import { RelativeFilePath } from '@fern-api/fs-utils'
+import { RelativeFilePath } from "@fern-api/fs-utils"
 
-import { WebSocketChannel } from '@fern-fern/ir-sdk/api'
+import { WebSocketChannel } from "@fern-fern/ir-sdk/api"
 
-import { AbstractSdkClientClassDeclarationReferencer } from './AbstractSdkClientClassDeclarationReferencer'
-import { DeclarationReferencer } from './DeclarationReferencer'
+import { AbstractSdkClientClassDeclarationReferencer } from "./AbstractSdkClientClassDeclarationReferencer"
+import { DeclarationReferencer } from "./DeclarationReferencer"
 
 export declare namespace WebsocketTypeSchemaDeclarationReferencer {
     export interface Name {
@@ -14,7 +14,7 @@ export declare namespace WebsocketTypeSchemaDeclarationReferencer {
     }
 }
 
-const SOCKET_DIRECTORY_NAME = 'socket'
+const SOCKET_DIRECTORY_NAME = "socket"
 
 export class WebsocketTypeSchemaDeclarationReferencer extends AbstractSdkClientClassDeclarationReferencer<WebsocketTypeSchemaDeclarationReferencer.Name> {
     public getExportedFilepath(name: WebsocketTypeSchemaDeclarationReferencer.Name): ExportedFilePath {

@@ -1,12 +1,12 @@
-import { ParseOpenAPIOptions } from '@fern-api/openapi-ir-parser'
-import { AbsoluteFilePath, RelativeFilePath } from '@fern-api/path-utils'
+import { ParseOpenAPIOptions } from "@fern-api/openapi-ir-parser"
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/path-utils"
 
-import { Source } from './Source'
+import { Source } from "./Source"
 
 export type Spec = OpenAPISpec | ProtobufSpec | OpenRPCSpec
 
 export interface OpenAPISpec {
-    type: 'openapi'
+    type: "openapi"
     absoluteFilepath: AbsoluteFilePath
     absoluteFilepathToOverrides: AbsoluteFilePath | undefined
     source: Source
@@ -15,14 +15,14 @@ export interface OpenAPISpec {
 }
 
 export interface OpenRPCSpec {
-    type: 'openrpc'
+    type: "openrpc"
     absoluteFilepath: AbsoluteFilePath
     absoluteFilepathToOverrides: AbsoluteFilePath | undefined
     namespace?: string
 }
 
 export interface ProtobufSpec {
-    type: 'protobuf'
+    type: "protobuf"
     absoluteFilepathToProtobufRoot: AbsoluteFilePath
     absoluteFilepathToProtobufTarget: AbsoluteFilePath | undefined
     absoluteFilepathToOverrides: AbsoluteFilePath | undefined

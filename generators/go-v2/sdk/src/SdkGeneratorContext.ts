@@ -1,11 +1,11 @@
-import { GeneratorNotificationService } from '@fern-api/base-generator'
-import { assertNever } from '@fern-api/core-utils'
-import { RelativeFilePath } from '@fern-api/fs-utils'
-import { AbstractGoGeneratorContext, FileLocation, go } from '@fern-api/go-ast'
-import { GoProject } from '@fern-api/go-base'
+import { GeneratorNotificationService } from "@fern-api/base-generator"
+import { assertNever } from "@fern-api/core-utils"
+import { RelativeFilePath } from "@fern-api/fs-utils"
+import { AbstractGoGeneratorContext, FileLocation, go } from "@fern-api/go-ast"
+import { GoProject } from "@fern-api/go-base"
 
-import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
-import { GithubOutputMode, OutputMode } from '@fern-fern/generator-exec-sdk/api'
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
+import { GithubOutputMode, OutputMode } from "@fern-fern/generator-exec-sdk/api"
 import {
     EnvironmentId,
     EnvironmentUrl,
@@ -20,14 +20,14 @@ import {
     ServiceId,
     StreamingResponse,
     Subpackage
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { GoGeneratorAgent } from './GoGeneratorAgent'
-import { SdkCustomConfigSchema } from './SdkCustomConfig'
-import { EndpointGenerator } from './endpoint/EndpointGenerator'
-import { Caller } from './internal/Caller'
-import { ModuleConfig } from './module/ModuleConfig'
-import { ReadmeConfigBuilder } from './readme/ReadmeConfigBuilder'
+import { GoGeneratorAgent } from "./GoGeneratorAgent"
+import { SdkCustomConfigSchema } from "./SdkCustomConfig"
+import { EndpointGenerator } from "./endpoint/EndpointGenerator"
+import { Caller } from "./internal/Caller"
+import { ModuleConfig } from "./module/ModuleConfig"
+import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder"
 
 export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomConfigSchema> {
     public readonly project: GoProject
@@ -60,14 +60,14 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         if (subpackage != null && this.isFlatPackageLayout()) {
             return `${this.getClassName(subpackage.name)}Client`
         }
-        return 'Client'
+        return "Client"
     }
 
     public getClientFilename(subpackage?: Subpackage): string {
         if (subpackage != null && this.isFlatPackageLayout()) {
             return `${this.getFilename(subpackage.name)}.go`
         }
-        return 'client.go'
+        return "client.go"
     }
 
     public getRawClientClassName(subpackage?: Subpackage): string {
@@ -75,7 +75,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             if (this.isFlatPackageLayout()) {
                 return `Raw${this.getClassName(subpackage.name)}Client`
             }
-            return 'RawClient'
+            return "RawClient"
         }
         return `Raw${this.getClientClassName()}`
     }
@@ -84,7 +84,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         if (subpackage != null && this.isFlatPackageLayout()) {
             return `raw_${this.getFilename(subpackage.name)}.go`
         }
-        return 'raw_client.go'
+        return "raw_client.go"
     }
 
     public getMethodName(name: Name): string {
@@ -98,7 +98,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
     public getDefaultBaseUrlTypeInstantiation(endpoint: HttpEndpoint): go.TypeInstantiation {
         const defaultBaseUrl = this.getDefaultBaseUrl(endpoint)
         if (defaultBaseUrl == null) {
-            return go.TypeInstantiation.string('')
+            return go.TypeInstantiation.string("")
         }
         return go.TypeInstantiation.string(defaultBaseUrl)
     }
@@ -119,9 +119,9 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         }
         const environments = this.ir.environments.environments
         switch (environments.type) {
-            case 'singleBaseUrl':
+            case "singleBaseUrl":
                 return environments.environments.find((environment) => environment.id === id)?.url
-            case 'multipleBaseUrls': {
+            case "multipleBaseUrls": {
                 for (const environment of environments.environments) {
                     const url = environment.urls[id]
                     if (url != null) {
@@ -146,7 +146,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         if (this.customConfig.module == null) {
             // A GitHub configuration was provided, so the module config should use
             // the GitHub configuration's repository url.
-            const modulePath = githubConfig.repoUrl.replace('https://', '')
+            const modulePath = githubConfig.repoUrl.replace("https://", "")
             return {
                 ...ModuleConfig.DEFAULT,
                 path: modulePath
@@ -161,10 +161,10 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
 
     private getGithubOutputMode({ outputMode }: { outputMode: OutputMode }): GithubOutputMode | undefined {
         switch (outputMode.type) {
-            case 'github':
+            case "github":
                 return outputMode
-            case 'publish':
-            case 'downloadFiles':
+            case "publish":
+            case "downloadFiles":
                 return undefined
             default:
                 assertNever(outputMode)
@@ -173,7 +173,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
 
     public getRootClientDirectory(): RelativeFilePath {
         if (this.isFlatPackageLayout()) {
-            return RelativeFilePath.of('.')
+            return RelativeFilePath.of(".")
         }
         return RelativeFilePath.of(this.getRootClientPackageName())
     }
@@ -189,7 +189,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         if (this.isFlatPackageLayout()) {
             return this.getRootPackageName()
         }
-        return 'client'
+        return "client"
     }
 
     public getRootClientClassReference(): go.TypeReference {
@@ -243,7 +243,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         if (fileLocation.importPath === this.getRootImportPath()) {
             return this.getRootPackageName()
         }
-        return fileLocation.importPath.split('/').pop() ?? ''
+        return fileLocation.importPath.split("/").pop() ?? ""
     }
 
     public getServiceClientFileLocation({
@@ -287,39 +287,39 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
 
     public getContextParameter(): go.Parameter {
         return go.parameter({
-            name: 'ctx',
+            name: "ctx",
             type: go.Type.reference(this.getContextTypeReference())
         })
     }
 
     public getContextParameterReference(): go.AstNode {
-        return go.codeblock('ctx')
+        return go.codeblock("ctx")
     }
 
     public getErrorCodesTypeReference(): go.TypeReference {
         return go.typeReference({
-            name: 'ErrorCodes',
+            name: "ErrorCodes",
             importPath: this.getInternalImportPath()
         })
     }
 
     public getCoreApiErrorTypeReference(): go.TypeReference {
         return go.typeReference({
-            name: 'APIError',
+            name: "APIError",
             importPath: this.getCoreImportPath()
         })
     }
 
     public getVariadicRequestOptionParameter(): go.Parameter {
         return go.parameter({
-            name: 'opts',
+            name: "opts",
             type: this.getVariadicRequestOptionType()
         })
     }
 
     public getVariadicIdempotentRequestOptionParameter(): go.Parameter {
         return go.parameter({
-            name: 'opts',
+            name: "opts",
             type: this.getVariadicIdempotentRequestOptionType()
         })
     }
@@ -338,29 +338,29 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
 
     public getRequestOptionsTypeReference(): go.TypeReference {
         return go.typeReference({
-            name: 'RequestOptions',
+            name: "RequestOptions",
             importPath: this.getCoreImportPath()
         })
     }
 
     public getRequestOptionTypeReference(): go.TypeReference {
         return go.typeReference({
-            name: 'RequestOption',
+            name: "RequestOption",
             importPath: this.getOptionImportPath()
         })
     }
 
     public getIdempotentRequestOptionTypeReference(): go.TypeReference {
         return go.typeReference({
-            name: 'IdempotentRequestOption',
+            name: "IdempotentRequestOption",
             importPath: this.getOptionImportPath()
         })
     }
 
     public callBytesNewBuffer(): go.FuncInvocation {
         return go.invokeFunc({
-            func: go.typeReference({ name: 'NewBuffer', importPath: 'bytes' }),
-            arguments_: [go.codeblock('nil')],
+            func: go.typeReference({ name: "NewBuffer", importPath: "bytes" }),
+            arguments_: [go.codeblock("nil")],
             multiline: false
         })
     }
@@ -368,7 +368,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
     public callNewRequestOptions(argument: go.AstNode): go.FuncInvocation {
         return go.invokeFunc({
             func: go.typeReference({
-                name: 'NewRequestOptions',
+                name: "NewRequestOptions",
                 importPath: this.getCoreImportPath()
             }),
             arguments_: [argument],
@@ -379,7 +379,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
     public callNewIdempotentRequestOptions(argument: go.AstNode): go.FuncInvocation {
         return go.invokeFunc({
             func: go.typeReference({
-                name: 'NewIdempotentRequestOptions',
+                name: "NewIdempotentRequestOptions",
                 importPath: this.getCoreImportPath()
             }),
             arguments_: [argument],
@@ -390,8 +390,8 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
     public callSprintf(arguments_: go.AstNode[]): go.FuncInvocation {
         return go.invokeFunc({
             func: go.typeReference({
-                name: 'Sprintf',
-                importPath: 'fmt'
+                name: "Sprintf",
+                importPath: "fmt"
             }),
             arguments_,
             multiline: false
@@ -399,32 +399,32 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
     }
 
     public callEncodeUrl(arguments_: go.AstNode[]): go.FuncInvocation {
-        return this.callInternalFunc('EncodeURL', arguments_)
+        return this.callInternalFunc("EncodeURL", arguments_)
     }
 
     public callResolveBaseURL(arguments_: go.AstNode[]): go.FuncInvocation {
-        return this.callInternalFunc('ResolveBaseURL', arguments_)
+        return this.callInternalFunc("ResolveBaseURL", arguments_)
     }
 
     public callMergeHeaders(arguments_: go.AstNode[]): go.FuncInvocation {
-        return this.callInternalFunc('MergeHeaders', arguments_)
+        return this.callInternalFunc("MergeHeaders", arguments_)
     }
 
     public callNewErrorDecoder(arguments_: go.AstNode[]): go.FuncInvocation {
-        return this.callInternalFunc('NewErrorDecoder', arguments_, false)
+        return this.callInternalFunc("NewErrorDecoder", arguments_, false)
     }
 
     public callNewMultipartWriter(arguments_: go.AstNode[]): go.FuncInvocation {
-        return this.callInternalFunc('NewMultipartWriter', arguments_, false)
+        return this.callInternalFunc("NewMultipartWriter", arguments_, false)
     }
 
     public callQueryValues(arguments_: go.AstNode[]): go.FuncInvocation {
-        return this.callInternalFunc('QueryValues', arguments_, false)
+        return this.callInternalFunc("QueryValues", arguments_, false)
     }
 
     public getRawResponseTypeReference(valueType: go.Type): go.TypeReference {
         return go.typeReference({
-            name: 'Response',
+            name: "Response",
             importPath: this.getCoreImportPath(),
             generics: [valueType]
         })
@@ -432,7 +432,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
 
     public getStreamTypeReference(valueType: go.Type): go.TypeReference {
         return go.typeReference({
-            name: 'Stream',
+            name: "Stream",
             importPath: this.getCoreImportPath(),
             generics: [valueType]
         })
@@ -444,11 +444,11 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             return false
         }
         switch (requestBody.type) {
-            case 'inlinedRequestBody':
-            case 'reference':
-            case 'bytes':
+            case "inlinedRequestBody":
+            case "reference":
+            case "bytes":
                 return false
-            case 'fileUpload':
+            case "fileUpload":
                 return true
             default:
                 assertNever(requestBody)
@@ -465,13 +465,13 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             return false
         }
         switch (responseBody.type) {
-            case 'fileDownload':
-            case 'json':
-            case 'text':
-            case 'bytes':
+            case "fileDownload":
+            case "json":
+            case "text":
+            case "bytes":
                 return false
-            case 'streaming':
-            case 'streamParameter':
+            case "streaming":
+            case "streamParameter":
                 return true
             default:
                 assertNever(responseBody)
@@ -480,10 +480,10 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
 
     public getStreamPayload(streamingResponse: StreamingResponse): go.Type {
         switch (streamingResponse.type) {
-            case 'json':
-            case 'sse':
+            case "json":
+            case "sse":
                 return this.goTypeMapper.convert({ reference: streamingResponse.payload })
-            case 'text':
+            case "text":
                 return go.Type.string()
             default:
                 assertNever(streamingResponse)
@@ -519,11 +519,11 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         if (endpoint.requestBody != null) {
             const requestBody = endpoint.requestBody
             switch (requestBody.type) {
-                case 'fileUpload':
+                case "fileUpload":
                     return !this.fileUploadRequestHasProperties(requestBody)
-                case 'reference':
-                case 'inlinedRequestBody':
-                case 'bytes':
+                case "reference":
+                case "inlinedRequestBody":
+                case "bytes":
                     return false
                 default:
                     assertNever(requestBody)
@@ -553,7 +553,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         if (this.customConfig.inlineFileProperties) {
             return true
         }
-        return fileUploadRequest.properties.some((property) => property.type === 'bodyProperty')
+        return fileUploadRequest.properties.some((property) => property.type === "bodyProperty")
     }
 
     public accessRequestProperty({
@@ -569,20 +569,20 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
 
     public getNetHttpHeaderTypeReference(): go.TypeReference {
         return go.typeReference({
-            name: 'Header',
-            importPath: 'net/http'
+            name: "Header",
+            importPath: "net/http"
         })
     }
 
     public getNetHttpMethodTypeReference(method: HttpMethod): go.TypeReference {
         return go.typeReference({
             name: this.getNetHttpMethodTypeReferenceName(method),
-            importPath: 'net/http'
+            importPath: "net/http"
         })
     }
 
     public isFlatPackageLayout(): boolean {
-        return this.customConfig.packageLayout === 'flat'
+        return this.customConfig.packageLayout === "flat"
     }
 
     public getFileLocationForClient({
@@ -597,14 +597,14 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             // This represents a nested root package, so we need to deposit
             // the client in a 'client' subpackage (e.g. user/client).
             parts.push(...service.name.fernFilepath.allParts.map((part) => part.camelCase.safeName.toLowerCase()))
-            parts.push('client')
+            parts.push("client")
         } else {
             parts.push(...service.name.fernFilepath.packagePath.map((part) => part.camelCase.safeName.toLowerCase()))
-            parts.push(service.name.fernFilepath.file?.camelCase.safeName.toLowerCase() ?? 'client')
+            parts.push(service.name.fernFilepath.file?.camelCase.safeName.toLowerCase() ?? "client")
         }
         return {
-            importPath: [this.getRootImportPath(), ...parts].join('/'),
-            directory: RelativeFilePath.of(parts.join('/'))
+            importPath: [this.getRootImportPath(), ...parts].join("/"),
+            directory: RelativeFilePath.of(parts.join("/"))
         }
     }
 
@@ -621,18 +621,18 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
 
     private getNetHttpMethodTypeReferenceName(method: HttpMethod): string {
         switch (method) {
-            case 'GET':
-                return 'MethodGet'
-            case 'POST':
-                return 'MethodPost'
-            case 'PUT':
-                return 'MethodPut'
-            case 'PATCH':
-                return 'MethodPatch'
-            case 'DELETE':
-                return 'MethodDelete'
-            case 'HEAD':
-                return 'MethodHead'
+            case "GET":
+                return "MethodGet"
+            case "POST":
+                return "MethodPost"
+            case "PUT":
+                return "MethodPut"
+            case "PATCH":
+                return "MethodPatch"
+            case "DELETE":
+                return "MethodDelete"
+            case "HEAD":
+                return "MethodHead"
             default:
                 assertNever(method)
         }

@@ -1,1 +1,1 @@
-export { ValidOauthRule } from './valid-oauth'
+export { ValidOauthRule } from "./valid-oauth"

@@ -1,12 +1,12 @@
-import { OpenAPIV3 } from 'openapi-types'
+import { OpenAPIV3 } from "openapi-types"
 
-import { HttpMethod } from '@fern-api/openapi-ir'
+import { HttpMethod } from "@fern-api/openapi-ir"
 
-import { getExtension } from '../../../getExtension'
-import { AbstractOpenAPIV3ParserContext } from '../AbstractOpenAPIV3ParserContext'
-import { FernOpenAPIExtension } from '../extensions/fernExtensions'
-import { PathItemContext } from './contexts'
-import { ConvertedOperation, ConvertedWebhookOperation, convertOperation } from './operation/convertOperation'
+import { getExtension } from "../../../getExtension"
+import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext"
+import { FernOpenAPIExtension } from "../extensions/fernExtensions"
+import { PathItemContext } from "./contexts"
+import { ConvertedOperation, ConvertedWebhookOperation, convertOperation } from "./operation/convertOperation"
 
 export function convertPathItem(
     path: string,
@@ -17,7 +17,7 @@ export function convertPathItem(
     const result: ConvertedOperation[] = []
     const operations = getOperationObjectsFromPathItem(pathItemObject)
 
-    const basePathItemContext: Omit<PathItemContext, 'method'> = {
+    const basePathItemContext: Omit<PathItemContext, "method"> = {
         document,
         pathItem: pathItemObject,
         path,
@@ -55,7 +55,7 @@ export function convertPathItemToWebhooks(
     const result: ConvertedWebhookOperation[] = []
     const operations = getOperationObjectsFromPathItem(pathItemObject)
 
-    const basePathItemContext: Omit<PathItemContext, 'method'> = {
+    const basePathItemContext: Omit<PathItemContext, "method"> = {
         document,
         pathItem: pathItemObject,
         path,

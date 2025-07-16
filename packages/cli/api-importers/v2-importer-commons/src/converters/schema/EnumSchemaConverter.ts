@@ -1,8 +1,8 @@
-import { OpenAPIV3_1 } from 'openapi-types'
+import { OpenAPIV3_1 } from "openapi-types"
 
-import { Type } from '@fern-api/ir-sdk'
+import { Type } from "@fern-api/ir-sdk"
 
-import { AbstractConverter, AbstractConverterContext, FernEnumConfig } from '../..'
+import { AbstractConverter, AbstractConverterContext, FernEnumConfig } from "../.."
 
 export declare namespace EnumSchemaConverter {
     export interface Args extends AbstractConverter.AbstractArgs {
@@ -33,7 +33,7 @@ export class EnumSchemaConverter extends AbstractConverter<
             return undefined
         }
 
-        const enumValues = this.schema.enum.filter((value) => typeof value === 'string' || typeof value === 'number')
+        const enumValues = this.schema.enum.filter((value) => typeof value === "string" || typeof value === "number")
         const values = enumValues.map((value) => {
             const stringValue = value.toString()
             const fernEnumValue = this.maybeFernEnum?.[stringValue]

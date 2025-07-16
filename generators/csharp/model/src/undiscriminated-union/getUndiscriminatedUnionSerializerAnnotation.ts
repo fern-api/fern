@@ -1,7 +1,7 @@
-import { AbstractCsharpGeneratorContext } from '@fern-api/csharp-base'
-import { csharp } from '@fern-api/csharp-codegen'
+import { AbstractCsharpGeneratorContext } from "@fern-api/csharp-base"
+import { csharp } from "@fern-api/csharp-codegen"
 
-import { UndiscriminatedUnionTypeDeclaration } from '@fern-fern/ir-sdk/api'
+import { UndiscriminatedUnionTypeDeclaration } from "@fern-fern/ir-sdk/api"
 
 /**
  * Returns a C# annotation used to deserialize and serialize OneOf references.
@@ -22,30 +22,30 @@ export function getUndiscriminatedUnionSerializerAnnotation({
     if (isList) {
         return csharp.annotation({
             reference: csharp.classReference({
-                name: 'JsonConverter',
-                namespace: 'System.Text.Json.Serialization'
+                name: "JsonConverter",
+                namespace: "System.Text.Json.Serialization"
             }),
             argument: csharp.codeblock((writer) => {
-                writer.write('typeof(')
+                writer.write("typeof(")
 
                 const oneOf = getOneOf({ context, undiscriminatedUnionDeclaration })
                 const oneOfSerializer = getOneOfSerializer({ context, undiscriminatedUnionDeclaration })
                 const collectionSerializer = context.getCollectionItemSerializerReference(oneOf, oneOfSerializer)
                 writer.writeNode(collectionSerializer)
-                writer.write(')')
+                writer.write(")")
             })
         })
     }
     return csharp.annotation({
         reference: csharp.classReference({
-            name: 'JsonConverter',
-            namespace: 'System.Text.Json.Serialization'
+            name: "JsonConverter",
+            namespace: "System.Text.Json.Serialization"
         }),
         argument: csharp.codeblock((writer) => {
-            writer.write('typeof(')
+            writer.write("typeof(")
             const oneOfSerializer = getOneOfSerializer({ context, undiscriminatedUnionDeclaration })
             writer.writeNode(oneOfSerializer)
-            writer.write(')')
+            writer.write(")")
         })
     })
 }

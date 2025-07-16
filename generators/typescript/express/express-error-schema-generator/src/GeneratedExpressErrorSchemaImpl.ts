@@ -1,11 +1,11 @@
-import { AbstractGeneratedSchema } from '@fern-typescript/abstract-schema-generator'
-import { Reference, Zurg, getSchemaOptions, getTextOfTsNode } from '@fern-typescript/commons'
-import { ExpressContext, GeneratedExpressErrorSchema } from '@fern-typescript/contexts'
-import { ModuleDeclaration, ts } from 'ts-morph'
+import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator"
+import { Reference, Zurg, getSchemaOptions, getTextOfTsNode } from "@fern-typescript/commons"
+import { ExpressContext, GeneratedExpressErrorSchema } from "@fern-typescript/contexts"
+import { ModuleDeclaration, ts } from "ts-morph"
 
-import { assertNever } from '@fern-api/core-utils'
+import { assertNever } from "@fern-api/core-utils"
 
-import { ErrorDeclaration, TypeReference } from '@fern-fern/ir-sdk/api'
+import { ErrorDeclaration, TypeReference } from "@fern-fern/ir-sdk/api"
 
 export declare namespace GeneratedExpressErrorSchemaImpl {
     export interface Init {
@@ -45,15 +45,15 @@ export class GeneratedExpressErrorSchemaImpl
         // (de)serialize the named type directly.
         // unknown request bodies don't need to be serialized.
         switch (this.type.type) {
-            case 'primitive':
-            case 'container':
+            case "primitive":
+            case "container":
                 this.writeSchemaToFile(context)
                 break
             // named requests bodies are not generated - consumers should
             // (de)serialize the named type directly.
             // unknown request bodies don't need to be serialized.
-            case 'named':
-            case 'unknown':
+            case "named":
+            case "unknown":
                 break
             default:
                 assertNever(this.type)
@@ -69,7 +69,7 @@ export class GeneratedExpressErrorSchemaImpl
         }
 
         switch (this.type.type) {
-            case 'named':
+            case "named":
                 return context.typeSchema
                     .getSchemaOfNamedType(this.type, { isGeneratingSchema: false })
                     .jsonOrThrow(referenceToBody, {
@@ -78,10 +78,10 @@ export class GeneratedExpressErrorSchemaImpl
                             omitUndefined: false
                         })
                     })
-            case 'unknown':
+            case "unknown":
                 return referenceToBody
-            case 'primitive':
-            case 'container':
+            case "primitive":
+            case "container":
                 return this.getReferenceToZurgSchema(context).jsonOrThrow(referenceToBody, {
                     ...getSchemaOptions({
                         allowExtraFields: this.allowExtraFields,

@@ -1,3 +1,3 @@
-import { RubyModelGeneratorCli } from './GeneratorCli'
+import { RubyModelGeneratorCli } from "./GeneratorCli"
 
 void new RubyModelGeneratorCli().runCli()

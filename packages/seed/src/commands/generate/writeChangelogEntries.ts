@@ -1,9 +1,9 @@
-import { writeFile } from 'fs/promises'
-import moment from 'moment'
+import { writeFile } from "fs/promises"
+import moment from "moment"
 
-import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
 
-import { ChangelogEntry } from '@fern-fern/generators-sdk/api/resources/generators'
+import { ChangelogEntry } from "@fern-fern/generators-sdk/api/resources/generators"
 
 export function writeChangelogEntries(version: string, entries: ChangelogEntry[] | undefined): string {
     // ## 0.0.1
@@ -40,7 +40,7 @@ export function writeChangelogEntries(version: string, entries: ChangelogEntry[]
     const removed: string[] = []
     const fixed: string[] = []
     if (entries == null) {
-        changelogString += 'Nothing new to report!'
+        changelogString += "Nothing new to report!"
     } else {
         entries.forEach((entry) => {
             summary.push(`**\`(${entry.type}):\`** ${entry.summary}`)
@@ -56,36 +56,36 @@ export function writeChangelogEntries(version: string, entries: ChangelogEntry[]
         })
 
         if (upgradeNotes.length > 0) {
-            changelogString += '<Note>\n'
-            upgradeNotes.map(writeAsBullet).join('\n')
-            changelogString += '</Note>\n\n'
+            changelogString += "<Note>\n"
+            upgradeNotes.map(writeAsBullet).join("\n")
+            changelogString += "</Note>\n\n"
         }
 
-        changelogString += summary.join('\n\n')
+        changelogString += summary.join("\n\n")
 
         if (added.length > 0) {
             changelogString += "\n\n### What's new\n"
-            changelogString += added.map(writeAsBullet).join('\n')
+            changelogString += added.map(writeAsBullet).join("\n")
         }
 
         if (fixed.length > 0) {
             changelogString += "\n\n### What's been fixed\n"
-            changelogString += fixed.map(writeAsBullet).join('\n')
+            changelogString += fixed.map(writeAsBullet).join("\n")
         }
 
         if (changed.length > 0) {
             changelogString += "\n\n### What's changed\n"
-            changelogString += changed.map(writeAsBullet).join('\n')
+            changelogString += changed.map(writeAsBullet).join("\n")
         }
 
         if (deprecated.length > 0) {
             changelogString += "\n\n### What's deprecated\n"
-            changelogString += deprecated.map(writeAsBullet).join('\n')
+            changelogString += deprecated.map(writeAsBullet).join("\n")
         }
 
         if (removed.length > 0) {
             changelogString += "\n\n### What's been removed\n"
-            changelogString += removed.map(writeAsBullet).join('\n')
+            changelogString += removed.map(writeAsBullet).join("\n")
         }
     }
     return changelogString
@@ -102,10 +102,10 @@ export async function writeChangelogsToFile(
     for (const [releaseDate, versions] of changelogs.entries()) {
         const changelogPath = join(outputPath, RelativeFilePath.of(`${releaseDate}.mdx`))
 
-        let changelogContent = ''
+        let changelogContent = ""
         for (const [_, changelog] of versions.entries()) {
             changelogContent += changelog
-            changelogContent += '\n\n'
+            changelogContent += "\n\n"
         }
 
         await writeFile(changelogPath, changelogContent)

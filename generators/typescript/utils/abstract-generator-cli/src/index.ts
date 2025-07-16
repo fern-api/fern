@@ -1,1 +1,1 @@
-export { AbstractGeneratorCli } from './AbstractGeneratorCli'
+export { AbstractGeneratorCli } from "./AbstractGeneratorCli"

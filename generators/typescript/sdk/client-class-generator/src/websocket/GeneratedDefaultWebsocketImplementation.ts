@@ -1,5 +1,5 @@
-import { PackageId, getPropertyKey, getTextOfTsNode } from '@fern-typescript/commons'
-import { ChannelSignature, GeneratedWebsocketImplementation, SdkContext } from '@fern-typescript/contexts'
+import { PackageId, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons"
+import { ChannelSignature, GeneratedWebsocketImplementation, SdkContext } from "@fern-typescript/contexts"
 import {
     ClassDeclarationStructure,
     InterfaceDeclarationStructure,
@@ -7,9 +7,9 @@ import {
     Scope,
     StructureKind,
     ts
-} from 'ts-morph'
+} from "ts-morph"
 
-import { SetRequired } from '@fern-api/core-utils'
+import { SetRequired } from "@fern-api/core-utils"
 
 import {
     IntermediateRepresentation,
@@ -17,11 +17,11 @@ import {
     QueryParameter,
     WebSocketChannel,
     WebSocketChannelId
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { GeneratedSdkClientClassImpl } from '../GeneratedSdkClientClassImpl'
-import { GeneratedQueryParams } from '../endpoints/utils/GeneratedQueryParams'
-import { buildUrl } from '../endpoints/utils/buildUrl'
+import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl"
+import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams"
+import { buildUrl } from "../endpoints/utils/buildUrl"
 
 export declare namespace GeneratedDefaultWebsocketImplementation {
     export interface Init {
@@ -39,14 +39,14 @@ export declare namespace GeneratedDefaultWebsocketImplementation {
 }
 
 export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsocketImplementation {
-    private static readonly CONNECT_ARGS_INTERFACE_NAME = 'ConnectArgs'
-    private static readonly CONNECT_ARGS_PRIVATE_MEMBER = 'args'
-    private static readonly DEBUG_PROPERTY_NAME = 'debug'
-    private static readonly HEADERS_PROPERTY_NAME = 'headers'
-    private static readonly HEADERS_VARIABLE_NAME = '_headers'
+    private static readonly CONNECT_ARGS_INTERFACE_NAME = "ConnectArgs"
+    private static readonly CONNECT_ARGS_PRIVATE_MEMBER = "args"
+    private static readonly DEBUG_PROPERTY_NAME = "debug"
+    private static readonly HEADERS_PROPERTY_NAME = "headers"
+    private static readonly HEADERS_VARIABLE_NAME = "_headers"
 
-    private static readonly RECONNECT_ATTEMPTS_PROPERTY_NAME = 'reconnectAttempts'
-    private static readonly GENERATED_VERSION_PROPERTY_NAME = 'fernSdkVersion'
+    private static readonly RECONNECT_ATTEMPTS_PROPERTY_NAME = "reconnectAttempts"
+    private static readonly GENERATED_VERSION_PROPERTY_NAME = "fernSdkVersion"
     private static readonly DEFAULT_NUM_RECONNECT_ATTEMPTS = 30
 
     private readonly intermediateRepresentation: IntermediateRepresentation
@@ -90,9 +90,9 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         return {
             parameters: [
                 {
-                    name: 'args',
+                    name: "args",
                     type: `${this.serviceClassName}.${GeneratedDefaultWebsocketImplementation.CONNECT_ARGS_INTERFACE_NAME}`,
-                    initializer: connectArgsInterface.properties?.every((p) => p.hasQuestionToken) ? '{}' : undefined
+                    initializer: connectArgsInterface.properties?.every((p) => p.hasQuestionToken) ? "{}" : undefined
                 }
             ],
             returnTypeWithoutPromise: this.getSocketTypeNode(context)
@@ -130,18 +130,18 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         const statements = this.generateConnectMethodStatements(context)
 
         serviceClass.methods?.push({
-            name: 'connect',
+            name: "connect",
             scope: Scope.Public,
             isAsync: true,
             parameters: [
                 {
-                    name: 'args',
+                    name: "args",
                     type: `${this.serviceClassName}.${GeneratedDefaultWebsocketImplementation.CONNECT_ARGS_INTERFACE_NAME}`,
-                    initializer: connectArgsInterface.properties?.every((p) => p.hasQuestionToken) ? '{}' : undefined
+                    initializer: connectArgsInterface.properties?.every((p) => p.hasQuestionToken) ? "{}" : undefined
                 }
             ],
             returnType: getTextOfTsNode(
-                ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('Promise'), [
+                ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Promise"), [
                     this.getSocketTypeNode(context)
                 ])
             ),
@@ -153,7 +153,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
     }
 
     private generateConnectArgsInterface(context: SdkContext): InterfaceDeclarationStructure {
-        const requestOptions: SetRequired<InterfaceDeclarationStructure, 'properties'> = {
+        const requestOptions: SetRequired<InterfaceDeclarationStructure, "properties"> = {
             kind: StructureKind.Interface,
             name: GeneratedDefaultWebsocketImplementation.CONNECT_ARGS_INTERFACE_NAME,
             properties: [
@@ -181,25 +181,25 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 {
                     name: GeneratedDefaultWebsocketImplementation.HEADERS_PROPERTY_NAME,
                     type: getTextOfTsNode(
-                        ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('Record'), [
+                        ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Record"), [
                             ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
                             ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
                         ])
                     ),
                     hasQuestionToken: true,
-                    docs: ['Arbitrary headers to send with the websocket connect request.']
+                    docs: ["Arbitrary headers to send with the websocket connect request."]
                 },
                 {
                     name: GeneratedDefaultWebsocketImplementation.DEBUG_PROPERTY_NAME,
                     type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword)),
                     hasQuestionToken: true,
-                    docs: ['Enable debug mode on the websocket. Defaults to false.']
+                    docs: ["Enable debug mode on the websocket. Defaults to false."]
                 },
                 {
                     name: GeneratedDefaultWebsocketImplementation.RECONNECT_ATTEMPTS_PROPERTY_NAME,
                     type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)),
                     hasQuestionToken: true,
-                    docs: ['Number of reconnect attempts. Defaults to 30.']
+                    docs: ["Number of reconnect attempts. Defaults to 30."]
                 }
             ],
             isExported: true
@@ -290,7 +290,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                         ts.factory.createObjectBindingPattern(bindingElements),
                         undefined,
                         undefined,
-                        ts.factory.createIdentifier('args')
+                        ts.factory.createIdentifier("args")
                     )
                 ],
                 ts.NodeFlags.Const
@@ -314,7 +314,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                         ts.factory.createVariableDeclaration(
                             ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.HEADERS_VARIABLE_NAME),
                             undefined,
-                            ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('Record'), [
+                            ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Record"), [
                                 ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
                                 ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
                             ]),
@@ -395,7 +395,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 ts.factory.createVariableDeclarationList(
                     [
                         ts.factory.createVariableDeclaration(
-                            ts.factory.createIdentifier('socket'),
+                            ts.factory.createIdentifier("socket"),
                             undefined,
                             undefined,
                             this.getReferenceToWebsocket(context)
@@ -407,7 +407,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
             ts.factory.createReturnStatement(
                 ts.factory.createNewExpression(this.getReferenceToSocket(context), undefined, [
                     ts.factory.createObjectLiteralExpression([
-                        ts.factory.createShorthandPropertyAssignment(ts.factory.createIdentifier('socket'))
+                        ts.factory.createShorthandPropertyAssignment(ts.factory.createIdentifier("socket"))
                     ])
                 ])
             )
@@ -442,7 +442,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
             protocols: ts.factory.createArrayLiteralExpression([]),
             options: ts.factory.createObjectLiteralExpression([
                 ts.factory.createPropertyAssignment(
-                    'debug',
+                    "debug",
                     ts.factory.createBinaryExpression(
                         ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.DEBUG_PROPERTY_NAME),
                         ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
@@ -450,7 +450,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                     )
                 ),
                 ts.factory.createPropertyAssignment(
-                    'maxRetries',
+                    "maxRetries",
                     ts.factory.createBinaryExpression(
                         ts.factory.createIdentifier(
                             GeneratedDefaultWebsocketImplementation.RECONNECT_ATTEMPTS_PROPERTY_NAME
@@ -476,7 +476,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
 
         if (this.requireDefaultEnvironment) {
             if (defaultEnvironment == null) {
-                throw new Error('Cannot use default environment because none exists')
+                throw new Error("Cannot use default environment because none exists")
             }
             return defaultEnvironment
         }
@@ -558,7 +558,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
             (queryParam) => queryParam.name.wireValue === queryParameterKey
         )
         if (queryParameter == null) {
-            throw new Error('Query parameter does not exist: ' + queryParameterKey)
+            throw new Error("Query parameter does not exist: " + queryParameterKey)
         }
         return ts.factory.createIdentifier(this.getPropertyNameOfQueryParameter(queryParameter).propertyName)
     }

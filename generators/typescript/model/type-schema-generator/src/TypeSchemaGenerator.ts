@@ -1,4 +1,4 @@
-import { Reference } from '@fern-typescript/commons'
+import { Reference } from "@fern-typescript/commons"
 import {
     GeneratedAliasTypeSchema,
     GeneratedEnumTypeSchema,
@@ -7,8 +7,8 @@ import {
     GeneratedTypeSchema,
     GeneratedUnionTypeSchema,
     ModelContext
-} from '@fern-typescript/contexts'
-import { ts } from 'ts-morph'
+} from "@fern-typescript/contexts"
+import { ts } from "ts-morph"
 
 import {
     AliasTypeDeclaration,
@@ -17,13 +17,13 @@ import {
     Type,
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { GeneratedAliasTypeSchemaImpl } from './alias/GeneratedAliasTypeSchemaImpl'
-import { GeneratedEnumTypeSchemaImpl } from './enum/GeneratedEnumTypeSchemaImpl'
-import { GeneratedObjectTypeSchemaImpl } from './object/GeneratedObjectTypeSchemaImpl'
-import { GeneratedUndiscriminatedUnionTypeSchemaImpl } from './undiscriminated-union/GeneratedUndiscriminatedUnionTypeSchemaImpl'
-import { GeneratedUnionTypeSchemaImpl } from './union/GeneratedUnionTypeSchemaImpl'
+import { GeneratedAliasTypeSchemaImpl } from "./alias/GeneratedAliasTypeSchemaImpl"
+import { GeneratedEnumTypeSchemaImpl } from "./enum/GeneratedEnumTypeSchemaImpl"
+import { GeneratedObjectTypeSchemaImpl } from "./object/GeneratedObjectTypeSchemaImpl"
+import { GeneratedUndiscriminatedUnionTypeSchemaImpl } from "./undiscriminated-union/GeneratedUndiscriminatedUnionTypeSchemaImpl"
+import { GeneratedUnionTypeSchemaImpl } from "./union/GeneratedUnionTypeSchemaImpl"
 
 export declare namespace TypeSchemaGenerator {
     export interface Init {
@@ -100,7 +100,7 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
                     getReferenceToGeneratedTypeSchema
                 }),
             _other: () => {
-                throw new Error('Unknown type declaration shape: ' + shape.type)
+                throw new Error("Unknown type declaration shape: " + shape.type)
             }
         })
     }

@@ -1,12 +1,12 @@
-import { ExportsManager, ImportsManager, PackageId, Reference } from '@fern-typescript/commons'
-import { EndpointErrorUnionContext, GeneratedEndpointErrorUnion } from '@fern-typescript/contexts'
-import { EndpointErrorUnionGenerator } from '@fern-typescript/endpoint-error-union-generator'
-import { PackageResolver } from '@fern-typescript/resolvers'
-import { SourceFile } from 'ts-morph'
+import { ExportsManager, ImportsManager, PackageId, Reference } from "@fern-typescript/commons"
+import { EndpointErrorUnionContext, GeneratedEndpointErrorUnion } from "@fern-typescript/contexts"
+import { EndpointErrorUnionGenerator } from "@fern-typescript/endpoint-error-union-generator"
+import { PackageResolver } from "@fern-typescript/resolvers"
+import { SourceFile } from "ts-morph"
 
-import { Name } from '@fern-fern/ir-sdk/api'
+import { Name } from "@fern-fern/ir-sdk/api"
 
-import { EndpointDeclarationReferencer } from '../../declaration-referencers/EndpointDeclarationReferencer'
+import { EndpointDeclarationReferencer } from "../../declaration-referencers/EndpointDeclarationReferencer"
 
 export declare namespace EndpointErrorUnionContextImpl {
     export interface Init {
@@ -75,10 +75,10 @@ export class EndpointErrorUnionContextImpl implements EndpointErrorUnionContext 
             importsManager: this.importsManager,
             exportsManager: this.exportsManager,
             importStrategy: {
-                type: 'fromRoot',
+                type: "fromRoot",
                 namespaceImport: this.endpointErrorUnionDeclarationReferencer.namespaceExport
             },
-            subImport: typeof export_ === 'string' ? [export_] : export_
+            subImport: typeof export_ === "string" ? [export_] : export_
         })
     }
 }

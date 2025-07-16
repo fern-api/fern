@@ -1,7 +1,7 @@
-import { AbstractFormatter, AbstractWriter, NopFormatter } from '@fern-api/browser-compatible-base-generator'
+import { AbstractFormatter, AbstractWriter, NopFormatter } from "@fern-api/browser-compatible-base-generator"
 
-import { TypescriptCustomConfigSchema } from '../../custom-config/TypescriptCustomConfigSchema'
-import { Reference } from '../Reference'
+import { TypescriptCustomConfigSchema } from "../../custom-config/TypescriptCustomConfigSchema"
+import { Reference } from "../Reference"
 
 type ModuleName = string
 type Alias = string
@@ -39,15 +39,15 @@ export class Writer extends AbstractWriter {
     public addImport(reference: Reference): void {
         if (reference.importFrom != null) {
             switch (reference.importFrom.type) {
-                case 'default': {
+                case "default": {
                     this.validateDefault(reference)
                     break
                 }
-                case 'named': {
+                case "named": {
                     this.validateNamed(reference)
                     break
                 }
-                case 'star': {
+                case "star": {
                     this.validateStar(reference)
                     break
                 }
@@ -61,7 +61,7 @@ export class Writer extends AbstractWriter {
     }
 
     private validateDefault(reference: Reference): void {
-        if (reference.importFrom?.type !== 'default') {
+        if (reference.importFrom?.type !== "default") {
             return
         }
         const moduleDefault = (this.defaultImports[reference.importFrom.moduleName] ??= reference)
@@ -74,12 +74,12 @@ export class Writer extends AbstractWriter {
     }
 
     private validateNamed(reference: Reference): void {
-        if (reference.importFrom?.type !== 'named') {
+        if (reference.importFrom?.type !== "named") {
             return
         }
 
         const existing = this.imports[reference.importFrom.moduleName] ?? []
-        const existingStar = existing.filter((e) => e.importFrom?.type === 'star')
+        const existingStar = existing.filter((e) => e.importFrom?.type === "star")
         if (existingStar.length > 0) {
             throw new Error(
                 `Cannot add named import ${reference.name} because non-named` +
@@ -91,7 +91,7 @@ export class Writer extends AbstractWriter {
         for (const references of Object.values(this.imports)) {
             for (const ref of references) {
                 if (
-                    ref.importFrom?.type === 'named' &&
+                    ref.importFrom?.type === "named" &&
                     ref.importFrom.moduleName !== reference.importFrom.moduleName &&
                     ref.name === reference.name
                 ) {
@@ -109,7 +109,7 @@ export class Writer extends AbstractWriter {
     }
 
     private validateStar(reference: Reference): void {
-        if (reference.importFrom?.type !== 'star') {
+        if (reference.importFrom?.type !== "star") {
             return
         }
 
@@ -117,7 +117,7 @@ export class Writer extends AbstractWriter {
             reference.importFrom.starImportAlias)
         if (moduleAlias !== reference.importFrom.starImportAlias) {
             throw new Error(
-                'Cannot have more than one alias for non-named imports from a module: ' +
+                "Cannot have more than one alias for non-named imports from a module: " +
                     `got ${reference.importFrom.starImportAlias} but already have ${moduleAlias}.`
             )
         }
@@ -128,7 +128,7 @@ export class Writer extends AbstractWriter {
         if (aliasModule !== reference.importFrom.moduleName) {
             throw new Error(
                 `Attempted to use alias ${reference.importFrom.starImportAlias} for more than one ` +
-                    'module in the same file'
+                    "module in the same file"
             )
         }
     }

@@ -1,4 +1,4 @@
-import { LogLevel } from '@fern-api/logger'
+import { LogLevel } from "@fern-api/logger"
 
 export class Logger {
     private enabled = true
@@ -7,7 +7,7 @@ export class Logger {
         if (!this.enabled) {
             return
         }
-        process.stderr.write(`[${level}] ${messages.join(' ')}\n`)
+        process.stderr.write(`[${level}] ${messages.join(" ")}\n`)
     }
 
     disable(): void {

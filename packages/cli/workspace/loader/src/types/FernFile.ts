@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, RelativeFilePath } from '@fern-api/fs-utils'
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils"
 
 export interface FernFile {
     relativeFilepath: RelativeFilePath

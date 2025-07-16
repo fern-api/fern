@@ -1,6 +1,6 @@
-import { Reference } from './Reference'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { Reference } from "./Reference"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export declare namespace FunctionInvocation {
     interface Args {
@@ -21,12 +21,12 @@ export class FunctionInvocation extends AstNode {
 
     public write(writer: Writer): void {
         writer.writeNode(this.function_)
-        writer.write('(')
+        writer.write("(")
         writer.delimit({
             nodes: this.arguments_,
-            delimiter: ', ',
+            delimiter: ", ",
             writeFunction: (argument) => argument.write(writer)
         })
-        writer.write(')')
+        writer.write(")")
     }
 }

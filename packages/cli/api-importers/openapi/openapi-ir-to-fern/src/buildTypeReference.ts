@@ -1,5 +1,5 @@
-import { assertNever } from '@fern-api/core-utils'
-import { RawSchemas } from '@fern-api/fern-definition-schema'
+import { assertNever } from "@fern-api/core-utils"
+import { RawSchemas } from "@fern-api/fern-definition-schema"
 import {
     ArraySchema,
     DoubleSchema,
@@ -16,21 +16,21 @@ import {
     ReferencedSchema,
     Schema,
     StringSchema
-} from '@fern-api/openapi-ir'
-import { RelativeFilePath } from '@fern-api/path-utils'
+} from "@fern-api/openapi-ir"
+import { RelativeFilePath } from "@fern-api/path-utils"
 
-import { OpenApiIrConverterContext } from './OpenApiIrConverterContext'
-import { buildEnumTypeDeclaration, buildObjectTypeDeclaration, buildOneOfTypeDeclaration } from './buildTypeDeclaration'
-import { convertAvailability } from './utils/convertAvailability'
-import { convertSdkGroupNameToFile } from './utils/convertSdkGroupName'
-import { convertToEncodingSchema } from './utils/convertToEncodingSchema'
-import { getGroupNameForSchema } from './utils/getGroupNameForSchema'
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext"
+import { buildEnumTypeDeclaration, buildObjectTypeDeclaration, buildOneOfTypeDeclaration } from "./buildTypeDeclaration"
+import { convertAvailability } from "./utils/convertAvailability"
+import { convertSdkGroupNameToFile } from "./utils/convertSdkGroupName"
+import { convertToEncodingSchema } from "./utils/convertToEncodingSchema"
+import { getGroupNameForSchema } from "./utils/getGroupNameForSchema"
 import {
     getDefaultFromTypeReference,
     getDocsFromTypeReference,
     getTypeFromTypeReference,
     getValidationFromTypeReference
-} from './utils/getTypeFromTypeReference'
+} from "./utils/getTypeFromTypeReference"
 
 const MIN_INT_32 = -2147483648
 const MAX_INT_32 = 2147483647
@@ -59,10 +59,10 @@ export function buildTypeReference({
         context.markSchemaAsReferenced(schema, namespace)
     }
     switch (schema.type) {
-        case 'primitive': {
+        case "primitive": {
             return buildPrimitiveTypeReference(schema)
         }
-        case 'array':
+        case "array":
             return buildArrayTypeReference({
                 schema,
                 fileContainingReference,
@@ -71,7 +71,7 @@ export function buildTypeReference({
                 namespace,
                 declarationDepth
             })
-        case 'map':
+        case "map":
             return buildMapTypeReference({
                 schema,
                 fileContainingReference,
@@ -80,16 +80,16 @@ export function buildTypeReference({
                 namespace,
                 declarationDepth
             })
-        case 'reference':
+        case "reference":
             return buildReferenceTypeReference({
                 schema,
                 fileContainingReference,
                 context,
                 namespace
             })
-        case 'unknown':
+        case "unknown":
             return buildUnknownTypeReference()
-        case 'optional':
+        case "optional":
             return buildOptionalTypeReference({
                 schema,
                 fileContainingReference,
@@ -98,7 +98,7 @@ export function buildTypeReference({
                 namespace,
                 declarationDepth
             })
-        case 'nullable':
+        case "nullable":
             return buildNullableTypeReference({
                 schema,
                 fileContainingReference,
@@ -107,7 +107,7 @@ export function buildTypeReference({
                 namespace,
                 declarationDepth
             })
-        case 'enum':
+        case "enum":
             return buildEnumTypeReference({
                 schema,
                 fileContainingReference,
@@ -115,10 +115,10 @@ export function buildTypeReference({
                 declarationFile,
                 declarationDepth
             })
-        case 'literal':
+        case "literal":
             schema.value
             return buildLiteralTypeReference(schema)
-        case 'object':
+        case "object":
             return buildObjectTypeReference({
                 schema,
                 fileContainingReference,
@@ -127,7 +127,7 @@ export function buildTypeReference({
                 namespace,
                 declarationDepth
             })
-        case 'oneOf':
+        case "oneOf":
             return buildOneOfTypeReference({
                 schema: schema.value,
                 fileContainingReference,
@@ -143,50 +143,50 @@ export function buildTypeReference({
 
 export function buildPrimitiveTypeReference(primitiveSchema: PrimitiveSchema): RawSchemas.TypeReferenceSchema {
     switch (primitiveSchema.schema.type) {
-        case 'string':
+        case "string":
             return buildStringTypeReference({
                 description: primitiveSchema.description,
                 schema: primitiveSchema.schema
             })
-        case 'int':
+        case "int":
             return buildIntegerTypeReference({
                 description: primitiveSchema.description,
                 schema: primitiveSchema.schema
             })
-        case 'float':
+        case "float":
             return buildFloatTypeReference({
                 description: primitiveSchema.description,
                 schema: primitiveSchema.schema
             })
-        case 'double':
+        case "double":
             return buildDoubleTypeReference({
                 description: primitiveSchema.description,
                 schema: primitiveSchema.schema
             })
-        case 'boolean':
+        case "boolean":
             return buildBooleanTypeReference({
                 description: primitiveSchema.description,
                 schema: primitiveSchema.schema
             })
-        case 'int64':
+        case "int64":
             return buildLongTypeReference({
                 description: primitiveSchema.description,
                 schema: primitiveSchema.schema
             })
     }
     const typeReference = primitiveSchema.schema._visit({
-        int: () => 'integer',
-        int64: () => 'long',
-        uint: () => 'uint',
-        uint64: () => 'uint64',
-        float: () => 'double',
-        double: () => 'double',
-        string: () => 'string',
-        datetime: () => 'datetime',
-        date: () => 'date',
-        base64: () => 'base64',
-        boolean: () => 'boolean',
-        _other: () => 'unknown'
+        int: () => "integer",
+        int64: () => "long",
+        uint: () => "uint",
+        uint64: () => "uint64",
+        float: () => "double",
+        double: () => "double",
+        string: () => "string",
+        datetime: () => "datetime",
+        date: () => "date",
+        base64: () => "base64",
+        boolean: () => "boolean",
+        _other: () => "unknown"
     })
     if (primitiveSchema.description == null && primitiveSchema.title == null) {
         return typeReference
@@ -208,7 +208,7 @@ function buildBooleanTypeReference({
     description: string | undefined
     schema: PrimitiveSchemaValue.Boolean
 }): RawSchemas.TypeReferenceSchema {
-    const type = 'boolean'
+    const type = "boolean"
     if (description == null && schema.default == null) {
         return type
     }
@@ -231,7 +231,7 @@ function buildLongTypeReference({
     description: string | undefined
     schema: PrimitiveSchemaValue.Int64
 }): RawSchemas.TypeReferenceSchema {
-    const type = 'long'
+    const type = "long"
     if (description == null && schema.default == null) {
         return type
     }
@@ -254,7 +254,7 @@ function buildStringTypeReference({
     description: string | undefined
     schema: PrimitiveSchemaValue.String
 }): RawSchemas.TypeReferenceSchema {
-    const type = 'string'
+    const type = "string"
     const validation = maybeStringValidation(schema)
     if (description == null && schema.default == null && validation == null) {
         return type
@@ -281,7 +281,7 @@ function buildIntegerTypeReference({
     description: string | undefined
     schema: PrimitiveSchemaValue.Int
 }): RawSchemas.TypeReferenceSchema {
-    const type = 'integer'
+    const type = "integer"
     const validation = maybeNumberValidation(schema, type)
     if (description == null && schema.default == null && validation == null) {
         return type
@@ -308,7 +308,7 @@ function buildFloatTypeReference({
     description: string | undefined
     schema: PrimitiveSchemaValue.Float
 }): RawSchemas.TypeReferenceSchema {
-    const type = 'float'
+    const type = "float"
     if (description == null) {
         return type
     }
@@ -328,7 +328,7 @@ function buildDoubleTypeReference({
     description: string | undefined
     schema: PrimitiveSchemaValue.Double
 }): RawSchemas.TypeReferenceSchema {
-    const type = 'double'
+    const type = "double"
     const validation = maybeNumberValidation(schema, type)
     if (description == null && schema.default == null && validation == null) {
         return type
@@ -349,7 +349,7 @@ function buildDoubleTypeReference({
 }
 
 function maybeStringValidation(
-    schema: Omit<StringSchema, 'default'> | undefined
+    schema: Omit<StringSchema, "default"> | undefined
 ): RawSchemas.ValidationSchema | undefined {
     if (schema == null) {
         return undefined
@@ -371,18 +371,18 @@ function maybeValidFormat(format: string | undefined): string | undefined {
     // We only accept the set of OpenAPI formats that are explicitly listed at the following:
     // https://swagger.io/docs/specification/data-models/data-types/#string
     switch (format) {
-        case 'date':
-        case 'date-time':
-        case 'password':
-        case 'byte':
-        case 'bytes':
-        case 'binary':
-        case 'email':
-        case 'uuid':
-        case 'uri':
-        case 'hostname':
-        case 'ipv4':
-        case 'ipv6':
+        case "date":
+        case "date-time":
+        case "password":
+        case "byte":
+        case "bytes":
+        case "binary":
+        case "email":
+        case "uuid":
+        case "uri":
+        case "hostname":
+        case "ipv4":
+        case "ipv6":
             return format
         default:
             return undefined
@@ -390,8 +390,8 @@ function maybeValidFormat(format: string | undefined): string | undefined {
 }
 
 function maybeNumberValidation(
-    schema: Omit<IntSchema, 'default'> | Omit<DoubleSchema, 'default'> | undefined,
-    type: 'integer' | 'double'
+    schema: Omit<IntSchema, "default"> | Omit<DoubleSchema, "default"> | undefined,
+    type: "integer" | "double"
 ): RawSchemas.ValidationSchema | undefined {
     if (schema == null) {
         return undefined
@@ -428,12 +428,12 @@ function maybeNumberValidation(
  * @param type - The type of the number, either "integer" or "double".
  * @returns The number if it is within the valid range, or `undefined` if it is outside the range.
  */
-function makeUndefinedIfOutsideRange(num: number | undefined, type: 'integer' | 'double'): number | undefined {
+function makeUndefinedIfOutsideRange(num: number | undefined, type: "integer" | "double"): number | undefined {
     if (num === undefined) {
         return undefined
     }
 
-    const [min, max] = type === 'integer' ? [MIN_INT_32, MAX_INT_32] : [MIN_DOUBLE_64, MAX_DOUBLE_64]
+    const [min, max] = type === "integer" ? [MIN_INT_32, MAX_INT_32] : [MIN_DOUBLE_64, MAX_DOUBLE_64]
 
     return num < min || num > max ? undefined : num
 }
@@ -451,7 +451,7 @@ export function buildReferenceTypeReference({
 }): RawSchemas.TypeReferenceSchema {
     const resolvedSchema = context.getSchema(schema.schema, namespace)
     if (resolvedSchema == null) {
-        return 'unknown'
+        return "unknown"
     }
 
     const schemaName = getSchemaName(resolvedSchema) ?? schema.schema
@@ -464,12 +464,12 @@ export function buildReferenceTypeReference({
         type: schemaName
     })
 
-    const type = resolvedSchema.type === 'nullable' ? `optional<${typeWithPrefix}>` : typeWithPrefix
+    const type = resolvedSchema.type === "nullable" ? `optional<${typeWithPrefix}>` : typeWithPrefix
     if (schema.description == null && displayName == null) {
         return type
     }
     return {
-        type: resolvedSchema.type === 'nullable' ? `optional<${typeWithPrefix}>` : typeWithPrefix,
+        type: resolvedSchema.type === "nullable" ? `optional<${typeWithPrefix}>` : typeWithPrefix,
         ...(schema.description != null ? { docs: schema.description } : {}),
         ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {})
     }
@@ -591,7 +591,7 @@ export function buildNullableTypeReference({
     const itemDocs = getDocsFromTypeReference(itemTypeReference)
     const itemDefault = getDefaultFromTypeReference(itemTypeReference)
     const itemValidation = getValidationFromTypeReference(itemTypeReference)
-    const type = itemType.startsWith('nullable<') ? itemType : `nullable<${itemType}>`
+    const type = itemType.startsWith("nullable<") ? itemType : `nullable<${itemType}>`
     if (
         schema.availability == null &&
         schema.description == null &&
@@ -655,7 +655,7 @@ export function buildOptionalTypeReference({
     const itemDocs = getDocsFromTypeReference(itemTypeReference)
     const itemDefault = getDefaultFromTypeReference(itemTypeReference)
     const itemValidation = getValidationFromTypeReference(itemTypeReference)
-    const type = itemType.startsWith('optional<') ? itemType : `optional<${itemType}>`
+    const type = itemType.startsWith("optional<") ? itemType : `optional<${itemType}>`
     if (
         schema.availability == null &&
         schema.description == null &&
@@ -685,17 +685,17 @@ export function buildOptionalTypeReference({
 }
 
 export function buildUnknownTypeReference(): RawSchemas.TypeReferenceSchema {
-    return 'unknown'
+    return "unknown"
 }
 
 export function buildLiteralTypeReference(schema: LiteralSchema): RawSchemas.TypeReferenceSchema {
     let value: string
     switch (schema.value.type) {
-        case 'boolean': {
+        case "boolean": {
             value = `literal<${schema.value.value}>`
             break
         }
-        case 'string': {
+        case "string": {
             value = `literal<"${schema.value.value}">`
             break
         }
@@ -821,7 +821,7 @@ export function buildOneOfTypeReference({
         return prefixedType
     }
     return {
-        ...(schema.title != null ? { 'display-name': schema.title } : {}),
+        ...(schema.title != null ? { "display-name": schema.title } : {}),
         type: prefixedType,
         ...(schema.description != null ? { docs: schema.description } : {}),
         ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {})
@@ -890,10 +890,10 @@ function wrapOptionalIfNotAlready({
     typeReference: RawSchemas.TypeReferenceSchema
     itemType: string
 }): RawSchemas.TypeReferenceSchema {
-    if (itemType.startsWith('optional<')) {
+    if (itemType.startsWith("optional<")) {
         return typeReference
     }
-    if (typeof typeReference === 'string') {
+    if (typeof typeReference === "string") {
         return `optional<${typeReference}>`
     }
     return {

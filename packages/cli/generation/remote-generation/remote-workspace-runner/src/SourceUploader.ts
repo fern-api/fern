@@ -1,17 +1,17 @@
-import { readFile, unlink } from 'fs/promises'
-import tmp from 'tmp-promise'
+import { readFile, unlink } from "fs/promises"
+import tmp from "tmp-promise"
 
-import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
-import { ApiDefinitionSource, SourceConfig } from '@fern-api/ir-sdk'
-import { loggingExeca } from '@fern-api/logging-execa'
-import { InteractiveTaskContext } from '@fern-api/task-context'
-import { IdentifiableSource } from '@fern-api/workspace-loader'
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { ApiDefinitionSource, SourceConfig } from "@fern-api/ir-sdk"
+import { loggingExeca } from "@fern-api/logging-execa"
+import { InteractiveTaskContext } from "@fern-api/task-context"
+import { IdentifiableSource } from "@fern-api/workspace-loader"
 
-import { FernRegistry as FdrAPI } from '@fern-fern/fdr-cjs-sdk'
+import { FernRegistry as FdrAPI } from "@fern-fern/fdr-cjs-sdk"
 
-const PROTOBUF_ZIP_FILENAME = 'proto.zip'
+const PROTOBUF_ZIP_FILENAME = "proto.zip"
 
-export type SourceType = 'asyncapi' | 'openapi' | 'protobuf'
+export type SourceType = "asyncapi" | "openapi" | "protobuf"
 
 export class SourceUploader {
     public sourceTypes: Set<SourceType>
@@ -38,10 +38,10 @@ export class SourceUploader {
         const uploadCommand = await this.getUploadCommand(source)
         const fileData = await readFile(uploadCommand.absoluteFilePath)
         const response = await fetch(uploadURL, {
-            method: 'PUT',
+            method: "PUT",
             body: fileData,
             headers: {
-                'Content-Type': 'application/octet-stream'
+                "Content-Type": "application/octet-stream"
             }
         })
         await uploadCommand.cleanup()
@@ -55,7 +55,7 @@ export class SourceUploader {
     private async getUploadCommand(
         source: IdentifiableSource
     ): Promise<{ absoluteFilePath: AbsoluteFilePath; cleanup: () => Promise<void> }> {
-        if (source.type === 'protobuf') {
+        if (source.type === "protobuf") {
             const absoluteFilePath = await this.zipSource(source.absoluteFilePath)
             return {
                 absoluteFilePath,
@@ -78,7 +78,7 @@ export class SourceUploader {
         const destination = join(AbsoluteFilePath.of(tmpDir.path), RelativeFilePath.of(PROTOBUF_ZIP_FILENAME))
 
         this.context.logger.debug(`Zipping source ${absolutePathToSource} into ${destination}`)
-        await loggingExeca(this.context.logger, 'zip', ['-r', destination, '.'], {
+        await loggingExeca(this.context.logger, "zip", ["-r", destination, "."], {
             cwd: absolutePathToSource,
             doNotPipeOutput: true
         })
@@ -93,7 +93,7 @@ export class SourceUploader {
         for (const [id, sourceUpload] of Object.entries(sources)) {
             const identifiableSource = this.getSourceOrThrow(id)
             switch (identifiableSource.type) {
-                case 'protobuf':
+                case "protobuf":
                     apiDefinitionSources.push(
                         ApiDefinitionSource.proto({
                             id,
@@ -101,10 +101,10 @@ export class SourceUploader {
                         })
                     )
                     continue
-                case 'openapi':
+                case "openapi":
                     apiDefinitionSources.push(ApiDefinitionSource.openapi())
                     continue
-                case 'asyncapi':
+                case "asyncapi":
                     // AsyncAPI sources aren't modeled in the IR yet.
                     continue
             }

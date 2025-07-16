@@ -1,5 +1,5 @@
-import { AstNode, Writer } from '../csharp'
-import { XmlDocWriter } from './core/XmlDocWriter'
+import { AstNode, Writer } from "../csharp"
+import { XmlDocWriter } from "./core/XmlDocWriter"
 
 export declare namespace XmlDocBlock {
     type Like = XmlDocBlock | XmlDocBlock.Arg
@@ -39,37 +39,37 @@ export class XmlDocBlock extends AstNode {
             return
         }
         const docWriter = writer instanceof Writer ? new XmlDocWriter(writer) : writer
-        if (typeof this.arg === 'function') {
+        if (typeof this.arg === "function") {
             docWriter.writePrefix()
             this.arg(docWriter)
             docWriter.writeNewLineIfLastLineNot()
             return
         }
-        if (typeof this.arg === 'string') {
+        if (typeof this.arg === "string") {
             docWriter.writeMultilineWithEscaping(this.arg)
             docWriter.writeNewLineIfLastLineNot()
             return
         }
         if (this.arg.summary) {
             docWriter.writePrefix()
-            docWriter.writeOpenXmlNode('summary')
+            docWriter.writeOpenXmlNode("summary")
             docWriter.writeLine()
             this.writeXmlDocNodeWithEscaping(docWriter, this.arg.summary)
             docWriter.writeNewLineIfLastLineNot()
             docWriter.writePrefix()
-            docWriter.writeCloseXmlNode('summary')
+            docWriter.writeCloseXmlNode("summary")
             docWriter.writeNewLineIfLastLineNot()
         }
         if (this.arg.codeExample) {
             docWriter.writePrefix()
-            docWriter.writeOpenXmlNode('example')
-            docWriter.writeOpenXmlNode('code')
+            docWriter.writeOpenXmlNode("example")
+            docWriter.writeOpenXmlNode("code")
             docWriter.writeLine()
             this.writeXmlDocNodeWithEscaping(docWriter, this.arg.codeExample)
             docWriter.writeNewLineIfLastLineNot()
             docWriter.writePrefix()
-            docWriter.writeCloseXmlNode('code')
-            docWriter.writeCloseXmlNode('example')
+            docWriter.writeCloseXmlNode("code")
+            docWriter.writeCloseXmlNode("example")
             docWriter.writeNewLineIfLastLineNot()
         }
         if (this.arg.exceptions) {
@@ -79,13 +79,13 @@ export class XmlDocBlock extends AstNode {
                 docWriter.writeNodeOrString(exceptionType)
                 docWriter.write('">')
                 this.writeXmlDocNode(docWriter, exceptionSummary)
-                docWriter.write('</exception>')
+                docWriter.write("</exception>")
                 docWriter.writeNewLineIfLastLineNot()
             })
         }
         if (this.arg.inheritdoc) {
             docWriter.writePrefix()
-            docWriter.write('<inheritdoc')
+            docWriter.write("<inheritdoc")
             if (this.arg.inheritdoc !== true) {
                 if (this.arg.inheritdoc.cref) {
                     docWriter.write(` cref="${this.arg.inheritdoc.cref}"`)
@@ -94,18 +94,18 @@ export class XmlDocBlock extends AstNode {
                     docWriter.write(` path="${this.arg.inheritdoc.path}"`)
                 }
             }
-            docWriter.write(' />')
+            docWriter.write(" />")
 
             docWriter.writeNewLineIfLastLineNot()
         }
         if (this.arg.remarks) {
             docWriter.writePrefix()
-            docWriter.writeOpenXmlNode('remarks')
+            docWriter.writeOpenXmlNode("remarks")
             docWriter.writeLine()
             this.writeXmlDocNodeWithEscaping(docWriter, this.arg.remarks)
             docWriter.writeNewLineIfLastLineNot()
             docWriter.writePrefix()
-            docWriter.writeCloseXmlNode('remarks')
+            docWriter.writeCloseXmlNode("remarks")
             docWriter.writeNewLineIfLastLineNot()
         }
     }
@@ -114,12 +114,12 @@ export class XmlDocBlock extends AstNode {
         if (node == null) {
             return
         }
-        if (typeof node === 'function') {
+        if (typeof node === "function") {
             writer.writePrefix()
             node(writer)
             return
         }
-        if (typeof node === 'string') {
+        if (typeof node === "string") {
             writer.writePrefix()
             writer.writeMultiline(node)
         }
@@ -129,12 +129,12 @@ export class XmlDocBlock extends AstNode {
         if (node == null) {
             return
         }
-        if (typeof node === 'function') {
+        if (typeof node === "function") {
             writer.writePrefix()
             node(writer)
             return
         }
-        if (typeof node === 'string') {
+        if (typeof node === "string") {
             writer.writePrefix()
             writer.writeMultilineWithEscaping(node)
         }

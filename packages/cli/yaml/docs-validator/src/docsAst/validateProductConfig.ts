@@ -1,17 +1,17 @@
-import { docsYml } from '@fern-api/configuration-loader'
-import { validateAgainstJsonSchema } from '@fern-api/core-utils'
+import { docsYml } from "@fern-api/configuration-loader"
+import { validateAgainstJsonSchema } from "@fern-api/core-utils"
 
-import * as DocsYmlJsonSchema from './products-yml.schema.json'
+import * as DocsYmlJsonSchema from "./products-yml.schema.json"
 
 export type ProductParseResult = ProductFileSuccessParseResult | ProductFileFailureParseResult
 
 interface ProductFileSuccessParseResult {
-    type: 'success'
+    type: "success"
     contents: docsYml.RawSchemas.VersionFileConfig
 }
 
 interface ProductFileFailureParseResult {
-    type: 'failure'
+    type: "failure"
     message: string
 }
 
@@ -20,14 +20,14 @@ export async function validateProductConfigFileSchema({ value }: { value: unknow
     const result = validateAgainstJsonSchema(value, DocsYmlJsonSchema as any)
     if (result.success) {
         return {
-            type: 'success',
+            type: "success",
             contents: docsYml.RawSchemas.Serializer.ProductFileConfig.parseOrThrow(value)
         }
     }
 
-    const path = result.error?.instancePath ? ` at ${result?.error.instancePath}` : ''
+    const path = result.error?.instancePath ? ` at ${result?.error.instancePath}` : ""
     return {
-        type: 'failure',
-        message: `${result.error?.message ?? 'Failed to parse because JSON schema validation failed'}${path}`
+        type: "failure",
+        message: `${result.error?.message ?? "Failed to parse because JSON schema validation failed"}${path}`
     }
 }

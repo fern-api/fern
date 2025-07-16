@@ -1,25 +1,25 @@
-import Ajv from 'ajv'
-import addFormats from 'ajv-formats'
-import { describe, expect, it } from 'vitest'
+import Ajv from "ajv"
+import addFormats from "ajv-formats"
+import { describe, expect, it } from "vitest"
 
-import { SourceResolverImpl } from '@fern-api/cli-source-resolver'
-import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
-import { generateIntermediateRepresentation } from '@fern-api/ir-generator'
-import { loadApis } from '@fern-api/project-loader'
-import { createMockTaskContext } from '@fern-api/task-context'
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { generateIntermediateRepresentation } from "@fern-api/ir-generator"
+import { loadApis } from "@fern-api/project-loader"
+import { createMockTaskContext } from "@fern-api/task-context"
 
-import { convertIRtoJsonSchema } from '../convertIRtoJsonSchema'
+import { convertIRtoJsonSchema } from "../convertIRtoJsonSchema"
 
-describe('convertIRtoJsonSchema', async () => {
+describe("convertIRtoJsonSchema", async () => {
     const TEST_DEFINITIONS_DIR = join(
         AbsoluteFilePath.of(__dirname),
-        RelativeFilePath.of('../../../../../../test-definitions')
+        RelativeFilePath.of("../../../../../../test-definitions")
     )
     const apiWorkspaces = await loadApis({
-        fernDirectory: join(AbsoluteFilePath.of(TEST_DEFINITIONS_DIR), RelativeFilePath.of('fern')),
+        fernDirectory: join(AbsoluteFilePath.of(TEST_DEFINITIONS_DIR), RelativeFilePath.of("fern")),
         context: createMockTaskContext(),
-        cliVersion: '0.0.0',
-        cliName: 'fern',
+        cliVersion: "0.0.0",
+        cliName: "fern",
         commandLineApiWorkspace: undefined,
         defaultToAllApiWorkspaces: true
     })
@@ -35,7 +35,7 @@ describe('convertIRtoJsonSchema', async () => {
             const intermediateRepresentation = generateIntermediateRepresentation({
                 workspace: fernWorkspace,
                 generationLanguage: undefined,
-                audiences: { type: 'all' },
+                audiences: { type: "all" },
                 keywords: undefined,
                 smartCasing: true,
                 exampleGeneration: { disabled: false },
@@ -61,7 +61,7 @@ describe('convertIRtoJsonSchema', async () => {
                     const json = JSON.stringify(jsonschema, undefined, 2)
                     await expect(json).toMatchFileSnapshot(
                         RelativeFilePath.of(
-                            `./__snapshots__/${workspace.workspaceName}/${typeId.replaceAll(':', '_')}.json`
+                            `./__snapshots__/${workspace.workspaceName}/${typeId.replaceAll(":", "_")}.json`
                         )
                     )
                 })

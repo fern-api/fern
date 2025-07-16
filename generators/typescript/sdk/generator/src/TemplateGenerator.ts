@@ -1,7 +1,7 @@
-import { GetReferenceOpts, NpmPackage, PackageId, getTextOfTsNode } from '@fern-typescript/commons'
-import { GeneratedEnumType, SdkContext } from '@fern-typescript/contexts'
-import { OAuthTokenProviderGenerator } from '@fern-typescript/sdk-client-class-generator/src/oauth-generator/OAuthTokenProviderGenerator'
-import { Project } from 'ts-morph'
+import { GetReferenceOpts, NpmPackage, PackageId, getTextOfTsNode } from "@fern-typescript/commons"
+import { GeneratedEnumType, SdkContext } from "@fern-typescript/contexts"
+import { OAuthTokenProviderGenerator } from "@fern-typescript/sdk-client-class-generator/src/oauth-generator/OAuthTokenProviderGenerator"
+import { Project } from "ts-morph"
 
 import {
     ApiAuth,
@@ -22,14 +22,14 @@ import {
     TypeReference,
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
-} from '@fern-fern/ir-sdk/api'
-import { FdrSnippetTemplate } from '@fern-fern/snippet-sdk'
-import { TemplateInput } from '@fern-fern/snippet-sdk/api'
-import * as FDRAPIV1Read from '@fern-fern/snippet-sdk/api/resources/api/resources/v1/resources/read'
+} from "@fern-fern/ir-sdk/api"
+import { FdrSnippetTemplate } from "@fern-fern/snippet-sdk"
+import { TemplateInput } from "@fern-fern/snippet-sdk/api"
+import * as FDRAPIV1Read from "@fern-fern/snippet-sdk/api/resources/api/resources/v1/resources/read"
 
 // Write this in the fern def to share between FE + BE
-const TEMPLATE_SENTINEL = '$FERN_INPUT'
-const ENVIRONMENT_OPTION_PROPERTY_NAME = 'environment'
+const TEMPLATE_SENTINEL = "$FERN_INPUT"
+const ENVIRONMENT_OPTION_PROPERTY_NAME = "environment"
 
 export class TemplateGenerator {
     private endpointContext: SdkContext
@@ -113,7 +113,7 @@ export class TemplateGenerator {
             return undefined
         }
 
-        return crumbs.join('.')
+        return crumbs.join(".")
     }
 
     private getBaseGenericTemplate({
@@ -197,7 +197,7 @@ export class TemplateGenerator {
                         uint64: () => FDRAPIV1Read.PrimitiveType.uint64(),
                         float: () => FDRAPIV1Read.PrimitiveType.double({}),
                         _other: () => {
-                            throw new Error('Unknown primitive type: ' + primitive.v1)
+                            throw new Error("Unknown primitive type: " + primitive.v1)
                         }
                     })
                 ),
@@ -230,7 +230,7 @@ export class TemplateGenerator {
                                 boolean: (bool) => FDRAPIV1Read.LiteralType.booleanLiteral(bool),
                                 string: (str) => FDRAPIV1Read.LiteralType.stringLiteral(str),
                                 _other: () => {
-                                    throw new Error('Unknown literal type: ' + literalValue.type)
+                                    throw new Error("Unknown literal type: " + literalValue.type)
                                 }
                             })
                         ),
@@ -307,13 +307,13 @@ export class TemplateGenerator {
         indentationLevel: number
     }): FdrSnippetTemplate.Template | undefined {
         const childIndentationLevel = indentationLevel + 1
-        const childTabs = '\t'.repeat(childIndentationLevel)
+        const childTabs = "\t".repeat(childIndentationLevel)
         const childBreadcrumbs: string[] = [...(nameBreadcrumbs ?? [])]
         if (name != null) {
             childBreadcrumbs.push(name)
         }
 
-        const selfTabs = '\t'.repeat(indentationLevel)
+        const selfTabs = "\t".repeat(indentationLevel)
         const memberTemplates: Record<string, FdrSnippetTemplate.Template> = {}
         for (const member of utd.types) {
             const memberTemplate = member.shape._visit<FdrSnippetTemplate.Template | undefined>({
@@ -414,8 +414,8 @@ export class TemplateGenerator {
         isObjectInlined: boolean
     }): FdrSnippetTemplate.Template | undefined {
         const childIndentationLevel = indentationLevel + 1
-        const childTabs = '\t'.repeat(isObjectInlined ? childIndentationLevel - 1 : childIndentationLevel)
-        const selfTabs = '\t'.repeat(indentationLevel)
+        const childTabs = "\t".repeat(isObjectInlined ? childIndentationLevel - 1 : childIndentationLevel)
+        const selfTabs = "\t".repeat(indentationLevel)
         const templateInputs: FdrSnippetTemplate.TemplateInput[] = []
         for (const prop of otd.properties) {
             const childBreadcrumbs = nameBreadcrumbs != null ? [...nameBreadcrumbs] : []
@@ -544,8 +544,8 @@ export class TemplateGenerator {
         includeLiteralTemplates?: boolean
     }): FdrSnippetTemplate.Template | undefined {
         const childIndentationLevel = indentationLevel + 1
-        const selfTabs = '\t'.repeat(indentationLevel)
-        const childTabs = '\t'.repeat(childIndentationLevel)
+        const selfTabs = "\t".repeat(indentationLevel)
+        const childTabs = "\t".repeat(childIndentationLevel)
         const immediatePayloadPath = this.getBreadCrumbPath({ wireOrOriginalName, nameBreadcrumbs })
         return containerType._visit<FdrSnippetTemplate.Template | undefined>({
             list: (itemType) => {
@@ -632,7 +632,7 @@ export class TemplateGenerator {
                               `{\n${childTabs}${TEMPLATE_SENTINEL}\n${selfTabs}}`
                           ),
                           delimiter: `,\n${childTabs}`,
-                          keyValueSeparator: ': ',
+                          keyValueSeparator: ": ",
                           keyTemplate,
                           valueTemplate,
                           templateInput: FdrSnippetTemplate.TemplateInput.payload({
@@ -667,7 +667,7 @@ export class TemplateGenerator {
                     boolean: (bool) => bool.toString(),
                     string: (str) => `"${str}"`,
                     _other: () => {
-                        throw new Error('Unknown literal type: ' + literal.type)
+                        throw new Error("Unknown literal type: " + literal.type)
                     }
                 })
                 return includeLiteralTemplates
@@ -939,7 +939,7 @@ export class TemplateGenerator {
         return FdrSnippetTemplate.Template.iterable({
             isOptional: true,
             containerTemplateString,
-            delimiter: ',\n\t\t',
+            delimiter: ",\n\t\t",
             innerTemplate: this.fileUploadTemplate(),
             templateInput: FdrSnippetTemplate.TemplateInput.payload({
                 location: FdrSnippetTemplate.PayloadLocation.Body,
@@ -1010,7 +1010,7 @@ export class TemplateGenerator {
                                 templateInputs: [
                                     FdrSnippetTemplate.TemplateInput.payload({
                                         location: FdrSnippetTemplate.PayloadLocation.Auth,
-                                        path: 'username'
+                                        path: "username"
                                     })
                                 ]
                             })
@@ -1025,7 +1025,7 @@ export class TemplateGenerator {
                                 templateInputs: [
                                     FdrSnippetTemplate.TemplateInput.payload({
                                         location: FdrSnippetTemplate.PayloadLocation.Auth,
-                                        path: 'password'
+                                        path: "password"
                                     })
                                 ]
                             })
@@ -1044,7 +1044,7 @@ export class TemplateGenerator {
                                 templateInputs: [
                                     FdrSnippetTemplate.TemplateInput.payload({
                                         location: FdrSnippetTemplate.PayloadLocation.Auth,
-                                        path: 'token'
+                                        path: "token"
                                     })
                                 ]
                             })
@@ -1062,7 +1062,7 @@ export class TemplateGenerator {
                                 templateInputs: [
                                     FdrSnippetTemplate.TemplateInput.payload({
                                         location: FdrSnippetTemplate.PayloadLocation.Auth,
-                                        path: 'Authorization'
+                                        path: "Authorization"
                                     })
                                 ]
                             })
@@ -1079,7 +1079,7 @@ export class TemplateGenerator {
                                 templateInputs: [
                                     FdrSnippetTemplate.TemplateInput.payload({
                                         location: FdrSnippetTemplate.PayloadLocation.Auth,
-                                        path: 'Authorization' // TO CHANGE
+                                        path: "Authorization" // TO CHANGE
                                     })
                                 ]
                             })
@@ -1094,7 +1094,7 @@ export class TemplateGenerator {
                                 templateInputs: [
                                     FdrSnippetTemplate.TemplateInput.payload({
                                         location: FdrSnippetTemplate.PayloadLocation.Auth,
-                                        path: 'Authorization' // TO CHANGE
+                                        path: "Authorization" // TO CHANGE
                                     })
                                 ]
                             })
@@ -1102,7 +1102,7 @@ export class TemplateGenerator {
                     )
                 },
                 _other: () => {
-                    throw new Error('Unknown auth scheme: ' + authScheme.type)
+                    throw new Error("Unknown auth scheme: " + authScheme.type)
                 }
             })
         }
@@ -1155,7 +1155,7 @@ export class TemplateGenerator {
                         imports: [],
                         templateString: TEMPLATE_SENTINEL,
                         isOptional: false,
-                        inputDelimiter: ',\n\t',
+                        inputDelimiter: ",\n\t",
                         templateInputs: fileParamInputs
                     })
                 )
@@ -1171,7 +1171,7 @@ export class TemplateGenerator {
                         imports: [],
                         templateString: TEMPLATE_SENTINEL,
                         isOptional: false,
-                        inputDelimiter: ',\n\t',
+                        inputDelimiter: ",\n\t",
                         templateInputs: nonRequestParamInputs
                     })
                 )
@@ -1187,7 +1187,7 @@ export class TemplateGenerator {
                         imports: [],
                         templateString: `{\n\t\t${TEMPLATE_SENTINEL}\n\t}`,
                         isOptional: true,
-                        inputDelimiter: ',\n\t\t',
+                        inputDelimiter: ",\n\t\t",
                         templateInputs: requestParamInputs
                     })
                 )
@@ -1250,14 +1250,14 @@ export class TemplateGenerator {
                 imports: [`import { ${rootSdkClientName} } from "${this.npmPackage.packageName}";`],
                 templateString: clientInstantiationTemplateString,
                 isOptional: false,
-                inputDelimiter: ',',
+                inputDelimiter: ",",
                 templateInputs: topLevelClientInstantiationTemplateInputs
             }),
             functionInvocation: FdrSnippetTemplate.Template.generic({
                 imports: [],
                 templateString: functionInvocationTemplateString,
                 isOptional: false,
-                inputDelimiter: ',\n\t',
+                inputDelimiter: ",\n\t",
                 templateInputs: topLevelFunctionInvocationTemplateInputs
             })
         })

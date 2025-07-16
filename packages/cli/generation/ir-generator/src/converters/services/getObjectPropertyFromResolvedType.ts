@@ -1,11 +1,11 @@
-import { assertNever } from '@fern-api/core-utils'
-import { RawSchemas, isRawObjectDefinition } from '@fern-api/fern-definition-schema'
-import { ObjectProperty } from '@fern-api/ir-sdk'
+import { assertNever } from "@fern-api/core-utils"
+import { RawSchemas, isRawObjectDefinition } from "@fern-api/fern-definition-schema"
+import { ObjectProperty } from "@fern-api/ir-sdk"
 
-import { FernFileContext } from '../../FernFileContext'
-import { ResolvedType } from '../../resolvers/ResolvedType'
-import { TypeResolver } from '../../resolvers/TypeResolver'
-import { getObjectPropertiesFromRawObjectSchema } from '../type-declarations/convertObjectTypeDeclaration'
+import { FernFileContext } from "../../FernFileContext"
+import { ResolvedType } from "../../resolvers/ResolvedType"
+import { TypeResolver } from "../../resolvers/TypeResolver"
+import { getObjectPropertiesFromRawObjectSchema } from "../type-declarations/convertObjectTypeDeclaration"
 
 export function getObjectPropertyFromResolvedType({
     typeResolver,
@@ -19,8 +19,8 @@ export function getObjectPropertyFromResolvedType({
     property: string
 }): ObjectProperty {
     switch (resolvedType._type) {
-        case 'container':
-            if (resolvedType.container._type === 'optional') {
+        case "container":
+            if (resolvedType.container._type === "optional") {
                 return getObjectPropertyFromResolvedType({
                     typeResolver,
                     file,
@@ -29,7 +29,7 @@ export function getObjectPropertyFromResolvedType({
                 })
             }
             break
-        case 'named':
+        case "named":
             if (isRawObjectDefinition(resolvedType.declaration)) {
                 return getObjectPropertyFromObjectSchema({
                     typeResolver,
@@ -39,13 +39,13 @@ export function getObjectPropertyFromResolvedType({
                 })
             }
             break
-        case 'primitive':
-        case 'unknown':
+        case "primitive":
+        case "unknown":
             break
         default:
             assertNever(resolvedType)
     }
-    throw new Error('Internal error; response must be an object in order to return a property as a response')
+    throw new Error("Internal error; response must be an object in order to return a property as a response")
 }
 
 export function getObjectPropertyFromObjectSchema({
@@ -73,7 +73,7 @@ function getAllPropertiesForRawObjectSchema(
     typeResolver: TypeResolver
 ): Record<string, ObjectProperty> {
     let extendedTypes: string[] = []
-    if (typeof objectSchema.extends === 'string') {
+    if (typeof objectSchema.extends === "string") {
         extendedTypes = [objectSchema.extends]
     } else if (Array.isArray(objectSchema.extends)) {
         extendedTypes = objectSchema.extends
@@ -104,7 +104,7 @@ function getAllPropertiesForExtendedType(
         referenceToNamedType: extendedType,
         file
     })
-    if (resolvedType._type === 'named' && isRawObjectDefinition(resolvedType.declaration)) {
+    if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
         return getAllPropertiesForRawObjectSchema(resolvedType.declaration, file, typeResolver)
     }
     // This should be unreachable; extended types must be named objects.

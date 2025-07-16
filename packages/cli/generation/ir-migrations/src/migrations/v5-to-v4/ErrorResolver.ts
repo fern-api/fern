@@ -1,4 +1,4 @@
-import { IrVersions } from '../../ir-versions'
+import { IrVersions } from "../../ir-versions"
 
 export type StringifiedErrorName = string
 
@@ -23,12 +23,12 @@ export class ErrorResolverImpl implements ErrorResolver {
         const key = stringifyErrorName(errorName)
         const error = this.errors[key]
         if (error == null) {
-            throw new Error('Error does not exist: ' + key)
+            throw new Error("Error does not exist: " + key)
         }
         return error
     }
 }
 
 function stringifyErrorName(errorName: IrVersions.V5.errors.DeclaredErrorName): string {
-    return `${errorName.fernFilepath.join('/')}:${errorName.name.originalName}`
+    return `${errorName.fernFilepath.join("/")}:${errorName.name.originalName}`
 }

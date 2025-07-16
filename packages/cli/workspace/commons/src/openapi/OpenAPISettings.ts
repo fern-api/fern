@@ -1,5 +1,5 @@
-import { ParseOpenAPIOptions, getParseOptions } from '@fern-api/openapi-ir-parser'
-import { ConvertOpenAPIOptions, getConvertOptions } from '@fern-api/openapi-ir-to-fern'
+import { ParseOpenAPIOptions, getParseOptions } from "@fern-api/openapi-ir-parser"
+import { ConvertOpenAPIOptions, getConvertOptions } from "@fern-api/openapi-ir-to-fern"
 
 export type OpenAPISettings = ParseOpenAPIOptions & ConvertOpenAPIOptions
 

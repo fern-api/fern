@@ -6,19 +6,19 @@ import {
     TypeId,
     WebSocketChannel,
     WebSocketMessage
-} from '@fern-api/ir-sdk'
+} from "@fern-api/ir-sdk"
 
-import { ExampleGenerationResult } from './ExampleGenerationResult'
+import { ExampleGenerationResult } from "./ExampleGenerationResult"
 import {
     generateHeaderExamples,
     generatePathParameterExamples,
     generateQueryParameterExamples
-} from './generateParameterExamples'
-import { generateTypeReferenceExample } from './generateTypeReferenceExample'
+} from "./generateParameterExamples"
+import { generateTypeReferenceExample } from "./generateTypeReferenceExample"
 
 export declare namespace generateWebSocketExample {
     interface Args {
-        ir: Omit<IntermediateRepresentation, 'sdkConfig' | 'subpackages' | 'rootPackage'>
+        ir: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage">
         channel: WebSocketChannel
         typeDeclarations: Record<TypeId, TypeDeclaration>
         skipOptionalRequestProperties: boolean
@@ -31,7 +31,7 @@ export function generateWebSocketExample({
     typeDeclarations,
     skipOptionalRequestProperties
 }: generateWebSocketExample.Args): ExampleGenerationResult<ExampleWebSocketSession> {
-    const result: Omit<ExampleWebSocketSession, 'url'> = {
+    const result: Omit<ExampleWebSocketSession, "url"> = {
         name: undefined,
         pathParameters: [],
         headers: [],
@@ -45,7 +45,7 @@ export function generateWebSocketExample({
         skipOptionalRequestProperties,
         maxDepth: 1
     })
-    if (channelPathResult.type === 'failure') {
+    if (channelPathResult.type === "failure") {
         return channelPathResult
     }
     result.pathParameters.push(...channelPathResult.example)
@@ -55,7 +55,7 @@ export function generateWebSocketExample({
         skipOptionalRequestProperties,
         maxDepth: 1
     })
-    if (rootPathResult.type === 'failure') {
+    if (rootPathResult.type === "failure") {
         return rootPathResult
     }
     result.pathParameters.push(...rootPathResult.example)
@@ -66,7 +66,7 @@ export function generateWebSocketExample({
         skipOptionalRequestProperties,
         maxDepth: 10
     })
-    if (queryParamsResult.type === 'failure') {
+    if (queryParamsResult.type === "failure") {
         return queryParamsResult
     }
     result.queryParameters = queryParamsResult.example
@@ -77,7 +77,7 @@ export function generateWebSocketExample({
         skipOptionalRequestProperties,
         maxDepth: 1
     })
-    if (channelHeaderResult.type === 'failure') {
+    if (channelHeaderResult.type === "failure") {
         return channelHeaderResult
     }
     result.headers.push(...channelHeaderResult.example)
@@ -87,12 +87,12 @@ export function generateWebSocketExample({
         skipOptionalRequestProperties,
         maxDepth: 1
     })
-    if (irHeaderResult.type === 'failure') {
+    if (irHeaderResult.type === "failure") {
         return irHeaderResult
     }
     result.headers.push(...irHeaderResult.example)
 
-    const sendMessages = channel.messages.filter((message) => message.origin === 'client')
+    const sendMessages = channel.messages.filter((message) => message.origin === "client")
     const sendMessage = sendMessages[0]
     if (sendMessage != null) {
         const generatedExampleMessage = generateExampleMessage({
@@ -107,7 +107,7 @@ export function generateWebSocketExample({
             })
         }
     }
-    const receiveMessages = channel.messages.filter((message) => message.origin === 'server')
+    const receiveMessages = channel.messages.filter((message) => message.origin === "server")
     const receiveMessage = receiveMessages[0]
     if (receiveMessage != null) {
         const generatedExampleMessage = generateExampleMessage({
@@ -124,7 +124,7 @@ export function generateWebSocketExample({
     }
 
     return {
-        type: 'success',
+        type: "success",
         example: {
             ...result,
             url: getUrlForExample(channel, result)
@@ -142,7 +142,7 @@ function generateExampleMessage({
     typeDeclarations: Record<TypeId, TypeDeclaration>
     skipOptionalRequestProperties: boolean
 }): ExampleWebSocketMessageBody | undefined {
-    if (message.body.type === 'inlinedBody') {
+    if (message.body.type === "inlinedBody") {
         return undefined
     }
     const generatedExampleMessage = generateTypeReferenceExample({
@@ -152,23 +152,23 @@ function generateExampleMessage({
         typeReference: message.body.bodyType,
         skipOptionalProperties: skipOptionalRequestProperties
     })
-    if (generatedExampleMessage.type === 'success') {
+    if (generatedExampleMessage.type === "success") {
         return ExampleWebSocketMessageBody.reference(generatedExampleMessage.example)
     }
     return undefined
 }
 
-function getUrlForExample(channel: WebSocketChannel, example: Omit<ExampleWebSocketSession, 'id' | 'url'>): string {
+function getUrlForExample(channel: WebSocketChannel, example: Omit<ExampleWebSocketSession, "id" | "url">): string {
     const pathParameters: Record<string, string> = {}
     ;[...example.pathParameters].forEach((examplePathParameter) => {
         const value = examplePathParameter.value.jsonExample
-        const stringValue = typeof value === 'string' ? value : JSON.stringify(value)
+        const stringValue = typeof value === "string" ? value : JSON.stringify(value)
         pathParameters[examplePathParameter.name.originalName] = stringValue
     })
     const url =
         channel.path.head +
         channel.path.parts
             .map((pathPart) => encodeURIComponent(`${pathParameters[pathPart.pathParameter]}`) + pathPart.tail)
-            .join('')
-    return url.startsWith('/') || url === '' ? url : `/${url}`
+            .join("")
+    return url.startsWith("/") || url === "" ? url : `/${url}`
 }

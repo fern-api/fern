@@ -1,15 +1,15 @@
-import { readFile, writeFile } from 'fs/promises'
-import YAML from 'yaml'
+import { readFile, writeFile } from "fs/promises"
+import YAML from "yaml"
 
-import { AbsoluteFilePath } from '@fern-api/fs-utils'
-import { TaskContext } from '@fern-api/task-context'
+import { AbsoluteFilePath } from "@fern-api/fs-utils"
+import { TaskContext } from "@fern-api/task-context"
 
-import { Migration } from '../../../types/Migration'
-import { getAllYamlFiles } from './getAllYamlFiles'
+import { Migration } from "../../../types/Migration"
+import { getAllYamlFiles } from "./getAllYamlFiles"
 
 export const migration: Migration = {
-    name: 'remove-inline-error-declarations',
-    summary: 'moves inlined error declarations to be types.',
+    name: "remove-inline-error-declarations",
+    summary: "moves inlined error declarations to be types.",
     run: async ({ context }) => {
         const yamlFiles = await getAllYamlFiles(context)
         for (const filepath of yamlFiles) {
@@ -27,9 +27,9 @@ async function migrateFile(filepath: AbsoluteFilePath, context: TaskContext): Pr
     const parsedDocument = YAML.parseDocument(contents.toString())
 
     const addType = (typeName: string, typeDeclaration: YAML.Node) => {
-        const types = parsedDocument.get('types')
+        const types = parsedDocument.get("types")
         if (types == null) {
-            parsedDocument.set('types', {
+            parsedDocument.set("types", {
                 [typeName]: typeDeclaration
             })
         } else if (!YAML.isMap(types)) {
@@ -39,7 +39,7 @@ async function migrateFile(filepath: AbsoluteFilePath, context: TaskContext): Pr
         }
     }
 
-    const errors = parsedDocument.get('errors')
+    const errors = parsedDocument.get("errors")
     if (errors == null) {
         return
     }
@@ -56,22 +56,22 @@ async function migrateFile(filepath: AbsoluteFilePath, context: TaskContext): Pr
         }
 
         // move type to be its own declaration
-        const errorType = errorDeclaration.value.get('type', true)
-        if (errorType != null && typeof errorType.value !== 'string') {
+        const errorType = errorDeclaration.value.get("type", true)
+        if (errorType != null && typeof errorType.value !== "string") {
             const errorBodyName = `${errorDeclaration.key}Body`
             addType(errorBodyName, errorType)
-            errorDeclaration.value.set('type', errorBodyName)
+            errorDeclaration.value.set("type", errorBodyName)
         }
 
         // move status code
-        const httpSection = errorDeclaration.value.get('http')
+        const httpSection = errorDeclaration.value.get("http")
         if (httpSection != null) {
             if (!YAML.isMap(httpSection)) {
                 context.failWithoutThrowing(`http in "${errorDeclaration.key}" is not a map in ${filepath}`)
             } else {
-                const statusCode = httpSection.get('statusCode', true)
-                errorDeclaration.value.delete('http')
-                errorDeclaration.value.set('status-code', statusCode)
+                const statusCode = httpSection.get("statusCode", true)
+                errorDeclaration.value.delete("http")
+                errorDeclaration.value.set("status-code", statusCode)
             }
         }
     }

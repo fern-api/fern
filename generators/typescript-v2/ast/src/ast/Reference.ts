@@ -1,20 +1,20 @@
-import { AstNode, Writer } from './core'
+import { AstNode, Writer } from "./core"
 
 export declare namespace Reference {
     type ModuleImport = DefaultImport | NamedImport | StarImport
 
     interface DefaultImport {
-        type: 'default'
+        type: "default"
         moduleName: string
     }
 
     interface NamedImport {
-        type: 'named'
+        type: "named"
         moduleName: string
     }
 
     interface StarImport {
-        type: 'star'
+        type: "star"
         moduleName: string
         starImportAlias: string
     }
@@ -45,8 +45,8 @@ export class Reference extends AstNode {
         if (this.importFrom != null) {
             writer.addImport(this)
         }
-        const prefix = this.importFrom?.type === 'star' ? `${this.importFrom.starImportAlias}.` : ''
-        const suffix = this.memberName != null ? `.${this.memberName}` : ''
+        const prefix = this.importFrom?.type === "star" ? `${this.importFrom.starImportAlias}.` : ""
+        const suffix = this.memberName != null ? `.${this.memberName}` : ""
         writer.write(`${prefix}${this.name}${suffix}`)
     }
 }

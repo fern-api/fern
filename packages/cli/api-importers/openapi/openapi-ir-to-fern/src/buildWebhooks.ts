@@ -1,17 +1,17 @@
-import { camelCase, isEqual } from 'lodash-es'
+import { camelCase, isEqual } from "lodash-es"
 
-import { FERN_PACKAGE_MARKER_FILENAME } from '@fern-api/configuration'
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { Webhook } from '@fern-api/openapi-ir'
-import { RelativeFilePath, join } from '@fern-api/path-utils'
+import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration"
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { Webhook } from "@fern-api/openapi-ir"
+import { RelativeFilePath, join } from "@fern-api/path-utils"
 
-import { OpenApiIrConverterContext } from './OpenApiIrConverterContext'
-import { buildHeader } from './buildHeader'
-import { buildTypeReference } from './buildTypeReference'
-import { convertFullExample } from './utils/convertFullExample'
-import { convertEndpointSdkNameToFile } from './utils/convertSdkGroupName'
-import { tokenizeString } from './utils/getEndpointLocation'
-import { getEndpointNamespace } from './utils/getNamespaceFromGroup'
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext"
+import { buildHeader } from "./buildHeader"
+import { buildTypeReference } from "./buildTypeReference"
+import { convertFullExample } from "./utils/convertFullExample"
+import { convertEndpointSdkNameToFile } from "./utils/convertSdkGroupName"
+import { tokenizeString } from "./utils/getEndpointLocation"
+import { getEndpointNamespace } from "./utils/getNamespaceFromGroup"
 
 export function buildWebhooks(context: OpenApiIrConverterContext): void {
     for (const webhook of context.ir.webhooks) {
@@ -35,7 +35,7 @@ export function buildWebhooks(context: OpenApiIrConverterContext): void {
         const webhookDefinition: RawSchemas.WebhookSchema = {
             audiences: webhook.audiences,
             method: webhook.method,
-            'display-name': webhook.summary ?? undefined,
+            "display-name": webhook.summary ?? undefined,
             headers,
             payload: buildTypeReference({
                 schema: webhook.payload,
@@ -116,7 +116,7 @@ function getUnresolvedWebhookLocation({
     // add to __package__.yml if equal
     if (isEqual(tagTokens, operationIdTokens)) {
         return {
-            file: RelativeFilePath.of('__package__.yml'),
+            file: RelativeFilePath.of("__package__.yml"),
             endpointId: tag
         }
     }
@@ -143,8 +143,8 @@ function getUnresolvedWebhookLocation({
     }
 
     return {
-        file: RelativeFilePath.of(camelCase(fileParts.join('_')) + '.yml'),
-        endpointId: camelCase(operationIdTokens.slice(fileParts.length).join('_')),
+        file: RelativeFilePath.of(camelCase(fileParts.join("_")) + ".yml"),
+        endpointId: camelCase(operationIdTokens.slice(fileParts.length).join("_")),
         tag
     }
 }

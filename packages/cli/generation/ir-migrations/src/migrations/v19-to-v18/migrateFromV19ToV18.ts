@@ -1,34 +1,34 @@
-import { mapValues } from 'lodash-es'
+import { mapValues } from "lodash-es"
 
-import { GeneratorName } from '@fern-api/configuration-loader'
+import { GeneratorName } from "@fern-api/configuration-loader"
 
-import { IrMigrationContext } from '../../IrMigrationContext'
-import { IrVersions } from '../../ir-versions'
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
+import { IrMigrationContext } from "../../IrMigrationContext"
+import { IrVersions } from "../../ir-versions"
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
 
 export const V19_TO_V18_MIGRATION: IrMigration<
     IrVersions.V19.ir.IntermediateRepresentation,
     IrVersions.V18.ir.IntermediateRepresentation
 > = {
-    laterVersion: 'v19',
-    earlierVersion: 'v18',
+    laterVersion: "v19",
+    earlierVersion: "v18",
     firstGeneratorVersionToConsumeNewIR: {
         [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_SDK]: '0.5.19-1-gef223230',
-        [GeneratorName.TYPESCRIPT_EXPRESS]: '0.5.19-1-gef223230',
+        [GeneratorName.TYPESCRIPT_SDK]: "0.5.19-1-gef223230",
+        [GeneratorName.TYPESCRIPT_EXPRESS]: "0.5.19-1-gef223230",
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_SPRING]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.PYTHON_FASTAPI]: '0.3.4-rc0-9-ge815162f',
-        [GeneratorName.PYTHON_PYDANTIC]: '0.3.4-rc0-9-ge815162f',
+        [GeneratorName.PYTHON_FASTAPI]: "0.3.4-rc0-9-ge815162f",
+        [GeneratorName.PYTHON_PYDANTIC]: "0.3.4-rc0-9-ge815162f",
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.OPENAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.STOPLIGHT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.POSTMAN]: '0.0.44-1-gbf4b0f3',
-        [GeneratorName.PYTHON_SDK]: '0.3.4-rc0-9-ge815162f',
+        [GeneratorName.POSTMAN]: "0.0.44-1-gbf4b0f3",
+        [GeneratorName.PYTHON_SDK]: "0.3.4-rc0-9-ge815162f",
         [GeneratorName.GO_FIBER]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet,
@@ -150,7 +150,7 @@ function convertExampleRequest(
         reference: (exampleReference) =>
             IrVersions.V18.http.ExampleRequestBody.reference(convertExampleTypeReference(exampleReference, context)),
         _unknown: () => {
-            throw new Error('Unknown ExampleRequestBody: ' + example.type)
+            throw new Error("Unknown ExampleRequestBody: " + example.type)
         }
     })
 }
@@ -170,7 +170,7 @@ function convertExampleResponse(
                 body: errorExample.body != null ? convertExampleTypeReference(errorExample.body, context) : undefined
             }),
         _unknown: () => {
-            throw new Error('Unknown ExampleResponse: ' + example.type)
+            throw new Error("Unknown ExampleResponse: " + example.type)
         }
     })
 }
@@ -232,7 +232,7 @@ function convertExampleTypeShape(
                             noProperties: IrVersions.V18.types.ExampleSingleUnionTypeProperties.noProperties,
                             _unknown: () => {
                                 throw new Error(
-                                    'Unknown ExampleSingleUnionTypeProperties: ' + unionExample.properties.type
+                                    "Unknown ExampleSingleUnionTypeProperties: " + unionExample.properties.type
                                 )
                             }
                         }
@@ -240,7 +240,7 @@ function convertExampleTypeShape(
             }),
         enum: IrVersions.V18.types.ExampleTypeShape.enum,
         _unknown: () => {
-            throw new Error('Unknown ExampleTypeShape: ' + example.type)
+            throw new Error("Unknown ExampleTypeShape: " + example.type)
         }
     })
 }
@@ -298,14 +298,14 @@ function convertExampleTypeReferenceShape(
                                     }))
                                 ),
                             _unknown: () => {
-                                throw new Error('Unknown ExampleContainer: ' + exampleContainer.type)
+                                throw new Error("Unknown ExampleContainer: " + exampleContainer.type)
                             }
                         }
                     )
                 ),
             unknown: IrVersions.V18.types.ExampleTypeReferenceShape.unknown,
             _unknown: () => {
-                throw new Error('Unknown ExampleTypeReferenceShape: ' + example.type)
+                throw new Error("Unknown ExampleTypeReferenceShape: " + example.type)
             }
         }
     )
@@ -315,14 +315,14 @@ function convertExamplePrimitive(
     example: IrVersions.V19.types.ExamplePrimitive,
     { taskContext, targetGenerator }: IrMigrationContext
 ): IrVersions.V18.types.ExamplePrimitive {
-    if (example.type === 'date') {
+    if (example.type === "date") {
         return taskContext.failAndThrow(
             targetGenerator != null
                 ? `Generator ${targetGenerator.name}@${targetGenerator.version}` +
-                      ' does not support examples for dates.' +
+                      " does not support examples for dates." +
                       ` If you'd like to use this feature, please upgrade ${targetGenerator.name}` +
-                      ' to a compatible version.'
-                : 'Cannot backwards-migrate IR because this IR contains date examples.'
+                      " to a compatible version."
+                : "Cannot backwards-migrate IR because this IR contains date examples."
         )
     }
     return example

@@ -1,12 +1,12 @@
-import { AbstractFormatter } from '../ast/AbstractFormatter'
+import { AbstractFormatter } from "../ast/AbstractFormatter"
 
 // Style of the generated snippets.
 export enum Style {
     // Use a concise style for the snippet (top-level statements).
-    Concise = 'concise',
+    Concise = "concise",
 
     // Use the full style for the snippet (a `main` function that can be run).
-    Full = 'full'
+    Full = "full"
 }
 
 // Options used to customize the behavior of any dynamic snippets generator

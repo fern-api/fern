@@ -1,8 +1,8 @@
-import { GetReferenceOpts, Reference, getTextOfTsNode } from '@fern-typescript/commons'
-import { BaseContext, BaseGeneratedType } from '@fern-typescript/contexts'
-import { ModuleDeclarationStructure, StatementStructures, WriterFunction, ts } from 'ts-morph'
+import { GetReferenceOpts, Reference, getTextOfTsNode } from "@fern-typescript/commons"
+import { BaseContext, BaseGeneratedType } from "@fern-typescript/contexts"
+import { ModuleDeclarationStructure, StatementStructures, WriterFunction, ts } from "ts-morph"
 
-import { ExampleType, ExampleTypeShape, FernFilepath } from '@fern-fern/ir-sdk/api'
+import { ExampleType, ExampleTypeShape, FernFilepath } from "@fern-fern/ir-sdk/api"
 
 export declare namespace AbstractGeneratedType {
     export interface Init<Shape, Context> {
@@ -20,7 +20,7 @@ export declare namespace AbstractGeneratedType {
     }
 }
 
-const EXAMPLE_PREFIX = '    '
+const EXAMPLE_PREFIX = "    "
 
 export abstract class AbstractGeneratedType<Shape, Context extends BaseContext> implements BaseGeneratedType<Context> {
     protected typeName: string
@@ -66,16 +66,16 @@ export abstract class AbstractGeneratedType<Shape, Context extends BaseContext> 
         }
         for (const example of this.examples) {
             const exampleStr =
-                '@example\n' +
+                "@example\n" +
                 getTextOfTsNode(
                     this.buildExample(example.shape, context, { isForComment: true, isForTypeDeclarationComment: true })
                 )
-            groups.push(exampleStr.replaceAll('\n', `\n${EXAMPLE_PREFIX}`))
+            groups.push(exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`))
         }
         if (groups.length === 0) {
             return undefined
         }
-        return groups.join('\n\n')
+        return groups.join("\n\n")
     }
 
     public writeToFile(context: Context): void {

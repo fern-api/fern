@@ -1,4 +1,4 @@
-import { ModelGeneratorCLI } from './ModelGeneratorCli'
+import { ModelGeneratorCLI } from "./ModelGeneratorCli"
 
 void runCli()
 

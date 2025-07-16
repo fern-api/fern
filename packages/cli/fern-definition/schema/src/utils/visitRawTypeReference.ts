@@ -1,9 +1,9 @@
-import { Literal, PrimitiveType, PrimitiveTypeV1, PrimitiveTypeV2 } from '@fern-api/ir-sdk'
+import { Literal, PrimitiveType, PrimitiveTypeV1, PrimitiveTypeV2 } from "@fern-api/ir-sdk"
 
-import { NumberValidationSchema } from '../schemas'
-import { StringValidationSchema } from '../schemas'
-import { ValidationSchema } from '../schemas'
-import { RawPrimitiveType } from './RawPrimitiveType'
+import { NumberValidationSchema } from "../schemas"
+import { StringValidationSchema } from "../schemas"
+import { ValidationSchema } from "../schemas"
+import { RawPrimitiveType } from "./RawPrimitiveType"
 
 export const FernContainerRegex = {
     MAP: /^map<\s*([^,]*)\s*,\s*(.*)\s*>$/,
@@ -189,9 +189,9 @@ export function visitRawTypeReference<R>({
     if (literalMatch?.[2] != null) {
         const group = literalMatch[2]
         switch (group) {
-            case 'false':
+            case "false":
                 return visitor.literal(Literal.boolean(false))
-            case 'true':
+            case "true":
                 return visitor.literal(Literal.boolean(true))
             default:
                 throw new Error(`Unsupported literal value: ${group}`)

@@ -1,15 +1,15 @@
-import { readFile, writeFile } from 'fs/promises'
-import YAML from 'yaml'
+import { readFile, writeFile } from "fs/promises"
+import YAML from "yaml"
 
-import { AbsoluteFilePath } from '@fern-api/fs-utils'
-import { TaskContext } from '@fern-api/task-context'
+import { AbsoluteFilePath } from "@fern-api/fs-utils"
+import { TaskContext } from "@fern-api/task-context"
 
-import { Migration } from '../../../types/Migration'
-import { getAllYamlFiles } from './getAllYamlFiles'
+import { Migration } from "../../../types/Migration"
+import { getAllYamlFiles } from "./getAllYamlFiles"
 
 export const migration: Migration = {
-    name: 'union-single-property-migration',
-    summary: 'migrates union types to set the `key` property on non-object subtypes to the discriminant value.',
+    name: "union-single-property-migration",
+    summary: "migrates union types to set the `key` property on non-object subtypes to the discriminant value.",
     run: async ({ context }) => {
         const yamlFiles = await getAllYamlFiles(context)
         for (const filepath of yamlFiles) {
@@ -25,7 +25,7 @@ export const migration: Migration = {
 async function migrateFile(filepath: AbsoluteFilePath, context: TaskContext): Promise<void> {
     const contents = await readFile(filepath)
     const parsedDocument = YAML.parseDocument(contents.toString())
-    const types = parsedDocument.get('types')
+    const types = parsedDocument.get("types")
     if (types == null) {
         return
     }
@@ -36,7 +36,7 @@ async function migrateFile(filepath: AbsoluteFilePath, context: TaskContext): Pr
 
     for (const typeDeclaration of types.items) {
         if (YAML.isMap(typeDeclaration.value)) {
-            const union = typeDeclaration.value.get('union')
+            const union = typeDeclaration.value.get("union")
             if (union == null) {
                 continue
             }
@@ -51,7 +51,7 @@ async function migrateFile(filepath: AbsoluteFilePath, context: TaskContext): Pr
                         key: singleUnionType.key
                     }
                 } else if (YAML.isMap(singleUnionType.value)) {
-                    singleUnionType.value.add(new YAML.Pair('key', singleUnionType.key))
+                    singleUnionType.value.add(new YAML.Pair("key", singleUnionType.key))
                 }
             }
         }

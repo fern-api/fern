@@ -1,1 +1,1 @@
-export * from './AbstractSwiftGeneratorCli'
+export * from "./AbstractSwiftGeneratorCli"

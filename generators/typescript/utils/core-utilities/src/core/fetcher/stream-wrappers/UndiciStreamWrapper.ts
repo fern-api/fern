@@ -1,4 +1,4 @@
-import { StreamWrapper } from './chooseStreamWrapper'
+import { StreamWrapper } from "./chooseStreamWrapper"
 
 type EventCallback = (data?: any) => void
 
@@ -40,7 +40,7 @@ export class UndiciStreamWrapper<ReadFormat extends Uint8Array | Uint16Array | U
     public pipe(
         dest: UndiciStreamWrapper<ReadFormat> | WritableStream<ReadFormat>
     ): UndiciStreamWrapper<ReadFormat> | WritableStream<ReadFormat> {
-        this.on('data', (chunk) => {
+        this.on("data", (chunk) => {
             if (dest instanceof UndiciStreamWrapper) {
                 dest._write(chunk)
             } else {
@@ -49,7 +49,7 @@ export class UndiciStreamWrapper<ReadFormat extends Uint8Array | Uint16Array | U
             }
         })
 
-        this.on('end', () => {
+        this.on("end", () => {
             if (dest instanceof UndiciStreamWrapper) {
                 dest._end()
             } else {
@@ -58,7 +58,7 @@ export class UndiciStreamWrapper<ReadFormat extends Uint8Array | Uint16Array | U
             }
         })
 
-        this.on('error', (error) => {
+        this.on("error", (error) => {
             if (dest instanceof UndiciStreamWrapper) {
                 dest._error(error)
             } else {
@@ -79,7 +79,7 @@ export class UndiciStreamWrapper<ReadFormat extends Uint8Array | Uint16Array | U
     }
 
     public unpipe(dest: UndiciStreamWrapper<ReadFormat> | WritableStream): void {
-        this.off('data', (chunk) => {
+        this.off("data", (chunk) => {
             if (dest instanceof UndiciStreamWrapper) {
                 dest._write(chunk)
             } else {
@@ -88,7 +88,7 @@ export class UndiciStreamWrapper<ReadFormat extends Uint8Array | Uint16Array | U
             }
         })
 
-        this.off('end', () => {
+        this.off("end", () => {
             if (dest instanceof UndiciStreamWrapper) {
                 dest._end()
             } else {
@@ -97,7 +97,7 @@ export class UndiciStreamWrapper<ReadFormat extends Uint8Array | Uint16Array | U
             }
         })
 
-        this.off('error', (error) => {
+        this.off("error", (error) => {
             if (dest instanceof UndiciStreamWrapper) {
                 dest._error(error)
             } else {
@@ -111,22 +111,22 @@ export class UndiciStreamWrapper<ReadFormat extends Uint8Array | Uint16Array | U
         this.reader
             .cancel(error)
             .then(() => {
-                this._emit('close')
+                this._emit("close")
             })
             .catch((err) => {
-                this._emit('error', err)
+                this._emit("error", err)
             })
     }
 
     public pause(): void {
         this.paused = true
-        this._emit('pause')
+        this._emit("pause")
     }
 
     public resume(): void {
         if (this.paused) {
             this.paused = false
-            this._emit('resume')
+            this._emit("resume")
             if (this.resumeCallback) {
                 this.resumeCallback()
                 this.resumeCallback = null
@@ -168,7 +168,7 @@ export class UndiciStreamWrapper<ReadFormat extends Uint8Array | Uint16Array | U
             }
         }
 
-        const decoder = new TextDecoder(this.encoding || 'utf-8')
+        const decoder = new TextDecoder(this.encoding || "utf-8")
         return decoder.decode(await new Blob(chunks).arrayBuffer())
     }
 
@@ -178,15 +178,15 @@ export class UndiciStreamWrapper<ReadFormat extends Uint8Array | Uint16Array | U
     }
 
     private _write(chunk: ReadFormat): void {
-        this._emit('data', chunk)
+        this._emit("data", chunk)
     }
 
     private _end(): void {
-        this._emit('end')
+        this._emit("end")
     }
 
     private _error(error: any): void {
-        this._emit('error', error)
+        this._emit("error", error)
     }
 
     private _emit(event: string, data?: any): void {
@@ -199,7 +199,7 @@ export class UndiciStreamWrapper<ReadFormat extends Uint8Array | Uint16Array | U
 
     private async _startReading(): Promise<void> {
         try {
-            this._emit('readable')
+            this._emit("readable")
             while (true) {
                 if (this.paused) {
                     await new Promise((resolve) => {
@@ -208,16 +208,16 @@ export class UndiciStreamWrapper<ReadFormat extends Uint8Array | Uint16Array | U
                 }
                 const { done, value } = await this.reader.read()
                 if (done) {
-                    this._emit('end')
-                    this._emit('close')
+                    this._emit("end")
+                    this._emit("close")
                     break
                 }
                 if (value) {
-                    this._emit('data', value)
+                    this._emit("data", value)
                 }
             }
         } catch (error) {
-            this._emit('error', error)
+            this._emit("error", error)
         }
     }
 

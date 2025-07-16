@@ -1,6 +1,6 @@
-import { Argument, Arguments, isNamedArgument } from '@fern-api/browser-compatible-base-generator'
+import { Argument, Arguments, isNamedArgument } from "@fern-api/browser-compatible-base-generator"
 
-import { Writer } from '../core/Writer'
+import { Writer } from "../core/Writer"
 
 export function writeArguments({
     writer,
@@ -12,7 +12,7 @@ export function writeArguments({
     multiline?: boolean
 }): void {
     if (arguments_.length === 0) {
-        writer.write('()')
+        writer.write("()")
         return
     }
     if (multiline) {
@@ -23,25 +23,25 @@ export function writeArguments({
 }
 
 function writeMultiline({ writer, arguments_ }: { writer: Writer; arguments_: Arguments }): void {
-    writer.writeLine('(')
+    writer.writeLine("(")
     writer.indent()
     for (const argument of arguments_) {
         writeArgument({ writer, argument, writeCompact: false })
-        writer.writeLine(',')
+        writer.writeLine(",")
     }
     writer.dedent()
-    writer.write(')')
+    writer.write(")")
 }
 
 function writeCompact({ writer, arguments_ }: { writer: Writer; arguments_: Arguments }): void {
-    writer.write('(')
+    writer.write("(")
     arguments_.forEach((argument, index) => {
         if (index > 0) {
-            writer.write(', ')
+            writer.write(", ")
         }
         writeArgument({ writer, argument, writeCompact: true })
     })
-    writer.write(')')
+    writer.write(")")
 }
 
 function writeArgument({

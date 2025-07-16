@@ -1,10 +1,10 @@
-import chalk from 'chalk'
+import chalk from "chalk"
 
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { FernFileContext, TypeResolver } from '@fern-api/ir-generator'
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { FernFileContext, TypeResolver } from "@fern-api/ir-generator"
 
-import { RuleViolation } from '../../Rule'
-import { maybeFileFromResolvedType, resolveResponseType } from '../../utils/propertyValidatorUtils'
+import { RuleViolation } from "../../Rule"
+import { maybeFileFromResolvedType, resolveResponseType } from "../../utils/propertyValidatorUtils"
 import {
     DEFAULT_ACCESS_TOKEN,
     DEFAULT_CLIENT_ID,
@@ -15,7 +15,7 @@ import {
     validateExpiresInResponseProperty,
     validateRefreshTokenResponseProperty,
     validateScopesRequestProperty
-} from './validateUtils'
+} from "./validateUtils"
 
 export function validateTokenEndpoint({
     endpointId,
@@ -32,7 +32,7 @@ export function validateTokenEndpoint({
 }): RuleViolation[] {
     const violations: RuleViolation[] = []
 
-    const maybeClientId = tokenEndpoint['request-properties']?.['client-id']
+    const maybeClientId = tokenEndpoint["request-properties"]?.["client-id"]
     if (maybeClientId != null) {
         violations.push(
             ...validateClientIdRequestProperty({
@@ -53,7 +53,7 @@ export function validateTokenEndpoint({
         })
         if (clientIdViolations.length > 0) {
             violations.push({
-                severity: 'fatal',
+                severity: "fatal",
                 message: `OAuth configuration for endpoint ${chalk.bold(
                     endpointId
                 )} is missing a valid client-id, such as '${DEFAULT_CLIENT_ID}'.`
@@ -61,7 +61,7 @@ export function validateTokenEndpoint({
         }
     }
 
-    const maybeClientSecret = tokenEndpoint['request-properties']?.['client-secret']
+    const maybeClientSecret = tokenEndpoint["request-properties"]?.["client-secret"]
     if (maybeClientSecret != null) {
         violations.push(
             ...validateClientSecretRequestProperty({
@@ -82,7 +82,7 @@ export function validateTokenEndpoint({
         })
         if (clientSecretViolations.length > 0) {
             violations.push({
-                severity: 'fatal',
+                severity: "fatal",
                 message: `OAuth configuration for endpoint ${chalk.bold(
                     endpointId
                 )} is missing a valid client-secret, such as '${DEFAULT_CLIENT_SECRET}'.`
@@ -90,7 +90,7 @@ export function validateTokenEndpoint({
         }
     }
 
-    const scopesProperty = tokenEndpoint?.['request-properties']?.scopes
+    const scopesProperty = tokenEndpoint?.["request-properties"]?.scopes
     if (scopesProperty != null) {
         violations.push(
             ...validateScopesRequestProperty({
@@ -106,13 +106,13 @@ export function validateTokenEndpoint({
     const resolvedResponseType = resolveResponseType({ endpoint, typeResolver, file })
     if (resolvedResponseType == null) {
         violations.push({
-            severity: 'fatal',
+            severity: "fatal",
             message: `OAuth configuration for endpoint ${chalk.bold(endpointId)} must define a response type.`
         })
         return violations
     }
 
-    const maybeAccessToken = tokenEndpoint['response-properties']?.['access-token']
+    const maybeAccessToken = tokenEndpoint["response-properties"]?.["access-token"]
     if (maybeAccessToken != null) {
         violations.push(
             ...validateAccessTokenResponseProperty({
@@ -133,7 +133,7 @@ export function validateTokenEndpoint({
         })
         if (accessTokenViolations.length > 0) {
             violations.push({
-                severity: 'fatal',
+                severity: "fatal",
                 message: `OAuth configuration for endpoint ${chalk.bold(
                     endpointId
                 )} is missing a valid access-token, such as '${DEFAULT_ACCESS_TOKEN}'.`
@@ -141,7 +141,7 @@ export function validateTokenEndpoint({
         }
     }
 
-    const expiresInProperty = tokenEndpoint?.['response-properties']?.['expires-in']
+    const expiresInProperty = tokenEndpoint?.["response-properties"]?.["expires-in"]
     if (expiresInProperty != null) {
         violations.push(
             ...validateExpiresInResponseProperty({
@@ -154,7 +154,7 @@ export function validateTokenEndpoint({
         )
     }
 
-    const refreshTokenProperty = tokenEndpoint?.['response-properties']?.['refresh-token']
+    const refreshTokenProperty = tokenEndpoint?.["response-properties"]?.["refresh-token"]
     if (refreshTokenProperty != null) {
         violations.push(
             ...validateRefreshTokenResponseProperty({

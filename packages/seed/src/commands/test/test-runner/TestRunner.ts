@@ -1,20 +1,20 @@
-import { cp, mkdir, writeFile } from 'fs/promises'
-import path from 'path'
+import { cp, mkdir, writeFile } from "fs/promises"
+import path from "path"
 
-import { FernWorkspace } from '@fern-api/api-workspace-commons'
-import { APIS_DIRECTORY, FERN_DIRECTORY, generatorsYml } from '@fern-api/configuration'
-import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
-import { TaskContext } from '@fern-api/task-context'
+import { FernWorkspace } from "@fern-api/api-workspace-commons"
+import { APIS_DIRECTORY, FERN_DIRECTORY, generatorsYml } from "@fern-api/configuration"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { TaskContext } from "@fern-api/task-context"
 
-import { Semaphore } from '../../../Semaphore'
-import { Stopwatch } from '../../../Stopwatch'
-import { FixtureConfigurations, OutputMode } from '../../../config/api'
-import { GeneratorWorkspace } from '../../../loadGeneratorWorkspaces'
-import { convertGeneratorWorkspaceToFernWorkspace } from '../../../utils/convertSeedWorkspaceToFernWorkspace'
-import { ParsedDockerName, parseDockerOrThrow } from '../../../utils/parseDockerOrThrow'
-import { workspaceShouldGenerateDynamicSnippetTests } from '../../../workspaceShouldGenerateDynamicSnippetTests'
-import { ScriptRunner } from '../ScriptRunner'
-import { TaskContextFactory } from '../TaskContextFactory'
+import { Semaphore } from "../../../Semaphore"
+import { Stopwatch } from "../../../Stopwatch"
+import { FixtureConfigurations, OutputMode } from "../../../config/api"
+import { GeneratorWorkspace } from "../../../loadGeneratorWorkspaces"
+import { convertGeneratorWorkspaceToFernWorkspace } from "../../../utils/convertSeedWorkspaceToFernWorkspace"
+import { ParsedDockerName, parseDockerOrThrow } from "../../../utils/parseDockerOrThrow"
+import { workspaceShouldGenerateDynamicSnippetTests } from "../../../workspaceShouldGenerateDynamicSnippetTests"
+import { ScriptRunner } from "../ScriptRunner"
+import { TaskContextFactory } from "../TaskContextFactory"
 
 export declare namespace TestRunner {
     interface Args {
@@ -58,15 +58,15 @@ export declare namespace TestRunner {
     type TestResult = TestSuccess | TestFailure
 
     interface TestSuccess {
-        type: 'success'
+        type: "success"
         id: string
         outputFolder: string
         metrics: TestCaseMetrics
     }
 
     interface TestFailure {
-        type: 'failure'
-        cause: 'invalid-fixture' | 'generation' | 'compile'
+        type: "failure"
+        cause: "invalid-fixture" | "generation" | "compile"
         message?: string
         id: string
         outputFolder: string
@@ -118,7 +118,7 @@ export abstract class TestRunner {
 
             const id = configuration != null ? `${fixture}:${configuration.outputFolder}` : `${fixture}`
             const absolutePathToAPIDefinition = AbsoluteFilePath.of(
-                path.join(__dirname, '../../../test-definitions', FERN_DIRECTORY, APIS_DIRECTORY, fixture)
+                path.join(__dirname, "../../../test-definitions", FERN_DIRECTORY, APIS_DIRECTORY, fixture)
             )
             const taskContext = this.taskContextFactory.create(`${this.generator.workspaceName}:${id}`)
             const outputFolder = configuration?.outputFolder ?? fixture
@@ -131,7 +131,7 @@ export abstract class TestRunner {
                           RelativeFilePath.of(configuration.outputFolder)
                       )
             const language = this.generator.workspaceConfig.language
-            const outputVersion = configuration?.outputVersion ?? '0.0.1'
+            const outputVersion = configuration?.outputVersion ?? "0.0.1"
             const customConfig =
                 this.generator.workspaceConfig.defaultCustomConfig != null || configuration?.customConfig != null
                     ? {
@@ -153,8 +153,8 @@ export abstract class TestRunner {
             )?.toFernWorkspace({ context: taskContext })
             if (fernWorkspace == null) {
                 return {
-                    type: 'failure',
-                    cause: 'invalid-fixture',
+                    type: "failure",
+                    cause: "invalid-fixture",
                     message: `Failed to validate fixture ${fixture}`,
                     id: fixture,
                     outputFolder,
@@ -162,9 +162,9 @@ export abstract class TestRunner {
                 }
             }
 
-            taskContext.logger.debug('Acquiring lock...')
+            taskContext.logger.debug("Acquiring lock...")
             await this.lock.acquire()
-            taskContext.logger.info('Running generator...')
+            taskContext.logger.info("Running generator...")
             try {
                 const generationStopwatch = new Stopwatch()
                 generationStopwatch.start()
@@ -192,11 +192,11 @@ export abstract class TestRunner {
                 generationStopwatch.stop()
                 metrics.generationTime = generationStopwatch.duration()
             } catch (error) {
-                taskContext.logger.error(`Generation failed: ${(error as Error)?.message ?? 'Unknown error'}`)
+                taskContext.logger.error(`Generation failed: ${(error as Error)?.message ?? "Unknown error"}`)
                 taskContext.logger.error(`${(error as Error)?.stack}`)
                 return {
-                    type: 'failure',
-                    cause: 'generation',
+                    type: "failure",
+                    cause: "generation",
                     id: fixture,
                     outputFolder,
                     metrics
@@ -205,7 +205,7 @@ export abstract class TestRunner {
 
             if (this.skipScripts) {
                 return {
-                    type: 'success',
+                    type: "success",
                     id: fixture,
                     outputFolder,
                     metrics
@@ -220,17 +220,17 @@ export abstract class TestRunner {
             scriptStopwatch.stop()
             metrics.compileTime = scriptStopwatch.duration()
 
-            if (scriptResponse.type === 'failure') {
+            if (scriptResponse.type === "failure") {
                 return {
-                    type: 'failure',
-                    cause: 'compile',
+                    type: "failure",
+                    cause: "compile",
                     id: fixture,
                     outputFolder,
                     metrics
                 }
             }
             return {
-                type: 'success',
+                type: "success",
                 id: fixture,
                 outputFolder,
                 metrics

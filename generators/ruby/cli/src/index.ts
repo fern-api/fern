@@ -1,1 +1,1 @@
-export * from './AbstractGeneratorCli'
+export * from "./AbstractGeneratorCli"

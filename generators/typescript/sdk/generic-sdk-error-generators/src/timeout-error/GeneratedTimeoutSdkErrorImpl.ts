@@ -1,12 +1,12 @@
-import { AbstractErrorClassGenerator } from '@fern-typescript/abstract-error-class-generator'
-import { GeneratedTimeoutSdkError, SdkContext } from '@fern-typescript/contexts'
-import { OptionalKind, ParameterDeclarationStructure, PropertyDeclarationStructure, ts } from 'ts-morph'
+import { AbstractErrorClassGenerator } from "@fern-typescript/abstract-error-class-generator"
+import { GeneratedTimeoutSdkError, SdkContext } from "@fern-typescript/contexts"
+import { OptionalKind, ParameterDeclarationStructure, PropertyDeclarationStructure, ts } from "ts-morph"
 
 export class GeneratedTimeoutSdkErrorImpl
     extends AbstractErrorClassGenerator<SdkContext>
     implements GeneratedTimeoutSdkError
 {
-    private static readonly MESSAGE_CONSTRUCTOR_PARAMETER_NAME = 'message'
+    private static readonly MESSAGE_CONSTRUCTOR_PARAMETER_NAME = "message"
 
     public writeToFile(context: SdkContext): void {
         super.writeToSourceFile(context)
@@ -42,7 +42,7 @@ export class GeneratedTimeoutSdkErrorImpl
         return [
             {
                 name: GeneratedTimeoutSdkErrorImpl.MESSAGE_CONSTRUCTOR_PARAMETER_NAME,
-                type: 'string',
+                type: "string",
                 hasQuestionToken: false
             }
         ]

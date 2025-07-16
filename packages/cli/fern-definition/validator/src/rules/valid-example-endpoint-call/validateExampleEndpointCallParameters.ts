@@ -1,8 +1,8 @@
-import { FernWorkspace } from '@fern-api/api-workspace-commons'
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { ExampleResolver, ExampleValidators, FernFileContext, TypeResolver } from '@fern-api/ir-generator'
+import { FernWorkspace } from "@fern-api/api-workspace-commons"
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { ExampleResolver, ExampleValidators, FernFileContext, TypeResolver } from "@fern-api/ir-generator"
 
-import { RuleViolation } from '../../Rule'
+import { RuleViolation } from "../../Rule"
 
 export function validateExampleEndpointCallParameters<T>({
     allDeclarations = {},
@@ -38,9 +38,9 @@ export function validateExampleEndpointCallParameters<T>({
 
             const isOptional =
                 (resolvedType != null &&
-                    resolvedType._type === 'container' &&
-                    (resolvedType.container._type === 'optional' || resolvedType.container._type === 'nullable')) ||
-                resolvedType?._type === 'unknown'
+                    resolvedType._type === "container" &&
+                    (resolvedType.container._type === "optional" || resolvedType.container._type === "nullable")) ||
+                resolvedType?._type === "unknown"
 
             if (!isOptional) {
                 acc.push(key)
@@ -53,7 +53,7 @@ export function validateExampleEndpointCallParameters<T>({
     for (const requiredKey of requiredParameters) {
         if (examples?.[requiredKey] == null) {
             violations.push({
-                severity: 'fatal',
+                severity: "fatal",
                 message: `Example is missing required ${parameterDisplayName} "${requiredKey}"`
             })
         }
@@ -64,7 +64,7 @@ export function validateExampleEndpointCallParameters<T>({
             const expectedType = allDeclarations[key]
             if (expectedType == null) {
                 violations.push({
-                    severity: 'fatal',
+                    severity: "fatal",
                     message: `Unexpected ${parameterDisplayName} "${key}"`
                 })
             } else {
@@ -84,7 +84,7 @@ export function validateExampleEndpointCallParameters<T>({
                             breadcrumbs,
                             depth: 0
                         }).map((val): RuleViolation => {
-                            return { severity: 'fatal', message: val.message }
+                            return { severity: "fatal", message: val.message }
                         })
                     )
                 }

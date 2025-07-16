@@ -1,33 +1,33 @@
-import { writeFile } from 'fs/promises'
-import { Argv } from 'yargs'
+import { writeFile } from "fs/promises"
+import { Argv } from "yargs"
 
-import { GENERATORS_CONFIGURATION_FILENAME } from '@fern-api/configuration-loader'
+import { GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader"
 
-import { FernRegistry } from '@fern-fern/generators-sdk'
+import { FernRegistry } from "@fern-fern/generators-sdk"
 
-import { CliContext } from './cli-context/CliContext'
-import { getGeneratorUpgradeMessage } from './cli-context/upgrade-utils/getFernUpgradeMessage'
-import { getProjectGeneratorUpgrades } from './cli-context/upgrade-utils/getGeneratorVersions'
-import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from './cliCommons'
-import { GenerationModeFilter, getGeneratorList } from './commands/generator-list/getGeneratorList'
-import { getGeneratorMetadata } from './commands/generator-metadata/getGeneratorMetadata'
-import { getOrganization } from './commands/organization/getOrganization'
-import { upgradeGenerator } from './commands/upgrade/upgradeGenerator'
+import { CliContext } from "./cli-context/CliContext"
+import { getGeneratorUpgradeMessage } from "./cli-context/upgrade-utils/getFernUpgradeMessage"
+import { getProjectGeneratorUpgrades } from "./cli-context/upgrade-utils/getGeneratorVersions"
+import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons"
+import { GenerationModeFilter, getGeneratorList } from "./commands/generator-list/getGeneratorList"
+import { getGeneratorMetadata } from "./commands/generator-metadata/getGeneratorMetadata"
+import { getOrganization } from "./commands/organization/getOrganization"
+import { upgradeGenerator } from "./commands/upgrade/upgradeGenerator"
 
 export function addGetOrganizationCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext): void {
     cli.command(
-        'organization',
+        "organization",
         // Hides the command from the help message
         false,
         (yargs) =>
-            yargs.option('output', {
+            yargs.option("output", {
                 string: true,
-                alias: 'o',
-                description: 'The location to output the organization name as a text file, defaults to standard out.'
+                alias: "o",
+                description: "The location to output the organization name as a text file, defaults to standard out."
             }),
         async (argv) => {
             await cliContext.instrumentPostHogEvent({
-                command: 'fern organization',
+                command: "fern organization",
                 properties: {
                     outputLocation: argv.output
                 }
@@ -45,57 +45,57 @@ export function addGetOrganizationCommand(cli: Argv<GlobalCliOptions>, cliContex
 }
 
 export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: CliContext): void {
-    cli.command('generator', 'Operate on the generators within your Fern configuration', (yargs) => {
+    cli.command("generator", "Operate on the generators within your Fern configuration", (yargs) => {
         yargs
             .command(
-                'list',
+                "list",
                 // Hides the command from the help message
                 false,
                 (yargs) =>
                     yargs
-                        .option('output', {
+                        .option("output", {
                             string: true,
-                            alias: 'o',
-                            description: 'The location to output the list as a text file, defaults to standard out.'
+                            alias: "o",
+                            description: "The location to output the list as a text file, defaults to standard out."
                         })
-                        .option('generators', {
+                        .option("generators", {
                             string: true,
-                            type: 'array',
+                            type: "array",
                             description:
-                                'The type of generator to include in the list, ex: `fern-typescript-node-sdk`. If omitted, all generators will be listed.'
+                                "The type of generator to include in the list, ex: `fern-typescript-node-sdk`. If omitted, all generators will be listed."
                         })
-                        .option('groups', {
-                            type: 'array',
-                            string: true,
-                            description:
-                                'The groups to include generators from, if group is not specified, the all generators of the specified type will be listed.'
-                        })
-                        .option('apis', {
-                            type: 'array',
+                        .option("groups", {
+                            type: "array",
                             string: true,
                             description:
-                                'The APIs to list the generators for. If not specified, the generator will be upgraded for all APIs.'
+                                "The groups to include generators from, if group is not specified, the all generators of the specified type will be listed."
                         })
-                        .option('api-fallback', {
+                        .option("apis", {
+                            type: "array",
+                            string: true,
+                            description:
+                                "The APIs to list the generators for. If not specified, the generator will be upgraded for all APIs."
+                        })
+                        .option("api-fallback", {
                             string: true,
                             // Don't love this, but also don't know how else to maintain this structure without assuming some sentinel,
                             // which this feels better than.
                             description:
-                                'The APIs to list the generators for. If not specified, the generator will be upgraded for all APIs.'
+                                "The APIs to list the generators for. If not specified, the generator will be upgraded for all APIs."
                         })
-                        .option('include-mode', {
+                        .option("include-mode", {
                             choices: Object.values(GenerationModeFilter),
-                            type: 'array',
-                            description: 'The generator output modes to include within the outputted list.'
+                            type: "array",
+                            description: "The generator output modes to include within the outputted list."
                         })
-                        .option('exclude-mode', {
+                        .option("exclude-mode", {
                             choices: Object.values(GenerationModeFilter),
-                            type: 'array',
-                            description: 'The generator output modes to exclude within the outputted list.'
+                            type: "array",
+                            description: "The generator output modes to exclude within the outputted list."
                         }),
                 async (argv) => {
                     await cliContext.instrumentPostHogEvent({
-                        command: 'fern generator list',
+                        command: "fern generator list",
                         properties: {
                             outputLocation: argv.output
                         }
@@ -111,50 +111,50 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                         apiKeyFallback: argv.apiFallback,
                         cliContext,
                         outputLocation: argv.output,
-                        includedModes: argv['include-mode'] ? new Set(argv['include-mode']) : undefined,
-                        excludedModes: argv['exclude-mode'] ? new Set(argv['exclude-mode']) : undefined
+                        includedModes: argv["include-mode"] ? new Set(argv["include-mode"]) : undefined,
+                        excludedModes: argv["exclude-mode"] ? new Set(argv["exclude-mode"]) : undefined
                     })
                 }
             )
             .command(
-                'upgrade',
+                "upgrade",
                 `Upgrades the specified generator in ${GENERATORS_CONFIGURATION_FILENAME} to the latest stable version.`,
                 (yargs) =>
                     yargs
-                        .option('generator', {
+                        .option("generator", {
                             string: true,
-                            description: 'The type of generator to upgrade, ex: `fern-typescript-node-sdk`.'
+                            description: "The type of generator to upgrade, ex: `fern-typescript-node-sdk`."
                         })
-                        .option('group', {
-                            string: true,
-                            description:
-                                'The group in which the generator is located, if group is not specified, the all generators of the specified type will be upgraded.'
-                        })
-                        .option('api', {
+                        .option("group", {
                             string: true,
                             description:
-                                'The API to upgrade the generator for. If not specified, the generator will be upgraded for all APIs.'
+                                "The group in which the generator is located, if group is not specified, the all generators of the specified type will be upgraded."
                         })
-                        .option('include-major', {
+                        .option("api", {
+                            string: true,
+                            description:
+                                "The API to upgrade the generator for. If not specified, the generator will be upgraded for all APIs."
+                        })
+                        .option("include-major", {
                             boolean: true,
                             default: false,
                             description:
-                                'Whether or not to include major versions within the upgrade. Defaults to false, meaning major versions will be skipped.'
+                                "Whether or not to include major versions within the upgrade. Defaults to false, meaning major versions will be skipped."
                         })
-                        .option('channel', {
+                        .option("channel", {
                             demandOption: false,
                             choices: Object.values(FernRegistry.generators.ReleaseType)
                         })
-                        .option('list', {
+                        .option("list", {
                             demandOption: false,
                             boolean: true,
                             default: false,
                             description:
-                                'When specified, a list of available upgrades will be displayed, but no upgrade will be taken.'
+                                "When specified, a list of available upgrades will be displayed, but no upgrade will be taken."
                         }),
                 async (argv) => {
                     await cliContext.instrumentPostHogEvent({
-                        command: 'fern generator upgrade',
+                        command: "fern generator upgrade",
                         properties: {
                             generator: argv.generator,
                             version: argv.version,
@@ -184,7 +184,7 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
 
                         const message = await getGeneratorUpgradeMessage({
                             generatorUpgradeInfo: upgrades,
-                            header: 'Generator Upgrades\n',
+                            header: "Generator Upgrades\n",
                             includeBoxen: true
                         })
                         if (message != null) {
@@ -207,47 +207,47 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
             )
             .command(
                 // Meant to retrieve metadata about the generator, for now this is hidden and the only option is --version
-                'get',
+                "get",
                 false,
                 (yargs) =>
                     yargs
-                        .option('output', {
+                        .option("output", {
                             string: true,
-                            alias: 'o',
-                            description: 'The location to output the list as a text file, defaults to standard out.'
+                            alias: "o",
+                            description: "The location to output the list as a text file, defaults to standard out."
                         })
-                        .option('generator', {
-                            string: true,
-                            demandOption: true,
-                            description: 'The name of the generator to get, ex: `fern-typescript-node-sdk`.'
-                        })
-                        .option('group', {
+                        .option("generator", {
                             string: true,
                             demandOption: true,
-                            description: 'The group in which the generator is located.'
+                            description: "The name of the generator to get, ex: `fern-typescript-node-sdk`."
                         })
-                        .option('api', {
+                        .option("group", {
                             string: true,
-                            description: 'The API in which the generator is located.'
+                            demandOption: true,
+                            description: "The group in which the generator is located."
                         })
-                        .option('version', {
+                        .option("api", {
+                            string: true,
+                            description: "The API in which the generator is located."
+                        })
+                        .option("version", {
                             boolean: true,
                             default: false,
-                            description: 'Get the version of the specified generator.'
+                            description: "Get the version of the specified generator."
                         })
-                        .option('language', {
+                        .option("language", {
                             boolean: true,
                             default: false,
-                            description: 'Get the language of the specified generator.'
+                            description: "Get the language of the specified generator."
                         })
-                        .option('repository', {
+                        .option("repository", {
                             boolean: true,
                             default: false,
-                            description: 'Get repository for the generator invocation, if one is specified.'
+                            description: "Get repository for the generator invocation, if one is specified."
                         }),
                 async (argv) => {
                     await cliContext.instrumentPostHogEvent({
-                        command: 'fern generator get',
+                        command: "fern generator get",
                         properties: {
                             generator: argv.generator,
                             version: argv.version,
@@ -274,7 +274,7 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                     }
 
                     if (generator == null) {
-                        const maybeApiFilter = argv.api ? ` for API ${argv.api}` : ''
+                        const maybeApiFilter = argv.api ? ` for API ${argv.api}` : ""
                         cliContext.failAndThrow(
                             `Generator ${argv.generator}, in group ${argv.group}${maybeApiFilter} was not found.`
                         )
@@ -305,9 +305,9 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
 
                     if (argv.repository) {
                         const repository =
-                            generator.outputMode.type === 'github'
+                            generator.outputMode.type === "github"
                                 ? generator.outputMode.repo
-                                : generator.outputMode.type === 'githubV2'
+                                : generator.outputMode.type === "githubV2"
                                   ? generator.outputMode.githubV2.repo
                                   : undefined
                         if (repository != null) {

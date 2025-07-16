@@ -1,4 +1,4 @@
-import { HttpEndpoint } from '@fern-fern/ir-sdk/api'
+import { HttpEndpoint } from "@fern-fern/ir-sdk/api"
 
 export function getContentTypeFromRequestBody(endpoint: HttpEndpoint): string | undefined {
     if (!endpoint.requestBody) {

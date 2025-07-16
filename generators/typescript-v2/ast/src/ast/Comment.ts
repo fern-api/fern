@@ -1,5 +1,5 @@
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export declare namespace Comment {
     interface Args {
@@ -17,11 +17,11 @@ export class Comment extends AstNode {
 
     public write(writer: Writer): void {
         if (this.docs != null) {
-            writer.writeLine('/**')
-            this.docs.split('\n').forEach((line) => {
+            writer.writeLine("/**")
+            this.docs.split("\n").forEach((line) => {
                 writer.writeLine(` * ${line}`)
             })
-            writer.writeLine('*/')
+            writer.writeLine("*/")
         }
     }
 }

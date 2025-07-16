@@ -1,6 +1,6 @@
-import { isNonNullish } from '@fern-api/core-utils'
-import { OSSWorkspace } from '@fern-api/lazy-fern-workspace'
-import { Project } from '@fern-api/project-loader'
+import { isNonNullish } from "@fern-api/core-utils"
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace"
+import { Project } from "@fern-api/project-loader"
 
 export async function filterOssWorkspaces(project: Project): Promise<OSSWorkspace[]> {
     return (

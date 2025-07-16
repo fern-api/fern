@@ -23,12 +23,12 @@ export interface MintJsonSchema {
     api?: {
         baseUrl?: string | string[]
         auth?: {
-            method?: 'bearer' | 'basic' | 'key' | 'cobo'
+            method?: "bearer" | "basic" | "key" | "cobo"
             name?: string
             inputPrefix?: string
         }
         playground?: {
-            mode?: 'show' | 'simple' | 'hide'
+            mode?: "show" | "simple" | "hide"
         }
         request?: {
             example?: {
@@ -38,7 +38,7 @@ export interface MintJsonSchema {
         maintainOrder?: boolean
     }
     modeToggle?: {
-        default?: 'light' | 'dark'
+        default?: "light" | "dark"
         isHidden?: boolean
     }
     versions?: [
@@ -82,12 +82,12 @@ export interface MintJsonSchema {
      */
     topbarCtaButton?:
         | {
-              type?: 'link'
+              type?: "link"
               name: string
               url: string
           }
         | {
-              type: 'github'
+              type: "github"
               /**
                * A link to your GitHub repository
                */
@@ -98,12 +98,12 @@ export interface MintJsonSchema {
      */
     topbarLinks?: (
         | {
-              type?: 'link'
+              type?: "link"
               name: string
               url: string
           }
         | {
-              type: 'github'
+              type: "github"
               /**
                * A link to your GitHub repository
                */
@@ -118,32 +118,32 @@ export interface MintJsonSchema {
         name: string
         icon?: string
         iconType?:
-            | 'brands'
-            | 'duotone'
-            | 'light'
-            | 'regular'
-            | 'sharp-light'
-            | 'sharp-regular'
-            | 'sharp-solid'
-            | 'sharp-thin'
-            | 'solid'
-            | 'thin'
+            | "brands"
+            | "duotone"
+            | "light"
+            | "regular"
+            | "sharp-light"
+            | "sharp-regular"
+            | "sharp-solid"
+            | "sharp-thin"
+            | "solid"
+            | "thin"
     }
     anchors?: {
         name: string
         url: string
         icon?: string
         iconType?:
-            | 'brands'
-            | 'duotone'
-            | 'light'
-            | 'regular'
-            | 'sharp-light'
-            | 'sharp-regular'
-            | 'sharp-solid'
-            | 'sharp-thin'
-            | 'solid'
-            | 'thin'
+            | "brands"
+            | "duotone"
+            | "light"
+            | "regular"
+            | "sharp-light"
+            | "sharp-regular"
+            | "sharp-solid"
+            | "sharp-thin"
+            | "solid"
+            | "thin"
         color?:
             | string
             | {
@@ -246,16 +246,16 @@ export interface MintNavigationItem {
     group: string
     icon?: string
     iconType?:
-        | 'brands'
-        | 'duotone'
-        | 'light'
-        | 'regular'
-        | 'sharp-light'
-        | 'sharp-regular'
-        | 'sharp-solid'
-        | 'sharp-thin'
-        | 'solid'
-        | 'thin'
+        | "brands"
+        | "duotone"
+        | "light"
+        | "regular"
+        | "sharp-light"
+        | "sharp-regular"
+        | "sharp-solid"
+        | "sharp-thin"
+        | "solid"
+        | "thin"
     version?: string
     pages: [MintNavigationItemPage, ...MintNavigationItemPage[]]
 }
@@ -268,33 +268,33 @@ export interface MintlifyFrontmatter {
     openapi?: string
     icon?: string
     iconType?:
-        | 'brands'
-        | 'duotone'
-        | 'light'
-        | 'regular'
-        | 'sharp-light'
-        | 'sharp-regular'
-        | 'sharp-solid'
-        | 'sharp-thin'
-        | 'solid'
-        | 'thin'
-    mode?: 'wide' | 'custom'
+        | "brands"
+        | "duotone"
+        | "light"
+        | "regular"
+        | "sharp-light"
+        | "sharp-regular"
+        | "sharp-solid"
+        | "sharp-thin"
+        | "solid"
+        | "thin"
+    mode?: "wide" | "custom"
     url?: string
 
     // SEO
-    'og:site_name'?: string
-    'og:title'?: string
-    'og:description'?: string
-    'og:url'?: string
-    'og:image'?: string
-    'og:locale'?: string
-    'og:logo'?: string
-    'article:publisher'?: string
-    'twitter:title'?: string
-    'twitter:description'?: string
-    'twitter:url'?: string
-    'twitter:image'?: string
-    'twitter:site'?: string
-    'og:image:width'?: string
-    'og:image:height': string
+    "og:site_name"?: string
+    "og:title"?: string
+    "og:description"?: string
+    "og:url"?: string
+    "og:image"?: string
+    "og:locale"?: string
+    "og:logo"?: string
+    "article:publisher"?: string
+    "twitter:title"?: string
+    "twitter:description"?: string
+    "twitter:url"?: string
+    "twitter:image"?: string
+    "twitter:site"?: string
+    "og:image:width"?: string
+    "og:image:height": string
 }

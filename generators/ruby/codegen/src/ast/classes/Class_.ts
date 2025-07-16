@@ -1,13 +1,13 @@
-import { BLOCK_END } from '../../utils/RubyConstants'
-import { Argument } from '../Argument'
-import { Import } from '../Import'
-import { Property } from '../Property'
-import { Yardoc } from '../Yardoc'
-import { AstNode } from '../core/AstNode'
-import { Expression } from '../expressions/Expression'
-import { FunctionInvocation } from '../functions/FunctionInvocation'
-import { Function_ } from '../functions/Function_'
-import { ClassReference } from './ClassReference'
+import { BLOCK_END } from "../../utils/RubyConstants"
+import { Argument } from "../Argument"
+import { Import } from "../Import"
+import { Property } from "../Property"
+import { Yardoc } from "../Yardoc"
+import { AstNode } from "../core/AstNode"
+import { Expression } from "../expressions/Expression"
+import { FunctionInvocation } from "../functions/FunctionInvocation"
+import { Function_ } from "../functions/Function_"
+import { ClassReference } from "./ClassReference"
 
 export declare namespace Class_ {
     export interface Init extends AstNode.Init {
@@ -63,7 +63,7 @@ export class Class_ extends AstNode {
 
         if (includeInitializer) {
             this.initializer = new Function_({
-                name: 'initialize',
+                name: "initialize",
                 parameters: properties.map((prop) =>
                     prop.toParameter({ shouldOmitOptional: shouldOmitOptionalFieldsInInitializer })
                 ),
@@ -78,7 +78,7 @@ export class Class_ extends AstNode {
                     }),
                     ...initializerAdditionalExpressions
                 ],
-                invocationName: 'new'
+                invocationName: "new"
             })
             functions = [this.initializer, ...functions]
         } else if (initializerOverride !== undefined) {
@@ -91,26 +91,26 @@ export class Class_ extends AstNode {
 
         this.yardoc =
             this.documentation != null
-                ? new Yardoc({ reference: { name: 'universal', documentation: this.documentation } })
+                ? new Yardoc({ reference: { name: "universal", documentation: this.documentation } })
                 : undefined
     }
 
     public writeInternal(startingTabSpaces: number): void {
         this.addText({ stringContent: this.yardoc?.write({ startingTabSpaces }) })
-        this.addText({ stringContent: this.classReference.name, templateString: 'class %s', startingTabSpaces })
+        this.addText({ stringContent: this.classReference.name, templateString: "class %s", startingTabSpaces })
 
         for (const prop of this.properties) {
-            const yardoc = new Yardoc({ reference: { name: 'typeReference', type: prop } })
+            const yardoc = new Yardoc({ reference: { name: "typeReference", type: prop } })
             this.addText({ stringContent: yardoc.write({ startingTabSpaces }) })
             this.addText({
                 stringContent: prop.write({}),
                 startingTabSpaces: this.tabSizeSpaces + startingTabSpaces,
-                templateString: 'attr_reader %s'
+                templateString: "attr_reader %s"
             })
         }
         const protectedClassVariableAccessors =
             this.protectedProperties.length > 0
-                ? `protected ${this.protectedProperties.map((prop) => prop.write({})).join(', ')}`
+                ? `protected ${this.protectedProperties.map((prop) => prop.write({})).join(", ")}`
                 : undefined
         this.addText({
             stringContent: protectedClassVariableAccessors,

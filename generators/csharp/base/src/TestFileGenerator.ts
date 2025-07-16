@@ -1,9 +1,9 @@
-import { BaseCsharpCustomConfigSchema, csharp, dependencies } from '@fern-api/csharp-codegen'
-import { RelativeFilePath, join } from '@fern-api/fs-utils'
+import { BaseCsharpCustomConfigSchema, csharp, dependencies } from "@fern-api/csharp-codegen"
+import { RelativeFilePath, join } from "@fern-api/fs-utils"
 
-import { FileGenerator } from './FileGenerator'
-import { AbstractCsharpGeneratorContext } from './context/AbstractCsharpGeneratorContext'
-import { CSharpFile } from './project'
+import { FileGenerator } from "./FileGenerator"
+import { AbstractCsharpGeneratorContext } from "./context/AbstractCsharpGeneratorContext"
+import { CSharpFile } from "./project"
 
 export class TestFileGenerator extends FileGenerator<
     CSharpFile,
@@ -11,12 +11,12 @@ export class TestFileGenerator extends FileGenerator<
     AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>
 > {
     protected getFilepath(): RelativeFilePath {
-        return join(this.context.project.filepaths.getTestFilesDirectory(), RelativeFilePath.of('TestClient.cs'))
+        return join(this.context.project.filepaths.getTestFilesDirectory(), RelativeFilePath.of("TestClient.cs"))
     }
 
     public doGenerate(): CSharpFile {
         const testClass = csharp.class_({
-            name: 'TestClient',
+            name: "TestClient",
             namespace: this.context.getTestNamespace(),
             access: csharp.Access.Public,
             annotations: [
@@ -27,7 +27,7 @@ export class TestFileGenerator extends FileGenerator<
         })
         return new CSharpFile({
             clazz: testClass,
-            directory: RelativeFilePath.of(''),
+            directory: RelativeFilePath.of(""),
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
             namespace: this.context.getNamespace(),

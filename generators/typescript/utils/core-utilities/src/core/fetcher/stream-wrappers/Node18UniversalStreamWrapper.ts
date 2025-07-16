@@ -1,6 +1,6 @@
-import type { Writable } from 'readable-stream'
+import type { Writable } from "readable-stream"
 
-import { EventCallback, StreamWrapper } from './chooseStreamWrapper'
+import { EventCallback, StreamWrapper } from "./chooseStreamWrapper"
 
 export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16Array | Uint32Array>
     implements
@@ -41,7 +41,7 @@ export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16
     public pipe(
         dest: Node18UniversalStreamWrapper<ReadFormat> | Writable | WritableStream<ReadFormat>
     ): Node18UniversalStreamWrapper<ReadFormat> | Writable | WritableStream<ReadFormat> {
-        this.on('data', async (chunk) => {
+        this.on("data", async (chunk) => {
             if (dest instanceof Node18UniversalStreamWrapper) {
                 dest._write(chunk)
             } else if (dest instanceof WritableStream) {
@@ -52,7 +52,7 @@ export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16
             }
         })
 
-        this.on('end', async () => {
+        this.on("end", async () => {
             if (dest instanceof Node18UniversalStreamWrapper) {
                 dest._end()
             } else if (dest instanceof WritableStream) {
@@ -63,7 +63,7 @@ export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16
             }
         })
 
-        this.on('error', async (error) => {
+        this.on("error", async (error) => {
             if (dest instanceof Node18UniversalStreamWrapper) {
                 dest._error(error)
             } else if (dest instanceof WritableStream) {
@@ -86,7 +86,7 @@ export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16
     }
 
     public unpipe(dest: Node18UniversalStreamWrapper<ReadFormat> | Writable | WritableStream<ReadFormat>): void {
-        this.off('data', async (chunk) => {
+        this.off("data", async (chunk) => {
             if (dest instanceof Node18UniversalStreamWrapper) {
                 dest._write(chunk)
             } else if (dest instanceof WritableStream) {
@@ -97,7 +97,7 @@ export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16
             }
         })
 
-        this.off('end', async () => {
+        this.off("end", async () => {
             if (dest instanceof Node18UniversalStreamWrapper) {
                 dest._end()
             } else if (dest instanceof WritableStream) {
@@ -108,7 +108,7 @@ export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16
             }
         })
 
-        this.off('error', async (error) => {
+        this.off("error", async (error) => {
             if (dest instanceof Node18UniversalStreamWrapper) {
                 dest._error(error)
             } else if (dest instanceof WritableStream) {
@@ -124,22 +124,22 @@ export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16
         this.reader
             .cancel(error)
             .then(() => {
-                this._emit('close')
+                this._emit("close")
             })
             .catch((err) => {
-                this._emit('error', err)
+                this._emit("error", err)
             })
     }
 
     public pause(): void {
         this.paused = true
-        this._emit('pause')
+        this._emit("pause")
     }
 
     public resume(): void {
         if (this.paused) {
             this.paused = false
-            this._emit('resume')
+            this._emit("resume")
             if (this.resumeCallback) {
                 this.resumeCallback()
                 this.resumeCallback = null
@@ -182,7 +182,7 @@ export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16
             }
         }
 
-        const decoder = new TextDecoder(this.encoding || 'utf-8')
+        const decoder = new TextDecoder(this.encoding || "utf-8")
         return decoder.decode(await new Blob(chunks).arrayBuffer())
     }
 
@@ -192,15 +192,15 @@ export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16
     }
 
     private _write(chunk: ReadFormat): void {
-        this._emit('data', chunk)
+        this._emit("data", chunk)
     }
 
     private _end(): void {
-        this._emit('end')
+        this._emit("end")
     }
 
     private _error(error: any): void {
-        this._emit('error', error)
+        this._emit("error", error)
     }
 
     private _emit(event: string, data?: any): void {
@@ -213,7 +213,7 @@ export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16
 
     private async _startReading(): Promise<void> {
         try {
-            this._emit('readable')
+            this._emit("readable")
             while (true) {
                 if (this.paused) {
                     await new Promise((resolve) => {
@@ -222,16 +222,16 @@ export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16
                 }
                 const { done, value } = await this.reader.read()
                 if (done) {
-                    this._emit('end')
-                    this._emit('close')
+                    this._emit("end")
+                    this._emit("close")
                     break
                 }
                 if (value) {
-                    this._emit('data', value)
+                    this._emit("data", value)
                 }
             }
         } catch (error) {
-            this._emit('error', error)
+            this._emit("error", error)
         }
     }
 

@@ -1,7 +1,7 @@
-import { assertNever } from '@fern-api/core-utils'
-import { CSharpFile, FileGenerator } from '@fern-api/csharp-base'
-import { csharp, escapeForCSharpString } from '@fern-api/csharp-codegen'
-import { RelativeFilePath, join } from '@fern-api/fs-utils'
+import { assertNever } from "@fern-api/core-utils"
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base"
+import { csharp, escapeForCSharpString } from "@fern-api/csharp-codegen"
+import { RelativeFilePath, join } from "@fern-api/fs-utils"
 
 import {
     AuthScheme,
@@ -13,19 +13,19 @@ import {
     ServiceId,
     Subpackage,
     TypeReference
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { SdkCustomConfigSchema } from '../SdkCustomConfig'
-import { SdkGeneratorContext } from '../SdkGeneratorContext'
-import { RawClient } from '../endpoint/http/RawClient'
-import { GrpcClientInfo } from '../grpc/GrpcClientInfo'
-import { OauthTokenProviderGenerator } from '../oauth/OauthTokenProviderGenerator'
+import { SdkCustomConfigSchema } from "../SdkCustomConfig"
+import { SdkGeneratorContext } from "../SdkGeneratorContext"
+import { RawClient } from "../endpoint/http/RawClient"
+import { GrpcClientInfo } from "../grpc/GrpcClientInfo"
+import { OauthTokenProviderGenerator } from "../oauth/OauthTokenProviderGenerator"
 
-export const CLIENT_MEMBER_NAME = '_client'
-export const GRPC_CLIENT_MEMBER_NAME = '_grpc'
+export const CLIENT_MEMBER_NAME = "_client"
+export const GRPC_CLIENT_MEMBER_NAME = "_grpc"
 
-const GetFromEnvironmentOrThrow = 'GetFromEnvironmentOrThrow'
-const CLIENT_OPTIONS_PARAMETER_NAME = 'clientOptions'
+const GetFromEnvironmentOrThrow = "GetFromEnvironmentOrThrow"
+const CLIENT_OPTIONS_PARAMETER_NAME = "clientOptions"
 
 interface ConstructorParameter {
     name: string
@@ -66,7 +66,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
     }
 
     protected getFilepath(): RelativeFilePath {
-        return join(RelativeFilePath.of(this.context.getRootClientClassName() + '.cs'))
+        return join(RelativeFilePath.of(this.context.getRootClientClassName() + ".cs"))
     }
 
     public doGenerate(): CSharpFile {
@@ -139,7 +139,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         }
         return new CSharpFile({
             clazz: class_,
-            directory: RelativeFilePath.of(''),
+            directory: RelativeFilePath.of(""),
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
             namespace: this.context.getNamespace(),
@@ -167,7 +167,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                         .convert({ reference: param.typeReference })
                         .toOptionalIfNotAlready(),
                     docs: param.docs,
-                    initializer: 'null'
+                    initializer: "null"
                 })
             )
         }
@@ -176,7 +176,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
             csharp.parameter({
                 name: CLIENT_OPTIONS_PARAMETER_NAME,
                 type: csharp.Type.optional(csharp.Type.reference(this.context.getClientOptionsClassReference())),
-                initializer: 'null'
+                initializer: "null"
             })
         )
 
@@ -197,7 +197,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                 headerEntries.push({
                     key: csharp.codeblock(csharp.string_({ string: param.header.name })),
                     value: csharp.codeblock(
-                        param.value.type === 'string'
+                        param.value.type === "string"
                             ? csharp.string_({ string: param.value.string })
                             : param.value
                               ? `"${true.toString()}"`
@@ -230,7 +230,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
             keyType: csharp.Types.string(),
             valueType: csharp.Types.string(),
             values: {
-                type: 'entries',
+                type: "entries",
                 entries: headerEntries
             }
         })
@@ -244,15 +244,15 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                         writer.writeLine(`${param.name} ??= ${GetFromEnvironmentOrThrow}(`)
                         writer.indent()
                         writer.writeNode(csharp.string_({ string: param.environmentVariable }))
-                        writer.writeLine(',')
+                        writer.writeLine(",")
                         writer.writeLine(
                             `"Please pass in ${escapeForCSharpString(param.name)} or set the environment variable ${escapeForCSharpString(param.environmentVariable)}."`
                         )
                         writer.dedent()
-                        writer.writeLine(');')
+                        writer.writeLine(");")
                     }
                 }
-                writer.write('var defaultHeaders = ')
+                writer.write("var defaultHeaders = ")
                 writer.writeNodeStatement(
                     csharp.instantiateClass({
                         classReference: this.context.getHeadersClassReference(),
@@ -260,7 +260,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     })
                 )
 
-                writer.write('clientOptions ??= ')
+                writer.write("clientOptions ??= ")
                 writer.writeNodeStatement(
                     csharp.instantiateClass({
                         classReference: this.context.getClientOptionsClassReference(),
@@ -270,21 +270,21 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
 
                 for (const param of literalParameters) {
                     if (param.header != null) {
-                        writer.controlFlow('if', csharp.codeblock(`clientOptions.${param.name} != null`))
+                        writer.controlFlow("if", csharp.codeblock(`clientOptions.${param.name} != null`))
                         writer.write(`defaultHeaders["${param.header.name}"] = `)
-                        if (param.value.type === 'string') {
+                        if (param.value.type === "string") {
                             writer.write(`clientOptions.${param.name}`)
                         } else {
                             writer.write(`clientOptions.${param.name}.ToString()`)
                         }
-                        writer.writeLine(';')
+                        writer.writeLine(";")
                         writer.endControlFlow()
                     }
                 }
 
-                writer.controlFlow('foreach', csharp.codeblock('var header in defaultHeaders'))
-                writer.controlFlow('if', csharp.codeblock('!clientOptions.Headers.ContainsKey(header.Key)'))
-                writer.writeLine('clientOptions.Headers[header.Key] = header.Value;')
+                writer.controlFlow("foreach", csharp.codeblock("var header in defaultHeaders"))
+                writer.controlFlow("if", csharp.codeblock("!clientOptions.Headers.ContainsKey(header.Key)"))
+                writer.writeLine("clientOptions.Headers[header.Key] = header.Value;")
                 writer.endControlFlow()
                 writer.endControlFlow()
 
@@ -292,8 +292,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     const authClientClassReference = this.context.getSubpackageClassReferenceForServiceIdOrThrow(
                         this.oauth.configuration.tokenEndpoint.endpointReference.serviceId
                     )
-                    const arguments_ = [csharp.codeblock('new RawClient(clientOptions.Clone())')]
-                    writer.write('var tokenProvider = new OAuthTokenProvider(clientId, clientSecret, ')
+                    const arguments_ = [csharp.codeblock("new RawClient(clientOptions.Clone())")]
+                    writer.write("var tokenProvider = new OAuthTokenProvider(clientId, clientSecret, ")
                     writer.writeNode(
                         csharp.instantiateClass({
                             classReference: authClientClassReference,
@@ -301,7 +301,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                             forceUseConstructor: true
                         })
                     )
-                    writer.writeTextStatement(')')
+                    writer.writeTextStatement(")")
 
                     writer.writeNode(
                         csharp.codeblock((writer) => {
@@ -312,25 +312,25 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     )
                 }
 
-                writer.writeLine('_client = ')
+                writer.writeLine("_client = ")
                 writer.writeNodeStatement(
                     csharp.instantiateClass({
                         classReference: this.context.getRawClientClassReference(),
-                        arguments_: [csharp.codeblock('clientOptions')]
+                        arguments_: [csharp.codeblock("clientOptions")]
                     })
                 )
                 if (this.grpcClientInfo != null) {
-                    writer.writeLine('_grpc = _client.Grpc')
+                    writer.writeLine("_grpc = _client.Grpc")
                     writer.write(this.grpcClientInfo.privatePropertyName)
-                    writer.write(' = ')
+                    writer.write(" = ")
                     writer.writeNodeStatement(
                         csharp.instantiateClass({
                             classReference: this.grpcClientInfo.classReference,
-                            arguments_: [csharp.codeblock('_grpc.Channel')]
+                            arguments_: [csharp.codeblock("_grpc.Channel")]
                         })
                     )
                 }
-                const arguments_ = [csharp.codeblock('_client')]
+                const arguments_ = [csharp.codeblock("_client")]
                 for (const subpackage of this.getSubpackages()) {
                     writer.writeLine(`${subpackage.name.pascalCase.safeName} = `)
                     writer.writeNodeStatement(
@@ -356,8 +356,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         const arguments_ = []
         for (const header of this.context.ir.headers) {
             if (
-                header.valueType.type === 'container' &&
-                (header.valueType.container.type === 'optional' || header.valueType.container.type === 'literal')
+                header.valueType.type === "container" &&
+                (header.valueType.container.type === "optional" || header.valueType.container.type === "literal")
             ) {
                 continue
             }
@@ -366,13 +366,13 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         if (this.context.ir.auth.requirement) {
             for (const scheme of this.context.ir.auth.schemes) {
                 switch (scheme.type) {
-                    case 'header':
+                    case "header":
                         if (scheme.headerEnvVar == null || includeEnvVarArguments) {
                             // assuming type is string for now to avoid generating complex example types here.
                             arguments_.push(csharp.codeblock(`"${scheme.name.name.screamingSnakeCase.safeName}"`))
                         }
                         break
-                    case 'basic': {
+                    case "basic": {
                         if (scheme.usernameEnvVar == null || includeEnvVarArguments) {
                             arguments_.push(csharp.codeblock(`"${scheme.username.screamingSnakeCase.safeName}"`))
                         }
@@ -381,12 +381,12 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                         }
                         break
                     }
-                    case 'bearer':
+                    case "bearer":
                         if (scheme.tokenEnvVar == null || includeEnvVarArguments) {
                             arguments_.push(csharp.codeblock(`"${scheme.token.screamingSnakeCase.safeName}"`))
                         }
                         break
-                    case 'oauth': {
+                    case "oauth": {
                         if (this.context.getOauth() != null) {
                             arguments_.push(csharp.codeblock('"CLIENT_ID"'))
                             arguments_.push(csharp.codeblock('"CLIENT_SECRET"'))
@@ -436,7 +436,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         for (const param of allParameters) {
             if (param.isOptional || param.environmentVariable != null) {
                 optionalParameters.push(param)
-            } else if (param.typeReference.type === 'container' && param.typeReference.container.type === 'literal') {
+            } else if (param.typeReference.type === "container" && param.typeReference.container.type === "literal") {
                 literalParameters.push({
                     name: param.name,
                     value: param.typeReference.container.literal,
@@ -456,7 +456,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
 
     private getParameterFromAuthScheme(scheme: AuthScheme): ConstructorParameter[] {
         const isOptional = this.context.ir.sdkConfig.isAuthMandatory
-        if (scheme.type === 'header') {
+        if (scheme.type === "header") {
             {
                 const name = scheme.name.name.camelCase.safeName
                 return [
@@ -473,7 +473,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     }
                 ]
             }
-        } else if (scheme.type === 'bearer') {
+        } else if (scheme.type === "bearer") {
             {
                 const name = scheme.token.camelCase.safeName
                 return [
@@ -482,8 +482,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                         docs: scheme.docs ?? `The ${name} to use for authentication.`,
                         isOptional,
                         header: {
-                            name: 'Authorization',
-                            prefix: 'Bearer'
+                            name: "Authorization",
+                            prefix: "Bearer"
                         },
                         typeReference: TypeReference.primitive({
                             v1: PrimitiveTypeV1.String,
@@ -493,7 +493,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     }
                 ]
             }
-        } else if (scheme.type === 'basic') {
+        } else if (scheme.type === "basic") {
             {
                 const usernameName = scheme.username.camelCase.safeName
                 const passwordName = scheme.password.camelCase.safeName
@@ -524,8 +524,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
             {
                 return [
                     {
-                        name: 'clientId',
-                        docs: 'The clientId to use for authentication.',
+                        name: "clientId",
+                        docs: "The clientId to use for authentication.",
                         isOptional,
                         typeReference: TypeReference.primitive({
                             v1: PrimitiveTypeV1.String,
@@ -534,8 +534,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                         environmentVariable: scheme.configuration.clientIdEnvVar
                     },
                     {
-                        name: 'clientSecret',
-                        docs: 'The clientSecret to use for authentication.',
+                        name: "clientSecret",
+                        docs: "The clientSecret to use for authentication.",
                         isOptional,
                         typeReference: TypeReference.primitive({
                             v1: PrimitiveTypeV1.String,
@@ -545,7 +545,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     }
                 ]
             }
-        } else if (scheme.type === 'oauth') {
+        } else if (scheme.type === "oauth") {
             return []
         } else {
             assertNever(scheme)
@@ -555,14 +555,14 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
     private getParameterForHeader(header: HttpHeader): ConstructorParameter {
         return {
             name:
-                header.valueType.type === 'container' && header.valueType.container.type === 'literal'
+                header.valueType.type === "container" && header.valueType.container.type === "literal"
                     ? header.name.name.pascalCase.safeName
                     : header.name.name.camelCase.safeName,
             header: {
                 name: header.name.wireValue
             },
             docs: header.docs,
-            isOptional: header.valueType.type === 'container' && header.valueType.container.type === 'optional',
+            isOptional: header.valueType.type === "container" && header.valueType.container.type === "optional",
             typeReference: header.valueType
         }
     }
@@ -574,17 +574,17 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
             return_: csharp.Types.string(),
             parameters: [
                 csharp.parameter({
-                    name: 'env',
+                    name: "env",
                     type: csharp.Types.string()
                 }),
                 csharp.parameter({
-                    name: 'message',
+                    name: "message",
                     type: csharp.Types.string()
                 })
             ],
             isAsync: false,
             body: csharp.codeblock((writer) => {
-                writer.writeLine('return Environment.GetEnvironmentVariable(env) ?? throw new Exception(message);')
+                writer.writeLine("return Environment.GetEnvironmentVariable(env) ?? throw new Exception(message);")
             }),
             type: csharp.MethodType.STATIC
         })

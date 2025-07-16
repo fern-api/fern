@@ -1,7 +1,7 @@
-import { AccessLevel } from './AccessLevel'
-import { Type } from './Type'
-import { AstNode, Writer } from './core'
-import { isReservedKeyword } from './syntax'
+import { AccessLevel } from "./AccessLevel"
+import { Type } from "./Type"
+import { AstNode, Writer } from "./core"
+import { isReservedKeyword } from "./syntax"
 
 export declare namespace EnumWithAssociatedValues {
     interface Case {
@@ -34,38 +34,38 @@ export class EnumWithAssociatedValues extends AstNode {
     public write(writer: Writer): void {
         if (this.accessLevel != null) {
             writer.write(this.accessLevel)
-            writer.write(' ')
+            writer.write(" ")
         }
         writer.write(`enum ${this.name}`)
         this.conformances?.forEach((conformance, index) => {
             if (index === 0) {
-                writer.write(': ')
+                writer.write(": ")
             } else if (index > 0) {
-                writer.write(', ')
+                writer.write(", ")
             }
             writer.write(conformance)
         })
-        writer.write(' {')
+        writer.write(" {")
         writer.newLine()
         writer.indent()
         this.cases.forEach((case_) => {
-            writer.write('case ')
+            writer.write("case ")
             if (isReservedKeyword(case_.unsafeName)) {
                 writer.write(`\`${case_.unsafeName}\``)
             } else {
                 writer.write(case_.unsafeName)
             }
-            writer.write('(')
+            writer.write("(")
             case_.associatedValue.forEach((type, index) => {
                 if (index > 0) {
-                    writer.write(', ')
+                    writer.write(", ")
                 }
                 type.write(writer)
             })
-            writer.write(')')
+            writer.write(")")
             writer.newLine()
         })
         writer.dedent()
-        writer.write('}')
+        writer.write("}")
     }
 }

@@ -1,5 +1,5 @@
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export declare namespace Decorator {
     interface Args {
@@ -17,7 +17,7 @@ export class Decorator extends AstNode {
     }
 
     public write(writer: Writer): void {
-        writer.write('@')
+        writer.write("@")
         this.callable.write(writer)
         writer.newLine()
     }

@@ -1,4 +1,4 @@
-import { csharp } from '@fern-api/csharp-codegen'
+import { csharp } from "@fern-api/csharp-codegen"
 
 import {
     ExampleContainer,
@@ -8,11 +8,11 @@ import {
     ExampleTypeReference,
     ExampleUndiscriminatedUnionType,
     ExampleUnionType
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { ModelGeneratorContext } from '../ModelGeneratorContext'
-import { ObjectGenerator } from '../object/ObjectGenerator'
-import { UnionGenerator } from '../union/UnionGenerator'
+import { ModelGeneratorContext } from "../ModelGeneratorContext"
+import { ObjectGenerator } from "../object/ObjectGenerator"
+import { UnionGenerator } from "../union/UnionGenerator"
 
 export class ExampleGenerator {
     private context: ModelGeneratorContext
@@ -34,7 +34,7 @@ export class ExampleGenerator {
             unknown: (value) => this.getSnippetForUnknown(value),
             named: (named) => this.getSnippetForNamed(named, parseDatetimes),
             _other: () => {
-                throw new Error('Unknown example type reference: ' + exampleTypeReference.shape.type)
+                throw new Error("Unknown example type reference: " + exampleTypeReference.shape.type)
             }
         })
         return csharp.codeblock((writer) => writer.writeNode(astNode))
@@ -42,13 +42,13 @@ export class ExampleGenerator {
 
     private getSnippetForUnknown(unknownExample: unknown): csharp.AstNode {
         switch (typeof unknownExample) {
-            case 'boolean':
+            case "boolean":
                 return csharp.InstantiatedPrimitive.boolean(unknownExample)
-            case 'string':
+            case "string":
                 return csharp.InstantiatedPrimitive.string(unknownExample)
-            case 'number':
+            case "number":
                 return csharp.InstantiatedPrimitive.double(unknownExample)
-            case 'object':
+            case "object":
                 if (Array.isArray(unknownExample)) {
                     const values = unknownExample.map((value) => this.getSnippetForUnknown(value))
                     return csharp.list({ entries: values, itemType: csharp.Type.optional(csharp.Type.object()) })
@@ -62,7 +62,7 @@ export class ExampleGenerator {
                         keyType: csharp.Type.object(),
                         valueType: csharp.Type.optional(csharp.Type.object()),
                         values: {
-                            type: 'entries',
+                            type: "entries",
                             entries
                         }
                     })
@@ -88,7 +88,7 @@ export class ExampleGenerator {
             undiscriminatedUnion: (exampleUndiscriminatedUnionType) =>
                 this.getSnippetForUndiscriminatedUnion(exampleUndiscriminatedUnionType, parseDatetimes),
             _other: () => {
-                throw new Error('Unknown example type: ' + exampleNamedType.shape.type)
+                throw new Error("Unknown example type: " + exampleNamedType.shape.type)
             }
         })
     }
@@ -99,8 +99,8 @@ export class ExampleGenerator {
         parseDatetimes: boolean
     ): csharp.AstNode {
         const typeDeclaration = this.context.getTypeDeclarationOrThrow(typeId)
-        if (typeDeclaration.shape.type !== 'object') {
-            throw new Error('Unexpected non object in Example Generator')
+        if (typeDeclaration.shape.type !== "object") {
+            throw new Error("Unexpected non object in Example Generator")
         }
         return new ObjectGenerator(this.context, typeDeclaration, typeDeclaration.shape).doGenerateSnippet({
             exampleObject: exampleObjectType,
@@ -125,8 +125,8 @@ export class ExampleGenerator {
     ): csharp.AstNode {
         if (this.context.shouldGenerateDiscriminatedUnions()) {
             const typeDeclaration = this.context.getTypeDeclarationOrThrow(typeId)
-            if (typeDeclaration.shape.type !== 'union') {
-                throw new Error('Unexpected non union in Example Generator')
+            if (typeDeclaration.shape.type !== "union") {
+                throw new Error("Unexpected non union in Example Generator")
             }
             return new UnionGenerator(this.context, typeDeclaration, typeDeclaration.shape).doGenerateSnippet({
                 exampleUnion: exampleUnionType,
@@ -139,7 +139,7 @@ export class ExampleGenerator {
             // todo: figure out what to put here
             noProperties: () => csharp.codeblock('"no-properties-union"'),
             _other: (value) => {
-                throw new Error('Unknown example type reference: ' + value.type)
+                throw new Error("Unknown example type reference: " + value.type)
             }
         })
     }
@@ -213,13 +213,13 @@ export class ExampleGenerator {
                     keyType: this.context.csharpTypeMapper.convert({ reference: p.keyType }),
                     valueType: this.context.csharpTypeMapper.convert({ reference: p.valueType }),
                     values: {
-                        type: 'entries',
+                        type: "entries",
                         entries
                     }
                 })
             },
             _other: (value) => {
-                throw new Error('Unknown example container: ' + value.type)
+                throw new Error("Unknown example container: " + value.type)
             }
         })
     }
@@ -240,7 +240,7 @@ export class ExampleGenerator {
             base64: (p) => csharp.InstantiatedPrimitive.string(p),
             bigInteger: (p) => csharp.InstantiatedPrimitive.string(p),
             _other: (value) => {
-                throw new Error('Unknown example type reference: ' + value.type)
+                throw new Error("Unknown example type reference: " + value.type)
             }
         })
         return csharp.codeblock((writer) => writer.writeNode(instantiatedPrimitive))

@@ -1,26 +1,26 @@
-import webpack from 'webpack'
+import webpack from "webpack"
 
-describe('test env compatibility', () => {
-    test('webpack', () => {
+describe("test env compatibility", () => {
+    test("webpack", () => {
         return new Promise<void>((resolve, reject) => {
             webpack(
                 {
-                    mode: 'production',
-                    entry: './src/index.ts',
+                    mode: "production",
+                    entry: "./src/index.ts",
                     module: {
                         rules: [
                             {
                                 test: /\.tsx?$/,
-                                use: 'ts-loader',
+                                use: "ts-loader",
                                 exclude: /node_modules/
                             }
                         ]
                     },
                     resolve: {
-                        extensions: ['.tsx', '.ts', '.jsx', '.js'],
+                        extensions: [".tsx", ".ts", ".jsx", ".js"],
                         extensionAlias: {
-                            '.js': ['.ts', '.js'],
-                            '.jsx': ['.tsx', '.jsx']
+                            ".js": [".ts", ".js"],
+                            ".jsx": [".tsx", ".jsx"]
                         }
                     }
                 },

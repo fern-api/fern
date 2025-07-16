@@ -1,10 +1,10 @@
-import { RelativeFilePath } from '@fern-api/fs-utils'
-import { FileGenerator, PhpFile } from '@fern-api/php-base'
+import { RelativeFilePath } from "@fern-api/fs-utils"
+import { FileGenerator, PhpFile } from "@fern-api/php-base"
 
-import { MultipleBaseUrlsEnvironments } from '@fern-fern/ir-sdk/api'
+import { MultipleBaseUrlsEnvironments } from "@fern-fern/ir-sdk/api"
 
-import { SdkCustomConfigSchema } from '../SdkCustomConfig'
-import { SdkGeneratorContext } from '../SdkGeneratorContext'
+import { SdkCustomConfigSchema } from "../SdkCustomConfig"
+import { SdkGeneratorContext } from "../SdkGeneratorContext"
 
 export declare namespace MultiUrlEnvironmentGenerator {
     interface Args {
@@ -22,10 +22,10 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<PhpFile, SdkCust
     }
 
     public doGenerate(): PhpFile {
-        throw new Error('Multiple environment URLs are not supported yet')
+        throw new Error("Multiple environment URLs are not supported yet")
     }
 
     protected getFilepath(): RelativeFilePath {
-        throw new Error('Multiple environment URLs are not supported yet')
+        throw new Error("Multiple environment URLs are not supported yet")
     }
 }

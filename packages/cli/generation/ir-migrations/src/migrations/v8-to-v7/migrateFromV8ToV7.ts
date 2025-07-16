@@ -1,28 +1,28 @@
-import { GeneratorName } from '@fern-api/configuration-loader'
+import { GeneratorName } from "@fern-api/configuration-loader"
 
-import { IrVersions } from '../../ir-versions'
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
+import { IrVersions } from "../../ir-versions"
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
 
 export const V8_TO_V7_MIGRATION: IrMigration<
     IrVersions.V8.ir.IntermediateRepresentation,
     IrVersions.V7.ir.IntermediateRepresentation
 > = {
-    laterVersion: 'v8',
-    earlierVersion: 'v7',
+    laterVersion: "v8",
+    earlierVersion: "v7",
     firstGeneratorVersionToConsumeNewIR: {
         [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_SDK]: '0.0.273-5-g1b00245b',
-        [GeneratorName.TYPESCRIPT_EXPRESS]: '0.0.273-5-g1b00245b',
+        [GeneratorName.TYPESCRIPT_SDK]: "0.0.273-5-g1b00245b",
+        [GeneratorName.TYPESCRIPT_EXPRESS]: "0.0.273-5-g1b00245b",
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_SPRING]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.PYTHON_FASTAPI]: '0.0.45-1-g8bb600f',
-        [GeneratorName.PYTHON_PYDANTIC]: '0.0.45-1-g8bb600f',
-        [GeneratorName.OPENAPI_PYTHON_CLIENT]: '0.0.0',
-        [GeneratorName.OPENAPI]: '0.0.20-1-gbbeb9bd',
+        [GeneratorName.PYTHON_FASTAPI]: "0.0.45-1-g8bb600f",
+        [GeneratorName.PYTHON_PYDANTIC]: "0.0.45-1-g8bb600f",
+        [GeneratorName.OPENAPI_PYTHON_CLIENT]: "0.0.0",
+        [GeneratorName.OPENAPI]: "0.0.20-1-gbbeb9bd",
         [GeneratorName.STOPLIGHT]: GeneratorWasNotCreatedYet,
         [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_SDK]: GeneratorWasNotCreatedYet,
@@ -60,7 +60,7 @@ function convertAuth(auth: IrVersions.V8.auth.ApiAuth): IrVersions.V7.auth.ApiAu
         docs: auth.docs,
         requirement: auth.requirement,
         schemes: auth.schemes.map((scheme) => {
-            if (scheme._type !== 'header') {
+            if (scheme._type !== "header") {
                 return scheme
             }
             return IrVersions.V7.auth.AuthScheme.header(convertHeader(scheme))
@@ -84,7 +84,7 @@ function convertTypeReference(typeReference: IrVersions.V8.types.TypeReference):
         primitive: IrVersions.V7.types.TypeReference.primitive,
         unknown: IrVersions.V7.types.TypeReference.unknown,
         _unknown: () => {
-            throw new Error('Unknown type reference: ' + typeReference._type)
+            throw new Error("Unknown type reference: " + typeReference._type)
         }
     })
 }
@@ -101,7 +101,7 @@ function convertContainerType(container: IrVersions.V8.types.ContainerType): IrV
             }),
         literal: IrVersions.V7.types.ContainerType.literal,
         _unknown: () => {
-            throw new Error('Unknown ContainerType: ' + container._type)
+            throw new Error("Unknown ContainerType: " + container._type)
         }
     })
 }
@@ -148,7 +148,7 @@ function convertTypeShape(shape: IrVersions.V8.types.Type): IrVersions.V7.types.
                 types: union.types.map((singleUnionType) => convertSingleUnionType(singleUnionType))
             }),
         _unknown: () => {
-            throw new Error('Unknown Type shape: ' + shape._type)
+            throw new Error("Unknown Type shape: " + shape._type)
         }
     })
 }
@@ -166,7 +166,7 @@ function convertResolvedType(
         primitive: IrVersions.V7.types.ResolvedTypeReference.primitive,
         unknown: IrVersions.V7.types.ResolvedTypeReference.unknown,
         _unknown: () => {
-            throw new Error('Unknown ResolvedTypeReference: ' + resolvedType._type)
+            throw new Error("Unknown ResolvedTypeReference: " + resolvedType._type)
         }
     })
 }
@@ -196,7 +196,7 @@ function convertSingleUnionTypeProperties(
                 }),
             noProperties: IrVersions.V7.types.SingleUnionTypeProperties.noProperties,
             _unknown: () => {
-                throw new Error('Unknown SingleUnionTypeProperties: ' + properties._type)
+                throw new Error("Unknown SingleUnionTypeProperties: " + properties._type)
             }
         }
     )
@@ -232,7 +232,7 @@ function convertExampleTypeShape(example: IrVersions.V8.types.ExampleTypeShape):
                 properties: convertExampleSingleUnionTypeProperties(union.properties)
             }),
         _unknown: () => {
-            throw new Error('Unknown ExampleTypeShape: ' + example.type)
+            throw new Error("Unknown ExampleTypeShape: " + example.type)
         }
     })
 }
@@ -280,14 +280,14 @@ function convertExampleTypeReferenceShape(
                                 }))
                             ),
                         _unknown: () => {
-                            throw new Error('Unknown ExampleContainer: ' + container.type)
+                            throw new Error("Unknown ExampleContainer: " + container.type)
                         }
                     })
                 ),
             primitive: IrVersions.V7.types.ExampleTypeReferenceShape.primitive,
             unknown: IrVersions.V7.types.ExampleTypeReferenceShape.unknown,
             _unknown: () => {
-                throw new Error('Unknown ExampleTypeReferenceShape: ' + example.type)
+                throw new Error("Unknown ExampleTypeReferenceShape: " + example.type)
             }
         }
     )
@@ -311,7 +311,7 @@ function convertExampleSingleUnionTypeProperties(
                 }),
             noProperties: IrVersions.V7.types.ExampleSingleUnionTypeProperties.noProperties,
             _unknown: () => {
-                throw new Error('Unknown ExampleSingleUnionTypeProperties: ' + properties.type)
+                throw new Error("Unknown ExampleSingleUnionTypeProperties: " + properties.type)
             }
         }
     )
@@ -414,7 +414,7 @@ function convertSdkRequestShape(shape: IrVersions.V8.http.SdkRequestShape): IrVe
             }),
         wrapper: IrVersions.V7.http.SdkRequestShape.wrapper,
         _unknown: () => {
-            throw new Error('Unknown SdkRequestShape: ' + shape.type)
+            throw new Error("Unknown SdkRequestShape: " + shape.type)
         }
     })
 }
@@ -437,7 +437,7 @@ function convertRequestBody(requestBody: IrVersions.V8.http.HttpRequestBody): Ir
                 requestBodyType: convertTypeReference(reference.requestBodyType)
             }),
         _unknown: () => {
-            throw new Error('Unknown HttpRequestBody: ' + requestBody.type)
+            throw new Error("Unknown HttpRequestBody: " + requestBody.type)
         }
     })
 }
@@ -511,7 +511,7 @@ function convertExampleRequest(example: IrVersions.V8.http.ExampleRequestBody): 
         reference: (reference) =>
             IrVersions.V7.http.ExampleRequestBody.reference(convertExampleTypeReference(reference)),
         _unknown: () => {
-            throw new Error('Unknown ExampleRequestBody: ' + example.type)
+            throw new Error("Unknown ExampleRequestBody: " + example.type)
         }
     })
 }
@@ -528,7 +528,7 @@ function convertExampleResponse(example: IrVersions.V8.http.ExampleResponse): Ir
                 body: failedResponse.body != null ? convertExampleTypeReference(failedResponse.body) : undefined
             }),
         _unknown: () => {
-            throw new Error('Unknown ExampleResponse: ' + example.type)
+            throw new Error("Unknown ExampleResponse: " + example.type)
         }
     })
 }

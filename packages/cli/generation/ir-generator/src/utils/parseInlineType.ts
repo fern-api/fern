@@ -1,8 +1,8 @@
-import { RawSchemas, recursivelyVisitRawTypeReference } from '@fern-api/fern-definition-schema'
-import { ContainerType, TypeReference } from '@fern-api/ir-sdk'
+import { RawSchemas, recursivelyVisitRawTypeReference } from "@fern-api/fern-definition-schema"
+import { ContainerType, TypeReference } from "@fern-api/ir-sdk"
 
-import { FernFileContext } from '../FernFileContext'
-import { parseTypeName } from './parseTypeName'
+import { FernFileContext } from "../FernFileContext"
+import { parseTypeName } from "./parseTypeName"
 
 export declare namespace parseInlineType {
     export interface Args {
@@ -44,7 +44,7 @@ export type TypeReferenceParser = (type: RawSchemas.TypeReferenceSchema) => Type
 
 export function createTypeReferenceParser(file: FernFileContext): TypeReferenceParser {
     return (type) => {
-        if (typeof type === 'string') {
+        if (typeof type === "string") {
             return parseInlineType({ type, _default: undefined, validation: undefined, file })
         }
         return parseInlineType({

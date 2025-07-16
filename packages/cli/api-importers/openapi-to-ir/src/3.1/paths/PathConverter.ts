@@ -1,16 +1,16 @@
-import { OpenAPIV3, OpenAPIV3_1 } from 'openapi-types'
+import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types"
 
-import { AuthScheme } from '@fern-api/ir-sdk'
-import { AbstractConverter, Converters } from '@fern-api/v2-importer-commons'
+import { AuthScheme } from "@fern-api/ir-sdk"
+import { AbstractConverter, Converters } from "@fern-api/v2-importer-commons"
 
-import { HttpMethods } from '../../constants/HttpMethods'
-import { FernIdempotentExtension } from '../../extensions/x-fern-idempotent'
-import { FernPaginationExtension } from '../../extensions/x-fern-pagination'
-import { FernStreamingExtension } from '../../extensions/x-fern-streaming'
-import { FernWebhookExtension } from '../../extensions/x-fern-webhook'
-import { OpenAPIConverterContext3_1 } from '../OpenAPIConverterContext3_1'
-import { OperationConverter } from './operations/OperationConverter'
-import { WebhookConverter } from './operations/WebhookConverter'
+import { HttpMethods } from "../../constants/HttpMethods"
+import { FernIdempotentExtension } from "../../extensions/x-fern-idempotent"
+import { FernPaginationExtension } from "../../extensions/x-fern-pagination"
+import { FernStreamingExtension } from "../../extensions/x-fern-streaming"
+import { FernWebhookExtension } from "../../extensions/x-fern-webhook"
+import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1"
+import { OperationConverter } from "./operations/OperationConverter"
+import { WebhookConverter } from "./operations/WebhookConverter"
 
 export declare namespace PathConverter {
     export interface Args extends AbstractConverter.Args<OpenAPIConverterContext3_1> {

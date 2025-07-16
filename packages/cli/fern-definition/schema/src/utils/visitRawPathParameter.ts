@@ -1,6 +1,6 @@
-import { HttpPathParameterSchema } from '../schemas'
-import { TypeReferenceSchema } from '../schemas'
-import { VariableReferenceSchema } from '../schemas'
+import { HttpPathParameterSchema } from "../schemas"
+import { TypeReferenceSchema } from "../schemas"
+import { VariableReferenceSchema } from "../schemas"
 
 export interface PathParameterDeclarationVisitor<R> {
     nonVariable: (pathParameter: TypeReferenceSchema) => R
@@ -21,8 +21,8 @@ export function visitRawPathParameter<R>(
 export function isVariablePathParameter(
     rawPathParameter: HttpPathParameterSchema
 ): rawPathParameter is VariableReferenceSchema | string {
-    if (typeof rawPathParameter === 'string') {
-        return rawPathParameter.startsWith('$')
+    if (typeof rawPathParameter === "string") {
+        return rawPathParameter.startsWith("$")
     }
-    return 'variable' in rawPathParameter
+    return "variable" in rawPathParameter
 }

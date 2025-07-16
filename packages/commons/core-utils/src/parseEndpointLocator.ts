@@ -2,13 +2,13 @@ export declare namespace ParseEndpointLocator {
     type Result = FailedResult | SuccessResult
 
     interface FailedResult {
-        type: 'failure'
+        type: "failure"
         message: string
     }
 
     interface SuccessResult {
-        type: 'success'
-        method: 'POST' | 'GET' | 'PUT' | 'PATCH' | 'DELETE'
+        type: "success"
+        method: "POST" | "GET" | "PUT" | "PATCH" | "DELETE"
         path: string
         pathParameters: Set<string>
     }
@@ -20,18 +20,18 @@ export declare namespace ParseEndpointLocator {
  * @returns
  */
 export function parseEndpointLocator(input: string): ParseEndpointLocator.Result {
-    const [method, path] = input.split(' ')
+    const [method, path] = input.split(" ")
 
-    if (!method || !['POST', 'GET', 'PUT', 'PATCH', 'DELETE'].includes(method)) {
+    if (!method || !["POST", "GET", "PUT", "PATCH", "DELETE"].includes(method)) {
         return {
-            type: 'failure',
+            type: "failure",
             message: `${input} contains invalid method ${method}`
         }
     }
 
     if (!path) {
         return {
-            type: 'failure',
+            type: "failure",
             message: `${input} contains no path ${path}`
         }
     }
@@ -48,8 +48,8 @@ export function parseEndpointLocator(input: string): ParseEndpointLocator.Result
     }
 
     return {
-        type: 'success',
-        method: method as ParseEndpointLocator.SuccessResult['method'],
+        type: "success",
+        method: method as ParseEndpointLocator.SuccessResult["method"],
         path,
         pathParameters
     }

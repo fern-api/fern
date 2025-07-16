@@ -1,6 +1,6 @@
-import { Reference } from '@fern-typescript/commons'
+import { Reference } from "@fern-typescript/commons"
 
-import { GeneratedGenericAPIExpressError } from './GeneratedGenericAPIExpressError'
+import { GeneratedGenericAPIExpressError } from "./GeneratedGenericAPIExpressError"
 
 export interface GenericAPIExpressErrorContext {
     getReferenceToGenericAPIExpressError: () => Reference

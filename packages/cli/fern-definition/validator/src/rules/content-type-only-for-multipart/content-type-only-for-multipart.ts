@@ -1,9 +1,9 @@
-import { isInlineRequestBody, parseFileUploadRequest } from '@fern-api/fern-definition-schema'
+import { isInlineRequestBody, parseFileUploadRequest } from "@fern-api/fern-definition-schema"
 
-import { Rule, RuleViolation } from '../../Rule'
+import { Rule, RuleViolation } from "../../Rule"
 
 export const ContentTypeOnlyForMultipartRule: Rule = {
-    name: 'content-type-only-for-multipart',
+    name: "content-type-only-for-multipart",
     DISABLE_RULE: false,
     create: () => {
         return {
@@ -19,7 +19,7 @@ export const ContentTypeOnlyForMultipartRule: Rule = {
                     }
 
                     if (
-                        typeof endpoint.request !== 'string' &&
+                        typeof endpoint.request !== "string" &&
                         endpoint.request.body != null &&
                         isInlineRequestBody(endpoint.request.body)
                     ) {
@@ -27,12 +27,12 @@ export const ContentTypeOnlyForMultipartRule: Rule = {
                         for (const [propertyName, propertyDeclaration] of Object.entries(
                             endpoint.request.body.properties ?? {}
                         )) {
-                            if (typeof propertyDeclaration === 'string') {
+                            if (typeof propertyDeclaration === "string") {
                                 continue
                             }
-                            if (propertyDeclaration['content-type'] != null) {
+                            if (propertyDeclaration["content-type"] != null) {
                                 violations.push({
-                                    severity: 'fatal',
+                                    severity: "fatal",
                                     message: `${propertyName} has content-type, but the request is not multipart`
                                 })
                             }

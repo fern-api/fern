@@ -1,4 +1,4 @@
-import stripAnsi from 'strip-ansi'
+import stripAnsi from "strip-ansi"
 
 export function addPrefixToString({
     prefix,
@@ -14,5 +14,5 @@ export function addPrefixToString({
     includePrefixOnAllLines?: boolean
 }): string {
     const prefixLength = stripAnsi(prefix).length
-    return `${prefix}${content.replaceAll('\n', `\n${includePrefixOnAllLines ? prefix : ' '.repeat(prefixLength)}`)}`
+    return `${prefix}${content.replaceAll("\n", `\n${includePrefixOnAllLines ? prefix : " ".repeat(prefixLength)}`)}`
 }

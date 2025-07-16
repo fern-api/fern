@@ -1,6 +1,6 @@
-import execa, { ExecaReturnValue } from 'execa'
+import execa, { ExecaReturnValue } from "execa"
 
-import { Logger } from '@fern-api/logger'
+import { Logger } from "@fern-api/logger"
 
 export declare namespace loggingExeca {
     export interface Options extends execa.Options {
@@ -18,16 +18,16 @@ export function runExeca(
     executable: string,
     args: string[] = [],
     { doNotPipeOutput = false, secrets = [], substitutions = {}, ...execaOptions }: loggingExeca.Options = {}
-): import('execa').ExecaChildProcess {
+): import("execa").ExecaChildProcess {
     const allSubstitutions = secrets.reduce(
         (acc, secret) => ({
             ...acc,
-            [secret]: '<redacted>'
+            [secret]: "<redacted>"
         }),
         substitutions
     )
 
-    let logLine = [executable, ...args].join(' ')
+    let logLine = [executable, ...args].join(" ")
     for (const [substitutionKey, substitutionValue] of Object.entries(allSubstitutions)) {
         logLine = logLine.replaceAll(substitutionKey, substitutionValue)
     }
@@ -50,10 +50,10 @@ export async function loggingExeca(
     }
     const result = await command
     if (result.stdout == null) {
-        result.stdout = ''
+        result.stdout = ""
     }
     if (result.stderr == null) {
-        result.stderr = ''
+        result.stderr = ""
     }
     return result
 }

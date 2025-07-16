@@ -1,8 +1,8 @@
-import { IrVersions } from '../../ir-versions'
-import { TypeReferenceResolver } from './TypeReferenceResolver'
-import { convertFernFilepathV1, convertFernFilepathV2 } from './convertFernFilepath'
-import { convertNameAndWireValueToV2, convertNameToV1, convertNameToV2 } from './convertName'
-import { convertTypeReference } from './convertTypeReference'
+import { IrVersions } from "../../ir-versions"
+import { TypeReferenceResolver } from "./TypeReferenceResolver"
+import { convertFernFilepathV1, convertFernFilepathV2 } from "./convertFernFilepath"
+import { convertNameAndWireValueToV2, convertNameToV1, convertNameToV2 } from "./convertName"
+import { convertTypeReference } from "./convertTypeReference"
 
 export function convertErrorDeclaration({
     errorDeclaration,
@@ -40,7 +40,7 @@ export function convertErrorDeclaration({
                             convertNameAndWireValueToV2(property.contentProperty)
                         ),
                     _unknown: () => {
-                        throw new Error('Unknown ErrorDiscriminationStrategy: ' + errorDiscriminationStrategy.type)
+                        throw new Error("Unknown ErrorDiscriminationStrategy: " + errorDiscriminationStrategy.type)
                     }
                 }
             ),

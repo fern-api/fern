@@ -1,27 +1,27 @@
-import express from 'express'
-import * as http from 'http'
-import { OpenAPI } from 'openapi-types'
+import express from "express"
+import * as http from "http"
+import { OpenAPI } from "openapi-types"
 
 const TEST_OPENAPI_DOCUMENT: OpenAPI.Document = {
-    openapi: '3.0.0',
+    openapi: "3.0.0",
     info: {
-        title: 'Test API',
-        version: '1.0.0'
+        title: "Test API",
+        version: "1.0.0"
     },
     paths: {
-        '/testdata': {
+        "/testdata": {
             get: {
-                summary: 'Retrieve test data',
-                operationId: 'getTestData',
+                summary: "Retrieve test data",
+                operationId: "getTestData",
                 responses: {
-                    '200': {
-                        description: 'Successful response',
+                    "200": {
+                        description: "Successful response",
                         content: {
-                            'application/json': {
+                            "application/json": {
                                 schema: {
-                                    type: 'object',
+                                    type: "object",
                                     properties: {
-                                        message: { type: 'string' }
+                                        message: { type: "string" }
                                     }
                                 }
                             }
@@ -30,19 +30,19 @@ const TEST_OPENAPI_DOCUMENT: OpenAPI.Document = {
                 }
             }
         },
-        '/filtered': {
+        "/filtered": {
             get: {
-                summary: 'This endpoint should be filtered out',
-                operationId: 'filtered',
+                summary: "This endpoint should be filtered out",
+                operationId: "filtered",
                 responses: {
-                    '200': {
-                        description: 'Successful response',
+                    "200": {
+                        description: "Successful response",
                         content: {
-                            'application/json': {
+                            "application/json": {
                                 schema: {
-                                    type: 'object',
+                                    type: "object",
                                     properties: {
-                                        message: { type: 'string' }
+                                        message: { type: "string" }
                                     }
                                 }
                             }
@@ -58,7 +58,7 @@ export function setupOpenAPIServer(): { server: http.Server; cleanup: () => Prom
     const app = express()
 
     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-    app.get('/openapi.json', (req: any, res: any) => {
+    app.get("/openapi.json", (req: any, res: any) => {
         res.json(TEST_OPENAPI_DOCUMENT)
     })
 

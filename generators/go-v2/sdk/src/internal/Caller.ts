@@ -1,8 +1,8 @@
-import { go } from '@fern-api/go-ast'
+import { go } from "@fern-api/go-ast"
 
-import { HttpEndpoint } from '@fern-fern/ir-sdk/api'
+import { HttpEndpoint } from "@fern-fern/ir-sdk/api"
 
-import { SdkGeneratorContext } from '../SdkGeneratorContext'
+import { SdkGeneratorContext } from "../SdkGeneratorContext"
 
 export declare namespace Caller {
     export interface CallArgs {
@@ -20,12 +20,12 @@ export declare namespace Caller {
  * Utility class that helps make HTTP calls.
  */
 export class Caller {
-    public static TYPE_NAME = 'Caller'
-    public static FIELD_NAME = 'caller'
-    public static CONSTRUCTOR_FUNC_NAME = 'NewCaller'
-    public static CALLER_PARAMS_TYPE_NAME = 'CallerParams'
-    public static CALL_PARAMS_TYPE_NAME = 'CallParams'
-    public static CALL_METHOD_NAME = 'Call'
+    public static TYPE_NAME = "Caller"
+    public static FIELD_NAME = "caller"
+    public static CONSTRUCTOR_FUNC_NAME = "NewCaller"
+    public static CALLER_PARAMS_TYPE_NAME = "CallerParams"
+    public static CALL_PARAMS_TYPE_NAME = "CallParams"
+    public static CALL_METHOD_NAME = "Call"
 
     private context: SdkGeneratorContext
 
@@ -80,11 +80,11 @@ export class Caller {
                     typeReference: this.getCallerParamsTypeReference(),
                     fields: [
                         {
-                            name: 'Client',
+                            name: "Client",
                             value: go.TypeInstantiation.reference(client)
                         },
                         {
-                            name: 'MaxAttempts',
+                            name: "MaxAttempts",
                             value: go.TypeInstantiation.reference(maxAttempts)
                         }
                     ]
@@ -96,69 +96,69 @@ export class Caller {
     public call(args: Caller.CallArgs): go.AstNode {
         const arguments_: go.StructField[] = [
             {
-                name: 'URL',
+                name: "URL",
                 value: go.TypeInstantiation.reference(args.url)
             },
             {
-                name: 'Method',
+                name: "Method",
                 value: go.TypeInstantiation.reference(this.context.getNetHttpMethodTypeReference(args.endpoint.method))
             },
             {
-                name: 'Headers',
-                value: go.TypeInstantiation.reference(go.codeblock('headers'))
+                name: "Headers",
+                value: go.TypeInstantiation.reference(go.codeblock("headers"))
             },
             {
-                name: 'MaxAttempts',
+                name: "MaxAttempts",
                 value: go.TypeInstantiation.reference(
                     go.selector({
                         on: args.optionsReference,
-                        selector: go.codeblock('MaxAttempts')
+                        selector: go.codeblock("MaxAttempts")
                     })
                 )
             },
             {
-                name: 'BodyProperties',
+                name: "BodyProperties",
                 value: go.TypeInstantiation.reference(
                     go.selector({
                         on: args.optionsReference,
-                        selector: go.codeblock('BodyProperties')
+                        selector: go.codeblock("BodyProperties")
                     })
                 )
             },
             {
-                name: 'QueryParameters',
+                name: "QueryParameters",
                 value: go.TypeInstantiation.reference(
                     go.selector({
                         on: args.optionsReference,
-                        selector: go.codeblock('QueryParameters')
+                        selector: go.codeblock("QueryParameters")
                     })
                 )
             },
             {
-                name: 'Client',
+                name: "Client",
                 value: go.TypeInstantiation.reference(
                     go.selector({
                         on: args.optionsReference,
-                        selector: go.codeblock('HTTPClient')
+                        selector: go.codeblock("HTTPClient")
                     })
                 )
             }
         ]
         if (args.request != null) {
             arguments_.push({
-                name: 'Request',
+                name: "Request",
                 value: go.TypeInstantiation.reference(args.request)
             })
         }
         if (args.response != null) {
             arguments_.push({
-                name: 'Response',
+                name: "Response",
                 value: go.TypeInstantiation.reference(args.response)
             })
         }
         if (args.errorCodes != null) {
             arguments_.push({
-                name: 'ErrorDecoder',
+                name: "ErrorDecoder",
                 value: go.TypeInstantiation.reference(this.context.callNewErrorDecoder([args.errorCodes]))
             })
         }

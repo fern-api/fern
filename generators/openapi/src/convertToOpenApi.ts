@@ -1,4 +1,4 @@
-import { OpenAPIV3 } from 'openapi-types'
+import { OpenAPIV3 } from "openapi-types"
 
 import {
     DeclaredErrorName,
@@ -6,12 +6,12 @@ import {
     ErrorDeclaration,
     IntermediateRepresentation,
     TypeDeclaration
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { convertServices } from './converters/servicesConverter'
-import { convertType } from './converters/typeConverter'
-import { constructEndpointSecurity, constructSecuritySchemes } from './security'
-import { Mode } from './writeOpenApi'
+import { convertServices } from "./converters/servicesConverter"
+import { convertType } from "./converters/typeConverter"
+import { constructEndpointSecurity, constructSecuritySchemes } from "./security"
+import { Mode } from "./writeOpenApi"
 
 export function convertToOpenApi({
     apiName,
@@ -56,14 +56,14 @@ export function convertToOpenApi({
 
     const info: OpenAPIV3.InfoObject = {
         title: ir.apiDisplayName ?? apiName,
-        version: ''
+        version: ""
     }
     if (ir.apiDocs != null) {
         info.description = ir.apiDocs
     }
 
     const openAPISpec: OpenAPIV3.Document = {
-        openapi: '3.0.1',
+        openapi: "3.0.1",
         info,
         paths,
         components: {
@@ -72,7 +72,7 @@ export function convertToOpenApi({
         }
     }
 
-    if (ir.environments != null && ir.environments.environments.type === 'singleBaseUrl') {
+    if (ir.environments != null && ir.environments.environments.type === "singleBaseUrl") {
         openAPISpec.servers = ir.environments.environments.environments.map((environment) => {
             return {
                 url: environment.url,
@@ -91,12 +91,12 @@ export function getDeclaredTypeNameKey(declaredTypeName: DeclaredTypeName): stri
     return [
         ...declaredTypeName.fernFilepath.allParts.map((part) => part.originalName),
         declaredTypeName.name.originalName
-    ].join('-')
+    ].join("-")
 }
 
 export function getErrorTypeNameKey(declaredErrorName: DeclaredErrorName): string {
     return [
         ...declaredErrorName.fernFilepath.allParts.map((part) => part.originalName),
         declaredErrorName.name.originalName
-    ].join('-')
+    ].join("-")
 }

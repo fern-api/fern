@@ -1,21 +1,21 @@
-import { OpenAPISpec, ProtobufSpec, Spec } from '@fern-api/api-workspace-commons'
+import { OpenAPISpec, ProtobufSpec, Spec } from "@fern-api/api-workspace-commons"
 import {
     DEFINITION_DIRECTORY,
     OPENAPI_DIRECTORY,
     generatorsYml,
     loadGeneratorsConfiguration
-} from '@fern-api/configuration-loader'
-import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from '@fern-api/fs-utils'
+} from "@fern-api/configuration-loader"
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils"
 import {
     ConjureWorkspace,
     LazyFernWorkspace,
     OSSWorkspace,
     WorkspaceLoader,
     WorkspaceLoaderFailureType
-} from '@fern-api/lazy-fern-workspace'
-import { TaskContext } from '@fern-api/task-context'
+} from "@fern-api/lazy-fern-workspace"
+import { TaskContext } from "@fern-api/task-context"
 
-import { loadAPIChangelog } from './loadAPIChangelog'
+import { loadAPIChangelog } from "./loadAPIChangelog"
 
 export async function loadSingleNamespaceAPIWorkspace({
     absolutePathToWorkspace,
@@ -33,7 +33,7 @@ export async function loadSingleNamespaceAPIWorkspace({
             definition.overrides != null
                 ? join(absolutePathToWorkspace, RelativeFilePath.of(definition.overrides))
                 : undefined
-        if (definition.schema.type === 'protobuf') {
+        if (definition.schema.type === "protobuf") {
             const relativeFilepathToProtobufRoot = RelativeFilePath.of(definition.schema.root)
             const absoluteFilepathToProtobufRoot = join(absolutePathToWorkspace, relativeFilepathToProtobufRoot)
             if (!(await doesPathExist(absoluteFilepathToProtobufRoot))) {
@@ -67,7 +67,7 @@ export async function loadSingleNamespaceAPIWorkspace({
             }
 
             specs.push({
-                type: 'protobuf',
+                type: "protobuf",
                 absoluteFilepathToProtobufRoot,
                 absoluteFilepathToProtobufTarget: absoluteFilepathToTarget,
                 absoluteFilepathToOverrides,
@@ -89,7 +89,7 @@ export async function loadSingleNamespaceAPIWorkspace({
                     disableExamples: false,
                     discriminatedUnionV2: definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
                     preserveSchemaIds: false,
-                    asyncApiNaming: definition.settings?.asyncApiMessageNaming ?? 'v1',
+                    asyncApiNaming: definition.settings?.asyncApiMessageNaming ?? "v1",
                     filter: definition.settings?.filter,
                     exampleGeneration: undefined,
                     defaultFormParameterEncoding: definition.settings?.defaultFormParameterEncoding,
@@ -103,11 +103,11 @@ export async function loadSingleNamespaceAPIWorkspace({
             continue
         }
 
-        if (definition.schema.type === 'openrpc') {
+        if (definition.schema.type === "openrpc") {
             const relativeFilepathToOpenRpc = RelativeFilePath.of(definition.schema.path)
             const absoluteFilepathToOpenRpc = join(absolutePathToWorkspace, relativeFilepathToOpenRpc)
             specs.push({
-                type: 'openrpc',
+                type: "openrpc",
                 absoluteFilepath: absoluteFilepathToOpenRpc,
                 absoluteFilepathToOverrides,
                 namespace
@@ -141,7 +141,7 @@ export async function loadSingleNamespaceAPIWorkspace({
             }
         }
         specs.push({
-            type: 'openapi',
+            type: "openapi",
             absoluteFilepath,
             absoluteFilepathToOverrides,
             settings: {
@@ -160,7 +160,7 @@ export async function loadSingleNamespaceAPIWorkspace({
                 disableExamples: false,
                 discriminatedUnionV2: definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
                 preserveSchemaIds: false,
-                asyncApiNaming: definition.settings?.asyncApiMessageNaming ?? 'v1',
+                asyncApiNaming: definition.settings?.asyncApiMessageNaming ?? "v1",
                 filter: definition.settings?.filter,
                 exampleGeneration: definition.settings?.exampleGeneration,
                 defaultFormParameterEncoding: definition.settings?.defaultFormParameterEncoding,
@@ -171,7 +171,7 @@ export async function loadSingleNamespaceAPIWorkspace({
                 preserveSingleSchemaOneOf: definition.settings?.preserveSingleSchemaOneOf ?? false
             },
             source: {
-                type: 'openapi',
+                type: "openapi",
                 file: absoluteFilepath
             },
             namespace
@@ -203,7 +203,7 @@ export async function loadAPIWorkspace({
         // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
     } catch (err) {}
 
-    if (generatorsConfiguration?.api != null && generatorsConfiguration?.api.type === 'conjure') {
+    if (generatorsConfiguration?.api != null && generatorsConfiguration?.api.type === "conjure") {
         return {
             didSucceed: true,
             workspace: new ConjureWorkspace({
@@ -220,13 +220,13 @@ export async function loadAPIWorkspace({
 
     if (
         generatorsConfiguration?.api != null &&
-        ((generatorsConfiguration.api.type === 'singleNamespace' &&
+        ((generatorsConfiguration.api.type === "singleNamespace" &&
             generatorsConfiguration.api.definitions.length > 0) ||
-            generatorsConfiguration.api.type === 'multiNamespace')
+            generatorsConfiguration.api.type === "multiNamespace")
     ) {
         const specs: Spec[] = []
 
-        if (generatorsConfiguration.api.type === 'singleNamespace') {
+        if (generatorsConfiguration.api.type === "singleNamespace") {
             const maybeSpecs = await loadSingleNamespaceAPIWorkspace({
                 absolutePathToWorkspace,
                 namespace: undefined,
@@ -266,10 +266,10 @@ export async function loadAPIWorkspace({
             didSucceed: true,
             workspace: new OSSWorkspace({
                 specs: specs.filter((spec) => {
-                    if (spec.type === 'openrpc') {
+                    if (spec.type === "openrpc") {
                         return false
                     }
-                    if (spec.type === 'protobuf') {
+                    if (spec.type === "protobuf") {
                         return false
                     }
                     return true

@@ -1,21 +1,21 @@
-import { ExportsManager } from '@fern-typescript/commons'
-import { SdkContext } from '@fern-typescript/contexts'
-import { ts } from 'ts-morph'
+import { ExportsManager } from "@fern-typescript/commons"
+import { SdkContext } from "@fern-typescript/contexts"
+import { ts } from "ts-morph"
 
-import { FernIr } from '@fern-fern/ir-sdk'
+import { FernIr } from "@fern-fern/ir-sdk"
 import {
     HeaderAuthScheme,
     HttpEndpoint,
     HttpHeader,
     HttpService,
     IntermediateRepresentation
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { GeneratedHeader } from '../../GeneratedHeader'
-import { GeneratedSdkClientClassImpl } from '../../GeneratedSdkClientClassImpl'
-import { RequestParameter } from '../../request-parameter/RequestParameter'
-import { getLiteralValueForHeader } from './isLiteralHeader'
-import { REQUEST_OPTIONS_PARAMETER_NAME } from './requestOptionsParameter'
+import { GeneratedHeader } from "../../GeneratedHeader"
+import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl"
+import { RequestParameter } from "../../request-parameter/RequestParameter"
+import { getLiteralValueForHeader } from "./isLiteralHeader"
+import { REQUEST_OPTIONS_PARAMETER_NAME } from "./requestOptionsParameter"
 
 export function generateHeaders({
     context,
@@ -43,7 +43,7 @@ export function generateHeaders({
     const authorizationHeaderValue = generatedSdkClientClass.getAuthorizationHeaderValue()
     if (authorizationHeaderValue != null) {
         elements.push({
-            header: 'Authorization',
+            header: "Authorization",
             value: authorizationHeaderValue
         })
     }
@@ -87,8 +87,8 @@ export function generateHeaders({
         )
     }
 
-    context.importsManager.addImportFromRoot('core/headers', {
-        namedImports: ['mergeHeaders']
+    context.importsManager.addImportFromRoot("core/headers", {
+        namedImports: ["mergeHeaders"]
     })
 
     const mergeHeadersArgs = []
@@ -100,15 +100,15 @@ export function generateHeaders({
                 GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER
             ),
             ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-            'headers'
+            "headers"
         )
     )
     if (onlyDefinedHeaders.length > 0) {
-        context.importsManager.addImportFromRoot('core/headers', {
-            namedImports: ['mergeOnlyDefinedHeaders']
+        context.importsManager.addImportFromRoot("core/headers", {
+            namedImports: ["mergeOnlyDefinedHeaders"]
         })
         mergeHeadersArgs.push(
-            ts.factory.createCallExpression(ts.factory.createIdentifier('mergeOnlyDefinedHeaders'), undefined, [
+            ts.factory.createCallExpression(ts.factory.createIdentifier("mergeOnlyDefinedHeaders"), undefined, [
                 ts.factory.createObjectLiteralExpression(onlyDefinedHeaders)
             ])
         )
@@ -117,11 +117,11 @@ export function generateHeaders({
         ts.factory.createPropertyAccessChain(
             ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
             ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-            ts.factory.createIdentifier('headers')
+            ts.factory.createIdentifier("headers")
         )
     )
 
-    return ts.factory.createCallExpression(ts.factory.createIdentifier('mergeHeaders'), undefined, mergeHeadersArgs)
+    return ts.factory.createCallExpression(ts.factory.createIdentifier("mergeHeaders"), undefined, mergeHeadersArgs)
 }
 
 function getValueExpressionForHeader({
@@ -187,7 +187,7 @@ function getOverridableRootHeaders({
 
                 let value: ts.Expression
                 if (literalValue != null) {
-                    if (typeof literalValue === 'boolean') {
+                    if (typeof literalValue === "boolean") {
                         const booleanLiteral = literalValue ? ts.factory.createTrue() : ts.factory.createFalse()
                         value = ts.factory.createCallExpression(
                             ts.factory.createPropertyAccessExpression(
@@ -202,7 +202,7 @@ function getOverridableRootHeaders({
                                         booleanLiteral
                                     )
                                 ),
-                                ts.factory.createIdentifier('toString')
+                                ts.factory.createIdentifier("toString")
                             ),
                             undefined,
                             []
@@ -252,7 +252,7 @@ function getOverridableRootHeaders({
 }
 
 function isAuthorizationHeader(header: HttpHeader | HeaderAuthScheme): boolean {
-    return header.name.wireValue.toLowerCase() === 'authorization'
+    return header.name.wireValue.toLowerCase() === "authorization"
 }
 
 function getOptionKeyForHeader(header: HttpHeader): string {

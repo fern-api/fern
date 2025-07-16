@@ -1,18 +1,18 @@
-import { OpenAPIV3 } from 'openapi-types'
+import { OpenAPIV3 } from "openapi-types"
 
-import { FernIr, IntermediateRepresentation } from '@fern-api/ir-sdk'
-import { AbstractConverter, AbstractSpecConverter, Converters, Extensions } from '@fern-api/v2-importer-commons'
+import { FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk"
+import { AbstractConverter, AbstractSpecConverter, Converters, Extensions } from "@fern-api/v2-importer-commons"
 
-import { AsyncAPIV2 } from './2.x'
-import { ChannelConverter2_X } from './2.x/channel/ChannelConverter2_X'
-import { ServersConverter2_X } from './2.x/servers/ServersConverter2_X'
-import { AsyncAPIV3 } from './3.0'
-import { ChannelConverter3_0 } from './3.0/channel/ChannelConverter3_0'
-import { ServersConverter3_0 } from './3.0/servers/ServersConverter3_0'
-import { AsyncAPIConverterContext } from './AsyncAPIConverterContext'
-import { AbstractChannelConverter } from './converters/AbstractChannelConverter'
+import { AsyncAPIV2 } from "./2.x"
+import { ChannelConverter2_X } from "./2.x/channel/ChannelConverter2_X"
+import { ServersConverter2_X } from "./2.x/servers/ServersConverter2_X"
+import { AsyncAPIV3 } from "./3.0"
+import { ChannelConverter3_0 } from "./3.0/channel/ChannelConverter3_0"
+import { ServersConverter3_0 } from "./3.0/servers/ServersConverter3_0"
+import { AsyncAPIConverterContext } from "./AsyncAPIConverterContext"
+import { AbstractChannelConverter } from "./converters/AbstractChannelConverter"
 
-export type BaseIntermediateRepresentation = Omit<IntermediateRepresentation, 'apiName' | 'constants'>
+export type BaseIntermediateRepresentation = Omit<IntermediateRepresentation, "apiName" | "constants">
 
 export declare namespace AsyncAPIConverter {
     type Args = AbstractSpecConverter.Args<AsyncAPIConverterContext>
@@ -60,7 +60,7 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
                 if (!this.context.isMessageWithPayload(message) && !this.context.isReferenceObject(message)) {
                     continue
                 }
-                const messageBreadcrumbs = ['channels', channelPath, 'messages', messageId]
+                const messageBreadcrumbs = ["channels", channelPath, "messages", messageId]
 
                 const resolvedMessage = this.context.resolveMaybeReference<AsyncAPIV3.ChannelMessage>({
                     schemaOrReference: message,
@@ -91,7 +91,7 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
             if (message.payload == null) {
                 continue
             }
-            const componentBreadcrumbs = ['components', 'messages', id]
+            const componentBreadcrumbs = ["components", "messages", id]
             const payloadSchema: OpenAPIV3.SchemaObject | undefined =
                 this.context.resolveMaybeReference<OpenAPIV3.SchemaObject>({
                     schemaOrReference: message.payload,
@@ -113,7 +113,7 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
         for (const [id, schema] of Object.entries(this.context.spec.components?.schemas ?? {})) {
             this.convertSchema({
                 id,
-                breadcrumbs: ['components', 'schemas', id],
+                breadcrumbs: ["components", "schemas", id],
                 schema
             })
         }
@@ -150,7 +150,7 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
             const servers = this.context.spec.servers as Record<string, AsyncAPIV3.ServerV3>
             const serversConverter = new ServersConverter3_0({
                 context: this.context,
-                breadcrumbs: ['servers'],
+                breadcrumbs: ["servers"],
                 servers
             })
             convertedServers = serversConverter.convert()
@@ -158,7 +158,7 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
             const servers = this.context.spec.servers as Record<string, AsyncAPIV2.ServerV2>
             const serversConverter = new ServersConverter2_X({
                 context: this.context,
-                breadcrumbs: ['servers'],
+                breadcrumbs: ["servers"],
                 servers
             })
             convertedServers = serversConverter.convert()
@@ -169,7 +169,7 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
     private convertChannels(): void {
         for (const [channelPath, channel] of Object.entries(this.context.spec.channels ?? {})) {
             const groupNameExtension = new Extensions.SdkGroupNameExtension({
-                breadcrumbs: ['channels', channelPath],
+                breadcrumbs: ["channels", channelPath],
                 operation: channel,
                 context: this.context
             })
@@ -182,7 +182,7 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
 
                 const channelConverter = new ChannelConverter3_0({
                     context: this.context,
-                    breadcrumbs: ['channels', channelPath],
+                    breadcrumbs: ["channels", channelPath],
                     websocketGroup,
                     channel,
                     channelPath,
@@ -192,7 +192,7 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
             } else {
                 const channelConverter = new ChannelConverter2_X({
                     context: this.context,
-                    breadcrumbs: ['channels', channelPath],
+                    breadcrumbs: ["channels", channelPath],
                     websocketGroup,
                     channel,
                     channelPath

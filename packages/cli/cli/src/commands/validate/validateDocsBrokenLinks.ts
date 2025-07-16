@@ -1,10 +1,10 @@
-import { filterOssWorkspaces } from '@fern-api/docs-resolver'
-import { validateDocsWorkspace } from '@fern-api/docs-validator'
-import { OSSWorkspace } from '@fern-api/lazy-fern-workspace'
-import { Project } from '@fern-api/project-loader'
+import { filterOssWorkspaces } from "@fern-api/docs-resolver"
+import { validateDocsWorkspace } from "@fern-api/docs-validator"
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace"
+import { Project } from "@fern-api/project-loader"
 
-import { CliContext } from '../../cli-context/CliContext'
-import { logViolations } from './logViolations'
+import { CliContext } from "../../cli-context/CliContext"
+import { logViolations } from "./logViolations"
 
 export async function validateDocsBrokenLinks({
     project,
@@ -18,7 +18,7 @@ export async function validateDocsBrokenLinks({
     const docsWorkspace = project.docsWorkspaces
 
     if (docsWorkspace == null) {
-        cliContext.failAndThrow('No docs workspace found')
+        cliContext.failAndThrow("No docs workspace found")
         return
     }
 

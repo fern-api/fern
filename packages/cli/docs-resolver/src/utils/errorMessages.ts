@@ -1,4 +1,4 @@
-import { getLexicallyNearestNeighbors } from './getLexicallyNearestNeighbors'
+import { getLexicallyNearestNeighbors } from "./getLexicallyNearestNeighbors"
 
 const NUM_MATCH_CANDIDATES = 3
 const LEVENSHTEIN_THRESHOLD = 5
@@ -18,7 +18,7 @@ export function cannotFindSubpackageByLocatorError(locator: string, existingLoca
             msg = `${msg} No similar API sections found. Available API sections:`
             return availableSections.length === 0
                 ? `${msg} []`
-                : `${msg} [\n${availableSections.map((s) => `\t${s}`).join(',\n')}\n]`
+                : `${msg} [\n${availableSections.map((s) => `\t${s}`).join(",\n")}\n]`
         case 1:
             return `${msg} Did you mean ${nearestThreeMatches[0]}?`
         case 2:
@@ -33,5 +33,5 @@ export function packageReuseError(name: string): string {
 }
 
 export function normalizeLocatorString(s: string): string {
-    return s.toLowerCase().replace(/[^a-z0-9]/g, '')
+    return s.toLowerCase().replace(/[^a-z0-9]/g, "")
 }

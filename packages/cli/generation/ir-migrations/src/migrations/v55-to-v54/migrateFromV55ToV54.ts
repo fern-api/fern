@@ -1,28 +1,28 @@
-import { mapValues } from 'lodash-es'
+import { mapValues } from "lodash-es"
 
-import { GeneratorName } from '@fern-api/configuration-loader'
-import { assertNever } from '@fern-api/core-utils'
+import { GeneratorName } from "@fern-api/configuration-loader"
+import { assertNever } from "@fern-api/core-utils"
 
-import { IrSerialization } from '../../ir-serialization'
-import { IrVersions } from '../../ir-versions'
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
+import { IrSerialization } from "../../ir-serialization"
+import { IrVersions } from "../../ir-versions"
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
 
 export const V55_TO_V54_MIGRATION: IrMigration<
     IrVersions.V55.ir.IntermediateRepresentation,
     IrVersions.V54.ir.IntermediateRepresentation
 > = {
-    laterVersion: 'v55',
-    earlierVersion: 'v54',
+    laterVersion: "v55",
+    earlierVersion: "v54",
     firstGeneratorVersionToConsumeNewIR: {
-        [GeneratorName.TYPESCRIPT_NODE_SDK]: '0.47.0',
-        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: '0.47.0',
-        [GeneratorName.TYPESCRIPT]: '0.47.0',
-        [GeneratorName.TYPESCRIPT_SDK]: '0.47.0',
-        [GeneratorName.TYPESCRIPT_EXPRESS]: '0.17.7',
+        [GeneratorName.TYPESCRIPT_NODE_SDK]: "0.47.0",
+        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: "0.47.0",
+        [GeneratorName.TYPESCRIPT]: "0.47.0",
+        [GeneratorName.TYPESCRIPT_SDK]: "0.47.0",
+        [GeneratorName.TYPESCRIPT_EXPRESS]: "0.17.7",
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_MODEL]: '1.7.0',
-        [GeneratorName.JAVA_SDK]: '2.16.0',
-        [GeneratorName.JAVA_SPRING]: '1.5.0',
+        [GeneratorName.JAVA_MODEL]: "1.7.0",
+        [GeneratorName.JAVA_SDK]: "2.16.0",
+        [GeneratorName.JAVA_SPRING]: "1.5.0",
         [GeneratorName.PYTHON_FASTAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_PYDANTIC]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -36,15 +36,15 @@ export const V55_TO_V54_MIGRATION: IrMigration<
         [GeneratorName.RUBY_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.RUBY_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.CSHARP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.CSHARP_SDK]: '1.10.1',
+        [GeneratorName.CSHARP_SDK]: "1.10.1",
         [GeneratorName.SWIFT_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.SWIFT_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.PHP_MODEL]: GeneratorWasNotCreatedYet,
-        [GeneratorName.PHP_SDK]: '0.3.2'
+        [GeneratorName.PHP_SDK]: "0.3.2"
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V54.IntermediateRepresentation.jsonOrThrow(ir, {
-            unrecognizedObjectKeys: 'strip',
+            unrecognizedObjectKeys: "strip",
             skipValidation: true
         }),
     migrateBackwards: (v55): IrVersions.V54.ir.IntermediateRepresentation => {
@@ -119,7 +119,7 @@ function convertTypes(
                     )
                 },
                 _other: () => {
-                    throw new Error('Encountered unknown shape')
+                    throw new Error("Encountered unknown shape")
                 }
             })
         }
@@ -161,7 +161,7 @@ function convertWebsocketMessageBody(
     body: IrVersions.V55.websocket.WebSocketMessageBody
 ): IrVersions.V54.websocket.WebSocketMessageBody {
     switch (body.type) {
-        case 'inlinedBody':
+        case "inlinedBody":
             return IrVersions.V54.websocket.WebSocketMessageBody.inlinedBody({
                 ...body,
                 properties: body.properties.map((property) => {
@@ -171,7 +171,7 @@ function convertWebsocketMessageBody(
                     }
                 })
             })
-        case 'reference':
+        case "reference":
             return IrVersions.V54.websocket.WebSocketMessageBody.reference({
                 ...body,
                 bodyType: convertTypeReference(body.bodyType)
@@ -197,12 +197,12 @@ function convertWebhookPayload(
     payload: IrVersions.V55.webhooks.WebhookPayload
 ): IrVersions.V54.webhooks.WebhookPayload {
     switch (payload.type) {
-        case 'reference':
+        case "reference":
             return IrVersions.V54.webhooks.WebhookPayload.reference({
                 ...payload,
                 payloadType: convertTypeReference(payload.payloadType)
             })
-        case 'inlinedPayload':
+        case "inlinedPayload":
             return IrVersions.V54.webhooks.WebhookPayload.inlinedPayload({
                 ...payload,
                 properties: payload.properties.map((property) => {
@@ -227,13 +227,13 @@ function convertAuth(auth: IrVersions.V55.auth.ApiAuth): IrVersions.V54.auth.Api
         ...auth,
         schemes: auth.schemes.map((scheme) => {
             switch (scheme.type) {
-                case 'basic':
+                case "basic":
                     return IrVersions.V54.auth.AuthScheme.basic(scheme)
-                case 'bearer':
+                case "bearer":
                     return IrVersions.V54.auth.AuthScheme.bearer(scheme)
-                case 'header':
+                case "header":
                     return IrVersions.V54.auth.AuthScheme.header(convertHeader(scheme))
-                case 'oauth':
+                case "oauth":
                     return IrVersions.V54.auth.AuthScheme.oauth(convertOAuth(scheme))
             }
         })
@@ -318,10 +318,10 @@ function convertHttpHeader(header: IrVersions.V55.http.HttpHeader): IrVersions.V
 }
 
 function convertTypeReference(typeReference: IrVersions.V55.types.TypeReference): IrVersions.V54.types.TypeReference {
-    if (typeReference.type === 'container' && typeReference.container.type === 'nullable') {
+    if (typeReference.type === "container" && typeReference.container.type === "nullable") {
         return convertNullableTypeReferenceToOptionalIfNotAlready(typeReference.container.nullable)
     }
-    if (typeReference.type === 'container' && typeReference.container.type === 'optional') {
+    if (typeReference.type === "container" && typeReference.container.type === "optional") {
         return convertOptionalTypeReferenceWithoutNullable(typeReference.container.optional)
     }
     return IrVersions.V55.types.TypeReference._visit<IrVersions.V54.types.TypeReference>(typeReference, {
@@ -330,7 +330,7 @@ function convertTypeReference(typeReference: IrVersions.V55.types.TypeReference)
         named: IrVersions.V54.types.TypeReference.named,
         unknown: IrVersions.V54.types.TypeReference.unknown,
         _other: () => {
-            throw new Error('Unknown type reference: ' + typeReference.type)
+            throw new Error("Unknown type reference: " + typeReference.type)
         }
     })
 }
@@ -367,7 +367,7 @@ function convertContainerType(container: IrVersions.V55.types.ContainerType): Ir
             }),
         literal: IrVersions.V54.types.ContainerType.literal,
         _other: () => {
-            throw new Error('Unknown ContainerType: ' + container.type)
+            throw new Error("Unknown ContainerType: " + container.type)
         }
     })
 }
@@ -412,7 +412,7 @@ function convertResolvedType(
             IrVersions.V54.types.ResolvedTypeReference.primitive(convertPrimitiveType(primitiveType)),
         unknown: IrVersions.V54.types.ResolvedTypeReference.unknown,
         _other: () => {
-            throw new Error('Unknown ResolvedTypeReference: ' + resolvedType.type)
+            throw new Error("Unknown ResolvedTypeReference: " + resolvedType.type)
         }
     })
 }
@@ -487,17 +487,17 @@ function convertHttpResponse(response: IrVersions.V55.http.HttpResponse): IrVers
 
 function convertResponseBody(responseBody: IrVersions.V55.http.HttpResponseBody): IrVersions.V54.http.HttpResponseBody {
     switch (responseBody.type) {
-        case 'json':
+        case "json":
             return IrVersions.V54.http.HttpResponseBody.json(convertJsonResponse(responseBody.value))
-        case 'fileDownload':
+        case "fileDownload":
             return IrVersions.V54.http.HttpResponseBody.fileDownload(responseBody)
-        case 'bytes':
+        case "bytes":
             return IrVersions.V54.http.HttpResponseBody.bytes(responseBody)
-        case 'text':
+        case "text":
             return IrVersions.V54.http.HttpResponseBody.text(responseBody)
-        case 'streaming':
+        case "streaming":
             return IrVersions.V54.http.HttpResponseBody.streaming(convertStreamingResponse(responseBody.value))
-        case 'streamParameter':
+        case "streamParameter":
             return IrVersions.V54.http.HttpResponseBody.streamParameter(convertStreamParameter(responseBody))
         default:
             assertNever(responseBody)
@@ -506,12 +506,12 @@ function convertResponseBody(responseBody: IrVersions.V55.http.HttpResponseBody)
 
 function convertJsonResponse(jsonResponse: IrVersions.V55.http.JsonResponse): IrVersions.V54.http.JsonResponse {
     switch (jsonResponse.type) {
-        case 'response':
+        case "response":
             return IrVersions.V54.http.JsonResponse.response({
                 ...jsonResponse,
                 responseBodyType: convertTypeReference(jsonResponse.responseBodyType)
             })
-        case 'nestedPropertyAsResponse':
+        case "nestedPropertyAsResponse":
             return IrVersions.V54.http.JsonResponse.nestedPropertyAsResponse({
                 ...jsonResponse,
                 responseBodyType: convertTypeReference(jsonResponse.responseBodyType),
@@ -527,14 +527,14 @@ function convertStreamingResponse(
     streamingResponse: IrVersions.V55.http.StreamingResponse
 ): IrVersions.V54.http.StreamingResponse {
     switch (streamingResponse.type) {
-        case 'json':
+        case "json":
             return IrVersions.V54.http.StreamingResponse.json({
                 ...streamingResponse,
                 payload: convertTypeReference(streamingResponse.payload)
             })
-        case 'text':
+        case "text":
             return IrVersions.V54.http.StreamingResponse.text(streamingResponse)
-        case 'sse':
+        case "sse":
             return IrVersions.V54.http.StreamingResponse.sse({
                 ...streamingResponse,
                 payload: convertTypeReference(streamingResponse.payload)
@@ -546,13 +546,13 @@ function convertNonStreamHttpResponse(
     nonStreamingResponse: IrVersions.V55.http.NonStreamHttpResponseBody
 ): IrVersions.V54.http.NonStreamHttpResponseBody {
     switch (nonStreamingResponse.type) {
-        case 'json':
+        case "json":
             return IrVersions.V54.http.NonStreamHttpResponseBody.json(convertJsonResponse(nonStreamingResponse.value))
-        case 'bytes':
+        case "bytes":
             return IrVersions.V54.http.NonStreamHttpResponseBody.bytes(nonStreamingResponse)
-        case 'text':
+        case "text":
             return IrVersions.V54.http.NonStreamHttpResponseBody.text(nonStreamingResponse)
-        case 'fileDownload':
+        case "fileDownload":
             return IrVersions.V54.http.NonStreamHttpResponseBody.fileDownload(nonStreamingResponse)
         default:
             assertNever(nonStreamingResponse)
@@ -570,9 +570,9 @@ function convertStreamParameter(
 
 function convertPagination(pagination: IrVersions.V55.http.Pagination): IrVersions.V54.http.Pagination {
     switch (pagination.type) {
-        case 'cursor':
+        case "cursor":
             return IrVersions.V54.http.Pagination.cursor(convertCursorPagination(pagination))
-        case 'offset':
+        case "offset":
             return IrVersions.V54.http.Pagination.offset(convertOffsetPagination(pagination))
     }
 }
@@ -614,9 +614,9 @@ function convertRequestPropertValue(
     requestPropertyValue: IrVersions.V55.http.RequestPropertyValue
 ): IrVersions.V54.http.RequestPropertyValue {
     switch (requestPropertyValue.type) {
-        case 'query':
+        case "query":
             return IrVersions.V54.RequestPropertyValue.query(convertQueryParameter(requestPropertyValue))
-        case 'body':
+        case "body":
             return IrVersions.V54.RequestPropertyValue.body(convertObjectProperty(requestPropertyValue))
     }
 }
@@ -661,7 +661,7 @@ function convertSdkRequestShape(shape: IrVersions.V55.http.SdkRequestShape): IrV
             IrVersions.V54.http.SdkRequestShape.justRequestBody(convertSdkRequestBodyType(reference)),
         wrapper: IrVersions.V54.http.SdkRequestShape.wrapper,
         _other: () => {
-            throw new Error('Unknown SdkRequestShape: ' + shape.type)
+            throw new Error("Unknown SdkRequestShape: " + shape.type)
         }
     })
 }
@@ -670,9 +670,9 @@ function convertSdkRequestBodyType(
     shape: IrVersions.V55.http.SdkRequestBodyType
 ): IrVersions.V54.http.SdkRequestBodyType {
     switch (shape.type) {
-        case 'bytes':
+        case "bytes":
             return IrVersions.V54.http.SdkRequestBodyType.bytes(shape)
-        case 'typeReference':
+        case "typeReference":
             return IrVersions.V54.http.SdkRequestBodyType.typeReference({
                 ...shape,
                 requestBodyType: convertTypeReference(shape.requestBodyType)
@@ -704,12 +704,12 @@ function convertRequestBody(requestBody: IrVersions.V55.http.HttpRequestBody): I
                 ...fileUpload,
                 properties: fileUpload.properties.map((fileUploadRequestProperty) => {
                     switch (fileUploadRequestProperty.type) {
-                        case 'bodyProperty':
+                        case "bodyProperty":
                             return IrVersions.V54.http.FileUploadRequestProperty.bodyProperty({
                                 ...fileUploadRequestProperty,
                                 valueType: convertTypeReference(fileUploadRequestProperty.valueType)
                             })
-                        case 'file':
+                        case "file":
                             return IrVersions.V54.http.FileUploadRequestProperty.file(
                                 convertFileProperty(fileUploadRequestProperty.value)
                             )
@@ -720,16 +720,16 @@ function convertRequestBody(requestBody: IrVersions.V55.http.HttpRequestBody): I
             return IrVersions.V54.http.HttpRequestBody.bytes(bytes)
         },
         _other: () => {
-            throw new Error('Unknown HttpRequestBody: ' + requestBody.type)
+            throw new Error("Unknown HttpRequestBody: " + requestBody.type)
         }
     })
 }
 
 function convertFileProperty(fileProperty: IrVersions.V55.http.FileProperty): IrVersions.V54.http.FileProperty {
     switch (fileProperty.type) {
-        case 'file':
+        case "file":
             return IrVersions.V54.http.FileProperty.file(fileProperty)
-        case 'fileArray':
+        case "fileArray":
             return IrVersions.V54.http.FileProperty.fileArray(fileProperty)
     }
 }
@@ -793,9 +793,9 @@ function convertExampleWebSocketMessageBody(
     body: IrVersions.V55.ExampleWebSocketMessageBody
 ): IrVersions.V54.ExampleWebSocketMessageBody {
     switch (body.type) {
-        case 'inlinedBody':
+        case "inlinedBody":
             return IrVersions.V54.ExampleWebSocketMessageBody.inlinedBody(convertExampleInlinedRequestBody(body))
-        case 'reference':
+        case "reference":
             return IrVersions.V54.ExampleWebSocketMessageBody.reference(convertExampleTypeReference(body))
     }
 }
@@ -823,13 +823,13 @@ function convertExampleTypeReferenceShape(
     shape: IrVersions.V55.ExampleTypeReferenceShape
 ): IrVersions.V54.ExampleTypeReferenceShape {
     switch (shape.type) {
-        case 'primitive':
+        case "primitive":
             return IrVersions.V54.ExampleTypeReferenceShape.primitive(convertExamplePrimitiveTypeReferenceShape(shape))
-        case 'container':
+        case "container":
             return IrVersions.V54.ExampleTypeReferenceShape.container(convertExampleContainerTypeReferenceShape(shape))
-        case 'unknown':
+        case "unknown":
             return IrVersions.V54.ExampleTypeReferenceShape.unknown(shape.unknown)
-        case 'named':
+        case "named":
             return IrVersions.V54.ExampleTypeReferenceShape.named({
                 ...shape,
                 typeName: shape.typeName,
@@ -852,21 +852,21 @@ function convertExampleContainerTypeReferenceShape(
     shape: IrVersions.V55.ExampleTypeReferenceShape.Container
 ): IrVersions.V54.ExampleContainer {
     switch (shape.container.type) {
-        case 'list':
+        case "list":
             return IrVersions.V54.ExampleContainer.list({
                 list: shape.container.list.map((exampleTypeReference) =>
                     convertExampleTypeReference(exampleTypeReference)
                 ),
                 itemType: convertTypeReference(shape.container.itemType)
             })
-        case 'set':
+        case "set":
             return IrVersions.V54.ExampleContainer.set({
                 set: shape.container.set.map((exampleTypeReference) =>
                     convertExampleTypeReference(exampleTypeReference)
                 ),
                 itemType: convertTypeReference(shape.container.itemType)
             })
-        case 'optional':
+        case "optional":
             return IrVersions.V54.ExampleContainer.optional({
                 optional:
                     shape.container.optional != null
@@ -874,7 +874,7 @@ function convertExampleContainerTypeReferenceShape(
                         : undefined,
                 valueType: convertTypeReference(shape.container.valueType)
             })
-        case 'nullable':
+        case "nullable":
             return IrVersions.V54.ExampleContainer.optional({
                 optional:
                     shape.container.nullable != null
@@ -882,7 +882,7 @@ function convertExampleContainerTypeReferenceShape(
                         : undefined,
                 valueType: convertTypeReference(shape.container.valueType)
             })
-        case 'map':
+        case "map":
             return IrVersions.V54.ExampleContainer.map({
                 map: shape.container.map.map((exampleKeyValuePair) => ({
                     key: convertExampleTypeReference(exampleKeyValuePair.key),
@@ -891,7 +891,7 @@ function convertExampleContainerTypeReferenceShape(
                 keyType: convertTypeReference(shape.container.keyType),
                 valueType: convertTypeReference(shape.container.valueType)
             })
-        case 'literal':
+        case "literal":
             return IrVersions.V54.ExampleContainer.literal({
                 literal: convertExamplePrimitive(shape.container.literal)
             })
@@ -909,19 +909,19 @@ function convertExampleTypeReference(
 
 function convertExampleTypeShape(shape: IrVersions.V55.ExampleTypeShape): IrVersions.V54.ExampleTypeShape {
     switch (shape.type) {
-        case 'object':
+        case "object":
             return IrVersions.V54.ExampleTypeShape.object({
                 properties: shape.properties.map((property) => convertExampleObjectProperty(property))
             })
-        case 'alias':
+        case "alias":
             return IrVersions.V54.ExampleTypeShape.alias({
                 value: { ...convertExampleTypeReference(shape.value) }
             })
-        case 'enum':
+        case "enum":
             return IrVersions.V54.ExampleTypeShape.enum(shape)
-        case 'union':
+        case "union":
             return IrVersions.V54.ExampleTypeShape.union(convertUnionExampleTypeShape(shape))
-        case 'undiscriminatedUnion':
+        case "undiscriminatedUnion":
             return IrVersions.V54.ExampleTypeShape.undiscriminatedUnion(
                 convertUndiscriminatedUnionExampleTypeShape(shape)
             )
@@ -957,17 +957,17 @@ function convertExampleSingleUnionTypeProperties(
     exampleSingleUnionTypeProperties: IrVersions.V55.ExampleSingleUnionTypeProperties
 ): IrVersions.V54.ExampleSingleUnionTypeProperties {
     switch (exampleSingleUnionTypeProperties.type) {
-        case 'samePropertiesAsObject':
+        case "samePropertiesAsObject":
             return IrVersions.V54.ExampleSingleUnionTypeProperties.samePropertiesAsObject({
                 ...exampleSingleUnionTypeProperties,
                 object: convertExampleObjectType(exampleSingleUnionTypeProperties.object)
             })
-        case 'singleProperty':
+        case "singleProperty":
             return IrVersions.V54.ExampleSingleUnionTypeProperties.singleProperty({
                 ...exampleSingleUnionTypeProperties,
                 shape: convertExampleTypeReferenceShape(exampleSingleUnionTypeProperties.shape)
             })
-        case 'noProperties':
+        case "noProperties":
             return IrVersions.V54.ExampleSingleUnionTypeProperties.noProperties()
     }
 }
@@ -1015,12 +1015,12 @@ function convertExampleEndpointCall(example: IrVersions.V55.ExampleEndpointCall)
 
 function convertExampleResponse(response: IrVersions.V55.ExampleResponse): IrVersions.V54.ExampleResponse {
     switch (response.type) {
-        case 'error':
+        case "error":
             return IrVersions.V54.ExampleResponse.error({
                 ...response,
                 body: response.body != null ? convertExampleTypeReference(response.body) : undefined
             })
-        case 'ok':
+        case "ok":
             return IrVersions.V54.ExampleResponse.ok(convertExampleEndpointSuccessResponse(response))
     }
 }
@@ -1029,15 +1029,15 @@ function convertExampleEndpointSuccessResponse(
     response: IrVersions.V55.ExampleResponse.Ok
 ): IrVersions.V54.ExampleEndpointSuccessResponse {
     switch (response.value.type) {
-        case 'body':
+        case "body":
             return IrVersions.V54.ExampleEndpointSuccessResponse.body(
                 response.value.value != null ? convertExampleTypeReference(response.value.value) : undefined
             )
-        case 'stream':
+        case "stream":
             return IrVersions.V54.ExampleEndpointSuccessResponse.stream(
                 response.value.value.map((exampleTypeReference) => convertExampleTypeReference(exampleTypeReference))
             )
-        case 'sse':
+        case "sse":
             return IrVersions.V54.ExampleEndpointSuccessResponse.sse(
                 response.value.value.map((exampleServerSideEvent) => ({
                     ...exampleServerSideEvent,
@@ -1049,9 +1049,9 @@ function convertExampleEndpointSuccessResponse(
 
 function convertExampleRequest(request: IrVersions.V55.ExampleRequestBody): IrVersions.V54.ExampleRequestBody {
     switch (request.type) {
-        case 'inlinedRequestBody':
+        case "inlinedRequestBody":
             return IrVersions.V54.ExampleRequestBody.inlinedRequestBody(convertExampleInlinedRequestBody(request))
-        case 'reference':
+        case "reference":
             return IrVersions.V54.ExampleRequestBody.reference(convertExampleTypeReference(request))
     }
 }
@@ -1069,19 +1069,19 @@ function convertDynamic(
 
 function convertDynamicType(type: IrVersions.V55.dynamic.NamedType): IrVersions.V54.dynamic.NamedType {
     switch (type.type) {
-        case 'alias':
+        case "alias":
             return IrVersions.V54.dynamic.NamedType.alias({
                 ...type,
                 typeReference: convertDynamicTypeReference(type.typeReference)
             })
-        case 'enum':
+        case "enum":
             return IrVersions.V54.dynamic.NamedType.enum(type)
-        case 'object':
+        case "object":
             return IrVersions.V54.dynamic.NamedType.object({
                 ...type,
                 properties: type.properties.map((property) => convertDynamicNamedParameter(property))
             })
-        case 'discriminatedUnion':
+        case "discriminatedUnion":
             return IrVersions.V54.dynamic.NamedType.discriminatedUnion({
                 ...type,
                 types: Object.fromEntries(
@@ -1091,7 +1091,7 @@ function convertDynamicType(type: IrVersions.V55.dynamic.NamedType): IrVersions.
                     ])
                 )
             })
-        case 'undiscriminatedUnion':
+        case "undiscriminatedUnion":
             return IrVersions.V54.dynamic.NamedType.undiscriminatedUnion({
                 ...type,
                 types: type.types.map((type) => convertDynamicTypeReference(type))
@@ -1111,11 +1111,11 @@ function convertDynamicEndpoint(endpoint: IrVersions.V55.dynamic.Endpoint): IrVe
 
 function convertDynamicAuth(auth: IrVersions.V55.dynamic.Auth): IrVersions.V54.dynamic.Auth {
     switch (auth.type) {
-        case 'basic':
+        case "basic":
             return IrVersions.V54.dynamic.Auth.basic(auth)
-        case 'bearer':
+        case "bearer":
             return IrVersions.V54.dynamic.Auth.bearer(auth)
-        case 'header':
+        case "header":
             return IrVersions.V54.dynamic.Auth.header({
                 header: convertDynamicNamedParameter(auth.header)
             })
@@ -1126,27 +1126,27 @@ function convertDynamicTypeReference(
     typeReference: IrVersions.V55.dynamic.TypeReference
 ): IrVersions.V54.dynamic.TypeReference {
     switch (typeReference.type) {
-        case 'list':
+        case "list":
             return IrVersions.V54.dynamic.TypeReference.list(convertDynamicTypeReference(typeReference.value))
-        case 'optional':
+        case "optional":
             return convertOptionalDynamicTypeReferenceWithoutNullable(typeReference.value)
-        case 'nullable':
+        case "nullable":
             return convertNullableDynamicTypeReferenceToOptionalIfNotAlready(typeReference.value)
-        case 'map':
+        case "map":
             return IrVersions.V54.dynamic.TypeReference.map({
                 ...typeReference,
                 key: convertDynamicTypeReference(typeReference.key),
                 value: convertDynamicTypeReference(typeReference.value)
             })
-        case 'literal':
+        case "literal":
             return IrVersions.V54.dynamic.TypeReference.literal(typeReference.value)
-        case 'named':
+        case "named":
             return IrVersions.V54.dynamic.TypeReference.named(typeReference.value)
-        case 'primitive':
+        case "primitive":
             return IrVersions.V54.dynamic.TypeReference.primitive(typeReference.value)
-        case 'set':
+        case "set":
             return IrVersions.V54.dynamic.TypeReference.set(convertDynamicTypeReference(typeReference.value))
-        case 'unknown':
+        case "unknown":
             return IrVersions.V54.dynamic.TypeReference.unknown()
         default:
             assertNever(typeReference)
@@ -1157,14 +1157,14 @@ function convertDynamicSingleDiscriminatedUnionType(
     singleDiscriminatedUnionType: IrVersions.V55.dynamic.SingleDiscriminatedUnionType
 ): IrVersions.V54.dynamic.SingleDiscriminatedUnionType {
     switch (singleDiscriminatedUnionType.type) {
-        case 'samePropertiesAsObject':
+        case "samePropertiesAsObject":
             return IrVersions.V54.dynamic.SingleDiscriminatedUnionType.samePropertiesAsObject({
                 ...singleDiscriminatedUnionType,
                 properties: singleDiscriminatedUnionType.properties.map((property) =>
                     convertDynamicNamedParameter(property)
                 )
             })
-        case 'singleProperty':
+        case "singleProperty":
             return IrVersions.V54.dynamic.SingleDiscriminatedUnionType.singleProperty({
                 ...singleDiscriminatedUnionType,
                 typeReference: convertDynamicTypeReference(singleDiscriminatedUnionType.typeReference),
@@ -1172,7 +1172,7 @@ function convertDynamicSingleDiscriminatedUnionType(
                     convertDynamicNamedParameter(property)
                 )
             })
-        case 'noProperties':
+        case "noProperties":
             return IrVersions.V54.dynamic.SingleDiscriminatedUnionType.noProperties({
                 ...singleDiscriminatedUnionType,
                 properties: singleDiscriminatedUnionType.properties?.map((property) =>
@@ -1195,9 +1195,9 @@ function convertDynamicNamedParameter(
 
 function convertDynamicRequest(request: IrVersions.V55.dynamic.Request): IrVersions.V54.dynamic.Request {
     switch (request.type) {
-        case 'body':
+        case "body":
             return IrVersions.V54.dynamic.Request.body(convertDynamicRequestBody(request))
-        case 'inlined':
+        case "inlined":
             return IrVersions.V54.dynamic.Request.inlined(convertDynamicInlinedRequest(request))
         default:
             assertNever(request)
@@ -1233,15 +1233,15 @@ function convertDynamicInlinedRequestBody(
     inlinedRequestBody: IrVersions.V55.dynamic.InlinedRequestBody
 ): IrVersions.V54.dynamic.InlinedRequestBody {
     switch (inlinedRequestBody.type) {
-        case 'properties':
+        case "properties":
             return IrVersions.V54.dynamic.InlinedRequestBody.properties(
                 inlinedRequestBody.value.map((property) => convertDynamicNamedParameter(property))
             )
-        case 'referenced':
+        case "referenced":
             return IrVersions.V54.dynamic.InlinedRequestBody.referenced(
                 convertDynamicReferencedRequestBody(inlinedRequestBody)
             )
-        case 'fileUpload':
+        case "fileUpload":
             return IrVersions.V54.dynamic.InlinedRequestBody.fileUpload(
                 convertFileUploadRequestBody(inlinedRequestBody)
             )
@@ -1263,9 +1263,9 @@ function convertDynamicRequestBodyType(
     requestBodyType: IrVersions.V55.dynamic.ReferencedRequestBodyType
 ): IrVersions.V54.dynamic.ReferencedRequestBodyType {
     switch (requestBodyType.type) {
-        case 'bytes':
+        case "bytes":
             return IrVersions.V54.dynamic.ReferencedRequestBodyType.bytes()
-        case 'typeReference':
+        case "typeReference":
             return IrVersions.V54.dynamic.ReferencedRequestBodyType.typeReference(
                 convertDynamicTypeReference(requestBodyType.value)
             )
@@ -1288,11 +1288,11 @@ function convertDynamicFileUploadRequestBodyProperty(
     fileUploadRequestBodyProperty: IrVersions.V55.dynamic.FileUploadRequestBodyProperty
 ): IrVersions.V54.dynamic.FileUploadRequestBodyProperty {
     switch (fileUploadRequestBodyProperty.type) {
-        case 'file':
+        case "file":
             return IrVersions.V54.dynamic.FileUploadRequestBodyProperty.file(fileUploadRequestBodyProperty)
-        case 'fileArray':
+        case "fileArray":
             return IrVersions.V54.dynamic.FileUploadRequestBodyProperty.fileArray(fileUploadRequestBodyProperty)
-        case 'bodyProperty':
+        case "bodyProperty":
             return IrVersions.V54.dynamic.FileUploadRequestBodyProperty.bodyProperty(
                 convertDynamicNamedParameter(fileUploadRequestBodyProperty)
             )
@@ -1304,7 +1304,7 @@ function convertDynamicFileUploadRequestBodyProperty(
 function convertOptionalTypeReferenceWithoutNullable(
     typeReference: IrVersions.V55.types.TypeReference
 ): IrVersions.V54.types.TypeReference {
-    if (typeReference.type === 'container' && typeReference.container.type === 'nullable') {
+    if (typeReference.type === "container" && typeReference.container.type === "nullable") {
         return IrVersions.V54.types.TypeReference.container(
             IrVersions.V54.types.ContainerType.optional(convertTypeReference(typeReference.container.nullable))
         )
@@ -1317,7 +1317,7 @@ function convertOptionalTypeReferenceWithoutNullable(
 function convertNullableTypeReferenceToOptionalIfNotAlready(
     typeReference: IrVersions.V55.types.TypeReference
 ): IrVersions.V54.types.TypeReference {
-    if (typeReference.type === 'container' && typeReference.container.type === 'optional') {
+    if (typeReference.type === "container" && typeReference.container.type === "optional") {
         return convertTypeReference(typeReference)
     }
     return IrVersions.V54.types.TypeReference.container(
@@ -1328,7 +1328,7 @@ function convertNullableTypeReferenceToOptionalIfNotAlready(
 function convertNullableDynamicTypeReferenceToOptionalIfNotAlready(
     typeReference: IrVersions.V55.dynamic.TypeReference
 ): IrVersions.V54.dynamic.TypeReference {
-    if (typeReference.type === 'optional') {
+    if (typeReference.type === "optional") {
         return convertDynamicTypeReference(typeReference)
     }
     return IrVersions.V54.dynamic.TypeReference.optional(convertDynamicTypeReference(typeReference))
@@ -1337,7 +1337,7 @@ function convertNullableDynamicTypeReferenceToOptionalIfNotAlready(
 function convertOptionalDynamicTypeReferenceWithoutNullable(
     typeReference: IrVersions.V55.dynamic.TypeReference
 ): IrVersions.V54.dynamic.TypeReference {
-    if (typeReference.type === 'nullable') {
+    if (typeReference.type === "nullable") {
         return IrVersions.V54.dynamic.TypeReference.optional(convertDynamicTypeReference(typeReference.value))
     }
     return IrVersions.V54.dynamic.TypeReference.optional(convertDynamicTypeReference(typeReference))

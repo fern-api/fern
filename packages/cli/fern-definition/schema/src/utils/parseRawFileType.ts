@@ -1,11 +1,11 @@
-import { FernContainerRegex } from './visitRawTypeReference'
+import { FernContainerRegex } from "./visitRawTypeReference"
 
 export interface RawFileType {
     isOptional: boolean
     isArray: boolean
 }
 
-const FILE_TYPE = 'file'
+const FILE_TYPE = "file"
 
 function isFileArray(typeReference: string): boolean {
     const listMatch = typeReference.match(FernContainerRegex.LIST)

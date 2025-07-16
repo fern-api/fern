@@ -1,8 +1,8 @@
-import { OpenAPIV3 } from 'openapi-types'
+import { OpenAPIV3 } from "openapi-types"
 
-import { MediaType } from '@fern-api/core-utils'
+import { MediaType } from "@fern-api/core-utils"
 
-import { isReferenceObject } from './isReferenceObject'
+import { isReferenceObject } from "./isReferenceObject"
 
 export function getReferenceOccurrences(document: OpenAPIV3.Document): Record<string, number> {
     const contentConflictsRemovedDocument = removeApplicationJsonAndMultipartConflictsFromDocument(document)
@@ -36,11 +36,11 @@ function getReferenceOccurrencesHelper({
         return
     }
 
-    if (typeof obj !== 'object') {
+    if (typeof obj !== "object") {
         return
     }
 
-    if (obj.$ref != null && typeof obj.$ref === 'string') {
+    if (obj.$ref != null && typeof obj.$ref === "string") {
         const refProperty = obj.$ref
         if (occurrences[refProperty] == null) {
             occurrences[refProperty] = 1

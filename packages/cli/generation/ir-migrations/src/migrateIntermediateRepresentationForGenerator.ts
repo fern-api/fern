@@ -1,8 +1,8 @@
-import { IntermediateRepresentation } from '@fern-api/ir-sdk'
-import { TaskContext } from '@fern-api/task-context'
+import { IntermediateRepresentation } from "@fern-api/ir-sdk"
+import { TaskContext } from "@fern-api/task-context"
 
-import { getIntermediateRepresentationMigrator } from './IntermediateRepresentationMigrator'
-import { GeneratorNameAndVersion } from './IrMigrationContext'
+import { getIntermediateRepresentationMigrator } from "./IntermediateRepresentationMigrator"
+import { GeneratorNameAndVersion } from "./IrMigrationContext"
 
 export function migrateIntermediateRepresentationForGenerator({
     intermediateRepresentation,

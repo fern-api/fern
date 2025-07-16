@@ -1,9 +1,9 @@
-import { z } from 'zod'
+import { z } from "zod"
 
 export const PostmanPublishingSchema = z.strictObject({
     postman: z.strictObject({
-        'api-key': z.string(),
-        'workspace-id': z.string()
+        "api-key": z.string(),
+        "workspace-id": z.string()
     })
 })
 

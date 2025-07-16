@@ -1,11 +1,11 @@
-import { FernFilepath } from '@fern-fern/ir-sdk/api'
+import { FernFilepath } from "@fern-fern/ir-sdk/api"
 
-import { LocationGenerator } from '../utils/LocationGenerator'
-import { BLOCK_END } from '../utils/RubyConstants'
-import { Import } from './Import'
-import { ClassReference } from './classes/ClassReference'
-import { Class_ } from './classes/Class_'
-import { AstNode } from './core/AstNode'
+import { LocationGenerator } from "../utils/LocationGenerator"
+import { BLOCK_END } from "../utils/RubyConstants"
+import { Import } from "./Import"
+import { ClassReference } from "./classes/ClassReference"
+import { Class_ } from "./classes/Class_"
+import { AstNode } from "./core/AstNode"
 
 export declare namespace Module_ {
     export interface Init extends AstNode.Init {
@@ -28,7 +28,7 @@ export class Module_ extends AstNode {
     }
 
     public writeInternal(startingTabSpaces: number): void {
-        this.addText({ stringContent: this.name, templateString: 'module %s', startingTabSpaces })
+        this.addText({ stringContent: this.name, templateString: "module %s", startingTabSpaces })
         this.children?.forEach((child) =>
             this.addText({ stringContent: child.write({ startingTabSpaces: this.tabSizeSpaces + startingTabSpaces }) })
         )

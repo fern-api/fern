@@ -1,5 +1,5 @@
-import { ObjectSchema, inferParsedObject, inferRawObject } from '../object'
-import { Discriminant } from './discriminant'
+import { ObjectSchema, inferParsedObject, inferRawObject } from "../object"
+import { Discriminant } from "./discriminant"
 
 export type UnionSubtypes<DiscriminantValues extends string | number | symbol> = {
     [K in DiscriminantValues]: ObjectSchema<any, any>

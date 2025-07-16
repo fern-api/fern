@@ -1,12 +1,12 @@
-import chalk from 'chalk'
+import chalk from "chalk"
 
-import { visitRawEnvironmentDeclaration } from '@fern-api/fern-definition-schema'
+import { visitRawEnvironmentDeclaration } from "@fern-api/fern-definition-schema"
 
-import { Rule, RuleViolation } from '../../Rule'
-import { getAllEnvironmentUrlIds } from '../../utils/getAllEnvironmentUriIds'
+import { Rule, RuleViolation } from "../../Rule"
+import { getAllEnvironmentUrlIds } from "../../utils/getAllEnvironmentUriIds"
 
 export const MatchingEnvironmentUrlsRule: Rule = {
-    name: 'matching-environment-urls',
+    name: "matching-environment-urls",
     create: ({ workspace }) => {
         const urlIds = getAllEnvironmentUrlIds(workspace)
         if (urlIds.length === 0) {
@@ -20,7 +20,7 @@ export const MatchingEnvironmentUrlsRule: Rule = {
 
                     const addViolationForUrlId = (urlId: string) => {
                         violations.push({
-                            severity: 'fatal',
+                            severity: "fatal",
                             message: `Environment ${environmentId} is missing URL for ${chalk.bold(urlId)}`
                         })
                     }

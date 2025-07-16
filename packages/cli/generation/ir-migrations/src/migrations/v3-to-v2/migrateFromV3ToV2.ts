@@ -1,25 +1,25 @@
-import { GeneratorName } from '@fern-api/configuration-loader'
+import { GeneratorName } from "@fern-api/configuration-loader"
 
-import { IrVersions } from '../../ir-versions'
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
-import { getReferencedTypesForInlinedRequest } from './getReferencedTypesForInlinedRequest'
+import { IrVersions } from "../../ir-versions"
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
+import { getReferencedTypesForInlinedRequest } from "./getReferencedTypesForInlinedRequest"
 
 export const V3_TO_V2_MIGRATION: IrMigration<
     IrVersions.V3.ir.IntermediateRepresentation,
     IrVersions.V2.ir.IntermediateRepresentation
 > = {
-    laterVersion: 'v3',
-    earlierVersion: 'v2',
+    laterVersion: "v3",
+    earlierVersion: "v2",
     firstGeneratorVersionToConsumeNewIR: {
         [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_SDK]: '0.0.249',
-        [GeneratorName.TYPESCRIPT_EXPRESS]: '0.0.264',
+        [GeneratorName.TYPESCRIPT_SDK]: "0.0.249",
+        [GeneratorName.TYPESCRIPT_EXPRESS]: "0.0.264",
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_MODEL]: '0.0.134-3-g97d4964',
-        [GeneratorName.JAVA_SDK]: '0.0.134-3-g97d4964',
-        [GeneratorName.JAVA_SPRING]: '0.0.134-3-g97d4964',
+        [GeneratorName.JAVA_MODEL]: "0.0.134-3-g97d4964",
+        [GeneratorName.JAVA_SDK]: "0.0.134-3-g97d4964",
+        [GeneratorName.JAVA_SPRING]: "0.0.134-3-g97d4964",
         [GeneratorName.PYTHON_FASTAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_PYDANTIC]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.OPENAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -176,7 +176,7 @@ function migrateRequest(
             }
         },
         _unknown: () => {
-            throw new Error('Unknown HttpRequestBody type: ' + v3Request.type)
+            throw new Error("Unknown HttpRequestBody type: " + v3Request.type)
         }
     })
 }

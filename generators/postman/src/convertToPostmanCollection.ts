@@ -1,6 +1,6 @@
-import { startCase } from 'lodash'
+import { startCase } from "lodash"
 
-import { isNonNullish } from '@fern-api/core-utils'
+import { isNonNullish } from "@fern-api/core-utils"
 
 import {
     ApiAuth,
@@ -11,18 +11,18 @@ import {
     IntermediateRepresentation,
     Package,
     TypeDeclaration
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 import {
     PostmanCollectionEndpointItem,
     PostmanCollectionItem,
     PostmanCollectionSchema,
     PostmanHeader
-} from '@fern-fern/postman-sdk/api'
+} from "@fern-fern/postman-sdk/api"
 
-import { convertAuth, getAuthHeaders, getVariablesForAuthScheme } from './auth'
-import { convertExampleEndpointCall } from './convertExampleEndpointCall'
-import { GeneratedExampleRequest } from './request/GeneratedExampleRequest'
-import { ORIGIN_VARIABLE_NAME } from './utils'
+import { convertAuth, getAuthHeaders, getVariablesForAuthScheme } from "./auth"
+import { convertExampleEndpointCall } from "./convertExampleEndpointCall"
+import { GeneratedExampleRequest } from "./request/GeneratedExampleRequest"
+import { ORIGIN_VARIABLE_NAME } from "./utils"
 
 export function convertToPostmanCollection({
     ir,
@@ -37,14 +37,14 @@ export function convertToPostmanCollection({
     return {
         info: {
             name: collectionName,
-            schema: 'https://schema.getpostman.com/json/collection/v2.1.0/collection.json',
+            schema: "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
             description: ir.apiDocs ?? undefined
         },
         variable: [
             {
                 key: ORIGIN_VARIABLE_NAME,
                 value: getOriginaVariableValue(ir),
-                type: 'string'
+                type: "string"
             },
             ...authSchemes.flatMap(getVariablesForAuthScheme)
         ],
@@ -54,13 +54,13 @@ export function convertToPostmanCollection({
 }
 
 function getOriginaVariableValue(ir: IntermediateRepresentation): string {
-    if (ir.environments?.environments.type === 'singleBaseUrl') {
+    if (ir.environments?.environments.type === "singleBaseUrl") {
         if (ir.environments.defaultEnvironment != null) {
             const defaultEnvironment = ir.environments.environments.environments.find(
                 (env) => env.id === ir.environments?.defaultEnvironment
             )
             if (defaultEnvironment == null) {
-                throw new Error('Environment does not exist: ' + ir.environments.defaultEnvironment)
+                throw new Error("Environment does not exist: " + ir.environments.defaultEnvironment)
             }
             return defaultEnvironment.url
         }
@@ -70,7 +70,7 @@ function getOriginaVariableValue(ir: IntermediateRepresentation): string {
         }
     }
 
-    return ''
+    return ""
 }
 
 function filterAuthSchemes(auth: ApiAuth): AuthScheme[] {
@@ -97,7 +97,7 @@ function filterAuthSchemes(auth: ApiAuth): AuthScheme[] {
             },
             header: () => true,
             _other: () => {
-                throw new Error('Unknown auth scheme: ' + scheme.type)
+                throw new Error("Unknown auth scheme: " + scheme.type)
             }
         })
     })
@@ -123,12 +123,12 @@ function getCollectionItemsForPackage(
     for (const subpackageId of package_.subpackages) {
         const subpackage = ir.subpackages[subpackageId]
         if (subpackage == null) {
-            throw new Error('Subpackage does not exist: ' + subpackageId)
+            throw new Error("Subpackage does not exist: " + subpackageId)
         }
         if (subpackage.hasEndpointsInTree) {
             const service = subpackage.service != null ? ir.services[subpackage.service] : undefined
             items.push({
-                type: 'container',
+                type: "container",
                 description: subpackage.docs ?? undefined,
                 name: service?.displayName ?? startCase(subpackage.name.originalName),
                 item: getCollectionItemsForPackage(subpackage, ir, authHeaders)
@@ -139,7 +139,7 @@ function getCollectionItemsForPackage(
     if (package_.service != null) {
         const service = ir.services[package_.service]
         if (service == null) {
-            throw new Error('Service does not exist: ' + package_.service)
+            throw new Error("Service does not exist: " + package_.service)
         }
         items.push(
             ...service.endpoints
@@ -154,7 +154,7 @@ function getCollectionItemsForPackage(
                     })
                     if (convertedEndpoint != null) {
                         return {
-                            type: 'endpoint',
+                            type: "endpoint",
                             ...convertedEndpoint
                         }
                     }

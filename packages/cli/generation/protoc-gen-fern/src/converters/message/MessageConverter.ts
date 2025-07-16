@@ -1,15 +1,15 @@
-import { DescriptorProto } from '@bufbuild/protobuf/wkt'
+import { DescriptorProto } from "@bufbuild/protobuf/wkt"
 
-import * as FernIr from '@fern-api/ir-sdk'
-import { Type, TypeId } from '@fern-api/ir-sdk'
-import { AbstractConverter } from '@fern-api/v2-importer-commons'
+import * as FernIr from "@fern-api/ir-sdk"
+import { Type, TypeId } from "@fern-api/ir-sdk"
+import { AbstractConverter } from "@fern-api/v2-importer-commons"
 
-import { ProtofileConverterContext } from '../ProtofileConverterContext'
-import { capitalizeFirstLetter } from '../utils/CapitalizeFirstLetter'
-import { convertFields } from '../utils/ConvertFields'
-import { PATH_FIELD_NUMBERS } from '../utils/PathFieldNumbers'
-import { EnumOrMessageConverter } from './EnumOrMessageConverter'
-import { OneOfFieldConverter } from './OneOfFieldConverter'
+import { ProtofileConverterContext } from "../ProtofileConverterContext"
+import { capitalizeFirstLetter } from "../utils/CapitalizeFirstLetter"
+import { convertFields } from "../utils/ConvertFields"
+import { PATH_FIELD_NUMBERS } from "../utils/PathFieldNumbers"
+import { EnumOrMessageConverter } from "./EnumOrMessageConverter"
+import { OneOfFieldConverter } from "./OneOfFieldConverter"
 
 export declare namespace MessageConverter {
     export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {
@@ -227,7 +227,7 @@ export class MessageConverter extends AbstractConverter<ProtofileConverterContex
         }
     }
 
-    private prependDelimitedParentMessageName(name: string, delimiter: string = '.'): string {
+    private prependDelimitedParentMessageName(name: string, delimiter: string = "."): string {
         return `${this.message.name}${delimiter}${name}`
     }
 

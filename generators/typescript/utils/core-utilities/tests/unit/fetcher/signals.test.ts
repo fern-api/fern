@@ -1,6 +1,6 @@
-import { anySignal, getTimeoutSignal } from '../../../src/core/fetcher/signals'
+import { anySignal, getTimeoutSignal } from "../../../src/core/fetcher/signals"
 
-describe('Test getTimeoutSignal', () => {
+describe("Test getTimeoutSignal", () => {
     beforeEach(() => {
         jest.useFakeTimers()
     })
@@ -9,7 +9,7 @@ describe('Test getTimeoutSignal', () => {
         jest.useRealTimers()
     })
 
-    it('should return an object with signal and abortId', () => {
+    it("should return an object with signal and abortId", () => {
         const { signal, abortId } = getTimeoutSignal(1000)
 
         expect(signal).toBeDefined()
@@ -18,7 +18,7 @@ describe('Test getTimeoutSignal', () => {
         expect(signal.aborted).toBe(false)
     })
 
-    it('should create a signal that aborts after the specified timeout', () => {
+    it("should create a signal that aborts after the specified timeout", () => {
         const timeoutMs = 5000
         const { signal } = getTimeoutSignal(timeoutMs)
 
@@ -32,13 +32,13 @@ describe('Test getTimeoutSignal', () => {
     })
 })
 
-describe('Test anySignal', () => {
-    it('should return an AbortSignal', () => {
+describe("Test anySignal", () => {
+    it("should return an AbortSignal", () => {
         const signal = anySignal(new AbortController().signal)
         expect(signal).toBeInstanceOf(AbortSignal)
     })
 
-    it('should abort when any of the input signals is aborted', () => {
+    it("should abort when any of the input signals is aborted", () => {
         const controller1 = new AbortController()
         const controller2 = new AbortController()
         const signal = anySignal(controller1.signal, controller2.signal)
@@ -48,7 +48,7 @@ describe('Test anySignal', () => {
         expect(signal.aborted).toBe(true)
     })
 
-    it('should handle an array of signals', () => {
+    it("should handle an array of signals", () => {
         const controller1 = new AbortController()
         const controller2 = new AbortController()
         const signal = anySignal([controller1.signal, controller2.signal])
@@ -58,7 +58,7 @@ describe('Test anySignal', () => {
         expect(signal.aborted).toBe(true)
     })
 
-    it('should abort immediately if one of the input signals is already aborted', () => {
+    it("should abort immediately if one of the input signals is already aborted", () => {
         const controller1 = new AbortController()
         const controller2 = new AbortController()
         controller1.abort()

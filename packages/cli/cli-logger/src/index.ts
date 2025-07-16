@@ -1,1 +1,1 @@
-export { formatLog } from './formatLog'
+export { formatLog } from "./formatLog"

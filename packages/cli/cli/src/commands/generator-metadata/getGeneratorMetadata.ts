@@ -1,7 +1,7 @@
-import { generatorsYml, loadGeneratorsConfiguration } from '@fern-api/configuration-loader'
-import { Project } from '@fern-api/project-loader'
+import { generatorsYml, loadGeneratorsConfiguration } from "@fern-api/configuration-loader"
+import { Project } from "@fern-api/project-loader"
 
-import { CliContext } from '../../cli-context/CliContext'
+import { CliContext } from "../../cli-context/CliContext"
 
 export async function getGeneratorMetadata({
     cliContext,

@@ -1,86 +1,86 @@
-import { object, string, stringLiteral } from '../../../../src/core/schemas/builders'
-import { itJson, itParse, itSchema } from '../utils/itSchema'
-import { itValidate } from '../utils/itValidate'
+import { object, string, stringLiteral } from "../../../../src/core/schemas/builders"
+import { itJson, itParse, itSchema } from "../utils/itSchema"
+import { itValidate } from "../utils/itValidate"
 
-describe('passthrough', () => {
+describe("passthrough", () => {
     const baseSchema = object({
         foo: string(),
-        bar: stringLiteral('bar')
+        bar: stringLiteral("bar")
     })
 
-    describe('parse', () => {
-        itParse('includes unknown values', baseSchema.passthrough(), {
+    describe("parse", () => {
+        itParse("includes unknown values", baseSchema.passthrough(), {
             raw: {
-                foo: 'hello',
-                bar: 'bar',
-                baz: 'extra'
+                foo: "hello",
+                bar: "bar",
+                baz: "extra"
             },
             parsed: {
-                foo: 'hello',
-                bar: 'bar',
-                baz: 'extra'
+                foo: "hello",
+                bar: "bar",
+                baz: "extra"
             }
         })
 
         itValidate(
-            'preserves schema validation',
+            "preserves schema validation",
             baseSchema.passthrough(),
             {
                 foo: 123,
-                bar: 'bar',
-                baz: 'extra'
+                bar: "bar",
+                baz: "extra"
             },
             [
                 {
-                    path: ['foo'],
-                    message: 'Expected string. Received 123.'
+                    path: ["foo"],
+                    message: "Expected string. Received 123."
                 }
             ]
         )
     })
 
-    describe('json', () => {
-        itJson('includes unknown values', baseSchema.passthrough(), {
+    describe("json", () => {
+        itJson("includes unknown values", baseSchema.passthrough(), {
             raw: {
-                foo: 'hello',
-                bar: 'bar',
+                foo: "hello",
+                bar: "bar",
 
-                baz: 'extra'
+                baz: "extra"
             },
             parsed: {
-                foo: 'hello',
-                bar: 'bar',
+                foo: "hello",
+                bar: "bar",
 
-                baz: 'extra'
+                baz: "extra"
             }
         })
 
         itValidate(
-            'preserves schema validation',
+            "preserves schema validation",
             baseSchema.passthrough(),
             {
-                foo: 'hello',
-                bar: 'wrong',
-                baz: 'extra'
+                foo: "hello",
+                bar: "wrong",
+                baz: "extra"
             },
             [
                 {
-                    path: ['bar'],
+                    path: ["bar"],
                     message: 'Expected "bar". Received "wrong".'
                 }
             ]
         )
     })
 
-    itSchema('preserves schema validation in both directions', baseSchema.passthrough(), {
+    itSchema("preserves schema validation in both directions", baseSchema.passthrough(), {
         raw: {
-            foo: 'hello',
-            bar: 'bar',
+            foo: "hello",
+            bar: "bar",
             extra: 42
         },
         parsed: {
-            foo: 'hello',
-            bar: 'bar',
+            foo: "hello",
+            bar: "bar",
             extra: 42
         }
     })

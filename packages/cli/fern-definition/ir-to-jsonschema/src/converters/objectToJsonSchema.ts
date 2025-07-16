@@ -1,9 +1,9 @@
-import { JSONSchema4 } from 'json-schema'
+import { JSONSchema4 } from "json-schema"
 
-import { ObjectTypeDeclaration } from '@fern-api/ir-sdk'
+import { ObjectTypeDeclaration } from "@fern-api/ir-sdk"
 
-import { JsonSchemaConverterContext } from '../JsonSchemaConverterContext'
-import { convertTypeReferenceToJsonSchema } from './typeReferenceToJsonSchema'
+import { JsonSchemaConverterContext } from "../JsonSchemaConverterContext"
+import { convertTypeReferenceToJsonSchema } from "./typeReferenceToJsonSchema"
 
 export declare namespace convertObjectToJsonSchema {
     interface Args {
@@ -14,7 +14,7 @@ export declare namespace convertObjectToJsonSchema {
 
 export function convertObjectToJsonSchema({ object, context }: convertObjectToJsonSchema.Args): JSONSchema4 {
     const schema: JSONSchema4 = {
-        type: 'object'
+        type: "object"
     }
 
     const allProperties = [...(object.extendedProperties ?? []), ...object.properties]

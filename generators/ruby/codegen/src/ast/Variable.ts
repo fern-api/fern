@@ -1,5 +1,5 @@
-import { ClassReference } from './classes/ClassReference'
-import { AstNode } from './core/AstNode'
+import { ClassReference } from "./classes/ClassReference"
+import { AstNode } from "./core/AstNode"
 
 export enum VariableType {
     CLASS,
@@ -32,13 +32,13 @@ export class Variable extends AstNode {
         let templateString
         switch (this.variableType) {
             case VariableType.CLASS:
-                templateString = '@@%s'
+                templateString = "@@%s"
                 break
             case VariableType.INSTANCE:
-                templateString = '@%s'
+                templateString = "@%s"
                 break
             default:
-                templateString = '%s'
+                templateString = "%s"
                 break
         }
         this.addText({ stringContent: this.name, templateString, startingTabSpaces })

@@ -1,20 +1,20 @@
-import { Fetcher, GetReferenceOpts, PackageId } from '@fern-typescript/commons'
-import { GeneratedEndpointImplementation, SdkContext } from '@fern-typescript/contexts'
-import { OptionalKind, ParameterDeclarationStructure, ts } from 'ts-morph'
+import { Fetcher, GetReferenceOpts, PackageId } from "@fern-typescript/commons"
+import { GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts"
+import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph"
 
-import { ExampleEndpointCall, HttpEndpoint } from '@fern-fern/ir-sdk/api'
+import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api"
 
-import { GeneratedSdkClientClassImpl } from '../GeneratedSdkClientClassImpl'
-import { GeneratedEndpointRequest } from '../endpoint-request/GeneratedEndpointRequest'
-import { getReadableTypeNode } from '../getReadableTypeNode'
-import { GeneratedEndpointResponse } from './default/endpoint-response/GeneratedEndpointResponse'
-import { buildUrl } from './utils/buildUrl'
+import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl"
+import { GeneratedEndpointRequest } from "../endpoint-request/GeneratedEndpointRequest"
+import { getReadableTypeNode } from "../getReadableTypeNode"
+import { GeneratedEndpointResponse } from "./default/endpoint-response/GeneratedEndpointResponse"
+import { buildUrl } from "./utils/buildUrl"
 import {
     getAbortSignalExpression,
     getMaxRetriesExpression,
     getRequestOptionsParameter,
     getTimeoutExpression
-} from './utils/requestOptionsParameter'
+} from "./utils/requestOptionsParameter"
 
 export declare namespace GeneratedStreamingEndpointImplementation {
     export interface Init {
@@ -23,29 +23,29 @@ export declare namespace GeneratedStreamingEndpointImplementation {
         response: GeneratedEndpointResponse
         generatedSdkClientClass: GeneratedSdkClientClassImpl
         includeCredentialsOnCrossOriginRequests: boolean
-        defaultTimeoutInSeconds: number | 'infinity' | undefined
+        defaultTimeoutInSeconds: number | "infinity" | undefined
         request: GeneratedEndpointRequest
         includeSerdeLayer: boolean
         retainOriginalCasing: boolean
         omitUndefined: boolean
-        streamType: 'wrapper' | 'web'
+        streamType: "wrapper" | "web"
     }
 }
 
 export class GeneratedStreamingEndpointImplementation implements GeneratedEndpointImplementation {
-    public static DATA_PARAMETER_NAME = 'data'
+    public static DATA_PARAMETER_NAME = "data"
 
     public readonly endpoint: HttpEndpoint
 
     public response: GeneratedEndpointResponse
     private generatedSdkClientClass: GeneratedSdkClientClassImpl
     private includeCredentialsOnCrossOriginRequests: boolean
-    private defaultTimeoutInSeconds: number | 'infinity' | undefined
+    private defaultTimeoutInSeconds: number | "infinity" | undefined
     private request: GeneratedEndpointRequest
     private includeSerdeLayer: boolean
     private retainOriginalCasing: boolean
     private omitUndefined: boolean
-    private streamType: 'wrapper' | 'web'
+    private streamType: "wrapper" | "web"
 
     constructor({
         endpoint,
@@ -110,8 +110,8 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         invocation: ts.Expression
         context: SdkContext
     }): ts.Node[] {
-        const responseVariableName = 'response'
-        const itemVariableName = 'item'
+        const responseVariableName = "response"
+        const itemVariableName = "item"
         return [
             ts.factory.createVariableStatement(
                 undefined,
@@ -146,8 +146,8 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                         ts.factory.createExpressionStatement(
                             ts.factory.createCallExpression(
                                 ts.factory.createPropertyAccessExpression(
-                                    ts.factory.createIdentifier('console'),
-                                    ts.factory.createIdentifier('log')
+                                    ts.factory.createIdentifier("console"),
+                                    ts.factory.createIdentifier("log")
                                 ),
                                 undefined,
                                 [ts.factory.createIdentifier(itemVariableName)]
@@ -238,7 +238,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                     this.generatedSdkClientClass
                 )
             }),
-            responseType: 'sse',
+            responseType: "sse",
             withCredentials: this.includeCredentialsOnCrossOriginRequests
         }
 

@@ -1,8 +1,8 @@
-import { readFile } from 'fs/promises'
-import yaml from 'js-yaml'
+import { readFile } from "fs/promises"
+import yaml from "js-yaml"
 
-import { DefinitionFile, serialization } from '@fern-api/conjure-sdk'
-import { AbsoluteFilePath, RelativeFilePath, listFiles, relative } from '@fern-api/fs-utils'
+import { DefinitionFile, serialization } from "@fern-api/conjure-sdk"
+import { AbsoluteFilePath, RelativeFilePath, listFiles, relative } from "@fern-api/fs-utils"
 
 export interface ConjureFile {
     fileContents: DefinitionFile
@@ -34,20 +34,20 @@ async function createConjureFile({
 }): Promise<ConjureFile> {
     const rawContents = (await readFile(absoluteFilepath))
         .toString()
-        .replaceAll(/: rid(?:$|\s)/g, ': string\n')
-        .replaceAll('<rid>', '<string>')
-        .replaceAll('rid>', 'string>')
-        .replaceAll(': safelong', ': long')
-        .replaceAll('<safelong>', '<long>')
-        .replaceAll('safelong>', 'long>')
-        .replaceAll(': any', ': unknown')
-        .replaceAll('<any>', '<unknown>')
-        .replaceAll('any>', 'unknown>')
+        .replaceAll(/: rid(?:$|\s)/g, ": string\n")
+        .replaceAll("<rid>", "<string>")
+        .replaceAll("rid>", "string>")
+        .replaceAll(": safelong", ": long")
+        .replaceAll("<safelong>", "<long>")
+        .replaceAll("safelong>", "long>")
+        .replaceAll(": any", ": unknown")
+        .replaceAll("<any>", "<unknown>")
+        .replaceAll("any>", "unknown>")
     return {
         relativeFilepath,
         absoluteFilepath,
         fileContents: serialization.DefinitionFile.parseOrThrow(yaml.load(rawContents), {
-            unrecognizedObjectKeys: 'passthrough',
+            unrecognizedObjectKeys: "passthrough",
             allowUnrecognizedEnumValues: true,
             allowUnrecognizedUnionMembers: true
         })

@@ -1,10 +1,10 @@
-import { z } from 'zod'
+import { z } from "zod"
 
-import { BaseDependencyConfig } from './BaseDependencyConfig'
-import { ClientConfig } from './ClientConfig'
-import { DependencyConfig } from './DependencyConfig'
-import { ModuleExport } from './ModuleExport'
-import { PydanticConfig } from './PydanticConfig'
+import { BaseDependencyConfig } from "./BaseDependencyConfig"
+import { ClientConfig } from "./ClientConfig"
+import { DependencyConfig } from "./DependencyConfig"
+import { ModuleExport } from "./ModuleExport"
+import { PydanticConfig } from "./PydanticConfig"
 
 export const BasePythonCustomConfigSchema = z.object({
     // Influence dynamic snippets.
@@ -25,7 +25,7 @@ export const BasePythonCustomConfigSchema = z.object({
     pyproject_toml: z.string().optional(),
     should_generate_websocket_clients: z.boolean().optional(),
     skip_formatting: z.boolean().optional(),
-    timeout_in_seconds: z.union([z.literal('infinity'), z.number()]).optional(),
+    timeout_in_seconds: z.union([z.literal("infinity"), z.number()]).optional(),
 
     // Deprecated.
     client_class_name: z.string().optional(),

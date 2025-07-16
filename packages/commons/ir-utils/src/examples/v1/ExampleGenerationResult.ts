@@ -1,12 +1,12 @@
 export type ExampleGenerationResult<T> = ExampleGenerationSuccess<T> | ExampleGenerationFailure
 
 export interface ExampleGenerationSuccess<T> {
-    type: 'success'
+    type: "success"
     jsonExample: unknown
     example: T
 }
 
 export interface ExampleGenerationFailure {
-    type: 'failure'
+    type: "failure"
     message: string
 }

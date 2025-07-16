@@ -1,11 +1,11 @@
-import { Values } from '@fern-api/core-utils'
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { AbsoluteFilePath } from '@fern-api/path-utils'
+import { Values } from "@fern-api/core-utils"
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { AbsoluteFilePath } from "@fern-api/path-utils"
 
-import { FernFiddle } from '@fern-fern/fiddle-sdk'
+import { FernFiddle } from "@fern-fern/fiddle-sdk"
 
-import { generatorsYml } from '..'
-import { Audiences } from '../commons'
+import { generatorsYml } from ".."
+import { Audiences } from "../commons"
 import {
     ApiDefinitionSettingsSchema,
     GeneratorInvocationSchema,
@@ -13,7 +13,7 @@ import {
     OpenApiFilterSchema,
     OpenRpcSpecSchema,
     ReadmeSchema
-} from './schemas'
+} from "./schemas"
 
 export interface GeneratorsConfiguration {
     api?: APIDefinition
@@ -32,7 +32,7 @@ export interface SingleNamespaceAPIDefinition
     extends RawSchemas.WithEnvironmentsSchema,
         RawSchemas.WithAuthSchema,
         RawSchemas.WithHeadersSchema {
-    type: 'singleNamespace'
+    type: "singleNamespace"
     definitions: APIDefinitionLocation[]
 }
 
@@ -40,7 +40,7 @@ export interface MultiNamespaceAPIDefinition
     extends RawSchemas.WithEnvironmentsSchema,
         RawSchemas.WithAuthSchema,
         RawSchemas.WithHeadersSchema {
-    type: 'multiNamespace'
+    type: "multiNamespace"
     rootDefinitions: APIDefinitionLocation[] | undefined
     definitions: Record<string, APIDefinitionLocation[]>
 }
@@ -49,7 +49,7 @@ export interface ConjureAPIDefinition
     extends RawSchemas.WithEnvironmentsSchema,
         RawSchemas.WithAuthSchema,
         RawSchemas.WithHeadersSchema {
-    type: 'conjure'
+    type: "conjure"
     pathToConjureDefinition: string
 }
 
@@ -57,7 +57,7 @@ export interface APIDefinitionSettings {
     shouldUseTitleAsName: boolean | undefined
     shouldUseUndiscriminatedUnionsWithLiterals: boolean | undefined
     shouldUseIdiomaticRequestNames: boolean | undefined
-    asyncApiMessageNaming: 'v1' | 'v2' | undefined
+    asyncApiMessageNaming: "v1" | "v2" | undefined
     shouldUseOptionalAdditionalProperties: boolean | undefined
     coerceEnumsToLiterals: boolean | undefined
     objectQueryParameters: boolean | undefined
@@ -68,7 +68,7 @@ export interface APIDefinitionSettings {
     useBytesForBinaryResponse: boolean | undefined
     respectForwardCompatibleEnums: boolean | undefined
     filter: OpenApiFilterSchema | undefined
-    defaultFormParameterEncoding: 'form' | 'json' | undefined
+    defaultFormParameterEncoding: "form" | "json" | undefined
     exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined
     additionalPropertiesDefaultsTo: boolean | undefined
     typeDatesAsStrings: boolean | undefined
@@ -86,19 +86,19 @@ export interface APIDefinitionLocation {
 export type APIDefinitionSchema = ProtoAPIDefinitionSchema | OSSAPIDefinitionSchema | OpenRPCDefinitionSchema
 
 export interface ProtoAPIDefinitionSchema {
-    type: 'protobuf'
+    type: "protobuf"
     root: string
     target: string
     localGeneration: boolean
 }
 
 export interface OSSAPIDefinitionSchema {
-    type: 'oss'
+    type: "oss"
     path: string
 }
 
 export interface OpenRPCDefinitionSchema {
-    type: 'openrpc'
+    type: "openrpc"
     path: string
 }
 
@@ -140,14 +140,14 @@ export interface GeneratorInvocation {
 }
 
 export const GenerationLanguage = {
-    TYPESCRIPT: 'typescript',
-    JAVA: 'java',
-    PYTHON: 'python',
-    GO: 'go',
-    RUBY: 'ruby',
-    CSHARP: 'csharp',
-    SWIFT: 'swift',
-    PHP: 'php'
+    TYPESCRIPT: "typescript",
+    JAVA: "java",
+    PYTHON: "python",
+    GO: "go",
+    RUBY: "ruby",
+    CSHARP: "csharp",
+    SWIFT: "swift",
+    PHP: "php"
 } as const
 
 export type GenerationLanguage = Values<typeof GenerationLanguage>
@@ -157,7 +157,7 @@ export function getPackageName({
 }: {
     generatorInvocation: GeneratorInvocation
 }): string | undefined {
-    if (generatorInvocation.language === 'go') {
+    if (generatorInvocation.language === "go") {
         return getGoPackageName(generatorInvocation)
     }
     return generatorInvocation.outputMode._visit<string | undefined>({

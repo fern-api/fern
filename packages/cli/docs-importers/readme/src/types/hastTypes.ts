@@ -1,5 +1,5 @@
-import type { Element, ElementContent, Root as HastRoot } from 'hast'
-import type { MdxJsxFlowElementHast, MdxJsxTextElementHast } from 'mdast-util-mdx-jsx'
+import type { Element, ElementContent, Root as HastRoot } from "hast"
+import type { MdxJsxFlowElementHast, MdxJsxTextElementHast } from "mdast-util-mdx-jsx"
 
 export type HastNode = Element
 export type HastNodeIndex = number | undefined

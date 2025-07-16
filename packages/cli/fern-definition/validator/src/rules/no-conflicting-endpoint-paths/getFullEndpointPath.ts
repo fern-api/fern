@@ -1,4 +1,4 @@
-import { RawSchemas } from '@fern-api/fern-definition-schema'
+import { RawSchemas } from "@fern-api/fern-definition-schema"
 
 export function getFullEndpointPath({
     service,
@@ -7,5 +7,5 @@ export function getFullEndpointPath({
     service: RawSchemas.HttpServiceSchema
     endpoint: RawSchemas.HttpEndpointSchema
 }): string {
-    return service['base-path'] + endpoint.path
+    return service["base-path"] + endpoint.path
 }

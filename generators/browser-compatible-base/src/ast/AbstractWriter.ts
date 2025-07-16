@@ -1,11 +1,11 @@
-import { AbstractAstNode } from './AbstractAstNode'
-import { CodeBlock } from './CodeBlock'
+import { AbstractAstNode } from "./AbstractAstNode"
+import { CodeBlock } from "./CodeBlock"
 
 const TAB_SIZE = 4
 
 export class AbstractWriter {
     /* The contents being written */
-    public buffer = ''
+    public buffer = ""
     /* Indentation level (multiple of 4) */
     private indentLevel = 0
     /* Whether anything has been written to the buffer */
@@ -20,17 +20,17 @@ export class AbstractWriter {
      * @param text
      */
     public write(text: string): void {
-        const textEndsInNewline = text.length > 0 && text.endsWith('\n')
+        const textEndsInNewline = text.length > 0 && text.endsWith("\n")
         // temporarily remove the trailing newline, since we don't want to add the indent prefix after it
         const textWithoutNewline = textEndsInNewline ? text.substring(0, text.length - 1) : text
 
         const indent = this.getIndentString()
-        let indentedText = textWithoutNewline.replaceAll('\n', `\n${indent}`)
+        let indentedText = textWithoutNewline.replaceAll("\n", `\n${indent}`)
         if (this.isAtStartOfLine()) {
             indentedText = indent + indentedText
         }
         if (textEndsInNewline) {
-            indentedText += '\n'
+            indentedText += "\n"
         }
         this.writeInternal(indentedText)
     }
@@ -59,7 +59,7 @@ export class AbstractWriter {
      * @param input
      */
     public writeNodeOrString(input: AbstractAstNode | string): void {
-        if (typeof input === 'string') {
+        if (typeof input === "string") {
             this.write(input)
             return
         }
@@ -73,7 +73,7 @@ export class AbstractWriter {
      */
     public writeNodeStatement(node: AbstractAstNode): void {
         node.write(this)
-        this.write(';')
+        this.write(";")
         this.writeNewLineIfLastLineNot()
     }
 
@@ -84,7 +84,7 @@ export class AbstractWriter {
     public writeTextStatement(text: string): void {
         const codeBlock = new CodeBlock(text)
         codeBlock.write(this)
-        this.write(';')
+        this.write(";")
         this.writeNewLineIfLastLineNot()
     }
 
@@ -96,9 +96,9 @@ export class AbstractWriter {
     public controlFlow(prefix: string, statement: AbstractAstNode): void {
         const codeBlock = new CodeBlock(prefix)
         codeBlock.write(this)
-        this.write(' (')
+        this.write(" (")
         this.writeNode(statement)
-        this.write(') {')
+        this.write(") {")
         this.writeNewLineIfLastLineNot()
         this.indent()
     }
@@ -111,7 +111,7 @@ export class AbstractWriter {
     public controlFlowWithoutStatement(prefix: string): void {
         const codeBlock = new CodeBlock(prefix)
         codeBlock.write(this)
-        this.write(' {')
+        this.write(" {")
         this.writeNewLineIfLastLineNot()
         this.indent()
     }
@@ -121,7 +121,7 @@ export class AbstractWriter {
      */
     public endControlFlow(): void {
         this.dedent()
-        this.writeLine('}')
+        this.writeLine("}")
     }
 
     /**
@@ -131,12 +131,12 @@ export class AbstractWriter {
      */
     public contiguousControlFlow(prefix: string, statement: AbstractAstNode): void {
         this.dedent()
-        this.write('} ')
+        this.write("} ")
         const codeBlock = new CodeBlock(prefix)
         codeBlock.write(this)
-        this.write(' (')
+        this.write(" (")
         this.writeNode(statement)
-        this.write(') {')
+        this.write(") {")
         this.writeNewLineIfLastLineNot()
         this.indent()
     }
@@ -147,34 +147,34 @@ export class AbstractWriter {
      */
     public alternativeControlFlow(prefix: string): void {
         this.dedent()
-        this.write('} ')
+        this.write("} ")
         const codeBlock = new CodeBlock(prefix)
         codeBlock.write(this)
-        this.write(' {')
+        this.write(" {")
         this.writeNewLineIfLastLineNot()
         this.indent()
     }
 
     /* Only writes a newline if last line in the buffer is not a newline */
-    public writeLine(text = ''): void {
+    public writeLine(text = ""): void {
         this.write(text)
         this.writeNewLineIfLastLineNot()
     }
 
     /* Always writes newline */
     public newLine(): void {
-        this.writeInternal('\n')
+        this.writeInternal("\n")
     }
 
     public writeSemicolonIfLastCharacterIsNot(): void {
         if (!this.lastCharacterIsSemicolon) {
-            this.writeInternal(';')
+            this.writeInternal(";")
         }
     }
 
     public writeNewLineIfLastLineNot(): void {
         if (!this.lastCharacterIsNewline) {
-            this.writeInternal('\n')
+            this.writeInternal("\n")
         }
     }
 
@@ -221,8 +221,8 @@ export class AbstractWriter {
     private writeInternal(text: string): string {
         if (text.length > 0) {
             this.hasWrittenAnything = true
-            this.lastCharacterIsNewline = text.endsWith('\n')
-            this.lastCharacterIsSemicolon = text.endsWith(';')
+            this.lastCharacterIsNewline = text.endsWith("\n")
+            this.lastCharacterIsSemicolon = text.endsWith(";")
         }
         return (this.buffer += text)
     }
@@ -232,6 +232,6 @@ export class AbstractWriter {
     }
 
     private getIndentString(): string {
-        return ' '.repeat(this.indentLevel * TAB_SIZE)
+        return " ".repeat(this.indentLevel * TAB_SIZE)
     }
 }

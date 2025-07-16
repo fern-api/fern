@@ -1,9 +1,9 @@
-import { AccessLevel } from './AccessLevel'
-import type { EnumWithRawValues } from './EnumWithRawValues'
-import { Initializer } from './Initializer'
-import { Method } from './Method'
-import { Property } from './Property'
-import { AstNode, Writer } from './core'
+import { AccessLevel } from "./AccessLevel"
+import type { EnumWithRawValues } from "./EnumWithRawValues"
+import { Initializer } from "./Initializer"
+import { Method } from "./Method"
+import { Property } from "./Property"
+import { AstNode, Writer } from "./core"
 
 export declare namespace Struct {
     interface Args {
@@ -48,18 +48,18 @@ export class Struct extends AstNode {
     public write(writer: Writer): void {
         if (this.accessLevel != null) {
             writer.write(this.accessLevel)
-            writer.write(' ')
+            writer.write(" ")
         }
         writer.write(`struct ${this.name}`)
         this.conformances?.forEach((conformance, index) => {
             if (index === 0) {
-                writer.write(': ')
+                writer.write(": ")
             } else if (index > 0) {
-                writer.write(', ')
+                writer.write(", ")
             }
             writer.write(conformance)
         })
-        writer.write(' {')
+        writer.write(" {")
         writer.newLine()
         writer.indent()
         this.properties.forEach((property) => {
@@ -97,6 +97,6 @@ export class Struct extends AstNode {
             })
         }
         writer.dedent()
-        writer.write('}')
+        writer.write("}")
     }
 }

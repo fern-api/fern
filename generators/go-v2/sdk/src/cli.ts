@@ -1,4 +1,4 @@
-import { SdkGeneratorCLI } from './SdkGeneratorCli'
+import { SdkGeneratorCLI } from "./SdkGeneratorCli"
 
 void runCli()
 

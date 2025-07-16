@@ -1,11 +1,11 @@
-import { CSharpFile, EXTERNAL_PROTO_STRUCT_CLASS_REFERENCE, FileGenerator } from '@fern-api/csharp-base'
-import { csharp } from '@fern-api/csharp-codegen'
-import { RelativeFilePath, join } from '@fern-api/fs-utils'
+import { CSharpFile, EXTERNAL_PROTO_STRUCT_CLASS_REFERENCE, FileGenerator } from "@fern-api/csharp-base"
+import { csharp } from "@fern-api/csharp-codegen"
+import { RelativeFilePath, join } from "@fern-api/fs-utils"
 
-import { TypeDeclaration } from '@fern-fern/ir-sdk/api'
+import { TypeDeclaration } from "@fern-fern/ir-sdk/api"
 
-import { ModelCustomConfigSchema } from '../ModelCustomConfig'
-import { ModelGeneratorContext } from '../ModelGeneratorContext'
+import { ModelCustomConfigSchema } from "../ModelCustomConfig"
+import { ModelGeneratorContext } from "../ModelGeneratorContext"
 
 export declare namespace WellKnownProtoStructGenerator {
     interface Args {
@@ -80,7 +80,7 @@ export class WellKnownProtoStructGenerator extends FileGenerator<
             access: csharp.Access.Public,
             parameters: [
                 csharp.parameter({
-                    name: 'value',
+                    name: "value",
                     type: csharp.Type.list(
                         csharp.Type.keyValuePair(
                             csharp.Type.string(),
@@ -90,14 +90,14 @@ export class WellKnownProtoStructGenerator extends FileGenerator<
                 })
             ],
             baseConstructorCall: csharp.invokeMethod({
-                method: 'base',
+                method: "base",
                 arguments_: [
                     csharp.codeblock((writer) => {
                         writer.writeNode(
                             csharp.invokeMethod({
-                                on: csharp.codeblock('value'),
-                                method: 'ToDictionary',
-                                arguments_: [csharp.codeblock('e => e.Key, e => e.Value')]
+                                on: csharp.codeblock("value"),
+                                method: "ToDictionary",
+                                arguments_: [csharp.codeblock("e => e.Key, e => e.Value")]
                             })
                         )
                     })
@@ -108,70 +108,70 @@ export class WellKnownProtoStructGenerator extends FileGenerator<
 
     private getToProtoMethod(): csharp.Method {
         return csharp.method({
-            name: 'ToProto',
+            name: "ToProto",
             access: csharp.Access.Internal,
             isAsync: false,
             parameters: [],
             return_: csharp.Type.reference(EXTERNAL_PROTO_STRUCT_CLASS_REFERENCE),
             body: csharp.codeblock((writer) => {
-                writer.write('var result = ')
+                writer.write("var result = ")
                 writer.writeNodeStatement(
                     csharp.instantiateClass({
                         classReference: EXTERNAL_PROTO_STRUCT_CLASS_REFERENCE,
                         arguments_: []
                     })
                 )
-                writer.controlFlow('foreach', csharp.codeblock('var kvp in this'))
-                writer.write('result.Fields[kvp.Key] = ')
+                writer.controlFlow("foreach", csharp.codeblock("var kvp in this"))
+                writer.write("result.Fields[kvp.Key] = ")
                 writer.writeNodeStatement(
                     csharp.invokeMethod({
-                        on: csharp.codeblock('kvp.Value?'),
-                        method: 'ToProto',
+                        on: csharp.codeblock("kvp.Value?"),
+                        method: "ToProto",
                         arguments_: []
                     })
                 )
                 writer.endControlFlow()
-                writer.writeLine('return result;')
+                writer.writeLine("return result;")
             })
         })
     }
 
     private getFromProtoMethod(): csharp.Method {
         return csharp.method({
-            name: 'FromProto',
+            name: "FromProto",
             access: csharp.Access.Internal,
             type: csharp.MethodType.STATIC,
             isAsync: false,
             parameters: [
                 csharp.parameter({
-                    name: 'value',
+                    name: "value",
                     type: csharp.Type.reference(EXTERNAL_PROTO_STRUCT_CLASS_REFERENCE)
                 })
             ],
             return_: csharp.Type.reference(this.classReference),
             body: csharp.codeblock((writer) => {
-                writer.write('var result = ')
+                writer.write("var result = ")
                 writer.writeNodeStatement(
                     csharp.instantiateClass({
                         classReference: this.classReference,
                         arguments_: []
                     })
                 )
-                writer.controlFlow('foreach', csharp.codeblock('var kvp in value.Fields'))
-                writer.write('result[kvp.Key] = ')
+                writer.controlFlow("foreach", csharp.codeblock("var kvp in value.Fields"))
+                writer.write("result[kvp.Key] = ")
                 writer.writeNodeStatement(
                     csharp.ternary({
-                        condition: csharp.codeblock('kvp.Value != null'),
+                        condition: csharp.codeblock("kvp.Value != null"),
                         true_: csharp.invokeMethod({
                             on: this.protoValueClassReference,
-                            method: 'FromProto',
-                            arguments_: [csharp.codeblock('kvp.Value')]
+                            method: "FromProto",
+                            arguments_: [csharp.codeblock("kvp.Value")]
                         }),
-                        false_: csharp.codeblock('null')
+                        false_: csharp.codeblock("null")
                     })
                 )
                 writer.endControlFlow()
-                writer.writeLine('return result;')
+                writer.writeLine("return result;")
             })
         })
     }
@@ -179,7 +179,7 @@ export class WellKnownProtoStructGenerator extends FileGenerator<
     protected getFilepath(): RelativeFilePath {
         return join(
             this.context.project.filepaths.getSourceFileDirectory(),
-            RelativeFilePath.of(this.classReference.name + '.cs')
+            RelativeFilePath.of(this.classReference.name + ".cs")
         )
     }
 }

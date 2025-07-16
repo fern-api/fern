@@ -1,6 +1,6 @@
-import { ts } from 'ts-morph'
+import { ts } from "ts-morph"
 
-import { BaseGeneratedType } from './BaseGeneratedType'
+import { BaseGeneratedType } from "./BaseGeneratedType"
 
 export type GeneratedAliasType<Context> = BrandedGeneratedAliasType<Context> | NotBrandedGeneratedAliasType<Context>
 
@@ -14,5 +14,5 @@ export interface NotBrandedGeneratedAliasType<Context> extends BaseGeneratedAlia
 }
 
 export interface BaseGeneratedAliasType<Context> extends BaseGeneratedType<Context> {
-    type: 'alias'
+    type: "alias"
 }

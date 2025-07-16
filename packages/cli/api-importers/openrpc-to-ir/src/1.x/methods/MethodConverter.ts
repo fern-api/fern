@@ -4,8 +4,8 @@ import {
     ExamplePairingObject,
     MethodObject,
     ServerObject
-} from '@open-rpc/meta-schema'
-import { OpenAPIV3 } from 'openapi-types'
+} from "@open-rpc/meta-schema"
+import { OpenAPIV3 } from "openapi-types"
 
 import {
     FernIr,
@@ -19,11 +19,11 @@ import {
     JsonResponseBody,
     PathParameter,
     TypeId
-} from '@fern-api/ir-sdk'
-import { constructHttpPath } from '@fern-api/ir-utils'
-import { AbstractConverter, Converters, ServersConverter } from '@fern-api/v2-importer-commons'
+} from "@fern-api/ir-sdk"
+import { constructHttpPath } from "@fern-api/ir-utils"
+import { AbstractConverter, Converters, ServersConverter } from "@fern-api/v2-importer-commons"
 
-import { OpenRPCConverterContext3_1 } from '../OpenRPCConverterContext3_1'
+import { OpenRPCConverterContext3_1 } from "../OpenRPCConverterContext3_1"
 
 export declare namespace MethodConverter {
     export interface Args extends AbstractConverter.Args<OpenRPCConverterContext3_1> {
@@ -69,7 +69,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
         let inlinedTypes: Record<TypeId, Converters.SchemaConverters.SchemaConverter.ConvertedSchema> = {}
 
         // Construct the path with all path parameters
-        let pathString = ''
+        let pathString = ""
         for (const pathParam of this.pathParameters) {
             pathString += `/{${pathParam.name.originalName}}`
         }
@@ -90,9 +90,9 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             } else {
                 resolvedParam = param
             }
-            const schemaId = [this.method.name, 'Param', resolvedParam.name].join('_')
+            const schemaId = [this.method.name, "Param", resolvedParam.name].join("_")
             const parameterSchemaConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
-                breadcrumbs: [this.method.name, 'Param', resolvedParam.name],
+                breadcrumbs: [this.method.name, "Param", resolvedParam.name],
                 schemaIdOverride: schemaId,
                 context: this.context,
                 schemaOrReference: resolvedParam.schema as OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject,
@@ -104,7 +104,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                     docs: resolvedParam.description,
                     availability: this.context.getAvailability({
                         node: param,
-                        breadcrumbs: [...this.breadcrumbs, 'parameters']
+                        breadcrumbs: [...this.breadcrumbs, "parameters"]
                     }),
                     name: this.context.casingsGenerator.generateNameAndWireValue({
                         name: resolvedParam.name,
@@ -125,16 +125,16 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
         if (this.method.result != null) {
             const resolvedResult = this.context.resolveMaybeReference<ContentDescriptorObject>({
                 schemaOrReference: this.method.result,
-                breadcrumbs: [...this.breadcrumbs, 'result']
+                breadcrumbs: [...this.breadcrumbs, "result"]
             })
 
             if (resolvedResult != null) {
                 const resultSchemaConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
-                    breadcrumbs: [this.method.name, 'result'],
+                    breadcrumbs: [this.method.name, "result"],
                     context: this.context,
                     schemaOrReference: resolvedResult.schema as OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject
                 })
-                const schemaId = [this.method.name, 'Result'].join('_')
+                const schemaId = [this.method.name, "Result"].join("_")
                 const convertedResultSchema = resultSchemaConverter.convert()
                 if (convertedResultSchema != null) {
                     jsonResponseBody = {
@@ -164,7 +164,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             v2BaseUrls,
             basePath: undefined,
             auth: false,
-            method: 'POST',
+            method: "POST",
             id: this.method.name,
             docs: this.method.description,
             name: this.context.casingsGenerator.generateName(this.method.name),
@@ -178,12 +178,12 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             requestBody:
                 requestProperties.length > 0
                     ? HttpRequestBody.inlinedRequestBody({
-                          name: this.context.casingsGenerator.generateName([this.method.name, 'Request'].join('_')),
+                          name: this.context.casingsGenerator.generateName([this.method.name, "Request"].join("_")),
                           docs: undefined,
                           properties: requestProperties,
                           extends: [],
                           extendedProperties: [],
-                          contentType: 'application/json',
+                          contentType: "application/json",
                           extraProperties: false,
                           v2Examples: undefined
                       })
@@ -313,8 +313,8 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                     request: {
                         docs: undefined,
                         endpoint: {
-                            method: 'POST',
-                            path: '/{apiKey}'
+                            method: "POST",
+                            path: "/{apiKey}"
                         },
                         baseUrl: undefined,
                         environment: undefined,
@@ -329,8 +329,8 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                         statusCode: undefined,
                         body: resolvedResult?.value
                             ? FernIr.V2HttpEndpointResponseBody.json({
-                                  jsonrpc: '2.0',
-                                  id: resolvedExample.examplePairedRequest?.id || '1',
+                                  jsonrpc: "2.0",
+                                  id: resolvedExample.examplePairedRequest?.id || "1",
                                   result: resolvedResult.value
                               })
                             : undefined

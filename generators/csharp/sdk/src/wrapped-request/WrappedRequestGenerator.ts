@@ -1,7 +1,7 @@
-import { CSharpFile, FileGenerator } from '@fern-api/csharp-base'
-import { csharp } from '@fern-api/csharp-codegen'
-import { ExampleGenerator, generateField, generateFieldForFileProperty } from '@fern-api/fern-csharp-model'
-import { RelativeFilePath, join } from '@fern-api/fs-utils'
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base"
+import { csharp } from "@fern-api/csharp-codegen"
+import { ExampleGenerator, generateField, generateFieldForFileProperty } from "@fern-api/fern-csharp-model"
+import { RelativeFilePath, join } from "@fern-api/fs-utils"
 
 import {
     ContainerType,
@@ -11,10 +11,10 @@ import {
     SdkRequestWrapper,
     ServiceId,
     TypeReference
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { SdkCustomConfigSchema } from '../SdkCustomConfig'
-import { SdkGeneratorContext } from '../SdkGeneratorContext'
+import { SdkCustomConfigSchema } from "../SdkCustomConfig"
+import { SdkGeneratorContext } from "../SdkGeneratorContext"
 
 export declare namespace WrappedRequestGenerator {
     export interface Args {
@@ -160,7 +160,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             fileUpload: (request) => {
                 for (const property of request.properties) {
                     switch (property.type) {
-                        case 'bodyProperty':
+                        case "bodyProperty":
                             class_.addField(
                                 generateField({
                                     property,
@@ -170,7 +170,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                                 })
                             )
                             break
-                        case 'file':
+                        case "file":
                             class_.addField(
                                 generateFieldForFileProperty({
                                     property: property.value,
@@ -193,7 +193,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                 const protobufClassReference = csharp.classReference({
                     name: this.classReference.name,
                     namespace: this.context.protobufResolver.getNamespaceFromProtobufFileOrThrow(protobufService.file),
-                    namespaceAlias: 'Proto'
+                    namespaceAlias: "Proto"
                 })
                 class_.addMethod(
                     this.context.csharpProtobufTypeMapper.toProtoMethod({
@@ -240,7 +240,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
         }
         for (const exampleQueryParameter of example.queryParameters) {
             const isSingleQueryParameter =
-                exampleQueryParameter.shape == null || exampleQueryParameter.shape.type === 'single'
+                exampleQueryParameter.shape == null || exampleQueryParameter.shape.type === "single"
             const singleValueSnippet = this.exampleGenerator.getSnippetForTypeReference({
                 exampleTypeReference: exampleQueryParameter.value,
                 parseDatetimes
@@ -310,12 +310,12 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
         return join(
             this.context.project.filepaths.getSourceFileDirectory(),
             this.getDirectory(),
-            RelativeFilePath.of(this.classReference.name + '.cs')
+            RelativeFilePath.of(this.classReference.name + ".cs")
         )
     }
 
     private getDirectory(): RelativeFilePath {
         const directory = this.context.getDirectoryForServiceId(this.serviceId)
-        return RelativeFilePath.of(directory ? `${directory}/Requests` : 'Requests')
+        return RelativeFilePath.of(directory ? `${directory}/Requests` : "Requests")
     }
 }

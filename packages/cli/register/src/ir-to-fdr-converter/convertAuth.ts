@@ -1,7 +1,7 @@
-import { assertNever } from '@fern-api/core-utils'
-import { FernIr as Ir } from '@fern-api/ir-sdk'
+import { assertNever } from "@fern-api/core-utils"
+import { FernIr as Ir } from "@fern-api/ir-sdk"
 
-import { FernRegistry as FdrCjsSdk } from '@fern-fern/fdr-cjs-sdk'
+import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk"
 
 export interface PlaygroundConfig {
     oauth?: boolean
@@ -15,40 +15,40 @@ export function convertAuth(
     if (auth.schemes.length > 0 && auth.schemes[0] != null) {
         const scheme = auth.schemes[0]
         switch (scheme.type) {
-            case 'basic':
+            case "basic":
                 return {
-                    type: 'basicAuth',
+                    type: "basicAuth",
                     passwordName: scheme.password.originalName,
                     usernameName: scheme.username.originalName,
                     description: auth.docs
                 }
-            case 'bearer':
+            case "bearer":
                 return {
-                    type: 'bearerAuth',
+                    type: "bearerAuth",
                     tokenName: scheme.token.originalName,
                     description: auth.docs
                 }
-            case 'header':
+            case "header":
                 return {
-                    type: 'header',
+                    type: "header",
                     headerWireValue: scheme.name.wireValue,
                     nameOverride: scheme.name.name.originalName,
                     prefix: scheme.prefix,
                     description: auth.docs
                 }
-            case 'oauth': {
+            case "oauth": {
                 const tokenPath =
                     scheme.configuration.tokenEndpoint.responseProperties.accessToken.propertyPath
                         ?.map((p) => p.originalName)
-                        .join('.') || '$.body.access_token'
+                        .join(".") || "$.body.access_token"
 
                 return playgroundConfig?.oauth
                     ? {
-                          type: 'oAuth',
+                          type: "oAuth",
                           value: {
-                              type: 'clientCredentials',
+                              type: "clientCredentials",
                               value: {
-                                  type: 'referencedEndpoint',
+                                  type: "referencedEndpoint",
                                   endpointId: FdrCjsSdk.EndpointId(
                                       scheme.configuration.tokenEndpoint.endpointReference.endpointId
                                   ),
@@ -60,8 +60,8 @@ export function convertAuth(
                           }
                       }
                     : {
-                          type: 'bearerAuth',
-                          tokenName: 'token',
+                          type: "bearerAuth",
+                          tokenName: "token",
                           description: auth.docs
                       }
             }

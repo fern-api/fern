@@ -11,9 +11,9 @@ import {
     Parameter,
     Property,
     StringClassReference
-} from '@fern-api/ruby-codegen'
+} from "@fern-api/ruby-codegen"
 
-import { OAuthAccessTokenProperties, ResponseProperty } from '@fern-fern/ir-sdk/api'
+import { OAuthAccessTokenProperties, ResponseProperty } from "@fern-fern/ir-sdk/api"
 
 export interface OauthFunction {
     tokenResponseProperty: OAuthAccessTokenProperties
@@ -36,12 +36,12 @@ export declare namespace OauthTokenProvider {
     }
 }
 
-type OauthType = 'client_credentials' | undefined
+type OauthType = "client_credentials" | undefined
 
 export class OauthTokenProvider extends Class_ {
     public fetchToken: Function_
     public initializerParameters: Parameter[]
-    public static FIELD_NAME = 'token'
+    public static FIELD_NAME = "token"
 
     // Including the type here to try to future proof some, though it's a bit awkward
     constructor({
@@ -52,14 +52,14 @@ export class OauthTokenProvider extends Class_ {
         accessTokenReference
     }: OauthTokenProvider.Init) {
         const tokenProviderClassReference = new ClassReference({
-            name: 'OauthTokenProvider',
-            import_: new Import({ from: 'core/oauth', isExternal: false }),
+            name: "OauthTokenProvider",
+            import_: new Import({ from: "core/oauth", isExternal: false }),
             moduleBreadcrumbs: [clientName]
         })
         super({
             classReference: tokenProviderClassReference,
             includeInitializer: false,
-            documentation: 'Utility class for managing token refresh.',
+            documentation: "Utility class for managing token refresh.",
             initializerOverride: OauthTokenProvider.getInitializer(
                 oauthType,
                 oauthConfiguration,
@@ -87,27 +87,27 @@ export class OauthTokenProvider extends Class_ {
         tokenProvider: ClassReference
     ): Function_ {
         switch (oauthType) {
-            case 'client_credentials': {
+            case "client_credentials": {
                 const body = [
                     new Expression({
-                        leftSide: '@client_id',
-                        rightSide: 'client_id',
+                        leftSide: "@client_id",
+                        rightSide: "client_id",
                         isAssignment: true
                     }),
                     new Expression({
-                        leftSide: '@client_secret',
-                        rightSide: 'client_secret',
+                        leftSide: "@client_secret",
+                        rightSide: "client_secret",
                         isAssignment: true
                     })
                 ]
                 body.push(
                     new Expression({
-                        leftSide: '@auth_client',
+                        leftSide: "@auth_client",
                         rightSide: new FunctionInvocation({
                             onObject: oauthConfiguration.accessTokenFunction.tokenFunctionClientClassReference,
-                            baseFunction: new Function_({ name: 'new', functionBody: [] }),
+                            baseFunction: new Function_({ name: "new", functionBody: [] }),
                             arguments_: [
-                                new Argument({ value: 'request_client', name: 'request_client', isNamed: true })
+                                new Argument({ value: "request_client", name: "request_client", isNamed: true })
                             ]
                         }),
                         isAssignment: true
@@ -116,12 +116,12 @@ export class OauthTokenProvider extends Class_ {
                 if (OauthTokenProvider.isRefreshClientSeparate(oauthConfiguration)) {
                     body.push(
                         new Expression({
-                            leftSide: '@refresh_client',
+                            leftSide: "@refresh_client",
                             rightSide: new FunctionInvocation({
                                 onObject: oauthConfiguration.refreshTokenFunction?.tokenFunctionClientClassReference,
-                                baseFunction: new Function_({ name: 'new', functionBody: [] }),
+                                baseFunction: new Function_({ name: "new", functionBody: [] }),
                                 arguments_: [
-                                    new Argument({ value: 'request_client', name: 'request_client', isNamed: true })
+                                    new Argument({ value: "request_client", name: "request_client", isNamed: true })
                                 ]
                             }),
                             isAssignment: true
@@ -130,32 +130,32 @@ export class OauthTokenProvider extends Class_ {
                 }
 
                 return new Function_({
-                    name: 'initialize',
-                    invocationName: 'new',
+                    name: "initialize",
+                    invocationName: "new",
                     functionBody: body,
                     parameters: OauthTokenProvider.getParameters(oauthType, requestClient),
                     returnValue: tokenProvider
                 })
             }
             default:
-                throw new Error('Invalid oauth type')
+                throw new Error("Invalid oauth type")
         }
     }
 
     private static getParameters(oauthType: OauthType, requestClient: ClassReference): Parameter[] {
         switch (oauthType) {
-            case 'client_credentials': {
+            case "client_credentials": {
                 return [
                     new Parameter({
-                        name: 'client_id',
+                        name: "client_id",
                         type: StringClassReference
                     }),
                     new Parameter({
-                        name: 'client_secret',
+                        name: "client_secret",
                         type: StringClassReference
                     }),
                     new Parameter({
-                        name: 'request_client',
+                        name: "request_client",
                         type: requestClient
                     })
                 ]
@@ -178,25 +178,25 @@ export class OauthTokenProvider extends Class_ {
         oauthConfiguration: OauthTokenProvider.ClientCredentialsInit
     ): Property[] {
         switch (oauthType) {
-            case 'client_credentials': {
+            case "client_credentials": {
                 const properties = [
                     new Property({
-                        name: 'client_id',
+                        name: "client_id",
                         type: StringClassReference
                     }),
                     new Property({
-                        name: 'client_secret',
+                        name: "client_secret",
                         type: StringClassReference
                     }),
                     new Property({
-                        name: 'auth_client',
+                        name: "auth_client",
                         type: StringClassReference
                     })
                 ]
                 if (OauthTokenProvider.isRefreshClientSeparate(oauthConfiguration)) {
                     properties.push(
                         new Property({
-                            name: 'refresh_client',
+                            name: "refresh_client",
                             type: StringClassReference
                         })
                     )
@@ -210,11 +210,11 @@ export class OauthTokenProvider extends Class_ {
 
     private static getExpressions(oauthType: OauthType): Expression[] {
         switch (oauthType) {
-            case 'client_credentials': {
+            case "client_credentials": {
                 return [
                     new Expression({
-                        leftSide: 'EXPIRY_BUFFER_MINUTES',
-                        rightSide: '2',
+                        leftSide: "EXPIRY_BUFFER_MINUTES",
+                        rightSide: "2",
                         isAssignment: true
                     })
                 ]
@@ -226,49 +226,49 @@ export class OauthTokenProvider extends Class_ {
 
     private static getTokenFunction(oauthType: OauthType): Function_ {
         switch (oauthType) {
-            case 'client_credentials': {
+            case "client_credentials": {
                 return new Function_({
-                    name: 'token',
+                    name: "token",
                     functionBody: [
                         new ConditionalStatement({
                             if_: {
                                 // HACK: we don't really support nested statements like this, so doing manually for now
-                                leftSide: '!@token.nil? && (@token.expires_at.nil? || @token.expires_at > Time.now)',
+                                leftSide: "!@token.nil? && (@token.expires_at.nil? || @token.expires_at > Time.now)",
                                 expressions: [
                                     new Expression({
-                                        leftSide: 'return',
-                                        rightSide: '@token.access_token',
+                                        leftSide: "return",
+                                        rightSide: "@token.access_token",
                                         isAssignment: false
                                     })
                                 ]
                             }
                         }),
                         new Expression({
-                            leftSide: '@token',
+                            leftSide: "@token",
                             rightSide: new FunctionInvocation({
-                                baseFunction: new Function_({ name: 'refresh_token', functionBody: [] }),
+                                baseFunction: new Function_({ name: "refresh_token", functionBody: [] }),
                                 arguments_: []
                             }),
                             isAssignment: true
                         }),
                         new Expression({
-                            rightSide: '@token.access_token',
+                            rightSide: "@token.access_token",
                             isAssignment: false
                         })
                     ],
                     documentation:
-                        'Returns a cached access token retrieved from the provided client credentials, refreshing if necessary.',
+                        "Returns a cached access token retrieved from the provided client credentials, refreshing if necessary.",
                     returnValue: StringClassReference
                 })
             }
             default:
-                throw new Error('Invalid oauth type')
+                throw new Error("Invalid oauth type")
         }
     }
 
     private static responsePropertyToObjectAccess(responseProperty: ResponseProperty): string {
         const path = responseProperty.property.name.name.snakeCase.safeName
-        return [...(responseProperty.propertyPath ?? []).map((p) => p.snakeCase.safeName), path].join('.')
+        return [...(responseProperty.propertyPath ?? []).map((p) => p.snakeCase.safeName), path].join(".")
     }
 
     private static getAccessTokenInstantiation(
@@ -281,7 +281,7 @@ export class OauthTokenProvider extends Class_ {
                 value: `${responseVariableName}.${OauthTokenProvider.responsePropertyToObjectAccess(
                     tokenResponseProperty.accessToken
                 )}`,
-                name: 'access_token',
+                name: "access_token",
                 isNamed: true
             })
         ]
@@ -291,7 +291,7 @@ export class OauthTokenProvider extends Class_ {
                     value: `${responseVariableName}.${OauthTokenProvider.responsePropertyToObjectAccess(
                         tokenResponseProperty.refreshToken
                     )}`,
-                    name: 'refresh',
+                    name: "refresh",
                     isNamed: true
                 })
             )
@@ -302,7 +302,7 @@ export class OauthTokenProvider extends Class_ {
                     value: `Time.now + ${responseVariableName}.${OauthTokenProvider.responsePropertyToObjectAccess(
                         tokenResponseProperty.expiresIn
                     )} - (EXPIRY_BUFFER_MINUTES * 60)`,
-                    name: 'expires_at',
+                    name: "expires_at",
                     isNamed: true
                 })
             )
@@ -310,7 +310,7 @@ export class OauthTokenProvider extends Class_ {
 
         return new FunctionInvocation({
             onObject: accessTokenReference,
-            baseFunction: new Function_({ name: 'new', functionBody: [] }),
+            baseFunction: new Function_({ name: "new", functionBody: [] }),
             arguments_: accessTokenArguments
         })
     }
@@ -321,19 +321,19 @@ export class OauthTokenProvider extends Class_ {
         oauthConfiguration: OauthTokenProvider.ClientCredentialsInit
     ): Function_[] {
         switch (oauthType) {
-            case 'client_credentials': {
+            case "client_credentials": {
                 const body: AstNode[] = []
-                const responseVariableName = 'token_response'
+                const responseVariableName = "token_response"
                 const clientCredentialArgs = [
                     new Argument({
                         isNamed: true,
-                        name: 'client_id',
-                        value: '@client_id'
+                        name: "client_id",
+                        value: "@client_id"
                     }),
                     new Argument({
                         isNamed: true,
-                        name: 'client_secret',
-                        value: '@client_secret'
+                        name: "client_secret",
+                        value: "@client_secret"
                     })
                 ]
                 if (oauthConfiguration.refreshTokenFunction != null) {
@@ -342,18 +342,18 @@ export class OauthTokenProvider extends Class_ {
                             if_: {
                                 // HACK: we don't really support nested statements like this, so doing manually for now
                                 leftSide: new FunctionInvocation({
-                                    onObject: '@token',
+                                    onObject: "@token",
                                     baseFunction: new Function_({
-                                        name: 'nil?',
+                                        name: "nil?",
                                         functionBody: []
                                     }),
                                     optionalSafeCall: false
                                 }),
-                                operation: '||',
+                                operation: "||",
                                 rightSide: new FunctionInvocation({
-                                    onObject: '@token.refresh_token',
+                                    onObject: "@token.refresh_token",
                                     baseFunction: new Function_({
-                                        name: 'nil?',
+                                        name: "nil?",
                                         functionBody: []
                                     }),
                                     optionalSafeCall: false
@@ -362,7 +362,7 @@ export class OauthTokenProvider extends Class_ {
                                     new Expression({
                                         leftSide: responseVariableName,
                                         rightSide: new FunctionInvocation({
-                                            onObject: '@auth_client',
+                                            onObject: "@auth_client",
                                             baseFunction: oauthConfiguration.accessTokenFunction.tokenFunction,
                                             arguments_: clientCredentialArgs,
                                             useFullPath: false
@@ -370,7 +370,7 @@ export class OauthTokenProvider extends Class_ {
                                         isAssignment: true
                                     }),
                                     new Expression({
-                                        leftSide: 'return',
+                                        leftSide: "return",
                                         rightSide: OauthTokenProvider.getAccessTokenInstantiation(
                                             responseVariableName,
                                             oauthConfiguration.accessTokenFunction.tokenResponseProperty,
@@ -385,15 +385,15 @@ export class OauthTokenProvider extends Class_ {
                                     leftSide: responseVariableName,
                                     rightSide: new FunctionInvocation({
                                         onObject: OauthTokenProvider.isRefreshClientSeparate(oauthConfiguration)
-                                            ? '@refresh_client'
-                                            : '@auth_client',
+                                            ? "@refresh_client"
+                                            : "@auth_client",
                                         baseFunction: oauthConfiguration.refreshTokenFunction.tokenFunction,
                                         arguments_: [
                                             ...clientCredentialArgs,
                                             new Argument({
                                                 isNamed: true,
-                                                name: 'refresh_token',
-                                                value: '@token.refresh_token'
+                                                name: "refresh_token",
+                                                value: "@token.refresh_token"
                                             })
                                         ],
                                         useFullPath: false
@@ -401,7 +401,7 @@ export class OauthTokenProvider extends Class_ {
                                     isAssignment: true
                                 }),
                                 new Expression({
-                                    leftSide: 'return',
+                                    leftSide: "return",
                                     rightSide: OauthTokenProvider.getAccessTokenInstantiation(
                                         responseVariableName,
                                         oauthConfiguration.refreshTokenFunction.tokenResponseProperty,
@@ -418,7 +418,7 @@ export class OauthTokenProvider extends Class_ {
                             new Expression({
                                 leftSide: responseVariableName,
                                 rightSide: new FunctionInvocation({
-                                    onObject: '@auth_client',
+                                    onObject: "@auth_client",
                                     baseFunction: oauthConfiguration.accessTokenFunction.tokenFunction,
                                     arguments_: clientCredentialArgs,
                                     useFullPath: false
@@ -426,7 +426,7 @@ export class OauthTokenProvider extends Class_ {
                                 isAssignment: true
                             }),
                             new Expression({
-                                leftSide: 'return',
+                                leftSide: "return",
                                 rightSide: OauthTokenProvider.getAccessTokenInstantiation(
                                     responseVariableName,
                                     oauthConfiguration.accessTokenFunction.tokenResponseProperty,
@@ -440,7 +440,7 @@ export class OauthTokenProvider extends Class_ {
 
                 return [
                     new Function_({
-                        name: 'refresh_token',
+                        name: "refresh_token",
                         functionBody: body,
                         returnValue: accessTokenReference
                     })

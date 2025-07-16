@@ -1,9 +1,9 @@
-import { FernDefinition } from '@fern-api/api-workspace-commons'
-import { keys } from '@fern-api/core-utils'
-import { RelativeFilePath } from '@fern-api/fs-utils'
-import { getResolvedPathOfImportedFile } from '@fern-api/ir-generator'
+import { FernDefinition } from "@fern-api/api-workspace-commons"
+import { keys } from "@fern-api/core-utils"
+import { RelativeFilePath } from "@fern-api/fs-utils"
+import { getResolvedPathOfImportedFile } from "@fern-api/ir-generator"
 
-import { Rule } from '../../Rule'
+import { Rule } from "../../Rule"
 
 type CircularImports = Record<RelativeFilePath, CircularImport[]>
 
@@ -13,7 +13,7 @@ interface CircularImport {
 }
 
 export const NoCircularImportsRule: Rule = {
-    name: 'no-circular-imports',
+    name: "no-circular-imports",
     DISABLE_RULE: true,
     create: ({ workspace }) => {
         const circularImports = findCircularImports(workspace.definition.namedDefinitionFiles)
@@ -36,15 +36,15 @@ export const NoCircularImportsRule: Rule = {
                     )
 
                     return circularImportsToReport.map((circularImport) => ({
-                        severity: 'fatal',
+                        severity: "fatal",
                         message:
                             circularImport.chainWithoutStartingFilepath.length === 0
-                                ? 'A file cannot import itself'
+                                ? "A file cannot import itself"
                                 : `Circular import detected: ${[
                                       circularImport.startingFilepath,
                                       ...circularImport.chainWithoutStartingFilepath,
                                       circularImport.startingFilepath
-                                  ].join(' -> ')}`
+                                  ].join(" -> ")}`
                     }))
                 }
             }
@@ -52,7 +52,7 @@ export const NoCircularImportsRule: Rule = {
     }
 }
 
-function findCircularImports(definitionFiles: FernDefinition['namedDefinitionFiles']): CircularImports {
+function findCircularImports(definitionFiles: FernDefinition["namedDefinitionFiles"]): CircularImports {
     const circularImports: CircularImports = {}
 
     for (const filepath of keys(definitionFiles)) {
@@ -65,7 +65,7 @@ function findCircularImports(definitionFiles: FernDefinition['namedDefinitionFil
 function findCircularImportsRecursive(
     filepath: RelativeFilePath,
     path: RelativeFilePath[],
-    definitionFiles: FernDefinition['namedDefinitionFiles']
+    definitionFiles: FernDefinition["namedDefinitionFiles"]
 ): CircularImport[] {
     const circularImports: CircularImport[] = []
 

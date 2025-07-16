@@ -1,11 +1,11 @@
-import { assertNever } from '@fern-api/core-utils'
+import { assertNever } from "@fern-api/core-utils"
 
-import { java } from '..'
-import { ClassReference } from './ClassReference'
-import { CodeBlock } from './CodeBlock'
-import { ArraysClassReference, OptionalClassReference, Type } from './Type'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { java } from ".."
+import { ClassReference } from "./ClassReference"
+import { CodeBlock } from "./CodeBlock"
+import { ArraysClassReference, OptionalClassReference, Type } from "./Type"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 type InternalTypeLiteral =
     | BigInteger
@@ -32,17 +32,17 @@ type InternalTypeLiteral =
     | Nop
 
 interface BigInteger {
-    type: 'bigInteger'
+    type: "bigInteger"
     value: string
 }
 
 interface Boolean_ {
-    type: 'boolean'
+    type: "boolean"
     value: boolean
 }
 
 interface Builder {
-    type: 'builder'
+    type: "builder"
     classReference: ClassReference
     parameters: BuilderParameter[]
 }
@@ -53,12 +53,12 @@ export interface BuilderParameter {
 }
 
 interface Bytes {
-    type: 'bytes'
+    type: "bytes"
     value: string
 }
 
 interface Class_ {
-    type: 'class'
+    type: "class"
     reference: ClassReference
     parameters: ConstructorParameter[]
 }
@@ -69,49 +69,49 @@ export interface ConstructorParameter {
 }
 
 interface Float {
-    type: 'float'
+    type: "float"
     value: number
 }
 
 interface Date {
-    type: 'date'
+    type: "date"
     value: string
 }
 
 interface DateTime {
-    type: 'dateTime'
+    type: "dateTime"
     value: string
 }
 
 interface Double {
-    type: 'double'
+    type: "double"
     value: number
 }
 
 interface Enum {
-    type: 'enum'
+    type: "enum"
     classReference: ClassReference
     value: string
 }
 
 interface Integer {
-    type: 'integer'
+    type: "integer"
     value: number
 }
 
 interface List {
-    type: 'list'
+    type: "list"
     valueType: Type
     values: TypeLiteral[]
 }
 
 interface Long {
-    type: 'long'
+    type: "long"
     value: number
 }
 
 interface Map {
-    type: 'map'
+    type: "map"
     keyType: Type
     valueType: Type
     entries: MapEntry[]
@@ -123,44 +123,44 @@ interface MapEntry {
 }
 
 interface Optional {
-    type: 'optional'
+    type: "optional"
     value: TypeLiteral
     useOf?: boolean
 }
 
 interface Raw {
-    type: 'raw'
+    type: "raw"
     value: string | AstNode
 }
 
 interface Reference {
-    type: 'reference'
+    type: "reference"
     value: AstNode
 }
 
 interface Set {
-    type: 'set'
+    type: "set"
     valueType: Type
     values: TypeLiteral[]
 }
 
 interface String_ {
-    type: 'string'
+    type: "string"
     value: string
 }
 
 interface Unknown {
-    type: 'unknown'
+    type: "unknown"
     value: unknown
 }
 
 interface UUID {
-    type: 'uuid'
+    type: "uuid"
     value: string
 }
 
 interface Nop {
-    type: 'nop'
+    type: "nop"
 }
 
 export class TypeLiteral extends AstNode {
@@ -170,57 +170,57 @@ export class TypeLiteral extends AstNode {
 
     public write(writer: Writer): void {
         switch (this.internalType.type) {
-            case 'bigInteger':
+            case "bigInteger":
                 this.writeBigInteger({ writer, bigInteger: this.internalType })
                 break
-            case 'boolean':
+            case "boolean":
                 writer.write(this.internalType.value.toString())
                 break
-            case 'builder':
+            case "builder":
                 this.writeBuilder({ writer, builder: this.internalType })
                 break
-            case 'bytes':
+            case "bytes":
                 writer.write(`"${this.internalType.value}".getBytes()`)
                 break
-            case 'class': {
+            case "class": {
                 this.writeClass({ writer, class_: this.internalType })
                 break
             }
-            case 'date':
+            case "date":
                 writer.write(`"${this.internalType.value}"`)
                 break
-            case 'dateTime':
+            case "dateTime":
                 this.writeDateTime({ writer, dateTime: this.internalType })
                 break
-            case 'double':
+            case "double":
                 writer.write(this.internalType.value.toString())
                 break
-            case 'enum':
+            case "enum":
                 this.writeEnum({ writer, enum_: this.internalType })
                 break
-            case 'float':
+            case "float":
                 writer.write(`${this.internalType.value}f`)
                 break
-            case 'integer':
+            case "integer":
                 writer.write(this.internalType.value.toString())
                 break
-            case 'list': {
+            case "list": {
                 this.writeList({ writer, list: this.internalType })
                 break
             }
-            case 'long': {
+            case "long": {
                 writer.write(`${this.internalType.value}L`)
                 break
             }
-            case 'map': {
+            case "map": {
                 this.writeMap({ writer, map: this.internalType })
                 break
             }
-            case 'optional': {
+            case "optional": {
                 this.writeOptional({ writer, optional: this.internalType })
                 break
             }
-            case 'raw': {
+            case "raw": {
                 if (this.internalType.value instanceof AstNode) {
                     writer.writeNode(this.internalType.value)
                 } else {
@@ -228,23 +228,23 @@ export class TypeLiteral extends AstNode {
                 }
                 break
             }
-            case 'reference':
+            case "reference":
                 writer.writeNode(this.internalType.value)
                 break
-            case 'set': {
+            case "set": {
                 this.writeSet({ writer, set: this.internalType })
                 break
             }
-            case 'string':
+            case "string":
                 writer.write(`"${this.escapeString(this.internalType.value)}"`)
                 break
-            case 'unknown':
+            case "unknown":
                 this.writeUnknown({ writer, value: this.internalType.value })
                 break
-            case 'uuid':
+            case "uuid":
                 this.writeUUID({ writer, uuid: this.internalType })
                 break
-            case 'nop':
+            case "nop":
                 break
             default:
                 assertNever(this.internalType)
@@ -252,20 +252,20 @@ export class TypeLiteral extends AstNode {
     }
 
     public isOptional(): boolean {
-        return this.internalType.type === 'optional'
+        return this.internalType.type === "optional"
     }
 
     /* Static factory methods for creating a Type */
     public static bigInteger(value: string): TypeLiteral {
         return new this({
-            type: 'bigInteger',
+            type: "bigInteger",
             value
         })
     }
 
     public static boolean(value: boolean): TypeLiteral {
         return new this({
-            type: 'boolean',
+            type: "boolean",
             value
         })
     }
@@ -277,12 +277,12 @@ export class TypeLiteral extends AstNode {
         classReference: ClassReference
         parameters: BuilderParameter[]
     }): TypeLiteral {
-        return new this({ type: 'builder', classReference, parameters })
+        return new this({ type: "builder", classReference, parameters })
     }
 
     public static bytes(value: string): TypeLiteral {
         return new this({
-            type: 'bytes',
+            type: "bytes",
             value
         })
     }
@@ -294,33 +294,33 @@ export class TypeLiteral extends AstNode {
         reference: ClassReference
         parameters: ConstructorParameter[]
     }): TypeLiteral {
-        return new this({ type: 'class', reference, parameters })
+        return new this({ type: "class", reference, parameters })
     }
 
     public static date(value: string): TypeLiteral {
         return new this({
-            type: 'date',
+            type: "date",
             value
         })
     }
 
     public static dateTime(value: string): TypeLiteral {
         return new this({
-            type: 'dateTime',
+            type: "dateTime",
             value
         })
     }
 
     public static double(value: number): TypeLiteral {
         return new this({
-            type: 'double',
+            type: "double",
             value
         })
     }
 
     public static enum_({ classReference, value }: { classReference: ClassReference; value: string }): TypeLiteral {
         return new this({
-            type: 'enum',
+            type: "enum",
             classReference,
             value
         })
@@ -328,21 +328,21 @@ export class TypeLiteral extends AstNode {
 
     public static float(value: number): TypeLiteral {
         return new this({
-            type: 'float',
+            type: "float",
             value
         })
     }
 
     public static integer(value: number): TypeLiteral {
         return new this({
-            type: 'integer',
+            type: "integer",
             value
         })
     }
 
     public static list({ valueType, values }: { valueType: Type; values: TypeLiteral[] }): TypeLiteral {
         return new this({
-            type: 'list',
+            type: "list",
             valueType,
             values
         })
@@ -350,7 +350,7 @@ export class TypeLiteral extends AstNode {
 
     public static long(value: number): TypeLiteral {
         return new this({
-            type: 'long',
+            type: "long",
             value
         })
     }
@@ -365,7 +365,7 @@ export class TypeLiteral extends AstNode {
         entries: MapEntry[]
     }): TypeLiteral {
         return new this({
-            type: 'map',
+            type: "map",
             keyType,
             valueType,
             entries
@@ -378,7 +378,7 @@ export class TypeLiteral extends AstNode {
             return value
         }
         return new this({
-            type: 'optional',
+            type: "optional",
             value,
             useOf
         })
@@ -386,21 +386,21 @@ export class TypeLiteral extends AstNode {
 
     public static raw(value: string | AstNode): TypeLiteral {
         return new this({
-            type: 'raw',
+            type: "raw",
             value
         })
     }
 
     public static reference(value: AstNode): TypeLiteral {
         return new this({
-            type: 'reference',
+            type: "reference",
             value
         })
     }
 
     public static set({ valueType, values }: { valueType: Type; values: TypeLiteral[] }): TypeLiteral {
         return new this({
-            type: 'set',
+            type: "set",
             valueType,
             values
         })
@@ -408,62 +408,62 @@ export class TypeLiteral extends AstNode {
 
     public static string(value: string): TypeLiteral {
         return new this({
-            type: 'string',
+            type: "string",
             value
         })
     }
 
     public static unknown(value: unknown): TypeLiteral {
         return new this({
-            type: 'unknown',
+            type: "unknown",
             value
         })
     }
 
     public static uuid(value: string): TypeLiteral {
         return new this({
-            type: 'uuid',
+            type: "uuid",
             value
         })
     }
 
     public static nop(): TypeLiteral {
         return new this({
-            type: 'nop'
+            type: "nop"
         })
     }
 
     public static isNop(typeLiteral: TypeLiteral): boolean {
-        return typeLiteral.internalType.type === 'nop'
+        return typeLiteral.internalType.type === "nop"
     }
 
     /* Returns true if the type literal should be written on a single line. */
     public shouldWriteInLine(): boolean {
         switch (this.internalType.type) {
-            case 'bigInteger':
-            case 'boolean':
-            case 'bytes':
-            case 'date':
-            case 'dateTime':
-            case 'double':
-            case 'enum':
-            case 'float':
-            case 'integer':
-            case 'long':
-            case 'nop':
-            case 'raw':
-            case 'string':
-            case 'unknown':
-            case 'uuid':
+            case "bigInteger":
+            case "boolean":
+            case "bytes":
+            case "date":
+            case "dateTime":
+            case "double":
+            case "enum":
+            case "float":
+            case "integer":
+            case "long":
+            case "nop":
+            case "raw":
+            case "string":
+            case "unknown":
+            case "uuid":
                 return true
-            case 'optional':
+            case "optional":
                 return this.internalType.value.shouldWriteInLine()
-            case 'builder':
-            case 'class':
-            case 'list':
-            case 'map':
-            case 'reference':
-            case 'set':
+            case "builder":
+            case "class":
+            case "list":
+            case "map":
+            case "reference":
+            case "set":
                 return false
             default:
                 assertNever(this.internalType)
@@ -471,7 +471,7 @@ export class TypeLiteral extends AstNode {
     }
 
     private writeBigInteger({ writer, bigInteger }: { writer: Writer; bigInteger: BigInteger }): void {
-        writer.write('new ')
+        writer.write("new ")
         writer.writeNode(
             java.instantiateClass({
                 classReference: BigIntegerClassReference,
@@ -492,7 +492,7 @@ export class TypeLiteral extends AstNode {
     }
 
     private writeBuilderParameters({ writer, parameters }: { writer: Writer; parameters: BuilderParameter[] }): void {
-        writer.writeLine('.builder()')
+        writer.writeLine(".builder()")
         for (const parameter of parameters) {
             writer.write(`.${parameter.name}(`)
             if (!parameter.value.shouldWriteInLine()) {
@@ -504,10 +504,10 @@ export class TypeLiteral extends AstNode {
             if (!parameter.value.shouldWriteInLine()) {
                 writer.newLine()
             }
-            writer.writeLine(')')
+            writer.writeLine(")")
         }
         writer.writeNewLineIfLastLineNot()
-        writer.write('.build()')
+        writer.write(".build()")
     }
 
     public orderBuilderParameters(parameters: java.BuilderParameter[]): java.BuilderParameter[] {
@@ -536,7 +536,7 @@ export class TypeLiteral extends AstNode {
         writer.writeNode(
             java.invokeMethod({
                 on: OffsetDateTimeClassReference,
-                method: 'parse',
+                method: "parse",
                 arguments_: [TypeLiteral.string(dateTime.value)]
             })
         )
@@ -544,7 +544,7 @@ export class TypeLiteral extends AstNode {
 
     private writeEnum({ writer, enum_: enum_ }: { writer: Writer; enum_: Enum }): void {
         writer.writeNode(enum_.classReference)
-        writer.write('.' + enum_.value)
+        writer.write("." + enum_.value)
     }
 
     private writeList({ writer, list }: { writer: Writer; list: List }): void {
@@ -554,33 +554,33 @@ export class TypeLiteral extends AstNode {
     private writeMap({ writer, map }: { writer: Writer; map: Map }): void {
         const entries = filterNopMapEntries({ entries: map.entries })
         if (entries.length === 0) {
-            writer.write('new ')
+            writer.write("new ")
             writer.writeNode(HashMapClassReference)
-            writer.write('<')
+            writer.write("<")
             writer.writeNode(map.keyType)
-            writer.write(', ')
+            writer.write(", ")
             writer.writeNode(map.valueType)
-            writer.write('>()')
+            writer.write(">()")
             return
         }
 
-        writer.write('new ')
+        writer.write("new ")
         writer.writeNode(HashMapClassReference)
-        writer.write('<')
+        writer.write("<")
         writer.writeNode(map.keyType)
-        writer.write(', ')
+        writer.write(", ")
         writer.writeNode(map.valueType)
-        writer.writeLine('>() {{')
+        writer.writeLine(">() {{")
         writer.indent()
         for (const entry of entries) {
-            writer.write('put(')
+            writer.write("put(")
             writer.writeNode(entry.key)
-            writer.write(', ')
+            writer.write(", ")
             writer.writeNode(entry.value)
-            writer.writeLine(');')
+            writer.writeLine(");")
         }
         writer.dedent()
-        writer.write('}}')
+        writer.write("}}")
     }
 
     private writeOptional({ writer, optional }: { writer: Writer; optional: Optional }): void {
@@ -591,7 +591,7 @@ export class TypeLiteral extends AstNode {
         writer.writeNode(
             java.invokeMethod({
                 on: OptionalClassReference,
-                method: 'of',
+                method: "of",
                 arguments_: [optional.value]
             })
         )
@@ -602,47 +602,47 @@ export class TypeLiteral extends AstNode {
     }
 
     private writeIterable({ writer, iterable }: { writer: Writer; iterable: List | Set }): void {
-        const classReference = iterable.type === 'list' ? ArrayListClassReference : HashSetClassReference
+        const classReference = iterable.type === "list" ? ArrayListClassReference : HashSetClassReference
         const values = filterNopValues({ values: iterable.values })
         if (values.length === 0) {
             writer.write(`new ${classReference.name}<`)
             writer.writeNode(iterable.valueType)
-            writer.write('>()')
+            writer.write(">()")
             return
         }
 
-        writer.write('new ')
+        writer.write("new ")
         writer.writeNode(classReference)
-        writer.write('<')
+        writer.write("<")
         writer.writeNode(iterable.valueType)
-        writer.writeLine('>(')
+        writer.writeLine(">(")
         writer.indent()
         writer.writeNode(
             java.invokeMethod({
                 on: ArraysClassReference,
-                method: 'asList',
+                method: "asList",
                 arguments_: values
             })
         )
         writer.writeNewLineIfLastLineNot()
         writer.dedent()
-        writer.write(')')
+        writer.write(")")
     }
 
     private writeUnknown({ writer, value }: { writer: Writer; value: unknown }): void {
         switch (typeof value) {
-            case 'boolean':
+            case "boolean":
                 writer.write(value.toString())
                 return
-            case 'string':
+            case "string":
                 writer.write(`"${this.escapeString(value)}"`)
                 return
-            case 'number':
+            case "number":
                 writer.write(value.toString())
                 return
-            case 'object':
+            case "object":
                 if (value == null) {
-                    writer.write('null')
+                    writer.write("null")
                     return
                 }
                 if (Array.isArray(value)) {
@@ -665,53 +665,53 @@ export class TypeLiteral extends AstNode {
         value: any[]
     }): void {
         if (value.length === 0) {
-            writer.write('new')
+            writer.write("new")
             writer.writeNode(ArrayListClassReference)
-            writer.write('<Object>()')
+            writer.write("<Object>()")
             return
         }
-        writer.writeLine('new')
+        writer.writeLine("new")
         writer.writeNode(ArrayListClassReference)
-        writer.write('<Object>() {')
+        writer.write("<Object>() {")
         writer.indent()
         writer.writeNode(
             java.invokeMethod({
                 on: ArraysClassReference,
-                method: 'asList',
+                method: "asList",
                 arguments_: value.map((element) => TypeLiteral.unknown(element))
             })
         )
         writer.writeNewLineIfLastLineNot()
         writer.dedent()
-        writer.write('}')
+        writer.write("}")
     }
 
     private writeUnknownMap({ writer, value }: { writer: Writer; value: object }): void {
         const entries = Object.entries(value)
         if (entries.length === 0) {
-            writer.write('new ')
+            writer.write("new ")
             writer.writeNode(HashMapClassReference)
-            writer.write('<String, Object>()')
+            writer.write("<String, Object>()")
             return
         }
-        writer.writeLine('new ')
+        writer.writeLine("new ")
         writer.writeNode(HashMapClassReference)
-        writer.write('<String, Object>() {{')
+        writer.write("<String, Object>() {{")
         writer.indent()
         for (const [key, val] of entries) {
             writer.write(`put("${key}", `)
             writer.writeNode(TypeLiteral.unknown(val))
-            writer.writeLine(');')
+            writer.writeLine(");")
         }
         writer.dedent()
-        writer.write('}}')
+        writer.write("}}")
     }
 
     private writeUUID({ writer, uuid }: { writer: Writer; uuid: UUID }): void {
         writer.writeNode(
             java.invokeMethod({
                 on: UUIDClassReference,
-                method: 'fromString',
+                method: "fromString",
                 arguments_: [TypeLiteral.string(uuid.value)]
             })
         )
@@ -719,61 +719,61 @@ export class TypeLiteral extends AstNode {
 
     private escapeString(input: string): string {
         return input
-            .replace(/\\/g, '\\\\') // Escape backslashes
+            .replace(/\\/g, "\\\\") // Escape backslashes
             .replace(/"/g, '\\"') // Escape double quotes
-            .replace(/\n/g, '\\n') // Escape newlines
-            .replace(/\r/g, '\\r') // Escape carriage returns
-            .replace(/\t/g, '\\t') // Escape tabs
+            .replace(/\n/g, "\\n") // Escape newlines
+            .replace(/\r/g, "\\r") // Escape carriage returns
+            .replace(/\t/g, "\\t") // Escape tabs
     }
 
     private static isAlreadyOptional(value: TypeLiteral) {
-        return value.internalType.type === 'optional'
+        return value.internalType.type === "optional"
     }
 }
 
 export const ArrayListClassReference = new ClassReference({
-    name: 'ArrayList',
-    packageName: 'java.util'
+    name: "ArrayList",
+    packageName: "java.util"
 })
 
 export const BigIntegerClassReference = new ClassReference({
-    name: 'BigInteger',
-    packageName: 'java.math'
+    name: "BigInteger",
+    packageName: "java.math"
 })
 
 export const HashMapClassReference = new ClassReference({
-    name: 'HashMap',
-    packageName: 'java.util'
+    name: "HashMap",
+    packageName: "java.util"
 })
 
 export const HashSetClassReference = new ClassReference({
-    name: 'HashSet',
-    packageName: 'java.util'
+    name: "HashSet",
+    packageName: "java.util"
 })
 
 export const ListClassReference = new ClassReference({
-    name: 'List',
-    packageName: 'java.util'
+    name: "List",
+    packageName: "java.util"
 })
 
 export const MapClassReference = new ClassReference({
-    name: 'Map',
-    packageName: 'java.util'
+    name: "Map",
+    packageName: "java.util"
 })
 
 export const OffsetDateTimeClassReference = new ClassReference({
-    name: 'OffsetDateTime',
-    packageName: 'java.time'
+    name: "OffsetDateTime",
+    packageName: "java.time"
 })
 
 export const SetClassReference = new ClassReference({
-    name: 'Set',
-    packageName: 'java.util'
+    name: "Set",
+    packageName: "java.util"
 })
 
 export const UUIDClassReference = new ClassReference({
-    name: 'UUID',
-    packageName: 'java.util'
+    name: "UUID",
+    packageName: "java.util"
 })
 
 function filterNopConstructorParameters({

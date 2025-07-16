@@ -1,9 +1,9 @@
-import { Zurg, getPropertyKey, getTextOfTsNode } from '@fern-typescript/commons'
-import { GeneratedType, ModelContext } from '@fern-typescript/contexts'
-import { AbstractRawSingleUnionType } from '@fern-typescript/union-schema-generator'
-import { OptionalKind, PropertySignatureStructure, ts } from 'ts-morph'
+import { Zurg, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons"
+import { GeneratedType, ModelContext } from "@fern-typescript/contexts"
+import { AbstractRawSingleUnionType } from "@fern-typescript/union-schema-generator"
+import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph"
 
-import { SingleUnionTypeProperty } from '@fern-fern/ir-sdk/api'
+import { SingleUnionTypeProperty } from "@fern-fern/ir-sdk/api"
 
 export declare namespace RawSinglePropertySingleUnionType {
     export interface Init<Context extends ModelContext> extends AbstractRawSingleUnionType.Init {
@@ -41,10 +41,10 @@ export class RawSinglePropertySingleUnionType<
 
     protected getNonDiscriminantPropertiesForSchema(
         context: Context
-    ): Zurg.union.SingleUnionType['nonDiscriminantProperties'] {
+    ): Zurg.union.SingleUnionType["nonDiscriminantProperties"] {
         const unionBeingGenerated = this.getGeneratedType()
-        if (unionBeingGenerated.type !== 'union') {
-            throw new Error('Type is not a union')
+        if (unionBeingGenerated.type !== "union") {
+            throw new Error("Type is not a union")
         }
         return context.coreUtilities.zurg.object([
             {

@@ -1,16 +1,16 @@
-import { ExportsManager, ImportsManager, PackageId, Reference } from '@fern-typescript/commons'
+import { ExportsManager, ImportsManager, PackageId, Reference } from "@fern-typescript/commons"
 import {
     ExpressInlinedRequestBodySchemaContext,
     GeneratedExpressInlinedRequestBodySchema
-} from '@fern-typescript/contexts'
-import { ExpressInlinedRequestBodySchemaGenerator } from '@fern-typescript/express-inlined-request-schema-generator'
-import { PackageResolver } from '@fern-typescript/resolvers'
-import { SourceFile } from 'ts-morph'
+} from "@fern-typescript/contexts"
+import { ExpressInlinedRequestBodySchemaGenerator } from "@fern-typescript/express-inlined-request-schema-generator"
+import { PackageResolver } from "@fern-typescript/resolvers"
+import { SourceFile } from "ts-morph"
 
-import { Name } from '@fern-fern/ir-sdk/api'
+import { Name } from "@fern-fern/ir-sdk/api"
 
-import { ExpressInlinedRequestBodyDeclarationReferencer } from '../../declaration-referencers/ExpressInlinedRequestBodyDeclarationReferencer'
-import { getSchemaImportStrategy } from '../getSchemaImportStrategy'
+import { ExpressInlinedRequestBodyDeclarationReferencer } from "../../declaration-referencers/ExpressInlinedRequestBodyDeclarationReferencer"
+import { getSchemaImportStrategy } from "../getSchemaImportStrategy"
 
 export declare namespace ExpressInlinedRequestBodySchemaContextImpl {
     export interface Init {

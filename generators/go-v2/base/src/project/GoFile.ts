@@ -1,6 +1,6 @@
-import { AbstractFormatter, File } from '@fern-api/base-generator'
-import { RelativeFilePath } from '@fern-api/fs-utils'
-import { BaseGoCustomConfigSchema, go } from '@fern-api/go-ast'
+import { AbstractFormatter, File } from "@fern-api/base-generator"
+import { RelativeFilePath } from "@fern-api/fs-utils"
+import { BaseGoCustomConfigSchema, go } from "@fern-api/go-ast"
 
 export declare namespace GoFile {
     interface Args {

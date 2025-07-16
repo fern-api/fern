@@ -1,10 +1,10 @@
-import { SdkContext } from '@fern-typescript/contexts'
-import { ts } from 'ts-morph'
+import { SdkContext } from "@fern-typescript/contexts"
+import { ts } from "ts-morph"
 
 export type PaginationResponseInfo = CursorPaginationResponseInfo | OffsetPaginationResponseInfo
 
 export interface CursorPaginationResponseInfo {
-    type: 'cursor'
+    type: "cursor"
     responseType: ts.TypeNode
     itemType: ts.TypeNode
     getItems: ts.Expression
@@ -13,7 +13,7 @@ export interface CursorPaginationResponseInfo {
 }
 
 export interface OffsetPaginationResponseInfo {
-    type: 'offset' | 'offset-step'
+    type: "offset" | "offset-step"
     initializeOffset: ts.Statement
     responseType: ts.TypeNode
     itemType: ts.TypeNode

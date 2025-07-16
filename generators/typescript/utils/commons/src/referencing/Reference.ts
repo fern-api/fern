@@ -1,4 +1,4 @@
-import { ts } from 'ts-morph'
+import { ts } from "ts-morph"
 
 export interface Reference {
     getExpression: (opts?: GetReferenceOpts) => ts.Expression

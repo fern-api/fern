@@ -4,16 +4,16 @@ export declare namespace HttpEndpointReferenceParser {
         method: Method
     }
 
-    type Method = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'HEAD'
+    type Method = "GET" | "POST" | "PUT" | "DELETE" | "PATCH" | "HEAD"
 
     export type ValidationResult = Valid | Invalid
 
     interface Valid {
-        type: 'valid'
+        type: "valid"
     }
 
     interface Invalid {
-        type: 'invalid'
+        type: "invalid"
     }
 }
 
@@ -27,14 +27,14 @@ export class HttpEndpointReferenceParser {
     public validate(reference: string): HttpEndpointReferenceParser.ValidationResult {
         const validFormat = this.REFERENCE_REGEX.test(reference)
         if (!validFormat) {
-            return { type: 'invalid' }
+            return { type: "invalid" }
         }
-        return { type: 'valid' }
+        return { type: "valid" }
     }
 
     public tryParse(reference: string): HttpEndpointReferenceParser.Parsed | undefined {
         const validationResponse = this.validate(reference)
-        if (validationResponse.type === 'invalid') {
+        if (validationResponse.type === "invalid") {
             return undefined
         }
         const match = reference.match(this.REFERENCE_REGEX)

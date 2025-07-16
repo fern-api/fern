@@ -1,7 +1,7 @@
-import { AbstractGeneratedSchema } from '@fern-typescript/abstract-schema-generator'
-import { Reference } from '@fern-typescript/commons'
-import { BaseContext, GeneratedType } from '@fern-typescript/contexts'
-import { ts } from 'ts-morph'
+import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator"
+import { Reference } from "@fern-typescript/commons"
+import { BaseContext, GeneratedType } from "@fern-typescript/contexts"
+import { ts } from "ts-morph"
 
 export declare namespace AbstractGeneratedTypeSchema {
     export interface Init<Shape, Context> {

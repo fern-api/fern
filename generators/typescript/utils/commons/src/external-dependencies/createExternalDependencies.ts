@@ -1,10 +1,10 @@
-import { DependencyManager } from '../dependency-manager/DependencyManager'
-import { ImportsManager } from '../imports-manager'
-import { ExternalDependencies } from './ExternalDependencies'
-import { BlobImpl } from './blob/BlobImpl'
-import { ExpressImpl } from './express/ExpressImpl'
-import { FsImpl } from './fs/FsImpl'
-import { StreamImpl } from './stream/StreamImpl'
+import { DependencyManager } from "../dependency-manager/DependencyManager"
+import { ImportsManager } from "../imports-manager"
+import { ExternalDependencies } from "./ExternalDependencies"
+import { BlobImpl } from "./blob/BlobImpl"
+import { ExpressImpl } from "./express/ExpressImpl"
+import { FsImpl } from "./fs/FsImpl"
+import { StreamImpl } from "./stream/StreamImpl"
 
 export declare namespace createExternalDependencies {
     export interface Args {

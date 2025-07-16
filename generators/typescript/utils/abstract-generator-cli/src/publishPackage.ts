@@ -1,9 +1,9 @@
-import { NpmPackage, PersistedTypescriptProject } from '@fern-typescript/commons'
+import { NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons"
 
-import { GeneratorNotificationService } from '@fern-api/base-generator'
-import { Logger } from '@fern-api/logger'
+import { GeneratorNotificationService } from "@fern-api/base-generator"
+import { Logger } from "@fern-api/logger"
 
-import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
 
 export async function publishPackage({
     generatorNotificationService,
@@ -21,7 +21,7 @@ export async function publishPackage({
     shouldTolerateRepublish: boolean
 }): Promise<void> {
     if (npmPackage?.publishInfo == null) {
-        throw new Error('npmPackage.publishInfo is not defined.')
+        throw new Error("npmPackage.publishInfo is not defined.")
     }
 
     const packageCoordinate = FernGeneratorExec.PackageCoordinate.npm({

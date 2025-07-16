@@ -1,9 +1,9 @@
-import { noop, visitObject } from '@fern-api/core-utils'
-import { NodePath, RawSchemas } from '@fern-api/fern-definition-schema'
+import { noop, visitObject } from "@fern-api/core-utils"
+import { NodePath, RawSchemas } from "@fern-api/fern-definition-schema"
 
-import { DefinitionFileAstVisitor, TypeReferenceLocation } from '../DefinitionFileAstVisitor'
-import { createDocsVisitor } from './utils/createDocsVisitor'
-import { createTypeReferenceVisitor } from './utils/visitTypeReference'
+import { DefinitionFileAstVisitor, TypeReferenceLocation } from "../DefinitionFileAstVisitor"
+import { createDocsVisitor } from "./utils/createDocsVisitor"
+import { createTypeReferenceVisitor } from "./utils/visitTypeReference"
 
 export function visitWebhooks({
     webhook,
@@ -17,35 +17,35 @@ export function visitWebhooks({
     const visitTypeReference = createTypeReferenceVisitor(visitor)
 
     visitObject(webhook, {
-        'display-name': noop,
+        "display-name": noop,
         method: noop,
         examples: noop,
         headers: (headers) => {
             visitHeaders({
                 headers,
                 visitor,
-                nodePath: [...nodePathForWebhook, 'headers']
+                nodePath: [...nodePathForWebhook, "headers"]
             })
         },
         payload: (payload) => {
-            const nodePathForPayload = [...nodePathForWebhook, 'payload']
-            if (typeof payload === 'string') {
+            const nodePathForPayload = [...nodePathForWebhook, "payload"]
+            if (typeof payload === "string") {
                 visitTypeReference(payload, nodePathForPayload, {
-                    location: 'requestReference'
+                    location: "requestReference"
                 })
                 return
             }
 
             if (isRawDiscriminatedUnionDefinition(payload)) {
-                visitTypeReference(payload.type, [...nodePathForPayload, 'type'], {
-                    location: 'requestReference'
+                visitTypeReference(payload.type, [...nodePathForPayload, "type"], {
+                    location: "requestReference"
                 })
                 return
             }
 
             const nodePathForInlinedPayload = [...nodePathForPayload]
             visitor.typeDeclaration?.(
-                { typeName: { isInlined: true, location: 'inlinedRequest' }, declaration: payload },
+                { typeName: { isInlined: true, location: "inlinedRequest" }, declaration: payload },
                 nodePathForInlinedPayload
             )
             visitObject(payload, {
@@ -54,9 +54,9 @@ export function visitWebhooks({
                     if (_extends == null) {
                         return
                     }
-                    const extendsList: string[] = typeof _extends === 'string' ? [_extends] : _extends
+                    const extendsList: string[] = typeof _extends === "string" ? [_extends] : _extends
                     for (const extendedType of extendsList) {
-                        const nodePathForExtension = [...nodePathForInlinedPayload, 'extends', extendedType]
+                        const nodePathForExtension = [...nodePathForInlinedPayload, "extends", extendedType]
                         visitor.extension?.(extendedType, nodePathForExtension)
                         visitTypeReference(extendedType, nodePathForExtension)
                     }
@@ -66,8 +66,8 @@ export function visitWebhooks({
                         return
                     }
                     for (const [propertyKey, property] of Object.entries(properties)) {
-                        const nodePathForProperty = [...nodePathForInlinedPayload, 'properties', propertyKey]
-                        if (typeof property === 'string') {
+                        const nodePathForProperty = [...nodePathForInlinedPayload, "properties", propertyKey]
+                        if (typeof property === "string") {
                             visitTypeReference(property, nodePathForProperty, {
                                 location: TypeReferenceLocation.InlinedRequestProperty
                             })
@@ -77,7 +77,7 @@ export function visitWebhooks({
                                 docs: createDocsVisitor(visitor, nodePathForProperty),
                                 availability: noop,
                                 type: (type) => {
-                                    visitTypeReference(type, [...nodePathForProperty, 'type'], {
+                                    visitTypeReference(type, [...nodePathForProperty, "type"], {
                                         _default: property.default,
                                         validation: property.validation,
                                         location: TypeReferenceLocation.InlinedRequestProperty
@@ -120,7 +120,7 @@ function visitHeaders({
 
         visitor.header?.({ headerKey, header }, nodePathForHeader)
 
-        if (typeof header === 'string') {
+        if (typeof header === "string") {
             visitTypeReference(header, nodePathForHeader)
         } else {
             visitObject(header, {

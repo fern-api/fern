@@ -1,9 +1,9 @@
-import { Zurg, getPropertyKey, getTextOfTsNode } from '@fern-typescript/commons'
-import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from 'ts-morph'
+import { Zurg, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons"
+import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph"
 
-import { NameAndWireValue } from '@fern-fern/ir-sdk/api'
+import { NameAndWireValue } from "@fern-fern/ir-sdk/api"
 
-import { RawSingleUnionType } from './RawSingleUnionType'
+import { RawSingleUnionType } from "./RawSingleUnionType"
 
 export declare namespace AbstractRawSingleUnionType {
     export interface Init {
@@ -55,5 +55,5 @@ export abstract class AbstractRawSingleUnionType<Context> implements RawSingleUn
 
     protected abstract getNonDiscriminantPropertiesForSchema(
         context: Context
-    ): Zurg.union.SingleUnionType['nonDiscriminantProperties']
+    ): Zurg.union.SingleUnionType["nonDiscriminantProperties"]
 }

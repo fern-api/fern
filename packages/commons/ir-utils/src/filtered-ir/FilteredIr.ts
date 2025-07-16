@@ -6,10 +6,10 @@ import {
     WebSocketChannel,
     WebSocketChannelId,
     Webhook
-} from '@fern-api/ir-sdk'
+} from "@fern-api/ir-sdk"
 
-import { IdGenerator } from '../utils/IdGenerator'
-import { EndpointId, EnvironmentId, ErrorId, ServiceId, SubpackageId, TypeId, WebhookId } from './ids'
+import { IdGenerator } from "../utils/IdGenerator"
+import { EndpointId, EnvironmentId, ErrorId, ServiceId, SubpackageId, TypeId, WebhookId } from "./ids"
 
 export interface FilteredIr {
     hasType(type: TypeDeclaration): boolean

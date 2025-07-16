@@ -1,16 +1,16 @@
-import { size } from 'lodash-es'
+import { size } from "lodash-es"
 
-import { RawSchemas, isInlineRequestBody, parseRawBytesType } from '@fern-api/fern-definition-schema'
-import { SdkRequest, SdkRequestBodyType, SdkRequestShape } from '@fern-api/ir-sdk'
+import { RawSchemas, isInlineRequestBody, parseRawBytesType } from "@fern-api/fern-definition-schema"
+import { SdkRequest, SdkRequestBodyType, SdkRequestShape } from "@fern-api/ir-sdk"
 
-import { FernFileContext } from '../../FernFileContext'
-import { PropertyResolver } from '../../resolvers/PropertyResolver'
-import { TypeResolver } from '../../resolvers/TypeResolver'
-import { convertReferenceHttpRequestBody } from './convertHttpRequestBody'
-import { getRequestPropertyComponents } from './convertProperty'
+import { FernFileContext } from "../../FernFileContext"
+import { PropertyResolver } from "../../resolvers/PropertyResolver"
+import { TypeResolver } from "../../resolvers/TypeResolver"
+import { convertReferenceHttpRequestBody } from "./convertHttpRequestBody"
+import { getRequestPropertyComponents } from "./convertProperty"
 
-export const DEFAULT_REQUEST_PARAMETER_NAME = 'request'
-export const DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER = 'body'
+export const DEFAULT_REQUEST_PARAMETER_NAME = "request"
+export const DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER = "body"
 
 export function convertHttpSdkRequest({
     request,
@@ -37,11 +37,11 @@ export function convertHttpSdkRequest({
         shape,
         requestParameterName: file.casingsGenerator.generateName(DEFAULT_REQUEST_PARAMETER_NAME),
         streamParameter:
-            endpoint['stream-condition'] != null
+            endpoint["stream-condition"] != null
                 ? propertyResolver.resolveRequestPropertyOrThrow({
                       file,
                       endpoint: endpointKey,
-                      propertyComponents: getRequestPropertyComponents(endpoint['stream-condition'])
+                      propertyComponents: getRequestPropertyComponents(endpoint["stream-condition"])
                   })
                 : undefined
     }
@@ -59,8 +59,8 @@ function convertHttpSdkRequestShape({
     typeResolver: TypeResolver
 }): SdkRequestShape | undefined {
     const constructWrapper = () => {
-        if (typeof request === 'string' || request?.name == null) {
-            throw new Error('Name is missing for request wrapper')
+        if (typeof request === "string" || request?.name == null) {
+            throw new Error("Name is missing for request wrapper")
         }
         return SdkRequestShape.wrapper({
             wrapperName: file.casingsGenerator.generateName(request.name),
@@ -78,7 +78,7 @@ function convertHttpSdkRequestShape({
         return undefined
     }
 
-    if (typeof request === 'string') {
+    if (typeof request === "string") {
         return SdkRequestShape.justRequestBody(getSdkJustRequestBodyType({ requestBody: request, file }))
     }
 
@@ -107,7 +107,7 @@ export function getSdkJustRequestBodyType({
     contentType?: string
 }): SdkRequestBodyType {
     const rawBytes =
-        typeof requestBody === 'string' ? parseRawBytesType(requestBody) : parseRawBytesType(requestBody.type)
+        typeof requestBody === "string" ? parseRawBytesType(requestBody) : parseRawBytesType(requestBody.type)
     if (rawBytes != null) {
         return SdkRequestBodyType.bytes({
             isOptional: rawBytes.isOptional,
@@ -134,7 +134,7 @@ export function doesRequestHaveNonBodyProperties({
     file: FernFileContext
     typeResolver: TypeResolver
 }): boolean {
-    const { headers = {}, 'path-parameters': pathParameters = {}, 'query-parameters': queryParameters = {} } = request
+    const { headers = {}, "path-parameters": pathParameters = {}, "query-parameters": queryParameters = {} } = request
 
     return (
         !areAllHeadersLiteral({ headers, file, typeResolver }) || size(pathParameters) > 0 || size(queryParameters) > 0
@@ -150,7 +150,7 @@ function doesRequestHaveOnlyPathParameters({
     file: FernFileContext
     typeResolver: TypeResolver
 }): boolean {
-    const { headers = {}, 'path-parameters': pathParameters = {}, 'query-parameters': queryParameters = {} } = request
+    const { headers = {}, "path-parameters": pathParameters = {}, "query-parameters": queryParameters = {} } = request
 
     return (
         size(pathParameters) > 0 &&
@@ -161,7 +161,7 @@ function doesRequestHaveOnlyPathParameters({
 }
 
 function shouldIncludePathParametersInWrapper(request: RawSchemas.HttpRequestSchema): boolean {
-    return typeof request !== 'string' && request?.['path-parameters'] != null
+    return typeof request !== "string" && request?.["path-parameters"] != null
 }
 
 function areAllHeadersLiteral({
@@ -175,12 +175,12 @@ function areAllHeadersLiteral({
 }): boolean {
     return (
         Object.values(headers).filter((header) => {
-            const headerType = typeof header === 'string' ? header : header.type
+            const headerType = typeof header === "string" ? header : header.type
             const resolvedType = typeResolver.resolveTypeOrThrow({
                 type: headerType,
                 file
             })
-            const isLiteral = resolvedType._type === 'container' && resolvedType.container._type === 'literal'
+            const isLiteral = resolvedType._type === "container" && resolvedType.container._type === "literal"
             return !isLiteral
         }).length === 0
     )

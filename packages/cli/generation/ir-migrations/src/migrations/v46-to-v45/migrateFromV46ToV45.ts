@@ -1,32 +1,32 @@
-import { GeneratorName } from '@fern-api/configuration-loader'
+import { GeneratorName } from "@fern-api/configuration-loader"
 
-import { IrSerialization } from '../../ir-serialization'
-import { IrVersions } from '../../ir-versions'
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
+import { IrSerialization } from "../../ir-serialization"
+import { IrVersions } from "../../ir-versions"
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
 
 export const V46_TO_V45_MIGRATION: IrMigration<
     IrVersions.V46.ir.IntermediateRepresentation,
     IrVersions.V45.ir.IntermediateRepresentation
 > = {
-    laterVersion: 'v46',
-    earlierVersion: 'v45',
+    laterVersion: "v46",
+    earlierVersion: "v45",
     firstGeneratorVersionToConsumeNewIR: {
-        [GeneratorName.TYPESCRIPT_NODE_SDK]: '0.21.0',
-        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: '0.21.0',
+        [GeneratorName.TYPESCRIPT_NODE_SDK]: "0.21.0",
+        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: "0.21.0",
         [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_SDK]: '0.21.0',
-        [GeneratorName.TYPESCRIPT_EXPRESS]: '0.16.0',
+        [GeneratorName.TYPESCRIPT_SDK]: "0.21.0",
+        [GeneratorName.TYPESCRIPT_EXPRESS]: "0.16.0",
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_MODEL]: '0.9.0',
-        [GeneratorName.JAVA_SDK]: '0.10.0',
-        [GeneratorName.JAVA_SPRING]: '0.9.0',
-        [GeneratorName.PYTHON_FASTAPI]: '0.10.1',
-        [GeneratorName.PYTHON_PYDANTIC]: '0.9.1',
+        [GeneratorName.JAVA_MODEL]: "0.9.0",
+        [GeneratorName.JAVA_SDK]: "0.10.0",
+        [GeneratorName.JAVA_SPRING]: "0.9.0",
+        [GeneratorName.PYTHON_FASTAPI]: "0.10.1",
+        [GeneratorName.PYTHON_PYDANTIC]: "0.9.1",
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.OPENAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.STOPLIGHT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.PYTHON_SDK]: '2.9.9',
+        [GeneratorName.PYTHON_SDK]: "2.9.9",
         [GeneratorName.GO_FIBER]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -41,7 +41,7 @@ export const V46_TO_V45_MIGRATION: IrMigration<
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V45.IntermediateRepresentation.jsonOrThrow(ir, {
-            unrecognizedObjectKeys: 'strip',
+            unrecognizedObjectKeys: "strip",
             skipValidation: true
         }),
     migrateBackwards: (v46): IrVersions.V45.ir.IntermediateRepresentation => {
@@ -185,13 +185,13 @@ function convertExampleObjectType(v46EOT: IrVersions.V46.ExampleObjectType): IrV
 }
 
 function convertExampleTypeShape(v46ETS: IrVersions.V46.ExampleTypeShape): IrVersions.V45.ExampleTypeShape {
-    if (v46ETS.type === 'alias') {
+    if (v46ETS.type === "alias") {
         return IrVersions.V45.ExampleTypeShape.alias({
             value: convertExampleTypeReference(v46ETS.value)
         })
-    } else if (v46ETS.type === 'object') {
+    } else if (v46ETS.type === "object") {
         return IrVersions.V45.ExampleTypeShape.object(convertExampleObjectType(v46ETS))
-    } else if (v46ETS.type === 'union') {
+    } else if (v46ETS.type === "union") {
         return IrVersions.V45.ExampleTypeShape.union({
             ...v46ETS,
             singleUnionType: {
@@ -211,7 +211,7 @@ function convertExampleTypeShape(v46ETS: IrVersions.V46.ExampleTypeShape): IrVer
                 })
             }
         })
-    } else if (v46ETS.type === 'undiscriminatedUnion') {
+    } else if (v46ETS.type === "undiscriminatedUnion") {
         return IrVersions.V45.ExampleTypeShape.undiscriminatedUnion({
             ...v46ETS,
             singleUnionType: convertExampleTypeReference(v46ETS.singleUnionType)

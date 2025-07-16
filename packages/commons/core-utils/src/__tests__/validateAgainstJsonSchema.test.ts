@@ -1,23 +1,23 @@
-import { JSONSchema4 } from 'json-schema'
+import { JSONSchema4 } from "json-schema"
 
-import { validateAgainstJsonSchema } from '../validateAgainstJsonSchema'
+import { validateAgainstJsonSchema } from "../validateAgainstJsonSchema"
 
-describe('validateAgainstJsonSchema', () => {
+describe("validateAgainstJsonSchema", () => {
     const schema: JSONSchema4 = {
-        type: 'object',
+        type: "object",
         properties: {
-            name: { type: 'string' },
-            age: { type: 'number' },
-            email: { type: 'string' }
+            name: { type: "string" },
+            age: { type: "number" },
+            email: { type: "string" }
         },
-        required: ['name', 'age']
+        required: ["name", "age"]
     }
 
-    it('should return success for valid data', () => {
+    it("should return success for valid data", () => {
         const validData = {
-            name: 'John Doe',
+            name: "John Doe",
             age: 30,
-            email: 'john@example.com'
+            email: "john@example.com"
         }
 
         const result = validateAgainstJsonSchema(validData, schema)
@@ -27,10 +27,10 @@ describe('validateAgainstJsonSchema', () => {
         }
     })
 
-    it('should return failure for invalid data', () => {
+    it("should return failure for invalid data", () => {
         const invalidData = {
-            name: 'Jane Doe',
-            age: '25' // age should be a number
+            name: "Jane Doe",
+            age: "25" // age should be a number
         }
 
         const result = validateAgainstJsonSchema(invalidData, schema)
@@ -41,9 +41,9 @@ describe('validateAgainstJsonSchema', () => {
         }
     })
 
-    it('should return failure when required fields are missing', () => {
+    it("should return failure when required fields are missing", () => {
         const incompleteData = {
-            name: 'Alice'
+            name: "Alice"
             // missing required 'age' field
         }
 
@@ -53,7 +53,7 @@ describe('validateAgainstJsonSchema', () => {
             console.log(result.error)
             expect(result.error).toBeDefined()
             expect(result.error?.message).toBeDefined()
-            expect(result.error?.params?.missingProperty).toBe('age')
+            expect(result.error?.params?.missingProperty).toBe("age")
         }
     })
 })

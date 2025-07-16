@@ -1,9 +1,9 @@
-import path from 'path'
-import urlJoin from 'url-join'
+import path from "path"
+import urlJoin from "url-join"
 
-import { AbsoluteFilePath } from '@fern-api/fs-utils'
+import { AbsoluteFilePath } from "@fern-api/fs-utils"
 
-import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
 import {
     ExampleContainer,
     ExamplePrimitive,
@@ -11,14 +11,14 @@ import {
     ExampleTypeReferenceShape,
     ExampleTypeShape,
     HttpEndpoint
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { GeneratedFile } from '../utils/GeneratedFile'
-import { generateEnumNameFromValues } from '../utils/NamingUtilities'
-import { Argument } from './Argument'
-import { ExampleNode } from './ExampleNode'
-import { Import } from './Import'
-import { Property } from './Property'
+import { GeneratedFile } from "../utils/GeneratedFile"
+import { generateEnumNameFromValues } from "../utils/NamingUtilities"
+import { Argument } from "./Argument"
+import { ExampleNode } from "./ExampleNode"
+import { Import } from "./Import"
+import { Property } from "./Property"
 import {
     ArrayInstance,
     ClassReferenceFactory,
@@ -26,12 +26,12 @@ import {
     EnumReference,
     HashInstance,
     SetInstance
-} from './classes/ClassReference'
-import { Class_ } from './classes/Class_'
-import { AstNode } from './core/AstNode'
-import { Expression } from './expressions/Expression'
-import { FunctionInvocation } from './functions/FunctionInvocation'
-import { Function_ } from './functions/Function_'
+} from "./classes/ClassReference"
+import { Class_ } from "./classes/Class_"
+import { AstNode } from "./core/AstNode"
+import { Expression } from "./expressions/Expression"
+import { FunctionInvocation } from "./functions/FunctionInvocation"
+import { Function_ } from "./functions/Function_"
 
 export declare namespace ExampleGenerator {
     export interface Init {
@@ -79,17 +79,17 @@ export class ExampleGenerator {
 
     // TODO(dsinghvi): HACKHACK Move this to IR
     private getFullPathForEndpoint(endpoint: HttpEndpoint): string {
-        let url = ''
+        let url = ""
         if (endpoint.fullPath.head.length > 0) {
             url = urlJoin(url, endpoint.fullPath.head)
         }
         for (const part of endpoint.fullPath.parts) {
-            url = urlJoin(url, '{' + part.pathParameter + '}')
+            url = urlJoin(url, "{" + part.pathParameter + "}")
             if (part.tail.length > 0) {
                 url = urlJoin(url, part.tail)
             }
         }
-        return url.startsWith('/') ? url : `/${url}`
+        return url.startsWith("/") ? url : `/${url}`
     }
 
     public registerSnippet(func: Function_, endpoint: HttpEndpoint): void {
@@ -133,24 +133,24 @@ export class ExampleGenerator {
                           integer: (integerExample) => integerExample.toString(),
                           double: (doubleExample) => doubleExample.toString(),
                           long: (longExample) => longExample.toString(),
-                          boolean: (booleanExample) => (booleanExample ? 'true' : 'false'),
+                          boolean: (booleanExample) => (booleanExample ? "true" : "false"),
                           uuid: (uuidExample) => `"${uuidExample}"`,
                           datetime: (dateTimeExample) =>
                               new FunctionInvocation({
-                                  baseFunction: new Function_({ name: 'parse', functionBody: [] }),
-                                  onObject: new DateReference({ type: 'DateTime' }),
+                                  baseFunction: new Function_({ name: "parse", functionBody: [] }),
+                                  onObject: new DateReference({ type: "DateTime" }),
                                   arguments_: [
                                       new Argument({ value: `"${dateTimeExample.toISOString()}"`, isNamed: false })
                                   ]
                               }),
                           date: (dateExample) =>
                               new FunctionInvocation({
-                                  baseFunction: new Function_({ name: 'parse', functionBody: [] }),
-                                  onObject: new DateReference({ type: 'Date' }),
+                                  baseFunction: new Function_({ name: "parse", functionBody: [] }),
+                                  onObject: new DateReference({ type: "Date" }),
                                   arguments_: [new Argument({ value: `"${dateExample}"`, isNamed: false })]
                               }),
                           _other: () => {
-                              throw new Error('Unknown primitive example: ' + primitiveExample.type)
+                              throw new Error("Unknown primitive example: " + primitiveExample.type)
                           }
                       }),
                   container: (ec: ExampleContainer) => {
@@ -182,7 +182,7 @@ export class ExampleGenerator {
                               }),
                           optional: (optionalExample) => this.convertExampleTypeReference(optionalExample),
                           _other: () => {
-                              throw new Error('Unknown example container type: ' + ec.type)
+                              throw new Error("Unknown example container type: " + ec.type)
                           }
                       })
                   },
@@ -217,13 +217,13 @@ export class ExampleGenerator {
                           undiscriminatedUnion: (uuExample) =>
                               this.convertExampleTypeReference(uuExample.singleUnionType),
                           _other: () => {
-                              throw new Error('Unknown example container type: ' + es.type)
+                              throw new Error("Unknown example container type: " + es.type)
                           }
                       })
                   },
                   unknown: () => JSON.stringify(example.jsonExample),
                   _other: () => {
-                      throw new Error('Unknown example type: ' + example.shape.type)
+                      throw new Error("Unknown example type: " + example.shape.type)
                   }
               })
             : undefined

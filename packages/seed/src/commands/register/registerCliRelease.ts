@@ -1,13 +1,13 @@
-import { readFile } from 'fs/promises'
-import yaml from 'js-yaml'
+import { readFile } from "fs/promises"
+import yaml from "js-yaml"
 
-import { RelativeFilePath, doesPathExist, join } from '@fern-api/fs-utils'
-import { TaskContext } from '@fern-api/task-context'
+import { RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils"
+import { TaskContext } from "@fern-api/task-context"
 
-import { FernRegistryClient as FdrClient } from '@fern-fern/generators-sdk'
-import * as serializers from '@fern-fern/generators-sdk/serialization'
+import { FernRegistryClient as FdrClient } from "@fern-fern/generators-sdk"
+import * as serializers from "@fern-fern/generators-sdk/serialization"
 
-import { loadCliWorkspace } from '../../loadGeneratorWorkspaces'
+import { loadCliWorkspace } from "../../loadGeneratorWorkspaces"
 
 export async function registerCliRelease({
     fdrClient,
@@ -18,12 +18,12 @@ export async function registerCliRelease({
 }): Promise<void> {
     const cliWorkspace = await loadCliWorkspace()
     if (cliWorkspace == null) {
-        context.logger.error('Failed to find CLI workspace, continuing without registering CLI releases.')
+        context.logger.error("Failed to find CLI workspace, continuing without registering CLI releases.")
         return
     }
     if (cliWorkspace.workspaceConfig.changelogLocation == null) {
         context.logger.error(
-            'No changelog location specified, continuing without registering CLI releases. To register CLI releases, specify a changelog location at: `changelogLocation`.'
+            "No changelog location specified, continuing without registering CLI releases. To register CLI releases, specify a changelog location at: `changelogLocation`."
         )
         return
     }
@@ -40,7 +40,7 @@ export async function registerCliRelease({
 
     // We've found a versions file, let's read it and register all the versions
     const changelogs = yaml.load((await readFile(absolutePathToChangelogLocation)).toString())
-    context.logger.info('Registering CLI releases...')
+    context.logger.info("Registering CLI releases...")
     if (Array.isArray(changelogs)) {
         for (const entry of changelogs) {
             try {

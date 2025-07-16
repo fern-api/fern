@@ -1,8 +1,8 @@
-import { GeneratedVersion } from '@fern-typescript/contexts'
+import { GeneratedVersion } from "@fern-typescript/contexts"
 
-import { ApiVersionScheme } from '@fern-fern/ir-sdk/api'
+import { ApiVersionScheme } from "@fern-fern/ir-sdk/api"
 
-import { GeneratedVersionImpl } from './GeneratedVersionImpl'
+import { GeneratedVersionImpl } from "./GeneratedVersionImpl"
 
 export declare namespace VersionGenerator {
     export namespace generateVersion {

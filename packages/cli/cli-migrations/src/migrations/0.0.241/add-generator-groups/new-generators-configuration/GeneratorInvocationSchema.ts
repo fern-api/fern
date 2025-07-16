@@ -1,7 +1,7 @@
-import { z } from 'zod'
+import { z } from "zod"
 
-import { GeneratorOutputSchema } from './GeneratorOutputSchema'
-import { GithubConfigurationSchema } from './GithubConfigurationSchema'
+import { GeneratorOutputSchema } from "./GeneratorOutputSchema"
+import { GithubConfigurationSchema } from "./GithubConfigurationSchema"
 
 export const GeneratorInvocationSchema = z.strictObject({
     name: z.string(),

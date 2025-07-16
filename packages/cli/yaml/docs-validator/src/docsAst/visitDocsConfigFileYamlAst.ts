@@ -1,18 +1,18 @@
-import { readFile } from 'fs/promises'
-import yaml from 'js-yaml'
+import { readFile } from "fs/promises"
+import yaml from "js-yaml"
 
-import { docsYml } from '@fern-api/configuration-loader'
-import { noop, visitObjectAsync } from '@fern-api/core-utils'
-import { NodePath } from '@fern-api/fern-definition-schema'
-import { AbsoluteFilePath, dirname, doesPathExist, resolve } from '@fern-api/fs-utils'
-import { TaskContext } from '@fern-api/task-context'
-import { AbstractAPIWorkspace, FernWorkspace } from '@fern-api/workspace-loader'
+import { docsYml } from "@fern-api/configuration-loader"
+import { noop, visitObjectAsync } from "@fern-api/core-utils"
+import { NodePath } from "@fern-api/fern-definition-schema"
+import { AbsoluteFilePath, dirname, doesPathExist, resolve } from "@fern-api/fs-utils"
+import { TaskContext } from "@fern-api/task-context"
+import { AbstractAPIWorkspace, FernWorkspace } from "@fern-api/workspace-loader"
 
-import { DocsConfigFileAstVisitor } from './DocsConfigFileAstVisitor'
-import { validateProductConfigFileSchema } from './validateProductConfig'
-import { validateVersionConfigFileSchema } from './validateVersionConfig'
-import { visitFilepath } from './visitFilepath'
-import { visitNavigationAst } from './visitNavigationAst'
+import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor"
+import { validateProductConfigFileSchema } from "./validateProductConfig"
+import { validateVersionConfigFileSchema } from "./validateVersionConfig"
+import { visitFilepath } from "./visitFilepath"
+import { visitNavigationAst } from "./visitNavigationAst"
 
 export declare namespace visitDocsConfigFileYamlAst {
     interface Args {
@@ -48,12 +48,12 @@ export async function visitDocsConfigFileYamlAst({
         backgroundImage: async (background) => {
             if (background == null) {
                 return
-            } else if (typeof background === 'string') {
+            } else if (typeof background === "string") {
                 await visitFilepath({
                     absoluteFilepathToConfiguration,
                     rawUnresolvedFilepath: background,
                     visitor,
-                    nodePath: ['background-image']
+                    nodePath: ["background-image"]
                 })
             } else {
                 if (background.dark != null) {
@@ -61,7 +61,7 @@ export async function visitDocsConfigFileYamlAst({
                         absoluteFilepathToConfiguration,
                         rawUnresolvedFilepath: background.dark,
                         visitor,
-                        nodePath: ['background-image', 'dark']
+                        nodePath: ["background-image", "dark"]
                     })
                 }
                 if (background.light != null) {
@@ -69,7 +69,7 @@ export async function visitDocsConfigFileYamlAst({
                         absoluteFilepathToConfiguration,
                         rawUnresolvedFilepath: background.light,
                         visitor,
-                        nodePath: ['background-image', 'light']
+                        nodePath: ["background-image", "light"]
                     })
                 }
             }
@@ -86,7 +86,7 @@ export async function visitDocsConfigFileYamlAst({
                             absoluteFilepathToConfiguration,
                             rawUnresolvedFilepath: stylesheet,
                             visitor,
-                            nodePath: ['css', `${idx}`],
+                            nodePath: ["css", `${idx}`],
                             willBeUploaded: false
                         })
                     )
@@ -96,7 +96,7 @@ export async function visitDocsConfigFileYamlAst({
                     absoluteFilepathToConfiguration,
                     rawUnresolvedFilepath: css,
                     visitor,
-                    nodePath: ['css'],
+                    nodePath: ["css"],
                     willBeUploaded: false
                 })
             }
@@ -112,7 +112,7 @@ export async function visitDocsConfigFileYamlAst({
                 absoluteFilepathToConfiguration,
                 rawUnresolvedFilepath: favicon,
                 visitor,
-                nodePath: ['favicon']
+                nodePath: ["favicon"]
             })
         },
         footerLinks: noop,
@@ -128,7 +128,7 @@ export async function visitDocsConfigFileYamlAst({
                             absoluteFilepathToConfiguration,
                             visitor,
                             script,
-                            nodePath: ['js', `${idx}`]
+                            nodePath: ["js", `${idx}`]
                         })
                     )
                 )
@@ -138,7 +138,7 @@ export async function visitDocsConfigFileYamlAst({
                     absoluteFilepathToConfiguration,
                     visitor,
                     script: js,
-                    nodePath: ['js']
+                    nodePath: ["js"]
                 })
             }
         },
@@ -150,7 +150,7 @@ export async function visitDocsConfigFileYamlAst({
                     absoluteFilepathToConfiguration,
                     rawUnresolvedFilepath: contents.logo.dark,
                     visitor,
-                    nodePath: ['logo', 'dark']
+                    nodePath: ["logo", "dark"]
                 })
             }
             if (contents.logo?.light != null) {
@@ -158,7 +158,7 @@ export async function visitDocsConfigFileYamlAst({
                     absoluteFilepathToConfiguration,
                     rawUnresolvedFilepath: contents.logo.light,
                     visitor,
-                    nodePath: ['logo', 'light']
+                    nodePath: ["logo", "light"]
                 })
             }
         },
@@ -173,7 +173,7 @@ export async function visitDocsConfigFileYamlAst({
                 absolutePathToFernFolder,
                 navigation,
                 visitor,
-                nodePath: ['navigation'],
+                nodePath: ["navigation"],
                 absoluteFilepathToConfiguration,
                 apiWorkspaces,
                 context
@@ -190,7 +190,7 @@ export async function visitDocsConfigFileYamlAst({
                         absoluteFilepathToConfiguration,
                         rawUnresolvedFilepath: product.path,
                         visitor,
-                        nodePath: ['products', `${idx}`],
+                        nodePath: ["products", `${idx}`],
                         willBeUploaded: false
                     })
                     const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), product.path)
@@ -205,12 +205,12 @@ export async function visitDocsConfigFileYamlAst({
                         )
                     }
                     const parsedProductFile = await validateProductConfigFileSchema({ value: content })
-                    if (parsedProductFile.type === 'success') {
+                    if (parsedProductFile.type === "success") {
                         await visitNavigationAst({
                             absolutePathToFernFolder,
                             navigation: parsedProductFile.contents.navigation,
                             visitor,
-                            nodePath: ['navigation'],
+                            nodePath: ["navigation"],
                             absoluteFilepathToConfiguration: absoluteFilepath,
                             apiWorkspaces,
                             context
@@ -235,7 +235,7 @@ export async function visitDocsConfigFileYamlAst({
                         absoluteFilepathToConfiguration,
                         visitor,
                         font: body,
-                        nodePath: ['typography', 'bodyFont']
+                        nodePath: ["typography", "bodyFont"]
                     })
                 },
                 codeFont: async (code) => {
@@ -246,7 +246,7 @@ export async function visitDocsConfigFileYamlAst({
                         absoluteFilepathToConfiguration,
                         visitor,
                         font: code,
-                        nodePath: ['typography', 'codeFont']
+                        nodePath: ["typography", "codeFont"]
                     })
                 },
                 headingsFont: async (headings) => {
@@ -257,7 +257,7 @@ export async function visitDocsConfigFileYamlAst({
                         absoluteFilepathToConfiguration,
                         visitor,
                         font: headings,
-                        nodePath: ['typography', 'headingsFont']
+                        nodePath: ["typography", "headingsFont"]
                     })
                 }
             })
@@ -273,7 +273,7 @@ export async function visitDocsConfigFileYamlAst({
                         absoluteFilepathToConfiguration,
                         rawUnresolvedFilepath: version.path,
                         visitor,
-                        nodePath: ['versions', `${idx}`],
+                        nodePath: ["versions", `${idx}`],
                         willBeUploaded: false
                     })
                     const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), version.path)
@@ -288,12 +288,12 @@ export async function visitDocsConfigFileYamlAst({
                         )
                     }
                     const parsedVersionFile = await validateVersionConfigFileSchema({ value: content })
-                    if (parsedVersionFile.type === 'success') {
+                    if (parsedVersionFile.type === "success") {
                         await visitNavigationAst({
                             absolutePathToFernFolder,
                             navigation: parsedVersionFile.contents.navigation,
                             visitor,
-                            nodePath: ['navigation'],
+                            nodePath: ["navigation"],
                             absoluteFilepathToConfiguration: absoluteFilepath,
                             apiWorkspaces,
                             context
@@ -328,7 +328,7 @@ async function visitFontConfig({
     }
 
     for (const path of font.paths ?? []) {
-        if (typeof path === 'string') {
+        if (typeof path === "string") {
             await visitFilepath({
                 absoluteFilepathToConfiguration,
                 rawUnresolvedFilepath: path,
@@ -359,7 +359,7 @@ async function visitScript({
     script: docsYml.RawSchemas.JsConfigOptions
     nodePath: NodePath
 }) {
-    const rawUnresolvedFilepath = typeof script === 'string' ? script : 'path' in script ? script.path : null
+    const rawUnresolvedFilepath = typeof script === "string" ? script : "path" in script ? script.path : null
 
     if (rawUnresolvedFilepath) {
         await visitFilepath({

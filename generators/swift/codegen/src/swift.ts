@@ -8,7 +8,7 @@ import {
     Method,
     Property,
     Struct
-} from './ast'
+} from "./ast"
 
 export function codeBlock(args: CodeBlock.Args): CodeBlock {
     return new CodeBlock(args)
@@ -46,4 +46,4 @@ export function struct(args: Struct.Args): Struct {
     return new Struct(args)
 }
 
-export * from './ast'
+export * from "./ast"

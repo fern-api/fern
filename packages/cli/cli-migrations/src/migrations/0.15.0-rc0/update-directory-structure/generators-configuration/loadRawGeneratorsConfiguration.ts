@@ -1,9 +1,9 @@
-import { readFile } from 'fs/promises'
-import yaml from 'js-yaml'
+import { readFile } from "fs/promises"
+import yaml from "js-yaml"
 
-import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
 
-import { LegacyGenerators } from '.'
+import { LegacyGenerators } from "."
 
 export async function loadRawGeneratorsConfiguration({
     absolutePathToWorkspace
@@ -20,7 +20,7 @@ export async function loadRawGeneratorsConfiguration({
     return undefined
 }
 
-const GENERATORS_YML = 'generators.yml'
+const GENERATORS_YML = "generators.yml"
 
 export function getAbsolutePathToGeneratorsConfiguration({
     absolutePathToWorkspace

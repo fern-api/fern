@@ -1,19 +1,19 @@
-import chalk from 'chalk'
-import fs from 'fs-extra'
-import { mkdir } from 'fs/promises'
-import path from 'path'
+import chalk from "chalk"
+import fs from "fs-extra"
+import { mkdir } from "fs/promises"
+import path from "path"
 
 import {
     APIS_DIRECTORY,
     DEFAULT_API_WORKSPACE_FOLDER_NAME,
     DEFINITION_DIRECTORY,
     GENERATORS_CONFIGURATION_FILENAME
-} from '@fern-api/configuration-loader'
-import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from '@fern-api/fs-utils'
-import { TaskContext } from '@fern-api/task-context'
+} from "@fern-api/configuration-loader"
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils"
+import { TaskContext } from "@fern-api/task-context"
 
-import { createFernDirectoryAndWorkspace } from './createFernDirectoryAndOrganization'
-import { createFernWorkspace, createOpenAPIWorkspace } from './createWorkspace'
+import { createFernDirectoryAndWorkspace } from "./createFernDirectoryAndOrganization"
+import { createFernWorkspace, createOpenAPIWorkspace } from "./createWorkspace"
 
 export async function initializeAPI({
     organization,
@@ -44,11 +44,11 @@ export async function initializeAPI({
             context
         })
 
-        context.logger.info(chalk.green('Created new API: ./' + path.relative(process.cwd(), directoryOfWorkspace)))
+        context.logger.info(chalk.green("Created new API: ./" + path.relative(process.cwd(), directoryOfWorkspace)))
     } else {
         await createFernWorkspace({ directoryOfWorkspace, cliVersion: versionOfCli, context })
 
-        context.logger.info(chalk.green('Created new fern folder'))
+        context.logger.info(chalk.green("Created new fern folder"))
     }
 }
 
@@ -78,12 +78,12 @@ async function getDirectoryOfNewAPIWorkspace({
 
     const inlinedApiDefinition = await hasInlinedAPIDefinitions({ absolutePathToFernDirectory })
     if (inlinedApiDefinition) {
-        taskContext.logger.info('Creating workspaces to support multiple API Definitions.')
+        taskContext.logger.info("Creating workspaces to support multiple API Definitions.")
 
         const apiWorkspaceDirectory = join(
             absolutePathToFernDirectory,
             RelativeFilePath.of(APIS_DIRECTORY),
-            RelativeFilePath.of('api')
+            RelativeFilePath.of("api")
         )
 
         const inlinedDefinitionDirectory: AbsoluteFilePath = join(
@@ -110,7 +110,7 @@ async function getDirectoryOfNewAPIWorkspace({
         const newApiDirectory = join(
             absolutePathToFernDirectory,
             RelativeFilePath.of(APIS_DIRECTORY),
-            RelativeFilePath.of('api1')
+            RelativeFilePath.of("api1")
         )
         await mkdir(workspaceDefinitionDirectory, { recursive: true })
         return newApiDirectory

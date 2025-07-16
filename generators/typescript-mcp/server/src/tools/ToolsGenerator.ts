@@ -1,5 +1,5 @@
-import { RelativeFilePath, join } from '@fern-api/fs-utils'
-import { TypescriptCustomConfigSchema, ts } from '@fern-api/typescript-ast'
+import { RelativeFilePath, join } from "@fern-api/fs-utils"
+import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast"
 import {
     FileGenerator,
     FunctionNode,
@@ -8,11 +8,11 @@ import {
     ObjectLiteralNode,
     TypescriptFile,
     ZodTypeMapper
-} from '@fern-api/typescript-mcp-base'
+} from "@fern-api/typescript-mcp-base"
 
-import { HttpEndpoint, HttpService } from '@fern-fern/ir-sdk/api'
+import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api"
 
-import { ServerGeneratorContext } from '../ServerGeneratorContext'
+import { ServerGeneratorContext } from "../ServerGeneratorContext"
 
 export class ToolsGenerator extends FileGenerator<
     TypescriptFile,
@@ -26,17 +26,17 @@ export class ToolsGenerator extends FileGenerator<
     constructor(context: ServerGeneratorContext) {
         super(context)
         this.mcpSdkReference = ts.reference({
-            name: 'McpServer',
-            importFrom: { type: 'named', moduleName: '@modelcontextprotocol/sdk/server/mcp.js' }
+            name: "McpServer",
+            importFrom: { type: "named", moduleName: "@modelcontextprotocol/sdk/server/mcp.js" }
         })
         this.sdkClientClassReference = ts.reference({
             name: this.context.project.builder.sdkClientClassName,
-            importFrom: { type: 'named', moduleName: this.context.project.builder.sdkModuleName }
+            importFrom: { type: "named", moduleName: this.context.project.builder.sdkModuleName }
         })
-        this.sdkClientVariableName = 'client'
+        this.sdkClientVariableName = "client"
         this.schemasReference = ts.reference({
-            name: '',
-            importFrom: { type: 'star', moduleName: '../schemas', starImportAlias: 'schemas' }
+            name: "",
+            importFrom: { type: "star", moduleName: "../schemas", starImportAlias: "schemas" }
         })
     }
 
@@ -54,11 +54,11 @@ export class ToolsGenerator extends FileGenerator<
                                 new ObjectLiteralNode({
                                     fields: [
                                         {
-                                            name: 'environment',
+                                            name: "environment",
                                             value: new FunctionNode({
                                                 parameters: [],
                                                 body: ts.codeblock((writer) => {
-                                                    writer.write('return ')
+                                                    writer.write("return ")
                                                     writer.write('""')
                                                 })
                                             })
@@ -94,11 +94,11 @@ export class ToolsGenerator extends FileGenerator<
     }
 
     protected getDirectory(): RelativeFilePath {
-        return RelativeFilePath.of('')
+        return RelativeFilePath.of("")
     }
 
     protected getFilename(): string {
-        return 'index.ts'
+        return "index.ts"
     }
 
     protected getFilepath(): RelativeFilePath {
@@ -114,7 +114,7 @@ export declare namespace ToolDefinition {
         schemasReference: ts.Reference
         endpoint: HttpEndpoint
         service: HttpService
-        builder: ServerGeneratorContext['project']['builder']
+        builder: ServerGeneratorContext["project"]["builder"]
         zodTypeMapper: ZodTypeMapper
     }
 }
@@ -172,12 +172,12 @@ export class ToolDefinition {
         const writeParams = (writer: ts.Writer) => {
             if (hasSchema && hasPartsFromPath) {
                 writeSchema(writer)
-                writer.write('.extend(')
+                writer.write(".extend(")
                 writeSchemaShapeFromParts(writer)
-                writer.write(').shape')
+                writer.write(").shape")
             } else if (hasSchema) {
                 writeSchema(writer)
-                writer.write('.shape')
+                writer.write(".shape")
             } else if (hasPartsFromPath) {
                 writeSchemaShapeFromParts(writer)
             }
@@ -185,13 +185,13 @@ export class ToolDefinition {
 
         const writeExtractParams = (writer: ts.Writer) => {
             if (hasPartsFromPath) {
-                writer.write('const { ')
-                writer.write(partsFromPath?.map((part) => part.key).join(', '))
-                writer.write(hasSchema && hasPartsFromPath ? ', ' : '')
-                writer.write(hasSchema ? '...request' : '')
-                writer.write(' } = params;')
+                writer.write("const { ")
+                writer.write(partsFromPath?.map((part) => part.key).join(", "))
+                writer.write(hasSchema && hasPartsFromPath ? ", " : "")
+                writer.write(hasSchema ? "...request" : "")
+                writer.write(" } = params;")
             } else if (hasSchema) {
-                writer.write('const request = params;')
+                writer.write("const request = params;")
             }
         }
 
@@ -199,10 +199,10 @@ export class ToolDefinition {
             writeExtractParams(writer)
             writer.writeNodeStatement(
                 ts.variable({
-                    name: 'result',
+                    name: "result",
                     const: true,
                     initializer: ts.codeblock((writer) => {
-                        writer.write('await ')
+                        writer.write("await ")
                         writer.writeNode(
                             new MethodInvocationNode({
                                 on: ts.codeblock(this.args.sdkClientVariableName),
@@ -216,7 +216,7 @@ export class ToolDefinition {
                                     ...(hasSchema
                                         ? [
                                               ts.codeblock((writer) => {
-                                                  writer.write('request')
+                                                  writer.write("request")
                                               })
                                           ]
                                         : [])
@@ -226,12 +226,12 @@ export class ToolDefinition {
                     })
                 })
             )
-            writer.write('return ')
+            writer.write("return ")
             writer.writeNodeStatement(
                 new ObjectLiteralNode({
                     fields: [
                         {
-                            name: 'content',
+                            name: "content",
                             value: ts.codeblock((writer) => {
                                 writer.write('[{ type: "text", text: JSON.stringify(result) }]')
                             })
@@ -251,20 +251,20 @@ export class ToolDefinition {
                         new ObjectLiteralNode({
                             fields: [
                                 {
-                                    name: 'register',
+                                    name: "register",
                                     value: new FunctionNode({
                                         parameters: [
                                             new FunctionParameterNode({
-                                                name: 'server',
+                                                name: "server",
                                                 type: this.args.mcpSdkReference
                                             })
                                         ],
                                         body: ts.codeblock((writer) => {
-                                            writer.write('return ')
+                                            writer.write("return ")
                                             writer.writeNodeStatement(
                                                 new MethodInvocationNode({
-                                                    on: ts.codeblock('server'),
-                                                    method: 'tool',
+                                                    on: ts.codeblock("server"),
+                                                    method: "tool",
                                                     arguments_: [
                                                         ts.TypeLiteral.string(this.toolName),
                                                         ...(this.toolDescription
@@ -275,7 +275,7 @@ export class ToolDefinition {
                                                             async: true,
                                                             parameters: [
                                                                 new FunctionParameterNode({
-                                                                    name: 'params'
+                                                                    name: "params"
                                                                 })
                                                             ],
                                                             body: ts.codeblock(writeBody)
@@ -297,7 +297,7 @@ export class ToolDefinition {
     private getPartsFromPath() {
         const schemaPrefix = this.args.service.name.fernFilepath.allParts
             .map((part) => part.pascalCase.safeName)
-            .join('')
+            .join("")
         return this.args.endpoint.path.parts.map((part) => ({
             key: part.pathParameter,
             value: `${schemaPrefix}${this.capitalize(part.pathParameter)}`

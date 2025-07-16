@@ -1,6 +1,6 @@
-import { OpenAPIV3 } from 'openapi-types'
+import { OpenAPIV3 } from "openapi-types"
 
-import { ChannelId } from '../sharedTypes'
+import { ChannelId } from "../sharedTypes"
 
 export interface DocumentV3 {
     asyncapi: string
@@ -37,7 +37,7 @@ export interface ChannelV3 {
 
 export interface Operation {
     description?: string
-    action: 'send' | 'receive'
+    action: "send" | "receive"
     channel: OpenAPIV3.ReferenceObject
     messages: OpenAPIV3.ReferenceObject[]
 }

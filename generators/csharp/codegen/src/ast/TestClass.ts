@@ -1,11 +1,11 @@
-import { Access } from './Access'
-import { Annotation } from './Annotation'
-import { Class } from './Class'
-import { ClassReference } from './ClassReference'
-import { CodeBlock } from './CodeBlock'
-import { Method } from './Method'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { Access } from "./Access"
+import { Annotation } from "./Annotation"
+import { Class } from "./Class"
+import { ClassReference } from "./ClassReference"
+import { CodeBlock } from "./CodeBlock"
+import { Method } from "./Method"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export declare namespace TestClass {
     interface Args {
@@ -52,7 +52,7 @@ export class TestClass extends AstNode {
             namespace: this.namespace,
             annotations: [
                 new Annotation({
-                    reference: new ClassReference({ name: 'TestFixture', namespace: 'NUnit.Framework' })
+                    reference: new ClassReference({ name: "TestFixture", namespace: "NUnit.Framework" })
                 })
             ],
             parentClassReference: this.parentClassReference
@@ -67,7 +67,7 @@ export class TestClass extends AstNode {
                     body: testMethod.body,
                     annotations: [
                         new Annotation({
-                            reference: new ClassReference({ name: 'Test', namespace: 'NUnit.Framework' })
+                            reference: new ClassReference({ name: "Test", namespace: "NUnit.Framework" })
                         })
                     ]
                 })

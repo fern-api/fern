@@ -1,16 +1,16 @@
-import { php } from '@fern-api/php-codegen'
+import { php } from "@fern-api/php-codegen"
 
-import { SdkGeneratorContext } from '../SdkGeneratorContext'
+import { SdkGeneratorContext } from "../SdkGeneratorContext"
 
 /**
  * The Guzzle HTTP client.
  */
 export class GuzzleClient {
-    public static readonly NAMESPACE = 'GuzzleHttp'
-    public static readonly EXCEPTION_NAMESPACE = 'GuzzleHttp\\Exception'
-    public static readonly CLIENT_CLASS_NAME = 'Client'
-    public static readonly CLIENT_INTERFACE_CLASS_NAME = 'ClientInterface'
-    public static readonly REQUEST_EXCEPTION_CLASS_NAME = 'RequestException'
+    public static readonly NAMESPACE = "GuzzleHttp"
+    public static readonly EXCEPTION_NAMESPACE = "GuzzleHttp\\Exception"
+    public static readonly CLIENT_CLASS_NAME = "Client"
+    public static readonly CLIENT_INTERFACE_CLASS_NAME = "ClientInterface"
+    public static readonly REQUEST_EXCEPTION_CLASS_NAME = "RequestException"
 
     private context: SdkGeneratorContext
 

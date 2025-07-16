@@ -1,7 +1,7 @@
-import { docsYml } from '@fern-api/configuration-loader'
-import { noop, visitObjectAsync } from '@fern-api/core-utils'
-import { TaskContext } from '@fern-api/task-context'
-import { AbstractAPIWorkspace, FernWorkspace } from '@fern-api/workspace-loader'
+import { docsYml } from "@fern-api/configuration-loader"
+import { noop, visitObjectAsync } from "@fern-api/core-utils"
+import { TaskContext } from "@fern-api/task-context"
+import { AbstractAPIWorkspace, FernWorkspace } from "@fern-api/workspace-loader"
 
 export type DocsConfigFileAstVisitor<R = void | Promise<void>> = {
     [K in keyof DocsConfigFileAstNodeTypes]: DocsConfigFileAstNodeVisitor<K, R>

@@ -1,7 +1,7 @@
-import { ts } from 'ts-morph'
+import { ts } from "ts-morph"
 
-import { GeneratedFile } from '../../commons/GeneratedFile'
-import { ExpressContext } from '../ExpressContext'
+import { GeneratedFile } from "../../commons/GeneratedFile"
+import { ExpressContext } from "../ExpressContext"
 
 export interface GeneratedExpressEndpointTypeSchemas extends GeneratedFile<ExpressContext> {
     getReferenceToRawResponse: (context: ExpressContext) => ts.TypeNode

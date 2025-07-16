@@ -1,6 +1,6 @@
-import { CSharpFile, FileGenerator } from '@fern-api/csharp-base'
-import { csharp } from '@fern-api/csharp-codegen'
-import { RelativeFilePath, join } from '@fern-api/fs-utils'
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base"
+import { csharp } from "@fern-api/csharp-codegen"
+import { RelativeFilePath, join } from "@fern-api/fs-utils"
 
 import {
     ExampleObjectType,
@@ -8,12 +8,12 @@ import {
     ObjectProperty,
     ObjectTypeDeclaration,
     TypeDeclaration
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { ModelCustomConfigSchema } from '../ModelCustomConfig'
-import { ModelGeneratorContext } from '../ModelGeneratorContext'
-import { generateFields } from '../generateFields'
-import { ExampleGenerator } from '../snippets/ExampleGenerator'
+import { ModelCustomConfigSchema } from "../ModelCustomConfig"
+import { ModelGeneratorContext } from "../ModelGeneratorContext"
+import { generateFields } from "../generateFields"
+import { ExampleGenerator } from "../snippets/ExampleGenerator"
 
 export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
     private readonly typeDeclaration: TypeDeclaration
@@ -90,10 +90,10 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
                             dontSimplify: true
                         }
                     ),
-                    name: '_extensionData',
+                    name: "_extensionData",
                     initializer: this.objectDeclaration.extraProperties
-                        ? csharp.codeblock('new Dictionary<string, object?>()')
-                        : csharp.codeblock('new Dictionary<string, JsonElement>()')
+                        ? csharp.codeblock("new Dictionary<string, object?>()")
+                        : csharp.codeblock("new Dictionary<string, JsonElement>()")
                 })
             )
         }
@@ -108,26 +108,26 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
                     type: this.objectDeclaration.extraProperties
                         ? this.context.getAdditionalPropertiesType()
                         : this.context.getReadOnlyAdditionalPropertiesType(),
-                    name: 'AdditionalProperties',
+                    name: "AdditionalProperties",
                     get: true,
                     set: this.objectDeclaration.extraProperties ? true : csharp.Access.Private,
-                    initializer: csharp.codeblock('new()')
+                    initializer: csharp.codeblock("new()")
                 })
             )
         } else {
             class_.addField(
                 csharp.field({
                     doc: {
-                        summary: 'Additional properties received from the response, if any.',
-                        remarks: '[EXPERIMENTAL] This API is experimental and may change in future releases.'
+                        summary: "Additional properties received from the response, if any.",
+                        remarks: "[EXPERIMENTAL] This API is experimental and may change in future releases."
                     },
                     annotations: [this.context.getJsonExtensionDataAttribute()],
                     access: csharp.Access.Public,
                     type: csharp.Type.idictionary(csharp.Type.string(), this.context.getJsonElementType()),
-                    name: 'AdditionalProperties',
+                    name: "AdditionalProperties",
                     set: csharp.Access.Internal,
                     get: csharp.Access.Public,
-                    initializer: csharp.codeblock('new Dictionary<string, JsonElement>()')
+                    initializer: csharp.codeblock("new Dictionary<string, JsonElement>()")
                 })
             )
         }
@@ -139,10 +139,10 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
                 class_.addMethod(
                     csharp.method({
                         interfaceReference: this.context.getIJsonOnSerializingInterfaceReference(),
-                        name: 'OnSerializing',
+                        name: "OnSerializing",
                         parameters: [],
                         bodyType: csharp.Method.BodyType.Expression,
-                        body: csharp.codeblock('AdditionalProperties.CopyToExtensionData(_extensionData)')
+                        body: csharp.codeblock("AdditionalProperties.CopyToExtensionData(_extensionData)")
                     })
                 )
             }
@@ -154,10 +154,10 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
             class_.addMethod(
                 csharp.method({
                     interfaceReference: this.context.getIJsonOnDeserializedInterfaceReference(),
-                    name: 'OnDeserialized',
+                    name: "OnDeserialized",
                     parameters: [],
                     bodyType: csharp.Method.BodyType.Expression,
-                    body: csharp.codeblock('AdditionalProperties.CopyFromExtensionData(_extensionData)')
+                    body: csharp.codeblock("AdditionalProperties.CopyFromExtensionData(_extensionData)")
                 })
             )
         }
@@ -243,7 +243,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
     protected getFilepath(): RelativeFilePath {
         return join(
             this.context.project.filepaths.getSourceFileDirectory(),
-            RelativeFilePath.of(this.classReference.name + '.cs')
+            RelativeFilePath.of(this.classReference.name + ".cs")
         )
     }
 }

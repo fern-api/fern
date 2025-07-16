@@ -1,13 +1,13 @@
-import { assertNever } from '@fern-api/core-utils'
+import { assertNever } from "@fern-api/core-utils"
 
-import { HttpEndpoint, HttpService, SdkRequest, ServiceId } from '@fern-fern/ir-sdk/api'
+import { HttpEndpoint, HttpService, SdkRequest, ServiceId } from "@fern-fern/ir-sdk/api"
 
-import { SdkGeneratorContext } from '../../SdkGeneratorContext'
-import { EndpointSignatureInfo } from '../EndpointSignatureInfo'
-import { BytesRequest } from '../request/BytesRequest'
-import { EndpointRequest } from '../request/EndpointRequest'
-import { ReferencedEndpointRequest } from '../request/ReferencedEndpointRequest'
-import { WrappedEndpointRequest } from '../request/WrappedEndpointRequest'
+import { SdkGeneratorContext } from "../../SdkGeneratorContext"
+import { EndpointSignatureInfo } from "../EndpointSignatureInfo"
+import { BytesRequest } from "../request/BytesRequest"
+import { EndpointRequest } from "../request/EndpointRequest"
+import { ReferencedEndpointRequest } from "../request/ReferencedEndpointRequest"
+import { WrappedEndpointRequest } from "../request/WrappedEndpointRequest"
 
 export function getEndpointRequest({
     context,
@@ -46,7 +46,7 @@ function createEndpointRequest({
     serviceId: ServiceId
 }): EndpointRequest | undefined {
     switch (sdkRequest.shape.type) {
-        case 'wrapper':
+        case "wrapper":
             return new WrappedEndpointRequest({
                 context,
                 serviceId,
@@ -55,8 +55,8 @@ function createEndpointRequest({
                 service,
                 endpoint
             })
-        case 'justRequestBody':
-            if (sdkRequest.shape.value.type === 'bytes') {
+        case "justRequestBody":
+            if (sdkRequest.shape.value.type === "bytes") {
                 return new BytesRequest(context, sdkRequest, service, endpoint)
             }
             return new ReferencedEndpointRequest(

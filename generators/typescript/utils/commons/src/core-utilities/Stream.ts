@@ -1,7 +1,7 @@
-import { ts } from 'ts-morph'
+import { ts } from "ts-morph"
 
-import { CoreUtility } from './CoreUtility'
-import { MANIFEST as RuntimeManifest } from './Runtime'
+import { CoreUtility } from "./CoreUtility"
+import { MANIFEST as RuntimeManifest } from "./Runtime"
 
 export interface Stream {
     readonly Stream: {
@@ -29,25 +29,25 @@ export declare namespace Stream {
     }
 
     export interface SSEEventShape {
-        type: 'sse'
+        type: "sse"
         streamTerminator?: ts.Expression
     }
 
     export interface MessageEventShape {
-        type: 'json'
+        type: "json"
         messageTerminator?: ts.Expression
     }
 }
 
 export const MANIFEST: CoreUtility.Manifest = {
-    name: 'stream',
-    pathInCoreUtilities: { nameOnDisk: 'stream', exportDeclaration: { exportAll: true } },
+    name: "stream",
+    pathInCoreUtilities: { nameOnDisk: "stream", exportDeclaration: { exportAll: true } },
     addDependencies: (): void => {
         return
     },
     dependsOn: [RuntimeManifest],
     getFilesPatterns: () => {
-        return { patterns: 'src/core/stream/**' }
+        return { patterns: "src/core/stream/**" }
     }
 }
 
@@ -56,7 +56,7 @@ export class StreamImpl extends CoreUtility implements Stream {
 
     public Stream = {
         _construct: this.withExportedName(
-            'Stream',
+            "Stream",
             (Stream) =>
                 ({
                     stream,
@@ -70,43 +70,43 @@ export class StreamImpl extends CoreUtility implements Stream {
                     signal: ts.Expression
                 }): ts.Expression => {
                     const eventShapeProperties: ts.ObjectLiteralElementLike[] = []
-                    if (eventShape.type === 'sse') {
+                    if (eventShape.type === "sse") {
                         eventShapeProperties.push(
                             ts.factory.createPropertyAssignment(
-                                ts.factory.createIdentifier('type'),
-                                ts.factory.createStringLiteral('sse')
+                                ts.factory.createIdentifier("type"),
+                                ts.factory.createStringLiteral("sse")
                             )
                         )
                         if (eventShape.streamTerminator != null) {
                             eventShapeProperties.push(
                                 ts.factory.createPropertyAssignment(
-                                    ts.factory.createIdentifier('streamTerminator'),
-                                    eventShape.streamTerminator ?? ts.factory.createStringLiteral('\n')
+                                    ts.factory.createIdentifier("streamTerminator"),
+                                    eventShape.streamTerminator ?? ts.factory.createStringLiteral("\n")
                                 )
                             )
                         }
-                    } else if (eventShape.type === 'json') {
+                    } else if (eventShape.type === "json") {
                         eventShapeProperties.push(
                             ts.factory.createPropertyAssignment(
-                                ts.factory.createIdentifier('type'),
-                                ts.factory.createStringLiteral('json')
+                                ts.factory.createIdentifier("type"),
+                                ts.factory.createStringLiteral("json")
                             )
                         )
                         eventShapeProperties.push(
                             ts.factory.createPropertyAssignment(
-                                ts.factory.createIdentifier('messageTerminator'),
-                                eventShape.messageTerminator ?? ts.factory.createStringLiteral('\n')
+                                ts.factory.createIdentifier("messageTerminator"),
+                                eventShape.messageTerminator ?? ts.factory.createStringLiteral("\n")
                             )
                         )
                     }
                     return ts.factory.createNewExpression(Stream.getExpression(), undefined, [
                         ts.factory.createObjectLiteralExpression(
                             [
-                                ts.factory.createPropertyAssignment(ts.factory.createIdentifier('stream'), stream),
-                                ts.factory.createPropertyAssignment(ts.factory.createIdentifier('parse'), parse),
-                                ts.factory.createPropertyAssignment(ts.factory.createIdentifier('signal'), signal),
+                                ts.factory.createPropertyAssignment(ts.factory.createIdentifier("stream"), stream),
+                                ts.factory.createPropertyAssignment(ts.factory.createIdentifier("parse"), parse),
+                                ts.factory.createPropertyAssignment(ts.factory.createIdentifier("signal"), signal),
                                 ts.factory.createPropertyAssignment(
-                                    ts.factory.createIdentifier('eventShape'),
+                                    ts.factory.createIdentifier("eventShape"),
                                     ts.factory.createObjectLiteralExpression(eventShapeProperties, true)
                                 )
                             ],
@@ -117,7 +117,7 @@ export class StreamImpl extends CoreUtility implements Stream {
         ),
 
         _getReferenceToType: this.withExportedName(
-            'Stream',
+            "Stream",
             (APIResponse) => (response: ts.TypeNode) =>
                 ts.factory.createTypeReferenceNode(APIResponse.getEntityName(), [response])
         )

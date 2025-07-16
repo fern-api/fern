@@ -1,19 +1,19 @@
-import path from 'path'
+import path from "path"
 
-import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
-import { createMockTaskContext } from '@fern-api/task-context'
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { createMockTaskContext } from "@fern-api/task-context"
 
-import { loadApisOrThrow } from '../../loadApisOrThrow'
-import { generateAndSnapshotDynamicIR } from './generateAndSnapshotDynamicIR'
+import { loadApisOrThrow } from "../../loadApisOrThrow"
+import { generateAndSnapshotDynamicIR } from "./generateAndSnapshotDynamicIR"
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
-describe('test definitions', async () => {
-    const TEST_DEFINITIONS_DIR = path.join(__dirname, '../../../../../../../test-definitions')
+describe("test definitions", async () => {
+    const TEST_DEFINITIONS_DIR = path.join(__dirname, "../../../../../../../test-definitions")
     const apiWorkspaces = await loadApisOrThrow({
-        fernDirectory: join(AbsoluteFilePath.of(TEST_DEFINITIONS_DIR), RelativeFilePath.of('fern')),
+        fernDirectory: join(AbsoluteFilePath.of(TEST_DEFINITIONS_DIR), RelativeFilePath.of("fern")),
         context: createMockTaskContext(),
-        cliVersion: '0.0.0',
-        cliName: 'fern',
+        cliVersion: "0.0.0",
+        cliName: "fern",
         commandLineApiWorkspace: undefined,
         defaultToAllApiWorkspaces: true
     })
@@ -22,10 +22,10 @@ describe('test definitions', async () => {
         apiWorkspaces.map(async (workspace) => {
             it(`${workspace.workspaceName}`, async () => {
                 await generateAndSnapshotDynamicIR({
-                    absolutePathToIr: AbsoluteFilePath.of(path.join(__dirname, 'test-definitions')),
+                    absolutePathToIr: AbsoluteFilePath.of(path.join(__dirname, "test-definitions")),
                     workspace,
-                    audiences: { type: 'all' },
-                    workspaceName: workspace.workspaceName ?? ''
+                    audiences: { type: "all" },
+                    workspaceName: workspace.workspaceName ?? ""
                 })
             })
         })

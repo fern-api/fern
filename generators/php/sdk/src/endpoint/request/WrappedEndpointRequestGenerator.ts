@@ -1,7 +1,7 @@
-import { assertNever } from '@fern-api/core-utils'
-import { RelativeFilePath, join } from '@fern-api/fs-utils'
-import { FileGenerator, FileLocation, PhpFile } from '@fern-api/php-base'
-import { php } from '@fern-api/php-codegen'
+import { assertNever } from "@fern-api/core-utils"
+import { RelativeFilePath, join } from "@fern-api/fs-utils"
+import { FileGenerator, FileLocation, PhpFile } from "@fern-api/php-base"
+import { php } from "@fern-api/php-codegen"
 
 import {
     FileProperty,
@@ -11,10 +11,10 @@ import {
     QueryParameter,
     SdkRequestWrapper,
     ServiceId
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { SdkCustomConfigSchema } from '../../SdkCustomConfig'
-import { SdkGeneratorContext } from '../../SdkGeneratorContext'
+import { SdkCustomConfigSchema } from "../../SdkCustomConfig"
+import { SdkGeneratorContext } from "../../SdkGeneratorContext"
 
 export declare namespace WrappedEndpointRequestGenerator {
     export interface Args {
@@ -143,7 +143,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
             fileUpload: (fileUpload) => {
                 for (const property of fileUpload.properties) {
                     switch (property.type) {
-                        case 'file': {
+                        case "file": {
                             this.addFieldWithMethods({
                                 clazz,
                                 name: property.value.key.name,
@@ -153,7 +153,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
                             })
                             break
                         }
-                        case 'bodyProperty': {
+                        case "bodyProperty": {
                             this.addFieldWithMethods({
                                 clazz,
                                 name: property.name.name,
@@ -184,11 +184,11 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
     private filePropertyToField(fileProperty: FileProperty): php.Field {
         let type
         switch (fileProperty.type) {
-            case 'file': {
+            case "file": {
                 type = php.Type.reference(this.context.getFileClassReference())
                 break
             }
-            case 'fileArray': {
+            case "fileArray": {
                 type = php.Type.array(php.Type.reference(this.context.getFileClassReference()))
                 break
             }
@@ -270,7 +270,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
         return join(
             this.context.project.filepaths.getSourceDirectory(),
             this.location.directory,
-            RelativeFilePath.of(this.classReference.name + '.php')
+            RelativeFilePath.of(this.classReference.name + ".php")
         )
     }
 }

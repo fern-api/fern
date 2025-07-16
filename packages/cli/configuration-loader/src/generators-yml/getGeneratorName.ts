@@ -1,18 +1,18 @@
-import { TaskContext } from '@fern-api/task-context'
+import { TaskContext } from "@fern-api/task-context"
 
-import { GeneratorName } from './GeneratorName'
+import { GeneratorName } from "./GeneratorName"
 
 export function getGeneratorNameOrThrow(generatorName: string, context: TaskContext): GeneratorName {
     const normalizedGeneratorName = normalizeGeneratorName(generatorName)
     if (normalizedGeneratorName == null) {
-        return context.failAndThrow('Unrecognized generator: ' + generatorName)
+        return context.failAndThrow("Unrecognized generator: " + generatorName)
     }
 
     return normalizedGeneratorName
 }
 
 export function normalizeGeneratorName(generatorName: string): GeneratorName | undefined {
-    if (!generatorName.startsWith('fernapi/')) {
+    if (!generatorName.startsWith("fernapi/")) {
         generatorName = `fernapi/${generatorName}`
     }
     if (isGeneratorName(generatorName)) {

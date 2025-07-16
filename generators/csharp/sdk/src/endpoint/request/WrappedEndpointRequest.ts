@@ -1,5 +1,5 @@
-import { assertNever } from '@fern-api/core-utils'
-import { csharp } from '@fern-api/csharp-codegen'
+import { assertNever } from "@fern-api/core-utils"
+import { csharp } from "@fern-api/csharp-codegen"
 
 import {
     HttpEndpoint,
@@ -11,16 +11,16 @@ import {
     SdkRequestWrapper,
     ServiceId,
     TypeReference
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { SdkGeneratorContext } from '../../SdkGeneratorContext'
-import { RawClient } from '../http/RawClient'
+import { SdkGeneratorContext } from "../../SdkGeneratorContext"
+import { RawClient } from "../http/RawClient"
 import {
     EndpointRequest,
     HeaderParameterCodeBlock,
     QueryParameterCodeBlock,
     RequestBodyCodeBlock
-} from './EndpointRequest'
+} from "./EndpointRequest"
 
 export declare namespace WrappedEndpointRequest {
     interface Args {
@@ -32,8 +32,8 @@ export declare namespace WrappedEndpointRequest {
     }
 }
 
-const QUERY_PARAMETER_BAG_NAME = '_query'
-const HEADER_BAG_NAME = '_headers'
+const QUERY_PARAMETER_BAG_NAME = "_query"
+const HEADER_BAG_NAME = "_headers"
 
 export class WrappedEndpointRequest extends EndpointRequest {
     private serviceId: ServiceId
@@ -78,7 +78,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 }
                 for (const query of optionalQueryParameters) {
                     const queryParameterReference = `${this.getParameterName()}.${query.name.name.pascalCase.safeName}`
-                    writer.controlFlow('if', csharp.codeblock(`${queryParameterReference} != null`))
+                    writer.controlFlow("if", csharp.codeblock(`${queryParameterReference} != null`))
                     this.writeQueryParameter(writer, query)
                     writer.endControlFlow()
                 }
@@ -103,11 +103,11 @@ export class WrappedEndpointRequest extends EndpointRequest {
             this.stringify({
                 reference: query.valueType,
                 name: query.name.name,
-                parameterOverride: '_value',
+                parameterOverride: "_value",
                 allowOptionals: false // When allow-multiple is set, the query parameter never uses optional types.
             })
         )
-        writer.writeLine(').ToList();')
+        writer.writeLine(").ToList();")
     }
 
     public getHeaderParameterCodeBlock(): HeaderParameterCodeBlock | undefined {
@@ -137,7 +137,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                                 keyType: csharp.Type.string(),
                                 valueType: csharp.Type.string(),
                                 values: {
-                                    type: 'entries',
+                                    type: "entries",
                                     entries: requiredHeaders.map((header) => {
                                         return {
                                             key: csharp.codeblock(csharp.string_({ string: header.name.wireValue })),
@@ -154,7 +154,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 )
                 for (const header of optionalHeaders) {
                     const headerReference = `${this.getParameterName()}.${header.name.name.pascalCase.safeName}`
-                    writer.controlFlow('if', csharp.codeblock(`${headerReference} != null`))
+                    writer.controlFlow("if", csharp.codeblock(`${headerReference} != null`))
                     writer.write(`${HEADER_BAG_NAME}["${header.name.wireValue}"] = `)
                     writer.writeNodeStatement(this.stringify({ reference: header.valueType, name: header.name.name }))
                     writer.endControlFlow()
@@ -169,13 +169,13 @@ export class WrappedEndpointRequest extends EndpointRequest {
             return undefined
         }
         switch (this.endpoint.requestBody.type) {
-            case 'bytes':
-                return 'bytes'
-            case 'reference':
-            case 'inlinedRequestBody':
-                return 'json'
-            case 'fileUpload':
-                return 'multipartform'
+            case "bytes":
+                return "bytes"
+            case "reference":
+            case "inlinedRequestBody":
+                return "json"
+            case "fileUpload":
+                return "multipartform"
             default:
                 assertNever(this.endpoint.requestBody)
         }
@@ -200,20 +200,20 @@ export class WrappedEndpointRequest extends EndpointRequest {
             (this.isOptional({ typeReference: reference }) || this.isNullable({ typeReference: reference })) &&
             this.isStruct({ typeReference: reference }) &&
             (allowOptionals ?? true)
-                ? '.Value'
-                : ''
+                ? ".Value"
+                : ""
 
-        if (this.isDateOrDateTime({ type: 'datetime', typeReference: reference })) {
+        if (this.isDateOrDateTime({ type: "datetime", typeReference: reference })) {
             return csharp.codeblock((writer) => {
                 writer.write(`${parameter}${maybeDotValue}.ToString(`)
                 writer.writeNode(this.context.getConstantsClassReference())
-                writer.write('.DateTimeFormat)')
+                writer.write(".DateTimeFormat)")
             })
-        } else if (this.isDateOrDateTime({ type: 'date', typeReference: reference })) {
+        } else if (this.isDateOrDateTime({ type: "date", typeReference: reference })) {
             return csharp.codeblock((writer) => {
                 writer.write(`${parameter}${maybeDotValue}.ToString(`)
                 writer.writeNode(this.context.getConstantsClassReference())
-                writer.write('.DateFormat)')
+                writer.write(".DateFormat)")
             })
         } else if (this.isEnum({ typeReference: reference })) {
             return csharp.codeblock((writer) => {
@@ -226,7 +226,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 writer.writeNode(
                     csharp.invokeMethod({
                         on: this.context.getJsonUtilsClassReference(),
-                        method: 'Serialize',
+                        method: "Serialize",
                         arguments_: [csharp.codeblock(`${parameter}${maybeDotValue}`)]
                     })
                 )
@@ -263,26 +263,26 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
     private isString(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
-            case 'container':
-                if (typeReference.container.type === 'optional') {
+            case "container":
+                if (typeReference.container.type === "optional") {
                     return this.isString(typeReference.container.optional)
                 }
-                if (typeReference.container.type === 'nullable') {
+                if (typeReference.container.type === "nullable") {
                     return this.isString(typeReference.container.nullable)
                 }
                 return false
-            case 'named': {
+            case "named": {
                 const declaration = this.context.getTypeDeclarationOrThrow(typeReference.typeId)
-                if (declaration.shape.type === 'alias') {
+                if (declaration.shape.type === "alias") {
                     return this.isString(declaration.shape.aliasOf)
                 }
                 return false
             }
-            case 'primitive': {
+            case "primitive": {
                 const csharpType = this.context.csharpTypeMapper.convert({ reference: typeReference })
-                return csharpType.internalType.type === 'string'
+                return csharpType.internalType.type === "string"
             }
-            case 'unknown': {
+            case "unknown": {
                 return false
             }
         }
@@ -290,25 +290,25 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
     private isOptional({ typeReference }: { typeReference: TypeReference }): boolean {
         switch (typeReference.type) {
-            case 'container':
-                if (typeReference.container.type === 'optional') {
+            case "container":
+                if (typeReference.container.type === "optional") {
                     return true
                 }
-                if (typeReference.container.type === 'nullable') {
+                if (typeReference.container.type === "nullable") {
                     return this.isOptional({ typeReference: typeReference.container.nullable })
                 }
                 return false
-            case 'named': {
+            case "named": {
                 const declaration = this.context.getTypeDeclarationOrThrow(typeReference.typeId)
-                if (declaration.shape.type === 'alias') {
+                if (declaration.shape.type === "alias") {
                     return this.isOptional({ typeReference: declaration.shape.aliasOf })
                 }
                 return false
             }
-            case 'primitive': {
+            case "primitive": {
                 return false
             }
-            case 'unknown': {
+            case "unknown": {
                 return false
             }
         }
@@ -316,25 +316,25 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
     private isNullable({ typeReference }: { typeReference: TypeReference }): boolean {
         switch (typeReference.type) {
-            case 'container':
-                if (typeReference.container.type === 'optional') {
+            case "container":
+                if (typeReference.container.type === "optional") {
                     return this.isNullable({ typeReference: typeReference.container.optional })
                 }
-                if (typeReference.container.type === 'nullable') {
+                if (typeReference.container.type === "nullable") {
                     return true
                 }
                 return false
-            case 'named': {
+            case "named": {
                 const declaration = this.context.getTypeDeclarationOrThrow(typeReference.typeId)
-                if (declaration.shape.type === 'alias') {
+                if (declaration.shape.type === "alias") {
                     return this.isNullable({ typeReference: declaration.shape.aliasOf })
                 }
                 return false
             }
-            case 'primitive': {
+            case "primitive": {
                 return false
             }
-            case 'unknown': {
+            case "unknown": {
                 return false
             }
         }
@@ -423,27 +423,27 @@ export class WrappedEndpointRequest extends EndpointRequest {
         type,
         typeReference
     }: {
-        type: 'date' | 'datetime'
+        type: "date" | "datetime"
         typeReference: TypeReference
     }): boolean {
-        const matchingPrimitiveValue = type === 'date' ? 'DATE' : 'DATE_TIME'
+        const matchingPrimitiveValue = type === "date" ? "DATE" : "DATE_TIME"
         switch (typeReference.type) {
-            case 'container':
-                if (typeReference.container.type === 'optional') {
+            case "container":
+                if (typeReference.container.type === "optional") {
                     return this.isDateOrDateTime({ type, typeReference: typeReference.container.optional })
                 }
                 return false
-            case 'named': {
+            case "named": {
                 const declaration = this.context.getTypeDeclarationOrThrow(typeReference.typeId)
-                if (declaration.shape.type === 'alias') {
+                if (declaration.shape.type === "alias") {
                     return this.isDateOrDateTime({ type, typeReference: declaration.shape.aliasOf })
                 }
                 return false
             }
-            case 'primitive': {
+            case "primitive": {
                 return typeReference.primitive.v1 === matchingPrimitiveValue
             }
-            case 'unknown': {
+            case "unknown": {
                 return false
             }
         }
@@ -451,25 +451,25 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
     private isEnum({ typeReference }: { typeReference: TypeReference }): boolean {
         switch (typeReference.type) {
-            case 'container':
-                if (typeReference.container.type === 'optional') {
+            case "container":
+                if (typeReference.container.type === "optional") {
                     return this.isEnum({ typeReference: typeReference.container.optional })
                 }
                 return false
-            case 'named': {
+            case "named": {
                 const declaration = this.context.getTypeDeclarationOrThrow(typeReference.typeId)
-                if (declaration.shape.type === 'enum') {
+                if (declaration.shape.type === "enum") {
                     return true
                 }
-                if (declaration.shape.type === 'alias') {
+                if (declaration.shape.type === "alias") {
                     return this.isEnum({ typeReference: declaration.shape.aliasOf })
                 }
                 return false
             }
-            case 'primitive': {
+            case "primitive": {
                 return false
             }
-            case 'unknown': {
+            case "unknown": {
                 return false
             }
         }
@@ -508,7 +508,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 })
             },
             primitive: (primitive) => {
-                const isBoolean = primitive.v2?.type === 'boolean' || primitive.v1 === 'BOOLEAN'
+                const isBoolean = primitive.v2?.type === "boolean" || primitive.v1 === "BOOLEAN"
                 if (isBoolean) {
                     return true
                 }

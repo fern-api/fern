@@ -1,8 +1,8 @@
-import { readFile } from 'fs/promises'
-import grayMatter from 'gray-matter'
+import { readFile } from "fs/promises"
+import grayMatter from "gray-matter"
 
-import { AbsoluteFilePath, RelativeFilePath, dirname, resolve } from '@fern-api/fs-utils'
-import { TaskContext } from '@fern-api/task-context'
+import { AbsoluteFilePath, RelativeFilePath, dirname, resolve } from "@fern-api/fs-utils"
+import { TaskContext } from "@fern-api/task-context"
 
 async function defaultMarkdownLoader(filepath: AbsoluteFilePath) {
     // strip frontmatter from the referenced markdown
@@ -25,7 +25,7 @@ export async function replaceReferencedMarkdown({
     context: TaskContext
     markdownLoader?: (filepath: AbsoluteFilePath) => Promise<string>
 }): Promise<string> {
-    if (!markdown.includes('<Markdown')) {
+    if (!markdown.includes("<Markdown")) {
         return markdown
     }
 
@@ -45,16 +45,16 @@ export async function replaceReferencedMarkdown({
         }
 
         const filepath = resolve(
-            src.startsWith('/') ? absolutePathToFernFolder : dirname(absolutePathToMarkdownFile),
-            RelativeFilePath.of(src.replace(/^\//, ''))
+            src.startsWith("/") ? absolutePathToFernFolder : dirname(absolutePathToMarkdownFile),
+            RelativeFilePath.of(src.replace(/^\//, ""))
         )
 
         try {
             let replaceString = await markdownLoader(filepath)
             replaceString = replaceString
-                .split('\n')
+                .split("\n")
                 .map((line) => indent + line)
-                .join('\n')
+                .join("\n")
             newMarkdown = newMarkdown.replace(matchString, replaceString)
         } catch (e) {
             context.logger.warn(`Failed to read markdown file "${src}" referenced in ${absolutePathToMarkdownFile}`)

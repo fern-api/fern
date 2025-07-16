@@ -1,11 +1,11 @@
-import { RelativeFilePath } from '@fern-api/fs-utils'
-import { FileGenerator, PhpFile } from '@fern-api/php-base'
-import { php } from '@fern-api/php-codegen'
+import { RelativeFilePath } from "@fern-api/fs-utils"
+import { FileGenerator, PhpFile } from "@fern-api/php-base"
+import { php } from "@fern-api/php-codegen"
 
-import { EnumTypeDeclaration, TypeDeclaration } from '@fern-fern/ir-sdk/api'
+import { EnumTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api"
 
-import { ModelCustomConfigSchema } from '../ModelCustomConfig'
-import { ModelGeneratorContext } from '../ModelGeneratorContext'
+import { ModelCustomConfigSchema } from "../ModelCustomConfig"
+import { ModelGeneratorContext } from "../ModelGeneratorContext"
 
 export class EnumGenerator extends FileGenerator<PhpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
     private readonly classReference: php.ClassReference
@@ -22,7 +22,7 @@ export class EnumGenerator extends FileGenerator<PhpFile, ModelCustomConfigSchem
     protected doGenerate(): PhpFile {
         const enum_ = php.enum_({
             ...this.classReference,
-            backing: 'string'
+            backing: "string"
         })
         this.enumDeclaration.values.forEach((member) =>
             enum_.addMember({ name: member.name.name.pascalCase.safeName, value: member.name.wireValue })

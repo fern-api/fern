@@ -1,9 +1,9 @@
-import { readFile } from 'fs/promises'
-import { compact } from 'lodash-es'
+import { readFile } from "fs/promises"
+import { compact } from "lodash-es"
 
-import { docsYml } from '@fern-api/configuration'
-import { assertNever } from '@fern-api/core-utils'
-import { AbsoluteFilePath, RelativeFilePath, relativize } from '@fern-api/fs-utils'
+import { docsYml } from "@fern-api/configuration"
+import { assertNever } from "@fern-api/core-utils"
+import { AbsoluteFilePath, RelativeFilePath, relativize } from "@fern-api/fs-utils"
 
 const BATCH_SIZE = 100 // Define a reasonable batch size
 
@@ -18,7 +18,7 @@ async function loadBatch({
 }: LoadPagesOptions): Promise<Record<RelativeFilePath, string>> {
     const pairs = await Promise.all(
         files.map(async (file) => {
-            const content = await readFile(file, 'utf-8')
+            const content = await readFile(file, "utf-8")
             return [relativize(absolutePathToFernFolder, file), content]
         })
     )
@@ -58,33 +58,33 @@ export function getAllPages({
 
 function getAllPagesFromNavigationConfig(navigation: docsYml.DocsNavigationConfiguration): AbsoluteFilePath[] {
     switch (navigation.type) {
-        case 'tabbed':
+        case "tabbed":
             return navigation.items.flatMap((tab) => {
-                if (tab.child.type === 'layout') {
+                if (tab.child.type === "layout") {
                     return tab.child.layout.flatMap((item) => {
                         return getAllPagesFromNavigationItem({
                             item
                         })
                     })
-                } else if (tab.child.type === 'changelog') {
+                } else if (tab.child.type === "changelog") {
                     return tab.child.changelog
                 }
                 return []
             })
-        case 'untabbed':
+        case "untabbed":
             return navigation.items.flatMap((item) => {
                 return getAllPagesFromNavigationItem({
                     item
                 })
             })
-        case 'versioned':
+        case "versioned":
             return navigation.versions.flatMap((version) => {
                 return getAllPages({
                     landingPage: version.landingPage,
                     navigation: version.navigation
                 })
             })
-        case 'productgroup':
+        case "productgroup":
             return navigation.products.flatMap((product) => {
                 return getAllPages({
                     landingPage: product.landingPage,
@@ -98,25 +98,25 @@ function getAllPagesFromNavigationConfig(navigation: docsYml.DocsNavigationConfi
 
 export function getAllPagesFromNavigationItem({ item }: { item: docsYml.DocsNavigationItem }): AbsoluteFilePath[] {
     switch (item.type) {
-        case 'apiSection':
+        case "apiSection":
             return compact([
                 item.overviewAbsolutePath,
                 ...item.navigation.flatMap((apiNavigation) =>
                     getAllPagesFromApiReferenceLayoutItem({ item: apiNavigation })
                 )
             ])
-        case 'link':
+        case "link":
             return []
-        case 'page':
+        case "page":
             return [item.absolutePath]
-        case 'section':
+        case "section":
             return compact([
                 item.overviewAbsolutePath,
                 ...item.contents.flatMap((subItem) => {
                     return getAllPagesFromNavigationItem({ item: subItem })
                 })
             ])
-        case 'changelog':
+        case "changelog":
             return item.changelog
         default:
             assertNever(item)
@@ -128,9 +128,9 @@ function getAllPagesFromApiReferenceLayoutItem({
 }: {
     item: docsYml.ParsedApiReferenceLayoutItem
 }): AbsoluteFilePath[] {
-    if (item.type === 'page') {
+    if (item.type === "page") {
         return [item.absolutePath]
-    } else if (item.type === 'package' || item.type === 'section') {
+    } else if (item.type === "package" || item.type === "section") {
         return compact([
             item.overviewAbsolutePath,
             ...item.contents.flatMap((subItem) => {

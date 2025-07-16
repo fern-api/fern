@@ -1,11 +1,11 @@
-import { DefaultBodyType, HttpHandler, HttpResponse, HttpResponseResolver, http } from 'msw'
+import { DefaultBodyType, HttpHandler, HttpResponse, HttpResponseResolver, http } from "msw"
 
-import { url } from '../../src/core'
-import { toJson } from '../../src/core/json'
-import { withHeaders } from './withHeaders'
-import { withJson } from './withJson'
+import { url } from "../../src/core"
+import { toJson } from "../../src/core/json"
+import { withHeaders } from "./withHeaders"
+import { withJson } from "./withJson"
 
-type HttpMethod = 'all' | 'get' | 'post' | 'put' | 'delete' | 'patch' | 'options' | 'head'
+type HttpMethod = "all" | "get" | "post" | "put" | "delete" | "patch" | "options" | "head"
 
 interface MethodStage {
     baseUrl(baseUrl: string): MethodStage
@@ -54,9 +54,9 @@ export interface HttpHandlerBuilderOptions {
 }
 
 class RequestBuilder implements MethodStage, RequestHeadersStage, RequestBodyStage, ResponseStage {
-    private method: HttpMethod = 'get'
-    private _baseUrl: string = ''
-    private path: string = '/'
+    private method: HttpMethod = "get"
+    private _baseUrl: string = ""
+    private path: string = "/"
     private readonly predicates: ((resolver: HttpResponseResolver) => HttpResponseResolver)[] = []
     private readonly handlerOptions?: HttpHandlerBuilderOptions
 
@@ -70,49 +70,49 @@ class RequestBuilder implements MethodStage, RequestHeadersStage, RequestBodySta
     }
 
     all(path: string): RequestHeadersStage {
-        this.method = 'all'
+        this.method = "all"
         this.path = path
         return this
     }
 
     get(path: string): RequestHeadersStage {
-        this.method = 'get'
+        this.method = "get"
         this.path = path
         return this
     }
 
     post(path: string): RequestHeadersStage {
-        this.method = 'post'
+        this.method = "post"
         this.path = path
         return this
     }
 
     put(path: string): RequestHeadersStage {
-        this.method = 'put'
+        this.method = "put"
         this.path = path
         return this
     }
 
     delete(path: string): RequestHeadersStage {
-        this.method = 'delete'
+        this.method = "delete"
         this.path = path
         return this
     }
 
     patch(path: string): RequestHeadersStage {
-        this.method = 'patch'
+        this.method = "patch"
         this.path = path
         return this
     }
 
     options(path: string): RequestHeadersStage {
-        this.method = 'options'
+        this.method = "options"
         this.path = path
         return this
     }
 
     head(path: string): RequestHeadersStage {
-        this.method = 'head'
+        this.method = "head"
         this.path = path
         return this
     }

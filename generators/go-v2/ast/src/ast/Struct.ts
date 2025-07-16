@@ -1,11 +1,11 @@
-import { CodeBlock } from '@fern-api/browser-compatible-base-generator'
+import { CodeBlock } from "@fern-api/browser-compatible-base-generator"
 
-import { Comment } from './Comment'
-import { Field } from './Field'
-import { Method } from './Method'
-import { Parameter } from './Parameter'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { Comment } from "./Comment"
+import { Field } from "./Field"
+import { Method } from "./Method"
+import { Parameter } from "./Parameter"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export declare namespace Struct {
     interface Args {
@@ -55,7 +55,7 @@ export class Struct extends AstNode {
         writer.writeNode(new Comment({ docs: this.docs }))
         writer.write(`type ${this.name} struct {`)
         if (this.fields.length === 0) {
-            writer.writeLine('}')
+            writer.writeLine("}")
         } else {
             writer.newLine()
             writer.indent()
@@ -64,7 +64,7 @@ export class Struct extends AstNode {
                 writer.newLine()
             }
             writer.dedent()
-            writer.writeLine('}')
+            writer.writeLine("}")
         }
 
         if (this.constructor_ != null) {
@@ -85,7 +85,7 @@ export class Struct extends AstNode {
         writer.write(`func New${this.name}(`)
         constructor.parameters.forEach((parameter, index) => {
             if (index > 0) {
-                writer.write(', ')
+                writer.write(", ")
             }
             writer.writeNode(parameter)
         })
@@ -95,6 +95,6 @@ export class Struct extends AstNode {
         writer.writeNode(constructor.body)
         writer.writeNewLineIfLastLineNot()
         writer.dedent()
-        writer.writeLine('}')
+        writer.writeLine("}")
     }
 }

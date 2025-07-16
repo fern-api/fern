@@ -1,8 +1,8 @@
-import { assertNever } from '@fern-api/core-utils'
+import { assertNever } from "@fern-api/core-utils"
 
-import { IrVersions } from '../../ir-versions'
-import { convertContainerType } from './convertContainerType'
-import { convertDeclaredTypeName } from './convertDeclaredTypeName'
+import { IrVersions } from "../../ir-versions"
+import { convertContainerType } from "./convertContainerType"
+import { convertDeclaredTypeName } from "./convertDeclaredTypeName"
 
 export interface TypeReferenceResolver {
     resolveTypeReference: (
@@ -33,7 +33,7 @@ export class TypeReferenceResolverImpl implements TypeReferenceResolver {
                 IrVersions.V4.types.ResolvedTypeReference.container(convertContainerType(container)),
             named: (typeName) => {
                 const typeDeclaration = this.getTypeDeclaration(typeName)
-                if (typeDeclaration.shape._type === 'alias') {
+                if (typeDeclaration.shape._type === "alias") {
                     return this.resolveTypeReference(typeDeclaration.shape.aliasOf)
                 }
                 return IrVersions.V4.types.ResolvedTypeReference.named({
@@ -44,7 +44,7 @@ export class TypeReferenceResolverImpl implements TypeReferenceResolver {
             primitive: IrVersions.V4.types.ResolvedTypeReference.primitive,
             unknown: IrVersions.V4.types.ResolvedTypeReference.unknown,
             _unknown: () => {
-                throw new Error('Unknown TypeReference: ' + typeReference._type)
+                throw new Error("Unknown TypeReference: " + typeReference._type)
             }
         })
     }
@@ -53,25 +53,25 @@ export class TypeReferenceResolverImpl implements TypeReferenceResolver {
         const key = stringifyTypeName(typeName)
         const type = this.types[key]
         if (type == null) {
-            throw new Error('Type does not exist: ' + type)
+            throw new Error("Type does not exist: " + type)
         }
         return type
     }
 }
 
 function stringifyTypeName(typeName: IrVersions.V5.types.DeclaredTypeName): string {
-    return `${typeName.fernFilepath.join('/')}:${typeName.name.originalName}`
+    return `${typeName.fernFilepath.join("/")}:${typeName.name.originalName}`
 }
 
 function getTypeDeclarationShape(
-    shape: Exclude<IrVersions.V5.types.Type['_type'], 'alias'>
+    shape: Exclude<IrVersions.V5.types.Type["_type"], "alias">
 ): IrVersions.V4.types.ShapeType {
     switch (shape) {
-        case 'object':
+        case "object":
             return IrVersions.V4.types.ShapeType.Object
-        case 'union':
+        case "union":
             return IrVersions.V4.types.ShapeType.Union
-        case 'enum':
+        case "enum":
             return IrVersions.V4.types.ShapeType.Enum
         default:
             assertNever(shape)

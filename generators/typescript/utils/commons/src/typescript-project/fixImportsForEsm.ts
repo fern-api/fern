@@ -1,14 +1,14 @@
-import path from 'path'
-import { Project, SyntaxKind } from 'ts-morph'
+import path from "path"
+import { Project, SyntaxKind } from "ts-morph"
 
-import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
 
 // Define the possible import modifications
 const ImportModification = {
-    NONE: 'none',
-    ADD_JS_EXTENSION: 'add_js_extension',
-    REPLACE_TS_WITH_JS: 'replace_ts_with_js',
-    ADD_INDEX_JS: 'add_index_js'
+    NONE: "none",
+    ADD_JS_EXTENSION: "add_js_extension",
+    REPLACE_TS_WITH_JS: "replace_ts_with_js",
+    ADD_INDEX_JS: "add_index_js"
 } as const
 
 type ImportModificationType = (typeof ImportModification)[keyof typeof ImportModification]
@@ -29,7 +29,7 @@ type ImportModificationType = (typeof ImportModification)[keyof typeof ImportMod
  */
 export async function fixImportsForEsm(pathToProject: AbsoluteFilePath): Promise<void> {
     const project = new Project({
-        tsConfigFilePath: join(pathToProject, RelativeFilePath.of('tsconfig.json'))
+        tsConfigFilePath: join(pathToProject, RelativeFilePath.of("tsconfig.json"))
     })
 
     // Create caches for performance
@@ -49,7 +49,7 @@ export async function fixImportsForEsm(pathToProject: AbsoluteFilePath): Promise
             const moduleSpecifier = importDecl.getModuleSpecifierValue()
 
             // Skip if not a relative import or already has .js extension
-            if (!moduleSpecifier || !moduleSpecifier.startsWith('.') || moduleSpecifier.endsWith('.js')) {
+            if (!moduleSpecifier || !moduleSpecifier.startsWith(".") || moduleSpecifier.endsWith(".js")) {
                 continue
             }
 
@@ -72,7 +72,7 @@ export async function fixImportsForEsm(pathToProject: AbsoluteFilePath): Promise
         // Handle dynamic imports - highly optimized for large projects
         // First check if file even contains 'import(' to skip files without dynamic imports
         const sourceText = sourceFile.getFullText()
-        if (!sourceText.includes('import(')) {
+        if (!sourceText.includes("import(")) {
             continue
         }
 
@@ -97,7 +97,7 @@ export async function fixImportsForEsm(pathToProject: AbsoluteFilePath): Promise
             const moduleSpecifier = stringLiteral.getLiteralValue()
 
             // Skip if not a relative import or already has .js extension
-            if (!moduleSpecifier || !moduleSpecifier.startsWith('.') || moduleSpecifier.endsWith('.js')) {
+            if (!moduleSpecifier || !moduleSpecifier.startsWith(".") || moduleSpecifier.endsWith(".js")) {
                 continue
             }
 
@@ -129,7 +129,7 @@ function getModifiedSpecifier(moduleSpecifier: string, modification: ImportModif
         case ImportModification.ADD_JS_EXTENSION:
             return `${moduleSpecifier}.js`
         case ImportModification.REPLACE_TS_WITH_JS:
-            return moduleSpecifier.slice(0, -3) + '.js'
+            return moduleSpecifier.slice(0, -3) + ".js"
         default:
             return moduleSpecifier
     }
@@ -148,7 +148,7 @@ function determineModification(
     fileExistenceCache: Set<string>
 ): ImportModificationType {
     // Case 1: Import with explicit .ts extension
-    if (moduleSpecifier.endsWith('.ts')) {
+    if (moduleSpecifier.endsWith(".ts")) {
         return ImportModification.REPLACE_TS_WITH_JS
     }
 
@@ -158,14 +158,14 @@ function determineModification(
     const dirPath = join(AbsoluteFilePath.of(currentDir), RelativeFilePath.of(moduleSpecifier))
 
     if (
-        fileExistenceCache.has(join(dirPath, RelativeFilePath.of('index.ts')).toString()) ||
-        fileExistenceCache.has(join(dirPath, RelativeFilePath.of('index.js')).toString())
+        fileExistenceCache.has(join(dirPath, RelativeFilePath.of("index.ts")).toString()) ||
+        fileExistenceCache.has(join(dirPath, RelativeFilePath.of("index.js")).toString())
     ) {
         return ImportModification.ADD_INDEX_JS
     }
 
     // Case 3: Regular .ts file import
-    const tsFilePath = join(AbsoluteFilePath.of(currentDir), RelativeFilePath.of(moduleSpecifier + '.ts')).toString()
+    const tsFilePath = join(AbsoluteFilePath.of(currentDir), RelativeFilePath.of(moduleSpecifier + ".ts")).toString()
 
     if (fileExistenceCache.has(tsFilePath)) {
         return ImportModification.ADD_JS_EXTENSION

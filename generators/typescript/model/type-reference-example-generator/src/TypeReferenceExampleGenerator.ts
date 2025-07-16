@@ -1,8 +1,8 @@
-import { GeneratedTypeReferenceExample } from '@fern-typescript/contexts'
+import { GeneratedTypeReferenceExample } from "@fern-typescript/contexts"
 
-import { ExampleTypeReference } from '@fern-fern/ir-sdk/api'
+import { ExampleTypeReference } from "@fern-fern/ir-sdk/api"
 
-import { GeneratedTypeReferenceExampleImpl } from './GeneratedTypeReferenceExampleImpl'
+import { GeneratedTypeReferenceExampleImpl } from "./GeneratedTypeReferenceExampleImpl"
 
 export declare namespace TypeReferenceExampleGenerator {
     export interface Init {

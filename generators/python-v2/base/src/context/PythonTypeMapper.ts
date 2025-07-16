@@ -1,5 +1,5 @@
-import { assertNever } from '@fern-api/core-utils'
-import { python } from '@fern-api/python-ast'
+import { assertNever } from "@fern-api/core-utils"
+import { python } from "@fern-api/python-ast"
 
 import {
     ContainerType,
@@ -10,10 +10,10 @@ import {
     PrimitiveTypeV1,
     TypeId,
     TypeReference
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { BasePythonCustomConfigSchema } from '../custom-config/BasePythonCustomConfigSchema'
-import { AbstractPythonGeneratorContext } from './AbstractPythonGeneratorContext'
+import { BasePythonCustomConfigSchema } from "../custom-config/BasePythonCustomConfigSchema"
+import { AbstractPythonGeneratorContext } from "./AbstractPythonGeneratorContext"
 
 export declare namespace PythonTypeMapper {
     interface Args {
@@ -30,15 +30,15 @@ export class PythonTypeMapper {
 
     public convert({ reference }: PythonTypeMapper.Args): python.Type {
         switch (reference.type) {
-            case 'container':
+            case "container":
                 return this.convertContainer({
                     container: reference.container
                 })
-            case 'named':
+            case "named":
                 return this.convertNamed({ named: reference })
-            case 'primitive':
+            case "primitive":
                 return this.convertPrimitive(reference)
-            case 'unknown':
+            case "unknown":
                 return python.Type.any()
             default:
                 assertNever(reference)
@@ -54,20 +54,20 @@ export class PythonTypeMapper {
 
     private convertContainer({ container }: { container: ContainerType }): python.Type {
         switch (container.type) {
-            case 'list':
+            case "list":
                 return python.Type.list(this.convert({ reference: container.list }))
-            case 'map': {
+            case "map": {
                 const key = this.convert({ reference: container.keyType })
                 const value = this.convert({ reference: container.valueType })
                 return python.Type.dict(key, value)
             }
-            case 'set':
+            case "set":
                 return python.Type.set(this.convert({ reference: container.set }))
-            case 'optional':
+            case "optional":
                 return python.Type.optional(this.convert({ reference: container.optional }))
-            case 'nullable':
+            case "nullable":
                 return python.Type.optional(this.convert({ reference: container.nullable }))
-            case 'literal':
+            case "literal":
                 return this.convertLiteral({ literal: container.literal })
             default:
                 assertNever(container)
@@ -95,9 +95,9 @@ export class PythonTypeMapper {
 
     private convertLiteral({ literal }: { literal: Literal }): python.Type {
         switch (literal.type) {
-            case 'boolean':
+            case "boolean":
                 return python.Type.bool()
-            case 'string':
+            case "string":
                 return python.Type.str()
         }
     }
@@ -106,15 +106,15 @@ export class PythonTypeMapper {
         const objectClassReference = this.convertToClassReference(named)
         const typeDeclaration = this.context.getTypeDeclarationOrThrow(named.typeId)
         switch (typeDeclaration.shape.type) {
-            case 'alias':
+            case "alias":
                 return this.convert({ reference: typeDeclaration.shape.aliasOf })
-            case 'enum':
+            case "enum":
                 return python.Type.reference(objectClassReference)
-            case 'object':
+            case "object":
                 return python.Type.reference(objectClassReference)
-            case 'union':
+            case "union":
                 return python.Type.reference(objectClassReference)
-            case 'undiscriminatedUnion': {
+            case "undiscriminatedUnion": {
                 return python.Type.reference(objectClassReference)
             }
             default:

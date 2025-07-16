@@ -1,10 +1,10 @@
-import { CSharpFile } from '@fern-api/csharp-base'
+import { CSharpFile } from "@fern-api/csharp-base"
 
-import { WellKnownProtobufType } from '@fern-fern/ir-sdk/api'
+import { WellKnownProtobufType } from "@fern-fern/ir-sdk/api"
 
-import { ModelGeneratorContext } from './ModelGeneratorContext'
-import { WellKnownProtoStructGenerator } from './proto/WellKnownProtoStructGenerator'
-import { WellKnownProtoValueGenerator } from './proto/WellKnownProtoValueGenerator'
+import { ModelGeneratorContext } from "./ModelGeneratorContext"
+import { WellKnownProtoStructGenerator } from "./proto/WellKnownProtoStructGenerator"
+import { WellKnownProtoValueGenerator } from "./proto/WellKnownProtoValueGenerator"
 
 export function generateWellKnownProtobufFiles(context: ModelGeneratorContext): CSharpFile[] | undefined {
     const resolvedProtoStructType = context.protobufResolver.resolveWellKnownProtobufType(
@@ -16,13 +16,13 @@ export function generateWellKnownProtobufFiles(context: ModelGeneratorContext): 
     }
     if (resolvedProtoStructType != null && resolvedProtoValueType == null) {
         context.logger.debug(
-            'Skipping well-known type generation a google.protobuf.Struct was defined without a google.protobuf.Value type.'
+            "Skipping well-known type generation a google.protobuf.Struct was defined without a google.protobuf.Value type."
         )
         return undefined
     }
     if (resolvedProtoStructType == null && resolvedProtoValueType != null) {
         context.logger.debug(
-            'Skipping well-known type generation a google.protobuf.Value was defined without a google.protobuf.Struct type.'
+            "Skipping well-known type generation a google.protobuf.Value was defined without a google.protobuf.Struct type."
         )
         return undefined
     }

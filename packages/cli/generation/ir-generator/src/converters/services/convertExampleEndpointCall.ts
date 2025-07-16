@@ -1,14 +1,14 @@
-import urlJoin from 'url-join'
+import urlJoin from "url-join"
 
-import { FernWorkspace } from '@fern-api/api-workspace-commons'
-import { isNonNullish, isPlainObject } from '@fern-api/core-utils'
+import { FernWorkspace } from "@fern-api/api-workspace-commons"
+import { isNonNullish, isPlainObject } from "@fern-api/core-utils"
 import {
     RawSchemas,
     isInlineRequestBody,
     parseBytesRequest,
     parseRawFileType,
     visitExampleResponseSchema
-} from '@fern-api/fern-definition-schema'
+} from "@fern-api/fern-definition-schema"
 import {
     ExampleEndpointCall,
     ExampleEndpointSuccessResponse,
@@ -19,23 +19,23 @@ import {
     ExampleRequestBody,
     ExampleResponse,
     Name
-} from '@fern-api/ir-sdk'
-import { hashJSON } from '@fern-api/ir-utils'
+} from "@fern-api/ir-sdk"
+import { hashJSON } from "@fern-api/ir-utils"
 
-import { FernFileContext } from '../../FernFileContext'
-import { ErrorResolver } from '../../resolvers/ErrorResolver'
-import { ExampleResolver } from '../../resolvers/ExampleResolver'
-import { TypeResolver } from '../../resolvers/TypeResolver'
-import { VariableResolver } from '../../resolvers/VariableResolver'
-import { getEndpointPathParameters } from '../../utils/getEndpointPathParameters'
-import { parseErrorName } from '../../utils/parseErrorName'
+import { FernFileContext } from "../../FernFileContext"
+import { ErrorResolver } from "../../resolvers/ErrorResolver"
+import { ExampleResolver } from "../../resolvers/ExampleResolver"
+import { TypeResolver } from "../../resolvers/TypeResolver"
+import { VariableResolver } from "../../resolvers/VariableResolver"
+import { getEndpointPathParameters } from "../../utils/getEndpointPathParameters"
+import { parseErrorName } from "../../utils/parseErrorName"
 import {
     convertTypeReferenceExample,
     getOriginalTypeDeclarationForPropertyFromExtensions
-} from '../type-declarations/convertExampleType'
-import { getPropertyName } from '../type-declarations/convertObjectTypeDeclaration'
-import { getHeaderName, resolvePathParameterOrThrow } from './convertHttpService'
-import { getQueryParameterName } from './convertQueryParameter'
+} from "../type-declarations/convertExampleType"
+import { getPropertyName } from "../type-declarations/convertObjectTypeDeclaration"
+import { getHeaderName, resolvePathParameterOrThrow } from "./convertHttpService"
+import { getQueryParameterName } from "./convertQueryParameter"
 
 export function convertExampleEndpointCall({
     service,
@@ -76,11 +76,11 @@ export function convertExampleEndpointCall({
         ...convertedPathParameters,
         ...convertHeaders({ service, endpoint, example, typeResolver, exampleResolver, file, workspace }),
         queryParameters:
-            example['query-parameters'] != null
-                ? Object.entries(example['query-parameters']).map(([wireKey, value]) => {
+            example["query-parameters"] != null
+                ? Object.entries(example["query-parameters"]).map(([wireKey, value]) => {
                       const queryParameterDeclaration =
-                          typeof endpoint.request !== 'string'
-                              ? endpoint.request?.['query-parameters']?.[wireKey]
+                          typeof endpoint.request !== "string"
+                              ? endpoint.request?.["query-parameters"]?.[wireKey]
                               : undefined
                       if (queryParameterDeclaration == null) {
                           throw new Error(`Query parameter ${wireKey} does not exist`)
@@ -96,7 +96,7 @@ export function convertExampleEndpointCall({
                           value: convertTypeReferenceExample({
                               example: value,
                               rawTypeBeingExemplified:
-                                  typeof queryParameterDeclaration === 'string'
+                                  typeof queryParameterDeclaration === "string"
                                       ? queryParameterDeclaration
                                       : queryParameterDeclaration.type,
                               typeResolver,
@@ -124,8 +124,8 @@ export function convertExampleEndpointCall({
 
 function getQueryParamaterDeclationShape({ queryParameter }: { queryParameter: RawSchemas.HttpQueryParameterSchema }) {
     const isAllowMultiple =
-        typeof queryParameter !== 'string' && queryParameter['allow-multiple'] != null
-            ? queryParameter['allow-multiple']
+        typeof queryParameter !== "string" && queryParameter["allow-multiple"] != null
+            ? queryParameter["allow-multiple"]
             : false
     return isAllowMultiple ? ExampleQueryParameterShape.exploded() : ExampleQueryParameterShape.single()
 }
@@ -148,7 +148,7 @@ function convertPathParameters({
     variableResolver: VariableResolver
     file: FernFileContext
     workspace: FernWorkspace
-}): Pick<ExampleEndpointCall, 'rootPathParameters' | 'endpointPathParameters' | 'servicePathParameters'> {
+}): Pick<ExampleEndpointCall, "rootPathParameters" | "endpointPathParameters" | "servicePathParameters"> {
     const rootPathParameters: ExamplePathParameter[] = []
     const servicePathParameters: ExamplePathParameter[] = []
     const endpointPathParameters: ExamplePathParameter[] = []
@@ -181,11 +181,11 @@ function convertPathParameters({
         }
     }
 
-    if (example['path-parameters'] != null) {
+    if (example["path-parameters"] != null) {
         const rawEndpointPathParameters = getEndpointPathParameters(endpoint)
-        for (const [key, examplePathParameter] of Object.entries(example['path-parameters'])) {
-            const rootPathParameterDeclaration = file.rootApiFile['path-parameters']?.[key]
-            const servicePathParameterDeclaration = service['path-parameters']?.[key]
+        for (const [key, examplePathParameter] of Object.entries(example["path-parameters"])) {
+            const rootPathParameterDeclaration = file.rootApiFile["path-parameters"]?.[key]
+            const servicePathParameterDeclaration = service["path-parameters"]?.[key]
             const endpointPathParameterDeclaration = rawEndpointPathParameters[key]
 
             if (rootPathParameterDeclaration != null) {
@@ -241,14 +241,14 @@ function convertHeaders({
     exampleResolver: ExampleResolver
     file: FernFileContext
     workspace: FernWorkspace
-}): Pick<ExampleEndpointCall, 'endpointHeaders' | 'serviceHeaders'> {
+}): Pick<ExampleEndpointCall, "endpointHeaders" | "serviceHeaders"> {
     const serviceHeaders: ExampleHeader[] = []
     const endpointHeaders: ExampleHeader[] = []
 
     if (example.headers != null) {
         for (const [wireKey, exampleHeader] of Object.entries(example.headers)) {
             const endpointHeaderDeclaration =
-                typeof endpoint.request !== 'string' ? endpoint.request?.headers?.[wireKey] : undefined
+                typeof endpoint.request !== "string" ? endpoint.request?.headers?.[wireKey] : undefined
             const serviceHeaderDeclaration = service.headers?.[wireKey]
 
             // TODO: add global headers field in ExampleEndpointCall
@@ -262,7 +262,7 @@ function convertHeaders({
                     value: convertTypeReferenceExample({
                         example: exampleHeader,
                         rawTypeBeingExemplified:
-                            typeof endpointHeaderDeclaration === 'string'
+                            typeof endpointHeaderDeclaration === "string"
                                 ? endpointHeaderDeclaration
                                 : endpointHeaderDeclaration.type,
                         typeResolver,
@@ -281,7 +281,7 @@ function convertHeaders({
                     value: convertTypeReferenceExample({
                         example: exampleHeader,
                         rawTypeBeingExemplified:
-                            typeof serviceHeaderDeclaration === 'string'
+                            typeof serviceHeaderDeclaration === "string"
                                 ? serviceHeaderDeclaration
                                 : serviceHeaderDeclaration.type,
                         typeResolver,
@@ -338,12 +338,12 @@ function convertExampleRequestBody({
     file: FernFileContext
     workspace: FernWorkspace
 }): ExampleRequestBody | undefined {
-    const requestType = typeof endpoint.request !== 'string' ? endpoint.request?.body : endpoint.request
+    const requestType = typeof endpoint.request !== "string" ? endpoint.request?.body : endpoint.request
     if (requestType == null) {
         return undefined
     }
     // (HACK: Skip bytes request example creation)
-    if (typeof requestType === 'string' && parseBytesRequest(requestType) != null) {
+    if (typeof requestType === "string" && parseBytesRequest(requestType) != null) {
         return undefined
     }
 
@@ -351,7 +351,7 @@ function convertExampleRequestBody({
         return ExampleRequestBody.reference(
             convertTypeReferenceExample({
                 example: example.request,
-                rawTypeBeingExemplified: typeof requestType !== 'string' ? requestType.type : requestType,
+                rawTypeBeingExemplified: typeof requestType !== "string" ? requestType.type : requestType,
                 typeResolver,
                 exampleResolver,
                 fileContainingRawTypeReference: file,
@@ -373,7 +373,7 @@ function convertExampleRequestBody({
     for (const [wireKey, propertyExample] of Object.entries(example.request)) {
         const inlinedRequestPropertyDeclaration = requestType.properties?.[wireKey]
         const inlinedRequestPropertyType =
-            typeof inlinedRequestPropertyDeclaration === 'string'
+            typeof inlinedRequestPropertyDeclaration === "string"
                 ? inlinedRequestPropertyDeclaration
                 : inlinedRequestPropertyDeclaration?.type
         if (inlinedRequestPropertyType != null && parseRawFileType(inlinedRequestPropertyType) != null) {
@@ -389,7 +389,7 @@ function convertExampleRequestBody({
                 value: convertTypeReferenceExample({
                     example: propertyExample,
                     rawTypeBeingExemplified:
-                        typeof inlinedRequestPropertyDeclaration !== 'string'
+                        typeof inlinedRequestPropertyDeclaration !== "string"
                             ? inlinedRequestPropertyDeclaration.type
                             : inlinedRequestPropertyDeclaration,
                     typeResolver,
@@ -408,7 +408,7 @@ function convertExampleRequestBody({
                 file
             })
             if (originalTypeDeclaration == null) {
-                throw new Error('Could not find original type declaration for property: ' + wireKey)
+                throw new Error("Could not find original type declaration for property: " + wireKey)
             }
             exampleProperties.push({
                 name: file.casingsGenerator.generateNameAndWireValue({
@@ -419,7 +419,7 @@ function convertExampleRequestBody({
                 value: convertTypeReferenceExample({
                     example: propertyExample,
                     rawTypeBeingExemplified:
-                        typeof originalTypeDeclaration.rawPropertyType === 'string'
+                        typeof originalTypeDeclaration.rawPropertyType === "string"
                             ? originalTypeDeclaration.rawPropertyType
                             : originalTypeDeclaration.rawPropertyType.type,
                     typeResolver,
@@ -492,9 +492,9 @@ function convertExampleResponse({
         },
         stream: (example) => {
             const rawTypeBeingExemplified =
-                typeof endpoint['response-stream'] === 'string'
-                    ? endpoint['response-stream']
-                    : endpoint['response-stream']?.type
+                typeof endpoint["response-stream"] === "string"
+                    ? endpoint["response-stream"]
+                    : endpoint["response-stream"]?.type
             return ExampleResponse.ok(
                 ExampleEndpointSuccessResponse.stream(
                     example.stream
@@ -519,9 +519,9 @@ function convertExampleResponse({
         },
         events: (example) => {
             const rawTypeBeingExemplified =
-                typeof endpoint['response-stream'] === 'string'
-                    ? endpoint['response-stream']
-                    : endpoint['response-stream']?.type
+                typeof endpoint["response-stream"] === "string"
+                    ? endpoint["response-stream"]
+                    : endpoint["response-stream"]?.type
             return ExampleResponse.ok(
                 ExampleEndpointSuccessResponse.sse(
                     example.stream
@@ -564,7 +564,7 @@ function convertExampleResponseBody({
     file: FernFileContext
     workspace: FernWorkspace
 }) {
-    const responseBodyType = typeof endpoint.response !== 'string' ? endpoint.response?.type : endpoint.response
+    const responseBodyType = typeof endpoint.response !== "string" ? endpoint.response?.type : endpoint.response
     if (responseBodyType == null) {
         return undefined
     }
@@ -593,10 +593,10 @@ function buildUrl({
     service: RawSchemas.HttpServiceSchema
     endpoint: RawSchemas.HttpEndpointSchema
     example: RawSchemas.ExampleEndpointCallSchema
-    pathParams: Pick<ExampleEndpointCall, 'rootPathParameters' | 'endpointPathParameters' | 'servicePathParameters'>
+    pathParams: Pick<ExampleEndpointCall, "rootPathParameters" | "endpointPathParameters" | "servicePathParameters">
 }): string {
-    let url = urlJoin(file.rootApiFile['base-path'] ?? '', service['base-path'], endpoint.path)
-    if (example['path-parameters'] != null) {
+    let url = urlJoin(file.rootApiFile["base-path"] ?? "", service["base-path"], endpoint.path)
+    if (example["path-parameters"] != null) {
         for (const parameter of [
             ...pathParams.endpointPathParameters,
             ...pathParams.servicePathParameters,
@@ -609,9 +609,9 @@ function buildUrl({
         }
     }
     // urlJoin has some bugs where it may miss forward slash concatting https://github.com/jfromaniello/url-join/issues/42
-    url = url.replaceAll('//', '/')
+    url = url.replaceAll("//", "/")
     // for backwards compatibility we always make sure that the url stats with a slash
-    if (!url.startsWith('/')) {
+    if (!url.startsWith("/")) {
         url = `/${url}`
     }
     return url

@@ -1,13 +1,13 @@
-import { ExportedFilePath, Reference, getExportedDirectoriesForFernFilepath } from '@fern-typescript/commons'
+import { ExportedFilePath, Reference, getExportedDirectoriesForFernFilepath } from "@fern-typescript/commons"
 
-import { RelativeFilePath } from '@fern-api/fs-utils'
+import { RelativeFilePath } from "@fern-api/fs-utils"
 
-import { DeclaredTypeName } from '@fern-fern/ir-sdk/api'
+import { DeclaredTypeName } from "@fern-fern/ir-sdk/api"
 
-import { AbstractDeclarationReferencer } from './AbstractDeclarationReferencer'
-import { DeclarationReferencer } from './DeclarationReferencer'
+import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer"
+import { DeclarationReferencer } from "./DeclarationReferencer"
 
-export const TYPES_DIRECTORY_NAME = 'types'
+export const TYPES_DIRECTORY_NAME = "types"
 
 export class TypeDeclarationReferencer extends AbstractDeclarationReferencer<DeclaredTypeName> {
     public getExportedFilepath(typeName: DeclaredTypeName): ExportedFilePath {

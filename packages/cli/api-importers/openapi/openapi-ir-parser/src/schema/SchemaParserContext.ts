@@ -1,9 +1,9 @@
-import { OpenAPIV3 } from 'openapi-types'
+import { OpenAPIV3 } from "openapi-types"
 
-import { Logger } from '@fern-api/logger'
-import { SchemaId, SdkGroupName } from '@fern-api/openapi-ir'
+import { Logger } from "@fern-api/logger"
+import { SchemaId, SdkGroupName } from "@fern-api/openapi-ir"
 
-import { ParseOpenAPIOptions } from '../options'
+import { ParseOpenAPIOptions } from "../options"
 
 export interface SchemaParserContext {
     logger: Logger

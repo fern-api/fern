@@ -1,13 +1,13 @@
-import { FernWriters, getTextOfTsNode } from '@fern-typescript/commons'
-import { GeneratedEnvironments, SdkContext } from '@fern-typescript/contexts'
-import { VariableDeclarationKind, ts } from 'ts-morph'
+import { FernWriters, getTextOfTsNode } from "@fern-typescript/commons"
+import { GeneratedEnvironments, SdkContext } from "@fern-typescript/contexts"
+import { VariableDeclarationKind, ts } from "ts-morph"
 
 import {
     EnvironmentBaseUrlId,
     EnvironmentId,
     SingleBaseUrlEnvironment,
     SingleBaseUrlEnvironments
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
 export declare namespace GeneratedSingleUrlEnvironmentsImpl {
     export interface Init {
@@ -76,7 +76,7 @@ export class GeneratedSingleUrlEnvironmentsImpl implements GeneratedEnvironments
             (environment) => environment.id === this.defaultEnvironmentId
         )
         if (defaultEnvironment == null) {
-            throw new Error('Default environment does not exist')
+            throw new Error("Default environment does not exist")
         }
         return ts.factory.createPropertyAccessExpression(
             context.environments.getReferenceToEnvironmentsEnum().getExpression(),

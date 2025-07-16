@@ -1,10 +1,10 @@
-import { readdir } from 'fs/promises'
+import { readdir } from "fs/promises"
 
-import { AbsoluteFilePath, doesPathExist, isCI } from '@fern-api/fs-utils'
+import { AbsoluteFilePath, doesPathExist, isCI } from "@fern-api/fs-utils"
 
-import { CliContext } from '../../cli-context/CliContext'
-import { getOutputDirectories } from '../../persistence/output-directories/getOutputDirectories'
-import { storeOutputDirectories } from '../../persistence/output-directories/storeOutputDirectories'
+import { CliContext } from "../../cli-context/CliContext"
+import { getOutputDirectories } from "../../persistence/output-directories/getOutputDirectories"
+import { storeOutputDirectories } from "../../persistence/output-directories/storeOutputDirectories"
 
 export interface CheckOutputDirectoryResult {
     shouldProceed: boolean

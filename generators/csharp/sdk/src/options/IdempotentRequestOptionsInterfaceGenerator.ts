@@ -1,13 +1,13 @@
-import { CSharpFile, FileGenerator } from '@fern-api/csharp-base'
-import { csharp } from '@fern-api/csharp-codegen'
-import { RelativeFilePath, join } from '@fern-api/fs-utils'
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base"
+import { csharp } from "@fern-api/csharp-codegen"
+import { RelativeFilePath, join } from "@fern-api/fs-utils"
 
-import { SdkCustomConfigSchema } from '../SdkCustomConfig'
-import { SdkGeneratorContext } from '../SdkGeneratorContext'
-import { BaseOptionsGenerator } from './BaseOptionsGenerator'
+import { SdkCustomConfigSchema } from "../SdkCustomConfig"
+import { SdkGeneratorContext } from "../SdkGeneratorContext"
+import { BaseOptionsGenerator } from "./BaseOptionsGenerator"
 
-export const IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME = 'IIdempotentRequestOptions'
-export const IDEMPOTENT_REQUEST_OPTIONS_PARAMETER_NAME = 'options'
+export const IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME = "IIdempotentRequestOptions"
+export const IDEMPOTENT_REQUEST_OPTIONS_PARAMETER_NAME = "options"
 
 export class IdempotentRequestOptionsInterfaceGenerator extends FileGenerator<
     CSharpFile,
@@ -30,7 +30,7 @@ export class IdempotentRequestOptionsInterfaceGenerator extends FileGenerator<
         interface_.addFields(this.baseOptionsGenerator.getIdempotentRequestOptionFields())
         interface_.addMethod(
             csharp.method({
-                name: 'GetIdempotencyHeaders',
+                name: "GetIdempotencyHeaders",
                 access: csharp.Access.Internal,
                 parameters: [],
                 return_: csharp.Type.reference(this.context.getHeadersClassReference()),

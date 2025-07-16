@@ -1,12 +1,12 @@
-import { assertNever, keys } from '@fern-api/core-utils'
-import { FernIr } from '@fern-api/dynamic-ir-sdk'
-import { HttpEndpointReferenceParser } from '@fern-api/fern-definition-schema'
+import { assertNever, keys } from "@fern-api/core-utils"
+import { FernIr } from "@fern-api/dynamic-ir-sdk"
+import { HttpEndpointReferenceParser } from "@fern-api/fern-definition-schema"
 
-import { FernGeneratorExec } from '../GeneratorNotificationService'
-import { DiscriminatedUnionTypeInstance } from './DiscriminatedUnionTypeInstance'
-import { ErrorReporter, Severity } from './ErrorReporter'
-import { Options } from './Options'
-import { TypeInstance } from './TypeInstance'
+import { FernGeneratorExec } from "../GeneratorNotificationService"
+import { DiscriminatedUnionTypeInstance } from "./DiscriminatedUnionTypeInstance"
+import { ErrorReporter, Severity } from "./ErrorReporter"
+import { Options } from "./Options"
+import { TypeInstance } from "./TypeInstance"
 
 export abstract class AbstractDynamicSnippetsGeneratorContext {
     public config: FernGeneratorExec.GeneratorConfig
@@ -114,7 +114,7 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         if (fileValue == null) {
             return undefined
         }
-        if (typeof fileValue !== 'string') {
+        if (typeof fileValue !== "string") {
             this.errors.add({
                 severity: Severity.Critical,
                 message: `Expected file value to be a string, got ${typeof fileValue}`
@@ -144,7 +144,7 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         }
         const stringValues: string[] = []
         for (const value of fileArrayValue) {
-            if (typeof value !== 'string') {
+            if (typeof value !== "string") {
                 this.errors.add({
                     severity: Severity.Critical,
                     message: `Expected file array value to be an array of strings, got ${typeof value}`
@@ -157,11 +157,11 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
     }
 
     public getRecord(value: unknown): Record<string, unknown> | undefined {
-        if (typeof value !== 'object' || Array.isArray(value)) {
+        if (typeof value !== "object" || Array.isArray(value)) {
             this.errors.add({
                 severity: Severity.Critical,
                 message: `Expected object with key, value pairs but got: ${
-                    Array.isArray(value) ? 'array' : typeof value
+                    Array.isArray(value) ? "array" : typeof value
                 }`
             })
             return undefined
@@ -205,7 +205,7 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
             })
             return undefined
         }
-        if (typeof discriminantValue !== 'string') {
+        if (typeof discriminantValue !== "string") {
             this.errors.add({
                 severity: Severity.Critical,
                 message: `Expected discriminant value to be a string but got: ${typeof discriminantValue}`
@@ -294,10 +294,10 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         body: FernIr.dynamic.InlinedRequestBody
     ): body is FernIr.dynamic.InlinedRequestBody.FileUpload {
         switch (body.type) {
-            case 'fileUpload':
+            case "fileUpload":
                 return true
-            case 'properties':
-            case 'referenced':
+            case "properties":
+            case "referenced":
                 return false
             default:
                 assertNever(body)
@@ -310,14 +310,14 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         }
         const environments = this._ir.environments.environments
         switch (environments.type) {
-            case 'singleBaseUrl': {
+            case "singleBaseUrl": {
                 const environment = environments.environments.find((env) => env.id === environmentID)
                 if (environment == null) {
                     return undefined
                 }
                 return environment.name
             }
-            case 'multipleBaseUrls': {
+            case "multipleBaseUrls": {
                 const environment = environments.environments.find((env) => env.id === environmentID)
                 if (environment == null) {
                     return undefined
@@ -330,13 +330,13 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
     }
 
     public isSingleEnvironmentID(environment: FernIr.dynamic.EnvironmentValues): environment is FernIr.EnvironmentId {
-        return typeof environment === 'string'
+        return typeof environment === "string"
     }
 
     public isMultiEnvironmentValues(
         environment: FernIr.dynamic.EnvironmentValues
     ): environment is FernIr.dynamic.MultipleEnvironmentUrlValues {
-        return typeof environment === 'object'
+        return typeof environment === "object"
     }
 
     public validateMultiEnvironmentUrlValues(
@@ -346,26 +346,26 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
             this.errors.add({
                 severity: Severity.Critical,
                 message:
-                    'Multiple environments are not supported for single base URL environments; use the baseUrl option instead'
+                    "Multiple environments are not supported for single base URL environments; use the baseUrl option instead"
             })
             return false
         }
         const environments = this._ir.environments.environments
         switch (environments.type) {
-            case 'singleBaseUrl': {
+            case "singleBaseUrl": {
                 this.errors.add({
                     severity: Severity.Critical,
                     message:
-                        'Multiple environments are not supported for single base URL environments; use the baseUrl option instead'
+                        "Multiple environments are not supported for single base URL environments; use the baseUrl option instead"
                 })
                 return false
             }
-            case 'multipleBaseUrls': {
+            case "multipleBaseUrls": {
                 const firstEnvironment = environments.environments[0]
                 if (firstEnvironment == null) {
                     this.errors.add({
                         severity: Severity.Critical,
-                        message: 'Multiple environments are not supported; use the baseUrl option instead'
+                        message: "Multiple environments are not supported; use the baseUrl option instead"
                     })
                     return false
                 }
@@ -378,7 +378,7 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
                 if (expectedKeys.size > 0) {
                     this.errors.add({
                         severity: Severity.Critical,
-                        message: `The provided environments are invalid; got: [${Object.keys(multiEnvironmentUrlValues).join(', ')}], expected: [${keys(firstEnvironment.urls).join(', ')}]`
+                        message: `The provided environments are invalid; got: [${Object.keys(multiEnvironmentUrlValues).join(", ")}], expected: [${keys(firstEnvironment.urls).join(", ")}]`
                     })
                     return false
                 }
@@ -388,10 +388,10 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
     }
 
     public getValueAsNumber({ value }: { value: unknown }): number | undefined {
-        if (typeof value !== 'number') {
+        if (typeof value !== "number") {
             this.errors.add({
                 severity: Severity.Critical,
-                message: this.newTypeMismatchError({ expected: 'number', value }).message
+                message: this.newTypeMismatchError({ expected: "number", value }).message
             })
             return undefined
         }
@@ -399,10 +399,10 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
     }
 
     public getValueAsBoolean({ value }: { value: unknown }): boolean | undefined {
-        if (typeof value !== 'boolean') {
+        if (typeof value !== "boolean") {
             this.errors.add({
                 severity: Severity.Critical,
-                message: this.newTypeMismatchError({ expected: 'boolean', value }).message
+                message: this.newTypeMismatchError({ expected: "boolean", value }).message
             })
             return undefined
         }
@@ -410,10 +410,10 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
     }
 
     public getValueAsString({ value }: { value: unknown }): string | undefined {
-        if (typeof value !== 'string') {
+        if (typeof value !== "string") {
             this.errors.add({
                 severity: Severity.Critical,
-                message: this.newTypeMismatchError({ expected: 'string', value }).message
+                message: this.newTypeMismatchError({ expected: "string", value }).message
             })
             return undefined
         }
@@ -422,16 +422,16 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
 
     public isOptional(typeReference: FernIr.dynamic.TypeReference): boolean {
         switch (typeReference.type) {
-            case 'nullable':
+            case "nullable":
                 return this.isOptional(typeReference.value)
-            case 'optional':
+            case "optional":
                 return true
-            case 'named': {
+            case "named": {
                 const resolvedType = this.resolveNamedType({ typeId: typeReference.value })
                 if (resolvedType == null) {
                     return false
                 }
-                if (resolvedType.type === 'alias') {
+                if (resolvedType.type === "alias") {
                     return this.isNullable(resolvedType.typeReference)
                 }
                 return false
@@ -442,16 +442,16 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
 
     public isNullable(typeReference: FernIr.dynamic.TypeReference): boolean {
         switch (typeReference.type) {
-            case 'nullable':
+            case "nullable":
                 return true
-            case 'optional':
+            case "optional":
                 return this.isNullable(typeReference.value)
-            case 'named': {
+            case "named": {
                 const resolvedType = this.resolveNamedType({ typeId: typeReference.value })
                 if (resolvedType == null) {
                     return false
                 }
-                if (resolvedType.type === 'alias') {
+                if (resolvedType.type === "alias") {
                     return this.isNullable(resolvedType.typeReference)
                 }
                 return false
@@ -486,10 +486,10 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         inlineFileProperties: boolean
     }): boolean {
         switch (body.type) {
-            case 'properties':
-            case 'referenced':
+            case "properties":
+            case "referenced":
                 return true
-            case 'fileUpload':
+            case "fileUpload":
                 return this.includeFileUploadBodyInWrappedRequest({ fileUpload: body, inlineFileProperties })
             default:
                 assertNever(body)
@@ -512,10 +512,10 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
     private fileUploadHasBodyProperties({ fileUpload }: { fileUpload: FernIr.dynamic.FileUploadRequestBody }): boolean {
         return fileUpload.properties.some((property) => {
             switch (property.type) {
-                case 'file':
-                case 'fileArray':
+                case "file":
+                case "fileArray":
                     return false
-                case 'bodyProperty':
+                case "bodyProperty":
                     return true
                 default:
                     assertNever(property)
@@ -526,10 +526,10 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
     private fileUploadHasFileProperties({ fileUpload }: { fileUpload: FernIr.dynamic.FileUploadRequestBody }): boolean {
         return fileUpload.properties.some((property) => {
             switch (property.type) {
-                case 'file':
-                case 'fileArray':
+                case "file":
+                case "fileArray":
                     return true
-                case 'bodyProperty':
+                case "bodyProperty":
                     return false
                 default:
                     assertNever(property)
@@ -538,10 +538,10 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
     }
 
     private isListTypeReference(typeReference: FernIr.dynamic.TypeReference): boolean {
-        if (typeReference.type === 'optional') {
+        if (typeReference.type === "optional") {
             return this.isListTypeReference(typeReference.value)
         }
-        return typeReference.type === 'list' || typeReference.type === 'set'
+        return typeReference.type === "list" || typeReference.type === "set"
     }
 
     private parsedEndpointMatches({

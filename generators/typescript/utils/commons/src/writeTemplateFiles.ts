@@ -1,6 +1,6 @@
-import * as fs from 'fs/promises'
-import { template } from 'lodash-es'
-import * as path from 'path'
+import * as fs from "fs/promises"
+import { template } from "lodash-es"
+import * as path from "path"
 
 export async function writeTemplateFiles(directory: string, templateVariables: Record<string, unknown>): Promise<void> {
     const templateFiles = await findTemplateFiles(directory)
@@ -21,7 +21,7 @@ async function findTemplateFiles(directory: string): Promise<string[]> {
 
             if (entry.isDirectory()) {
                 await walkDirectory(fullPath)
-            } else if (entry.isFile() && entry.name.includes('.template.')) {
+            } else if (entry.isFile() && entry.name.includes(".template.")) {
                 templateFiles.push(fullPath)
             }
         }
@@ -35,10 +35,10 @@ async function processTemplateFile(
     templateFilePath: string,
     templateVariables: Record<string, unknown>
 ): Promise<void> {
-    const templateContent = await fs.readFile(templateFilePath, 'utf8')
+    const templateContent = await fs.readFile(templateFilePath, "utf8")
     const compiledTemplate = template(templateContent)
     const content = compiledTemplate(templateVariables)
-    const outputFilePath = templateFilePath.replace(/\.template\./, '.')
-    await fs.writeFile(outputFilePath, content, 'utf8')
+    const outputFilePath = templateFilePath.replace(/\.template\./, ".")
+    await fs.writeFile(outputFilePath, content, "utf8")
     await fs.unlink(templateFilePath)
 }

@@ -1,20 +1,20 @@
-import { FernGeneratorExec } from '@fern-api/browser-compatible-base-generator'
-import { BasePythonCustomConfigSchema } from '@fern-api/python-browser-compatible-base'
+import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator"
+import { BasePythonCustomConfigSchema } from "@fern-api/python-browser-compatible-base"
 
 const PYPI = {
-    packageName: 'acme',
-    registryUrl: 'https://registry.npmjs.org',
-    username: 'dummy',
-    password: 'dummy'
+    packageName: "acme",
+    registryUrl: "https://registry.npmjs.org",
+    username: "dummy",
+    password: "dummy"
 }
 
 const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
     dryRun: false,
-    irFilepath: '<placeholder>',
+    irFilepath: "<placeholder>",
     output: {
-        path: '<placeholder>',
+        path: "<placeholder>",
         mode: FernGeneratorExec.OutputMode.publish({
-            version: '1.0.0',
+            version: "1.0.0",
             publishTarget: FernGeneratorExec.GeneratorPublishTarget.pypi(PYPI),
             // biome-ignore lint/suspicious/noExplicitAny: allow
             registries: {} as any,
@@ -24,16 +24,16 @@ const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
             } as any
         })
     },
-    organization: 'acme',
-    workspaceName: 'api',
+    organization: "acme",
+    workspaceName: "api",
     environment: FernGeneratorExec.GeneratorEnvironment.local(),
     whitelabel: false,
     writeUnitTests: false,
     generateOauthClients: false,
     customConfig: {
         client: {
-            filename: 'acme.py',
-            class_name: 'Acme'
+            filename: "acme.py",
+            class_name: "Acme"
         }
     } as BasePythonCustomConfigSchema
 }

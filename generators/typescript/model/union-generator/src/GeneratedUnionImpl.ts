@@ -6,8 +6,8 @@ import {
     getTextOfTsNode,
     getWriterForMultiLineUnionType,
     maybeAddDocsStructure
-} from '@fern-typescript/commons'
-import { GeneratedUnion, ModelContext } from '@fern-typescript/contexts'
+} from "@fern-typescript/commons"
+import { GeneratedUnion, ModelContext } from "@fern-typescript/contexts"
 import {
     InterfaceDeclarationStructure,
     ModuleDeclarationStructure,
@@ -20,12 +20,12 @@ import {
     VariableStatementStructure,
     WriterFunction,
     ts
-} from 'ts-morph'
+} from "ts-morph"
 
-import { ObjectProperty } from '@fern-fern/ir-sdk/api'
+import { ObjectProperty } from "@fern-fern/ir-sdk/api"
 
-import { KnownSingleUnionType } from './known-single-union-type/KnownSingleUnionType'
-import { ParsedSingleUnionType } from './parsed-single-union-type/ParsedSingleUnionType'
+import { KnownSingleUnionType } from "./known-single-union-type/KnownSingleUnionType"
+import { ParsedSingleUnionType } from "./parsed-single-union-type/ParsedSingleUnionType"
 
 export declare namespace GeneratedUnionImpl {
     export interface Init<Context extends ModelContext> {
@@ -51,14 +51,14 @@ export declare namespace GeneratedUnionImpl {
 }
 
 export class GeneratedUnionImpl<Context extends ModelContext> implements GeneratedUnion<Context> {
-    public static readonly UTILS_INTERFACE_NAME = '_Utils'
-    public static readonly BASE_INTERFACE_NAME = '_Base'
-    public static readonly VISITOR_INTERFACE_NAME = '_Visitor'
-    public static readonly VISITOR_RETURN_TYPE = '_Result'
-    public static readonly VISITOR_PARAMETER_NAME = 'visitor'
-    public static readonly VISITEE_PARAMETER_NAME = 'value'
-    public static readonly UNKNOWN_VISITOR_KEY = '_other'
-    public static readonly VISIT_UTIL_PROPERTY_NAME = '_visit'
+    public static readonly UTILS_INTERFACE_NAME = "_Utils"
+    public static readonly BASE_INTERFACE_NAME = "_Base"
+    public static readonly VISITOR_INTERFACE_NAME = "_Visitor"
+    public static readonly VISITOR_RETURN_TYPE = "_Result"
+    public static readonly VISITOR_PARAMETER_NAME = "visitor"
+    public static readonly VISITEE_PARAMETER_NAME = "value"
+    public static readonly UNKNOWN_VISITOR_KEY = "_other"
+    public static readonly VISIT_UTIL_PROPERTY_NAME = "_visit"
 
     public readonly getReferenceToUnion: (context: Context) => Reference
     public readonly discriminant: string
@@ -234,7 +234,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         existingValue: ts.Expression
     }): ts.Expression {
         if (!this.includeConstBuilders) {
-            throw new Error('Cannot build single union type because builders were not generated')
+            throw new Error("Cannot build single union type because builders were not generated")
         }
         return ts.factory.createCallExpression(
             ts.factory.createPropertyAccessExpression(
@@ -253,7 +253,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
     public getBasePropertyKey(rawKey: string): string {
         const baseProperty = this.baseProperties.find((property) => property.name.wireValue === rawKey)
         if (baseProperty == null) {
-            throw new Error('No base property exists for key ' + rawKey)
+            throw new Error("No base property exists for key " + rawKey)
         }
         return this._getBasePropertyKey(baseProperty)
     }
@@ -477,7 +477,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
 
     private addBuilderProperties(context: Context, writer: ObjectWriter) {
         if (this.hasBaseInterface()) {
-            throw new Error('Cannot create builders because union has base properties')
+            throw new Error("Cannot create builders because union has base properties")
         }
 
         const singleUnionTypes = this.includeOtherInUnionTypes

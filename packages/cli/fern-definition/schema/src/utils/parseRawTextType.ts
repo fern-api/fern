@@ -1,10 +1,10 @@
-import { FernContainerRegex } from './visitRawTypeReference'
+import { FernContainerRegex } from "./visitRawTypeReference"
 
 export interface RawTextType {
     isOptional: boolean
 }
 
-const TEXT_TYPE = 'text'
+const TEXT_TYPE = "text"
 
 export function parseRawTextType(typeReference: string): RawTextType | undefined {
     if (typeReference === TEXT_TYPE) {

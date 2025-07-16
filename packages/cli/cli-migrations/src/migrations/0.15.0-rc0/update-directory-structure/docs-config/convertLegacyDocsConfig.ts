@@ -1,4 +1,4 @@
-import { DocsURL, LegacyDocs, MigratedDocs } from '.'
+import { DocsURL, LegacyDocs, MigratedDocs } from "."
 
 export function convertLegacyDocsConfig({
     docsConfiguration,
@@ -13,7 +13,7 @@ export function convertLegacyDocsConfig({
         ...docsConfiguration,
         navbarLinks: docsConfiguration.navbarLinks?.map((link) => ({ ...link, href: link.url })),
         instances: docsURLs,
-        logo: typeof docsConfiguration.logo === 'string' ? { dark: docsConfiguration.logo } : docsConfiguration.logo,
+        logo: typeof docsConfiguration.logo === "string" ? { dark: docsConfiguration.logo } : docsConfiguration.logo,
         navigation:
             apiName != null
                 ? addApiNameToNavigationConfig({ navigation: docsConfiguration.navigation, apiName })

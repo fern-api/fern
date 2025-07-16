@@ -1,4 +1,4 @@
-import { TaskContext } from '@fern-api/task-context'
+import { TaskContext } from "@fern-api/task-context"
 
 export interface Migration {
     name: string

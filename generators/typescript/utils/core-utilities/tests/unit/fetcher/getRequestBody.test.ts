@@ -1,64 +1,64 @@
-import { getRequestBody } from '../../../src/core/fetcher/getRequestBody'
-import { RUNTIME } from '../../../src/core/runtime'
+import { getRequestBody } from "../../../src/core/fetcher/getRequestBody"
+import { RUNTIME } from "../../../src/core/runtime"
 
-describe('Test getRequestBody', () => {
-    it('should stringify body if not FormData in Node environment', async () => {
-        if (RUNTIME.type === 'node') {
-            const body = { key: 'value' }
+describe("Test getRequestBody", () => {
+    it("should stringify body if not FormData in Node environment", async () => {
+        if (RUNTIME.type === "node") {
+            const body = { key: "value" }
             const result = await getRequestBody({
                 body,
-                type: 'json'
+                type: "json"
             })
             expect(result).toBe('{"key":"value"}')
         }
     })
 
-    it('should return FormData in browser environment', async () => {
-        if (RUNTIME.type === 'browser') {
+    it("should return FormData in browser environment", async () => {
+        if (RUNTIME.type === "browser") {
             const formData = new FormData()
-            formData.append('key', 'value')
+            formData.append("key", "value")
             const result = await getRequestBody({
                 body: formData,
-                type: 'file'
+                type: "file"
             })
             expect(result).toBe(formData)
         }
     })
 
-    it('should stringify body if not FormData in browser environment', async () => {
-        if (RUNTIME.type === 'browser') {
-            const body = { key: 'value' }
+    it("should stringify body if not FormData in browser environment", async () => {
+        if (RUNTIME.type === "browser") {
+            const body = { key: "value" }
             const result = await getRequestBody({
                 body,
-                type: 'json'
+                type: "json"
             })
             expect(result).toBe('{"key":"value"}')
         }
     })
 
-    it('should return the Uint8Array', async () => {
+    it("should return the Uint8Array", async () => {
         const input = new Uint8Array([1, 2, 3])
         const result = await getRequestBody({
             body: input,
-            type: 'bytes'
+            type: "bytes"
         })
         expect(result).toBe(input)
     })
 
     it("should return the input for content-type 'application/x-www-form-urlencoded'", async () => {
-        const input = 'key=value&another=param'
+        const input = "key=value&another=param"
         const result = await getRequestBody({
             body: input,
-            type: 'other'
+            type: "other"
         })
         expect(result).toBe(input)
     })
 
-    it('should JSON stringify objects', async () => {
-        const input = { key: 'value' }
+    it("should JSON stringify objects", async () => {
+        const input = { key: "value" }
         const result = await getRequestBody({
             body: input,
-            type: 'json'
+            type: "json"
         })
         expect(result).toBe('{"key":"value"}')
     })

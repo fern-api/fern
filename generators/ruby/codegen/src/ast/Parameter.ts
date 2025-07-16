@@ -1,8 +1,8 @@
-import { Argument } from './Argument'
-import { Import } from './Import'
-import { Variable, VariableType } from './Variable'
-import { ClassReference, NilValue, OmittedValue } from './classes/ClassReference'
-import { AstNode } from './core/AstNode'
+import { Argument } from "./Argument"
+import { Import } from "./Import"
+import { Variable, VariableType } from "./Variable"
+import { ClassReference, NilValue, OmittedValue } from "./classes/ClassReference"
+import { AstNode } from "./core/AstNode"
 
 export declare namespace Parameter {
     export interface Init extends AstNode.Init {
@@ -62,9 +62,9 @@ export class Parameter extends AstNode {
         const defaultString = this.defaultValue instanceof AstNode ? this.defaultValue.write({}) : this.defaultValue
         this.addText({
             stringContent: this.name,
-            templateString: this.isBlock ? '&%s' : this.isNamed ? '%s:' : undefined
+            templateString: this.isBlock ? "&%s" : this.isNamed ? "%s:" : undefined
         })
-        this.addText({ stringContent: defaultString, templateString: ' %s', appendToLastString: true })
+        this.addText({ stringContent: defaultString, templateString: " %s", appendToLastString: true })
     }
 
     public getImports(): Set<Import> {

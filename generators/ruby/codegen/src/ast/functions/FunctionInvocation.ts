@@ -1,10 +1,10 @@
-import { BLOCK_END } from '../../utils/RubyConstants'
-import { Argument } from '../Argument'
-import { Import } from '../Import'
-import { Variable } from '../Variable'
-import { Class_ } from '../classes/Class_'
-import { AstNode } from '../core/AstNode'
-import { Function_ } from './Function_'
+import { BLOCK_END } from "../../utils/RubyConstants"
+import { Argument } from "../Argument"
+import { Import } from "../Import"
+import { Variable } from "../Variable"
+import { Class_ } from "../classes/Class_"
+import { AstNode } from "../core/AstNode"
+import { Function_ } from "./Function_"
 
 export interface BlockConfiguration {
     arguments?: string
@@ -53,10 +53,10 @@ export class FunctionInvocation extends AstNode {
 
     private writeBlock(startingTabSpaces: number) {
         if (this.block && this.block.expressions.length > 0) {
-            this.addText({ stringContent: ' do', appendToLastString: true, startingTabSpaces })
+            this.addText({ stringContent: " do", appendToLastString: true, startingTabSpaces })
             this.addText({
                 stringContent: this.block.arguments,
-                templateString: ' | %s |',
+                templateString: " | %s |",
                 appendToLastString: true,
                 startingTabSpaces
             })
@@ -71,27 +71,27 @@ export class FunctionInvocation extends AstNode {
 
     private writeArguments(startingTabSpaces: number) {
         if (this.arguments_.length > 2) {
-            this.addText({ stringContent: '(', appendToLastString: true })
+            this.addText({ stringContent: "(", appendToLastString: true })
             this.arguments_.forEach((arg, idx) =>
                 this.addText({
                     stringContent: arg.write({}),
                     appendToLastString: false,
-                    templateString: idx < this.arguments_.length - 1 ? '%s,' : undefined,
+                    templateString: idx < this.arguments_.length - 1 ? "%s," : undefined,
                     startingTabSpaces: this.tabSizeSpaces + startingTabSpaces
                 })
             )
-            this.addText({ stringContent: ')', appendToLastString: false, startingTabSpaces })
+            this.addText({ stringContent: ")", appendToLastString: false, startingTabSpaces })
         } else if (this.arguments_.length > 0) {
-            this.addText({ stringContent: '(', appendToLastString: true })
+            this.addText({ stringContent: "(", appendToLastString: true })
             this.arguments_.forEach((arg, idx) =>
                 this.addText({
                     stringContent: arg.write({}),
                     appendToLastString: true,
-                    templateString: idx === 0 ? undefined : ', %s',
+                    templateString: idx === 0 ? undefined : ", %s",
                     startingTabSpaces
                 })
             )
-            this.addText({ stringContent: ')', appendToLastString: true, startingTabSpaces })
+            this.addText({ stringContent: ")", appendToLastString: true, startingTabSpaces })
         }
     }
 
@@ -104,7 +104,7 @@ export class FunctionInvocation extends AstNode {
         })
         this.addText({
             stringContent: this.baseFunction?.getInvocationName(this.useFullPath),
-            templateString: onObject === undefined ? undefined : this.optionalSafeCall ? '&.%s' : '.%s',
+            templateString: onObject === undefined ? undefined : this.optionalSafeCall ? "&.%s" : ".%s",
             startingTabSpaces,
             appendToLastString: true
         })

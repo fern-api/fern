@@ -1,9 +1,9 @@
-import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from '@fern-api/base-generator'
-import { BaseSwiftCustomConfigSchema } from '@fern-api/swift-codegen'
+import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator"
+import { BaseSwiftCustomConfigSchema } from "@fern-api/swift-codegen"
 
-import { IntermediateRepresentation } from '@fern-fern/ir-sdk/api'
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api"
 
-import { SwiftProject } from '../project'
+import { SwiftProject } from "../project"
 
 export abstract class AbstractSwiftGeneratorContext<
     CustomConfig extends BaseSwiftCustomConfigSchema

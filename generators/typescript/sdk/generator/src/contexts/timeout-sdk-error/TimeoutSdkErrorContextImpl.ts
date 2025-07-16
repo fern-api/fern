@@ -1,9 +1,9 @@
-import { ExportsManager, ImportsManager, Reference } from '@fern-typescript/commons'
-import { GeneratedTimeoutSdkError, TimeoutSdkErrorContext } from '@fern-typescript/contexts'
-import { TimeoutSdkErrorGenerator } from '@fern-typescript/generic-sdk-error-generators'
-import { SourceFile } from 'ts-morph'
+import { ExportsManager, ImportsManager, Reference } from "@fern-typescript/commons"
+import { GeneratedTimeoutSdkError, TimeoutSdkErrorContext } from "@fern-typescript/contexts"
+import { TimeoutSdkErrorGenerator } from "@fern-typescript/generic-sdk-error-generators"
+import { SourceFile } from "ts-morph"
 
-import { TimeoutSdkErrorDeclarationReferencer } from '../../declaration-referencers/TimeoutSdkErrorDeclarationReferencer'
+import { TimeoutSdkErrorDeclarationReferencer } from "../../declaration-referencers/TimeoutSdkErrorDeclarationReferencer"
 
 export declare namespace TimeoutSdkErrorContextImpl {
     export interface Init {

@@ -1,10 +1,10 @@
-import { isNonNullish } from '@fern-api/core-utils'
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { EndpointExample, FullExample, PathParameterExample, PrimitiveExample } from '@fern-api/openapi-ir'
-import { Schema } from '@fern-api/openapi-ir'
+import { isNonNullish } from "@fern-api/core-utils"
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { EndpointExample, FullExample, PathParameterExample, PrimitiveExample } from "@fern-api/openapi-ir"
+import { Schema } from "@fern-api/openapi-ir"
 
-import { OpenApiIrConverterContext } from './OpenApiIrConverterContext'
-import { convertEndpointResponseExample, convertFullExample } from './utils/convertFullExample'
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext"
+import { convertEndpointResponseExample, convertFullExample } from "./utils/convertFullExample"
 
 export function buildEndpointExample({
     endpointExample,
@@ -14,7 +14,7 @@ export function buildEndpointExample({
     context: OpenApiIrConverterContext
 }): RawSchemas.ExampleEndpointCallSchema {
     const example: RawSchemas.ExampleEndpointCallSchema = {}
-    if (endpointExample.type !== 'full') {
+    if (endpointExample.type !== "full") {
         return endpointExample.value as RawSchemas.ExampleEndpointCallSchema
     }
 
@@ -27,11 +27,11 @@ export function buildEndpointExample({
     }
 
     if (endpointExample.pathParameters != null && endpointExample.pathParameters.length > 0) {
-        example['path-parameters'] = convertPathParameterExample(endpointExample.pathParameters)
+        example["path-parameters"] = convertPathParameterExample(endpointExample.pathParameters)
     }
 
     if (endpointExample.queryParameters != null && endpointExample.queryParameters.length > 0) {
-        example['query-parameters'] = convertQueryParameterExample(endpointExample.queryParameters)
+        example["query-parameters"] = convertQueryParameterExample(endpointExample.queryParameters)
     }
 
     const hasEndpointHeaders = endpointExample.headers != null && endpointExample.headers.length > 0
@@ -65,9 +65,9 @@ export function buildEndpointExample({
     }
 
     if (endpointExample.codeSamples != null && endpointExample.codeSamples.length > 0) {
-        example['code-samples'] = endpointExample.codeSamples
+        example["code-samples"] = endpointExample.codeSamples
             .map((codeSample) => {
-                if (codeSample.type === 'language') {
+                if (codeSample.type === "language") {
                     return {
                         name: codeSample.name ?? undefined,
                         docs: codeSample.description ?? undefined,

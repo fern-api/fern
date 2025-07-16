@@ -1,7 +1,7 @@
-import { ExportedFilePath, PackageId, Reference } from '@fern-typescript/commons'
+import { ExportedFilePath, PackageId, Reference } from "@fern-typescript/commons"
 
-import { AbstractSdkClientClassDeclarationReferencer } from './AbstractSdkClientClassDeclarationReferencer'
-import { DeclarationReferencer } from './DeclarationReferencer'
+import { AbstractSdkClientClassDeclarationReferencer } from "./AbstractSdkClientClassDeclarationReferencer"
+import { DeclarationReferencer } from "./DeclarationReferencer"
 
 export class SdkRootClientClassDeclarationReferencer extends AbstractSdkClientClassDeclarationReferencer<never> {
     public getExportedFilepath(): ExportedFilePath {
@@ -17,7 +17,7 @@ export class SdkRootClientClassDeclarationReferencer extends AbstractSdkClientCl
     }
 
     public getFilename(): string {
-        return 'Client.ts'
+        return "Client.ts"
     }
 
     public getExportedName(): string {

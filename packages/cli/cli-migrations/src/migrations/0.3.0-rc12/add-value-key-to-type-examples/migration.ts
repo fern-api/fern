@@ -1,14 +1,14 @@
-import { readFile, writeFile } from 'fs/promises'
-import YAML from 'yaml'
+import { readFile, writeFile } from "fs/promises"
+import YAML from "yaml"
 
-import { AbsoluteFilePath } from '@fern-api/fs-utils'
-import { TaskContext } from '@fern-api/task-context'
+import { AbsoluteFilePath } from "@fern-api/fs-utils"
+import { TaskContext } from "@fern-api/task-context"
 
-import { Migration } from '../../../types/Migration'
-import { getAllYamlFiles } from './getAllYamlFiles'
+import { Migration } from "../../../types/Migration"
+import { getAllYamlFiles } from "./getAllYamlFiles"
 
 export const migration: Migration = {
-    name: 'add-value-key-to-type-examples',
+    name: "add-value-key-to-type-examples",
     summary: "Add the 'value' key to type examples, so they can be named and documented",
     run: async ({ context }) => {
         const yamlFiles = await getAllYamlFiles(context)
@@ -25,7 +25,7 @@ export const migration: Migration = {
 async function migrateYamlFile(filepath: AbsoluteFilePath, context: TaskContext): Promise<void> {
     const contents = await readFile(filepath)
     const parsedDocument = YAML.parseDocument(contents.toString())
-    const types = parsedDocument.get('types')
+    const types = parsedDocument.get("types")
     if (types == null) {
         return
     }
@@ -36,7 +36,7 @@ async function migrateYamlFile(filepath: AbsoluteFilePath, context: TaskContext)
         if (!YAML.isMap(type.value)) {
             continue
         }
-        const examples = type.value.get('examples')
+        const examples = type.value.get("examples")
         if (examples == null) {
             continue
         }

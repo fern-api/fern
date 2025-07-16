@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from "zod"
 
 // https://redocly.com/docs/api-reference-docs/specification-extensions/x-code-samples/
 export const RedoclyCodeSampleSchema = z.object({

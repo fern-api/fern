@@ -1,6 +1,6 @@
-import { ts } from 'ts-morph'
+import { ts } from "ts-morph"
 
-import { CoreUtility } from './CoreUtility'
+import { CoreUtility } from "./CoreUtility"
 
 export interface Utils {
     readonly setObjectProperty: {
@@ -9,10 +9,10 @@ export interface Utils {
 }
 
 export const MANIFEST: CoreUtility.Manifest = {
-    name: 'utils',
-    pathInCoreUtilities: { nameOnDisk: 'utils', exportDeclaration: { exportAll: true } },
+    name: "utils",
+    pathInCoreUtilities: { nameOnDisk: "utils", exportDeclaration: { exportAll: true } },
     getFilesPatterns: () => {
-        return { patterns: ['src/core/utils/*.ts', 'tests/unit/utils/*.test.ts'] }
+        return { patterns: ["src/core/utils/*.ts", "tests/unit/utils/*.test.ts"] }
     }
 }
 export class UtilsImpl extends CoreUtility implements Utils {
@@ -20,7 +20,7 @@ export class UtilsImpl extends CoreUtility implements Utils {
 
     public setObjectProperty = {
         _invoke: this.withExportedName(
-            'setObjectProperty',
+            "setObjectProperty",
             (setObjectProperty) =>
                 ({
                     referenceToObject,

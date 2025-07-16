@@ -1,9 +1,9 @@
-import { OpenAPIV3 } from 'openapi-types'
+import { OpenAPIV3 } from "openapi-types"
 
-import { Availability, SchemaWithExample, SdkGroupName, Source } from '@fern-api/openapi-ir'
+import { Availability, SchemaWithExample, SdkGroupName, Source } from "@fern-api/openapi-ir"
 
-import { SchemaParserContext } from './SchemaParserContext'
-import { convertSchema } from './convertSchemas'
+import { SchemaParserContext } from "./SchemaParserContext"
+import { convertSchema } from "./convertSchemas"
 
 export function convertArray({
     nameOverride,
@@ -46,7 +46,7 @@ export function convertArray({
                   namespace,
                   groupName
               })
-            : convertSchema(item, false, context, [...breadcrumbs, 'Item'], source, namespace)
+            : convertSchema(item, false, context, [...breadcrumbs, "Item"], source, namespace)
     return wrapArray({
         nameOverride,
         generatedName,

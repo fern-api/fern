@@ -1,6 +1,6 @@
-import { GetReferenceOpts, PackageId, getTextOfTsNode } from '@fern-typescript/commons'
-import { SdkContext } from '@fern-typescript/contexts'
-import { OptionalKind, ParameterDeclarationStructure, ts } from 'ts-morph'
+import { GetReferenceOpts, PackageId, getTextOfTsNode } from "@fern-typescript/commons"
+import { SdkContext } from "@fern-typescript/contexts"
+import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph"
 
 import {
     ExampleEndpointCall,
@@ -9,9 +9,9 @@ import {
     HttpService,
     QueryParameter,
     SdkRequest
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { RequestParameter } from './RequestParameter'
+import { RequestParameter } from "./RequestParameter"
 
 export declare namespace AbstractRequestParameter {
     export interface Init {

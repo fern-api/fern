@@ -1,11 +1,11 @@
-import { JSONSchema4 } from 'json-schema'
+import { JSONSchema4 } from "json-schema"
 
-import { assertNever } from '@fern-api/core-utils'
-import { UnionTypeDeclaration } from '@fern-api/ir-sdk'
+import { assertNever } from "@fern-api/core-utils"
+import { UnionTypeDeclaration } from "@fern-api/ir-sdk"
 
-import { JsonSchemaConverterContext } from '../JsonSchemaConverterContext'
-import { convertTypeDeclarationToJsonSchema } from './convertTypeDeclarationToJsonSchema'
-import { convertTypeReferenceToJsonSchema } from './typeReferenceToJsonSchema'
+import { JsonSchemaConverterContext } from "../JsonSchemaConverterContext"
+import { convertTypeDeclarationToJsonSchema } from "./convertTypeDeclarationToJsonSchema"
+import { convertTypeReferenceToJsonSchema } from "./typeReferenceToJsonSchema"
 
 export declare namespace convertUnionToJsonSchema {
     interface Args {
@@ -17,10 +17,10 @@ export declare namespace convertUnionToJsonSchema {
 export function convertUnionToJsonSchema({ union, context }: convertUnionToJsonSchema.Args): JSONSchema4 {
     const discriminant = union.discriminant.wireValue
     return {
-        type: 'object',
+        type: "object",
         properties: {
             [discriminant]: {
-                type: 'string',
+                type: "string",
                 enum: union.types.map((member) => member.discriminantValue.wireValue)
             }
         },
@@ -28,7 +28,7 @@ export function convertUnionToJsonSchema({ union, context }: convertUnionToJsonS
             let properties: Record<string, JSONSchema4> = {}
             let required: string[] = []
             switch (member.shape.propertiesType) {
-                case 'samePropertiesAsObject': {
+                case "samePropertiesAsObject": {
                     const typeDeclaration = context.getTypeDeclarationForId({ typeId: member.shape.typeId })
                     const jsonSchema = convertTypeDeclarationToJsonSchema({
                         typeDeclaration,
@@ -38,13 +38,13 @@ export function convertUnionToJsonSchema({ union, context }: convertUnionToJsonS
                     required = Array.isArray(jsonSchema.required) ? jsonSchema.required : []
                     break
                 }
-                case 'singleProperty':
+                case "singleProperty":
                     properties.value = convertTypeReferenceToJsonSchema({
                         typeReference: member.shape.type,
                         context
                     })
                     break
-                case 'noProperties':
+                case "noProperties":
                     // No additional properties or required fields
                     break
                 default:

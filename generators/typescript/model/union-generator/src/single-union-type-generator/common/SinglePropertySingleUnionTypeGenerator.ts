@@ -1,8 +1,8 @@
-import { TypeReferenceNode, getPropertyKey, getTextOfTsNode } from '@fern-typescript/commons'
-import { ModelContext } from '@fern-typescript/contexts'
-import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from 'ts-morph'
+import { TypeReferenceNode, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons"
+import { ModelContext } from "@fern-typescript/contexts"
+import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph"
 
-import { SingleUnionTypeGenerator } from '../SingleUnionTypeGenerator'
+import { SingleUnionTypeGenerator } from "../SingleUnionTypeGenerator"
 
 export declare namespace SinglePropertySingleUnionTypeGenerator {
     export interface Init<Context> {
@@ -17,7 +17,7 @@ export declare namespace SinglePropertySingleUnionTypeGenerator {
 export class SinglePropertySingleUnionTypeGenerator<Context extends ModelContext>
     implements SingleUnionTypeGenerator<Context>
 {
-    private static BUILDER_PARAMETER_NAME = 'value'
+    private static BUILDER_PARAMETER_NAME = "value"
 
     private propertyName: string
     private getReferenceToPropertyType: (context: Context) => TypeReferenceNode

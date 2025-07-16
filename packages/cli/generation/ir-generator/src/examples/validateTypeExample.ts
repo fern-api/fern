@@ -1,15 +1,15 @@
-import { FernWorkspace } from '@fern-api/api-workspace-commons'
-import { RawSchemas, visitRawTypeDeclaration } from '@fern-api/fern-definition-schema'
+import { FernWorkspace } from "@fern-api/api-workspace-commons"
+import { RawSchemas, visitRawTypeDeclaration } from "@fern-api/fern-definition-schema"
 
-import { FernFileContext } from '../FernFileContext'
-import { ExampleResolver } from '../resolvers/ExampleResolver'
-import { TypeResolver } from '../resolvers/TypeResolver'
-import { ExampleViolation } from './exampleViolation'
-import { validateAliasExample } from './validateAliasExample'
-import { validateEnumExample } from './validateEnumExample'
-import { validateObjectExample } from './validateObjectExample'
-import { validateUndiscriminatedUnionExample } from './validateUndiscriminatedUnionExample'
-import { validateUnionExample } from './validateUnionExample'
+import { FernFileContext } from "../FernFileContext"
+import { ExampleResolver } from "../resolvers/ExampleResolver"
+import { TypeResolver } from "../resolvers/TypeResolver"
+import { ExampleViolation } from "./exampleViolation"
+import { validateAliasExample } from "./validateAliasExample"
+import { validateEnumExample } from "./validateEnumExample"
+import { validateObjectExample } from "./validateObjectExample"
+import { validateUndiscriminatedUnionExample } from "./validateUndiscriminatedUnionExample"
+import { validateUnionExample } from "./validateUnionExample"
 
 export function validateTypeExample({
     typeName,

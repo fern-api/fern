@@ -1,5 +1,5 @@
-import { mkdir, writeFile } from 'fs/promises'
-import yaml from 'js-yaml'
+import { mkdir, writeFile } from "fs/promises"
+import yaml from "js-yaml"
 
 import {
     DEFAULT_GROUP_NAME,
@@ -9,13 +9,13 @@ import {
     ROOT_API_FILENAME,
     generatorsYml,
     getLatestGeneratorVersion
-} from '@fern-api/configuration-loader'
-import { formatDefinitionFile } from '@fern-api/fern-definition-formatter'
-import { RootApiFileSchema } from '@fern-api/fern-definition-schema'
-import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join, relative } from '@fern-api/fs-utils'
-import { TaskContext } from '@fern-api/task-context'
+} from "@fern-api/configuration-loader"
+import { formatDefinitionFile } from "@fern-api/fern-definition-formatter"
+import { RootApiFileSchema } from "@fern-api/fern-definition-schema"
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join, relative } from "@fern-api/fs-utils"
+import { TaskContext } from "@fern-api/task-context"
 
-import { SAMPLE_IMDB_API } from './sampleImdbApi'
+import { SAMPLE_IMDB_API } from "./sampleImdbApi"
 
 export async function createFernWorkspace({
     directoryOfWorkspace,
@@ -73,7 +73,7 @@ async function getDefaultGeneratorsConfiguration({
     context: TaskContext
     apiConfiguration?: generatorsYml.ApiConfigurationSchema
 }): Promise<generatorsYml.GeneratorsConfigurationSchema> {
-    const defaultGeneratorName = 'fernapi/fern-typescript-sdk'
+    const defaultGeneratorName = "fernapi/fern-typescript-sdk"
     const fallbackInvocation = GENERATOR_INVOCATIONS[defaultGeneratorName]
 
     let version = fallbackInvocation.version
@@ -92,7 +92,7 @@ async function getDefaultGeneratorsConfiguration({
         )
     }
     const config: generatorsYml.GeneratorsConfigurationSchema = {
-        'default-group': DEFAULT_GROUP_NAME,
+        "default-group": DEFAULT_GROUP_NAME,
         groups: {
             [DEFAULT_GROUP_NAME]: {
                 generators: [
@@ -124,13 +124,13 @@ async function writeGeneratorsConfiguration({
 }): Promise<void> {
     await writeFile(
         filepath,
-        '# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json\n' +
+        "# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json\n" +
             yaml.dump(await getDefaultGeneratorsConfiguration({ cliVersion, context, apiConfiguration }), {
                 sortKeys: (a, b) => {
-                    if (a === 'api') {
+                    if (a === "api") {
                         return -1
                     }
-                    if (b === 'api') {
+                    if (b === "api") {
                         return 1
                     }
                     return a.localeCompare(b)
@@ -140,9 +140,9 @@ async function writeGeneratorsConfiguration({
 }
 
 const ROOT_API: RootApiFileSchema = {
-    name: 'api',
-    'error-discrimination': {
-        strategy: 'status-code'
+    name: "api",
+    "error-discrimination": {
+        strategy: "status-code"
     }
 }
 
@@ -154,7 +154,7 @@ async function writeSampleApiDefinition({
     await mkdir(directoryOfDefinition)
     await writeFile(join(directoryOfDefinition, RelativeFilePath.of(ROOT_API_FILENAME)), yaml.dump(ROOT_API))
 
-    const absoluteFilepathToImdbYaml = join(directoryOfDefinition, RelativeFilePath.of('imdb.yml'))
+    const absoluteFilepathToImdbYaml = join(directoryOfDefinition, RelativeFilePath.of("imdb.yml"))
     await writeFile(
         absoluteFilepathToImdbYaml,
         await formatDefinitionFile({

@@ -1,8 +1,8 @@
-import { format } from 'util'
+import { format } from "util"
 
-import { AbsoluteFilePath, RelativeFilePath } from '@fern-api/fs-utils'
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils"
 
-import { Import } from '../Import'
+import { Import } from "../Import"
 
 export enum NewLinePlacement {
     BEFORE,
@@ -40,7 +40,7 @@ export abstract class AstNode {
 
     constructor({ documentation, contentOverride, writeImports = false }: AstNode.Init) {
         // TODO: Make documentation a list of strings split by returns then make them multi-line comments
-        this.documentation = documentation instanceof Array ? documentation : documentation?.split('\n')
+        this.documentation = documentation instanceof Array ? documentation : documentation?.split("\n")
         this.contentOverride = contentOverride
         this.writeImports = writeImports
     }
@@ -48,7 +48,7 @@ export abstract class AstNode {
     public abstract writeInternal(startingTabSpaces: number): void
 
     protected writePaddedString(startingTabSpaces: number, content: string): string {
-        return `${' '.repeat(startingTabSpaces)}${content}`
+        return `${" ".repeat(startingTabSpaces)}${content}`
     }
 
     protected addText({
@@ -74,7 +74,7 @@ export abstract class AstNode {
     }
 
     protected addNewLine(): void {
-        this.text.push('')
+        this.text.push("")
     }
 
     public write({
@@ -104,7 +104,7 @@ export abstract class AstNode {
         const text =
             this.contentOverride !== undefined
                 ? this.writePaddedString(startingTabSpaces, this.contentOverride)
-                : this.text.join('\n')
+                : this.text.join("\n")
         // Reset text buffer
         this.text = []
         return text

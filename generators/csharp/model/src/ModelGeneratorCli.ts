@@ -1,14 +1,14 @@
-import { FernGeneratorExec, GeneratorNotificationService } from '@fern-api/base-generator'
-import { AbstractCsharpGeneratorCli } from '@fern-api/csharp-base'
-import { validateReadOnlyMemoryTypes } from '@fern-api/csharp-codegen'
+import { FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator"
+import { AbstractCsharpGeneratorCli } from "@fern-api/csharp-base"
+import { validateReadOnlyMemoryTypes } from "@fern-api/csharp-codegen"
 
-import { IntermediateRepresentation } from '@fern-fern/ir-sdk/api'
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api"
 
-import { ModelCustomConfigSchema } from './ModelCustomConfig'
-import { ModelGeneratorContext } from './ModelGeneratorContext'
-import { generateModels } from './generateModels'
-import { generateVersion } from './generateVersion'
-import { generateWellKnownProtobufFiles } from './generateWellKnownProtobufFiles'
+import { ModelCustomConfigSchema } from "./ModelCustomConfig"
+import { ModelGeneratorContext } from "./ModelGeneratorContext"
+import { generateModels } from "./generateModels"
+import { generateVersion } from "./generateVersion"
+import { generateWellKnownProtobufFiles } from "./generateWellKnownProtobufFiles"
 
 export class ModelGeneratorCLI extends AbstractCsharpGeneratorCli<ModelCustomConfigSchema, ModelGeneratorContext> {
     protected constructContext({
@@ -39,7 +39,7 @@ export class ModelGeneratorCLI extends AbstractCsharpGeneratorCli<ModelCustomCon
     }
 
     protected async publishPackage(context: ModelGeneratorContext): Promise<void> {
-        throw new Error('Method not implemented.')
+        throw new Error("Method not implemented.")
     }
 
     protected async writeForGithub(context: ModelGeneratorContext): Promise<void> {

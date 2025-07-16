@@ -1,23 +1,23 @@
-import { mkdir, writeFile } from 'fs/promises'
-import type { Root as HastRoot } from 'hast'
+import { mkdir, writeFile } from "fs/promises"
+import type { Root as HastRoot } from "hast"
 
-import { docsYml } from '@fern-api/configuration'
-import { DEFAULT_LAYOUT, DocsImporter, FernDocsBuilder } from '@fern-api/docs-importer-commons'
-import { AbsoluteFilePath, RelativeFilePath, dirname, join as fsUtilsJoin, relativize } from '@fern-api/fs-utils'
-import { Logger } from '@fern-api/logger'
-import { TaskContext } from '@fern-api/task-context'
+import { docsYml } from "@fern-api/configuration"
+import { DEFAULT_LAYOUT, DocsImporter, FernDocsBuilder } from "@fern-api/docs-importer-commons"
+import { AbsoluteFilePath, RelativeFilePath, dirname, join as fsUtilsJoin, relativize } from "@fern-api/fs-utils"
+import { Logger } from "@fern-api/logger"
+import { TaskContext } from "@fern-api/task-context"
 
-import { getFavicon } from './extract/favicon'
-import { getTitle } from './extract/title'
-import { parsePage } from './parse/parsePage'
-import { retrieveRootNavElement } from './parse/parseRootNav'
-import { parseSidebar } from './parse/parseSidebar'
-import { parseTabLinks } from './parse/parseTabs'
-import { scrapedNavigationGroup, scrapedNavigationPage, scrapedNavigationSection } from './types/scrapedNavigation'
-import { getColors } from './utils/colors'
-import { getLogos } from './utils/files/logo'
-import { htmlToHast } from './utils/hast'
-import { fetchPageHtml, startPuppeteer } from './utils/network'
+import { getFavicon } from "./extract/favicon"
+import { getTitle } from "./extract/title"
+import { parsePage } from "./parse/parsePage"
+import { retrieveRootNavElement } from "./parse/parseRootNav"
+import { parseSidebar } from "./parse/parseSidebar"
+import { parseTabLinks } from "./parse/parseTabs"
+import { scrapedNavigationGroup, scrapedNavigationPage, scrapedNavigationSection } from "./types/scrapedNavigation"
+import { getColors } from "./utils/colors"
+import { getLogos } from "./utils/files/logo"
+import { htmlToHast } from "./utils/hast"
+import { fetchPageHtml, startPuppeteer } from "./utils/network"
 
 export declare namespace ReadmeImporter {
     interface Args {
@@ -39,7 +39,7 @@ export class ReadmeImporter extends DocsImporter<object> {
 
     constructor(args: ReadmeImporter.Args) {
         super({ context: args.context })
-        this.url = typeof args.url === 'string' ? new URL(args.url) : args.url
+        this.url = typeof args.url === "string" ? new URL(args.url) : args.url
         this.logger = args.context.logger
         this.absolutePathToFernDirectory = args.absolutePathToFernDirectory
     }
@@ -51,7 +51,7 @@ export class ReadmeImporter extends DocsImporter<object> {
         const tabs = parseTabLinks(hast) ?? []
 
         if (tabs.length === 0) {
-            this.logger.debug('No tabs found on the page')
+            this.logger.debug("No tabs found on the page")
         } else {
             this.logger.debug(`Found ${tabs.length} tabs:`)
             for (const tab of tabs) {
@@ -104,7 +104,7 @@ export class ReadmeImporter extends DocsImporter<object> {
             const response = await fetch(favicon)
             if (response.ok) {
                 const imageBuffer = Buffer.from(await response.arrayBuffer())
-                const faviconPath = fsUtilsJoin(assetsDirectory, RelativeFilePath.of('favicon'))
+                const faviconPath = fsUtilsJoin(assetsDirectory, RelativeFilePath.of("favicon"))
                 await writeFile(faviconPath, new Uint8Array(imageBuffer))
                 builder.setFavicon({ favicon: relativize(this.absolutePathToFernDirectory, faviconPath) })
             }
@@ -125,7 +125,7 @@ export class ReadmeImporter extends DocsImporter<object> {
      * @returns The absolute path to the assets directory
      */
     private async getAndCreateAssetsDirectory(): Promise<AbsoluteFilePath> {
-        const assetsDirectory = fsUtilsJoin(this.absolutePathToFernDirectory, RelativeFilePath.of('assets'))
+        const assetsDirectory = fsUtilsJoin(this.absolutePathToFernDirectory, RelativeFilePath.of("assets"))
 
         // Create the directory if it doesn't exist
         await mkdir(assetsDirectory, { recursive: true })
@@ -203,7 +203,7 @@ export class ReadmeImporter extends DocsImporter<object> {
 
             await Promise.all(
                 section.pages
-                    .filter((page): page is scrapedNavigationPage => page.type === 'page')
+                    .filter((page): page is scrapedNavigationPage => page.type === "page")
                     .map(async (page) => {
                         const url = new URL(page.slug.toString(), this.url)
                         this.logger.debug(`Fetching page: ${url.toString()}`)
@@ -272,12 +272,12 @@ export class ReadmeImporter extends DocsImporter<object> {
             // Process nested navigation groups recursively
             await Promise.all(
                 section.pages
-                    .filter((page): page is scrapedNavigationGroup => page.type === 'group')
+                    .filter((page): page is scrapedNavigationGroup => page.type === "group")
                     .map(async (nestedGroup) => {
                         this.logger.debug(`Processing nested group: ${nestedGroup.group}`)
                         await this.downloadMarkdownPages({
                             absolutePathToOutputDirectory: absolutePathToOutputDirectoryForSection,
-                            sections: [{ type: 'group', group: nestedGroup.group, pages: nestedGroup.pages }]
+                            sections: [{ type: "group", group: nestedGroup.group, pages: nestedGroup.pages }]
                         })
                     })
             )
@@ -307,7 +307,7 @@ export class ReadmeImporter extends DocsImporter<object> {
             }
 
             for (const page of section.pages) {
-                if (page.type === 'page') {
+                if (page.type === "page") {
                     sectionItem.contents.push({
                         page: page.page,
                         path: relativize(
@@ -348,7 +348,7 @@ export class ReadmeImporter extends DocsImporter<object> {
     }): AbsoluteFilePath {
         return fsUtilsJoin(
             absolutePathToOutputDirectoryForSection,
-            RelativeFilePath.of(`${this.kebabCaseWithoutEmojis(page.split('/').pop() || page)}.mdx`)
+            RelativeFilePath.of(`${this.kebabCaseWithoutEmojis(page.split("/").pop() || page)}.mdx`)
         )
     }
 
@@ -379,16 +379,16 @@ export class ReadmeImporter extends DocsImporter<object> {
         // Remove emojis using a regex that matches emoji unicode ranges
         const withoutEmojis = str.replace(
             /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu,
-            ''
+            ""
         )
 
         // Convert to kebab case: lowercase, replace spaces and special chars with hyphens
         return withoutEmojis
             .toLowerCase()
             .trim()
-            .replace(/[^\w\s-]/g, '') // Remove special characters except hyphens
-            .replace(/[\s_]+/g, '-') // Replace spaces and underscores with hyphens
-            .replace(/-+/g, '-') // Replace multiple hyphens with a single hyphen
-            .replace(/^-+|-+$/g, '') // Remove leading and trailing hyphens
+            .replace(/[^\w\s-]/g, "") // Remove special characters except hyphens
+            .replace(/[\s_]+/g, "-") // Replace spaces and underscores with hyphens
+            .replace(/-+/g, "-") // Replace multiple hyphens with a single hyphen
+            .replace(/^-+|-+$/g, "") // Remove leading and trailing hyphens
     }
 }

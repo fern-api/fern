@@ -1,5 +1,5 @@
-import { Values } from '@fern-api/core-utils'
-import { NodePath, RawSchemas } from '@fern-api/fern-definition-schema'
+import { Values } from "@fern-api/core-utils"
+import { NodePath, RawSchemas } from "@fern-api/fern-definition-schema"
 
 export type DefinitionFileAstVisitor<R = void | void> = {
     [K in keyof DefinitionFileAstNodeTypes]: DefinitionFileAstNodeVisitor<K, R>
@@ -86,13 +86,13 @@ export interface DefinitionFileAstNodeTypes {
     extension: string
 }
 
-export type TypeDeclarationName = { isInlined: false; name: string } | { isInlined: true; location: 'inlinedRequest' }
+export type TypeDeclarationName = { isInlined: false; name: string } | { isInlined: true; location: "inlinedRequest" }
 
 export const TypeReferenceLocation = {
-    RequestReference: 'requestReference',
-    InlinedRequestProperty: 'inlinedRequestProperty',
-    Response: 'response',
-    StreamingResponse: 'streamingResponse'
+    RequestReference: "requestReference",
+    InlinedRequestProperty: "inlinedRequestProperty",
+    Response: "response",
+    StreamingResponse: "streamingResponse"
 } as const
 export type TypeReferenceLocation = Values<typeof TypeReferenceLocation>
 

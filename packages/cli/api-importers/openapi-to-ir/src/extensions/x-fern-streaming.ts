@@ -1,28 +1,28 @@
-import { OpenAPIV3 } from 'openapi-types'
-import { z } from 'zod'
+import { OpenAPIV3 } from "openapi-types"
+import { z } from "zod"
 
-import { AbstractConverterContext, AbstractExtension } from '@fern-api/v2-importer-commons'
+import { AbstractConverterContext, AbstractExtension } from "@fern-api/v2-importer-commons"
 
-const REQUEST_PREFIX = '$request.'
+const REQUEST_PREFIX = "$request."
 
 const StreamingExtensionObjectSchema = z.object({
-    'stream-condition': z.string().optional(),
-    format: z.enum(['sse', 'json']).optional(),
-    'stream-description': z.string().optional(),
-    'response-stream': z.any(),
+    "stream-condition": z.string().optional(),
+    format: z.enum(["sse", "json"]).optional(),
+    "stream-description": z.string().optional(),
+    "response-stream": z.any(),
     response: z.any()
 })
 
 const StreamingExtensionSchema = z.union([z.boolean(), StreamingExtensionObjectSchema])
 
 type OnlyStreamingEndpoint = {
-    type: 'stream'
-    format: 'sse' | 'json'
+    type: "stream"
+    format: "sse" | "json"
 }
 
 type StreamConditionEndpoint = {
-    type: 'streamCondition'
-    format: 'sse' | 'json'
+    type: "streamCondition"
+    format: "sse" | "json"
     streamDescription: string | undefined
     streamConditionProperty: string
     responseStream: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject
@@ -39,7 +39,7 @@ export declare namespace FernStreamingExtension {
 
 export class FernStreamingExtension extends AbstractExtension<FernStreamingExtension.Output> {
     private readonly operation: object
-    public readonly key = 'x-fern-streaming'
+    public readonly key = "x-fern-streaming"
 
     constructor({ breadcrumbs, operation, context }: FernStreamingExtension.Args) {
         super({ breadcrumbs, context })
@@ -61,31 +61,31 @@ export class FernStreamingExtension extends AbstractExtension<FernStreamingExten
             return undefined
         }
 
-        if (typeof result.data === 'boolean') {
-            return result.data ? { type: 'stream', format: 'json' } : undefined
+        if (typeof result.data === "boolean") {
+            return result.data ? { type: "stream", format: "json" } : undefined
         }
 
-        if (result.data['stream-condition'] == null && result.data.format != null) {
-            return { type: 'stream', format: result.data.format }
+        if (result.data["stream-condition"] == null && result.data.format != null) {
+            return { type: "stream", format: result.data.format }
         }
 
-        if (result.data['stream-condition'] == null) {
+        if (result.data["stream-condition"] == null) {
             this.context.errorCollector.collect({
-                message: 'Missing stream-condition property without specified format.',
+                message: "Missing stream-condition property without specified format.",
                 path: this.breadcrumbs
             })
             return undefined
         }
 
         return {
-            type: 'streamCondition',
-            format: result.data.format ?? 'json',
-            streamDescription: result.data['stream-description'],
+            type: "streamCondition",
+            format: result.data.format ?? "json",
+            streamDescription: result.data["stream-description"],
             streamConditionProperty: AbstractConverterContext.maybeTrimPrefix(
-                result.data['stream-condition'],
+                result.data["stream-condition"],
                 REQUEST_PREFIX
             ),
-            responseStream: result.data['response-stream'],
+            responseStream: result.data["response-stream"],
             response: result.data.response
         }
     }

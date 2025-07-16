@@ -1,11 +1,11 @@
-import { camelCase } from 'lodash-es'
-import urlJoin from 'url-join'
+import { camelCase } from "lodash-es"
+import urlJoin from "url-join"
 
-import { APIV1Read, FernNavigation } from '@fern-api/fdr-sdk'
-import { TaskContext } from '@fern-api/task-context'
+import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk"
+import { TaskContext } from "@fern-api/task-context"
 
-import { isSubpackage } from './utils/isSubpackage'
-import { stringifyEndpointPathParts, stringifyEndpointPathParts2 } from './utils/stringifyEndpointPathParts'
+import { isSubpackage } from "./utils/isSubpackage"
+import { stringifyEndpointPathParts, stringifyEndpointPathParts2 } from "./utils/stringifyEndpointPathParts"
 
 // unlike `FernNavigation.EndpointId`, which concatenates the subpackageId and endpointId with a dot,
 // SubpackageHolder is intended to help resolve the endpointId from within a subpackage.
@@ -16,7 +16,7 @@ export interface SubpackageHolder {
     readonly grpcs: ReadonlyMap<APIV1Read.GrpcId, APIV1Read.EndpointDefinition>
 }
 
-export const ROOT_PACKAGE_ID = '__package__' as const
+export const ROOT_PACKAGE_ID = "__package__" as const
 
 /**
  * A holder for an API definition, which provides a way to resolve endpoint, websocket, and webhook IDs.
@@ -99,7 +99,7 @@ export class ApiDefinitionHolder {
             }
             this.#subpackages.set(subpackageId, subpackageHolder)
             pkg.endpoints.forEach((endpoint) => {
-                if (endpoint.protocol?.type === 'grpc') {
+                if (endpoint.protocol?.type === "grpc") {
                     subpackageHolder.grpcs.set(endpoint.id as unknown as APIV1Read.GrpcId, endpoint)
                     const grpcId = ApiDefinitionHolder.createGrpcId(endpoint, subpackageId)
                     this.#grpcs.set(grpcId, endpoint)
@@ -111,8 +111,8 @@ export class ApiDefinitionHolder {
 
                     const methods: string[] = [endpoint.method]
 
-                    if (endpoint.response?.type.type === 'stream') {
-                        methods.push('STREAM')
+                    if (endpoint.response?.type.type === "stream") {
+                        methods.push("STREAM")
                     }
 
                     methods.forEach((method) => {
@@ -153,7 +153,7 @@ export class ApiDefinitionHolder {
                 this.#webSockets.set(webSocketId, webSocket)
 
                 const locators: string[] = []
-                const methods: string[] = ['GET', 'WSS']
+                const methods: string[] = ["GET", "WSS"]
 
                 methods.forEach((method) => {
                     locators.push(`${method} ${stringifyEndpointPathParts(webSocket.path.parts)}`)
@@ -221,7 +221,7 @@ export class ApiDefinitionHolder {
         const packageList = isSubpackage(pkg) ? [...parents, pkg.name] : parents
 
         const path = packageList.length === 0 ? [ROOT_PACKAGE_ID] : packageList
-        const locators = [path.join('.'), path.join('/'), `${path.join('.')}.yml`]
+        const locators = [path.join("."), path.join("/"), `${path.join(".")}.yml`]
         locators.forEach((locator) => {
             this.context?.logger.trace(`Registering subpackage locator: ${locator}`)
             this.#subpackagesByLocator.set(locator, pkg)
@@ -233,11 +233,11 @@ export class ApiDefinitionHolder {
 
         pkg.endpoints.forEach((endpoint) => {
             // TODO
-            if (endpoint.protocol?.type === 'grpc') {
+            if (endpoint.protocol?.type === "grpc") {
                 return
             }
             const path = [...packageList, endpoint.id]
-            const locators = [path.join('.'), path.join('/')]
+            const locators = [path.join("."), path.join("/")]
             locators.forEach((locator) => {
                 this.context?.logger.trace(`Registering endpoint locator: ${locator}`)
                 this.#endpointsByLocator.set(locator, endpoint)
@@ -246,7 +246,7 @@ export class ApiDefinitionHolder {
 
         pkg.websockets.forEach((webSocket) => {
             const path = [...packageList, webSocket.id]
-            const locators = [path.join('.'), path.join('/')]
+            const locators = [path.join("."), path.join("/")]
             locators.forEach((locator) => {
                 this.context?.logger.trace(`Registering websocket locator: ${locator}`)
                 this.#webSocketsByLocator.set(locator, webSocket)
@@ -255,7 +255,7 @@ export class ApiDefinitionHolder {
 
         pkg.webhooks.forEach((webhook) => {
             const path = [...packageList, webhook.id]
-            const locators = [path.join('.'), path.join('/')]
+            const locators = [path.join("."), path.join("/")]
             locators.forEach((locator) => {
                 this.context?.logger.trace(`Registering webhook locator: ${locator}`)
                 this.#webhooksByLocator.set(locator, webhook)
@@ -362,11 +362,11 @@ export function getBasePath(environment: APIV1Read.Environment | undefined): str
         return undefined
     }
 
-    if (environment.baseUrl.startsWith('/')) {
+    if (environment.baseUrl.startsWith("/")) {
         return environment.baseUrl
     }
 
-    if (environment.baseUrl.startsWith('http') || environment.baseUrl.startsWith('ws')) {
+    if (environment.baseUrl.startsWith("http") || environment.baseUrl.startsWith("ws")) {
         try {
             return new URL(environment.baseUrl).pathname
         } catch (e) {

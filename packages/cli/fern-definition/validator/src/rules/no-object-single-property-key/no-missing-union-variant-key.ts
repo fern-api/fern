@@ -1,11 +1,11 @@
-import { RawSchemas, isRawDiscriminatedUnionDefinition } from '@fern-api/fern-definition-schema'
-import { TypeResolverImpl, constructFernFileContext } from '@fern-api/ir-generator'
+import { RawSchemas, isRawDiscriminatedUnionDefinition } from "@fern-api/fern-definition-schema"
+import { TypeResolverImpl, constructFernFileContext } from "@fern-api/ir-generator"
 
-import { Rule, RuleViolation } from '../../Rule'
-import { CASINGS_GENERATOR } from '../../utils/casingsGenerator'
+import { Rule, RuleViolation } from "../../Rule"
+import { CASINGS_GENERATOR } from "../../utils/casingsGenerator"
 
 export const NoObjectSinglePropertyKeyRule: Rule = {
-    name: 'no-object-single-property-key',
+    name: "no-object-single-property-key",
     create: ({ workspace }) => {
         const typeResolver = new TypeResolverImpl(workspace)
 
@@ -24,14 +24,14 @@ export const NoObjectSinglePropertyKeyRule: Rule = {
                         discriminantValue: string
                         singleUnionType: RawSchemas.SingleUnionTypeSchema
                     }): RuleViolation[] => {
-                        const hasKey = typeof singleUnionType !== 'string' && singleUnionType.key != null
-                        const type = typeof singleUnionType === 'string' ? singleUnionType : singleUnionType.type
+                        const hasKey = typeof singleUnionType !== "string" && singleUnionType.key != null
+                        const type = typeof singleUnionType === "string" ? singleUnionType : singleUnionType.type
 
-                        if (typeof type !== 'string' || hasKey) {
-                            if (typeof type !== 'string' && hasKey) {
+                        if (typeof type !== "string" || hasKey) {
+                            if (typeof type !== "string" && hasKey) {
                                 return [
                                     {
-                                        severity: 'fatal',
+                                        severity: "fatal",
                                         message: `Union variant ${discriminantValue} has no type, so "key" cannot be defined`
                                     }
                                 ]

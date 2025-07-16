@@ -1,10 +1,10 @@
-import { SourceResolverImpl } from '@fern-api/cli-source-resolver'
-import { Audiences } from '@fern-api/configuration-loader'
-import { AbsoluteFilePath, RelativeFilePath, join, streamObjectToFile } from '@fern-api/fs-utils'
-import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from '@fern-api/ir-generator'
-import { serialization as IrSerialization } from '@fern-api/ir-sdk'
-import { createMockTaskContext } from '@fern-api/task-context'
-import { AbstractAPIWorkspace } from '@fern-api/workspace-loader'
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver"
+import { Audiences } from "@fern-api/configuration-loader"
+import { AbsoluteFilePath, RelativeFilePath, join, streamObjectToFile } from "@fern-api/fs-utils"
+import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator"
+import { serialization as IrSerialization } from "@fern-api/ir-sdk"
+import { createMockTaskContext } from "@fern-api/task-context"
+import { AbstractAPIWorkspace } from "@fern-api/workspace-loader"
 
 export async function generateAndSnapshotDynamicIR({
     workspace,
@@ -45,7 +45,7 @@ export async function generateAndSnapshotDynamicIR({
     const dynamicIntermediateRepresentationJson = IrSerialization.dynamic.DynamicIntermediateRepresentation.jsonOrThrow(
         dynamicIntermediateRepresentation,
         {
-            unrecognizedObjectKeys: 'strip'
+            unrecognizedObjectKeys: "strip"
         }
     )
 

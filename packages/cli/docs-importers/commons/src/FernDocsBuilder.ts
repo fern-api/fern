@@ -1,7 +1,7 @@
-import { docsYml } from '@fern-api/configuration'
-import { AbsoluteFilePath, RelativeFilePath } from '@fern-api/fs-utils'
+import { docsYml } from "@fern-api/configuration"
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils"
 
-import { FernRegistry as CjsFdrSdk } from '@fern-fern/fdr-cjs-sdk'
+import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk"
 
 /**
  * A builder utility to help

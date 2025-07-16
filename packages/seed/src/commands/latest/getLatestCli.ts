@@ -1,11 +1,11 @@
-import semver from 'semver'
+import semver from "semver"
 
-import { RelativeFilePath, doesPathExist, join } from '@fern-api/fs-utils'
-import { TaskContext } from '@fern-api/task-context'
+import { RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils"
+import { TaskContext } from "@fern-api/task-context"
 
-import { loadCliWorkspace } from '../../loadGeneratorWorkspaces'
-import { parseCliReleasesFile } from '../../utils/convertVersionsFileToReleases'
-import { VersionFilePair, getNewCliVersion } from '../../utils/versionUtilities'
+import { loadCliWorkspace } from "../../loadGeneratorWorkspaces"
+import { parseCliReleasesFile } from "../../utils/convertVersionsFileToReleases"
+import { VersionFilePair, getNewCliVersion } from "../../utils/versionUtilities"
 
 export async function getLatestCli({
     context,
@@ -25,7 +25,7 @@ export async function getLatestCli({
 
         if (maybeNewVersion == null) {
             context.failWithoutThrowing(
-                'No version diff! There must not have been a new version since the last publish.'
+                "No version diff! There must not have been a new version since the last publish."
             )
             return
         }
@@ -33,12 +33,12 @@ export async function getLatestCli({
     }
 
     if (cliWorkspace == null) {
-        context.logger.error('Failed to find CLI workspace, no latest version found.')
+        context.logger.error("Failed to find CLI workspace, no latest version found.")
         return
     }
     if (cliWorkspace.workspaceConfig.changelogLocation == null) {
         context.logger.error(
-            'No changelog location specified, unable to determine latest version. To register CLI releases, specify a changelog location at: `changelogLocation`.'
+            "No changelog location specified, unable to determine latest version. To register CLI releases, specify a changelog location at: `changelogLocation`."
         )
         return
     }

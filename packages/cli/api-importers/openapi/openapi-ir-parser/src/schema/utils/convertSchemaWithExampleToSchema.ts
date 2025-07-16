@@ -1,4 +1,4 @@
-import { assertNever } from '@fern-api/core-utils'
+import { assertNever } from "@fern-api/core-utils"
 import {
     ObjectProperty,
     ObjectPropertyWithExample,
@@ -8,11 +8,11 @@ import {
     PrimitiveSchemaValueWithExample,
     Schema,
     SchemaWithExample
-} from '@fern-api/openapi-ir'
+} from "@fern-api/openapi-ir"
 
 export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Schema {
     switch (schema.type) {
-        case 'object':
+        case "object":
             return Schema.object({
                 allOf: schema.allOf,
                 properties: schema.properties.map((objectProperty) => convertToObjectProperty(objectProperty)),
@@ -28,7 +28,7 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 source: schema.source,
                 inline: schema.inline
             })
-        case 'array':
+        case "array":
             return Schema.array({
                 description: schema.description,
                 availability: schema.availability,
@@ -40,7 +40,7 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 groupName: schema.groupName,
                 inline: schema.inline
             })
-        case 'enum':
+        case "enum":
             return Schema.enum({
                 description: schema.description,
                 availability: schema.availability,
@@ -54,7 +54,7 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 source: schema.source,
                 inline: schema.inline
             })
-        case 'literal':
+        case "literal":
             return Schema.literal({
                 description: schema.description,
                 availability: schema.availability,
@@ -65,7 +65,7 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 namespace: schema.namespace,
                 groupName: schema.groupName
             })
-        case 'nullable':
+        case "nullable":
             return Schema.nullable({
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
@@ -77,7 +77,7 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 groupName: schema.groupName,
                 inline: schema.inline
             })
-        case 'optional':
+        case "optional":
             return Schema.optional({
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
@@ -89,7 +89,7 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 groupName: schema.groupName,
                 inline: schema.inline
             })
-        case 'primitive':
+        case "primitive":
             return Schema.primitive({
                 description: schema.description,
                 availability: schema.availability,
@@ -100,7 +100,7 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 namespace: schema.namespace,
                 groupName: schema.groupName
             })
-        case 'map':
+        case "map":
             return Schema.map({
                 description: schema.description,
                 availability: schema.availability,
@@ -123,7 +123,7 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 encoding: schema.encoding,
                 inline: schema.inline
             })
-        case 'reference':
+        case "reference":
             return Schema.reference({
                 description: schema.description,
                 availability: schema.availability,
@@ -135,9 +135,9 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 groupName: schema.groupName,
                 source: schema.source
             })
-        case 'oneOf':
+        case "oneOf":
             return Schema.oneOf(convertToOneOf(schema.value))
-        case 'unknown':
+        case "unknown":
             return Schema.unknown({ nameOverride: schema.nameOverride, generatedName: schema.generatedName })
         default:
             assertNever(schema)
@@ -146,15 +146,15 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
 
 export function convertSchemaWithExampleToOptionalSchema(schema: SchemaWithExample): Schema {
     switch (schema.type) {
-        case 'object':
-        case 'array':
-        case 'enum':
-        case 'literal':
-        case 'nullable':
-        case 'primitive':
-        case 'map':
-        case 'reference':
-        case 'unknown':
+        case "object":
+        case "array":
+        case "enum":
+        case "literal":
+        case "nullable":
+        case "primitive":
+        case "map":
+        case "reference":
+        case "unknown":
             return Schema.optional({
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
@@ -166,7 +166,7 @@ export function convertSchemaWithExampleToOptionalSchema(schema: SchemaWithExamp
                 groupName: schema.groupName,
                 inline: undefined
             })
-        case 'optional':
+        case "optional":
             return Schema.optional({
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
@@ -178,7 +178,7 @@ export function convertSchemaWithExampleToOptionalSchema(schema: SchemaWithExamp
                 groupName: schema.groupName,
                 inline: schema.inline
             })
-        case 'oneOf': {
+        case "oneOf": {
             const oneOfSchema = convertToOneOf(schema.value)
             return Schema.optional({
                 generatedName: oneOfSchema.generatedName,
@@ -199,7 +199,7 @@ export function convertSchemaWithExampleToOptionalSchema(schema: SchemaWithExamp
 
 function convertToOneOf(oneOfSchema: OneOfSchemaWithExample): OneOfSchema {
     switch (oneOfSchema.type) {
-        case 'discriminated':
+        case "discriminated":
             return OneOfSchema.discriminated({
                 commonProperties: oneOfSchema.commonProperties.map((commonProperty) => {
                     return {
@@ -224,7 +224,7 @@ function convertToOneOf(oneOfSchema: OneOfSchemaWithExample): OneOfSchema {
                 source: oneOfSchema.source,
                 inline: oneOfSchema.inline
             })
-        case 'undiscriminated':
+        case "undiscriminated":
             return OneOfSchema.undiscriminated({
                 description: oneOfSchema.description,
                 availability: oneOfSchema.availability,
@@ -245,27 +245,27 @@ function convertToOneOf(oneOfSchema: OneOfSchemaWithExample): OneOfSchema {
 
 function convertToPrimitiveSchemaValue(primitiveSchema: PrimitiveSchemaValueWithExample): PrimitiveSchemaValue {
     switch (primitiveSchema.type) {
-        case 'string':
+        case "string":
             return PrimitiveSchemaValue.string(primitiveSchema)
-        case 'base64':
+        case "base64":
             return PrimitiveSchemaValue.base64()
-        case 'boolean':
+        case "boolean":
             return PrimitiveSchemaValue.boolean(primitiveSchema)
-        case 'date':
+        case "date":
             return PrimitiveSchemaValue.date()
-        case 'datetime':
+        case "datetime":
             return PrimitiveSchemaValue.datetime()
-        case 'double':
+        case "double":
             return PrimitiveSchemaValue.double(primitiveSchema)
-        case 'float':
+        case "float":
             return PrimitiveSchemaValue.float()
-        case 'int':
+        case "int":
             return PrimitiveSchemaValue.int(primitiveSchema)
-        case 'int64':
+        case "int64":
             return PrimitiveSchemaValue.int64(primitiveSchema)
-        case 'uint':
+        case "uint":
             return PrimitiveSchemaValue.uint()
-        case 'uint64':
+        case "uint64":
             return PrimitiveSchemaValue.uint64()
         default:
             assertNever(primitiveSchema)

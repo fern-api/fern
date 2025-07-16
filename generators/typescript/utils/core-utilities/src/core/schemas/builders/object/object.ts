@@ -1,14 +1,14 @@
-import { MaybeValid, Schema, SchemaType, ValidationError } from '../../Schema'
-import { entries } from '../../utils/entries'
-import { filterObject } from '../../utils/filterObject'
-import { getErrorMessageForIncorrectType } from '../../utils/getErrorMessageForIncorrectType'
-import { isPlainObject } from '../../utils/isPlainObject'
-import { keys } from '../../utils/keys'
-import { maybeSkipValidation } from '../../utils/maybeSkipValidation'
-import { partition } from '../../utils/partition'
-import { getObjectLikeUtils } from '../object-like'
-import { getSchemaUtils } from '../schema-utils'
-import { isProperty } from './property'
+import { MaybeValid, Schema, SchemaType, ValidationError } from "../../Schema"
+import { entries } from "../../utils/entries"
+import { filterObject } from "../../utils/filterObject"
+import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType"
+import { isPlainObject } from "../../utils/isPlainObject"
+import { keys } from "../../utils/keys"
+import { maybeSkipValidation } from "../../utils/maybeSkipValidation"
+import { partition } from "../../utils/partition"
+import { getObjectLikeUtils } from "../object-like"
+import { getSchemaUtils } from "../schema-utils"
+import { isProperty } from "./property"
 import {
     BaseObjectSchema,
     ObjectSchema,
@@ -17,7 +17,7 @@ import {
     inferObjectSchemaFromPropertySchemas,
     inferParsedObjectFromPropertySchemas,
     inferRawObjectFromPropertySchemas
-} from './types'
+} from "./types"
 
 interface ObjectPropertyWithRawKey {
     rawKey: string
@@ -153,7 +153,7 @@ function validateAndTransformObject<Transformed>({
     value,
     requiredKeys,
     getProperty,
-    unrecognizedObjectKeys = 'fail',
+    unrecognizedObjectKeys = "fail",
     skipValidation = false,
     breadcrumbsPrefix = []
 }: {
@@ -162,7 +162,7 @@ function validateAndTransformObject<Transformed>({
     getProperty: (
         preTransformedKey: string
     ) => { transformedKey: string; transform: (propertyValue: object) => MaybeValid<any> } | undefined
-    unrecognizedObjectKeys: 'fail' | 'passthrough' | 'strip' | undefined
+    unrecognizedObjectKeys: "fail" | "passthrough" | "strip" | undefined
     skipValidation: boolean | undefined
     breadcrumbsPrefix: string[] | undefined
     omitUndefined: boolean | undefined
@@ -173,7 +173,7 @@ function validateAndTransformObject<Transformed>({
             errors: [
                 {
                     path: breadcrumbsPrefix,
-                    message: getErrorMessageForIncorrectType(value, 'object')
+                    message: getErrorMessageForIncorrectType(value, "object")
                 }
             ]
         }
@@ -198,15 +198,15 @@ function validateAndTransformObject<Transformed>({
             }
         } else {
             switch (unrecognizedObjectKeys) {
-                case 'fail':
+                case "fail":
                     errors.push({
                         path: [...breadcrumbsPrefix, preTransformedKey],
                         message: `Unexpected key "${preTransformedKey}"`
                     })
                     break
-                case 'strip':
+                case "strip":
                     break
-                case 'passthrough':
+                case "passthrough":
                     transformed[preTransformedKey] = preTransformedItemValue
                     break
             }
@@ -273,7 +273,7 @@ export function getObjectUtils<Raw, Parsed>(schema: BaseObjectSchema<Raw, Parsed
                     _getParsedProperties: () => schema._getParsedProperties(),
                     _getRawProperties: () => schema._getRawProperties(),
                     parse: (raw, opts) => {
-                        const transformed = schema.parse(raw, { ...opts, unrecognizedObjectKeys: 'passthrough' })
+                        const transformed = schema.parse(raw, { ...opts, unrecognizedObjectKeys: "passthrough" })
                         if (!transformed.ok) {
                             return transformed
                         }
@@ -286,7 +286,7 @@ export function getObjectUtils<Raw, Parsed>(schema: BaseObjectSchema<Raw, Parsed
                         }
                     },
                     json: (parsed, opts) => {
-                        const transformed = schema.json(parsed, { ...opts, unrecognizedObjectKeys: 'passthrough' })
+                        const transformed = schema.json(parsed, { ...opts, unrecognizedObjectKeys: "passthrough" })
                         if (!transformed.ok) {
                             return transformed
                         }

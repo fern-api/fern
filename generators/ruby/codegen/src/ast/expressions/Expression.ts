@@ -1,6 +1,6 @@
-import { Import } from '../Import'
-import { Yardoc } from '../Yardoc'
-import { AstNode } from '../core/AstNode'
+import { Import } from "../Import"
+import { Yardoc } from "../Yardoc"
+import { AstNode } from "../core/AstNode"
 
 export declare namespace Expression {
     export interface Init extends AstNode.Init {
@@ -23,7 +23,7 @@ export class Expression extends AstNode {
         this.leftSide = leftSide
         this.rightSide = rightSide
         this.isAssignment = isAssignment && leftSide !== undefined
-        this.operation = isAssignment ? '=' : operation
+        this.operation = isAssignment ? "=" : operation
         this.yardoc = yardoc
     }
 
@@ -37,7 +37,7 @@ export class Expression extends AstNode {
         this.addText({
             stringContent: rightString ?? leftString,
             templateString:
-                this.operation !== undefined ? ` ${this.operation} %s` : leftString === undefined ? undefined : ' %s',
+                this.operation !== undefined ? ` ${this.operation} %s` : leftString === undefined ? undefined : " %s",
             appendToLastString: true,
             startingTabSpaces: leftString === undefined ? startingTabSpaces : undefined
         })

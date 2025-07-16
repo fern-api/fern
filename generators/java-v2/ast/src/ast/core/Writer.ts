@@ -1,6 +1,6 @@
-import { AbstractFormatter, AbstractWriter, NopFormatter } from '@fern-api/browser-compatible-base-generator'
+import { AbstractFormatter, AbstractWriter, NopFormatter } from "@fern-api/browser-compatible-base-generator"
 
-import { BaseJavaCustomConfigSchema } from '../../custom-config/BaseJavaCustomConfigSchema'
+import { BaseJavaCustomConfigSchema } from "../../custom-config/BaseJavaCustomConfigSchema"
 
 type PackageName = string
 

@@ -1,8 +1,8 @@
-import esutils from 'esutils'
+import esutils from "esutils"
 
 export function getPropertyKey(key: string): string {
     // [key: string]: any; => [key: string]: any;
-    if (key.startsWith('[') && key.endsWith(']')) {
+    if (key.startsWith("[") && key.endsWith("]")) {
         return key
     }
 

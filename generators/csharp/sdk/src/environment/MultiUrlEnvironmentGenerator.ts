@@ -1,11 +1,11 @@
-import { CSharpFile, FileGenerator } from '@fern-api/csharp-base'
-import { csharp } from '@fern-api/csharp-codegen'
-import { RelativeFilePath, join } from '@fern-api/fs-utils'
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base"
+import { csharp } from "@fern-api/csharp-codegen"
+import { RelativeFilePath, join } from "@fern-api/fs-utils"
 
-import { MultipleBaseUrlsEnvironments } from '@fern-fern/ir-sdk/api'
+import { MultipleBaseUrlsEnvironments } from "@fern-fern/ir-sdk/api"
 
-import { SdkCustomConfigSchema } from '../SdkCustomConfig'
-import { SdkGeneratorContext } from '../SdkGeneratorContext'
+import { SdkCustomConfigSchema } from "../SdkCustomConfig"
+import { SdkGeneratorContext } from "../SdkGeneratorContext"
 
 export declare namespace SingleUrlEnvironmentGenerator {
     interface Args {
@@ -41,7 +41,7 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<
                     static_: true,
                     readonly: true,
                     name:
-                        (this.context.customConfig['pascal-case-environments'] ?? true)
+                        (this.context.customConfig["pascal-case-environments"] ?? true)
                             ? environment.name.pascalCase.safeName
                             : environment.name.screamingSnakeCase.safeName,
                     type: csharp.Type.reference(this.context.getEnvironmentsClassReference()),
@@ -55,7 +55,7 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<
                                         throw new Error(`Failed to find base url with id ${id}`)
                                     }
                                     return {
-                                        name: baseUrl?.name.pascalCase.safeName ?? '',
+                                        name: baseUrl?.name.pascalCase.safeName ?? "",
                                         assignment: csharp.codeblock(csharp.string_({ string: url }))
                                     }
                                 })

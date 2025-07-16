@@ -1,12 +1,12 @@
-import { OpenAPIV3_1 } from 'openapi-types'
+import { OpenAPIV3_1 } from "openapi-types"
 
-import { ObjectProperty, TypeId } from '@fern-api/ir-sdk'
+import { ObjectProperty, TypeId } from "@fern-api/ir-sdk"
 
-import { Extensions } from '..'
-import { AbstractConverterContext } from '../AbstractConverterContext'
-import { ErrorCollector } from '../ErrorCollector'
-import { SchemaConverter } from '../converters/schema/SchemaConverter'
-import { SchemaOrReferenceConverter } from '../converters/schema/SchemaOrReferenceConverter'
+import { Extensions } from ".."
+import { AbstractConverterContext } from "../AbstractConverterContext"
+import { ErrorCollector } from "../ErrorCollector"
+import { SchemaConverter } from "../converters/schema/SchemaConverter"
+import { SchemaOrReferenceConverter } from "../converters/schema/SchemaOrReferenceConverter"
 
 export function convertProperties({
     properties,
@@ -31,8 +31,8 @@ export function convertProperties({
     const propertiesByAudience: Record<string, Set<string>> = {}
     const referencedTypes: Set<string> = new Set()
     for (const [propertyName, propertySchema] of Object.entries(properties ?? {})) {
-        const propertyBreadcrumbs = [...breadcrumbs, 'properties', propertyName]
-        if (typeof propertySchema !== 'object') {
+        const propertyBreadcrumbs = [...breadcrumbs, "properties", propertyName]
+        if (typeof propertySchema !== "object") {
             errorCollector.collect({
                 message: `Schema property ${propertyName} should be an object`,
                 path: propertyBreadcrumbs
@@ -42,7 +42,7 @@ export function convertProperties({
         const propertyId =
             maybeGetFernTypeNameExtension(breadcrumbs, propertySchema, context) ??
             context.convertBreadcrumbsToName(propertyBreadcrumbs)
-        const isNullable = 'nullable' in propertySchema ? (propertySchema.nullable as boolean) : false
+        const isNullable = "nullable" in propertySchema ? (propertySchema.nullable as boolean) : false
 
         const propertySchemaConverter = new SchemaOrReferenceConverter({
             context,

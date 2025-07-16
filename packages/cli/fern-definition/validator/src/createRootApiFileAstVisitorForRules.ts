@@ -1,9 +1,9 @@
-import { NodePath, RootApiFileSchema } from '@fern-api/fern-definition-schema'
-import { RelativeFilePath } from '@fern-api/fs-utils'
+import { NodePath, RootApiFileSchema } from "@fern-api/fern-definition-schema"
+import { RelativeFilePath } from "@fern-api/fs-utils"
 
-import { RuleVisitors } from './Rule'
-import { ValidationViolation } from './ValidationViolation'
-import { RootApiFileAstNodeTypes, RootApiFileAstNodeVisitor, RootApiFileAstVisitor } from './ast'
+import { RuleVisitors } from "./Rule"
+import { ValidationViolation } from "./ValidationViolation"
+import { RootApiFileAstNodeTypes, RootApiFileAstNodeVisitor, RootApiFileAstVisitor } from "./ast"
 
 export function createRootApiFileAstVisitorForRules({
     relativeFilepath,
@@ -40,14 +40,14 @@ export function createRootApiFileAstVisitorForRules({
     }
 
     return {
-        ...createAstNodeVisitor('file'),
-        ...createAstNodeVisitor('oauth'),
-        ...createAstNodeVisitor('defaultEnvironment'),
-        ...createAstNodeVisitor('environment'),
-        ...createAstNodeVisitor('errorDiscrimination'),
-        ...createAstNodeVisitor('errorReference'),
-        ...createAstNodeVisitor('variableDeclaration'),
-        ...createAstNodeVisitor('variableReference'),
-        ...createAstNodeVisitor('pathParameter')
+        ...createAstNodeVisitor("file"),
+        ...createAstNodeVisitor("oauth"),
+        ...createAstNodeVisitor("defaultEnvironment"),
+        ...createAstNodeVisitor("environment"),
+        ...createAstNodeVisitor("errorDiscrimination"),
+        ...createAstNodeVisitor("errorReference"),
+        ...createAstNodeVisitor("variableDeclaration"),
+        ...createAstNodeVisitor("variableReference"),
+        ...createAstNodeVisitor("pathParameter")
     }
 }

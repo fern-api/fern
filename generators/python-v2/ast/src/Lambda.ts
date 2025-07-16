@@ -1,6 +1,6 @@
-import { LambdaParameter } from './LambdaParameter'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { LambdaParameter } from "./LambdaParameter"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export declare namespace Lambda {
     interface Args {
@@ -24,18 +24,18 @@ export class Lambda extends AstNode {
     }
 
     public write(writer: Writer): void {
-        writer.write('lambda')
+        writer.write("lambda")
 
         if (this.parameters && this.parameters.length) {
-            writer.write(' ')
+            writer.write(" ")
             this.parameters.forEach((param, index) => {
                 param.write(writer)
                 if (index < this.parameters.length - 1) {
-                    writer.write(', ')
+                    writer.write(", ")
                 }
             })
         }
-        writer.write(': ')
+        writer.write(": ")
         this.body.write(writer)
     }
 }

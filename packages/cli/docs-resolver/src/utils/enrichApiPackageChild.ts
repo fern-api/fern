@@ -1,4 +1,4 @@
-import { FernNavigation } from '@fern-api/fdr-sdk'
+import { FernNavigation } from "@fern-api/fdr-sdk"
 
 export function enrichApiPackageChild({
     child,
@@ -17,7 +17,7 @@ export function enrichApiPackageChild({
         subpackageChildren: FernNavigation.V1.ApiPackageChild[]
     ) => FernNavigation.V1.ApiPackageChild[]
 }): FernNavigation.V1.ApiPackageChild {
-    if (child.type === 'apiPackage') {
+    if (child.type === "apiPackage") {
         // expand the subpackage to include children that haven't been visited yet
         const slug = FernNavigation.V1.SlugGenerator.init(child.slug)
         const subpackageIds = nodeIdToSubpackageId.get(child.id) ?? []

@@ -1,8 +1,8 @@
-import { BaseSchema, Schema, inferParsed, inferRaw } from '../../Schema'
-import { addQuestionMarksToNullableProperties } from '../../utils/addQuestionMarksToNullableProperties'
-import { ObjectLikeUtils } from '../object-like'
-import { SchemaUtils } from '../schema-utils'
-import { Property } from './property'
+import { BaseSchema, Schema, inferParsed, inferRaw } from "../../Schema"
+import { addQuestionMarksToNullableProperties } from "../../utils/addQuestionMarksToNullableProperties"
+import { ObjectLikeUtils } from "../object-like"
+import { SchemaUtils } from "../schema-utils"
+import { Property } from "./property"
 
 export type ObjectSchema<Raw, Parsed> = BaseObjectSchema<Raw, Parsed> &
     ObjectLikeUtils<Raw, Parsed> &

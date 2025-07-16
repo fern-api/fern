@@ -1,25 +1,25 @@
 interface QueryStringOptions {
-    arrayFormat?: 'indices' | 'repeat'
+    arrayFormat?: "indices" | "repeat"
     encode?: boolean
 }
 
 const defaultQsOptions: Required<QueryStringOptions> = {
-    arrayFormat: 'indices',
+    arrayFormat: "indices",
     encode: true
 } as const
 
 function encodeValue(value: unknown, shouldEncode: boolean): string {
     if (value === undefined) {
-        return ''
+        return ""
     }
     if (value === null) {
-        return ''
+        return ""
     }
     const stringValue = String(value)
     return shouldEncode ? encodeURIComponent(stringValue) : stringValue
 }
 
-function stringifyObject(obj: Record<string, unknown>, prefix = '', options: Required<QueryStringOptions>): string[] {
+function stringifyObject(obj: Record<string, unknown>, prefix = "", options: Required<QueryStringOptions>): string[] {
     const parts: string[] = []
 
     for (const [key, value] of Object.entries(obj)) {
@@ -38,16 +38,16 @@ function stringifyObject(obj: Record<string, unknown>, prefix = '', options: Req
                 if (item === undefined) {
                     continue
                 }
-                if (typeof item === 'object' && !Array.isArray(item) && item !== null) {
-                    const arrayKey = options.arrayFormat === 'indices' ? `${fullKey}[${i}]` : fullKey
+                if (typeof item === "object" && !Array.isArray(item) && item !== null) {
+                    const arrayKey = options.arrayFormat === "indices" ? `${fullKey}[${i}]` : fullKey
                     parts.push(...stringifyObject(item as Record<string, unknown>, arrayKey, options))
                 } else {
-                    const arrayKey = options.arrayFormat === 'indices' ? `${fullKey}[${i}]` : fullKey
+                    const arrayKey = options.arrayFormat === "indices" ? `${fullKey}[${i}]` : fullKey
                     const encodedKey = options.encode ? encodeURIComponent(arrayKey) : arrayKey
                     parts.push(`${encodedKey}=${encodeValue(item, options.encode)}`)
                 }
             }
-        } else if (typeof value === 'object' && value !== null) {
+        } else if (typeof value === "object" && value !== null) {
             if (Object.keys(value as Record<string, unknown>).length === 0) {
                 continue
             }
@@ -62,13 +62,13 @@ function stringifyObject(obj: Record<string, unknown>, prefix = '', options: Req
 }
 
 export function toQueryString(obj: unknown, options?: QueryStringOptions): string {
-    if (obj == null || typeof obj !== 'object') {
-        return ''
+    if (obj == null || typeof obj !== "object") {
+        return ""
     }
 
-    const parts = stringifyObject(obj as Record<string, unknown>, '', {
+    const parts = stringifyObject(obj as Record<string, unknown>, "", {
         ...defaultQsOptions,
         ...options
     })
-    return parts.join('&')
+    return parts.join("&")
 }

@@ -1,11 +1,11 @@
-import { PhpFile } from '@fern-api/php-base'
+import { PhpFile } from "@fern-api/php-base"
 
-import { EnumTypeDeclaration } from '@fern-fern/ir-sdk/api'
+import { EnumTypeDeclaration } from "@fern-fern/ir-sdk/api"
 
-import { ModelGeneratorContext } from './ModelGeneratorContext'
-import { EnumGenerator } from './enum/EnumGenerator'
-import { ObjectGenerator } from './object/ObjectGenerator'
-import { UnionGenerator } from './union/UnionGenerator'
+import { ModelGeneratorContext } from "./ModelGeneratorContext"
+import { EnumGenerator } from "./enum/EnumGenerator"
+import { ObjectGenerator } from "./object/ObjectGenerator"
+import { UnionGenerator } from "./union/UnionGenerator"
 
 export function generateModels(context: ModelGeneratorContext): void {
     for (const typeDeclaration of Object.values(context.ir.types)) {

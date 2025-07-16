@@ -1,20 +1,20 @@
-import { OpenAPIV3 } from 'openapi-types'
+import { OpenAPIV3 } from "openapi-types"
 
-import { assertNever } from '@fern-api/core-utils'
-import { OpenApiIntermediateRepresentation, Source as OpenApiIrSource, Schemas } from '@fern-api/openapi-ir'
-import { TaskContext } from '@fern-api/task-context'
+import { assertNever } from "@fern-api/core-utils"
+import { OpenApiIntermediateRepresentation, Source as OpenApiIrSource, Schemas } from "@fern-api/openapi-ir"
+import { TaskContext } from "@fern-api/task-context"
 
-import { DEFAULT_PARSE_ASYNCAPI_SETTINGS, ParseAsyncAPIOptions } from './asyncapi/options'
-import { parseAsyncAPI } from './asyncapi/parse'
-import { AsyncAPIV2 } from './asyncapi/v2'
-import { AsyncAPIV3 } from './asyncapi/v3'
-import { generateIr as generateIrFromV3 } from './openapi/v3/generateIr'
-import { ParseOpenAPIOptions, getParseOptions } from './options'
+import { DEFAULT_PARSE_ASYNCAPI_SETTINGS, ParseAsyncAPIOptions } from "./asyncapi/options"
+import { parseAsyncAPI } from "./asyncapi/parse"
+import { AsyncAPIV2 } from "./asyncapi/v2"
+import { AsyncAPIV3 } from "./asyncapi/v3"
+import { generateIr as generateIrFromV3 } from "./openapi/v3/generateIr"
+import { ParseOpenAPIOptions, getParseOptions } from "./options"
 
 export type Document = OpenAPIDocument | AsyncAPIDocument
 
 export interface OpenAPIDocument {
-    type: 'openapi'
+    type: "openapi"
     value: OpenAPIV3.Document
     source?: OpenApiIrSource
     namespace?: string
@@ -22,7 +22,7 @@ export interface OpenAPIDocument {
 }
 
 export interface AsyncAPIDocument {
-    type: 'asyncapi'
+    type: "asyncapi"
     value: AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3
     source?: OpenApiIrSource
     namespace?: string
@@ -65,9 +65,9 @@ export function parse({
         groups: {}
     }
     for (const document of documents) {
-        const source = document.source != null ? document.source : OpenApiIrSource.openapi({ file: '<memory>' })
+        const source = document.source != null ? document.source : OpenApiIrSource.openapi({ file: "<memory>" })
         switch (document.type) {
-            case 'openapi': {
+            case "openapi": {
                 const openapiIr = generateIrFromV3({
                     taskContext: context,
                     openApi: document.value,
@@ -78,7 +78,7 @@ export function parse({
                 ir = merge(ir, openapiIr)
                 break
             }
-            case 'asyncapi': {
+            case "asyncapi": {
                 const parsedAsyncAPI = parseAsyncAPI({
                     document: document.value,
                     taskContext: context,

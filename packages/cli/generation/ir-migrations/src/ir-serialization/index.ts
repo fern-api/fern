@@ -1,1 +1,1 @@
-export * as IrSerialization from './IrSerialization'
+export * as IrSerialization from "./IrSerialization"

@@ -1,12 +1,12 @@
-import { generatorsYml } from '@fern-api/configuration'
-import { AbsoluteFilePath } from '@fern-api/fs-utils'
-import { IntermediateRepresentation } from '@fern-api/ir-sdk'
-import { TaskContext } from '@fern-api/task-context'
+import { generatorsYml } from "@fern-api/configuration"
+import { AbsoluteFilePath } from "@fern-api/fs-utils"
+import { IntermediateRepresentation } from "@fern-api/ir-sdk"
+import { TaskContext } from "@fern-api/task-context"
 
-import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
 
-import { DynamicSnippetsTestGenerator } from './DynamicSnippetsTestGenerator'
-import { generateDynamicSnippetsTestSuite } from './generateDynamicSnippetsTestSuite'
+import { DynamicSnippetsTestGenerator } from "./DynamicSnippetsTestGenerator"
+import { generateDynamicSnippetsTestSuite } from "./generateDynamicSnippetsTestSuite"
 
 export async function generateDynamicSnippetTests({
     context,

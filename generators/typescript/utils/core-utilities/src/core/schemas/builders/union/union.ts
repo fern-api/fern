@@ -1,23 +1,23 @@
-import { BaseSchema, MaybeValid, SchemaType } from '../../Schema'
-import { getErrorMessageForIncorrectType } from '../../utils/getErrorMessageForIncorrectType'
-import { isPlainObject } from '../../utils/isPlainObject'
-import { keys } from '../../utils/keys'
-import { maybeSkipValidation } from '../../utils/maybeSkipValidation'
-import { enum_ } from '../enum'
-import { ObjectSchema } from '../object'
-import { ObjectLikeSchema, getObjectLikeUtils } from '../object-like'
-import { getSchemaUtils } from '../schema-utils'
-import { Discriminant } from './discriminant'
-import { UnionSubtypes, inferParsedDiscriminant, inferParsedUnion, inferRawDiscriminant, inferRawUnion } from './types'
+import { BaseSchema, MaybeValid, SchemaType } from "../../Schema"
+import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType"
+import { isPlainObject } from "../../utils/isPlainObject"
+import { keys } from "../../utils/keys"
+import { maybeSkipValidation } from "../../utils/maybeSkipValidation"
+import { enum_ } from "../enum"
+import { ObjectSchema } from "../object"
+import { ObjectLikeSchema, getObjectLikeUtils } from "../object-like"
+import { getSchemaUtils } from "../schema-utils"
+import { Discriminant } from "./discriminant"
+import { UnionSubtypes, inferParsedDiscriminant, inferParsedUnion, inferRawDiscriminant, inferRawUnion } from "./types"
 
 export function union<D extends string | Discriminant<any, any>, U extends UnionSubtypes<any>>(
     discriminant: D,
     union: U
 ): ObjectLikeSchema<inferRawUnion<D, U>, inferParsedUnion<D, U>> {
     const rawDiscriminant =
-        typeof discriminant === 'string' ? discriminant : (discriminant.rawDiscriminant as inferRawDiscriminant<D>)
+        typeof discriminant === "string" ? discriminant : (discriminant.rawDiscriminant as inferRawDiscriminant<D>)
     const parsedDiscriminant =
-        typeof discriminant === 'string'
+        typeof discriminant === "string"
             ? discriminant
             : (discriminant.parsedDiscriminant as inferParsedDiscriminant<D>)
 
@@ -100,7 +100,7 @@ function transformAndValidateUnion<
             errors: [
                 {
                     path: breadcrumbsPrefix,
-                    message: getErrorMessageForIncorrectType(value, 'object')
+                    message: getErrorMessageForIncorrectType(value, "object")
                 }
             ]
         }
@@ -145,7 +145,7 @@ function transformAndValidateUnion<
                 errors: [
                     {
                         path: [...breadcrumbsPrefix, discriminant],
-                        message: 'Unexpected discriminant value'
+                        message: "Unexpected discriminant value"
                     }
                 ]
             }

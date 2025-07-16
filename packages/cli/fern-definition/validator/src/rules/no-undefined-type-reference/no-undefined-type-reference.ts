@@ -1,7 +1,7 @@
-import chalk from 'chalk'
-import { mapValues } from 'lodash-es'
+import chalk from "chalk"
+import { mapValues } from "lodash-es"
 
-import { FernWorkspace, visitAllDefinitionFiles } from '@fern-api/api-workspace-commons'
+import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/api-workspace-commons"
 import {
     NodePath,
     isRawTextType,
@@ -9,17 +9,17 @@ import {
     parseRawBytesType,
     parseRawFileType,
     recursivelyVisitRawTypeReference
-} from '@fern-api/fern-definition-schema'
-import { RelativeFilePath } from '@fern-api/fs-utils'
-import { parseReferenceToTypeName } from '@fern-api/ir-generator'
+} from "@fern-api/fern-definition-schema"
+import { RelativeFilePath } from "@fern-api/fs-utils"
+import { parseReferenceToTypeName } from "@fern-api/ir-generator"
 
-import { Rule, RuleViolation } from '../../Rule'
-import { TypeReferenceLocation, visitDefinitionFileYamlAst } from '../../ast'
+import { Rule, RuleViolation } from "../../Rule"
+import { TypeReferenceLocation, visitDefinitionFileYamlAst } from "../../ast"
 
 type TypeName = string
 
 export const NoUndefinedTypeReferenceRule: Rule = {
-    name: 'no-undefined-type-reference',
+    name: "no-undefined-type-reference",
     create: ({ workspace }) => {
         const typesByFilepath: Record<RelativeFilePath, Set<TypeName>> = getTypesByFilepath(workspace)
 
@@ -44,7 +44,7 @@ export const NoUndefinedTypeReferenceRule: Rule = {
                 while (mutableNodePath.length > 0) {
                     const nodePathItem = mutableNodePath.pop()
                     const maybeGeneric = nodePathItem
-                        ? typeof nodePathItem === 'string'
+                        ? typeof nodePathItem === "string"
                             ? parseGeneric(nodePathItem)
                             : parseGeneric(nodePathItem.key)
                         : undefined
@@ -71,8 +71,8 @@ export const NoUndefinedTypeReferenceRule: Rule = {
                             if (parsedRawFileType.isOptional) {
                                 return [
                                     {
-                                        severity: 'fatal',
-                                        message: 'File response cannot be optional'
+                                        severity: "fatal",
+                                        message: "File response cannot be optional"
                                     }
                                 ]
                             } else {
@@ -91,8 +91,8 @@ export const NoUndefinedTypeReferenceRule: Rule = {
                         } else {
                             return [
                                 {
-                                    severity: 'fatal',
-                                    message: 'The bytes type can only be used as a request'
+                                    severity: "fatal",
+                                    message: "The bytes type can only be used as a request"
                                 }
                             ]
                         }
@@ -106,8 +106,8 @@ export const NoUndefinedTypeReferenceRule: Rule = {
                         } else {
                             return [
                                 {
-                                    severity: 'fatal',
-                                    message: 'The text type can only be used as a response or response-stream.'
+                                    severity: "fatal",
+                                    message: "The text type can only be used as a response or response-stream."
                                 }
                             ]
                         }
@@ -122,17 +122,17 @@ export const NoUndefinedTypeReferenceRule: Rule = {
                     return namedTypes.reduce<RuleViolation[]>((violations, namedType) => {
                         if (namedType.parsed?.typeName != null && parseRawFileType(namedType.parsed.typeName) != null) {
                             violations.push({
-                                severity: 'fatal',
-                                message: 'The file type can only be used as properties in inlined requests.'
+                                severity: "fatal",
+                                message: "The file type can only be used as properties in inlined requests."
                             })
                         } else if (namedType.parsed?.typeName != null && isRawTextType(namedType.parsed.typeName)) {
                             violations.push({
-                                severity: 'fatal',
-                                message: 'The text type can only be used as a response-stream or response.'
+                                severity: "fatal",
+                                message: "The text type can only be used as a response-stream or response."
                             })
                         } else if (!doesTypeExist(namedType) && !checkGenericType(namedType, nodePath)) {
                             violations.push({
-                                severity: 'fatal',
+                                severity: "fatal",
                                 message: `Type ${chalk.bold(
                                     namedType.parsed?.typeName ?? namedType.fullyQualifiedName
                                 )} is not defined.`

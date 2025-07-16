@@ -1,10 +1,10 @@
-import { OpenAPIV3_1 } from 'openapi-types'
+import { OpenAPIV3_1 } from "openapi-types"
 
-import { ContainerType, Type, TypeId, TypeReference } from '@fern-api/ir-sdk'
+import { ContainerType, Type, TypeId, TypeReference } from "@fern-api/ir-sdk"
 
-import { AbstractConverter, AbstractConverterContext } from '../..'
-import { SchemaConverter } from './SchemaConverter'
-import { SchemaOrReferenceConverter } from './SchemaOrReferenceConverter'
+import { AbstractConverter, AbstractConverterContext } from "../.."
+import { SchemaConverter } from "./SchemaConverter"
+import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter"
 
 export declare namespace MapSchemaConverter {
     export interface Args extends AbstractConverter.AbstractArgs {
@@ -40,7 +40,7 @@ export class MapSchemaConverter extends AbstractConverter<AbstractConverterConte
     }
 
     private tryConvertUnknownMap(): MapSchemaConverter.Output | undefined {
-        if (typeof this.schemaOrReferenceOrBoolean === 'boolean') {
+        if (typeof this.schemaOrReferenceOrBoolean === "boolean") {
             const additionalPropertiesType = TypeReference.container(
                 ContainerType.map({
                     keyType: AbstractConverter.STRING,
@@ -61,7 +61,7 @@ export class MapSchemaConverter extends AbstractConverter<AbstractConverterConte
     }
 
     private tryConvertTypedMap(): MapSchemaConverter.Output | undefined {
-        if (typeof this.schemaOrReferenceOrBoolean === 'boolean') {
+        if (typeof this.schemaOrReferenceOrBoolean === "boolean") {
             return undefined
         }
 

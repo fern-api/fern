@@ -1,6 +1,6 @@
-import { AbstractConverter, AbstractExtension } from '@fern-api/v2-importer-commons'
+import { AbstractConverter, AbstractExtension } from "@fern-api/v2-importer-commons"
 
-import { WebsocketSessionExtensionExamplesSchema } from '../schemas/ExampleSchema'
+import { WebsocketSessionExtensionExamplesSchema } from "../schemas/ExampleSchema"
 
 export interface WebsocketSessionExampleMessage {
     type: string
@@ -28,7 +28,7 @@ export declare namespace FernExamplesExtension {
 
 export class FernExamplesExtension extends AbstractExtension<FernExamplesExtension.Output> {
     private readonly channel: object
-    public readonly key = 'x-fern-examples'
+    public readonly key = "x-fern-examples"
 
     constructor({ breadcrumbs, channel, context }: FernExamplesExtension.Args) {
         super({ breadcrumbs: breadcrumbs ?? [], context })
@@ -53,7 +53,7 @@ export class FernExamplesExtension extends AbstractExtension<FernExamplesExtensi
         return result.data.map((example) => ({
             summary: example.summary,
             description: example.description,
-            queryParameters: example['query-parameters'],
+            queryParameters: example["query-parameters"],
             headers: example.headers,
             messages: example.messages.map((message) => ({
                 type: message.type,

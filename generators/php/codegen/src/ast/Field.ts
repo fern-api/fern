@@ -1,11 +1,11 @@
-import { Access } from './Access'
-import { Attribute } from './Attribute'
-import { CodeBlock } from './CodeBlock'
-import { Comment } from './Comment'
-import { Type } from './Type'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
-import { convertToPhpVariableName } from './utils/convertToPhpVariableName'
+import { Access } from "./Access"
+import { Attribute } from "./Attribute"
+import { CodeBlock } from "./CodeBlock"
+import { Comment } from "./Comment"
+import { Type } from "./Type"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
+import { convertToPhpVariableName } from "./utils/convertToPhpVariableName"
 
 export declare namespace Field {
     export interface Args {
@@ -60,17 +60,17 @@ export class Field extends AstNode {
 
         writer.write(`${this.access} `)
         if (this.readonly_) {
-            writer.write('readonly ')
+            writer.write("readonly ")
         }
 
         this.type.write(writer)
         writer.write(` ${this.name}`)
 
         if (this.initializer != null) {
-            writer.write(' = ')
+            writer.write(" = ")
             this.initializer.write(writer)
         }
-        writer.write(';')
+        writer.write(";")
 
         if (this.inlineDocs != null) {
             writer.write(` // ${this.inlineDocs}`)
@@ -81,7 +81,7 @@ export class Field extends AstNode {
     private writeComment(writer: Writer): void {
         const comment = new Comment()
         comment.addTag({
-            tagType: 'var',
+            tagType: "var",
             type: this.type,
             name: this.name,
             docs: this.docs
@@ -91,14 +91,14 @@ export class Field extends AstNode {
 
     private writeAttributesIfPresent(writer: Writer): void {
         if (this.attributes.length > 0) {
-            writer.write('#[')
+            writer.write("#[")
             this.attributes.forEach((attribute, index) => {
                 if (index > 0) {
-                    writer.write(', ')
+                    writer.write(", ")
                 }
                 attribute.write(writer)
             })
-            writer.writeLine(']')
+            writer.writeLine("]")
         }
     }
 }

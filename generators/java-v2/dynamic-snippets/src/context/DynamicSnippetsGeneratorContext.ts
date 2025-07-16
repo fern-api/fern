@@ -1,33 +1,33 @@
-import { camelCase } from 'lodash-es'
+import { camelCase } from "lodash-es"
 
 import {
     AbstractDynamicSnippetsGeneratorContext,
     FernGeneratorExec,
     Options,
     TypeInstance
-} from '@fern-api/browser-compatible-base-generator'
-import { assertNever } from '@fern-api/core-utils'
-import { FernIr } from '@fern-api/dynamic-ir-sdk'
-import { BaseJavaCustomConfigSchema, java } from '@fern-api/java-ast'
+} from "@fern-api/browser-compatible-base-generator"
+import { assertNever } from "@fern-api/core-utils"
+import { FernIr } from "@fern-api/dynamic-ir-sdk"
+import { BaseJavaCustomConfigSchema, java } from "@fern-api/java-ast"
 
-import { DynamicTypeLiteralMapper } from './DynamicTypeLiteralMapper'
-import { DynamicTypeMapper } from './DynamicTypeMapper'
-import { FilePropertyMapper } from './FilePropertyMapper'
+import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper"
+import { DynamicTypeMapper } from "./DynamicTypeMapper"
+import { FilePropertyMapper } from "./FilePropertyMapper"
 
 const RESERVED_NAMES = new Set([
-    'enum',
-    'extends',
-    'package',
-    'void',
-    'short',
-    'class',
-    'abstract',
-    'return',
-    'import',
-    'for',
-    'assert',
-    'switch',
-    'getClass'
+    "enum",
+    "extends",
+    "package",
+    "void",
+    "short",
+    "class",
+    "abstract",
+    "return",
+    "import",
+    "for",
+    "assert",
+    "switch",
+    "getClass"
 ])
 
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
@@ -87,11 +87,11 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getRootClientClassName(): string {
-        return this.customConfig?.['client-class-name'] ?? `${this.getBaseNamePrefix()}Client`
+        return this.customConfig?.["client-class-name"] ?? `${this.getBaseNamePrefix()}Client`
     }
 
     public getEnvironmentClassName(): string {
-        return 'Environment'
+        return "Environment"
     }
 
     public getEnvironmentTypeReferenceFromID(environmentID: string): java.AstNode | undefined {
@@ -101,7 +101,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         }
         return java.codeblock((writer) => {
             writer.writeNode(this.getEnvironmentClassReference())
-            writer.write('.')
+            writer.write(".")
             writer.write(this.getEnumName(environmentName))
         })
     }
@@ -126,7 +126,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     public getNullableClassReference(): java.ClassReference {
         return java.classReference({
-            name: 'Nullable',
+            name: "Nullable",
             packageName: this.getCorePackageName()
         })
     }
@@ -135,7 +135,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return java.TypeLiteral.reference(
             java.invokeMethod({
                 on: this.getNullableClassReference(),
-                method: 'ofNull',
+                method: "ofNull",
                 arguments_: []
             })
         )
@@ -144,70 +144,70 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     public getFileStreamFromString(content: string): java.TypeLiteral {
         return java.TypeLiteral.reference(
             java.codeblock((writer) => {
-                writer.write('new ')
+                writer.write("new ")
                 writer.writeNode(this.getFileStreamClassReference())
-                writer.write('(')
+                writer.write("(")
                 writer.writeNode(this.getByteArrayInputStreamClassReference())
-                writer.write('(')
+                writer.write("(")
                 writer.writeNode(java.TypeLiteral.string(content))
-                writer.write('.getBytes(')
+                writer.write(".getBytes(")
                 writer.writeNode(this.getStandardCharsetsClassReference())
-                writer.write('.UTF_8)))')
+                writer.write(".UTF_8)))")
             })
         )
     }
 
     public getFileStreamClassReference(): java.ClassReference {
         return java.classReference({
-            name: 'FileStream',
+            name: "FileStream",
             packageName: this.getCorePackageName()
         })
     }
 
     public getByteArrayInputStreamClassReference(): java.ClassReference {
         return java.classReference({
-            name: 'ByteArrayInputStream',
-            packageName: 'java.io'
+            name: "ByteArrayInputStream",
+            packageName: "java.io"
         })
     }
 
     public getStandardCharsetsClassReference(): java.ClassReference {
         return java.classReference({
-            name: 'StandardCharsets',
-            packageName: 'java.nio.charset'
+            name: "StandardCharsets",
+            packageName: "java.nio.charset"
         })
     }
 
     public isPrimitive(typeReference: FernIr.dynamic.TypeReference): boolean {
         switch (typeReference.type) {
-            case 'primitive':
+            case "primitive":
                 return true
-            case 'optional':
-            case 'nullable':
+            case "optional":
+            case "nullable":
                 return this.isPrimitive(typeReference.value)
-            case 'named': {
+            case "named": {
                 const named = this.resolveNamedType({ typeId: typeReference.value })
                 if (named == null) {
                     return false
                 }
                 switch (named.type) {
-                    case 'alias':
+                    case "alias":
                         return this.isPrimitive(named.typeReference)
-                    case 'discriminatedUnion':
-                    case 'undiscriminatedUnion':
-                    case 'object':
-                    case 'enum':
+                    case "discriminatedUnion":
+                    case "undiscriminatedUnion":
+                    case "object":
+                    case "enum":
                         return false
                     default:
                         assertNever(named)
                 }
                 break
             }
-            case 'list':
-            case 'set':
-            case 'map':
-            case 'literal':
-            case 'unknown':
+            case "list":
+            case "set":
+            case "map":
+            case "literal":
+            case "unknown":
                 return false
             default:
                 assertNever(typeReference)
@@ -221,33 +221,33 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     public getCorePackageName(): string {
         const tokens = this.getPackagePrefixTokens()
-        tokens.push('core')
+        tokens.push("core")
         return this.joinPackageTokens(tokens)
     }
 
     public getTypesPackageName(fernFilepath: FernIr.FernFilepath): string {
-        return this.getResourcesPackage(fernFilepath, 'types')
+        return this.getResourcesPackage(fernFilepath, "types")
     }
 
     public getRequestsPackageName(fernFilepath: FernIr.FernFilepath): string {
-        if (this.getPackageLayout() === 'flat') {
+        if (this.getPackageLayout() === "flat") {
             return this.getTypesPackageName(fernFilepath)
         }
-        return this.getResourcesPackage(fernFilepath, 'requests')
+        return this.getResourcesPackage(fernFilepath, "requests")
     }
 
     protected getResourcesPackage(fernFilepath: FernIr.FernFilepath, suffix?: string): string {
         const tokens = this.getPackagePrefixTokens()
         switch (this.getPackageLayout()) {
-            case 'flat':
+            case "flat":
                 if (fernFilepath != null) {
                     tokens.push(...fernFilepath.packagePath.map((name) => this.getPackageNameSegment(name)))
                 }
                 break
-            case 'nested':
+            case "nested":
             default:
                 if (fernFilepath != null && fernFilepath.allParts.length > 0) {
-                    tokens.push('resources')
+                    tokens.push("resources")
                 }
                 if (fernFilepath != null) {
                     tokens.push(...fernFilepath.allParts.map((name) => this.getPackageNameSegment(name)))
@@ -262,19 +262,19 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     public getPackageName(fernFilepath: FernIr.FernFilepath, suffix?: string): string {
         let parts = this.getPackageNameSegments(fernFilepath)
         parts = suffix != null ? [...parts, suffix] : parts
-        return [...this.getPackagePrefixTokens(), ...parts].join('.')
+        return [...this.getPackagePrefixTokens(), ...parts].join(".")
     }
 
     public getPackageLayout(): string {
-        return this.customConfig?.['package-layout'] ?? 'nested'
+        return this.customConfig?.["package-layout"] ?? "nested"
     }
 
     public shouldInlinePathParameters(): boolean {
-        return this.customConfig?.['inline-path-parameters'] ?? false
+        return this.customConfig?.["inline-path-parameters"] ?? false
     }
 
     public shouldInlineFileProperties(): boolean {
-        return this.customConfig?.['inline-file-properties'] ?? false
+        return this.customConfig?.["inline-file-properties"] ?? false
     }
 
     private getPackageNameSegments(fernFilepath: FernIr.FernFilepath): string[] {
@@ -286,11 +286,11 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     private getPackagePrefixTokens(): string[] {
-        if (this.customConfig?.['package-prefix'] != null) {
-            return this.customConfig['package-prefix'].split('.')
+        if (this.customConfig?.["package-prefix"] != null) {
+            return this.customConfig["package-prefix"].split(".")
         }
         const prefix: string[] = []
-        prefix.push('com')
+        prefix.push("com")
         prefix.push(...this.splitOnNonAlphaNumericChar(this.config.organization))
         prefix.push(...this.splitOnNonAlphaNumericChar(this.getApiName()))
         return prefix
@@ -321,14 +321,14 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     private joinPackageTokens(tokens: string[]): string {
         const sanitizedTokens = tokens.map((token) => {
-            return this.startsWithNumber(token) ? '_' + token : token
+            return this.startsWithNumber(token) ? "_" + token : token
         })
-        return sanitizedTokens.join('.')
+        return sanitizedTokens.join(".")
     }
 
     private getName(name: string): string {
         if (this.isReservedName(name)) {
-            return '_' + name
+            return "_" + name
         }
         return name
     }

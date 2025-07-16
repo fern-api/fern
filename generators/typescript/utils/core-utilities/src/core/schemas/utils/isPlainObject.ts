@@ -1,6 +1,6 @@
 // borrowed from https://github.com/lodash/lodash/blob/master/isPlainObject.js
 export function isPlainObject(value: unknown): value is Record<string, unknown> {
-    if (typeof value !== 'object' || value === null) {
+    if (typeof value !== "object" || value === null) {
         return false
     }
 

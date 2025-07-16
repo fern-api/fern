@@ -1,4 +1,4 @@
-import { AbstractWriter } from './AbstractWriter'
+import { AbstractWriter } from "./AbstractWriter"
 
 export abstract class AbstractAstNode {
     /**

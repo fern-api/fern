@@ -1,6 +1,6 @@
-import { dynamic } from '@fern-fern/ir-sdk/api'
+import { dynamic } from "@fern-fern/ir-sdk/api"
 
-export type EndpointSnippetRequest = Omit<dynamic.EndpointSnippetRequest, 'baseUrl'> & {
+export type EndpointSnippetRequest = Omit<dynamic.EndpointSnippetRequest, "baseUrl"> & {
     baseURL: string | undefined
 }
 

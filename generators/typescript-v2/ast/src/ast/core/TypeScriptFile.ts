@@ -1,4 +1,4 @@
-import { Writer } from './Writer'
+import { Writer } from "./Writer"
 
 export declare namespace TypeScriptFile {
     interface Args extends Writer.Args {}
@@ -36,20 +36,20 @@ export class TypeScriptFile extends Writer {
     public getContent(): string {
         const imports = this.stringifyImports()
         if (imports.length > 0) {
-            return imports + '\n' + this.buffer
+            return imports + "\n" + this.buffer
         }
         return this.buffer
     }
 
     private stringifyImports(): string {
-        let result = ''
+        let result = ""
         for (const [module, references] of Object.entries(this.imports)) {
             const defaultImport = this.defaultImports[module]
-            let stringifiedNonDefault = ''
-            const named = references.filter((r) => r.importFrom?.type === 'named')
+            let stringifiedNonDefault = ""
+            const named = references.filter((r) => r.importFrom?.type === "named")
             const starImportAlias = this.starImportAliases[module]
             if (named.length > 0 || defaultImport != null || starImportAlias != null) {
-                result += 'import'
+                result += "import"
                 if (defaultImport != null) {
                     result += ` ${defaultImport.name}`
                 }
@@ -63,13 +63,13 @@ export class TypeScriptFile extends Writer {
                         stringifiedNonDefault += `${lastRef.name}`
                     }
                     if (defaultImport != null) {
-                        result += ','
+                        result += ","
                     }
                     result += ` { ${stringifiedNonDefault} }`
                 }
                 if (starImportAlias != null) {
                     if (defaultImport != null || named.length > 0) {
-                        result += ', '
+                        result += ", "
                     }
                     result += ` * as ${starImportAlias}`
                 }

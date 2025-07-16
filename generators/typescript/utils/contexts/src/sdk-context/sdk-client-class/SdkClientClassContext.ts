@@ -1,6 +1,6 @@
-import { NpmPackage, PackageId, Reference } from '@fern-typescript/commons'
+import { NpmPackage, PackageId, Reference } from "@fern-typescript/commons"
 
-import { GeneratedSdkClientClass } from './GeneratedSdkClientClass'
+import { GeneratedSdkClientClass } from "./GeneratedSdkClientClass"
 
 export interface SdkClientClassContext {
     getGeneratedSdkClientClass: (packageId: PackageId) => GeneratedSdkClientClass

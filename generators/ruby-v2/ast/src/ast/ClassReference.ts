@@ -1,5 +1,5 @@
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export declare namespace ClassReference {
     interface Args {
@@ -27,7 +27,7 @@ export class ClassReference extends AstNode {
     public write(writer: Writer): void {
         // If fullyQualified or modules are present, write the full module path
         if (this.fullyQualified || this.modules.length > 0) {
-            const fullPath = [...this.modules, this.name].join('::')
+            const fullPath = [...this.modules, this.name].join("::")
             writer.write(fullPath)
             return
         }

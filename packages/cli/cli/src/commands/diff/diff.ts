@@ -1,16 +1,16 @@
-import { readFile } from 'fs/promises'
-import semver from 'semver'
+import { readFile } from "fs/promises"
+import semver from "semver"
 
-import { AbsoluteFilePath, cwd, doesPathExist } from '@fern-api/fs-utils'
-import { resolve } from '@fern-api/fs-utils'
-import { IntermediateRepresentation, serialization } from '@fern-api/ir-sdk'
-import { IntermediateRepresentationChangeDetector } from '@fern-api/ir-utils'
-import { FernCliError } from '@fern-api/task-context'
+import { AbsoluteFilePath, cwd, doesPathExist } from "@fern-api/fs-utils"
+import { resolve } from "@fern-api/fs-utils"
+import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk"
+import { IntermediateRepresentationChangeDetector } from "@fern-api/ir-utils"
+import { FernCliError } from "@fern-api/task-context"
 
-import { CliContext } from '../../cli-context/CliContext'
+import { CliContext } from "../../cli-context/CliContext"
 
 export interface Result {
-    bump: 'major' | 'minor' | 'patch'
+    bump: "major" | "minor" | "patch"
     nextVersion?: string
     errors: string[]
 }
@@ -28,8 +28,8 @@ export async function diff({
 }): Promise<Result> {
     const detector = new IntermediateRepresentationChangeDetector()
     const change = await detector.check({
-        from: await readIr({ context, filepath: from, flagName: 'from' }),
-        to: await readIr({ context, filepath: to, flagName: 'to' })
+        from: await readIr({ context, filepath: from, flagName: "from" }),
+        to: await readIr({ context, filepath: to, flagName: "to" })
     })
     const errors = change.errors.map((error) => error.message)
     if (fromVersion == null) {
@@ -60,11 +60,11 @@ async function readIr({
     flagName: string
 }): Promise<IntermediateRepresentation> {
     const absoluteFilepath = AbsoluteFilePath.of(resolve(cwd(), filepath))
-    if (!(await doesPathExist(absoluteFilepath, 'file'))) {
+    if (!(await doesPathExist(absoluteFilepath, "file"))) {
         context.failWithoutThrowing(`File not found: ${absoluteFilepath}`)
         throw new FernCliError()
     }
-    const ir = await readFile(absoluteFilepath, 'utf-8')
+    const ir = await readFile(absoluteFilepath, "utf-8")
     const parsed = serialization.IntermediateRepresentation.parse(JSON.parse(ir))
     if (!parsed.ok) {
         context.failWithoutThrowing(`Invalid --${flagName}; expected a filepath containing a valid IR`)

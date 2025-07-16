@@ -1,6 +1,6 @@
-import { FernWorkspace } from '@fern-api/api-workspace-commons'
-import { isPlainObject } from '@fern-api/core-utils'
-import { RawSchemas } from '@fern-api/fern-definition-schema'
+import { FernWorkspace } from "@fern-api/api-workspace-commons"
+import { isPlainObject } from "@fern-api/core-utils"
+import { RawSchemas } from "@fern-api/fern-definition-schema"
 import {
     ExampleHeader,
     ExampleInlinedRequestBodyProperty,
@@ -14,24 +14,24 @@ import {
     WebSocketChannel,
     WebSocketMessage,
     WebSocketMessageBody
-} from '@fern-api/ir-sdk'
-import { constructHttpPath } from '@fern-api/ir-utils'
+} from "@fern-api/ir-sdk"
+import { constructHttpPath } from "@fern-api/ir-utils"
 
-import { getHeaderName } from '..'
-import { FernFileContext } from '../FernFileContext'
-import { ExampleResolver } from '../resolvers/ExampleResolver'
-import { TypeResolver } from '../resolvers/TypeResolver'
-import { VariableResolver } from '../resolvers/VariableResolver'
-import { getEndpointPathParameters } from '../utils/getEndpointPathParameters'
-import { parseTypeName } from '../utils/parseTypeName'
-import { convertAvailability, convertDeclaration } from './convertDeclaration'
-import { convertHttpHeader, convertPathParameters, resolvePathParameterOrThrow } from './services/convertHttpService'
-import { getQueryParameterName } from './services/convertQueryParameter'
+import { getHeaderName } from ".."
+import { FernFileContext } from "../FernFileContext"
+import { ExampleResolver } from "../resolvers/ExampleResolver"
+import { TypeResolver } from "../resolvers/TypeResolver"
+import { VariableResolver } from "../resolvers/VariableResolver"
+import { getEndpointPathParameters } from "../utils/getEndpointPathParameters"
+import { parseTypeName } from "../utils/parseTypeName"
+import { convertAvailability, convertDeclaration } from "./convertDeclaration"
+import { convertHttpHeader, convertPathParameters, resolvePathParameterOrThrow } from "./services/convertHttpService"
+import { getQueryParameterName } from "./services/convertQueryParameter"
 import {
     convertTypeReferenceExample,
     getOriginalTypeDeclarationForPropertyFromExtensions
-} from './type-declarations/convertExampleType'
-import { getExtensionsAsList, getPropertyName } from './type-declarations/convertObjectTypeDeclaration'
+} from "./type-declarations/convertExampleType"
+import { getExtensionsAsList, getPropertyName } from "./type-declarations/convertObjectTypeDeclaration"
 
 export function convertChannel({
     channel,
@@ -56,7 +56,7 @@ export function convertChannel({
             docs: message.docs,
             origin: message.origin,
             body: convertMessageSchema({ body: message.body, file }),
-            displayName: message['display-name']
+            displayName: message["display-name"]
         })
     }
     return {
@@ -65,8 +65,8 @@ export function convertChannel({
         baseUrl: channel.url,
         auth: channel.auth,
         // since there's only 1 channel per file, we can use the file name as the channel's name
-        name: file.fernFilepath.file ?? file.casingsGenerator.generateName(channel['display-name'] ?? channel.path),
-        displayName: channel['display-name'],
+        name: file.fernFilepath.file ?? file.casingsGenerator.generateName(channel["display-name"] ?? channel.path),
+        displayName: channel["display-name"],
         headers:
             channel.headers != null
                 ? Object.entries(channel.headers).map(([headerKey, header]) =>
@@ -75,17 +75,17 @@ export function convertChannel({
                 : [],
         docs: channel.docs,
         pathParameters:
-            channel['path-parameters'] != null
+            channel["path-parameters"] != null
                 ? convertPathParameters({
-                      pathParameters: channel['path-parameters'],
+                      pathParameters: channel["path-parameters"],
                       location: PathParameterLocation.Endpoint,
                       file,
                       variableResolver
                   })
                 : [],
         queryParameters:
-            channel['query-parameters'] != null
-                ? Object.entries(channel['query-parameters']).map(([queryParameterKey, queryParameter]) => {
+            channel["query-parameters"] != null
+                ? Object.entries(channel["query-parameters"]).map(([queryParameterKey, queryParameter]) => {
                       const { name } = getQueryParameterName({ queryParameterKey, queryParameter })
                       const valueType = file.parseTypeReference(queryParameter)
                       return {
@@ -96,8 +96,8 @@ export function convertChannel({
                           }),
                           valueType,
                           allowMultiple:
-                              typeof queryParameter !== 'string' && queryParameter['allow-multiple'] != null
-                                  ? queryParameter['allow-multiple']
+                              typeof queryParameter !== "string" && queryParameter["allow-multiple"] != null
+                                  ? queryParameter["allow-multiple"]
                                   : false,
                           v2Examples: {
                               userSpecifiedExamples: {},
@@ -124,9 +124,9 @@ export function convertChannel({
                 ...convertedPathParameters,
                 ...convertHeaders({ channel, example, typeResolver, exampleResolver, file, workspace }),
                 queryParameters:
-                    example['query-parameters'] != null
-                        ? Object.entries(example['query-parameters']).map(([wireKey, value]) => {
-                              const queryParameterDeclaration = channel['query-parameters']?.[wireKey]
+                    example["query-parameters"] != null
+                        ? Object.entries(example["query-parameters"]).map(([wireKey, value]) => {
+                              const queryParameterDeclaration = channel["query-parameters"]?.[wireKey]
                               if (queryParameterDeclaration == null) {
                                   throw new Error(`Query parameter ${wireKey} does not exist`)
                               }
@@ -141,7 +141,7 @@ export function convertChannel({
                                   value: convertTypeReferenceExample({
                                       example: value,
                                       rawTypeBeingExemplified:
-                                          typeof queryParameterDeclaration === 'string'
+                                          typeof queryParameterDeclaration === "string"
                                               ? queryParameterDeclaration
                                               : queryParameterDeclaration.type,
                                       typeResolver,
@@ -182,8 +182,8 @@ export function convertChannel({
 
 function getQueryParamaterDeclationShape({ queryParameter }: { queryParameter: RawSchemas.HttpQueryParameterSchema }) {
     const isAllowMultiple =
-        typeof queryParameter !== 'string' && queryParameter['allow-multiple'] != null
-            ? queryParameter['allow-multiple']
+        typeof queryParameter !== "string" && queryParameter["allow-multiple"] != null
+            ? queryParameter["allow-multiple"]
             : false
     return isAllowMultiple ? ExampleQueryParameterShape.exploded() : ExampleQueryParameterShape.single()
 }
@@ -207,7 +207,7 @@ function convertExampleWebSocketMessageBody({
         return ExampleWebSocketMessageBody.reference(
             convertTypeReferenceExample({
                 example,
-                rawTypeBeingExemplified: typeof message.body !== 'string' ? message.body.type : message.body,
+                rawTypeBeingExemplified: typeof message.body !== "string" ? message.body.type : message.body,
                 typeResolver,
                 exampleResolver,
                 fileContainingRawTypeReference: file,
@@ -218,7 +218,7 @@ function convertExampleWebSocketMessageBody({
     }
 
     if (!isPlainObject(example)) {
-        throw new Error('Example must be an object')
+        throw new Error("Example must be an object")
     }
 
     const exampleProperties: ExampleInlinedRequestBodyProperty[] = []
@@ -233,7 +233,7 @@ function convertExampleWebSocketMessageBody({
                 value: convertTypeReferenceExample({
                     example: propertyExample,
                     rawTypeBeingExemplified:
-                        typeof inlinedRequestPropertyDeclaration !== 'string'
+                        typeof inlinedRequestPropertyDeclaration !== "string"
                             ? inlinedRequestPropertyDeclaration.type
                             : inlinedRequestPropertyDeclaration,
                     typeResolver,
@@ -252,7 +252,7 @@ function convertExampleWebSocketMessageBody({
                 file
             })
             if (originalTypeDeclaration == null) {
-                throw new Error('Could not find original type declaration for property: ' + wireKey)
+                throw new Error("Could not find original type declaration for property: " + wireKey)
             }
             exampleProperties.push({
                 name: file.casingsGenerator.generateNameAndWireValue({
@@ -263,7 +263,7 @@ function convertExampleWebSocketMessageBody({
                 value: convertTypeReferenceExample({
                     example: propertyExample,
                     rawTypeBeingExemplified:
-                        typeof originalTypeDeclaration.rawPropertyType === 'string'
+                        typeof originalTypeDeclaration.rawPropertyType === "string"
                             ? originalTypeDeclaration.rawPropertyType
                             : originalTypeDeclaration.rawPropertyType.type,
                     typeResolver,
@@ -290,7 +290,7 @@ function convertMessageSchema({
     body: RawSchemas.WebSocketChannelMessageBodySchema
     file: FernFileContext
 }): WebSocketMessageBody {
-    if (typeof body === 'string') {
+    if (typeof body === "string") {
         return WebSocketMessageBody.reference({
             docs: undefined,
             bodyType: file.parseTypeReference(body)
@@ -342,7 +342,7 @@ function convertChannelPathParameters({
     variableResolver: VariableResolver
     file: FernFileContext
     workspace: FernWorkspace
-}): Pick<ExampleWebSocketSession, 'pathParameters'> {
+}): Pick<ExampleWebSocketSession, "pathParameters"> {
     const pathParameters: ExamplePathParameter[] = []
 
     const buildExamplePathParameter = ({
@@ -373,9 +373,9 @@ function convertChannelPathParameters({
         }
     }
 
-    if (example['path-parameters'] != null) {
+    if (example["path-parameters"] != null) {
         const rawEndpointPathParameters = getEndpointPathParameters(channel)
-        for (const [key, examplePathParameter] of Object.entries(example['path-parameters'])) {
+        for (const [key, examplePathParameter] of Object.entries(example["path-parameters"])) {
             // const rootPathParameterDeclaration = file.rootApiFile["path-parameters"]?.[key];
             const pathParameterDeclaration = rawEndpointPathParameters[key]
 
@@ -410,7 +410,7 @@ function convertHeaders({
     exampleResolver: ExampleResolver
     file: FernFileContext
     workspace: FernWorkspace
-}): Pick<ExampleWebSocketSession, 'headers'> {
+}): Pick<ExampleWebSocketSession, "headers"> {
     const headers: ExampleHeader[] = []
 
     if (example.headers != null) {
@@ -425,7 +425,7 @@ function convertHeaders({
                     value: convertTypeReferenceExample({
                         example: exampleHeader,
                         rawTypeBeingExemplified:
-                            typeof headerDeclaration === 'string' ? headerDeclaration : headerDeclaration.type,
+                            typeof headerDeclaration === "string" ? headerDeclaration : headerDeclaration.type,
                         typeResolver,
                         exampleResolver,
                         fileContainingRawTypeReference: file,
@@ -449,10 +449,10 @@ function buildUrl({
 }: {
     channel: RawSchemas.WebSocketChannelSchema
     example: RawSchemas.ExampleEndpointCallSchema
-    pathParams: Pick<ExampleWebSocketSession, 'pathParameters'>
+    pathParams: Pick<ExampleWebSocketSession, "pathParameters">
 }): string {
     let url = channel.path
-    if (example['path-parameters'] != null) {
+    if (example["path-parameters"] != null) {
         for (const parameter of [...pathParams.pathParameters]) {
             url = url.replaceAll(
                 `{${parameter.name.originalName}}`,
@@ -466,7 +466,7 @@ function buildUrl({
 function isInlineMessageBody(
     messageBody: RawSchemas.WebSocketChannelMessageBodySchema
 ): messageBody is RawSchemas.WebSocketChannelInlinedMessageSchema {
-    if (typeof messageBody === 'string') {
+    if (typeof messageBody === "string") {
         return false
     }
 

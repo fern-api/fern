@@ -1,8 +1,8 @@
-import { AbstractDynamicSnippetsGenerator, FernGeneratorExec } from '@fern-api/browser-compatible-base-generator'
-import { FernIr } from '@fern-api/dynamic-ir-sdk'
+import { AbstractDynamicSnippetsGenerator, FernGeneratorExec } from "@fern-api/browser-compatible-base-generator"
+import { FernIr } from "@fern-api/dynamic-ir-sdk"
 
-import { EndpointSnippetGenerator } from './EndpointSnippetGenerator'
-import { DynamicSnippetsGeneratorContext } from './context/DynamicSnippetsGeneratorContext'
+import { EndpointSnippetGenerator } from "./EndpointSnippetGenerator"
+import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext"
 
 export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<
     DynamicSnippetsGeneratorContext,

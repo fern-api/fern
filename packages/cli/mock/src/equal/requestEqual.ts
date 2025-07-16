@@ -1,12 +1,12 @@
-import { Request } from 'express'
+import { Request } from "express"
 
-import { ExampleEndpointCall } from '@fern-api/ir-sdk'
+import { ExampleEndpointCall } from "@fern-api/ir-sdk"
 
-import { EqualResponse } from './EqualRequestResponse'
-import { bodyEqual } from './bodyEqual'
-import { headersEqual } from './headersEqual'
-import { pathParametersEqual } from './pathParametersEqual'
-import { queryParametersEqual } from './queryParametersEqual'
+import { EqualResponse } from "./EqualRequestResponse"
+import { bodyEqual } from "./bodyEqual"
+import { headersEqual } from "./headersEqual"
+import { pathParametersEqual } from "./pathParametersEqual"
+import { queryParametersEqual } from "./queryParametersEqual"
 
 export declare namespace requestEqual {
     interface Args {
@@ -20,7 +20,7 @@ export function requestEqual({ request, example }: requestEqual.Args): EqualResp
         request,
         example
     })
-    if (pathParameterResponse.type === 'notEqual') {
+    if (pathParameterResponse.type === "notEqual") {
         return pathParameterResponse
     }
 
@@ -28,7 +28,7 @@ export function requestEqual({ request, example }: requestEqual.Args): EqualResp
         request,
         example
     })
-    if (queryParametersResponse.type === 'notEqual') {
+    if (queryParametersResponse.type === "notEqual") {
         return queryParametersResponse
     }
 
@@ -36,7 +36,7 @@ export function requestEqual({ request, example }: requestEqual.Args): EqualResp
         request,
         example
     })
-    if (headersResponse.type === 'notEqual') {
+    if (headersResponse.type === "notEqual") {
         return headersResponse
     }
 
@@ -44,9 +44,9 @@ export function requestEqual({ request, example }: requestEqual.Args): EqualResp
         request,
         example
     })
-    if (bodyResponse.type === 'notEqual') {
+    if (bodyResponse.type === "notEqual") {
         return bodyResponse
     }
 
-    return { type: 'equal' }
+    return { type: "equal" }
 }

@@ -1,8 +1,8 @@
-import { z } from 'zod'
+import { z } from "zod"
 
-import { MavenPublishingSchema } from './MavenPublishingSchema'
-import { NpmPublishingSchema } from './NpmPublishingSchema'
-import { PostmanPublishingSchema } from './PostmanPublishingSchema'
+import { MavenPublishingSchema } from "./MavenPublishingSchema"
+import { NpmPublishingSchema } from "./NpmPublishingSchema"
+import { PostmanPublishingSchema } from "./PostmanPublishingSchema"
 
 export const GeneratorPublishingSchema = z.union([NpmPublishingSchema, MavenPublishingSchema, PostmanPublishingSchema])
 

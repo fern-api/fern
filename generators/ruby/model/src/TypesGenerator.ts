@@ -1,5 +1,5 @@
-import { AbstractGeneratorContext } from '@fern-api/base-generator'
-import { ClassReferenceFactory, Class_, GeneratedRubyFile, LocationGenerator, Module_ } from '@fern-api/ruby-codegen'
+import { AbstractGeneratorContext } from "@fern-api/base-generator"
+import { ClassReferenceFactory, Class_, GeneratedRubyFile, LocationGenerator, Module_ } from "@fern-api/ruby-codegen"
 
 import {
     AliasTypeDeclaration,
@@ -14,7 +14,7 @@ import {
     TypeId,
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
 import {
     generateAliasDefinitionFromTypeDeclaration,
@@ -22,8 +22,8 @@ import {
     generateSerializableObjectFromTypeDeclaration,
     generateUndiscriminatedUnionFromTypeDeclaration,
     generateUnionFromTypeDeclaration
-} from './AbstractionUtilities'
-import { RootFile } from './RootFile'
+} from "./AbstractionUtilities"
+import { RootFile } from "./RootFile"
 
 // TODO: This (as an abstract class) will probably be used across CLIs
 export class TypesGenerator {
@@ -66,11 +66,11 @@ export class TypesGenerator {
             this.types.set(type.name.typeId, type)
         }
 
-        this.gc.logger.debug('[Ruby] Flattening properties across objects prior to file creation.')
+        this.gc.logger.debug("[Ruby] Flattening properties across objects prior to file creation.")
         for (const typeId of this.types.keys()) {
             this.flattenedProperties.set(typeId, this.getFlattenedProperties(typeId))
         }
-        this.gc.logger.debug('[Ruby] Done flattening properties.')
+        this.gc.logger.debug("[Ruby] Done flattening properties.")
 
         this.locationGenerator = new LocationGenerator(this.gemName, this.clientName, shouldFlattenModules)
         this.classReferenceFactory = new ClassReferenceFactory(this.types, this.locationGenerator)
@@ -120,7 +120,7 @@ export class TypesGenerator {
                           return []
                       },
                       _other: () => {
-                          throw new Error('Attempting to type declaration for an unknown type.')
+                          throw new Error("Attempting to type declaration for an unknown type.")
                       }
                   }))
     }
@@ -270,7 +270,7 @@ export class TypesGenerator {
         })
     }
     private generateUnknownFile(shape: Type): GeneratedRubyFile | undefined {
-        throw new Error('Unknown type declaration shape: ' + shape.type)
+        throw new Error("Unknown type declaration shape: " + shape.type)
     }
 
     public generateFiles(includeRootImports = false): GeneratedRubyFile[] {
@@ -293,7 +293,7 @@ export class TypesGenerator {
         }
 
         if (includeRootImports) {
-            this.gc.logger.debug('[Ruby] Generating root file for all types.')
+            this.gc.logger.debug("[Ruby] Generating root file for all types.")
             typeFiles.push(this.generateRootFile())
         }
 
@@ -301,14 +301,14 @@ export class TypesGenerator {
     }
 
     public getResolvedClasses(): Map<TypeId, Class_> {
-        this.gc.logger.debug('[Ruby] Gathering resolved types.')
+        this.gc.logger.debug("[Ruby] Gathering resolved types.")
         this.resolvedReferences.forEach((typeId, resolvedTypeId) => {
             const resolvedClass = this.generatedClasses.get(resolvedTypeId)
             if (resolvedClass !== undefined) {
                 this.generatedClasses.set(typeId, resolvedClass)
             }
         })
-        this.gc.logger.debug('[Ruby] Done gathering resolved types.')
+        this.gc.logger.debug("[Ruby] Done gathering resolved types.")
         return this.generatedClasses
     }
 }

@@ -1,7 +1,7 @@
-import { BaseSchema, Schema, SchemaType } from '../../Schema'
-import { getErrorMessageForIncorrectType } from '../../utils/getErrorMessageForIncorrectType'
-import { maybeSkipValidation } from '../../utils/maybeSkipValidation'
-import { getSchemaUtils } from '../schema-utils'
+import { BaseSchema, Schema, SchemaType } from "../../Schema"
+import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType"
+import { maybeSkipValidation } from "../../utils/maybeSkipValidation"
+import { getSchemaUtils } from "../schema-utils"
 
 // https://stackoverflow.com/questions/12756159/regex-and-iso8601-formatted-datetime
 const ISO_8601_REGEX =
@@ -10,13 +10,13 @@ const ISO_8601_REGEX =
 export function date(): Schema<string, Date> {
     const baseSchema: BaseSchema<string, Date> = {
         parse: (raw, { breadcrumbsPrefix = [] } = {}) => {
-            if (typeof raw !== 'string') {
+            if (typeof raw !== "string") {
                 return {
                     ok: false,
                     errors: [
                         {
                             path: breadcrumbsPrefix,
-                            message: getErrorMessageForIncorrectType(raw, 'string')
+                            message: getErrorMessageForIncorrectType(raw, "string")
                         }
                     ]
                 }
@@ -27,7 +27,7 @@ export function date(): Schema<string, Date> {
                     errors: [
                         {
                             path: breadcrumbsPrefix,
-                            message: getErrorMessageForIncorrectType(raw, 'ISO 8601 date string')
+                            message: getErrorMessageForIncorrectType(raw, "ISO 8601 date string")
                         }
                     ]
                 }
@@ -49,7 +49,7 @@ export function date(): Schema<string, Date> {
                     errors: [
                         {
                             path: breadcrumbsPrefix,
-                            message: getErrorMessageForIncorrectType(date, 'Date object')
+                            message: getErrorMessageForIncorrectType(date, "Date object")
                         }
                     ]
                 }

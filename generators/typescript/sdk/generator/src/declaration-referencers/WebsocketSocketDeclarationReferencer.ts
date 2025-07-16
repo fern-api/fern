@@ -1,9 +1,9 @@
-import { ExportedFilePath, PackageId, Reference } from '@fern-typescript/commons'
+import { ExportedFilePath, PackageId, Reference } from "@fern-typescript/commons"
 
-import { SubpackageId } from '@fern-fern/ir-sdk/api'
+import { SubpackageId } from "@fern-fern/ir-sdk/api"
 
-import { AbstractSdkClientClassDeclarationReferencer } from './AbstractSdkClientClassDeclarationReferencer'
-import { DeclarationReferencer } from './DeclarationReferencer'
+import { AbstractSdkClientClassDeclarationReferencer } from "./AbstractSdkClientClassDeclarationReferencer"
+import { DeclarationReferencer } from "./DeclarationReferencer"
 
 export class WebsocketSocketDeclarationReferencer extends AbstractSdkClientClassDeclarationReferencer<SubpackageId> {
     public getExportedFilepath(subpackageId: SubpackageId): ExportedFilePath {
@@ -16,7 +16,7 @@ export class WebsocketSocketDeclarationReferencer extends AbstractSdkClientClass
     }
 
     public getFilename(): string {
-        return 'Socket.ts'
+        return "Socket.ts"
     }
 
     public getExportedName(subpackageId: SubpackageId): string {

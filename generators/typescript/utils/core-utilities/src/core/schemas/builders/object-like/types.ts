@@ -1,4 +1,4 @@
-import { BaseSchema, Schema } from '../../Schema'
+import { BaseSchema, Schema } from "../../Schema"
 
 export type ObjectLikeSchema<Raw, Parsed> = Schema<Raw, Parsed> & BaseSchema<Raw, Parsed> & ObjectLikeUtils<Raw, Parsed>
 

@@ -1,4 +1,4 @@
-import { keys } from './objects/keys'
+import { keys } from "./objects/keys"
 
 export type ObjectPropertiesVisitor<T, R> = {
     [K in keyof T]-?: (value: T[K]) => R

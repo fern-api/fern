@@ -1,20 +1,20 @@
 export function convertNumberToSnakeCase(number: number): string | undefined {
-    const singleDigits = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
+    const singleDigits = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
 
     const teenNumbers = [
-        'ten',
-        'eleven',
-        'twelve',
-        'thirteen',
-        'fourteen',
-        'fifteen',
-        'sixteen',
-        'seventeen',
-        'eighteen',
-        'nineteen'
+        "ten",
+        "eleven",
+        "twelve",
+        "thirteen",
+        "fourteen",
+        "fifteen",
+        "sixteen",
+        "seventeen",
+        "eighteen",
+        "nineteen"
     ]
 
-    const tensNumbers = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety']
+    const tensNumbers = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"]
 
     if (number < 0 || number > 9999) {
         return undefined

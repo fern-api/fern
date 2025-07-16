@@ -1,33 +1,33 @@
-import { exec } from 'child_process'
-import stripAnsi from 'strip-ansi'
-import { vi } from 'vitest'
+import { exec } from "child_process"
+import stripAnsi from "strip-ansi"
+import { vi } from "vitest"
 
-import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from '@fern-api/fs-utils'
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils"
 
-import { runFernCli, runFernCliWithoutAuthToken } from '../../utils/runFernCli'
-import { init } from '../init/init'
+import { runFernCli, runFernCliWithoutAuthToken } from "../../utils/runFernCli"
+import { init } from "../init/init"
 
-const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of('fixtures'))
+const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"))
 
-describe('fern generate', () => {
-    it('default api (fern init)', async () => {
+describe("fern generate", () => {
+    it("default api (fern init)", async () => {
         const pathOfDirectory = await init()
 
-        await runFernCli(['generate', '--local', '--keepDocker'], {
+        await runFernCli(["generate", "--local", "--keepDocker"], {
             cwd: pathOfDirectory
         })
 
-        expect(await doesPathExist(join(pathOfDirectory, RelativeFilePath.of('sdks/typescript')))).toBe(true)
+        expect(await doesPathExist(join(pathOfDirectory, RelativeFilePath.of("sdks/typescript")))).toBe(true)
     }, 180_000)
 
-    it('ir contains fdr definitionid', async () => {
-        const { stdout, stderr } = await runFernCli(['generate', '--log-level', 'debug'], {
-            cwd: join(fixturesDir, RelativeFilePath.of('basic')),
+    it("ir contains fdr definitionid", async () => {
+        const { stdout, stderr } = await runFernCli(["generate", "--log-level", "debug"], {
+            cwd: join(fixturesDir, RelativeFilePath.of("basic")),
             reject: false
         })
 
-        console.log('stdout', stdout)
-        console.log('stderr', stderr)
+        console.log("stdout", stdout)
+        console.log("stderr", stderr)
 
         const filepath = extractFilepath(stdout)
         if (filepath == null) {
@@ -55,9 +55,9 @@ describe('fern generate', () => {
     // It's otherwise flaky on developer machines that haven't logged in with the fern CLI.
     //
     // biome-ignore lint/suspicious/noSkippedTests: allow
-    it.skip('missing docs page', async () => {
-        const { stdout } = await runFernCli(['generate', '--docs'], {
-            cwd: join(fixturesDir, RelativeFilePath.of('docs-missing-page')),
+    it.skip("missing docs page", async () => {
+        const { stdout } = await runFernCli(["generate", "--docs"], {
+            cwd: join(fixturesDir, RelativeFilePath.of("docs-missing-page")),
             reject: false
         })
 
@@ -68,52 +68,52 @@ describe('fern generate', () => {
         ).toMatchSnapshot()
     }, 180_000)
 
-    it('generate docs with no auth requires login', async () => {
-        vi.stubEnv('FERN_TOKEN', undefined)
-        const { stdout } = await runFernCliWithoutAuthToken(['generate', '--docs'], {
-            cwd: join(fixturesDir, RelativeFilePath.of('docs')),
+    it("generate docs with no auth requires login", async () => {
+        vi.stubEnv("FERN_TOKEN", undefined)
+        const { stdout } = await runFernCliWithoutAuthToken(["generate", "--docs"], {
+            cwd: join(fixturesDir, RelativeFilePath.of("docs")),
             reject: false
         })
-        expect(stdout).toContain('Login required.')
+        expect(stdout).toContain("Login required.")
     }, 180_000)
 
-    it('generate docs with auth bypass fails', async () => {
-        vi.stubEnv('FERN_TOKEN', undefined)
-        const { stdout } = await runFernCliWithoutAuthToken(['generate', '--docs'], {
-            cwd: join(fixturesDir, RelativeFilePath.of('docs')),
+    it("generate docs with auth bypass fails", async () => {
+        vi.stubEnv("FERN_TOKEN", undefined)
+        const { stdout } = await runFernCliWithoutAuthToken(["generate", "--docs"], {
+            cwd: join(fixturesDir, RelativeFilePath.of("docs")),
             reject: false,
             env: {
-                FERN_SELF_HOSTED: 'true'
+                FERN_SELF_HOSTED: "true"
             }
         })
-        expect(stdout).toContain('No token found. Please set the FERN_TOKEN environment variable.')
+        expect(stdout).toContain("No token found. Please set the FERN_TOKEN environment variable.")
     }, 180_000)
 
-    it('generate docs with auth bypass succeeds', async () => {
-        vi.stubEnv('FERN_TOKEN', 'dummy')
+    it("generate docs with auth bypass succeeds", async () => {
+        vi.stubEnv("FERN_TOKEN", "dummy")
 
-        const { stdout } = await runFernCliWithoutAuthToken(['generate', '--docs'], {
-            cwd: join(fixturesDir, RelativeFilePath.of('docs')),
+        const { stdout } = await runFernCliWithoutAuthToken(["generate", "--docs"], {
+            cwd: join(fixturesDir, RelativeFilePath.of("docs")),
             reject: false,
             env: {
-                FERN_SELF_HOSTED: 'true',
-                FERN_TOKEN: 'dummy'
+                FERN_SELF_HOSTED: "true",
+                FERN_TOKEN: "dummy"
             }
         })
-        expect(stdout).toContain('ferndevtest.docs.dev.buildwithfern.com Started.')
+        expect(stdout).toContain("ferndevtest.docs.dev.buildwithfern.com Started.")
     }, 180_000)
 
-    it('generate docs with no docs.yml file fails', async () => {
-        const { stdout } = await runFernCli(['generate', '--docs'], {
-            cwd: join(fixturesDir, RelativeFilePath.of('basic')),
+    it("generate docs with no docs.yml file fails", async () => {
+        const { stdout } = await runFernCli(["generate", "--docs"], {
+            cwd: join(fixturesDir, RelativeFilePath.of("basic")),
             reject: false
         })
-        expect(stdout).toContain('No docs.yml file found. Please make sure your project has one.')
+        expect(stdout).toContain("No docs.yml file found. Please make sure your project has one.")
     }, 180_000)
 })
 
 function extractFilepath(logLine: string): string | null {
-    const prefix = 'Wrote IR to disk:'
+    const prefix = "Wrote IR to disk:"
     const index = logLine.indexOf(prefix)
 
     if (index !== -1) {

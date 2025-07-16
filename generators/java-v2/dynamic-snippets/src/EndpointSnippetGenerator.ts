@@ -5,23 +5,23 @@ import {
     Scope,
     Severity,
     Style
-} from '@fern-api/browser-compatible-base-generator'
-import { assertNever } from '@fern-api/core-utils'
-import { FernIr } from '@fern-api/dynamic-ir-sdk'
-import { java } from '@fern-api/java-ast'
+} from "@fern-api/browser-compatible-base-generator"
+import { assertNever } from "@fern-api/core-utils"
+import { FernIr } from "@fern-api/dynamic-ir-sdk"
+import { java } from "@fern-api/java-ast"
 
-import { Config } from './Config'
-import { DynamicSnippetsGeneratorContext } from './context/DynamicSnippetsGeneratorContext'
-import { FilePropertyInfo } from './context/FilePropertyMapper'
+import { Config } from "./Config"
+import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext"
+import { FilePropertyInfo } from "./context/FilePropertyMapper"
 
-const SNIPPET_PACKAGE_NAME = 'com.example.usage'
-const SNIPPET_CLASS_NAME = 'Example'
-const SNIPPET_METHOD_NAME = 'main'
-const SNIPPET_METHOD_ARG = 'args'
-const CLIENT_VAR_NAME = 'client'
+const SNIPPET_PACKAGE_NAME = "com.example.usage"
+const SNIPPET_CLASS_NAME = "Example"
+const SNIPPET_METHOD_NAME = "main"
+const SNIPPET_METHOD_ARG = "args"
+const CLIENT_VAR_NAME = "client"
 const STRING_TYPE_REFERENCE: FernIr.dynamic.TypeReference = {
-    type: 'primitive',
-    value: 'STRING'
+    type: "primitive",
+    value: "STRING"
 }
 
 export class EndpointSnippetGenerator {
@@ -180,12 +180,12 @@ export class EndpointSnippetGenerator {
         if (baseUrl != null && environment != null) {
             this.context.errors.add({
                 severity: Severity.Critical,
-                message: 'Cannot specify both baseUrl and environment options'
+                message: "Cannot specify both baseUrl and environment options"
             })
             return undefined
         }
         if (baseUrl != null) {
-            if (this.context.ir.environments?.environments.type === 'multipleBaseUrls') {
+            if (this.context.ir.environments?.environments.type === "multipleBaseUrls") {
                 this.context.errors.add({
                     severity: Severity.Critical,
                     message: "The Java SDK doesn't support a baseUrl when multiple URL environments are configured"
@@ -193,7 +193,7 @@ export class EndpointSnippetGenerator {
                 return undefined
             }
             return {
-                name: 'url',
+                name: "url",
                 value: java.TypeLiteral.string(baseUrl)
             }
         }
@@ -208,7 +208,7 @@ export class EndpointSnippetGenerator {
                     return undefined
                 }
                 return {
-                    name: 'environment',
+                    name: "environment",
                     value: java.TypeLiteral.reference(classReference)
                 }
             }
@@ -217,7 +217,7 @@ export class EndpointSnippetGenerator {
                     return undefined
                 }
                 return {
-                    name: 'environment',
+                    name: "environment",
                     value: java.TypeLiteral.reference(
                         java.instantiateClass({
                             classReference: this.context.getEnvironmentClassReference(),
@@ -243,8 +243,8 @@ export class EndpointSnippetGenerator {
         values: FernIr.dynamic.AuthValues
     }): java.BuilderParameter[] {
         switch (auth.type) {
-            case 'basic':
-                if (values.type !== 'basic') {
+            case "basic":
+                if (values.type !== "basic") {
                     this.context.errors.add({
                         severity: Severity.Critical,
                         message: this.context.newAuthMismatchError({ auth, values }).message
@@ -252,8 +252,8 @@ export class EndpointSnippetGenerator {
                     return []
                 }
                 return this.getRootClientBasicAuthArgs({ auth, values })
-            case 'bearer':
-                if (values.type !== 'bearer') {
+            case "bearer":
+                if (values.type !== "bearer") {
                     this.context.errors.add({
                         severity: Severity.Critical,
                         message: this.context.newAuthMismatchError({ auth, values }).message
@@ -261,8 +261,8 @@ export class EndpointSnippetGenerator {
                     return []
                 }
                 return this.getRootClientBearerAuthArgs({ auth, values })
-            case 'header':
-                if (values.type !== 'header') {
+            case "header":
+                if (values.type !== "header") {
                     this.context.errors.add({
                         severity: Severity.Critical,
                         message: this.context.newAuthMismatchError({ auth, values }).message
@@ -270,8 +270,8 @@ export class EndpointSnippetGenerator {
                     return []
                 }
                 return this.getRootClientHeaderAuthArgs({ auth, values })
-            case 'oauth':
-                if (values.type !== 'oauth') {
+            case "oauth":
+                if (values.type !== "oauth") {
                     this.context.errors.add({
                         severity: Severity.Critical,
                         message: this.context.newAuthMismatchError({ auth, values }).message
@@ -293,7 +293,7 @@ export class EndpointSnippetGenerator {
     }): java.BuilderParameter[] {
         return [
             {
-                name: 'credentials',
+                name: "credentials",
                 value: java.TypeLiteral.raw(`"${values.username}", "${values.password}"`)
             }
         ]
@@ -412,9 +412,9 @@ export class EndpointSnippetGenerator {
         snippet: FernIr.dynamic.EndpointSnippetRequest
     }): java.TypeLiteral[] {
         switch (endpoint.request.type) {
-            case 'inlined':
+            case "inlined":
                 return this.getMethodArgsForInlinedRequest({ request: endpoint.request, snippet })
-            case 'body':
+            case "body":
                 return this.getMethodArgsForBodyRequest({ request: endpoint.request, snippet })
             default:
                 assertNever(endpoint.request)
@@ -456,11 +456,11 @@ export class EndpointSnippetGenerator {
         value: unknown
     }): java.TypeLiteral {
         switch (body.type) {
-            case 'bytes': {
+            case "bytes": {
                 return this.getBytesBodyRequestArg({ value })
             }
-            case 'typeReference': {
-                if (body.value.type === 'optional') {
+            case "typeReference": {
+                if (body.value.type === "optional") {
                     // TODO(amckinney): This endpoint defines an optional request body, so the
                     // Java SDK requires the Optional.of(...) wrapper.
                     //
@@ -482,7 +482,7 @@ export class EndpointSnippetGenerator {
     }
 
     private getBytesBodyRequestArg({ value }: { value: unknown }): java.TypeLiteral {
-        if (typeof value !== 'string') {
+        if (typeof value !== "string") {
             this.context.errors.add({
                 severity: Severity.Critical,
                 message: `Expected bytes value to be a string, got ${typeof value}`
@@ -630,11 +630,11 @@ export class EndpointSnippetGenerator {
         filePropertyInfo: FilePropertyInfo
     }): java.BuilderParameter[] {
         switch (body.type) {
-            case 'properties':
+            case "properties":
                 return this.getInlinedRequestBodyPropertyBuilderParameters({ parameters: body.value, value })
-            case 'referenced':
+            case "referenced":
                 return [this.getReferencedRequestBodyPropertyBuilderParameter({ body, value })]
-            case 'fileUpload':
+            case "fileUpload":
                 return this.getFileUploadRequestBodyBuilderParameters({ filePropertyInfo })
             default:
                 assertNever(body)
@@ -673,9 +673,9 @@ export class EndpointSnippetGenerator {
         value: unknown
     }): java.TypeLiteral {
         switch (body.type) {
-            case 'bytes':
+            case "bytes":
                 return this.getBytesBodyRequestArg({ value })
-            case 'typeReference':
+            case "typeReference":
                 return this.context.dynamicTypeLiteralMapper.convert({ typeReference: body.value, value })
             default:
                 assertNever(body)
@@ -730,7 +730,7 @@ export class EndpointSnippetGenerator {
         if (endpoint.declaration.fernFilepath.allParts.length > 0) {
             return `${endpoint.declaration.fernFilepath.allParts
                 .map((val) => `${this.context.getMethodName(val)}()`)
-                .join('.')}.${this.context.getMethodName(endpoint.declaration.name)}`
+                .join(".")}.${this.context.getMethodName(endpoint.declaration.name)}`
         }
         return this.context.getMethodName(endpoint.declaration.name)
     }

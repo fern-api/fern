@@ -1,5 +1,5 @@
-import { AbstractAstNode } from './AbstractAstNode'
-import { AbstractWriter } from './AbstractWriter'
+import { AbstractAstNode } from "./AbstractAstNode"
+import { AbstractWriter } from "./AbstractWriter"
 
 export declare namespace CodeBlock {
     /* Write arbitrary code */
@@ -15,10 +15,10 @@ export class CodeBlock<T extends AbstractWriter> extends AbstractAstNode {
     }
 
     public write(writer: T): void {
-        if (typeof this.value === 'string') {
+        if (typeof this.value === "string") {
             writer.write(this.value)
             // if function
-        } else if (typeof this.value === 'function') {
+        } else if (typeof this.value === "function") {
             this.value(writer)
         } else {
             this.value.write(writer)

@@ -1,6 +1,6 @@
-import { AbstractErrorClassGenerator } from '@fern-typescript/abstract-error-class-generator'
-import { getTextOfTsNode } from '@fern-typescript/commons'
-import { ExpressContext, GeneratedExpressError } from '@fern-typescript/contexts'
+import { AbstractErrorClassGenerator } from "@fern-typescript/abstract-error-class-generator"
+import { getTextOfTsNode } from "@fern-typescript/commons"
+import { ExpressContext, GeneratedExpressError } from "@fern-typescript/contexts"
 import {
     ClassDeclaration,
     OptionalKind,
@@ -8,9 +8,9 @@ import {
     PropertyDeclarationStructure,
     Scope,
     ts
-} from 'ts-morph'
+} from "ts-morph"
 
-import { ErrorDeclaration } from '@fern-fern/ir-sdk/api'
+import { ErrorDeclaration } from "@fern-fern/ir-sdk/api"
 
 export declare namespace GeneratedExpressErrorImpl {
     export interface Init {
@@ -23,9 +23,9 @@ export class GeneratedExpressErrorImpl
     extends AbstractErrorClassGenerator<ExpressContext>
     implements GeneratedExpressError
 {
-    public readonly type = 'class'
+    public readonly type = "class"
 
-    private static BODY_CONSTRUCTOR_PARAMETER_NAME = 'body'
+    private static BODY_CONSTRUCTOR_PARAMETER_NAME = "body"
 
     private errorDeclaration: ErrorDeclaration
 
@@ -59,7 +59,7 @@ export class GeneratedExpressErrorImpl
                         this.errorDeclaration.name
                     )
                     if (errorSchema == null) {
-                        throw new Error('Error schema was not generated.')
+                        throw new Error("Error schema was not generated.")
                     }
 
                     return [

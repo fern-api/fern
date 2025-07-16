@@ -1,22 +1,22 @@
-import type { Node as EstreeNode } from 'estree'
-import { walk } from 'estree-walker'
-import grayMatter from 'gray-matter'
-import { fromMarkdown } from 'mdast-util-from-markdown'
-import { mdxFromMarkdown } from 'mdast-util-mdx'
-import { mdx } from 'micromark-extension-mdx'
-import { isAbsolute } from 'path'
-import { CONTINUE, SKIP, visit } from 'unist-util-visit'
-import { z } from 'zod'
+import type { Node as EstreeNode } from "estree"
+import { walk } from "estree-walker"
+import grayMatter from "gray-matter"
+import { fromMarkdown } from "mdast-util-from-markdown"
+import { mdxFromMarkdown } from "mdast-util-mdx"
+import { mdx } from "micromark-extension-mdx"
+import { isAbsolute } from "path"
+import { CONTINUE, SKIP, visit } from "unist-util-visit"
+import { z } from "zod"
 
-import { AbsoluteFilePath, RelativeFilePath, dirname, resolve } from '@fern-api/fs-utils'
-import { TaskContext } from '@fern-api/task-context'
+import { AbsoluteFilePath, RelativeFilePath, dirname, resolve } from "@fern-api/fs-utils"
+import { TaskContext } from "@fern-api/task-context"
 
-import { FernRegistry as CjsFdrSdk } from '@fern-fern/fdr-cjs-sdk'
+import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk"
 
-import { extractAttributeValueLiteral, extractSingleLiteral } from './extract-literals'
-import { isMdxExpression, isMdxJsxAttribute, isMdxJsxElement, isMdxJsxExpressionAttribute } from './is-mdx-element'
-import { parseMarkdownToTree } from './parseMarkdownToTree'
-import { walkEstreeJsxAttributes } from './walk-estree-jsx-attributes'
+import { extractAttributeValueLiteral, extractSingleLiteral } from "./extract-literals"
+import { isMdxExpression, isMdxJsxAttribute, isMdxJsxElement, isMdxJsxExpressionAttribute } from "./is-mdx-element"
+import { parseMarkdownToTree } from "./parseMarkdownToTree"
+import { walkEstreeJsxAttributes } from "./walk-estree-jsx-attributes"
 
 interface AbsolutePathMetadata {
     absolutePathToMarkdownFile: AbsoluteFilePath
@@ -51,7 +51,7 @@ export function parseImagePaths(
         return
     }
 
-    visitFrontmatterImages(data, ['image', 'og:image', 'og:logo', 'twitter:image'], mapImage)
+    visitFrontmatterImages(data, ["image", "og:image", "og:logo", "twitter:image"], mapImage)
     replaceFrontmatterImagesforLogo(data, mapImage)
 
     const tree = parseMarkdownToTree(content)
@@ -66,7 +66,7 @@ export function parseImagePaths(
         const original = replacedContent.slice(start + offset, start + offset + length)
         let replaced = original
 
-        if (node.type === 'image') {
+        if (node.type === "image") {
             const src = trimAnchor(node.url)
             const resolvedPath = resolvePath(src, metadata)
             if (src != null && resolvedPath != null) {
@@ -90,7 +90,7 @@ export function parseImagePaths(
         }
 
         if (isMdxJsxElement(node)) {
-            const srcAttr = node.attributes.filter(isMdxJsxAttribute).find((attr) => attr.name === 'src')
+            const srcAttr = node.attributes.filter(isMdxJsxAttribute).find((attr) => attr.name === "src")
             const src = trimAnchor(extractAttributeValueLiteral(srcAttr?.value))
 
             if (srcAttr && src) {
@@ -104,7 +104,7 @@ export function parseImagePaths(
             node.attributes.forEach((attr) => {
                 if (
                     isMdxJsxAttribute(attr) &&
-                    typeof attr.value !== 'string' &&
+                    typeof attr.value !== "string" &&
                     attr.value != null &&
                     attr.value.data?.estree
                 ) {
@@ -142,8 +142,8 @@ function resolvePath(
     }
 
     const filepath = resolve(
-        pathToImage.startsWith('/') ? absolutePathToFernFolder : dirname(absolutePathToMarkdownFile),
-        RelativeFilePath.of(pathToImage.replace(/^\//, ''))
+        pathToImage.startsWith("/") ? absolutePathToFernFolder : dirname(absolutePathToMarkdownFile),
+        RelativeFilePath.of(pathToImage.replace(/^\//, ""))
     )
 
     return filepath
@@ -154,12 +154,12 @@ function isExternalUrl(url: string): boolean {
 }
 
 function isDataUrl(url: string): boolean {
-    return url.startsWith('data:')
+    return url.startsWith("data:")
 }
 
 export type ReplacedHref =
-    | { type: 'replace'; slug: string; href: string }
-    | { type: 'missing-reference'; path: string; href: string }
+    | { type: "replace"; slug: string; href: string }
+    | { type: "missing-reference"; path: string; href: string }
 
 export function getReplacedHref({
     href,
@@ -173,15 +173,15 @@ export function getReplacedHref({
     if (href == null) {
         return
     }
-    if (href.endsWith('.md') || href.endsWith('.mdx')) {
+    if (href.endsWith(".md") || href.endsWith(".mdx")) {
         const absoluteFilePath = resolvePath(href, metadata)
         if (absoluteFilePath != null) {
             const slug = markdownFilesToPathName[absoluteFilePath]
             if (slug != null) {
-                const normalizeSlug = slug.startsWith('/') ? slug : '/' + slug
-                return { type: 'replace', slug: normalizeSlug, href }
+                const normalizeSlug = slug.startsWith("/") ? slug : "/" + slug
+                return { type: "replace", slug: normalizeSlug, href }
             } else {
-                return { type: 'missing-reference', path: absoluteFilePath, href }
+                return { type: "missing-reference", path: absoluteFilePath, href }
             }
         }
     }
@@ -228,7 +228,7 @@ export function replaceImagePathsAndUrls(
         return undefined
     }
 
-    visitFrontmatterImages(data, ['image', 'og:image', 'og:logo', 'twitter:image'], mapImage)
+    visitFrontmatterImages(data, ["image", "og:image", "og:logo", "twitter:image"], mapImage)
     replaceFrontmatterImagesforLogo(data, mapImage)
 
     visit(tree, (node) => {
@@ -248,7 +248,7 @@ export function replaceImagePathsAndUrls(
 
         function replaceHref(href: string | undefined) {
             const replacedHref = getReplacedHref({ href, markdownFilesToPathName, metadata })
-            if (href != null && replacedHref != null && replacedHref.type === 'replace') {
+            if (href != null && replacedHref != null && replacedHref.type === "replace") {
                 replaced = replaced.replace(href, replacedHref.slug)
             }
         }
@@ -260,26 +260,26 @@ export function replaceImagePathsAndUrls(
             })
         }
 
-        if (node.type === 'image') {
+        if (node.type === "image") {
             const src = trimAnchor(node.url)
             replaceSrc(trimAnchor(src))
         }
 
-        if (node.type === 'link') {
+        if (node.type === "link") {
             replaceHref(trimAnchor(node.url))
         }
 
         if (isMdxJsxElement(node)) {
-            const srcAttr = node.attributes.filter(isMdxJsxAttribute).find((attr) => attr.name === 'src')
+            const srcAttr = node.attributes.filter(isMdxJsxAttribute).find((attr) => attr.name === "src")
             replaceSrc(trimAnchor(extractAttributeValueLiteral(srcAttr?.value)))
 
-            const hrefAttr = node.attributes.find((attr) => attr.type === 'mdxJsxAttribute' && attr.name === 'href')
+            const hrefAttr = node.attributes.find((attr) => attr.type === "mdxJsxAttribute" && attr.name === "href")
             replaceHref(trimAnchor(extractAttributeValueLiteral(hrefAttr?.value)))
 
             node.attributes.forEach((attr) => {
                 if (
                     isMdxJsxAttribute(attr) &&
-                    typeof attr.value !== 'string' &&
+                    typeof attr.value !== "string" &&
                     attr.value != null &&
                     attr.value.data?.estree
                 ) {
@@ -312,7 +312,7 @@ function getPosition(
     markdown: string,
     position: { start: { line: number; column: number }; end: { line: number; column: number } }
 ) {
-    const lines = markdown.split('\n')
+    const lines = markdown.split("\n")
     let start = position.start.column - 1
     for (let i = 0; i < position.start.line - 1; i++) {
         const line = lines[i]
@@ -336,10 +336,10 @@ function getPosition(
 }
 
 export function trimAnchor(text: unknown): string | undefined {
-    if (typeof text !== 'string') {
+    if (typeof text !== "string") {
         return undefined
     }
-    return text.replace(/#.*$/, '')
+    return text.replace(/#.*$/, "")
 }
 
 function visitFrontmatterImages(
@@ -351,22 +351,22 @@ function visitFrontmatterImages(
         const value = data[key]
         if (value != null) {
             // realtime validation, this also assumes there can be other stuff in the object, but we only care about the valid keys
-            if (typeof value === 'object') {
-                if (value.type === 'fileId') {
+            if (typeof value === "object") {
+                if (value.type === "fileId") {
                     data[key] = {
-                        type: 'fileId',
+                        type: "fileId",
                         value: CjsFdrSdk.FileId(mapImage(value.value) ?? value.value)
                     }
                 }
-            } else if (typeof value === 'string') {
+            } else if (typeof value === "string") {
                 const mappedImage = mapImage(value)
                 data[key] = mappedImage
                     ? {
-                          type: 'fileId',
+                          type: "fileId",
                           value: CjsFdrSdk.FileId(mappedImage)
                       }
                     : {
-                          type: 'url',
+                          type: "url",
                           value: CjsFdrSdk.Url(value)
                       }
             }
@@ -390,11 +390,11 @@ export function convertImageToFileIdOrUrl(
     const mappedImage = mapImage(value)
     return mappedImage
         ? {
-              type: 'fileId',
+              type: "fileId",
               value: CjsFdrSdk.FileId(mappedImage)
           }
         : {
-              type: 'url',
+              type: "url",
               value: CjsFdrSdk.Url(value)
           }
 }
@@ -410,7 +410,7 @@ function replaceFrontmatterImagesforLogo(
     }
     const parsedFrontmatterLogo = parsedValue.data
 
-    if (typeof parsedFrontmatterLogo === 'string') {
+    if (typeof parsedFrontmatterLogo === "string") {
         data.logo = convertImageToFileIdOrUrl(parsedFrontmatterLogo, mapImage)
     } else {
         if (parsedFrontmatterLogo.light != null) {

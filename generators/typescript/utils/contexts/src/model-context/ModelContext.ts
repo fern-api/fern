@@ -1,3 +1,3 @@
-import { BaseContext } from '../base-context'
+import { BaseContext } from "../base-context"
 
 export interface ModelContext extends BaseContext {}

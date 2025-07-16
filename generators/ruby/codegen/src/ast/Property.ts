@@ -1,11 +1,11 @@
-import { Name } from '@fern-fern/ir-sdk/api'
+import { Name } from "@fern-fern/ir-sdk/api"
 
-import { Argument } from './Argument'
-import { Import } from './Import'
-import { Parameter } from './Parameter'
-import { Variable, VariableType } from './Variable'
-import { ClassReference } from './classes/ClassReference'
-import { AstNode } from './core/AstNode'
+import { Argument } from "./Argument"
+import { Import } from "./Import"
+import { Parameter } from "./Parameter"
+import { Variable, VariableType } from "./Variable"
+import { ClassReference } from "./classes/ClassReference"
+import { AstNode } from "./core/AstNode"
 
 export declare namespace Property {
     export interface Init extends AstNode.Init {
@@ -74,7 +74,7 @@ export class Property extends AstNode {
     }
 
     public writeInternal(): void {
-        this.addText({ stringContent: this.name, templateString: ':%s' })
+        this.addText({ stringContent: this.name, templateString: ":%s" })
     }
 
     public getImports(): Set<Import> {

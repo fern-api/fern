@@ -1,6 +1,6 @@
-import { GetReferenceOpts, PackageId, getPropertyKey } from '@fern-typescript/commons'
-import { GeneratedRequestWrapperExample, SdkContext } from '@fern-typescript/contexts'
-import { ts } from 'ts-morph'
+import { GetReferenceOpts, PackageId, getPropertyKey } from "@fern-typescript/commons"
+import { GeneratedRequestWrapperExample, SdkContext } from "@fern-typescript/contexts"
+import { ts } from "ts-morph"
 
 import {
     ExampleEndpointCall,
@@ -8,7 +8,7 @@ import {
     HttpRequestBody,
     Name,
     TypeReference
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
 export declare namespace GeneratedRequestWrapperExampleImpl {
     export interface Init {
@@ -48,16 +48,16 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
     private buildExample({ context, opts }: { context: SdkContext; opts: GetReferenceOpts }): ts.Expression {
         const generatedType = context.requestWrapper.getGeneratedRequestWrapper(this.packageId, this.endpointName)
         const fileProperties = []
-        if (context.inlineFileProperties && this.requestBody != null && this.requestBody.type === 'fileUpload') {
+        if (context.inlineFileProperties && this.requestBody != null && this.requestBody.type === "fileUpload") {
             for (const property of this.requestBody.properties) {
-                if (property.type === 'file') {
+                if (property.type === "file") {
                     if (property.value.isOptional) {
                         continue
                     }
                     const createReadStream = context.externalDependencies.fs.createReadStream(
-                        ts.factory.createStringLiteral('/path/to/your/file')
+                        ts.factory.createStringLiteral("/path/to/your/file")
                     )
-                    if (property.value.type === 'fileArray') {
+                    if (property.value.type === "fileArray") {
                         fileProperties.push(
                             ts.factory.createPropertyAssignment(
                                 getPropertyKey(
@@ -113,7 +113,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
                                 const originalTypeForProperty = context.type.getGeneratedType(
                                     property.originalTypeDeclaration
                                 )
-                                if (originalTypeForProperty.type === 'union') {
+                                if (originalTypeForProperty.type === "union") {
                                     const propertyKey = originalTypeForProperty.getSinglePropertyKey({
                                         name: property.name,
                                         type: TypeReference.named({
@@ -127,7 +127,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
                                         context.type.getGeneratedExample(property.value).build(context, opts)
                                     )
                                 }
-                                if (originalTypeForProperty.type !== 'object') {
+                                if (originalTypeForProperty.type !== "object") {
                                     throw new Error(
                                         `Property does not come from an object, instead got ${originalTypeForProperty.type}`
                                     )
@@ -158,7 +158,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
                     ]
                 },
                 _other: () => {
-                    throw new Error('Encountered unknown example request type')
+                    throw new Error("Encountered unknown example request type")
                 }
             }) ?? []
 
@@ -175,10 +175,10 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
     }
 
     private isNotLiteral(shape: ExampleTypeReferenceShape): boolean {
-        if (shape.type === 'named' && shape.shape.type === 'alias') {
+        if (shape.type === "named" && shape.shape.type === "alias") {
             return this.isNotLiteral(shape.shape.value.shape)
         } else {
-            return !(shape.type === 'container' && shape.container.type === 'literal')
+            return !(shape.type === "container" && shape.container.type === "literal")
         }
     }
 }

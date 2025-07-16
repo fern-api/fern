@@ -1,10 +1,10 @@
-import { readFile, rm } from 'fs/promises'
-import { tmpName } from 'tmp-promise'
+import { readFile, rm } from "fs/promises"
+import { tmpName } from "tmp-promise"
 
-import { generatorsYml } from '@fern-api/configuration'
-import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
+import { generatorsYml } from "@fern-api/configuration"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
 
-import { runFernCli } from '../../utils/runFernCli'
+import { runFernCli } from "../../utils/runFernCli"
 
 export interface DiffResult {
     exitCode: number
@@ -21,24 +21,24 @@ export async function diff({
     const fromIrFilename = await tmpName()
     await rm(fromIrFilename, { force: true, recursive: true })
 
-    await runFernCli(['ir', fromIrFilename], {
-        cwd: join(fixturePath, RelativeFilePath.of('from'))
+    await runFernCli(["ir", fromIrFilename], {
+        cwd: join(fixturePath, RelativeFilePath.of("from"))
     })
 
     const toIrFilename = await tmpName()
     await rm(toIrFilename, { force: true, recursive: true })
 
-    await runFernCli(['ir', toIrFilename], {
-        cwd: join(fixturePath, RelativeFilePath.of('to'))
+    await runFernCli(["ir", toIrFilename], {
+        cwd: join(fixturePath, RelativeFilePath.of("to"))
     })
 
-    const command = ['diff', '--from', fromIrFilename, '--to', toIrFilename]
+    const command = ["diff", "--from", fromIrFilename, "--to", toIrFilename]
     if (fromVersion != null) {
-        command.push('--from-version', fromVersion)
+        command.push("--from-version", fromVersion)
     }
 
     const result = await runFernCli(command, {
-        cwd: join(fixturePath, RelativeFilePath.of('from')),
+        cwd: join(fixturePath, RelativeFilePath.of("from")),
         reject: false
     })
 

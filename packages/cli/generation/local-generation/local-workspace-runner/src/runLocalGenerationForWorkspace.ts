@@ -1,25 +1,25 @@
-import chalk from 'chalk'
-import os from 'os'
-import path from 'path'
-import tmp from 'tmp-promise'
+import chalk from "chalk"
+import os from "os"
+import path from "path"
+import tmp from "tmp-promise"
 
-import { FernToken } from '@fern-api/auth'
-import { getAccessToken } from '@fern-api/auth'
-import { SourceResolverImpl } from '@fern-api/cli-source-resolver'
-import { fernConfigJson, generatorsYml } from '@fern-api/configuration'
-import { createVenusService } from '@fern-api/core'
-import { ContainerRunner, replaceEnvVariables } from '@fern-api/core-utils'
-import { RelativeFilePath, join } from '@fern-api/fs-utils'
-import { generateIntermediateRepresentation } from '@fern-api/ir-generator'
-import { FernIr } from '@fern-api/ir-sdk'
-import { TaskContext } from '@fern-api/task-context'
-import { FernVenusApi } from '@fern-api/venus-api-sdk'
+import { FernToken } from "@fern-api/auth"
+import { getAccessToken } from "@fern-api/auth"
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver"
+import { fernConfigJson, generatorsYml } from "@fern-api/configuration"
+import { createVenusService } from "@fern-api/core"
+import { ContainerRunner, replaceEnvVariables } from "@fern-api/core-utils"
+import { RelativeFilePath, join } from "@fern-api/fs-utils"
+import { generateIntermediateRepresentation } from "@fern-api/ir-generator"
+import { FernIr } from "@fern-api/ir-sdk"
+import { TaskContext } from "@fern-api/task-context"
+import { FernVenusApi } from "@fern-api/venus-api-sdk"
 import {
     AbstractAPIWorkspace,
     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
-} from '@fern-api/workspace-loader'
+} from "@fern-api/workspace-loader"
 
-import { writeFilesToDiskAndRunGenerator } from './runGenerator'
+import { writeFilesToDiskAndRunGenerator } from "./runGenerator"
 
 export async function runLocalGenerationForWorkspace({
     token,
@@ -75,7 +75,7 @@ export async function runLocalGenerationForWorkspace({
                 if (generatorInvocation.absolutePathToLocalOutput == null) {
                     token = await getAccessToken()
                     if (token == null) {
-                        interactiveTaskContext.failWithoutThrowing('Please provide a FERN_TOKEN in your environment.')
+                        interactiveTaskContext.failWithoutThrowing("Please provide a FERN_TOKEN in your environment.")
                         return
                     }
                 }
@@ -108,7 +108,7 @@ export async function runLocalGenerationForWorkspace({
                     generatorInvocation.absolutePathToLocalOutput ??
                     join(
                         workspace.absoluteFilePath,
-                        RelativeFilePath.of('sdks'),
+                        RelativeFilePath.of("sdks"),
                         RelativeFilePath.of(generatorInvocation.language ?? generatorInvocation.name)
                     )
 
@@ -133,7 +133,7 @@ export async function runLocalGenerationForWorkspace({
                     runner
                 })
 
-                interactiveTaskContext.logger.info(chalk.green('Wrote files to ' + absolutePathToLocalOutput))
+                interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput))
             })
         })
     )
@@ -147,8 +147,8 @@ export async function getWorkspaceTempDir(): Promise<tmp.DirectoryResult> {
     return tmp.dir({
         // use the /private prefix on osx so that docker can access the tmpdir
         // see https://stackoverflow.com/a/45123074
-        tmpdir: os.platform() === 'darwin' ? path.join('/private', os.tmpdir()) : undefined,
-        prefix: 'fern'
+        tmpdir: os.platform() === "darwin" ? path.join("/private", os.tmpdir()) : undefined,
+        prefix: "fern"
     })
 }
 
@@ -161,19 +161,19 @@ function getPublishConfig({
 }): FernIr.PublishingConfig | undefined {
     if (generatorInvocation.raw?.github != null && isGithubSelfhosted(generatorInvocation.raw.github)) {
         return FernIr.PublishingConfig.github({
-            owner: '',
-            repo: '',
+            owner: "",
+            repo: "",
             uri: generatorInvocation.raw.github.uri,
             token: generatorInvocation.raw.github.token,
             target: FernIr.PublishTarget.postman({
-                apiKey: '',
-                workspaceId: '',
+                apiKey: "",
+                workspaceId: "",
                 collectionId: undefined
             })
         })
     }
 
-    if (generatorInvocation.raw?.output?.location === 'local-file-system') {
+    if (generatorInvocation.raw?.output?.location === "local-file-system") {
         return FernIr.PublishingConfig.filesystem({
             generateFullProject: org?.selfHostedSdKs ?? false
         })
@@ -198,5 +198,5 @@ function isGithubSelfhosted(
     if (github == null) {
         return false
     }
-    return 'uri' in github && 'token' in github
+    return "uri" in github && "token" in github
 }

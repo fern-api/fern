@@ -1,4 +1,4 @@
-import { FieldDescriptorProto_Type } from '@bufbuild/protobuf/wkt'
+import { FieldDescriptorProto_Type } from "@bufbuild/protobuf/wkt"
 
 export type ProtobufSettings = undefined
 

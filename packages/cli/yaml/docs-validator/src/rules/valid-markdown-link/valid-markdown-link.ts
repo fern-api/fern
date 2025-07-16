@@ -1,30 +1,30 @@
-import chalk from 'chalk'
-import { randomUUID } from 'crypto'
-import path from 'path'
+import chalk from "chalk"
+import { randomUUID } from "crypto"
+import path from "path"
 
-import { noop } from '@fern-api/core-utils'
-import { DocsDefinitionResolver, convertIrToApiDefinition } from '@fern-api/docs-resolver'
-import { APIV1Read, ApiDefinition, FernNavigation } from '@fern-api/fdr-sdk'
-import { AbsoluteFilePath, RelativeFilePath, join, relative } from '@fern-api/fs-utils'
-import { generateIntermediateRepresentation } from '@fern-api/ir-generator'
-import { createLogger } from '@fern-api/logger'
-import { createMockTaskContext } from '@fern-api/task-context'
+import { noop } from "@fern-api/core-utils"
+import { DocsDefinitionResolver, convertIrToApiDefinition } from "@fern-api/docs-resolver"
+import { APIV1Read, ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk"
+import { AbsoluteFilePath, RelativeFilePath, join, relative } from "@fern-api/fs-utils"
+import { generateIntermediateRepresentation } from "@fern-api/ir-generator"
+import { createLogger } from "@fern-api/logger"
+import { createMockTaskContext } from "@fern-api/task-context"
 
-import { SourceResolverImpl } from '../../../../../cli-source-resolver/src/SourceResolverImpl'
-import { Rule, RuleViolation } from '../../Rule'
-import { checkIfPathnameExists } from './check-if-pathname-exists'
-import { PathnameToCheck, collectPathnamesToCheck } from './collect-pathnames'
-import { getInstanceUrls, removeLeadingSlash, toBaseUrl } from './url-utils'
+import { SourceResolverImpl } from "../../../../../cli-source-resolver/src/SourceResolverImpl"
+import { Rule, RuleViolation } from "../../Rule"
+import { checkIfPathnameExists } from "./check-if-pathname-exists"
+import { PathnameToCheck, collectPathnamesToCheck } from "./collect-pathnames"
+import { getInstanceUrls, removeLeadingSlash, toBaseUrl } from "./url-utils"
 
 const NOOP_CONTEXT = createMockTaskContext({ logger: createLogger(noop) })
 
 export const ValidMarkdownLinks: Rule = {
-    name: 'valid-markdown-links',
+    name: "valid-markdown-links",
     create: async ({ workspace, apiWorkspaces, ossWorkspaces }) => {
         const instanceUrls = getInstanceUrls(workspace)
 
-        const url = instanceUrls[0] ?? 'http://localhost'
-        const baseUrl = toBaseUrl(instanceUrls[0] ?? 'http://localhost')
+        const url = instanceUrls[0] ?? "http://localhost"
+        const baseUrl = toBaseUrl(instanceUrls[0] ?? "http://localhost")
 
         const docsDefinitionResolver = new DocsDefinitionResolver(
             url,
@@ -37,7 +37,7 @@ export const ValidMarkdownLinks: Rule = {
         const resolvedDocsDefinition = await docsDefinitionResolver.resolve()
 
         if (!resolvedDocsDefinition.config.root) {
-            throw new Error('Root node not found')
+            throw new Error("Root node not found")
         }
 
         // TODO: this is a bit of a hack to get the navigation tree. We should probably just use the navigation tree
@@ -73,7 +73,7 @@ export const ValidMarkdownLinks: Rule = {
             absoluteFilePathsToSlugs.set(absoluteFilePath, slugs)
         })
 
-        const specialDocPages = ['/llms-full.txt', '/llms.txt']
+        const specialDocPages = ["/llms-full.txt", "/llms.txt"]
 
         for (const specialPage of specialDocPages) {
             const pageWithBasePath = baseUrl.basePath
@@ -123,7 +123,7 @@ export const ValidMarkdownLinks: Rule = {
                             })
                             return {
                                 name: ValidMarkdownLinks.name,
-                                severity: 'error' as const,
+                                severity: "error" as const,
                                 message,
                                 relativeFilepath: relFilePath
                             }
@@ -140,7 +140,7 @@ export const ValidMarkdownLinks: Rule = {
                 )
                 const ir = generateIntermediateRepresentation({
                     workspace: fernWorkspace,
-                    audiences: config.audiences ? { type: 'select', audiences: config.audiences } : { type: 'all' },
+                    audiences: config.audiences ? { type: "select", audiences: config.audiences } : { type: "all" },
                     generationLanguage: undefined,
                     keywords: undefined,
                     smartCasing: false,
@@ -191,7 +191,7 @@ export const ValidMarkdownLinks: Rule = {
                                     })
                                     return {
                                         name: ValidMarkdownLinks.name,
-                                        severity: 'error' as const,
+                                        severity: "error" as const,
                                         message,
                                         relFilepath: relFilePath
                                     }
@@ -221,7 +221,7 @@ function createLinkViolationMessage({
     let msg = `${targetPathname} links to non-existent page ${chalk.bold(pathnameToCheck.pathname)}`
     const { position, sourceFilepath } = pathnameToCheck
     if (sourceFilepath == null || position == null) {
-        return [msg, RelativeFilePath.of('')]
+        return [msg, RelativeFilePath.of("")]
     }
 
     msg = `broken link to ${chalk.bold(pathnameToCheck.pathname)}`
@@ -247,7 +247,7 @@ function toLatest(apiDefinition: APIV1Read.ApiDefinition) {
 async function collectDescriptions(apiDefinition: ApiDefinition.ApiDefinition): Promise<string[]> {
     const descriptions: string[] = []
     ApiDefinition.Transformer.descriptions((description) => {
-        if (typeof description === 'string') {
+        if (typeof description === "string") {
             descriptions.push(description)
         }
 

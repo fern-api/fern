@@ -1,11 +1,11 @@
-import { OpenAPIV3 } from 'openapi-types'
+import { OpenAPIV3 } from "openapi-types"
 
-import { isPlainObject } from '@fern-api/core-utils'
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { CustomCodeSample } from '@fern-api/openapi-ir'
+import { isPlainObject } from "@fern-api/core-utils"
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { CustomCodeSample } from "@fern-api/openapi-ir"
 
-import { getExtension } from '../../../getExtension'
-import { ReadmeOpenAPIExtension } from './readmeExtensions'
+import { getExtension } from "../../../getExtension"
+import { ReadmeOpenAPIExtension } from "./readmeExtensions"
 
 // https://docs.readme.com/main/docs/openapi-extensions#custom-code-samples
 interface ReadmeCodeSample {
@@ -23,7 +23,7 @@ function isReadMeCodeSamples(maybeCodeSamples: unknown): maybeCodeSamples is Rea
         if (!isPlainObject(maybeCodeSample)) {
             return false
         }
-        if (typeof maybeCodeSample.language !== 'string' || typeof maybeCodeSample.code !== 'string') {
+        if (typeof maybeCodeSample.language !== "string" || typeof maybeCodeSample.code !== "string") {
             return false
         }
     }
@@ -37,7 +37,7 @@ export function getReadmeCodeSamples(operationObject: OpenAPIV3.OperationObject)
         return []
     }
 
-    const readmeCodeSamples = readme['code-samples']
+    const readmeCodeSamples = readme["code-samples"]
 
     if (!isReadMeCodeSamples(readmeCodeSamples)) {
         return []
@@ -67,7 +67,7 @@ export function getRawReadmeCodeSamples(
         return []
     }
 
-    const readmeCodeSamples = readme['code-samples']
+    const readmeCodeSamples = readme["code-samples"]
 
     if (!isReadMeCodeSamples(readmeCodeSamples)) {
         return []

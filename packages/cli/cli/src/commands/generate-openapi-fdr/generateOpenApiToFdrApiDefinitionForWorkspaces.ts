@@ -1,11 +1,11 @@
-import path from 'path'
+import path from "path"
 
-import { Audiences } from '@fern-api/configuration'
-import { generateFdrFromOpenApiWorkspace, generateFdrFromOpenApiWorkspaceV3 } from '@fern-api/docs-resolver'
-import { AbsoluteFilePath, streamObjectToFile } from '@fern-api/fs-utils'
-import { Project } from '@fern-api/project-loader'
+import { Audiences } from "@fern-api/configuration"
+import { generateFdrFromOpenApiWorkspace, generateFdrFromOpenApiWorkspaceV3 } from "@fern-api/docs-resolver"
+import { AbsoluteFilePath, streamObjectToFile } from "@fern-api/fs-utils"
+import { Project } from "@fern-api/project-loader"
 
-import { CliContext } from '../../cli-context/CliContext'
+import { CliContext } from "../../cli-context/CliContext"
 
 export async function generateOpenApiToFdrApiDefinitionForWorkspaces({
     project,

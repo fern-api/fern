@@ -1,15 +1,15 @@
-import { SourceFile, ts } from 'ts-morph'
+import { SourceFile, ts } from "ts-morph"
 
-import { ExportedDirectory, ExportedFilePath, ExportsManager } from '../exports-manager'
-import { ImportsManager } from '../imports-manager/ImportsManager'
-import { ModuleSpecifier } from './ModuleSpecifier'
-import { GetReferenceOpts, Reference } from './Reference'
-import { getDirectReferenceToExport } from './getDirectReferenceToExport'
-import { getEntityNameOfDirectory } from './getEntityNameOfDirectory'
-import { getExpressionToDirectory } from './getExpressionToDirectory'
-import { getRelativePathAsModuleSpecifierTo } from './getRelativePathAsModuleSpecifierTo'
+import { ExportedDirectory, ExportedFilePath, ExportsManager } from "../exports-manager"
+import { ImportsManager } from "../imports-manager/ImportsManager"
+import { ModuleSpecifier } from "./ModuleSpecifier"
+import { GetReferenceOpts, Reference } from "./Reference"
+import { getDirectReferenceToExport } from "./getDirectReferenceToExport"
+import { getEntityNameOfDirectory } from "./getEntityNameOfDirectory"
+import { getExpressionToDirectory } from "./getExpressionToDirectory"
+import { getRelativePathAsModuleSpecifierTo } from "./getRelativePathAsModuleSpecifierTo"
 
-const DEFAULT_SRC_DIRECTORY = 'src'
+const DEFAULT_SRC_DIRECTORY = "src"
 
 export declare namespace getReferenceToExportFromRoot {
     export interface Args {
@@ -137,7 +137,7 @@ export function getReferenceToExportFromRoot({
             prefix: useDynamicImport
                 ? ts.factory.createParenthesizedExpression(
                       ts.factory.createAwaitExpression(
-                          ts.factory.createCallExpression(ts.factory.createIdentifier('import'), undefined, [
+                          ts.factory.createCallExpression(ts.factory.createIdentifier("import"), undefined, [
                               ts.factory.createStringLiteral(moduleSpecifier)
                           ])
                       )

@@ -1,7 +1,7 @@
-import { Comment } from './Comment'
-import { Module } from './Module'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { Comment } from "./Comment"
+import { Module } from "./Module"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export declare namespace Class_ {
     export interface Args extends Module.Args {
@@ -44,9 +44,9 @@ export class Class_ extends Module {
             })
 
             writer.dedent()
-            writer.write('end')
+            writer.write("end")
         } else {
-            writer.write('; end')
+            writer.write("; end")
         }
         writer.newLine()
     }
@@ -55,15 +55,15 @@ export class Class_ extends Module {
         writer.write(`class ${this.name}`)
 
         if (this.typeParameters.length) {
-            writer.write('[')
+            writer.write("[")
 
             writer.delimit({
                 nodes: this.typeParameters,
-                delimiter: ', ',
+                delimiter: ", ",
                 writeFunction: (argument) => argument.writeTypeDefinition(writer)
             })
 
-            writer.write(']')
+            writer.write("]")
         }
 
         if (this.superclass) {
@@ -81,6 +81,6 @@ export class Class_ extends Module {
             writer.dedent()
         }
 
-        writer.write('end')
+        writer.write("end")
     }
 }

@@ -1,6 +1,6 @@
-import { Directory } from 'ts-morph'
+import { Directory } from "ts-morph"
 
-import { Writer, ts } from '@fern-api/typescript-ast'
+import { Writer, ts } from "@fern-api/typescript-ast"
 
 export declare namespace VersionFileGenerator {
     interface Args {
@@ -25,9 +25,9 @@ export class VersionFileGenerator {
                 const: true,
                 export: true,
                 initializer: ts.codeblock(`"${this.version}"`),
-                name: 'SDK_VERSION'
+                name: "SDK_VERSION"
             })
         )
-        this.packagePathDirectory.createSourceFile('version.ts', writer.toString())
+        this.packagePathDirectory.createSourceFile("version.ts", writer.toString())
     }
 }

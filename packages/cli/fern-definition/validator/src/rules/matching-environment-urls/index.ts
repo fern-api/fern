@@ -1,1 +1,1 @@
-export { MatchingEnvironmentUrlsRule } from './matching-environment-urls'
+export { MatchingEnvironmentUrlsRule } from "./matching-environment-urls"

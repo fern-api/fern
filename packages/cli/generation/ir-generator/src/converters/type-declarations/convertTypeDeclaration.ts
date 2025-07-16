@@ -1,22 +1,22 @@
-import { FernWorkspace } from '@fern-api/api-workspace-commons'
-import { RawSchemas, isRawObjectDefinition, visitRawTypeDeclaration } from '@fern-api/fern-definition-schema'
-import { Encoding, ExampleType, FernFilepath, Source, Type, TypeDeclaration } from '@fern-api/ir-sdk'
-import { AudienceId, getPropertiesByAudience } from '@fern-api/ir-utils'
-import { SourceResolver } from '@fern-api/source-resolver'
+import { FernWorkspace } from "@fern-api/api-workspace-commons"
+import { RawSchemas, isRawObjectDefinition, visitRawTypeDeclaration } from "@fern-api/fern-definition-schema"
+import { Encoding, ExampleType, FernFilepath, Source, Type, TypeDeclaration } from "@fern-api/ir-sdk"
+import { AudienceId, getPropertiesByAudience } from "@fern-api/ir-utils"
+import { SourceResolver } from "@fern-api/source-resolver"
 
-import { FernFileContext } from '../../FernFileContext'
-import { ExampleResolver } from '../../resolvers/ExampleResolver'
-import { TypeResolver } from '../../resolvers/TypeResolver'
-import { parseTypeName } from '../../utils/parseTypeName'
-import { convertDeclaration } from '../convertDeclaration'
-import { convertSourceToProtobufType, maybeConvertEncodingToProtobufType } from '../convertProtobufType'
-import { convertAliasTypeDeclaration } from './convertAliasTypeDeclaration'
-import { convertDiscriminatedUnionTypeDeclaration } from './convertDiscriminatedUnionTypeDeclaration'
-import { convertEnumTypeDeclaration } from './convertEnumTypeDeclaration'
-import { convertTypeExample } from './convertExampleType'
-import { convertObjectTypeDeclaration } from './convertObjectTypeDeclaration'
-import { convertUndiscriminatedUnionTypeDeclaration } from './convertUndiscriminatedUnionTypeDeclaration'
-import { getReferencedTypesFromRawDeclaration } from './getReferencedTypesFromRawDeclaration'
+import { FernFileContext } from "../../FernFileContext"
+import { ExampleResolver } from "../../resolvers/ExampleResolver"
+import { TypeResolver } from "../../resolvers/TypeResolver"
+import { parseTypeName } from "../../utils/parseTypeName"
+import { convertDeclaration } from "../convertDeclaration"
+import { convertSourceToProtobufType, maybeConvertEncodingToProtobufType } from "../convertProtobufType"
+import { convertAliasTypeDeclaration } from "./convertAliasTypeDeclaration"
+import { convertDiscriminatedUnionTypeDeclaration } from "./convertDiscriminatedUnionTypeDeclaration"
+import { convertEnumTypeDeclaration } from "./convertEnumTypeDeclaration"
+import { convertTypeExample } from "./convertExampleType"
+import { convertObjectTypeDeclaration } from "./convertObjectTypeDeclaration"
+import { convertUndiscriminatedUnionTypeDeclaration } from "./convertUndiscriminatedUnionTypeDeclaration"
+import { getReferencedTypesFromRawDeclaration } from "./getReferencedTypesFromRawDeclaration"
 
 export interface TypeDeclarationWithDescendantFilepaths {
     typeDeclaration: TypeDeclaration
@@ -72,7 +72,7 @@ export function convertTypeDeclaration({
             encoding: convertTypeDeclarationEncoding({ typeDeclaration, source }),
             source,
             userProvidedExamples:
-                typeof typeDeclaration !== 'string' && typeDeclaration.examples != null
+                typeof typeDeclaration !== "string" && typeDeclaration.examples != null
                     ? typeDeclaration.examples.map(
                           (example): ExampleType => ({
                               name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
@@ -130,7 +130,7 @@ function convertTypeDeclarationSource({
     typeName: string
     sourceResolver: SourceResolver
 }): Source | undefined {
-    if (typeof typeDeclaration === 'string' || (typeDeclaration.source == null && typeDeclaration.encoding == null)) {
+    if (typeof typeDeclaration === "string" || (typeDeclaration.source == null && typeDeclaration.encoding == null)) {
         return undefined
     }
     if (typeDeclaration.encoding != null) {
@@ -148,7 +148,7 @@ function convertTypeDeclarationSource({
         source: typeDeclaration.source,
         relativeFilepath: file.relativeFilepath
     })
-    if (resolvedSource == null || resolvedSource.type !== 'protobuf') {
+    if (resolvedSource == null || resolvedSource.type !== "protobuf") {
         return undefined
     }
     return Source.proto(
@@ -166,7 +166,7 @@ function convertTypeDeclarationEncoding({
     typeDeclaration: RawSchemas.TypeDeclarationSchema
     source: Source | undefined
 }): Encoding {
-    if (typeof typeDeclaration !== 'string' && typeDeclaration.encoding != null) {
+    if (typeof typeDeclaration !== "string" && typeDeclaration.encoding != null) {
         return convertEncoding(typeDeclaration.encoding)
     }
     return convertSourceToEncoding(source)
@@ -185,7 +185,7 @@ function convertEncoding(encodingSchema: RawSchemas.EncodingSchema): Encoding {
 }
 
 function convertSourceToEncoding(source: Source | undefined): Encoding {
-    return source != null && source.type === 'proto'
+    return source != null && source.type === "proto"
         ? {
               json: undefined,
               proto: {}
@@ -196,10 +196,10 @@ function convertSourceToEncoding(source: Source | undefined): Encoding {
           }
 }
 function getInline(typeDeclaration: RawSchemas.TypeDeclarationSchema): boolean | undefined {
-    if (typeof typeDeclaration === 'string') {
+    if (typeof typeDeclaration === "string") {
         return undefined
     }
-    if ('inline' in typeDeclaration) {
+    if ("inline" in typeDeclaration) {
         return typeDeclaration.inline
     }
     return undefined

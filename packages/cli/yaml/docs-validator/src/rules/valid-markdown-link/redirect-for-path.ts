@@ -1,7 +1,7 @@
-import { compile, match } from 'path-to-regexp'
-import urljoin from 'url-join'
+import { compile, match } from "path-to-regexp"
+import urljoin from "url-join"
 
-import { removeTrailingSlash } from './url-utils'
+import { removeTrailingSlash } from "./url-utils"
 
 // this is a copy of https://github.com/fern-api/fern-platform/blob/main/packages/ui/fern-docs-utils/src/getRedirectForPath.ts
 // please keep in sync with that file
@@ -62,12 +62,12 @@ export function getRedirectForPath(
         if (result) {
             const destination = safeCompile(redirect.destination, result)
 
-            if (!destination.startsWith('/')) {
+            if (!destination.startsWith("/")) {
                 try {
                     new URL(destination)
                 } catch (e) {
                     // biome-ignore lint/suspicious/noConsole: allow console
-                    console.error('Invalid redirect destination:', destination)
+                    console.error("Invalid redirect destination:", destination)
                     return undefined
                 }
             }

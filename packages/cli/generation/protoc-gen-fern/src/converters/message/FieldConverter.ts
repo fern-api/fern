@@ -1,13 +1,13 @@
-import { FieldDescriptorProto, FieldDescriptorProto_Type } from '@bufbuild/protobuf/wkt'
+import { FieldDescriptorProto, FieldDescriptorProto_Type } from "@bufbuild/protobuf/wkt"
 
-import { Availability, ContainerType, TypeReference } from '@fern-api/ir-sdk'
-import { AbstractConverter } from '@fern-api/v2-importer-commons'
+import { Availability, ContainerType, TypeReference } from "@fern-api/ir-sdk"
+import { AbstractConverter } from "@fern-api/v2-importer-commons"
 
-import { PRIMITIVE_TYPES } from '../../commons/ProtobufSettings'
-import { ProtofileConverterContext } from '../ProtofileConverterContext'
-import { ArrayFieldConverter } from './ArrayFieldConverter'
-import { EnumOrMessageConverter } from './EnumOrMessageConverter'
-import { PrimitiveFieldConverter } from './PrimitiveFieldConverter'
+import { PRIMITIVE_TYPES } from "../../commons/ProtobufSettings"
+import { ProtofileConverterContext } from "../ProtofileConverterContext"
+import { ArrayFieldConverter } from "./ArrayFieldConverter"
+import { EnumOrMessageConverter } from "./EnumOrMessageConverter"
+import { PrimitiveFieldConverter } from "./PrimitiveFieldConverter"
 
 export declare namespace FieldConverter {
     export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {

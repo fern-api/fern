@@ -1,13 +1,13 @@
-import chalk from 'chalk'
+import chalk from "chalk"
 
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { FernFileContext, ResolvedType, TypeResolver } from '@fern-api/ir-generator'
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator"
 
-import { RuleViolation } from '../../Rule'
-import { getPathFromSelector } from '../../utils/property-validator/getPathFromSelector'
-import { validatePropertyInType } from '../../utils/property-validator/validatePropertyInType'
-import { maybeFileFromResolvedType, maybePrimitiveType, resolveResponseType } from '../../utils/propertyValidatorUtils'
-import { validateRequestProperty, validateResultsProperty } from './validateUtils'
+import { RuleViolation } from "../../Rule"
+import { getPathFromSelector } from "../../utils/property-validator/getPathFromSelector"
+import { validatePropertyInType } from "../../utils/property-validator/validatePropertyInType"
+import { maybeFileFromResolvedType, maybePrimitiveType, resolveResponseType } from "../../utils/propertyValidatorUtils"
+import { validateRequestProperty, validateResultsProperty } from "./validateUtils"
 
 export function validateOffsetPagination({
     endpointId,
@@ -47,7 +47,7 @@ export function validateOffsetPagination({
     const resolvedResponseType = resolveResponseType({ endpoint, typeResolver, file })
     if (resolvedResponseType == null) {
         violations.push({
-            severity: 'fatal',
+            severity: "fatal",
             message: `Pagination configuration for endpoint ${chalk.bold(endpointId)} must define a response type.`
         })
         return violations
@@ -96,7 +96,7 @@ function validateOffsetProperty({
         file,
         requestProperty: offsetPagination.offset,
         propertyValidator: {
-            propertyID: 'offset',
+            propertyID: "offset",
             validate: isValidOffsetType
         }
     })
@@ -125,7 +125,7 @@ function validateStepProperty({
         file,
         requestProperty: offsetPagination.step,
         propertyValidator: {
-            propertyID: 'step',
+            propertyID: "step",
             validate: isValidOffsetType
         }
     })
@@ -136,7 +136,7 @@ function isValidOffsetType({ resolvedType }: { resolvedType: ResolvedType | unde
     if (primitiveType == null) {
         return false
     }
-    return primitiveType === 'INTEGER' || primitiveType === 'LONG' || primitiveType === 'DOUBLE'
+    return primitiveType === "INTEGER" || primitiveType === "LONG" || primitiveType === "DOUBLE"
 }
 
 function validateHasNextPageProperty({
@@ -151,21 +151,21 @@ function validateHasNextPageProperty({
     file: FernFileContext
     offsetPagination: RawSchemas.OffsetPaginationSchema
 }): RuleViolation[] {
-    if (offsetPagination['has-next-page'] == null) {
+    if (offsetPagination["has-next-page"] == null) {
         return []
     }
     return validatePropertyInType({
         typeResolver,
         file,
-        path: getPathFromSelector(offsetPagination['has-next-page']),
+        path: getPathFromSelector(offsetPagination["has-next-page"]),
         resolvedType: resolvedResponseType,
         validate: ({ resolvedType }) => {
             const primitiveType = maybePrimitiveType(resolvedType)
-            if (primitiveType !== 'BOOLEAN') {
+            if (primitiveType !== "BOOLEAN") {
                 return [
                     {
-                        message: `"has-next-page" selector, ${offsetPagination['has-next-page']}, does not point to a boolean property`,
-                        severity: 'fatal'
+                        message: `"has-next-page" selector, ${offsetPagination["has-next-page"]}, does not point to a boolean property`,
+                        severity: "fatal"
                     }
                 ]
             }

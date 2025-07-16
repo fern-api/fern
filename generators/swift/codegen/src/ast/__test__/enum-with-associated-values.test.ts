@@ -1,14 +1,14 @@
-import { swift } from '../..'
-import { AccessLevel } from '../AccessLevel'
+import { swift } from "../.."
+import { AccessLevel } from "../AccessLevel"
 
-describe('EnumWithAssociatedValues', () => {
-    describe('write', () => {
-        it('should write basic enum with associated values', () => {
+describe("EnumWithAssociatedValues", () => {
+    describe("write", () => {
+        it("should write basic enum with associated values", () => {
             const enum_ = swift.enumWithAssociatedValues({
-                name: 'NetworkResponse',
+                name: "NetworkResponse",
                 cases: [
-                    { unsafeName: 'success', associatedValue: [swift.Type.string()] },
-                    { unsafeName: 'error', associatedValue: [swift.Type.int(), swift.Type.string()] }
+                    { unsafeName: "success", associatedValue: [swift.Type.string()] },
+                    { unsafeName: "error", associatedValue: [swift.Type.int(), swift.Type.string()] }
                 ]
             })
 
@@ -20,14 +20,14 @@ describe('EnumWithAssociatedValues', () => {
             `)
         })
 
-        it('should write enum with access level and conformances', () => {
+        it("should write enum with access level and conformances", () => {
             const enum_ = swift.enumWithAssociatedValues({
-                name: 'Result',
+                name: "Result",
                 accessLevel: AccessLevel.Public,
-                conformances: ['Codable', 'Equatable'],
+                conformances: ["Codable", "Equatable"],
                 cases: [
-                    { unsafeName: 'success', associatedValue: [swift.Type.string()] },
-                    { unsafeName: 'failure', associatedValue: [swift.Type.string()] }
+                    { unsafeName: "success", associatedValue: [swift.Type.string()] },
+                    { unsafeName: "failure", associatedValue: [swift.Type.string()] }
                 ]
             })
 
@@ -39,12 +39,12 @@ describe('EnumWithAssociatedValues', () => {
             `)
         })
 
-        it('should handle complex associated values', () => {
+        it("should handle complex associated values", () => {
             const enum_ = swift.enumWithAssociatedValues({
-                name: 'ComplexEnum',
+                name: "ComplexEnum",
                 cases: [
                     {
-                        unsafeName: 'complex',
+                        unsafeName: "complex",
                         associatedValue: [
                             swift.Type.array(swift.Type.string()),
                             swift.Type.dictionary(swift.Type.string(), swift.Type.int()),
@@ -61,12 +61,12 @@ describe('EnumWithAssociatedValues', () => {
             `)
         })
 
-        it('should handle reserved keywords in case names', () => {
+        it("should handle reserved keywords in case names", () => {
             const enum_ = swift.enumWithAssociatedValues({
-                name: 'KeywordEnum',
+                name: "KeywordEnum",
                 cases: [
-                    { unsafeName: 'class', associatedValue: [swift.Type.string()] },
-                    { unsafeName: 'struct', associatedValue: [swift.Type.int()] }
+                    { unsafeName: "class", associatedValue: [swift.Type.string()] },
+                    { unsafeName: "struct", associatedValue: [swift.Type.int()] }
                 ]
             })
 

@@ -1,15 +1,15 @@
-import { OpenAPIV3 } from 'openapi-types'
+import { OpenAPIV3 } from "openapi-types"
 
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { EndpointExample } from '@fern-api/openapi-ir'
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { EndpointExample } from "@fern-api/openapi-ir"
 
-import { getExtension, getExtensionAndValidate } from '../../../getExtension'
-import { AbstractOpenAPIV3ParserContext } from '../AbstractOpenAPIV3ParserContext'
-import { OperationContext } from '../converters/contexts'
-import { RedoclyCodeSampleArraySchema, RedoclyCodeSampleSchema } from '../schemas/RedoclyCodeSampleSchema'
-import { OpenAPIExtension } from './extensions'
-import { FernOpenAPIExtension } from './fernExtensions'
-import { getRawReadmeCodeSamples } from './getReadmeCodeSamples'
+import { getExtension, getExtensionAndValidate } from "../../../getExtension"
+import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext"
+import { OperationContext } from "../converters/contexts"
+import { RedoclyCodeSampleArraySchema, RedoclyCodeSampleSchema } from "../schemas/RedoclyCodeSampleSchema"
+import { OpenAPIExtension } from "./extensions"
+import { FernOpenAPIExtension } from "./fernExtensions"
+import { getRawReadmeCodeSamples } from "./getReadmeCodeSamples"
 
 export function getExamplesFromExtension(
     operationContext: OperationContext,
@@ -58,7 +58,7 @@ export function getExamplesFromExtension(
 
     if (redoclyCodeSamples.length > 0) {
         validatedExampleEndpointCalls.push({
-            'code-samples': redoclyCodeSamples.map(
+            "code-samples": redoclyCodeSamples.map(
                 (value): RawSchemas.ExampleCodeSampleSchema => ({
                     name: value.label ?? value.lang,
                     language: value.lang,
@@ -73,7 +73,7 @@ export function getExamplesFromExtension(
     const readmeCodeSamples = getRawReadmeCodeSamples(operationObject)
     if (readmeCodeSamples.length > 0) {
         validatedExampleEndpointCalls.push({
-            'code-samples': readmeCodeSamples
+            "code-samples": readmeCodeSamples
         })
     }
 

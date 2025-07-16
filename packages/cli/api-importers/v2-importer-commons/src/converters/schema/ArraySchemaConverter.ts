@@ -1,10 +1,10 @@
-import { OpenAPIV3_1 } from 'openapi-types'
+import { OpenAPIV3_1 } from "openapi-types"
 
-import { ContainerType, TypeId, TypeReference } from '@fern-api/ir-sdk'
+import { ContainerType, TypeId, TypeReference } from "@fern-api/ir-sdk"
 
-import { AbstractConverter, AbstractConverterContext } from '../..'
-import { SchemaConverter } from './SchemaConverter'
-import { SchemaOrReferenceConverter } from './SchemaOrReferenceConverter'
+import { AbstractConverter, AbstractConverterContext } from "../.."
+import { SchemaConverter } from "./SchemaConverter"
+import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter"
 
 export declare namespace ArraySchemaConverter {
     export interface Args extends AbstractConverter.AbstractArgs {
@@ -40,7 +40,7 @@ export class ArraySchemaConverter extends AbstractConverter<
             }
             const schemaOrReferenceConverter = new SchemaOrReferenceConverter({
                 context: this.context,
-                breadcrumbs: [...this.breadcrumbs, 'items'],
+                breadcrumbs: [...this.breadcrumbs, "items"],
                 schemaOrReference: this.schema.items
             })
 

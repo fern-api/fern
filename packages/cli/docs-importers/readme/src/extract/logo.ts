@@ -1,16 +1,16 @@
-import type { Element, Root as HastRoot } from 'hast'
-import { visit } from 'unist-util-visit'
+import type { Element, Root as HastRoot } from "hast"
+import { visit } from "unist-util-visit"
 
-import { downloadImage } from '../utils/files/images'
-import { htmlToHast } from '../utils/hast'
+import { downloadImage } from "../utils/files/images"
+import { htmlToHast } from "../utils/hast"
 
 function getLogoNodes(root: HastRoot): Array<Element> | undefined {
     const logoElements: Array<Element> = []
-    visit(root, 'element', (element) => {
+    visit(root, "element", (element) => {
         const isLogoImage =
-            element.tagName === 'img' &&
+            element.tagName === "img" &&
             Array.isArray(element.properties.className) &&
-            element.properties.className.includes('rm-Logo-img')
+            element.properties.className.includes("rm-Logo-img")
 
         if (isLogoImage) {
             logoElements.push(element)
@@ -27,7 +27,7 @@ export async function findLogosFromHtml(html: string, filepaths: Array<string>):
         const downloadResults = await Promise.all(
             logoImages.map(async (image) => {
                 const downloadResult = await downloadImage(image.properties.src as string)
-                return downloadResult.success && downloadResult.data ? downloadResult.data[1] : ''
+                return downloadResult.success && downloadResult.data ? downloadResult.data[1] : ""
             })
         )
         filepaths.push(...downloadResults)

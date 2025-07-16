@@ -1,7 +1,7 @@
-import { Rule } from '../../Rule'
+import { Rule } from "../../Rule"
 
 export const NoMissingAuthRule: Rule = {
-    name: 'no-missing-auth',
+    name: "no-missing-auth",
     create: (context) => {
         const authIsDefined = context.workspace.definition.rootApiFile.contents.auth != null
         return {
@@ -10,8 +10,8 @@ export const NoMissingAuthRule: Rule = {
                     if (service.auth && !authIsDefined) {
                         return [
                             {
-                                severity: 'fatal',
-                                message: 'Service requires auth, but no auth is defined.'
+                                severity: "fatal",
+                                message: "Service requires auth, but no auth is defined."
                             }
                         ]
                     }
@@ -21,8 +21,8 @@ export const NoMissingAuthRule: Rule = {
                     if (endpoint.auth != null && endpoint.auth && !authIsDefined) {
                         return [
                             {
-                                severity: 'fatal',
-                                message: 'Endpoint requires auth, but no auth is defined.'
+                                severity: "fatal",
+                                message: "Endpoint requires auth, but no auth is defined."
                             }
                         ]
                     }

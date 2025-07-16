@@ -1,5 +1,5 @@
-import isEqual from 'lodash-es/isEqual'
-import { OpenAPIV3 } from 'openapi-types'
+import isEqual from "lodash-es/isEqual"
+import { OpenAPIV3 } from "openapi-types"
 
 import {
     AliasTypeDeclaration,
@@ -20,9 +20,9 @@ import {
     TypeReference,
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { convertObject } from './convertObject'
+import { convertObject } from "./convertObject"
 
 export interface ConvertedType {
     openApiSchema: OpenApiComponentSchema
@@ -53,15 +53,15 @@ export function convertType(typeDeclaration: TypeDeclaration, ir: IntermediateRe
             return convertObject({
                 properties: objectTypeDeclaration.properties.map((property) => {
                     let exampleProperty: ExampleObjectProperty | undefined = undefined
-                    if (exampleType != null && exampleType.shape.type === 'object') {
+                    if (exampleType != null && exampleType.shape.type === "object") {
                         exampleProperty = exampleType.shape.properties.find((example) => {
                             return example.name.wireValue === property.name.wireValue
                         })
                     } else if (exampleTypeFromEndpointRequest != null) {
                         if (
-                            exampleTypeFromEndpointRequest.type === 'reference' &&
-                            exampleTypeFromEndpointRequest.shape.type === 'named' &&
-                            exampleTypeFromEndpointRequest.shape.shape.type === 'object'
+                            exampleTypeFromEndpointRequest.type === "reference" &&
+                            exampleTypeFromEndpointRequest.shape.type === "named" &&
+                            exampleTypeFromEndpointRequest.shape.shape.type === "object"
                         ) {
                             exampleProperty = exampleTypeFromEndpointRequest.shape.shape.properties.find((example) => {
                                 return example.name.wireValue === property.name.wireValue
@@ -69,11 +69,11 @@ export function convertType(typeDeclaration: TypeDeclaration, ir: IntermediateRe
                         }
                     } else if (
                         exampleTypeFromEndpointResponse != null &&
-                        exampleTypeFromEndpointResponse.type === 'body'
+                        exampleTypeFromEndpointResponse.type === "body"
                     ) {
                         if (
-                            exampleTypeFromEndpointResponse.value?.shape.type === 'named' &&
-                            exampleTypeFromEndpointResponse.value.shape.shape.type === 'object'
+                            exampleTypeFromEndpointResponse.value?.shape.type === "named" &&
+                            exampleTypeFromEndpointResponse.value.shape.shape.type === "object"
                         ) {
                             exampleProperty = exampleTypeFromEndpointResponse.value.shape.shape.properties.find(
                                 (example) => {
@@ -100,7 +100,7 @@ export function convertType(typeDeclaration: TypeDeclaration, ir: IntermediateRe
             return convertUndiscriminatedUnion({ undiscriminatedUnionDeclaration, docs })
         },
         _other: () => {
-            throw new Error('Encountered unknown type: ' + shape.type)
+            throw new Error("Encountered unknown type: " + shape.type)
         }
     })
     return {
@@ -131,7 +131,7 @@ export function convertEnum({
     docs: string | undefined
 }): OpenAPIV3.SchemaObject {
     return {
-        type: 'string',
+        type: "string",
         enum: enumTypeDeclaration.values.map((enumValue) => {
             return enumValue.name.wireValue
         }),
@@ -147,20 +147,20 @@ export function convertUnion({
     docs: string | undefined
 }): OpenAPIV3.SchemaObject {
     const oneOfTypes: OpenAPIV3.SchemaObject[] = unionTypeDeclaration.types.map((singleUnionType) => {
-        const discriminantProperty: OpenAPIV3.BaseSchemaObject['properties'] = {
+        const discriminantProperty: OpenAPIV3.BaseSchemaObject["properties"] = {
             [unionTypeDeclaration.discriminant.wireValue]: {
-                type: 'string',
+                type: "string",
                 enum: [singleUnionType.discriminantValue.wireValue]
             }
         }
         return SingleUnionTypeProperties._visit<OpenAPIV3.SchemaObject>(singleUnionType.shape, {
             noProperties: () => ({
-                type: 'object',
+                type: "object",
                 properties: discriminantProperty,
                 required: [unionTypeDeclaration.discriminant.wireValue]
             }),
             singleProperty: (singleProperty) => ({
-                type: 'object',
+                type: "object",
                 properties: {
                     ...discriminantProperty,
                     [singleProperty.name.wireValue]: convertTypeReference(singleProperty.type)
@@ -168,10 +168,10 @@ export function convertUnion({
                 required: [unionTypeDeclaration.discriminant.wireValue]
             }),
             samePropertiesAsObject: (typeName) => ({
-                type: 'object',
+                type: "object",
                 allOf: [
                     {
-                        type: 'object',
+                        type: "object",
                         properties: discriminantProperty
                     },
                     {
@@ -181,7 +181,7 @@ export function convertUnion({
                 required: [unionTypeDeclaration.discriminant.wireValue]
             }),
             _other: () => {
-                throw new Error('Unknown SingleUnionTypeProperties: ' + singleUnionType.shape.propertiesType)
+                throw new Error("Unknown SingleUnionTypeProperties: " + singleUnionType.shape.propertiesType)
             }
         })
     })
@@ -199,7 +199,7 @@ export function convertUnion({
                 description: property.docs ?? undefined,
                 ...convertTypeReference(property.valueType)
             }
-            if (!(property.valueType.type === 'container' && property.valueType.container.type === 'optional')) {
+            if (!(property.valueType.type === "container" && property.valueType.container.type === "optional")) {
                 schema.required = [...(schema.required ?? []), property.name.wireValue]
             }
             return acc
@@ -242,7 +242,7 @@ export function convertTypeReference(typeReference: TypeReference): OpenApiCompo
             return {}
         },
         _other: () => {
-            throw new Error('Encountered unknown typeReference: ' + typeReference.type)
+            throw new Error("Encountered unknown typeReference: " + typeReference.type)
         }
     })
 }
@@ -252,111 +252,111 @@ function convertPrimitiveType(primitiveType: PrimitiveType): OpenAPIV3.NonArrayS
         return (
             PrimitiveTypeV1._visit<OpenAPIV3.NonArraySchemaObject>(primitiveType.v1, {
                 boolean: () => {
-                    return { type: 'boolean' }
+                    return { type: "boolean" }
                 },
                 dateTime: () => {
                     return {
-                        type: 'string',
-                        format: 'date-time'
+                        type: "string",
+                        format: "date-time"
                     }
                 },
                 double: () => {
                     return {
-                        type: 'number',
-                        format: 'double'
+                        type: "number",
+                        format: "double"
                     }
                 },
                 integer: () => {
                     return {
-                        type: 'integer'
+                        type: "integer"
                     }
                 },
                 long: () => {
                     return {
-                        type: 'integer',
-                        format: 'int64'
+                        type: "integer",
+                        format: "int64"
                     }
                 },
                 string: () => {
-                    return { type: 'string' }
+                    return { type: "string" }
                 },
                 uuid: () => {
                     return {
-                        type: 'string',
-                        format: 'uuid'
+                        type: "string",
+                        format: "uuid"
                     }
                 },
                 date: () => {
                     return {
-                        type: 'string',
-                        format: 'date'
+                        type: "string",
+                        format: "date"
                     }
                 },
                 base64: () => {
                     return {
-                        type: 'string',
-                        format: 'byte'
+                        type: "string",
+                        format: "byte"
                     }
                 },
                 uint: () => {
                     return {
-                        type: 'integer',
-                        format: 'int64'
+                        type: "integer",
+                        format: "int64"
                     }
                 },
                 uint64: () => {
                     return {
-                        type: 'integer',
-                        format: 'int64'
+                        type: "integer",
+                        format: "int64"
                     }
                 },
                 float: () => {
                     return {
-                        type: 'integer',
-                        format: 'float'
+                        type: "integer",
+                        format: "float"
                     }
                 },
                 bigInteger: () => {
                     return {
-                        type: 'integer',
-                        format: 'bigint'
+                        type: "integer",
+                        format: "bigint"
                     }
                 },
                 _other: () => {
-                    throw new Error('Encountered unknown primitiveType: ' + primitiveType.v1)
+                    throw new Error("Encountered unknown primitiveType: " + primitiveType.v1)
                 }
             }) ?? {}
         )
     }
     return PrimitiveTypeV2._visit<OpenAPIV3.NonArraySchemaObject>(primitiveType.v2, {
         boolean: () => {
-            return { type: 'boolean' }
+            return { type: "boolean" }
         },
         dateTime: () => {
             return {
-                type: 'string',
-                format: 'date-time'
+                type: "string",
+                format: "date-time"
             }
         },
         double: () => {
             return {
-                type: 'number',
-                format: 'double'
+                type: "number",
+                format: "double"
             }
         },
         integer: () => {
             return {
-                type: 'integer'
+                type: "integer"
             }
         },
         long: () => {
             return {
-                type: 'integer',
-                format: 'int64'
+                type: "integer",
+                format: "int64"
             }
         },
         string: (val) => {
-            const type: OpenAPIV3.NonArraySchemaObject = { type: 'string' }
+            const type: OpenAPIV3.NonArraySchemaObject = { type: "string" }
             if (val.validation?.format != null) {
                 type.format = val.validation.format
             }
@@ -367,48 +367,48 @@ function convertPrimitiveType(primitiveType: PrimitiveType): OpenAPIV3.NonArrayS
         },
         uuid: () => {
             return {
-                type: 'string',
-                format: 'uuid'
+                type: "string",
+                format: "uuid"
             }
         },
         date: () => {
             return {
-                type: 'string',
-                format: 'date'
+                type: "string",
+                format: "date"
             }
         },
         base64: () => {
             return {
-                type: 'string',
-                format: 'byte'
+                type: "string",
+                format: "byte"
             }
         },
         uint: () => {
             return {
-                type: 'integer',
-                format: 'int64'
+                type: "integer",
+                format: "int64"
             }
         },
         uint64: () => {
             return {
-                type: 'integer',
-                format: 'int64'
+                type: "integer",
+                format: "int64"
             }
         },
         float: () => {
             return {
-                type: 'number',
-                format: 'float'
+                type: "number",
+                format: "float"
             }
         },
         bigInteger: () => {
             return {
-                type: 'integer',
-                format: 'bigint'
+                type: "integer",
+                format: "bigint"
             }
         },
         _other: () => {
-            throw new Error('Encountered unknown primitiveType: ' + primitiveType.v1)
+            throw new Error("Encountered unknown primitiveType: " + primitiveType.v1)
         }
     })
 }
@@ -417,29 +417,29 @@ function convertContainerType(containerType: ContainerType): OpenApiComponentSch
     return ContainerType._visit<OpenApiComponentSchema>(containerType, {
         list: (listType) => {
             return {
-                type: 'array',
+                type: "array",
                 items: convertTypeReference(listType)
             }
         },
         set: (setType) => {
             return {
-                type: 'array',
+                type: "array",
                 items: convertTypeReference(setType)
             }
         },
         map: (mapType) => {
             if (
-                mapType.keyType.type === 'primitive' &&
-                mapType.keyType.primitive.v1 === 'STRING' &&
-                mapType.valueType.type === 'unknown'
+                mapType.keyType.type === "primitive" &&
+                mapType.keyType.primitive.v1 === "STRING" &&
+                mapType.valueType.type === "unknown"
             ) {
                 return {
-                    type: 'object',
+                    type: "object",
                     additionalProperties: true
                 }
             }
             return {
-                type: 'object',
+                type: "object",
                 additionalProperties: convertTypeReference(mapType.valueType)
             }
         },
@@ -453,13 +453,13 @@ function convertContainerType(containerType: ContainerType): OpenApiComponentSch
             return literalType._visit({
                 boolean: (val) => {
                     return {
-                        type: 'boolean',
+                        type: "boolean",
                         const: val
                     }
                 },
                 string: (val) => {
                     return {
-                        type: 'string',
+                        type: "string",
                         const: val
                     }
                 },
@@ -467,7 +467,7 @@ function convertContainerType(containerType: ContainerType): OpenApiComponentSch
             })
         },
         _other: () => {
-            throw new Error('Encountered unknown containerType: ' + containerType.type)
+            throw new Error("Encountered unknown containerType: " + containerType.type)
         }
     })
 }
@@ -480,7 +480,7 @@ export function getNameFromDeclaredTypeName(declaredTypeName: DeclaredTypeName):
     return [
         ...declaredTypeName.fernFilepath.packagePath.map((part) => part.originalName),
         declaredTypeName.name.originalName
-    ].join('')
+    ].join("")
 }
 
 function getExampleFromEndpointRequest(
@@ -493,8 +493,8 @@ function getExampleFromEndpointRequest(
                 continue
             }
             if (
-                endpoint.requestBody?.type === 'reference' &&
-                endpoint.requestBody.requestBodyType.type === 'named' &&
+                endpoint.requestBody?.type === "reference" &&
+                endpoint.requestBody.requestBodyType.type === "named" &&
                 areDeclaredTypeNamesEqual(endpoint.requestBody.requestBodyType, declaredTypeName)
             ) {
                 return endpoint.userSpecifiedExamples[0]?.example?.request ?? undefined
@@ -510,17 +510,17 @@ function getExampleFromEndpointResponse(
 ): ExampleEndpointSuccessResponse | undefined {
     for (const service of Object.values(ir.services)) {
         for (const endpoint of service.endpoints) {
-            if (endpoint.userSpecifiedExamples.length <= 0 || endpoint.response?.body?.type !== 'json') {
+            if (endpoint.userSpecifiedExamples.length <= 0 || endpoint.response?.body?.type !== "json") {
                 continue
             }
             if (
-                endpoint.response.body.value.responseBodyType.type === 'named' &&
+                endpoint.response.body.value.responseBodyType.type === "named" &&
                 endpoint.response.body.value.responseBodyType.typeId === declaredTypeName.typeId
             ) {
                 const okResponseExample = endpoint.userSpecifiedExamples.find((exampleEndpoint) => {
-                    return exampleEndpoint.example?.response.type === 'ok'
+                    return exampleEndpoint.example?.response.type === "ok"
                 })
-                if (okResponseExample != null && okResponseExample.example?.response.type === 'ok') {
+                if (okResponseExample != null && okResponseExample.example?.response.type === "ok") {
                     return okResponseExample.example.response.value
                 }
             }

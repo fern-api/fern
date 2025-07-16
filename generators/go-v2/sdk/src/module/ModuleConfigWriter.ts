@@ -1,12 +1,12 @@
-import dedent from 'dedent'
+import dedent from "dedent"
 
-import { File } from '@fern-api/base-generator'
-import { RelativeFilePath } from '@fern-api/fs-utils'
-import { FileGenerator } from '@fern-api/go-base'
+import { File } from "@fern-api/base-generator"
+import { RelativeFilePath } from "@fern-api/fs-utils"
+import { FileGenerator } from "@fern-api/go-base"
 
-import { SdkCustomConfigSchema } from '../SdkCustomConfig'
-import { SdkGeneratorContext } from '../SdkGeneratorContext'
-import { ModuleConfig } from './ModuleConfig'
+import { SdkCustomConfigSchema } from "../SdkCustomConfig"
+import { SdkGeneratorContext } from "../SdkGeneratorContext"
+import { ModuleConfig } from "./ModuleConfig"
 
 export class ModuleConfigWriter extends FileGenerator<File, SdkCustomConfigSchema, SdkGeneratorContext> {
     private moduleConfig: ModuleConfig
@@ -25,7 +25,7 @@ export class ModuleConfigWriter extends FileGenerator<File, SdkCustomConfigSchem
     }
 
     private getDirectory(): RelativeFilePath {
-        return RelativeFilePath.of('.')
+        return RelativeFilePath.of(".")
     }
 
     private getContent(): string {
@@ -46,11 +46,11 @@ export class ModuleConfigWriter extends FileGenerator<File, SdkCustomConfigSchem
 
     private writeImports(): string {
         if (this.moduleConfig.imports == null) {
-            return ''
+            return ""
         }
         return Object.entries(this.moduleConfig.imports)
             .map(([importPath, version]) => this.writeImport({ importPath, version }))
-            .join('\n')
+            .join("\n")
     }
 
     private writeImport({ importPath, version }: { importPath: string; version: string }): string {

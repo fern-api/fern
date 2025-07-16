@@ -1,8 +1,8 @@
-import { Reference } from '@fern-typescript/commons'
+import { Reference } from "@fern-typescript/commons"
 
-import { DeclaredErrorName, ErrorDeclaration } from '@fern-fern/ir-sdk/api'
+import { DeclaredErrorName, ErrorDeclaration } from "@fern-fern/ir-sdk/api"
 
-import { GeneratedExpressError } from './GeneratedExpressError'
+import { GeneratedExpressError } from "./GeneratedExpressError"
 
 export interface ExpressErrorContext {
     getReferenceToError: (errorName: DeclaredErrorName) => Reference

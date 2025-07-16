@@ -1,5 +1,5 @@
-import { Zurg } from '@fern-typescript/commons'
-import { InterfaceDeclarationStructure, OptionalKind } from 'ts-morph'
+import { Zurg } from "@fern-typescript/commons"
+import { InterfaceDeclarationStructure, OptionalKind } from "ts-morph"
 
 export interface RawSingleUnionType<Context> {
     discriminantValue: string

@@ -1,21 +1,21 @@
-import tmp from 'tmp-promise'
+import tmp from "tmp-promise"
 
-import { DEFINITION_DIRECTORY, GeneratorGroup, GeneratorInvocation } from '@fern-api/configuration'
-import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
-import { LogLevel } from '@fern-api/logger'
+import { DEFINITION_DIRECTORY, GeneratorGroup, GeneratorInvocation } from "@fern-api/configuration"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { LogLevel } from "@fern-api/logger"
 import {
     AbstractAPIWorkspace,
     FernWorkspace,
     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
-} from '@fern-api/workspace-loader'
+} from "@fern-api/workspace-loader"
 
-import { Semaphore } from '../../Semaphore'
-import { GeneratorWorkspace } from '../../loadGeneratorWorkspaces'
-import { convertGeneratorWorkspaceToFernWorkspace } from '../../utils/convertSeedWorkspaceToFernWorkspace'
-import { workspaceShouldGenerateDynamicSnippetTests } from '../../workspaceShouldGenerateDynamicSnippetTests'
-import { ScriptRunner } from '../test/ScriptRunner'
-import { TaskContextFactory } from '../test/TaskContextFactory'
-import { DockerTestRunner } from '../test/test-runner'
+import { Semaphore } from "../../Semaphore"
+import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces"
+import { convertGeneratorWorkspaceToFernWorkspace } from "../../utils/convertSeedWorkspaceToFernWorkspace"
+import { workspaceShouldGenerateDynamicSnippetTests } from "../../workspaceShouldGenerateDynamicSnippetTests"
+import { ScriptRunner } from "../test/ScriptRunner"
+import { TaskContextFactory } from "../test/TaskContextFactory"
+import { DockerTestRunner } from "../test/test-runner"
 
 export async function runWithCustomFixture({
     pathToFixture,
@@ -39,7 +39,7 @@ export async function runWithCustomFixture({
     const customFixtureConfig = workspace.workspaceConfig.customFixtureConfig
 
     const taskContext = taskContextFactory.create(
-        `${workspace.workspaceName}:${'custom'} - ${customFixtureConfig?.outputFolder ?? ''}`
+        `${workspace.workspaceName}:${"custom"} - ${customFixtureConfig?.outputFolder ?? ""}`
     )
 
     const dockerGeneratorRunner = new DockerTestRunner({
@@ -54,10 +54,10 @@ export async function runWithCustomFixture({
     const apiWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
         absolutePathToAPIDefinition: pathToFixture,
         taskContext,
-        fixture: 'custom'
+        fixture: "custom"
     })
     if (apiWorkspace == null) {
-        taskContext.logger.error('Failed to load API definition.')
+        taskContext.logger.error("Failed to load API definition.")
         return
     }
 
@@ -105,7 +105,7 @@ function getGeneratorGroup({
     for (const group of groups ?? []) {
         for (const generator of group.generators) {
             if (generator.name === image) {
-                const invocation = { ...generator, absolutePathToLocalOutput: absolutePathToOutput, version: 'latest' }
+                const invocation = { ...generator, absolutePathToLocalOutput: absolutePathToOutput, version: "latest" }
                 return {
                     group: {
                         ...group,

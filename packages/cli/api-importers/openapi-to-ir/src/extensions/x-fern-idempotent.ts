@@ -1,4 +1,4 @@
-import { AbstractExtension } from '@fern-api/v2-importer-commons'
+import { AbstractExtension } from "@fern-api/v2-importer-commons"
 
 export declare namespace FernIdempotentExtension {
     export interface Args extends AbstractExtension.Args {
@@ -8,7 +8,7 @@ export declare namespace FernIdempotentExtension {
 
 export class FernIdempotentExtension extends AbstractExtension<boolean> {
     private readonly operation: object
-    public readonly key = 'x-fern-idempotent'
+    public readonly key = "x-fern-idempotent"
 
     constructor({ breadcrumbs, operation, context }: FernIdempotentExtension.Args) {
         super({ breadcrumbs, context })
@@ -21,9 +21,9 @@ export class FernIdempotentExtension extends AbstractExtension<boolean> {
             return undefined
         }
 
-        if (typeof extensionValue !== 'boolean') {
+        if (typeof extensionValue !== "boolean") {
             this.context.errorCollector.collect({
-                message: 'Received unexpected non-boolean value for x-fern-idempotent',
+                message: "Received unexpected non-boolean value for x-fern-idempotent",
                 path: this.breadcrumbs
             })
             return undefined

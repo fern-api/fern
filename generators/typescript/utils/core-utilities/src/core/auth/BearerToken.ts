@@ -10,6 +10,6 @@ export const BearerToken = {
         return `Bearer ${token}`
     },
     fromAuthorizationHeader: (header: string): BearerToken => {
-        return header.replace(BEARER_AUTH_HEADER_PREFIX, '').trim() as BearerToken
+        return header.replace(BEARER_AUTH_HEADER_PREFIX, "").trim() as BearerToken
     }
 }

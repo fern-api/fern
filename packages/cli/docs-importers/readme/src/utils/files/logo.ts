@@ -1,10 +1,10 @@
-import { Browser } from 'puppeteer'
+import { Browser } from "puppeteer"
 
-import { docsYml } from '@fern-api/configuration'
-import { stripLeadingSlash } from '@fern-api/core-utils'
-import { RelativeFilePath } from '@fern-api/fs-utils'
+import { docsYml } from "@fern-api/configuration"
+import { stripLeadingSlash } from "@fern-api/core-utils"
+import { RelativeFilePath } from "@fern-api/fs-utils"
 
-import { findLogosFromHtml } from '../../extract/logo'
+import { findLogosFromHtml } from "../../extract/logo"
 
 const LOGO_DEFAULT_HEIGHT = 28
 
@@ -21,11 +21,11 @@ export async function getLogos(
         try {
             const page = await browser.newPage()
             await page.goto(url.toString(), {
-                waitUntil: 'networkidle2'
+                waitUntil: "networkidle2"
             })
 
             htmls.push(await page.content())
-            await page.click('.rm-ThemeToggle')
+            await page.click(".rm-ThemeToggle")
             htmls.push(await page.content())
             // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
         } catch {}

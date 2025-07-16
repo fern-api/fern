@@ -1,8 +1,8 @@
-import { isPlainObject } from '@fern-api/core-utils'
-import { EXAMPLE_REFERENCE_PREFIX } from '@fern-api/fern-definition-schema'
+import { isPlainObject } from "@fern-api/core-utils"
+import { EXAMPLE_REFERENCE_PREFIX } from "@fern-api/fern-definition-schema"
 
-import { FernFileContext } from '../FernFileContext'
-import { TypeResolver } from './TypeResolver'
+import { FernFileContext } from "../FernFileContext"
+import { TypeResolver } from "./TypeResolver"
 
 export interface ExampleResolver {
     resolveAllReferencesInExample: (args: {
@@ -33,12 +33,12 @@ export class ExampleResolverImpl implements ExampleResolver {
         example: unknown
         file: FernFileContext
     }): { resolvedExample: unknown } | undefined {
-        if (typeof example === 'string') {
+        if (typeof example === "string") {
             const resolvedExample = this.resolveExample({
                 example,
                 file
             })
-            if (resolvedExample == null || typeof resolvedExample.resolvedExample === 'string') {
+            if (resolvedExample == null || typeof resolvedExample.resolvedExample === "string") {
                 return resolvedExample
             }
             return this.resolveAllReferencesInExample({
@@ -75,7 +75,7 @@ export class ExampleResolverImpl implements ExampleResolver {
     } {
         const resolvedExample = this.resolveAllReferencesInExample({ example, file })
         if (resolvedExample == null) {
-            throw new Error('Failed to resolve examples')
+            throw new Error("Failed to resolve examples")
         }
         return resolvedExample
     }
@@ -87,7 +87,7 @@ export class ExampleResolverImpl implements ExampleResolver {
         example: unknown
         file: FernFileContext
     }): { resolvedExample: unknown; file: FernFileContext } | undefined {
-        if (typeof example !== 'string') {
+        if (typeof example !== "string") {
             return {
                 resolvedExample: example,
                 file
@@ -120,7 +120,7 @@ export class ExampleResolverImpl implements ExampleResolver {
         })
         if (
             typeDeclaration == null ||
-            typeof typeDeclaration.declaration === 'string' ||
+            typeof typeDeclaration.declaration === "string" ||
             typeDeclaration.declaration.examples == null
         ) {
             return undefined
@@ -141,7 +141,7 @@ export class ExampleResolverImpl implements ExampleResolver {
     } {
         const resolvedExample = this.resolveExample({ example, file })
         if (resolvedExample == null) {
-            throw new Error('Cannot resolve example: ' + example)
+            throw new Error("Cannot resolve example: " + example)
         }
         return resolvedExample
     }
@@ -149,7 +149,7 @@ export class ExampleResolverImpl implements ExampleResolver {
     public parseExampleReference(
         exampleReference: string
     ): { rawTypeReference: string; exampleName: string } | undefined {
-        const [first, second, third, ...rest] = exampleReference.split('.')
+        const [first, second, third, ...rest] = exampleReference.split(".")
 
         if (first == null || second == null || rest.length > 0) {
             return undefined

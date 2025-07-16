@@ -1,9 +1,9 @@
-import { DynamicSnippetsTestRunner } from '@fern-api/browser-compatible-base-generator'
+import { DynamicSnippetsTestRunner } from "@fern-api/browser-compatible-base-generator"
 
-import { buildDynamicSnippetsGenerator } from './utils/buildDynamicSnippetsGenerator'
-import { buildGeneratorConfig } from './utils/buildGeneratorConfig'
+import { buildDynamicSnippetsGenerator } from "./utils/buildDynamicSnippetsGenerator"
+import { buildGeneratorConfig } from "./utils/buildGeneratorConfig"
 
-describe('snippets (default)', () => {
+describe("snippets (default)", () => {
     const runner = new DynamicSnippetsTestRunner()
     runner.runTests({
         buildGenerator: ({ irFilepath }) =>
@@ -11,13 +11,13 @@ describe('snippets (default)', () => {
     })
 })
 
-describe('snippets (exportedClientName)', () => {
+describe("snippets (exportedClientName)", () => {
     const runner = new DynamicSnippetsTestRunner()
     runner.runTests({
         buildGenerator: ({ irFilepath }) =>
             buildDynamicSnippetsGenerator({
                 irFilepath,
-                config: buildGeneratorConfig({ customConfig: { exportedClientName: 'FernClient' } })
+                config: buildGeneratorConfig({ customConfig: { exportedClientName: "FernClient" } })
             })
     })
 })

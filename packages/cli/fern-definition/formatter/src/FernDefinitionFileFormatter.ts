@@ -1,20 +1,20 @@
-import * as prettier from 'prettier2'
+import * as prettier from "prettier2"
 
-import { assertNever, assertNeverNoThrow } from '@fern-api/core-utils'
-import { RawSchemas } from '@fern-api/fern-definition-schema'
+import { assertNever, assertNeverNoThrow } from "@fern-api/core-utils"
+import { RawSchemas } from "@fern-api/fern-definition-schema"
 
 const LANG_SERVER_BANNER =
-    '# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json'
+    "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json"
 
 const YAML_KEY_REGEX = /^(\s*)(\S+):.*$/
 
 type FernFileCursorLocation =
     | keyof RawSchemas.DefinitionFileSchema
-    | 'endpoint'
-    | 'webhook'
-    | 'type'
-    | 'error'
-    | 'unknown'
+    | "endpoint"
+    | "webhook"
+    | "type"
+    | "error"
+    | "unknown"
 
 export class FernDefinitionFileFormatter {
     private tabWidth: number | undefined
@@ -31,7 +31,7 @@ export class FernDefinitionFileFormatter {
 
             const writer = new FileWriter()
 
-            if (!this.fileContents.includes('yaml-language-server')) {
+            if (!this.fileContents.includes("yaml-language-server")) {
                 writer.writeLine(LANG_SERVER_BANNER)
                 writer.writeLine()
             }
@@ -43,7 +43,7 @@ export class FernDefinitionFileFormatter {
             }
 
             const reader = new LineReader(body)
-            let location: FernFileCursorLocation = 'unknown'
+            let location: FernFileCursorLocation = "unknown"
             while (!reader.isEof()) {
                 location = this.writeNextLine({ nextLine: reader.readNextLine(), writer, location })
             }
@@ -53,11 +53,11 @@ export class FernDefinitionFileFormatter {
     }
 
     private async splitFileAtHeader(): Promise<{ header: string[]; body: string[] }> {
-        const lines = (await this.prettierFormat(this.fileContents)).split('\n')
+        const lines = (await this.prettierFormat(this.fileContents)).split("\n")
 
         const indexOfSeparator = lines.findIndex((line) => {
             const trimmed = line.trim()
-            return trimmed.length === 0 || !trimmed.startsWith('#')
+            return trimmed.length === 0 || !trimmed.startsWith("#")
         })
 
         return {
@@ -68,7 +68,7 @@ export class FernDefinitionFileFormatter {
 
     private async prettierFormat(content: string): Promise<string> {
         return prettier.format(content, {
-            parser: 'yaml'
+            parser: "yaml"
         })
     }
 
@@ -119,55 +119,55 @@ export class FernDefinitionFileFormatter {
         if (indent === 0) {
             const castedKey = key as keyof RawSchemas.DefinitionFileSchema
             switch (castedKey) {
-                case 'docs':
-                case 'imports':
-                case 'types':
-                case 'service':
-                case 'errors':
-                case 'webhooks':
-                case 'channel':
+                case "docs":
+                case "imports":
+                case "types":
+                case "service":
+                case "errors":
+                case "webhooks":
+                case "channel":
                     return castedKey
                 default:
                     assertNeverNoThrow(castedKey)
-                    return 'unknown'
+                    return "unknown"
             }
         }
 
-        if (previousLocation == null || previousLocation === 'unknown') {
+        if (previousLocation == null || previousLocation === "unknown") {
             return undefined
         }
 
         switch (previousLocation) {
-            case 'docs':
-            case 'imports':
+            case "docs":
+            case "imports":
                 return undefined
-            case 'service':
-            case 'endpoint':
+            case "service":
+            case "endpoint":
                 if (indent === 2) {
-                    return 'endpoint'
+                    return "endpoint"
                 }
                 return undefined
-            case 'types':
-            case 'type':
+            case "types":
+            case "type":
                 if (indent === 1) {
-                    return 'type'
+                    return "type"
                 }
                 return undefined
-            case 'errors':
-            case 'error':
+            case "errors":
+            case "error":
                 if (indent === 1) {
-                    return 'error'
+                    return "error"
                 }
                 return undefined
-            case 'webhooks':
-            case 'webhook':
+            case "webhooks":
+            case "webhook":
                 if (indent === 1) {
-                    return 'webhook'
+                    return "webhook"
                 }
                 return undefined
-            case 'channel':
+            case "channel":
                 if (indent === 1) {
-                    return 'channel'
+                    return "channel"
                 }
                 return undefined
             default:
@@ -188,14 +188,14 @@ class LineReader {
     public readNextLine(): string {
         const nextLine = this.lines[this.lineIndex++]
         if (nextLine == null) {
-            throw new Error('EOF')
+            throw new Error("EOF")
         }
         return nextLine
     }
 }
 
 class FileWriter {
-    private content = ''
+    private content = ""
 
     public write(content: string): void {
         this.content += content
@@ -205,7 +205,7 @@ class FileWriter {
         if (content != null) {
             this.write(content)
         }
-        this.write('\n')
+        this.write("\n")
     }
 
     public getContent(): string {

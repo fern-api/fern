@@ -1,6 +1,6 @@
-import { go } from '@fern-api/go-ast'
+import { go } from "@fern-api/go-ast"
 
-import { EndpointRequest } from './request/EndpointRequest'
+import { EndpointRequest } from "./request/EndpointRequest"
 
 export interface EndpointSignatureInfo {
     allParameters: go.Parameter[]

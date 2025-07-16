@@ -1,19 +1,19 @@
-import { Comment } from './Comment'
-import { KeywordParameter } from './KeywordParameter'
-import { KeywordSplatParameter } from './KeywordSplatParameter'
-import { Parameter } from './Parameter'
-import { PositionalParameter } from './PositionalParameter'
-import { PositionalSplatParameter } from './PositionalSplatParameter'
-import { Type } from './Type'
-import { YieldParameter } from './YieldParameter'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { Comment } from "./Comment"
+import { KeywordParameter } from "./KeywordParameter"
+import { KeywordSplatParameter } from "./KeywordSplatParameter"
+import { Parameter } from "./Parameter"
+import { PositionalParameter } from "./PositionalParameter"
+import { PositionalSplatParameter } from "./PositionalSplatParameter"
+import { Type } from "./Type"
+import { YieldParameter } from "./YieldParameter"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
-export type MethodKind = 'instance' | 'class'
-export const MethodKind = { Instance: 'instance', Class_: 'class' } as const
+export type MethodKind = "instance" | "class"
+export const MethodKind = { Instance: "instance", Class_: "class" } as const
 
-export type MethodVisibility = 'public' | 'private' | 'protected'
-export const MethodVisibility = { Public: 'public', Private: 'private', Protected: 'protected' } as const
+export type MethodVisibility = "public" | "private" | "protected"
+export const MethodVisibility = { Public: "public", Private: "private", Protected: "protected" } as const
 
 export declare namespace Method {
     export interface ParameterArgs {
@@ -82,10 +82,10 @@ export class Method extends AstNode {
             writer.write(this.visibility)
 
             if (this.kind === MethodKind.Class_) {
-                writer.write('_class_method')
+                writer.write("_class_method")
             }
 
-            writer.write(' ')
+            writer.write(" ")
         }
 
         switch (this.kind) {
@@ -99,15 +99,15 @@ export class Method extends AstNode {
         }
 
         if (this.parameters.length) {
-            writer.write('(')
+            writer.write("(")
 
             writer.delimit({
                 nodes: this.parameters,
-                delimiter: ', ',
+                delimiter: ", ",
                 writeFunction: (argument) => argument.write(writer)
             })
 
-            writer.write(')')
+            writer.write(")")
         }
 
         if (this.statements.length) {
@@ -122,9 +122,9 @@ export class Method extends AstNode {
             })
             writer.dedent()
 
-            writer.write('end')
+            writer.write("end")
         } else {
-            writer.write('; end')
+            writer.write("; end")
         }
 
         writer.newLine()
@@ -137,11 +137,11 @@ export class Method extends AstNode {
             parameter.writeTypeDefinition(writer)
 
             if (index < this.parameters.length - 1) {
-                writer.write(', ')
+                writer.write(", ")
             }
         })
 
-        writer.write(') -> ')
+        writer.write(") -> ")
 
         this.returnType.writeTypeDefinition(writer)
     }

@@ -1,1 +1,1 @@
-export { ValidMarkdownFileReferences } from './valid-markdown-file-reference'
+export { ValidMarkdownFileReferences } from "./valid-markdown-file-reference"

@@ -1,16 +1,16 @@
-import path from 'path'
-import semver from 'semver'
+import path from "path"
+import semver from "semver"
 
-import { AbsoluteFilePath, RelativeFilePath } from '@fern-api/fs-utils'
-import { loggingExeca } from '@fern-api/logging-execa'
-import { TaskContext } from '@fern-api/task-context'
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils"
+import { loggingExeca } from "@fern-api/logging-execa"
+import { TaskContext } from "@fern-api/task-context"
 
-import { GeneratorReleaseRequest } from '@fern-fern/generators-sdk/api/resources/generators'
+import { GeneratorReleaseRequest } from "@fern-fern/generators-sdk/api/resources/generators"
 
-import { PublishDockerConfiguration } from '../../config/api'
-import { GeneratorWorkspace } from '../../loadGeneratorWorkspaces'
-import { parseGeneratorReleasesFile } from '../../utils/convertVersionsFileToReleases'
-import { runCommands, subVersion } from '../../utils/publishUtilities'
+import { PublishDockerConfiguration } from "../../config/api"
+import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces"
+import { parseGeneratorReleasesFile } from "../../utils/convertVersionsFileToReleases"
+import { runCommands, subVersion } from "../../utils/publishUtilities"
 
 interface VersionFilePair {
     latestChangelogPath: string
@@ -30,7 +30,7 @@ export async function publishGenerator({
     context.logger.info(`Publishing generator ${generatorId}@${version}...`)
 
     let publishVersion: string
-    if (typeof version !== 'string') {
+    if (typeof version !== "string") {
         // We were given two version files, so we need to compare them to find if any new
         // versions have been added since the last publish.
         const maybeNewVersion = await getNewVersion({
@@ -41,7 +41,7 @@ export async function publishGenerator({
 
         if (maybeNewVersion == null) {
             context.logger.error(
-                'No version to publish! There must not have been a new version since the last publish. Failing quietly'
+                "No version to publish! There must not have been a new version since the last publish. Failing quietly"
             )
             return
         }
@@ -54,11 +54,11 @@ export async function publishGenerator({
     let workingDirectory = generator.absolutePathToWorkspace
     if (publishConfig.workingDirectory) {
         workingDirectory = AbsoluteFilePath.of(
-            path.join(__dirname, RelativeFilePath.of('../../..'), RelativeFilePath.of(publishConfig.workingDirectory))
+            path.join(__dirname, RelativeFilePath.of("../../.."), RelativeFilePath.of(publishConfig.workingDirectory))
         )
     }
     // Instance of PublishDocker configuration, leverage docker CLI here
-    if ('docker' in publishConfig) {
+    if ("docker" in publishConfig) {
         const unparsedCommands = publishConfig.preBuildCommands
         const preBuildCommands = Array.isArray(unparsedCommands)
             ? unparsedCommands
@@ -87,40 +87,40 @@ async function buildAndPushDockerImage(
     const dockerHubUsername = process?.env?.DOCKER_USERNAME
     const dockerHubPassword = process?.env?.DOCKER_PASSWORD
     if (!dockerHubUsername || !dockerHubPassword) {
-        context.failAndThrow('Docker Hub credentials not found within your environment variables.')
+        context.failAndThrow("Docker Hub credentials not found within your environment variables.")
     }
 
-    context.logger.debug('Logging into Docker Hub...')
-    await loggingExeca(context.logger, 'docker', ['login', '-u', dockerHubUsername, '--password-stdin'], {
+    context.logger.debug("Logging into Docker Hub...")
+    await loggingExeca(context.logger, "docker", ["login", "-u", dockerHubUsername, "--password-stdin"], {
         doNotPipeOutput: true,
         input: dockerHubPassword
     })
 
     // Build and push the Docker image, now that you've run the pre-build commands
     const aliases = [dockerConfig.image, ...(dockerConfig.aliases ?? [])].map((alias) => `${alias}:${version}`)
-    const tagArgs = aliases.map((imageTag) => ['-t', imageTag]).flat()
+    const tagArgs = aliases.map((imageTag) => ["-t", imageTag]).flat()
     context.logger.debug(`Pushing Docker image ${aliases[0]} to Docker Hub...`)
     if (aliases.length > 1) {
-        context.logger.debug(`Also tagging with aliases: ${aliases.slice(1).join(', ')}`)
+        context.logger.debug(`Also tagging with aliases: ${aliases.slice(1).join(", ")}`)
     }
     const standardBuildOptions = [
-        'build',
-        '--push',
-        '--platform',
-        'linux/amd64,linux/arm64',
-        '-f',
+        "build",
+        "--push",
+        "--platform",
+        "linux/amd64,linux/arm64",
+        "-f",
         dockerConfig.file,
         ...tagArgs,
         dockerConfig.context
     ]
     try {
-        await loggingExeca(context.logger, 'docker', standardBuildOptions, { doNotPipeOutput: true })
+        await loggingExeca(context.logger, "docker", standardBuildOptions, { doNotPipeOutput: true })
     } catch (e) {
-        if (e instanceof Error && e.message.includes('Multi-platform build is not supported for the docker driver')) {
+        if (e instanceof Error && e.message.includes("Multi-platform build is not supported for the docker driver")) {
             context.logger.error(
-                'Docker cannot build multi-platform images with the current driver, trying `docker buildx`.'
+                "Docker cannot build multi-platform images with the current driver, trying `docker buildx`."
             )
-            await loggingExeca(context.logger, 'docker', ['buildx', ...standardBuildOptions], {
+            await loggingExeca(context.logger, "docker", ["buildx", ...standardBuildOptions], {
                 doNotPipeOutput: false
             })
             return

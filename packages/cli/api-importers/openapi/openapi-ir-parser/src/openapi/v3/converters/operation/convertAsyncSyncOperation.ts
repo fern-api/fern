@@ -1,13 +1,13 @@
-import { OpenAPIV3 } from 'openapi-types'
+import { OpenAPIV3 } from "openapi-types"
 
-import { EndpointWithExample, LiteralSchemaValue, SchemaWithExample, Source } from '@fern-api/openapi-ir'
+import { EndpointWithExample, LiteralSchemaValue, SchemaWithExample, Source } from "@fern-api/openapi-ir"
 
-import { getGeneratedTypeName } from '../../../../schema/utils/getSchemaName'
-import { isReferenceObject } from '../../../../schema/utils/isReferenceObject'
-import { AbstractOpenAPIV3ParserContext } from '../../AbstractOpenAPIV3ParserContext'
-import { AsyncFernExtensionSchema } from '../../extensions/getFernAsyncExtension'
-import { OperationContext } from '../contexts'
-import { convertHttpOperation } from './convertHttpOperation'
+import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName"
+import { isReferenceObject } from "../../../../schema/utils/isReferenceObject"
+import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext"
+import { AsyncFernExtensionSchema } from "../../extensions/getFernAsyncExtension"
+import { OperationContext } from "../contexts"
+import { convertHttpOperation } from "./convertHttpOperation"
 
 export interface AsyncAndSyncEndpoints {
     async: EndpointWithExample
@@ -29,7 +29,7 @@ export function convertAsyncSyncOperation({
 
     const headerToIgnore = asyncExtension.discriminant.name
     const headerValue = asyncExtension.discriminant.value
-    const asyncResponseStatusCode = asyncExtension['response-status-code']
+    const asyncResponseStatusCode = asyncExtension["response-status-code"]
 
     const filteredPathItemParams = filterParameters({ context, headerToIgnore, parameters: pathItemParameters })
     const filteredOperationParams = filterParameters({ context, headerToIgnore, parameters: operationParameters })
@@ -58,10 +58,10 @@ export function convertAsyncSyncOperation({
             ...operationContext,
             pathItemParameters: filteredPathItemParams,
             operationParameters: filteredOperationParams,
-            baseBreadcrumbs: [...operationContext.baseBreadcrumbs, 'async']
+            baseBreadcrumbs: [...operationContext.baseBreadcrumbs, "async"]
         },
         context,
-        suffix: 'async',
+        suffix: "async",
         responseStatusCode: asyncResponseStatusCode,
         streamFormat: undefined,
         source
@@ -105,7 +105,7 @@ function filterParameters({
         const resolvedParameter = isReferenceObject(parameter)
             ? context.resolveParameterReference(parameter)
             : parameter
-        if (resolvedParameter.in === 'header' && resolvedParameter.name === headerToIgnore) {
+        if (resolvedParameter.in === "header" && resolvedParameter.name === headerToIgnore) {
             return false
         }
         return true

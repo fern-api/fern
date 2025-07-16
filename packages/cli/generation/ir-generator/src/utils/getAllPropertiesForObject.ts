@@ -1,12 +1,12 @@
-import { FernWorkspace, getDefinitionFile } from '@fern-api/api-workspace-commons'
-import { constructCasingsGenerator } from '@fern-api/casings-generator'
-import { RawSchemas, isRawObjectDefinition } from '@fern-api/fern-definition-schema'
-import { RelativeFilePath } from '@fern-api/path-utils'
+import { FernWorkspace, getDefinitionFile } from "@fern-api/api-workspace-commons"
+import { constructCasingsGenerator } from "@fern-api/casings-generator"
+import { RawSchemas, isRawObjectDefinition } from "@fern-api/fern-definition-schema"
+import { RelativeFilePath } from "@fern-api/path-utils"
 
-import { constructFernFileContext } from '../FernFileContext'
-import { getPropertyName } from '../converters/type-declarations/convertObjectTypeDeclaration'
-import { ResolvedType } from '../resolvers/ResolvedType'
-import { TypeResolver } from '../resolvers/TypeResolver'
+import { constructFernFileContext } from "../FernFileContext"
+import { getPropertyName } from "../converters/type-declarations/convertObjectTypeDeclaration"
+import { ResolvedType } from "../resolvers/ResolvedType"
+import { TypeResolver } from "../resolvers/TypeResolver"
 
 // Note: using this exported variable is NOT recommended, but its included for convenience
 // when the call-site doesn't care about the language nor special casing convention.
@@ -31,7 +31,7 @@ export type ObjectPropertyPath = ObjectPropertyPathPart[]
 
 export interface ObjectPropertyPathPart {
     reference: string
-    followedVia: 'alias' | 'extension'
+    followedVia: "alias" | "extension"
 }
 
 export type TypeName = string
@@ -90,7 +90,7 @@ export function getAllPropertiesForObject({
     if (objectDeclaration.properties != null) {
         for (const [propertyKey, propertyDeclaration] of Object.entries(objectDeclaration.properties)) {
             const propertyType =
-                typeof propertyDeclaration === 'string' ? propertyDeclaration : propertyDeclaration.type
+                typeof propertyDeclaration === "string" ? propertyDeclaration : propertyDeclaration.type
             const resolvedPropertyType = typeResolver.resolveType({ type: propertyType, file })
             if (resolvedPropertyType != null) {
                 properties.push({
@@ -101,11 +101,11 @@ export function getAllPropertiesForObject({
                     propertyType,
                     resolvedPropertyType,
                     isOptional:
-                        resolvedPropertyType._type === 'container' &&
-                        resolvedPropertyType.container._type === 'optional',
+                        resolvedPropertyType._type === "container" &&
+                        resolvedPropertyType.container._type === "optional",
                     isNullable:
-                        resolvedPropertyType._type === 'container' &&
-                        resolvedPropertyType.container._type === 'nullable'
+                        resolvedPropertyType._type === "container" &&
+                        resolvedPropertyType.container._type === "nullable"
                 })
             }
         }
@@ -113,7 +113,7 @@ export function getAllPropertiesForObject({
 
     if (objectDeclaration.extends != null) {
         const extensions =
-            typeof objectDeclaration.extends === 'string' ? [objectDeclaration.extends] : objectDeclaration.extends
+            typeof objectDeclaration.extends === "string" ? [objectDeclaration.extends] : objectDeclaration.extends
         for (const extension of extensions) {
             const resolvedTypeOfExtension = typeResolver.resolveNamedType({
                 referenceToNamedType: extension,
@@ -121,7 +121,7 @@ export function getAllPropertiesForObject({
             })
 
             if (
-                resolvedTypeOfExtension?._type === 'named' &&
+                resolvedTypeOfExtension?._type === "named" &&
                 isRawObjectDefinition(resolvedTypeOfExtension.declaration)
             ) {
                 const definitionFile = getDefinitionFile(workspace, resolvedTypeOfExtension.filepath)
@@ -139,12 +139,12 @@ export function getAllPropertiesForObject({
                                 ...path,
                                 {
                                     reference: extension,
-                                    followedVia: 'extension'
+                                    followedVia: "extension"
                                 },
                                 ...resolvedTypeOfExtension.objectPath.map(
                                     (pathItem): ObjectPropertyPathPart => ({
                                         reference: pathItem.reference,
-                                        followedVia: 'alias'
+                                        followedVia: "alias"
                                     })
                                 )
                             ],
@@ -183,7 +183,7 @@ export function getAllPropertiesForType({
             rootApiFile: workspace.definition.rootApiFile.contents
         })
     })
-    if (resolvedType == null || resolvedType._type !== 'named' || !isRawObjectDefinition(resolvedType.declaration)) {
+    if (resolvedType == null || resolvedType._type !== "named" || !isRawObjectDefinition(resolvedType.declaration)) {
         return []
     }
     return getAllPropertiesForObject({
@@ -205,7 +205,7 @@ export function convertObjectPropertyWithPathToString({
     prefixBreadcrumbs?: string[]
 }): string {
     const parts = [...prefixBreadcrumbs, ...convertObjectPropertyPathToStrings(property.path), property.wireKey]
-    return parts.join(' -> ')
+    return parts.join(" -> ")
 }
 
 function convertObjectPropertyPathToStrings(path: ObjectPropertyPath): string[] {
@@ -213,14 +213,14 @@ function convertObjectPropertyPathToStrings(path: ObjectPropertyPath): string[] 
 }
 
 function convertObjectPropertyPathPartToString(part: ObjectPropertyPathPart): string {
-    return [getPrefixForObjectPropertyPathPart(part), part.reference].join(' ')
+    return [getPrefixForObjectPropertyPathPart(part), part.reference].join(" ")
 }
 
 function getPrefixForObjectPropertyPathPart(part: ObjectPropertyPathPart): string {
     switch (part.followedVia) {
-        case 'alias':
-            return '(alias of)'
-        case 'extension':
-            return '(extends)'
+        case "alias":
+            return "(alias of)"
+        case "extension":
+            return "(extends)"
     }
 }

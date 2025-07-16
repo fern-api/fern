@@ -1,8 +1,8 @@
-import { AbstractAstNode } from '@fern-api/browser-compatible-base-generator'
+import { AbstractAstNode } from "@fern-api/browser-compatible-base-generator"
 
-import { Writer } from '..'
-import { XmlDocBlock } from '../XmlDocBlock'
-import { AstNode } from './AstNode'
+import { Writer } from ".."
+import { XmlDocBlock } from "../XmlDocBlock"
+import { AstNode } from "./AstNode"
 
 export class XmlDocWriter {
     private writer: Writer
@@ -12,7 +12,7 @@ export class XmlDocWriter {
     }
 
     public write(text: string | XmlDocBlock): void {
-        if (typeof text === 'string') {
+        if (typeof text === "string") {
             this.writer.write(text)
             return
         }
@@ -20,14 +20,14 @@ export class XmlDocWriter {
     }
 
     public writeWithEscaping(text: string | XmlDocBlock): void {
-        if (typeof text === 'string') {
+        if (typeof text === "string") {
             this.writer.write(this.escapeXmlDocContent(text))
             return
         }
         text.write(this.writer)
     }
 
-    public writeLine(text = ''): void {
+    public writeLine(text = ""): void {
         this.writePrefix()
         this.writer.writeLine(text)
         this.wrotePrefixOnCurrentLine = false
@@ -52,7 +52,7 @@ export class XmlDocWriter {
         if (this.wrotePrefixOnCurrentLine) {
             return this
         }
-        this.writer.write('/// ')
+        this.writer.write("/// ")
         this.wrotePrefixOnCurrentLine = true
         return this
     }
@@ -103,7 +103,7 @@ export class XmlDocWriter {
 
     public writeMultiline(text: string): void {
         text.trim()
-            .split('\n')
+            .split("\n")
             .forEach((line) => {
                 this.writeLine(line)
             })
@@ -115,6 +115,6 @@ export class XmlDocWriter {
     }
 
     private escapeXmlDocContent(text: string): string {
-        return text.replaceAll('<', '&lt;').replaceAll('>', '&gt;')
+        return text.replaceAll("<", "&lt;").replaceAll(">", "&gt;")
     }
 }

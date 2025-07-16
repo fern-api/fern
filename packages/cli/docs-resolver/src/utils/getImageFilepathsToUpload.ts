@@ -1,13 +1,13 @@
-import { docsYml } from '@fern-api/configuration-loader'
-import { AbsoluteFilePath, RelativeFilePath, doesPathExist, resolve } from '@fern-api/fs-utils'
-import { DocsWorkspace } from '@fern-api/workspace-loader'
+import { docsYml } from "@fern-api/configuration-loader"
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, resolve } from "@fern-api/fs-utils"
+import { DocsWorkspace } from "@fern-api/workspace-loader"
 
 function shouldProcessIconPath(iconPath: string): boolean {
     return (
-        iconPath.startsWith('.') || // check for mac + linux relative paths
-        iconPath.includes('/') ||
-        iconPath.includes('\\') || // check for windows relative paths
-        iconPath.includes(':')
+        iconPath.startsWith(".") || // check for mac + linux relative paths
+        iconPath.includes("/") ||
+        iconPath.includes("\\") || // check for windows relative paths
+        iconPath.includes(":")
     )
 }
 
@@ -85,19 +85,19 @@ export async function collectFilesFromDocsConfig({
     }
 
     /* opengraph images */
-    if (parsedDocsConfig.metadata?.['og:image'] != null && parsedDocsConfig.metadata['og:image'].type === 'filepath') {
-        filepaths.add(parsedDocsConfig.metadata['og:image'].value)
+    if (parsedDocsConfig.metadata?.["og:image"] != null && parsedDocsConfig.metadata["og:image"].type === "filepath") {
+        filepaths.add(parsedDocsConfig.metadata["og:image"].value)
     }
 
-    if (parsedDocsConfig.metadata?.['og:logo'] != null && parsedDocsConfig.metadata['og:logo'].type === 'filepath') {
-        filepaths.add(parsedDocsConfig.metadata['og:logo'].value)
+    if (parsedDocsConfig.metadata?.["og:logo"] != null && parsedDocsConfig.metadata["og:logo"].type === "filepath") {
+        filepaths.add(parsedDocsConfig.metadata["og:logo"].value)
     }
 
     if (
-        parsedDocsConfig.metadata?.['twitter:image'] != null &&
-        parsedDocsConfig.metadata['twitter:image'].type === 'filepath'
+        parsedDocsConfig.metadata?.["twitter:image"] != null &&
+        parsedDocsConfig.metadata["twitter:image"].type === "filepath"
     ) {
-        filepaths.add(parsedDocsConfig.metadata['twitter:image'].value)
+        filepaths.add(parsedDocsConfig.metadata["twitter:image"].value)
     }
 
     /* typography */
@@ -120,7 +120,7 @@ export async function collectFilesFromDocsConfig({
     }
 
     /* product image files */
-    if (parsedDocsConfig.navigation.type === 'productgroup') {
+    if (parsedDocsConfig.navigation.type === "productgroup") {
         parsedDocsConfig.navigation.products.forEach((product) => {
             if (product.image != null) {
                 filepaths.add(product.image)
@@ -157,7 +157,7 @@ async function collectIconsFromNavigation({
     const filepaths = new Set<AbsoluteFilePath>()
 
     switch (navigation.type) {
-        case 'untabbed':
+        case "untabbed":
             await Promise.all(
                 navigation.items.map((item) =>
                     collectIconsFromNavigationItem({
@@ -168,7 +168,7 @@ async function collectIconsFromNavigation({
                 )
             )
             break
-        case 'tabbed':
+        case "tabbed":
             await Promise.all(
                 navigation.items.map(async (tab) => {
                     if (tab.icon != null) {
@@ -178,7 +178,7 @@ async function collectIconsFromNavigation({
                             docsWorkspace
                         })
                     }
-                    if (tab.child.type === 'layout' && tab.child.layout != null) {
+                    if (tab.child.type === "layout" && tab.child.layout != null) {
                         await Promise.all(
                             tab.child.layout.map((item) =>
                                 collectIconsFromNavigationItem({
@@ -192,7 +192,7 @@ async function collectIconsFromNavigation({
                 })
             )
             break
-        case 'versioned':
+        case "versioned":
             await Promise.all(
                 navigation.versions.map(async (version) => {
                     if (version.landingPage != null) {
@@ -210,7 +210,7 @@ async function collectIconsFromNavigation({
                 })
             )
             break
-        case 'productgroup':
+        case "productgroup":
             await Promise.all(
                 navigation.products.map(async (product) => {
                     if (product.landingPage != null) {
@@ -243,7 +243,7 @@ async function collectIconsFromNavigationItem({
     docsWorkspace: DocsWorkspace
 }): Promise<void> {
     switch (item.type) {
-        case 'page':
+        case "page":
             if (item.icon != null) {
                 await addIconToFilepaths({
                     iconPath: item.icon,
@@ -252,7 +252,7 @@ async function collectIconsFromNavigationItem({
                 })
             }
             break
-        case 'section':
+        case "section":
             if (item.icon != null) {
                 await addIconToFilepaths({
                     iconPath: item.icon,
@@ -270,7 +270,7 @@ async function collectIconsFromNavigationItem({
                 )
             )
             break
-        case 'apiSection':
+        case "apiSection":
             if (item.icon != null) {
                 await addIconToFilepaths({
                     iconPath: item.icon,
@@ -279,7 +279,7 @@ async function collectIconsFromNavigationItem({
                 })
             }
             break
-        case 'link':
+        case "link":
             if (item.icon != null) {
                 await addIconToFilepaths({
                     iconPath: item.icon,
@@ -288,7 +288,7 @@ async function collectIconsFromNavigationItem({
                 })
             }
             break
-        case 'changelog':
+        case "changelog":
             if (item.icon != null) {
                 await addIconToFilepaths({
                     iconPath: item.icon,

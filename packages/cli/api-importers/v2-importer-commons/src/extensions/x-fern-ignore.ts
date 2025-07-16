@@ -1,4 +1,4 @@
-import { AbstractExtension } from '../AbstractExtension'
+import { AbstractExtension } from "../AbstractExtension"
 
 export declare namespace FernIgnoreExtension {
     export interface Args extends AbstractExtension.Args {
@@ -8,7 +8,7 @@ export declare namespace FernIgnoreExtension {
 
 export class FernIgnoreExtension extends AbstractExtension<boolean> {
     private readonly operation: object
-    public readonly key = 'x-fern-ignore'
+    public readonly key = "x-fern-ignore"
 
     constructor({ breadcrumbs, operation, context }: FernIgnoreExtension.Args) {
         super({ breadcrumbs, context })
@@ -21,9 +21,9 @@ export class FernIgnoreExtension extends AbstractExtension<boolean> {
             return undefined
         }
 
-        if (typeof extensionValue !== 'boolean') {
+        if (typeof extensionValue !== "boolean") {
             this.context.errorCollector.collect({
-                message: 'Received unexpected non-boolean value for x-fern-ignore',
+                message: "Received unexpected non-boolean value for x-fern-ignore",
                 path: this.breadcrumbs
             })
             return undefined

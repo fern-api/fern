@@ -1,15 +1,15 @@
-import { OpenAPIV3_1 } from 'openapi-types'
+import { OpenAPIV3_1 } from "openapi-types"
 
-import { Examples } from '@fern-api/core-utils'
+import { Examples } from "@fern-api/core-utils"
 
-import { APIError, AbstractConverter, AbstractConverterContext } from '..'
+import { APIError, AbstractConverter, AbstractConverterContext } from ".."
 
 export declare namespace ExampleConverter {
     export interface Args extends AbstractConverter.Args<AbstractConverterContext<object>> {
         schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
         example: unknown
         depth?: number
-        exampleGenerationStrategy?: 'request' | 'response'
+        exampleGenerationStrategy?: "request" | "response"
         generateOptionalProperties?: boolean
     }
 
@@ -72,7 +72,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     private readonly schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
     private readonly example: unknown
     private readonly depth: number
-    private readonly exampleGenerationStrategy: 'request' | 'response' | undefined
+    private readonly exampleGenerationStrategy: "request" | "response" | undefined
     private readonly generateOptionalProperties: boolean
     private readonly seenRefs: Set<string>
 
@@ -100,7 +100,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             return {
                 isValid: true,
                 coerced: false,
-                validExample: typeof this.example !== 'undefined' ? this.example : {},
+                validExample: typeof this.example !== "undefined" ? this.example : {},
                 errors: []
             }
         }
@@ -129,13 +129,13 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 validExample: null,
                 errors: [
                     {
-                        message: 'Schema is not resolvable',
+                        message: "Schema is not resolvable",
                         path: this.breadcrumbs
                     }
                 ]
             }
         }
-        if (typeof resolvedSchema !== 'object') {
+        if (typeof resolvedSchema !== "object") {
             return {
                 isValid: false,
                 coerced: false,
@@ -148,7 +148,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 ]
             }
         }
-        if ('nullable' in resolvedSchema && resolvedSchema.nullable === true && this.example === null) {
+        if ("nullable" in resolvedSchema && resolvedSchema.nullable === true && this.example === null) {
             return {
                 isValid: true,
                 coerced: false,
@@ -163,11 +163,11 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             })
         }
 
-        if (resolvedSchema.type == 'null') {
+        if (resolvedSchema.type == "null") {
             return this.convertNull()
         }
 
-        if (resolvedSchema.type == 'boolean') {
+        if (resolvedSchema.type == "boolean") {
             return this.convertBoolean()
         }
 
@@ -175,43 +175,43 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             return this.convertEnum(resolvedSchema)
         }
 
-        if (resolvedSchema.type == 'number') {
+        if (resolvedSchema.type == "number") {
             return this.convertNumber()
         }
 
-        if (resolvedSchema.type == 'string') {
+        if (resolvedSchema.type == "string") {
             return this.convertString()
         }
 
-        if (resolvedSchema.type == 'integer') {
+        if (resolvedSchema.type == "integer") {
             return this.convertInteger()
         }
 
-        if (resolvedSchema.type == 'array') {
+        if (resolvedSchema.type == "array") {
             return this.convertArray({
                 resolvedSchema
             })
         }
 
-        if ('oneOf' in resolvedSchema && resolvedSchema.oneOf != null) {
+        if ("oneOf" in resolvedSchema && resolvedSchema.oneOf != null) {
             return this.convertOneOf({
                 resolvedSchema
             })
         }
 
-        if ('anyOf' in resolvedSchema && resolvedSchema.anyOf != null) {
+        if ("anyOf" in resolvedSchema && resolvedSchema.anyOf != null) {
             return this.convertAnyOf({
                 resolvedSchema
             })
         }
 
-        if (resolvedSchema.type == 'object' || resolvedSchema.properties != null || resolvedSchema.allOf != null) {
+        if (resolvedSchema.type == "object" || resolvedSchema.properties != null || resolvedSchema.allOf != null) {
             return this.convertObject({
                 resolvedSchema
             })
         }
 
-        if (typeof resolvedSchema === 'object' && Object.keys(resolvedSchema).length === 0) {
+        if (typeof resolvedSchema === "object" && Object.keys(resolvedSchema).length === 0) {
             return {
                 isValid: true,
                 coerced: false,
@@ -256,7 +256,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     }
 
     private convertBoolean(): ExampleConverter.Output {
-        const isValid = typeof this.example === 'boolean'
+        const isValid = typeof this.example === "boolean"
         if (isValid) {
             return {
                 isValid,
@@ -280,7 +280,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
               })?.const
             : this.schema.const
 
-        if (typeof resolvedDefault === 'boolean' || typeof resolvedConst === 'boolean') {
+        if (typeof resolvedDefault === "boolean" || typeof resolvedConst === "boolean") {
             return {
                 isValid: true,
                 coerced: false,
@@ -344,7 +344,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     }
 
     private convertNumber(): ExampleConverter.Output {
-        if (typeof this.example === 'number') {
+        if (typeof this.example === "number") {
             return {
                 isValid: true,
                 coerced: false,
@@ -370,7 +370,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                   skipErrorCollector: true
               })?.default
             : this.schema.default
-        if (typeof resolvedDefault === 'number') {
+        if (typeof resolvedDefault === "number") {
             return {
                 isValid: true,
                 coerced: false,
@@ -393,7 +393,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     }
 
     private convertString(): ExampleConverter.Output {
-        if (typeof this.example === 'string') {
+        if (typeof this.example === "string") {
             return {
                 isValid: true,
                 coerced: false,
@@ -402,7 +402,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             }
         }
 
-        if (typeof this.example !== 'object' && !Array.isArray(this.example) && this.example != null) {
+        if (typeof this.example !== "object" && !Array.isArray(this.example) && this.example != null) {
             const stringValue = String(this.example)
             return {
                 isValid: true,
@@ -420,7 +420,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
               })?.default
             : this.schema.default
 
-        if (typeof resolvedDefault === 'string') {
+        if (typeof resolvedDefault === "string") {
             return {
                 isValid: true,
                 coerced: false,
@@ -439,9 +439,9 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             : this.schema
 
         const dateFallbackExample =
-            resolvedSchema?.format === 'date'
+            resolvedSchema?.format === "date"
                 ? this.EXAMPLE_DATE
-                : resolvedSchema?.format === 'date-time'
+                : resolvedSchema?.format === "date-time"
                   ? this.EXAMPLE_DATE_TIME
                   : this.EXAMPLE_STRING
 
@@ -459,7 +459,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     }
 
     private convertInteger(): ExampleConverter.Output {
-        if (typeof this.example === 'number' && Number.isInteger(this.example)) {
+        if (typeof this.example === "number" && Number.isInteger(this.example)) {
             return {
                 isValid: true,
                 coerced: false,
@@ -468,7 +468,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             }
         }
 
-        if (typeof this.example === 'string') {
+        if (typeof this.example === "string") {
             const num = Number(this.example)
             if (!isNaN(num) && Number.isInteger(num)) {
                 return {
@@ -487,7 +487,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                   skipErrorCollector: true
               })?.default
             : this.schema.default
-        if (typeof resolvedDefault === 'number' && Number.isInteger(resolvedDefault)) {
+        if (typeof resolvedDefault === "number" && Number.isInteger(resolvedDefault)) {
             return {
                 isValid: true,
                 coerced: false,
@@ -510,18 +510,18 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     }
 
     private convertArray({ resolvedSchema }: { resolvedSchema: OpenAPIV3_1.SchemaObject }): ExampleConverter.Output {
-        if (resolvedSchema.type != 'array') {
+        if (resolvedSchema.type != "array") {
             return { isValid: false, coerced: false, validExample: null, errors: [] }
         }
         if (resolvedSchema.items == null) {
-            resolvedSchema.items = { type: 'string' }
+            resolvedSchema.items = { type: "string" }
         }
         const usedFallbackExample = this.example == null
         const maybeExampleArray = this.example ?? resolvedSchema.example
         const exampleArray = Array.isArray(maybeExampleArray) ? maybeExampleArray : [maybeExampleArray]
         const results = exampleArray.map((item) => {
             const exampleConverter = new ExampleConverter({
-                breadcrumbs: [...this.breadcrumbs, 'items'],
+                breadcrumbs: [...this.breadcrumbs, "items"],
                 context: this.context,
                 schema: resolvedSchema.items,
                 example: item,
@@ -544,15 +544,15 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     }
 
     private convertObject({ resolvedSchema }: { resolvedSchema: OpenAPIV3_1.SchemaObject }): ExampleConverter.Output {
-        if (resolvedSchema.type == 'object' && resolvedSchema.properties == null && resolvedSchema.allOf == null) {
+        if (resolvedSchema.type == "object" && resolvedSchema.properties == null && resolvedSchema.allOf == null) {
             return { isValid: true, coerced: false, validExample: this.example ?? {}, errors: [] }
         }
 
         const exampleObj =
-            typeof this.example !== 'object' || this.example == null ? {} : (this.example as Record<string, unknown>)
+            typeof this.example !== "object" || this.example == null ? {} : (this.example as Record<string, unknown>)
 
         const resultsByKey = Object.entries(resolvedSchema.properties ?? {}).map(([key, property]) => {
-            if (typeof property !== 'object') {
+            if (typeof property !== "object") {
                 return { key, result: { isValid: true, coerced: false, validExample: undefined, errors: [] } }
             }
 
@@ -567,28 +567,28 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             }
 
             if (
-                'readOnly' in property &&
+                "readOnly" in property &&
                 property.readOnly === true &&
-                'writeOnly' in property &&
+                "writeOnly" in property &&
                 property.writeOnly === true
             ) {
                 return { key, result: { isValid: true, coerced: false, validExample: undefined, errors: [] } }
             }
             // TODO: Do we want to collect an error when the request / response example does not respect the readOnly / writeOnly property?
-            if ('readOnly' in property && property.readOnly === true && this.exampleGenerationStrategy === 'request') {
+            if ("readOnly" in property && property.readOnly === true && this.exampleGenerationStrategy === "request") {
                 return { key, result: { isValid: true, coerced: false, validExample: undefined, errors: [] } }
             }
             if (
-                'writeOnly' in property &&
+                "writeOnly" in property &&
                 property.writeOnly === true &&
-                this.exampleGenerationStrategy === 'response'
+                this.exampleGenerationStrategy === "response"
             ) {
                 return { key, result: { isValid: true, coerced: false, validExample: undefined, errors: [] } }
             }
             const propertyIsOmittedFromExample =
                 !(key in exampleObj) ||
-                (!('nullable' in property) && exampleObj[key] == null) ||
-                ('nullable' in property && property.nullable === true && exampleObj[key] === undefined)
+                (!("nullable" in property) && exampleObj[key] == null) ||
+                ("nullable" in property && property.nullable === true && exampleObj[key] === undefined)
             const propertyIsOptional = !resolvedSchema.required?.includes(key)
 
             if (propertyIsOmittedFromExample && propertyIsOptional) {
@@ -646,7 +646,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         )
 
         for (const result of allOfResults) {
-            if (typeof result.validExample === 'object' && result.validExample !== null) {
+            if (typeof result.validExample === "object" && result.validExample !== null) {
                 const validExampleObj = result.validExample as Record<string, unknown>
                 example = {
                     ...example,
@@ -659,15 +659,15 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         const additionalPropertiesResults: Array<{ key: string; result: ExampleConverter.Output }> = []
         if (resolvedSchema.additionalProperties !== false) {
             const additionalPropertiesSchema: OpenAPIV3_1.SchemaObject =
-                typeof resolvedSchema.additionalProperties === 'object'
+                typeof resolvedSchema.additionalProperties === "object"
                     ? resolvedSchema.additionalProperties
                     : ({
                           oneOf: [
-                              { type: 'string' },
-                              { type: 'number' },
-                              { type: 'boolean' },
-                              { type: 'object' },
-                              { type: 'array' }
+                              { type: "string" },
+                              { type: "number" },
+                              { type: "boolean" },
+                              { type: "object" },
+                              { type: "array" }
                           ]
                           // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                       } as any)
@@ -703,7 +703,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             const firstValidNonObject = allOfResults.find(
                 (result) =>
                     result.validExample !== undefined &&
-                    (typeof result.validExample !== 'object' || result.validExample === null)
+                    (typeof result.validExample !== "object" || result.validExample === null)
             )
             if (firstValidNonObject) {
                 example = firstValidNonObject.validExample
@@ -770,7 +770,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     }
 
     private convertOneOf({ resolvedSchema }: { resolvedSchema: OpenAPIV3_1.SchemaObject }): ExampleConverter.Output {
-        if (!('oneOf' in resolvedSchema) || resolvedSchema.oneOf == null) {
+        if (!("oneOf" in resolvedSchema) || resolvedSchema.oneOf == null) {
             return { isValid: false, coerced: false, validExample: null, errors: [] }
         }
         const results = resolvedSchema.oneOf.map((subSchema, index) => {
@@ -807,7 +807,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     }
 
     private convertAnyOf({ resolvedSchema }: { resolvedSchema: OpenAPIV3_1.SchemaObject }): ExampleConverter.Output {
-        if (!('anyOf' in resolvedSchema) || resolvedSchema.anyOf == null) {
+        if (!("anyOf" in resolvedSchema) || resolvedSchema.anyOf == null) {
             return { isValid: false, coerced: false, validExample: null, errors: [] }
         }
         const results = resolvedSchema.anyOf.map((subSchema, index) => {
@@ -861,10 +861,10 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         if (resolvedSchema == null) {
             return undefined
         }
-        if ('example' in resolvedSchema) {
+        if ("example" in resolvedSchema) {
             return resolvedSchema.example as Type
         }
-        if ('examples' in resolvedSchema) {
+        if ("examples" in resolvedSchema) {
             return Object.values(resolvedSchema.examples ?? {})[0] as Type
         }
         return undefined
@@ -872,8 +872,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
 
     private isDeprecatedProperty(
         property: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
-    ): property is OpenAPIV3_1.SchemaObject & { availability: 'deprecated' } {
-        return property != null && 'availability' in property && property.availability === 'deprecated'
+    ): property is OpenAPIV3_1.SchemaObject & { availability: "deprecated" } {
+        return property != null && "availability" in property && property.availability === "deprecated"
     }
 
     private isRequiredProperty({

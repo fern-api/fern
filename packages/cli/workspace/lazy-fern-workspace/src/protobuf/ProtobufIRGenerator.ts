@@ -1,10 +1,10 @@
-import { chmod, cp, writeFile } from 'fs/promises'
-import path from 'path'
-import tmp from 'tmp-promise'
+import { chmod, cp, writeFile } from "fs/promises"
+import path from "path"
+import tmp from "tmp-promise"
 
-import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
-import { createLoggingExecutable, runExeca } from '@fern-api/logging-execa'
-import { TaskContext } from '@fern-api/task-context'
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { createLoggingExecutable, runExeca } from "@fern-api/logging-execa"
+import { TaskContext } from "@fern-api/task-context"
 
 import {
     PROTOBUF_EXPORT_CONFIG_V1,
@@ -16,7 +16,7 @@ import {
     PROTOBUF_SHELL_PROXY,
     PROTOBUF_SHELL_PROXY_FILENAME,
     createEmptyProtobufLogger
-} from './utils'
+} from "./utils"
 
 export class ProtobufIRGenerator {
     private context: TaskContext
@@ -98,13 +98,13 @@ export class ProtobufIRGenerator {
         absoluteFilepathToProtobufTarget: AbsoluteFilePath
     }): Promise<void> {
         // Use buf export to get all relevant .proto files
-        const which = createLoggingExecutable('which', {
+        const which = createLoggingExecutable("which", {
             cwd: protobufGeneratorConfigPath,
             logger: createEmptyProtobufLogger()
         })
 
         try {
-            await which(['buf'])
+            await which(["buf"])
         } catch (err) {
             this.context.failAndThrow(
                 "Missing required dependency; please install 'buf' to continue (e.g. 'brew install buf')."
@@ -113,29 +113,29 @@ export class ProtobufIRGenerator {
 
         // Create a temporary buf config file to prevent conflicts
         // Try buf export with v1 first, then fall back to v2 if it fails
-        for (const version of ['v1', 'v2']) {
+        for (const version of ["v1", "v2"]) {
             this.context.logger.info(`Using buf export with version: ${version}`)
 
-            const tmpBufConfigFile = await tmp.file({ postfix: '.yaml' })
-            const configContent = version === 'v1' ? PROTOBUF_EXPORT_CONFIG_V1 : PROTOBUF_EXPORT_CONFIG_V2
-            await writeFile(tmpBufConfigFile.path, configContent, 'utf8')
+            const tmpBufConfigFile = await tmp.file({ postfix: ".yaml" })
+            const configContent = version === "v1" ? PROTOBUF_EXPORT_CONFIG_V1 : PROTOBUF_EXPORT_CONFIG_V2
+            await writeFile(tmpBufConfigFile.path, configContent, "utf8")
 
             try {
                 const result = await runExeca(
                     this.context.logger,
-                    'buf',
+                    "buf",
                     [
-                        'export',
-                        '--path',
+                        "export",
+                        "--path",
                         absoluteFilepathToProtobufTarget,
-                        '--config',
+                        "--config",
                         AbsoluteFilePath.of(tmpBufConfigFile.path),
-                        '--output',
+                        "--output",
                         protobufGeneratorConfigPath
                     ],
                     {
                         cwd: absoluteFilepathToProtobufRoot,
-                        stdio: 'pipe'
+                        stdio: "pipe"
                     }
                 )
 
@@ -147,7 +147,7 @@ export class ProtobufIRGenerator {
                 return
             } catch (error) {
                 await tmpBufConfigFile.cleanup()
-                if (version === 'v2') {
+                if (version === "v2") {
                     throw error
                 }
             }
@@ -167,9 +167,9 @@ export class ProtobufIRGenerator {
             filter: (src) => {
                 const basename = path.basename(src)
                 return (
-                    basename !== 'buf.lock' &&
-                    basename !== 'buf.yaml' &&
-                    !(basename.startsWith('buf.gen.') && basename.endsWith('.yaml'))
+                    basename !== "buf.lock" &&
+                    basename !== "buf.yaml" &&
+                    !(basename.startsWith("buf.gen.") && basename.endsWith(".yaml"))
                 )
             }
         })
@@ -182,18 +182,18 @@ export class ProtobufIRGenerator {
     }): Promise<void> {
         // Initialize package.json
         await writeFile(
-            join(protobufGeneratorConfigPath, RelativeFilePath.of('package.json')),
+            join(protobufGeneratorConfigPath, RelativeFilePath.of("package.json")),
             PROTOBUF_MODULE_PACKAGE_JSON
         )
 
-        await runExeca(this.context.logger, 'npm', ['install'], {
+        await runExeca(this.context.logger, "npm", ["install"], {
             cwd: protobufGeneratorConfigPath,
-            stdio: 'ignore'
+            stdio: "ignore"
         })
 
-        await runExeca(this.context.logger, 'npm', ['install', '-g', 'fern-api'], {
+        await runExeca(this.context.logger, "npm", ["install", "-g", "fern-api"], {
             cwd: protobufGeneratorConfigPath,
-            stdio: 'ignore'
+            stdio: "ignore"
         })
 
         // Write buf config
@@ -209,31 +209,31 @@ export class ProtobufIRGenerator {
     }
 
     private async doGenerateLocal({ cwd }: { cwd: AbsoluteFilePath }): Promise<AbsoluteFilePath> {
-        const which = createLoggingExecutable('which', {
+        const which = createLoggingExecutable("which", {
             cwd,
             logger: createEmptyProtobufLogger()
         })
 
         try {
-            await which(['buf'])
+            await which(["buf"])
         } catch (err) {
             this.context.failAndThrow(
                 "Missing required dependency; please install 'buf' to continue (e.g. 'brew install buf')."
             )
         }
 
-        const buf = createLoggingExecutable('buf', {
+        const buf = createLoggingExecutable("buf", {
             cwd,
             logger: createEmptyProtobufLogger()
         })
 
-        await buf(['config', 'init'])
-        await buf(['generate'])
+        await buf(["config", "init"])
+        await buf(["generate"])
 
         return join(cwd, RelativeFilePath.of(PROTOBUF_GENERATOR_OUTPUT_FILEPATH))
     }
 
     private async generateRemote(): Promise<AbsoluteFilePath> {
-        this.context.failAndThrow('Remote Protobuf generation is unimplemented.')
+        this.context.failAndThrow("Remote Protobuf generation is unimplemented.")
     }
 }

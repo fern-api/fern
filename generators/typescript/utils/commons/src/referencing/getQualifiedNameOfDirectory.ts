@@ -1,10 +1,10 @@
-import path from 'path'
+import path from "path"
 
-import { keys } from '@fern-api/core-utils'
+import { keys } from "@fern-api/core-utils"
 
-import { ExportedDirectory, ExportsManager } from '../exports-manager'
+import { ExportedDirectory, ExportsManager } from "../exports-manager"
 
-const DEFAULT_SRC_DIRECTORY = 'src'
+const DEFAULT_SRC_DIRECTORY = "src"
 
 export declare namespace getQualifiedNameOfDirectory {
     export interface Args<QualifiedName> {
@@ -78,10 +78,10 @@ function splitQualifiedName<QualifiedName>({
 
     const [first, ...rest] = pathToDirectory
     if (first == null) {
-        throw new Error('Cannot get qualified name because path is empty')
+        throw new Error("Cannot get qualified name because path is empty")
     }
     if (first.exportDeclaration?.namespaceExport == null) {
-        throw new Error('Cannot get qualified name because path is not namespace-exported')
+        throw new Error("Cannot get qualified name because path is not namespace-exported")
     }
 
     return { initial: convertToQualifiedName(first.exportDeclaration.namespaceExport), remainingDirectories: rest }

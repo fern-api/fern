@@ -1,8 +1,8 @@
-import { writePostmanCollection } from './writePostmanCollection'
+import { writePostmanCollection } from "./writePostmanCollection"
 
 const pathToJson = process.argv[process.argv.length - 1]
 if (pathToJson == null) {
-    throw new Error('No argument for config filepath.')
+    throw new Error("No argument for config filepath.")
 }
 
 void writePostmanCollection(pathToJson)

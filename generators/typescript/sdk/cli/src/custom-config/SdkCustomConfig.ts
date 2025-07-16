@@ -14,7 +14,7 @@ export interface SdkCustomConfig {
     includeUtilsOnUnionMembers: boolean
     includeOtherInUnionTypes: boolean
     requireDefaultEnvironment: boolean
-    defaultTimeoutInSeconds: number | 'infinity' | undefined
+    defaultTimeoutInSeconds: number | "infinity" | undefined
     skipResponseValidation: boolean
     extraDependencies: Record<string, string>
     extraDevDependencies: Record<string, string>
@@ -38,10 +38,10 @@ export interface SdkCustomConfig {
     noScripts: boolean | undefined
     useBigInt: boolean | undefined
     useLegacyExports: boolean | undefined
-    streamType: 'wrapper' | 'web'
-    fileResponseType: 'stream' | 'binary-response'
-    formDataSupport: 'Node16' | 'Node18'
-    fetchSupport: 'node-fetch' | 'native'
+    streamType: "wrapper" | "web"
+    fileResponseType: "stream" | "binary-response"
+    formDataSupport: "Node16" | "Node18"
+    fetchSupport: "node-fetch" | "native"
     packagePath: string | undefined
     omitFernHeaders: boolean | undefined
     useDefaultRequestParameterValues: boolean | undefined

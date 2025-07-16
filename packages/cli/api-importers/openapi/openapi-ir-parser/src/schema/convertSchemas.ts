@@ -1,7 +1,7 @@
-import { size } from 'lodash-es'
-import { OpenAPIV3 } from 'openapi-types'
+import { size } from "lodash-es"
+import { OpenAPIV3 } from "openapi-types"
 
-import { Logger } from '@fern-api/logger'
+import { Logger } from "@fern-api/logger"
 import {
     Availability,
     Encoding,
@@ -13,37 +13,37 @@ import {
     SchemaWithExample,
     SdkGroupName,
     Source
-} from '@fern-api/openapi-ir'
+} from "@fern-api/openapi-ir"
 
-import { getExtension } from '../getExtension'
-import { OpenAPIExtension } from '../openapi/v3/extensions/extensions'
-import { FernOpenAPIExtension } from '../openapi/v3/extensions/fernExtensions'
-import { getExamples } from '../openapi/v3/extensions/getExamples'
-import { getFernEncoding } from '../openapi/v3/extensions/getFernEncoding'
-import { getFernEnum } from '../openapi/v3/extensions/getFernEnum'
-import { getFernTypeExtension } from '../openapi/v3/extensions/getFernTypeExtension'
-import { getSourceExtension } from '../openapi/v3/extensions/getSourceExtension'
-import { getValueIfBoolean } from '../utils/getValue'
-import { SchemaParserContext } from './SchemaParserContext'
-import { convertAdditionalProperties, wrapMap } from './convertAdditionalProperties'
-import { convertArray } from './convertArray'
-import { convertAvailability } from './convertAvailability'
-import { convertDiscriminatedOneOf, convertDiscriminatedOneOfWithVariants } from './convertDiscriminatedOneOf'
-import { convertEncoding } from './convertEncoding'
-import { convertEnum } from './convertEnum'
-import { convertInteger } from './convertInteger'
-import { convertLiteral } from './convertLiteral'
-import { convertNumber } from './convertNumber'
-import { convertObject } from './convertObject'
-import { convertUndiscriminatedOneOf, convertUndiscriminatedOneOfWithDiscriminant } from './convertUndiscriminatedOneOf'
-import { getDefaultAsString } from './defaults/getDefault'
-import { getExampleAsArray, getExampleAsBoolean, getExampleAsNumber, getExamplesString } from './examples/getExample'
-import { getBreadcrumbsFromReference } from './utils/getBreadcrumbsFromReference'
-import { getGeneratedTypeName } from './utils/getSchemaName'
-import { isReferenceObject } from './utils/isReferenceObject'
+import { getExtension } from "../getExtension"
+import { OpenAPIExtension } from "../openapi/v3/extensions/extensions"
+import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions"
+import { getExamples } from "../openapi/v3/extensions/getExamples"
+import { getFernEncoding } from "../openapi/v3/extensions/getFernEncoding"
+import { getFernEnum } from "../openapi/v3/extensions/getFernEnum"
+import { getFernTypeExtension } from "../openapi/v3/extensions/getFernTypeExtension"
+import { getSourceExtension } from "../openapi/v3/extensions/getSourceExtension"
+import { getValueIfBoolean } from "../utils/getValue"
+import { SchemaParserContext } from "./SchemaParserContext"
+import { convertAdditionalProperties, wrapMap } from "./convertAdditionalProperties"
+import { convertArray } from "./convertArray"
+import { convertAvailability } from "./convertAvailability"
+import { convertDiscriminatedOneOf, convertDiscriminatedOneOfWithVariants } from "./convertDiscriminatedOneOf"
+import { convertEncoding } from "./convertEncoding"
+import { convertEnum } from "./convertEnum"
+import { convertInteger } from "./convertInteger"
+import { convertLiteral } from "./convertLiteral"
+import { convertNumber } from "./convertNumber"
+import { convertObject } from "./convertObject"
+import { convertUndiscriminatedOneOf, convertUndiscriminatedOneOfWithDiscriminant } from "./convertUndiscriminatedOneOf"
+import { getDefaultAsString } from "./defaults/getDefault"
+import { getExampleAsArray, getExampleAsBoolean, getExampleAsNumber, getExamplesString } from "./examples/getExample"
+import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference"
+import { getGeneratedTypeName } from "./utils/getSchemaName"
+import { isReferenceObject } from "./utils/isReferenceObject"
 
-export const SCHEMA_REFERENCE_PREFIX = '#/components/schemas/'
-export const SCHEMA_INLINE_REFERENCE_PREFIX = '#/components/responses/'
+export const SCHEMA_REFERENCE_PREFIX = "#/components/schemas/"
+export const SCHEMA_INLINE_REFERENCE_PREFIX = "#/components/responses/"
 
 export function convertSchema(
     schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject,
@@ -106,7 +106,7 @@ export function convertReferenceObject(
     source: Source,
     namespace: string | undefined
 ): SchemaWithExample {
-    const referenceSchema = schema.$ref.includes('properties')
+    const referenceSchema = schema.$ref.includes("properties")
         ? convertSchemaObject(
               context.resolveSchemaReference(schema),
               wrapAsNullable,
@@ -142,7 +142,7 @@ function getTitleAsName(title: string | undefined): string | undefined {
     if (title == null) {
         return undefined
     }
-    if (title.includes(' ')) {
+    if (title.includes(" ")) {
         return undefined
     }
     if (!/^[a-zA-Z]+$/.test(title)) {
@@ -163,7 +163,7 @@ export function convertSchemaObject(
     referencedAsRequest = false,
     fallback?: string | number | boolean | unknown[]
 ): SchemaWithExample {
-    if (typeof schema === 'string') {
+    if (typeof schema === "string") {
         schema = { type: schema } as OpenAPIV3.SchemaObject
     }
     const nameOverride =
@@ -172,7 +172,7 @@ export function convertSchemaObject(
     const mixedGroupName =
         getExtension(schema, FernOpenAPIExtension.SDK_GROUP_NAME) ??
         getExtension<string[]>(schema, OpenAPIExtension.TAGS)?.[0]
-    let groupName: SdkGroupName = (typeof mixedGroupName === 'string' ? [mixedGroupName] : mixedGroupName) ?? []
+    let groupName: SdkGroupName = (typeof mixedGroupName === "string" ? [mixedGroupName] : mixedGroupName) ?? []
     groupName = context.resolveGroupName(groupName)
 
     const generatedName = getGeneratedTypeName(breadcrumbs, context.options.preserveSchemaIds)
@@ -210,7 +210,7 @@ export function convertSchemaObject(
 
     // handle type array
     if (Array.isArray(schema.type)) {
-        const nullIndex = schema.type.indexOf('null')
+        const nullIndex = schema.type.indexOf("null")
         const hasNull = nullIndex !== -1
         if (schema.type.length === 1) {
             schema.type = schema.type[0]
@@ -251,7 +251,7 @@ export function convertSchemaObject(
     // enums
     if (
         schema.enum != null &&
-        (schema.type === 'string' || schema.type == null || (schema.type as string) === 'enum')
+        (schema.type === "string" || schema.type == null || (schema.type as string) === "enum")
     ) {
         if (!isListOfStrings(schema.enum)) {
             // If enum is not a list of strings, just type as a string.
@@ -313,9 +313,9 @@ export function convertSchemaObject(
 
     // List of types that is undiscriminated union
     if (isListOfStrings(schema.type) && schema.type.length > 1) {
-        const wrapVariantAsNullable = schema.type.includes('null')
+        const wrapVariantAsNullable = schema.type.includes("null")
         const subtypes: OpenAPIV3.SchemaObject[] = schema.type
-            .filter((val) => val !== 'null')
+            .filter((val) => val !== "null")
             .map((type) => {
                 return {
                     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
@@ -341,7 +341,7 @@ export function convertSchemaObject(
     }
 
     // primitive types
-    if (schema.type === 'boolean') {
+    if (schema.type === "boolean") {
         const literalValue = getExtension<boolean>(schema, FernOpenAPIExtension.BOOLEAN_LITERAL)
         if (literalValue != null) {
             return wrapLiteral({
@@ -372,7 +372,7 @@ export function convertSchemaObject(
         })
     }
 
-    if (schema.type === 'number') {
+    if (schema.type === "number") {
         return convertNumber({
             nameOverride,
             generatedName,
@@ -392,7 +392,7 @@ export function convertSchemaObject(
             groupName
         })
     }
-    if (schema.type === 'integer') {
+    if (schema.type === "integer") {
         return convertInteger({
             nameOverride,
             generatedName,
@@ -412,12 +412,12 @@ export function convertSchemaObject(
             groupName
         })
     }
-    if ((schema.type as string) === 'float') {
+    if ((schema.type as string) === "float") {
         return convertNumber({
             nameOverride,
             generatedName,
             title,
-            format: 'float',
+            format: "float",
             _default: schema.default,
             minimum: schema.minimum,
             maximum: schema.maximum,
@@ -432,8 +432,8 @@ export function convertSchemaObject(
             groupName
         })
     }
-    if (schema.type === 'string') {
-        if (schema.format === 'date-time') {
+    if (schema.type === "string") {
+        if (schema.format === "date-time") {
             return wrapPrimitive({
                 nameOverride,
                 generatedName,
@@ -449,7 +449,7 @@ export function convertSchemaObject(
             })
         }
 
-        if (schema.format === 'date' && context.options.typeDatesAsStrings === false) {
+        if (schema.format === "date" && context.options.typeDatesAsStrings === false) {
             return wrapPrimitive({
                 nameOverride,
                 generatedName,
@@ -465,7 +465,7 @@ export function convertSchemaObject(
             })
         }
 
-        if (schema.format === 'json-string') {
+        if (schema.format === "json-string") {
             return SchemaWithExample.unknown({
                 nameOverride,
                 generatedName,
@@ -478,7 +478,7 @@ export function convertSchemaObject(
             })
         }
 
-        const maybeConstValue = getProperty<string>(schema, 'const')
+        const maybeConstValue = getProperty<string>(schema, "const")
         if (maybeConstValue != null) {
             return wrapLiteral({
                 nameOverride,
@@ -514,7 +514,7 @@ export function convertSchemaObject(
     }
 
     // arrays
-    if (schema.type === 'array') {
+    if (schema.type === "array") {
         return convertArray({
             nameOverride,
             generatedName,
@@ -574,7 +574,7 @@ export function convertSchemaObject(
         }
     }
 
-    if (schema.type === 'object' && schema.discriminator != null && schema.discriminator.mapping != null) {
+    if (schema.type === "object" && schema.discriminator != null && schema.discriminator.mapping != null) {
         if (!context.options.discriminatedUnionV2) {
             return convertDiscriminatedOneOf({
                 nameOverride,
@@ -665,7 +665,7 @@ export function convertSchemaObject(
                     wrapAsNullable,
                     context,
                     subtypes: schema.oneOf.filter((schema) => {
-                        return isReferenceObject(schema) || (schema.type as string) !== 'null'
+                        return isReferenceObject(schema) || (schema.type as string) !== "null"
                     }),
                     encoding,
                     namespace,
@@ -687,9 +687,9 @@ export function convertSchemaObject(
             if (schema.oneOf.length === 2 && schema.oneOf[0] != null && schema.oneOf[1] != null) {
                 const firstSchema = schema.oneOf[0]
                 const secondSchema = schema.oneOf[1]
-                if (!isReferenceObject(firstSchema) && (firstSchema.type as string) === 'null') {
+                if (!isReferenceObject(firstSchema) && (firstSchema.type as string) === "null") {
                     return convertSchema(secondSchema, true, context, breadcrumbs, source, namespace)
-                } else if (!isReferenceObject(secondSchema) && (secondSchema.type as string) === 'null') {
+                } else if (!isReferenceObject(secondSchema) && (secondSchema.type as string) === "null") {
                     return convertSchema(firstSchema, true, context, breadcrumbs, source, namespace)
                 }
             }
@@ -739,7 +739,7 @@ export function convertSchemaObject(
 
             const hasNullValue =
                 schema.oneOf.filter((schema) => {
-                    return !isReferenceObject(schema) && (schema.type as string) === 'null'
+                    return !isReferenceObject(schema) && (schema.type as string) === "null"
                 }).length > 0
             return convertUndiscriminatedOneOf({
                 nameOverride,
@@ -751,7 +751,7 @@ export function convertSchemaObject(
                 wrapAsNullable: wrapAsNullable || hasNullValue,
                 context,
                 subtypes: schema.oneOf.filter((schema) => {
-                    return isReferenceObject(schema) || (schema.type as string) !== 'null'
+                    return isReferenceObject(schema) || (schema.type as string) !== "null"
                 }),
                 encoding,
                 namespace,
@@ -779,10 +779,10 @@ export function convertSchemaObject(
         if (schema.anyOf.length === 2) {
             const [firstSchema, secondSchema] = schema.anyOf
             if (firstSchema != null && secondSchema != null) {
-                if (!isReferenceObject(firstSchema) && (firstSchema.type as unknown) === 'null') {
+                if (!isReferenceObject(firstSchema) && (firstSchema.type as unknown) === "null") {
                     const convertedSchema = convertSchema(secondSchema, true, context, breadcrumbs, source, namespace)
                     return maybeInjectDescriptionOrGroupName(convertedSchema, description, namespace, groupName)
-                } else if (!isReferenceObject(secondSchema) && (secondSchema.type as unknown) === 'null') {
+                } else if (!isReferenceObject(secondSchema) && (secondSchema.type as unknown) === "null") {
                     const convertedSchema = convertSchema(firstSchema, true, context, breadcrumbs, source, namespace)
                     return maybeInjectDescriptionOrGroupName(convertedSchema, description, namespace, groupName)
                 }
@@ -816,7 +816,7 @@ export function convertSchemaObject(
 
         const hasNullValue =
             schema.anyOf.filter((schema) => {
-                return !isReferenceObject(schema) && (schema.type as string) === 'null'
+                return !isReferenceObject(schema) && (schema.type as string) === "null"
             }).length > 0
         return convertUndiscriminatedOneOf({
             nameOverride,
@@ -828,7 +828,7 @@ export function convertSchemaObject(
             wrapAsNullable: wrapAsNullable || hasNullValue,
             context,
             subtypes: schema.anyOf.filter((schema) => {
-                return isReferenceObject(schema) || (schema.type as string) !== 'null'
+                return isReferenceObject(schema) || (schema.type as string) !== "null"
             }),
             encoding,
             namespace,
@@ -915,7 +915,7 @@ export function convertSchemaObject(
     }
 
     // handle vanilla object
-    if (schema.type === 'object' && hasNoOneOf(schema) && hasNoAllOf(schema) && hasNoProperties(schema)) {
+    if (schema.type === "object" && hasNoOneOf(schema) && hasNoAllOf(schema) && hasNoProperties(schema)) {
         return wrapMap({
             nameOverride,
             generatedName,
@@ -980,15 +980,15 @@ function getBooleanFromDefault(defaultValue: unknown): boolean | undefined {
     if (defaultValue == null) {
         return undefined
     }
-    if (typeof defaultValue === 'boolean') {
+    if (typeof defaultValue === "boolean") {
         return defaultValue
     }
-    if (typeof defaultValue === 'string') {
+    if (typeof defaultValue === "string") {
         const lowercased = defaultValue.toLowerCase()
-        if (lowercased === 'true') {
+        if (lowercased === "true") {
             return true
         }
-        if (lowercased === 'false') {
+        if (lowercased === "false") {
             return false
         }
     }
@@ -999,7 +999,7 @@ export function getSchemaIdFromReference(ref: OpenAPIV3.ReferenceObject): string
     if (!ref.$ref.startsWith(SCHEMA_REFERENCE_PREFIX)) {
         return undefined
     }
-    return ref.$ref.replace(SCHEMA_REFERENCE_PREFIX, '')
+    return ref.$ref.replace(SCHEMA_REFERENCE_PREFIX, "")
 }
 
 export function convertToReferencedSchema(
@@ -1046,7 +1046,7 @@ function hasNoProperties(schema: OpenAPIV3.SchemaObject): boolean {
 }
 
 function isListOfStrings(x: unknown): x is string[] {
-    return Array.isArray(x) && x.every((item) => typeof item === 'string')
+    return Array.isArray(x) && x.every((item) => typeof item === "string")
 }
 
 function maybeInjectDescriptionOrGroupName(
@@ -1055,7 +1055,7 @@ function maybeInjectDescriptionOrGroupName(
     namespace: string | undefined,
     groupName: SdkGroupName | undefined
 ): SchemaWithExample {
-    if (schema.type === 'reference') {
+    if (schema.type === "reference") {
         return SchemaWithExample.reference({
             ...schema,
             description,
@@ -1063,7 +1063,7 @@ function maybeInjectDescriptionOrGroupName(
             namespace,
             groupName
         })
-    } else if (schema.type === 'optional') {
+    } else if (schema.type === "optional") {
         return SchemaWithExample.optional({
             nameOverride: schema.nameOverride,
             generatedName: schema.generatedName,
@@ -1075,7 +1075,7 @@ function maybeInjectDescriptionOrGroupName(
             groupName,
             inline: undefined
         })
-    } else if (schema.type === 'nullable') {
+    } else if (schema.type === "nullable") {
         return SchemaWithExample.nullable({
             nameOverride: schema.nameOverride,
             generatedName: schema.generatedName,
@@ -1097,7 +1097,7 @@ function maybeInjectDescriptionOrGroupName(
 //  (3): The allOf specifies 'properties'
 //  (4): All nested allOf, oneOf, or anyOf types satisfy (1), (2), or (3)
 function isValidAllOfObject(allOf: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject): boolean {
-    if (isReferenceObject(allOf) || allOf.type === 'object' || allOf.properties != null) {
+    if (isReferenceObject(allOf) || allOf.type === "object" || allOf.properties != null) {
         return true
     }
     if (allOf.allOf != null) {
@@ -1188,7 +1188,7 @@ export function wrapPrimitive({
     generatedName: string
     title: string | undefined
 }): SchemaWithExample {
-    groupName = typeof groupName === 'string' ? [groupName] : groupName
+    groupName = typeof groupName === "string" ? [groupName] : groupName
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
             nameOverride,
@@ -1318,7 +1318,7 @@ function getPossibleDiscriminantsForSchemaObject({
             ? context.resolveSchemaReference(propertySchema)
             : propertySchema
         if (
-            resolvedPropertySchema.type === 'string' &&
+            resolvedPropertySchema.type === "string" &&
             resolvedPropertySchema.enum != null &&
             isListOfStrings(resolvedPropertySchema.enum) &&
             getEnumSet(resolvedPropertySchema.enum).length === 1 &&
@@ -1327,13 +1327,13 @@ function getPossibleDiscriminantsForSchemaObject({
             possibleDiscrimimants[propertyName] = resolvedPropertySchema.enum[0]
         }
 
-        const maybeConstValue = getProperty<string>(resolvedPropertySchema, 'const')
-        if (resolvedPropertySchema.type === 'string' && maybeConstValue != null) {
+        const maybeConstValue = getProperty<string>(resolvedPropertySchema, "const")
+        if (resolvedPropertySchema.type === "string" && maybeConstValue != null) {
             possibleDiscrimimants[propertyName] = maybeConstValue
         }
 
         // assuming that if a type property on the object exists and has an example then it could be the discriminant
-        if (propertyName === 'type' && resolvedPropertySchema.example != null) {
+        if (propertyName === "type" && resolvedPropertySchema.example != null) {
             possibleDiscrimimants[propertyName] = resolvedPropertySchema.example
         }
     }
@@ -1356,7 +1356,7 @@ function getEnumSet(enums: any[] | undefined): any[] {
 
     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     enums.forEach((item: any) => {
-        if (typeof item === 'string') {
+        if (typeof item === "string") {
             set.add(item.toLowerCase())
         } else {
             set.add(item)

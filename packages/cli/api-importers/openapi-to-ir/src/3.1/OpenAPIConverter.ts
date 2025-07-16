@@ -1,17 +1,17 @@
-import { OpenAPIV3, OpenAPIV3_1 } from 'openapi-types'
+import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types"
 
-import { AuthScheme, FernIr, IntermediateRepresentation } from '@fern-api/ir-sdk'
-import { convertApiAuth, convertEnvironments } from '@fern-api/ir-utils'
-import { AbstractSpecConverter, Converters, ServersConverter } from '@fern-api/v2-importer-commons'
+import { AuthScheme, FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk"
+import { convertApiAuth, convertEnvironments } from "@fern-api/ir-utils"
+import { AbstractSpecConverter, Converters, ServersConverter } from "@fern-api/v2-importer-commons"
 
-import { FernGlobalHeadersExtension } from '../extensions/x-fern-global-headers'
-import { convertGlobalHeadersExtension } from '../utils/convertGlobalHeadersExtension'
-import { OpenAPIConverterContext3_1 } from './OpenAPIConverterContext3_1'
-import { PathConverter } from './paths/PathConverter'
-import { WebhookConverter } from './paths/operations/WebhookConverter'
-import { SecuritySchemeConverter } from './securitySchemes/SecuritySchemeConverter'
+import { FernGlobalHeadersExtension } from "../extensions/x-fern-global-headers"
+import { convertGlobalHeadersExtension } from "../utils/convertGlobalHeadersExtension"
+import { OpenAPIConverterContext3_1 } from "./OpenAPIConverterContext3_1"
+import { PathConverter } from "./paths/PathConverter"
+import { WebhookConverter } from "./paths/operations/WebhookConverter"
+import { SecuritySchemeConverter } from "./securitySchemes/SecuritySchemeConverter"
 
-export type BaseIntermediateRepresentation = Omit<IntermediateRepresentation, 'apiName' | 'constants'>
+export type BaseIntermediateRepresentation = Omit<IntermediateRepresentation, "apiName" | "constants">
 
 export declare namespace OpenAPIConverter {
     type Args = AbstractSpecConverter.Args<OpenAPIConverterContext3_1>
@@ -56,7 +56,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         }
 
         const globalHeadersExtension = new FernGlobalHeadersExtension({
-            breadcrumbs: ['x-fern-global-headers'],
+            breadcrumbs: ["x-fern-global-headers"],
             document: this.context.spec,
             context: this.context
         })
@@ -89,7 +89,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         for (const [id, securityScheme] of Object.entries(this.context.spec.components?.securitySchemes ?? {})) {
             const resolvedSecurityScheme = this.context.resolveMaybeReference<OpenAPIV3_1.SecuritySchemeObject>({
                 schemaOrReference: securityScheme,
-                breadcrumbs: ['components', 'securitySchemes', id]
+                breadcrumbs: ["components", "securitySchemes", id]
             })
             if (resolvedSecurityScheme == null) {
                 continue
@@ -97,7 +97,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
 
             const securitySchemeConverter = new SecuritySchemeConverter({
                 context: this.context,
-                breadcrumbs: ['components', 'securitySchemes', id],
+                breadcrumbs: ["components", "securitySchemes", id],
                 securityScheme: resolvedSecurityScheme
             })
             const convertedScheme = securitySchemeConverter.convert()
@@ -120,7 +120,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
 
         if (securitySchemes.length > 0) {
             this.addAuthToIR({
-                requirement: securitySchemes.length === 1 ? 'ALL' : 'ANY',
+                requirement: securitySchemes.length === 1 ? "ALL" : "ANY",
                 schemes: securitySchemes,
                 docs: undefined
             })
@@ -144,13 +144,13 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                 })
             }
             return {
-                defaultUrl: this.context.environmentOverrides['default-url']
+                defaultUrl: this.context.environmentOverrides["default-url"]
             }
         }
 
         const serversConverter = new ServersConverter({
             context: this.context,
-            breadcrumbs: ['servers'],
+            breadcrumbs: ["servers"],
             servers: this.context.spec.servers,
             endpointLevelServers
         })
@@ -166,7 +166,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             const schemaConverter = new Converters.SchemaConverters.SchemaConverter({
                 context: this.context,
                 id,
-                breadcrumbs: ['components', 'schemas', id],
+                breadcrumbs: ["components", "schemas", id],
                 schema
             })
             const convertedSchema = schemaConverter.convert()
@@ -184,15 +184,15 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         for (const [, webhookItem] of Object.entries(this.context.spec.webhooks ?? {})) {
             if (webhookItem == null) {
                 this.context.errorCollector.collect({
-                    message: 'Skipping empty webhook',
+                    message: "Skipping empty webhook",
                     path: this.breadcrumbs
                 })
                 continue
             }
 
-            if (!('post' in webhookItem)) {
+            if (!("post" in webhookItem)) {
                 this.context.errorCollector.collect({
-                    message: 'Skipping webhook as it is not a POST method',
+                    message: "Skipping webhook as it is not a POST method",
                     path: this.breadcrumbs
                 })
                 continue
@@ -200,7 +200,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
 
             if (webhookItem.post?.operationId == null) {
                 this.context.errorCollector.collect({
-                    message: 'Skipping webhook as no operationId is present',
+                    message: "Skipping webhook as no operationId is present",
                     path: this.breadcrumbs
                 })
                 continue
@@ -209,7 +209,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             const operationId = webhookItem.post.operationId
             const webHookConverter = new WebhookConverter({
                 context: this.context,
-                breadcrumbs: ['webhooks', operationId],
+                breadcrumbs: ["webhooks", operationId],
                 operation: webhookItem.post,
                 method: OpenAPIV3.HttpMethods.POST,
                 path: operationId
@@ -243,7 +243,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
 
             const pathConverter = new PathConverter({
                 context: this.context,
-                breadcrumbs: ['paths', path],
+                breadcrumbs: ["paths", path],
                 topLevelServers: this.context.spec.servers,
                 pathItem,
                 path
@@ -295,7 +295,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                     })
                     this.addWebhookToIr({
                         webhook: webhook.webhook,
-                        operationId: group.join('.'),
+                        operationId: group.join("."),
                         group,
                         audiences: webhook.audiences
                     })
@@ -317,7 +317,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
     }): boolean {
         const schemeAlreadyExists = currentSecuritySchemes.some((scheme) => {
             if (scheme.type === authScheme.type) {
-                if (scheme.type === 'bearer' && authScheme.type === 'bearer') {
+                if (scheme.type === "bearer" && authScheme.type === "bearer") {
                     return scheme.token === authScheme.token
                 }
                 // TODO: Add other scheme types as needed

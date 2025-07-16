@@ -1,12 +1,12 @@
-import { getPropertyKey } from '@fern-typescript/commons'
-import { ModelContext } from '@fern-typescript/contexts'
-import { ts } from 'ts-morph'
+import { getPropertyKey } from "@fern-typescript/commons"
+import { ModelContext } from "@fern-typescript/contexts"
+import { ts } from "ts-morph"
 
-import { assertNever } from '@fern-api/core-utils'
+import { assertNever } from "@fern-api/core-utils"
 
-import { GeneratedUnionImpl } from '../GeneratedUnionImpl'
-import { AbstractParsedSingleUnionType } from '../parsed-single-union-type/AbstractParsedSingleUnionType'
-import { KnownSingleUnionType } from './KnownSingleUnionType'
+import { GeneratedUnionImpl } from "../GeneratedUnionImpl"
+import { AbstractParsedSingleUnionType } from "../parsed-single-union-type/AbstractParsedSingleUnionType"
+import { KnownSingleUnionType } from "./KnownSingleUnionType"
 
 export abstract class AbstractKnownSingleUnionType<Context extends ModelContext>
     extends AbstractParsedSingleUnionType<Context>
@@ -16,10 +16,10 @@ export abstract class AbstractKnownSingleUnionType<Context extends ModelContext>
 
     public getDiscriminantValueType(): ts.TypeNode {
         const discriminantValue = this.getDiscriminantValue()
-        if (typeof discriminantValue === 'string') {
+        if (typeof discriminantValue === "string") {
             return ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(discriminantValue))
         }
-        if (typeof discriminantValue === 'number') {
+        if (typeof discriminantValue === "number") {
             return ts.factory.createLiteralTypeNode(ts.factory.createNumericLiteral(discriminantValue))
         }
         assertNever(discriminantValue)
@@ -43,10 +43,10 @@ export abstract class AbstractKnownSingleUnionType<Context extends ModelContext>
 
     public getDiscriminantValueAsExpression(): ts.Expression {
         const discriminantValue = this.getDiscriminantValueOrThrow()
-        if (typeof discriminantValue === 'string') {
+        if (typeof discriminantValue === "string") {
             return ts.factory.createStringLiteral(discriminantValue)
         }
-        if (typeof discriminantValue === 'number') {
+        if (typeof discriminantValue === "number") {
             return ts.factory.createNumericLiteral(discriminantValue)
         }
         assertNever(discriminantValue)

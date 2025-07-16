@@ -4,11 +4,11 @@ import {
     Reference,
     getDirectReferenceToExport,
     getReferenceToExportFromRoot
-} from '@fern-typescript/commons'
+} from "@fern-typescript/commons"
 
-import { assertNever } from '@fern-api/core-utils'
+import { assertNever } from "@fern-api/core-utils"
 
-import { DeclarationReferencer } from './DeclarationReferencer'
+import { DeclarationReferencer } from "./DeclarationReferencer"
 
 export declare namespace AbstractDeclarationReferencer {
     export interface Init {
@@ -45,7 +45,7 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
         }: DeclarationReferencer.getReferenceTo.Options<Name>
     ): Reference {
         switch (importStrategy.type) {
-            case 'direct':
+            case "direct":
                 return getDirectReferenceToExport({
                     exportedName,
                     exportedFromPath: this.getExportedFilepathForReference(name),
@@ -55,7 +55,7 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
                     referencedIn,
                     subImport
                 })
-            case 'fromRoot':
+            case "fromRoot":
                 return getReferenceToExportFromRoot({
                     exportedName,
                     exportedFromPath: this.getExportedFilepathForReference(name),

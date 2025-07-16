@@ -18,10 +18,10 @@ export const toJson = (
     replacer?: (this: unknown, key: string, value: unknown) => unknown,
     space?: string | number
 ): string => {
-    if (typeof data === 'bigint') {
+    if (typeof data === "bigint") {
         return data.toString()
     }
-    if (typeof data !== 'object') {
+    if (typeof data !== "object") {
         return JSON.stringify(data, replacer, space)
     }
 
@@ -30,14 +30,14 @@ export const toJson = (
     const preliminaryJSON = JSON.stringify(
         data,
         (key, value) =>
-            typeof value === 'bigint'
-                ? value.toString() + 'n'
-                : typeof replacer === 'undefined'
+            typeof value === "bigint"
+                ? value.toString() + "n"
+                : typeof replacer === "undefined"
                   ? value
                   : replacer(key, value),
         space
     )
-    const finalJSON = preliminaryJSON.replace(bigInts, '$1$2$3')
+    const finalJSON = preliminaryJSON.replace(bigInts, "$1$2$3")
 
     return finalJSON
 }
@@ -85,13 +85,13 @@ export function fromJson<T = unknown>(
     const serializedData = json.replace(numbersBiggerThanMaxInt, '"$1n"')
 
     return JSON.parse(serializedData, (key, value) => {
-        const isCustomFormatBigInt = typeof value === 'string' && Boolean(value.match(/^-?\d+n$/))
+        const isCustomFormatBigInt = typeof value === "string" && Boolean(value.match(/^-?\d+n$/))
 
         if (isCustomFormatBigInt) {
             return BigInt(value.substring(0, value.length - 1))
         }
 
-        if (typeof reviver !== 'undefined') {
+        if (typeof reviver !== "undefined") {
             return reviver(key, value)
         }
 

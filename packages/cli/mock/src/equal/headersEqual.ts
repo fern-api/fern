@@ -1,9 +1,9 @@
-import { Request } from 'express'
-import { isEqualWith } from 'lodash-es'
+import { Request } from "express"
+import { isEqualWith } from "lodash-es"
 
-import { ExampleEndpointCall } from '@fern-api/ir-sdk'
+import { ExampleEndpointCall } from "@fern-api/ir-sdk"
 
-import { EqualResponse } from './EqualRequestResponse'
+import { EqualResponse } from "./EqualRequestResponse"
 
 export declare namespace headersEqual {
     interface Args {
@@ -18,19 +18,19 @@ export function headersEqual({ request, example }: headersEqual.Args): EqualResp
         if (
             !isEqualWith(
                 requestHeader,
-                typeof exampleHeader.value.jsonExample === 'string'
+                typeof exampleHeader.value.jsonExample === "string"
                     ? exampleHeader.value.jsonExample
                     : JSON.stringify(exampleHeader.value.jsonExample)
             )
         ) {
             return {
-                type: 'notEqual',
+                type: "notEqual",
                 parameter: [exampleHeader.name.wireValue],
                 actualValue: requestHeader,
                 expectedValue: exampleHeader.value.jsonExample,
-                location: 'header'
+                location: "header"
             }
         }
     }
-    return { type: 'equal' }
+    return { type: "equal" }
 }

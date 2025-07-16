@@ -1,9 +1,9 @@
-import { Availability, LiteralSchemaValue, SchemaWithExample, SdkGroupName } from '@fern-api/openapi-ir'
+import { Availability, LiteralSchemaValue, SchemaWithExample, SdkGroupName } from "@fern-api/openapi-ir"
 
 function createLiteralSchemaValue(value: unknown): LiteralSchemaValue {
-    if (typeof value === 'string') {
+    if (typeof value === "string") {
         return LiteralSchemaValue.string(value)
-    } else if (typeof value === 'boolean') {
+    } else if (typeof value === "boolean") {
         return LiteralSchemaValue.boolean(value)
     } else {
         // TODO: support other types

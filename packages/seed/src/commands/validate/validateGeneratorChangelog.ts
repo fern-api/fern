@@ -1,13 +1,13 @@
-import chalk from 'chalk'
-import { readFile } from 'fs/promises'
-import yaml from 'js-yaml'
+import chalk from "chalk"
+import { readFile } from "fs/promises"
+import yaml from "js-yaml"
 
-import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from '@fern-api/fs-utils'
-import { TaskContext } from '@fern-api/task-context'
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils"
+import { TaskContext } from "@fern-api/task-context"
 
-import * as serializers from '@fern-fern/generators-sdk/serialization'
+import * as serializers from "@fern-fern/generators-sdk/serialization"
 
-import { GeneratorWorkspace } from '../../loadGeneratorWorkspaces'
+import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces"
 
 // TODO: we should share the language and generator type with the FDR definition
 export async function validateGenerator({
@@ -21,7 +21,7 @@ export async function validateGenerator({
     const generatorConfig = generator.workspaceConfig
 
     if (generatorConfig.changelogLocation == null) {
-        context.logger.warn('No changelog location specified')
+        context.logger.warn("No changelog location specified")
         return
     }
 
@@ -67,7 +67,7 @@ async function validateGeneratorChangelog({
         }
     }
     if (!hasErrors) {
-        context.logger.info(chalk.green('All changelogs are valid'))
+        context.logger.info(chalk.green("All changelogs are valid"))
     } else {
         context.failAndThrow()
     }

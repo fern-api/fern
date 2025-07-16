@@ -1,20 +1,20 @@
-import { OpenAPIV3 } from 'openapi-types'
+import { OpenAPIV3 } from "openapi-types"
 
-import { EndpointWithExample, PrimitiveSchemaValueWithExample, SchemaWithExample, Source } from '@fern-api/openapi-ir'
+import { EndpointWithExample, PrimitiveSchemaValueWithExample, SchemaWithExample, Source } from "@fern-api/openapi-ir"
 
-import { getExtension } from '../../../../getExtension'
-import { getGeneratedTypeName } from '../../../../schema/utils/getSchemaName'
-import { AbstractOpenAPIV3ParserContext } from '../../AbstractOpenAPIV3ParserContext'
-import { DummyOpenAPIV3ParserContext } from '../../DummyOpenAPIV3ParserContext'
-import { OpenAPIExtension } from '../../extensions/extensions'
-import { FernOpenAPIExtension } from '../../extensions/fernExtensions'
-import { getExamplesFromExtension } from '../../extensions/getExamplesFromExtension'
-import { getFernAvailability } from '../../extensions/getFernAvailability'
-import { OperationContext } from '../contexts'
-import { convertServer } from '../convertServer'
-import { ConvertedParameters, convertParameters } from '../endpoint/convertParameters'
-import { convertRequest } from '../endpoint/convertRequest'
-import { convertResponse } from '../endpoint/convertResponse'
+import { getExtension } from "../../../../getExtension"
+import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName"
+import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext"
+import { DummyOpenAPIV3ParserContext } from "../../DummyOpenAPIV3ParserContext"
+import { OpenAPIExtension } from "../../extensions/extensions"
+import { FernOpenAPIExtension } from "../../extensions/fernExtensions"
+import { getExamplesFromExtension } from "../../extensions/getExamplesFromExtension"
+import { getFernAvailability } from "../../extensions/getFernAvailability"
+import { OperationContext } from "../contexts"
+import { convertServer } from "../convertServer"
+import { ConvertedParameters, convertParameters } from "../endpoint/convertParameters"
+import { convertRequest } from "../endpoint/convertRequest"
+import { convertResponse } from "../endpoint/convertResponse"
 
 export function convertHttpOperation({
     operationContext,
@@ -28,7 +28,7 @@ export function convertHttpOperation({
     context: AbstractOpenAPIV3ParserContext
     responseStatusCode?: number
     suffix?: string
-    streamFormat: 'sse' | 'json' | undefined
+    streamFormat: "sse" | "json" | undefined
     source: Source
 }): EndpointWithExample {
     const { document, operation, path, method, baseBreadcrumbs, sdkMethodName } = operationContext
@@ -38,7 +38,7 @@ export function convertHttpOperation({
         FernOpenAPIExtension.REQUEST_NAME_V1,
         FernOpenAPIExtension.REQUEST_NAME_V2
     ])
-    const requestBreadcrumbs = [...baseBreadcrumbs, 'Request']
+    const requestBreadcrumbs = [...baseBreadcrumbs, "Request"]
     const convertedParameters = convertParameters({
         parameters: [...operationContext.pathItemParameters, ...operationContext.operationParameters],
         context,
@@ -61,7 +61,7 @@ export function convertHttpOperation({
     if (missingPathParams.length > 0) {
         for (const param of missingPathParams) {
             convertedParameters.pathParameters.push({
-                name: param ?? '',
+                name: param ?? "",
                 variableReference: undefined,
                 parameterNameOverride: undefined,
                 availability: undefined,
@@ -76,7 +76,7 @@ export function convertHttpOperation({
                         pattern: undefined
                     }),
                     description: undefined,
-                    generatedName: '',
+                    generatedName: "",
                     nameOverride: undefined,
                     namespace: undefined,
                     groupName: undefined,
@@ -110,15 +110,15 @@ export function convertHttpOperation({
     if (
         endpointHasNonRequestBodyParameters({ context, convertedParameters }) &&
         convertedRequest != null &&
-        convertedRequest.type === 'json' &&
-        convertedRequest.schema.type !== 'object' &&
+        convertedRequest.type === "json" &&
+        convertedRequest.schema.type !== "object" &&
         operation.requestBody != null
     ) {
         convertedRequest = convertRequest({
             requestBody: operation.requestBody,
             document,
             context,
-            requestBreadcrumbs: [...requestBreadcrumbs, 'Body'],
+            requestBreadcrumbs: [...requestBreadcrumbs, "Body"],
             source,
             namespace: context.namespace
         })
@@ -133,7 +133,7 @@ export function convertHttpOperation({
         })
     }
 
-    const responseBreadcrumbs = [...baseBreadcrumbs, 'Response']
+    const responseBreadcrumbs = [...baseBreadcrumbs, "Response"]
 
     const convertedResponse = convertResponse({
         operationContext,
@@ -146,7 +146,7 @@ export function convertHttpOperation({
     })
 
     // Fern doesn't support GET requests with bodies
-    if (operationContext.method === 'GET') {
+    if (operationContext.method === "GET") {
         convertedRequest = undefined
     }
 
@@ -160,7 +160,7 @@ export function convertHttpOperation({
         audiences: getExtension<string[]>(operation, FernOpenAPIExtension.AUDIENCES) ?? [],
         operationId:
             operation.operationId != null && suffix != null
-                ? operation.operationId + '_' + suffix
+                ? operation.operationId + "_" + suffix
                 : operation.operationId,
         tags: context.resolveTagsToTagIds(operation.tags),
         namespace: context.namespace,

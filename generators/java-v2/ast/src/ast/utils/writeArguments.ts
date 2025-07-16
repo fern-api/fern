@@ -1,12 +1,12 @@
-import { Argument, Arguments, isNamedArgument } from '@fern-api/browser-compatible-base-generator'
+import { Argument, Arguments, isNamedArgument } from "@fern-api/browser-compatible-base-generator"
 
-import { TypeLiteral } from '../TypeLiteral'
-import { Writer } from '../core/Writer'
+import { TypeLiteral } from "../TypeLiteral"
+import { Writer } from "../core/Writer"
 
 export function writeArguments({ writer, arguments_ }: { writer: Writer; arguments_: Arguments }): void {
     const filteredArguments = filterNopArguments(arguments_)
     if (filteredArguments.length === 0) {
-        writer.write('()')
+        writer.write("()")
         return
     }
     const shouldWriteMultiline = filteredArguments.some((arg) => {
@@ -16,22 +16,22 @@ export function writeArguments({ writer, arguments_ }: { writer: Writer; argumen
         writeMultilineArguments({ writer, arguments_: filteredArguments })
         return
     }
-    writer.write('(')
+    writer.write("(")
     filteredArguments.forEach((argument, index) => {
         if (index > 0) {
-            writer.write(', ')
+            writer.write(", ")
         }
         writeArgument({ writer, argument })
     })
-    writer.write(')')
+    writer.write(")")
 }
 
 function writeMultilineArguments({ writer, arguments_ }: { writer: Writer; arguments_: Argument[] }): void {
-    writer.writeLine('(')
+    writer.writeLine("(")
     writer.indent()
     arguments_.forEach((argument, index) => {
         if (index > 0) {
-            writer.writeLine(',')
+            writer.writeLine(",")
         }
         writeArgument({ writer, argument })
     })
@@ -39,7 +39,7 @@ function writeMultilineArguments({ writer, arguments_ }: { writer: Writer; argum
     if (arguments_.length > 0) {
         writer.newLine()
     }
-    writer.write(')')
+    writer.write(")")
 }
 
 function writeArgument({ writer, argument }: { writer: Writer; argument: Argument }): void {

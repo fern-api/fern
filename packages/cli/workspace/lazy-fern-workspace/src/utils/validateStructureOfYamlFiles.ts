@@ -1,15 +1,15 @@
-import path from 'path'
+import path from "path"
 
-import { OnDiskNamedDefinitionFile, ParsedFernFile } from '@fern-api/api-workspace-commons'
-import { FERN_PACKAGE_MARKER_FILENAME, ROOT_API_FILENAME } from '@fern-api/configuration-loader'
-import { entries, validateAgainstJsonSchema } from '@fern-api/core-utils'
-import { PackageMarkerFileSchema, RawSchemas, RootApiFileSchema } from '@fern-api/fern-definition-schema'
-import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
+import { OnDiskNamedDefinitionFile, ParsedFernFile } from "@fern-api/api-workspace-commons"
+import { FERN_PACKAGE_MARKER_FILENAME, ROOT_API_FILENAME } from "@fern-api/configuration-loader"
+import { entries, validateAgainstJsonSchema } from "@fern-api/core-utils"
+import { PackageMarkerFileSchema, RawSchemas, RootApiFileSchema } from "@fern-api/fern-definition-schema"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
 
-import * as RootApiFileJsonSchema from '../api-yml.schema.json'
-import * as DefinitionFileJsonSchema from '../fern.schema.json'
-import * as PackageMarkerFileJsonSchema from '../package-yml.schema.json'
-import { WorkspaceLoader, WorkspaceLoaderFailureType } from './Result'
+import * as RootApiFileJsonSchema from "../api-yml.schema.json"
+import * as DefinitionFileJsonSchema from "../fern.schema.json"
+import * as PackageMarkerFileJsonSchema from "../package-yml.schema.json"
+import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./Result"
 
 export declare namespace validateStructureOfYamlFiles {
     export type Return = SuccessfulResult | FailedResult
@@ -62,7 +62,7 @@ export function validateStructureOfYamlFiles({
             if (result.success) {
                 const contents = RawSchemas.serialization.RootApiFileSchema.parseOrThrow(parsedFileContents)
                 rootApiFile = {
-                    defaultUrl: contents['default-url'],
+                    defaultUrl: contents["default-url"],
                     contents,
                     rawContents: file.rawContents
                 }
@@ -75,7 +75,7 @@ export function validateStructureOfYamlFiles({
             if (result.success) {
                 const contents = RawSchemas.serialization.PackageMarkerFileSchema.parseOrThrow(parsedFileContents)
                 packageMarkers[relativeFilepath] = {
-                    defaultUrl: typeof contents.export === 'object' ? contents.export.url : undefined,
+                    defaultUrl: typeof contents.export === "object" ? contents.export.url : undefined,
                     contents,
                     rawContents: file.rawContents
                 }

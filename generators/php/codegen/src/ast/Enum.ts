@@ -1,10 +1,10 @@
-import { ClassReference } from './ClassReference'
-import { CodeBlock } from './CodeBlock'
-import { Comment } from './Comment'
-import { Method } from './Method'
-import { Type } from './Type'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { ClassReference } from "./ClassReference"
+import { CodeBlock } from "./CodeBlock"
+import { Comment } from "./Comment"
+import { Method } from "./Method"
+import { Type } from "./Type"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export declare namespace Enum {
     interface Args {
@@ -13,7 +13,7 @@ export declare namespace Enum {
         /* The namespace of the PHP enum*/
         namespace: string
         /* If present, specifies that the enum is backed by this type */
-        backing?: 'string' | 'int'
+        backing?: "string" | "int"
         /* Docs associated with the class */
         docs?: string
         /* Whether the class should implement the JsonSerializable interface */
@@ -31,7 +31,7 @@ export declare namespace Enum {
 export class Enum extends AstNode {
     public readonly name: string
     public readonly namespace: string
-    public readonly backing: 'string' | 'int' | undefined
+    public readonly backing: "string" | "int" | undefined
     public readonly docs: string | undefined
     public readonly members: Enum.Member[] = []
     public readonly serializable: boolean
@@ -51,7 +51,7 @@ export class Enum extends AstNode {
 
     public write(writer: Writer): void {
         this.writeComment(writer)
-        writer.write('enum ')
+        writer.write("enum ")
         writer.writeLine(`${this.name}`)
         if (this.backing != null) {
             writer.write(` : ${this.backing}`)
@@ -59,40 +59,40 @@ export class Enum extends AstNode {
         if (this.serializable) {
             writer.addReference(
                 new ClassReference({
-                    name: 'JsonSerializable',
-                    namespace: ''
+                    name: "JsonSerializable",
+                    namespace: ""
                 })
             )
-            writer.writeLine(' implements JsonSerializable')
+            writer.writeLine(" implements JsonSerializable")
         }
-        writer.writeLine(' {')
+        writer.writeLine(" {")
         writer.indent()
         for (const member of this.members) {
             writer.write(`case ${member.name}`)
             if (member.value != null) {
-                if (typeof member.value === 'string') {
+                if (typeof member.value === "string") {
                     writer.write(` = "${member.value}"`)
                 } else {
                     writer.write(` = ${member.value}`)
                 }
             }
-            writer.writeTextStatement('')
+            writer.writeTextStatement("")
         }
         if (this.serializable) {
             writer.newLine()
             writer.writeNode(
                 new Method({
-                    name: 'jsonSerialize',
+                    name: "jsonSerialize",
                     return_: Type.string(),
-                    access: 'public',
+                    access: "public",
                     parameters: [],
-                    body: new CodeBlock('return $this->value;')
+                    body: new CodeBlock("return $this->value;")
                 })
             )
         }
         writer.writeNewLineIfLastLineNot()
         writer.dedent()
-        writer.writeLine('}')
+        writer.writeLine("}")
     }
 
     public writeComment(writer: Writer): void {

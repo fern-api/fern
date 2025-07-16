@@ -1,17 +1,17 @@
-import { csharp } from '../..'
+import { csharp } from "../.."
 
-describe('class reference', () => {
-    it('generics', async () => {
+describe("class reference", () => {
+    it("generics", async () => {
         const clazz = csharp.classReference({
-            name: 'OneOf',
-            namespace: 'OneOf',
+            name: "OneOf",
+            namespace: "OneOf",
             generics: [
                 csharp.Type.string(),
                 csharp.Type.boolean(),
                 csharp.Type.reference(
                     csharp.classReference({
-                        namespace: 'System',
-                        name: 'List',
+                        namespace: "System",
+                        name: "List",
                         generics: [csharp.Type.string()]
                     })
                 )
@@ -19,12 +19,12 @@ describe('class reference', () => {
         })
         expect(
             clazz.toString({
-                namespace: '',
+                namespace: "",
                 allNamespaceSegments: new Set<string>(),
                 allTypeClassReferences: new Map<string, Set<string>>(),
-                rootNamespace: '',
+                rootNamespace: "",
                 customConfig: {}
             })
-        ).toContain('OneOf<string, bool, List<string>>')
+        ).toContain("OneOf<string, bool, List<string>>")
     })
 })

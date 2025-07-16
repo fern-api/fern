@@ -1,9 +1,9 @@
-import { ExportedFilePath, ExportsManager, ImportsManager, Reference } from '@fern-typescript/commons'
-import { SourceFile } from 'ts-morph'
+import { ExportedFilePath, ExportsManager, ImportsManager, Reference } from "@fern-typescript/commons"
+import { SourceFile } from "ts-morph"
 
-import { AbstractDeclarationReferencer } from './AbstractDeclarationReferencer'
+import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer"
 
-const ERRORS_DIRECTORY = 'errors'
+const ERRORS_DIRECTORY = "errors"
 
 export abstract class AbstractExpressErrorDeclarationReferencer extends AbstractDeclarationReferencer {
     public getExportedFilepath(): ExportedFilePath {
@@ -42,8 +42,8 @@ export abstract class AbstractExpressErrorDeclarationReferencer extends Abstract
             exportsManager,
             referencedIn,
             importStrategy: {
-                type: 'fromRoot',
-                namespaceImport: 'errors'
+                type: "fromRoot",
+                namespaceImport: "errors"
             }
         })
     }

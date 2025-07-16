@@ -1,5 +1,5 @@
-import { assertNever } from '@fern-api/core-utils'
-import { RawSchemas } from '@fern-api/fern-definition-schema'
+import { assertNever } from "@fern-api/core-utils"
+import { RawSchemas } from "@fern-api/fern-definition-schema"
 import {
     ArraySchema,
     CasingOverrides,
@@ -15,11 +15,11 @@ import {
     Schema,
     SchemaId,
     WithInline
-} from '@fern-api/openapi-ir'
-import { RelativeFilePath } from '@fern-api/path-utils'
+} from "@fern-api/openapi-ir"
+import { RelativeFilePath } from "@fern-api/path-utils"
 
-import { OpenApiIrConverterContext } from './OpenApiIrConverterContext'
-import { State } from './State'
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext"
+import { State } from "./State"
 import {
     buildArrayTypeReference,
     buildLiteralTypeReference,
@@ -30,11 +30,11 @@ import {
     buildReferenceTypeReference,
     buildTypeReference,
     buildUnknownTypeReference
-} from './buildTypeReference'
-import { convertAvailability } from './utils/convertAvailability'
-import { convertToEncodingSchema } from './utils/convertToEncodingSchema'
-import { convertToSourceSchema } from './utils/convertToSourceSchema'
-import { getTypeFromTypeReference } from './utils/getTypeFromTypeReference'
+} from "./buildTypeReference"
+import { convertAvailability } from "./utils/convertAvailability"
+import { convertToEncodingSchema } from "./utils/convertToEncodingSchema"
+import { convertToSourceSchema } from "./utils/convertToSourceSchema"
+import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference"
 
 export interface ConvertedTypeDeclaration {
     name: string | undefined
@@ -57,10 +57,10 @@ export function buildTypeDeclaration({
 }): ConvertedTypeDeclaration {
     let typeDeclaration: ConvertedTypeDeclaration
     switch (schema.type) {
-        case 'primitive':
+        case "primitive":
             typeDeclaration = buildPrimitiveTypeDeclaration(schema)
             break
-        case 'array':
+        case "array":
             typeDeclaration = buildArrayTypeDeclaration({
                 schema,
                 context,
@@ -69,7 +69,7 @@ export function buildTypeDeclaration({
                 declarationDepth
             })
             break
-        case 'map':
+        case "map":
             typeDeclaration = buildMapTypeDeclaration({
                 schema,
                 context,
@@ -78,13 +78,13 @@ export function buildTypeDeclaration({
                 declarationDepth
             })
             break
-        case 'reference':
+        case "reference":
             typeDeclaration = buildReferenceTypeDeclaration({ schema, context, declarationFile, namespace })
             break
-        case 'unknown':
+        case "unknown":
             typeDeclaration = buildUnknownTypeDeclaration(schema.nameOverride, schema.generatedName)
             break
-        case 'optional':
+        case "optional":
             typeDeclaration = buildOptionalTypeDeclaration({
                 schema,
                 context,
@@ -93,7 +93,7 @@ export function buildTypeDeclaration({
                 declarationDepth
             })
             break
-        case 'nullable':
+        case "nullable":
             typeDeclaration = buildNullableTypeDeclaration({
                 schema,
                 context,
@@ -102,13 +102,13 @@ export function buildTypeDeclaration({
                 declarationDepth
             })
             break
-        case 'enum':
+        case "enum":
             typeDeclaration = buildEnumTypeDeclaration(schema, declarationDepth)
             break
-        case 'literal':
+        case "literal":
             typeDeclaration = buildLiteralTypeDeclaration(schema, schema.nameOverride, schema.generatedName)
             break
-        case 'object':
+        case "object":
             typeDeclaration = buildObjectTypeDeclaration({
                 schema,
                 context,
@@ -117,7 +117,7 @@ export function buildTypeDeclaration({
                 declarationDepth
             })
             break
-        case 'oneOf':
+        case "oneOf":
             typeDeclaration = buildOneOfTypeDeclaration({
                 schema: schema.value,
                 context,
@@ -148,9 +148,9 @@ export function buildObjectTypeDeclaration({
     const shouldSkipReadonly =
         context.isInState(State.Request) &&
         context.respectReadonlySchemas &&
-        (context.getEndpointMethod() === 'POST' ||
-            context.getEndpointMethod() === 'PUT' ||
-            context.getEndpointMethod() === 'PATCH')
+        (context.getEndpointMethod() === "POST" ||
+            context.getEndpointMethod() === "PUT" ||
+            context.getEndpointMethod() === "PATCH")
 
     let readOnlyPropertyPresent = false
     const properties: Record<string, RawSchemas.ObjectPropertySchema> = {}
@@ -237,7 +237,7 @@ export function buildObjectTypeDeclaration({
         for (const propertyToInline of inlinedSchemaPropertyInfo.properties) {
             if (properties[propertyToInline.key] == null) {
                 if (propertiesToSetToUnknown.has(propertyToInline.key)) {
-                    properties[propertyToInline.key] = 'unknown'
+                    properties[propertyToInline.key] = "unknown"
                 }
                 properties[propertyToInline.key] = buildTypeReference({
                     schema: propertyToInline.schema,
@@ -270,7 +270,7 @@ export function buildObjectTypeDeclaration({
                 if (startsWithNumber(propertyKey)) {
                     return [
                         propertyKey,
-                        typeof propertyDefinition === 'string'
+                        typeof propertyDefinition === "string"
                             ? {
                                   type: propertyDefinition,
                                   name: `_${propertyKey}`
@@ -289,7 +289,7 @@ export function buildObjectTypeDeclaration({
         objectTypeDeclaration.extends = extendedSchemas
     }
     if (schema.additionalProperties) {
-        objectTypeDeclaration['extra-properties'] = true
+        objectTypeDeclaration["extra-properties"] = true
     }
     if (schema.availability != null) {
         objectTypeDeclaration.availability = convertAvailability(schema.availability)
@@ -322,10 +322,10 @@ function getAllParentSchemasToInline({
     if (schema == null) {
         return []
     }
-    if (schema.type === 'reference') {
+    if (schema.type === "reference") {
         return getAllParentSchemasToInline({ property, schemaId: schema.schema, context, namespace })
     }
-    if (schema.type === 'object') {
+    if (schema.type === "object") {
         const { properties, allOf } = getProperties(context, schemaId, namespace)
         const hasProperty = properties.some((p) => {
             return p.key === property
@@ -354,9 +354,9 @@ function getProperties(
     if (schema == null) {
         return { properties: [], allOf: [] }
     }
-    if (schema.type === 'object') {
+    if (schema.type === "object") {
         return { properties: schema.properties, allOf: schema.allOf }
-    } else if (schema.type === 'reference') {
+    } else if (schema.type === "reference") {
         return getProperties(context, schema.schema, namespace)
     }
     throw new Error(`Cannot getAllProperties for a non-object schema. schemaId=${schemaId}, type=${schema.type}`)
@@ -417,7 +417,7 @@ export function buildMapTypeDeclaration({
 export function buildPrimitiveTypeDeclaration(schema: PrimitiveSchema): ConvertedTypeDeclaration {
     const typeReference = buildPrimitiveTypeReference(schema)
 
-    if (typeof typeReference === 'string') {
+    if (typeof typeReference === "string") {
         return {
             name: schema.nameOverride ?? schema.generatedName,
             schema: typeReference
@@ -467,7 +467,7 @@ export function buildEnumTypeDeclaration(schema: EnumSchema, declarationDepth: n
                     setCasing = true
                 }
                 if (enumValue.casing.screamingSnake != null) {
-                    casing['screaming-snake'] = enumValue.casing.screamingSnake
+                    casing["screaming-snake"] = enumValue.casing.screamingSnake
                     setCasing = true
                 }
                 if (enumValue.casing.snake != null) {
@@ -499,7 +499,7 @@ export function buildEnumTypeDeclaration(schema: EnumSchema, declarationDepth: n
         source: schema.source != null ? convertToSourceSchema(schema.source) : undefined
     }
     for (const enumValue of enumSchema.enum) {
-        const name = typeof enumValue === 'string' ? enumValue : (enumValue.name ?? enumValue.value)
+        const name = typeof enumValue === "string" ? enumValue : (enumValue.name ?? enumValue.value)
         if (!uniqueEnumName.has(name.toLowerCase())) {
             uniqueEnumSchema.enum.push(enumValue)
             uniqueEnumName.add(name.toLowerCase())
@@ -631,7 +631,7 @@ export function buildOneOfTypeDeclaration({
     declarationDepth: number
 }): ConvertedTypeDeclaration {
     const encoding = schema.encoding != null ? convertToEncodingSchema(schema.encoding) : undefined
-    if (schema.type === 'discriminated') {
+    if (schema.type === "discriminated") {
         const baseProperties: Record<string, RawSchemas.ObjectPropertySchema> = {}
         for (const property of schema.commonProperties) {
             baseProperties[property.key] = buildTypeReference({
@@ -656,7 +656,7 @@ export function buildOneOfTypeDeclaration({
             name: schema.nameOverride ?? schema.generatedName,
             schema: {
                 discriminant: schema.discriminantProperty,
-                'base-properties': baseProperties,
+                "base-properties": baseProperties,
                 docs: schema.description ?? undefined,
                 availability: schema.availability != null ? convertAvailability(schema.availability) : undefined,
                 union,
@@ -709,7 +709,7 @@ function getSchemaIdOfResolvedType({
     if (resolvedSchema == null) {
         return undefined
     }
-    if (resolvedSchema.type === 'reference') {
+    if (resolvedSchema.type === "reference") {
         return getSchemaIdOfResolvedType({ context, schema: resolvedSchema.schema, namespace })
     }
     return schema
@@ -732,7 +732,7 @@ function convertPropertyTypeReferenceToTypeDefinition({
         return typeReference
     } else {
         return {
-            ...(typeof typeReference === 'string' ? { type: typeReference } : { ...typeReference }),
+            ...(typeof typeReference === "string" ? { type: typeReference } : { ...typeReference }),
             ...(audiences.length > 0 ? { audiences } : {}),
             ...(name != null ? { name } : {}),
             ...(availability != null ? { availability } : {}),

@@ -1,5 +1,5 @@
-import levenshtein from 'fast-levenshtein'
-import { Heap } from 'heap-js'
+import levenshtein from "fast-levenshtein"
+import { Heap } from "heap-js"
 
 /**
  * Returns the numNeighbors nearest lexical neighbors to the target string from the set of neighbors.

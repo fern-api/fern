@@ -1,17 +1,17 @@
-import { php } from '..'
-import { Access, ClassReference } from '../php'
-import { Class } from './Class'
-import { CodeBlock } from './CodeBlock'
-import { Field } from './Field'
-import { Method } from './Method'
-import { Parameter } from './Parameter'
-import { Type } from './Type'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
-import { convertFromPhpVariableName } from './utils/convertFromPhpVariableName'
-import { orderByAccess } from './utils/orderByAccess'
+import { php } from ".."
+import { Access, ClassReference } from "../php"
+import { Class } from "./Class"
+import { CodeBlock } from "./CodeBlock"
+import { Field } from "./Field"
+import { Method } from "./Method"
+import { Parameter } from "./Parameter"
+import { Type } from "./Type"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
+import { convertFromPhpVariableName } from "./utils/convertFromPhpVariableName"
+import { orderByAccess } from "./utils/orderByAccess"
 
-const CONSTRUCTOR_PARAMETER_NAME = 'values'
+const CONSTRUCTOR_PARAMETER_NAME = "values"
 
 export declare namespace DataClass {
     interface Args extends Class.Args {
@@ -29,7 +29,7 @@ export class DataClass extends AstNode {
         super()
         this.name = name
         this.namespace = namespace
-        this.constructorAccess = constructorAccess ?? 'public'
+        this.constructorAccess = constructorAccess ?? "public"
         this.class_ = new Class({ name, namespace, abstract, docs, parentClassReference, traits })
     }
 
@@ -60,9 +60,9 @@ export class DataClass extends AstNode {
                     for (const field of orderedFields) {
                         writer.write(`$this->${field.name} = $${CONSTRUCTOR_PARAMETER_NAME}['${field.name}']`)
                         if (field.type.isOptional()) {
-                            writer.write(' ?? null')
+                            writer.write(" ?? null")
                         }
-                        writer.write(';')
+                        writer.write(";")
                     }
                 })
             })
@@ -88,7 +88,7 @@ export class DataClass extends AstNode {
                         multiline: true
                     }
                 ),
-                initializer: this.allFieldsAreOptional() ? new CodeBlock('[]') : undefined
+                initializer: this.allFieldsAreOptional() ? new CodeBlock("[]") : undefined
             })
         ]
     }

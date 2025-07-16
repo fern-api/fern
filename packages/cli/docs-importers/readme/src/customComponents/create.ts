@@ -1,23 +1,23 @@
-import type { Element, Root as HastRoot } from 'hast'
-import { CONTINUE, SKIP, visit } from 'unist-util-visit'
+import type { Element, Root as HastRoot } from "hast"
+import { CONTINUE, SKIP, visit } from "unist-util-visit"
 
-import { scrapeAccordion } from '../components/Accordion'
-import { scrapeAccordionGroup } from '../components/AccordionGroup'
-import { scrapeCallout } from '../components/Callout'
-import { scrapeCard } from '../components/Card'
-import { scrapeCardGroup } from '../components/CardGroup'
-import { scrapeCodeGroup } from '../components/CodeGroup'
-import { scrapeEmbed } from '../components/Embed'
-import { scrapeFrame } from '../components/Frame'
-import { scrapeTabs } from '../components/Tabs'
-import type { HastNode, HastNodeIndex, HastNodeParent } from '../types/hastTypes'
+import { scrapeAccordion } from "../components/Accordion"
+import { scrapeAccordionGroup } from "../components/AccordionGroup"
+import { scrapeCallout } from "../components/Callout"
+import { scrapeCard } from "../components/Card"
+import { scrapeCardGroup } from "../components/CardGroup"
+import { scrapeCodeGroup } from "../components/CodeGroup"
+import { scrapeEmbed } from "../components/Embed"
+import { scrapeFrame } from "../components/Frame"
+import { scrapeTabs } from "../components/Tabs"
+import type { HastNode, HastNodeIndex, HastNodeParent } from "../types/hastTypes"
 
 type ScrapeFuncType = (node: HastNode, index: HastNodeIndex, parent: HastNodeParent) => Element | undefined
 
 function createComponent(scrapeFunc: ScrapeFuncType) {
     return function (tree: HastRoot) {
-        return visit(tree, 'element', function (node, index, parent) {
-            if (node.tagName === 'code' || node.tagName === 'pre') {
+        return visit(tree, "element", function (node, index, parent) {
+            if (node.tagName === "code" || node.tagName === "pre") {
                 return SKIP
             }
             let result: Element | undefined = undefined
@@ -27,7 +27,7 @@ function createComponent(scrapeFunc: ScrapeFuncType) {
                 return CONTINUE
             }
 
-            if (parent && typeof index === 'number') {
+            if (parent && typeof index === "number") {
                 parent.children[index] = result
                 return SKIP
             }

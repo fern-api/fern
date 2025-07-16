@@ -1,10 +1,10 @@
-import { FernToken } from '@fern-api/auth'
-import { replaceEnvVariables } from '@fern-api/core-utils'
-import { TaskContext } from '@fern-api/task-context'
-import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from '@fern-api/workspace-loader'
+import { FernToken } from "@fern-api/auth"
+import { replaceEnvVariables } from "@fern-api/core-utils"
+import { TaskContext } from "@fern-api/task-context"
+import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader"
 
-import { OSSWorkspace } from '../../../../workspace/lazy-fern-workspace/src'
-import { publishDocs } from './publishDocs'
+import { OSSWorkspace } from "../../../../workspace/lazy-fern-workspace/src"
+import { publishDocs } from "./publishDocs"
 
 export async function runRemoteGenerationForDocsWorkspace({
     organization,
@@ -46,7 +46,7 @@ export async function runRemoteGenerationForDocsWorkspace({
     )
 
     if (instances.length === 0) {
-        context.failAndThrow('No instances specified in docs.yml! Cannot register docs.')
+        context.failAndThrow("No instances specified in docs.yml! Cannot register docs.")
         return
     }
 
@@ -66,7 +66,7 @@ export async function runRemoteGenerationForDocsWorkspace({
     const customDomains: string[] = []
 
     if (maybeInstance.customDomain != null) {
-        if (typeof maybeInstance.customDomain === 'string') {
+        if (typeof maybeInstance.customDomain === "string") {
             customDomains.push(maybeInstance.customDomain)
         } else if (Array.isArray(maybeInstance.customDomain)) {
             customDomains.push(...maybeInstance.customDomain)

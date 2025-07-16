@@ -1,11 +1,11 @@
-import yaml from 'js-yaml'
-import { camelCase } from 'lodash-es'
-import { OpenAPIV3_1 } from 'openapi-types'
+import yaml from "js-yaml"
+import { camelCase } from "lodash-es"
+import { OpenAPIV3_1 } from "openapi-types"
 
-import { OpenAPISettings } from '@fern-api/api-workspace-commons'
-import { CasingsGenerator, constructCasingsGenerator } from '@fern-api/casings-generator'
-import { generatorsYml } from '@fern-api/configuration'
-import { RawSchemas } from '@fern-api/fern-definition-schema'
+import { OpenAPISettings } from "@fern-api/api-workspace-commons"
+import { CasingsGenerator, constructCasingsGenerator } from "@fern-api/casings-generator"
+import { generatorsYml } from "@fern-api/configuration"
+import { RawSchemas } from "@fern-api/fern-definition-schema"
 import {
     Availability,
     AvailabilityStatus,
@@ -15,15 +15,15 @@ import {
     ObjectPropertyAccess,
     TypeId,
     TypeReference
-} from '@fern-api/ir-sdk'
-import { ExampleGenerationArgs } from '@fern-api/ir-utils'
-import { Logger } from '@fern-api/logger'
+} from "@fern-api/ir-sdk"
+import { ExampleGenerationArgs } from "@fern-api/ir-utils"
+import { Logger } from "@fern-api/logger"
 
-import { Extensions } from '.'
-import { APIErrorLevel, ErrorCollector } from './ErrorCollector'
-import { SchemaConverter } from './converters/schema/SchemaConverter'
+import { Extensions } from "."
+import { APIErrorLevel, ErrorCollector } from "./ErrorCollector"
+import { SchemaConverter } from "./converters/schema/SchemaConverter"
 
-export type DisplayNameOverrideSource = 'schema_identifier' | 'discriminator_key' | 'reference_identifier'
+export type DisplayNameOverrideSource = "schema_identifier" | "discriminator_key" | "reference_identifier"
 
 export declare namespace Spec {
     export interface Args<T> {
@@ -84,7 +84,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
         this.generateV1Examples = args.generateV1Examples
     }
 
-    private static BREADCRUMBS_TO_IGNORE = ['properties', 'allOf', 'anyOf']
+    private static BREADCRUMBS_TO_IGNORE = ["properties", "allOf", "anyOf"]
 
     public abstract convertReferenceToTypeReference({
         reference,
@@ -118,31 +118,31 @@ export abstract class AbstractConverterContext<Spec extends object> {
             }
 
             // Ignore 'components' if first crumb
-            if (index === 0 && crumb === 'components') {
+            if (index === 0 && crumb === "components") {
                 return false
             }
 
             // Ignore 'schemas' if second crumb
-            if (index === 1 && crumb === 'schemas') {
+            if (index === 1 && crumb === "schemas") {
                 return false
             }
 
             // Ignore path-related crumbs
-            if (breadcrumbs[0] === 'paths') {
+            if (breadcrumbs[0] === "paths") {
                 // Ignore 'paths' if first crumb
                 if (index === 0) {
                     return false
                 }
                 // Ignore HTTP methods if second crumb
-                if (index === 1 && ['get', 'post', 'put', 'delete', 'patch'].includes(crumb)) {
+                if (index === 1 && ["get", "post", "put", "delete", "patch"].includes(crumb)) {
                     return false
                 }
                 // Ignore 'parameters' if third crumb after HTTP method
                 if (
                     index === 2 &&
                     breadcrumbs[1] != null &&
-                    ['get', 'post', 'put', 'delete', 'patch'].includes(breadcrumbs[1]) &&
-                    crumb === 'parameters'
+                    ["get", "post", "put", "delete", "patch"].includes(breadcrumbs[1]) &&
+                    crumb === "parameters"
                 ) {
                     return false
                 }
@@ -151,7 +151,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
             return true
         })
 
-        const camelCased = camelCase(filteredBreadcrumbs.join('_'))
+        const camelCased = camelCase(filteredBreadcrumbs.join("_"))
         return camelCased.charAt(0).toUpperCase() + camelCased.slice(1)
     }
 
@@ -187,12 +187,12 @@ export abstract class AbstractConverterContext<Spec extends object> {
         let resolvedReference: unknown = this.spec
 
         const keys = reference.$ref
-            .replace(/^(?:(?:https?:\/\/)?|#?\/?)?/, '')
-            .split('/')
-            .map((key) => key.replace(/~1/g, '/'))
+            .replace(/^(?:(?:https?:\/\/)?|#?\/?)?/, "")
+            .split("/")
+            .map((key) => key.replace(/~1/g, "/"))
 
         for (const key of keys) {
-            if (typeof resolvedReference !== 'object' || resolvedReference == null) {
+            if (typeof resolvedReference !== "object" || resolvedReference == null) {
                 if (!skipErrorCollector) {
                     this.errorCollector.collect({
                         level: APIErrorLevel.ERROR,
@@ -222,10 +222,10 @@ export abstract class AbstractConverterContext<Spec extends object> {
 
     private getErrorMessageForMissingRef({ reference }: { reference: OpenAPIV3_1.ReferenceObject }): string {
         // Check if the reference is to a schema in components/schemas
-        const refPath = reference.$ref.replace(/^(?:(?:https?:\/\/)?|#?\/?)?/, '').split('/')
+        const refPath = reference.$ref.replace(/^(?:(?:https?:\/\/)?|#?\/?)?/, "").split("/")
 
         // Check if the reference follows the pattern components/schemas/<schema>
-        if (refPath.length >= 3 && refPath[0] === 'components' && refPath[1] === 'schemas') {
+        if (refPath.length >= 3 && refPath[0] === "components" && refPath[1] === "schemas") {
             const schemaName = refPath[2]
             return `Schema ${schemaName} does not exist`
         }
@@ -250,7 +250,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
 
         if (this.isExternalReference(reference.$ref)) {
             isExternalRef = true
-            const splitReference = reference.$ref.split('#')
+            const splitReference = reference.$ref.split("#")
             const url = splitReference[0]
             referencePath = splitReference[1]
 
@@ -286,17 +286,17 @@ export abstract class AbstractConverterContext<Spec extends object> {
         }
 
         const maybeReferenceString = referencePath ?? reference.$ref
-        if (maybeReferenceString == null || typeof maybeReferenceString !== 'string') {
+        if (maybeReferenceString == null || typeof maybeReferenceString !== "string") {
             return { resolved: false }
         }
 
         const keys = maybeReferenceString
-            .replace(/^(?:(?:https?:\/\/)?|#?\/?)?/, '')
-            .split('/')
-            .map((key) => key.replace(/~1/g, '/'))
+            .replace(/^(?:(?:https?:\/\/)?|#?\/?)?/, "")
+            .split("/")
+            .map((key) => key.replace(/~1/g, "/"))
 
         for (const key of keys) {
-            if (typeof resolvedReference !== 'object' || resolvedReference == null) {
+            if (typeof resolvedReference !== "object" || resolvedReference == null) {
                 return { resolved: false }
             }
             // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
@@ -307,7 +307,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
             return { resolved: false }
         }
 
-        if (isExternalRef && typeof resolvedReference === 'object' && resolvedReference !== null) {
+        if (isExternalRef && typeof resolvedReference === "object" && resolvedReference !== null) {
             const visitedRefs = new Set<string>()
             visitedRefs.add(reference.$ref)
 
@@ -334,7 +334,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
         visitedRefs: Set<string>,
         baseUrl: string | undefined
     ): Promise<unknown> {
-        if (obj === null || typeof obj !== 'object') {
+        if (obj === null || typeof obj !== "object") {
             return obj
         }
 
@@ -368,11 +368,11 @@ export abstract class AbstractConverterContext<Spec extends object> {
                 let tempRef = rootDoc
                 const refPath = refValue
                     .substring(2) // Remove leading "#/"
-                    .split('/')
-                    .map((seg) => seg.replace(/~1/g, '/').replace(/~0/g, '~'))
+                    .split("/")
+                    .map((seg) => seg.replace(/~1/g, "/").replace(/~0/g, "~"))
 
                 for (const segment of refPath) {
-                    if (typeof tempRef !== 'object' || tempRef === null) {
+                    if (typeof tempRef !== "object" || tempRef === null) {
                         // Cannot resolve fully — keep the original ref
                         return obj
                     }
@@ -397,7 +397,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
         // Regular object with properties — recursively resolve each property
         const result: Record<string, unknown> = {}
         for (const [key, value] of Object.entries(obj)) {
-            if (typeof value === 'object' && value !== null) {
+            if (typeof value === "object" && value !== null) {
                 result[key] = await this.resolveNestedExternalReferences(value, rootDoc, visitedRefs, baseUrl)
             } else {
                 result[key] = value
@@ -424,7 +424,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
                 examples.push(...schema.examples)
             } else {
                 this.errorCollector.collect({
-                    message: 'Received non-array schema examples',
+                    message: "Received non-array schema examples",
                     path: breadcrumbs
                 })
             }
@@ -447,7 +447,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
         const examples: Array<[string, unknown]> = []
         if (mediaTypeObject.example != null) {
             const exampleName = this.generateUniqueName({
-                prefix: defaultExampleName ?? `${breadcrumbs.join('_')}_example`,
+                prefix: defaultExampleName ?? `${breadcrumbs.join("_")}_example`,
                 existingNames: []
             })
             examples.push([exampleName, mediaTypeObject.example])
@@ -614,7 +614,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
     }
 
     public typeReferenceToDeclaredTypeName(typeReference: TypeReference): DeclaredTypeName | undefined {
-        if (typeReference.type !== 'named') {
+        if (typeReference.type !== "named") {
             return undefined
         }
         const typeId = typeReference.typeId
@@ -659,25 +659,25 @@ export abstract class AbstractConverterContext<Spec extends object> {
     }
 
     public isReferenceObject(value: unknown): value is OpenAPIV3_1.ReferenceObject {
-        return typeof value === 'object' && value !== null && '$ref' in value
+        return typeof value === "object" && value !== null && "$ref" in value
     }
 
     public isExternalReference($ref: string): boolean {
-        return typeof $ref === 'string' && ($ref.startsWith('http://') || $ref.startsWith('https://'))
+        return typeof $ref === "string" && ($ref.startsWith("http://") || $ref.startsWith("https://"))
     }
 
     public isReferenceObjectWithIdentifier(
         value: unknown
     ): value is OpenAPIV3_1.ReferenceObject & { title?: string; name?: string; messageId?: string } {
-        return this.isReferenceObject(value) && ('title' in value || 'name' in value || 'messageId' in value)
+        return this.isReferenceObject(value) && ("title" in value || "name" in value || "messageId" in value)
     }
 
     public isExampleWithSummary(example: unknown): example is { summary: string } {
-        return typeof example === 'object' && example != null && 'summary' in example
+        return typeof example === "object" && example != null && "summary" in example
     }
 
     public isExampleWithValue(example: unknown): example is { value: unknown } {
-        return typeof example === 'object' && example != null && 'value' in example
+        return typeof example === "object" && example != null && "value" in example
     }
 
     /**
@@ -686,24 +686,24 @@ export abstract class AbstractConverterContext<Spec extends object> {
     public isOptional(
         valueType: TypeReference
     ): valueType is TypeReference.Container & { container: ContainerType.Optional } {
-        return valueType.type === 'container' && valueType.container.type === 'optional'
+        return valueType.type === "container" && valueType.container.type === "optional"
     }
 
     public isNullable(
         valueType: TypeReference
     ): valueType is TypeReference.Container & { container: ContainerType.Nullable } {
-        return valueType.type === 'container' && valueType.container.type === 'nullable'
+        return valueType.type === "container" && valueType.container.type === "nullable"
     }
 
     public isList(valueType: TypeReference): valueType is TypeReference.Container & { container: ContainerType.List } {
-        return valueType.type === 'container' && valueType.container.type === 'list'
+        return valueType.type === "container" && valueType.container.type === "list"
     }
 
     public isFile(valueType: TypeReference): boolean {
         return (
-            valueType.type === 'primitive' &&
-            valueType.primitive.v2?.type === 'string' &&
-            valueType.primitive.v2.validation?.format === 'binary'
+            valueType.type === "primitive" &&
+            valueType.primitive.v2?.type === "string" &&
+            valueType.primitive.v2.validation?.format === "binary"
         )
     }
 
@@ -712,28 +712,28 @@ export abstract class AbstractConverterContext<Spec extends object> {
      */
 
     public getAsString(value: unknown): string | undefined {
-        if (typeof value === 'string') {
+        if (typeof value === "string") {
             return value
         }
         return undefined
     }
 
     public getAsInteger(value: unknown): number | undefined {
-        if (typeof value === 'number' && Number.isInteger(value)) {
+        if (typeof value === "number" && Number.isInteger(value)) {
             return value
         }
         return undefined
     }
 
     public getAsNumber(value: unknown): number | undefined {
-        if (typeof value === 'number') {
+        if (typeof value === "number") {
             return value
         }
         return undefined
     }
 
     public getAsBoolean(value: unknown): boolean | undefined {
-        if (typeof value === 'boolean') {
+        if (typeof value === "boolean") {
             return value
         }
         return undefined
@@ -747,7 +747,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
     }
 
     public getAsObject(value: unknown): Record<string, unknown> | undefined {
-        if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+        if (typeof value === "object" && value !== null && !Array.isArray(value)) {
             return value as Record<string, unknown>
         }
         return undefined
@@ -769,6 +769,6 @@ export abstract class AbstractConverterContext<Spec extends object> {
     }
 
     public isObjectSchemaType(schema: OpenAPIV3_1.SchemaObject): boolean {
-        return schema.type === 'object' || schema.properties != null
+        return schema.type === "object" || schema.properties != null
     }
 }

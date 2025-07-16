@@ -1,14 +1,14 @@
-import { HttpEndpoint, IntermediateRepresentation, TypeDeclaration, TypeId, V2ValueExamples } from '@fern-api/ir-sdk'
+import { HttpEndpoint, IntermediateRepresentation, TypeDeclaration, TypeId, V2ValueExamples } from "@fern-api/ir-sdk"
 
-import { isTypeReferenceOptional } from '../../utils/isTypeReferenceOptional'
-import { getFirstExamples } from './getV2Examples'
+import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional"
+import { getFirstExamples } from "./getV2Examples"
 
 export function getParameterExamples({
     ir,
     endpoint,
     skipOptionalRequestProperties
 }: {
-    ir: Omit<IntermediateRepresentation, 'sdkConfig' | 'subpackages' | 'rootPackage'>
+    ir: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage">
     endpoint: HttpEndpoint
     skipOptionalRequestProperties: boolean
 }): {

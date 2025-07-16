@@ -1,11 +1,11 @@
-import { OpenAPIV3_1 } from 'openapi-types'
+import { OpenAPIV3_1 } from "openapi-types"
 
-import { isNonNullish } from '@fern-api/core-utils'
-import { Type, TypeId, TypeReference } from '@fern-api/ir-sdk'
+import { isNonNullish } from "@fern-api/core-utils"
+import { Type, TypeId, TypeReference } from "@fern-api/ir-sdk"
 
-import { AbstractConverter, AbstractConverterContext } from '../..'
-import { convertProperties } from '../../utils/ConvertProperties'
-import { SchemaConverter } from './SchemaConverter'
+import { AbstractConverter, AbstractConverterContext } from "../.."
+import { convertProperties } from "../../utils/ConvertProperties"
+import { SchemaConverter } from "./SchemaConverter"
 
 export declare namespace ObjectSchemaConverter {
     export interface Args extends AbstractConverter.AbstractArgs {
@@ -33,7 +33,7 @@ export class ObjectSchemaConverter extends AbstractConverter<
 
     public convert(): ObjectSchemaConverter.Output {
         const hasAdditionalProperties =
-            typeof this.schema.additionalProperties === 'boolean' && this.schema.additionalProperties
+            typeof this.schema.additionalProperties === "boolean" && this.schema.additionalProperties
 
         if (!this.schema.properties && !this.schema.allOf) {
             return {
@@ -68,7 +68,7 @@ export class ObjectSchemaConverter extends AbstractConverter<
         let inlinedTypes: Record<TypeId, SchemaConverter.ConvertedSchema> = propertiesInlinedTypes
         let propertiesByAudience: Record<string, Set<string>> = basePropertiesByAudience
         for (const [index, allOfSchemaOrReference] of (this.schema.allOf ?? []).entries()) {
-            const breadcrumbs = [...this.breadcrumbs, 'allOf', index.toString()]
+            const breadcrumbs = [...this.breadcrumbs, "allOf", index.toString()]
             let allOfSchema: OpenAPIV3_1.SchemaObject
             if (this.context.isReferenceObject(allOfSchemaOrReference)) {
                 if (!objectHasRequiredProperties) {

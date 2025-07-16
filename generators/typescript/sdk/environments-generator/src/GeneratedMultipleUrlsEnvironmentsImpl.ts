@@ -1,6 +1,6 @@
-import { FernWriters, getPropertyKey, getTextOfTsNode } from '@fern-typescript/commons'
-import { GeneratedEnvironments, SdkContext } from '@fern-typescript/contexts'
-import { VariableDeclarationKind, ts } from 'ts-morph'
+import { FernWriters, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons"
+import { GeneratedEnvironments, SdkContext } from "@fern-typescript/contexts"
+import { VariableDeclarationKind, ts } from "ts-morph"
 
 import {
     EnvironmentBaseUrlId,
@@ -8,7 +8,7 @@ import {
     EnvironmentId,
     MultipleBaseUrlsEnvironment,
     MultipleBaseUrlsEnvironments
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
 export declare namespace GeneratedMultipleUrlsEnvironmentsImpl {
     export interface Init {
@@ -42,7 +42,7 @@ export class GeneratedMultipleUrlsEnvironmentsImpl implements GeneratedEnvironme
             name: this.environmentUrlsTypeName,
             properties: this.environments.baseUrls.map((baseUrl) => ({
                 name: getPropertyKey(this.getNameOfBaseUrl(baseUrl)),
-                type: 'string'
+                type: "string"
             })),
             isExported: true
         })
@@ -109,7 +109,7 @@ export class GeneratedMultipleUrlsEnvironmentsImpl implements GeneratedEnvironme
             (environment) => environment.id === this.defaultEnvironmentId
         )
         if (defaultEnvironment == null) {
-            throw new Error('Default environment does not exist')
+            throw new Error("Default environment does not exist")
         }
 
         return ts.factory.createPropertyAccessExpression(
@@ -137,7 +137,7 @@ export class GeneratedMultipleUrlsEnvironmentsImpl implements GeneratedEnvironme
         baseUrlId: EnvironmentBaseUrlId | undefined
     }): ts.Expression {
         if (baseUrlId == null) {
-            throw new Error('Cannot get reference to multiple environment URL because baseUrlId is not defined')
+            throw new Error("Cannot get reference to multiple environment URL because baseUrlId is not defined")
         }
         const baseUrl = this.environments.baseUrls.find((otherBaseUrl) => otherBaseUrl.id === baseUrlId)
         if (baseUrl == null) {

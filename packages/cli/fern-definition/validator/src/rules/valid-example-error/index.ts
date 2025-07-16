@@ -1,1 +1,1 @@
-export { ValidExampleErrorRule } from './valid-example-error'
+export { ValidExampleErrorRule } from "./valid-example-error"

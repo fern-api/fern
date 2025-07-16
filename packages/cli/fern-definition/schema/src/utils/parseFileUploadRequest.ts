@@ -1,4 +1,4 @@
-import { MediaType } from '@fern-api/core-utils'
+import { MediaType } from "@fern-api/core-utils"
 
 import {
     AvailabilityUnionSchema,
@@ -6,11 +6,11 @@ import {
     HttpInlineRequestBodySchema,
     HttpRequestSchema,
     ObjectPropertySchema
-} from '../schemas'
-import { isFileInGeneric } from './generics/isFileInGeneric'
-import { parseGenericNested } from './generics/parseGenericNested'
-import { isInlineRequestBody } from './isInlineRequestBody'
-import { parseRawFileType } from './parseRawFileType'
+} from "../schemas"
+import { isFileInGeneric } from "./generics/isFileInGeneric"
+import { parseGenericNested } from "./generics/parseGenericNested"
+import { isInlineRequestBody } from "./isInlineRequestBody"
+import { parseRawFileType } from "./parseRawFileType"
 
 export interface RawFileUploadRequest {
     name: string
@@ -37,16 +37,16 @@ export declare namespace RawFileUploadRequest {
         availability?: AvailabilityUnionSchema | undefined
         key: string
         contentType?: string
-        style?: 'exploded' | 'json' | 'form'
+        style?: "exploded" | "json" | "form"
     }
 }
 
 function isFileUploadRequest(request: HttpRequestSchema | string): request is HttpRequestSchema {
-    if (typeof request === 'string') {
+    if (typeof request === "string") {
         return false
     }
 
-    if (MediaType.parse(request['content-type'])?.isMultiPartFormData() ?? false) {
+    if (MediaType.parse(request["content-type"])?.isMultiPartFormData() ?? false) {
         return true
     }
 
@@ -85,11 +85,11 @@ function createRawFileUploadRequest(
 ): RawFileUploadRequest | undefined {
     const properties = Object.entries(requestBody.properties ?? []).reduce<RawFileUploadRequest.Property[]>(
         (acc, [key, propertyType]) => {
-            const docs = typeof propertyType !== 'string' ? propertyType.docs : undefined
-            const contentType = typeof propertyType !== 'string' ? propertyType['content-type'] : undefined
-            const style = typeof propertyType !== 'string' ? propertyType.style : undefined
+            const docs = typeof propertyType !== "string" ? propertyType.docs : undefined
+            const contentType = typeof propertyType !== "string" ? propertyType["content-type"] : undefined
+            const style = typeof propertyType !== "string" ? propertyType.style : undefined
             const maybeParsedFileType = parseRawFileType(
-                typeof propertyType === 'string' ? propertyType : propertyType.type
+                typeof propertyType === "string" ? propertyType : propertyType.type
             )
             if (maybeParsedFileType != null) {
                 acc.push({
@@ -109,7 +109,7 @@ function createRawFileUploadRequest(
         []
     )
 
-    if (requestBody['extra-properties']) {
+    if (requestBody["extra-properties"]) {
         // TODO: handle extra properties
     }
 
@@ -122,11 +122,11 @@ function createRawFileUploadRequest(
 }
 
 function doesPropertyHaveFile(property: HttpInlineRequestBodyPropertySchema): boolean {
-    const propertyType = typeof property === 'string' ? property : property.type
-    if (propertyType === 'file') {
+    const propertyType = typeof property === "string" ? property : property.type
+    if (propertyType === "file") {
         return true
     }
-    if (!propertyType.includes('file')) {
+    if (!propertyType.includes("file")) {
         // fast check to avoid unnecessary parsing
         return false
     }

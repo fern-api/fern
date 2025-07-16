@@ -1,16 +1,16 @@
-import { swift } from '../..'
+import { swift } from "../.."
 
-describe('Enum', () => {
-    describe('write', () => {
-        it('should omit raw values if they are the same as the case names', () => {
+describe("Enum", () => {
+    describe("write", () => {
+        it("should omit raw values if they are the same as the case names", () => {
             const enum_ = swift.enumWithRawValues({
-                name: 'Direction',
-                conformances: ['String'],
+                name: "Direction",
+                conformances: ["String"],
                 cases: [
-                    { unsafeName: 'north', rawValue: 'north' },
-                    { unsafeName: 'south', rawValue: 'south' },
-                    { unsafeName: 'east', rawValue: 'east' },
-                    { unsafeName: 'west', rawValue: 'west' }
+                    { unsafeName: "north", rawValue: "north" },
+                    { unsafeName: "south", rawValue: "south" },
+                    { unsafeName: "east", rawValue: "east" },
+                    { unsafeName: "west", rawValue: "west" }
                 ]
             })
 
@@ -24,15 +24,15 @@ describe('Enum', () => {
             `)
         })
 
-        it('should specify raw values if they are not the same as the case names', () => {
+        it("should specify raw values if they are not the same as the case names", () => {
             const enum_ = swift.enumWithRawValues({
-                name: 'Direction',
-                conformances: ['String'],
+                name: "Direction",
+                conformances: ["String"],
                 cases: [
-                    { unsafeName: 'northWest', rawValue: 'north-west' },
-                    { unsafeName: 'southWest', rawValue: 'south-west' },
-                    { unsafeName: 'east', rawValue: 'east' },
-                    { unsafeName: 'west', rawValue: 'west' }
+                    { unsafeName: "northWest", rawValue: "north-west" },
+                    { unsafeName: "southWest", rawValue: "south-west" },
+                    { unsafeName: "east", rawValue: "east" },
+                    { unsafeName: "west", rawValue: "west" }
                 ]
             })
 
@@ -46,13 +46,13 @@ describe('Enum', () => {
             `)
         })
 
-        it('should handle reserved keywords in case names', () => {
+        it("should handle reserved keywords in case names", () => {
             const enum_ = swift.enumWithRawValues({
-                name: 'KeywordEnum',
+                name: "KeywordEnum",
                 cases: [
-                    { unsafeName: 'class', rawValue: 'class' },
-                    { unsafeName: 'associatedtype', rawValue: 'associated-type' },
-                    { unsafeName: 'north', rawValue: 'north' }
+                    { unsafeName: "class", rawValue: "class" },
+                    { unsafeName: "associatedtype", rawValue: "associated-type" },
+                    { unsafeName: "north", rawValue: "north" }
                 ]
             })
 

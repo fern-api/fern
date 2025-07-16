@@ -3,5 +3,5 @@ export interface DocsLinks {
 }
 
 export const DocsLinks: DocsLinks = {
-    oauth: 'https://buildwithfern.com/learn/api-definition/fern/api-yml-reference#authentication'
+    oauth: "https://buildwithfern.com/learn/api-definition/fern/api-yml-reference#authentication"
 }

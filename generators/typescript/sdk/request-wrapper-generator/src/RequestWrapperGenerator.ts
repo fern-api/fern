@@ -1,9 +1,9 @@
-import { PackageId } from '@fern-typescript/commons'
-import { GeneratedRequestWrapper } from '@fern-typescript/contexts'
+import { PackageId } from "@fern-typescript/commons"
+import { GeneratedRequestWrapper } from "@fern-typescript/contexts"
 
-import { HttpEndpoint, HttpService } from '@fern-fern/ir-sdk/api'
+import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api"
 
-import { GeneratedRequestWrapperImpl } from './GeneratedRequestWrapperImpl'
+import { GeneratedRequestWrapperImpl } from "./GeneratedRequestWrapperImpl"
 
 export declare namespace RequestWrapperGenerator {
     export namespace generateRequestWrapper {
@@ -17,7 +17,7 @@ export declare namespace RequestWrapperGenerator {
             inlineFileProperties: boolean
             enableInlineTypes: boolean
             shouldInlinePathParameters: boolean
-            formDataSupport: 'Node16' | 'Node18'
+            formDataSupport: "Node16" | "Node18"
         }
     }
 }

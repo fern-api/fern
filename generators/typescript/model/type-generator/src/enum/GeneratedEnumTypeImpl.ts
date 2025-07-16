@@ -4,8 +4,8 @@ import {
     getTextOfTsNode,
     getWriterForMultiLineUnionType,
     maybeAddDocsStructure
-} from '@fern-typescript/commons'
-import { BaseContext, GeneratedEnumType } from '@fern-typescript/contexts'
+} from "@fern-typescript/commons"
+import { BaseContext, GeneratedEnumType } from "@fern-typescript/contexts"
 import {
     ModuleDeclarationStructure,
     OptionalKind,
@@ -17,11 +17,11 @@ import {
     VariableStatementStructure,
     WriterFunction,
     ts
-} from 'ts-morph'
+} from "ts-morph"
 
-import { EnumTypeDeclaration, EnumValue, ExampleTypeShape } from '@fern-fern/ir-sdk/api'
+import { EnumTypeDeclaration, EnumValue, ExampleTypeShape } from "@fern-fern/ir-sdk/api"
 
-import { AbstractGeneratedType } from '../AbstractGeneratedType'
+import { AbstractGeneratedType } from "../AbstractGeneratedType"
 
 export declare namespace GeneratedEnumTypeImpl {
     export interface Init<Context> extends AbstractGeneratedType.Init<EnumTypeDeclaration, Context> {
@@ -33,14 +33,14 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
     extends AbstractGeneratedType<EnumTypeDeclaration, Context>
     implements GeneratedEnumType<Context>
 {
-    private static readonly VISITOR_INTERFACE_NAME = 'Visitor'
-    private static readonly OTHER_VISITOR_METHOD_NAME = '_other'
-    private static readonly VISITOR_RETURN_TYPE_PARAMETER = 'R'
-    private static readonly VISIT_PROPERTTY_NAME = '_visit'
-    private static readonly VISIT_VALUE_PARAMETER_NAME = 'value'
-    private static readonly VISITOR_PARAMETER_NAME = 'visitor'
+    private static readonly VISITOR_INTERFACE_NAME = "Visitor"
+    private static readonly OTHER_VISITOR_METHOD_NAME = "_other"
+    private static readonly VISITOR_RETURN_TYPE_PARAMETER = "R"
+    private static readonly VISIT_PROPERTTY_NAME = "_visit"
+    private static readonly VISIT_VALUE_PARAMETER_NAME = "value"
+    private static readonly VISITOR_PARAMETER_NAME = "visitor"
 
-    public readonly type = 'enum'
+    public readonly type = "enum"
     private includeEnumUtils: boolean
 
     constructor({ includeEnumUtils, ...superInit }: GeneratedEnumTypeImpl.Init<Context>) {
@@ -204,7 +204,7 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
                     initializer: getTextOfTsNode(
                         ts.factory.createAsExpression(
                             ts.factory.createObjectLiteralExpression(constProperties, true),
-                            ts.factory.createTypeReferenceNode('const')
+                            ts.factory.createTypeReferenceNode("const")
                         )
                     )
                 }
@@ -262,13 +262,13 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
     }
 
     public buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {
-        if (example.type !== 'enum') {
-            throw new Error('Example is not for an enum')
+        if (example.type !== "enum") {
+            throw new Error("Example is not for an enum")
         }
 
         const enumValue = this.shape.values.find((enumValue) => enumValue.name.wireValue === example.value.wireValue)
         if (enumValue == null) {
-            throw new Error('No enum with wire value: ' + example.value.wireValue)
+            throw new Error("No enum with wire value: " + example.value.wireValue)
         }
         if (opts.isForTypeDeclarationComment) {
             return ts.factory.createPropertyAccessExpression(

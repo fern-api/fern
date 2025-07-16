@@ -1,16 +1,16 @@
-import { readFile } from 'fs/promises'
-import yaml from 'js-yaml'
+import { readFile } from "fs/promises"
+import yaml from "js-yaml"
 
-import { docsYml } from '@fern-api/configuration'
-import { assertNever, isPlainObject } from '@fern-api/core-utils'
-import { AbsoluteFilePath, dirname, doesPathExist, listFiles, resolve } from '@fern-api/fs-utils'
-import { TaskContext } from '@fern-api/task-context'
+import { docsYml } from "@fern-api/configuration"
+import { assertNever, isPlainObject } from "@fern-api/core-utils"
+import { AbsoluteFilePath, dirname, doesPathExist, listFiles, resolve } from "@fern-api/fs-utils"
+import { TaskContext } from "@fern-api/task-context"
 
-import { FernRegistry as CjsFdrSdk } from '@fern-fern/fdr-cjs-sdk'
+import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk"
 
-import { WithoutQuestionMarks } from '../commons/WithoutQuestionMarks'
-import { convertColorsConfiguration } from './convertColorsConfiguration'
-import { getAllPages, loadAllPages } from './getAllPages'
+import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks"
+import { convertColorsConfiguration } from "./convertColorsConfiguration"
+import { getAllPages, loadAllPages } from "./getAllPages"
 
 export async function parseDocsConfiguration({
     rawDocsConfiguration,
@@ -190,7 +190,7 @@ export async function parseDocsConfiguration({
 function convertLogoReference(
     rawLogo: docsYml.RawSchemas.LogoConfiguration | undefined,
     absoluteFilepathToDocsConfig: AbsoluteFilePath
-): docsYml.ParsedDocsConfiguration['logo'] {
+): docsYml.ParsedDocsConfiguration["logo"] {
     return rawLogo != null
         ? {
               dark: resolveFilepath(rawLogo.dark, absoluteFilepathToDocsConfig),
@@ -204,10 +204,10 @@ function convertLogoReference(
 function convertBackgroundImage(
     rawBackgroundImage: docsYml.RawSchemas.BackgroundImageConfiguration | undefined,
     absoluteFilepathToDocsConfig: AbsoluteFilePath
-): docsYml.ParsedDocsConfiguration['backgroundImage'] {
+): docsYml.ParsedDocsConfiguration["backgroundImage"] {
     if (rawBackgroundImage == null) {
         return undefined
-    } else if (typeof rawBackgroundImage === 'string') {
+    } else if (typeof rawBackgroundImage === "string") {
         const image = resolveFilepath(rawBackgroundImage, absoluteFilepathToDocsConfig)
 
         return { dark: image, light: image }
@@ -222,11 +222,11 @@ function convertBackgroundImage(
 async function convertCssConfig(
     css: docsYml.RawSchemas.CssConfig | undefined,
     absoluteFilepathToDocsConfig: AbsoluteFilePath
-): Promise<docsYml.ParsedDocsConfiguration['css']> {
+): Promise<docsYml.ParsedDocsConfiguration["css"]> {
     if (css == null) {
         return undefined
     }
-    const cssFilePaths = typeof css === 'string' ? [css] : css
+    const cssFilePaths = typeof css === "string" ? [css] : css
     return {
         inline: await Promise.all(
             cssFilePaths.map(async (cssFilePath) => {
@@ -240,13 +240,13 @@ async function convertCssConfig(
 function isRemoteJsConfig(
     config: docsYml.RawSchemas.JsRemoteConfig | docsYml.RawSchemas.JsFileConfigSettings
 ): config is docsYml.RawSchemas.JsRemoteConfig {
-    return Object.hasOwn(config, 'url')
+    return Object.hasOwn(config, "url")
 }
 
 function isFileJsConfig(
     config: docsYml.RawSchemas.JsRemoteConfig | docsYml.RawSchemas.JsFileConfigSettings
 ): config is docsYml.RawSchemas.JsFileConfigSettings {
-    return Object.hasOwn(config, 'path')
+    return Object.hasOwn(config, "path")
 }
 
 async function convertJsConfig(
@@ -262,7 +262,7 @@ async function convertJsConfig(
     const configs = Array.isArray(js) ? js : [js]
 
     for (const config of configs) {
-        if (typeof config === 'string') {
+        if (typeof config === "string") {
             files.push({
                 absolutePath: resolveFilepath(config, absoluteFilepathToDocsConfig)
             })
@@ -284,34 +284,34 @@ async function convertJsConfig(
 
 function convertLayoutConfig(
     layout: docsYml.RawSchemas.LayoutConfig | undefined
-): docsYml.ParsedDocsConfiguration['layout'] {
+): docsYml.ParsedDocsConfiguration["layout"] {
     if (layout == null) {
         return undefined
     }
 
     return {
         pageWidth:
-            layout.pageWidth?.trim().toLowerCase() === 'full' ? { type: 'full' } : parseSizeConfig(layout.pageWidth),
+            layout.pageWidth?.trim().toLowerCase() === "full" ? { type: "full" } : parseSizeConfig(layout.pageWidth),
         contentWidth: parseSizeConfig(layout.contentWidth),
         sidebarWidth: parseSizeConfig(layout.sidebarWidth),
         headerHeight: parseSizeConfig(layout.headerHeight),
 
         searchbarPlacement:
-            layout.searchbarPlacement === 'header'
+            layout.searchbarPlacement === "header"
                 ? CjsFdrSdk.docs.v1.commons.SearchbarPlacement.Header
-                : layout.searchbarPlacement === 'header-tabs'
+                : layout.searchbarPlacement === "header-tabs"
                   ? CjsFdrSdk.docs.v1.commons.SearchbarPlacement.HeaderTabs
                   : CjsFdrSdk.docs.v1.commons.SearchbarPlacement.Sidebar,
         tabsPlacement:
-            layout.tabsPlacement === 'header'
+            layout.tabsPlacement === "header"
                 ? CjsFdrSdk.docs.v1.commons.TabsPlacement.Header
                 : CjsFdrSdk.docs.v1.commons.TabsPlacement.Sidebar,
         contentAlignment:
-            layout.contentAlignment === 'left'
+            layout.contentAlignment === "left"
                 ? CjsFdrSdk.docs.v1.commons.ContentAlignment.Left
                 : CjsFdrSdk.docs.v1.commons.ContentAlignment.Center,
         headerPosition:
-            layout.headerPosition === 'static'
+            layout.headerPosition === "static"
                 ? CjsFdrSdk.docs.v1.commons.HeaderPosition.Absolute
                 : CjsFdrSdk.docs.v1.commons.HeaderPosition.Fixed,
         disableHeader: layout.disableHeader ?? false
@@ -328,7 +328,7 @@ function parseSizeConfig(sizeAsString: string | undefined): CjsFdrSdk.docs.v1.co
     const pxMatch = sizeAsStringClean.match(/^(\d+)px$/)
     if (pxMatch != null && pxMatch[1] != null) {
         return {
-            type: 'px',
+            type: "px",
             value: parseFloat(pxMatch[1])
         }
     }
@@ -336,7 +336,7 @@ function parseSizeConfig(sizeAsString: string | undefined): CjsFdrSdk.docs.v1.co
     const remMatch = sizeAsStringClean.match(/^(\d+)rem$/)
     if (remMatch != null && remMatch[1] != null) {
         return {
-            type: 'rem',
+            type: "rem",
             value: parseFloat(remMatch[1])
         }
     }
@@ -378,7 +378,7 @@ async function getVersionedNavigationConfiguration({
         })
     }
     return {
-        type: 'versioned',
+        type: "versioned",
         versions: versionedNavbars
     }
 }
@@ -443,18 +443,18 @@ async function getNavigationConfiguration({
                 navigation,
                 slug: product.slug,
                 subtitle: product.subtitle,
-                icon: product.icon || 'fa-solid fa-code',
+                icon: product.icon || "fa-solid fa-code",
                 image: productImageFile
             })
         }
         return {
-            type: 'productgroup',
+            type: "productgroup",
             products: productNavbars
         }
     } else if (versions != null) {
         return await getVersionedNavigationConfiguration({ versions, absolutePathToFernFolder, context })
     }
-    throw new Error('Unexpected. Docs have neither navigation or versions defined.')
+    throw new Error("Unexpected. Docs have neither navigation or versions defined.")
 }
 
 function convertFeatureFlag(
@@ -463,7 +463,7 @@ function convertFeatureFlag(
     if (flag == null) {
         return undefined
     }
-    if (typeof flag === 'string') {
+    if (typeof flag === "string") {
         return [
             {
                 flag,
@@ -539,7 +539,7 @@ async function convertFontConfig({
 function constructVariants(
     rawFontConfig: docsYml.RawSchemas.FontConfig,
     absoluteFilepathToDocsConfig: AbsoluteFilePath
-): Promise<docsYml.FontConfig['variants']> {
+): Promise<docsYml.FontConfig["variants"]> {
     const variants: docsYml.RawSchemas.FontConfigVariant[] = []
 
     if (rawFontConfig.path != null) {
@@ -551,7 +551,7 @@ function constructVariants(
     }
 
     rawFontConfig.paths?.forEach((rawVariant) => {
-        if (typeof rawVariant === 'string') {
+        if (typeof rawVariant === "string") {
             variants.push({
                 path: rawVariant,
                 weight: rawFontConfig.weight,
@@ -580,13 +580,13 @@ function parseWeight(weight: string | number | undefined): string[] | undefined 
         return undefined
     }
 
-    if (typeof weight === 'number') {
+    if (typeof weight === "number") {
         return [weight.toString()]
     }
 
     const weights = weight
         .split(/\D+/)
-        .filter((item) => item !== '' && ['100', '200', '300', '400', '500', '600', '700', '800', '900'].includes(item))
+        .filter((item) => item !== "" && ["100", "200", "300", "400", "500", "600", "700", "800", "900"].includes(item))
 
     return weights
 }
@@ -622,7 +622,7 @@ async function convertNavigationTabConfiguration({
             skipUrlSlug: tab.skipSlug,
             hidden: tab.hidden,
             child: {
-                type: 'layout',
+                type: "layout",
                 layout
             },
             viewers: parseRoles(tab.viewers),
@@ -639,7 +639,7 @@ async function convertNavigationTabConfiguration({
             skipUrlSlug: tab.skipSlug,
             hidden: tab.hidden,
             child: {
-                type: 'link',
+                type: "link",
                 href: tab.href
             },
             viewers: parseRoles(tab.viewers),
@@ -656,8 +656,8 @@ async function convertNavigationTabConfiguration({
             skipUrlSlug: tab.skipSlug,
             hidden: tab.hidden,
             child: {
-                type: 'changelog',
-                changelog: await listFiles(resolveFilepath(tab.changelog, absolutePathToConfig), '{md,mdx}')
+                type: "changelog",
+                changelog: await listFiles(resolveFilepath(tab.changelog, absolutePathToConfig), "{md,mdx}")
             },
             viewers: parseRoles(tab.viewers),
             orphaned: tab.orphaned,
@@ -694,12 +694,12 @@ async function convertNavigationConfiguration({
             )
         )
         return {
-            type: 'tabbed',
+            type: "tabbed",
             items: tabbedNavigationItems
         }
     } else {
         return {
-            type: 'untabbed',
+            type: "untabbed",
             items: await Promise.all(
                 rawNavigationConfig.map((item) =>
                     convertNavigationItem({ rawConfig: item, absolutePathToFernFolder, absolutePathToConfig, context })
@@ -709,7 +709,7 @@ async function convertNavigationConfiguration({
     }
 }
 
-const DEFAULT_CHANGELOG_TITLE = 'Changelog'
+const DEFAULT_CHANGELOG_TITLE = "Changelog"
 
 async function convertNavigationItem({
     rawConfig,
@@ -727,7 +727,7 @@ async function convertNavigationItem({
     }
     if (isRawSectionConfig(rawConfig)) {
         return {
-            type: 'section',
+            type: "section",
             title: rawConfig.section,
             icon: rawConfig.icon,
             contents: await Promise.all(
@@ -747,13 +747,13 @@ async function convertNavigationItem({
     }
     if (isRawApiSectionConfig(rawConfig)) {
         return {
-            type: 'apiSection',
+            type: "apiSection",
             openrpc: rawConfig.openrpc,
             title: rawConfig.api,
             icon: rawConfig.icon,
             apiName: rawConfig.apiName ?? undefined,
             audiences:
-                rawConfig.audiences != null ? { type: 'select', audiences: rawConfig.audiences } : { type: 'all' },
+                rawConfig.audiences != null ? { type: "select", audiences: rawConfig.audiences } : { type: "all" },
             showErrors: rawConfig.displayErrors ?? true,
             snippetsConfiguration:
                 rawConfig.snippets != null
@@ -776,7 +776,7 @@ async function convertNavigationItem({
     }
     if (isRawLinkConfig(rawConfig)) {
         return {
-            type: 'link',
+            type: "link",
             text: rawConfig.link,
             url: rawConfig.href,
             icon: rawConfig.icon
@@ -784,8 +784,8 @@ async function convertNavigationItem({
     }
     if (isRawChangelogConfig(rawConfig)) {
         return {
-            type: 'changelog',
-            changelog: await listFiles(resolveFilepath(rawConfig.changelog, absolutePathToConfig), '{md,mdx}'),
+            type: "changelog",
+            changelog: await listFiles(resolveFilepath(rawConfig.changelog, absolutePathToConfig), "{md,mdx}"),
             hidden: rawConfig.hidden ?? false,
             icon: rawConfig.icon,
             title: rawConfig.title ?? DEFAULT_CHANGELOG_TITLE,
@@ -814,7 +814,7 @@ function parsePageConfig(
         return undefined
     }
     return {
-        type: 'page',
+        type: "page",
         title: item.page,
         absolutePath: resolveFilepath(item.path, absolutePathToConfig),
         slug: item.slug,
@@ -831,8 +831,8 @@ function parseApiReferenceLayoutItem(
     item: docsYml.RawSchemas.ApiReferenceLayoutItem,
     absolutePathToConfig: AbsoluteFilePath
 ): docsYml.ParsedApiReferenceLayoutItem[] {
-    if (typeof item === 'string') {
-        return [{ type: 'item', value: item }]
+    if (typeof item === "string") {
+        return [{ type: "item", value: item }]
     }
 
     if (isRawPageConfig(item)) {
@@ -840,7 +840,7 @@ function parseApiReferenceLayoutItem(
     } else if (isRawLinkConfig(item)) {
         return [
             {
-                type: 'link',
+                type: "link",
                 text: item.link,
                 url: item.href,
                 icon: item.icon
@@ -849,7 +849,7 @@ function parseApiReferenceLayoutItem(
     } else if (isRawApiRefSectionConfiguration(item)) {
         return [
             {
-                type: 'section',
+                type: "section",
                 title: item.section,
                 referencedSubpackages: item.referencedPackages ?? [],
                 overviewAbsolutePath: resolveFilepath(item.summary, absolutePathToConfig),
@@ -868,7 +868,7 @@ function parseApiReferenceLayoutItem(
     } else if (isRawApiRefEndpointConfiguration(item)) {
         return [
             {
-                type: 'endpoint',
+                type: "endpoint",
                 endpoint: item.endpoint,
                 title: item.title,
                 icon: item.icon,
@@ -884,7 +884,7 @@ function parseApiReferenceLayoutItem(
     return Object.entries(item).map(([key, value]): docsYml.ParsedApiReferenceLayoutItem.Package => {
         if (isRawApiRefPackageConfiguration(value)) {
             return {
-                type: 'package',
+                type: "package",
                 title: value.title,
                 package: key,
                 overviewAbsolutePath: resolveFilepath(value.summary, absolutePathToConfig),
@@ -901,7 +901,7 @@ function parseApiReferenceLayoutItem(
             }
         }
         return {
-            type: 'package',
+            type: "package",
             title: undefined,
             package: key,
             overviewAbsolutePath: undefined,
@@ -934,7 +934,7 @@ function convertSnippetsConfiguration({
 }
 
 function isRawPageConfig(item: unknown): item is docsYml.RawSchemas.PageConfiguration {
-    return isPlainObject(item) && typeof item.page === 'string' && typeof item.path === 'string'
+    return isPlainObject(item) && typeof item.page === "string" && typeof item.path === "string"
 }
 
 function isRawSectionConfig(item: docsYml.RawSchemas.NavigationItem): item is docsYml.RawSchemas.SectionConfiguration {
@@ -952,19 +952,19 @@ function isRawApiSectionConfig(
 function isRawLinkConfig(item: unknown): item is docsYml.RawSchemas.LinkConfiguration {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     docsYml.RawSchemas
-    return isPlainObject(item) && typeof item.link === 'string' && typeof item.href === 'string'
+    return isPlainObject(item) && typeof item.link === "string" && typeof item.href === "string"
 }
 
 function isRawChangelogConfig(item: unknown): item is docsYml.RawSchemas.ChangelogConfiguration {
-    return isPlainObject(item) && typeof item.changelog === 'string'
+    return isPlainObject(item) && typeof item.changelog === "string"
 }
 
 function isRawApiRefSectionConfiguration(item: unknown): item is docsYml.RawSchemas.ApiReferenceSectionConfiguration {
-    return isPlainObject(item) && typeof item.section === 'string' && Array.isArray(item.contents)
+    return isPlainObject(item) && typeof item.section === "string" && Array.isArray(item.contents)
 }
 
 function isRawApiRefEndpointConfiguration(item: unknown): item is docsYml.RawSchemas.ApiReferenceEndpointConfiguration {
-    return isPlainObject(item) && typeof item.endpoint === 'string'
+    return isPlainObject(item) && typeof item.endpoint === "string"
 }
 
 function isRawApiRefPackageConfiguration(
@@ -1003,14 +1003,14 @@ function convertNavbarLinks(
     navbarLinks: docsYml.RawSchemas.NavbarLink[] | undefined
 ): CjsFdrSdk.docs.v1.commons.NavbarLink[] | undefined {
     return navbarLinks?.map((navbarLink): WithoutQuestionMarks<CjsFdrSdk.docs.v1.commons.NavbarLink> => {
-        if (navbarLink.type === 'github') {
-            return { type: 'github', url: CjsFdrSdk.Url(navbarLink.value) }
+        if (navbarLink.type === "github") {
+            return { type: "github", url: CjsFdrSdk.Url(navbarLink.value) }
         }
 
         return {
             type: navbarLink.type,
             text: navbarLink.text,
-            url: CjsFdrSdk.Url(navbarLink.href ?? navbarLink.url ?? '/'),
+            url: CjsFdrSdk.Url(navbarLink.href ?? navbarLink.url ?? "/"),
             icon: navbarLink.icon,
             rightIcon: navbarLink.rightIcon,
             rounded: navbarLink.rounded
@@ -1051,22 +1051,22 @@ async function convertMetadata(
     }
 
     return {
-        'og:site_name': metadata.ogSiteName,
-        'og:title': metadata.ogTitle,
-        'og:description': metadata.ogDescription,
-        'og:url': metadata.ogUrl,
-        'og:image': await convertFilepathOrUrl(metadata.ogImage, absoluteFilepathToDocsConfig),
-        'og:image:width': metadata.ogImageWidth,
-        'og:image:height': metadata.ogImageHeight,
-        'og:locale': metadata.ogLocale,
-        'og:logo': await convertFilepathOrUrl(metadata.ogLogo, absoluteFilepathToDocsConfig),
-        'twitter:title': metadata.twitterTitle,
-        'twitter:description': metadata.twitterDescription,
-        'twitter:image': await convertFilepathOrUrl(metadata.twitterImage, absoluteFilepathToDocsConfig),
-        'twitter:handle': metadata.twitterHandle,
-        'twitter:site': metadata.twitterSite,
-        'twitter:url': metadata.twitterUrl,
-        'twitter:card': metadata.twitterCard,
+        "og:site_name": metadata.ogSiteName,
+        "og:title": metadata.ogTitle,
+        "og:description": metadata.ogDescription,
+        "og:url": metadata.ogUrl,
+        "og:image": await convertFilepathOrUrl(metadata.ogImage, absoluteFilepathToDocsConfig),
+        "og:image:width": metadata.ogImageWidth,
+        "og:image:height": metadata.ogImageHeight,
+        "og:locale": metadata.ogLocale,
+        "og:logo": await convertFilepathOrUrl(metadata.ogLogo, absoluteFilepathToDocsConfig),
+        "twitter:title": metadata.twitterTitle,
+        "twitter:description": metadata.twitterDescription,
+        "twitter:image": await convertFilepathOrUrl(metadata.twitterImage, absoluteFilepathToDocsConfig),
+        "twitter:handle": metadata.twitterHandle,
+        "twitter:site": metadata.twitterSite,
+        "twitter:url": metadata.twitterUrl,
+        "twitter:card": metadata.twitterCard,
         nofollow: undefined,
         noindex: undefined
     }
@@ -1080,18 +1080,18 @@ async function convertFilepathOrUrl(
         return undefined
     }
 
-    if (value.startsWith('http')) {
-        return { type: 'url', value }
+    if (value.startsWith("http")) {
+        return { type: "url", value }
     }
 
     const filepath = resolveFilepath(value, absoluteFilepathToDocsConfig)
 
     if (await doesPathExist(filepath)) {
-        return { type: 'filepath', value: filepath }
+        return { type: "filepath", value: filepath }
     }
 
     // If the file does not exist, fallback to a URL
-    return { type: 'url', value }
+    return { type: "url", value }
 }
 
 function parseRoles(raw: string | string[] | undefined): CjsFdrSdk.RoleId[] | undefined {
@@ -1099,7 +1099,7 @@ function parseRoles(raw: string | string[] | undefined): CjsFdrSdk.RoleId[] | un
         return undefined
     }
 
-    if (typeof raw === 'string') {
+    if (typeof raw === "string") {
         return [CjsFdrSdk.RoleId(raw)]
     }
 

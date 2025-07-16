@@ -1,6 +1,6 @@
-import { ClassReference } from './ClassReference'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { ClassReference } from "./ClassReference"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export declare namespace Annotation {
     interface Args {
@@ -23,17 +23,17 @@ export class Annotation extends AstNode {
 
     public write(writer: Writer): void {
         writer.addReference(this.reference)
-        writer.write('[')
+        writer.write("[")
         this.reference.writeAsAttribute(writer)
         if (this.argument != null) {
-            writer.write('(')
-            if (typeof this.argument === 'string') {
+            writer.write("(")
+            if (typeof this.argument === "string") {
                 writer.write(this.argument)
             } else {
                 this.argument.write(writer)
             }
-            writer.write(')')
+            writer.write(")")
         }
-        writer.write(']')
+        writer.write("]")
     }
 }

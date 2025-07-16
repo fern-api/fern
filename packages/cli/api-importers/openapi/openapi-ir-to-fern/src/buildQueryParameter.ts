@@ -1,12 +1,12 @@
-import { FERN_PACKAGE_MARKER_FILENAME } from '@fern-api/configuration'
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { QueryParameter, Schema, VALID_ENUM_NAME_REGEX, generateEnumNameFromValue } from '@fern-api/openapi-ir'
-import { RelativeFilePath } from '@fern-api/path-utils'
+import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration"
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { QueryParameter, Schema, VALID_ENUM_NAME_REGEX, generateEnumNameFromValue } from "@fern-api/openapi-ir"
+import { RelativeFilePath } from "@fern-api/path-utils"
 
-import { OpenApiIrConverterContext } from './OpenApiIrConverterContext'
-import { buildTypeReference } from './buildTypeReference'
-import { convertAvailability } from './utils/convertAvailability'
-import { getDefaultFromTypeReference, getTypeFromTypeReference } from './utils/getTypeFromTypeReference'
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext"
+import { buildTypeReference } from "./buildTypeReference"
+import { convertAvailability } from "./utils/convertAvailability"
+import { getDefaultFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference"
 
 export function buildQueryParameter({
     queryParameter,
@@ -33,10 +33,10 @@ export function buildQueryParameter({
     const queryParameterDefault = getDefaultFromTypeReference(typeReference.value)
 
     // we can assume unknown-typed query parameters are strings by default
-    if (queryParameterType === 'unknown') {
-        queryParameterType = 'string'
-    } else if (queryParameterType === 'optional<unknown>') {
-        queryParameterType = 'optional<string>'
+    if (queryParameterType === "unknown") {
+        queryParameterType = "string"
+    } else if (queryParameterType === "optional<unknown>") {
+        queryParameterType = "optional<string>"
     }
 
     const queryParameterSchema: RawSchemas.HttpQueryParameterSchema = {
@@ -48,7 +48,7 @@ export function buildQueryParameter({
     }
 
     if (typeReference.allowMultiple) {
-        queryParameterSchema['allow-multiple'] = true
+        queryParameterSchema["allow-multiple"] = true
     }
 
     if (queryParameter.description != null) {
@@ -71,7 +71,7 @@ export function buildQueryParameter({
 
     if (
         queryParameterSchema.default == null &&
-        queryParameterSchema['allow-multiple'] == null &&
+        queryParameterSchema["allow-multiple"] == null &&
         queryParameterSchema.docs == null &&
         queryParameterSchema.name == null &&
         queryParameterSchema.availability == null &&
@@ -101,11 +101,11 @@ function getQueryParameterTypeReference({
     fileContainingReference: RelativeFilePath
     namespace: string | undefined
 }): QueryParameterTypeReference | undefined {
-    if (schema.type === 'reference') {
+    if (schema.type === "reference") {
         const resolvedSchema = context.getSchema(schema.schema, namespace)
         if (resolvedSchema == null) {
             return undefined
-        } else if (resolvedSchema.type === 'array') {
+        } else if (resolvedSchema.type === "array") {
             return {
                 value: buildTypeReference({
                     schema: Schema.optional({
@@ -127,15 +127,15 @@ function getQueryParameterTypeReference({
                 }),
                 allowMultiple: true
             }
-        } else if (resolvedSchema.type === 'oneOf' && resolvedSchema.value.type === 'undiscriminated') {
+        } else if (resolvedSchema.type === "oneOf" && resolvedSchema.value.type === "undiscriminated") {
             // Try to generated enum from literal values
             const potentialEnumValues: (string | RawSchemas.EnumValueSchema)[] = []
             let foundPrimitiveString = false
             for (const [_, schema] of Object.entries(resolvedSchema.value.schemas)) {
-                if (schema.type === 'primitive' && schema.schema.type === 'string') {
+                if (schema.type === "primitive" && schema.schema.type === "string") {
                     foundPrimitiveString = true
                 }
-                if (schema.type === 'literal' && schema.value.type === 'string') {
+                if (schema.type === "literal" && schema.value.type === "string") {
                     if (VALID_ENUM_NAME_REGEX.test(schema.value.value)) {
                         potentialEnumValues.push(schema.value.value)
                     } else {
@@ -159,7 +159,7 @@ function getQueryParameterTypeReference({
                             discriminated: false,
                             union: [
                                 {
-                                    type: 'string'
+                                    type: "string"
                                 },
                                 {
                                     type: schema.generatedName
@@ -259,12 +259,12 @@ function getQueryParameterTypeReference({
         }
     }
 
-    if (schema.type === 'optional' || schema.type === 'nullable') {
-        if (schema.value.type === 'reference') {
+    if (schema.type === "optional" || schema.type === "nullable") {
+        if (schema.value.type === "reference") {
             const resolvedSchema = context.getSchema(schema.value.schema, namespace)
             if (resolvedSchema == null) {
                 return undefined
-            } else if (resolvedSchema.type === 'array') {
+            } else if (resolvedSchema.type === "array") {
                 return {
                     value: buildTypeReference({
                         schema: Schema.optional({
@@ -300,7 +300,7 @@ function getQueryParameterTypeReference({
                 }
             }
         }
-        if (schema.value.type === 'array') {
+        if (schema.value.type === "array") {
             return {
                 value: buildTypeReference({
                     schema: Schema.optional({
@@ -321,15 +321,15 @@ function getQueryParameterTypeReference({
                 }),
                 allowMultiple: true
             }
-        } else if (schema.value.type === 'oneOf' && schema.value.value.type === 'undiscriminated') {
+        } else if (schema.value.type === "oneOf" && schema.value.value.type === "undiscriminated") {
             // Try to generated enum from literal values
             const potentialEnumValues: (string | RawSchemas.EnumValueSchema)[] = []
             let foundPrimitiveString = false
             for (const [_, oneOfSchema] of Object.entries(schema.value.value.schemas)) {
-                if (oneOfSchema.type === 'primitive' && oneOfSchema.schema.type === 'string') {
+                if (oneOfSchema.type === "primitive" && oneOfSchema.schema.type === "string") {
                     foundPrimitiveString = true
                 }
-                if (oneOfSchema.type === 'literal' && oneOfSchema.value.type === 'string') {
+                if (oneOfSchema.type === "literal" && oneOfSchema.value.type === "string") {
                     if (VALID_ENUM_NAME_REGEX.test(oneOfSchema.value.value)) {
                         potentialEnumValues.push(oneOfSchema.value.value)
                     } else {
@@ -353,7 +353,7 @@ function getQueryParameterTypeReference({
                             discriminated: false,
                             union: [
                                 {
-                                    type: 'string'
+                                    type: "string"
                                 },
                                 {
                                     type: `optional<${schema.value.value.generatedName}>`
@@ -448,7 +448,7 @@ function getQueryParameterTypeReference({
                     namespace
                 })
             }
-        } else if (schema.value.type === 'object') {
+        } else if (schema.value.type === "object") {
             if (context.objectQueryParameters) {
                 return {
                     value: buildTypeReference({
@@ -476,7 +476,7 @@ function getQueryParameterTypeReference({
         }
     }
 
-    if (schema.type === 'array') {
+    if (schema.type === "array") {
         return {
             value: buildTypeReference({
                 schema: Schema.optional({
@@ -513,9 +513,9 @@ function getQueryParameterTypeReference({
 
 function hasSamePrimitiveValueType({ array, primitive }: { array: Schema; primitive: Schema }): boolean {
     return (
-        array?.type === 'array' &&
-        array.value.type === 'primitive' &&
-        primitive?.type === 'primitive' &&
+        array?.type === "array" &&
+        array.value.type === "primitive" &&
+        primitive?.type === "primitive" &&
         array.value.schema.type === primitive.schema.type
     )
 }

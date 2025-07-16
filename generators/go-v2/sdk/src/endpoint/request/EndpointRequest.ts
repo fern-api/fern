@@ -1,8 +1,8 @@
-import { go } from '@fern-api/go-ast'
+import { go } from "@fern-api/go-ast"
 
-import { HttpEndpoint, HttpService, SdkRequest } from '@fern-fern/ir-sdk/api'
+import { HttpEndpoint, HttpService, SdkRequest } from "@fern-fern/ir-sdk/api"
 
-import { SdkGeneratorContext } from '../../SdkGeneratorContext'
+import { SdkGeneratorContext } from "../../SdkGeneratorContext"
 
 export abstract class EndpointRequest {
     public constructor(

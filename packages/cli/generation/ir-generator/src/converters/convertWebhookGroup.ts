@@ -1,6 +1,6 @@
-import { FernWorkspace } from '@fern-api/api-workspace-commons'
-import { isPlainObject } from '@fern-api/core-utils'
-import { RawSchemas } from '@fern-api/fern-definition-schema'
+import { FernWorkspace } from "@fern-api/api-workspace-commons"
+import { isPlainObject } from "@fern-api/core-utils"
+import { RawSchemas } from "@fern-api/fern-definition-schema"
 import {
     Availability,
     ExampleWebhookCall,
@@ -8,17 +8,17 @@ import {
     Webhook,
     WebhookGroup,
     WebhookPayload
-} from '@fern-api/ir-sdk'
-import { IdGenerator, isReferencedWebhookPayloadSchema } from '@fern-api/ir-utils'
+} from "@fern-api/ir-sdk"
+import { IdGenerator, isReferencedWebhookPayloadSchema } from "@fern-api/ir-utils"
 
-import { FernFileContext } from '../FernFileContext'
-import { ExampleResolver } from '../resolvers/ExampleResolver'
-import { TypeResolver } from '../resolvers/TypeResolver'
-import { parseTypeName } from '../utils/parseTypeName'
-import { convertAvailability } from './convertDeclaration'
-import { convertHttpHeader } from './services/convertHttpService'
-import { convertTypeReferenceExample } from './type-declarations/convertExampleType'
-import { getExtensionsAsList, getPropertyName } from './type-declarations/convertObjectTypeDeclaration'
+import { FernFileContext } from "../FernFileContext"
+import { ExampleResolver } from "../resolvers/ExampleResolver"
+import { TypeResolver } from "../resolvers/TypeResolver"
+import { parseTypeName } from "../utils/parseTypeName"
+import { convertAvailability } from "./convertDeclaration"
+import { convertHttpHeader } from "./services/convertHttpService"
+import { convertTypeReferenceExample } from "./type-declarations/convertExampleType"
+import { getExtensionsAsList, getPropertyName } from "./type-declarations/convertObjectTypeDeclaration"
 
 export function convertWebhookGroup({
     webhooks,
@@ -38,7 +38,7 @@ export function convertWebhookGroup({
         webhookGroup.push({
             id: IdGenerator.generateWebhookId(file.fernFilepath, webhookId),
             availability: convertAvailability(webhook.availability),
-            displayName: webhook['display-name'],
+            displayName: webhook["display-name"],
             docs: webhook.docs,
             method: webhook.method,
             name: file.casingsGenerator.generateName(webhookId),
@@ -73,7 +73,7 @@ function convertWebhookPayloadSchema({
     payload: RawSchemas.WebhookPayloadSchema
     file: FernFileContext
 }): WebhookPayload {
-    if (typeof payload === 'string') {
+    if (typeof payload === "string") {
         return WebhookPayload.reference({
             docs: undefined,
             payloadType: file.parseTypeReference(payload)
@@ -95,9 +95,9 @@ function convertWebhookPayloadSchema({
                           convertInlinedRequestProperty({
                               propertyKey,
                               propertyDefinition,
-                              docs: typeof propertyDefinition !== 'string' ? propertyDefinition.docs : undefined,
+                              docs: typeof propertyDefinition !== "string" ? propertyDefinition.docs : undefined,
                               availability:
-                                  typeof propertyDefinition !== 'string'
+                                  typeof propertyDefinition !== "string"
                                       ? convertAvailability(propertyDefinition.availability)
                                       : undefined,
                               file
@@ -148,7 +148,7 @@ function convertWebhookExamples({
     workspace: FernWorkspace
 }): ExampleWebhookCall[] {
     const typeName =
-        typeof webhook.payload === 'string'
+        typeof webhook.payload === "string"
             ? webhook.payload
             : isReferencedWebhookPayloadSchema(webhook.payload)
               ? webhook.payload.type
@@ -179,7 +179,7 @@ function convertWebhookExamples({
         name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
         payload: convertTypeReferenceExample({
             example: example.payload,
-            rawTypeBeingExemplified: 'map<string, unknown>',
+            rawTypeBeingExemplified: "map<string, unknown>",
             fileContainingRawTypeReference: file,
             fileContainingExample: file,
             typeResolver,

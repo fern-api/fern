@@ -1,10 +1,10 @@
-import { Access } from './Access'
-import { CodeBlock } from './CodeBlock'
-import { Comment } from './Comment'
-import { Type } from './Type'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
-import { convertToPhpVariableName } from './utils/convertToPhpVariableName'
+import { Access } from "./Access"
+import { CodeBlock } from "./CodeBlock"
+import { Comment } from "./Comment"
+import { Type } from "./Type"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
+import { convertToPhpVariableName } from "./utils/convertToPhpVariableName"
 
 export declare namespace Parameter {
     interface Args {
@@ -43,7 +43,7 @@ export class Parameter extends AstNode {
 
     public getCommentTag(): Comment.Tag {
         return {
-            tagType: 'param',
+            tagType: "param",
             type: this.type,
             name: this.name,
             docs: this.docs
@@ -55,15 +55,15 @@ export class Parameter extends AstNode {
             writer.write(`${this.access} `)
         }
         if (this.readonly_) {
-            writer.write('readonly ')
+            writer.write("readonly ")
         }
         this.type.write(writer)
         writer.write(` ${this.name}`)
         if (this.initializer != null) {
-            writer.write(' = ')
+            writer.write(" = ")
             this.initializer.write(writer)
         } else if (this.type.isOptional()) {
-            writer.write(' = null')
+            writer.write(" = null")
         }
     }
 }

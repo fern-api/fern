@@ -1,4 +1,4 @@
-import { camelCase, upperFirst } from 'lodash-es'
+import { camelCase, upperFirst } from "lodash-es"
 
 export function getNamespaceExport({
     organization,

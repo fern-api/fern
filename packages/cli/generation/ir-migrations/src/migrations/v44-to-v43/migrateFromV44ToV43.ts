@@ -1,16 +1,16 @@
-import { GeneratorName } from '@fern-api/configuration-loader'
-import { assertNever, isNonNullish } from '@fern-api/core-utils'
+import { GeneratorName } from "@fern-api/configuration-loader"
+import { assertNever, isNonNullish } from "@fern-api/core-utils"
 
-import { IrSerialization } from '../../ir-serialization'
-import { IrVersions } from '../../ir-versions'
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
+import { IrSerialization } from "../../ir-serialization"
+import { IrVersions } from "../../ir-versions"
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
 
 export const V44_TO_V43_MIGRATION: IrMigration<
     IrVersions.V44.ir.IntermediateRepresentation,
     IrVersions.V43.ir.IntermediateRepresentation
 > = {
-    laterVersion: 'v44',
-    earlierVersion: 'v43',
+    laterVersion: "v44",
+    earlierVersion: "v43",
     firstGeneratorVersionToConsumeNewIR: {
         [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -42,7 +42,7 @@ export const V44_TO_V43_MIGRATION: IrMigration<
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V43.IntermediateRepresentation.jsonOrThrow(ir, {
-            unrecognizedObjectKeys: 'strip',
+            unrecognizedObjectKeys: "strip",
             skipValidation: true
         }),
     migrateBackwards: (V44, _context): IrVersions.V43.ir.IntermediateRepresentation => {
@@ -106,9 +106,9 @@ function convertExampleResponse({
 }): IrVersions.V43.ExampleResponse {
     /* eslint-disable no-fallthrough */
     switch (example.type) {
-        case 'ok':
+        case "ok":
             return convertExampleSuccessResponse({ example: example.value })
-        case 'error':
+        case "error":
             return IrVersions.V43.ExampleResponse.error(example)
         default:
             assertNever(example)
@@ -122,13 +122,13 @@ function convertExampleSuccessResponse({
     example: IrVersions.V44.ExampleEndpointSuccessResponse
 }): IrVersions.V43.ExampleResponse {
     switch (example.type) {
-        case 'body':
+        case "body":
             return IrVersions.V43.ExampleResponse.ok({ body: example.value })
-        case 'sse':
+        case "sse":
             return IrVersions.V43.ExampleResponse.ok({
                 body: undefined
             })
-        case 'stream':
+        case "stream":
             return IrVersions.V43.ExampleResponse.ok({
                 body: undefined
             })

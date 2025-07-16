@@ -1,14 +1,14 @@
-import { Class } from './Class'
-import { Comment } from './Comment'
-import { Field } from './Field'
-import { Method } from './Method'
-import { Reference } from './Reference'
-import { StarImport } from './StarImport'
-import { Type } from './Type'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
-import { ImportedName, ModulePath } from './core/types'
-import { createPythonClassName } from './core/utils'
+import { Class } from "./Class"
+import { Comment } from "./Comment"
+import { Field } from "./Field"
+import { Method } from "./Method"
+import { Reference } from "./Reference"
+import { StarImport } from "./StarImport"
+import { Type } from "./Type"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
+import { ImportedName, ModulePath } from "./core/types"
+import { createPythonClassName } from "./core/utils"
 
 interface UniqueReferenceValue {
     modulePath: ModulePath
@@ -91,7 +91,7 @@ export class PythonFile extends AstNode {
         const usedNames = this.getInitialUsedNames()
 
         // First, reserve the names of any references that are defined in the file itself and that don't need importing.
-        const filePath = this.path.join('.')
+        const filePath = this.path.join(".")
         const fileReferences = uniqueReferences.get(filePath)
         if (fileReferences) {
             const { references } = fileReferences
@@ -174,7 +174,7 @@ export class PythonFile extends AstNode {
             const fullyQualifiedPath = reference.getFullyQualifiedPath()
 
             // Skip references that don't have a path. It's inferred that they don't need to be imported.
-            if (fullyQualifiedPath === '') {
+            if (fullyQualifiedPath === "") {
                 continue
             }
 
@@ -213,7 +213,7 @@ export class PythonFile extends AstNode {
         const name = reference.name
         const alias = nameOverride.isAlias ? nameOverride.name : undefined
 
-        return `${name}${alias ? ` as ${alias}` : ''}`
+        return `${name}${alias ? ` as ${alias}` : ""}`
     }
 
     private writeImports({
@@ -255,21 +255,21 @@ export class PythonFile extends AstNode {
                 }
 
                 // Build the relative import path
-                let relativePath = levelsUp > 0 ? '.'.repeat(levelsUp) : '.'
-                relativePath += refModulePath.slice(commonPrefixLength).join('.')
+                let relativePath = levelsUp > 0 ? ".".repeat(levelsUp) : "."
+                relativePath += refModulePath.slice(commonPrefixLength).join(".")
 
                 // Write the relative import statement
                 writer.write(
                     `from ${relativePath} import ${references
                         .map((reference) => this.getImportName({ writer, reference }))
-                        .join(', ')}`
+                        .join(", ")}`
                 )
             } else {
                 // Use fully qualified path
                 writer.write(
                     `from ${fullyQualifiedPath} import ${references
                         .map((reference) => this.getImportName({ writer, reference }))
-                        .join(', ')}`
+                        .join(", ")}`
                 )
             }
             writer.newLine()

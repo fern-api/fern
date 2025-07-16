@@ -1,14 +1,14 @@
-import { camelCase } from 'lodash-es'
+import { camelCase } from "lodash-es"
 
-import { HttpEndpoint, IntermediateRepresentation, V2HttpEndpointExample } from '@fern-api/ir-sdk'
+import { HttpEndpoint, IntermediateRepresentation, V2HttpEndpointExample } from "@fern-api/ir-sdk"
 
-import { getRequestBodyExamples } from './getRequestBodyExamples'
-import { getResponseExamples } from './getResponseExamples'
+import { getRequestBodyExamples } from "./getRequestBodyExamples"
+import { getResponseExamples } from "./getResponseExamples"
 
 export declare namespace generateEndpointExample {
     interface Args {
         endpoint: HttpEndpoint
-        ir: Omit<IntermediateRepresentation, 'sdkConfig' | 'subpackages' | 'rootPackage'>
+        ir: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage">
         skipOptionalRequestProperties: boolean
     }
 

@@ -1,16 +1,16 @@
-import { readdir } from 'fs/promises'
+import { readdir } from "fs/promises"
 
-import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
-import { isVersionAhead } from '@fern-api/semver-utils'
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { isVersionAhead } from "@fern-api/semver-utils"
 
-import { ALL_MIGRATIONS } from '../migrations'
-import { Migration } from '../types/Migration'
-import { VersionMigrations } from '../types/VersionMigrations'
+import { ALL_MIGRATIONS } from "../migrations"
+import { Migration } from "../types/Migration"
+import { VersionMigrations } from "../types/VersionMigrations"
 
-const MIGRATIONS_DIRECTORY = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of('../migrations'))
+const MIGRATIONS_DIRECTORY = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("../migrations"))
 
-describe('migrations', () => {
-    it('each version export all its migrations', async () => {
+describe("migrations", () => {
+    it("each version export all its migrations", async () => {
         const versions = (await readdir(MIGRATIONS_DIRECTORY, { withFileTypes: true }))
             .filter((item) => item.isDirectory())
             .map((item) => item.name)
@@ -41,7 +41,7 @@ describe('migrations', () => {
         }
     })
 
-    it('all migrations are registered', async () => {
+    it("all migrations are registered", async () => {
         const allMigrationsPromises = (await readdir(MIGRATIONS_DIRECTORY, { withFileTypes: true }))
             .filter((item) => item.isDirectory())
             .map(async (item) => {
@@ -63,7 +63,7 @@ describe('migrations', () => {
         }
     })
 
-    it('migrations are in semver order', () => {
+    it("migrations are in semver order", () => {
         for (const [index, migration] of ALL_MIGRATIONS.entries()) {
             const nextMigration = ALL_MIGRATIONS[index + 1]
             if (nextMigration != null) {

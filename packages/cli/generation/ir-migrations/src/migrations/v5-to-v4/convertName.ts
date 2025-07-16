@@ -1,4 +1,4 @@
-import { IrVersions } from '../../ir-versions'
+import { IrVersions } from "../../ir-versions"
 
 export function convertNameToV1(name: IrVersions.V5.commons.Name): IrVersions.V4.commons.StringWithAllCasings {
     return {

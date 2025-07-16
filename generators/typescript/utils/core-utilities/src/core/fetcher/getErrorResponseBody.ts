@@ -1,26 +1,26 @@
-import { fromJson } from '../json'
-import { getResponseBody } from './getResponseBody'
+import { fromJson } from "../json"
+import { getResponseBody } from "./getResponseBody"
 
 export async function getErrorResponseBody(response: Response): Promise<unknown> {
-    let contentType = response.headers.get('Content-Type')?.toLowerCase()
+    let contentType = response.headers.get("Content-Type")?.toLowerCase()
     if (contentType == null || contentType.length === 0) {
         return getResponseBody(response)
     }
 
-    if (contentType.indexOf(';') !== -1) {
-        contentType = contentType.split(';')[0]?.trim() ?? ''
+    if (contentType.indexOf(";") !== -1) {
+        contentType = contentType.split(";")[0]?.trim() ?? ""
     }
     switch (contentType) {
-        case 'application/hal+json':
-        case 'application/json':
-        case 'application/ld+json':
-        case 'application/problem+json':
-        case 'application/vnd.api+json':
-        case 'text/json':
+        case "application/hal+json":
+        case "application/json":
+        case "application/ld+json":
+        case "application/problem+json":
+        case "application/vnd.api+json":
+        case "text/json":
             const text = await response.text()
             return text.length > 0 ? fromJson(text) : undefined
         default:
-            if (contentType.startsWith('application/vnd.') && contentType.endsWith('+json')) {
+            if (contentType.startsWith("application/vnd.") && contentType.endsWith("+json")) {
                 const text = await response.text()
                 return text.length > 0 ? fromJson(text) : undefined
             }

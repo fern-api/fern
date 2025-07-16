@@ -1,9 +1,9 @@
-import { AbstractGeneratedSchema } from '@fern-typescript/abstract-schema-generator'
-import { PackageId, Reference, Zurg, getSchemaOptions, getTextOfTsNode } from '@fern-typescript/commons'
-import { GeneratedWebsocketTypeSchema, SdkContext } from '@fern-typescript/contexts'
-import { ModuleDeclaration, ts } from 'ts-morph'
+import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator"
+import { PackageId, Reference, Zurg, getSchemaOptions, getTextOfTsNode } from "@fern-typescript/commons"
+import { GeneratedWebsocketTypeSchema, SdkContext } from "@fern-typescript/contexts"
+import { ModuleDeclaration, ts } from "ts-morph"
 
-import { WebSocketChannel, WebSocketMessageBodyReference } from '@fern-fern/ir-sdk/api'
+import { WebSocketChannel, WebSocketMessageBodyReference } from "@fern-fern/ir-sdk/api"
 
 export declare namespace GeneratedWebsocketResponseSchemaImpl {
     export interface Init extends AbstractGeneratedSchema.Init {
@@ -71,7 +71,7 @@ export class GeneratedWebsocketResponseSchemaImpl
             isExported: true,
             type: this.receiveMessages
                 .map((message) => getTextOfTsNode(context.typeSchema.getReferenceToRawType(message.bodyType).typeNode))
-                .join(' | ')
+                .join(" | ")
         })
     }
 

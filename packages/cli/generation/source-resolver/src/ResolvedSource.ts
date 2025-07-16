@@ -1,16 +1,16 @@
-import { AbsoluteFilePath, RelativeFilePath } from '@fern-api/path-utils'
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/path-utils"
 
 export declare type ResolvedSource = ResolvedSource.OpenAPI | ResolvedSource.Protobuf
 
 export declare namespace ResolvedSource {
     interface OpenAPI {
-        type: 'openapi'
+        type: "openapi"
         absoluteFilePath: AbsoluteFilePath
         relativeFilePath: RelativeFilePath
     }
 
     interface Protobuf {
-        type: 'protobuf'
+        type: "protobuf"
         absoluteFilePath: AbsoluteFilePath
         relativeFilePath: RelativeFilePath
         csharpNamespace: string | undefined

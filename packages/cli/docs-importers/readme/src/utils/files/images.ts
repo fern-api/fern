@@ -1,36 +1,36 @@
-import { existsSync, mkdirSync } from 'node:fs'
-import { dirname, join } from 'node:path'
+import { existsSync, mkdirSync } from "node:fs"
+import { dirname, join } from "node:path"
 
-import type { Result } from '../../types/result'
-import { fetchImage } from '../network'
-import { write } from './file'
+import type { Result } from "../../types/result"
+import { fetchImage } from "../network"
+import { write } from "./file"
 
 export const SUPPORTED_MEDIA_EXTENSIONS = [
-    'png',
-    'jpeg',
-    'jpg',
-    'webp',
-    'avif',
-    'svg',
-    'ico',
-    'jfif',
-    'pjpeg',
-    'pjp',
-    'svgz',
-    'bmp'
+    "png",
+    "jpeg",
+    "jpg",
+    "webp",
+    "avif",
+    "svg",
+    "ico",
+    "jfif",
+    "pjpeg",
+    "pjp",
+    "svgz",
+    "bmp"
 ]
 
 export async function downloadImage(src: string): Promise<Result<[string, string]>> {
     if (!src) {
         return { success: false, data: undefined }
     }
-    if (src.startsWith('data:image/')) {
+    if (src.startsWith("data:image/")) {
         return { success: true, data: [src, src] }
     }
-    const basePath = join(process.cwd(), 'fern')
+    const basePath = join(process.cwd(), "fern")
     try {
-        let filename = await writeImageToFile(src, join(basePath, 'images'))
-        filename = filename.replace(basePath, '')
+        let filename = await writeImageToFile(src, join(basePath, "images"))
+        filename = filename.replace(basePath, "")
         return { success: true, data: [src, filename] }
     } catch (error) {
         return { success: false, data: undefined }
@@ -67,7 +67,7 @@ export function isValidImageSrc(src: string): boolean {
     if (!src) {
         return false
     }
-    const extBeginsIndex = src.lastIndexOf('.') + 1
+    const extBeginsIndex = src.lastIndexOf(".") + 1
     const extRaw = src.substring(extBeginsIndex)
     if (src === extRaw) {
         return false
@@ -80,29 +80,29 @@ export function isValidImageSrc(src: string): boolean {
 }
 
 export function removeMetadataFromImageSrc(src: string): string {
-    if (src.startsWith('http')) {
+    if (src.startsWith("http")) {
         src = new URL(src).pathname
     }
-    const parts = src.split('#')
+    const parts = src.split("#")
     if (parts.length === 0) {
-        return 'image'
+        return "image"
     }
     const beforeHash = parts[0]
     if (!beforeHash) {
-        return 'image'
+        return "image"
     }
 
-    const queryParts = beforeHash.split('?')
+    const queryParts = beforeHash.split("?")
     if (queryParts.length === 0) {
-        return 'image'
+        return "image"
     }
     const beforeQuery = queryParts[0]
     if (!beforeQuery) {
-        return 'image'
+        return "image"
     }
 
     return (
-        decodeURIComponent(beforeQuery.replace(/[/]{2,}/g, '/')).replace(/(?:_{2,}|[\s%#&{}\\<>*?$!'":@+`|=])/g, '-') ||
-        'image'
+        decodeURIComponent(beforeQuery.replace(/[/]{2,}/g, "/")).replace(/(?:_{2,}|[\s%#&{}\\<>*?$!'":@+`|=])/g, "-") ||
+        "image"
     )
 }

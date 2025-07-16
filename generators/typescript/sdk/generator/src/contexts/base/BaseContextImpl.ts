@@ -5,14 +5,14 @@ import {
     ExternalDependencies,
     ImportsManager,
     createExternalDependencies
-} from '@fern-typescript/commons'
-import { CoreUtilities } from '@fern-typescript/commons/src/core-utilities/CoreUtilities'
-import { BaseContext, JsonContext, TypeContext, TypeSchemaContext } from '@fern-typescript/contexts'
-import { SourceFile } from 'ts-morph'
+} from "@fern-typescript/commons"
+import { CoreUtilities } from "@fern-typescript/commons/src/core-utilities/CoreUtilities"
+import { BaseContext, JsonContext, TypeContext, TypeSchemaContext } from "@fern-typescript/contexts"
+import { SourceFile } from "ts-morph"
 
-import { Logger } from '@fern-api/logger'
+import { Logger } from "@fern-api/logger"
 
-import { Constants } from '@fern-fern/ir-sdk/api'
+import { Constants } from "@fern-fern/ir-sdk/api"
 
 export declare namespace BaseContextImpl {
     export interface Init {

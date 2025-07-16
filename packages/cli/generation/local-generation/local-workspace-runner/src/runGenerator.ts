@@ -1,26 +1,26 @@
-import { writeFile } from 'fs/promises'
-import tmp, { DirectoryResult } from 'tmp-promise'
+import { writeFile } from "fs/promises"
+import tmp, { DirectoryResult } from "tmp-promise"
 
-import { Audiences, generatorsYml } from '@fern-api/configuration'
-import { ContainerRunner } from '@fern-api/core-utils'
-import { runDocker } from '@fern-api/docker-utils'
-import { AbsoluteFilePath, streamObjectToFile, waitUntilPathExists } from '@fern-api/fs-utils'
-import { ApiDefinitionSource, IntermediateRepresentation, SourceConfig } from '@fern-api/ir-sdk'
-import { TaskContext } from '@fern-api/task-context'
-import { FernWorkspace, IdentifiableSource } from '@fern-api/workspace-loader'
+import { Audiences, generatorsYml } from "@fern-api/configuration"
+import { ContainerRunner } from "@fern-api/core-utils"
+import { runDocker } from "@fern-api/docker-utils"
+import { AbsoluteFilePath, streamObjectToFile, waitUntilPathExists } from "@fern-api/fs-utils"
+import { ApiDefinitionSource, IntermediateRepresentation, SourceConfig } from "@fern-api/ir-sdk"
+import { TaskContext } from "@fern-api/task-context"
+import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader"
 
-import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
-import * as FernGeneratorExecParsing from '@fern-fern/generator-exec-sdk/serialization'
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
+import * as FernGeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization"
 
-import { LocalTaskHandler } from './LocalTaskHandler'
+import { LocalTaskHandler } from "./LocalTaskHandler"
 import {
     DOCKER_CODEGEN_OUTPUT_DIRECTORY,
     DOCKER_GENERATOR_CONFIG_PATH,
     DOCKER_PATH_TO_IR,
     DOCKER_SOURCES_DIRECTORY
-} from './constants'
-import { getGeneratorConfig } from './getGeneratorConfig'
-import { getIntermediateRepresentation } from './getIntermediateRepresentation'
+} from "./constants"
+import { getGeneratorConfig } from "./getGeneratorConfig"
+import { getIntermediateRepresentation } from "./getIntermediateRepresentation"
 
 export interface GeneratorRunResponse {
     ir: IntermediateRepresentation
@@ -89,19 +89,19 @@ export async function writeFilesToDiskAndRunGenerator({
         context,
         ir: migrated
     })
-    context.logger.debug('Wrote IR to: ' + absolutePathToIr)
+    context.logger.debug("Wrote IR to: " + absolutePathToIr)
 
     const configJsonFile = await tmp.file({
         tmpdir: workspaceTempDir.path
     })
     const absolutePathToWriteConfigJson = AbsoluteFilePath.of(configJsonFile.path)
-    context.logger.debug('Will write config.json to: ' + absolutePathToWriteConfigJson)
+    context.logger.debug("Will write config.json to: " + absolutePathToWriteConfigJson)
 
     const tmpOutputDirectory = await tmp.dir({
         tmpdir: workspaceTempDir.path
     })
     const absolutePathToTmpOutputDirectory = AbsoluteFilePath.of(tmpOutputDirectory.path)
-    context.logger.debug('Will write output to: ' + absolutePathToTmpOutputDirectory)
+    context.logger.debug("Will write output to: " + absolutePathToTmpOutputDirectory)
 
     let absolutePathToTmpSnippetJSON = undefined
     if (absolutePathToLocalSnippetJSON != null) {
@@ -109,7 +109,7 @@ export async function writeFilesToDiskAndRunGenerator({
             tmpdir: workspaceTempDir.path
         })
         absolutePathToTmpSnippetJSON = AbsoluteFilePath.of(snippetJsonFile.path)
-        context.logger.debug('Will write snippet.json to: ' + absolutePathToTmpSnippetJSON)
+        context.logger.debug("Will write snippet.json to: " + absolutePathToTmpSnippetJSON)
     }
 
     let absolutePathToTmpSnippetTemplatesJSON = undefined
@@ -118,7 +118,7 @@ export async function writeFilesToDiskAndRunGenerator({
             tmpdir: workspaceTempDir.path
         })
         absolutePathToTmpSnippetTemplatesJSON = AbsoluteFilePath.of(snippetTemplatesJsonFile.path)
-        context.logger.debug('Will write snippet-templates.json to: ' + absolutePathToTmpSnippetTemplatesJSON)
+        context.logger.debug("Will write snippet-templates.json to: " + absolutePathToTmpSnippetTemplatesJSON)
     }
 
     try {
@@ -174,7 +174,7 @@ async function writeIrToFile({
     workspaceTempDir: DirectoryResult
     context: TaskContext
 }): Promise<AbsoluteFilePath> {
-    context.logger.debug('Migrated IR')
+    context.logger.debug("Migrated IR")
     const irFile = await tmp.file({
         tmpdir: workspaceTempDir.path
     })
@@ -284,7 +284,7 @@ export async function runGenerator({
 function getSourceConfig(workspace: FernWorkspace): SourceConfig {
     return {
         sources: workspace.getSources().map((source) => {
-            if (source.type === 'protobuf') {
+            if (source.type === "protobuf") {
                 return ApiDefinitionSource.proto({
                     id: source.id,
                     protoRootUrl: `file:///${getDockerDestinationForSource(source)}`

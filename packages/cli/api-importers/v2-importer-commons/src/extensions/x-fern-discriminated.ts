@@ -1,4 +1,4 @@
-import { AbstractExtension } from '../AbstractExtension'
+import { AbstractExtension } from "../AbstractExtension"
 
 export declare namespace FernDiscriminatedExtension {
     export interface Args extends AbstractExtension.Args {
@@ -8,7 +8,7 @@ export declare namespace FernDiscriminatedExtension {
 
 export class FernDiscriminatedExtension extends AbstractExtension<boolean | undefined> {
     private readonly node: unknown
-    public readonly key = 'x-fern-discriminated'
+    public readonly key = "x-fern-discriminated"
 
     constructor({ breadcrumbs, node, context }: FernDiscriminatedExtension.Args) {
         super({ breadcrumbs, context })
@@ -21,7 +21,7 @@ export class FernDiscriminatedExtension extends AbstractExtension<boolean | unde
             return undefined
         }
 
-        if (typeof extensionValue !== 'boolean') {
+        if (typeof extensionValue !== "boolean") {
             return undefined
         }
 

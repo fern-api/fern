@@ -1,4 +1,4 @@
-import { mapValues, pickBy } from 'lodash-es'
+import { mapValues, pickBy } from "lodash-es"
 
 import {
     ExampleType,
@@ -7,15 +7,15 @@ import {
     ServiceTypeReferenceInfo,
     Type,
     TypeId
-} from '@fern-api/ir-sdk'
+} from "@fern-api/ir-sdk"
 
-import { FilteredIr } from './FilteredIr'
-import { filterEndpointExample, filterExampleType } from './filterExamples'
+import { FilteredIr } from "./FilteredIr"
+import { filterEndpointExample, filterExampleType } from "./filterExamples"
 
 export function filterIntermediateRepresentationForAudiences(
-    intermediateRepresentation: Omit<IntermediateRepresentation, 'sdkConfig' | 'subpackages' | 'rootPackage'>,
+    intermediateRepresentation: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage">,
     filteredIr: FilteredIr | undefined
-): Omit<IntermediateRepresentation, 'sdkConfig' | 'subpackages' | 'rootPackage'> {
+): Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage"> {
     if (filteredIr == null) {
         return intermediateRepresentation
     }
@@ -27,7 +27,7 @@ export function filterIntermediateRepresentationForAudiences(
             typeDeclaration.userProvidedExamples = typeDeclaration.userProvidedExamples
                 .map((example) => filterExampleType({ filteredIr, exampleType: example }))
                 .filter((ex) => ex !== undefined) as ExampleType[]
-            if (typeDeclaration.shape.type === 'object') {
+            if (typeDeclaration.shape.type === "object") {
                 for (const property of typeDeclaration.shape.properties) {
                     const hasProperty = filteredIr.hasProperty(typeId, property.name.wireValue)
                     if (hasProperty) {
@@ -56,7 +56,7 @@ export function filterIntermediateRepresentationForAudiences(
                 .filter((webhook) => filteredIr.hasWebhook(webhook))
                 .map((webhook) => {
                     const webhookId = webhook.id
-                    if (webhook.payload.type === 'inlinedPayload' && webhookId != null) {
+                    if (webhook.payload.type === "inlinedPayload" && webhookId != null) {
                         webhook.payload = {
                             ...webhook.payload,
                             properties: webhook.payload.properties.filter((property) => {
@@ -90,14 +90,14 @@ export function filterIntermediateRepresentationForAudiences(
     const filteredEnvironmentsConfig = intermediateRepresentation.environments
     if (filteredEnvironmentsConfig) {
         switch (filteredEnvironmentsConfig.environments.type) {
-            case 'singleBaseUrl': {
+            case "singleBaseUrl": {
                 filteredEnvironmentsConfig.environments.environments =
                     filteredEnvironmentsConfig.environments.environments.filter((environment) =>
                         filteredIr.hasEnvironmentId(environment.id)
                     )
                 break
             }
-            case 'multipleBaseUrls': {
+            case "multipleBaseUrls": {
                 filteredEnvironmentsConfig.environments.environments =
                     filteredEnvironmentsConfig.environments.environments.filter((environment) =>
                         filteredIr.hasEnvironmentId(environment.id)
@@ -146,7 +146,7 @@ export function filterIntermediateRepresentationForAudiences(
                                 return filteredIr.hasQueryParameter(httpEndpoint.id, queryParameter.name.wireValue)
                             })
                         }
-                        if (httpEndpoint.requestBody?.type === 'inlinedRequestBody') {
+                        if (httpEndpoint.requestBody?.type === "inlinedRequestBody") {
                             return {
                                 ...httpEndpoint,
                                 requestBody: {

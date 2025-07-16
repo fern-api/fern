@@ -1,4 +1,4 @@
-import { AbstractConverterContext } from './AbstractConverterContext'
+import { AbstractConverterContext } from "./AbstractConverterContext"
 
 export declare namespace AbstractExtension {
     export interface Args {
@@ -24,7 +24,7 @@ export abstract class AbstractExtension<Output> {
     }
 
     protected getExtensionValue(value: unknown, fallbackKey?: string): unknown | undefined {
-        if (typeof value !== 'object' || value == null) {
+        if (typeof value !== "object" || value == null) {
             return undefined
         }
         const primaryExtensionValue = (value as Record<string, unknown>)[this.key]

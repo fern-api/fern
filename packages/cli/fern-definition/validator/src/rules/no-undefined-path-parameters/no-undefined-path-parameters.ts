@@ -1,45 +1,45 @@
-import chalk from 'chalk'
-import capitalize from 'lodash-es/capitalize'
-import urlJoin from 'url-join'
+import chalk from "chalk"
+import capitalize from "lodash-es/capitalize"
+import urlJoin from "url-join"
 
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { getEndpointPathParameters } from '@fern-api/ir-generator'
-import { constructHttpPath } from '@fern-api/ir-utils'
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { getEndpointPathParameters } from "@fern-api/ir-generator"
+import { constructHttpPath } from "@fern-api/ir-utils"
 
-import { Rule, RuleViolation } from '../../Rule'
+import { Rule, RuleViolation } from "../../Rule"
 
 export const NoUndefinedPathParametersRule: Rule = {
-    name: 'no-undefined-path-parameters',
+    name: "no-undefined-path-parameters",
     create: () => {
         return {
             rootApiFile: {
                 file: (file) => {
-                    if (file['base-path'] == null) {
+                    if (file["base-path"] == null) {
                         return []
                     }
                     return getPathParameterRuleViolations({
-                        path: file['base-path'],
-                        pathParameters: file['path-parameters'] ?? {},
-                        pathType: 'file'
+                        path: file["base-path"],
+                        pathParameters: file["path-parameters"] ?? {},
+                        pathType: "file"
                     })
                 }
             },
             definitionFile: {
                 httpService: (service) => {
                     return getPathParameterRuleViolations({
-                        path: service['base-path'],
-                        pathParameters: service['path-parameters'] ?? {},
-                        pathType: 'service'
+                        path: service["base-path"],
+                        pathParameters: service["path-parameters"] ?? {},
+                        pathType: "service"
                     })
                 },
                 httpEndpoint: ({ endpoint }) => {
                     return getPathParameterRuleViolations({
                         path:
-                            endpoint['base-path'] != null
-                                ? urlJoin(endpoint['base-path'], endpoint.path)
+                            endpoint["base-path"] != null
+                                ? urlJoin(endpoint["base-path"], endpoint.path)
                                 : endpoint.path,
                         pathParameters: getEndpointPathParameters(endpoint),
-                        pathType: 'endpoint'
+                        pathType: "endpoint"
                     })
                 }
             }
@@ -54,7 +54,7 @@ function getPathParameterRuleViolations({
 }: {
     path: string
     pathParameters: Record<string, RawSchemas.HttpPathParameterSchema>
-    pathType: 'file' | 'service' | 'endpoint'
+    pathType: "file" | "service" | "endpoint"
 }): RuleViolation[] {
     const errors: RuleViolation[] = []
 
@@ -63,7 +63,7 @@ function getPathParameterRuleViolations({
     httpPath.parts.forEach((part) => {
         if (urlPathParameters.has(part.pathParameter)) {
             errors.push({
-                severity: 'fatal',
+                severity: "fatal",
                 message: `${capitalize(pathType)} has duplicate path parameter: ${chalk.bold(part.pathParameter)}.`
             })
         }
@@ -76,7 +76,7 @@ function getPathParameterRuleViolations({
     const undefinedPathParameters = getDifference(urlPathParameters, definedPathParameters)
     undefinedPathParameters.forEach((pathParameter) => {
         errors.push({
-            severity: 'fatal',
+            severity: "fatal",
             message: `${capitalize(pathType)} has missing path-parameter: ${chalk.bold(pathParameter)}.`
         })
     })
@@ -85,7 +85,7 @@ function getPathParameterRuleViolations({
     const missingUrlPathParameters = getDifference(definedPathParameters, urlPathParameters)
     missingUrlPathParameters.forEach((pathParameter) => {
         errors.push({
-            severity: 'fatal',
+            severity: "fatal",
             message: `Path parameter is unreferenced in ${pathType}: ${chalk.bold(pathParameter)}.`
         })
     })

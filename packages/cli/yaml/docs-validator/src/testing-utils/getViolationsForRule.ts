@@ -1,13 +1,13 @@
-import stripAnsi from 'strip-ansi'
+import stripAnsi from "strip-ansi"
 
-import { filterOssWorkspaces } from '@fern-api/docs-resolver'
-import { AbsoluteFilePath } from '@fern-api/fs-utils'
-import { loadProjectFromDirectory } from '@fern-api/project-loader'
-import { createMockTaskContext } from '@fern-api/task-context'
+import { filterOssWorkspaces } from "@fern-api/docs-resolver"
+import { AbsoluteFilePath } from "@fern-api/fs-utils"
+import { loadProjectFromDirectory } from "@fern-api/project-loader"
+import { createMockTaskContext } from "@fern-api/task-context"
 
-import { Rule } from '../Rule'
-import { ValidationViolation } from '../ValidationViolation'
-import { runRulesOnDocsWorkspace } from '../validateDocsWorkspace'
+import { Rule } from "../Rule"
+import { ValidationViolation } from "../ValidationViolation"
+import { runRulesOnDocsWorkspace } from "../validateDocsWorkspace"
 
 export declare namespace getViolationsForRule {
     export interface Args {
@@ -24,14 +24,14 @@ export async function getViolationsForRule({
     const project = await loadProjectFromDirectory({
         absolutePathToFernDirectory,
         context,
-        cliVersion: '0.0.0',
+        cliVersion: "0.0.0",
         defaultToAllApiWorkspaces: true,
         commandLineApiWorkspace: undefined,
-        cliName: 'fern'
+        cliName: "fern"
     })
 
     if (project.docsWorkspaces == null) {
-        throw new Error('Expected docs workspace to be present, but found none')
+        throw new Error("Expected docs workspace to be present, but found none")
     }
 
     const violations = await runRulesOnDocsWorkspace({

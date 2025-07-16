@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { FernWorkspace, visitAllDefinitionFiles } from '@fern-api/api-workspace-commons'
-import { NodePath, isGeneric, parseGeneric, visitRawTypeDeclaration } from '@fern-api/fern-definition-schema'
+import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/api-workspace-commons"
+import { NodePath, isGeneric, parseGeneric, visitRawTypeDeclaration } from "@fern-api/fern-definition-schema"
 
-import { Rule, RuleViolation } from '../../Rule'
-import { visitDefinitionFileYamlAst } from '../../ast'
+import { Rule, RuleViolation } from "../../Rule"
+import { visitDefinitionFileYamlAst } from "../../ast"
 
 type GenericDeclaration = string
-type PropertyBasedTypeDeclaration = 'object' | 'discriminatedUnion'
+type PropertyBasedTypeDeclaration = "object" | "discriminatedUnion"
 
 export const ValidGenericRule: Rule = {
-    name: 'valid-generic',
+    name: "valid-generic",
     create: ({ workspace }) => {
         const genericArgumentCounts = getGenericArgumentCounts(workspace)
         const propertyBasedErrors: Record<
@@ -51,8 +51,8 @@ export const ValidGenericRule: Rule = {
                                 })
                             ) {
                                 errors.push({
-                                    severity: 'fatal',
-                                    message: 'Generics are only supported for object declarations'
+                                    severity: "fatal",
+                                    message: "Generics are only supported for object declarations"
                                 })
                             }
                         }
@@ -60,10 +60,10 @@ export const ValidGenericRule: Rule = {
 
                     visitRawTypeDeclaration(declaration, {
                         alias: (aliasValue) => {
-                            const alias = typeof aliasValue === 'string' ? aliasValue : aliasValue.type
+                            const alias = typeof aliasValue === "string" ? aliasValue : aliasValue.type
                             const maybeGeneric = parseGeneric(alias)
                             if (maybeGeneric != null) {
-                                const [maybeTypeName, typeName, ..._rest] = maybeGeneric.name.split('.')
+                                const [maybeTypeName, typeName, ..._rest] = maybeGeneric.name.split(".")
                                 const key = typeName ?? maybeTypeName
                                 if (
                                     key &&
@@ -71,30 +71,30 @@ export const ValidGenericRule: Rule = {
                                     genericArgumentCounts[key] !== maybeGeneric.arguments.length
                                 ) {
                                     errors.push({
-                                        severity: 'fatal',
+                                        severity: "fatal",
                                         message: `Generic ${key} expects ${
                                             genericArgumentCounts[key]
                                         } arguments, but received ${
                                             maybeGeneric.arguments.length
-                                        } <${maybeGeneric.arguments.join(',')}>`
+                                        } <${maybeGeneric.arguments.join(",")}>`
                                     })
                                 }
                             } else {
                                 if (alias in genericArgumentCounts) {
                                     errors.push({
-                                        severity: 'fatal',
+                                        severity: "fatal",
                                         message: `Generic ${alias} expects ${genericArgumentCounts[alias]} arguments, but received none`
                                     })
                                 }
                             }
                         },
                         enum: (enumValue) => {
-                            if (typeof enumValue !== 'string') {
+                            if (typeof enumValue !== "string") {
                                 enumValue.enum.forEach((value) => {
-                                    const enumValue = typeof value === 'string' ? value : value.value
+                                    const enumValue = typeof value === "string" ? value : value.value
                                     if (isGeneric(enumValue)) {
                                         errors.push({
-                                            severity: 'fatal',
+                                            severity: "fatal",
                                             message: `Cannot reference generic ${enumValue} from enum`
                                         })
                                     }
@@ -103,16 +103,16 @@ export const ValidGenericRule: Rule = {
                         },
                         object: (objectValue) => {
                             Object.entries(objectValue?.properties ?? {}).forEach(([key, value]) => {
-                                if (isGeneric(typeof value === 'string' ? value : value.type)) {
+                                if (isGeneric(typeof value === "string" ? value : value.type)) {
                                     if (nodePath) {
                                         ;(propertyBasedErrors.object ??= []).push({
                                             key,
                                             nodePath
                                         })
                                     } else {
-                                        const valueAsString = typeof value === 'string' ? value : JSON.stringify(value)
+                                        const valueAsString = typeof value === "string" ? value : JSON.stringify(value)
                                         errors.push({
-                                            severity: 'fatal',
+                                            severity: "fatal",
                                             message: `Cannot reference generic ${valueAsString} from object property ${key}`
                                         })
                                     }
@@ -122,9 +122,9 @@ export const ValidGenericRule: Rule = {
                         discriminatedUnion: (discriminatedUnionValue) => {
                             Object.entries(discriminatedUnionValue.union).forEach(([key, value]) => {
                                 const discriminatedUnionValue =
-                                    typeof value === 'string'
+                                    typeof value === "string"
                                         ? value
-                                        : typeof value.type === 'string'
+                                        : typeof value.type === "string"
                                           ? value.type
                                           : undefined
 
@@ -135,9 +135,9 @@ export const ValidGenericRule: Rule = {
                                             nodePath
                                         })
                                     } else {
-                                        const valueAsString = typeof value === 'string' ? value : JSON.stringify(value)
+                                        const valueAsString = typeof value === "string" ? value : JSON.stringify(value)
                                         errors.push({
-                                            severity: 'fatal',
+                                            severity: "fatal",
                                             message: `Cannot reference generic ${valueAsString} from union property ${key}`
                                         })
                                     }
@@ -146,10 +146,10 @@ export const ValidGenericRule: Rule = {
                         },
                         undiscriminatedUnion: (undiscriminatedUnionValue) => {
                             undiscriminatedUnionValue.union.forEach((value) => {
-                                const discriminatedUnionValue = typeof value === 'string' ? value : value.type
+                                const discriminatedUnionValue = typeof value === "string" ? value : value.type
                                 if (isGeneric(discriminatedUnionValue)) {
                                     errors.push({
-                                        severity: 'fatal',
+                                        severity: "fatal",
                                         message: `Cannot reference generic ${discriminatedUnionValue} from union`
                                     })
                                 }
@@ -170,14 +170,14 @@ export const ValidGenericRule: Rule = {
                             ]) {
                                 if (
                                     propertyNodePath.length > 0 &&
-                                    nodePath.join(',').startsWith(propertyNodePath.join(',')) &&
+                                    nodePath.join(",").startsWith(propertyNodePath.join(",")) &&
                                     nodePath.includes(key)
                                 ) {
                                     errors.push({
-                                        severity: 'fatal',
+                                        severity: "fatal",
                                         message: `Cannot reference generic ${typeReference} from ${
-                                            propertyBasedTypeDeclaration.toLowerCase().includes('union')
-                                                ? 'union'
+                                            propertyBasedTypeDeclaration.toLowerCase().includes("union")
+                                                ? "union"
                                                 : propertyBasedTypeDeclaration
                                         }`
                                     })

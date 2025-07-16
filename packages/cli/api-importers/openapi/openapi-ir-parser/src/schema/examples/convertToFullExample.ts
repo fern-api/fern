@@ -1,14 +1,14 @@
-import { FullExample, KeyValuePair, PrimitiveExample } from '@fern-api/openapi-ir'
+import { FullExample, KeyValuePair, PrimitiveExample } from "@fern-api/openapi-ir"
 
 export function convertToFullExample(value: unknown): FullExample | undefined {
-    if (typeof value === 'string') {
+    if (typeof value === "string") {
         return FullExample.primitive(PrimitiveExample.string(value))
-    } else if (typeof value === 'number') {
+    } else if (typeof value === "number") {
         if (Number.isInteger(value)) {
             return FullExample.primitive(PrimitiveExample.int(value))
         }
         return FullExample.primitive(PrimitiveExample.double(value))
-    } else if (typeof value === 'boolean') {
+    } else if (typeof value === "boolean") {
         return FullExample.primitive(PrimitiveExample.boolean(value))
     } else if (Array.isArray(value)) {
         const examples = value.map((example) => convertToFullExample(example))
@@ -18,8 +18,8 @@ export function convertToFullExample(value: unknown): FullExample | undefined {
         return FullExample.array(examples.filter((example) => example != null) as FullExample[])
     } else if (
         value != null &&
-        typeof value === 'object' &&
-        Object.keys(value).every((key) => typeof key === 'string')
+        typeof value === "object" &&
+        Object.keys(value).every((key) => typeof key === "string")
     ) {
         const kvs: KeyValuePair[] = []
         for (const [property, propertyValue] of Object.entries(value)) {

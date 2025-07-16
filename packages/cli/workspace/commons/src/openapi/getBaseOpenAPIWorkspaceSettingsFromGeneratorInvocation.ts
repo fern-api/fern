@@ -1,6 +1,6 @@
-import { generatorsYml } from '@fern-api/configuration'
+import { generatorsYml } from "@fern-api/configuration"
 
-import { type BaseOpenAPIWorkspace } from './BaseOpenAPIWorkspace'
+import { type BaseOpenAPIWorkspace } from "./BaseOpenAPIWorkspace"
 
 export function getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(
     generatorInvocation: generatorsYml.GeneratorInvocation
@@ -12,7 +12,7 @@ export function getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(
         detectGlobalHeaders: true
     }
 
-    if (generatorInvocation.settings?.unions === 'v1') {
+    if (generatorInvocation.settings?.unions === "v1") {
         result.discriminatedUnionV2 = true
     }
 

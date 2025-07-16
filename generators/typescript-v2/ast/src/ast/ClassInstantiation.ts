@@ -1,6 +1,6 @@
-import { Reference } from './Reference'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { Reference } from "./Reference"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export declare namespace ClassInstantiation {
     interface Args {
@@ -20,14 +20,14 @@ export class ClassInstantiation extends AstNode {
     }
 
     public write(writer: Writer): void {
-        writer.write('new ')
+        writer.write("new ")
         writer.writeNode(this.class_)
-        writer.write('(')
+        writer.write("(")
         writer.delimit({
             nodes: this.arguments_,
-            delimiter: ', ',
+            delimiter: ", ",
             writeFunction: (argument) => argument.write(writer)
         })
-        writer.write(')')
+        writer.write(")")
     }
 }

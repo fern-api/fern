@@ -1,10 +1,10 @@
-import { camelCase } from 'lodash-es'
-import urlJoin from 'url-join'
+import { camelCase } from "lodash-es"
+import urlJoin from "url-join"
 
-import { FdrAPI } from '@fern-api/fdr-sdk'
+import { FdrAPI } from "@fern-api/fdr-sdk"
 
-import { getBasePath } from './ApiDefinitionHolder'
-import { stringifyEndpointPathParts, stringifyEndpointPathParts2 } from './utils/stringifyEndpointPathParts'
+import { getBasePath } from "./ApiDefinitionHolder"
+import { stringifyEndpointPathParts, stringifyEndpointPathParts2 } from "./utils/stringifyEndpointPathParts"
 
 export class ApiDefinitionHolderLatest {
     #subpackagesByLocator: Record<string, FdrAPI.api.latest.SubpackageMetadata> = {}
@@ -20,9 +20,9 @@ export class ApiDefinitionHolderLatest {
 
         for (const [endpointId, endpoint] of Object.entries(api.endpoints)) {
             this.#endpointsByLocator[endpointId] = endpoint
-            this.#endpointsByLocator[endpointId.replace('endpoint_', '')] = endpoint
-            this.#endpointsByLocator[endpointId.replace('endpoint_', 'subpackage_')] = endpoint
-            for (const method of [endpoint.method, 'STREAM']) {
+            this.#endpointsByLocator[endpointId.replace("endpoint_", "")] = endpoint
+            this.#endpointsByLocator[endpointId.replace("endpoint_", "subpackage_")] = endpoint
+            for (const method of [endpoint.method, "STREAM"]) {
                 endpoint.environments?.forEach((environment) => {
                     this.#endpointsByLocator[
                         `${method} ${urlJoin(environment.baseUrl, stringifyEndpointPathParts(endpoint.path))}`
@@ -46,14 +46,14 @@ export class ApiDefinitionHolderLatest {
         }
         for (const [webhookId, webhook] of Object.entries(api.webhooks)) {
             this.#webhooksByLocator[webhookId] = webhook
-            this.#webhooksByLocator[webhookId.replace('webhook_', '')] = webhook
-            this.#webhooksByLocator[webhookId.replace('webhook_', 'subpackage_')] = webhook
-            this.#webhooksByLocator[`${webhook.method} ${webhook.path.join('/')}`] = webhook
+            this.#webhooksByLocator[webhookId.replace("webhook_", "")] = webhook
+            this.#webhooksByLocator[webhookId.replace("webhook_", "subpackage_")] = webhook
+            this.#webhooksByLocator[`${webhook.method} ${webhook.path.join("/")}`] = webhook
         }
         for (const [websocketId, websocket] of Object.entries(api.websockets)) {
             this.#websocketsByLocator[websocketId] = websocket
-            this.#websocketsByLocator[websocketId.replace('websocket_', '')] = websocket
-            this.#websocketsByLocator[websocketId.replace('websocket_', 'subpackage_')] = websocket
+            this.#websocketsByLocator[websocketId.replace("websocket_", "")] = websocket
+            this.#websocketsByLocator[websocketId.replace("websocket_", "subpackage_")] = websocket
             this.#websocketsByLocator[`STREAM ${stringifyEndpointPathParts(websocket.path)}`] = websocket
             this.#websocketsByLocator[`STREAM ${stringifyEndpointPathParts2(websocket.path)}`] = websocket
         }
@@ -61,14 +61,14 @@ export class ApiDefinitionHolderLatest {
 
     getSubpackageByLocator(locator: string): FdrAPI.api.latest.SubpackageMetadata | undefined {
         if (
-            ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS', 'CONNECT', 'TRACE'].some((method) =>
+            ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS", "CONNECT", "TRACE"].some((method) =>
                 locator.includes(method)
             )
         ) {
             return undefined
         }
 
-        const subpackageId = locator.replace('.yml', '').replace('.yaml', '')
+        const subpackageId = locator.replace(".yml", "").replace(".yaml", "")
         return this.#subpackagesByLocator[subpackageId]
     }
 

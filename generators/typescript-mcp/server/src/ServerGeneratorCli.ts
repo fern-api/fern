@@ -1,14 +1,14 @@
-import { GeneratorNotificationService } from '@fern-api/base-generator'
-import { AbstractTypescriptMcpGeneratorCli } from '@fern-api/typescript-mcp-base'
-import { generateModels } from '@fern-api/typescript-mcp-model'
+import { GeneratorNotificationService } from "@fern-api/base-generator"
+import { AbstractTypescriptMcpGeneratorCli } from "@fern-api/typescript-mcp-base"
+import { generateModels } from "@fern-api/typescript-mcp-model"
 
-import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
-import { IntermediateRepresentation } from '@fern-fern/ir-sdk/api'
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api"
 
-import { TypescriptCustomConfigSchema } from '../../../typescript-v2/ast/src'
-import { ServerGeneratorContext } from './ServerGeneratorContext'
-import { ReadmeGenerator } from './readme/ReadmeGenerator'
-import { ToolsGenerator } from './tools/ToolsGenerator'
+import { TypescriptCustomConfigSchema } from "../../../typescript-v2/ast/src"
+import { ServerGeneratorContext } from "./ServerGeneratorContext"
+import { ReadmeGenerator } from "./readme/ReadmeGenerator"
+import { ToolsGenerator } from "./tools/ToolsGenerator"
 
 export declare namespace ServerGeneratorCLI {
     export interface Init {
@@ -51,7 +51,7 @@ export class ServerGeneratorCLI extends AbstractTypescriptMcpGeneratorCli<
     }
 
     protected async publishPackage(context: ServerGeneratorContext): Promise<void> {
-        throw new Error('Method not implemented.')
+        throw new Error("Method not implemented.")
     }
 
     protected async writeForGithub(context: ServerGeneratorContext): Promise<void> {

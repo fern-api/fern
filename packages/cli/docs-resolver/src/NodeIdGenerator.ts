@@ -1,9 +1,9 @@
-import crypto from 'crypto'
+import crypto from "crypto"
 
-import { FernNavigation } from '@fern-api/fdr-sdk'
+import { FernNavigation } from "@fern-api/fdr-sdk"
 
 function hash(id: string): string {
-    return crypto.createHash('sha256').update(id).digest('hex')
+    return crypto.createHash("sha256").update(id).digest("hex")
 }
 
 export class NodeIdGenerator {

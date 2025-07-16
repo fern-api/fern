@@ -1,6 +1,6 @@
-import { stringifyFernFilepath } from '@fern-api/ir-utils'
+import { stringifyFernFilepath } from "@fern-api/ir-utils"
 
-import { ResolvedEndpoint } from './ResolvedEndpoint'
+import { ResolvedEndpoint } from "./ResolvedEndpoint"
 
 export const generateEndpointIdFromResolvedEndpoint = (resolvedEndpoint: ResolvedEndpoint): string => {
     const joinedFernFilePath = stringifyFernFilepath(resolvedEndpoint.file.fernFilepath)

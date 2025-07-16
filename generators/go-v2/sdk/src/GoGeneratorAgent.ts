@@ -1,12 +1,12 @@
-import { AbstractGeneratorAgent } from '@fern-api/base-generator'
-import { Logger } from '@fern-api/logger'
+import { AbstractGeneratorAgent } from "@fern-api/base-generator"
+import { Logger } from "@fern-api/logger"
 
-import { FernGeneratorCli } from '@fern-fern/generator-cli-sdk'
-import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
-import { IntermediateRepresentation } from '@fern-fern/ir-sdk/api'
+import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk"
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api"
 
-import { SdkGeneratorContext } from './SdkGeneratorContext'
-import { ReadmeConfigBuilder } from './readme/ReadmeConfigBuilder'
+import { SdkGeneratorContext } from "./SdkGeneratorContext"
+import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder"
 
 export class GoGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorContext> {
     private readmeConfigBuilder: ReadmeConfigBuilder
@@ -46,10 +46,10 @@ export class GoGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorContext
     ): FernGeneratorCli.GitHubConfig {
         // TODO: get from env
         return {
-            sourceDirectory: 'NONE',
-            uri: 'NONE',
-            token: 'token',
-            branch: 'NONE'
+            sourceDirectory: "NONE",
+            uri: "NONE",
+            token: "token",
+            branch: "NONE"
         }
     }
 }

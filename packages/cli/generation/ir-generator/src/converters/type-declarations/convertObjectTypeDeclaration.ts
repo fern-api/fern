@@ -1,10 +1,10 @@
-import { assertNever } from '@fern-api/core-utils'
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { ObjectProperty, ObjectPropertyAccess, Type } from '@fern-api/ir-sdk'
+import { assertNever } from "@fern-api/core-utils"
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { ObjectProperty, ObjectPropertyAccess, Type } from "@fern-api/ir-sdk"
 
-import { FernFileContext } from '../../FernFileContext'
-import { parseTypeName } from '../../utils/parseTypeName'
-import { convertDeclaration } from '../convertDeclaration'
+import { FernFileContext } from "../../FernFileContext"
+import { parseTypeName } from "../../utils/parseTypeName"
+import { convertDeclaration } from "../convertDeclaration"
 
 export function convertObjectTypeDeclaration({
     object,
@@ -16,7 +16,7 @@ export function convertObjectTypeDeclaration({
     return Type.object({
         extends: getExtensionsAsList(object.extends).map((extended) => parseTypeName({ typeName: extended, file })),
         properties: getObjectPropertiesFromRawObjectSchema(object, file),
-        extraProperties: object['extra-properties'] ?? false,
+        extraProperties: object["extra-properties"] ?? false,
         extendedProperties: undefined
     })
 }
@@ -47,7 +47,7 @@ export function getExtensionsAsList(extensions: string | string[] | undefined): 
     if (extensions == null) {
         return []
     }
-    if (typeof extensions === 'string') {
+    if (typeof extensions === "string") {
         return [extensions]
     }
     return extensions
@@ -60,7 +60,7 @@ export function getPropertyName({
     propertyKey: string
     property: RawSchemas.ObjectPropertySchema
 }): { name: string; wasExplicitlySet: boolean } {
-    if (typeof property !== 'string' && property.name != null) {
+    if (typeof property !== "string" && property.name != null) {
         return {
             name: property.name,
             wasExplicitlySet: true
@@ -78,15 +78,15 @@ export function getPropertyAccess({
 }: {
     property: RawSchemas.ObjectPropertySchema
 }): ObjectPropertyAccess | undefined {
-    if (typeof property === 'string') {
+    if (typeof property === "string") {
         return undefined
     }
-    const propertyAccess = property['access']
+    const propertyAccess = property["access"]
     if (propertyAccess != null) {
         switch (propertyAccess) {
-            case 'read-only':
+            case "read-only":
                 return ObjectPropertyAccess.ReadOnly
-            case 'write-only':
+            case "write-only":
                 return ObjectPropertyAccess.WriteOnly
             default:
                 assertNever(propertyAccess)

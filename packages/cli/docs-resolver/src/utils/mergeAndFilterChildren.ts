@@ -1,6 +1,6 @@
-import { FernNavigation } from '@fern-api/fdr-sdk'
+import { FernNavigation } from "@fern-api/fdr-sdk"
 
-import { mergeEndpointPairs } from './mergeEndpointPairs'
+import { mergeEndpointPairs } from "./mergeEndpointPairs"
 
 export function mergeAndFilterChildren<EndpointType extends { method: string }>({
     left,
@@ -23,5 +23,5 @@ export function mergeAndFilterChildren<EndpointType extends { method: string }>(
         stringifyEndpointPathParts,
         disableEndpointPairs,
         apiDefinitionId
-    }).filter((child) => (child.type === 'apiPackage' ? child.children.length > 0 : true))
+    }).filter((child) => (child.type === "apiPackage" ? child.children.length > 0 : true))
 }

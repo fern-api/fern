@@ -1,9 +1,9 @@
-import { UnnamedArgument } from '@fern-api/browser-compatible-base-generator'
-import { assertNever } from '@fern-api/core-utils'
+import { UnnamedArgument } from "@fern-api/browser-compatible-base-generator"
+import { assertNever } from "@fern-api/core-utils"
 
-import { Type } from './Type'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { Type } from "./Type"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export declare namespace Dictionary {
     interface Args {
@@ -20,12 +20,12 @@ export declare namespace Dictionary {
     type Values = MapEntryValues | UnnamedArgumentValues
 
     interface MapEntryValues {
-        type: 'entries'
+        type: "entries"
         entries: MapEntry[]
     }
 
     interface UnnamedArgumentValues {
-        type: 'argument'
+        type: "argument"
         argument: UnnamedArgument
     }
 }
@@ -43,36 +43,36 @@ export class Dictionary extends AstNode {
     }
 
     public write(writer: Writer): void {
-        writer.write('new Dictionary<')
+        writer.write("new Dictionary<")
         this.keyType.write(writer)
-        writer.write(', ')
+        writer.write(", ")
         this.valueType.write(writer)
-        writer.write('>')
+        writer.write(">")
 
         if (this.values == null) {
-            writer.write('()')
+            writer.write("()")
             return
         }
 
         switch (this.values.type) {
-            case 'argument': {
-                writer.write('(')
+            case "argument": {
+                writer.write("(")
                 this.values.argument.write(writer)
-                writer.write(')')
+                writer.write(")")
                 break
             }
-            case 'entries': {
-                writer.writeLine('() {')
+            case "entries": {
+                writer.writeLine("() {")
                 writer.indent()
                 for (const { key, value } of this.values.entries) {
-                    writer.write('{ ')
+                    writer.write("{ ")
                     key.write(writer)
-                    writer.write(', ')
+                    writer.write(", ")
                     value.write(writer)
-                    writer.writeLine(' }, ')
+                    writer.writeLine(" }, ")
                 }
                 writer.dedent()
-                writer.write('}')
+                writer.write("}")
                 break
             }
             default:

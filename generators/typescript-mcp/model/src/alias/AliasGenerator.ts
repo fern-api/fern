@@ -1,10 +1,10 @@
-import { RelativeFilePath, join } from '@fern-api/fs-utils'
-import { TypescriptCustomConfigSchema, ts } from '@fern-api/typescript-ast'
-import { ExportNode, FileGenerator, TypescriptFile } from '@fern-api/typescript-mcp-base'
+import { RelativeFilePath, join } from "@fern-api/fs-utils"
+import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast"
+import { ExportNode, FileGenerator, TypescriptFile } from "@fern-api/typescript-mcp-base"
 
-import { AliasTypeDeclaration, TypeDeclaration } from '@fern-fern/ir-sdk/api'
+import { AliasTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api"
 
-import { ModelGeneratorContext } from '../ModelGeneratorContext'
+import { ModelGeneratorContext } from "../ModelGeneratorContext"
 
 export class AliasGenerator extends FileGenerator<TypescriptFile, TypescriptCustomConfigSchema, ModelGeneratorContext> {
     private readonly schemaVariableName: string
@@ -42,7 +42,7 @@ export class AliasGenerator extends FileGenerator<TypescriptFile, TypescriptCust
     }
 
     protected getDirectory(): RelativeFilePath {
-        return RelativeFilePath.of('')
+        return RelativeFilePath.of("")
     }
 
     protected getFilename(): string {

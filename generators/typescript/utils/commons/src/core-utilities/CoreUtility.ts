@@ -1,14 +1,14 @@
-import { DependencyManager } from '../dependency-manager/DependencyManager'
-import { ExportedDirectory } from '../exports-manager'
-import { Reference } from '../referencing'
+import { DependencyManager } from "../dependency-manager/DependencyManager"
+import { ExportedDirectory } from "../exports-manager"
+import { Reference } from "../referencing"
 
 export type CoreUtilityName = string
 
 export declare namespace CoreUtility {
     export interface Options {
-        streamType: 'wrapper' | 'web'
-        formDataSupport: 'Node16' | 'Node18'
-        fetchSupport: 'node-fetch' | 'native'
+        streamType: "wrapper" | "web"
+        formDataSupport: "Node16" | "Node18"
+        fetchSupport: "node-fetch" | "native"
     }
     export interface Init {
         getReferenceToExport: (args: { manifest: CoreUtility.Manifest; exportedName: string }) => Reference

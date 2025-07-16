@@ -1,1 +1,1 @@
-export { GoFormatter } from './GoFormatter'
+export { GoFormatter } from "./GoFormatter"

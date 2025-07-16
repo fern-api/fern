@@ -1,21 +1,21 @@
-import chalk from 'chalk'
-import { readFile, writeFile } from 'fs/promises'
-import path from 'path'
-import YAML from 'yaml'
+import chalk from "chalk"
+import { readFile, writeFile } from "fs/promises"
+import path from "path"
+import YAML from "yaml"
 
 import {
     getGeneratorNameOrThrow,
     getLatestGeneratorVersion,
     getPathToGeneratorsConfiguration,
     loadRawGeneratorsConfiguration
-} from '@fern-api/configuration-loader'
-import { AbsoluteFilePath, doesPathExist } from '@fern-api/fs-utils'
-import { Project } from '@fern-api/project-loader'
-import { TaskContext } from '@fern-api/task-context'
+} from "@fern-api/configuration-loader"
+import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils"
+import { Project } from "@fern-api/project-loader"
+import { TaskContext } from "@fern-api/task-context"
 
-import { FernRegistry } from '@fern-fern/generators-sdk'
+import { FernRegistry } from "@fern-fern/generators-sdk"
 
-import { CliContext } from '../../cli-context/CliContext'
+import { CliContext } from "../../cli-context/CliContext"
 
 export async function loadAndUpdateGenerators({
     absolutePathToWorkspace,
@@ -36,7 +36,7 @@ export async function loadAndUpdateGenerators({
 }): Promise<string | undefined> {
     const filepath = await getPathToGeneratorsConfiguration({ absolutePathToWorkspace })
     if (filepath == null || !(await doesPathExist(filepath))) {
-        context.logger.debug('Generators configuration file was not found, no generators to upgrade.')
+        context.logger.debug("Generators configuration file was not found, no generators to upgrade.")
         return undefined
     }
     const contents = await readFile(filepath)
@@ -45,9 +45,9 @@ export async function loadAndUpdateGenerators({
     const parsedDocument = YAML.parseDocument(contents.toString())
     // We cannot use zod to parse the schema since then it loses order
     // is there a better, type-safe way to do this???
-    const generatorGroups = parsedDocument.get('groups')
+    const generatorGroups = parsedDocument.get("groups")
     if (generatorGroups == null) {
-        context.logger.debug('No groups were found within the generators configuration, no generators to upgrade.')
+        context.logger.debug("No groups were found within the generators configuration, no generators to upgrade.")
         return undefined
     }
     if (!YAML.isMap(generatorGroups)) {
@@ -73,7 +73,7 @@ export async function loadAndUpdateGenerators({
             continue
         }
 
-        const generators = group.get('generators')
+        const generators = group.get("generators")
 
         if (!YAML.isSeq(generators)) {
             context.failAndThrow(
@@ -88,7 +88,7 @@ export async function loadAndUpdateGenerators({
                     `Expected generator in group ${groupName} to be a map in ${path.relative(process.cwd(), filepath)}`
                 )
             }
-            const generatorName = generator.get('name') as string
+            const generatorName = generator.get("name") as string
 
             if (generatorFilter != null && generatorName !== generatorFilter) {
                 context.logger.debug(
@@ -99,7 +99,7 @@ export async function loadAndUpdateGenerators({
 
             const normalizedGeneratorName = getGeneratorNameOrThrow(generatorName, context)
 
-            const currentGeneratorVersion = generator.get('version') as string
+            const currentGeneratorVersion = generator.get("version") as string
 
             const latestVersion = await getLatestGeneratorVersion({
                 generatorName: normalizedGeneratorName,
@@ -116,7 +116,7 @@ export async function loadAndUpdateGenerators({
             context.logger.debug(
                 chalk.green(`Upgrading ${generatorName} from ${currentGeneratorVersion} to ${latestVersion}`)
             )
-            generator.set('version', latestVersion)
+            generator.set("version", latestVersion)
         }
     }
 
@@ -149,13 +149,13 @@ export async function upgradeGenerator({
                     })) ?? {}
                 if (generatorsConfiguration == null || generatorsConfiguration.groups == null) {
                     context.logger.debug(
-                        'No groups were found within the generators configuration, no generators to upgrade.'
+                        "No groups were found within the generators configuration, no generators to upgrade."
                     )
                     return
                 }
 
                 if (workspace.workspaceName == null) {
-                    context.logger.info('Upgrading generators.')
+                    context.logger.info("Upgrading generators.")
                 } else {
                     context.logger.info(`Upgrading generators in workspace: ${workspace.workspaceName}.`)
                 }

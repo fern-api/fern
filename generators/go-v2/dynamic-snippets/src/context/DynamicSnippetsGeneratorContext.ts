@@ -1,11 +1,11 @@
-import { AbstractDynamicSnippetsGeneratorContext, FernGeneratorExec } from '@fern-api/browser-compatible-base-generator'
-import { FernIr } from '@fern-api/dynamic-ir-sdk'
-import { BaseGoCustomConfigSchema, resolveRootImportPath } from '@fern-api/go-ast'
-import { go } from '@fern-api/go-ast'
+import { AbstractDynamicSnippetsGeneratorContext, FernGeneratorExec } from "@fern-api/browser-compatible-base-generator"
+import { FernIr } from "@fern-api/dynamic-ir-sdk"
+import { BaseGoCustomConfigSchema, resolveRootImportPath } from "@fern-api/go-ast"
+import { go } from "@fern-api/go-ast"
 
-import { DynamicTypeInstantiationMapper } from './DynamicTypeInstantiationMapper'
-import { DynamicTypeMapper } from './DynamicTypeMapper'
-import { FilePropertyMapper } from './FilePropertyMapper'
+import { DynamicTypeInstantiationMapper } from "./DynamicTypeInstantiationMapper"
+import { DynamicTypeMapper } from "./DynamicTypeMapper"
+import { FilePropertyMapper } from "./FilePropertyMapper"
 
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
     public ir: FernIr.dynamic.DynamicIntermediateRepresentation
@@ -48,21 +48,21 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     public getImportPath(fernFilepath: FernIr.FernFilepath): string {
         const parts = fernFilepath.packagePath.map((path) => path.pascalCase.unsafeName.toLowerCase())
-        return [this.rootImportPath, ...parts].join('/')
+        return [this.rootImportPath, ...parts].join("/")
     }
 
     public getContextTypeReference(): go.TypeReference {
         return go.typeReference({
-            name: 'Context',
-            importPath: 'context'
+            name: "Context",
+            importPath: "context"
         })
     }
 
     public getContextTodoFunctionInvocation(): go.FuncInvocation {
         return go.invokeFunc({
             func: go.typeReference({
-                name: 'TODO',
-                importPath: 'context'
+                name: "TODO",
+                importPath: "context"
             }),
             arguments_: []
         })
@@ -70,16 +70,16 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     public getIoReaderTypeReference(): go.TypeReference {
         return go.typeReference({
-            name: 'Reader',
-            importPath: 'io'
+            name: "Reader",
+            importPath: "io"
         })
     }
 
     public getNewStringsReaderFunctionInvocation(s: string): go.FuncInvocation {
         return go.invokeFunc({
             func: go.typeReference({
-                name: 'NewReader',
-                importPath: 'strings'
+                name: "NewReader",
+                importPath: "strings"
             }),
             arguments_: [go.TypeInstantiation.string(s)]
         })
@@ -99,11 +99,11 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         if (this.customConfig?.clientName != null) {
             return this.customConfig.clientName
         }
-        return 'Client'
+        return "Client"
     }
 
     public getClientImportPath(): string {
-        if (this.customConfig?.packageLayout === 'flat') {
+        if (this.customConfig?.packageLayout === "flat") {
             return this.rootImportPath
         }
         return `${this.rootImportPath}/client`

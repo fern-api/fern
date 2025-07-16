@@ -1,13 +1,13 @@
-import { csharp } from '@fern-api/csharp-codegen'
+import { csharp } from "@fern-api/csharp-codegen"
 
-import { ExampleEndpointCall, HttpEndpoint, ServiceId } from '@fern-fern/ir-sdk/api'
+import { ExampleEndpointCall, HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api"
 
-import { SdkGeneratorContext } from '../../SdkGeneratorContext'
-import { GrpcClientInfo } from '../../grpc/GrpcClientInfo'
-import { AbstractEndpointGenerator } from '../AbstractEndpointGenerator'
-import { EndpointSignatureInfo } from '../EndpointSignatureInfo'
-import { EndpointRequest } from '../request/EndpointRequest'
-import { RESPONSE_VARIABLE_NAME } from '../utils/constants'
+import { SdkGeneratorContext } from "../../SdkGeneratorContext"
+import { GrpcClientInfo } from "../../grpc/GrpcClientInfo"
+import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator"
+import { EndpointSignatureInfo } from "../EndpointSignatureInfo"
+import { EndpointRequest } from "../request/EndpointRequest"
+import { RESPONSE_VARIABLE_NAME } from "../utils/constants"
 
 export declare namespace GrpcEndpointGenerator {
     export interface Args {
@@ -35,14 +35,14 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
             csharp.parameter({
                 type: csharp.Type.optional(csharp.Type.reference(this.context.getGrpcRequestOptionsClassReference())),
                 name: this.context.getRequestOptionsParameterName(),
-                initializer: 'null'
+                initializer: "null"
             })
         )
         parameters.push(
             csharp.parameter({
                 type: csharp.Type.reference(this.context.getCancellationTokenClassReference()),
                 name: this.context.getCancellationTokenParameterName(),
-                initializer: 'default'
+                initializer: "default"
             })
         )
         const endpointSnippets = this.context.snippetGenerator.getSnippetsForEndpoint(endpoint.id)
@@ -106,8 +106,8 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
         return_: csharp.Type | undefined
     }): csharp.CodeBlock {
         return csharp.codeblock((writer) => {
-            writer.writeLine('try')
-            writer.writeLine('{')
+            writer.writeLine("try")
+            writer.writeLine("{")
             writer.indent()
             writer.writeNodeStatement(this.createCallOptions({ rawGrpcClientReference }))
             writer.writeNodeStatement(
@@ -123,31 +123,31 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
                 })
             )
             writer.dedent()
-            writer.writeLine('}')
+            writer.writeLine("}")
 
-            writer.write('catch (')
+            writer.write("catch (")
             writer.writeNode(this.getRpcExceptionClassReference())
-            writer.writeLine(' rpc)')
-            writer.writeLine('{')
+            writer.writeLine(" rpc)")
+            writer.writeLine("{")
             writer.indent()
             writer.writeNodeStatement(this.handleRpcException())
             writer.dedent()
-            writer.writeLine('}')
+            writer.writeLine("}")
 
-            writer.writeLine('catch (Exception e)')
-            writer.writeLine('{')
+            writer.writeLine("catch (Exception e)")
+            writer.writeLine("{")
             writer.writeNodeStatement(this.handleException())
-            writer.writeLine('}')
+            writer.writeLine("}")
         })
     }
 
     private createCallOptions({ rawGrpcClientReference }: { rawGrpcClientReference: string }): csharp.CodeBlock {
         return csharp.codeblock((writer) => {
-            writer.write('var callOptions = ')
+            writer.write("var callOptions = ")
             writer.writeNode(
                 csharp.invokeMethod({
                     on: csharp.codeblock(rawGrpcClientReference),
-                    method: 'CreateCallOptions',
+                    method: "CreateCallOptions",
                     arguments_: [
                         csharp.codeblock((writer) => {
                             writer.write(`${this.context.getRequestOptionsParameterName()} ?? `)
@@ -175,41 +175,41 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
         grpcClientInfo: GrpcClientInfo
     }): csharp.CodeBlock {
         const mapToProtoRequest =
-            request != null ? this.getToProtoMethodInvocation({ request }) : csharp.codeblock('null')
+            request != null ? this.getToProtoMethodInvocation({ request }) : csharp.codeblock("null")
         return csharp.codeblock((writer) => {
-            writer.write('var call = ')
+            writer.write("var call = ")
             writer.writeNode(
                 csharp.invokeMethod({
                     on: csharp.codeblock(grpcClientInfo.privatePropertyName),
                     method: this.context.getEndpointMethodName(endpoint),
-                    arguments_: [mapToProtoRequest, csharp.codeblock('callOptions')]
+                    arguments_: [mapToProtoRequest, csharp.codeblock("callOptions")]
                 })
             )
         })
     }
 
     private invokeCallAndDecodeResponse({ return_ }: { return_: csharp.Type | undefined }): csharp.CodeBlock {
-        const decodeResponse = return_ != null ? this.getFromProtoMethodInvocation({ return_ }) : csharp.codeblock('')
+        const decodeResponse = return_ != null ? this.getFromProtoMethodInvocation({ return_ }) : csharp.codeblock("")
         return csharp.codeblock((writer) => {
-            writer.write('var ')
+            writer.write("var ")
             writer.write(RESPONSE_VARIABLE_NAME)
-            writer.writeLine(' = await call.ConfigureAwait(false);')
-            writer.write('return ')
+            writer.writeLine(" = await call.ConfigureAwait(false);")
+            writer.write("return ")
             writer.writeNode(decodeResponse)
         })
     }
 
     private handleRpcException(): csharp.CodeBlock {
         return csharp.codeblock((writer) => {
-            writer.writeLine('var statusCode = (int)rpc.StatusCode;')
-            writer.write('throw ')
+            writer.writeLine("var statusCode = (int)rpc.StatusCode;")
+            writer.write("throw ")
             writer.writeNode(
                 csharp.instantiateClass({
                     classReference: this.context.getBaseApiExceptionClassReference(),
                     arguments_: [
                         csharp.codeblock('$"Error with gRPC status code {statusCode}"'),
-                        csharp.codeblock('statusCode'),
-                        csharp.codeblock('rpc.Message')
+                        csharp.codeblock("statusCode"),
+                        csharp.codeblock("rpc.Message")
                     ]
                 })
             )
@@ -218,11 +218,11 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
 
     private handleException(): csharp.CodeBlock {
         return csharp.codeblock((writer) => {
-            writer.write('throw ')
+            writer.write("throw ")
             writer.writeNode(
                 csharp.instantiateClass({
                     classReference: this.context.getBaseExceptionClassReference(),
-                    arguments_: [csharp.codeblock('"Error"'), csharp.codeblock('e')]
+                    arguments_: [csharp.codeblock('"Error"'), csharp.codeblock("e")]
                 })
             )
         })
@@ -233,7 +233,7 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
             writer.writeNode(
                 csharp.invokeMethod({
                     on: csharp.codeblock(request.getParameterName()),
-                    method: 'ToProto',
+                    method: "ToProto",
                     arguments_: []
                 })
             )
@@ -245,7 +245,7 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
             writer.writeNode(
                 csharp.invokeMethod({
                     on: return_,
-                    method: 'FromProto',
+                    method: "FromProto",
                     arguments_: [csharp.codeblock(RESPONSE_VARIABLE_NAME)]
                 })
             )
@@ -254,8 +254,8 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
 
     private getRpcExceptionClassReference(): csharp.ClassReference {
         return csharp.classReference({
-            name: 'RpcException',
-            namespace: 'Grpc.Core'
+            name: "RpcException",
+            namespace: "Grpc.Core"
         })
     }
 

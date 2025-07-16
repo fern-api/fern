@@ -1,11 +1,11 @@
-import { FernIr, V2EndpointLocationHttpMethod, V2HttpEndpointExample } from '@fern-api/ir-sdk'
+import { FernIr, V2EndpointLocationHttpMethod, V2HttpEndpointExample } from "@fern-api/ir-sdk"
 
 export function initializeEmptyServiceExample(): V2HttpEndpointExample {
     return {
         request: {
             endpoint: {
                 method: V2EndpointLocationHttpMethod.Post,
-                path: ''
+                path: ""
             },
             baseUrl: undefined,
             environment: undefined,

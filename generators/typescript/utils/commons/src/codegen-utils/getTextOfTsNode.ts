@@ -1,4 +1,4 @@
-import { ts } from 'ts-morph'
+import { ts } from "ts-morph"
 
 const SOURCE_FILE = ts.factory.createSourceFile(
     [],

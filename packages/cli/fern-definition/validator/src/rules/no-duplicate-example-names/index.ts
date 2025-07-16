@@ -1,1 +1,1 @@
-export { NoDuplicateExampleNamesRule } from './no-duplicate-example-names'
+export { NoDuplicateExampleNamesRule } from "./no-duplicate-example-names"

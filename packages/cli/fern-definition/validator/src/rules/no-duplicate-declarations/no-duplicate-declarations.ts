@@ -1,10 +1,10 @@
-import path from 'path'
+import path from "path"
 
-import { FernWorkspace, visitAllDefinitionFiles } from '@fern-api/api-workspace-commons'
-import { RelativeFilePath } from '@fern-api/fs-utils'
+import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/api-workspace-commons"
+import { RelativeFilePath } from "@fern-api/fs-utils"
 
-import { Rule, RuleViolation } from '../../Rule'
-import { visitDefinitionFileYamlAst } from '../../ast'
+import { Rule, RuleViolation } from "../../Rule"
+import { visitDefinitionFileYamlAst } from "../../ast"
 
 type RelativeDirectoryPath = string
 type DeclaredName = string
@@ -12,7 +12,7 @@ type DeclaredName = string
 type Declarations = Record<RelativeDirectoryPath, Record<DeclaredName, RelativeFilePath[]>>
 
 export const NoDuplicateDeclarationsRule: Rule = {
-    name: 'no-duplicate-declarations',
+    name: "no-duplicate-declarations",
     create: ({ workspace, logger }) => {
         const declarations = getDeclarations(workspace)
 
@@ -45,9 +45,9 @@ export const NoDuplicateDeclarationsRule: Rule = {
             const indexOfThisDeclarations = declarationsForName.indexOf(relativeFilepath)
             const duplicates = declarationsForName.filter((_declaration, index) => index !== indexOfThisDeclarations)
             return duplicates.map((duplicate) => ({
-                severity: 'fatal',
+                severity: "fatal",
                 message: `${declaredName} is already declared in ${
-                    duplicate === relativeFilepath ? 'this file' : duplicate
+                    duplicate === relativeFilepath ? "this file" : duplicate
                 }`
             }))
         }
@@ -59,7 +59,7 @@ export const NoDuplicateDeclarationsRule: Rule = {
                 errorDeclaration: ({ errorName }, { relativeFilepath }) =>
                     getRuleViolations({ declaredName: errorName, relativeFilepath }),
                 httpEndpoint: ({ endpoint }, { relativeFilepath }) => {
-                    if (typeof endpoint.request !== 'string' && endpoint.request?.name != null) {
+                    if (typeof endpoint.request !== "string" && endpoint.request?.name != null) {
                         return getRuleViolations({ declaredName: endpoint.request.name, relativeFilepath })
                     } else {
                         return []
@@ -89,7 +89,7 @@ function getDeclarations(workspace: FernWorkspace): Declarations {
                 addDeclaration(errorName)
             },
             httpEndpoint: ({ endpoint }) => {
-                if (typeof endpoint.request !== 'string' && endpoint.request?.name != null) {
+                if (typeof endpoint.request !== "string" && endpoint.request?.name != null) {
                     addDeclaration(endpoint.request.name)
                 }
             }

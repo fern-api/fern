@@ -1,20 +1,20 @@
-import { OpenAPI } from 'openapi-types'
+import { OpenAPI } from "openapi-types"
 
-import { BaseOpenAPIWorkspace, BaseOpenAPIWorkspaceSync } from '@fern-api/api-workspace-commons'
-import { generatorsYml } from '@fern-api/configuration'
-import { OpenApiIntermediateRepresentation } from '@fern-api/openapi-ir'
-import { parse } from '@fern-api/openapi-ir-parser'
-import { AbsoluteFilePath } from '@fern-api/path-utils'
-import { TaskContext } from '@fern-api/task-context'
+import { BaseOpenAPIWorkspace, BaseOpenAPIWorkspaceSync } from "@fern-api/api-workspace-commons"
+import { generatorsYml } from "@fern-api/configuration"
+import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir"
+import { parse } from "@fern-api/openapi-ir-parser"
+import { AbsoluteFilePath } from "@fern-api/path-utils"
+import { TaskContext } from "@fern-api/task-context"
 
-import { InMemoryOpenAPILoader } from './InMemoryOpenAPILoader'
+import { InMemoryOpenAPILoader } from "./InMemoryOpenAPILoader"
 
-const IN_MEMORY_ABSOLUTE_FILEPATH = AbsoluteFilePath.of('/<memory>')
+const IN_MEMORY_ABSOLUTE_FILEPATH = AbsoluteFilePath.of("/<memory>")
 
 const DEFAULT_WORKSPACE_ARGS = {
     absoluteFilePath: IN_MEMORY_ABSOLUTE_FILEPATH,
-    cliVersion: '<unknown>',
-    workspaceName: 'anonymous'
+    cliVersion: "<unknown>",
+    workspaceName: "anonymous"
 }
 
 export declare namespace OpenAPIWorkspace {
@@ -36,7 +36,7 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
     private spec: OpenAPIWorkspace.Spec
     private loader: InMemoryOpenAPILoader
 
-    public type = 'openapi'
+    public type = "openapi"
 
     constructor({ spec, generatorsConfiguration }: OpenAPIWorkspace.Args) {
         super({

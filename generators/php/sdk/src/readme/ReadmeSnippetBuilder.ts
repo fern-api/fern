@@ -1,11 +1,11 @@
-import { AbstractReadmeSnippetBuilder } from '@fern-api/base-generator'
-import { php } from '@fern-api/php-codegen'
+import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator"
+import { php } from "@fern-api/php-codegen"
 
-import { FernGeneratorCli } from '@fern-fern/generator-cli-sdk'
-import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
-import { EndpointId, FeatureId, FernFilepath, HttpEndpoint } from '@fern-fern/ir-sdk/api'
+import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk"
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
+import { EndpointId, FeatureId, FernFilepath, HttpEndpoint } from "@fern-fern/ir-sdk/api"
 
-import { SdkGeneratorContext } from '../SdkGeneratorContext'
+import { SdkGeneratorContext } from "../SdkGeneratorContext"
 
 interface EndpointWithFilepath {
     endpoint: HttpEndpoint
@@ -13,8 +13,8 @@ interface EndpointWithFilepath {
 }
 
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
-    private static EXCEPTION_HANDLING_FEATURE_ID: FernGeneratorCli.FeatureId = 'EXCEPTION_HANDLING'
-    private static PAGINATION_FEATURE_ID: FernGeneratorCli.FeatureId = 'PAGINATION'
+    private static EXCEPTION_HANDLING_FEATURE_ID: FernGeneratorCli.FeatureId = "EXCEPTION_HANDLING"
+    private static PAGINATION_FEATURE_ID: FernGeneratorCli.FeatureId = "PAGINATION"
 
     private readonly context: SdkGeneratorContext
     private readonly endpoints: Record<EndpointId, EndpointWithFilepath> = {}
@@ -185,18 +185,18 @@ ${this.context.getClientVariableName()} = new ${this.context.getRootClientClassN
 
             // Write variable assignment with the client instantiation
             writer.write(
-                '$client = ' +
+                "$client = " +
                     clientInstantiation.toString({
                         namespace: this.context.getRootNamespace(),
                         rootNamespace: this.context.getRootNamespace(),
                         customConfig: this.context.customConfig,
                         skipImports: true
                     }) +
-                    ';\n\n'
+                    ";\n\n"
             )
 
             // Create variable for pagination result
-            writer.write('$items = ')
+            writer.write("$items = ")
 
             // Method invocation using the paginationEndpoint
             const methodName = this.context.getEndpointMethodName(paginationEndpoint.endpoint)
@@ -221,17 +221,17 @@ ${this.context.getClientVariableName()} = new ${this.context.getRootClientClassN
             })
 
             listMethodCall.write(writer)
-            writer.write(';\n\n')
+            writer.write(";\n\n")
 
             // Foreach loop
-            writer.write('foreach ($items as $item) {\n')
+            writer.write("foreach ($items as $item) {\n")
             writer.indent()
 
             // Echo statement with sprintf
-            writer.write('var_dump($item);\n')
+            writer.write("var_dump($item);\n")
 
             writer.dedent()
-            writer.write('}')
+            writer.write("}")
         })
 
         const codeString = codeBlock.toString({
@@ -307,7 +307,7 @@ foreach ($items->getPages() as $page) {
         const snippets: Record<EndpointId, string> = {}
         for (const endpointSnippet of Object.values(endpointSnippets)) {
             if (endpointSnippet.id.identifierOverride == null) {
-                throw new Error('Internal error; snippets must define the endpoint id to generate README.md')
+                throw new Error("Internal error; snippets must define the endpoint id to generate README.md")
             }
             snippets[endpointSnippet.id.identifierOverride] = this.getEndpointSnippetString(endpointSnippet)
         }
@@ -343,7 +343,7 @@ foreach ($items->getPages() as $page) {
 
     private getEndpointSnippetString(endpoint: FernGeneratorExec.Endpoint): string {
         // Note: this is a shim since php snippets are not supported yet in FernGeneratorExec
-        if (endpoint.snippet.type !== 'java') {
+        if (endpoint.snippet.type !== "java") {
             throw new Error(`Internal error; expected csharp snippet but got: ${endpoint.snippet.type}`)
         }
         return endpoint.snippet.syncClient
@@ -356,6 +356,6 @@ foreach ($items->getPages() as $page) {
     }
 
     private writeCode(s: string): string {
-        return s.trim() + '\n'
+        return s.trim() + "\n"
     }
 }

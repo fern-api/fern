@@ -1,16 +1,16 @@
-import { AbstractGeneratorCli } from '@fern-typescript/abstract-generator-cli'
-import { NpmPackage, PersistedTypescriptProject, fixImportsForEsm, writeTemplateFiles } from '@fern-typescript/commons'
-import { GeneratorContext } from '@fern-typescript/contexts'
-import { SdkGenerator } from '@fern-typescript/sdk-generator'
+import { AbstractGeneratorCli } from "@fern-typescript/abstract-generator-cli"
+import { NpmPackage, PersistedTypescriptProject, fixImportsForEsm, writeTemplateFiles } from "@fern-typescript/commons"
+import { GeneratorContext } from "@fern-typescript/contexts"
+import { SdkGenerator } from "@fern-typescript/sdk-generator"
 
-import { FernGeneratorExec } from '@fern-api/base-generator'
-import { AbsoluteFilePath } from '@fern-api/fs-utils'
-import { getNamespaceExport } from '@fern-api/typescript-base'
+import { FernGeneratorExec } from "@fern-api/base-generator"
+import { AbsoluteFilePath } from "@fern-api/fs-utils"
+import { getNamespaceExport } from "@fern-api/typescript-base"
 
-import { IntermediateRepresentation } from '@fern-fern/ir-sdk/api'
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api"
 
-import { SdkCustomConfig } from './custom-config/SdkCustomConfig'
-import { SdkCustomConfigSchema } from './custom-config/schema/SdkCustomConfigSchema'
+import { SdkCustomConfig } from "./custom-config/SdkCustomConfig"
+import { SdkCustomConfigSchema } from "./custom-config/schema/SdkCustomConfigSchema"
 
 export declare namespace SdkGeneratorCli {
     export interface Init {
@@ -67,10 +67,10 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             noScripts: parsed?.noScripts ?? false,
             useBigInt: parsed?.useBigInt ?? false,
             useLegacyExports: parsed?.useLegacyExports ?? false,
-            streamType: parsed?.streamType ?? 'web',
-            fileResponseType: parsed?.fileResponseType ?? 'binary-response',
-            formDataSupport: parsed?.formDataSupport ?? 'Node18',
-            fetchSupport: parsed?.fetchSupport ?? 'native',
+            streamType: parsed?.streamType ?? "web",
+            fileResponseType: parsed?.fileResponseType ?? "binary-response",
+            formDataSupport: parsed?.formDataSupport ?? "Node18",
+            fetchSupport: parsed?.fetchSupport ?? "native",
             packagePath: parsed?.packagePath,
             omitFernHeaders: parsed?.omitFernHeaders ?? false,
             useDefaultRequestParameterValues: parsed?.useDefaultRequestParameterValues ?? false
@@ -157,10 +157,10 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 enableInlineTypes: customConfig.enableInlineTypes ?? true,
                 useLegacyExports,
                 generateWireTests: customConfig.generateWireTests ?? false,
-                streamType: customConfig.streamType ?? 'web',
-                fileResponseType: customConfig.fileResponseType ?? 'binary-response',
-                formDataSupport: customConfig.formDataSupport ?? 'Node18',
-                fetchSupport: customConfig.fetchSupport ?? 'native',
+                streamType: customConfig.streamType ?? "web",
+                fileResponseType: customConfig.fileResponseType ?? "binary-response",
+                formDataSupport: customConfig.formDataSupport ?? "Node18",
+                fetchSupport: customConfig.fetchSupport ?? "native",
                 packagePath: customConfig.packagePath,
                 omitFernHeaders: customConfig.omitFernHeaders ?? false,
                 useDefaultRequestParameterValues: customConfig.useDefaultRequestParameterValues ?? false
@@ -218,12 +218,12 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         return customConfig.publishToJsr ?? false
     }
 
-    protected executionEnvironment(config: FernGeneratorExec.GeneratorConfig): 'local' | 'dev' | 'prod' {
-        return config.environment.type === 'local'
-            ? 'local'
-            : config.environment.coordinatorUrlV2.endsWith('dev2.buildwithfern.com')
-              ? 'dev'
-              : 'prod'
+    protected executionEnvironment(config: FernGeneratorExec.GeneratorConfig): "local" | "dev" | "prod" {
+        return config.environment.type === "local"
+            ? "local"
+            : config.environment.coordinatorUrlV2.endsWith("dev2.buildwithfern.com")
+              ? "dev"
+              : "prod"
     }
 
     private customConfigWithOverrides(customConfig: SdkCustomConfig): SdkCustomConfig {
@@ -237,13 +237,13 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         ir: IntermediateRepresentation
         config: FernGeneratorExec.GeneratorConfig
     }): boolean {
-        const hasGitHubOutputMode = config.output.mode.type === 'github'
+        const hasGitHubOutputMode = config.output.mode.type === "github"
         const publishConfig = ir.publishConfig
         switch (publishConfig?.type) {
-            case 'filesystem':
+            case "filesystem":
                 return publishConfig.generateFullProject || hasGitHubOutputMode
-            case 'github':
-            case 'direct':
+            case "github":
+            case "direct":
             default:
                 return hasGitHubOutputMode
         }

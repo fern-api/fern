@@ -1,9 +1,9 @@
-import { TaskContext } from '@fern-api/task-context'
+import { TaskContext } from "@fern-api/task-context"
 
-import { FernFiddle } from '@fern-fern/fiddle-sdk'
+import { FernFiddle } from "@fern-fern/fiddle-sdk"
 
-import { RemoteTaskHandler } from './RemoteTaskHandler'
-import { REMOTE_GENERATION_SERVICE } from './service'
+import { RemoteTaskHandler } from "./RemoteTaskHandler"
+import { REMOTE_GENERATION_SERVICE } from "./service"
 
 const MAX_UNSUCCESSFUL_ATTEMPTS = 3
 
@@ -25,7 +25,7 @@ export function pollJobAndReportStatus({
         if (response.ok) {
             return response.body[taskId]
         } else {
-            context.logger.debug('Failed to get job status.', JSON.stringify(response.error.content))
+            context.logger.debug("Failed to get job status.", JSON.stringify(response.error.content))
             return undefined
         }
     }

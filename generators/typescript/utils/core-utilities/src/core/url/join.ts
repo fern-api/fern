@@ -1,13 +1,13 @@
 export function join(base: string, ...segments: string[]): string {
     if (!base) {
-        return ''
+        return ""
     }
 
     if (segments.length === 0) {
         return base
     }
 
-    if (base.includes('://')) {
+    if (base.includes("://")) {
         let url: URL
         try {
             url = new URL(base)
@@ -17,7 +17,7 @@ export function join(base: string, ...segments: string[]): string {
         }
 
         const lastSegment = segments[segments.length - 1]
-        const shouldPreserveTrailingSlash = lastSegment && lastSegment.endsWith('/')
+        const shouldPreserveTrailingSlash = lastSegment && lastSegment.endsWith("/")
 
         for (const segment of segments) {
             const cleanSegment = trimSlashes(segment)
@@ -26,8 +26,8 @@ export function join(base: string, ...segments: string[]): string {
             }
         }
 
-        if (shouldPreserveTrailingSlash && !url.pathname.endsWith('/')) {
-            url.pathname += '/'
+        if (shouldPreserveTrailingSlash && !url.pathname.endsWith("/")) {
+            url.pathname += "/"
         }
 
         return url.toString()
@@ -44,7 +44,7 @@ function joinPath(base: string, ...segments: string[]): string {
     let result = base
 
     const lastSegment = segments[segments.length - 1]
-    const shouldPreserveTrailingSlash = lastSegment && lastSegment.endsWith('/')
+    const shouldPreserveTrailingSlash = lastSegment && lastSegment.endsWith("/")
 
     for (const segment of segments) {
         const cleanSegment = trimSlashes(segment)
@@ -53,18 +53,18 @@ function joinPath(base: string, ...segments: string[]): string {
         }
     }
 
-    if (shouldPreserveTrailingSlash && !result.endsWith('/')) {
-        result += '/'
+    if (shouldPreserveTrailingSlash && !result.endsWith("/")) {
+        result += "/"
     }
 
     return result
 }
 
 function joinPathSegments(left: string, right: string): string {
-    if (left.endsWith('/')) {
+    if (left.endsWith("/")) {
         return left + right
     }
-    return left + '/' + right
+    return left + "/" + right
 }
 
 function trimSlashes(str: string): string {
@@ -73,8 +73,8 @@ function trimSlashes(str: string): string {
     let start = 0
     let end = str.length
 
-    if (str.startsWith('/')) start = 1
-    if (str.endsWith('/')) end = str.length - 1
+    if (str.startsWith("/")) start = 1
+    if (str.endsWith("/")) end = str.length - 1
 
     return start === 0 && end === str.length ? str : str.slice(start, end)
 }

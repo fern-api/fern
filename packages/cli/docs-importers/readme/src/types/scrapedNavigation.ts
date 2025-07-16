@@ -1,29 +1,29 @@
 export type scrapedNavigationSection = {
-    type: 'group'
+    type: "group"
     group: string
     pages: scrapedNavigationEntry[]
 }
 export type scrapedNavigation = scrapedNavigationSection[]
 export type scrapedNavigationGroup = {
-    type: 'group'
+    type: "group"
     group: string
     pages: scrapedNavigationEntry[]
     version?: string
     icon?: string
     iconType?:
-        | 'brands'
-        | 'duotone'
-        | 'light'
-        | 'regular'
-        | 'sharp-light'
-        | 'sharp-regular'
-        | 'sharp-solid'
-        | 'sharp-thin'
-        | 'solid'
-        | 'thin'
+        | "brands"
+        | "duotone"
+        | "light"
+        | "regular"
+        | "sharp-light"
+        | "sharp-regular"
+        | "sharp-solid"
+        | "sharp-thin"
+        | "solid"
+        | "thin"
 }
 export type scrapedNavigationPage = {
-    type: 'page'
+    type: "page"
     page: string
     slug: string
 }

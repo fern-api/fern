@@ -1,12 +1,12 @@
-import { FernWorkspace } from '@fern-api/api-workspace-commons'
-import { RawSchemas, isInlineRequestBody } from '@fern-api/fern-definition-schema'
-import { RelativeFilePath } from '@fern-api/fs-utils'
+import { FernWorkspace } from "@fern-api/api-workspace-commons"
+import { RawSchemas, isInlineRequestBody } from "@fern-api/fern-definition-schema"
+import { RelativeFilePath } from "@fern-api/fs-utils"
 import {
     ObjectPropertyWithPath,
     TypeResolverImpl,
     getAllPropertiesForObject,
     getAllPropertiesForType
-} from '@fern-api/ir-generator'
+} from "@fern-api/ir-generator"
 
 export function getAllPropertiesForRequest({
     endpoint,
@@ -25,7 +25,7 @@ export function getAllPropertiesForRequest({
 
     const typeResolver = new TypeResolverImpl(workspace)
 
-    if (typeof endpoint.request === 'string') {
+    if (typeof endpoint.request === "string") {
         return getAllPropertiesForType({
             typeName: endpoint.request,
             filepathOfDeclaration: filepath,
@@ -40,9 +40,9 @@ export function getAllPropertiesForRequest({
         return undefined
     }
 
-    if (typeof endpoint.request.body === 'string' || !isInlineRequestBody(endpoint.request.body)) {
+    if (typeof endpoint.request.body === "string" || !isInlineRequestBody(endpoint.request.body)) {
         return getAllPropertiesForType({
-            typeName: typeof endpoint.request.body === 'string' ? endpoint.request.body : endpoint.request.body.type,
+            typeName: typeof endpoint.request.body === "string" ? endpoint.request.body : endpoint.request.body.type,
             filepathOfDeclaration: filepath,
             definitionFile,
             workspace,

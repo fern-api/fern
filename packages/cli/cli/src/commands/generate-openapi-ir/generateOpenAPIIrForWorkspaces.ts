@@ -1,13 +1,13 @@
-import path from 'path'
+import path from "path"
 
-import { generatorsYml } from '@fern-api/configuration-loader'
-import { AbsoluteFilePath, streamObjectToFile } from '@fern-api/fs-utils'
-import { LazyFernWorkspace, OSSWorkspace, OpenAPILoader, getAllOpenAPISpecs } from '@fern-api/lazy-fern-workspace'
-import { serialization } from '@fern-api/openapi-ir'
-import { parse } from '@fern-api/openapi-ir-parser'
-import { Project } from '@fern-api/project-loader'
+import { generatorsYml } from "@fern-api/configuration-loader"
+import { AbsoluteFilePath, streamObjectToFile } from "@fern-api/fs-utils"
+import { LazyFernWorkspace, OSSWorkspace, OpenAPILoader, getAllOpenAPISpecs } from "@fern-api/lazy-fern-workspace"
+import { serialization } from "@fern-api/openapi-ir"
+import { parse } from "@fern-api/openapi-ir-parser"
+import { Project } from "@fern-api/project-loader"
 
-import { CliContext } from '../../cli-context/CliContext'
+import { CliContext } from "../../cli-context/CliContext"
 
 export async function generateOpenAPIIrForWorkspaces({
     project,
@@ -24,7 +24,7 @@ export async function generateOpenAPIIrForWorkspaces({
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 if (workspace instanceof LazyFernWorkspace) {
-                    context.logger.info('Skipping, API is specified as a Fern Definition.')
+                    context.logger.info("Skipping, API is specified as a Fern Definition.")
                     return
                 } else if (!(workspace instanceof OSSWorkspace)) {
                     return

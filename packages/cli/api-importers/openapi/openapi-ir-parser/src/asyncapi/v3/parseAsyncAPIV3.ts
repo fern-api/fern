@@ -1,5 +1,5 @@
-import { camelCase, upperFirst } from 'lodash-es'
-import { OpenAPIV3 } from 'openapi-types'
+import { camelCase, upperFirst } from "lodash-es"
+import { OpenAPIV3 } from "openapi-types"
 
 import {
     HeaderWithExample,
@@ -11,23 +11,23 @@ import {
     WebsocketChannel,
     WebsocketMessageSchema,
     WebsocketSessionExample
-} from '@fern-api/openapi-ir'
+} from "@fern-api/openapi-ir"
 
-import { FernOpenAPIExtension } from '../..'
-import { getExtension } from '../../getExtension'
-import { convertAvailability } from '../../schema/convertAvailability'
-import { convertSchema } from '../../schema/convertSchemas'
-import { convertSchemaWithExampleToSchema } from '../../schema/utils/convertSchemaWithExampleToSchema'
-import { getSchemas } from '../../utils/getSchemas'
-import { ExampleWebsocketSessionFactory, SessionExampleBuilderInput } from '../ExampleWebsocketSessionFactory'
-import { FernAsyncAPIExtension } from '../fernExtensions'
-import { WebsocketSessionExampleExtension, getFernExamples } from '../getFernExamples'
-import { ParseAsyncAPIOptions } from '../options'
-import { AsyncAPIIntermediateRepresentation } from '../parse'
-import { ChannelId, ServerContext } from '../sharedTypes'
-import { constructServerUrl, transformToValidPath } from '../sharedUtils'
-import { AsyncAPIV3 } from '../v3'
-import { AsyncAPIV3ParserContext } from './AsyncAPIV3ParserContext'
+import { FernOpenAPIExtension } from "../.."
+import { getExtension } from "../../getExtension"
+import { convertAvailability } from "../../schema/convertAvailability"
+import { convertSchema } from "../../schema/convertSchemas"
+import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema"
+import { getSchemas } from "../../utils/getSchemas"
+import { ExampleWebsocketSessionFactory, SessionExampleBuilderInput } from "../ExampleWebsocketSessionFactory"
+import { FernAsyncAPIExtension } from "../fernExtensions"
+import { WebsocketSessionExampleExtension, getFernExamples } from "../getFernExamples"
+import { ParseAsyncAPIOptions } from "../options"
+import { AsyncAPIIntermediateRepresentation } from "../parse"
+import { ChannelId, ServerContext } from "../sharedTypes"
+import { constructServerUrl, transformToValidPath } from "../sharedUtils"
+import { AsyncAPIV3 } from "../v3"
+import { AsyncAPIV3ParserContext } from "./AsyncAPIV3ParserContext"
 
 interface ChannelEvents {
     subscribe: OpenAPIV3.ReferenceObject[]
@@ -35,9 +35,9 @@ interface ChannelEvents {
     __parsedMessages: WebsocketMessageSchema[]
 }
 
-const CHANNEL_REFERENCE_PREFIX = '#/channels/'
-const SERVER_REFERENCE_PREFIX = '#/servers/'
-const LOCATION_PREFIX = '$message.'
+const CHANNEL_REFERENCE_PREFIX = "#/channels/"
+const SERVER_REFERENCE_PREFIX = "#/servers/"
+const LOCATION_PREFIX = "$message."
 
 interface SeenMessage {
     channelId: string
@@ -152,9 +152,9 @@ export function parseAsyncAPIV3({
             channelEvents[channelPath] = { subscribe: [], publish: [], __parsedMessages: [] }
         }
 
-        if (operation.action === 'receive') {
+        if (operation.action === "receive") {
             channelEvents[channelPath].subscribe.push(...operation.messages)
-        } else if (operation.action === 'send') {
+        } else if (operation.action === "send") {
             channelEvents[channelPath].publish.push(...operation.messages)
         } else {
             throw new Error(`Operation ${operationId} has an invalid action: ${operation.action}`)
@@ -168,7 +168,7 @@ export function parseAsyncAPIV3({
             ...convertMessageReferencesToWebsocketSchemas({
                 messages: events.subscribe,
                 channelPath,
-                origin: 'server',
+                origin: "server",
                 messageSchemas: messageSchemas[channelPath] ?? {},
                 duplicatedMessageIds,
                 context
@@ -179,7 +179,7 @@ export function parseAsyncAPIV3({
             ...convertMessageReferencesToWebsocketSchemas({
                 messages: events.publish,
                 channelPath,
-                origin: 'client',
+                origin: "client",
                 messageSchemas: messageSchemas[channelPath] ?? {},
                 duplicatedMessageIds,
                 context
@@ -210,7 +210,7 @@ export function parseAsyncAPIV3({
                     resolvedParameter.location != null
                         ? convertChannelParameterLocation(resolvedParameter.location)
                         : {
-                              type: channel.address?.includes(`={${name}}`) ? ('query' as const) : ('path' as const),
+                              type: channel.address?.includes(`={${name}}`) ? ("query" as const) : ("path" as const),
                               parameterKey: name
                           }
                 const isOptional = getExtension<boolean>(
@@ -220,7 +220,7 @@ export function parseAsyncAPIV3({
                 const parameterName = upperFirst(camelCase(channelPath)) + upperFirst(camelCase(name))
                 const parameterSchemaObject = {
                     ...resolvedParameter,
-                    type: 'string' as OpenAPIV3.NonArraySchemaObjectType,
+                    type: "string" as OpenAPIV3.NonArraySchemaObjectType,
                     title: parameterName,
                     example: resolvedParameter.examples?.[0],
                     default: resolvedParameter.default,
@@ -240,7 +240,7 @@ export function parseAsyncAPIV3({
                         value: parameterSchema,
                         description: undefined,
                         availability: undefined,
-                        generatedName: '',
+                        generatedName: "",
                         title: parameterName,
                         namespace: undefined,
                         groupName: undefined,
@@ -258,14 +258,14 @@ export function parseAsyncAPIV3({
                     source
                 }
 
-                if (type === 'header') {
+                if (type === "header") {
                     headers.push({
                         ...parameterObject,
                         env: undefined
                     })
-                } else if (type === 'path') {
+                } else if (type === "path") {
                     pathParameters.push(parameterObject)
-                } else if (type === 'payload' || type === 'query') {
+                } else if (type === "payload" || type === "query") {
                     queryParameters.push(parameterObject)
                 }
             }
@@ -343,7 +343,7 @@ export function parseAsyncAPIV3({
                     Object.values(servers),
                 // TODO (Eden): This can be a LOT more complicated than this. See the link below for more details:
                 // https://www.asyncapi.com/docs/reference/specification/v3.0.0#channelObject
-                path: channel.address?.split('?')[0] ?? transformToValidPath(channelPath),
+                path: channel.address?.split("?")[0] ?? transformToValidPath(channelPath),
                 description: channel.description,
                 examples,
                 source
@@ -367,11 +367,11 @@ function getChannelPathFromOperation(operation: AsyncAPIV3.Operation): string {
 }
 
 function convertChannelParameterLocation(location: string): {
-    type: 'header' | 'path' | 'payload'
+    type: "header" | "path" | "payload"
     parameterKey: string
 } {
     try {
-        const [messageType, parameterKey] = location.split('#/')
+        const [messageType, parameterKey] = location.split("#/")
         if (messageType == null || parameterKey == null) {
             throw new Error(`Invalid location format: ${location}; unable to parse message type and parameter key`)
         }
@@ -379,14 +379,14 @@ function convertChannelParameterLocation(location: string): {
             throw new Error(`Invalid location format: ${location}; expected ${LOCATION_PREFIX} prefix`)
         }
         const type = messageType.substring(LOCATION_PREFIX.length)
-        if (type !== 'header' && type !== 'path' && type !== 'payload') {
+        if (type !== "header" && type !== "path" && type !== "payload") {
             throw new Error(`Invalid message type: ${type}. Must be one of: header, path, payload`)
         }
         return { type, parameterKey }
     } catch (error) {
         throw new Error(
             `Invalid location format: ${location}; see here for more details: ` +
-                'https://www.asyncapi.com/docs/reference/specification/v3.0.0#runtimeExpression'
+                "https://www.asyncapi.com/docs/reference/specification/v3.0.0#runtimeExpression"
         )
     }
 }
@@ -416,7 +416,7 @@ function convertMessageReferencesToWebsocketSchemas({
 }: {
     messages: OpenAPIV3.ReferenceObject[]
     channelPath: string
-    origin: 'server' | 'client'
+    origin: "server" | "client"
     messageSchemas: Record<SchemaId, SchemaWithExample>
     duplicatedMessageIds: Array<SchemaId>
     context: AsyncAPIV3ParserContext
@@ -454,8 +454,8 @@ function getExampleSchemas({
     examplePublishMessage: SessionExampleBuilderInput | undefined
     exampleSubscribeMessage: SessionExampleBuilderInput | undefined
 } {
-    const examplePublishMessageId = messages.find((message) => message.origin === 'client')?.name
-    const exampleSubscribeMessageId = messages.find((message) => message.origin === 'server')?.name
+    const examplePublishMessageId = messages.find((message) => message.origin === "client")?.name
+    const exampleSubscribeMessageId = messages.find((message) => message.origin === "server")?.name
     const examplePublishMessage = examplePublishMessageId != null ? messageSchemas[examplePublishMessageId] : undefined
     const exampleSubscribeMessage =
         exampleSubscribeMessageId != null ? messageSchemas[exampleSubscribeMessageId] : undefined

@@ -1,13 +1,13 @@
-import { AbstractWriter } from '@fern-api/browser-compatible-base-generator'
+import { AbstractWriter } from "@fern-api/browser-compatible-base-generator"
 
-import { Type } from './Type'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { Type } from "./Type"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export enum Variance {
     Invariant,
-    Covariant = 'out',
-    Contravariant = 'in'
+    Covariant = "out",
+    Contravariant = "in"
 }
 
 export declare namespace TypeParameter {
@@ -54,7 +54,7 @@ export class TypeParameter extends AstNode {
 
     public writeTypeDefinition(writer: Writer): void {
         if (this.unchecked) {
-            writer.write('unchecked ')
+            writer.write("unchecked ")
         }
 
         if (this.variance != Variance.Invariant) {
@@ -64,12 +64,12 @@ export class TypeParameter extends AstNode {
         writer.write(this.name)
 
         if (this.bound) {
-            writer.write(' < ')
+            writer.write(" < ")
             this.bound.writeTypeDefinition(writer)
         }
 
         if (this.defaultType) {
-            writer.write(' = ')
+            writer.write(" = ")
             this.defaultType.writeTypeDefinition(writer)
         }
     }

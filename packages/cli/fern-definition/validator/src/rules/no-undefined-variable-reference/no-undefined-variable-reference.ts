@@ -3,13 +3,13 @@ import {
     VariableResolverImpl,
     constructFernFileContext,
     constructRootApiFileContext
-} from '@fern-api/ir-generator'
+} from "@fern-api/ir-generator"
 
-import { Rule, RuleViolation } from '../../Rule'
-import { CASINGS_GENERATOR } from '../../utils/casingsGenerator'
+import { Rule, RuleViolation } from "../../Rule"
+import { CASINGS_GENERATOR } from "../../utils/casingsGenerator"
 
 export const NoUndefinedVariableReferenceRule: Rule = {
-    name: 'no-undefined-variable-reference',
+    name: "no-undefined-variable-reference",
     create: ({ workspace }) => {
         const variableResolver = new VariableResolverImpl()
 
@@ -17,7 +17,7 @@ export const NoUndefinedVariableReferenceRule: Rule = {
             if (!variableReference.startsWith(VariableResolverImpl.VARIABLE_PREFIX)) {
                 return [
                     {
-                        severity: 'fatal',
+                        severity: "fatal",
                         message: `Variable reference must start with ${VariableResolverImpl.VARIABLE_PREFIX}`
                     }
                 ]
@@ -29,7 +29,7 @@ export const NoUndefinedVariableReferenceRule: Rule = {
 
             return [
                 {
-                    severity: 'fatal',
+                    severity: "fatal",
                     message: `Variable ${variableReference} is not defined.`
                 }
             ]

@@ -1,6 +1,6 @@
-import { GeneratorInvocation, generatorsYml } from '@fern-api/configuration'
-import { isGithubSelfhosted } from '@fern-api/configuration-loader'
-import { AbsoluteFilePath } from '@fern-api/fs-utils'
+import { GeneratorInvocation, generatorsYml } from "@fern-api/configuration"
+import { isGithubSelfhosted } from "@fern-api/configuration-loader"
+import { AbsoluteFilePath } from "@fern-api/fs-utils"
 
 import {
     GithubPublishInfo as FiddleGithubPublishInfo,
@@ -12,18 +12,18 @@ import {
     PublishOutputModeV2,
     PypiOutput,
     RubyGemsOutput
-} from '@fern-fern/fiddle-sdk/api'
-import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
-import { EnvironmentVariable } from '@fern-fern/generator-exec-sdk/api'
+} from "@fern-fern/fiddle-sdk/api"
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
+import { EnvironmentVariable } from "@fern-fern/generator-exec-sdk/api"
 
 import {
     DOCKER_CODEGEN_OUTPUT_DIRECTORY,
     DOCKER_PATH_TO_IR,
     DOCKER_PATH_TO_SNIPPET,
     DOCKER_PATH_TO_SNIPPET_TEMPLATES
-} from './constants'
+} from "./constants"
 
-const DEFAULT_OUTPUT_VERSION = '0.0.1'
+const DEFAULT_OUTPUT_VERSION = "0.0.1"
 
 export declare namespace getGeneratorConfig {
     export interface Args {
@@ -54,20 +54,20 @@ function getGithubPublishConfig(
                   FernGeneratorExec.GithubPublishInfo.npm({
                       registryUrl: value.registryUrl,
                       packageName: value.packageName,
-                      tokenEnvironmentVariable: EnvironmentVariable(value.token ?? '')
+                      tokenEnvironmentVariable: EnvironmentVariable(value.token ?? "")
                   }),
               maven: (value) =>
                   FernGeneratorExec.GithubPublishInfo.maven({
                       registryUrl: value.registryUrl,
                       coordinate: value.coordinate,
-                      usernameEnvironmentVariable: EnvironmentVariable(value.credentials?.username ?? ''),
-                      passwordEnvironmentVariable: EnvironmentVariable(value.credentials?.password ?? ''),
+                      usernameEnvironmentVariable: EnvironmentVariable(value.credentials?.username ?? ""),
+                      passwordEnvironmentVariable: EnvironmentVariable(value.credentials?.password ?? ""),
                       signature:
                           value.signature != null
                               ? {
-                                    keyIdEnvironmentVariable: EnvironmentVariable(value.signature.keyId ?? ''),
-                                    passwordEnvironmentVariable: EnvironmentVariable(value.signature.password ?? ''),
-                                    secretKeyEnvironmentVariable: EnvironmentVariable(value.signature.secretKey ?? '')
+                                    keyIdEnvironmentVariable: EnvironmentVariable(value.signature.keyId ?? ""),
+                                    passwordEnvironmentVariable: EnvironmentVariable(value.signature.password ?? ""),
+                                    secretKeyEnvironmentVariable: EnvironmentVariable(value.signature.secretKey ?? "")
                                 }
                               : undefined
                   }),
@@ -75,25 +75,25 @@ function getGithubPublishConfig(
                   FernGeneratorExec.GithubPublishInfo.pypi({
                       registryUrl: value.registryUrl,
                       packageName: value.packageName,
-                      usernameEnvironmentVariable: EnvironmentVariable(value.credentials?.username ?? ''),
-                      passwordEnvironmentVariable: EnvironmentVariable(value.credentials?.password ?? '')
+                      usernameEnvironmentVariable: EnvironmentVariable(value.credentials?.username ?? ""),
+                      passwordEnvironmentVariable: EnvironmentVariable(value.credentials?.password ?? "")
                   }),
               rubygems: (value) =>
                   FernGeneratorExec.GithubPublishInfo.rubygems({
                       registryUrl: value.registryUrl,
                       packageName: value.packageName,
-                      apiKeyEnvironmentVariable: EnvironmentVariable(value.apiKey ?? '')
+                      apiKeyEnvironmentVariable: EnvironmentVariable(value.apiKey ?? "")
                   }),
               postman: (value) =>
                   FernGeneratorExec.GithubPublishInfo.postman({
-                      apiKeyEnvironmentVariable: EnvironmentVariable(value.apiKey ?? ''),
-                      workspaceIdEnvironmentVariable: EnvironmentVariable(value.workspaceId ?? '')
+                      apiKeyEnvironmentVariable: EnvironmentVariable(value.apiKey ?? ""),
+                      workspaceIdEnvironmentVariable: EnvironmentVariable(value.workspaceId ?? "")
                   }),
               nuget: (value) =>
                   FernGeneratorExec.GithubPublishInfo.nuget({
                       registryUrl: value.registryUrl,
                       packageName: value.packageName,
-                      apiKeyEnvironmentVariable: EnvironmentVariable(value.apiKey ?? '')
+                      apiKeyEnvironmentVariable: EnvironmentVariable(value.apiKey ?? "")
                   }),
               _other: () => undefined
           })
@@ -163,7 +163,7 @@ export function getGeneratorConfig({
                 push: (value) => `https://github.com/${value.owner}/${value.repo}`,
                 pullRequest: (value) => `https://github.com/${value.owner}/${value.repo}`,
                 _other: () => {
-                    throw new Error('Encountered unknown github mode')
+                    throw new Error("Encountered unknown github mode")
                 }
             })
             const outputConfig: FernGeneratorExec.GeneratorOutputConfig = {
@@ -186,7 +186,7 @@ export function getGeneratorConfig({
             return outputConfig
         },
         _other: () => {
-            throw new Error('Output type did not match any of the types supported by Fern')
+            throw new Error("Output type did not match any of the types supported by Fern")
         }
     })
     return {
@@ -214,7 +214,7 @@ function newDummyPublishOutputConfig(
     generatorInvocation: GeneratorInvocation
 ): FernGeneratorExec.GeneratorOutputConfig {
     let outputMode: NpmOutput | MavenOutput | PypiOutput | RubyGemsOutput | PostmanOutput | NugetOutput | undefined
-    if ('registryOverrides' in multipleOutputMode) {
+    if ("registryOverrides" in multipleOutputMode) {
         outputMode = multipleOutputMode.registryOverrides.maven ?? multipleOutputMode.registryOverrides.npm
     } else if (outputMode != null) {
         outputMode = multipleOutputMode._visit<
@@ -230,7 +230,7 @@ function newDummyPublishOutputConfig(
         })
     }
 
-    let repoUrl = ''
+    let repoUrl = ""
     if (generatorInvocation.raw?.github != null) {
         if (isGithubSelfhosted(generatorInvocation.raw.github)) {
             repoUrl = generatorInvocation.raw.github.uri

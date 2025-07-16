@@ -1,13 +1,13 @@
-import validatePackageName from 'validate-npm-package-name'
+import validatePackageName from "validate-npm-package-name"
 
-import { FernWorkspace } from '@fern-api/api-workspace-commons'
-import { validateFernWorkspace } from '@fern-api/fern-definition-validator'
-import { validateGeneratorsWorkspace } from '@fern-api/generators-validator'
-import { OSSWorkspace } from '@fern-api/lazy-fern-workspace'
-import { validateOSSWorkspace } from '@fern-api/oss-validator'
-import { TaskContext } from '@fern-api/task-context'
+import { FernWorkspace } from "@fern-api/api-workspace-commons"
+import { validateFernWorkspace } from "@fern-api/fern-definition-validator"
+import { validateGeneratorsWorkspace } from "@fern-api/generators-validator"
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace"
+import { validateOSSWorkspace } from "@fern-api/oss-validator"
+import { TaskContext } from "@fern-api/task-context"
 
-import { logViolations } from './logViolations'
+import { logViolations } from "./logViolations"
 
 export async function validateAPIWorkspaceWithoutExiting({
     workspace,
@@ -53,7 +53,7 @@ export async function validateAPIWorkspaceAndLogIssues({
     ossWorkspace?: OSSWorkspace
 }): Promise<void> {
     if (!validatePackageName(workspace.definition.rootApiFile.contents.name).validForNewPackages) {
-        context.failAndThrow('API name is not valid.')
+        context.failAndThrow("API name is not valid.")
     }
 
     const { hasErrors } = await validateAPIWorkspaceWithoutExiting({

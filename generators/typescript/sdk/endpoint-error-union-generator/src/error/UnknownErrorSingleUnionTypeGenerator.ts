@@ -1,7 +1,7 @@
-import { getPropertyKey, getTextOfTsNode } from '@fern-typescript/commons'
-import { SdkContext } from '@fern-typescript/contexts'
-import { SingleUnionTypeGenerator } from '@fern-typescript/union-generator'
-import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from 'ts-morph'
+import { getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons"
+import { SdkContext } from "@fern-typescript/contexts"
+import { SingleUnionTypeGenerator } from "@fern-typescript/union-generator"
+import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph"
 
 export declare namespace UnknownErrorSingleUnionTypeGenerator {
     export interface Init {
@@ -10,8 +10,8 @@ export declare namespace UnknownErrorSingleUnionTypeGenerator {
 }
 
 export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGenerator<SdkContext> {
-    private static readonly CONTENT_PROPERTY_NAME = 'content'
-    private static readonly BUILDER_PARAMETER_NAME = 'fetcherError'
+    private static readonly CONTENT_PROPERTY_NAME = "content"
+    private static readonly BUILDER_PARAMETER_NAME = "fetcherError"
 
     private discriminant: string
 
@@ -84,7 +84,7 @@ export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGene
         return [
             ts.factory.createPropertyAssignment(
                 getPropertyKey(this.discriminant),
-                ts.factory.createIdentifier('undefined')
+                ts.factory.createIdentifier("undefined")
             ),
             ts.factory.createPropertyAssignment(
                 UnknownErrorSingleUnionTypeGenerator.CONTENT_PROPERTY_NAME,

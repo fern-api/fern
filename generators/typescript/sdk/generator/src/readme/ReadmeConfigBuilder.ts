@@ -1,21 +1,21 @@
-import { NpmPackage } from '@fern-typescript/commons'
-import { SdkContext } from '@fern-typescript/contexts'
+import { NpmPackage } from "@fern-typescript/commons"
+import { SdkContext } from "@fern-typescript/contexts"
 
-import { FernGeneratorCli } from '@fern-fern/generator-cli-sdk'
-import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
+import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk"
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
 
-import { ReadmeSnippetBuilder } from './ReadmeSnippetBuilder'
+import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder"
 
 export class ReadmeConfigBuilder {
     private endpointSnippets: FernGeneratorExec.Endpoint[]
-    private readonly fileResponseType: 'stream' | 'binary-response'
+    private readonly fileResponseType: "stream" | "binary-response"
 
     constructor({
         endpointSnippets,
         fileResponseType
     }: {
         endpointSnippets: FernGeneratorExec.Endpoint[]
-        fileResponseType: 'stream' | 'binary-response'
+        fileResponseType: "stream" | "binary-response"
     }) {
         this.endpointSnippets = endpointSnippets
         this.fileResponseType = fileResponseType
@@ -65,7 +65,7 @@ export class ReadmeConfigBuilder {
             apiReferenceLink: context.ir.readmeConfig?.apiReferenceLink,
             bannerLink: context.ir.readmeConfig?.bannerLink,
             introduction: context.ir.readmeConfig?.introduction,
-            referenceMarkdownPath: './reference.md',
+            referenceMarkdownPath: "./reference.md",
             features
         }
     }

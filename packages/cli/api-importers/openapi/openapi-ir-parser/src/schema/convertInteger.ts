@@ -1,6 +1,6 @@
-import { Availability, PrimitiveSchemaValueWithExample, SchemaWithExample, SdkGroupName } from '@fern-api/openapi-ir'
+import { Availability, PrimitiveSchemaValueWithExample, SchemaWithExample, SdkGroupName } from "@fern-api/openapi-ir"
 
-import { wrapPrimitive } from './convertSchemas'
+import { wrapPrimitive } from "./convertSchemas"
 
 export function convertInteger({
     nameOverride,
@@ -37,7 +37,7 @@ export function convertInteger({
     namespace: string | undefined
     groupName: SdkGroupName | undefined
 }): SchemaWithExample {
-    if (format === 'int64') {
+    if (format === "int64") {
         return wrapPrimitive({
             nameOverride,
             generatedName,
@@ -52,7 +52,7 @@ export function convertInteger({
             namespace,
             groupName
         })
-    } else if (format === 'uint32') {
+    } else if (format === "uint32") {
         return wrapPrimitive({
             nameOverride,
             generatedName,
@@ -67,7 +67,7 @@ export function convertInteger({
             namespace,
             groupName
         })
-    } else if (format === 'uint64') {
+    } else if (format === "uint64") {
         return wrapPrimitive({
             nameOverride,
             generatedName,

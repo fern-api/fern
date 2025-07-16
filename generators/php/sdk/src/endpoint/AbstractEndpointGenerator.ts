@@ -1,13 +1,13 @@
-import { assertNever } from '@fern-api/core-utils'
-import { php } from '@fern-api/php-codegen'
+import { assertNever } from "@fern-api/core-utils"
+import { php } from "@fern-api/php-codegen"
 
-import { HttpEndpoint, HttpService, PathParameter, SdkRequest, ServiceId } from '@fern-fern/ir-sdk/api'
+import { HttpEndpoint, HttpService, PathParameter, SdkRequest, ServiceId } from "@fern-fern/ir-sdk/api"
 
-import { SdkGeneratorContext } from '../SdkGeneratorContext'
-import { EndpointSignatureInfo } from './EndpointSignatureInfo'
-import { EndpointRequest } from './request/EndpointRequest'
-import { getEndpointRequest } from './utils/getEndpointRequest'
-import { getEndpointReturnType } from './utils/getEndpointReturnType'
+import { SdkGeneratorContext } from "../SdkGeneratorContext"
+import { EndpointSignatureInfo } from "./EndpointSignatureInfo"
+import { EndpointRequest } from "./request/EndpointRequest"
+import { getEndpointRequest } from "./utils/getEndpointRequest"
+import { getEndpointReturnType } from "./utils/getEndpointReturnType"
 
 export abstract class AbstractEndpointGenerator {
     protected readonly context: SdkGeneratorContext
@@ -44,7 +44,7 @@ export abstract class AbstractEndpointGenerator {
     }: {
         serviceId: ServiceId
         endpoint: HttpEndpoint
-    }): Pick<EndpointSignatureInfo, 'pathParameters' | 'pathParameterReferences'> {
+    }): Pick<EndpointSignatureInfo, "pathParameters" | "pathParameterReferences"> {
         const includePathParametersInSignature = this.includePathParametersInEndpointSignature({ endpoint })
         const pathParameters: php.Parameter[] = []
         const service = this.context.getHttpServiceOrThrow(serviceId)
@@ -82,9 +82,9 @@ export abstract class AbstractEndpointGenerator {
             name: request.getRequestParameterName(),
             initializer: request.shouldIncludeDefaultInitializer()
                 ? php.codeblock((writer) => {
-                      writer.write('new ')
+                      writer.write("new ")
                       writer.writeNode(request.getRequestParameterType())
-                      writer.write('()')
+                      writer.write("()")
                   })
                 : undefined
         })
@@ -96,10 +96,10 @@ export abstract class AbstractEndpointGenerator {
             return true
         }
         switch (shape.type) {
-            case 'wrapper': {
+            case "wrapper": {
                 return !this.context.includePathParametersInWrappedRequest({ endpoint, wrapper: shape })
             }
-            case 'justRequestBody': {
+            case "justRequestBody": {
                 return true
             }
             default: {

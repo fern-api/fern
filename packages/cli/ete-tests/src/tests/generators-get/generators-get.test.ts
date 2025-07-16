@@ -1,16 +1,16 @@
-import { readFile } from 'fs/promises'
-import tmp from 'tmp-promise'
+import { readFile } from "fs/promises"
+import tmp from "tmp-promise"
 
-import { runFernCli } from '../../utils/runFernCli'
-import { init } from '../init/init'
+import { runFernCli } from "../../utils/runFernCli"
+import { init } from "../init/init"
 
 // Ensure that the generators list command works and the format doesn't change, since fern-bot consumes this
-describe('fern generator get', () => {
-    it('fern generator get --version', async () => {
+describe("fern generator get", () => {
+    it("fern generator get --version", async () => {
         const pathOfDirectory = await init()
 
         const out = await runFernCli(
-            ['generator', 'get', '--generator', 'fernapi/fern-typescript-sdk', '--group', 'local', '--version'],
+            ["generator", "get", "--generator", "fernapi/fern-typescript-sdk", "--group", "local", "--version"],
             {
                 cwd: pathOfDirectory
             }
@@ -19,11 +19,11 @@ describe('fern generator get', () => {
         expect(out.stdout).toMatchSnapshot()
     }, 60_000)
 
-    it('fern generator get --language', async () => {
+    it("fern generator get --language", async () => {
         const pathOfDirectory = await init()
 
         const out = await runFernCli(
-            ['generator', 'get', '--generator', 'fernapi/fern-typescript-sdk', '--group', 'local', '--language'],
+            ["generator", "get", "--generator", "fernapi/fern-typescript-sdk", "--group", "local", "--language"],
             {
                 cwd: pathOfDirectory
             }
@@ -32,21 +32,21 @@ describe('fern generator get', () => {
         expect(out.stdout).toMatchSnapshot()
     }, 60_000)
 
-    it('fern generator get to file', async () => {
+    it("fern generator get to file", async () => {
         const pathOfDirectory = await init()
         const tmpFile = await tmp.file()
         await runFernCli(
             [
-                'generator',
-                'get',
-                '--generator',
-                'fernapi/fern-typescript-sdk',
-                '--group',
-                'local',
-                '--language',
-                '--version',
-                '--repository',
-                '-o',
+                "generator",
+                "get",
+                "--generator",
+                "fernapi/fern-typescript-sdk",
+                "--group",
+                "local",
+                "--language",
+                "--version",
+                "--repository",
+                "-o",
                 tmpFile.path
             ],
             {
@@ -54,7 +54,7 @@ describe('fern generator get', () => {
             }
         )
 
-        const out = await readFile(tmpFile.path, 'utf-8')
+        const out = await readFile(tmpFile.path, "utf-8")
         expect(out).toMatchSnapshot()
     }, 60_000)
 })

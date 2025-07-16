@@ -1,6 +1,6 @@
-import { Audiences as ConfigAudiences } from '@fern-api/configuration'
-import { assertNever, noop } from '@fern-api/core-utils'
-import { RawSchemas, isInlineRequestBody } from '@fern-api/fern-definition-schema'
+import { Audiences as ConfigAudiences } from "@fern-api/configuration"
+import { assertNever, noop } from "@fern-api/core-utils"
+import { RawSchemas, isInlineRequestBody } from "@fern-api/fern-definition-schema"
 import {
     ContainerType,
     DeclaredServiceName,
@@ -20,12 +20,12 @@ import {
     WebSocketMessageBody,
     Webhook,
     WebhookPayload
-} from '@fern-api/ir-sdk'
+} from "@fern-api/ir-sdk"
 
-import { IdGenerator } from '../utils/IdGenerator'
-import { isReferencedWebhookPayloadSchema } from '../utils/isReferencedWebhookPayloadSchema'
-import { FilteredIr, FilteredIrImpl } from './FilteredIr'
-import { getPropertiesByAudience } from './getPropertiesByAudience'
+import { IdGenerator } from "../utils/IdGenerator"
+import { isReferencedWebhookPayloadSchema } from "../utils/isReferencedWebhookPayloadSchema"
+import { FilteredIr, FilteredIrImpl } from "./FilteredIr"
+import { getPropertiesByAudience } from "./getPropertiesByAudience"
 import {
     AudienceId,
     ChannelNode,
@@ -44,7 +44,7 @@ import {
     TypePropertiesNode,
     WebhookId,
     WebhookNode
-} from './ids'
+} from "./ids"
 
 export class IrGraph {
     private types: Record<TypeId, TypeNode> = {}
@@ -167,8 +167,8 @@ export class IrGraph {
         for (const queryParameter of httpEndpoint.queryParameters) {
             populateReferencesFromTypeReference(queryParameter.valueType, referencedTypes, referencedSubpackages)
         }
-        if (rawEndpoint != null && rawEndpoint.request != null && typeof rawEndpoint.request !== 'string') {
-            const parametersByAudience = getPropertiesByAudience(rawEndpoint.request['query-parameters'] ?? {})
+        if (rawEndpoint != null && rawEndpoint.request != null && typeof rawEndpoint.request !== "string") {
+            const parametersByAudience = getPropertiesByAudience(rawEndpoint.request["query-parameters"] ?? {})
 
             this.queryParameters[endpointId] = {
                 endpointId,
@@ -186,8 +186,8 @@ export class IrGraph {
                     }
                     if (
                         rawEndpoint != null &&
-                        typeof rawEndpoint.request === 'object' &&
-                        typeof rawEndpoint.request.body === 'object' &&
+                        typeof rawEndpoint.request === "object" &&
+                        typeof rawEndpoint.request.body === "object" &&
                         isInlineRequestBody(rawEndpoint.request.body)
                     ) {
                         const propertiesByAudience = getPropertiesByAudience(rawEndpoint.request.body.properties ?? {})
@@ -208,7 +208,7 @@ export class IrGraph {
                                 populateReferencesFromTypeReference(valueType, referencedTypes, referencedSubpackages)
                             },
                             _other: () => {
-                                throw new Error('Unknown FileUploadRequestProperty: ' + property.type)
+                                throw new Error("Unknown FileUploadRequestProperty: " + property.type)
                             }
                         })
                     }
@@ -217,7 +217,7 @@ export class IrGraph {
                     return
                 },
                 _other: () => {
-                    throw new Error('Unknown HttpRequestBody: ' + httpEndpoint.requestBody?.type)
+                    throw new Error("Unknown HttpRequestBody: " + httpEndpoint.requestBody?.type)
                 }
             })
         }
@@ -239,7 +239,7 @@ export class IrGraph {
                             populateReferencesFromTypeReference(json.payload, referencedTypes, referencedSubpackages),
                         text: noop,
                         _other: () => {
-                            throw new Error('Unknown streamingResponse type: ' + streamingResponse.type)
+                            throw new Error("Unknown streamingResponse type: " + streamingResponse.type)
                         }
                     })
                 },
@@ -251,10 +251,10 @@ export class IrGraph {
                             populateReferencesFromTypeReference(json.payload, referencedTypes, referencedSubpackages),
                         text: noop,
                         _other: () => {
-                            throw new Error('Unknown streamingResponse type: ' + response.streamResponse.type)
+                            throw new Error("Unknown streamingResponse type: " + response.streamResponse.type)
                         }
                     })
-                    if (response.nonStreamResponse.type === 'json') {
+                    if (response.nonStreamResponse.type === "json") {
                         populateReferencesFromTypeReference(
                             response.nonStreamResponse.value.responseBodyType,
                             referencedTypes,
@@ -265,7 +265,7 @@ export class IrGraph {
                 text: noop,
                 bytes: noop,
                 _other: () => {
-                    throw new Error('Unknown HttpResponse: ' + httpEndpoint.response?.body?.type)
+                    throw new Error("Unknown HttpResponse: " + httpEndpoint.response?.body?.type)
                 }
             })
         }
@@ -341,7 +341,7 @@ export class IrGraph {
                     }
                     if (
                         rawWebhook?.payload != null &&
-                        typeof rawWebhook.payload === 'object' &&
+                        typeof rawWebhook.payload === "object" &&
                         !isReferencedWebhookPayloadSchema(rawWebhook.payload)
                     ) {
                         const propertiesByAudience = getPropertiesByAudience(rawWebhook.payload.properties ?? {})
@@ -355,7 +355,7 @@ export class IrGraph {
                     populateReferencesFromTypeReference(payloadType, referencedTypes, referencedSubpackages)
                 },
                 _other: () => {
-                    throw new Error('Unknown WebhookPayload: ' + webhook.payload?.type)
+                    throw new Error("Unknown WebhookPayload: " + webhook.payload?.type)
                 }
             })
         }
@@ -468,7 +468,7 @@ export class IrGraph {
         const queryParameters: Record<EndpointId, Set<string> | undefined> = {}
         const webhookPayloadProperties: Record<WebhookId, Set<string> | undefined> = {}
 
-        if (this.audiences.type === 'filtered') {
+        if (this.audiences.type === "filtered") {
             for (const [typeId, typePropertiesNode] of Object.entries(this.properties)) {
                 if (!typeIds.has(typeId)) {
                     continue
@@ -575,7 +575,7 @@ export class IrGraph {
             types.add(typeId)
             const typeNode = this.getTypeNode(typeId)
 
-            if (this.audiences.type === 'filtered') {
+            if (this.audiences.type === "filtered") {
                 for (const audienceId of this.audiences.audiences) {
                     const descendantsForAudience = typeNode.descendantsByAudience[audienceId]
                     if (descendantsForAudience != null) {
@@ -638,15 +638,15 @@ export class IrGraph {
     }
 
     public hasNoAudiences(): boolean {
-        return this.audiences.type === 'none'
+        return this.audiences.type === "none"
     }
 
     private hasAudience(audiences: AudienceId[]): boolean {
         const configuredAudiences = this.audiences
         switch (configuredAudiences.type) {
-            case 'none':
+            case "none":
                 return true
-            case 'filtered':
+            case "filtered":
                 return audiences.some((audienceId) => configuredAudiences.audiences.has(audienceId))
             default:
                 assertNever(configuredAudiences)
@@ -667,20 +667,20 @@ export class IrGraph {
 type Audiences = NoAudience | FilteredAudiences
 
 interface NoAudience {
-    type: 'none'
+    type: "none"
 }
 
 interface FilteredAudiences {
-    type: 'filtered'
+    type: "filtered"
     audiences: Set<string>
 }
 
 function audiencesFromConfig(configAudiences: ConfigAudiences): Audiences {
     switch (configAudiences.type) {
-        case 'all':
-            return { type: 'none' }
-        case 'select':
-            return { type: 'filtered', audiences: new Set(configAudiences.audiences) }
+        case "all":
+            return { type: "none" }
+        case "select":
+            return { type: "filtered", audiences: new Set(configAudiences.audiences) }
         default:
             assertNever(configAudiences)
     }

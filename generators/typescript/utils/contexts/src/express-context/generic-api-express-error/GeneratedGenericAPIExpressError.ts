@@ -1,7 +1,7 @@
-import { MethodDeclarationStructure, OptionalKind, ts } from 'ts-morph'
+import { MethodDeclarationStructure, OptionalKind, ts } from "ts-morph"
 
-import { GeneratedFile } from '../../commons/GeneratedFile'
-import { ExpressContext } from '../ExpressContext'
+import { GeneratedFile } from "../../commons/GeneratedFile"
+import { ExpressContext } from "../ExpressContext"
 
 export interface GeneratedGenericAPIExpressError extends GeneratedFile<ExpressContext> {
     implementSend: (

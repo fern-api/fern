@@ -1,7 +1,7 @@
-import chalk from 'chalk'
+import chalk from "chalk"
 
-import { LogLevel, Logger } from '@fern-api/logger'
-import { FernCliError } from '@fern-api/task-context'
+import { LogLevel, Logger } from "@fern-api/logger"
+import { FernCliError } from "@fern-api/task-context"
 
 export function logErrorMessage({
     message,
@@ -39,7 +39,7 @@ export function logErrorMessage({
 }
 
 function convertErrorToString(error: unknown): string | undefined {
-    if (typeof error === 'string') {
+    if (typeof error === "string") {
         return error
     }
     if (error instanceof Error) {

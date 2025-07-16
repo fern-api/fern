@@ -1,6 +1,6 @@
-import { ServerOptions } from '@modelcontextprotocol/sdk/server/index.js'
-import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
-import { Implementation } from '@modelcontextprotocol/sdk/types.js'
+import { ServerOptions } from "@modelcontextprotocol/sdk/server/index.js"
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js"
+import { Implementation } from "@modelcontextprotocol/sdk/types.js"
 
 // Customize the name and version of the MCP implementation.
 export const implementation: Partial<Implementation> = {}

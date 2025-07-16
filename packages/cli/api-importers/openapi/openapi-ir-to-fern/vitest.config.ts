@@ -1,1 +1,1 @@
-export { default } from '../../../../../shared/vitest.config'
+export { default } from "../../../../../shared/vitest.config"

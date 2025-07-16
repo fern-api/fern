@@ -1,14 +1,14 @@
-import stripAnsi from 'strip-ansi'
+import stripAnsi from "strip-ansi"
 
-import { generatorsYml, loadGeneratorsConfiguration } from '@fern-api/configuration-loader'
-import { AbsoluteFilePath } from '@fern-api/fs-utils'
-import { LazyFernWorkspace } from '@fern-api/lazy-fern-workspace'
-import { CONSOLE_LOGGER } from '@fern-api/logger'
-import { createMockTaskContext } from '@fern-api/task-context'
+import { generatorsYml, loadGeneratorsConfiguration } from "@fern-api/configuration-loader"
+import { AbsoluteFilePath } from "@fern-api/fs-utils"
+import { LazyFernWorkspace } from "@fern-api/lazy-fern-workspace"
+import { CONSOLE_LOGGER } from "@fern-api/logger"
+import { createMockTaskContext } from "@fern-api/task-context"
 
-import { Rule } from '../Rule'
-import { ValidationViolation } from '../ValidationViolation'
-import { runRulesOnWorkspace } from '../validateFernWorkspace'
+import { Rule } from "../Rule"
+import { ValidationViolation } from "../ValidationViolation"
+import { runRulesOnWorkspace } from "../validateFernWorkspace"
 
 export declare namespace getViolationsForRule {
     export interface Args {
@@ -32,7 +32,7 @@ export async function getViolationsForRule({
             context
         }),
         context,
-        cliVersion: cliVersion ?? '0.0.0',
+        cliVersion: cliVersion ?? "0.0.0",
         workspaceName: undefined
     })
     const fernWorkspace = await lazyWorkspace.toFernWorkspace({ context })

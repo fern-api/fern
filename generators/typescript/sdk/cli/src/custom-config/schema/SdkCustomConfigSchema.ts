@@ -1,4 +1,4 @@
-import { TypescriptCustomConfigSchema } from '@fern-api/typescript-ast'
+import { TypescriptCustomConfigSchema } from "@fern-api/typescript-ast"
 
 export const SdkCustomConfigSchema: typeof TypescriptCustomConfigSchema = TypescriptCustomConfigSchema
 

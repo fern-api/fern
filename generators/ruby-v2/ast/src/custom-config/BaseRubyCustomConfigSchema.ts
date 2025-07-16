@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from "zod"
 
 export const BaseRubyCustomConfigSchema = z.object({
     clientModuleName: z.optional(z.string())

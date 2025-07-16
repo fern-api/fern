@@ -1,4 +1,4 @@
-import { assertNever } from '@fern-api/core-utils'
+import { assertNever } from "@fern-api/core-utils"
 
 import {
     ContainerType,
@@ -9,12 +9,12 @@ import {
     PrimitiveTypeV1,
     TypeId,
     TypeReference
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { go } from '../'
-import { GoTypeReference, Type } from '../ast'
-import { BaseGoCustomConfigSchema } from '../custom-config/BaseGoCustomConfigSchema'
-import { AbstractGoGeneratorContext } from './AbstractGoGeneratorContext'
+import { go } from "../"
+import { GoTypeReference, Type } from "../ast"
+import { BaseGoCustomConfigSchema } from "../custom-config/BaseGoCustomConfigSchema"
+import { AbstractGoGeneratorContext } from "./AbstractGoGeneratorContext"
 
 export declare namespace GoTypeMapper {
     interface Args {
@@ -31,15 +31,15 @@ export class GoTypeMapper {
 
     public convert({ reference }: GoTypeMapper.Args): Type {
         switch (reference.type) {
-            case 'container':
+            case "container":
                 return this.convertContainer({
                     container: reference.container
                 })
-            case 'named':
+            case "named":
                 return this.convertNamed({ named: reference })
-            case 'primitive':
+            case "primitive":
                 return this.convertPrimitive(reference)
-            case 'unknown':
+            case "unknown":
                 return go.Type.any()
             default:
                 assertNever(reference)
@@ -55,20 +55,20 @@ export class GoTypeMapper {
 
     private convertContainer({ container }: { container: ContainerType }): Type {
         switch (container.type) {
-            case 'list':
+            case "list":
                 return Type.slice(this.convert({ reference: container.list }))
-            case 'map': {
+            case "map": {
                 const key = this.convert({ reference: container.keyType })
                 const value = this.convert({ reference: container.valueType })
                 return Type.map(key, value)
             }
-            case 'set':
+            case "set":
                 return Type.slice(this.convert({ reference: container.set }))
-            case 'optional':
+            case "optional":
                 return Type.optional(this.convert({ reference: container.optional }))
-            case 'nullable':
+            case "nullable":
                 return Type.optional(this.convert({ reference: container.nullable }))
-            case 'literal':
+            case "literal":
                 return this.convertLiteral({ literal: container.literal })
             default:
                 assertNever(container)
@@ -96,9 +96,9 @@ export class GoTypeMapper {
 
     private convertLiteral({ literal }: { literal: Literal }): Type {
         switch (literal.type) {
-            case 'boolean':
+            case "boolean":
                 return go.Type.bool()
-            case 'string':
+            case "string":
                 return go.Type.string()
             default:
                 assertNever(literal)
@@ -108,12 +108,12 @@ export class GoTypeMapper {
     private convertNamed({ named }: { named: DeclaredTypeName }): Type {
         const typeDeclaration = this.context.getTypeDeclarationOrThrow(named.typeId)
         switch (typeDeclaration.shape.type) {
-            case 'alias':
+            case "alias":
                 return go.Type.reference(this.convertToTypeReference(named))
-            case 'object':
-            case 'enum':
-            case 'union':
-            case 'undiscriminatedUnion':
+            case "object":
+            case "enum":
+            case "union":
+            case "undiscriminatedUnion":
                 return go.Type.pointer(go.Type.reference(this.convertToTypeReference(named)))
             default:
                 assertNever(typeDeclaration.shape)

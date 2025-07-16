@@ -1,15 +1,15 @@
-import { camelCase, snakeCase } from 'lodash-es'
+import { camelCase, snakeCase } from "lodash-es"
 
-import { AbstractDynamicSnippetsGeneratorContext, FernGeneratorExec } from '@fern-api/browser-compatible-base-generator'
-import { assertNever } from '@fern-api/core-utils'
-import { FernIr } from '@fern-api/dynamic-ir-sdk'
-import { python } from '@fern-api/python-ast'
-import { BasePythonCustomConfigSchema } from '@fern-api/python-browser-compatible-base'
+import { AbstractDynamicSnippetsGeneratorContext, FernGeneratorExec } from "@fern-api/browser-compatible-base-generator"
+import { assertNever } from "@fern-api/core-utils"
+import { FernIr } from "@fern-api/dynamic-ir-sdk"
+import { python } from "@fern-api/python-ast"
+import { BasePythonCustomConfigSchema } from "@fern-api/python-browser-compatible-base"
 
-import { DynamicTypeLiteralMapper } from './DynamicTypeLiteralMapper'
-import { FilePropertyMapper } from './FilePropertyMapper'
+import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper"
+import { FilePropertyMapper } from "./FilePropertyMapper"
 
-const ALLOWED_RESERVED_METHOD_NAMES = ['list', 'set']
+const ALLOWED_RESERVED_METHOD_NAMES = ["list", "set"]
 
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
     public ir: FernIr.dynamic.DynamicIntermediateRepresentation
@@ -53,7 +53,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     public getPropertyName(name: FernIr.Name): string {
         const snakeCase = name.snakeCase.safeName
-        if (snakeCase.startsWith('_')) {
+        if (snakeCase.startsWith("_")) {
             // These are public fields so they should not start with an underscore.
             //
             // The Fern CLI will automatically add the underscore in the beginning for
@@ -63,7 +63,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             // This isn't just nice to have, Pydantic V2 also disallows underscore prefixes
             // and Python also does not allow fields to start with a number, so we need a
             // new prefix.
-            return 'f_' + snakeCase.substring(snakeCase.lastIndexOf('_') + 1)
+            return "f_" + snakeCase.substring(snakeCase.lastIndexOf("_") + 1)
         }
         return snakeCase
     }
@@ -123,34 +123,34 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     public isPrimitive(typeReference: FernIr.dynamic.TypeReference): boolean {
         switch (typeReference.type) {
-            case 'primitive':
+            case "primitive":
                 return true
-            case 'optional':
-            case 'nullable':
+            case "optional":
+            case "nullable":
                 return this.isPrimitive(typeReference.value)
-            case 'named': {
+            case "named": {
                 const named = this.resolveNamedType({ typeId: typeReference.value })
                 if (named == null) {
                     return false
                 }
                 switch (named.type) {
-                    case 'alias':
+                    case "alias":
                         return this.isPrimitive(named.typeReference)
-                    case 'discriminatedUnion':
-                    case 'undiscriminatedUnion':
-                    case 'object':
-                    case 'enum':
+                    case "discriminatedUnion":
+                    case "undiscriminatedUnion":
+                    case "object":
+                    case "enum":
                         return false
                     default:
                         assertNever(named)
                 }
                 break
             }
-            case 'list':
-            case 'set':
-            case 'map':
-            case 'literal':
-            case 'unknown':
+            case "list":
+            case "set":
+            case "map":
+            case "literal":
+            case "unknown":
                 return false
             default:
                 assertNever(typeReference)
@@ -173,11 +173,11 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getCoreModulePath(): string[] {
-        return this.getRootModulePath().concat('core')
+        return this.getRootModulePath().concat("core")
     }
 
     public getEnvironmentModulePath(): string[] {
-        return this.getRootModulePath().concat('environment')
+        return this.getRootModulePath().concat("environment")
     }
 
     public shouldInlinePathParameters(): boolean {
@@ -186,7 +186,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     private cleanOrganizationName(): string {
-        return this.config.organization.replace(/[^a-zA-Z0-9]/g, '_')
+        return this.config.organization.replace(/[^a-zA-Z0-9]/g, "_")
     }
 
     private getApiName(): string {

@@ -1,6 +1,6 @@
-import { Type } from './Type'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { Type } from "./Type"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export declare namespace Set {
     interface Args {
@@ -20,18 +20,18 @@ export class Set extends AstNode {
     }
 
     public write(writer: Writer): void {
-        writer.write('new HashSet<')
+        writer.write("new HashSet<")
         this.itemType.write(writer)
-        writer.write('>() {')
+        writer.write(">() {")
         writer.newLine()
         writer.indent()
         this.entries.forEach((item, index) => {
             writer.writeNode(item)
             if (index < this.entries.length - 1) {
-                writer.write(', ')
+                writer.write(", ")
             }
         })
         writer.dedent()
-        writer.write('}')
+        writer.write("}")
     }
 }

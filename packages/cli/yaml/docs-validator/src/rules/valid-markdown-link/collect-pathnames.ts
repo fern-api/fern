@@ -1,10 +1,10 @@
-import type { Position } from 'unist'
+import type { Position } from "unist"
 
-import { AbsoluteFilePath } from '@fern-api/fs-utils'
+import { AbsoluteFilePath } from "@fern-api/fs-utils"
 
-import { RuleViolation } from '../../Rule'
-import { safeCollectLinksAndSources } from './collect-links'
-import { stripAnchorsAndSearchParams } from './url-utils'
+import { RuleViolation } from "../../Rule"
+import { safeCollectLinksAndSources } from "./collect-links"
+import { stripAnchorsAndSearchParams } from "./url-utils"
 
 // this should match any link that starts with a protocol (e.g. http://, https://, mailto:, etc.)
 const EXTERNAL_LINK_PATTERN = /^(?:[a-z+]+:)/gi
@@ -57,7 +57,7 @@ export function collectPathnamesToCheck(
 
     links.forEach((link) => {
         if (link.href.trimStart().match(EXTERNAL_LINK_PATTERN)) {
-            if (!link.href.trimStart().startsWith('http')) {
+            if (!link.href.trimStart().startsWith("http")) {
                 // we don't need to check if it exists if it's not an http link
                 return
             }
@@ -80,7 +80,7 @@ export function collectPathnamesToCheck(
                 })
             } catch (error) {
                 violations.push({
-                    severity: 'warning',
+                    severity: "warning",
                     message: `Invalid URL: ${link.href}`
                 })
             }
@@ -90,7 +90,7 @@ export function collectPathnamesToCheck(
         const pathname = stripAnchorsAndSearchParams(link.href)
 
         // empty "" is actually a valid path, so we don't need to check it
-        if (pathname.trim() === '') {
+        if (pathname.trim() === "") {
             return
         }
 
@@ -109,7 +109,7 @@ export function collectPathnamesToCheck(
                 new URL(source.src)
             } catch (error) {
                 violations.push({
-                    severity: 'warning' as const,
+                    severity: "warning" as const,
                     message: `Invalid URL: ${source.src}`
                 })
                 return

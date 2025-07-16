@@ -1,6 +1,6 @@
-import { NodePath } from '@fern-api/fern-definition-schema'
+import { NodePath } from "@fern-api/fern-definition-schema"
 
-import { DefinitionFileAstVisitor } from '../DefinitionFileAstVisitor'
+import { DefinitionFileAstVisitor } from "../DefinitionFileAstVisitor"
 
 export function visitImports({
     imports,

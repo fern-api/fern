@@ -1,16 +1,16 @@
-import { readFile } from 'fs/promises'
-import yaml from 'js-yaml'
-import path from 'path'
+import { readFile } from "fs/promises"
+import yaml from "js-yaml"
+import path from "path"
 
-import { AbstractGeneratorContext, FernGeneratorExec } from '@fern-api/browser-compatible-base-generator'
-import { Logger } from '@fern-api/logger'
+import { AbstractGeneratorContext, FernGeneratorExec } from "@fern-api/browser-compatible-base-generator"
+import { Logger } from "@fern-api/logger"
 
-import { FernGeneratorCli } from '@fern-fern/generator-cli-sdk'
+import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk"
 
-import { GeneratorAgentClient } from './GeneratorAgentClient'
-import { ReferenceConfigBuilder } from './reference'
+import { GeneratorAgentClient } from "./GeneratorAgentClient"
+import { ReferenceConfigBuilder } from "./reference"
 
-const DOCKER_FEATURES_CONFIG_PATH = '/assets/features.yml'
+const DOCKER_FEATURES_CONFIG_PATH = "/assets/features.yml"
 
 export declare namespace AbstractGeneratorAgent {
     interface ReadmeConfigArgs<GeneratorContext extends AbstractGeneratorContext> {
@@ -26,9 +26,9 @@ export declare namespace AbstractGeneratorAgent {
 }
 
 export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGeneratorContext> {
-    public README_FILENAME = 'README.md'
-    public SNIPPET_FILENAME = 'snippet.json'
-    public REFERENCE_FILENAME = 'reference.md'
+    public README_FILENAME = "README.md"
+    public SNIPPET_FILENAME = "snippet.json"
+    public REFERENCE_FILENAME = "reference.md"
 
     private logger: Logger
     private config: FernGeneratorExec.GeneratorConfig
@@ -106,16 +106,16 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
     ): FernGeneratorCli.GitHubConfig
 
     private async readFeatureConfig(): Promise<FernGeneratorCli.FeatureConfig> {
-        this.logger.debug('Reading feature configuration ...')
-        const rawContents = await readFile(this.getFeaturesConfigPath(), 'utf8')
+        this.logger.debug("Reading feature configuration ...")
+        const rawContents = await readFile(this.getFeaturesConfigPath(), "utf8")
         if (rawContents.length === 0) {
-            throw new Error('Internal error; failed to read feature configuration')
+            throw new Error("Internal error; failed to read feature configuration")
         }
         return yaml.load(rawContents) as FernGeneratorCli.FeatureConfig
     }
 
     private getRemote(): FernGeneratorCli.Remote | undefined {
-        const outputMode = this.config.output.mode.type === 'github' ? this.config.output.mode : undefined
+        const outputMode = this.config.output.mode.type === "github" ? this.config.output.mode : undefined
         if (outputMode?.repoUrl != null && outputMode?.installationToken != null) {
             return FernGeneratorCli.Remote.github({
                 repoUrl: outputMode.repoUrl,
@@ -126,8 +126,8 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
     }
 
     private getFeaturesConfigPath(): string {
-        if (process.env.NODE_ENV === 'test') {
-            return path.join(__dirname, '../../features.yml')
+        if (process.env.NODE_ENV === "test") {
+            return path.join(__dirname, "../../features.yml")
         }
         return DOCKER_FEATURES_CONFIG_PATH
     }

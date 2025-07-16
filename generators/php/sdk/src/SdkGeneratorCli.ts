@@ -1,23 +1,23 @@
-import { File, GeneratorNotificationService } from '@fern-api/base-generator'
-import { RelativeFilePath } from '@fern-api/fs-utils'
-import { AbstractPhpGeneratorCli } from '@fern-api/php-base'
-import { DynamicSnippetsGenerator } from '@fern-api/php-dynamic-snippets'
-import { generateModels, generateTraits } from '@fern-api/php-model'
+import { File, GeneratorNotificationService } from "@fern-api/base-generator"
+import { RelativeFilePath } from "@fern-api/fs-utils"
+import { AbstractPhpGeneratorCli } from "@fern-api/php-base"
+import { DynamicSnippetsGenerator } from "@fern-api/php-dynamic-snippets"
+import { generateModels, generateTraits } from "@fern-api/php-model"
 
-import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
-import { Endpoint } from '@fern-fern/generator-exec-sdk/api'
-import { HttpService, IntermediateRepresentation } from '@fern-fern/ir-sdk/api'
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
+import { Endpoint } from "@fern-fern/generator-exec-sdk/api"
+import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api"
 
-import { SdkCustomConfigSchema } from './SdkCustomConfig'
-import { SdkGeneratorContext } from './SdkGeneratorContext'
-import { WrappedEndpointRequestGenerator } from './endpoint/request/WrappedEndpointRequestGenerator'
-import { EnvironmentGenerator } from './environment/EnvironmentGenerator'
-import { BaseApiExceptionGenerator } from './error/BaseApiExceptionGenerator'
-import { BaseExceptionGenerator } from './error/BaseExceptionGenerator'
-import { RootClientGenerator } from './root-client/RootClientGenerator'
-import { SubPackageClientGenerator } from './subpackage-client/SubPackageClientGenerator'
-import { convertDynamicEndpointSnippetRequest } from './utils/convertEndpointSnippetRequest'
-import { convertIr } from './utils/convertIr'
+import { SdkCustomConfigSchema } from "./SdkCustomConfig"
+import { SdkGeneratorContext } from "./SdkGeneratorContext"
+import { WrappedEndpointRequestGenerator } from "./endpoint/request/WrappedEndpointRequestGenerator"
+import { EnvironmentGenerator } from "./environment/EnvironmentGenerator"
+import { BaseApiExceptionGenerator } from "./error/BaseApiExceptionGenerator"
+import { BaseExceptionGenerator } from "./error/BaseExceptionGenerator"
+import { RootClientGenerator } from "./root-client/RootClientGenerator"
+import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator"
+import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest"
+import { convertIr } from "./utils/convertIr"
 
 export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -43,7 +43,7 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
     }
 
     protected async publishPackage(context: SdkGeneratorContext): Promise<void> {
-        throw new Error('Method not implemented.')
+        throw new Error("Method not implemented.")
     }
 
     protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {
@@ -72,7 +72,7 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
                 })
             } catch (e) {
                 context.logger.warn(
-                    `Failed to generate README.md: ${e instanceof Error ? e.message : 'Unknown error'}. This is non-critical and generation will continue.`
+                    `Failed to generate README.md: ${e instanceof Error ? e.message : "Unknown error"}. This is non-critical and generation will continue.`
                 )
             }
         }
@@ -114,7 +114,7 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
 
     private generateRequests(context: SdkGeneratorContext, service: HttpService, serviceId: string) {
         for (const endpoint of service.endpoints) {
-            if (endpoint.sdkRequest != null && endpoint.sdkRequest.shape.type === 'wrapper') {
+            if (endpoint.sdkRequest != null && endpoint.sdkRequest.shape.type === "wrapper") {
                 if (context.shouldSkipWrappedRequest({ endpoint, wrapper: endpoint.sdkRequest.shape })) {
                     continue
                 }
@@ -151,11 +151,11 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
         endpointSnippets: FernGeneratorExec.Endpoint[]
     }): Promise<void> {
         if (endpointSnippets.length === 0) {
-            context.logger.debug('No snippets were produced; skipping README.md generation.')
+            context.logger.debug("No snippets were produced; skipping README.md generation.")
             return
         }
         const content = await context.generatorAgent.generateReadme({ context, endpointSnippets })
-        context.project.addRawFiles(new File(context.generatorAgent.README_FILENAME, RelativeFilePath.of('.'), content))
+        context.project.addRawFiles(new File(context.generatorAgent.README_FILENAME, RelativeFilePath.of("."), content))
     }
 
     private async generateSnippets({ context }: { context: SdkGeneratorContext }): Promise<Endpoint[]> {
@@ -163,7 +163,7 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
         const dynamicIr = context.ir.dynamic
 
         if (!dynamicIr) {
-            throw new Error('Cannot generate dynamic snippets without dynamic IR')
+            throw new Error("Cannot generate dynamic snippets without dynamic IR")
         }
 
         const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
@@ -181,8 +181,8 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
                 )
 
                 // TODO: We are shimming the PHP snippet into Java Generator Exec snippet as a short term hack
-                const syncClient = generatedSnippet.snippet + '\n'
-                const asyncClient = generatedSnippet.snippet + '\n'
+                const syncClient = generatedSnippet.snippet + "\n"
+                const asyncClient = generatedSnippet.snippet + "\n"
 
                 endpointSnippets.push({
                     exampleIdentifier: endpointExample.id,

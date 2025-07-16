@@ -1,13 +1,13 @@
-import { SdkContext } from '@fern-typescript/contexts'
-import { ErrorResolver } from '@fern-typescript/resolvers'
+import { SdkContext } from "@fern-typescript/contexts"
+import { ErrorResolver } from "@fern-typescript/resolvers"
 import {
     AbstractKnownSingleUnionType,
     NoPropertiesSingleUnionTypeGenerator,
     SinglePropertySingleUnionTypeGenerator,
     SingleUnionTypeGenerator
-} from '@fern-typescript/union-generator'
+} from "@fern-typescript/union-generator"
 
-import { ErrorDeclaration, ErrorDiscriminationStrategy, ResponseError } from '@fern-fern/ir-sdk/api'
+import { ErrorDeclaration, ErrorDiscriminationStrategy, ResponseError } from "@fern-fern/ir-sdk/api"
 
 export declare namespace ParsedSingleUnionTypeForError {
     export interface Init {
@@ -67,7 +67,7 @@ export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<
             property: () => this.errorDeclaration.discriminantValue.wireValue,
             statusCode: () => this.errorDeclaration.statusCode,
             _other: () => {
-                throw new Error('Unknown ErrorDiscriminationStrategy: ' + this.errorDiscriminationStrategy.type)
+                throw new Error("Unknown ErrorDiscriminationStrategy: " + this.errorDiscriminationStrategy.type)
             }
         })
     }
@@ -85,7 +85,7 @@ export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<
     }
 }
 
-const CONTENT_PROPERTY_FOR_STATUS_CODE_DISCRIMINATED_ERRORS = 'content'
+const CONTENT_PROPERTY_FOR_STATUS_CODE_DISCRIMINATED_ERRORS = "content"
 
 function getSingleUnionTypeGenerator({
     errorDiscriminationStrategy,
@@ -110,7 +110,7 @@ function getSingleUnionTypeGenerator({
             retainOriginalCasing ? contentProperty.name.originalName : contentProperty.name.camelCase.unsafeName,
         statusCode: () => CONTENT_PROPERTY_FOR_STATUS_CODE_DISCRIMINATED_ERRORS,
         _other: () => {
-            throw new Error('Unknown ErrorDiscriminationStrategy: ' + errorDiscriminationStrategy.type)
+            throw new Error("Unknown ErrorDiscriminationStrategy: " + errorDiscriminationStrategy.type)
         }
     })
 

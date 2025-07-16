@@ -1,14 +1,14 @@
-import { rm, writeFile } from 'fs/promises'
-import yaml from 'js-yaml'
+import { rm, writeFile } from "fs/promises"
+import yaml from "js-yaml"
 
-import { docsYml } from '@fern-api/configuration-loader'
-import { AbsoluteFilePath, moveFolder } from '@fern-api/fs-utils'
+import { docsYml } from "@fern-api/configuration-loader"
+import { AbsoluteFilePath, moveFolder } from "@fern-api/fs-utils"
 
-import { getAbsolutePathToDocsFolder, getAbsolutePathToDocsYaml, loadRawDocsConfiguration } from './docs-config'
-import { convertLegacyDocsConfig } from './docs-config/convertLegacyDocsConfig'
-import { getAbsolutePathToGeneratorsConfiguration, loadRawGeneratorsConfiguration } from './generators-configuration'
-import { convertLegacyGeneratorsConfiguration } from './generators-configuration/convertLegacyGeneratorsConfiguration'
-import { migrateDocsInstances } from './migrateDocsInstances'
+import { getAbsolutePathToDocsFolder, getAbsolutePathToDocsYaml, loadRawDocsConfiguration } from "./docs-config"
+import { convertLegacyDocsConfig } from "./docs-config/convertLegacyDocsConfig"
+import { getAbsolutePathToGeneratorsConfiguration, loadRawGeneratorsConfiguration } from "./generators-configuration"
+import { convertLegacyGeneratorsConfiguration } from "./generators-configuration/convertLegacyGeneratorsConfiguration"
+import { migrateDocsInstances } from "./migrateDocsInstances"
 
 /**
  * fern/  <------ path to fern directory
@@ -70,7 +70,7 @@ async function migrateAndWriteGeneratorsYml({
     const absolutePathToGeneratorsConfiguration = getAbsolutePathToGeneratorsConfiguration({ absolutePathToWorkspace })
     const convertedResponse = convertLegacyGeneratorsConfiguration({
         generatorsConfiguration,
-        pathModificationStrategy: 'MoveUp'
+        pathModificationStrategy: "MoveUp"
     })
     await writeFile(absolutePathToGeneratorsConfiguration, yaml.dump(convertedResponse.value))
     return convertedResponse.docsURLs

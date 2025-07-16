@@ -1,34 +1,34 @@
-import type { Element } from 'hast'
-import { CONTINUE, EXIT, SKIP, visit } from 'unist-util-visit'
+import type { Element } from "hast"
+import { CONTINUE, EXIT, SKIP, visit } from "unist-util-visit"
 
-import { getFirstChild } from '../extract/firstChild'
-import { getText } from '../extract/text'
-import { findTitle } from '../extract/title'
-import { scrapedNavigationEntry, scrapedNavigationPage, scrapedNavigationSection } from '../types/scrapedNavigation'
+import { getFirstChild } from "../extract/firstChild"
+import { getText } from "../extract/text"
+import { findTitle } from "../extract/title"
+import { scrapedNavigationEntry, scrapedNavigationPage, scrapedNavigationSection } from "../types/scrapedNavigation"
 
 export function parseSidebar(rootNode: Element): Array<scrapedNavigationSection> {
     const result: Array<scrapedNavigationSection> = []
 
-    visit(rootNode, 'element', function (node) {
+    visit(rootNode, "element", function (node) {
         if (
-            node.tagName === 'section' &&
+            node.tagName === "section" &&
             node.properties.className &&
             Array.isArray(node.properties.className) &&
-            node.properties.className.includes('rm-Sidebar-section')
+            node.properties.className.includes("rm-Sidebar-section")
         ) {
-            const heading = getFirstChild({ node, tagName: 'h2' })
-            const headingText = heading ? getText(heading) : ''
+            const heading = getFirstChild({ node, tagName: "h2" })
+            const headingText = heading ? getText(heading) : ""
             const items = parseNavItems(node)
 
             const flattenedItems = items.flatMap((item) => {
-                if (item.type === 'group') {
+                if (item.type === "group") {
                     return item.pages
                 }
                 return item
             })
 
             result.push({
-                type: 'group',
+                type: "group",
                 group: headingText,
                 pages: flattenedItems
             })
@@ -39,14 +39,14 @@ export function parseSidebar(rootNode: Element): Array<scrapedNavigationSection>
 
 export function parseNavItems(rootNode: Element): Array<scrapedNavigationEntry> {
     const result: Array<scrapedNavigationEntry> = []
-    const rootSectionTagName = 'section'
-    const innerSectionTagName = 'h2'
+    const rootSectionTagName = "section"
+    const innerSectionTagName = "h2"
 
-    visit(rootNode, 'element', function (node, index, parent) {
+    visit(rootNode, "element", function (node, index, parent) {
         if (node.tagName === rootSectionTagName) {
-            node.tagName = 'li'
+            node.tagName = "li"
         }
-        if (node.tagName !== 'li') {
+        if (node.tagName !== "li") {
             return CONTINUE
         }
 
@@ -54,11 +54,11 @@ export function parseNavItems(rootNode: Element): Array<scrapedNavigationEntry> 
         if (
             node.children[0] &&
             node.children[1] &&
-            node.children[0].type === 'element' &&
-            node.children[0].tagName === 'div' &&
-            node.children[1].type === 'element' &&
-            node.children[1].tagName === 'ul' &&
-            node.children[0].children.filter((child) => child.type === 'text').length ===
+            node.children[0].type === "element" &&
+            node.children[0].tagName === "div" &&
+            node.children[1].type === "element" &&
+            node.children[1].tagName === "ul" &&
+            node.children[0].children.filter((child) => child.type === "text").length ===
                 node.children[0].children.length
         ) {
             title = findTitle(node.children[0], { delete: false })
@@ -67,15 +67,15 @@ export function parseNavItems(rootNode: Element): Array<scrapedNavigationEntry> 
         if (
             node.children.length === 2 &&
             node.children[1] &&
-            node.children[1].type === 'element' &&
-            node.children[1].tagName === 'ul' &&
-            typeof index === 'number' &&
+            node.children[1].type === "element" &&
+            node.children[1].tagName === "ul" &&
+            typeof index === "number" &&
             parent
         ) {
             node.children = [
                 {
-                    type: 'element',
-                    tagName: 'div',
+                    type: "element",
+                    tagName: "div",
                     properties: {},
                     children: node.children
                 }
@@ -85,7 +85,7 @@ export function parseNavItems(rootNode: Element): Array<scrapedNavigationEntry> 
         const entry = parseListItem({
             node,
             sectionTagName: innerSectionTagName,
-            childListTagName: 'ul',
+            childListTagName: "ul",
             title
         })
 
@@ -101,8 +101,8 @@ export function parseNavItems(rootNode: Element): Array<scrapedNavigationEntry> 
 
 export function parseListItem({
     node,
-    sectionTagName = 'section',
-    childListTagName = 'ul',
+    sectionTagName = "section",
+    childListTagName = "ul",
     title
 }: {
     node: Element
@@ -110,7 +110,7 @@ export function parseListItem({
     childListTagName: string
     title?: string
 }): scrapedNavigationEntry | undefined {
-    const link = getFirstChild({ node, tagName: 'a' })
+    const link = getFirstChild({ node, tagName: "a" })
     if (!link) {
         return undefined
     }
@@ -118,16 +118,16 @@ export function parseListItem({
     let linkHref: string | undefined = undefined
     linkHref = link.properties.href as string | undefined
 
-    if (linkHref === undefined || linkHref === '#') {
+    if (linkHref === undefined || linkHref === "#") {
         return undefined
     }
 
     let isApiReferenceLink = false as boolean
-    visit(link, 'element', function (subNode) {
+    visit(link, "element", function (subNode) {
         if (
-            subNode.tagName === 'span' &&
+            subNode.tagName === "span" &&
             Array.isArray(subNode.properties.className) &&
-            subNode.properties.className.includes('rm-APIMethod')
+            subNode.properties.className.includes("rm-APIMethod")
         ) {
             isApiReferenceLink = true
             return EXIT
@@ -138,7 +138,7 @@ export function parseListItem({
         return undefined
     }
 
-    if (linkHref.startsWith('/')) {
+    if (linkHref.startsWith("/")) {
         linkHref = linkHref.substring(1)
     }
 
@@ -146,38 +146,38 @@ export function parseListItem({
     const childList = getFirstChild({ node, tagName: childListTagName })
     if (!childList) {
         return {
-            type: 'page',
-            page: getText(link) || getText(sectionHeader) || '',
+            type: "page",
+            page: getText(link) || getText(sectionHeader) || "",
             slug: linkHref
         }
     }
 
     let groupTitle = title
     if (!groupTitle) {
-        groupTitle = getText(link) || getText(sectionHeader) || ''
+        groupTitle = getText(link) || getText(sectionHeader) || ""
     }
 
     const childEntries = parseNavItems(childList)
     const newLink = linkHref
 
-    if (linkHref !== '#') {
+    if (linkHref !== "#") {
         const newPage: scrapedNavigationPage = {
-            type: 'page',
-            page: getText(link) || getText(sectionHeader) || '',
+            type: "page",
+            page: getText(link) || getText(sectionHeader) || "",
             slug: newLink
         }
 
         // Check if the link already exists in child entries
-        const existingPageIndex = childEntries.findIndex((child) => child.type === 'page' && child.slug === linkHref)
+        const existingPageIndex = childEntries.findIndex((child) => child.type === "page" && child.slug === linkHref)
 
         if (existingPageIndex !== -1) {
             // Replace the existing page with the new one
             childEntries[existingPageIndex] = newPage
-        } else if (!childEntries.some((child) => child.type === 'page' && child.slug === newLink)) {
+        } else if (!childEntries.some((child) => child.type === "page" && child.slug === newLink)) {
             // Add the new page if it doesn't exist
             childEntries.unshift(newPage)
         }
     }
 
-    return { type: 'group', group: groupTitle, pages: childEntries }
+    return { type: "group", group: groupTitle, pages: childEntries }
 }

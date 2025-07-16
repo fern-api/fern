@@ -1,4 +1,4 @@
-import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
 
 export abstract class AbstractGeneratorNotificationService {
     public abstract bufferUpdate(update: FernGeneratorExec.GeneratorUpdate): void

@@ -1,9 +1,9 @@
-import { BaseSchema } from '../../Schema'
-import { filterObject } from '../../utils/filterObject'
-import { getErrorMessageForIncorrectType } from '../../utils/getErrorMessageForIncorrectType'
-import { isPlainObject } from '../../utils/isPlainObject'
-import { getSchemaUtils } from '../schema-utils'
-import { ObjectLikeSchema, ObjectLikeUtils } from './types'
+import { BaseSchema } from "../../Schema"
+import { filterObject } from "../../utils/filterObject"
+import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType"
+import { isPlainObject } from "../../utils/isPlainObject"
+import { getSchemaUtils } from "../schema-utils"
+import { ObjectLikeSchema, ObjectLikeUtils } from "./types"
 
 export function getObjectLikeUtils<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): ObjectLikeUtils<Raw, Parsed> {
     return {
@@ -30,7 +30,7 @@ export function withParsedProperties<RawObjectShape, ParsedObjectShape, Properti
                 (processed, [key, value]) => {
                     return {
                         ...processed,
-                        [key]: typeof value === 'function' ? value(parsedObject.value) : value
+                        [key]: typeof value === "function" ? value(parsedObject.value) : value
                     }
                 },
                 {}
@@ -52,7 +52,7 @@ export function withParsedProperties<RawObjectShape, ParsedObjectShape, Properti
                     errors: [
                         {
                             path: opts?.breadcrumbsPrefix ?? [],
-                            message: getErrorMessageForIncorrectType(parsed, 'object')
+                            message: getErrorMessageForIncorrectType(parsed, "object")
                         }
                     ]
                 }

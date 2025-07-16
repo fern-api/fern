@@ -1,10 +1,10 @@
-import { ClassReference } from './ClassReference'
-import { Comment } from './Comment'
-import { Field } from './Field'
-import { Method } from './Method'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
-import { orderByAccess } from './utils/orderByAccess'
+import { ClassReference } from "./ClassReference"
+import { Comment } from "./Comment"
+import { Field } from "./Field"
+import { Method } from "./Method"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
+import { orderByAccess } from "./utils/orderByAccess"
 
 export declare namespace Trait {
     interface Args {
@@ -48,18 +48,18 @@ export class Trait extends AstNode {
         this.writeComment(writer)
         writer.write(`trait ${this.name} `)
         writer.newLine()
-        writer.writeLine('{')
+        writer.writeLine("{")
         writer.indent()
 
         if (this.traits.length > 0) {
-            writer.write('use ')
+            writer.write("use ")
             this.traits.forEach((trait, index) => {
                 if (index > 0) {
-                    writer.write(',')
+                    writer.write(",")
                 }
                 writer.writeNode(trait)
             })
-            writer.writeTextStatement('')
+            writer.writeTextStatement("")
             writer.newLine()
         }
 
@@ -70,7 +70,7 @@ export class Trait extends AstNode {
         this.writeMethods({ writer, methods: orderByAccess(this.methods) })
 
         writer.dedent()
-        writer.writeLine('}')
+        writer.writeLine("}")
         return
     }
 
@@ -78,7 +78,7 @@ export class Trait extends AstNode {
         const comment = new Comment({ docs: this.docs })
         for (const field of this.fields) {
             comment.addTag({
-                tagType: 'property',
+                tagType: "property",
                 type: field.type,
                 name: field.name
             })

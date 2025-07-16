@@ -1,9 +1,9 @@
-import { AbsoluteFilePath } from './AbsoluteFilePath'
-import { RelativeFilePath } from './RelativeFilePath'
+import { AbsoluteFilePath } from "./AbsoluteFilePath"
+import { RelativeFilePath } from "./RelativeFilePath"
 
 // For convenience, we re-export the convertToOsPath type for any caller
 // that requires fs-utils.
-export { convertToOsPath } from '@fern-api/path-utils'
+export { convertToOsPath } from "@fern-api/path-utils"
 
 export function convertToFernHostAbsoluteFilePath(path: AbsoluteFilePath): AbsoluteFilePath {
     // Don't use 'of' here, as it will use OS path, we want fern path
@@ -20,5 +20,5 @@ function convertToFernHostPath(path: string): string {
         unixPath = path.substring(2)
     }
 
-    return unixPath.replace(/\\/g, '/')
+    return unixPath.replace(/\\/g, "/")
 }

@@ -1,4 +1,4 @@
-import { Writer } from './Writer'
+import { Writer } from "./Writer"
 
 export declare namespace JavaFile {
     interface Args extends Writer.Args {}
@@ -48,6 +48,6 @@ ${this.buffer}`
             .filter((packageName) => packageName !== this.packageName) // Skip the target package
             .map((packageName) => `import ${packageName};`)
             .sort()
-            .join('\n')
+            .join("\n")
     }
 }

@@ -1,1 +1,1 @@
-export const sep = '/'
+export const sep = "/"

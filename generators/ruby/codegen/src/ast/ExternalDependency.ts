@@ -1,5 +1,5 @@
-import { ExtraDependenciesSchema } from '../BaseGeneratorConfig'
-import { AstNode } from './core/AstNode'
+import { ExtraDependenciesSchema } from "../BaseGeneratorConfig"
+import { AstNode } from "./core/AstNode"
 
 interface Version {
     version: string
@@ -27,13 +27,13 @@ export class ExternalDependency extends AstNode {
     public static convertDependencies(dependency: ExtraDependenciesSchema): ExternalDependency[] {
         const dependencies = []
         for (const [key, value] of Object.entries(dependency)) {
-            if (typeof value === 'string') {
+            if (typeof value === "string") {
                 dependencies.push(
                     new ExternalDependency({
                         packageName: key,
                         lowerBound: {
                             version: value,
-                            specifier: '~>'
+                            specifier: "~>"
                         }
                     })
                 )
@@ -45,14 +45,14 @@ export class ExternalDependency extends AstNode {
                             value.lowerBound != null
                                 ? {
                                       version: value.lowerBound.version,
-                                      specifier: value.lowerBound.specifier ?? '>='
+                                      specifier: value.lowerBound.specifier ?? ">="
                                   }
                                 : undefined,
                         upperBound:
                             value.upperBound != null
                                 ? {
                                       version: value.upperBound.version,
-                                      specifier: value.upperBound.specifier ?? '<='
+                                      specifier: value.upperBound.specifier ?? "<="
                                   }
                                 : undefined
                     })

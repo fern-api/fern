@@ -1,12 +1,12 @@
-import urlJoin from 'url-join'
+import urlJoin from "url-join"
 
-import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
-import { Endpoint } from '@fern-fern/generator-exec-sdk/api'
-import { HttpEndpoint } from '@fern-fern/ir-sdk/api'
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
+import { Endpoint } from "@fern-fern/generator-exec-sdk/api"
+import { HttpEndpoint } from "@fern-fern/ir-sdk/api"
 
-import { SdkGeneratorContext } from '../../SdkGeneratorContext'
-import { RootClientGenerator } from '../../root-client/RootClientGenerator'
-import { SingleEndpointSnippet } from './EndpointSnippetsGenerator'
+import { SdkGeneratorContext } from "../../SdkGeneratorContext"
+import { RootClientGenerator } from "../../root-client/RootClientGenerator"
+import { SingleEndpointSnippet } from "./EndpointSnippetsGenerator"
 
 export class SnippetJsonGenerator {
     private readonly context: SdkGeneratorContext
@@ -26,18 +26,18 @@ export class SnippetJsonGenerator {
                 customConfig: this.context.customConfig,
                 formatter: this.context.formatter
             })
-        const rootClientImportList = rootClientSnippet.imports?.split('\n') ?? []
+        const rootClientImportList = rootClientSnippet.imports?.split("\n") ?? []
 
         function getCsharpSnippet(endpointSnippet: SingleEndpointSnippet, isPager: boolean): string {
-            let snippet = ''
-            const snippetImportList = endpointSnippet.imports?.split('\n') ?? []
+            let snippet = ""
+            const snippetImportList = endpointSnippet.imports?.split("\n") ?? []
             const uniqueOrderedImports = Array.from(new Set([...rootClientImportList, ...snippetImportList]))
-                .filter((importString) => importString !== '')
+                .filter((importString) => importString !== "")
                 .sort()
-            snippet += `${uniqueOrderedImports.join('\n')}\n\nvar client = ${rootClientSnippet.body}`
+            snippet += `${uniqueOrderedImports.join("\n")}\n\nvar client = ${rootClientSnippet.body}`
 
             if (isPager) {
-                snippet += 'var pager = '
+                snippet += "var pager = "
             }
 
             snippet += endpointSnippet.endpointCall
@@ -93,16 +93,16 @@ export class SnippetJsonGenerator {
     // copied from ts generator:
     // TODO(dsinghvi): HACKHACK Move this to IR
     private getFullPathForEndpoint(endpoint: HttpEndpoint): string {
-        let url = ''
+        let url = ""
         if (endpoint.fullPath.head.length > 0) {
             url = urlJoin(url, endpoint.fullPath.head)
         }
         for (const part of endpoint.fullPath.parts) {
-            url = urlJoin(url, '{' + part.pathParameter + '}')
+            url = urlJoin(url, "{" + part.pathParameter + "}")
             if (part.tail.length > 0) {
                 url = urlJoin(url, part.tail)
             }
         }
-        return url.startsWith('/') ? url : `/${url}`
+        return url.startsWith("/") ? url : `/${url}`
     }
 }

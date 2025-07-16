@@ -1,5 +1,5 @@
-import { Type } from './Type'
-import { AstNode, Writer } from './core'
+import { Type } from "./Type"
+import { AstNode, Writer } from "./core"
 
 export declare namespace FunctionParameter {
     interface Args {
@@ -31,20 +31,20 @@ export class FunctionParameter extends AstNode {
 
     public write(writer: Writer): void {
         if (this.argumentLabel == null) {
-            writer.write('_ ')
+            writer.write("_ ")
         } else if (this.argumentLabel !== this.unsafeName) {
             writer.write(this.argumentLabel)
-            writer.write(' ')
+            writer.write(" ")
         }
         // Parameter names don't need to be escaped
         writer.write(this.unsafeName)
-        writer.write(': ')
+        writer.write(": ")
         this.type.write(writer)
         if (this.optional) {
-            writer.write('?')
+            writer.write("?")
         }
         if (this.defaultRawValue != null) {
-            writer.write(' = ')
+            writer.write(" = ")
             writer.write(this.defaultRawValue)
         }
     }

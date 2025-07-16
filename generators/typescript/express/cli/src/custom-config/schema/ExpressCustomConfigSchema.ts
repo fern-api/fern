@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from "zod"
 
 export const ExpressCustomConfigSchema = z.strictObject({
     useBrandedStringAliases: z.optional(z.boolean()),

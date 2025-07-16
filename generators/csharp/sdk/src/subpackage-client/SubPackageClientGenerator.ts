@@ -1,16 +1,16 @@
-import { CSharpFile, FileGenerator } from '@fern-api/csharp-base'
-import { csharp } from '@fern-api/csharp-codegen'
-import { RelativeFilePath, join } from '@fern-api/fs-utils'
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base"
+import { csharp } from "@fern-api/csharp-codegen"
+import { RelativeFilePath, join } from "@fern-api/fs-utils"
 
-import { HttpService, ServiceId, Subpackage } from '@fern-fern/ir-sdk/api'
+import { HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api"
 
-import { SdkCustomConfigSchema } from '../SdkCustomConfig'
-import { SdkGeneratorContext } from '../SdkGeneratorContext'
-import { RawClient } from '../endpoint/http/RawClient'
-import { GrpcClientInfo } from '../grpc/GrpcClientInfo'
+import { SdkCustomConfigSchema } from "../SdkCustomConfig"
+import { SdkGeneratorContext } from "../SdkGeneratorContext"
+import { RawClient } from "../endpoint/http/RawClient"
+import { GrpcClientInfo } from "../grpc/GrpcClientInfo"
 
-export const CLIENT_MEMBER_NAME = '_client'
-export const GRPC_CLIENT_MEMBER_NAME = '_grpc'
+export const CLIENT_MEMBER_NAME = "_client"
+export const GRPC_CLIENT_MEMBER_NAME = "_grpc"
 
 export declare namespace SubClientGenerator {
     interface Args {
@@ -102,11 +102,11 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
     private generateEndpoints(): csharp.Method[] {
         const service = this.service
         if (!service) {
-            throw new Error('Internal error; Service is not defined')
+            throw new Error("Internal error; Service is not defined")
         }
         const serviceId = this.serviceId
         if (!serviceId) {
-            throw new Error('Internal error; ServiceId is not defined')
+            throw new Error("Internal error; ServiceId is not defined")
         }
         return service.endpoints.flatMap((endpoint) => {
             return this.context.endpointGenerator.generate({
@@ -123,7 +123,7 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
     private getConstructorMethod(): csharp.Class.Constructor {
         const parameters: csharp.Parameter[] = [
             csharp.parameter({
-                name: 'client',
+                name: "client",
                 type: csharp.Type.reference(this.context.getRawClientClassReference())
             })
         ]
@@ -131,21 +131,21 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
             access: csharp.Access.Internal,
             parameters,
             body: csharp.codeblock((writer) => {
-                writer.writeLine('_client = client;')
+                writer.writeLine("_client = client;")
 
                 if (this.grpcClientInfo != null) {
-                    writer.writeLine('_grpc = _client.Grpc;')
+                    writer.writeLine("_grpc = _client.Grpc;")
                     writer.write(this.grpcClientInfo.privatePropertyName)
-                    writer.write(' = ')
+                    writer.write(" = ")
                     writer.writeNodeStatement(
                         csharp.instantiateClass({
                             classReference: this.grpcClientInfo.classReference,
-                            arguments_: [csharp.codeblock('_grpc.Channel')]
+                            arguments_: [csharp.codeblock("_grpc.Channel")]
                         })
                     )
                 }
 
-                const arguments_ = [csharp.codeblock('_client')]
+                const arguments_ = [csharp.codeblock("_client")]
                 for (const subpackage of this.getSubpackages()) {
                     writer.writeLine(`${subpackage.name.pascalCase.safeName} = `)
                     writer.writeNodeStatement(
@@ -168,7 +168,7 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
     protected getFilepath(): RelativeFilePath {
         return join(
             this.context.project.filepaths.getSourceFileDirectory(),
-            RelativeFilePath.of(this.classReference.name + '.cs')
+            RelativeFilePath.of(this.classReference.name + ".cs")
         )
     }
 }

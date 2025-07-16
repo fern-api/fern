@@ -1,13 +1,13 @@
-import { AbstractAstNode } from '@fern-api/browser-compatible-base-generator'
+import { AbstractAstNode } from "@fern-api/browser-compatible-base-generator"
 
-import { Access } from './Access'
-import { Annotation } from './Annotation'
-import { ClassReference } from './ClassReference'
-import { CodeBlock } from './CodeBlock'
-import { Type } from './Type'
-import { XmlDocBlock } from './XmlDocBlock'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { Access } from "./Access"
+import { Annotation } from "./Annotation"
+import { ClassReference } from "./ClassReference"
+import { CodeBlock } from "./CodeBlock"
+import { Type } from "./Type"
+import { XmlDocBlock } from "./XmlDocBlock"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export declare namespace Field {
     interface Args {
@@ -124,8 +124,8 @@ export class Field extends AstNode {
             this.annotations = [
                 new Annotation({
                     reference: new ClassReference({
-                        name: 'JsonPropertyName',
-                        namespace: 'System.Text.Json.Serialization'
+                        name: "JsonPropertyName",
+                        namespace: "System.Text.Json.Serialization"
                     }),
                     argument: `"${this.jsonPropertyName}"`
                 }),
@@ -176,25 +176,25 @@ export class Field extends AstNode {
             writer.write(`${this.access} `)
         }
         if (this.const_) {
-            writer.write('const ')
+            writer.write("const ")
         }
         if (this.new_) {
-            writer.write('new ')
+            writer.write("new ")
         }
         const underlyingTypeIfOptional = this.type.underlyingTypeIfOptional()
         const isOptional = underlyingTypeIfOptional != null
         const isCollection = (underlyingTypeIfOptional ?? this.type).isCollection()
         if (this.useRequired && !isOptional && !isCollection && this.initializer == null) {
-            writer.write('required ')
+            writer.write("required ")
         }
         if (this.static_) {
-            writer.write('static ')
+            writer.write("static ")
         }
         if (this.readonly) {
-            writer.write('readonly ')
+            writer.write("readonly ")
         }
         writer.writeNode(this.type)
-        writer.write(' ')
+        writer.write(" ")
         if (this.interfaceReference) {
             writer.write(`${this.interfaceReference.name}.`)
         }
@@ -204,12 +204,12 @@ export class Field extends AstNode {
         // expression body will run the code every time, which is not the intended/expected behavior of initializer
         const useExpressionBodiedPropertySyntax = this.get && !this.init && !this.set && this.initializer != null
         if ((this.get || this.init || this.set) && !useExpressionBodiedPropertySyntax) {
-            writer.write(' { ')
+            writer.write(" { ")
             if (this.get) {
                 if (!this.hasSameAccess(this.get)) {
                     writer.write(`${this.get} `)
                 }
-                writer.write('get; ')
+                writer.write("get; ")
             }
             if (this.init) {
                 // if init is accessible to the end user (public, or protected through inheritance),
@@ -219,42 +219,42 @@ export class Field extends AstNode {
                     (this.init === true || this.init === Access.Public || this.init === Access.Protected)
                 if (needsFallback) {
                     writer.writeLine()
-                    writer.writeNoIndent('#if NET5_0_OR_GREATER\n')
+                    writer.writeNoIndent("#if NET5_0_OR_GREATER\n")
                     if (!this.hasSameAccess(this.init)) {
                         writer.write(`${this.init} `)
                     }
-                    writer.writeTextStatement('init')
-                    writer.writeNoIndent('#else\n')
-                    writer.writeTextStatement('set')
-                    writer.writeNoIndent('#endif\n')
+                    writer.writeTextStatement("init")
+                    writer.writeNoIndent("#else\n")
+                    writer.writeTextStatement("set")
+                    writer.writeNoIndent("#endif\n")
                 } else {
                     if (!this.hasSameAccess(this.init)) {
                         writer.write(`${this.init} `)
                     }
-                    writer.write('init; ')
+                    writer.write("init; ")
                 }
             }
             if (this.set) {
                 if (!this.hasSameAccess(this.set)) {
                     writer.write(`${this.set} `)
                 }
-                writer.write('set; ')
+                writer.write("set; ")
             }
-            writer.write('}')
+            writer.write("}")
         }
 
         if (this.initializer != null) {
             if (useExpressionBodiedPropertySyntax) {
-                writer.write(' => ')
+                writer.write(" => ")
             } else {
-                writer.write(' = ')
+                writer.write(" = ")
             }
             this.initializer.write(writer)
-            writer.writeLine(';')
+            writer.writeLine(";")
         } else if (!this.skipDefaultInitializer && !isOptional && isCollection) {
             this.type.writeEmptyCollectionInitializer(writer)
         } else if (!this.get && !this.init) {
-            writer.writeLine(';')
+            writer.writeLine(";")
         }
     }
 

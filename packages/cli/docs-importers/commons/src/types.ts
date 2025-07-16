@@ -1,4 +1,4 @@
-import { FernDocsNavigationBuilder } from './FernDocsBuilder'
+import { FernDocsNavigationBuilder } from "./FernDocsBuilder"
 
 export interface TabInfo {
     name: string

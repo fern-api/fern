@@ -1,10 +1,10 @@
-import { mkdir } from 'fs/promises'
+import { mkdir } from "fs/promises"
 
-import { AbstractProject, File } from '@fern-api/base-generator'
-import { AbsoluteFilePath } from '@fern-api/fs-utils'
-import { BaseJavaCustomConfigSchema } from '@fern-api/java-ast'
+import { AbstractProject, File } from "@fern-api/base-generator"
+import { AbsoluteFilePath } from "@fern-api/fs-utils"
+import { BaseJavaCustomConfigSchema } from "@fern-api/java-ast"
 
-import { AbstractJavaGeneratorContext } from '../context/AbstractJavaGeneratorContext'
+import { AbstractJavaGeneratorContext } from "../context/AbstractJavaGeneratorContext"
 
 /**
  * In memory representation of a Java project.

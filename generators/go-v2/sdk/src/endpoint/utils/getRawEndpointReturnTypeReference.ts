@@ -1,9 +1,9 @@
-import { assertNever } from '@fern-api/core-utils'
-import { go } from '@fern-api/go-ast'
+import { assertNever } from "@fern-api/core-utils"
+import { go } from "@fern-api/go-ast"
 
-import { HttpEndpoint, JsonResponse } from '@fern-fern/ir-sdk/api'
+import { HttpEndpoint, JsonResponse } from "@fern-fern/ir-sdk/api"
 
-import { SdkGeneratorContext } from '../../SdkGeneratorContext'
+import { SdkGeneratorContext } from "../../SdkGeneratorContext"
 
 export function getRawEndpointReturnTypeReference({
     context,
@@ -18,23 +18,23 @@ export function getRawEndpointReturnTypeReference({
     }
     const body = response.body
     switch (body.type) {
-        case 'bytes':
+        case "bytes":
             return wrapWithRawResponseType({ context, returnType: go.Type.bytes() })
-        case 'fileDownload':
+        case "fileDownload":
             return wrapWithRawResponseType({
                 context,
                 returnType: go.Type.reference(context.getIoReaderTypeReference())
             })
-        case 'json':
+        case "json":
             return getRawEndpointReturnTypeReferenceJson({ context, responseBody: body.value })
-        case 'streaming':
+        case "streaming":
             return wrapWithRawResponseType({
                 context,
                 returnType: go.Type.reference(context.getStreamTypeReference(context.getStreamPayload(body.value)))
             })
-        case 'streamParameter':
+        case "streamParameter":
             return context.getRawResponseTypeReference(go.Type.any())
-        case 'text':
+        case "text":
             return wrapWithRawResponseType({ context, returnType: go.Type.string() })
         default:
             assertNever(body)
@@ -49,11 +49,11 @@ function getRawEndpointReturnTypeReferenceJson({
     responseBody: JsonResponse
 }): go.TypeReference {
     switch (responseBody.type) {
-        case 'response':
+        case "response":
             return context.getRawResponseTypeReference(
                 context.goTypeMapper.convert({ reference: responseBody.responseBodyType })
             )
-        case 'nestedPropertyAsResponse': {
+        case "nestedPropertyAsResponse": {
             const typeReference =
                 responseBody.responseProperty != null
                     ? responseBody.responseProperty.valueType

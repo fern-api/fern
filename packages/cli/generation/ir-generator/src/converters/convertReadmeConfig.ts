@@ -1,7 +1,7 @@
-import urlJoin from 'url-join'
+import urlJoin from "url-join"
 
-import { generatorsYml } from '@fern-api/configuration'
-import { HttpEndpoint, HttpService, ReadmeConfig, ServiceId } from '@fern-api/ir-sdk'
+import { generatorsYml } from "@fern-api/configuration"
+import { HttpEndpoint, HttpService, ReadmeConfig, ServiceId } from "@fern-api/ir-sdk"
 
 export function convertReadmeConfig({
     readme,
@@ -81,7 +81,7 @@ class ReadmeEndpointCache {
         return this.getEndpointKey({
             method: endpoint.method,
             path: getFullPathForEndpoint(endpoint),
-            stream: endpoint.response?.body?.type === 'streaming'
+            stream: endpoint.response?.body?.type === "streaming"
         })
     }
 
@@ -92,17 +92,17 @@ class ReadmeEndpointCache {
 }
 
 function getFullPathForEndpoint(endpoint: HttpEndpoint): string {
-    let url = ''
+    let url = ""
     if (endpoint.fullPath.head.length > 0) {
         url = urlJoin(url, endpoint.fullPath.head)
     }
     for (const part of endpoint.fullPath.parts) {
-        url = urlJoin(url, '{' + part.pathParameter + '}')
+        url = urlJoin(url, "{" + part.pathParameter + "}")
         if (part.tail.length > 0) {
             url = urlJoin(url, part.tail)
         }
     }
-    return url.startsWith('/') ? url : `/${url}`
+    return url.startsWith("/") ? url : `/${url}`
 }
 
 function getReadmeEndpointObject({
@@ -110,8 +110,8 @@ function getReadmeEndpointObject({
 }: {
     endpoint: generatorsYml.ReadmeEndpointSchema
 }): generatorsYml.ReadmeEndpointObjectSchema {
-    if (typeof endpoint === 'string') {
-        const split = endpoint.split(' ')
+    if (typeof endpoint === "string") {
+        const split = endpoint.split(" ")
         if (split.length !== 2 || split[0] == null || split[1] == null) {
             throw new Error(`invalid endpoint string: ${endpoint}`)
         }

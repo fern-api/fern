@@ -1,11 +1,11 @@
-import { ZodError } from 'zod'
+import { ZodError } from "zod"
 
-import { validateAgainstJsonSchema } from '@fern-api/core-utils'
-import { RelativeFilePath } from '@fern-api/fs-utils'
+import { validateAgainstJsonSchema } from "@fern-api/core-utils"
+import { RelativeFilePath } from "@fern-api/fs-utils"
 
-import { ConjureWorkspace } from '../ConjureWorkspace'
-import { LazyFernWorkspace } from '../LazyFernWorkspace'
-import { OSSWorkspace } from '../OSSWorkspace'
+import { ConjureWorkspace } from "../ConjureWorkspace"
+import { LazyFernWorkspace } from "../LazyFernWorkspace"
+import { OSSWorkspace } from "../OSSWorkspace"
 
 export declare namespace WorkspaceLoader {
     export type Result = SuccessfulResult | FailedResult
@@ -85,14 +85,14 @@ export declare namespace WorkspaceLoader {
 }
 
 export enum WorkspaceLoaderFailureType {
-    FILE_READ = 'FILE_READ',
-    FILE_PARSE = 'FILE_PARSE',
-    FILE_MISSING = 'FILE_MISSING',
-    STRUCTURE_VALIDATION = 'STRUCTURE_VALIDATION',
-    JSONSCHEMA_VALIDATION = 'JSONSCHEMA_VALIDATION',
-    DEPENDENCY_NOT_LISTED = 'DEPENDENCY_NOT_LISTED',
-    FAILED_TO_LOAD_DEPENDENCY = 'FAILED_TO_LOAD_DEPENDENCY',
-    EXPORTING_PACKAGE_MARKER_OTHER_KEYS = 'EXPORTING_PACKAGE_MARKER_OTHER_KEYS',
-    EXPORT_PACKAGE_HAS_DEFINITIONS = 'EXPORT_PACKAGE_HAS_DEFINITIONS',
-    MISCONFIGURED_DIRECTORY = 'MISCONFIGURED_DIRECTORY'
+    FILE_READ = "FILE_READ",
+    FILE_PARSE = "FILE_PARSE",
+    FILE_MISSING = "FILE_MISSING",
+    STRUCTURE_VALIDATION = "STRUCTURE_VALIDATION",
+    JSONSCHEMA_VALIDATION = "JSONSCHEMA_VALIDATION",
+    DEPENDENCY_NOT_LISTED = "DEPENDENCY_NOT_LISTED",
+    FAILED_TO_LOAD_DEPENDENCY = "FAILED_TO_LOAD_DEPENDENCY",
+    EXPORTING_PACKAGE_MARKER_OTHER_KEYS = "EXPORTING_PACKAGE_MARKER_OTHER_KEYS",
+    EXPORT_PACKAGE_HAS_DEFINITIONS = "EXPORT_PACKAGE_HAS_DEFINITIONS",
+    MISCONFIGURED_DIRECTORY = "MISCONFIGURED_DIRECTORY"
 }

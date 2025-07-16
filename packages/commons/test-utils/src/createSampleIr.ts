@@ -1,11 +1,11 @@
-import { SourceResolverImpl } from '@fern-api/cli-source-resolver'
-import { Audiences, generatorsYml } from '@fern-api/configuration'
-import { AbsoluteFilePath } from '@fern-api/fs-utils'
-import { generateIntermediateRepresentation } from '@fern-api/ir-generator'
-import { TaskContext, createMockTaskContext } from '@fern-api/task-context'
-import { loadAPIWorkspace } from '@fern-api/workspace-loader'
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver"
+import { Audiences, generatorsYml } from "@fern-api/configuration"
+import { AbsoluteFilePath } from "@fern-api/fs-utils"
+import { generateIntermediateRepresentation } from "@fern-api/ir-generator"
+import { TaskContext, createMockTaskContext } from "@fern-api/task-context"
+import { loadAPIWorkspace } from "@fern-api/workspace-loader"
 
-import { IntermediateRepresentation } from '@fern-fern/ir-sdk/api'
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api"
 
 export interface CreateSampleIrOptions {
     workspaceName?: string
@@ -15,7 +15,7 @@ export interface CreateSampleIrOptions {
     audiences?: Audiences
     keywords?: string[]
     smartCasing?: boolean
-    exampleGeneration?: generateIntermediateRepresentation.Args['exampleGeneration']
+    exampleGeneration?: generateIntermediateRepresentation.Args["exampleGeneration"]
     readme?: generatorsYml.ReadmeSchema
     version?: string
     packageName?: string
@@ -29,15 +29,15 @@ export async function createSampleIr(
     opts?: CreateSampleIrOptions
 ): Promise<IntermediateRepresentation> {
     const pathToWorkspace =
-        typeof absolutePathToWorkspace === 'string'
+        typeof absolutePathToWorkspace === "string"
             ? AbsoluteFilePath.of(absolutePathToWorkspace)
             : absolutePathToWorkspace
-    const workspaceName = opts?.workspaceName ?? 'Test Workspace'
+    const workspaceName = opts?.workspaceName ?? "Test Workspace"
     const context = opts?.context ?? createMockTaskContext()
-    const cliVersion = opts?.cliVersion ?? '0.0.0'
+    const cliVersion = opts?.cliVersion ?? "0.0.0"
 
     const generationLanguage = opts?.generationLanguage
-    const audiences = opts?.audiences ?? { type: 'all' }
+    const audiences = opts?.audiences ?? { type: "all" }
     const keywords = opts?.keywords
     const smartCasing = opts?.smartCasing ?? true
     const exampleGeneration = opts?.exampleGeneration ?? { disabled: true }

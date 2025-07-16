@@ -1,4 +1,4 @@
-import { ExamplePathParameter, Name, PathParameter } from '@fern-fern/ir-sdk/api'
+import { ExamplePathParameter, Name, PathParameter } from "@fern-fern/ir-sdk/api"
 
 /**
  * Determines the casing of the path parameter when used as a positional function parameter
@@ -26,8 +26,8 @@ export function getParameterNameForRootPathParameter({
     pathParameter: PathParameter
     retainOriginalCasing: boolean
 }): string {
-    if (pathParameter.location !== 'ROOT') {
-        throw new Error('pathParameter.location must be ROOT')
+    if (pathParameter.location !== "ROOT") {
+        throw new Error("pathParameter.location must be ROOT")
     }
     return getParameterNameForPathParameterInternalName({
         pathParameterName: pathParameter.name,

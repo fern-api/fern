@@ -6,11 +6,11 @@ import {
     Function_,
     Property,
     Variable
-} from '@fern-api/ruby-codegen'
+} from "@fern-api/ruby-codegen"
 
-import { HttpHeader } from '@fern-fern/ir-sdk/api'
+import { HttpHeader } from "@fern-fern/ir-sdk/api"
 
-import { RequestOptions } from './RequestOptionsClass'
+import { RequestOptions } from "./RequestOptionsClass"
 
 export declare namespace IdempotencyRequestOptions {
     export interface Init extends RequestOptions.Init {
@@ -35,7 +35,7 @@ export class IdempotencyRequestOptions extends RequestOptions {
                 })
         )
         super({
-            nameOverride: 'IdempotencyRequestOptions',
+            nameOverride: "IdempotencyRequestOptions",
             ...rest,
             additionalProperties: idempotencyHeaderProperties
         })
@@ -54,9 +54,9 @@ export class IdempotencyRequestOptions extends RequestOptions {
                         rightSide: new FunctionInvocation({
                             // TODO: Do this field access on the client better
                             onObject: `${requestOptionsVariable.write({})}&.${header.name}`,
-                            baseFunction: new Function_({ name: 'nil?', functionBody: [] })
+                            baseFunction: new Function_({ name: "nil?", functionBody: [] })
                         }),
-                        operation: '!',
+                        operation: "!",
                         expressions: [
                             new Expression({
                                 leftSide: `${faradayHeadersArg}["${header.wireValue}"]`,

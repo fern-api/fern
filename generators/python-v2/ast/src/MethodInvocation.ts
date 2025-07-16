@@ -1,7 +1,7 @@
-import { MethodArgument } from './MethodArgument'
-import { Reference } from './Reference'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { MethodArgument } from "./MethodArgument"
+import { Reference } from "./Reference"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export declare namespace MethodInvocation {
     interface Args {
@@ -38,15 +38,15 @@ export class MethodInvocation extends AstNode {
 
     public write(writer: Writer): void {
         this.on.write(writer)
-        writer.write('.')
+        writer.write(".")
         writer.write(this.method)
 
         if (this.arguments.length === 0) {
-            writer.write('()')
+            writer.write("()")
             return
         }
 
-        writer.write('(')
+        writer.write("(")
         if (this.multiline) {
             writer.newLine()
             writer.indent()
@@ -54,11 +54,11 @@ export class MethodInvocation extends AstNode {
         this.arguments.forEach((arg, idx) => {
             arg.write(writer)
             if (idx < this.arguments.length - 1) {
-                writer.write(',')
+                writer.write(",")
                 if (this.multiline) {
                     writer.newLine()
                 } else {
-                    writer.write(' ')
+                    writer.write(" ")
                 }
             }
         })
@@ -66,6 +66,6 @@ export class MethodInvocation extends AstNode {
             writer.newLine()
             writer.dedent()
         }
-        writer.write(')')
+        writer.write(")")
     }
 }

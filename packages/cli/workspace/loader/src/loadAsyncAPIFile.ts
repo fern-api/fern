@@ -1,7 +1,7 @@
-import { readdir } from 'fs/promises'
+import { readdir } from "fs/promises"
 
-import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from '@fern-api/fs-utils'
-import { TaskContext } from '@fern-api/task-context'
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils"
+import { TaskContext } from "@fern-api/task-context"
 
 export async function getValidAbsolutePathToAsyncAPIFromFolder(
     context: TaskContext,

@@ -1,9 +1,9 @@
-import { AccessLevel } from './AccessLevel'
-import { CodeBlock } from './CodeBlock'
-import { FunctionParameter } from './FunctionParameter'
-import { Type } from './Type'
-import { AstNode, Writer } from './core'
-import { escapeReservedKeyword } from './syntax/reserved-keywords'
+import { AccessLevel } from "./AccessLevel"
+import { CodeBlock } from "./CodeBlock"
+import { FunctionParameter } from "./FunctionParameter"
+import { Type } from "./Type"
+import { AstNode, Writer } from "./core"
+import { escapeReservedKeyword } from "./syntax/reserved-keywords"
 
 export declare namespace Method {
     interface Args {
@@ -37,23 +37,23 @@ export class Method extends AstNode {
     public write(writer: Writer): void {
         if (this.accessLevel != null) {
             writer.write(this.accessLevel)
-            writer.write(' ')
+            writer.write(" ")
         }
         if (this.static_) {
-            writer.write('static ')
+            writer.write("static ")
         }
-        writer.write('func ')
+        writer.write("func ")
         writer.write(escapeReservedKeyword(this.unsafeName))
-        writer.write('(')
+        writer.write("(")
         this.parameters?.forEach((parameter, parameterIdx) => {
             if (parameterIdx > 0) {
-                writer.write(', ')
+                writer.write(", ")
             }
             parameter.write(writer)
         })
-        writer.write(') -> ')
+        writer.write(") -> ")
         this.returnType.write(writer)
-        writer.write(' ')
+        writer.write(" ")
         this.body.write(writer)
     }
 }

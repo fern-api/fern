@@ -1,19 +1,19 @@
-import { FernToken } from '@fern-api/auth'
+import { FernToken } from "@fern-api/auth"
 import {
     DEFAULT_GROUP_GENERATORS_CONFIG_KEY,
     GENERATORS_CONFIGURATION_FILENAME,
     fernConfigJson
-} from '@fern-api/configuration-loader'
-import { ContainerRunner } from '@fern-api/core-utils'
-import { AbsoluteFilePath } from '@fern-api/fs-utils'
-import { runLocalGenerationForWorkspace } from '@fern-api/local-workspace-runner'
-import { runRemoteGenerationForAPIWorkspace } from '@fern-api/remote-workspace-runner'
-import { TaskContext } from '@fern-api/task-context'
-import { AbstractAPIWorkspace } from '@fern-api/workspace-loader'
+} from "@fern-api/configuration-loader"
+import { ContainerRunner } from "@fern-api/core-utils"
+import { AbsoluteFilePath } from "@fern-api/fs-utils"
+import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner"
+import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-runner"
+import { TaskContext } from "@fern-api/task-context"
+import { AbstractAPIWorkspace } from "@fern-api/workspace-loader"
 
-import { GROUP_CLI_OPTION } from '../../constants'
-import { validateAPIWorkspaceAndLogIssues } from '../validate/validateAPIWorkspaceAndLogIssues'
-import { GenerationMode } from './generateAPIWorkspaces'
+import { GROUP_CLI_OPTION } from "../../constants"
+import { validateAPIWorkspaceAndLogIssues } from "../validate/validateAPIWorkspaceAndLogIssues"
+import { GenerationMode } from "./generateAPIWorkspaces"
 
 export async function generateWorkspace({
     organization,
@@ -45,7 +45,7 @@ export async function generateWorkspace({
     runner: ContainerRunner | undefined
 }): Promise<void> {
     if (workspace.generatorsConfiguration == null) {
-        context.logger.warn('This workspaces has no generators.yml')
+        context.logger.warn("This workspaces has no generators.yml")
         return
     }
 
@@ -86,7 +86,7 @@ export async function generateWorkspace({
         })
     } else {
         if (!token) {
-            return context.failAndThrow('Please run fern login')
+            return context.failAndThrow("Please run fern login")
         }
         await runRemoteGenerationForAPIWorkspace({
             projectConfig,

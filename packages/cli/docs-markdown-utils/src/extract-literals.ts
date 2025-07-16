@@ -1,7 +1,7 @@
 // copied from https://github.com/fern-api/fern-platform/blob/main/packages/fern-docs/mdx/src/mdx-utils/extract-literal.ts
-import type { Node as EstreeNode } from 'estree'
-import { walk } from 'estree-walker'
-import { MdxJsxAttributeValueExpression } from 'mdast-util-mdx-jsx'
+import type { Node as EstreeNode } from "estree"
+import { walk } from "estree-walker"
+import { MdxJsxAttributeValueExpression } from "mdast-util-mdx-jsx"
 
 type Literal = string | number | bigint | boolean | RegExp | null | undefined
 
@@ -21,17 +21,17 @@ export function extractSingleLiteral(estree?: EstreeNode | null | undefined): Li
         enter(node) {
             // ignore function declarations, arrow functions, and JSX elements
             if (
-                node.type === 'FunctionDeclaration' ||
-                node.type === 'ArrowFunctionExpression' ||
-                node.type === 'JSXOpeningElement' ||
-                node.type === 'JSXOpeningFragment' ||
-                node.type === 'Identifier'
+                node.type === "FunctionDeclaration" ||
+                node.type === "ArrowFunctionExpression" ||
+                node.type === "JSXOpeningElement" ||
+                node.type === "JSXOpeningFragment" ||
+                node.type === "Identifier"
             ) {
                 skip = true
                 this.skip()
             }
 
-            if (node.type === 'Literal') {
+            if (node.type === "Literal") {
                 literals.push(node.value)
             }
         }
@@ -59,11 +59,11 @@ export function extractSingleLiteral(estree?: EstreeNode | null | undefined): Li
 export function extractAttributeValueLiteral(
     value: string | MdxJsxAttributeValueExpression | null | undefined
 ): Literal | undefined {
-    if (typeof value === 'string') {
+    if (typeof value === "string") {
         return value
     }
 
-    if (value?.type === 'mdxJsxAttributeValueExpression') {
+    if (value?.type === "mdxJsxAttributeValueExpression") {
         return extractSingleLiteral(value.data?.estree)
     }
 

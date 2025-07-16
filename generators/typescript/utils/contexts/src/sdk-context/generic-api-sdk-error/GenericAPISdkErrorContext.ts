@@ -1,6 +1,6 @@
-import { Reference } from '@fern-typescript/commons'
+import { Reference } from "@fern-typescript/commons"
 
-import { GeneratedGenericAPISdkError } from './GeneratedGenericAPISdkError'
+import { GeneratedGenericAPISdkError } from "./GeneratedGenericAPISdkError"
 
 export interface GenericAPISdkErrorContext {
     getReferenceToGenericAPISdkError: () => Reference

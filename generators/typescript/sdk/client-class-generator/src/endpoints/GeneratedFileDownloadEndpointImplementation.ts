@@ -1,36 +1,36 @@
-import { Fetcher, GetReferenceOpts } from '@fern-typescript/commons'
-import { GeneratedEndpointImplementation, SdkContext } from '@fern-typescript/contexts'
-import { ts } from 'ts-morph'
+import { Fetcher, GetReferenceOpts } from "@fern-typescript/commons"
+import { GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts"
+import { ts } from "ts-morph"
 
-import { assertNever } from '@fern-api/core-utils'
+import { assertNever } from "@fern-api/core-utils"
 
-import { ExampleEndpointCall, HttpEndpoint } from '@fern-fern/ir-sdk/api'
+import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api"
 
-import { GeneratedSdkClientClassImpl } from '../GeneratedSdkClientClassImpl'
-import { GeneratedEndpointRequest } from '../endpoint-request/GeneratedEndpointRequest'
-import { getReadableTypeNode } from '../getReadableTypeNode'
-import { GeneratedEndpointResponse } from './default/endpoint-response/GeneratedEndpointResponse'
-import { buildUrl } from './utils/buildUrl'
+import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl"
+import { GeneratedEndpointRequest } from "../endpoint-request/GeneratedEndpointRequest"
+import { getReadableTypeNode } from "../getReadableTypeNode"
+import { GeneratedEndpointResponse } from "./default/endpoint-response/GeneratedEndpointResponse"
+import { buildUrl } from "./utils/buildUrl"
 import {
     getAbortSignalExpression,
     getMaxRetriesExpression,
     getRequestOptionsParameter,
     getTimeoutExpression
-} from './utils/requestOptionsParameter'
+} from "./utils/requestOptionsParameter"
 
 export declare namespace GeneratedFileDownloadEndpointImplementation {
     export interface Init {
         endpoint: HttpEndpoint
         generatedSdkClientClass: GeneratedSdkClientClassImpl
         includeCredentialsOnCrossOriginRequests: boolean
-        defaultTimeoutInSeconds: number | 'infinity' | undefined
+        defaultTimeoutInSeconds: number | "infinity" | undefined
         request: GeneratedEndpointRequest
         response: GeneratedEndpointResponse
         includeSerdeLayer: boolean
         retainOriginalCasing: boolean
         omitUndefined: boolean
-        streamType: 'wrapper' | 'web'
-        fileResponseType: 'stream' | 'binary-response'
+        streamType: "wrapper" | "web"
+        fileResponseType: "stream" | "binary-response"
     }
 }
 
@@ -39,13 +39,13 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
     public response: GeneratedEndpointResponse
     private generatedSdkClientClass: GeneratedSdkClientClassImpl
     private includeCredentialsOnCrossOriginRequests: boolean
-    private defaultTimeoutInSeconds: number | 'infinity' | undefined
+    private defaultTimeoutInSeconds: number | "infinity" | undefined
     private request: GeneratedEndpointRequest
     private includeSerdeLayer: boolean
     private retainOriginalCasing: boolean
     private omitUndefined: boolean
-    private streamType: 'wrapper' | 'web'
-    private readonly fileResponseType: 'stream' | 'binary-response'
+    private streamType: "wrapper" | "web"
+    private readonly fileResponseType: "stream" | "binary-response"
 
     constructor({
         endpoint,
@@ -144,7 +144,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
             return undefined
         }
 
-        return lines.join('\n')
+        return lines.join("\n")
     }
 
     public getStatements(context: SdkContext): ts.Statement[] {
@@ -204,10 +204,10 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
             withCredentials: this.includeCredentialsOnCrossOriginRequests,
             responseType: (() => {
                 switch (this.fileResponseType) {
-                    case 'stream':
-                        return 'streaming'
-                    case 'binary-response':
-                        return 'binary-response'
+                    case "stream":
+                        return "streaming"
+                    case "binary-response":
+                        return "binary-response"
                     default:
                         assertNever(this.fileResponseType)
                 }
@@ -227,13 +227,13 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
                                 referenceToFetcher: this.generatedSdkClientClass.getReferenceToFetcher(context),
                                 cast: (() => {
                                     switch (this.fileResponseType) {
-                                        case 'stream':
+                                        case "stream":
                                             return getReadableTypeNode({
-                                                typeArgument: ts.factory.createTypeReferenceNode('Uint8Array'),
+                                                typeArgument: ts.factory.createTypeReferenceNode("Uint8Array"),
                                                 context,
                                                 streamType: this.streamType
                                             })
-                                        case 'binary-response':
+                                        case "binary-response":
                                             return context.coreUtilities.fetcher.BinaryResponse._getReferenceToType()
                                         default:
                                             assertNever(this.fileResponseType)

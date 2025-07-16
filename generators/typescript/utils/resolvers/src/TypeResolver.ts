@@ -7,7 +7,7 @@ import {
     TypeDeclaration,
     TypeId,
     TypeReference
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
 /**
  * TypeResolver converts a TypeName to a "resolved" value by following all
@@ -25,7 +25,7 @@ export class TypeResolver {
     public getTypeDeclarationFromId(typeId: TypeId): TypeDeclaration {
         const type = this.allTypes[typeId]
         if (type == null) {
-            throw new Error('Type not found: ' + typeId)
+            throw new Error("Type not found: " + typeId)
         }
         return type
     }
@@ -33,7 +33,7 @@ export class TypeResolver {
     public getTypeDeclarationFromName(typeName: DeclaredTypeName): TypeDeclaration {
         const type = this.allTypes[typeName.typeId]
         if (type == null) {
-            throw new Error('Type not found: ' + typeName.typeId)
+            throw new Error("Type not found: " + typeName.typeId)
         }
         return type
     }
@@ -50,7 +50,7 @@ export class TypeResolver {
             primitive: ResolvedTypeReference.primitive,
             unknown: ResolvedTypeReference.unknown,
             _other: () => {
-                throw new Error('Unknown type reference type: ' + type.type)
+                throw new Error("Unknown type reference type: " + type.type)
             }
         })
     }
@@ -79,7 +79,7 @@ export class TypeResolver {
                     shape: ShapeType.UndiscriminatedUnion
                 }),
             _other: () => {
-                throw new Error('Unknown type declaration type: ' + declaration.type)
+                throw new Error("Unknown type declaration type: " + declaration.type)
             }
         })
     }

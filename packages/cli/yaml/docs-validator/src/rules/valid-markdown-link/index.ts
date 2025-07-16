@@ -1,1 +1,1 @@
-export { ValidMarkdownLinks } from './valid-markdown-link'
+export { ValidMarkdownLinks } from "./valid-markdown-link"

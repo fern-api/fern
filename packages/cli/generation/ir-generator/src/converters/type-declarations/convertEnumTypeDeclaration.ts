@@ -1,8 +1,8 @@
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { EnumTypeDeclaration, EnumValue } from '@fern-api/ir-sdk'
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { EnumTypeDeclaration, EnumValue } from "@fern-api/ir-sdk"
 
-import { FernFileContext } from '../../FernFileContext'
-import { convertDeclaration } from '../convertDeclaration'
+import { FernFileContext } from "../../FernFileContext"
+import { convertDeclaration } from "../convertDeclaration"
 
 export function convertEnumTypeDeclaration({
     _enum,
@@ -15,10 +15,10 @@ export function convertEnumTypeDeclaration({
         return {
             ...convertDeclaration(value),
             name: file.casingsGenerator.generateNameAndWireValue({
-                wireValue: typeof value === 'string' ? value : value.value,
+                wireValue: typeof value === "string" ? value : value.value,
                 name: getEnumName(value).name,
                 opts: {
-                    casingOverrides: typeof value !== 'string' ? value.casing : undefined
+                    casingOverrides: typeof value !== "string" ? value.casing : undefined
                 }
             })
         }
@@ -44,11 +44,11 @@ export function getEnumNameFromEnumValue(
     wasExplicitlySet: boolean
 } {
     const maybeEnumDefinition = _enum.enum.find((value) =>
-        typeof value === 'string' ? false : value.value === enumValue
+        typeof value === "string" ? false : value.value === enumValue
     )
 
     return {
-        name: typeof maybeEnumDefinition === 'string' ? enumValue : (maybeEnumDefinition?.name ?? enumValue),
+        name: typeof maybeEnumDefinition === "string" ? enumValue : (maybeEnumDefinition?.name ?? enumValue),
         wasExplicitlySet: false
     }
 }
@@ -57,7 +57,7 @@ export function getEnumName(enumValue: string | RawSchemas.EnumValueSchema): {
     name: string
     wasExplicitlySet: boolean
 } {
-    if (typeof enumValue === 'string') {
+    if (typeof enumValue === "string") {
         return {
             name: enumValue,
             wasExplicitlySet: false

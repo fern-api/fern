@@ -1,12 +1,12 @@
-import { getParameterNameForPositionalPathParameter } from '@fern-typescript/commons'
-import { SdkContext } from '@fern-typescript/contexts'
-import { ts } from 'ts-morph'
+import { getParameterNameForPositionalPathParameter } from "@fern-typescript/commons"
+import { SdkContext } from "@fern-typescript/contexts"
+import { ts } from "ts-morph"
 
-import { assertNever } from '@fern-api/core-utils'
+import { assertNever } from "@fern-api/core-utils"
 
-import { HttpPath, PathParameter, PathParameterLocation, SdkRequest } from '@fern-fern/ir-sdk/api'
+import { HttpPath, PathParameter, PathParameterLocation, SdkRequest } from "@fern-fern/ir-sdk/api"
 
-import { GeneratedSdkClientClassImpl } from '../../GeneratedSdkClientClassImpl'
+import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl"
 
 export type GetReferenceToPathParameterVariableFromRequest = (pathParameter: PathParameter) => ts.Expression
 
@@ -45,7 +45,7 @@ export function buildUrl({
                 (param) => param.name.originalName === part.pathParameter
             )
             if (pathParameter == null) {
-                throw new Error('Could not locate path parameter: ' + part.pathParameter)
+                throw new Error("Could not locate path parameter: " + part.pathParameter)
             }
 
             let referenceToPathParameterValue = getReferenceToPathParameter({
@@ -56,13 +56,13 @@ export function buildUrl({
                 getReferenceToPathParameterVariableFromRequest
             })
 
-            if (includeSerdeLayer && pathParameter.valueType.type === 'named') {
+            if (includeSerdeLayer && pathParameter.valueType.type === "named") {
                 referenceToPathParameterValue = context.typeSchema
                     .getSchemaOfNamedType(pathParameter.valueType, {
                         isGeneratingSchema: false
                     })
                     .jsonOrThrow(referenceToPathParameterValue, {
-                        unrecognizedObjectKeys: 'fail',
+                        unrecognizedObjectKeys: "fail",
                         allowUnrecognizedEnumValues: false,
                         allowUnrecognizedUnionMembers: false,
                         skipValidation: false,
@@ -72,7 +72,7 @@ export function buildUrl({
             }
 
             return ts.factory.createTemplateSpan(
-                ts.factory.createCallExpression(ts.factory.createIdentifier('encodeURIComponent'), undefined, [
+                ts.factory.createCallExpression(ts.factory.createIdentifier("encodeURIComponent"), undefined, [
                     referenceToPathParameterValue
                 ]),
                 index === endpoint.fullPath.parts.length - 1

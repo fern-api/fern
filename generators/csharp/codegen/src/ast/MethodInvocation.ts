@@ -1,11 +1,11 @@
-import { NamedArgument } from '@fern-api/browser-compatible-base-generator'
+import { NamedArgument } from "@fern-api/browser-compatible-base-generator"
 
-import { csharp } from '..'
-import { AnonymousFunction } from '../csharp'
-import { ClassInstantiation } from './ClassInstantiation'
-import { CodeBlock } from './CodeBlock'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { csharp } from ".."
+import { AnonymousFunction } from "../csharp"
+import { ClassInstantiation } from "./ClassInstantiation"
+import { CodeBlock } from "./CodeBlock"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export declare namespace MethodInvocation {
     interface Args {
@@ -34,7 +34,7 @@ export class MethodInvocation extends AstNode {
     private arguments: AstNode[]
     private method: string
     private on: AstNode | undefined
-    private ['async']: boolean
+    private ["async"]: boolean
     private configureAwait: boolean
     private generics: csharp.Type[]
     private multiline: boolean
@@ -53,26 +53,26 @@ export class MethodInvocation extends AstNode {
 
     public write(writer: Writer): void {
         if (this.async) {
-            writer.write('await ')
+            writer.write("await ")
         }
         if (this.on) {
             this.on.write(writer)
-            writer.write('.')
+            writer.write(".")
         }
         writer.write(this.method)
         if (this.generics != null && this.generics.length > 0) {
-            writer.write('<')
+            writer.write("<")
             this.generics.forEach((generic, idx) => {
                 writer.writeNode(generic)
                 if (idx < this.generics.length - 1) {
-                    writer.write(', ')
+                    writer.write(", ")
                 }
             })
-            writer.write('>')
+            writer.write(">")
         }
-        writer.write('(')
+        writer.write("(")
         if (this.arguments.length === 0) {
-            writer.write(')')
+            writer.write(")")
             this.writeEnd(writer)
             return
         }
@@ -83,9 +83,9 @@ export class MethodInvocation extends AstNode {
         this.arguments.forEach((arg, idx) => {
             arg.write(writer)
             if (idx < this.arguments.length - 1) {
-                writer.write(',')
+                writer.write(",")
                 if (!this.multiline) {
-                    writer.write(' ')
+                    writer.write(" ")
                 }
             }
             if (this.multiline) {
@@ -95,13 +95,13 @@ export class MethodInvocation extends AstNode {
         if (this.multiline) {
             writer.dedent()
         }
-        writer.write(')')
+        writer.write(")")
         this.writeEnd(writer)
     }
 
     private writeEnd(writer: Writer): void {
         if (this.async && this.configureAwait === false) {
-            writer.write('.ConfigureAwait(false)')
+            writer.write(".ConfigureAwait(false)")
         }
     }
 }

@@ -1,9 +1,9 @@
-import { z } from 'zod'
+import { z } from "zod"
 
-import { GeneratorGroupSchema } from './GeneratorGroupSchema'
+import { GeneratorGroupSchema } from "./GeneratorGroupSchema"
 
 export const GeneratorsConfigurationSchema = z.strictObject({
-    'default-group': z.optional(z.string()),
+    "default-group": z.optional(z.string()),
     groups: z.optional(z.record(GeneratorGroupSchema))
 })
 

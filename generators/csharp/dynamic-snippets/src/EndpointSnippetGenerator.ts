@@ -1,23 +1,23 @@
-import { upperFirst } from 'lodash-es'
-import { camelCase } from 'lodash-es'
+import { upperFirst } from "lodash-es"
+import { camelCase } from "lodash-es"
 
-import { NamedArgument, Options, Scope, Style } from '@fern-api/browser-compatible-base-generator'
-import { Severity } from '@fern-api/browser-compatible-base-generator'
-import { assertNever } from '@fern-api/core-utils'
-import { csharp } from '@fern-api/csharp-codegen'
-import { FernIr } from '@fern-api/dynamic-ir-sdk'
+import { NamedArgument, Options, Scope, Style } from "@fern-api/browser-compatible-base-generator"
+import { Severity } from "@fern-api/browser-compatible-base-generator"
+import { assertNever } from "@fern-api/core-utils"
+import { csharp } from "@fern-api/csharp-codegen"
+import { FernIr } from "@fern-api/dynamic-ir-sdk"
 
-import { Config } from './Config'
-import { DynamicSnippetsGeneratorContext } from './context/DynamicSnippetsGeneratorContext'
-import { FilePropertyInfo } from './context/FilePropertyMapper'
+import { Config } from "./Config"
+import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext"
+import { FilePropertyInfo } from "./context/FilePropertyMapper"
 
-const SNIPPET_NAMESPACE = 'Usage'
-const SNIPPET_CLASS_NAME = 'Example'
-const SNIPPET_METHOD_NAME = 'Do'
-const CLIENT_VAR_NAME = 'client'
+const SNIPPET_NAMESPACE = "Usage"
+const SNIPPET_CLASS_NAME = "Example"
+const SNIPPET_METHOD_NAME = "Do"
+const CLIENT_VAR_NAME = "client"
 const STRING_TYPE_REFERENCE: FernIr.dynamic.TypeReference = {
-    type: 'primitive',
-    value: 'STRING'
+    type: "primitive",
+    value: "STRING"
 }
 
 export class EndpointSnippetGenerator {
@@ -181,7 +181,7 @@ export class EndpointSnippetGenerator {
             ...authArgs,
             ...headerArgs,
             {
-                name: 'clientOptions',
+                name: "clientOptions",
                 assignment: csharp.instantiateClass({
                     classReference: this.context.getClientOptionsClassReference(),
                     arguments_: optionArgs.map((arg) => ({
@@ -223,12 +223,12 @@ export class EndpointSnippetGenerator {
         if (baseUrl != null && environment != null) {
             this.context.errors.add({
                 severity: Severity.Critical,
-                message: 'Cannot specify both baseUrl and environment options'
+                message: "Cannot specify both baseUrl and environment options"
             })
             return csharp.TypeLiteral.nop()
         }
         if (baseUrl != null) {
-            if (this.context.ir.environments?.environments.type === 'multipleBaseUrls') {
+            if (this.context.ir.environments?.environments.type === "multipleBaseUrls") {
                 this.context.errors.add({
                     severity: Severity.Critical,
                     message: "The C# SDK doesn't support a baseUrl when multiple URL environments are configured"
@@ -279,8 +279,8 @@ export class EndpointSnippetGenerator {
         values: FernIr.dynamic.AuthValues
     }): NamedArgument[] {
         switch (auth.type) {
-            case 'basic':
-                if (values.type !== 'basic') {
+            case "basic":
+                if (values.type !== "basic") {
                     this.context.errors.add({
                         severity: Severity.Critical,
                         message: this.context.newAuthMismatchError({ auth, values }).message
@@ -288,8 +288,8 @@ export class EndpointSnippetGenerator {
                     return []
                 }
                 return this.getConstructorBasicAuthArg({ auth, values })
-            case 'bearer':
-                if (values.type !== 'bearer') {
+            case "bearer":
+                if (values.type !== "bearer") {
                     this.context.errors.add({
                         severity: Severity.Critical,
                         message: this.context.newAuthMismatchError({ auth, values }).message
@@ -297,8 +297,8 @@ export class EndpointSnippetGenerator {
                     return []
                 }
                 return this.getConstructorBearerAuthArgs({ auth, values })
-            case 'header':
-                if (values.type !== 'header') {
+            case "header":
+                if (values.type !== "header") {
                     this.context.errors.add({
                         severity: Severity.Critical,
                         message: this.context.newAuthMismatchError({ auth, values }).message
@@ -306,8 +306,8 @@ export class EndpointSnippetGenerator {
                     return []
                 }
                 return this.getConstructorHeaderAuthArgs({ auth, values })
-            case 'oauth':
-                if (values.type !== 'oauth') {
+            case "oauth":
+                if (values.type !== "oauth") {
                     this.context.errors.add({
                         severity: Severity.Critical,
                         message: this.context.newAuthMismatchError({ auth, values }).message
@@ -438,9 +438,9 @@ export class EndpointSnippetGenerator {
         snippet: FernIr.dynamic.EndpointSnippetRequest
     }): csharp.TypeLiteral[] {
         switch (endpoint.request.type) {
-            case 'inlined':
+            case "inlined":
                 return this.getMethodArgsForInlinedRequest({ request: endpoint.request, snippet })
-            case 'body':
+            case "body":
                 return this.getMethodArgsForBodyRequest({ request: endpoint.request, snippet })
             default:
                 assertNever(endpoint.request)
@@ -456,7 +456,7 @@ export class EndpointSnippetGenerator {
     }): csharp.TypeLiteral[] {
         const args: csharp.TypeLiteral[] = []
 
-        const inlinePathParameters = this.context.customConfig?.['inline-path-parameters'] ?? true
+        const inlinePathParameters = this.context.customConfig?.["inline-path-parameters"] ?? true
 
         this.context.errors.scope(Scope.PathParameters)
         const pathParameterFields: csharp.ConstructorField[] = []
@@ -578,11 +578,11 @@ export class EndpointSnippetGenerator {
         filePropertyInfo: FilePropertyInfo
     }): csharp.ConstructorField[] {
         switch (body.type) {
-            case 'properties':
+            case "properties":
                 return this.getInlinedRequestBodyPropertyConstructorFields({ parameters: body.value, value })
-            case 'referenced':
+            case "referenced":
                 return [this.getReferencedRequestBodyPropertyConstructorField({ body, value })]
-            case 'fileUpload':
+            case "fileUpload":
                 return this.getFileUploadRequestBodyConstructorFields({ filePropertyInfo })
             default:
                 assertNever(body)
@@ -641,9 +641,9 @@ export class EndpointSnippetGenerator {
         value: unknown
     }): csharp.TypeLiteral {
         switch (body.type) {
-            case 'bytes':
+            case "bytes":
                 return this.getBytesBodyRequestArg({ value })
-            case 'typeReference':
+            case "typeReference":
                 return this.context.dynamicTypeLiteralMapper.convert({ typeReference: body.value, value })
             default:
                 assertNever(body)
@@ -685,10 +685,10 @@ export class EndpointSnippetGenerator {
         value: unknown
     }): csharp.TypeLiteral {
         switch (body.type) {
-            case 'bytes': {
+            case "bytes": {
                 return this.getBytesBodyRequestArg({ value })
             }
-            case 'typeReference':
+            case "typeReference":
                 return this.context.dynamicTypeLiteralMapper.convert({ typeReference: body.value, value })
             default:
                 assertNever(body)
@@ -700,7 +700,7 @@ export class EndpointSnippetGenerator {
         if (str == null) {
             this.context.errors.add({
                 severity: Severity.Critical,
-                message: 'The bytes request body must be provided in string format'
+                message: "The bytes request body must be provided in string format"
             })
             return csharp.TypeLiteral.nop()
         }
@@ -741,16 +741,16 @@ export class EndpointSnippetGenerator {
         if (endpoint.declaration.fernFilepath.allParts.length > 0) {
             return `${endpoint.declaration.fernFilepath.allParts
                 .map((val) => this.context.getClassName(val))
-                .join('.')}.${this.context.getMethodName(endpoint.declaration.name)}`
+                .join(".")}.${this.context.getMethodName(endpoint.declaration.name)}`
         }
         return this.context.getMethodName(endpoint.declaration.name)
     }
 
     private getBaseUrlOptionName(): string {
-        if (this.context.ir.environments?.environments.type === 'multipleBaseUrls') {
-            return 'Environment'
+        if (this.context.ir.environments?.environments.type === "multipleBaseUrls") {
+            return "Environment"
         }
-        return 'BaseUrl'
+        return "BaseUrl"
     }
 
     private getStyle(options: Options): Style {

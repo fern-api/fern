@@ -1,29 +1,29 @@
-import { mergeWith } from 'lodash-es'
-import { OpenAPIV3_1 } from 'openapi-types'
+import { mergeWith } from "lodash-es"
+import { OpenAPIV3_1 } from "openapi-types"
 
-import * as FernIr from '@fern-api/ir-sdk'
+import * as FernIr from "@fern-api/ir-sdk"
 
-import { AbstractConverter, AbstractConverterContext, Extensions } from '../..'
-import { createTypeReferenceFromFernType } from '../../utils/CreateTypeReferenceFromFernType'
-import { ExampleConverter } from '../ExampleConverter'
-import { ArraySchemaConverter } from './ArraySchemaConverter'
-import { EnumSchemaConverter } from './EnumSchemaConverter'
-import { MapSchemaConverter } from './MapSchemaConverter'
-import { ObjectSchemaConverter } from './ObjectSchemaConverter'
-import { OneOfSchemaConverter } from './OneOfSchemaConverter'
-import { PrimitiveSchemaConverter } from './PrimitiveSchemaConverter'
+import { AbstractConverter, AbstractConverterContext, Extensions } from "../.."
+import { createTypeReferenceFromFernType } from "../../utils/CreateTypeReferenceFromFernType"
+import { ExampleConverter } from "../ExampleConverter"
+import { ArraySchemaConverter } from "./ArraySchemaConverter"
+import { EnumSchemaConverter } from "./EnumSchemaConverter"
+import { MapSchemaConverter } from "./MapSchemaConverter"
+import { ObjectSchemaConverter } from "./ObjectSchemaConverter"
+import { OneOfSchemaConverter } from "./OneOfSchemaConverter"
+import { PrimitiveSchemaConverter } from "./PrimitiveSchemaConverter"
 
 const TYPE_INVARIANT_KEYS = [
-    'description',
-    'example',
-    'title',
-    'default',
-    'deprecated',
-    'readOnly',
-    'writeOnly',
-    'xml',
-    'externalDocs',
-    'extensions'
+    "description",
+    "example",
+    "title",
+    "default",
+    "deprecated",
+    "readOnly",
+    "writeOnly",
+    "xml",
+    "externalDocs",
+    "extensions"
 ]
 
 export declare namespace SchemaConverter {
@@ -160,7 +160,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
 
     private tryConvertSingularAllOfSchema(): SchemaConverter.Output | undefined {
         if (
-            this.schemaOnlyHasAllowedKeys(['allOf', 'type', 'title']) &&
+            this.schemaOnlyHasAllowedKeys(["allOf", "type", "title"]) &&
             this.schema.allOf?.length === 1 &&
             this.schema.allOf[0] != null
         ) {
@@ -172,7 +172,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             if (allOfSchema != null) {
                 const allOfConverter = new SchemaConverter({
                     context: this.context,
-                    breadcrumbs: [...this.breadcrumbs, 'allOf', '0'],
+                    breadcrumbs: [...this.breadcrumbs, "allOf", "0"],
                     schema: allOfSchema,
                     id: this.id,
                     inlined: true
@@ -180,14 +180,14 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
 
                 const allOfResult = allOfConverter.convert()
 
-                if (allOfResult?.convertedSchema.typeDeclaration?.shape.type !== 'object') {
+                if (allOfResult?.convertedSchema.typeDeclaration?.shape.type !== "object") {
                     return allOfResult
                 }
             }
         }
 
         const shouldMergeAllOf =
-            this.schemaOnlyHasAllowedKeys(['allOf', 'type', 'title']) &&
+            this.schemaOnlyHasAllowedKeys(["allOf", "type", "title"]) &&
             Array.isArray(this.schema.allOf) &&
             this.schema.allOf.length >= 1
 
@@ -245,7 +245,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
     }
 
     private tryConvertArraySchema(): SchemaConverter.Output | undefined {
-        if (this.schema.type === 'array') {
+        if (this.schema.type === "array") {
             const arrayConverter = new ArraySchemaConverter({
                 context: this.context,
                 breadcrumbs: this.breadcrumbs,
@@ -317,13 +317,13 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
 
     private tryConvertMapSchema(): SchemaConverter.Output | undefined {
         if (
-            (typeof this.schema.additionalProperties === 'object' ||
-                typeof this.schema.additionalProperties === 'boolean') &&
+            (typeof this.schema.additionalProperties === "object" ||
+                typeof this.schema.additionalProperties === "boolean") &&
             this.schema.additionalProperties != null &&
             !this.schema.properties &&
             !this.schema.allOf
         ) {
-            if (typeof this.schema.additionalProperties === 'boolean' && this.schema.additionalProperties === false) {
+            if (typeof this.schema.additionalProperties === "boolean" && this.schema.additionalProperties === false) {
                 return undefined
             }
             const additionalPropertiesConverter = new MapSchemaConverter({
@@ -350,7 +350,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
     }
 
     private tryConvertObjectAllOfSchema(): SchemaConverter.Output | undefined {
-        if (this.schema.type === 'object' || this.schema.properties != null || this.schema.allOf != null) {
+        if (this.schema.type === "object" || this.schema.properties != null || this.schema.allOf != null) {
             const objectConverter = new ObjectSchemaConverter({
                 context: this.context,
                 breadcrumbs: this.breadcrumbs,
@@ -477,12 +477,12 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
     private isUntypedSchema(): boolean {
         if (
             this.schema &&
-            typeof this.schema === 'object' &&
-            !('oneOf' in this.schema) &&
-            !('anyOf' in this.schema) &&
-            !('allOf' in this.schema) &&
-            !('items' in this.schema) &&
-            !('properties' in this.schema)
+            typeof this.schema === "object" &&
+            !("oneOf" in this.schema) &&
+            !("anyOf" in this.schema) &&
+            !("allOf" in this.schema) &&
+            !("items" in this.schema) &&
+            !("properties" in this.schema)
         ) {
             return true
         }

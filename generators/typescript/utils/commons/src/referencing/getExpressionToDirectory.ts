@@ -1,7 +1,7 @@
-import { ts } from 'ts-morph'
+import { ts } from "ts-morph"
 
-import { ExportedDirectory, ExportsManager } from '../exports-manager'
-import { getQualifiedNameOfDirectory } from './getQualifiedNameOfDirectory'
+import { ExportedDirectory, ExportsManager } from "../exports-manager"
+import { getQualifiedNameOfDirectory } from "./getQualifiedNameOfDirectory"
 
 export declare namespace getExpressionToDirectory {
     export interface Args {

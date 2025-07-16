@@ -1,5 +1,5 @@
-import path from 'path'
-import { Directory, SourceFile } from 'ts-morph'
+import path from "path"
+import { Directory, SourceFile } from "ts-morph"
 
 export function getRelativePathAsModuleSpecifierTo({
     from,
@@ -11,22 +11,22 @@ export function getRelativePathAsModuleSpecifierTo({
     const parsedToFilePath = path.parse(getPath(to))
     const toFilePathWithoutExtension = path.join(parsedToFilePath.dir, parsedToFilePath.name)
 
-    if (path.normalize(toFilePathWithoutExtension) === '/') {
-        throw new Error('Cannot import from root')
+    if (path.normalize(toFilePathWithoutExtension) === "/") {
+        throw new Error("Cannot import from root")
     }
 
     let moduleSpecifier = path.relative(getDirectory(from), toFilePathWithoutExtension)
-    if (!moduleSpecifier.startsWith('.')) {
+    if (!moduleSpecifier.startsWith(".")) {
         moduleSpecifier = `./${moduleSpecifier}`
     }
-    if (moduleSpecifier.endsWith('/')) {
+    if (moduleSpecifier.endsWith("/")) {
         moduleSpecifier = moduleSpecifier.slice(0, -1)
     }
     return moduleSpecifier
 }
 
 function getPath(fileOrDirectory: Directory | SourceFile | string): string {
-    if (typeof fileOrDirectory === 'string') {
+    if (typeof fileOrDirectory === "string") {
         return fileOrDirectory
     }
 

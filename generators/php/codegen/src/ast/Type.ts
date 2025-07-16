@@ -1,13 +1,13 @@
-import { isEqual, uniqWith } from 'lodash-es'
+import { isEqual, uniqWith } from "lodash-es"
 
-import { assertNever } from '@fern-api/core-utils'
+import { assertNever } from "@fern-api/core-utils"
 
-import { BasePhpCustomConfigSchema } from '../custom-config/BasePhpCustomConfigSchema'
-import { ClassReference } from './ClassReference'
-import { TypeLiteral } from './TypeLiteral'
-import { AstNode } from './core/AstNode'
-import { GLOBAL_NAMESPACE } from './core/Constant'
-import { Writer } from './core/Writer'
+import { BasePhpCustomConfigSchema } from "../custom-config/BasePhpCustomConfigSchema"
+import { ClassReference } from "./ClassReference"
+import { TypeLiteral } from "./TypeLiteral"
+import { AstNode } from "./core/AstNode"
+import { GLOBAL_NAMESPACE } from "./core/Constant"
+import { Writer } from "./core/Writer"
 
 type InternalType =
     | Array_
@@ -29,60 +29,60 @@ type InternalType =
     | Literal
 
 interface Int {
-    type: 'int'
+    type: "int"
 }
 
 interface String_ {
-    type: 'string'
+    type: "string"
 }
 
 interface Bool {
-    type: 'bool'
+    type: "bool"
 }
 
 interface Float {
-    type: 'float'
+    type: "float"
 }
 
 interface Date {
-    type: 'date'
+    type: "date"
 }
 
 interface DateTime {
-    type: 'dateTime'
+    type: "dateTime"
 }
 
 interface Null {
-    type: 'null'
+    type: "null"
 }
 
 interface Mixed {
-    type: 'mixed'
+    type: "mixed"
 }
 
 interface Object_ {
-    type: 'object'
+    type: "object"
 }
 
 interface Array_ {
-    type: 'array'
+    type: "array"
     value: Type
 }
 
 interface Map {
-    type: 'map'
+    type: "map"
     keyType: Type
     valueType: Type
 }
 
 interface TypeDict {
-    type: 'typeDict'
+    type: "typeDict"
     entries: TypeDictEntry[]
     multiline?: boolean
 }
 
 interface Union {
-    type: 'union'
+    type: "union"
     types: Type[]
 }
 
@@ -93,30 +93,30 @@ interface TypeDictEntry {
 }
 
 interface Optional {
-    type: 'optional'
+    type: "optional"
     value: Type
 }
 
 interface Reference {
-    type: 'reference'
+    type: "reference"
     value: ClassReference
 }
 
 interface EnumString {
-    type: 'enumString'
+    type: "enumString"
     value: ClassReference
 }
 
 type LiteralString = TypeLiteral & {
     internalType: {
-        type: 'string'
+        type: "string"
         value: string
     }
 }
 
 type LiteralBoolean = TypeLiteral & {
     internalType: {
-        type: 'boolean'
+        type: "boolean"
         value: boolean
     }
 }
@@ -124,7 +124,7 @@ type LiteralBoolean = TypeLiteral & {
 type LiteralValue = LiteralString | LiteralBoolean
 
 interface Literal {
-    type: 'literal'
+    type: "literal"
     value: LiteralValue
 }
 
@@ -136,64 +136,64 @@ export class Type extends AstNode {
 
     public write(writer: Writer, { comment }: { comment?: boolean } = {}): void {
         switch (this.internalType.type) {
-            case 'int':
-                writer.write('int')
+            case "int":
+                writer.write("int")
                 break
-            case 'string':
-                writer.write('string')
+            case "string":
+                writer.write("string")
                 break
-            case 'bool':
-                writer.write('bool')
+            case "bool":
+                writer.write("bool")
                 break
-            case 'float':
-                writer.write('float')
+            case "float":
+                writer.write("float")
                 break
-            case 'date':
+            case "date":
                 writer.addReference(DateTimeClassReference)
-                writer.write('DateTime')
+                writer.write("DateTime")
                 break
-            case 'dateTime':
+            case "dateTime":
                 writer.addReference(DateTimeClassReference)
-                writer.write('DateTime')
+                writer.write("DateTime")
                 break
-            case 'mixed':
-                writer.write('mixed')
+            case "mixed":
+                writer.write("mixed")
                 break
-            case 'object':
-                writer.write('object')
+            case "object":
+                writer.write("object")
                 break
-            case 'array':
+            case "array":
                 if (!comment) {
-                    writer.write('array')
+                    writer.write("array")
                     break
                 }
-                writer.write('array<')
+                writer.write("array<")
                 this.internalType.value.write(writer, { comment })
-                writer.write('>')
+                writer.write(">")
                 break
-            case 'map': {
+            case "map": {
                 if (!comment) {
-                    writer.write('array')
+                    writer.write("array")
                     break
                 }
-                writer.write('array<')
+                writer.write("array<")
                 this.internalType.keyType.write(writer, { comment })
-                writer.write(', ')
+                writer.write(", ")
                 this.internalType.valueType.write(writer, { comment })
-                writer.write('>')
+                writer.write(">")
                 break
             }
-            case 'null': {
-                writer.write('null')
+            case "null": {
+                writer.write("null")
                 break
             }
-            case 'typeDict': {
+            case "typeDict": {
                 if (!comment) {
-                    writer.write('array')
+                    writer.write("array")
                     break
                 }
                 if (this.internalType.multiline) {
-                    writer.writeLine('array{')
+                    writer.writeLine("array{")
 
                     // NOTE: Put all required types before all optional parameters
                     // since this is required by PHPStan
@@ -202,79 +202,79 @@ export class Type extends AstNode {
                     const orderedEntries = [...requiredTypes, ...optionalTypes]
 
                     for (const entry of orderedEntries) {
-                        writer.write(' *   ')
+                        writer.write(" *   ")
                         this.writeTypeDictEntry({ writer, entry, comment })
-                        writer.writeLine(',')
+                        writer.writeLine(",")
                     }
-                    writer.write(' * }')
+                    writer.write(" * }")
                     break
                 }
-                writer.write('array{')
+                writer.write("array{")
                 this.internalType.entries.forEach((entry, index) => {
                     if (index > 0) {
-                        writer.write(', ')
+                        writer.write(", ")
                     }
                     this.writeTypeDictEntry({ writer, entry, comment })
                 })
-                writer.write('}')
+                writer.write("}")
                 break
             }
-            case 'union': {
+            case "union": {
                 this.writeUnion({ writer, unionTypes: this.internalType.types, comment })
                 break
             }
-            case 'optional': {
+            case "optional": {
                 const internalType = this.internalType.value.internalType
-                const isMixed = internalType.type === 'mixed'
-                const isUnion = internalType.type === 'union'
+                const isMixed = internalType.type === "mixed"
+                const isUnion = internalType.type === "union"
                 if (!isUnion && !isMixed) {
-                    writer.write('?')
+                    writer.write("?")
                 }
                 this.internalType.value.write(writer, { comment })
                 if (isUnion && !this.unionHasOptional(internalType.types)) {
-                    writer.write('|')
+                    writer.write("|")
                     writer.writeNode(Type.null())
                 }
                 break
             }
-            case 'reference':
+            case "reference":
                 if (comment) {
                     writer.writeNode(this.internalType.value)
                     const generics = this.internalType.value.generics
 
                     if (generics && generics.length > 0) {
-                        writer.write('<')
+                        writer.write("<")
                         generics.forEach((generic, index) => {
                             if (index > 0) {
-                                writer.write(', ')
+                                writer.write(", ")
                             }
                             generic.write(writer, { comment })
                         })
-                        writer.write('>')
+                        writer.write(">")
                     }
                 } else {
                     writer.writeNode(this.internalType.value)
                 }
                 break
-            case 'enumString':
+            case "enumString":
                 if (comment) {
-                    writer.write('value-of<')
+                    writer.write("value-of<")
                     writer.writeNode(this.internalType.value)
-                    writer.write('>')
+                    writer.write(">")
                 } else {
-                    writer.write('string')
+                    writer.write("string")
                 }
                 break
-            case 'literal':
+            case "literal":
                 if (comment) {
                     writer.writeNode(this.internalType.value)
                 } else {
                     switch (this.internalType.value.internalType.type) {
-                        case 'string':
-                            writer.write('string')
+                        case "string":
+                            writer.write("string")
                             break
-                        case 'boolean':
-                            writer.write('bool')
+                        case "boolean":
+                            writer.write("bool")
                             break
                         default:
                             assertNever(this.internalType.value.internalType)
@@ -287,14 +287,14 @@ export class Type extends AstNode {
     }
 
     public toOptionalIfNotAlready(): Type {
-        if (this.internalType.type === 'optional') {
+        if (this.internalType.type === "optional") {
             return this
         }
         return Type.optional(this)
     }
 
     public underlyingTypeIfOptional(): Type | undefined {
-        if (this.internalType.type === 'optional') {
+        if (this.internalType.type === "optional") {
             return this.internalType.value
         }
         return undefined
@@ -305,36 +305,36 @@ export class Type extends AstNode {
     }
 
     public isOptional(): boolean {
-        return this.internalType.type === 'optional'
+        return this.internalType.type === "optional"
     }
 
     public getClassReference(): ClassReference {
         switch (this.internalType.type) {
-            case 'date':
-            case 'dateTime':
+            case "date":
+            case "dateTime":
                 return new ClassReference({
-                    name: 'DateTime',
+                    name: "DateTime",
                     namespace: GLOBAL_NAMESPACE
                 })
 
-            case 'enumString':
-            case 'reference':
+            case "enumString":
+            case "reference":
                 return this.internalType.value
 
-            case 'int':
-            case 'string':
-            case 'bool':
-            case 'float':
-            case 'object':
-            case 'map':
-            case 'array':
-            case 'null':
-            case 'mixed':
-            case 'optional':
-            case 'typeDict':
-            case 'union':
-            case 'literal':
-                throw new Error('Cannot get class reference for ' + this.internalType.type)
+            case "int":
+            case "string":
+            case "bool":
+            case "float":
+            case "object":
+            case "map":
+            case "array":
+            case "null":
+            case "mixed":
+            case "optional":
+            case "typeDict":
+            case "union":
+            case "literal":
+                throw new Error("Cannot get class reference for " + this.internalType.type)
             default:
                 assertNever(this.internalType)
         }
@@ -343,62 +343,62 @@ export class Type extends AstNode {
     /* Static factory methods for creating a Type */
     public static int(): Type {
         return new this({
-            type: 'int'
+            type: "int"
         })
     }
 
     public static string(): Type {
         return new this({
-            type: 'string'
+            type: "string"
         })
     }
 
     public static bool(): Type {
         return new this({
-            type: 'bool'
+            type: "bool"
         })
     }
 
     public static float(): Type {
         return new this({
-            type: 'float'
+            type: "float"
         })
     }
 
     public static date(): Type {
         return new this({
-            type: 'date'
+            type: "date"
         })
     }
 
     public static dateTime(): Type {
         return new this({
-            type: 'dateTime'
+            type: "dateTime"
         })
     }
 
     public static mixed(): Type {
         return new this({
-            type: 'mixed'
+            type: "mixed"
         })
     }
 
     public static object(): Type {
         return new this({
-            type: 'object'
+            type: "object"
         })
     }
 
     public static array(value: Type): Type {
         return new this({
-            type: 'array',
+            type: "array",
             value
         })
     }
 
     public static map(keyType: Type, valueType: Type): Type {
         return new this({
-            type: 'map',
+            type: "map",
             keyType,
             valueType
         })
@@ -406,7 +406,7 @@ export class Type extends AstNode {
 
     public static typeDict(entries: TypeDictEntry[], { multiline }: { multiline?: boolean } = {}): Type {
         return new this({
-            type: 'typeDict',
+            type: "typeDict",
             entries,
             multiline
         })
@@ -420,7 +420,7 @@ export class Type extends AstNode {
         const uniqueTypes = uniqWith(flattenedTypes, isEqual)
 
         return new this({
-            type: 'union',
+            type: "union",
             types: uniqueTypes
         })
     }
@@ -429,7 +429,7 @@ export class Type extends AstNode {
         const flattened: Type[] = []
 
         for (const type of types) {
-            if (type.internalType.type === 'union') {
+            if (type.internalType.type === "union") {
                 // Recursively flatten nested unions
                 flattened.push(...this.flattenUnionTypes(type.internalType.types))
             } else {
@@ -446,47 +446,47 @@ export class Type extends AstNode {
             return value
         }
         return new this({
-            type: 'optional',
+            type: "optional",
             value
         })
     }
 
     public static null(): Type {
         return new this({
-            type: 'null'
+            type: "null"
         })
     }
 
     public static reference(value: ClassReference): Type {
         return new this({
-            type: 'reference',
+            type: "reference",
             value
         })
     }
 
     public static enumString(value: ClassReference): Type {
         return new this({
-            type: 'enumString',
+            type: "enumString",
             value
         })
     }
 
     public static literalString(value: string): Type {
         return new this({
-            type: 'literal',
+            type: "literal",
             value: TypeLiteral.string(value) as LiteralString
         })
     }
 
     public static literalBoolean(value: boolean): Type {
         return new this({
-            type: 'literal',
+            type: "literal",
             value: TypeLiteral.boolean(value) as LiteralBoolean
         })
     }
 
     private static isAlreadyOptional(value: Type) {
-        return value.internalType.type === 'optional'
+        return value.internalType.type === "optional"
     }
 
     private writeUnion({
@@ -501,19 +501,19 @@ export class Type extends AstNode {
         const uniqueTypes = this.getUniqueTypes({ types: unionTypes, comment, writer })
         const types = this.unwrapOptionalTypes(uniqueTypes)
 
-        const hasMixed = types.filter((type) => type.underlyingType().internalType.type === 'mixed').length > 0
+        const hasMixed = types.filter((type) => type.underlyingType().internalType.type === "mixed").length > 0
         if (hasMixed && !comment) {
-            writer.write('mixed')
+            writer.write("mixed")
             return
         }
 
         if (types.length > 0 && comment) {
-            writer.writeLine('(')
+            writer.writeLine("(")
             types.forEach((type, index) => {
                 if (index > 0) {
-                    writer.write(' *   |')
+                    writer.write(" *   |")
                 } else {
-                    writer.write(' *    ')
+                    writer.write(" *    ")
                 }
                 if (hasMixed) {
                     type = type.underlyingType()
@@ -522,13 +522,13 @@ export class Type extends AstNode {
                 writer.writeLine()
                 index++
             })
-            writer.write(' * )')
+            writer.write(" * )")
             return
         }
 
         types.forEach((type, index) => {
             if (index > 0) {
-                writer.write('|')
+                writer.write("|")
             }
             if (hasMixed) {
                 type = type.underlyingType()
@@ -549,9 +549,9 @@ export class Type extends AstNode {
     }) {
         writer.write(entry.key)
         if (entry.optional) {
-            writer.write('?')
+            writer.write("?")
         }
-        writer.write(': ')
+        writer.write(": ")
         entry.valueType.write(writer, { comment })
     }
 
@@ -593,7 +593,7 @@ export class Type extends AstNode {
     private unwrapOptionalTypes(types: Type[]): Type[] {
         let hasOptional = false
         const result = types.map((type) => {
-            if (type.internalType.type === 'optional') {
+            if (type.internalType.type === "optional") {
                 hasOptional = true
                 return type.internalType.value
             }
@@ -609,7 +609,7 @@ export class Type extends AstNode {
      * Determines if the union has one or more optional types.
      */
     private unionHasOptional(types: Type[]): boolean {
-        return types.filter((type) => type.internalType.type === 'optional').length > 0
+        return types.filter((type) => type.internalType.type === "optional").length > 0
     }
 
     /**
@@ -638,5 +638,5 @@ export class Type extends AstNode {
 
 export const DateTimeClassReference = new ClassReference({
     namespace: GLOBAL_NAMESPACE,
-    name: 'DateTime'
+    name: "DateTime"
 })

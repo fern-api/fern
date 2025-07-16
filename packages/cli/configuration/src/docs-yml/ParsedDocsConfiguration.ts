@@ -1,11 +1,11 @@
-import { AbsoluteFilePath, RelativeFilePath } from '@fern-api/path-utils'
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/path-utils"
 
-import { FernRegistry as CjsFdrSdk } from '@fern-fern/fdr-cjs-sdk'
+import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk"
 
-import { Audiences } from '../commons'
-import { AiChatConfig, DocsInstance, ExperimentalConfig, PlaygroundSettings, VersionAvailability } from './schemas'
+import { Audiences } from "../commons"
+import { AiChatConfig, DocsInstance, ExperimentalConfig, PlaygroundSettings, VersionAvailability } from "./schemas"
 // TODO: Update this import
-import { AnnouncementConfig } from './schemas/sdk/api/resources/docs/types/AnnouncementConfig'
+import { AnnouncementConfig } from "./schemas/sdk/api/resources/docs/types/AnnouncementConfig"
 
 export interface ParsedDocsConfiguration {
     instances: DocsInstance[]
@@ -66,20 +66,20 @@ export interface DocsColorsConfiguration {
 }
 
 export interface ParsedMetadataConfig
-    extends Omit<CjsFdrSdk.docs.v1.commons.MetadataConfig, 'og:image' | 'og:logo' | 'twitter:image'> {
-    'og:image': FilepathOrUrl | undefined
-    'og:logo': FilepathOrUrl | undefined
-    'twitter:image': FilepathOrUrl | undefined
+    extends Omit<CjsFdrSdk.docs.v1.commons.MetadataConfig, "og:image" | "og:logo" | "twitter:image"> {
+    "og:image": FilepathOrUrl | undefined
+    "og:logo": FilepathOrUrl | undefined
+    "twitter:image": FilepathOrUrl | undefined
 }
 
 export type ColorConfiguration =
     | {
-          type: 'themed'
+          type: "themed"
           dark: CjsFdrSdk.docs.v1.commons.RgbaColor | undefined
           light: CjsFdrSdk.docs.v1.commons.RgbaColor | undefined
       }
     | {
-          type: 'unthemed'
+          type: "unthemed"
           color: CjsFdrSdk.docs.v1.commons.RgbaColor | undefined
       }
 
@@ -126,25 +126,25 @@ export interface TypographyConfig {
     codeFont: FontConfig | undefined
 }
 
-export type FilepathOrUrl = { type: 'filepath'; value: AbsoluteFilePath } | { type: 'url'; value: string }
+export type FilepathOrUrl = { type: "filepath"; value: AbsoluteFilePath } | { type: "url"; value: string }
 
 export interface UntabbedDocsNavigation {
-    type: 'untabbed'
+    type: "untabbed"
     items: DocsNavigationItem[]
 }
 
 export interface TabbedDocsNavigation {
-    type: 'tabbed'
+    type: "tabbed"
     items: TabbedNavigation[]
 }
 
 export interface VersionedDocsNavigation {
-    type: 'versioned'
+    type: "versioned"
     versions: VersionInfo[]
 }
 
 export interface ProductGroupDocsNavigation {
-    type: 'productgroup'
+    type: "productgroup"
     products: ProductInfo[]
 }
 
@@ -192,17 +192,17 @@ type TabbedNavigationChild = TabbedNavigationChild.Layout | TabbedNavigationChil
 
 export declare namespace TabbedNavigationChild {
     export interface Layout {
-        type: 'layout'
+        type: "layout"
         layout: DocsNavigationItem[]
     }
 
     export interface Link {
-        type: 'link'
+        type: "link"
         href: string
     }
 
     export interface Changelog {
-        type: 'changelog'
+        type: "changelog"
         changelog: AbsoluteFilePath[]
     }
 }
@@ -218,7 +218,7 @@ export declare namespace DocsNavigationItem {
     export interface Page
         extends CjsFdrSdk.navigation.v1.WithPermissions,
             CjsFdrSdk.navigation.latest.WithFeatureFlags {
-        type: 'page'
+        type: "page"
         title: string
         icon: string | undefined
         absolutePath: AbsoluteFilePath
@@ -230,7 +230,7 @@ export declare namespace DocsNavigationItem {
     export interface Section
         extends CjsFdrSdk.navigation.v1.WithPermissions,
             CjsFdrSdk.navigation.latest.WithFeatureFlags {
-        type: 'section'
+        type: "section"
         title: string
         icon: string | undefined
         contents: DocsNavigationItem[]
@@ -244,7 +244,7 @@ export declare namespace DocsNavigationItem {
     export interface ApiSection
         extends CjsFdrSdk.navigation.v1.WithPermissions,
             CjsFdrSdk.navigation.latest.WithFeatureFlags {
-        type: 'apiSection'
+        type: "apiSection"
         title: string
         icon: string | undefined
         apiName: string | undefined
@@ -264,7 +264,7 @@ export declare namespace DocsNavigationItem {
     }
 
     export interface Link {
-        type: 'link'
+        type: "link"
         text: string
         url: string
         icon: string | undefined
@@ -273,7 +273,7 @@ export declare namespace DocsNavigationItem {
     export interface Changelog
         extends CjsFdrSdk.navigation.v1.WithPermissions,
             CjsFdrSdk.navigation.latest.WithFeatureFlags {
-        type: 'changelog'
+        type: "changelog"
         changelog: AbsoluteFilePath[]
         title: string
         icon: string | undefined
@@ -300,7 +300,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
     export interface Section
         extends CjsFdrSdk.navigation.v1.WithPermissions,
             CjsFdrSdk.navigation.latest.WithFeatureFlags {
-        type: 'section'
+        type: "section"
         title: string // title
         referencedSubpackages: string[] // subpackage IDs
         overviewAbsolutePath: AbsoluteFilePath | undefined
@@ -314,7 +314,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
     export interface Package
         extends CjsFdrSdk.navigation.v1.WithPermissions,
             CjsFdrSdk.navigation.latest.WithFeatureFlags {
-        type: 'package'
+        type: "package"
         title: string | undefined // defaults to subpackage title
         package: string // subpackage ID
         overviewAbsolutePath: AbsoluteFilePath | undefined
@@ -329,7 +329,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
     export interface Endpoint
         extends CjsFdrSdk.navigation.v1.WithPermissions,
             CjsFdrSdk.navigation.latest.WithFeatureFlags {
-        type: 'endpoint'
+        type: "endpoint"
         endpoint: string // endpoint locator
         title: string | undefined
         icon: string | undefined
@@ -339,7 +339,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
     }
 
     export interface Item {
-        type: 'item'
+        type: "item"
         value: string // this could be either an endpoint or subpackage.
     }
 }

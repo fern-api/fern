@@ -1,4 +1,4 @@
-import { ts } from '@fern-api/typescript-ast'
+import { ts } from "@fern-api/typescript-ast"
 
 export interface ObjectLiteralField {
     name: string
@@ -18,15 +18,15 @@ export class ObjectLiteralNode extends ts.AstNode {
     }
 
     public write(writer: ts.Writer): void {
-        writer.write('{')
+        writer.write("{")
         writer.newLine()
         writer.indent()
         for (const field of this.args.fields) {
             writer.write(`${field.name}: `)
             writer.writeNode(field.value)
-            writer.writeLine(',')
+            writer.writeLine(",")
         }
         writer.dedent()
-        writer.write('}')
+        writer.write("}")
     }
 }

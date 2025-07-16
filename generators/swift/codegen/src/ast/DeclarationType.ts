@@ -2,11 +2,11 @@ export const DeclarationType = {
     /**
      * Variable declaration.
      */
-    Var: 'var',
+    Var: "var",
     /**
      * Constant declaration.
      */
-    Let: 'let'
+    Let: "let"
 } as const
 
 export type DeclarationType = (typeof DeclarationType)[keyof typeof DeclarationType]

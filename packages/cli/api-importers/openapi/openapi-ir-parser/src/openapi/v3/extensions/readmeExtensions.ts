@@ -1,4 +1,4 @@
-import { Values } from '@fern-api/core-utils'
+import { Values } from "@fern-api/core-utils"
 
 export const ReadmeOpenAPIExtension = {
     /**
@@ -6,7 +6,7 @@ export const ReadmeOpenAPIExtension = {
      *
      * https://docs.readme.com/main/docs/openapi-extensions
      */
-    README_EXT: 'x-readme'
+    README_EXT: "x-readme"
 }
 
 export type ReadmeOpenAPIExtension = Values<typeof ReadmeOpenAPIExtension>

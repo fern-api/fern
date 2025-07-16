@@ -1,16 +1,16 @@
-import { assertNever } from '@fern-api/core-utils'
-import { csharp } from '@fern-api/csharp-codegen'
-import { ExampleGenerator } from '@fern-api/fern-csharp-model'
+import { assertNever } from "@fern-api/core-utils"
+import { csharp } from "@fern-api/csharp-codegen"
+import { ExampleGenerator } from "@fern-api/fern-csharp-model"
 
-import { ExampleEndpointCall, ExampleRequestBody, HttpEndpoint, PathParameter, ServiceId } from '@fern-fern/ir-sdk/api'
+import { ExampleEndpointCall, ExampleRequestBody, HttpEndpoint, PathParameter, ServiceId } from "@fern-fern/ir-sdk/api"
 
-import { SdkGeneratorContext } from '../SdkGeneratorContext'
-import { WrappedRequestGenerator } from '../wrapped-request/WrappedRequestGenerator'
-import { EndpointSignatureInfo } from './EndpointSignatureInfo'
-import { getEndpointRequest } from './utils/getEndpointRequest'
-import { getEndpointReturnType } from './utils/getEndpointReturnType'
+import { SdkGeneratorContext } from "../SdkGeneratorContext"
+import { WrappedRequestGenerator } from "../wrapped-request/WrappedRequestGenerator"
+import { EndpointSignatureInfo } from "./EndpointSignatureInfo"
+import { getEndpointRequest } from "./utils/getEndpointRequest"
+import { getEndpointReturnType } from "./utils/getEndpointReturnType"
 
-type PagingEndpoint = HttpEndpoint & { pagination: NonNullable<HttpEndpoint['pagination']> }
+type PagingEndpoint = HttpEndpoint & { pagination: NonNullable<HttpEndpoint["pagination"]> }
 
 export abstract class AbstractEndpointGenerator {
     private exampleGenerator: ExampleGenerator
@@ -43,7 +43,7 @@ export abstract class AbstractEndpointGenerator {
         return this.getEndpointSignatureInfoFor({
             serviceId,
             endpoint,
-            endpointType: 'unpaged'
+            endpointType: "unpaged"
         })
     }
 
@@ -57,7 +57,7 @@ export abstract class AbstractEndpointGenerator {
         return this.getEndpointSignatureInfoFor({
             serviceId,
             endpoint,
-            endpointType: 'paged'
+            endpointType: "paged"
         })
     }
 
@@ -68,7 +68,7 @@ export abstract class AbstractEndpointGenerator {
     }: {
         serviceId: ServiceId
         endpoint: HttpEndpoint
-        endpointType: 'unpaged' | 'paged'
+        endpointType: "unpaged" | "paged"
     }): EndpointSignatureInfo {
         const request = getEndpointRequest({ context: this.context, endpoint, serviceId })
         const requestParameter =
@@ -81,10 +81,10 @@ export abstract class AbstractEndpointGenerator {
         })
         let returnType: csharp.Type | undefined
         switch (endpointType) {
-            case 'unpaged':
+            case "unpaged":
                 returnType = getEndpointReturnType({ context: this.context, endpoint })
                 break
-            case 'paged':
+            case "paged":
                 returnType = this.getPagerReturnType(endpoint)
                 break
             default:
@@ -102,7 +102,7 @@ export abstract class AbstractEndpointGenerator {
 
     protected getPagerReturnType(endpoint: HttpEndpoint): csharp.Type {
         const itemType = this.getPaginationItemType(endpoint)
-        if (endpoint.pagination?.type === 'custom') {
+        if (endpoint.pagination?.type === "custom") {
             return csharp.Type.reference(
                 this.context.getCustomPagerClassReference({
                     itemType
@@ -121,11 +121,11 @@ export abstract class AbstractEndpointGenerator {
         const listItemType = this.context.csharpTypeMapper.convert({
             reference: (() => {
                 switch (endpoint.pagination.type) {
-                    case 'offset':
+                    case "offset":
                         return endpoint.pagination.results.property.valueType
-                    case 'cursor':
+                    case "cursor":
                         return endpoint.pagination.results.property.valueType
-                    case 'custom':
+                    case "custom":
                         return endpoint.pagination.results.property.valueType
                     default:
                         assertNever(endpoint.pagination)
@@ -134,7 +134,7 @@ export abstract class AbstractEndpointGenerator {
             unboxOptionals: true
         })
 
-        if (listItemType.internalType.type !== 'list') {
+        if (listItemType.internalType.type !== "list") {
             throw new Error(
                 `Pagination result type for endpoint ${endpoint.name.originalName} must be a list, but is ${listItemType.internalType.type}.`
             )
@@ -148,7 +148,7 @@ export abstract class AbstractEndpointGenerator {
     }: {
         endpoint: HttpEndpoint
         requestParameter: csharp.Parameter | undefined
-    }): Pick<EndpointSignatureInfo, 'pathParameters' | 'pathParameterReferences'> {
+    }): Pick<EndpointSignatureInfo, "pathParameters" | "pathParameterReferences"> {
         const pathParameters: csharp.Parameter[] = []
         const pathParameterReferences: Record<string, string> = {}
         const includePathParametersInEndpointSignature = this.includePathParametersInEndpointSignature({ endpoint })
@@ -212,7 +212,7 @@ export abstract class AbstractEndpointGenerator {
         const serviceFilePath = service.name.fernFilepath
         const requestBodyType = endpoint.requestBody?.type
         // TODO: implement these
-        if (requestBodyType === 'fileUpload' || requestBodyType === 'bytes') {
+        if (requestBodyType === "fileUpload" || requestBodyType === "bytes") {
             return undefined
         }
         const args = this.getNonEndpointArguments({ endpoint, example, parseDatetimes })
@@ -247,16 +247,16 @@ export abstract class AbstractEndpointGenerator {
         parseDatetimes: boolean
     ): csharp.CodeBlock | undefined {
         switch (endpoint.sdkRequest?.shape.type) {
-            case 'wrapper':
+            case "wrapper":
                 return new WrappedRequestGenerator({
                     wrapper: endpoint.sdkRequest.shape,
                     context: this.context,
                     serviceId,
                     endpoint
                 }).doGenerateSnippet({ example: exampleEndpointCall, parseDatetimes })
-            case 'justRequestBody': {
+            case "justRequestBody": {
                 if (exampleEndpointCall.request == null) {
-                    throw new Error('Unexpected no example request for just request body')
+                    throw new Error("Unexpected no example request for just request body")
                 }
                 return this.getJustRequestBodySnippet(exampleEndpointCall.request, parseDatetimes)
             }
@@ -277,15 +277,15 @@ export abstract class AbstractEndpointGenerator {
         return csharp.codeblock((writer) => {
             if (this.context.includeExceptionHandler()) {
                 if (returnType != null) {
-                    writer.write('return ')
+                    writer.write("return ")
                 }
-                writer.writeLine('await _client.Options.ExceptionHandler.TryCatchAsync(async () => {')
+                writer.writeLine("await _client.Options.ExceptionHandler.TryCatchAsync(async () => {")
                 writer.indent()
             }
             body.write(writer)
             if (this.context.includeExceptionHandler()) {
                 writer.dedent()
-                writer.writeLine('}).ConfigureAwait(false);')
+                writer.writeLine("}).ConfigureAwait(false);")
             }
         })
     }
@@ -319,8 +319,8 @@ export abstract class AbstractEndpointGenerator {
         exampleRequestBody: ExampleRequestBody,
         parseDatetimes: boolean
     ): csharp.CodeBlock {
-        if (exampleRequestBody.type === 'inlinedRequestBody') {
-            throw new Error('Unexpected inlinedRequestBody') // should be a wrapped request and already handled
+        if (exampleRequestBody.type === "inlinedRequestBody") {
+            throw new Error("Unexpected inlinedRequestBody") // should be a wrapped request and already handled
         }
         return this.exampleGenerator.getSnippetForTypeReference({
             exampleTypeReference: exampleRequestBody,
@@ -329,7 +329,7 @@ export abstract class AbstractEndpointGenerator {
     }
 
     private includePathParametersInEndpointSignature({ endpoint }: { endpoint: HttpEndpoint }): boolean {
-        if (endpoint.sdkRequest?.shape.type !== 'wrapper') {
+        if (endpoint.sdkRequest?.shape.type !== "wrapper") {
             return true
         }
         return !this.context.includePathParametersInWrappedRequest({

@@ -1,6 +1,6 @@
-import { File } from '@fern-api/base-generator'
-import { AbsoluteFilePath, RelativeFilePath } from '@fern-api/fs-utils'
-import { python } from '@fern-api/python-ast'
+import { File } from "@fern-api/base-generator"
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils"
+import { python } from "@fern-api/python-ast"
 
 export declare namespace WriteablePythonFile {
     interface Args {

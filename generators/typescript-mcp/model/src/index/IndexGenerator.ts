@@ -1,10 +1,10 @@
-import { RelativeFilePath, join } from '@fern-api/fs-utils'
-import { TypescriptCustomConfigSchema, ts } from '@fern-api/typescript-ast'
-import { FileGenerator, ReExportAsNamedNode, TypescriptFile } from '@fern-api/typescript-mcp-base'
+import { RelativeFilePath, join } from "@fern-api/fs-utils"
+import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast"
+import { FileGenerator, ReExportAsNamedNode, TypescriptFile } from "@fern-api/typescript-mcp-base"
 
-import { TypeDeclaration } from '@fern-fern/ir-sdk/api'
+import { TypeDeclaration } from "@fern-fern/ir-sdk/api"
 
-import { ModelGeneratorContext } from '../ModelGeneratorContext'
+import { ModelGeneratorContext } from "../ModelGeneratorContext"
 
 export class IndexGenerator extends FileGenerator<TypescriptFile, TypescriptCustomConfigSchema, ModelGeneratorContext> {
     private readonly schemaVariableNames: string[]
@@ -29,7 +29,7 @@ export class IndexGenerator extends FileGenerator<TypescriptFile, TypescriptCust
                     writer.writeNodeStatement(
                         new ReExportAsNamedNode({
                             name: schemaVariableName,
-                            importFrom: { type: 'default', moduleName: schemaVariableName }
+                            importFrom: { type: "default", moduleName: schemaVariableName }
                         })
                     )
                 })
@@ -41,11 +41,11 @@ export class IndexGenerator extends FileGenerator<TypescriptFile, TypescriptCust
     }
 
     protected getDirectory(): RelativeFilePath {
-        return RelativeFilePath.of('')
+        return RelativeFilePath.of("")
     }
 
     protected getFilename(): string {
-        return 'index.ts'
+        return "index.ts"
     }
 
     protected getFilepath(): RelativeFilePath {

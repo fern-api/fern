@@ -1,8 +1,8 @@
-import { AbstractDynamicSnippetsGeneratorContext, FernGeneratorExec } from '@fern-api/browser-compatible-base-generator'
-import { FernIr } from '@fern-api/dynamic-ir-sdk'
-import { BaseRubyCustomConfigSchema, ruby } from '@fern-api/ruby-ast'
+import { AbstractDynamicSnippetsGeneratorContext, FernGeneratorExec } from "@fern-api/browser-compatible-base-generator"
+import { FernIr } from "@fern-api/dynamic-ir-sdk"
+import { BaseRubyCustomConfigSchema, ruby } from "@fern-api/ruby-ast"
 
-import { DynamicTypeLiteralMapper } from './DynamicToLiteralMapper'
+import { DynamicTypeLiteralMapper } from "./DynamicToLiteralMapper"
 
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
     public ir: FernIr.dynamic.DynamicIntermediateRepresentation
@@ -38,7 +38,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getRootClientClassName(): string {
-        return 'Client'
+        return "Client"
     }
 
     public getRootModuleName(): string {
@@ -46,13 +46,13 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public isSingleEnvironmentID(environment: FernIr.dynamic.EnvironmentValues): environment is FernIr.EnvironmentId {
-        return typeof environment === 'string'
+        return typeof environment === "string"
     }
 
     public isMultiEnvironmentValues(
         environment: FernIr.dynamic.EnvironmentValues
     ): environment is FernIr.dynamic.MultipleEnvironmentUrlValues {
-        return typeof environment === 'object'
+        return typeof environment === "object"
     }
 
     public getEnvironmentTypeReferenceFromID(environmentID: string): ruby.AstNode | undefined {
@@ -62,14 +62,14 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         }
         return ruby.codeblock((writer) => {
             writer.writeNode(this.getEnvironmentClassReference())
-            writer.write('::')
+            writer.write("::")
             writer.write(this.getEnumName(environmentName))
         })
     }
 
     public getEnvironmentClassReference(): ruby.AstNode {
         return ruby.classReference({
-            name: 'Environment',
+            name: "Environment",
             modules: [this.getRootModuleName()]
         })
     }

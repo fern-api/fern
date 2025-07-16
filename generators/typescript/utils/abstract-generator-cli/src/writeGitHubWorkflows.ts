@@ -1,9 +1,9 @@
-import { mkdir, writeFile } from 'fs/promises'
-import path from 'path'
+import { mkdir, writeFile } from "fs/promises"
+import path from "path"
 
-import { AbsoluteFilePath } from '@fern-api/fs-utils'
+import { AbsoluteFilePath } from "@fern-api/fs-utils"
 
-import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
 
 export async function writeGitHubWorkflows({
     config,
@@ -18,7 +18,7 @@ export async function writeGitHubWorkflows({
     pathToProject: AbsoluteFilePath
     publishToJsr: boolean
 }): Promise<void> {
-    if (githubOutputMode.publishInfo != null && githubOutputMode.publishInfo.type !== 'npm') {
+    if (githubOutputMode.publishInfo != null && githubOutputMode.publishInfo.type !== "npm") {
         throw new Error(
             `Expected to receive npm publish info but received ${githubOutputMode.publishInfo.type} instead`
         )
@@ -29,7 +29,7 @@ export async function writeGitHubWorkflows({
         config,
         publishToJsr
     })
-    const githubWorkflowsDir = path.join(pathToProject, '.github', 'workflows')
+    const githubWorkflowsDir = path.join(pathToProject, ".github", "workflows")
     await mkdir(githubWorkflowsDir, { recursive: true })
     await writeFile(`${githubWorkflowsDir}/ci.yml`, workflowYaml)
 }
@@ -68,7 +68,7 @@ ${getTestJob({ config })}`
         (publishInfo != null && publishInfo?.shouldGeneratePublishWorkflow == null) ||
         publishInfo?.shouldGeneratePublishWorkflow === true
     ) {
-        const access = isPackagePrivate ? 'restricted' : 'public'
+        const access = isPackagePrivate ? "restricted" : "public"
         workflowYaml += `
   publish:
     needs: [ compile, test ]

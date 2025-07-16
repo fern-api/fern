@@ -1,5 +1,5 @@
-import { Expression } from './Expression'
-import { AstNode, Writer } from './core'
+import { Expression } from "./Expression"
+import { AstNode, Writer } from "./core"
 
 export declare namespace FunctionArgument {
     interface Args {
@@ -21,7 +21,7 @@ export class FunctionArgument extends AstNode {
     public write(writer: Writer): void {
         if (this.label != null) {
             writer.write(this.label)
-            writer.write(': ')
+            writer.write(": ")
         }
         this.value.write(writer)
     }

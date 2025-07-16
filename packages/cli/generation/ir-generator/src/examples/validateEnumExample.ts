@@ -1,7 +1,7 @@
-import { RawSchemas } from '@fern-api/fern-definition-schema'
+import { RawSchemas } from "@fern-api/fern-definition-schema"
 
-import { ExampleViolation } from './exampleViolation'
-import { getViolationsForMisshapenExample } from './getViolationsForMisshapenExample'
+import { ExampleViolation } from "./exampleViolation"
+import { getViolationsForMisshapenExample } from "./getViolationsForMisshapenExample"
 
 export function validateEnumExample({
     rawEnum,
@@ -12,11 +12,11 @@ export function validateEnumExample({
     example: RawSchemas.ExampleTypeValueSchema
     breadcrumbs: string[]
 }): ExampleViolation[] {
-    const wireValues = rawEnum.enum.map((enumValue) => (typeof enumValue === 'string' ? enumValue : enumValue.value))
-    const validEnumValuesLines = wireValues.map((wireValue) => `  - ${wireValue}`).join('\n')
+    const wireValues = rawEnum.enum.map((enumValue) => (typeof enumValue === "string" ? enumValue : enumValue.value))
+    const validEnumValuesLines = wireValues.map((wireValue) => `  - ${wireValue}`).join("\n")
 
-    if (typeof example !== 'string') {
-        return getViolationsForMisshapenExample(example, 'a string')
+    if (typeof example !== "string") {
+        return getViolationsForMisshapenExample(example, "a string")
     }
 
     if (wireValues.includes(example)) {

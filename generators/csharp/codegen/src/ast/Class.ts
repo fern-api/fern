@@ -1,24 +1,24 @@
-import { Access } from './Access'
-import { Annotation } from './Annotation'
-import { ClassInstantiation } from './ClassInstantiation'
-import { ClassReference } from './ClassReference'
-import { CodeBlock } from './CodeBlock'
-import { Field } from './Field'
-import { Interface } from './Interface'
-import { Method, MethodType } from './Method'
-import { MethodInvocation } from './MethodInvocation'
-import { Parameter } from './Parameter'
-import { Type } from './Type'
-import { XmlDocBlock } from './XmlDocBlock'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { Access } from "./Access"
+import { Annotation } from "./Annotation"
+import { ClassInstantiation } from "./ClassInstantiation"
+import { ClassReference } from "./ClassReference"
+import { CodeBlock } from "./CodeBlock"
+import { Field } from "./Field"
+import { Interface } from "./Interface"
+import { Method, MethodType } from "./Method"
+import { MethodInvocation } from "./MethodInvocation"
+import { Parameter } from "./Parameter"
+import { Type } from "./Type"
+import { XmlDocBlock } from "./XmlDocBlock"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export class Class extends AstNode {
     public static readonly ClassType = {
-        Class: 'class',
-        Record: 'record',
-        Struct: 'struct',
-        RecordStruct: 'record struct'
+        Class: "class",
+        Record: "record",
+        Struct: "struct",
+        RecordStruct: "record struct"
     } as const
     public static readonly Access = Access
     public readonly name: string
@@ -152,67 +152,67 @@ export class Class extends AstNode {
         writer.writeNewLineIfLastLineNot()
         writer.write(`${this.access}`)
         if (this.static_) {
-            writer.write(' static')
+            writer.write(" static")
         }
         if (this.abstract_) {
-            writer.write(' abstract')
+            writer.write(" abstract")
         }
         if (this.sealed) {
-            writer.write(' sealed')
+            writer.write(" sealed")
         }
         if (this.readonly) {
-            writer.write(' readonly')
+            writer.write(" readonly")
         }
         if (this.partial) {
-            writer.write(' partial')
+            writer.write(" partial")
         }
         writer.write(` ${this.type}`)
         writer.write(` ${this.name}`)
         if (this.primaryConstructor != null && this.primaryConstructor.parameters.length > 0) {
             const primaryConstructor = this.primaryConstructor
-            writer.write('(')
+            writer.write("(")
             primaryConstructor.parameters.forEach((parameter, index) => {
                 if (index > 0) {
-                    writer.write(',')
+                    writer.write(",")
                 }
                 parameter.write(writer)
             })
-            writer.write(')')
+            writer.write(")")
         }
         if (this.parentClassReference != null || this.interfaceReferences.length > 0) {
-            writer.write(' : ')
+            writer.write(" : ")
             if (this.parentClassReference != null) {
                 this.parentClassReference.write(writer)
                 if (this.interfaceReferences.length > 0) {
-                    writer.write(', ')
+                    writer.write(", ")
                 }
             }
             if (this.primaryConstructor != null && this.primaryConstructor.superClassArguments.length > 0) {
                 const primaryConstructor = this.primaryConstructor
-                writer.write('(')
+                writer.write("(")
                 this.primaryConstructor.superClassArguments.forEach((argument, index) => {
                     argument.write(writer)
                     if (index < primaryConstructor.superClassArguments.length - 1) {
-                        writer.write(', ')
+                        writer.write(", ")
                     }
                 })
-                writer.write(')')
+                writer.write(")")
             }
             this.interfaceReferences.forEach((interfaceReference, index) => {
                 interfaceReference.write(writer)
                 // Don't write a comma after the last interface
                 if (index < this.interfaceReferences.length - 1) {
-                    writer.write(', ')
+                    writer.write(", ")
                 }
             })
         }
         if (!this.hasBody()) {
-            writer.write(';')
+            writer.write(";")
             return
         }
 
         writer.writeNewLineIfLastLineNot()
-        writer.writeLine('{')
+        writer.writeLine("{")
         writer.indent()
 
         this.writeConsts(writer)
@@ -225,7 +225,7 @@ export class Class extends AstNode {
         this.writeNestedInterfaces(writer)
 
         writer.dedent()
-        writer.writeLine('}')
+        writer.writeLine("}")
     }
 
     private hasBody(): boolean {
@@ -246,19 +246,19 @@ export class Class extends AstNode {
             constructor.parameters.forEach((parameter, index) => {
                 parameter.write(writer)
                 if (index < constructor.parameters.length - 1) {
-                    writer.write(', ')
+                    writer.write(", ")
                 }
             })
-            writer.write(')')
+            writer.write(")")
             if (constructor.baseConstructorCall != null) {
-                writer.write(' : ')
+                writer.write(" : ")
                 constructor.baseConstructorCall.write(writer)
             }
-            writer.writeLine(' {')
+            writer.writeLine(" {")
             writer.indent()
             constructor.body?.write(writer)
             writer.dedent()
-            writer.writeLine('}')
+            writer.writeLine("}")
             writer.newLine()
         })
     }
@@ -353,33 +353,33 @@ export class Class extends AstNode {
     }
 
     private writeOperator({ writer, operator }: { writer: Writer; operator: Class.Operator }): void {
-        writer.write('public static ')
+        writer.write("public static ")
         if (operator.type === Class.CastOperator.Type.Explicit || operator.type === Class.CastOperator.Type.Implicit) {
             writer.write(`${operator.type} `)
-            writer.write('operator ')
+            writer.write("operator ")
             const to = operator.to ?? this.reference
             writer.writeNode(to)
-            writer.write('(')
+            writer.write("(")
             operator.parameter.write(writer)
         } else {
             const normalOperator = operator as Class.NormalOperator
             normalOperator.return.write(writer)
-            writer.write(' operator ')
+            writer.write(" operator ")
             writer.write(`${operator.type}(`)
             normalOperator.parameters.forEach((parameter, idx) => {
                 parameter.write(writer)
                 if (idx < normalOperator.parameters.length - 1) {
-                    writer.write(', ')
+                    writer.write(", ")
                 }
             })
         }
         if (operator.useExpressionBody) {
-            writer.write(') => ')
+            writer.write(") => ")
             writer.writeNodeStatement(operator.body)
         } else {
-            writer.write(') {')
+            writer.write(") {")
             writer.writeNode(operator.body)
-            writer.writeLine('}')
+            writer.writeLine("}")
         }
     }
 }
@@ -448,13 +448,13 @@ export namespace Class {
     }
     export namespace CastOperator {
         export const Type = {
-            Implicit: 'implicit',
-            Explicit: 'explicit'
+            Implicit: "implicit",
+            Explicit: "explicit"
         } as const
         export type Type = (typeof CastOperator.Type)[keyof typeof CastOperator.Type]
     }
     export interface NormalOperator {
-        type: '==' | '!='
+        type: "==" | "!="
         parameters: Parameter[]
         return: Type
         body: CodeBlock
@@ -498,25 +498,25 @@ function sortMethodType(a: { type: MethodType }, b: { type: MethodType }): numbe
 
 function sortMethodName(a: { name: string }, b: { name: string }): number {
     // put FromProto and ToProto 3rd from last
-    if (a.name === 'FromProto' || a.name === 'ToProto') {
-        return b.name === 'Equals' || b.name === 'ToString' ? -1 : 1
+    if (a.name === "FromProto" || a.name === "ToProto") {
+        return b.name === "Equals" || b.name === "ToString" ? -1 : 1
     }
-    if (b.name === 'FromProto' || b.name === 'ToProto') {
-        return a.name === 'Equals' || a.name === 'ToString' ? 1 : -1
+    if (b.name === "FromProto" || b.name === "ToProto") {
+        return a.name === "Equals" || a.name === "ToString" ? 1 : -1
     }
     // put ToString last
-    if (a.name === 'ToString') {
+    if (a.name === "ToString") {
         return 1
     }
-    if (b.name === 'ToString') {
+    if (b.name === "ToString") {
         return -1
     }
     // put Equals second to last
-    if (a.name === 'Equals') {
-        return b.name === 'ToString' ? -1 : 1
+    if (a.name === "Equals") {
+        return b.name === "ToString" ? -1 : 1
     }
-    if (b.name === 'Equals') {
-        return a.name === 'ToString' ? 1 : -1
+    if (b.name === "Equals") {
+        return a.name === "ToString" ? 1 : -1
     }
     return 0
 }

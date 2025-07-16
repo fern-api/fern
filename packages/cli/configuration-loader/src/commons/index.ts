@@ -1,1 +1,1 @@
-export { validateSchema } from './validateSchema'
+export { validateSchema } from "./validateSchema"

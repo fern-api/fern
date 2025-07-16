@@ -1,9 +1,9 @@
-import { camelCase, upperFirst } from 'lodash-es'
+import { camelCase, upperFirst } from "lodash-es"
 
-import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from '@fern-api/base-generator'
-import { assertNever } from '@fern-api/core-utils'
-import { RelativeFilePath } from '@fern-api/fs-utils'
-import { BasePhpCustomConfigSchema, GLOBAL_NAMESPACE, SELF, php } from '@fern-api/php-codegen'
+import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator"
+import { assertNever } from "@fern-api/core-utils"
+import { RelativeFilePath } from "@fern-api/fs-utils"
+import { BasePhpCustomConfigSchema, GLOBAL_NAMESPACE, SELF, php } from "@fern-api/php-codegen"
 
 import {
     FernFilepath,
@@ -17,13 +17,13 @@ import {
     TypeDeclaration,
     TypeId,
     TypeReference
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { AsIsFiles } from '../../../base/src/AsIs'
-import { TRAITS_DIRECTORY } from '../constants'
-import { PhpProject } from '../project/PhpProject'
-import { PhpAttributeMapper } from './PhpAttributeMapper'
-import { PhpTypeMapper } from './PhpTypeMapper'
+import { AsIsFiles } from "../../../base/src/AsIs"
+import { TRAITS_DIRECTORY } from "../constants"
+import { PhpProject } from "../project/PhpProject"
+import { PhpAttributeMapper } from "./PhpAttributeMapper"
+import { PhpTypeMapper } from "./PhpTypeMapper"
 
 export interface FileLocation {
     namespace: string
@@ -72,14 +72,14 @@ export abstract class AbstractPhpGeneratorContext<
     public getDateFormat(): php.AstNode {
         return php.codeblock((writer) => {
             writer.writeNode(this.getConstantClassReference())
-            writer.write('::DateFormat')
+            writer.write("::DateFormat")
         })
     }
 
     public getDateTimeFormat(): php.AstNode {
         return php.codeblock((writer) => {
             writer.writeNode(this.getConstantClassReference())
-            writer.write('::DateTimeFormat')
+            writer.write("::DateTimeFormat")
         })
     }
 
@@ -156,7 +156,7 @@ export abstract class AbstractPhpGeneratorContext<
     }
 
     public getVariableName(name: Name): string {
-        return '$' + this.getPropertyName(name)
+        return "$" + this.getPropertyName(name)
     }
 
     public getPropertyGetterName(name: Name): string {
@@ -169,20 +169,20 @@ export abstract class AbstractPhpGeneratorContext<
 
     public getToStringMethod(): php.Method {
         return php.method({
-            name: '__toString',
-            access: 'public',
+            name: "__toString",
+            access: "public",
             parameters: [],
             return_: php.Type.string(),
             body: php.codeblock((writer) => {
-                writer.write('return ')
+                writer.write("return ")
                 writer.writeNode(
                     php.invokeMethod({
                         on: php.this_(),
-                        method: 'toJson',
+                        method: "toJson",
                         arguments_: []
                     })
                 )
-                writer.writeLine(';')
+                writer.writeLine(";")
             })
         })
     }
@@ -196,57 +196,57 @@ export abstract class AbstractPhpGeneratorContext<
     }
 
     public getLiteralAsString(literal: Literal): string {
-        return literal.type === 'string' ? `'${literal.string}'` : literal.boolean ? "'true'" : "'false'"
+        return literal.type === "string" ? `'${literal.string}'` : literal.boolean ? "'true'" : "'false'"
     }
 
     public getThrowableClassReference(): php.ClassReference {
         return php.classReference({
             namespace: GLOBAL_NAMESPACE,
-            name: 'Throwable'
+            name: "Throwable"
         })
     }
 
     public getExceptionClassReference(): php.ClassReference {
         return php.classReference({
             namespace: GLOBAL_NAMESPACE,
-            name: 'Exception'
+            name: "Exception"
         })
     }
 
     public getDateAttributeClassReference(): php.ClassReference {
-        return this.getCoreTypesClassReference('Date')
+        return this.getCoreTypesClassReference("Date")
     }
 
     public getConstantClassReference(): php.ClassReference {
-        return this.getCoreTypesClassReference('Constant')
+        return this.getCoreTypesClassReference("Constant")
     }
 
     public getJsonDecoderClassReference(): php.ClassReference {
-        return this.getCoreJsonClassReference('JsonDecoder')
+        return this.getCoreJsonClassReference("JsonDecoder")
     }
 
     public getJsonDeserializerClassReference(): php.ClassReference {
-        return this.getCoreJsonClassReference('JsonDeserializer')
+        return this.getCoreJsonClassReference("JsonDeserializer")
     }
 
     public getJsonPropertyAttributeClassReference(): php.ClassReference {
-        return this.getCoreJsonClassReference('JsonProperty')
+        return this.getCoreJsonClassReference("JsonProperty")
     }
 
     public getJsonSerializableTypeClassReference(): php.ClassReference {
-        return this.getCoreJsonClassReference('JsonSerializableType')
+        return this.getCoreJsonClassReference("JsonSerializableType")
     }
 
     public getJsonSerializerClassReference(): php.ClassReference {
-        return this.getCoreJsonClassReference('JsonSerializer')
+        return this.getCoreJsonClassReference("JsonSerializer")
     }
 
     public getUnionClassReference(): php.ClassReference {
-        return this.getCoreTypesClassReference('Union')
+        return this.getCoreTypesClassReference("Union")
     }
 
     public getArrayTypeClassReference(): php.ClassReference {
-        return this.getCoreTypesClassReference('ArrayType')
+        return this.getCoreTypesClassReference("ArrayType")
     }
 
     public getCoreClientClassReference(name: string): php.ClassReference {
@@ -286,29 +286,29 @@ export abstract class AbstractPhpGeneratorContext<
 
     public isMixedArray(type: php.Type): boolean {
         return (
-            type.internalType.type === 'array' && type.internalType.value.underlyingType().internalType.type === 'mixed'
+            type.internalType.type === "array" && type.internalType.value.underlyingType().internalType.type === "mixed"
         )
     }
 
     public isOptional(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
-            case 'container':
+            case "container":
                 switch (typeReference.container.type) {
-                    case 'optional':
+                    case "optional":
                         return true
-                    case 'nullable':
+                    case "nullable":
                         return this.isOptional(typeReference.container.nullable)
                 }
                 return false
-            case 'named': {
+            case "named": {
                 const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId)
-                if (typeDeclaration.shape.type === 'alias') {
+                if (typeDeclaration.shape.type === "alias") {
                     return this.isOptional(typeDeclaration.shape.aliasOf)
                 }
                 return false
             }
-            case 'primitive':
-            case 'unknown':
+            case "primitive":
+            case "unknown":
                 return false
             default:
                 assertNever(typeReference)
@@ -317,23 +317,23 @@ export abstract class AbstractPhpGeneratorContext<
 
     public isNullable(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
-            case 'container':
+            case "container":
                 switch (typeReference.container.type) {
-                    case 'nullable':
+                    case "nullable":
                         return true
-                    case 'optional':
+                    case "optional":
                         return this.isNullable(typeReference.container.optional)
                 }
                 return false
-            case 'named': {
+            case "named": {
                 const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId)
-                if (typeDeclaration.shape.type === 'alias') {
+                if (typeDeclaration.shape.type === "alias") {
                     return this.isNullable(typeDeclaration.shape.aliasOf)
                 }
                 return false
             }
-            case 'primitive':
-            case 'unknown':
+            case "primitive":
+            case "unknown":
                 return false
             default:
                 assertNever(typeReference)
@@ -342,23 +342,23 @@ export abstract class AbstractPhpGeneratorContext<
 
     public dereferenceOptional(typeReference: TypeReference): TypeReference {
         switch (typeReference.type) {
-            case 'container':
-                if (typeReference.container.type === 'optional') {
+            case "container":
+                if (typeReference.container.type === "optional") {
                     return typeReference.container.optional
                 }
-                if (typeReference.container.type === 'nullable') {
+                if (typeReference.container.type === "nullable") {
                     return this.dereferenceOptional(typeReference.container.nullable)
                 }
                 return typeReference
-            case 'named': {
+            case "named": {
                 const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId)
-                if (typeDeclaration.shape.type === 'alias') {
+                if (typeDeclaration.shape.type === "alias") {
                     return this.dereferenceOptional(typeDeclaration.shape.aliasOf)
                 }
                 return typeReference
             }
-            case 'unknown':
-            case 'primitive':
+            case "unknown":
+            case "primitive":
                 return typeReference
             default:
                 assertNever(typeReference)
@@ -367,23 +367,23 @@ export abstract class AbstractPhpGeneratorContext<
 
     public dereferenceCollection(typeReference: TypeReference): TypeReference {
         switch (typeReference.type) {
-            case 'container': {
-                if (typeReference.container.type === 'list') {
+            case "container": {
+                if (typeReference.container.type === "list") {
                     return this.dereferenceCollection(typeReference.container.list)
-                } else if (typeReference.container.type === 'set') {
+                } else if (typeReference.container.type === "set") {
                     return this.dereferenceCollection(typeReference.container.set)
                 }
                 return typeReference
             }
-            case 'named': {
+            case "named": {
                 const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId)
-                if (typeDeclaration.shape.type === 'alias') {
+                if (typeDeclaration.shape.type === "alias") {
                     return this.dereferenceCollection(typeDeclaration.shape.aliasOf)
                 }
                 return typeReference
             }
-            case 'primitive':
-            case 'unknown':
+            case "primitive":
+            case "unknown":
                 return typeReference
             default:
                 assertNever(typeReference)
@@ -392,17 +392,17 @@ export abstract class AbstractPhpGeneratorContext<
 
     public isCollection(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
-            case 'container':
-                return typeReference.container.type === 'list' || typeReference.container.type === 'set'
-            case 'named': {
+            case "container":
+                return typeReference.container.type === "list" || typeReference.container.type === "set"
+            case "named": {
                 const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId)
-                if (typeDeclaration.shape.type === 'alias') {
+                if (typeDeclaration.shape.type === "alias") {
                     return this.isCollection(typeDeclaration.shape.aliasOf)
                 }
                 return false
             }
-            case 'primitive':
-            case 'unknown':
+            case "primitive":
+            case "unknown":
                 return false
             default:
                 assertNever(typeReference)
@@ -411,18 +411,18 @@ export abstract class AbstractPhpGeneratorContext<
 
     public isJsonEncodable(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
-            case 'container':
-                return typeReference.container.type === 'map'
-            case 'named': {
+            case "container":
+                return typeReference.container.type === "map"
+            case "named": {
                 const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId)
-                if (typeDeclaration.shape.type === 'alias') {
+                if (typeDeclaration.shape.type === "alias") {
                     return this.isJsonEncodable(typeDeclaration.shape.aliasOf)
                 }
                 return false
             }
-            case 'primitive':
+            case "primitive":
                 return false
-            case 'unknown':
+            case "unknown":
                 return true
             default:
                 assertNever(typeReference)
@@ -430,24 +430,24 @@ export abstract class AbstractPhpGeneratorContext<
     }
 
     public hasToJsonMethod(typeReference: TypeReference): boolean {
-        return typeReference.type === 'named' && !this.isPrimitive(typeReference) && !this.isEnum(typeReference)
+        return typeReference.type === "named" && !this.isPrimitive(typeReference) && !this.isEnum(typeReference)
     }
 
     public isEnum(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
-            case 'container':
-                if (typeReference.container.type === 'optional') {
+            case "container":
+                if (typeReference.container.type === "optional") {
                     return this.isEnum(typeReference.container.optional)
                 }
                 return false
-            case 'named': {
+            case "named": {
                 const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId)
                 return this.typeDeclarationIsEnum(declaration)
             }
-            case 'primitive': {
+            case "primitive": {
                 return false
             }
-            case 'unknown': {
+            case "unknown": {
                 return false
             }
             default:
@@ -456,20 +456,20 @@ export abstract class AbstractPhpGeneratorContext<
     }
 
     public typeDeclarationIsEnum(declaration: TypeDeclaration): boolean {
-        if (declaration.shape.type === 'alias') {
+        if (declaration.shape.type === "alias") {
             return this.isEnum(declaration.shape.aliasOf)
         }
-        return declaration.shape.type === 'enum'
+        return declaration.shape.type === "enum"
     }
 
     public isPrimitive(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
-            case 'primitive': {
+            case "primitive": {
                 return true
             }
-            case 'named': {
+            case "named": {
                 const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId)
-                if (declaration.shape.type === 'alias') {
+                if (declaration.shape.type === "alias") {
                     return this.isPrimitive(declaration.shape.aliasOf)
                 }
                 return false
@@ -488,28 +488,28 @@ export abstract class AbstractPhpGeneratorContext<
         primitive?: PrimitiveTypeV1
     }): boolean {
         switch (typeReference.type) {
-            case 'container':
+            case "container":
                 switch (typeReference.container.type) {
-                    case 'optional':
+                    case "optional":
                         return this.isDate(typeReference.container.optional)
-                    case 'nullable':
+                    case "nullable":
                         return this.isDate(typeReference.container.nullable)
                 }
                 return false
-            case 'named': {
+            case "named": {
                 const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId)
-                if (declaration.shape.type === 'alias') {
+                if (declaration.shape.type === "alias") {
                     return this.isDate(declaration.shape.aliasOf)
                 }
                 return false
             }
-            case 'primitive': {
+            case "primitive": {
                 if (primitive == null) {
                     return true
                 }
                 return typeReference.primitive.v1 === primitive
             }
-            case 'unknown':
+            case "unknown":
                 return false
             default:
                 assertNever(typeReference)
@@ -526,35 +526,35 @@ export abstract class AbstractPhpGeneratorContext<
 
     public getUnderlyingObjectTypeDeclaration(typeReference: TypeReference): ObjectTypeDeclaration {
         switch (typeReference.type) {
-            case 'named': {
+            case "named": {
                 const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId)
-                if (declaration.shape.type === 'alias') {
+                if (declaration.shape.type === "alias") {
                     return this.getUnderlyingObjectTypeDeclaration(declaration.shape.aliasOf)
                 }
-                if (declaration.shape.type === 'object') {
+                if (declaration.shape.type === "object") {
                     return declaration.shape
                 }
-                throw new Error('Type is not an object type')
+                throw new Error("Type is not an object type")
             }
-            case 'primitive':
-            case 'unknown':
-            case 'container':
+            case "primitive":
+            case "unknown":
+            case "container":
         }
-        throw new Error('Type is not an object type')
+        throw new Error("Type is not an object type")
     }
 
     public getUnderlyingObjectTypeDeclarationOrThrow(typeDeclaration: TypeDeclaration): ObjectTypeDeclaration {
-        if (typeDeclaration.shape.type === 'alias') {
+        if (typeDeclaration.shape.type === "alias") {
             return this.getUnderlyingObjectTypeDeclaration(typeDeclaration.shape.aliasOf)
         }
-        if (typeDeclaration.shape.type === 'object') {
+        if (typeDeclaration.shape.type === "object") {
             return typeDeclaration.shape
         }
-        throw new Error('Type is not an object type')
+        throw new Error("Type is not an object type")
     }
 
     public maybeLiteral(typeReference: TypeReference): Literal | undefined {
-        if (typeReference.type === 'container' && typeReference.container.type === 'literal') {
+        if (typeReference.type === "container" && typeReference.container.type === "literal") {
             return typeReference.container.literal
         }
         return undefined
@@ -598,11 +598,11 @@ export abstract class AbstractPhpGeneratorContext<
         return php.method({
             name: this.getPropertySetterName(name),
             access: php.Access.Public,
-            parameters: [php.parameter({ name: 'value', type: field.type })],
+            parameters: [php.parameter({ name: "value", type: field.type })],
             return_: SELF,
             body: php.codeblock((writer) => {
                 writer.write(`$this->${this.getPropertyName(name)} = $value;`)
-                writer.write('return $this;')
+                writer.write("return $this;")
             })
         })
     }
@@ -613,9 +613,9 @@ export abstract class AbstractPhpGeneratorContext<
             return php.Access.Public
         }
         switch (propertyAccess) {
-            case 'public':
+            case "public":
                 return php.Access.Public
-            case 'private':
+            case "private":
                 return php.Access.Private
             default:
                 assertNever(propertyAccess)
@@ -672,8 +672,8 @@ export abstract class AbstractPhpGeneratorContext<
         let parts = filepath.allParts.map((path) => path.pascalCase.safeName)
         parts = suffix != null ? [...parts, suffix] : parts
         return {
-            namespace: [this.getRootNamespace(), ...parts].join('\\'),
-            directory: RelativeFilePath.of(parts.join('/'))
+            namespace: [this.getRootNamespace(), ...parts].join("\\"),
+            directory: RelativeFilePath.of(parts.join("/"))
         }
     }
 }

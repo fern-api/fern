@@ -1,8 +1,8 @@
-import { wrapWithHttps } from '@fern-api/docs-resolver'
-import { AbsoluteFilePath, RelativeFilePath, dirname, doesPathExist, join } from '@fern-api/fs-utils'
+import { wrapWithHttps } from "@fern-api/docs-resolver"
+import { AbsoluteFilePath, RelativeFilePath, dirname, doesPathExist, join } from "@fern-api/fs-utils"
 
-import { getRedirectForPath } from './redirect-for-path'
-import { addLeadingSlash, removeLeadingSlash, removeTrailingSlash } from './url-utils'
+import { getRedirectForPath } from "./redirect-for-path"
+import { addLeadingSlash, removeLeadingSlash, removeTrailingSlash } from "./url-utils"
 
 /**
  * Checks if the given path exists in the docs.
@@ -44,14 +44,14 @@ export async function checkIfPathnameExists({
     const slugs = absoluteFilepath != null ? (absoluteFilePathsToSlugs.get(absoluteFilepath) ?? []) : []
 
     // base case: empty pathname is valid
-    if (pathname.trim() === '') {
+    if (pathname.trim() === "") {
         return true
     }
 
     pathname = withoutAnchors(pathname)
 
     // if the pathname starts with `/`, it must either be a slug or a file in the current workspace
-    if (pathname.startsWith('/')) {
+    if (pathname.startsWith("/")) {
         // only check slugs if the file is expected to be a markdown file
         let redirectedPath = withoutAnchors(withRedirects(pathname, baseUrl, redirects))
         for (let redirectCount = 0; redirectCount < 5; ++redirectCount) {
@@ -68,7 +68,7 @@ export async function checkIfPathnameExists({
 
         const absolutePath = join(workspaceAbsoluteFilePath, RelativeFilePath.of(removeLeadingSlash(pathname)))
 
-        if (await doesPathExist(absolutePath, 'file')) {
+        if (await doesPathExist(absolutePath, "file")) {
             return true
         }
 
@@ -79,9 +79,9 @@ export async function checkIfPathnameExists({
         // if the pathname does not start with a `/`, it is a relative path.
 
         // If pathname is `.` we'll check if the current directory exists.
-        if (pathname === '.') {
+        if (pathname === ".") {
             const currentDirPath = dirname(absoluteFilepath)
-            if (await doesPathExist(currentDirPath, 'directory')) {
+            if (await doesPathExist(currentDirPath, "directory")) {
                 return true
             }
         }
@@ -89,7 +89,7 @@ export async function checkIfPathnameExists({
         // We'll check if the pathname is a relativized path
         const relativizedPathname = join(dirname(absoluteFilepath), RelativeFilePath.of(pathname))
 
-        if (await doesPathExist(relativizedPathname, 'file')) {
+        if (await doesPathExist(relativizedPathname, "file")) {
             return true
         }
     }
@@ -125,7 +125,7 @@ function withRedirects(
 }
 
 function withoutAnchors(slug: string): string {
-    const hashIndex = slug.indexOf('#')
+    const hashIndex = slug.indexOf("#")
     if (hashIndex === -1) {
         return slug
     }

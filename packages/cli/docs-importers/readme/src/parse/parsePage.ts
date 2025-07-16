@@ -1,27 +1,27 @@
-import type { Root as HastRoot } from 'hast'
-import type { Root as MdastRoot } from 'mdast'
-import remarkGfm from 'remark-gfm'
-import remarkMdx from 'remark-mdx'
-import remarkStringify from 'remark-stringify'
-import { unified } from 'unified'
-import { CONTINUE, EXIT, visit } from 'unist-util-visit'
+import type { Root as HastRoot } from "hast"
+import type { Root as MdastRoot } from "mdast"
+import remarkGfm from "remark-gfm"
+import remarkMdx from "remark-mdx"
+import remarkStringify from "remark-stringify"
+import { unified } from "unified"
+import { CONTINUE, EXIT, visit } from "unist-util-visit"
 
-import { Logger } from '@fern-api/logger'
+import { Logger } from "@fern-api/logger"
 
-import { unifiedRemoveBreaks } from '../cleaners/breaks'
-import { unifiedRemoveClassNames } from '../cleaners/className'
-import { remarkRemoveEmptyEmphases } from '../cleaners/emptyEmphasis'
-import { unifiedRemoveEmptyParagraphs } from '../cleaners/emptyParagraphs'
-import { remarkProperlyFormatEmphasis } from '../cleaners/formatEmphasis'
-import { removeHastComments } from '../cleaners/hastComments'
-import { convertHeaderLinksToText } from '../cleaners/link'
-import { remarkRemoveBottomMetadata } from '../cleaners/metadata'
-import { unifiedRemoveNestedRoots } from '../cleaners/nestedRoots'
-import { unifiedRemovePositions } from '../cleaners/position'
-import { unifiedRemoveSuggestEdits } from '../cleaners/suggestEdits'
-import { remarkRemoveCodeBlocksInCells } from '../cleaners/tableCells'
-import { unifiedRemoveTableOfContents } from '../cleaners/toc'
-import { remarkRemoveUpdatedAt } from '../cleaners/updatedAt'
+import { unifiedRemoveBreaks } from "../cleaners/breaks"
+import { unifiedRemoveClassNames } from "../cleaners/className"
+import { remarkRemoveEmptyEmphases } from "../cleaners/emptyEmphasis"
+import { unifiedRemoveEmptyParagraphs } from "../cleaners/emptyParagraphs"
+import { remarkProperlyFormatEmphasis } from "../cleaners/formatEmphasis"
+import { removeHastComments } from "../cleaners/hastComments"
+import { convertHeaderLinksToText } from "../cleaners/link"
+import { remarkRemoveBottomMetadata } from "../cleaners/metadata"
+import { unifiedRemoveNestedRoots } from "../cleaners/nestedRoots"
+import { unifiedRemovePositions } from "../cleaners/position"
+import { unifiedRemoveSuggestEdits } from "../cleaners/suggestEdits"
+import { remarkRemoveCodeBlocksInCells } from "../cleaners/tableCells"
+import { unifiedRemoveTableOfContents } from "../cleaners/toc"
+import { remarkRemoveUpdatedAt } from "../cleaners/updatedAt"
 import {
     createAccordion,
     createAccordionGroup,
@@ -32,16 +32,16 @@ import {
     createEmbed,
     createFrame,
     createTabs
-} from '../customComponents/create'
-import { rehypeToRemarkCustomComponents } from '../customComponents/plugin'
-import { selectiveRehypeRemark } from '../customComponents/selective'
-import { getImagesUsedInFile } from '../extract/images'
-import { findSourceElement } from '../extract/source'
-import { getDescriptionFromRoot, getTitleFromHeading } from '../extract/title'
-import type { Result } from '../types/result'
-import { formatPageWithFrontmatter } from '../utils/files/file'
-import { htmlToHast } from '../utils/hast'
-import { normalizePath } from '../utils/strings'
+} from "../customComponents/create"
+import { rehypeToRemarkCustomComponents } from "../customComponents/plugin"
+import { selectiveRehypeRemark } from "../customComponents/selective"
+import { getImagesUsedInFile } from "../extract/images"
+import { findSourceElement } from "../extract/source"
+import { getDescriptionFromRoot, getTitleFromHeading } from "../extract/title"
+import type { Result } from "../types/result"
+import { formatPageWithFrontmatter } from "../utils/files/file"
+import { htmlToHast } from "../utils/hast"
+import { normalizePath } from "../utils/strings"
 
 export declare namespace parsePage {
     interface Args {
@@ -60,11 +60,11 @@ export async function parsePage({ logger, html, url }: parsePage.Args): Promise<
     // Remove secondary navigation (sidebar) from HTML before processing
     const removeSecondaryNavigation = (html: string): string => {
         // Create a temporary DOM element to manipulate the HTML
-        const tempDiv = document.createElement('div')
+        const tempDiv = document.createElement("div")
         tempDiv.innerHTML = html
 
         // Find and remove the sidebar navigation
-        const sidebar = tempDiv.querySelector('nav.rm-Sidebar')
+        const sidebar = tempDiv.querySelector("nav.rm-Sidebar")
         if (sidebar) {
             sidebar.remove()
         }
@@ -75,9 +75,9 @@ export async function parsePage({ logger, html, url }: parsePage.Args): Promise<
     // If we're in a browser environment, use DOM manipulation
     // Otherwise, use a simple regex-based approach for Node.js environment
     const cleanedHtml =
-        typeof document !== 'undefined'
+        typeof document !== "undefined"
             ? removeSecondaryNavigation(html)
-            : html.replace(/<nav[^>]*class="[^"]*rm-Sidebar[^"]*"[^>]*>[\s\S]*?<\/nav>/gi, '')
+            : html.replace(/<nav[^>]*class="[^"]*rm-Sidebar[^"]*"[^>]*>[\s\S]*?<\/nav>/gi, "")
 
     html = cleanedHtml
 
@@ -92,7 +92,7 @@ export async function parsePage({ logger, html, url }: parsePage.Args): Promise<
     }
 
     const contentAsRoot: HastRoot = {
-        type: 'root',
+        type: "root",
         children: [source]
     }
 
@@ -126,13 +126,13 @@ export async function parsePage({ logger, html, url }: parsePage.Args): Promise<
     const images = await getImagesUsedInFile(mdastTree, url)
 
     // First try to get title and description from HTML
-    let title = ''
-    let description = ''
+    let title = ""
+    let description = ""
 
     // Try to extract title from HTML
-    visit(hast, 'element', function (node) {
-        if (node.tagName === 'title') {
-            visit(node, 'text', function (textNode) {
+    visit(hast, "element", function (node) {
+        if (node.tagName === "title") {
+            visit(node, "text", function (textNode) {
                 title = textNode.value.trim()
                 return EXIT
             })
@@ -142,11 +142,11 @@ export async function parsePage({ logger, html, url }: parsePage.Args): Promise<
     })
 
     // Try to extract description from meta tags
-    visit(hast, 'element', function (node) {
+    visit(hast, "element", function (node) {
         if (
-            node.tagName === 'meta' &&
+            node.tagName === "meta" &&
             node.properties &&
-            node.properties.name === 'description' &&
+            node.properties.name === "description" &&
             node.properties.content
         ) {
             description = node.properties.content.toString()
@@ -171,8 +171,8 @@ export async function parsePage({ logger, html, url }: parsePage.Args): Promise<
 
         // Check if the mdx content starts with a h1 that matches the title
         // If so, remove that heading to avoid duplication
-        const titleHeadingPattern = new RegExp(`^# ${title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*\\n`, 'm')
-        let mdxContentNoDuplicateTitleSubtitle = mdxContent.replace(titleHeadingPattern, '')
+        const titleHeadingPattern = new RegExp(`^# ${title.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\s*\\n`, "m")
+        let mdxContentNoDuplicateTitleSubtitle = mdxContent.replace(titleHeadingPattern, "")
 
         // Check if the mdx content starts with a paragraph that matches the description
         // If so, remove that paragraph to avoid duplication
@@ -184,19 +184,19 @@ export async function parsePage({ logger, html, url }: parsePage.Args): Promise<
             if (
                 firstParagraph &&
                 (firstParagraph === description ||
-                    firstParagraph.replace(/\s+/g, ' ') === description.replace(/\s+/g, ' '))
+                    firstParagraph.replace(/\s+/g, " ") === description.replace(/\s+/g, " "))
             ) {
                 // Remove the first paragraph if it matches the description
                 // This handles cases where the description might have different whitespace formatting
                 const mdxContentWithoutDescription = mdxContentNoDuplicateTitleSubtitle.replace(
                     firstParagraphPattern,
-                    ''
+                    ""
                 )
                 mdxContentNoDuplicateTitleSubtitle = mdxContentWithoutDescription
             }
         }
 
-        const resultStr = String(mdxContentNoDuplicateTitleSubtitle).replace(/\n{3,}/g, '\n\n')
+        const resultStr = String(mdxContentNoDuplicateTitleSubtitle).replace(/\n{3,}/g, "\n\n")
 
         const mdx = formatPageWithFrontmatter({
             title,

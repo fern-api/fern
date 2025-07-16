@@ -1,15 +1,15 @@
-import type { Element, ElementContent } from 'hast'
+import type { Element, ElementContent } from "hast"
 
-import { assertIsDefined, assertIsNumber } from '../assert'
-import { convertHastChildrenToMdast } from '../customComponents/children'
-import { findTitle } from '../extract/title'
-import type { HastNode, HastNodeIndex, HastNodeParent } from '../types/hastTypes'
+import { assertIsDefined, assertIsNumber } from "../assert"
+import { convertHastChildrenToMdast } from "../customComponents/children"
+import { findTitle } from "../extract/title"
+import type { HastNode, HastNodeIndex, HastNodeParent } from "../types/hastTypes"
 
 export function scrapeAccordion(node: HastNode, index: HastNodeIndex, parent: HastNodeParent): Element | undefined {
     if (
-        node.tagName !== 'button' ||
+        node.tagName !== "button" ||
         !node.properties.className ||
-        !(node.properties.className as Array<string>).includes('accordion')
+        !(node.properties.className as Array<string>).includes("accordion")
     ) {
         return undefined
     }
@@ -26,8 +26,8 @@ export function scrapeAccordion(node: HastNode, index: HastNodeIndex, parent: Ha
     parent.children.shift()
 
     const newNode: Element = {
-        type: 'element',
-        tagName: 'Accordion',
+        type: "element",
+        tagName: "Accordion",
         properties: {
             title
         },

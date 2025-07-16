@@ -1,8 +1,8 @@
-import path from 'path'
-import { z } from 'zod'
+import path from "path"
+import { z } from "zod"
 
-import { addPrefixToString } from '@fern-api/core-utils'
-import { TaskContext } from '@fern-api/task-context'
+import { addPrefixToString } from "@fern-api/core-utils"
+import { TaskContext } from "@fern-api/task-context"
 
 export async function validateSchema<T>({
     schema,
@@ -24,12 +24,12 @@ export async function validateSchema<T>({
         const message = issue.path.length > 0 ? `${issue.message} at "${joinZodPath(issue.path)}"` : issue.message
         return addPrefixToString({
             content: message,
-            prefix: '  - '
+            prefix: "  - "
         })
     })
 
     const errorMessage = [`Failed to parse file: ${path.relative(process.cwd(), filepathBeingParsed)}`, ...issues].join(
-        '\n'
+        "\n"
     )
 
     return context.failAndThrow(errorMessage)
@@ -38,11 +38,11 @@ export async function validateSchema<T>({
 // copied from https://github.com/causaly/zod-validation-error/blob/main/lib/utils/joinPath.ts
 export function joinZodPath(arr: (string | number)[]): string {
     return arr.reduce<string>((acc, value) => {
-        if (typeof value === 'number') {
-            return acc + '[' + value + ']'
+        if (typeof value === "number") {
+            return acc + "[" + value + "]"
         }
 
-        const separator = acc === '' ? '' : '.'
+        const separator = acc === "" ? "" : "."
         return acc + separator + value
-    }, '')
+    }, "")
 }

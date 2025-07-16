@@ -1,11 +1,11 @@
-import { assertNever } from '@fern-api/core-utils'
+import { assertNever } from "@fern-api/core-utils"
 
-import { ContainerType, Literal, NamedType, PrimitiveType, PrimitiveTypeV1, TypeReference } from '@fern-fern/ir-sdk/api'
+import { ContainerType, Literal, NamedType, PrimitiveType, PrimitiveTypeV1, TypeReference } from "@fern-fern/ir-sdk/api"
 
-import { go } from '../'
-import { TypeInstantiation } from '../ast'
-import { BaseGoCustomConfigSchema } from '../custom-config/BaseGoCustomConfigSchema'
-import { AbstractGoGeneratorContext } from './AbstractGoGeneratorContext'
+import { go } from "../"
+import { TypeInstantiation } from "../ast"
+import { BaseGoCustomConfigSchema } from "../custom-config/BaseGoCustomConfigSchema"
+import { AbstractGoGeneratorContext } from "./AbstractGoGeneratorContext"
 
 export declare namespace GoZeroValueMapper {
     interface Args {
@@ -22,15 +22,15 @@ export class GoZeroValueMapper {
 
     public convert({ reference }: GoZeroValueMapper.Args): TypeInstantiation {
         switch (reference.type) {
-            case 'container':
+            case "container":
                 return this.convertContainer({
                     container: reference.container
                 })
-            case 'named':
+            case "named":
                 return this.convertNamed({ named: reference })
-            case 'primitive':
+            case "primitive":
                 return this.convertPrimitive(reference)
-            case 'unknown':
+            case "unknown":
                 return go.TypeInstantiation.nil()
             default:
                 assertNever(reference)
@@ -39,13 +39,13 @@ export class GoZeroValueMapper {
 
     private convertContainer({ container }: { container: ContainerType }): TypeInstantiation {
         switch (container.type) {
-            case 'list':
-            case 'map':
-            case 'set':
-            case 'optional':
-            case 'nullable':
+            case "list":
+            case "map":
+            case "set":
+            case "optional":
+            case "nullable":
                 return go.TypeInstantiation.nil()
-            case 'literal':
+            case "literal":
                 return this.convertLiteral({ literal: container.literal })
             default:
                 assertNever(container)
@@ -61,7 +61,7 @@ export class GoZeroValueMapper {
             float: () => go.TypeInstantiation.float64(0),
             double: () => go.TypeInstantiation.float64(0),
             boolean: () => go.TypeInstantiation.bool(false),
-            string: () => go.TypeInstantiation.string(''),
+            string: () => go.TypeInstantiation.string(""),
             date: () => this.context.getZeroTime(),
             dateTime: () => this.context.getZeroTime(),
             uuid: () => this.context.getZeroUuid(),
@@ -73,10 +73,10 @@ export class GoZeroValueMapper {
 
     private convertLiteral({ literal }: { literal: Literal }): TypeInstantiation {
         switch (literal.type) {
-            case 'boolean':
+            case "boolean":
                 return go.TypeInstantiation.bool(false)
-            case 'string':
-                return go.TypeInstantiation.string('')
+            case "string":
+                return go.TypeInstantiation.string("")
             default:
                 assertNever(literal)
         }

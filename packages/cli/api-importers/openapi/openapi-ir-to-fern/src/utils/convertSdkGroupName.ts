@@ -1,13 +1,13 @@
-import { camelCase } from 'lodash-es'
+import { camelCase } from "lodash-es"
 
-import { FERN_PACKAGE_MARKER_FILENAME_NO_EXTENSION } from '@fern-api/configuration'
-import { assertNever } from '@fern-api/core-utils'
-import { EndpointSdkName, SdkGroupName } from '@fern-api/openapi-ir'
-import { RelativeFilePath, join } from '@fern-api/path-utils'
+import { FERN_PACKAGE_MARKER_FILENAME_NO_EXTENSION } from "@fern-api/configuration"
+import { assertNever } from "@fern-api/core-utils"
+import { EndpointSdkName, SdkGroupName } from "@fern-api/openapi-ir"
+import { RelativeFilePath, join } from "@fern-api/path-utils"
 
 function cleanSdkGroupName(groupName: SdkGroupName): SdkGroupName {
-    const maybeNamespace = groupName.find((group) => typeof group === 'object' && group.type === 'namespace')
-    const noNamespace = groupName.filter((group) => typeof group === 'string' || group.type !== 'namespace')
+    const maybeNamespace = groupName.find((group) => typeof group === "object" && group.type === "namespace")
+    const noNamespace = groupName.filter((group) => typeof group === "string" || group.type !== "namespace")
     return maybeNamespace ? [maybeNamespace, ...noNamespace] : noNamespace
 }
 
@@ -18,11 +18,11 @@ export function convertSdkGroupNameToFileWithoutExtension(groupName: SdkGroupNam
     }
     const fileNames: string[] = []
     for (const [index, group] of cleanedGroupName.entries()) {
-        if (typeof group === 'string') {
+        if (typeof group === "string") {
             fileNames.push(camelCase(group))
-        } else if (typeof group === 'object') {
+        } else if (typeof group === "object") {
             switch (group.type) {
-                case 'namespace': {
+                case "namespace": {
                     if (index < cleanedGroupName.length - 1) {
                         fileNames.push(camelCase(group.name))
                     } else {
@@ -39,7 +39,7 @@ export function convertSdkGroupNameToFileWithoutExtension(groupName: SdkGroupNam
         }
     }
 
-    return fileNames.join('/')
+    return fileNames.join("/")
 }
 
 export function convertSdkGroupNameToFile(groupName: SdkGroupName | undefined): RelativeFilePath {
@@ -59,8 +59,8 @@ export function convertEndpointSdkNameToFileWithoutExtension({
     } else if (namespaceOverride != null) {
         // Override the namespace in the event it doesn't have one or it has one and we want to change it
         groupName = [
-            { type: 'namespace', name: namespaceOverride },
-            ...sdkName.groupName.filter((group) => typeof group === 'string' || group.type !== 'namespace')
+            { type: "namespace", name: namespaceOverride },
+            ...sdkName.groupName.filter((group) => typeof group === "string" || group.type !== "namespace")
         ]
     } else {
         groupName = sdkName.groupName

@@ -1,16 +1,16 @@
-import { FernToken, createOrganizationIfDoesNotExist } from '@fern-api/auth'
-import { ContainerRunner, Values } from '@fern-api/core-utils'
-import { RelativeFilePath, join } from '@fern-api/fs-utils'
-import { askToLogin } from '@fern-api/login'
-import { Project } from '@fern-api/project-loader'
+import { FernToken, createOrganizationIfDoesNotExist } from "@fern-api/auth"
+import { ContainerRunner, Values } from "@fern-api/core-utils"
+import { RelativeFilePath, join } from "@fern-api/fs-utils"
+import { askToLogin } from "@fern-api/login"
+import { Project } from "@fern-api/project-loader"
 
-import { CliContext } from '../../cli-context/CliContext'
-import { PREVIEW_DIRECTORY } from '../../constants'
-import { checkOutputDirectory } from './checkOutputDirectory'
-import { generateWorkspace } from './generateAPIWorkspace'
+import { CliContext } from "../../cli-context/CliContext"
+import { PREVIEW_DIRECTORY } from "../../constants"
+import { checkOutputDirectory } from "./checkOutputDirectory"
+import { generateWorkspace } from "./generateAPIWorkspace"
 
 export const GenerationMode = {
-    PullRequest: 'pull-request'
+    PullRequest: "pull-request"
 } as const
 
 export type GenerationMode = Values<typeof GenerationMode>
@@ -46,7 +46,7 @@ export async function generateAPIWorkspaces({
         const currentToken = await cliContext.runTask(async (context) => {
             return askToLogin(context)
         })
-        if (currentToken.type === 'user') {
+        if (currentToken.type === "user") {
             await cliContext.runTask(async (context) => {
                 await createOrganizationIfDoesNotExist({
                     organization: project.config.organization,
@@ -62,14 +62,14 @@ export async function generateAPIWorkspaces({
         for (const generator of workspace.generatorsConfiguration?.groups.flatMap((group) => group.generators) ?? []) {
             const { shouldProceed } = await checkOutputDirectory(generator.absolutePathToLocalOutput, cliContext, force)
             if (!shouldProceed) {
-                cliContext.failAndThrow('Generation cancelled')
+                cliContext.failAndThrow("Generation cancelled")
             }
         }
     }
 
     await cliContext.instrumentPostHogEvent({
         orgId: project.config.organization,
-        command: 'fern generate',
+        command: "fern generate",
         properties: {
             workspaces: project.apiWorkspaces.map((workspace) => {
                 return {

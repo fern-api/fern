@@ -1,8 +1,8 @@
-import { PackageId } from '@fern-typescript/commons'
+import { PackageId } from "@fern-typescript/commons"
 
-import { WebSocketChannel, WebSocketMessageBodyReference } from '@fern-fern/ir-sdk/api'
+import { WebSocketChannel, WebSocketMessageBodyReference } from "@fern-fern/ir-sdk/api"
 
-import { GeneratedWebsocketResponseSchemaImpl } from './GeneratedWebsocketResponseSchemaImpl'
+import { GeneratedWebsocketResponseSchemaImpl } from "./GeneratedWebsocketResponseSchemaImpl"
 
 export declare namespace WebsocketTypeSchemaGenerator {
     export interface Init {

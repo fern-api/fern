@@ -1,34 +1,34 @@
-import chalk from 'chalk'
+import chalk from "chalk"
 
-import { FernUserToken, storeToken } from '@fern-api/auth'
-import { getPosthogManager } from '@fern-api/posthog-manager'
-import { TaskContext } from '@fern-api/task-context'
+import { FernUserToken, storeToken } from "@fern-api/auth"
+import { getPosthogManager } from "@fern-api/posthog-manager"
+import { TaskContext } from "@fern-api/task-context"
 
-import { doAuth0DeviceAuthorizationFlow } from './auth0-login/doAuth0DeviceAuthorizationFlow'
-import { doAuth0LoginFlow } from './auth0-login/doAuth0LoginFlow'
+import { doAuth0DeviceAuthorizationFlow } from "./auth0-login/doAuth0DeviceAuthorizationFlow"
+import { doAuth0LoginFlow } from "./auth0-login/doAuth0LoginFlow"
 
 // these are client-side safe values
-const AUTH0_DOMAIN = process.env.AUTH0_DOMAIN ?? 'fern-prod.us.auth0.com'
-const AUTH0_CLIENT_ID = process.env.AUTH0_CLIENT_ID ?? 'syaWnk6SjNoo5xBf1omfvziU3q7085lh'
-const VENUS_AUDIENCE = process.env.VENUS_AUDIENCE ?? 'venus-prod'
+const AUTH0_DOMAIN = process.env.AUTH0_DOMAIN ?? "fern-prod.us.auth0.com"
+const AUTH0_CLIENT_ID = process.env.AUTH0_CLIENT_ID ?? "syaWnk6SjNoo5xBf1omfvziU3q7085lh"
+const VENUS_AUDIENCE = process.env.VENUS_AUDIENCE ?? "venus-prod"
 
 export async function login(
     context: TaskContext,
     { useDeviceCodeFlow = false }: { useDeviceCodeFlow?: boolean } = {}
 ): Promise<FernUserToken> {
     await context.instrumentPostHogEvent({
-        command: 'Login initiated'
+        command: "Login initiated"
     })
 
     const token = await getTokenFromAuth0(context, { useDeviceCodeFlow })
     await storeToken(token)
 
-    context.logger.info(chalk.green('Logged in!'))
+    context.logger.info(chalk.green("Logged in!"))
 
     ;(await getPosthogManager()).identify()
 
     return {
-        type: 'user',
+        type: "user",
         value: token
     }
 }

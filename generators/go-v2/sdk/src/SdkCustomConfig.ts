@@ -1,4 +1,4 @@
-import { BaseGoCustomConfigSchema } from '@fern-api/go-ast'
+import { BaseGoCustomConfigSchema } from "@fern-api/go-ast"
 
 export const SdkCustomConfigSchema: typeof BaseGoCustomConfigSchema = BaseGoCustomConfigSchema
 

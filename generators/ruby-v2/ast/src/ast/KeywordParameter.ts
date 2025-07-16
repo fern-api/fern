@@ -1,6 +1,6 @@
-import { AstNode } from '../ruby'
-import { Parameter } from './Parameter'
-import { Writer } from './core/Writer'
+import { AstNode } from "../ruby"
+import { Parameter } from "./Parameter"
+import { Writer } from "./core/Writer"
 
 export declare namespace KeywordParameter {
     interface Args extends Parameter.Args {
@@ -28,7 +28,7 @@ export class KeywordParameter extends Parameter {
 
     public writeTypeDefinition(writer: Writer): void {
         if (this.optional) {
-            writer.write('?')
+            writer.write("?")
         }
 
         writer.write(`${this.name}: `)

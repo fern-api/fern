@@ -1,8 +1,8 @@
-import { Availability, AvailabilityStatus } from '@fern-api/ir-sdk'
+import { Availability, AvailabilityStatus } from "@fern-api/ir-sdk"
 
-import { convertAvailability } from '../converters/convertDeclaration'
+import { convertAvailability } from "../converters/convertDeclaration"
 
-type RawAvailabilityStatus = 'in-development' | 'pre-release' | 'generally-available' | 'deprecated'
+type RawAvailabilityStatus = "in-development" | "pre-release" | "generally-available" | "deprecated"
 interface RawAvailability {
     status: RawAvailabilityStatus
     message?: string
@@ -11,10 +11,10 @@ interface RawAvailability {
 export function getAvailability(
     field: { availability?: RawAvailability | RawAvailabilityStatus } | string
 ): Availability | undefined {
-    if (typeof field === 'string' || field.availability == null) {
+    if (typeof field === "string" || field.availability == null) {
         return undefined
     }
 
-    const rawAvailability = typeof field.availability === 'string' ? { status: field.availability } : field.availability
+    const rawAvailability = typeof field.availability === "string" ? { status: field.availability } : field.availability
     return convertAvailability(field.availability)
 }

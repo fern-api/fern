@@ -1,13 +1,13 @@
-import { readFile } from 'fs/promises'
-import yaml from 'js-yaml'
+import { readFile } from "fs/promises"
+import yaml from "js-yaml"
 
-import { DOCS_CONFIGURATION_FILENAME, docsYml } from '@fern-api/configuration-loader'
-import { validateAgainstJsonSchema } from '@fern-api/core-utils'
-import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from '@fern-api/fs-utils'
-import { TaskContext } from '@fern-api/task-context'
+import { DOCS_CONFIGURATION_FILENAME, docsYml } from "@fern-api/configuration-loader"
+import { validateAgainstJsonSchema } from "@fern-api/core-utils"
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils"
+import { TaskContext } from "@fern-api/task-context"
 
-import * as DocsYmlJsonSchema from './docs-yml.schema.json'
-import { DocsWorkspace } from './types/Workspace'
+import * as DocsYmlJsonSchema from "./docs-yml.schema.json"
+import { DocsWorkspace } from "./types/Workspace"
 
 export async function loadDocsWorkspace({
     fernDirectory,
@@ -27,7 +27,7 @@ export async function loadDocsWorkspace({
     })
     if (docsConfiguration != null) {
         return {
-            type: 'docs',
+            type: "docs",
             absoluteFilePath: fernDirectory,
             config: docsConfiguration,
             workspaceName: undefined,
@@ -71,6 +71,6 @@ export async function loadRawDocsConfiguration({
     if (result.success) {
         return docsYml.RawSchemas.Serializer.DocsConfiguration.parseOrThrow(contentsJson)
     } else {
-        throw new Error(`Failed to parse docs.yml because of ${result.error?.message ?? 'Unknown error'}`)
+        throw new Error(`Failed to parse docs.yml because of ${result.error?.message ?? "Unknown error"}`)
     }
 }

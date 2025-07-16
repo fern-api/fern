@@ -1,16 +1,16 @@
-import { python } from '..'
-import { Writer } from '../core/Writer'
+import { python } from ".."
+import { Writer } from "../core/Writer"
 
-describe('ClassInstantiation', () => {
+describe("ClassInstantiation", () => {
     let writer: Writer
 
     beforeEach(() => {
         writer = new Writer()
     })
 
-    it('should write a class instantiation with no args', async () => {
+    it("should write a class instantiation with no args", async () => {
         const invocation = python.instantiateClass({
-            classReference: python.reference({ name: 'TestClass' }),
+            classReference: python.reference({ name: "TestClass" }),
             arguments_: []
         })
 
@@ -20,10 +20,10 @@ describe('ClassInstantiation', () => {
         expect(writer.toString()).toMatchSnapshot()
     })
 
-    it('should write a class instantiation with one positional arg', async () => {
+    it("should write a class instantiation with one positional arg", async () => {
         const invocation = python.instantiateClass({
-            classReference: python.reference({ name: 'TestClass' }),
-            arguments_: [python.methodArgument({ value: python.codeBlock('42') })]
+            classReference: python.reference({ name: "TestClass" }),
+            arguments_: [python.methodArgument({ value: python.codeBlock("42") })]
         })
 
         const writer = new Writer()
@@ -32,12 +32,12 @@ describe('ClassInstantiation', () => {
         expect(writer.toString()).toMatchSnapshot()
     })
 
-    it('should write a class instantiation with one positional arg and one kwarg', async () => {
+    it("should write a class instantiation with one positional arg and one kwarg", async () => {
         const invocation = python.instantiateClass({
-            classReference: python.reference({ name: 'TestClass' }),
+            classReference: python.reference({ name: "TestClass" }),
             arguments_: [
-                python.methodArgument({ value: python.codeBlock('42') }),
-                python.methodArgument({ name: 'key', value: python.codeBlock("'value'") })
+                python.methodArgument({ value: python.codeBlock("42") }),
+                python.methodArgument({ name: "key", value: python.codeBlock("'value'") })
             ]
         })
 
@@ -47,14 +47,14 @@ describe('ClassInstantiation', () => {
         expect(writer.toString()).toMatchSnapshot()
     })
 
-    it('should write a class instantiation with multiple positional and kwarg args', async () => {
+    it("should write a class instantiation with multiple positional and kwarg args", async () => {
         const invocation = python.instantiateClass({
-            classReference: python.reference({ name: 'TestClass' }),
+            classReference: python.reference({ name: "TestClass" }),
             arguments_: [
-                python.methodArgument({ value: python.codeBlock('42') }),
+                python.methodArgument({ value: python.codeBlock("42") }),
                 python.methodArgument({ value: python.codeBlock("'hello'") }),
-                python.methodArgument({ name: 'key1', value: python.codeBlock('True') }),
-                python.methodArgument({ name: 'key2', value: python.codeBlock('[1, 2, 3]') })
+                python.methodArgument({ name: "key1", value: python.codeBlock("True") }),
+                python.methodArgument({ name: "key2", value: python.codeBlock("[1, 2, 3]") })
             ]
         })
 
@@ -64,12 +64,12 @@ describe('ClassInstantiation', () => {
         expect(writer.toString()).toMatchSnapshot()
     })
 
-    it('should write a class instantiation with a parent', async () => {
+    it("should write a class instantiation with a parent", async () => {
         const invocation = python.instantiateClass({
-            classReference: python.reference({ name: 'ParentClass', attribute: ['ChildClass'] }),
+            classReference: python.reference({ name: "ParentClass", attribute: ["ChildClass"] }),
             arguments_: [
                 python.methodArgument({ value: python.codeBlock("'arg1'") }),
-                python.methodArgument({ name: 'kwarg', value: python.codeBlock('42') })
+                python.methodArgument({ name: "kwarg", value: python.codeBlock("42") })
             ]
         })
 

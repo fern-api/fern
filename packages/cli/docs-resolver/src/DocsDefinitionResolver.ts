@@ -1,20 +1,20 @@
-import dayjs from 'dayjs'
-import utc from 'dayjs/plugin/utc'
-import { readFile, stat } from 'fs/promises'
-import matter from 'gray-matter'
-import { kebabCase } from 'lodash-es'
-import urlJoin from 'url-join'
+import dayjs from "dayjs"
+import utc from "dayjs/plugin/utc"
+import { readFile, stat } from "fs/promises"
+import matter from "gray-matter"
+import { kebabCase } from "lodash-es"
+import urlJoin from "url-join"
 
-import { SourceResolverImpl } from '@fern-api/cli-source-resolver'
-import { WithoutQuestionMarks, docsYml, parseDocsConfiguration } from '@fern-api/configuration-loader'
-import { assertNever, isNonNullish, visitDiscriminatedUnion } from '@fern-api/core-utils'
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver"
+import { WithoutQuestionMarks, docsYml, parseDocsConfiguration } from "@fern-api/configuration-loader"
+import { assertNever, isNonNullish, visitDiscriminatedUnion } from "@fern-api/core-utils"
 import {
     parseImagePaths,
     replaceImagePathsAndUrls,
     replaceReferencedCode,
     replaceReferencedMarkdown
-} from '@fern-api/docs-markdown-utils'
-import { APIV1Write, DocsV1Write, FdrAPI, FernNavigation } from '@fern-api/fdr-sdk'
+} from "@fern-api/docs-markdown-utils"
+import { APIV1Write, DocsV1Write, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk"
 import {
     AbsoluteFilePath,
     RelativeFilePath,
@@ -23,24 +23,24 @@ import {
     listFiles,
     relative,
     resolve
-} from '@fern-api/fs-utils'
-import { generateIntermediateRepresentation } from '@fern-api/ir-generator'
-import { IntermediateRepresentation } from '@fern-api/ir-sdk'
-import { OSSWorkspace } from '@fern-api/lazy-fern-workspace'
-import { TaskContext } from '@fern-api/task-context'
-import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from '@fern-api/workspace-loader'
+} from "@fern-api/fs-utils"
+import { generateIntermediateRepresentation } from "@fern-api/ir-generator"
+import { IntermediateRepresentation } from "@fern-api/ir-sdk"
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace"
+import { TaskContext } from "@fern-api/task-context"
+import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader"
 
-import { ApiReferenceNodeConverter } from './ApiReferenceNodeConverter'
-import { ApiReferenceNodeConverterLatest } from './ApiReferenceNodeConverterLatest'
-import { ChangelogNodeConverter } from './ChangelogNodeConverter'
-import { NodeIdGenerator } from './NodeIdGenerator'
-import { convertDocsSnippetsConfigToFdr } from './utils/convertDocsSnippetsConfigToFdr'
-import { convertIrToApiDefinition } from './utils/convertIrToApiDefinition'
-import { generateFdrFromOpenApiWorkspace } from './utils/generateFdrFromOpenApiWorkspace'
-import { generateFdrFromOpenrpc } from './utils/generateFdrFromOpenrpc'
-import { collectFilesFromDocsConfig } from './utils/getImageFilepathsToUpload'
-import { visitNavigationAst } from './visitNavigationAst'
-import { wrapWithHttps } from './wrapWithHttps'
+import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter"
+import { ApiReferenceNodeConverterLatest } from "./ApiReferenceNodeConverterLatest"
+import { ChangelogNodeConverter } from "./ChangelogNodeConverter"
+import { NodeIdGenerator } from "./NodeIdGenerator"
+import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr"
+import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition"
+import { generateFdrFromOpenApiWorkspace } from "./utils/generateFdrFromOpenApiWorkspace"
+import { generateFdrFromOpenrpc } from "./utils/generateFdrFromOpenrpc"
+import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload"
+import { visitNavigationAst } from "./visitNavigationAst"
+import { wrapWithHttps } from "./wrapWithHttps"
 
 dayjs.extend(utc)
 
@@ -53,7 +53,7 @@ export interface UploadedFile extends FilePathPair {
     fileId: string
 }
 
-export type PlaygroundConfig = Pick<docsYml.RawSchemas.PlaygroundSettings, 'oauth'>
+export type PlaygroundConfig = Pick<docsYml.RawSchemas.PlaygroundSettings, "oauth">
 
 type AsyncOrSync<T> = T | Promise<T>
 
@@ -106,7 +106,7 @@ export class DocsDefinitionResolver {
     private _parsedDocsConfig: WithoutQuestionMarks<docsYml.ParsedDocsConfiguration> | undefined
     private get parsedDocsConfig(): WithoutQuestionMarks<docsYml.ParsedDocsConfiguration> {
         if (this._parsedDocsConfig == null) {
-            throw new Error('parsedDocsConfig is not set')
+            throw new Error("parsedDocsConfig is not set")
         }
         return this._parsedDocsConfig
     }
@@ -264,7 +264,7 @@ export class DocsDefinitionResolver {
                     const stats = await stat(absoluteFilePath)
 
                     if (stats.isDirectory()) {
-                        const files = await listFiles(absoluteFilePath, '{js,ts,jsx,tsx,md,mdx}')
+                        const files = await listFiles(absoluteFilePath, "{js,ts,jsx,tsx,md,mdx}")
 
                         files.forEach((file) => {
                             jsFilePaths.add(file)
@@ -319,7 +319,7 @@ export class DocsDefinitionResolver {
         for (const [relativePath, markdown] of Object.entries(pages)) {
             const frontmatter = matter(markdown)
             const slug = frontmatter.data.slug
-            if (typeof slug === 'string' && slug.trim().length > 0) {
+            if (typeof slug === "string" && slug.trim().length > 0) {
                 mdxFilePathToSlug.set(this.resolveFilepath(relativePath), slug.trim())
             }
         }
@@ -338,7 +338,7 @@ export class DocsDefinitionResolver {
         for (const [relativePath, markdown] of Object.entries(pages)) {
             const frontmatter = matter(markdown)
             const noindex = frontmatter.data.noindex
-            if (typeof noindex === 'boolean') {
+            if (typeof noindex === "boolean") {
                 mdxFilePathToNoIndex.set(this.resolveFilepath(relativePath), noindex)
             }
         }
@@ -478,7 +478,7 @@ export class DocsDefinitionResolver {
         }
         const errorMessage = apiSection.apiName
             ? `Failed to load API Definition '${apiSection.apiName}' referenced in docs`
-            : 'Failed to load API Definition referenced in docs'
+            : "Failed to load API Definition referenced in docs"
         throw new Error(errorMessage)
     }
 
@@ -493,24 +493,24 @@ export class DocsDefinitionResolver {
         }
         const errorMessage = apiSection.apiName
             ? `Failed to load API Definition '${apiSection.apiName}' referenced in docs`
-            : 'Failed to load API Definition referenced in docs'
+            : "Failed to load API Definition referenced in docs"
         throw new Error(errorMessage)
     }
 
     private async toRootNode(): Promise<FernNavigation.V1.RootNode> {
         const slug = FernNavigation.V1.SlugGenerator.init(FernNavigation.slugjoin(this.getDocsBasePath()))
-        const id = this.#idgen.get('root')
+        const id = this.#idgen.get("root")
 
         const child: FernNavigation.V1.RootChild = await this.toRootChild(slug)
 
         return {
-            type: 'root',
-            version: 'v1',
+            type: "root",
+            version: "v1",
             id,
             child,
             slug: slug.get(),
             // TODO: should this be "Documentation" by default? Or can we use the org name here?
-            title: this.parsedDocsConfig.title ?? 'Documentation',
+            title: this.parsedDocsConfig.title ?? "Documentation",
             hidden: false,
             icon: undefined,
             pointsTo: undefined,
@@ -553,10 +553,10 @@ export class DocsDefinitionResolver {
         const pageId = FernNavigation.PageId(this.toRelativeFilepath(landingPageConfig.absolutePath))
         const slug = parentSlug.apply({
             urlSlug: landingPageConfig.slug ?? kebabCase(landingPageConfig.title),
-            fullSlug: this.markdownFilesToFullSlugs.get(landingPageConfig.absolutePath)?.split('/')
+            fullSlug: this.markdownFilesToFullSlugs.get(landingPageConfig.absolutePath)?.split("/")
         })
         return {
-            type: 'landingPage',
+            type: "landingPage",
             id: this.#idgen.get(pageId),
             title: landingPageConfig.title,
             slug: slug.get(),
@@ -580,27 +580,27 @@ export class DocsDefinitionResolver {
         navigationConfig: docsYml.UnversionedNavigationConfiguration
         parentSlug: FernNavigation.V1.SlugGenerator
     }): Promise<FernNavigation.V1.UnversionedNode> {
-        const id = this.#idgen.get('unversioned')
+        const id = this.#idgen.get("unversioned")
         const landingPage: FernNavigation.V1.LandingPageNode | undefined =
             landingPageConfig != null ? this.toLandingPageNode(landingPageConfig, parentSlug) : undefined
 
         const child =
-            navigationConfig.type === 'tabbed'
+            navigationConfig.type === "tabbed"
                 ? await this.convertTabbedNavigation(id, navigationConfig.items, parentSlug)
                 : await this.toSidebarRootNode(id, navigationConfig.items, parentSlug)
 
-        return { type: 'unversioned', id, landingPage, child }
+        return { type: "unversioned", id, landingPage, child }
     }
 
     private async toVersionedNode(
         versioned: docsYml.VersionedDocsNavigation,
         parentSlug: FernNavigation.V1.SlugGenerator
     ): Promise<FernNavigation.V1.VersionedNode> {
-        const id = this.#idgen.get('versioned')
+        const id = this.#idgen.get("versioned")
 
         return {
             id,
-            type: 'versioned',
+            type: "versioned",
             // TODO: should the first version always be default? We should make this configurable.
             children: await Promise.all(
                 versioned.versions.map((item, idx) => this.toVersionNode(item, parentSlug, idx === 0))
@@ -617,12 +617,12 @@ export class DocsDefinitionResolver {
         landingPageConfig: docsYml.DocsNavigationItem.Page | undefined
         parentSlug: FernNavigation.V1.SlugGenerator
     }): Promise<FernNavigation.V1.ProductGroupNode> {
-        const id = this.#idgen.get('productgroup')
+        const id = this.#idgen.get("productgroup")
         const landingPage: FernNavigation.V1.LandingPageNode | undefined =
             landingPageConfig != null ? this.toLandingPageNode(landingPageConfig, parentSlug) : undefined
         return {
             id,
-            type: 'productgroup',
+            type: "productgroup",
             landingPage,
             children: await Promise.all(productGroup.products.map((product) => this.toProductNode(product, parentSlug)))
         }
@@ -635,9 +635,9 @@ export class DocsDefinitionResolver {
         const slug = parentSlug.setProductSlug(product.slug ?? kebabCase(product.product))
         let child: FernNavigation.V1.ProductChild
         switch (product.navigation.type) {
-            case 'tabbed':
+            case "tabbed":
                 child = {
-                    type: 'unversioned',
+                    type: "unversioned",
                     id: this.#idgen.get(product.product),
                     landingPage: undefined,
                     child: await this.convertTabbedNavigation(
@@ -647,9 +647,9 @@ export class DocsDefinitionResolver {
                     )
                 }
                 break
-            case 'untabbed':
+            case "untabbed":
                 child = {
-                    type: 'unversioned',
+                    type: "unversioned",
                     id: this.#idgen.get(product.product),
                     landingPage: undefined,
                     child: await this.toSidebarRootNode(
@@ -659,18 +659,18 @@ export class DocsDefinitionResolver {
                     )
                 }
                 break
-            case 'versioned':
+            case "versioned":
                 child = await this.toVersionedNode(product.navigation, slug)
                 break
             default:
                 assertNever(product.navigation)
         }
         return {
-            type: 'product',
+            type: "product",
             id: this.#idgen.get(product.product),
             productId: FernNavigation.V1.ProductId(product.product),
             title: product.product,
-            subtitle: product.subtitle ?? '',
+            subtitle: product.subtitle ?? "",
             slug: slug.get(),
             child,
             default: false,
@@ -693,11 +693,11 @@ export class DocsDefinitionResolver {
         const id = this.#idgen.get(version.version)
         const slug = parentSlug.setVersionSlug(version.slug ?? kebabCase(version.version))
         const child =
-            version.navigation.type === 'tabbed'
+            version.navigation.type === "tabbed"
                 ? await this.convertTabbedNavigation(id, version.navigation.items, slug)
                 : await this.toSidebarRootNode(id, version.navigation.items, slug)
         return {
-            type: 'version',
+            type: "version",
             id,
             versionId: FernNavigation.VersionId(version.version),
             title: version.version,
@@ -728,24 +728,24 @@ export class DocsDefinitionResolver {
 
         const grouped: FernNavigation.V1.SidebarRootChild[] = []
         children.forEach((child) => {
-            if (child.type === 'apiReference') {
+            if (child.type === "apiReference") {
                 grouped.push(child)
                 return
             }
 
-            if (child.type === 'section' && !child.collapsed) {
+            if (child.type === "section" && !child.collapsed) {
                 grouped.push(child)
                 return
             }
 
             const lastChild = grouped.length > 0 ? grouped[grouped.length - 1] : undefined
             let sidebarGroup: FernNavigation.V1.SidebarGroupNode
-            if (lastChild?.type === 'sidebarGroup') {
+            if (lastChild?.type === "sidebarGroup") {
                 sidebarGroup = lastChild
             } else {
                 sidebarGroup = {
                     id: this.#idgen.get(`${id}/group`),
-                    type: 'sidebarGroup',
+                    type: "sidebarGroup",
                     children: []
                 }
                 grouped.push(sidebarGroup)
@@ -755,7 +755,7 @@ export class DocsDefinitionResolver {
         })
 
         return {
-            type: 'sidebarRoot',
+            type: "sidebarRoot",
             id,
             children: grouped
         }
@@ -791,7 +791,7 @@ export class DocsDefinitionResolver {
             }
             const api = await generateFdrFromOpenrpc(absoluteFilepathToOpenrpc, this.taskContext)
             if (api == null) {
-                throw new Error('Failed to generate API Definition from OpenRPC document')
+                throw new Error("Failed to generate API Definition from OpenRPC document")
             }
             await this.registerApiV2({
                 // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
@@ -820,7 +820,7 @@ export class DocsDefinitionResolver {
             const snippetsConfig = convertDocsSnippetsConfigToFdr(item.snippetsConfiguration)
             const api = await generateFdrFromOpenApiWorkspace(workspace, this.taskContext)
             if (api == null) {
-                throw new Error('Failed to generate API Definition from OpenAPI workspace')
+                throw new Error("Failed to generate API Definition from OpenAPI workspace")
             }
             await this.registerApiV2({
                 // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
@@ -938,7 +938,7 @@ export class DocsDefinitionResolver {
 
     private async toLinkNode(item: docsYml.DocsNavigationItem.Link): Promise<FernNavigation.V1.LinkNode> {
         return {
-            type: 'link',
+            type: "link",
             id: this.#idgen.get(item.url),
             title: item.text,
             url: FernNavigation.V1.Url(item.url),
@@ -954,12 +954,12 @@ export class DocsDefinitionResolver {
         const pageId = FernNavigation.PageId(this.toRelativeFilepath(item.absolutePath))
         const slug = parentSlug.apply({
             urlSlug: item.slug ?? kebabCase(item.title),
-            fullSlug: this.markdownFilesToFullSlugs.get(item.absolutePath)?.split('/')
+            fullSlug: this.markdownFilesToFullSlugs.get(item.absolutePath)?.split("/")
         })
         const id = this.#idgen.get(pageId)
         return {
             id,
-            type: 'page',
+            type: "page",
             slug: slug.get(),
             title: item.title,
             icon: item.icon,
@@ -985,7 +985,7 @@ export class DocsDefinitionResolver {
         const slug = parentSlug.apply({
             urlSlug: item.slug ?? kebabCase(item.title),
             fullSlug: item.overviewAbsolutePath
-                ? this.markdownFilesToFullSlugs.get(item.overviewAbsolutePath)?.split('/')
+                ? this.markdownFilesToFullSlugs.get(item.overviewAbsolutePath)?.split("/")
                 : undefined,
             skipUrlSlug: item.skipUrlSlug
         })
@@ -994,7 +994,7 @@ export class DocsDefinitionResolver {
         const hiddenSection = hideChildren || item.hidden
         return {
             id,
-            type: 'section',
+            type: "section",
             overviewPageId: pageId,
             slug: slug.get(),
             title: item.title,
@@ -1020,7 +1020,7 @@ export class DocsDefinitionResolver {
     ): Promise<FernNavigation.V1.TabbedNode> {
         const id = this.#idgen.get(`${prefix}/tabbed`)
         return {
-            type: 'tabbed',
+            type: "tabbed",
             id,
             children: await Promise.all(items.map((item) => this.toTabChild(id, item, parentSlug)))
         }
@@ -1062,7 +1062,7 @@ export class DocsDefinitionResolver {
 
     private async toTabLinkNode(item: docsYml.TabbedNavigation, href: string): Promise<FernNavigation.V1.LinkNode> {
         return {
-            type: 'link',
+            type: "link",
             id: this.#idgen.get(href),
             title: item.title,
             url: FernNavigation.V1.Url(href),
@@ -1082,7 +1082,7 @@ export class DocsDefinitionResolver {
             skipUrlSlug: item.skipUrlSlug
         })
         return {
-            type: 'tab',
+            type: "tab",
             id,
             title: item.title,
             slug: slug.get(),
@@ -1105,7 +1105,7 @@ export class DocsDefinitionResolver {
         }
         const fileId = this.collectedFileIds.get(filepath)
         if (fileId == null) {
-            return this.taskContext.failAndThrow('Failed to locate file after uploading: ' + filepath)
+            return this.taskContext.failAndThrow("Failed to locate file after uploading: " + filepath)
         }
         return DocsV1Write.FileId(fileId)
     }
@@ -1115,20 +1115,20 @@ export class DocsDefinitionResolver {
         if (colors == null) {
             return undefined
         }
-        if (colors.type === 'dark') {
+        if (colors.type === "dark") {
             return {
                 ...colors,
                 ...this.convertLogoAndBackgroundImage({
-                    theme: 'dark'
+                    theme: "dark"
                 })
             }
-        } else if (colors.type === 'light') {
+        } else if (colors.type === "light") {
             return {
                 ...colors,
                 ...this.convertLogoAndBackgroundImage({
-                    theme: 'light'
+                    theme: "light"
                 }),
-                type: 'light'
+                type: "light"
             }
         } else {
             return {
@@ -1136,20 +1136,20 @@ export class DocsDefinitionResolver {
                 dark: {
                     ...colors.dark,
                     ...this.convertLogoAndBackgroundImage({
-                        theme: 'dark'
+                        theme: "dark"
                     })
                 },
                 light: {
                     ...colors.light,
                     ...this.convertLogoAndBackgroundImage({
-                        theme: 'light'
+                        theme: "light"
                     })
                 }
             }
         }
     }
 
-    private convertLogoAndBackgroundImage({ theme }: { theme: 'dark' | 'light' }) {
+    private convertLogoAndBackgroundImage({ theme }: { theme: "dark" | "light" }) {
         const { logo, backgroundImage } = this.parsedDocsConfig
         const logoRef = logo?.[theme]
         const backgroundImageRef = backgroundImage?.[theme]
@@ -1164,9 +1164,9 @@ export class DocsDefinitionResolver {
             return
         }
         return {
-            headingsFont: this.convertFont(this.parsedDocsConfig.typography.headingsFont, 'headings'),
-            bodyFont: this.convertFont(this.parsedDocsConfig.typography.bodyFont, 'body'),
-            codeFont: this.convertFont(this.parsedDocsConfig.typography.codeFont, 'code')
+            headingsFont: this.convertFont(this.parsedDocsConfig.typography.headingsFont, "headings"),
+            bodyFont: this.convertFont(this.parsedDocsConfig.typography.bodyFont, "body"),
+            codeFont: this.convertFont(this.parsedDocsConfig.typography.codeFont, "code")
         }
     }
 
@@ -1182,7 +1182,7 @@ export class DocsDefinitionResolver {
         const fileId = this.getFileId(font.variants[0].absolutePath)
 
         return {
-            type: 'custom',
+            type: "custom",
             name: font.name ?? `font:${label}:${fileId}`,
             variants: font.variants.map((variant) => {
                 const fontFile = this.getFileId(variant.absolutePath)
@@ -1223,16 +1223,16 @@ export class DocsDefinitionResolver {
         }
 
         const {
-            'og:image': ogImage,
-            'og:logo': ogLogo,
-            'twitter:image': twitterImage,
+            "og:image": ogImage,
+            "og:logo": ogLogo,
+            "twitter:image": twitterImage,
             ...rest
         } = this.parsedDocsConfig.metadata
         return {
             ...rest,
-            'og:image': this.convertFileIdOrUrl(ogImage),
-            'og:logo': this.convertFileIdOrUrl(ogLogo),
-            'twitter:image': this.convertFileIdOrUrl(twitterImage)
+            "og:image": this.convertFileIdOrUrl(ogImage),
+            "og:logo": this.convertFileIdOrUrl(ogLogo),
+            "twitter:image": this.convertFileIdOrUrl(twitterImage)
         }
     }
 
@@ -1241,13 +1241,13 @@ export class DocsDefinitionResolver {
             return
         }
 
-        return visitDiscriminatedUnion(filepathOrUrl, 'type')._visit<DocsV1Write.FileIdOrUrl>({
+        return visitDiscriminatedUnion(filepathOrUrl, "type")._visit<DocsV1Write.FileIdOrUrl>({
             filepath: ({ value }) => ({
-                type: 'fileId',
+                type: "fileId",
                 value: this.getFileId(value)
             }),
-            url: ({ value }) => ({ type: 'url', value: DocsV1Write.Url(value) }),
-            _other: () => this.taskContext.failAndThrow('Invalid metadata configuration')
+            url: ({ value }) => ({ type: "url", value: DocsV1Write.Url(value) }),
+            _other: () => this.taskContext.failAndThrow("Invalid metadata configuration")
         })
     }
 }
@@ -1260,7 +1260,7 @@ function createEditThisPageUrl(
         return undefined
     }
 
-    const { owner, repo, branch = 'main', host = 'https://github.com' } = editThisPage.github
+    const { owner, repo, branch = "main", host = "https://github.com" } = editThisPage.github
 
     return `${wrapWithHttps(host)}/${owner}/${repo}/blob/${branch}/fern/${pageFilepath}?plain=1`
 }
@@ -1269,13 +1269,13 @@ function convertAvailability(
     availability: docsYml.RawSchemas.VersionAvailability
 ): FernNavigation.V1.NavigationV1Availability {
     switch (availability) {
-        case 'beta':
+        case "beta":
             return FernNavigation.V1.NavigationV1Availability.Beta
-        case 'deprecated':
+        case "deprecated":
             return FernNavigation.V1.NavigationV1Availability.Deprecated
-        case 'ga':
+        case "ga":
             return FernNavigation.V1.NavigationV1Availability.GenerallyAvailable
-        case 'stable':
+        case "stable":
             return FernNavigation.V1.NavigationV1Availability.Stable
         default:
             assertNever(availability)

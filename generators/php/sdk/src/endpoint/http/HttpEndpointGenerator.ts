@@ -1,8 +1,8 @@
-import { upperFirst } from 'lodash-es'
+import { upperFirst } from "lodash-es"
 
-import { Arguments, UnnamedArgument } from '@fern-api/base-generator'
-import { assertNever } from '@fern-api/core-utils'
-import { php } from '@fern-api/php-codegen'
+import { Arguments, UnnamedArgument } from "@fern-api/base-generator"
+import { assertNever } from "@fern-api/core-utils"
+import { php } from "@fern-api/php-codegen"
 
 import {
     CursorPagination,
@@ -14,13 +14,13 @@ import {
     RequestProperty,
     ResponseProperty,
     ServiceId
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { SdkGeneratorContext } from '../../SdkGeneratorContext'
-import { AbstractEndpointGenerator } from '../AbstractEndpointGenerator'
-import { getEndpointReturnType } from '../utils/getEndpointReturnType'
+import { SdkGeneratorContext } from "../../SdkGeneratorContext"
+import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator"
+import { getEndpointReturnType } from "../utils/getEndpointReturnType"
 
-type PagingEndpoint = HttpEndpoint & { pagination: NonNullable<HttpEndpoint['pagination']> }
+type PagingEndpoint = HttpEndpoint & { pagination: NonNullable<HttpEndpoint["pagination"]> }
 
 export declare namespace EndpointGenerator {
     export interface Args {
@@ -33,9 +33,9 @@ export declare namespace EndpointGenerator {
     }
 }
 
-const JSON_VARIABLE_NAME = '$json'
-const RESPONSE_VARIABLE_NAME = '$response'
-const STATUS_CODE_VARIABLE_NAME = '$statusCode'
+const JSON_VARIABLE_NAME = "$json"
+const RESPONSE_VARIABLE_NAME = "$response"
+const STATUS_CODE_VARIABLE_NAME = "$statusCode"
 
 export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     public constructor({ context }: { context: SdkGeneratorContext }) {
@@ -84,7 +84,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             name: hasPagination
                 ? this.context.getUnpagedEndpointMethodName(endpoint)
                 : this.context.getEndpointMethodName(endpoint),
-            access: hasPagination ? 'private' : 'public',
+            access: hasPagination ? "private" : "public",
             parameters,
             docs: endpoint.docs,
             return_,
@@ -95,7 +95,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         php.variable(this.context.getRequestOptionsName()),
                         php.mergeArrays(`$this->${this.context.getClientOptionsName()}`, {
                             ref: php.variable(this.context.getRequestOptionsName()),
-                            fallback: '[]'
+                            fallback: "[]"
                         })
                     )
                 )
@@ -113,7 +113,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeNode(requestBodyCodeBlock.code)
                 }
 
-                writer.writeLine('try {')
+                writer.writeLine("try {")
                 writer.indent()
                 writer.write(`${RESPONSE_VARIABLE_NAME} = `)
 
@@ -140,23 +140,23 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeNode(successResponseStatements)
                 }
                 writer.dedent()
-                writer.write('} catch (')
+                writer.write("} catch (")
                 writer.writeNode(this.context.guzzleClient.getRequestExceptionClassReference())
-                writer.writeLine(' $e) {')
+                writer.writeLine(" $e) {")
                 writer.indent()
-                writer.writeNodeStatement(php.assignVariable(php.variable('response'), '$e->getResponse()'))
-                writer.controlFlow('if', php.codeblock('$response === null'))
+                writer.writeNodeStatement(php.assignVariable(php.variable("response"), "$e->getResponse()"))
+                writer.controlFlow("if", php.codeblock("$response === null"))
                 writer.writeNodeStatement(
                     php.throwException({
                         classReference: this.context.getBaseExceptionClassReference(),
                         arguments_: [
                             {
-                                name: 'message',
-                                assignment: '$e->getMessage()'
+                                name: "message",
+                                assignment: "$e->getMessage()"
                             },
                             {
-                                name: 'previous',
-                                assignment: php.variable('e')
+                                name: "previous",
+                                assignment: php.variable("e")
                             }
                         ]
                     })
@@ -167,33 +167,33 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         classReference: this.context.getBaseApiExceptionClassReference(),
                         arguments_: [
                             {
-                                name: 'message',
-                                assignment: php.string('API request failed')
+                                name: "message",
+                                assignment: php.string("API request failed")
                             },
                             {
-                                name: 'statusCode',
-                                assignment: '$response->getStatusCode()'
+                                name: "statusCode",
+                                assignment: "$response->getStatusCode()"
                             },
                             {
-                                name: 'body',
-                                assignment: '$response->getBody()->getContents()'
+                                name: "body",
+                                assignment: "$response->getBody()->getContents()"
                             }
                         ],
                         multiline: true
                     })
                 )
                 writer.dedent()
-                writer.write('} catch (')
+                writer.write("} catch (")
                 writer.writeNode(this.context.getClientExceptionInterfaceClassReference())
-                writer.writeLine(' $e) {')
+                writer.writeLine(" $e) {")
                 writer.indent()
                 writer.writeNodeStatement(
                     this.throwNewBaseException({
-                        message: php.codeblock('$e->getMessage()')
+                        message: php.codeblock("$e->getMessage()")
                     })
                 )
                 writer.dedent()
-                writer.writeLine('}')
+                writer.writeLine("}")
 
                 writer.writeNode(this.getEndpointErrorHandling({ endpoint }))
             })
@@ -224,28 +224,28 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         const return_ = this.getPagerReturnType(endpoint)
         return php.method({
             name: this.context.getPagedEndpointMethodName(endpoint),
-            access: 'public',
+            access: "public",
             parameters,
             docs: endpoint.docs,
             return_,
             body: php.codeblock((writer) => {
                 const requestParam = endpointSignatureInfo.requestParameter
                 if (!requestParam) {
-                    throw new Error('Request parameter is required for pagination')
+                    throw new Error("Request parameter is required for pagination")
                 }
                 const unpagedEndpointMethodName = this.context.getUnpagedEndpointMethodName(endpoint)
                 const unpagedEndpointResponseType = getEndpointReturnType({ context: this.context, endpoint })
                 if (!unpagedEndpointResponseType) {
-                    throw new Error('Internal error; a response type is required for pagination endpoints')
+                    throw new Error("Internal error; a response type is required for pagination endpoints")
                 }
                 const requestParamVar = php.variable(requestParam.name)
                 if (
-                    requestParam.type.internalType.type === 'optional' &&
-                    requestParam.type.internalType.value.internalType.type === 'reference'
+                    requestParam.type.internalType.type === "optional" &&
+                    requestParam.type.internalType.value.internalType.type === "reference"
                 ) {
-                    writer.write('if (')
+                    writer.write("if (")
                     writer.writeNode(requestParamVar)
-                    writer.writeLine(' === null) {')
+                    writer.writeLine(" === null) {")
                     writer.indent()
                     writer.writeNodeStatement(
                         php.assignVariable(
@@ -256,11 +256,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         )
                     )
                     writer.dedent()
-                    writer.writeLine('}')
+                    writer.writeLine("}")
                 }
 
                 switch (endpoint.pagination.type) {
-                    case 'offset':
+                    case "offset":
                         this.generateOffsetMethodBody({
                             pagination: endpoint.pagination,
                             requestParam,
@@ -270,7 +270,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                             unpagedEndpointMethodName
                         })
                         break
-                    case 'cursor':
+                    case "cursor":
                         this.generateCursorMethodBody({
                             pagination: endpoint.pagination,
                             requestParam,
@@ -280,8 +280,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                             unpagedEndpointMethodName
                         })
                         break
-                    case 'custom':
-                        throw new Error('Custom pagination is not supported yet')
+                    case "custom":
+                        throw new Error("Custom pagination is not supported yet")
                     default:
                         assertNever(endpoint.pagination)
                 }
@@ -306,26 +306,26 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }) {
         const cursorPagerClassReference = this.context.getCursorPagerClassReference()
         const cursorType = this.context.phpTypeMapper.convert({ reference: pagination.next.property.valueType })
-        writer.write('return ')
+        writer.write("return ")
         writer.writeNodeStatement(
             php.instantiateClass({
                 classReference: cursorPagerClassReference,
                 arguments_: [
                     {
-                        name: 'request',
+                        name: "request",
                         assignment: php.variable(requestParam.name)
                     },
                     {
-                        name: 'getNextPage',
+                        name: "getNextPage",
                         assignment: php.codeblock((writer) => {
-                            writer.write('fn(')
+                            writer.write("fn(")
                             writer.writeNode(requestParam.type)
-                            writer.write(' ')
+                            writer.write(" ")
                             writer.writeNode(php.variable(requestParam.name))
-                            writer.write(') => ')
+                            writer.write(") => ")
                             writer.writeNode(
                                 php.invokeMethod({
-                                    on: php.variable('this'),
+                                    on: php.variable("this"),
                                     method: unpagedEndpointMethodName,
                                     arguments_: parameters.map((parameter) => php.variable(parameter.name))
                                 })
@@ -333,45 +333,45 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         })
                     },
                     {
-                        name: 'setCursor',
+                        name: "setCursor",
                         assignment: php.codeblock((writer) => {
-                            writer.write('function (')
+                            writer.write("function (")
                             writer.writeNode(requestParam.type)
-                            writer.write(' $request, ')
+                            writer.write(" $request, ")
                             writer.writeNode(cursorType)
-                            writer.writeLine(' $cursor) { ')
+                            writer.writeLine(" $cursor) { ")
                             writer.indent()
                             writer.writeNodeStatement(
                                 this.context.deepSetPagination(
-                                    php.variable('request'),
+                                    php.variable("request"),
                                     this.getFullPropertyPath(pagination.page),
-                                    php.variable('cursor')
+                                    php.variable("cursor")
                                 )
                             )
                             writer.dedent()
-                            writer.write('}')
+                            writer.write("}")
                         })
                     },
                     {
-                        docs: '@phpstan-ignore-next-line',
-                        name: 'getNextCursor',
+                        docs: "@phpstan-ignore-next-line",
+                        name: "getNextCursor",
                         assignment: php.codeblock((writer) => {
-                            writer.write('fn (')
+                            writer.write("fn (")
                             writer.writeNode(unpagedEndpointResponseType)
-                            writer.write(' $response) => ')
-                            writer.writeNode(this.nullableGet('$response', pagination.next))
-                            writer.write(' ?? null')
+                            writer.write(" $response) => ")
+                            writer.writeNode(this.nullableGet("$response", pagination.next))
+                            writer.write(" ?? null")
                         })
                     },
                     {
-                        docs: '@phpstan-ignore-next-line',
-                        name: 'getItems',
+                        docs: "@phpstan-ignore-next-line",
+                        name: "getItems",
                         assignment: php.codeblock((writer) => {
-                            writer.write('fn (')
+                            writer.write("fn (")
                             writer.writeNode(unpagedEndpointResponseType)
-                            writer.write(' $response) => ')
-                            writer.writeNode(this.nullableGet('$response', pagination.results))
-                            writer.write(' ?? []')
+                            writer.write(" $response) => ")
+                            writer.writeNode(this.nullableGet("$response", pagination.results))
+                            writer.write(" ?? []")
                         })
                     }
                 ],
@@ -396,26 +396,26 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         unpagedEndpointMethodName: string
     }) {
         const offsetPagerClassReference = this.context.getOffsetPagerClassReference()
-        writer.write('return ')
+        writer.write("return ")
         writer.writeNodeStatement(
             php.instantiateClass({
                 classReference: offsetPagerClassReference,
                 arguments_: [
                     {
-                        name: 'request',
+                        name: "request",
                         assignment: php.variable(requestParam.name)
                     },
                     {
-                        name: 'getNextPage',
+                        name: "getNextPage",
                         assignment: php.codeblock((writer) => {
-                            writer.write('fn(')
+                            writer.write("fn(")
                             writer.writeNode(requestParam.type)
-                            writer.write(' ')
+                            writer.write(" ")
                             writer.writeNode(php.variable(requestParam.name))
-                            writer.write(') => ')
+                            writer.write(") => ")
                             writer.writeNode(
                                 php.invokeMethod({
-                                    on: php.variable('this'),
+                                    on: php.variable("this"),
                                     method: unpagedEndpointMethodName,
                                     arguments_: parameters.map((parameter) => php.variable(parameter.name))
                                 })
@@ -423,72 +423,72 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         })
                     },
                     {
-                        docs: '@phpstan-ignore-next-line',
-                        name: 'getOffset',
+                        docs: "@phpstan-ignore-next-line",
+                        name: "getOffset",
                         assignment: php.codeblock((writer) => {
-                            writer.write('fn(')
+                            writer.write("fn(")
                             writer.writeNode(requestParam.type)
-                            writer.write(' $request) => ')
-                            writer.writeNode(this.nullableGet('$request', pagination.page))
-                            writer.write(' ?? 0')
+                            writer.write(" $request) => ")
+                            writer.writeNode(this.nullableGet("$request", pagination.page))
+                            writer.write(" ?? 0")
                         })
                     },
                     {
-                        name: 'setOffset',
+                        name: "setOffset",
                         assignment: php.codeblock((writer) => {
-                            writer.write('function (')
+                            writer.write("function (")
                             writer.writeNode(requestParam.type)
-                            writer.writeLine(' $request, int $offset) { ')
+                            writer.writeLine(" $request, int $offset) { ")
                             writer.indent()
                             writer.writeNodeStatement(
                                 this.context.deepSetPagination(
-                                    php.variable('request'),
+                                    php.variable("request"),
                                     this.getFullPropertyPath(pagination.page),
-                                    php.variable('offset')
+                                    php.variable("offset")
                                 )
                             )
                             writer.dedent()
-                            writer.write('}')
+                            writer.write("}")
                         })
                     },
                     {
-                        docs: pagination.step ? '@phpstan-ignore-next-line' : undefined,
-                        name: 'getStep',
+                        docs: pagination.step ? "@phpstan-ignore-next-line" : undefined,
+                        name: "getStep",
                         assignment: php.codeblock((writer) => {
                             if (!pagination.step) {
-                                writer.write('null')
+                                writer.write("null")
                                 return
                             }
-                            writer.write('fn(')
+                            writer.write("fn(")
                             writer.writeNode(requestParam.type)
-                            writer.write(' $request) => ')
-                            writer.writeNode(this.nullableGet('$request', pagination.step))
-                            writer.write(' ?? 0')
+                            writer.write(" $request) => ")
+                            writer.writeNode(this.nullableGet("$request", pagination.step))
+                            writer.write(" ?? 0")
                         })
                     },
                     {
-                        docs: '@phpstan-ignore-next-line',
-                        name: 'getItems',
+                        docs: "@phpstan-ignore-next-line",
+                        name: "getItems",
                         assignment: php.codeblock((writer) => {
-                            writer.write('fn(')
+                            writer.write("fn(")
                             writer.writeNode(unpagedEndpointResponseType)
-                            writer.write(' $response) => ')
-                            writer.writeNode(this.nullableGet('$response', pagination.results))
-                            writer.write(' ?? []')
+                            writer.write(" $response) => ")
+                            writer.writeNode(this.nullableGet("$response", pagination.results))
+                            writer.write(" ?? []")
                         })
                     },
                     {
-                        docs: '@phpstan-ignore-next-line',
-                        name: 'hasNextPage',
+                        docs: "@phpstan-ignore-next-line",
+                        name: "hasNextPage",
                         assignment: php.codeblock((writer) => {
                             if (!pagination.hasNextPage) {
-                                writer.write('null')
+                                writer.write("null")
                                 return
                             }
-                            writer.write('fn(')
+                            writer.write("fn(")
                             writer.writeNode(unpagedEndpointResponseType)
-                            writer.write(' $response) => ')
-                            writer.writeNode(this.nullableGet('$response', pagination.hasNextPage))
+                            writer.write(" $response) => ")
+                            writer.writeNode(this.nullableGet("$response", pagination.hasNextPage))
                         })
                     }
                 ],
@@ -509,11 +509,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             writer.writeNode(php.variable(variableName))
             if (propertyPath) {
                 for (const propertyPathElement of propertyPath) {
-                    writer.write('?')
+                    writer.write("?")
                     writer.writeNode(this.context.getTypeGetter(propertyPathElement))
                 }
             }
-            writer.write('?')
+            writer.write("?")
             writer.writeNode(this.context.getTypeGetter(property.name.name))
         })
     }
@@ -529,11 +529,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         const listItemType = this.context.phpTypeMapper.convert({
             reference: (() => {
                 switch (endpoint.pagination.type) {
-                    case 'offset':
+                    case "offset":
                         return endpoint.pagination.results.property.valueType
-                    case 'cursor':
+                    case "cursor":
                         return endpoint.pagination.results.property.valueType
-                    case 'custom':
+                    case "custom":
                         return endpoint.pagination.results.property.valueType
                     default:
                         assertNever(endpoint.pagination)
@@ -541,8 +541,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             })()
         })
 
-        if (listItemType.internalType.type === 'optional') {
-            if (listItemType.internalType.value.internalType.type === 'array') {
+        if (listItemType.internalType.type === "optional") {
+            if (listItemType.internalType.value.internalType.type === "array") {
                 return listItemType.internalType.value.internalType.value
             }
 
@@ -551,7 +551,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             )
         }
 
-        if (listItemType.internalType.type === 'array') {
+        if (listItemType.internalType.type === "array") {
             return listItemType.internalType.value
         }
 
@@ -620,41 +620,41 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         if (endpoint.response?.body == null) {
             return php.codeblock((writer) => {
                 writer.controlFlow(
-                    'if',
+                    "if",
                     php.codeblock(`${STATUS_CODE_VARIABLE_NAME} >= 200 && ${STATUS_CODE_VARIABLE_NAME} < 400`)
                 )
-                writer.writeLine('return;')
+                writer.writeLine("return;")
                 writer.endControlFlow()
             })
         }
         const body = endpoint.response.body
         return php.codeblock((writer) => {
             body._visit({
-                bytes: () => this.context.logger.error('Bytes not supported'),
-                streamParameter: () => this.context.logger.error('Stream parameters not supported'),
-                fileDownload: () => this.context.logger.error('File download not supported'),
+                bytes: () => this.context.logger.error("Bytes not supported"),
+                streamParameter: () => this.context.logger.error("Stream parameters not supported"),
+                fileDownload: () => this.context.logger.error("File download not supported"),
                 json: (_reference) => {
                     writer.controlFlow(
-                        'if',
+                        "if",
                         php.codeblock(`${STATUS_CODE_VARIABLE_NAME} >= 200 && ${STATUS_CODE_VARIABLE_NAME} < 400`)
                     )
                     if (return_ == null) {
-                        writer.write('return;')
+                        writer.write("return;")
                         writer.endControlFlow()
                         return
                     }
                     writer.writeNodeStatement(this.getResponseBodyContent())
                     if (return_.isOptional()) {
-                        writer.controlFlow('if', php.codeblock(`empty(${JSON_VARIABLE_NAME})`))
-                        writer.writeTextStatement('return null')
+                        writer.controlFlow("if", php.codeblock(`empty(${JSON_VARIABLE_NAME})`))
+                        writer.writeTextStatement("return null")
                         writer.endControlFlow()
                     }
-                    writer.write('return ')
+                    writer.write("return ")
                     writer.writeNode(this.decodeJsonResponse(return_))
                     writer.endControlFlow()
-                    writer.write('} catch (')
+                    writer.write("} catch (")
                     writer.writeNode(this.context.getJsonExceptionClassReference())
-                    writer.writeLine(' $e) {')
+                    writer.writeLine(" $e) {")
                     writer.indent()
                     writer.writeNodeStatement(
                         this.throwNewBaseException({
@@ -663,10 +663,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     )
                     writer.dedent()
                 },
-                streaming: () => this.context.logger.error('Streaming not supported'),
+                streaming: () => this.context.logger.error("Streaming not supported"),
                 text: () => {
                     writer.controlFlow(
-                        'if',
+                        "if",
                         php.codeblock(`${STATUS_CODE_VARIABLE_NAME} >= 200 && ${STATUS_CODE_VARIABLE_NAME} < 400`)
                     )
                     writer.writeTextStatement(`return ${RESPONSE_VARIABLE_NAME}->getBody()->getContents()`)
@@ -679,48 +679,48 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
     private decodeJsonResponse(return_: php.Type | undefined): php.CodeBlock {
         if (return_ == null) {
-            return php.codeblock('')
+            return php.codeblock("")
         }
         const arguments_: UnnamedArgument[] = [php.codeblock(JSON_VARIABLE_NAME)]
         const internalType = return_.underlyingType().internalType
         switch (internalType.type) {
-            case 'reference':
+            case "reference":
                 return this.decodeJsonResponseForClassReference({
                     arguments_,
                     classReference: internalType.value
                 })
-            case 'array':
-            case 'map':
+            case "array":
+            case "map":
                 return this.decodeJsonResponseForArray({
                     arguments_,
                     type: return_.underlyingType()
                 })
-            case 'int':
-            case 'float':
-            case 'string':
-            case 'bool':
-            case 'date':
-            case 'dateTime':
-            case 'mixed':
-            case 'literal':
+            case "int":
+            case "float":
+            case "string":
+            case "bool":
+            case "date":
+            case "dateTime":
+            case "mixed":
+            case "literal":
                 return this.decodeJsonResponseForPrimitive({
                     arguments_,
                     methodSuffix: upperFirst(internalType.type)
                 })
-            case 'enumString':
+            case "enumString":
                 return this.decodeJsonResponseForPrimitive({
                     arguments_,
-                    methodSuffix: 'String'
+                    methodSuffix: "String"
                 })
-            case 'union':
+            case "union":
                 return this.decodeJsonResponseForUnion({
                     arguments_,
                     types: internalType.types
                 })
-            case 'object':
-            case 'optional':
-            case 'null':
-            case 'typeDict':
+            case "object":
+            case "optional":
+            case "null":
+            case "typeDict":
                 throw new Error(`Internal error; '${internalType.type}' type is not a supported return type`)
             default:
                 assertNever(internalType)
@@ -738,7 +738,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             writer.writeNodeStatement(
                 php.invokeMethod({
                     on: classReference,
-                    method: 'fromJson',
+                    method: "fromJson",
                     arguments_,
                     static_: true
                 })
@@ -757,17 +757,17 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             writer.writeNode(
                 php.invokeMethod({
                     on: this.context.getJsonDecoderClassReference(),
-                    method: 'decodeArray',
+                    method: "decodeArray",
                     arguments_: [...arguments_, this.context.phpAttributeMapper.getTypeAttributeArgument(type)],
                     static_: true
                 })
             )
-            writer.write(';')
+            writer.write(";")
             if (this.context.isMixedArray(type)) {
                 writer.newLine()
                 return
             }
-            writer.writeLine(' // @phpstan-ignore-line')
+            writer.writeLine(" // @phpstan-ignore-line")
         })
     }
 
@@ -806,7 +806,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             writer.writeNode(
                 php.invokeMethod({
                     on: this.context.getJsonDecoderClassReference(),
-                    method: 'decodeUnion',
+                    method: "decodeUnion",
                     arguments_: [
                         ...arguments_,
                         this.context.phpAttributeMapper.getUnionTypeClassRepresentation(unionTypeParameters)
@@ -814,7 +814,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     static_: true
                 })
             )
-            writer.writeLine('; // @phpstan-ignore-line')
+            writer.writeLine("; // @phpstan-ignore-line")
         })
     }
 
@@ -826,18 +826,18 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
     private throwNewBaseException({ message }: { message: php.CodeBlock }): php.CodeBlock {
         return php.codeblock((writer) => {
-            writer.write('throw ')
+            writer.write("throw ")
             writer.writeNode(
                 php.instantiateClass({
                     classReference: this.context.getBaseExceptionClassReference(),
                     arguments_: [
                         {
-                            name: 'message',
+                            name: "message",
                             assignment: message
                         },
                         {
-                            name: 'previous',
-                            assignment: php.codeblock('$e')
+                            name: "previous",
+                            assignment: php.codeblock("$e")
                         }
                     ]
                 })
@@ -853,21 +853,21 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         body: php.CodeBlock
     }): php.CodeBlock {
         return php.codeblock((writer) => {
-            writer.write('throw ')
+            writer.write("throw ")
             writer.writeNode(
                 php.instantiateClass({
                     classReference: this.context.getBaseApiExceptionClassReference(),
                     arguments_: [
                         {
-                            name: 'message',
+                            name: "message",
                             assignment: message
                         },
                         {
-                            name: 'statusCode',
+                            name: "statusCode",
                             assignment: php.codeblock(STATUS_CODE_VARIABLE_NAME)
                         },
                         {
-                            name: 'body',
+                            name: "body",
                             assignment: body
                         }
                     ],

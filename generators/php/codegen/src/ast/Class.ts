@@ -1,13 +1,13 @@
-import { Access } from './Access'
-import { ClassReference } from './ClassReference'
-import { CodeBlock } from './CodeBlock'
-import { Comment } from './Comment'
-import { Field } from './Field'
-import { Method } from './Method'
-import { Parameter } from './Parameter'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
-import { orderByAccess } from './utils/orderByAccess'
+import { Access } from "./Access"
+import { ClassReference } from "./ClassReference"
+import { CodeBlock } from "./CodeBlock"
+import { Comment } from "./Comment"
+import { Field } from "./Field"
+import { Method } from "./Method"
+import { Parameter } from "./Parameter"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
+import { orderByAccess } from "./utils/orderByAccess"
 
 export declare namespace Class {
     interface Args {
@@ -81,26 +81,26 @@ export class Class extends AstNode {
         // required to fully de-conflict imports
         writer.addReference(new ClassReference({ name: this.name, namespace: this.namespace }))
         if (this.abstract) {
-            writer.write('abstract ')
+            writer.write("abstract ")
         }
         this.writeComment(writer)
         writer.write(`class ${this.name} `)
         if (this.parentClassReference != null) {
-            writer.write('extends ')
+            writer.write("extends ")
             this.parentClassReference.write(writer)
         }
         writer.newLine()
-        writer.writeLine('{')
+        writer.writeLine("{")
         writer.indent()
         if (this.traits.length > 0) {
-            writer.write('use ')
+            writer.write("use ")
             this.traits.forEach((trait, index) => {
                 if (index > 0) {
-                    writer.write(',')
+                    writer.write(",")
                 }
                 writer.writeNode(trait)
             })
-            writer.writeTextStatement('')
+            writer.writeTextStatement("")
             writer.newLine()
         }
 
@@ -119,7 +119,7 @@ export class Class extends AstNode {
         this.writeMethods({ writer, methods: orderByAccess(this.methods) })
 
         writer.dedent()
-        writer.writeLine('}')
+        writer.writeLine("}")
         return
     }
 
@@ -136,23 +136,23 @@ export class Class extends AstNode {
         if (constructor.access != null) {
             writer.write(`${constructor.access} `)
         }
-        writer.write('function __construct(')
+        writer.write("function __construct(")
         writer.indent()
         constructor.parameters.forEach((parameter, index) => {
             if (index === 0) {
                 writer.newLine()
             }
             parameter.write(writer)
-            writer.writeLine(',')
+            writer.writeLine(",")
         })
         writer.dedent()
-        writer.writeLine(')')
-        writer.writeLine('{')
+        writer.writeLine(")")
+        writer.writeLine("{")
         writer.indent()
         constructor.body?.write(writer)
         writer.writeNewLineIfLastLineNot()
         writer.dedent()
-        writer.writeLine('}')
+        writer.writeLine("}")
     }
 
     private writeConstructorComment({ writer, constructor }: { writer: Writer; constructor: Class.Constructor }): void {

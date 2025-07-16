@@ -1,5 +1,5 @@
-import { FernWorkspace } from '@fern-api/api-workspace-commons'
-import { assertNever } from '@fern-api/core-utils'
+import { FernWorkspace } from "@fern-api/api-workspace-commons"
+import { assertNever } from "@fern-api/core-utils"
 import {
     DefinitionFileSchema,
     RawSchemas,
@@ -7,7 +7,7 @@ import {
     isRawEnumDefinition,
     isRawObjectDefinition,
     isRawUndiscriminatedUnionDefinition
-} from '@fern-api/fern-definition-schema'
+} from "@fern-api/fern-definition-schema"
 import {
     FernFileContext,
     ResolvedContainerType,
@@ -16,10 +16,10 @@ import {
     TypeResolverImpl,
     constructFernFileContext,
     getAllPropertiesForObject
-} from '@fern-api/ir-generator'
+} from "@fern-api/ir-generator"
 
-import { RuleRunnerArgs } from './Rule'
-import { CASINGS_GENERATOR } from './utils/casingsGenerator'
+import { RuleRunnerArgs } from "./Rule"
+import { CASINGS_GENERATOR } from "./utils/casingsGenerator"
 
 export class ComplexQueryParamTypeDetector {
     private typeResolver: TypeResolver
@@ -60,21 +60,21 @@ export class ComplexQueryParamTypeDetector {
         visited: Set<string>
     }): boolean {
         switch (type._type) {
-            case 'container':
+            case "container":
                 return this.isResolvedContainerComplex({
                     type: type.container,
                     file,
                     visited
                 })
-            case 'named':
+            case "named":
                 return this.isNamedTypeComplex({
                     type,
                     file,
                     visited
                 })
-            case 'primitive':
+            case "primitive":
                 return false
-            case 'unknown':
+            case "unknown":
                 return true
             default:
                 assertNever(type)
@@ -91,9 +91,9 @@ export class ComplexQueryParamTypeDetector {
         visited: Set<string>
     }): boolean {
         switch (type._type) {
-            case 'literal':
+            case "literal":
                 return false
-            case 'map':
+            case "map":
                 return (
                     (this.isResolvedReferenceComplex({
                         type: type.keyType,
@@ -107,15 +107,15 @@ export class ComplexQueryParamTypeDetector {
                         })) &&
                     // This is how we denote generic objects, which we should allow to pass through.
                     !(
-                        type.keyType._type === 'primitive' &&
-                        type.keyType.primitive.v1 === 'STRING' &&
-                        type.valueType._type === 'unknown'
+                        type.keyType._type === "primitive" &&
+                        type.keyType.primitive.v1 === "STRING" &&
+                        type.valueType._type === "unknown"
                     )
                 )
-            case 'optional':
-            case 'nullable':
-            case 'list':
-            case 'set':
+            case "optional":
+            case "nullable":
+            case "list":
+            case "set":
                 return this.isResolvedReferenceComplex({
                     type: type.itemType,
                     file,
@@ -155,7 +155,7 @@ export class ComplexQueryParamTypeDetector {
         }
         if (isRawUndiscriminatedUnionDefinition(type.declaration)) {
             for (const variant of type.declaration.union) {
-                const variantType = typeof variant === 'string' ? variant : variant.type
+                const variantType = typeof variant === "string" ? variant : variant.type
                 const isVariantComplex = this.isTypeComplex(variantType, {
                     contents: file.definitionFile,
                     relativeFilepath: file.relativeFilepath
@@ -208,16 +208,16 @@ export class ComplexQueryParamTypeDetector {
         visited: Set<string>
     }): boolean {
         switch (type._type) {
-            case 'named':
+            case "named":
                 return this.isNamedTypeComplex({
                     type,
                     file,
                     visited
                 })
-            case 'primitive':
-            case 'unknown':
+            case "primitive":
+            case "unknown":
                 return false
-            case 'container':
+            case "container":
                 return this.isComplexContainer({
                     type: type.container,
                     file,
@@ -238,9 +238,9 @@ export class ComplexQueryParamTypeDetector {
         visited: Set<string>
     }): boolean {
         switch (type._type) {
-            case 'literal':
+            case "literal":
                 return false
-            case 'map':
+            case "map":
                 return (
                     this.isComplex({
                         type: type.keyType,
@@ -253,10 +253,10 @@ export class ComplexQueryParamTypeDetector {
                         visited
                     })
                 )
-            case 'optional':
-            case 'nullable':
-            case 'list':
-            case 'set':
+            case "optional":
+            case "nullable":
+            case "list":
+            case "set":
                 return this.isComplex({
                     type: type.itemType,
                     file,

@@ -1,20 +1,20 @@
-import { FdrAPI } from '@fern-api/fdr-sdk'
+import { FdrAPI } from "@fern-api/fdr-sdk"
 
-import { ApiDefinitionHolderLatest } from '../ApiDefinitionHolderLatest'
+import { ApiDefinitionHolderLatest } from "../ApiDefinitionHolderLatest"
 
-it.skip('finds subpackage by exact match', () => {
+it.skip("finds subpackage by exact match", () => {
     const apiDefinitionHolder = new ApiDefinitionHolderLatest({
-        id: FdrAPI.ApiDefinitionId('test'),
+        id: FdrAPI.ApiDefinitionId("test"),
         subpackages: {
-            [FdrAPI.api.v1.SubpackageId('test')]: {
-                id: FdrAPI.api.v1.SubpackageId('test'),
-                name: 'test',
-                displayName: 'test'
+            [FdrAPI.api.v1.SubpackageId("test")]: {
+                id: FdrAPI.api.v1.SubpackageId("test"),
+                name: "test",
+                displayName: "test"
             },
-            [FdrAPI.api.v1.SubpackageId('nested.package')]: {
-                id: FdrAPI.api.v1.SubpackageId('nested.package'),
-                name: 'nested',
-                displayName: 'nested'
+            [FdrAPI.api.v1.SubpackageId("nested.package")]: {
+                id: FdrAPI.api.v1.SubpackageId("nested.package"),
+                name: "nested",
+                displayName: "nested"
             }
         },
         endpoints: {},
@@ -25,21 +25,21 @@ it.skip('finds subpackage by exact match', () => {
         globalHeaders: [],
         snippetsConfiguration: undefined
     })
-    expect(apiDefinitionHolder.getSubpackageByLocator('test')).toEqual({
-        id: FdrAPI.api.v1.SubpackageId('test'),
-        name: 'test',
-        displayName: 'test'
+    expect(apiDefinitionHolder.getSubpackageByLocator("test")).toEqual({
+        id: FdrAPI.api.v1.SubpackageId("test"),
+        name: "test",
+        displayName: "test"
     })
 })
 
-it.skip('finds subpackage from yaml/yml files', () => {
+it.skip("finds subpackage from yaml/yml files", () => {
     const apiDefinitionHolder = new ApiDefinitionHolderLatest({
-        id: FdrAPI.ApiDefinitionId('test'),
+        id: FdrAPI.ApiDefinitionId("test"),
         subpackages: {
-            [FdrAPI.api.v1.SubpackageId('test')]: {
-                id: FdrAPI.api.v1.SubpackageId('test'),
-                name: 'test',
-                displayName: 'test'
+            [FdrAPI.api.v1.SubpackageId("test")]: {
+                id: FdrAPI.api.v1.SubpackageId("test"),
+                name: "test",
+                displayName: "test"
             }
         },
         endpoints: {},
@@ -51,33 +51,33 @@ it.skip('finds subpackage from yaml/yml files', () => {
         snippetsConfiguration: undefined
     })
 
-    expect(apiDefinitionHolder.getSubpackageByLocator('test.yaml')).toEqual({
-        id: FdrAPI.api.v1.SubpackageId('test'),
-        name: 'test',
-        displayName: 'test'
+    expect(apiDefinitionHolder.getSubpackageByLocator("test.yaml")).toEqual({
+        id: FdrAPI.api.v1.SubpackageId("test"),
+        name: "test",
+        displayName: "test"
     })
-    expect(apiDefinitionHolder.getSubpackageByLocator('test.yml')).toEqual({
-        id: FdrAPI.api.v1.SubpackageId('test'),
-        name: 'test',
-        displayName: 'test'
+    expect(apiDefinitionHolder.getSubpackageByLocator("test.yml")).toEqual({
+        id: FdrAPI.api.v1.SubpackageId("test"),
+        name: "test",
+        displayName: "test"
     })
 })
 
-it.skip('finds endpoint by id and by path/method', () => {
+it.skip("finds endpoint by id and by path/method", () => {
     const apiDefinitionHolder = new ApiDefinitionHolderLatest({
-        id: FdrAPI.ApiDefinitionId('test'),
+        id: FdrAPI.ApiDefinitionId("test"),
         subpackages: {},
         endpoints: {
-            [FdrAPI.EndpointId('getUser')]: {
-                id: FdrAPI.EndpointId('getUser'),
-                method: 'GET' as const,
+            [FdrAPI.EndpointId("getUser")]: {
+                id: FdrAPI.EndpointId("getUser"),
+                method: "GET" as const,
                 path: [],
-                displayName: 'Get User',
-                operationId: 'getUser',
+                displayName: "Get User",
+                operationId: "getUser",
                 auth: [],
                 environments: [],
-                defaultEnvironment: FdrAPI.EnvironmentId('defaultEnvironment'),
-                description: 'description',
+                defaultEnvironment: FdrAPI.EnvironmentId("defaultEnvironment"),
+                description: "description",
                 availability: undefined,
                 namespace: [],
                 pathParameters: [],
@@ -99,33 +99,33 @@ it.skip('finds endpoint by id and by path/method', () => {
         globalHeaders: [],
         snippetsConfiguration: undefined
     })
-    expect(apiDefinitionHolder.getEndpointByLocator('getUser', undefined)).toBeDefined()
-    expect(apiDefinitionHolder.getEndpointByLocator('GET /users/:id', undefined)).toBeDefined()
-    expect(apiDefinitionHolder.getEndpointByLocator('GET /users/{id}', undefined)).toBeDefined()
+    expect(apiDefinitionHolder.getEndpointByLocator("getUser", undefined)).toBeDefined()
+    expect(apiDefinitionHolder.getEndpointByLocator("GET /users/:id", undefined)).toBeDefined()
+    expect(apiDefinitionHolder.getEndpointByLocator("GET /users/{id}", undefined)).toBeDefined()
 })
 
-it.skip('finds websocket by id and by path', () => {
+it.skip("finds websocket by id and by path", () => {
     const apiDefinitionHolder = new ApiDefinitionHolderLatest({
-        id: FdrAPI.ApiDefinitionId('test'),
+        id: FdrAPI.ApiDefinitionId("test"),
         subpackages: {},
         endpoints: {},
         websockets: {
-            [FdrAPI.WebSocketId('userStream')]: {
-                id: FdrAPI.WebSocketId('userStream'),
+            [FdrAPI.WebSocketId("userStream")]: {
+                id: FdrAPI.WebSocketId("userStream"),
                 path: [],
-                displayName: 'User Stream',
+                displayName: "User Stream",
                 auth: [],
                 pathParameters: [],
                 queryParameters: [],
                 requestHeaders: [],
                 messages: [],
                 examples: [],
-                description: 'description',
+                description: "description",
                 availability: undefined,
                 namespace: [],
-                operationId: 'userStream',
+                operationId: "userStream",
                 environments: [],
-                defaultEnvironment: FdrAPI.EnvironmentId('defaultEnvironment')
+                defaultEnvironment: FdrAPI.EnvironmentId("defaultEnvironment")
             }
         },
         webhooks: {},
@@ -134,29 +134,29 @@ it.skip('finds websocket by id and by path', () => {
         globalHeaders: [],
         snippetsConfiguration: undefined
     })
-    expect(apiDefinitionHolder.getWebSocketByLocator('userStream', undefined)).toBeDefined()
-    expect(apiDefinitionHolder.getWebSocketByLocator('STREAM /users/stream', undefined)).toBeDefined()
+    expect(apiDefinitionHolder.getWebSocketByLocator("userStream", undefined)).toBeDefined()
+    expect(apiDefinitionHolder.getWebSocketByLocator("STREAM /users/stream", undefined)).toBeDefined()
 })
 
-it.skip('finds webhook by id and by path/method', () => {
+it.skip("finds webhook by id and by path/method", () => {
     const apiDefinitionHolder = new ApiDefinitionHolderLatest({
-        id: FdrAPI.ApiDefinitionId('test'),
+        id: FdrAPI.ApiDefinitionId("test"),
         subpackages: {},
         endpoints: {},
         websockets: {},
         webhooks: {
-            [FdrAPI.WebhookId('userCreated')]: {
-                id: FdrAPI.WebhookId('userCreated'),
-                method: 'POST' as const,
-                path: ['webhooks', 'user-created'],
-                displayName: 'User Created',
+            [FdrAPI.WebhookId("userCreated")]: {
+                id: FdrAPI.WebhookId("userCreated"),
+                method: "POST" as const,
+                path: ["webhooks", "user-created"],
+                displayName: "User Created",
                 headers: [],
                 payloads: [],
                 examples: [],
-                description: 'description',
+                description: "description",
                 availability: undefined,
                 namespace: [],
-                operationId: 'userCreated'
+                operationId: "userCreated"
             }
         },
         types: {},
@@ -164,6 +164,6 @@ it.skip('finds webhook by id and by path/method', () => {
         globalHeaders: [],
         snippetsConfiguration: undefined
     })
-    expect(apiDefinitionHolder.getWebhookByLocator('userCreated', undefined)).toBeDefined()
-    expect(apiDefinitionHolder.getWebhookByLocator('POST /webhooks/user-created', undefined)).toBeDefined()
+    expect(apiDefinitionHolder.getWebhookByLocator("userCreated", undefined)).toBeDefined()
+    expect(apiDefinitionHolder.getWebhookByLocator("POST /webhooks/user-created", undefined)).toBeDefined()
 })

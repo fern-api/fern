@@ -1,5 +1,5 @@
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export declare namespace MethodInvocation {
     interface Args {
@@ -26,18 +26,18 @@ export class MethodInvocation extends AstNode {
 
     public write(writer: Writer): void {
         this.on.write(writer)
-        writer.write('.')
+        writer.write(".")
         writer.write(this.method)
         // If there is more than one argument, write each argument on its own line,
         // separated by commas, for better readability in the generated Ruby code.
         // Otherwise, write the arguments inline (on the same line).
-        writer.write('(')
+        writer.write("(")
         if (this.arguments_.length > 1) {
             writer.indent()
             writer.newLine()
             this.arguments_.forEach((argument, index) => {
                 if (index > 0) {
-                    writer.write(',')
+                    writer.write(",")
                     writer.newLine()
                 }
                 argument.write(writer)
@@ -47,11 +47,11 @@ export class MethodInvocation extends AstNode {
         } else {
             this.arguments_.forEach((argument, index) => {
                 if (index > 0) {
-                    writer.write(', ')
+                    writer.write(", ")
                 }
                 argument.write(writer)
             })
         }
-        writer.write(')')
+        writer.write(")")
     }
 }

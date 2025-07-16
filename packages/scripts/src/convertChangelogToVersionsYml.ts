@@ -1,7 +1,7 @@
-import { readFile } from 'fs/promises'
+import { readFile } from "fs/promises"
 
-import { resolve } from '@fern-api/fs-utils'
-import { INTERMEDIATE_REPRESENTATION_MIGRATOR } from '@fern-api/ir-migrations'
+import { resolve } from "@fern-api/fs-utils"
+import { INTERMEDIATE_REPRESENTATION_MIGRATOR } from "@fern-api/ir-migrations"
 
 interface ChangelogEntry {
     version: string
@@ -11,7 +11,7 @@ interface ChangelogEntry {
 
 interface FormattedChange {
     summary: string
-    type: 'feat' | 'fix' | 'chore'
+    type: "feat" | "fix" | "chore"
 }
 
 interface FormattedEntry {
@@ -29,7 +29,7 @@ export function parseChangelog(changelogContent: string): ChangelogEntry[] {
     let currentChange: string | undefined = undefined
     let codeBlockDepth = 0
 
-    const lines = changelogContent.split('\n')
+    const lines = changelogContent.split("\n")
     for (const line of lines) {
         const versionMatch = line.match(/## \[(\d+\.\d+\.\d+(?:-\w+)?)\] - (\d{4}-\d{2}-\d{2})/)
         if (versionMatch && versionMatch[1] && versionMatch[2]) {
@@ -48,16 +48,16 @@ export function parseChangelog(changelogContent: string): ChangelogEntry[] {
             currentChanges = []
             currentChange = undefined
             codeBlockDepth = 0
-        } else if (line.trim().startsWith('- ') && codeBlockDepth === 0) {
+        } else if (line.trim().startsWith("- ") && codeBlockDepth === 0) {
             if (currentChange) {
                 currentChanges.push(currentChange)
             }
             currentChange = line
         } else if (currentChange) {
-            if (line.trim().startsWith('```')) {
+            if (line.trim().startsWith("```")) {
                 codeBlockDepth = codeBlockDepth === 0 ? 1 : codeBlockDepth - 1
             }
-            currentChange += '\n' + line
+            currentChange += "\n" + line
         }
     }
 
@@ -84,33 +84,33 @@ export function convertToNewFormat({
 }): FormattedEntry[] {
     return entries.map((entry) => {
         const changes = entry.changes.map((change) => {
-            let type: FormattedChange['type'] = 'fix'
+            let type: FormattedChange["type"] = "fix"
             let summary = change
 
-            const firstLine = summary.split('\n')[0]?.toLowerCase() ?? ''
-            if (firstLine.includes('feature:') || firstLine.includes('feat:')) {
-                type = 'feat'
-            } else if (firstLine.includes('chore:')) {
-                type = 'chore'
+            const firstLine = summary.split("\n")[0]?.toLowerCase() ?? ""
+            if (firstLine.includes("feature:") || firstLine.includes("feat:")) {
+                type = "feat"
+            } else if (firstLine.includes("chore:")) {
+                type = "chore"
             }
 
             summary = summary
-                .split('\n')
+                .split("\n")
                 .map((line, index) => {
                     if (index === 0) {
-                        const colonIndex = line.indexOf(':')
+                        const colonIndex = line.indexOf(":")
                         if (colonIndex !== -1) {
                             return line.slice(colonIndex + 1).trim()
                         }
                     }
                     return line
                 })
-                .join('\n')
+                .join("\n")
 
             summary = summary
-                .split('\n')
+                .split("\n")
                 .filter((line) => !line.match(/^## \[\d+\.\d+\.\d+(?:-\w+)?\] - \d{4}-\d{2}-\d{2}$/))
-                .join('\n')
+                .join("\n")
 
             return { summary: summary.trim(), type }
         })
@@ -137,16 +137,16 @@ export function formatOutput(newFormat: FormattedEntry[]): string {
         .map((entry) => {
             const formattedEntries = entry.changelogEntry
                 .map((change) => {
-                    const summaryLines = change.summary.split('\n')
+                    const summaryLines = change.summary.split("\n")
                     const formattedSummary = summaryLines
                         .map((line, index) => {
                             if (index === 0) {
                                 return line
                             } else {
-                                return ' '.repeat(8) + line
+                                return " ".repeat(8) + line
                             }
                         })
-                        .join('\n')
+                        .join("\n")
 
                     return `- changelogEntry:
     - summary: |
@@ -156,17 +156,17 @@ export function formatOutput(newFormat: FormattedEntry[]): string {
   version: "${entry.version}"
   createdAt: "${entry.createdAt}"`
                 })
-                .join('\n\n')
+                .join("\n\n")
 
             return formattedEntries
         })
-        .join('\n\n')
+        .join("\n\n")
 }
 
 export async function convertChangelogToVersions(inputPath: string, generatorName: string): Promise<string> {
     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     const absoluteInputPath = resolve(inputPath as any)
-    const inputContent = await readFile(absoluteInputPath, 'utf8')
+    const inputContent = await readFile(absoluteInputPath, "utf8")
     const entries = parseChangelog(inputContent)
     const newFormat = convertToNewFormat({ entries, generatorName })
     return formatOutput(newFormat)

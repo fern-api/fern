@@ -27,7 +27,7 @@ import {
     Variable,
     VariableType,
     VoidClassReference
-} from '@fern-api/ruby-codegen'
+} from "@fern-api/ruby-codegen"
 
 import {
     BytesRequest,
@@ -42,12 +42,12 @@ import {
     JsonResponseBodyWithProperty,
     TypeId,
     TypeReference
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { FileUploadUtility } from './FileUploadUtility'
-import { IdempotencyRequestOptions } from './IdempotencyRequestOptionsClass'
-import { RequestOptions } from './RequestOptionsClass'
-import { isTypeOptional } from './TypeUtilities'
+import { FileUploadUtility } from "./FileUploadUtility"
+import { IdempotencyRequestOptions } from "./IdempotencyRequestOptionsClass"
+import { RequestOptions } from "./RequestOptionsClass"
+import { isTypeOptional } from "./TypeUtilities"
 
 export class EndpointGenerator {
     public endpointHasExamples: boolean
@@ -87,7 +87,7 @@ export class EndpointGenerator {
         this.example = endpoint.examples[0]
         this.endpointHasExamples = this.example !== undefined
         this.eg = eg
-        this.blockArg = 'req'
+        this.blockArg = "req"
         this.requestOptions = requestOptions
         this.crf = crf
 
@@ -171,7 +171,7 @@ export class EndpointGenerator {
             }
         })
 
-        const defaultBodyParameterName = 'body'
+        const defaultBodyParameterName = "body"
         this.bodyAsProperties = []
         this.bodyLiteralsAsProperties = new Map()
         this.endpoint.requestBody?._visit({
@@ -180,7 +180,7 @@ export class EndpointGenerator {
                     .flatMap((dtn) => generatedClasses.get(dtn.typeId)?.properties)
                     .filter((p) => p !== undefined) as Property[]
                 const exampleRequestProperties =
-                    this.example?.request?.type === 'inlinedRequestBody' ? this.example.request.properties : undefined
+                    this.example?.request?.type === "inlinedRequestBody" ? this.example.request.properties : undefined
                 const allProperties = [
                     ...properties,
                     ...irb.properties.map((prop) => {
@@ -210,7 +210,7 @@ export class EndpointGenerator {
             },
             reference: (rbr: HttpRequestBodyReference) => {
                 const requestEx = this.eg.convertExampleTypeReference(
-                    this.example?.request?.type === 'reference' ? this.example.request : undefined
+                    this.example?.request?.type === "reference" ? this.example.request : undefined
                 )
                 if (!this.referenceIsLiteral(rbr.requestBodyType)) {
                     this.bodyAsProperties.push(
@@ -241,7 +241,7 @@ export class EndpointGenerator {
                                     isOptional: fp.isOptional,
                                     wireValue: fp.key.wireValue,
                                     type: [StringClassReference, FileClassReference],
-                                    example: 'my_file.txt'
+                                    example: "my_file.txt"
                                 }),
                             // TODO: add examples for fileUpload parameters
                             bodyProperty: (prop: InlinedRequestBodyProperty) =>
@@ -253,7 +253,7 @@ export class EndpointGenerator {
                                     documentation: prop.docs
                                 }),
                             _other: () => {
-                                throw new Error('Unknown file upload property type.')
+                                throw new Error("Unknown file upload property type.")
                             }
                         })
                     )
@@ -267,12 +267,12 @@ export class EndpointGenerator {
                             defaultBodyParameterName,
                         type: [B64StringClassReference, FileClassReference],
                         isOptional: br.isOptional,
-                        documentation: 'Base64 encoded bytes, or an IO object (e.g. Faraday::UploadIO, etc.)'
+                        documentation: "Base64 encoded bytes, or an IO object (e.g. Faraday::UploadIO, etc.)"
                     })
                 )
             },
             _other: () => {
-                throw new Error('Unknown request body type.')
+                throw new Error("Unknown request body type.")
             }
         })
 
@@ -283,11 +283,11 @@ export class EndpointGenerator {
 
         this.streamProcessingBlock = this.isStreamingResponse()
             ? new Parameter({
-                  name: 'on_data',
+                  name: "on_data",
                   type: GenericClassReference,
                   isBlock: true,
                   documentation:
-                      '[chunk, overall_received_bytes, env] Leverage the Faraday on_data callback which will receive tuples of strings, the sum of characters received so far, and the response environment. The latter will allow access to the response status, headers and reason, as well as the request info.'
+                      "[chunk, overall_received_bytes, env] Leverage the Faraday on_data callback which will receive tuples of strings, the sum of characters received so far, and the response environment. The latter will allow access to the response status, headers and reason, as well as the request info."
               })
             : undefined
 
@@ -295,7 +295,7 @@ export class EndpointGenerator {
     }
 
     private referenceIsLiteral(typeReference: TypeReference): boolean {
-        return typeReference.type === 'container' && typeReference.container.type === 'literal'
+        return typeReference.type === "container" && typeReference.container.type === "literal"
     }
 
     public getEndpointParameters(): Parameter[] {
@@ -351,9 +351,9 @@ export class EndpointGenerator {
                     ]),
                     // Expand the existing headers hash, then the additionalheaders params
                     additionalHashes: [
-                        { value: 'req.headers', defaultValue: '{}' },
+                        { value: "req.headers", defaultValue: "{}" },
                         { value: `${requestClientVariable.write({})}.get_headers` },
-                        { value: additionalHeadersProperty, defaultValue: '{}' }
+                        { value: additionalHeadersProperty, defaultValue: "{}" }
                     ],
                     shouldCompact: true,
                     stringifyValues: false
@@ -384,7 +384,7 @@ export class EndpointGenerator {
                           ...Array.from(literalQueryParams.entries()),
                           ...Array.from(inputQueryParams.entries())
                       ]),
-                      additionalHashes: [{ value: additionalQueryProperty, defaultValue: '{}' }],
+                      additionalHashes: [{ value: additionalQueryProperty, defaultValue: "{}" }],
                       shouldCompact: true,
                       stringifyValues: false
                   }),
@@ -396,16 +396,16 @@ export class EndpointGenerator {
                       leftSide: new FunctionInvocation({
                           onObject: this.requestOptionsVariable,
                           baseFunction: new Function_({
-                              name: 'nil?',
+                              name: "nil?",
                               functionBody: []
                           }),
                           optionalSafeCall: false
                       }),
-                      operation: '||',
+                      operation: "||",
                       rightSide: new FunctionInvocation({
                           onObject: additionalQueryProperty,
                           baseFunction: new Function_({
-                              name: 'nil?',
+                              name: "nil?",
                               functionBody: []
                           }),
                           optionalSafeCall: false
@@ -414,7 +414,7 @@ export class EndpointGenerator {
                           new Expression({
                               leftSide: `${this.blockArg}.params`,
                               rightSide: new HashInstance({
-                                  additionalHashes: [{ value: additionalQueryProperty, defaultValue: '{}' }],
+                                  additionalHashes: [{ value: additionalQueryProperty, defaultValue: "{}" }],
                                   shouldCompact: true,
                                   stringifyValues: false
                               }),
@@ -428,13 +428,13 @@ export class EndpointGenerator {
     private getFaradayBodyForReference(additionalBodyProperty: string): AstNode[] {
         const prop = this.bodyAsProperties[0]
         if (prop === undefined) {
-            throw new Error('No body properties found.')
+            throw new Error("No body properties found.")
         }
 
         const referenceBodyHash = new HashInstance({
             additionalHashes: [
-                { value: prop.name, defaultValue: '{}' },
-                { value: additionalBodyProperty, defaultValue: '{}' }
+                { value: prop.name, defaultValue: "{}" },
+                { value: additionalBodyProperty, defaultValue: "{}" }
             ],
             shouldCompact: true
         })
@@ -450,7 +450,7 @@ export class EndpointGenerator {
     private getFaradayBodyForBytes(): AstNode[] {
         const prop = this.bodyAsProperties[0]
         if (prop === undefined) {
-            throw new Error('No body properties found.')
+            throw new Error("No body properties found.")
         }
 
         return [
@@ -484,7 +484,7 @@ export class EndpointGenerator {
                             ...Array.from(literalBodyParams.entries()),
                             ...Array.from(inputBodyParams.entries())
                         ]),
-                        additionalHashes: [{ value: additionalBodyProperty, defaultValue: '{}' }],
+                        additionalHashes: [{ value: additionalBodyProperty, defaultValue: "{}" }],
                         shouldCompact: true,
                         stringifyValues: false
                     })
@@ -509,7 +509,7 @@ export class EndpointGenerator {
                                         new Argument({
                                             value: prop.toVariable(VariableType.LOCAL),
                                             isNamed: true,
-                                            name: 'file_like'
+                                            name: "file_like"
                                         })
                                     ]
                                 })
@@ -523,12 +523,12 @@ export class EndpointGenerator {
                                                       leftSide: new FunctionInvocation({
                                                           onObject: prop.toVariable(VariableType.LOCAL),
                                                           baseFunction: new Function_({
-                                                              name: 'nil?',
+                                                              name: "nil?",
                                                               functionBody: []
                                                           }),
                                                           optionalSafeCall: false
                                                       }),
-                                                      operation: '!',
+                                                      operation: "!",
                                                       expressions: [func]
                                                   }
                                               })
@@ -538,7 +538,7 @@ export class EndpointGenerator {
                                 return [prop.wireValue ?? prop.name, prop.toVariable(VariableType.LOCAL)]
                             })
                         ),
-                        additionalHashes: [{ value: additionalBodyProperty, defaultValue: '{}' }],
+                        additionalHashes: [{ value: additionalBodyProperty, defaultValue: "{}" }],
                         shouldCompact: true
                     })
 
@@ -554,14 +554,14 @@ export class EndpointGenerator {
                     return [
                         new Expression({
                             leftSide: `${this.blockArg}.headers['Content-Type']`,
-                            rightSide: `"${br.contentType ?? 'application/octet-stream'}"`,
+                            rightSide: `"${br.contentType ?? "application/octet-stream"}"`,
                             isAssignment: true
                         }),
                         ...this.getFaradayBodyForBytes()
                     ]
                 },
                 _other: () => {
-                    throw new Error('Unknown request body type.')
+                    throw new Error("Unknown request body type.")
                 }
             })
         } else {
@@ -572,16 +572,16 @@ export class EndpointGenerator {
                         leftSide: new FunctionInvocation({
                             onObject: this.requestOptionsVariable,
                             baseFunction: new Function_({
-                                name: 'nil?',
+                                name: "nil?",
                                 functionBody: []
                             }),
                             optionalSafeCall: false
                         }),
-                        operation: '||',
+                        operation: "||",
                         rightSide: new FunctionInvocation({
                             onObject: additionalBodyProperty,
                             baseFunction: new Function_({
-                                name: 'nil?',
+                                name: "nil?",
                                 functionBody: []
                             }),
                             optionalSafeCall: false
@@ -590,7 +590,7 @@ export class EndpointGenerator {
                             new Expression({
                                 leftSide: `${this.blockArg}.body`,
                                 rightSide: new HashInstance({
-                                    additionalHashes: [{ value: additionalBodyProperty, defaultValue: '{}' }],
+                                    additionalHashes: [{ value: additionalBodyProperty, defaultValue: "{}" }],
                                     shouldCompact: true,
                                     stringifyValues: false
                                 }),
@@ -617,9 +617,9 @@ export class EndpointGenerator {
                             rightSide: new FunctionInvocation({
                                 // TODO: Do this field access on the client better
                                 onObject: `${this.requestOptionsVariable.write({})}&.${prop.name}`,
-                                baseFunction: new Function_({ name: 'nil?', functionBody: [] })
+                                baseFunction: new Function_({ name: "nil?", functionBody: [] })
                             }),
-                            operation: '!',
+                            operation: "!",
                             expressions: [
                                 new Expression({
                                     leftSide: `${this.blockArg}.headers["${prop.wireValue ?? prop.name}"]`,
@@ -677,7 +677,7 @@ export class EndpointGenerator {
                 streaming: () => true,
                 text: () => false,
                 _other: () => {
-                    throw new Error('Unknown response type.')
+                    throw new Error("Unknown response type.")
                 }
             }) ?? false
         )
@@ -691,7 +691,7 @@ export class EndpointGenerator {
                 streaming: () => VoidClassReference,
                 text: () => StringClassReference,
                 _other: () => {
-                    throw new Error('Unknown response type.')
+                    throw new Error("Unknown response type.")
                 }
             }) ?? VoidClassReference
         )
@@ -724,7 +724,7 @@ export class EndpointGenerator {
                         }
 
                         const parsedJsonVariable = new Variable({
-                            name: 'parsed_json',
+                            name: "parsed_json",
                             type: GenericClassReference,
                             variableType: VariableType.LOCAL
                         })
@@ -733,7 +733,7 @@ export class EndpointGenerator {
                                 leftSide: parsedJsonVariable,
                                 rightSide: new FunctionInvocation({
                                     onObject: JsonClassReference,
-                                    baseFunction: new Function_({ name: 'parse', functionBody: [] }),
+                                    baseFunction: new Function_({ name: "parse", functionBody: [] }),
                                     arguments_: [
                                         new Argument({
                                             value: responseVariableBody,
@@ -750,16 +750,16 @@ export class EndpointGenerator {
                         if (jrbwp.responseProperty !== undefined) {
                             // Turn to struct, then get the field, then reconvert to JSON (to_json)
                             const nestedResponseValueVariable = new Variable({
-                                name: 'nested_response_json',
+                                name: "nested_response_json",
                                 type: GenericClassReference,
                                 variableType: VariableType.LOCAL
                             })
                             const parsingExpressions = [
                                 new Expression({
-                                    leftSide: 'parsed_json',
+                                    leftSide: "parsed_json",
                                     rightSide: new FunctionInvocation({
                                         onObject: JsonClassReference,
-                                        baseFunction: new Function_({ name: 'parse', functionBody: [] }),
+                                        baseFunction: new Function_({ name: "parse", functionBody: [] }),
                                         arguments_: [
                                             new Argument({
                                                 value: responseVariableBody,
@@ -800,17 +800,17 @@ export class EndpointGenerator {
                         }
                     },
                     _other: () => {
-                        throw new Error('Unknown response type.')
+                        throw new Error("Unknown response type.")
                     }
                 })
             },
             fileDownload: () => [],
             streaming: () => {
-                throw new Error('Streaming not yet supported.')
+                throw new Error("Streaming not yet supported.")
             },
             text: () => [responseVariableBody],
             _other: () => {
-                throw new Error('Unknown response type.')
+                throw new Error("Unknown response type.")
             }
         })
     }

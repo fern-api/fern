@@ -1,4 +1,4 @@
-import { mapValues } from 'lodash-es'
+import { mapValues } from "lodash-es"
 
 import {
     ErrorDeclaration,
@@ -14,11 +14,11 @@ import {
     TypeId,
     WebSocketChannelId,
     WebhookGroupId
-} from '@fern-api/ir-sdk'
-import { FilteredIr, IdGenerator } from '@fern-api/ir-utils'
+} from "@fern-api/ir-sdk"
+import { FilteredIr, IdGenerator } from "@fern-api/ir-utils"
 
-type UnprocessedPackage = Omit<Package, 'hasEndpointsInTree'>
-type UnprocessedSubpackage = Omit<Subpackage, 'hasEndpointsInTree'>
+type UnprocessedPackage = Omit<Package, "hasEndpointsInTree">
+type UnprocessedSubpackage = Omit<Subpackage, "hasEndpointsInTree">
 
 export class PackageTreeGenerator {
     private subpackages: Record<SubpackageId, UnprocessedSubpackage> = {}
@@ -41,7 +41,7 @@ export class PackageTreeGenerator {
     public addPackageRedirection({ from, to }: { from: FernFilepath; to: FernFilepath }): void {
         const package_ = this.getPackageForFernFilepath(from)
         if (package_.navigationConfig != null) {
-            throw new Error('Found duplicate navigationConfig for package')
+            throw new Error("Found duplicate navigationConfig for package")
         }
         package_.navigationConfig = {
             pointsTo: IdGenerator.generateSubpackageId(to)
@@ -51,7 +51,7 @@ export class PackageTreeGenerator {
     public addDocs(fernFilepath: FernFilepath, docs: string): void {
         const package_ = this.getPackageForFernFilepath(fernFilepath)
         if (package_.docs != null) {
-            throw new Error('Found duplicate docs for package')
+            throw new Error("Found duplicate docs for package")
         }
         package_.docs = docs
     }
@@ -71,7 +71,7 @@ export class PackageTreeGenerator {
     public addService(serviceId: ServiceId, service: HttpService): void {
         const package_ = this.getPackageForFernFilepath(service.name.fernFilepath)
         if (package_.service != null) {
-            throw new Error('Found duplicate service for ' + serviceId)
+            throw new Error("Found duplicate service for " + serviceId)
         }
         package_.service = serviceId
     }
@@ -79,7 +79,7 @@ export class PackageTreeGenerator {
     public addWebhookGroup(webhookGroupId: WebhookGroupId, fernFilepath: FernFilepath): void {
         const package_ = this.getPackageForFernFilepath(fernFilepath)
         if (package_.webhooks != null) {
-            throw new Error('Found duplicate webhook group for ' + webhookGroupId)
+            throw new Error("Found duplicate webhook group for " + webhookGroupId)
         }
         package_.webhooks = webhookGroupId
     }
@@ -87,12 +87,12 @@ export class PackageTreeGenerator {
     public addWebSocketChannel(websocketChannelId: WebSocketChannelId, fernFilepath: FernFilepath): void {
         const package_ = this.getPackageForFernFilepath(fernFilepath)
         if (package_.webhooks != null) {
-            throw new Error('Found duplicate webhook group for ' + websocketChannelId)
+            throw new Error("Found duplicate webhook group for " + websocketChannelId)
         }
         package_.websocket = websocketChannelId
     }
 
-    public build(filteredIr: FilteredIr | undefined): Pick<IntermediateRepresentation, 'subpackages' | 'rootPackage'> {
+    public build(filteredIr: FilteredIr | undefined): Pick<IntermediateRepresentation, "subpackages" | "rootPackage"> {
         if (filteredIr != null) {
             Object.entries(this.subpackages).forEach(([subpackageId, subpackage]) => {
                 if (!filteredIr.hasSubpackageId(subpackageId)) {
@@ -153,7 +153,7 @@ export class PackageTreeGenerator {
 
     public sortRootPackage(subpackagesInOrder: SubpackageId[]): void {
         if (!isEqualIgnoreOrder(this.rootPackage.subpackages, subpackagesInOrder)) {
-            throw new Error('Sorted subpackages differ from unsorted packages in root')
+            throw new Error("Sorted subpackages differ from unsorted packages in root")
         }
         this.rootPackage.subpackages = subpackagesInOrder
     }
@@ -161,10 +161,10 @@ export class PackageTreeGenerator {
     public sortSubpackage(subpackageId: SubpackageId, subpackagesInOrder: SubpackageId[]): void {
         const subpackage = this.subpackages[subpackageId]
         if (subpackage == null) {
-            throw new Error('Subpackage does not exist: ' + subpackageId)
+            throw new Error("Subpackage does not exist: " + subpackageId)
         }
         if (!isEqualIgnoreOrder(subpackage.subpackages, subpackagesInOrder)) {
-            throw new Error('Sorted subpackages differ from unsorted packages')
+            throw new Error("Sorted subpackages differ from unsorted packages")
         }
         subpackage.subpackages = subpackagesInOrder
     }
@@ -172,7 +172,7 @@ export class PackageTreeGenerator {
     private getAllSubpackagesWithEndpoints(root: SubpackageId): SubpackageId[] {
         const subpackage = this.subpackages[root]
         if (subpackage == null) {
-            throw new Error('Subpackage does not exist: ' + root)
+            throw new Error("Subpackage does not exist: " + root)
         }
 
         const subpackagesWithEndpoints = this.getAllChildrenWithEndpoints(subpackage)
@@ -201,7 +201,7 @@ export class PackageTreeGenerator {
         const subpackagesInParent = parent.subpackages.map((subpackageId) => {
             const subpackage = this.subpackages[subpackageId]
             if (subpackage == null) {
-                throw new Error('Subpackage ID is invalid: ' + subpackageId)
+                throw new Error("Subpackage ID is invalid: " + subpackageId)
             }
             return subpackage
         })

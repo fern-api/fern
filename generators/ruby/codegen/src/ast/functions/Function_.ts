@@ -1,15 +1,15 @@
-import { ObjectProperty, TypeId } from '@fern-fern/ir-sdk/api'
+import { ObjectProperty, TypeId } from "@fern-fern/ir-sdk/api"
 
-import { BLOCK_END } from '../../utils/RubyConstants'
-import { Argument } from '../Argument'
-import { ExampleGenerator } from '../ExampleGenerator'
-import { Import } from '../Import'
-import { Parameter } from '../Parameter'
-import { Yardoc } from '../Yardoc'
-import { ClassReference, ClassReferenceFactory } from '../classes/ClassReference'
-import { Class_ } from '../classes/Class_'
-import { AstNode } from '../core/AstNode'
-import { FunctionInvocation } from './FunctionInvocation'
+import { BLOCK_END } from "../../utils/RubyConstants"
+import { Argument } from "../Argument"
+import { ExampleGenerator } from "../ExampleGenerator"
+import { Import } from "../Import"
+import { Parameter } from "../Parameter"
+import { Yardoc } from "../Yardoc"
+import { ClassReference, ClassReferenceFactory } from "../classes/ClassReference"
+import { Class_ } from "../classes/Class_"
+import { AstNode } from "../core/AstNode"
+import { FunctionInvocation } from "./FunctionInvocation"
 
 export declare namespace Function_ {
     export interface Init extends AstNode.Init {
@@ -73,7 +73,7 @@ export class Function_ extends AstNode {
 
         this.yardoc = new Yardoc({
             reference: {
-                name: 'docString',
+                name: "docString",
                 parameters,
                 returnValue: this.returnValue,
                 documentation: this.documentation,
@@ -86,7 +86,7 @@ export class Function_ extends AstNode {
     }
 
     private writeParameters(): string | undefined {
-        return this.parameters.length > 0 ? `(${this.parameters.map((a) => a.write({})).join(', ')})` : undefined
+        return this.parameters.length > 0 ? `(${this.parameters.map((a) => a.write({})).join(", ")})` : undefined
     }
 
     public writeInternal(startingTabSpaces: number): void {
@@ -95,7 +95,7 @@ export class Function_ extends AstNode {
         })
         this.addText({
             stringContent: this.isStatic ? `self.${this.name}` : this.name,
-            templateString: 'def %s',
+            templateString: "def %s",
             startingTabSpaces
         })
         this.addText({ stringContent: this.writeParameters(), appendToLastString: true, startingTabSpaces })
@@ -123,7 +123,7 @@ export class Function_ extends AstNode {
         return this.invocationName != null
             ? this.invocationName
             : fullPath
-              ? [...this.packagePath, this.name].join('.')
+              ? [...this.packagePath, this.name].join(".")
               : this.name
     }
 

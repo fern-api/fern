@@ -1,1 +1,1 @@
-export { SdkEndpointTypeSchemasGenerator } from './SdkEndpointTypeSchemasGenerator'
+export { SdkEndpointTypeSchemasGenerator } from "./SdkEndpointTypeSchemasGenerator"

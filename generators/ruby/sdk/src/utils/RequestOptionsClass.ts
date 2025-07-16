@@ -11,9 +11,9 @@ import {
     Property,
     StringClassReference,
     Variable
-} from '@fern-api/ruby-codegen'
+} from "@fern-api/ruby-codegen"
 
-import { HeadersGenerator } from './HeadersGenerator'
+import { HeadersGenerator } from "./HeadersGenerator"
 
 export declare namespace RequestOptions {
     export interface Init {
@@ -34,7 +34,7 @@ export class RequestOptions extends Class_ {
 
     constructor({ nameOverride, headersGenerator, additionalProperties, clientName }: RequestOptions.Init) {
         const timeoutProperty = new Property({
-            name: 'timeout_in_seconds',
+            name: "timeout_in_seconds",
             type: LongClassReference,
             isOptional: true
         })
@@ -46,30 +46,30 @@ export class RequestOptions extends Class_ {
         ]
         // Generic overrides
         const additionalHeaderProperty = new Property({
-            name: 'additional_headers',
+            name: "additional_headers",
             type: new HashReference({ keyType: StringClassReference, valueType: GenericClassReference }),
             isOptional: true
         })
         const additionalQueryProperty = new Property({
-            name: 'additional_query_parameters',
+            name: "additional_query_parameters",
             type: new HashReference({ keyType: StringClassReference, valueType: GenericClassReference }),
             isOptional: true
         })
         const additionalBodyProperty = new Property({
-            name: 'additional_body_parameters',
+            name: "additional_body_parameters",
             type: new HashReference({ keyType: StringClassReference, valueType: GenericClassReference }),
             isOptional: true
         })
         const baseUrlProperty = new Property({
-            name: 'base_url',
+            name: "base_url",
             type: StringClassReference,
             isOptional: true
         })
 
         super({
             classReference: new ClassReference({
-                name: nameOverride ?? 'RequestOptions',
-                location: 'requests',
+                name: nameOverride ?? "RequestOptions",
+                location: "requests",
                 moduleBreadcrumbs: [clientName]
             }),
             includeInitializer: true,
@@ -82,7 +82,7 @@ export class RequestOptions extends Class_ {
                 timeoutProperty,
                 ...(additionalProperties ?? [])
             ],
-            documentation: 'Additional options for request-specific configuration when calling APIs via the SDK.'
+            documentation: "Additional options for request-specific configuration when calling APIs via the SDK."
         })
 
         this.timeoutProperty = timeoutProperty
@@ -104,9 +104,9 @@ export class RequestOptions extends Class_ {
                     rightSide: new FunctionInvocation({
                         // TODO: Do this field access on the client better
                         onObject: `${requestOptionsVariable.write({})}&.${this.timeoutProperty.name}`,
-                        baseFunction: new Function_({ name: 'nil?', functionBody: [] })
+                        baseFunction: new Function_({ name: "nil?", functionBody: [] })
                     }),
-                    operation: '!',
+                    operation: "!",
                     expressions: [
                         new Expression({
                             leftSide: `${faradayBlockArg}.options.timeout`,

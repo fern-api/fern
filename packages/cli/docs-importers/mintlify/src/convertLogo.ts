@@ -1,16 +1,16 @@
-import { docsYml } from '@fern-api/configuration'
-import { stripLeadingSlash } from '@fern-api/core-utils'
-import { FernDocsBuilder } from '@fern-api/docs-importer-commons'
-import { AbsoluteFilePath, RelativeFilePath, dirname, join } from '@fern-api/fs-utils'
+import { docsYml } from "@fern-api/configuration"
+import { stripLeadingSlash } from "@fern-api/core-utils"
+import { FernDocsBuilder } from "@fern-api/docs-importer-commons"
+import { AbsoluteFilePath, RelativeFilePath, dirname, join } from "@fern-api/fs-utils"
 
-import { MintJsonSchema } from './mintlify'
+import { MintJsonSchema } from "./mintlify"
 
 const LOGO_DEFAULT_HEIGHT = 28 // mintlify's default height (1.75rem);
 
 export declare namespace convertLogo {
     interface Args {
         absolutePathToMintJson: AbsoluteFilePath
-        logo: MintJsonSchema['logo']
+        logo: MintJsonSchema["logo"]
         builder: FernDocsBuilder
     }
 }
@@ -24,7 +24,7 @@ export function convertLogo({
         return undefined
     }
 
-    if (typeof logo === 'string') {
+    if (typeof logo === "string") {
         const relativeFilepath = RelativeFilePath.of(stripLeadingSlash(logo))
         builder.addAsset({
             absoluteFilePathToAsset: join(dirname(absolutePathToMintJson), relativeFilepath),

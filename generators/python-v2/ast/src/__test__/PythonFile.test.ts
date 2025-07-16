@@ -1,39 +1,39 @@
-import { expect } from 'vitest'
+import { expect } from "vitest"
 
-import { python } from '..'
-import { CodeBlock } from '../CodeBlock'
-import { ClassMethodType, Method } from '../Method'
-import { Writer } from '../core/Writer'
+import { python } from ".."
+import { CodeBlock } from "../CodeBlock"
+import { ClassMethodType, Method } from "../Method"
+import { Writer } from "../core/Writer"
 
-describe('PythonFile', () => {
+describe("PythonFile", () => {
     let writer: Writer
 
     beforeEach(() => {
         writer = new Writer()
     })
 
-    it('Add a class with no references', async () => {
+    it("Add a class with no references", async () => {
         const file = python.file({
-            path: ['test_module']
+            path: ["test_module"]
         })
 
-        const testClass = python.class_({ name: 'TestClass' })
+        const testClass = python.class_({ name: "TestClass" })
         file.addStatement(testClass)
 
         file.write(writer)
         expect(writer.toString()).toMatchSnapshot()
     })
 
-    it('Add a class with a reference that uses a python standard library reference', async () => {
+    it("Add a class with a reference that uses a python standard library reference", async () => {
         const file = python.file({
-            path: ['test_module']
+            path: ["test_module"]
         })
 
         const testClass = python.class_({
-            name: 'TestClass'
+            name: "TestClass"
         })
-        testClass.addReference(python.reference({ modulePath: ['itertools'], name: 'chain' }))
-        testClass.add(python.codeBlock('flat_list = list(itertools.chain([[1, 2], [3, 4]]))'))
+        testClass.addReference(python.reference({ modulePath: ["itertools"], name: "chain" }))
+        testClass.add(python.codeBlock("flat_list = list(itertools.chain([[1, 2], [3, 4]]))"))
 
         file.addStatement(testClass)
 
@@ -41,28 +41,28 @@ describe('PythonFile', () => {
         expect(writer.toString()).toMatchSnapshot()
     })
 
-    it('Add a class with a reference that uses a relative import', async () => {
+    it("Add a class with a reference that uses a relative import", async () => {
         const file = python.file({
-            path: ['my_module']
+            path: ["my_module"]
         })
 
         const relativeRef = python.reference({
-            modulePath: ['my_module', 'level_1'],
-            name: 'OtherClass'
+            modulePath: ["my_module", "level_1"],
+            name: "OtherClass"
         })
         const testClass = python.class_({
-            name: 'TestClass',
+            name: "TestClass",
             extends_: [relativeRef]
         })
         file.addStatement(testClass)
 
         // Add a class with a deeply nested relative import
         const deeplyNestedRef = python.reference({
-            modulePath: ['my_module', 'level_1', 'level_2'],
-            name: 'DeepClass'
+            modulePath: ["my_module", "level_1", "level_2"],
+            name: "DeepClass"
         })
         const deeplyNestedClass = python.class_({
-            name: 'DeeplyNestedTestClass',
+            name: "DeeplyNestedTestClass",
             extends_: [deeplyNestedRef]
         })
         file.addStatement(deeplyNestedClass)
@@ -71,38 +71,38 @@ describe('PythonFile', () => {
         expect(writer.toString()).toMatchSnapshot()
     })
 
-    it('Add a class with a reference to itself', async () => {
+    it("Add a class with a reference to itself", async () => {
         const file = python.file({
-            path: ['test_module']
+            path: ["test_module"]
         })
 
         const testClass = python.class_({
-            name: 'TestClass',
+            name: "TestClass",
             extends_: [
                 python.reference({
-                    name: 'ParentTestClass',
-                    modulePath: ['parent_module']
+                    name: "ParentTestClass",
+                    modulePath: ["parent_module"]
                 })
             ]
         })
 
         const classMethod = python.method({
-            name: 'from_dict',
+            name: "from_dict",
             type: ClassMethodType.CLASS,
             parameters: [
-                python.parameter({ name: 'data', type: python.Type.dict(python.Type.str(), python.Type.any()) })
+                python.parameter({ name: "data", type: python.Type.dict(python.Type.str(), python.Type.any()) })
             ]
         })
         classMethod.addStatement(
             python.field({
-                name: 'instance',
+                name: "instance",
                 initializer: python.instantiateClass({
-                    classReference: python.reference({ name: 'TestClass', modulePath: ['test_module'] }),
-                    arguments_: [python.methodArgument({ value: python.codeBlock('data') })]
+                    classReference: python.reference({ name: "TestClass", modulePath: ["test_module"] }),
+                    arguments_: [python.methodArgument({ value: python.codeBlock("data") })]
                 })
             })
         )
-        classMethod.addStatement(python.codeBlock('return instance'))
+        classMethod.addStatement(python.codeBlock("return instance"))
         testClass.add(classMethod)
 
         file.addStatement(testClass)
@@ -111,19 +111,19 @@ describe('PythonFile', () => {
         expect(writer.toString()).toMatchSnapshot()
     })
 
-    it('Set a variable to a nested attribute of an imported reference', async () => {
+    it("Set a variable to a nested attribute of an imported reference", async () => {
         const file = python.file({
-            path: ['test_module']
+            path: ["test_module"]
         })
 
         const importedRef = python.reference({
-            modulePath: ['external_module'],
-            name: 'ImportedClass',
-            attribute: ['nested', 'attribute']
+            modulePath: ["external_module"],
+            name: "ImportedClass",
+            attribute: ["nested", "attribute"]
         })
 
         const field = python.field({
-            name: 'my_variable',
+            name: "my_variable",
             type: python.Type.reference(importedRef)
         })
 
@@ -133,13 +133,13 @@ describe('PythonFile', () => {
         expect(writer.toString()).toMatchSnapshot()
     })
 
-    it('Add a Method', async () => {
+    it("Add a Method", async () => {
         const file = python.file({
-            path: ['test_module']
+            path: ["test_module"]
         })
 
         const testMethod = new Method({
-            name: 'test_method',
+            name: "test_method",
             parameters: [],
             return_: python.Type.str()
         })
@@ -149,9 +149,9 @@ describe('PythonFile', () => {
         expect(writer.toString()).toMatchSnapshot()
     })
 
-    it('Add a code block', async () => {
+    it("Add a code block", async () => {
         const file = python.file({
-            path: ['test_module']
+            path: ["test_module"]
         })
 
         const codeBlock = new CodeBlock("print('Hello, World!')")
@@ -161,31 +161,31 @@ describe('PythonFile', () => {
         expect(writer.toString()).toMatchSnapshot()
     })
 
-    it('Add a reference with no module path', async () => {
+    it("Add a reference with no module path", async () => {
         const file = python.file({
-            path: ['test_module']
+            path: ["test_module"]
         })
 
-        const ref = python.reference({ name: 'MyCar' })
-        file.addStatement(python.field({ name: 'car', type: python.Type.reference(ref) }))
+        const ref = python.reference({ name: "MyCar" })
+        file.addStatement(python.field({ name: "car", type: python.Type.reference(ref) }))
 
         // There shouldn't be any import path added
         file.write(writer)
         expect(writer.toString()).toMatchSnapshot()
     })
 
-    it('Add a class with an absolute import and alias', async () => {
+    it("Add a class with an absolute import and alias", async () => {
         const file = python.file({
-            path: ['test_module']
+            path: ["test_module"]
         })
 
         const absoluteRef = python.reference({
-            modulePath: ['external_module', 'submodule'],
-            name: 'ExternalClass',
-            alias: 'AliasedClass'
+            modulePath: ["external_module", "submodule"],
+            name: "ExternalClass",
+            alias: "AliasedClass"
         })
         const testClass = python.class_({
-            name: 'TestClassWithAlias',
+            name: "TestClassWithAlias",
             extends_: [absoluteRef]
         })
         file.addStatement(testClass)
@@ -194,18 +194,18 @@ describe('PythonFile', () => {
         expect(writer.toString()).toMatchSnapshot()
     })
 
-    it('Add a class with a relative import and alias', async () => {
+    it("Add a class with a relative import and alias", async () => {
         const file = python.file({
-            path: ['test_module', 'subdir']
+            path: ["test_module", "subdir"]
         })
 
         const relativeRef = python.reference({
-            modulePath: ['test_module', 'test', 'sibling_dir'],
-            name: 'SiblingClass',
-            alias: 'AliasedSibling'
+            modulePath: ["test_module", "test", "sibling_dir"],
+            name: "SiblingClass",
+            alias: "AliasedSibling"
         })
         const testClass = python.class_({
-            name: 'TestClassWithRelativeAlias',
+            name: "TestClassWithRelativeAlias",
             extends_: [relativeRef]
         })
         file.addStatement(testClass)
@@ -214,18 +214,18 @@ describe('PythonFile', () => {
         expect(writer.toString()).toMatchSnapshot()
     })
 
-    it('Add a class that inherits from a class imported from another file', async () => {
+    it("Add a class that inherits from a class imported from another file", async () => {
         const file = python.file({
-            path: ['test_module']
+            path: ["test_module"]
         })
 
         const baseClassRef = python.reference({
-            modulePath: ['test_module', 'base'],
-            name: 'BaseClass'
+            modulePath: ["test_module", "base"],
+            name: "BaseClass"
         })
 
         const derivedClass = python.class_({
-            name: 'DerivedClass',
+            name: "DerivedClass",
             extends_: [baseClassRef]
         })
 
@@ -235,20 +235,20 @@ describe('PythonFile', () => {
         expect(writer.toString()).toMatchSnapshot()
     })
 
-    it('Add a field with a list of reference type and initializer', async () => {
+    it("Add a field with a list of reference type and initializer", async () => {
         const file = python.file({
-            path: ['test_module']
+            path: ["test_module"]
         })
 
         const carRef = python.reference({
-            name: 'Car',
-            modulePath: ['test_module', 'cars']
+            name: "Car",
+            modulePath: ["test_module", "cars"]
         })
 
         const carsField = python.field({
-            name: 'cars',
+            name: "cars",
             type: python.Type.list(python.Type.reference(carRef)),
-            initializer: python.codeBlock('[Car(), Car()]')
+            initializer: python.codeBlock("[Car(), Car()]")
         })
 
         file.addStatement(carsField)
@@ -257,13 +257,13 @@ describe('PythonFile', () => {
         expect(writer.toString()).toMatchSnapshot()
     })
 
-    it('Multiple imports from the same module should work', async () => {
+    it("Multiple imports from the same module should work", async () => {
         const file = python.file({
-            path: ['test_module']
+            path: ["test_module"]
         })
 
         const unionField = python.field({
-            name: 'variable',
+            name: "variable",
             type: python.Type.union([python.Type.list(python.Type.str()), python.Type.set(python.Type.str())])
         })
 
@@ -275,16 +275,16 @@ describe('PythonFile', () => {
 
     it("Ensure we don't duplicate imports", async () => {
         const file = python.file({
-            path: ['test_module']
+            path: ["test_module"]
         })
 
         const varAField = python.field({
-            name: 'var_a',
+            name: "var_a",
             type: python.Type.list(python.Type.str())
         })
 
         const varBField = python.field({
-            name: 'var_b',
+            name: "var_b",
             type: python.Type.list(python.Type.str())
         })
 
@@ -295,19 +295,19 @@ describe('PythonFile', () => {
         expect(writer.toString()).toMatchSnapshot()
     })
 
-    it('References to other nodes in same module in __init__.py work', async () => {
+    it("References to other nodes in same module in __init__.py work", async () => {
         const file = python.file({
-            path: ['root', 'car'],
+            path: ["root", "car"],
             isInitFile: true
         })
 
         const carRef = python.reference({
-            name: 'Train',
-            modulePath: ['root', 'trains']
+            name: "Train",
+            modulePath: ["root", "trains"]
         })
 
         const exportField = python.field({
-            name: 'exported_car',
+            name: "exported_car",
             type: python.Type.reference(carRef)
         })
 
@@ -317,14 +317,14 @@ describe('PythonFile', () => {
         expect(writer.toString()).toMatchSnapshot()
     })
 
-    it('Initialize with a statement containing a reference', async () => {
+    it("Initialize with a statement containing a reference", async () => {
         const field = python.field({
-            name: 'my_id',
-            initializer: python.TypeInstantiation.uuid('1234')
+            name: "my_id",
+            initializer: python.TypeInstantiation.uuid("1234")
         })
 
         const file = python.file({
-            path: ['root'],
+            path: ["root"],
             statements: [field]
         })
 
@@ -333,17 +333,17 @@ describe('PythonFile', () => {
         expect(file.getReferences()).toHaveLength(1)
     })
 
-    it('Write top of file comments', async () => {
+    it("Write top of file comments", async () => {
         const file = python.file({
-            path: ['root'],
+            path: ["root"],
             comments: [
-                python.comment({ docs: '!/usr/bin/env python' }),
-                python.comment({ docs: 'flake8: noqa: F401, F403' })
+                python.comment({ docs: "!/usr/bin/env python" }),
+                python.comment({ docs: "flake8: noqa: F401, F403" })
             ],
             statements: [
                 python.field({
-                    name: 'my_id',
-                    initializer: python.TypeInstantiation.uuid('1234')
+                    name: "my_id",
+                    initializer: python.TypeInstantiation.uuid("1234")
                 })
             ]
         })
@@ -353,18 +353,18 @@ describe('PythonFile', () => {
         expect(file.getReferences()).toHaveLength(1)
     })
 
-    it('Write star imports', async () => {
+    it("Write star imports", async () => {
         const file = python.file({
-            path: ['root'],
-            comments: [python.comment({ docs: 'flake8: noqa: F401, F403' })],
+            path: ["root"],
+            comments: [python.comment({ docs: "flake8: noqa: F401, F403" })],
             imports: [
-                python.starImport({ modulePath: ['root', 'my_module_a'] }),
-                python.starImport({ modulePath: ['root', 'my_module_b'] })
+                python.starImport({ modulePath: ["root", "my_module_a"] }),
+                python.starImport({ modulePath: ["root", "my_module_b"] })
             ],
             statements: [
                 python.field({
-                    name: 'my_id',
-                    initializer: python.TypeInstantiation.uuid('1234')
+                    name: "my_id",
+                    initializer: python.TypeInstantiation.uuid("1234")
                 })
             ]
         })
@@ -374,20 +374,20 @@ describe('PythonFile', () => {
         expect(file.getReferences()).toHaveLength(3)
     })
 
-    it('Write duplicative import names', async () => {
-        const file = python.file({ path: ['root'] })
+    it("Write duplicative import names", async () => {
+        const file = python.file({ path: ["root"] })
 
         const local_class = python.class_({
-            name: 'Car'
+            name: "Car"
         })
 
         local_class.add(
             python.field({
-                name: 'car',
+                name: "car",
                 initializer: python.instantiateClass({
                     classReference: python.reference({
-                        modulePath: ['root', 'cars'],
-                        name: 'Car'
+                        modulePath: ["root", "cars"],
+                        name: "Car"
                     }),
                     arguments_: []
                 })
@@ -396,11 +396,11 @@ describe('PythonFile', () => {
 
         local_class.add(
             python.field({
-                name: 'car',
+                name: "car",
                 initializer: python.instantiateClass({
                     classReference: python.reference({
-                        modulePath: ['root', 'transportation', 'vehicles'],
-                        name: 'Car'
+                        modulePath: ["root", "transportation", "vehicles"],
+                        name: "Car"
                     }),
                     arguments_: []
                 })
@@ -409,11 +409,11 @@ describe('PythonFile', () => {
 
         local_class.add(
             python.field({
-                name: 'automobile',
+                name: "automobile",
                 initializer: python.instantiateClass({
                     classReference: python.reference({
-                        modulePath: ['root', 'automobiles'],
-                        name: 'Car'
+                        modulePath: ["root", "automobiles"],
+                        name: "Car"
                     }),
                     arguments_: []
                 })
@@ -422,11 +422,11 @@ describe('PythonFile', () => {
 
         local_class.add(
             python.field({
-                name: 'vehicle',
+                name: "vehicle",
                 initializer: python.instantiateClass({
                     classReference: python.reference({
-                        modulePath: ['root', 'vehicles', 'automobiles'],
-                        name: 'Car'
+                        modulePath: ["root", "vehicles", "automobiles"],
+                        name: "Car"
                     }),
                     arguments_: []
                 })

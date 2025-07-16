@@ -1,8 +1,8 @@
-import { assertNever } from '@fern-api/core-utils'
-import { ContainerType, ExampleContainer, ExamplePrimitive, TypeDeclaration, TypeId } from '@fern-api/ir-sdk'
+import { assertNever } from "@fern-api/core-utils"
+import { ContainerType, ExampleContainer, ExamplePrimitive, TypeDeclaration, TypeId } from "@fern-api/ir-sdk"
 
-import { ExampleGenerationResult, ExampleGenerationSuccess } from './ExampleGenerationResult'
-import { generateTypeReferenceExample } from './generateTypeReferenceExample'
+import { ExampleGenerationResult, ExampleGenerationSuccess } from "./ExampleGenerationResult"
+import { generateTypeReferenceExample } from "./generateTypeReferenceExample"
 
 export declare namespace generateContainerExample {
     interface Args {
@@ -30,7 +30,7 @@ export function generateContainerExample({
         return generateEmptyContainerExample({ containerType })
     }
     switch (containerType.type) {
-        case 'list': {
+        case "list": {
             const example = generateTypeReferenceExample({
                 fieldName,
                 typeReference: containerType.list,
@@ -39,11 +39,11 @@ export function generateContainerExample({
                 typeDeclarations,
                 skipOptionalProperties
             })
-            if (example.type === 'failure') {
+            if (example.type === "failure") {
                 return generateEmptyContainerExample({ containerType })
             }
             return {
-                type: 'success',
+                type: "success",
                 example: ExampleContainer.list({
                     list: [example.example, example.example],
                     itemType: containerType.list
@@ -51,15 +51,15 @@ export function generateContainerExample({
                 jsonExample: [example.jsonExample, example.jsonExample]
             }
         }
-        case 'literal': {
+        case "literal": {
             return {
-                type: 'success',
+                type: "success",
                 example: ExampleContainer.literal({
                     literal: containerType.literal._visit<ExamplePrimitive>({
                         boolean: (value) => ExamplePrimitive.boolean(value),
                         string: (value) => ExamplePrimitive.string({ original: value }),
                         _other: () => {
-                            throw new Error('Encountered unknown literal type')
+                            throw new Error("Encountered unknown literal type")
                         }
                     })
                 }),
@@ -67,12 +67,12 @@ export function generateContainerExample({
                     boolean: (value) => value,
                     string: (value) => value,
                     _other: () => {
-                        throw new Error('Encountered unknown literal type')
+                        throw new Error("Encountered unknown literal type")
                     }
                 })
             }
         }
-        case 'optional': {
+        case "optional": {
             if (skipOptionalProperties) {
                 return generateEmptyContainerExample({ containerType })
             }
@@ -84,11 +84,11 @@ export function generateContainerExample({
                 typeDeclarations,
                 skipOptionalProperties
             })
-            if (example.type === 'failure') {
+            if (example.type === "failure") {
                 return generateEmptyContainerExample({ containerType })
             }
             return {
-                type: 'success',
+                type: "success",
                 example: ExampleContainer.optional({
                     optional: example.example,
                     valueType: containerType.optional
@@ -96,7 +96,7 @@ export function generateContainerExample({
                 jsonExample: example.jsonExample
             }
         }
-        case 'nullable': {
+        case "nullable": {
             if (skipOptionalProperties) {
                 return generateEmptyContainerExample({ containerType })
             }
@@ -108,11 +108,11 @@ export function generateContainerExample({
                 typeDeclarations,
                 skipOptionalProperties
             })
-            if (example.type === 'failure') {
+            if (example.type === "failure") {
                 return generateEmptyContainerExample({ containerType })
             }
             return {
-                type: 'success',
+                type: "success",
                 example: ExampleContainer.nullable({
                     nullable: example.example,
                     valueType: containerType.nullable
@@ -120,7 +120,7 @@ export function generateContainerExample({
                 jsonExample: example.jsonExample
             }
         }
-        case 'set': {
+        case "set": {
             const example = generateTypeReferenceExample({
                 fieldName,
                 typeReference: containerType.set,
@@ -129,11 +129,11 @@ export function generateContainerExample({
                 typeDeclarations,
                 skipOptionalProperties
             })
-            if (example.type === 'failure') {
+            if (example.type === "failure") {
                 return generateEmptyContainerExample({ containerType })
             }
             return {
-                type: 'success',
+                type: "success",
                 example: ExampleContainer.set({
                     set: [example.example],
                     itemType: containerType.set
@@ -141,7 +141,7 @@ export function generateContainerExample({
                 jsonExample: [example.jsonExample]
             }
         }
-        case 'map': {
+        case "map": {
             const keyExample = generateTypeReferenceExample({
                 fieldName,
                 typeReference: containerType.keyType,
@@ -158,11 +158,11 @@ export function generateContainerExample({
                 typeDeclarations,
                 skipOptionalProperties
             })
-            if (keyExample.type === 'failure' || valueExample.type === 'failure') {
+            if (keyExample.type === "failure" || valueExample.type === "failure") {
                 return generateEmptyContainerExample({ containerType })
             }
             return {
-                type: 'success',
+                type: "success",
                 example: ExampleContainer.map({
                     map: [
                         {
@@ -189,9 +189,9 @@ export function generateEmptyContainerExample({
     containerType: ContainerType
 }): ExampleGenerationSuccess<ExampleContainer> {
     switch (containerType.type) {
-        case 'list': {
+        case "list": {
             return {
-                type: 'success',
+                type: "success",
                 example: ExampleContainer.list({
                     list: [],
                     itemType: containerType.list
@@ -199,15 +199,15 @@ export function generateEmptyContainerExample({
                 jsonExample: []
             }
         }
-        case 'literal': {
+        case "literal": {
             return {
-                type: 'success',
+                type: "success",
                 example: ExampleContainer.literal({
                     literal: containerType.literal._visit<ExamplePrimitive>({
                         boolean: (value) => ExamplePrimitive.boolean(value),
                         string: (value) => ExamplePrimitive.string({ original: value }),
                         _other: () => {
-                            throw new Error('Encountered unknown literal type')
+                            throw new Error("Encountered unknown literal type")
                         }
                     })
                 }),
@@ -215,14 +215,14 @@ export function generateEmptyContainerExample({
                     boolean: (value) => value,
                     string: (value) => value,
                     _other: () => {
-                        throw new Error('Encountered unknown literal type')
+                        throw new Error("Encountered unknown literal type")
                     }
                 })
             }
         }
-        case 'optional': {
+        case "optional": {
             return {
-                type: 'success',
+                type: "success",
                 example: ExampleContainer.optional({
                     optional: undefined,
                     valueType: containerType.optional
@@ -230,9 +230,9 @@ export function generateEmptyContainerExample({
                 jsonExample: undefined
             }
         }
-        case 'nullable': {
+        case "nullable": {
             return {
-                type: 'success',
+                type: "success",
                 example: ExampleContainer.nullable({
                     nullable: undefined,
                     valueType: containerType.nullable
@@ -240,9 +240,9 @@ export function generateEmptyContainerExample({
                 jsonExample: undefined
             }
         }
-        case 'set': {
+        case "set": {
             return {
-                type: 'success',
+                type: "success",
                 example: ExampleContainer.set({
                     set: [],
                     itemType: containerType.set
@@ -250,9 +250,9 @@ export function generateEmptyContainerExample({
                 jsonExample: []
             }
         }
-        case 'map': {
+        case "map": {
             return {
-                type: 'success',
+                type: "success",
                 example: ExampleContainer.map({
                     map: [],
                     keyType: containerType.keyType,

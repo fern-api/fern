@@ -1,17 +1,17 @@
-import { mapValues } from 'lodash-es'
+import { mapValues } from "lodash-es"
 
-import { GeneratorName } from '@fern-api/configuration-loader'
+import { GeneratorName } from "@fern-api/configuration-loader"
 
-import { IrSerialization } from '../../ir-serialization'
-import { IrVersions } from '../../ir-versions'
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
+import { IrSerialization } from "../../ir-serialization"
+import { IrVersions } from "../../ir-versions"
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
 
 export const V51_TO_V50_MIGRATION: IrMigration<
     IrVersions.V51.ir.IntermediateRepresentation,
     IrVersions.V50.ir.IntermediateRepresentation
 > = {
-    laterVersion: 'v51',
-    earlierVersion: 'v50',
+    laterVersion: "v51",
+    earlierVersion: "v50",
     firstGeneratorVersionToConsumeNewIR: {
         [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -35,7 +35,7 @@ export const V51_TO_V50_MIGRATION: IrMigration<
         [GeneratorName.RUBY_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.RUBY_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.CSHARP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.CSHARP_SDK]: '0.1.2',
+        [GeneratorName.CSHARP_SDK]: "0.1.2",
         [GeneratorName.SWIFT_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.SWIFT_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.PHP_MODEL]: GeneratorWasNotCreatedYet,
@@ -43,7 +43,7 @@ export const V51_TO_V50_MIGRATION: IrMigration<
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V50.IntermediateRepresentation.jsonOrThrow(ir, {
-            unrecognizedObjectKeys: 'strip',
+            unrecognizedObjectKeys: "strip",
             skipValidation: true
         }),
     migrateBackwards: (v51): IrVersions.V50.ir.IntermediateRepresentation => {
@@ -128,9 +128,9 @@ function convertExampleWebSocketMessageBody(
     body: IrVersions.V51.ExampleWebSocketMessageBody
 ): IrVersions.V50.ExampleWebSocketMessageBody {
     switch (body.type) {
-        case 'inlinedBody':
+        case "inlinedBody":
             return IrVersions.V50.ExampleWebSocketMessageBody.inlinedBody(convertExampleInlinedRequestBody(body))
-        case 'reference':
+        case "reference":
             return IrVersions.V50.ExampleWebSocketMessageBody.reference(convertExampleTypeReference(body))
     }
 }
@@ -168,15 +168,15 @@ function convertExampleTypeReferenceShape(
     shape: IrVersions.V51.ExampleTypeReferenceShape
 ): IrVersions.V50.ExampleTypeReferenceShape {
     switch (shape.type) {
-        case 'primitive':
+        case "primitive":
             return IrVersions.V50.ExampleTypeReferenceShape.primitive({
                 ...shape.primitive
             })
-        case 'container':
+        case "container":
             return IrVersions.V50.ExampleTypeReferenceShape.container(convertExampleContainerTypeReferenceShape(shape))
-        case 'unknown':
+        case "unknown":
             return IrVersions.V50.ExampleTypeReferenceShape.unknown(shape.unknown)
-        case 'named':
+        case "named":
             return IrVersions.V50.ExampleTypeReferenceShape.named({
                 ...shape,
                 typeName: shape.typeName,
@@ -189,26 +189,26 @@ function convertExampleContainerTypeReferenceShape(
     shape: IrVersions.V51.ExampleTypeReferenceShape.Container
 ): IrVersions.V50.ExampleContainer {
     switch (shape.container.type) {
-        case 'list':
+        case "list":
             return IrVersions.V50.ExampleContainer.list(
                 shape.container.list.map((exampleTypeReference) => convertExampleTypeReference(exampleTypeReference))
             )
-        case 'set':
+        case "set":
             return IrVersions.V50.ExampleContainer.set(
                 shape.container.set.map((exampleTypeReference) => convertExampleTypeReference(exampleTypeReference))
             )
-        case 'optional':
+        case "optional":
             return IrVersions.V50.ExampleContainer.optional(
                 shape.container.optional != null ? convertExampleTypeReference(shape.container.optional) : undefined
             )
-        case 'map':
+        case "map":
             return IrVersions.V50.ExampleContainer.map(
                 shape.container.map.map((exampleKeyValuePair) => ({
                     key: convertExampleTypeReference(exampleKeyValuePair.key),
                     value: convertExampleTypeReference(exampleKeyValuePair.value)
                 }))
             )
-        case 'literal':
+        case "literal":
             return IrVersions.V50.ExampleContainer.literal(shape.container.literal)
     }
 }
@@ -224,19 +224,19 @@ function convertExampleTypeReference(
 
 function convertExampleTypeShape(shape: IrVersions.V51.ExampleTypeShape): IrVersions.V50.ExampleTypeShape {
     switch (shape.type) {
-        case 'object':
+        case "object":
             return IrVersions.V50.ExampleTypeShape.object({
                 properties: shape.properties.map((property) => convertExampleObjectProperty(property))
             })
-        case 'alias':
+        case "alias":
             return IrVersions.V50.ExampleTypeShape.alias({
                 value: { ...convertExampleTypeReference(shape.value) }
             })
-        case 'enum':
+        case "enum":
             return IrVersions.V50.ExampleTypeShape.enum(shape)
-        case 'union':
+        case "union":
             return IrVersions.V50.ExampleTypeShape.union(convertUnionExampleTypeShape(shape))
-        case 'undiscriminatedUnion':
+        case "undiscriminatedUnion":
             return IrVersions.V50.ExampleTypeShape.undiscriminatedUnion(
                 convertUndiscriminatedUnionExampleTypeShape(shape)
             )
@@ -272,17 +272,17 @@ function convertExampleSingleUnionTypeProperties(
     exampleSingleUnionTypeProperties: IrVersions.V51.ExampleSingleUnionTypeProperties
 ): IrVersions.V50.ExampleSingleUnionTypeProperties {
     switch (exampleSingleUnionTypeProperties.type) {
-        case 'samePropertiesAsObject':
+        case "samePropertiesAsObject":
             return IrVersions.V50.ExampleSingleUnionTypeProperties.samePropertiesAsObject({
                 ...exampleSingleUnionTypeProperties,
                 object: convertExampleObjectType(exampleSingleUnionTypeProperties.object)
             })
-        case 'singleProperty':
+        case "singleProperty":
             return IrVersions.V50.ExampleSingleUnionTypeProperties.singleProperty({
                 ...exampleSingleUnionTypeProperties,
                 shape: convertExampleTypeReferenceShape(exampleSingleUnionTypeProperties.shape)
             })
-        case 'noProperties':
+        case "noProperties":
             return IrVersions.V50.ExampleSingleUnionTypeProperties.noProperties()
     }
 }
@@ -354,12 +354,12 @@ function convertExampleEndpointCall(example: IrVersions.V51.ExampleEndpointCall)
 
 function convertExampleResponse(response: IrVersions.V51.ExampleResponse): IrVersions.V50.ExampleResponse {
     switch (response.type) {
-        case 'error':
+        case "error":
             return IrVersions.V50.ExampleResponse.error({
                 ...response,
                 body: response.body != null ? convertExampleTypeReference(response.body) : undefined
             })
-        case 'ok':
+        case "ok":
             return IrVersions.V50.ExampleResponse.ok(convertExampleEndpointSuccessResponse(response))
     }
 }
@@ -368,15 +368,15 @@ function convertExampleEndpointSuccessResponse(
     response: IrVersions.V51.ExampleResponse.Ok
 ): IrVersions.V50.ExampleEndpointSuccessResponse {
     switch (response.value.type) {
-        case 'body':
+        case "body":
             return IrVersions.V50.ExampleEndpointSuccessResponse.body(
                 response.value.value != null ? convertExampleTypeReference(response.value.value) : undefined
             )
-        case 'stream':
+        case "stream":
             return IrVersions.V50.ExampleEndpointSuccessResponse.stream(
                 response.value.value.map((exampleTypeReference) => convertExampleTypeReference(exampleTypeReference))
             )
-        case 'sse':
+        case "sse":
             return IrVersions.V50.ExampleEndpointSuccessResponse.sse(
                 response.value.value.map((exampleServerSideEvent) => ({
                     ...exampleServerSideEvent,
@@ -388,9 +388,9 @@ function convertExampleEndpointSuccessResponse(
 
 function convertExampleRequest(request: IrVersions.V51.ExampleRequestBody): IrVersions.V50.ExampleRequestBody {
     switch (request.type) {
-        case 'inlinedRequestBody':
+        case "inlinedRequestBody":
             return IrVersions.V50.ExampleRequestBody.inlinedRequestBody(convertExampleInlinedRequestBody(request))
-        case 'reference':
+        case "reference":
             return IrVersions.V50.ExampleRequestBody.reference(convertExampleTypeReference(request))
     }
 }

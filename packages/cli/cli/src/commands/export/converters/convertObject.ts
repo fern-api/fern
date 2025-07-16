@@ -1,4 +1,4 @@
-import { OpenAPIV3 } from 'openapi-types'
+import { OpenAPIV3 } from "openapi-types"
 
 import {
     DeclaredTypeName,
@@ -6,9 +6,9 @@ import {
     ExampleObjectProperty,
     NameAndWireValue,
     TypeReference
-} from '@fern-api/ir-sdk'
+} from "@fern-api/ir-sdk"
 
-import { OpenApiComponentSchema, convertTypeReference, getReferenceFromDeclaredTypeName } from './typeConverter'
+import { OpenApiComponentSchema, convertTypeReference, getReferenceFromDeclaredTypeName } from "./typeConverter"
 
 export interface ObjectProperty {
     docs: string | undefined
@@ -32,13 +32,13 @@ export function convertObject({
         const convertedObjectProperty = convertTypeReference(objectProperty.valueType)
 
         let example: unknown = undefined
-        if (objectProperty.example != null && objectProperty.valueType.type === 'primitive') {
+        if (objectProperty.example != null && objectProperty.valueType.type === "primitive") {
             example = objectProperty.example.value.jsonExample
         } else if (
             objectProperty.example != null &&
-            objectProperty.valueType.type === 'container' &&
-            objectProperty.valueType.container.type === 'list' &&
-            objectProperty.valueType.container.list.type === 'primitive'
+            objectProperty.valueType.type === "container" &&
+            objectProperty.valueType.container.type === "list" &&
+            objectProperty.valueType.container.list.type === "primitive"
         ) {
             example = objectProperty.example.value.jsonExample
         }
@@ -49,13 +49,13 @@ export function convertObject({
             example
         }
         const isOptionalProperty =
-            objectProperty.valueType.type === 'container' && objectProperty.valueType.container.type === 'optional'
+            objectProperty.valueType.type === "container" && objectProperty.valueType.container.type === "optional"
         if (!isOptionalProperty) {
             required.push(objectProperty.name.wireValue)
         }
     })
     const convertedSchemaObject: OpenAPIV3.SchemaObject = {
-        type: 'object',
+        type: "object",
         description: docs,
         properties: convertedProperties
     }

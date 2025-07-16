@@ -1,14 +1,14 @@
-import { mkdir, readdir, rm } from 'fs/promises'
-import moment from 'moment'
+import { mkdir, readdir, rm } from "fs/promises"
+import moment from "moment"
 
-import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from '@fern-api/fs-utils'
-import { TaskContext } from '@fern-api/task-context'
+import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils"
+import { TaskContext } from "@fern-api/task-context"
 
-import { FernRegistryClient } from '@fern-fern/generators-sdk'
+import { FernRegistryClient } from "@fern-fern/generators-sdk"
 
-import { GeneratorWorkspace } from '../../loadGeneratorWorkspaces'
-import { parseGeneratorReleasesFile } from '../../utils/convertVersionsFileToReleases'
-import { writeChangelogEntries, writeChangelogsToFile } from './writeChangelogEntries'
+import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces"
+import { parseGeneratorReleasesFile } from "../../utils/convertVersionsFileToReleases"
+import { writeChangelogEntries, writeChangelogsToFile } from "./writeChangelogEntries"
 
 export async function generateGeneratorChangelog({
     context,
@@ -26,7 +26,7 @@ export async function generateGeneratorChangelog({
     const resolvedOutputPath =
         outputPath == null
             ? AbsoluteFilePath.of(process.cwd())
-            : outputPath.startsWith('/')
+            : outputPath.startsWith("/")
               ? AbsoluteFilePath.of(outputPath)
               : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(outputPath))
 
@@ -95,7 +95,7 @@ export async function generateGeneratorChangelog({
                     createdAt = releaseRequest.body.createdAt
                 }
             }
-            createdAt = moment(createdAt).format('YYYY-MM-DD')
+            createdAt = moment(createdAt).format("YYYY-MM-DD")
 
             if (!writtenVersions.has(createdAt)) {
                 writtenVersions.set(createdAt, new Map())

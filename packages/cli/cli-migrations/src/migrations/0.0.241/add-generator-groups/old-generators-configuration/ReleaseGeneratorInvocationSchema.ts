@@ -1,8 +1,8 @@
-import { z } from 'zod'
+import { z } from "zod"
 
-import { BaseGeneratorInvocationSchema } from './BaseGeneratorInvocationSchema'
-import { GeneratorPublishingSchema } from './GeneratorPublishingSchema'
-import { GithubRepositoryOutputSchema } from './GithubRepositoryOutputSchema'
+import { BaseGeneratorInvocationSchema } from "./BaseGeneratorInvocationSchema"
+import { GeneratorPublishingSchema } from "./GeneratorPublishingSchema"
+import { GithubRepositoryOutputSchema } from "./GithubRepositoryOutputSchema"
 
 export const ReleaseGeneratorInvocationSchema = BaseGeneratorInvocationSchema.extend({
     publishing: z.optional(GeneratorPublishingSchema),

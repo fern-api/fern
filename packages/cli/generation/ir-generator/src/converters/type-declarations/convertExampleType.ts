@@ -1,12 +1,12 @@
-import { FernWorkspace } from '@fern-api/api-workspace-commons'
-import { Examples, assertNever, isPlainObject } from '@fern-api/core-utils'
+import { FernWorkspace } from "@fern-api/api-workspace-commons"
+import { Examples, assertNever, isPlainObject } from "@fern-api/core-utils"
 import {
     RawSchemas,
     isRawAliasDefinition,
     isRawObjectDefinition,
     visitRawTypeDeclaration,
     visitRawTypeReference
-} from '@fern-api/fern-definition-schema'
+} from "@fern-api/fern-definition-schema"
 import {
     DeclaredTypeName,
     ExampleContainer,
@@ -18,21 +18,21 @@ import {
     ExampleTypeReferenceShape,
     ExampleTypeShape,
     PrimitiveTypeV1
-} from '@fern-api/ir-sdk'
-import { IdGenerator } from '@fern-api/ir-utils'
+} from "@fern-api/ir-sdk"
+import { IdGenerator } from "@fern-api/ir-utils"
 
-import { FernFileContext } from '../../FernFileContext'
-import { validateTypeReferenceExample } from '../../examples/validateTypeReferenceExample'
-import { ExampleResolver } from '../../resolvers/ExampleResolver'
-import { TypeResolver } from '../../resolvers/TypeResolver'
+import { FernFileContext } from "../../FernFileContext"
+import { validateTypeReferenceExample } from "../../examples/validateTypeReferenceExample"
+import { ExampleResolver } from "../../resolvers/ExampleResolver"
+import { TypeResolver } from "../../resolvers/TypeResolver"
 import {
     getSingleUnionTypeName,
     getSingleUnionTypeProperties,
     getUnionDiscriminant,
     getUnionDiscriminantName
-} from './convertDiscriminatedUnionTypeDeclaration'
-import { getEnumNameFromEnumValue } from './convertEnumTypeDeclaration'
-import { getPropertyName } from './convertObjectTypeDeclaration'
+} from "./convertDiscriminatedUnionTypeDeclaration"
+import { getEnumNameFromEnumValue } from "./convertEnumTypeDeclaration"
+import { getPropertyName } from "./convertObjectTypeDeclaration"
 
 export function convertTypeExample({
     typeName,
@@ -58,7 +58,7 @@ export function convertTypeExample({
             return ExampleTypeShape.alias({
                 value: convertTypeReferenceExample({
                     example,
-                    rawTypeBeingExemplified: typeof rawAlias === 'string' ? rawAlias : rawAlias.type,
+                    rawTypeBeingExemplified: typeof rawAlias === "string" ? rawAlias : rawAlias.type,
                     fileContainingRawTypeReference: fileContainingType,
                     fileContainingExample,
                     typeResolver,
@@ -82,14 +82,14 @@ export function convertTypeExample({
         discriminatedUnion: (rawUnion) => {
             const discriminant = getUnionDiscriminant(rawUnion)
             if (!isPlainObject(example)) {
-                throw new Error('Example is not an object')
+                throw new Error("Example is not an object")
             }
             const discriminantValueForExample = example[discriminant]
             if (discriminantValueForExample == null) {
-                throw new Error('Example is missing discriminant: ' + discriminant)
+                throw new Error("Example is missing discriminant: " + discriminant)
             }
-            if (typeof discriminantValueForExample !== 'string') {
-                throw new Error('Discriminant value is not a string')
+            if (typeof discriminantValueForExample !== "string") {
+                throw new Error("Discriminant value is not a string")
             }
 
             const rawSingleUnionType = rawUnion.union[discriminantValueForExample]
@@ -98,9 +98,9 @@ export function convertTypeExample({
             }
 
             const rawValueType =
-                typeof rawSingleUnionType === 'string'
+                typeof rawSingleUnionType === "string"
                     ? rawSingleUnionType
-                    : typeof rawSingleUnionType.type === 'string'
+                    : typeof rawSingleUnionType.type === "string"
                       ? rawSingleUnionType.type
                       : undefined
 
@@ -124,10 +124,10 @@ export function convertTypeExample({
             })
         },
         enum: (rawEnum) => {
-            if (typeof example !== 'string') {
+            if (typeof example !== "string") {
                 const validValues = rawEnum.enum
-                    .map((enumEntry) => (typeof enumEntry === 'string' ? enumEntry : enumEntry.value))
-                    .join(', ')
+                    .map((enumEntry) => (typeof enumEntry === "string" ? enumEntry : enumEntry.value))
+                    .join(", ")
 
                 throw new Error(`Expected one of ${validValues}. Received ${example}`)
             }
@@ -141,7 +141,7 @@ export function convertTypeExample({
         undiscriminatedUnion: (undiscriminatedUnion) => {
             for (const [index, variant] of undiscriminatedUnion.union.entries()) {
                 const violationsForMember = validateTypeReferenceExample({
-                    rawTypeReference: typeof variant === 'string' ? variant : variant.type,
+                    rawTypeReference: typeof variant === "string" ? variant : variant.type,
                     example,
                     typeResolver,
                     exampleResolver,
@@ -155,7 +155,7 @@ export function convertTypeExample({
                         index,
                         singleUnionType: convertTypeReferenceExample({
                             example,
-                            rawTypeBeingExemplified: typeof variant === 'string' ? variant : variant.type,
+                            rawTypeBeingExemplified: typeof variant === "string" ? variant : variant.type,
                             fileContainingRawTypeReference: fileContainingType,
                             fileContainingExample,
                             typeResolver,
@@ -166,9 +166,9 @@ export function convertTypeExample({
                 }
             }
             const variantOptions = undiscriminatedUnion.union.map((variant) => {
-                return typeof variant === 'string' ? variant : variant.type
+                return typeof variant === "string" ? variant : variant.type
             })
-            const validValues = variantOptions.join(', ')
+            const validValues = variantOptions.join(", ")
             throw new Error(`Expected one of ${validValues}. Received ${example}`)
         }
     })
@@ -213,7 +213,7 @@ export function convertTypeReferenceExample({
             },
             map: ({ keyType, valueType }) => {
                 if (!isPlainObject(resolvedExample)) {
-                    throw new Error('Example is not an object')
+                    throw new Error("Example is not an object")
                 }
                 return ExampleTypeReferenceShape.container(
                     ExampleContainer.map({
@@ -244,7 +244,7 @@ export function convertTypeReferenceExample({
             },
             list: (itemType) => {
                 if (!Array.isArray(resolvedExample)) {
-                    throw new Error('Example is not a list')
+                    throw new Error("Example is not a list")
                 }
                 return ExampleTypeReferenceShape.container(
                     ExampleContainer.list({
@@ -265,7 +265,7 @@ export function convertTypeReferenceExample({
             },
             set: (itemType) => {
                 if (!Array.isArray(resolvedExample)) {
-                    throw new Error('Example is not a list')
+                    throw new Error("Example is not a list")
                 }
                 return ExampleTypeReferenceShape.container(
                     ExampleContainer.set({
@@ -324,11 +324,11 @@ export function convertTypeReferenceExample({
             },
             literal: (literal) => {
                 switch (literal.type) {
-                    case 'boolean':
+                    case "boolean":
                         return ExampleTypeReferenceShape.container(
                             ExampleContainer.literal({ literal: ExamplePrimitive.boolean(literal.boolean) })
                         )
-                    case 'string':
+                    case "string":
                         return ExampleTypeReferenceShape.container(
                             ExampleContainer.literal({
                                 literal: ExamplePrimitive.string({
@@ -346,8 +346,8 @@ export function convertTypeReferenceExample({
                     file: fileContainingRawTypeReference
                 })
                 const parsedReferenceToNamedType = fileContainingRawTypeReference.parseTypeReference(named)
-                if (parsedReferenceToNamedType.type !== 'named') {
-                    throw new Error('Type reference is not to a named type.')
+                if (parsedReferenceToNamedType.type !== "named") {
+                    throw new Error("Type reference is not to a named type.")
                 }
                 const typeName: DeclaredTypeName = {
                     typeId: parsedReferenceToNamedType.typeId,
@@ -390,7 +390,7 @@ function convertPrimitiveExample({
 }): ExampleTypeReferenceShape {
     return PrimitiveTypeV1._visit(typeBeingExemplified, {
         string: () => {
-            if (typeof example !== 'string') {
+            if (typeof example !== "string") {
                 return ExampleTypeReferenceShape.primitive(
                     ExamplePrimitive.string({
                         original: Examples.STRING
@@ -404,7 +404,7 @@ function convertPrimitiveExample({
             )
         },
         dateTime: () => {
-            if (typeof example !== 'string') {
+            if (typeof example !== "string") {
                 return ExampleTypeReferenceShape.primitive(
                     ExamplePrimitive.string({
                         original: Examples.DATE_TIME
@@ -419,7 +419,7 @@ function convertPrimitiveExample({
             )
         },
         date: () => {
-            if (typeof example !== 'string') {
+            if (typeof example !== "string") {
                 return ExampleTypeReferenceShape.primitive(
                     ExamplePrimitive.string({
                         original: Examples.DATE
@@ -429,7 +429,7 @@ function convertPrimitiveExample({
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.date(example))
         },
         base64: () => {
-            if (typeof example !== 'string') {
+            if (typeof example !== "string") {
                 return ExampleTypeReferenceShape.primitive(
                     ExamplePrimitive.string({
                         original: Examples.BASE64
@@ -443,49 +443,49 @@ function convertPrimitiveExample({
             )
         },
         uint: () => {
-            if (typeof example !== 'number') {
+            if (typeof example !== "number") {
                 return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uint(Examples.UINT))
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uint(example))
         },
         uint64: () => {
-            if (typeof example !== 'number') {
+            if (typeof example !== "number") {
                 return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uint64(Examples.UINT64))
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uint64(example))
         },
         integer: () => {
-            if (typeof example !== 'number') {
+            if (typeof example !== "number") {
                 return ExampleTypeReferenceShape.primitive(ExamplePrimitive.integer(Examples.INT))
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.integer(example))
         },
         float: () => {
-            if (typeof example !== 'number') {
+            if (typeof example !== "number") {
                 return ExampleTypeReferenceShape.primitive(ExamplePrimitive.float(Examples.FLOAT))
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.float(example))
         },
         double: () => {
-            if (typeof example !== 'number') {
+            if (typeof example !== "number") {
                 return ExampleTypeReferenceShape.primitive(ExamplePrimitive.double(Examples.DOUBLE))
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.double(example))
         },
         long: () => {
-            if (typeof example !== 'number') {
+            if (typeof example !== "number") {
                 return ExampleTypeReferenceShape.primitive(ExamplePrimitive.long(Examples.UINT))
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.long(example))
         },
         boolean: () => {
-            if (typeof example !== 'boolean') {
+            if (typeof example !== "boolean") {
                 return ExampleTypeReferenceShape.primitive(ExamplePrimitive.boolean(Examples.BOOLEAN))
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.boolean(example))
         },
         uuid: () => {
-            if (typeof example !== 'string') {
+            if (typeof example !== "string") {
                 return ExampleTypeReferenceShape.primitive(
                     ExamplePrimitive.string({
                         original: Examples.UUID
@@ -495,7 +495,7 @@ function convertPrimitiveExample({
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uuid(example))
         },
         bigInteger: () => {
-            if (typeof example !== 'string') {
+            if (typeof example !== "string") {
                 return ExampleTypeReferenceShape.primitive(
                     ExamplePrimitive.string({
                         original: Examples.BIG_INTEGER
@@ -509,7 +509,7 @@ function convertPrimitiveExample({
             )
         },
         _other: () => {
-            throw new Error('Unknown primitive type: ' + typeBeingExemplified)
+            throw new Error("Unknown primitive type: " + typeBeingExemplified)
         }
     })
 }
@@ -557,7 +557,7 @@ function convertObject({
                               example: propertyExample,
                               fileContainingExample,
                               rawTypeBeingExemplified:
-                                  typeof originalTypeDeclaration.rawPropertyType === 'string'
+                                  typeof originalTypeDeclaration.rawPropertyType === "string"
                                       ? originalTypeDeclaration.rawPropertyType
                                       : originalTypeDeclaration.rawPropertyType.type,
                               fileContainingRawTypeReference: originalTypeDeclaration.file,
@@ -627,14 +627,14 @@ export function getOriginalTypeDeclarationForPropertyFromExtensions({
     | { typeName: DeclaredTypeName; rawPropertyType: string | RawSchemas.ObjectPropertySchema; file: FernFileContext }
     | undefined {
     if (extends_ != null) {
-        const extendsList = typeof extends_ === 'string' ? [extends_] : extends_
+        const extendsList = typeof extends_ === "string" ? [extends_] : extends_
         for (const typeName of extendsList) {
             const resolvedType = typeResolver.resolveNamedTypeOrThrow({
                 referenceToNamedType: typeName,
                 file
             })
-            if (resolvedType._type !== 'named' || !isRawObjectDefinition(resolvedType.declaration)) {
-                throw new Error('Extension is not of a named object')
+            if (resolvedType._type !== "named" || !isRawObjectDefinition(resolvedType.declaration)) {
+                throw new Error("Extension is not of a named object")
             }
             const originalTypeDeclaration = getOriginalTypeDeclarationForProperty({
                 wirePropertyKey,
@@ -695,9 +695,9 @@ function convertSingleUnionType({
     })
 
     switch (parsedSingleUnionTypeProperties.propertiesType) {
-        case 'singleProperty': {
+        case "singleProperty": {
             if (!isPlainObject(example)) {
-                throw new Error('Example is not an object')
+                throw new Error("Example is not an object")
             }
             return {
                 wireDiscriminantValue,
@@ -714,9 +714,9 @@ function convertSingleUnionType({
                 )
             }
         }
-        case 'samePropertiesAsObject': {
+        case "samePropertiesAsObject": {
             if (!isPlainObject(example)) {
-                throw new Error('Example is not an object')
+                throw new Error("Example is not an object")
             }
             const { [discriminant]: _discriminantValue, ...nonDiscriminantPropertiesFromExample } = example
             let rawDeclaration = typeResolver.getDeclarationOfNamedTypeOrThrow({
@@ -726,7 +726,7 @@ function convertSingleUnionType({
             while (isRawAliasDefinition(rawDeclaration.declaration)) {
                 rawDeclaration = typeResolver.getDeclarationOfNamedTypeOrThrow({
                     referenceToNamedType:
-                        typeof rawDeclaration.declaration === 'string'
+                        typeof rawDeclaration.declaration === "string"
                             ? rawDeclaration.declaration
                             : rawDeclaration.declaration.type,
                     file: fileContainingType

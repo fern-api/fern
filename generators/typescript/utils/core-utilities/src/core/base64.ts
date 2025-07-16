@@ -9,8 +9,8 @@ function bytesToBase64(bytes: Uint8Array): string {
 }
 
 export function base64Encode(input: string): string {
-    if (typeof Buffer !== 'undefined') {
-        return Buffer.from(input, 'utf8').toString('base64')
+    if (typeof Buffer !== "undefined") {
+        return Buffer.from(input, "utf8").toString("base64")
     }
 
     const bytes = new TextEncoder().encode(input)
@@ -18,8 +18,8 @@ export function base64Encode(input: string): string {
 }
 
 export function base64Decode(input: string): string {
-    if (typeof Buffer !== 'undefined') {
-        return Buffer.from(input, 'base64').toString('utf8')
+    if (typeof Buffer !== "undefined") {
+        return Buffer.from(input, "base64").toString("utf8")
     }
 
     const bytes = base64ToBytes(input)

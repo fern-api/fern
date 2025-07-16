@@ -1,14 +1,14 @@
-import { readFile } from 'fs/promises'
-import path from 'path'
+import { readFile } from "fs/promises"
+import path from "path"
 
-import { generatorsYml } from '@fern-api/configuration'
-import { assertNever } from '@fern-api/core-utils'
-import { visitRawApiAuth } from '@fern-api/fern-definition-schema'
-import { AbsoluteFilePath, RelativeFilePath, dirname, join, resolve } from '@fern-api/fs-utils'
-import { TaskContext } from '@fern-api/task-context'
+import { generatorsYml } from "@fern-api/configuration"
+import { assertNever } from "@fern-api/core-utils"
+import { visitRawApiAuth } from "@fern-api/fern-definition-schema"
+import { AbsoluteFilePath, RelativeFilePath, dirname, join, resolve } from "@fern-api/fs-utils"
+import { TaskContext } from "@fern-api/task-context"
 
-import { FernFiddle } from '@fern-fern/fiddle-sdk'
-import { GithubPullRequestReviewer, OutputMetadata, PublishingMetadata, PypiMetadata } from '@fern-fern/fiddle-sdk/api'
+import { FernFiddle } from "@fern-fern/fiddle-sdk"
+import { GithubPullRequestReviewer, OutputMetadata, PublishingMetadata, PypiMetadata } from "@fern-fern/fiddle-sdk/api"
 
 const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     shouldUseTitleAsName: undefined,
@@ -49,7 +49,7 @@ export async function convertGeneratorsConfiguration({
         absolutePathToConfiguration: absolutePathToGeneratorsConfiguration,
         api: parsedApiConfiguration,
         rawConfiguration: rawGeneratorsConfiguration,
-        defaultGroup: rawGeneratorsConfiguration['default-group'],
+        defaultGroup: rawGeneratorsConfiguration["default-group"],
         reviewers: rawGeneratorsConfiguration.reviewers,
         groups:
             rawGeneratorsConfiguration.groups != null
@@ -80,13 +80,13 @@ function parseDeprecatedApiDefinitionSettingsSchema(
 ): generatorsYml.APIDefinitionSettings {
     return {
         ...UNDEFINED_API_DEFINITION_SETTINGS,
-        shouldUseTitleAsName: settings?.['use-title'],
-        shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === 'v1',
-        asyncApiMessageNaming: settings?.['message-naming'],
-        respectNullableSchemas: settings?.['respect-nullable-schemas'],
-        onlyIncludeReferencedSchemas: settings?.['only-include-referenced-schemas'],
-        inlinePathParameters: settings?.['inline-path-parameters'],
-        shouldUseIdiomaticRequestNames: settings?.['idiomatic-request-names']
+        shouldUseTitleAsName: settings?.["use-title"],
+        shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1",
+        asyncApiMessageNaming: settings?.["message-naming"],
+        respectNullableSchemas: settings?.["respect-nullable-schemas"],
+        onlyIncludeReferencedSchemas: settings?.["only-include-referenced-schemas"],
+        inlinePathParameters: settings?.["inline-path-parameters"],
+        shouldUseIdiomaticRequestNames: settings?.["idiomatic-request-names"]
     }
 }
 
@@ -95,19 +95,19 @@ function parseOpenApiDefinitionSettingsSchema(
 ): generatorsYml.APIDefinitionSettings {
     return {
         ...parseBaseApiDefinitionSettingsSchema(settings),
-        shouldUseUndiscriminatedUnionsWithLiterals: settings?.['prefer-undiscriminated-unions-with-literals'],
-        onlyIncludeReferencedSchemas: settings?.['only-include-referenced-schemas'],
-        objectQueryParameters: settings?.['object-query-parameters'],
-        respectReadonlySchemas: settings?.['respect-readonly-schemas'],
-        inlinePathParameters: settings?.['inline-path-parameters'],
+        shouldUseUndiscriminatedUnionsWithLiterals: settings?.["prefer-undiscriminated-unions-with-literals"],
+        onlyIncludeReferencedSchemas: settings?.["only-include-referenced-schemas"],
+        objectQueryParameters: settings?.["object-query-parameters"],
+        respectReadonlySchemas: settings?.["respect-readonly-schemas"],
+        inlinePathParameters: settings?.["inline-path-parameters"],
         filter: settings?.filter,
-        exampleGeneration: settings?.['example-generation'],
-        defaultFormParameterEncoding: settings?.['default-form-parameter-encoding'],
-        useBytesForBinaryResponse: settings?.['use-bytes-for-binary-response'],
-        respectForwardCompatibleEnums: settings?.['respect-forward-compatible-enums'],
-        additionalPropertiesDefaultsTo: settings?.['additional-properties-defaults-to'],
-        typeDatesAsStrings: settings?.['type-dates-as-strings'],
-        preserveSingleSchemaOneOf: settings?.['preserve-single-schema-oneof']
+        exampleGeneration: settings?.["example-generation"],
+        defaultFormParameterEncoding: settings?.["default-form-parameter-encoding"],
+        useBytesForBinaryResponse: settings?.["use-bytes-for-binary-response"],
+        respectForwardCompatibleEnums: settings?.["respect-forward-compatible-enums"],
+        additionalPropertiesDefaultsTo: settings?.["additional-properties-defaults-to"],
+        typeDatesAsStrings: settings?.["type-dates-as-strings"],
+        preserveSingleSchemaOneOf: settings?.["preserve-single-schema-oneof"]
     }
 }
 
@@ -116,7 +116,7 @@ function parseAsyncApiDefinitionSettingsSchema(
 ): generatorsYml.APIDefinitionSettings {
     return {
         ...parseBaseApiDefinitionSettingsSchema(settings),
-        asyncApiMessageNaming: settings?.['message-naming']
+        asyncApiMessageNaming: settings?.["message-naming"]
     }
 }
 
@@ -125,11 +125,11 @@ function parseBaseApiDefinitionSettingsSchema(
 ): generatorsYml.APIDefinitionSettings {
     return {
         ...UNDEFINED_API_DEFINITION_SETTINGS,
-        shouldUseTitleAsName: settings?.['title-as-schema-name'],
-        shouldUseIdiomaticRequestNames: settings?.['idiomatic-request-names'],
-        shouldUseOptionalAdditionalProperties: settings?.['optional-additional-properties'] ?? true,
-        coerceEnumsToLiterals: settings?.['coerce-enums-to-literals'],
-        respectNullableSchemas: settings?.['respect-nullable-schemas']
+        shouldUseTitleAsName: settings?.["title-as-schema-name"],
+        shouldUseIdiomaticRequestNames: settings?.["idiomatic-request-names"],
+        shouldUseOptionalAdditionalProperties: settings?.["optional-additional-properties"] ?? true,
+        coerceEnumsToLiterals: settings?.["coerce-enums-to-literals"],
+        respectNullableSchemas: settings?.["respect-nullable-schemas"]
     }
 }
 
@@ -140,10 +140,10 @@ async function parseAPIConfigurationToApiLocations(
     const apiDefinitions: generatorsYml.APIDefinitionLocation[] = []
 
     if (apiConfiguration != null) {
-        if (typeof apiConfiguration === 'string') {
+        if (typeof apiConfiguration === "string") {
             apiDefinitions.push({
                 schema: {
-                    type: 'oss',
+                    type: "oss",
                     path: apiConfiguration
                 },
                 origin: undefined,
@@ -154,10 +154,10 @@ async function parseAPIConfigurationToApiLocations(
         } else if (generatorsYml.isRawProtobufAPIDefinitionSchema(apiConfiguration)) {
             apiDefinitions.push({
                 schema: {
-                    type: 'protobuf',
+                    type: "protobuf",
                     root: apiConfiguration.proto.root,
-                    target: apiConfiguration.proto.target ?? '',
-                    localGeneration: apiConfiguration.proto['local-generation'] ?? false
+                    target: apiConfiguration.proto.target ?? "",
+                    localGeneration: apiConfiguration.proto["local-generation"] ?? false
                 },
                 origin: undefined,
                 overrides: apiConfiguration.proto.overrides,
@@ -166,10 +166,10 @@ async function parseAPIConfigurationToApiLocations(
             })
         } else if (Array.isArray(apiConfiguration)) {
             for (const definition of apiConfiguration) {
-                if (typeof definition === 'string') {
+                if (typeof definition === "string") {
                     apiDefinitions.push({
                         schema: {
-                            type: 'oss',
+                            type: "oss",
                             path: definition
                         },
                         origin: undefined,
@@ -180,10 +180,10 @@ async function parseAPIConfigurationToApiLocations(
                 } else if (generatorsYml.isRawProtobufAPIDefinitionSchema(definition)) {
                     apiDefinitions.push({
                         schema: {
-                            type: 'protobuf',
+                            type: "protobuf",
                             root: definition.proto.root,
-                            target: definition.proto.target ?? '',
-                            localGeneration: definition.proto['local-generation'] ?? false
+                            target: definition.proto.target ?? "",
+                            localGeneration: definition.proto["local-generation"] ?? false
                         },
                         origin: undefined,
                         overrides: definition.proto.overrides,
@@ -193,7 +193,7 @@ async function parseAPIConfigurationToApiLocations(
                 } else {
                     apiDefinitions.push({
                         schema: {
-                            type: 'oss',
+                            type: "oss",
                             path: definition.path
                         },
                         origin: definition.origin,
@@ -206,7 +206,7 @@ async function parseAPIConfigurationToApiLocations(
         } else {
             apiDefinitions.push({
                 schema: {
-                    type: 'oss',
+                    type: "oss",
                     path: apiConfiguration.path
                 },
                 origin: apiConfiguration.origin,
@@ -222,10 +222,10 @@ async function parseAPIConfigurationToApiLocations(
         const openapiOverrides = rawConfiguration[generatorsYml.OPENAPI_OVERRIDES_LOCATION_KEY]
         const asyncapi = rawConfiguration[generatorsYml.ASYNC_API_LOCATION_KEY]
         if (openapi != null) {
-            if (typeof openapi === 'string') {
+            if (typeof openapi === "string") {
                 apiDefinitions.push({
                     schema: {
-                        type: 'oss',
+                        type: "oss",
                         path: openapi
                     },
                     origin: apiOrigin,
@@ -233,10 +233,10 @@ async function parseAPIConfigurationToApiLocations(
                     audiences: [],
                     settings: parseDeprecatedApiDefinitionSettingsSchema(rootSettings)
                 })
-            } else if (typeof openapi === 'object') {
+            } else if (typeof openapi === "object") {
                 apiDefinitions.push({
                     schema: {
-                        type: 'oss',
+                        type: "oss",
                         path: openapi.path
                     },
                     origin: openapi.origin,
@@ -250,7 +250,7 @@ async function parseAPIConfigurationToApiLocations(
         if (asyncapi != null) {
             apiDefinitions.push({
                 schema: {
-                    type: 'oss',
+                    type: "oss",
                     path: asyncapi
                 },
                 origin: apiOrigin,
@@ -272,10 +272,10 @@ async function parseApiConfigurationV2Schema({
     rawConfiguration: generatorsYml.GeneratorsConfigurationSchema
 }): Promise<generatorsYml.APIDefinition> {
     const partialConfig = {
-        'auth-schemes':
+        "auth-schemes":
             apiConfiguration.auth != null
                 ? Object.fromEntries(
-                      Object.entries(rawConfiguration['auth-schemes'] ?? {}).filter(([name, _]) => {
+                      Object.entries(rawConfiguration["auth-schemes"] ?? {}).filter(([name, _]) => {
                           if (apiConfiguration.auth == null) {
                               return false
                           }
@@ -295,7 +295,7 @@ async function parseApiConfigurationV2Schema({
 
     if (generatorsYml.isConjureSchema(apiConfiguration.specs)) {
         return {
-            type: 'conjure',
+            type: "conjure",
             pathToConjureDefinition: apiConfiguration.specs.conjure,
             ...partialConfig
         }
@@ -309,7 +309,7 @@ async function parseApiConfigurationV2Schema({
         if (generatorsYml.isOpenApiSpecSchema(spec)) {
             definitionLocation = {
                 schema: {
-                    type: 'oss',
+                    type: "oss",
                     path: spec.openapi
                 },
                 origin: spec.origin,
@@ -320,7 +320,7 @@ async function parseApiConfigurationV2Schema({
         } else if (generatorsYml.isAsyncApiSpecSchema(spec)) {
             definitionLocation = {
                 schema: {
-                    type: 'oss',
+                    type: "oss",
                     path: spec.asyncapi
                 },
                 origin: spec.origin,
@@ -331,10 +331,10 @@ async function parseApiConfigurationV2Schema({
         } else if (generatorsYml.isProtoSpecSchema(spec)) {
             definitionLocation = {
                 schema: {
-                    type: 'protobuf',
+                    type: "protobuf",
                     root: spec.proto.root,
-                    target: spec.proto.target ?? '',
-                    localGeneration: spec.proto['local-generation'] ?? false
+                    target: spec.proto.target ?? "",
+                    localGeneration: spec.proto["local-generation"] ?? false
                 },
                 origin: undefined,
                 overrides: spec.proto.overrides,
@@ -344,7 +344,7 @@ async function parseApiConfigurationV2Schema({
         } else if (generatorsYml.isOpenRpcSpecSchema(spec)) {
             definitionLocation = {
                 schema: {
-                    type: 'openrpc',
+                    type: "openrpc",
                     path: spec.openrpc
                 },
                 origin: undefined,
@@ -355,7 +355,7 @@ async function parseApiConfigurationV2Schema({
         } else {
             continue
         }
-        if ('namespace' in spec && spec.namespace != null) {
+        if ("namespace" in spec && spec.namespace != null) {
             namespacedDefinitions[spec.namespace] ??= []
             // biome-ignore lint/style/noNonNullAssertion: allow
             namespacedDefinitions[spec.namespace]!.push(definitionLocation)
@@ -367,14 +367,14 @@ async function parseApiConfigurationV2Schema({
     // No namespaces
     if (Object.keys(namespacedDefinitions).length === 0) {
         return {
-            type: 'singleNamespace',
+            type: "singleNamespace",
             definitions: rootDefinitions,
             ...partialConfig
         }
     }
     // Yes namespaces
     return {
-        type: 'multiNamespace',
+        type: "multiNamespace",
         rootDefinitions,
         definitions: namespacedDefinitions,
         ...partialConfig
@@ -400,7 +400,7 @@ async function parseAPIConfiguration(
                 )
             }
             return {
-                type: 'multiNamespace',
+                type: "multiNamespace",
                 rootDefinitions: undefined,
                 definitions: namespacedDefinitions
             }
@@ -408,7 +408,7 @@ async function parseAPIConfiguration(
     }
 
     return {
-        type: 'singleNamespace',
+        type: "singleNamespace",
         definitions: await parseAPIConfigurationToApiLocations(apiConfiguration, rawGeneratorsConfiguration)
     }
 }
@@ -432,7 +432,7 @@ async function convertGroup({
     return {
         groupName,
         reviewers: group.reviewers,
-        audiences: group.audiences == null ? { type: 'all' } : { type: 'select', audiences: group.audiences },
+        audiences: group.audiences == null ? { type: "all" } : { type: "select", audiences: group.audiences },
         generators: await Promise.all(
             group.generators.map((generator) =>
                 convertGenerator({
@@ -480,10 +480,10 @@ async function convertGenerator({
             maybeTopLevelReviewers
         }),
         keywords: generator.keywords,
-        smartCasing: generator['smart-casing'] ?? false,
-        disableExamples: generator['disable-examples'] ?? false,
+        smartCasing: generator["smart-casing"] ?? false,
+        disableExamples: generator["disable-examples"] ?? false,
         absolutePathToLocalOutput:
-            generator.output?.location === 'local-file-system'
+            generator.output?.location === "local-file-system"
                 ? resolve(dirname(absolutePathToGeneratorsConfiguration), generator.output.path)
                 : undefined,
         absolutePathToLocalSnippets:
@@ -491,7 +491,7 @@ async function convertGenerator({
                 ? resolve(dirname(absolutePathToGeneratorsConfiguration), generator.snippets.path)
                 : undefined,
         language: getLanguageFromGeneratorName(generator.name),
-        irVersionOverride: generator['ir-version'] ?? undefined,
+        irVersionOverride: generator["ir-version"] ?? undefined,
         publishMetadata: getPublishMetadata({ generatorInvocation: generator }),
         readme,
         settings: generator.api?.settings ?? undefined
@@ -503,20 +503,20 @@ function getPublishMetadata({
 }: {
     generatorInvocation: generatorsYml.GeneratorInvocationSchema
 }): PublishingMetadata | undefined {
-    const publishMetadata = generatorInvocation['publish-metadata']
+    const publishMetadata = generatorInvocation["publish-metadata"]
     if (publishMetadata != null) {
         return {
-            packageDescription: publishMetadata['package-description'],
+            packageDescription: publishMetadata["package-description"],
             publisherEmail: publishMetadata.email,
             publisherName: publishMetadata.author,
-            referenceUrl: publishMetadata['reference-url']
+            referenceUrl: publishMetadata["reference-url"]
         }
     } else if (generatorInvocation.metadata != null) {
         return {
-            packageDescription: generatorInvocation.metadata['package-description'],
+            packageDescription: generatorInvocation.metadata["package-description"],
             publisherEmail: generatorInvocation.metadata.email,
             publisherName: generatorInvocation.metadata.author,
-            referenceUrl: generatorInvocation.metadata['reference-url']
+            referenceUrl: generatorInvocation.metadata["reference-url"]
         }
     }
     return undefined
@@ -596,9 +596,9 @@ async function convertOutputMode({
     maybeGroupLevelReviewers: generatorsYml.ReviewersSchema | undefined
     maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined
 }): Promise<FernFiddle.OutputMode> {
-    const downloadSnippets = generator.snippets != null && generator.snippets.path !== ''
+    const downloadSnippets = generator.snippets != null && generator.snippets.path !== ""
     if (generator.github != null && !isGithubSelfhosted(generator.github)) {
-        const indexOfFirstSlash = generator.github.repository.indexOf('/')
+        const indexOfFirstSlash = generator.github.repository.indexOf("/")
         const owner = generator.github.repository.slice(0, indexOfFirstSlash)
         const repo = generator.github.repository.slice(indexOfFirstSlash + 1)
         const publishInfo =
@@ -613,10 +613,10 @@ async function convertOutputMode({
                       githubLicense: licenseSchema
                   })
                 : undefined
-        const mode = generator.github.mode ?? 'release'
+        const mode = generator.github.mode ?? "release"
         switch (mode) {
-            case 'commit':
-            case 'release':
+            case "commit":
+            case "release":
                 return FernFiddle.OutputMode.githubV2(
                     FernFiddle.GithubOutputModeV2.commitAndRelease({
                         owner,
@@ -626,7 +626,7 @@ async function convertOutputMode({
                         downloadSnippets
                     })
                 )
-            case 'pull-request': {
+            case "pull-request": {
                 const reviewers = _getReviewers({
                     topLevelReviewers: maybeTopLevelReviewers,
                     groupLevelReviewers: maybeGroupLevelReviewers,
@@ -643,12 +643,12 @@ async function convertOutputMode({
                     })
                 )
             }
-            case 'push':
+            case "push":
                 return FernFiddle.OutputMode.githubV2(
                     FernFiddle.GithubOutputModeV2.push({
                         owner,
                         repo,
-                        branch: generator.github.mode === 'push' ? generator.github.branch : undefined,
+                        branch: generator.github.mode === "push" ? generator.github.branch : undefined,
                         license,
                         publishInfo,
                         downloadSnippets
@@ -662,25 +662,25 @@ async function convertOutputMode({
         return FernFiddle.remoteGen.OutputMode.publish({ registryOverrides: {} })
     }
     switch (generator.output.location) {
-        case 'local-file-system':
+        case "local-file-system":
             return FernFiddle.OutputMode.downloadFiles({
                 downloadSnippets
             })
-        case 'npm':
+        case "npm":
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.npmOverride({
-                    registryUrl: generator.output.url ?? 'https://registry.npmjs.org',
-                    packageName: generator.output['package-name'],
-                    token: generator.output.token ?? '',
+                    registryUrl: generator.output.url ?? "https://registry.npmjs.org",
+                    packageName: generator.output["package-name"],
+                    token: generator.output.token ?? "",
                     downloadSnippets
                 })
             )
-        case 'maven': {
+        case "maven": {
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.mavenOverride({
                     registryUrl: getMavenRegistryUrl(generator.output),
-                    username: generator.output.username ?? '',
-                    password: generator.output.password ?? '',
+                    username: generator.output.username ?? "",
+                    password: generator.output.password ?? "",
                     coordinate: generator.output.coordinate,
                     signature:
                         generator.output.signature != null
@@ -694,20 +694,20 @@ async function convertOutputMode({
                 })
             )
         }
-        case 'postman':
+        case "postman":
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.postman({
-                    apiKey: generator.output['api-key'],
-                    workspaceId: generator.output['workspace-id']
+                    apiKey: generator.output["api-key"],
+                    workspaceId: generator.output["workspace-id"]
                 })
             )
-        case 'pypi':
+        case "pypi":
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.pypiOverride({
-                    registryUrl: generator.output.url ?? 'https://upload.pypi.org/legacy/',
-                    username: generator.output.token != null ? '__token__' : (generator.output.password ?? ''),
-                    password: generator.output.token ?? generator.output.password ?? '',
-                    coordinate: generator.output['package-name'],
+                    registryUrl: generator.output.url ?? "https://upload.pypi.org/legacy/",
+                    username: generator.output.token != null ? "__token__" : (generator.output.password ?? ""),
+                    password: generator.output.token ?? generator.output.password ?? "",
+                    coordinate: generator.output["package-name"],
                     downloadSnippets,
                     pypiMetadata: _getPypiMetadata({
                         pypiOutputMetadata: generator.output.metadata,
@@ -716,21 +716,21 @@ async function convertOutputMode({
                     })
                 })
             )
-        case 'nuget':
+        case "nuget":
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.nugetOverride({
-                    registryUrl: generator.output.url ?? 'https://nuget.org/',
-                    packageName: generator.output['package-name'],
-                    apiKey: generator.output['api-key'] ?? '',
+                    registryUrl: generator.output.url ?? "https://nuget.org/",
+                    packageName: generator.output["package-name"],
+                    apiKey: generator.output["api-key"] ?? "",
                     downloadSnippets
                 })
             )
-        case 'rubygems':
+        case "rubygems":
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.rubyGemsOverride({
-                    registryUrl: generator.output.url ?? 'https://rubygems.org/',
-                    packageName: generator.output['package-name'],
-                    apiKey: generator.output['api-key'] ?? '',
+                    registryUrl: generator.output.url ?? "https://rubygems.org/",
+                    packageName: generator.output["package-name"],
+                    apiKey: generator.output["api-key"] ?? "",
                     downloadSnippets
                 })
             )
@@ -746,13 +746,13 @@ async function getGithubLicense({
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath
     githubLicense: generatorsYml.GithubLicenseSchema
 }): Promise<FernFiddle.GithubLicense> {
-    if (typeof githubLicense === 'string') {
+    if (typeof githubLicense === "string") {
         switch (githubLicense) {
-            case 'MIT':
+            case "MIT":
                 return FernFiddle.GithubLicense.basic({
                     id: FernFiddle.GithubLicenseId.Mit
                 })
-            case 'Apache-2.0':
+            case "Apache-2.0":
                 return FernFiddle.GithubLicense.basic({
                     id: FernFiddle.GithubLicenseId.Apache
                 })
@@ -777,15 +777,15 @@ function getGithubPublishInfo(
     maybeTopLevelMetadata: OutputMetadata | undefined
 ): FernFiddle.GithubPublishInfo {
     switch (output.location) {
-        case 'local-file-system':
-            throw new Error('Cannot use local-file-system with github publishing')
-        case 'npm':
+        case "local-file-system":
+            throw new Error("Cannot use local-file-system with github publishing")
+        case "npm":
             return FernFiddle.GithubPublishInfo.npm({
-                registryUrl: output.url ?? 'https://registry.npmjs.org',
-                packageName: output['package-name'],
+                registryUrl: output.url ?? "https://registry.npmjs.org",
+                packageName: output["package-name"],
                 token: output.token
             })
-        case 'maven':
+        case "maven":
             return FernFiddle.GithubPublishInfo.maven({
                 registryUrl: getMavenRegistryUrl(output),
                 coordinate: output.coordinate,
@@ -805,24 +805,24 @@ function getGithubPublishInfo(
                           }
                         : undefined
             })
-        case 'postman':
+        case "postman":
             return FernFiddle.GithubPublishInfo.postman({
-                apiKey: output['api-key'],
-                workspaceId: output['workspace-id']
+                apiKey: output["api-key"],
+                workspaceId: output["workspace-id"]
             })
-        case 'pypi':
+        case "pypi":
             return FernFiddle.GithubPublishInfo.pypi({
-                registryUrl: output.url ?? 'https://upload.pypi.org/legacy/',
-                packageName: output['package-name'],
+                registryUrl: output.url ?? "https://upload.pypi.org/legacy/",
+                packageName: output["package-name"],
                 credentials:
                     output.token != null
                         ? {
-                              username: '__token__',
+                              username: "__token__",
                               password: output.token
                           }
                         : {
-                              username: output.username ?? '',
-                              password: output.password ?? ''
+                              username: output.username ?? "",
+                              password: output.password ?? ""
                           },
                 pypiMetadata: _getPypiMetadata({
                     pypiOutputMetadata: output.metadata,
@@ -830,17 +830,17 @@ function getGithubPublishInfo(
                     maybeTopLevelMetadata
                 })
             })
-        case 'nuget':
+        case "nuget":
             return FernFiddle.GithubPublishInfo.nuget({
-                registryUrl: output.url ?? 'https://nuget.org/',
-                packageName: output['package-name'],
-                apiKey: output['api-key']
+                registryUrl: output.url ?? "https://nuget.org/",
+                packageName: output["package-name"],
+                apiKey: output["api-key"]
             })
-        case 'rubygems':
+        case "rubygems":
             return FernFiddle.GithubPublishInfo.rubygems({
-                registryUrl: output.url ?? 'https://rubygems.org/',
-                packageName: output['package-name'],
-                apiKey: output['api-key']
+                registryUrl: output.url ?? "https://rubygems.org/",
+                packageName: output["package-name"],
+                apiKey: output["api-key"]
             })
         default:
             assertNever(output)
@@ -848,28 +848,28 @@ function getGithubPublishInfo(
 }
 
 function getLanguageFromGeneratorName(generatorName: string) {
-    if (generatorName.includes('csharp')) {
+    if (generatorName.includes("csharp")) {
         return generatorsYml.GenerationLanguage.CSHARP
     }
-    if (generatorName.includes('go')) {
+    if (generatorName.includes("go")) {
         return generatorsYml.GenerationLanguage.GO
     }
-    if (generatorName.includes('java') || generatorName.includes('spring')) {
+    if (generatorName.includes("java") || generatorName.includes("spring")) {
         return generatorsYml.GenerationLanguage.JAVA
     }
-    if (generatorName.includes('php')) {
+    if (generatorName.includes("php")) {
         return generatorsYml.GenerationLanguage.PHP
     }
-    if (generatorName.includes('python') || generatorName.includes('fastapi') || generatorName.includes('pydantic')) {
+    if (generatorName.includes("python") || generatorName.includes("fastapi") || generatorName.includes("pydantic")) {
         return generatorsYml.GenerationLanguage.PYTHON
     }
-    if (generatorName.includes('ruby')) {
+    if (generatorName.includes("ruby")) {
         return generatorsYml.GenerationLanguage.RUBY
     }
-    if (generatorName.includes('swift')) {
+    if (generatorName.includes("swift")) {
         return generatorsYml.GenerationLanguage.SWIFT
     }
-    if (generatorName.includes('typescript')) {
+    if (generatorName.includes("typescript")) {
         return generatorsYml.GenerationLanguage.TYPESCRIPT
     }
     return undefined
@@ -880,15 +880,15 @@ function getMavenRegistryUrl(maven: generatorsYml.MavenOutputLocationSchema) {
         return maven.url
     }
     return maven.signature != null
-        ? 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
-        : 'https://s01.oss.sonatype.org/content/repositories/releases/'
+        ? "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+        : "https://s01.oss.sonatype.org/content/repositories/releases/"
 }
 
 function getGithubLicenseSchema(
     generator: generatorsYml.GeneratorInvocationSchema
 ): generatorsYml.GithubLicenseSchema | undefined {
-    if (generator['publish-metadata']?.license != null) {
-        return generator['publish-metadata'].license
+    if (generator["publish-metadata"]?.license != null) {
+        return generator["publish-metadata"].license
     } else if (generator.metadata?.license != null) {
         return generator.metadata.license
     } else if (isGithubSelfhosted(generator.github)) {
@@ -912,31 +912,31 @@ function getPyPiMetadata(metadata: generatorsYml.PypiOutputMetadataSchema | unde
               description: metadata.description,
               authors: metadata.authors?.map((author) => ({ name: author.name, email: author.email })),
               keywords: metadata.keywords,
-              documentationLink: metadata['documentation-link'],
-              homepageLink: metadata['homepage-link']
+              documentationLink: metadata["documentation-link"],
+              homepageLink: metadata["homepage-link"]
           }
         : undefined
 }
 
 function warnForDeprecatedConfiguration(context: TaskContext, config: generatorsYml.GeneratorsConfigurationSchema) {
     const warnings = []
-    if (config['api-settings'] != null) {
+    if (config["api-settings"] != null) {
         warnings.push('"api-settings" is deprecated. Please use "api.specs[].settings" instead.')
     }
-    if (config['async-api'] != null) {
+    if (config["async-api"] != null) {
         warnings.push('"async-api" is deprecated. Please use "api.specs[].asyncapi" instead.')
     }
     if (config.openapi != null) {
         warnings.push('"openapi" is deprecated. Please use "api.specs[].openapi" instead.')
     }
-    if (config['openapi-overrides'] != null) {
+    if (config["openapi-overrides"] != null) {
         warnings.push('"openapi-overrides" is deprecated. Please use "api.specs[].overrides" instead.')
     }
-    if (config['spec-origin']) {
+    if (config["spec-origin"]) {
         warnings.push('"spec-origin" is deprecated. Please use "api.specs[].origin" instead.')
     }
     if (config.api != null) {
-        if (typeof config.api === 'string') {
+        if (typeof config.api === "string") {
             warnings.push(
                 'Using an OpenAPI or AsyncAPI path string for "api" is deprecated. Please use "api.specs[].openapi" or "api.specs[].asyncapi" instead.'
             )
@@ -945,16 +945,16 @@ function warnForDeprecatedConfiguration(context: TaskContext, config: generators
             warnings.push(
                 'Using an array for "api" is deprecated. Please use "api.specs[].openapi", "api.specs[].asyncapi", or "api.specs[].proto" instead.'
             )
-        } else if (typeof config.api === 'object') {
-            if ('path' in config.api) {
+        } else if (typeof config.api === "object") {
+            if ("path" in config.api) {
                 warnings.push(
                     'Using "api.path" is deprecated. Please use "api.specs[].openapi" or "api.specs[].asyncapi" instead.'
                 )
             }
-            if ('proto' in config.api) {
+            if ("proto" in config.api) {
                 warnings.push('Using "api.proto" is deprecated. Please use "api.specs[].proto" instead.')
             }
-            if ('namespaces' in config.api) {
+            if ("namespaces" in config.api) {
                 warnings.push(
                     'Using "api.namespaces" is deprecated. Please use "api.specs[].openapi", "api.specs[].asyncapi", or "api.specs[].proto" with the "namespace" property instead.'
                 )
@@ -963,8 +963,8 @@ function warnForDeprecatedConfiguration(context: TaskContext, config: generators
     }
 
     if (warnings.length > 0) {
-        context.logger.warn('Warnings for generators.yml:')
-        context.logger.warn('\t' + warnings.join('\n\t'))
+        context.logger.warn("Warnings for generators.yml:")
+        context.logger.warn("\t" + warnings.join("\n\t"))
     }
 }
 
@@ -977,5 +977,5 @@ export function isGithubSelfhosted(
     if (github == null) {
         return false
     }
-    return 'uri' in github && 'token' in github
+    return "uri" in github && "token" in github
 }

@@ -1,8 +1,8 @@
-import { File } from '@fern-api/base-generator'
-import { RelativeFilePath } from '@fern-api/fs-utils'
-import { TypescriptCustomConfigSchema } from '@fern-api/typescript-ast'
+import { File } from "@fern-api/base-generator"
+import { RelativeFilePath } from "@fern-api/fs-utils"
+import { TypescriptCustomConfigSchema } from "@fern-api/typescript-ast"
 
-import { AbstractTypescriptMcpGeneratorContext } from './context/AbstractTypescriptMcpGeneratorContext'
+import { AbstractTypescriptMcpGeneratorContext } from "./context/AbstractTypescriptMcpGeneratorContext"
 
 export abstract class FileGenerator<
     GeneratedFile extends File,

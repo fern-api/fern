@@ -1,1 +1,1 @@
-export { ALL_MIGRATIONS } from './all'
+export { ALL_MIGRATIONS } from "./all"

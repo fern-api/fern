@@ -1,4 +1,4 @@
-import { isNonNullish } from '@fern-api/core-utils'
+import { isNonNullish } from "@fern-api/core-utils"
 import {
     ExampleContainer,
     ExampleEndpointCall,
@@ -17,9 +17,9 @@ import {
     ExampleTypeReference,
     ExampleTypeReferenceShape,
     ExampleTypeShape
-} from '@fern-api/ir-sdk'
+} from "@fern-api/ir-sdk"
 
-import { FilteredIr } from './FilteredIr'
+import { FilteredIr } from "./FilteredIr"
 
 function filterExampleSingleUnionTypeProperties({
     filteredIr,
@@ -56,7 +56,7 @@ function filterExampleSingleUnionTypeProperties({
         },
         noProperties: () => singleUnionTypeProperties,
         _other: () => {
-            throw new Error('Received unknown type for example.')
+            throw new Error("Received unknown type for example.")
         }
     })
 }
@@ -154,7 +154,7 @@ function filterExampleTypeReference({
                 // This is just a primitive, don't do anything
                 literal: () => exampleTypeReference,
                 _other: () => {
-                    throw new Error('Received unknown type for example.')
+                    throw new Error("Received unknown type for example.")
                 }
             }),
         // If the type is allowed filter it's properties and return
@@ -239,7 +239,7 @@ function filterExampleTypeReference({
                               : undefined
                       },
                       _other: () => {
-                          throw new Error('Received unknown type for example.')
+                          throw new Error("Received unknown type for example.")
                       }
                   })
                 : undefined,
@@ -348,7 +348,7 @@ function filterExampleRequestBody({
             return filteredReference !== undefined ? ExampleRequestBody.reference(filteredReference) : undefined
         },
         _other: () => {
-            throw new Error('Received unknown type for example.')
+            throw new Error("Received unknown type for example.")
         }
     })
 }
@@ -495,7 +495,7 @@ export function filterExampleType({
                 : undefined
         },
         _other: () => {
-            throw new Error('Received unknown type for example.')
+            throw new Error("Received unknown type for example.")
         }
     })
 }

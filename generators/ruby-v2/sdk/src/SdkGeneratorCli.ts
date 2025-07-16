@@ -1,13 +1,13 @@
-import urlJoin from 'url-join'
+import urlJoin from "url-join"
 
-import { GeneratorNotificationService } from '@fern-api/base-generator'
-import { AbstractRubyGeneratorCli } from '@fern-api/ruby-base'
+import { GeneratorNotificationService } from "@fern-api/base-generator"
+import { AbstractRubyGeneratorCli } from "@fern-api/ruby-base"
 
-import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
-import { IntermediateRepresentation } from '@fern-fern/ir-sdk/api'
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api"
 
-import { SdkCustomConfigSchema } from './SdkCustomConfig'
-import { SdkGeneratorContext } from './SdkGeneratorContext'
+import { SdkCustomConfigSchema } from "./SdkCustomConfig"
+import { SdkGeneratorContext } from "./SdkGeneratorContext"
 
 export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -33,7 +33,7 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
     }
 
     protected async publishPackage(context: SdkGeneratorContext): Promise<void> {
-        throw new Error('Method not implemented.')
+        throw new Error("Method not implemented.")
     }
 
     protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {

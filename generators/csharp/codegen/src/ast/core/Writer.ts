@@ -1,12 +1,12 @@
-import { AbstractWriter } from '@fern-api/browser-compatible-base-generator'
+import { AbstractWriter } from "@fern-api/browser-compatible-base-generator"
 
-import { ClassReference } from '..'
-import { BaseCsharpCustomConfigSchema } from '../../custom-config'
+import { ClassReference } from ".."
+import { BaseCsharpCustomConfigSchema } from "../../custom-config"
 
 type Alias = string
 type Namespace = string
 
-const IMPLICIT_NAMESPACES = new Set(['System'])
+const IMPLICIT_NAMESPACES = new Set(["System"])
 
 function isNamespaceImplicit(namespace: string): boolean {
     return IMPLICIT_NAMESPACES.has(namespace)
@@ -87,7 +87,7 @@ export class Writer extends AbstractWriter {
     public addNamespaceAlias(alias: string, namespace: string): string {
         const set = new Set<Alias>(Object.values(this.namespaceAliases))
         while (set.has(alias)) {
-            alias = '_' + alias
+            alias = "_" + alias
         }
         this.namespaceAliases[alias] = namespace
         return alias
@@ -114,7 +114,7 @@ export class Writer extends AbstractWriter {
     }
 
     public getSimplifyObjectDictionaries(): boolean {
-        return this.customConfig['simplify-object-dictionaries'] ?? false
+        return this.customConfig["simplify-object-dictionaries"] ?? false
     }
 
     public toString(skipImports = false): string {
@@ -134,7 +134,7 @@ ${this.buffer}`
     }
 
     public isReadOnlyMemoryType(type: string): boolean {
-        return this.customConfig['read-only-memory-types']?.includes(type) ?? false
+        return this.customConfig["read-only-memory-types"]?.includes(type) ?? false
     }
 
     /*******************************
@@ -145,7 +145,7 @@ ${this.buffer}`
         const referenceKeys = Object.keys(this.references)
         const namespaceAliasEntries = Object.entries(this.namespaceAliases)
         if (referenceKeys.length === 0 && namespaceAliasEntries.length === 0) {
-            return ''
+            return ""
         }
 
         let result = referenceKeys
@@ -153,10 +153,10 @@ ${this.buffer}`
             .filter((ns) => !this.isCurrentNamespace(ns))
             .filter((ns) => !isNamespaceImplicit(ns)) // System is implicitly imported
             .map((ref) => `using ${ref};`)
-            .join('\n')
+            .join("\n")
 
         if (result.length > 0) {
-            result += '\n'
+            result += "\n"
         }
 
         for (const [alias, namespace] of namespaceAliasEntries) {

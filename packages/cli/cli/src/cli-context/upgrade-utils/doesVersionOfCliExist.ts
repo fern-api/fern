@@ -1,6 +1,6 @@
-import latestVersion from 'latest-version'
+import latestVersion from "latest-version"
 
-import { CliEnvironment } from '../CliEnvironment'
+import { CliEnvironment } from "../CliEnvironment"
 
 export async function doesVersionOfCliExist({
     cliEnvironment,

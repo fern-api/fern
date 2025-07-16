@@ -1,16 +1,16 @@
-import { mkdir, writeFile } from 'fs/promises'
-import path from 'path'
+import { mkdir, writeFile } from "fs/promises"
+import path from "path"
 
-import { Style } from '@fern-api/browser-compatible-base-generator'
-import { Config, DynamicSnippetsGenerator } from '@fern-api/csharp-dynamic-snippets'
-import { AbsoluteFilePath, RelativeFilePath, join } from '@fern-api/fs-utils'
-import { dynamic } from '@fern-api/ir-sdk'
-import { TaskContext } from '@fern-api/task-context'
+import { Style } from "@fern-api/browser-compatible-base-generator"
+import { Config, DynamicSnippetsGenerator } from "@fern-api/csharp-dynamic-snippets"
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils"
+import { dynamic } from "@fern-api/ir-sdk"
+import { TaskContext } from "@fern-api/task-context"
 
-import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
 
-import { convertDynamicEndpointSnippetRequest } from '../utils/convertEndpointSnippetRequest'
-import { convertIr } from '../utils/convertIr'
+import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest"
+import { convertIr } from "../utils/convertIr"
 
 const PROJECT_FILE_CONTENT = `
 <Project Sdk="Microsoft.NET.Sdk">
@@ -47,7 +47,7 @@ export class DynamicSnippetsCsharpTestGenerator {
         outputDir: AbsoluteFilePath
         requests: dynamic.EndpointSnippetRequest[]
     }): Promise<void> {
-        this.context.logger.debug('Generating dynamic snippet tests...')
+        this.context.logger.debug("Generating dynamic snippet tests...")
         const absolutePathToOutputDir = await this.initializeProject(outputDir)
         for (const [idx, request] of requests.entries()) {
             try {
@@ -70,14 +70,14 @@ export class DynamicSnippetsCsharpTestGenerator {
                 )
             }
         }
-        this.context.logger.debug('Done generating dynamic snippet tests')
+        this.context.logger.debug("Done generating dynamic snippet tests")
     }
 
     private async initializeProject(outputDir: AbsoluteFilePath): Promise<AbsoluteFilePath> {
-        const absolutePathToOutputDir = join(outputDir, RelativeFilePath.of('src/SeedApi.DynamicSnippets'))
+        const absolutePathToOutputDir = join(outputDir, RelativeFilePath.of("src/SeedApi.DynamicSnippets"))
         await mkdir(absolutePathToOutputDir, { recursive: true })
         await writeFile(
-            join(absolutePathToOutputDir, RelativeFilePath.of('SeedApi.DynamicSnippets.csproj')),
+            join(absolutePathToOutputDir, RelativeFilePath.of("SeedApi.DynamicSnippets.csproj")),
             PROJECT_FILE_CONTENT
         )
         return absolutePathToOutputDir

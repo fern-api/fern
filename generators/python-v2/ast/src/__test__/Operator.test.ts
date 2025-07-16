@@ -1,15 +1,15 @@
-import { python } from '..'
-import { OperatorType } from '../OperatorType'
-import { Writer } from '../core/Writer'
+import { python } from ".."
+import { OperatorType } from "../OperatorType"
+import { Writer } from "../core/Writer"
 
-describe('Operator', () => {
+describe("Operator", () => {
     let writer: Writer
 
     beforeEach(() => {
         writer = new Writer()
     })
 
-    it('writes or operators correctly', async () => {
+    it("writes or operators correctly", async () => {
         const operator = python.operator({
             operator: OperatorType.Or,
             lhs: python.TypeInstantiation.bool(true),
@@ -19,7 +19,7 @@ describe('Operator', () => {
         expect(writer.toString()).toMatchSnapshot()
     })
 
-    it('writes and operators correctly', async () => {
+    it("writes and operators correctly", async () => {
         const operator = python.operator({
             operator: OperatorType.And,
             lhs: python.TypeInstantiation.bool(true),
@@ -29,7 +29,7 @@ describe('Operator', () => {
         expect(writer.toString()).toMatchSnapshot()
     })
 
-    it('writes addition operators correctly', async () => {
+    it("writes addition operators correctly", async () => {
         const operator = python.operator({
             operator: OperatorType.Add,
             lhs: python.TypeInstantiation.int(5),
@@ -39,7 +39,7 @@ describe('Operator', () => {
         expect(writer.toString()).toMatchSnapshot()
     })
 
-    it('writes subtraction operators correctly', async () => {
+    it("writes subtraction operators correctly", async () => {
         const operator = python.operator({
             operator: OperatorType.Subtract,
             lhs: python.TypeInstantiation.int(10),
@@ -49,7 +49,7 @@ describe('Operator', () => {
         expect(writer.toString()).toMatchSnapshot()
     })
 
-    it('writes multiplication operators correctly', async () => {
+    it("writes multiplication operators correctly", async () => {
         const operator = python.operator({
             operator: OperatorType.Multiply,
             lhs: python.TypeInstantiation.int(6),
@@ -59,7 +59,7 @@ describe('Operator', () => {
         expect(writer.toString()).toMatchSnapshot()
     })
 
-    it('writes division operators correctly', async () => {
+    it("writes division operators correctly", async () => {
         const operator = python.operator({
             operator: OperatorType.Divide,
             lhs: python.TypeInstantiation.int(15),
@@ -69,7 +69,7 @@ describe('Operator', () => {
         expect(writer.toString()).toMatchSnapshot()
     })
 
-    it('writes modulo operators correctly', async () => {
+    it("writes modulo operators correctly", async () => {
         const operator = python.operator({
             operator: OperatorType.Modulo,
             lhs: python.TypeInstantiation.int(17),
@@ -79,7 +79,7 @@ describe('Operator', () => {
         expect(writer.toString()).toMatchSnapshot()
     })
 
-    it('writes bitwise left shift operators correctly', async () => {
+    it("writes bitwise left shift operators correctly", async () => {
         const operator = python.operator({
             operator: OperatorType.LeftShift,
             lhs: python.TypeInstantiation.int(1),
@@ -89,7 +89,7 @@ describe('Operator', () => {
         expect(writer.toString()).toMatchSnapshot()
     })
 
-    it('writes bitwise right shift operators correctly', async () => {
+    it("writes bitwise right shift operators correctly", async () => {
         const operator = python.operator({
             operator: OperatorType.RightShift,
             lhs: python.TypeInstantiation.int(8),

@@ -1,5 +1,5 @@
-import { DependencyManager, DependencyType } from '../dependency-manager/DependencyManager'
-import { ImportDeclaration, ImportsManager } from '../imports-manager/ImportsManager'
+import { DependencyManager, DependencyType } from "../dependency-manager/DependencyManager"
+import { ImportDeclaration, ImportsManager } from "../imports-manager/ImportsManager"
 
 export declare namespace ExternalDependency {
     export interface Init {
@@ -52,7 +52,7 @@ export abstract class ExternalDependency {
             return this.withImport(
                 defaultImport,
                 {
-                    namedImports: [{ name: 'default', alias: defaultImport }]
+                    namedImports: [{ name: "default", alias: defaultImport }]
                 },
                 run
             )

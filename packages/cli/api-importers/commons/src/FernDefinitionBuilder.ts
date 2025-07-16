@@ -1,15 +1,15 @@
-import { camelCase, isEqual } from 'lodash-es'
+import { camelCase, isEqual } from "lodash-es"
 
-import { FERN_PACKAGE_MARKER_FILENAME, ROOT_API_FILENAME } from '@fern-api/configuration'
-import { RawSchemas, RootApiFileSchema, visitRawEnvironmentDeclaration } from '@fern-api/fern-definition-schema'
-import { AbsoluteFilePath, RelativeFilePath, basename, dirname, join, relative } from '@fern-api/path-utils'
+import { FERN_PACKAGE_MARKER_FILENAME, ROOT_API_FILENAME } from "@fern-api/configuration"
+import { RawSchemas, RootApiFileSchema, visitRawEnvironmentDeclaration } from "@fern-api/fern-definition-schema"
+import { AbsoluteFilePath, RelativeFilePath, basename, dirname, join, relative } from "@fern-api/path-utils"
 
-import { FernDefinitionDirectory } from './utils/FernDefinitionDirectory'
+import { FernDefinitionDirectory } from "./utils/FernDefinitionDirectory"
 
-const BASE_MULTI_URL_ENVIRONMENT_NAME = 'Production'
+const BASE_MULTI_URL_ENVIRONMENT_NAME = "Production"
 
 export type HttpServiceInfo = Partial<
-    Pick<RawSchemas.HttpServiceSchema, 'auth' | 'base-path' | 'display-name'> & { docs?: string }
+    Pick<RawSchemas.HttpServiceSchema, "auth" | "base-path" | "display-name"> & { docs?: string }
 >
 
 export interface FernDefinitionBuilder {
@@ -43,7 +43,7 @@ export interface FernDefinitionBuilder {
 
     setApiVersion(apiVersionScheme: unknown): void
 
-    getEnvironmentType(): 'single' | 'multi' | undefined
+    getEnvironmentType(): "single" | "multi" | undefined
 
     addAudience(name: string): void
 
@@ -119,15 +119,15 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     public constructor(public readonly enableUniqueErrorsPerEndpoint: boolean) {
         this.root = new FernDefinitionDirectory()
         this.rootApiFile = {
-            name: 'api',
-            'error-discrimination': {
-                strategy: 'status-code'
+            name: "api",
+            "error-discrimination": {
+                strategy: "status-code"
             }
         }
     }
 
     public setDisplayName({ displayName }: { displayName: string }): void {
-        this.rootApiFile['display-name'] = displayName
+        this.rootApiFile["display-name"] = displayName
     }
 
     public addNavigation({ navigation }: { navigation: string[] }): void {
@@ -136,14 +136,14 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
 
     public setServiceInfo(
         file: RelativeFilePath,
-        { auth, 'base-path': basePath, 'display-name': displayName, docs }: HttpServiceInfo
+        { auth, "base-path": basePath, "display-name": displayName, docs }: HttpServiceInfo
     ): void {
         const fernFile = this.getOrCreateFile(file)
         if (fernFile.service == null) {
             // Set to default values if service is null
             fernFile.service = {
                 auth: false,
-                'base-path': '',
+                "base-path": "",
                 endpoints: {}
             }
         }
@@ -151,10 +151,10 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
             fernFile.service.auth = auth
         }
         if (basePath != null) {
-            fernFile.service['base-path'] = basePath
+            fernFile.service["base-path"] = basePath
         }
         if (displayName != null) {
-            fernFile.service['display-name'] = displayName
+            fernFile.service["display-name"] = displayName
         }
         if (docs != null) {
             fernFile.docs = docs
@@ -173,20 +173,20 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     }
 
     public addAuthScheme({ name, schema }: { name: string; schema: RawSchemas.AuthSchemeDeclarationSchema }): void {
-        if (this.rootApiFile['auth-schemes'] == null) {
-            this.rootApiFile['auth-schemes'] = {}
+        if (this.rootApiFile["auth-schemes"] == null) {
+            this.rootApiFile["auth-schemes"] = {}
         }
-        if (this.rootApiFile['auth-schemes'][name] == null) {
-            this.rootApiFile['auth-schemes'][name] = schema
+        if (this.rootApiFile["auth-schemes"][name] == null) {
+            this.rootApiFile["auth-schemes"][name] = schema
         }
     }
 
     public setDefaultEnvironment(name: string): void {
-        this.rootApiFile['default-environment'] = name
+        this.rootApiFile["default-environment"] = name
     }
 
     public setDefaultUrl(name: string): void {
-        this.rootApiFile['default-url'] = name
+        this.rootApiFile["default-url"] = name
     }
 
     public setBasePath(basePath: string): void {
@@ -197,14 +197,14 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         this.rootApiFile.version = apiVersionScheme as RawSchemas.VersionDeclarationSchema
     }
 
-    public getEnvironmentType(): 'single' | 'multi' | undefined {
+    public getEnvironmentType(): "single" | "multi" | undefined {
         const environmentEntry = Object.entries(this.rootApiFile.environments ?? {})[0]
         if (environmentEntry == null) {
             return undefined
         }
-        return visitRawEnvironmentDeclaration<'single' | 'multi'>(environmentEntry[1], {
-            singleBaseUrl: () => 'single',
-            multipleBaseUrls: () => 'multi'
+        return visitRawEnvironmentDeclaration<"single" | "multi">(environmentEntry[1], {
+            singleBaseUrl: () => "single",
+            multipleBaseUrls: () => "multi"
         })
     }
 
@@ -218,8 +218,8 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     public getGlobalHeaderNames(): Set<string> {
         const headerNames = Object.keys(this.rootApiFile.headers ?? {})
         // Get headers from auth schemes
-        if (this.rootApiFile['auth-schemes'] != null) {
-            for (const scheme of Object.values(this.rootApiFile['auth-schemes'])) {
+        if (this.rootApiFile["auth-schemes"] != null) {
+            for (const scheme of Object.values(this.rootApiFile["auth-schemes"])) {
                 if (isHeaderAuthScheme(scheme)) {
                     headerNames.push(scheme.header)
                 }
@@ -234,13 +234,13 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
 
     public getAuthHeaderName(): string | undefined {
         // Get header from auth schemes
-        if (this.rootApiFile['auth-schemes'] != null) {
-            for (const scheme of Object.values(this.rootApiFile['auth-schemes'])) {
+        if (this.rootApiFile["auth-schemes"] != null) {
+            for (const scheme of Object.values(this.rootApiFile["auth-schemes"])) {
                 if (isHeaderAuthScheme(scheme)) {
                     return scheme.header
                 }
             }
-            return 'Authorization'
+            return "Authorization"
         }
         return undefined
     }
@@ -261,10 +261,10 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     }
 
     public addIdempotencyHeader({ name, schema }: { name: string; schema: RawSchemas.HttpHeaderSchema }): void {
-        if (this.rootApiFile['idempotency-headers'] == null) {
-            this.rootApiFile['idempotency-headers'] = {}
+        if (this.rootApiFile["idempotency-headers"] == null) {
+            this.rootApiFile["idempotency-headers"] = {}
         }
-        this.rootApiFile['idempotency-headers'][name] = schema
+        this.rootApiFile["idempotency-headers"][name] = schema
     }
 
     public addVariable({ name, schema }: { name: string; schema: RawSchemas.VariableDeclarationSchema }): void {
@@ -289,9 +289,9 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         const importPrefix =
             alias ??
             camelCase(
-                (dirname(fileToImport) + '/' + basename(fileToImport, { stripExtension: true })).replaceAll(
-                    '__package__',
-                    'root'
+                (dirname(fileToImport) + "/" + basename(fileToImport, { stripExtension: true })).replaceAll(
+                    "__package__",
+                    "root"
                 )
             )
 
@@ -339,7 +339,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         }
         const type = fernFile.types[name]
         if (type != null) {
-            if (typeof type === 'string') {
+            if (typeof type === "string") {
                 fernFile.types[name] = {
                     type,
                     examples: [convertedExample]
@@ -365,8 +365,8 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
             fernFile.errors[name] = schema
         } else if (fernFile.errors[name]?.type !== schema.type) {
             fernFile.errors[name] = {
-                'status-code': schema['status-code'],
-                type: 'unknown'
+                "status-code": schema["status-code"],
+                type: "unknown"
             }
         }
     }
@@ -407,7 +407,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         if (fernFile.service == null) {
             fernFile.service = {
                 auth: false,
-                'base-path': '',
+                "base-path": "",
                 endpoints: {}
             }
         }
@@ -445,7 +445,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         const fernFile = this.getOrCreateFile(file)
         if (fernFile.channel == null) {
             fernFile.channel = {
-                path: '',
+                path: "",
                 auth: false
             }
         }
@@ -465,7 +465,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         const fernFile = this.getOrCreateFile(file)
         if (fernFile.channel == null) {
             fernFile.channel = {
-                path: '',
+                path: "",
                 auth: false
             }
         }
@@ -540,7 +540,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         if (this.rootApiFile.version == null) {
             return undefined
         }
-        return typeof this.rootApiFile.version.header === 'string'
+        return typeof this.rootApiFile.version.header === "string"
             ? this.rootApiFile.version.header
             : this.rootApiFile.version.header.value
     }
@@ -548,10 +548,10 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
 
 function getSharedEnvironmentBasePath(rootApiFile: RootApiFileSchema): string {
     if (rootApiFile.environments == null) {
-        return ''
+        return ""
     }
     const urls = Object.entries(rootApiFile.environments).flatMap(([_, url]) => {
-        if (typeof url === 'string') {
+        if (typeof url === "string") {
             return [url]
         } else if (isSingleBaseUrl(url)) {
             return [url.url]
@@ -566,18 +566,18 @@ function getPathname(url: string): string {
     try {
         const parsedUrl = new URL(url)
         const pathname = parsedUrl.pathname
-        if (pathname.endsWith('/')) {
+        if (pathname.endsWith("/")) {
             return pathname.slice(0, -1)
         } else {
             return pathname
         }
     } catch (err) {
-        return ''
+        return ""
     }
 }
 
 function getSharedSuffix(strings: string[]): string {
-    let suffix = ''
+    let suffix = ""
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, no-constant-condition
     while (true) {

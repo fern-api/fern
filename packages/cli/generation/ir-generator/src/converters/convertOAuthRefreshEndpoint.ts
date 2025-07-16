@@ -1,12 +1,12 @@
-import { OAuthRefreshEndpoint } from '@fern-api/ir-sdk'
-import { IdGenerator } from '@fern-api/ir-utils'
+import { OAuthRefreshEndpoint } from "@fern-api/ir-sdk"
+import { IdGenerator } from "@fern-api/ir-utils"
 
-import { FernFileContext } from '../FernFileContext'
-import { EndpointResolver } from '../resolvers/EndpointResolver'
-import { PropertyResolver } from '../resolvers/PropertyResolver'
-import { generateEndpointIdFromResolvedEndpoint } from '../resolvers/generateEndpointIdFromResolvedEndpoint'
-import { isRootFernFilepath } from '../utils/isRootFernFilepath'
-import { RefreshTokenEndpoint } from './convertOAuthUtils'
+import { FernFileContext } from "../FernFileContext"
+import { EndpointResolver } from "../resolvers/EndpointResolver"
+import { PropertyResolver } from "../resolvers/PropertyResolver"
+import { generateEndpointIdFromResolvedEndpoint } from "../resolvers/generateEndpointIdFromResolvedEndpoint"
+import { isRootFernFilepath } from "../utils/isRootFernFilepath"
+import { RefreshTokenEndpoint } from "./convertOAuthUtils"
 
 export function convertOAuthRefreshEndpoint({
     endpointResolver,

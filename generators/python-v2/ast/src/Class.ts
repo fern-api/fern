@@ -1,8 +1,8 @@
-import { Decorator } from './Decorator'
-import { Field } from './Field'
-import { Reference } from './Reference'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { Decorator } from "./Decorator"
+import { Field } from "./Field"
+import { Reference } from "./Reference"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export declare namespace Class {
     interface Args {
@@ -49,16 +49,16 @@ export class Class extends AstNode {
         writer.write(`class ${this.name}`)
 
         if (this.extends_.length > 0) {
-            writer.write('(')
+            writer.write("(")
             this.extends_.forEach((parentClassReference, index) => {
                 if (index > 0) {
-                    writer.write(', ')
+                    writer.write(", ")
                 }
                 parentClassReference.write(writer)
             })
-            writer.write(')')
+            writer.write(")")
         }
-        writer.write(':')
+        writer.write(":")
         writer.newLine()
 
         writer.indent()
@@ -79,7 +79,7 @@ export class Class extends AstNode {
         if (this.statements.length) {
             this.writeStatements({ writer })
         } else {
-            writer.write('pass')
+            writer.write("pass")
         }
         writer.dedent()
     }

@@ -1,55 +1,55 @@
-import { HttpPath } from '@fern-api/ir-sdk'
+import { HttpPath } from "@fern-api/ir-sdk"
 
-import { constructHttpPath } from '../constructHttpPath'
+import { constructHttpPath } from "../constructHttpPath"
 
-describe('constructHttpPath', () => {
-    it('/hello/{world}', () => {
+describe("constructHttpPath", () => {
+    it("/hello/{world}", () => {
         const expected: HttpPath = {
-            head: '/hello/',
+            head: "/hello/",
             parts: [
                 {
-                    pathParameter: 'world',
-                    tail: ''
+                    pathParameter: "world",
+                    tail: ""
                 }
             ]
         }
-        const actual = constructHttpPath('/hello/{world}')
+        const actual = constructHttpPath("/hello/{world}")
         expect(actual).toEqual(expected)
     })
 
-    it('{hello}/{world}', () => {
+    it("{hello}/{world}", () => {
         const expected: HttpPath = {
-            head: '',
+            head: "",
             parts: [
                 {
-                    pathParameter: 'hello',
-                    tail: '/'
+                    pathParameter: "hello",
+                    tail: "/"
                 },
                 {
-                    pathParameter: 'world',
-                    tail: ''
+                    pathParameter: "world",
+                    tail: ""
                 }
             ]
         }
-        const actual = constructHttpPath('{hello}/{world}')
+        const actual = constructHttpPath("{hello}/{world}")
         expect(actual).toEqual(expected)
     })
 
-    it('{hello}/{world}/hello', () => {
+    it("{hello}/{world}/hello", () => {
         const expected: HttpPath = {
-            head: '',
+            head: "",
             parts: [
                 {
-                    pathParameter: 'hello',
-                    tail: '/'
+                    pathParameter: "hello",
+                    tail: "/"
                 },
                 {
-                    pathParameter: 'world',
-                    tail: '/hello'
+                    pathParameter: "world",
+                    tail: "/hello"
                 }
             ]
         }
-        const actual = constructHttpPath('{hello}/{world}/hello')
+        const actual = constructHttpPath("{hello}/{world}/hello")
         expect(actual).toEqual(expected)
     })
 })

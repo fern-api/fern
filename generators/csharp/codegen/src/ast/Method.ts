@@ -1,15 +1,15 @@
-import { assertNever } from '@fern-api/core-utils'
+import { assertNever } from "@fern-api/core-utils"
 
-import { Access } from './Access'
-import { Annotation } from './Annotation'
-import { ClassReference } from './ClassReference'
-import { CodeBlock } from './CodeBlock'
-import { Parameter } from './Parameter'
-import { Type } from './Type'
-import { TypeParameter } from './TypeParameter'
-import { XmlDocBlock } from './XmlDocBlock'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { Access } from "./Access"
+import { Annotation } from "./Annotation"
+import { ClassReference } from "./ClassReference"
+import { CodeBlock } from "./CodeBlock"
+import { Parameter } from "./Parameter"
+import { Type } from "./Type"
+import { TypeParameter } from "./TypeParameter"
+import { XmlDocBlock } from "./XmlDocBlock"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export enum MethodType {
     INSTANCE,
@@ -88,77 +88,77 @@ export class Method extends AstNode {
             writer.write(`${this.access} `)
         }
         if (this.type === MethodType.STATIC) {
-            writer.write('static ')
+            writer.write("static ")
         }
         if (this.isAsync) {
-            writer.write('async ')
+            writer.write("async ")
         }
         if (this.override) {
-            writer.write('override ')
+            writer.write("override ")
         }
         if (this.return == null) {
             if (this.isAsync) {
                 writer.writeNode(
                     new ClassReference({
-                        name: 'Task',
-                        namespace: 'global::System.Threading.Tasks',
+                        name: "Task",
+                        namespace: "global::System.Threading.Tasks",
                         fullyQualified: true
                     })
                 )
-                writer.write(' ')
+                writer.write(" ")
             } else {
-                writer.write('void ')
+                writer.write("void ")
             }
         } else {
             if (this.isAsync) {
                 // Don't add a class reference for Task<T> since we don't want the writer
                 // to detect a conflict between Task<T> and Task and add a fully qualified name
-                writer.write('Task<')
+                writer.write("Task<")
                 this.return.write(writer)
-                writer.write('>')
+                writer.write(">")
             } else {
                 this.return.write(writer)
             }
-            writer.write(' ')
+            writer.write(" ")
         }
         if (this.interfaceReference) {
             writer.write(`${this.interfaceReference.name}.`)
         }
         writer.write(this.name)
         if (this.typeParameters.length > 0) {
-            writer.write('<')
+            writer.write("<")
             this.typeParameters.forEach((typeParameter, idx) => {
                 typeParameter.write(writer)
                 if (idx < this.typeParameters.length - 1) {
-                    writer.write(', ')
+                    writer.write(", ")
                 }
             })
-            writer.write('>')
+            writer.write(">")
         }
-        writer.write('(')
+        writer.write("(")
         this.parameters.forEach((parameter, idx) => {
             parameter.write(writer)
             if (idx < this.parameters.length - 1) {
-                writer.write(', ')
+                writer.write(", ")
             }
         })
-        writer.write(')')
+        writer.write(")")
         if (this.noBody) {
-            writer.writeLine(';')
+            writer.writeLine(";")
         } else {
             switch (this.bodyType) {
                 case Method.BodyType.Statement:
-                    writer.writeLine(' {')
+                    writer.writeLine(" {")
 
                     writer.indent()
                     this.body?.write(writer)
                     writer.dedent()
 
                     writer.writeNewLineIfLastLineNot()
-                    writer.writeLine('}')
+                    writer.writeLine("}")
                     break
                 case Method.BodyType.Expression:
-                    writer.write(' => ')
+                    writer.write(" => ")
                     this.body?.write(writer)
                     writer.writeSemicolonIfLastCharacterIsNot()
                     break
@@ -211,8 +211,8 @@ export namespace Method {
     }
 
     export const BodyType = {
-        Statement: 'statement',
-        Expression: 'expression'
+        Statement: "statement",
+        Expression: "expression"
     } as const
     export type BodyType = (typeof BodyType)[keyof typeof BodyType]
 }

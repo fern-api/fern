@@ -1,16 +1,16 @@
-import { mapValues } from 'lodash-es'
+import { mapValues } from "lodash-es"
 
-import { GeneratorName } from '@fern-api/configuration-loader'
+import { GeneratorName } from "@fern-api/configuration-loader"
 
-import { IrVersions } from '../../ir-versions'
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from '../../types/IrMigration'
+import { IrVersions } from "../../ir-versions"
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration"
 
 export const V14_TO_V13_MIGRATION: IrMigration<
     IrVersions.V14.ir.IntermediateRepresentation,
     IrVersions.V13.ir.IntermediateRepresentation
 > = {
-    laterVersion: 'v14',
-    earlierVersion: 'v13',
+    laterVersion: "v14",
+    earlierVersion: "v13",
     firstGeneratorVersionToConsumeNewIR: {
         [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNotCreatedYet,
@@ -84,7 +84,7 @@ export const V14_TO_V13_MIGRATION: IrMigration<
                             )
                         },
                         _unknown: () => {
-                            throw new Error('Encountered unknown shape')
+                            throw new Error("Encountered unknown shape")
                         }
                     })
                 }
@@ -106,7 +106,7 @@ function convertAuth(auth: IrVersions.V14.auth.ApiAuth): IrVersions.V13.auth.Api
         docs: auth.docs,
         requirement: auth.requirement,
         schemes: auth.schemes.map((scheme) => {
-            if (scheme._type !== 'header') {
+            if (scheme._type !== "header") {
                 return scheme
             }
             return IrVersions.V13.auth.AuthScheme.header(convertHeader(scheme))
@@ -136,7 +136,7 @@ function convertTypeReference(typeReference: IrVersions.V14.types.TypeReference)
     return IrVersions.V14.types.TypeReference._visit<IrVersions.V13.types.TypeReference>(typeReference, {
         container: (container) => IrVersions.V13.types.TypeReference.container(convertContainerType(container)),
         primitive: (primitiveType) => {
-            if (primitiveType === 'DATE') {
+            if (primitiveType === "DATE") {
                 return IrVersions.V13.types.TypeReference.primitive(IrVersions.V13.types.PrimitiveType.String)
             }
             return IrVersions.V13.types.TypeReference.primitive(primitiveType)
@@ -144,7 +144,7 @@ function convertTypeReference(typeReference: IrVersions.V14.types.TypeReference)
         named: IrVersions.V13.types.TypeReference.named,
         unknown: IrVersions.V13.types.TypeReference.unknown,
         _unknown: () => {
-            throw new Error('Unknown type reference: ' + typeReference._type)
+            throw new Error("Unknown type reference: " + typeReference._type)
         }
     })
 }
@@ -161,7 +161,7 @@ function convertContainerType(container: IrVersions.V14.types.ContainerType): Ir
             }),
         literal: IrVersions.V13.types.ContainerType.literal,
         _unknown: () => {
-            throw new Error('Unknown ContainerType: ' + container._type)
+            throw new Error("Unknown ContainerType: " + container._type)
         }
     })
 }
@@ -191,7 +191,7 @@ function convertSingleUnionTypeProperties(
                 }),
             noProperties: IrVersions.V13.types.SingleUnionTypeProperties.noProperties,
             _unknown: () => {
-                throw new Error('Unknown SingleUnionTypeProperties: ' + properties._type)
+                throw new Error("Unknown SingleUnionTypeProperties: " + properties._type)
             }
         }
     )
@@ -204,14 +204,14 @@ function convertResolvedType(
         container: (container) => IrVersions.V13.types.ResolvedTypeReference.container(convertContainerType(container)),
         named: IrVersions.V13.types.ResolvedTypeReference.named,
         primitive: (primitiveType) => {
-            if (primitiveType === 'DATE') {
+            if (primitiveType === "DATE") {
                 return IrVersions.V13.types.ResolvedTypeReference.primitive(IrVersions.V13.types.PrimitiveType.String)
             }
             return IrVersions.V13.types.ResolvedTypeReference.primitive(primitiveType)
         },
         unknown: IrVersions.V13.types.ResolvedTypeReference.unknown,
         _unknown: () => {
-            throw new Error('Unknown ResolvedTypeReference: ' + resolvedType._type)
+            throw new Error("Unknown ResolvedTypeReference: " + resolvedType._type)
         }
     })
 }
@@ -300,7 +300,7 @@ function convertSdkRequestShape(shape: IrVersions.V14.http.SdkRequestShape): IrV
             }),
         wrapper: IrVersions.V13.http.SdkRequestShape.wrapper,
         _unknown: () => {
-            throw new Error('Unknown SdkRequestShape: ' + shape.type)
+            throw new Error("Unknown SdkRequestShape: " + shape.type)
         }
     })
 }
@@ -326,7 +326,7 @@ function convertRequestBody(requestBody: IrVersions.V14.http.HttpRequestBody): I
             IrVersions.V13.http.HttpRequestBody.fileUpload({
                 name: fileUpload.name,
                 properties: fileUpload.properties.map((fileUploadRequestProperty) => {
-                    if (fileUploadRequestProperty.type === 'bodyProperty') {
+                    if (fileUploadRequestProperty.type === "bodyProperty") {
                         return {
                             ...fileUploadRequestProperty,
                             valueType: convertTypeReference(fileUploadRequestProperty.valueType)
@@ -336,7 +336,7 @@ function convertRequestBody(requestBody: IrVersions.V14.http.HttpRequestBody): I
                 })
             }),
         _unknown: () => {
-            throw new Error('Unknown HttpRequestBody: ' + requestBody.type)
+            throw new Error("Unknown HttpRequestBody: " + requestBody.type)
         }
     })
 }
@@ -372,7 +372,7 @@ function convertSdkResponse(sdkResponse: IrVersions.V14.http.SdkResponse): IrVer
                 streaming: convertStreamingResponse(maybeStreamingResponse.streaming)
             }),
         _unknown: () => {
-            throw new Error('Encountered unknown sdk response')
+            throw new Error("Encountered unknown sdk response")
         }
     })
 }

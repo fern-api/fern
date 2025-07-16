@@ -9,36 +9,36 @@ import {
     PackageId,
     SimpleTypescriptProject,
     TypescriptProject
-} from '@fern-typescript/commons'
-import { GeneratorContext } from '@fern-typescript/contexts'
-import { ExpressEndpointTypeSchemasGenerator } from '@fern-typescript/express-endpoint-type-schemas-generator'
-import { ExpressErrorGenerator } from '@fern-typescript/express-error-generator'
-import { ExpressErrorSchemaGenerator } from '@fern-typescript/express-error-schema-generator'
-import { ExpressInlinedRequestBodyGenerator } from '@fern-typescript/express-inlined-request-body-generator'
-import { ExpressInlinedRequestBodySchemaGenerator } from '@fern-typescript/express-inlined-request-schema-generator'
-import { ExpressRegisterGenerator } from '@fern-typescript/express-register-generator'
-import { ExpressServiceGenerator } from '@fern-typescript/express-service-generator'
-import { GenericAPIExpressErrorGenerator } from '@fern-typescript/generic-express-error-generators'
-import { ErrorResolver, PackageResolver, TypeResolver } from '@fern-typescript/resolvers'
-import { TypeGenerator } from '@fern-typescript/type-generator'
-import { TypeReferenceExampleGenerator } from '@fern-typescript/type-reference-example-generator'
-import { TypeSchemaGenerator } from '@fern-typescript/type-schema-generator'
-import { Directory, Project, SourceFile } from 'ts-morph'
+} from "@fern-typescript/commons"
+import { GeneratorContext } from "@fern-typescript/contexts"
+import { ExpressEndpointTypeSchemasGenerator } from "@fern-typescript/express-endpoint-type-schemas-generator"
+import { ExpressErrorGenerator } from "@fern-typescript/express-error-generator"
+import { ExpressErrorSchemaGenerator } from "@fern-typescript/express-error-schema-generator"
+import { ExpressInlinedRequestBodyGenerator } from "@fern-typescript/express-inlined-request-body-generator"
+import { ExpressInlinedRequestBodySchemaGenerator } from "@fern-typescript/express-inlined-request-schema-generator"
+import { ExpressRegisterGenerator } from "@fern-typescript/express-register-generator"
+import { ExpressServiceGenerator } from "@fern-typescript/express-service-generator"
+import { GenericAPIExpressErrorGenerator } from "@fern-typescript/generic-express-error-generators"
+import { ErrorResolver, PackageResolver, TypeResolver } from "@fern-typescript/resolvers"
+import { TypeGenerator } from "@fern-typescript/type-generator"
+import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator"
+import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator"
+import { Directory, Project, SourceFile } from "ts-morph"
 
-import { AbsoluteFilePath } from '@fern-api/fs-utils'
-import { Logger } from '@fern-api/logger'
+import { AbsoluteFilePath } from "@fern-api/fs-utils"
+import { Logger } from "@fern-api/logger"
 
-import { HttpService, IntermediateRepresentation, TypeDeclaration, TypeId } from '@fern-fern/ir-sdk/api'
+import { HttpService, IntermediateRepresentation, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api"
 
-import { ExpressContextImpl } from './contexts/ExpressContextImpl'
-import { EndpointDeclarationReferencer } from './declaration-referencers/EndpointDeclarationReferencer'
-import { ExpressErrorDeclarationReferencer } from './declaration-referencers/ExpressErrorDeclarationReferencer'
-import { ExpressInlinedRequestBodyDeclarationReferencer } from './declaration-referencers/ExpressInlinedRequestBodyDeclarationReferencer'
-import { ExpressRegisterDeclarationReferencer } from './declaration-referencers/ExpressRegisterDeclarationReferencer'
-import { ExpressServiceDeclarationReferencer } from './declaration-referencers/ExpressServiceDeclarationReferencer'
-import { GenericAPIExpressErrorDeclarationReferencer } from './declaration-referencers/GenericAPIExpressErrorDeclarationReferencer'
-import { JsonDeclarationReferencer } from './declaration-referencers/JsonDeclarationReferencer'
-import { TypeDeclarationReferencer } from './declaration-referencers/TypeDeclarationReferencer'
+import { ExpressContextImpl } from "./contexts/ExpressContextImpl"
+import { EndpointDeclarationReferencer } from "./declaration-referencers/EndpointDeclarationReferencer"
+import { ExpressErrorDeclarationReferencer } from "./declaration-referencers/ExpressErrorDeclarationReferencer"
+import { ExpressInlinedRequestBodyDeclarationReferencer } from "./declaration-referencers/ExpressInlinedRequestBodyDeclarationReferencer"
+import { ExpressRegisterDeclarationReferencer } from "./declaration-referencers/ExpressRegisterDeclarationReferencer"
+import { ExpressServiceDeclarationReferencer } from "./declaration-referencers/ExpressServiceDeclarationReferencer"
+import { GenericAPIExpressErrorDeclarationReferencer } from "./declaration-referencers/GenericAPIExpressErrorDeclarationReferencer"
+import { JsonDeclarationReferencer } from "./declaration-referencers/JsonDeclarationReferencer"
+import { TypeDeclarationReferencer } from "./declaration-referencers/TypeDeclarationReferencer"
 
 const FILE_HEADER = `/**
  * This file was auto-generated by Fern from our API Definition.
@@ -122,14 +122,14 @@ export class ExpressGenerator {
         this.npmPackage = npmPackage
         this.config = config
 
-        this.defaultSrcDirectory = 'src'
-        this.defaultTestDirectory = 'tests'
+        this.defaultSrcDirectory = "src"
+        this.defaultTestDirectory = "tests"
 
         this.exportsManager = new ExportsManager({ packagePath: config.packagePath })
         this.coreUtilitiesManager = new CoreUtilitiesManager({
-            streamType: 'wrapper',
-            formDataSupport: 'Node16',
-            fetchSupport: 'node-fetch',
+            streamType: "wrapper",
+            formDataSupport: "Node16",
+            fetchSupport: "node-fetch",
             relativePackagePath: this.getRelativePackagePath(),
             relativeTestPath: this.getRelativeTestPath()
         })
@@ -137,21 +137,21 @@ export class ExpressGenerator {
         this.project = new Project({
             useInMemoryFileSystem: true
         })
-        this.rootDirectory = this.project.createDirectory('/')
+        this.rootDirectory = this.project.createDirectory("/")
         this.typeResolver = new TypeResolver(intermediateRepresentation)
         this.errorResolver = new ErrorResolver(intermediateRepresentation)
         this.packageResolver = new PackageResolver(intermediateRepresentation)
 
         const apiDirectory: ExportedDirectory[] = [
             {
-                nameOnDisk: 'api',
+                nameOnDisk: "api",
                 exportDeclaration: { namespaceExport }
             }
         ]
 
         const schemaDirectory: ExportedDirectory[] = [
             {
-                nameOnDisk: 'serialization'
+                nameOnDisk: "serialization"
             }
         ]
 
@@ -285,7 +285,7 @@ export class ExpressGenerator {
             extraPeerDependencies: {},
             extraPeerDependenciesMeta: {},
             resolutions: {
-                '@types/mime': '3.0.4'
+                "@types/mime": "3.0.4"
             },
             extraConfigs: undefined,
             outputJsr: false,
@@ -380,7 +380,7 @@ export class ExpressGenerator {
     private generateInlinedRequestBodies() {
         this.forEachService((service, packageId) => {
             for (const endpoint of service.endpoints) {
-                if (endpoint.requestBody?.type === 'inlinedRequestBody') {
+                if (endpoint.requestBody?.type === "inlinedRequestBody") {
                     this.withSourceFile({
                         filepath: this.expressInlinedRequestBodyDeclarationReferencer.getExportedFilepath({
                             packageId,
@@ -405,7 +405,7 @@ export class ExpressGenerator {
     private generateInlinedRequestBodySchemas() {
         this.forEachService((service, packageId) => {
             for (const endpoint of service.endpoints) {
-                if (endpoint.requestBody?.type === 'inlinedRequestBody') {
+                if (endpoint.requestBody?.type === "inlinedRequestBody") {
                     this.withSourceFile({
                         filepath: this.expressInlinedRequestBodySchemaDeclarationReferencer.getExportedFilepath({
                             packageId,
@@ -605,11 +605,11 @@ export class ExpressGenerator {
 
         let packagePath = this.config.packagePath
 
-        if (packagePath.startsWith('/')) {
+        if (packagePath.startsWith("/")) {
             packagePath = packagePath.slice(1)
         }
 
-        if (packagePath.endsWith('/')) {
+        if (packagePath.endsWith("/")) {
             packagePath = packagePath.slice(0, -1)
         }
 
@@ -623,6 +623,6 @@ export class ExpressGenerator {
             return this.defaultTestDirectory
         }
 
-        return packagePath + '/' + this.defaultTestDirectory
+        return packagePath + "/" + this.defaultTestDirectory
     }
 }

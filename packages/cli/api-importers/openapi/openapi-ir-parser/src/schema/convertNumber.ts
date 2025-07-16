@@ -1,6 +1,6 @@
-import { Availability, PrimitiveSchemaValueWithExample, SchemaWithExample, SdkGroupName } from '@fern-api/openapi-ir'
+import { Availability, PrimitiveSchemaValueWithExample, SchemaWithExample, SdkGroupName } from "@fern-api/openapi-ir"
 
-import { wrapPrimitive } from './convertSchemas'
+import { wrapPrimitive } from "./convertSchemas"
 
 export function convertNumber({
     nameOverride,
@@ -37,7 +37,7 @@ export function convertNumber({
     namespace: string | undefined
     groupName: SdkGroupName | undefined
 }): SchemaWithExample {
-    if (format == null || format === 'double') {
+    if (format == null || format === "double") {
         return wrapPrimitive({
             nameOverride,
             generatedName,
@@ -57,7 +57,7 @@ export function convertNumber({
             namespace,
             groupName
         })
-    } else if (format === 'float') {
+    } else if (format === "float") {
         return wrapPrimitive({
             nameOverride,
             generatedName,
@@ -71,7 +71,7 @@ export function convertNumber({
             namespace,
             groupName
         })
-    } else if (format === 'int32') {
+    } else if (format === "int32") {
         return wrapPrimitive({
             nameOverride,
             generatedName,
@@ -91,7 +91,7 @@ export function convertNumber({
             namespace,
             groupName
         })
-    } else if (format === 'int64') {
+    } else if (format === "int64") {
         return wrapPrimitive({
             nameOverride,
             generatedName,
@@ -106,7 +106,7 @@ export function convertNumber({
             namespace,
             groupName
         })
-    } else if (format === 'uint32') {
+    } else if (format === "uint32") {
         return wrapPrimitive({
             nameOverride,
             generatedName,
@@ -121,7 +121,7 @@ export function convertNumber({
             namespace,
             groupName
         })
-    } else if (format === 'uint64') {
+    } else if (format === "uint64") {
         return wrapPrimitive({
             nameOverride,
             generatedName,
@@ -136,7 +136,7 @@ export function convertNumber({
             namespace,
             groupName
         })
-    } else if (format === 'time-delta') {
+    } else if (format === "time-delta") {
         return wrapPrimitive({
             nameOverride,
             generatedName,

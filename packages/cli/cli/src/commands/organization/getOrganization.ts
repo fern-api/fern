@@ -1,8 +1,8 @@
-import { writeFile } from 'fs/promises'
+import { writeFile } from "fs/promises"
 
-import { Project } from '@fern-api/project-loader'
+import { Project } from "@fern-api/project-loader"
 
-import { CliContext } from '../../cli-context/CliContext'
+import { CliContext } from "../../cli-context/CliContext"
 
 export async function getOrganization({
     project,

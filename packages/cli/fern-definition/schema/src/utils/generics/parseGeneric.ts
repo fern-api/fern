@@ -1,4 +1,4 @@
-import { RawContainerTypes } from '../RawContainerType'
+import { RawContainerTypes } from "../RawContainerType"
 
 export declare namespace ParseGeneric {
     interface Return {
@@ -18,7 +18,7 @@ export function parseGeneric(name: string): ParseGeneric.Return | undefined {
     ) {
         return {
             name: genericMatch[1].trim(),
-            arguments: genericMatch[2].split(',').map((arg) => arg.trim())
+            arguments: genericMatch[2].split(",").map((arg) => arg.trim())
         }
     }
 

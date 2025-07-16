@@ -1,9 +1,9 @@
-import { OpenAPIV3 } from 'openapi-types'
+import { OpenAPIV3 } from "openapi-types"
 
-import { Server } from '@fern-api/openapi-ir'
+import { Server } from "@fern-api/openapi-ir"
 
-import { getExtension } from '../../../getExtension'
-import { FernOpenAPIExtension } from '../extensions/fernExtensions'
+import { getExtension } from "../../../getExtension"
+import { FernOpenAPIExtension } from "../extensions/fernExtensions"
 
 export function convertServer(server: OpenAPIV3.ServerObject): Server {
     return {
@@ -44,11 +44,11 @@ function getServerName(server: OpenAPIV3.ServerObject): string | undefined {
         return name
     }
 
-    if (server.description?.toLowerCase() === 'production') {
-        return 'Production'
+    if (server.description?.toLowerCase() === "production") {
+        return "Production"
     }
-    if (server.description?.toLowerCase() === 'sandbox') {
-        return 'Sandbox'
+    if (server.description?.toLowerCase() === "sandbox") {
+        return "Sandbox"
     }
 
     return undefined

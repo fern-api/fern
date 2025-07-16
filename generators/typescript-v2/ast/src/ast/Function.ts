@@ -1,9 +1,9 @@
-import { CodeBlock } from './CodeBlock'
-import { Comment } from './Comment'
-import { Parameter } from './Parameter'
-import { Type } from './Type'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { CodeBlock } from "./CodeBlock"
+import { Comment } from "./Comment"
+import { Parameter } from "./Parameter"
+import { Type } from "./Type"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export declare namespace Function {
     interface Args {
@@ -19,7 +19,7 @@ export declare namespace Function {
 export class Function extends AstNode {
     readonly name: string
     readonly parameters: Parameter[]
-    readonly ['async']: boolean
+    readonly ["async"]: boolean
     readonly body: CodeBlock
     readonly return_: Type | undefined
     readonly docs: string | undefined
@@ -37,35 +37,35 @@ export class Function extends AstNode {
     public write(writer: Writer): void {
         writer.writeNode(new Comment({ docs: this.docs }))
         if (this.async) {
-            writer.write('async ')
+            writer.write("async ")
         }
-        writer.write('function ')
+        writer.write("function ")
         writer.write(`${this.name}`)
         this.writeParameters(writer)
         if (this.return_ != null) {
-            writer.write(': ')
+            writer.write(": ")
             writer.writeNode(this.async ? Type.promise(this.return_) : this.return_)
         }
-        writer.writeLine(' {')
+        writer.writeLine(" {")
         writer.indent()
         this.body?.write(writer)
         writer.dedent()
         writer.writeNewLineIfLastLineNot()
-        writer.writeLine('}')
+        writer.writeLine("}")
     }
 
     private writeParameters(writer: Writer): void {
         if (this.parameters.length === 0) {
-            writer.write('()')
+            writer.write("()")
             return
         }
         writer.indent()
-        writer.writeLine('(')
+        writer.writeLine("(")
         for (const parameter of this.parameters) {
             writer.writeNode(parameter)
-            writer.writeLine(',')
+            writer.writeLine(",")
         }
         writer.dedent()
-        writer.write(')')
+        writer.write(")")
     }
 }

@@ -1,6 +1,6 @@
-import { FernWorkspace } from '@fern-api/api-workspace-commons'
-import { assertNever, getDuplicates, isPlainObject } from '@fern-api/core-utils'
-import { EXAMPLE_REFERENCE_PREFIX, RawSchemas, visitRawTypeReference } from '@fern-api/fern-definition-schema'
+import { FernWorkspace } from "@fern-api/api-workspace-commons"
+import { assertNever, getDuplicates, isPlainObject } from "@fern-api/core-utils"
+import { EXAMPLE_REFERENCE_PREFIX, RawSchemas, visitRawTypeReference } from "@fern-api/fern-definition-schema"
 import {
     DoubleValidationRules,
     IntegerValidationRules,
@@ -9,15 +9,15 @@ import {
     PrimitiveTypeV1,
     PrimitiveTypeV2,
     StringValidationRules
-} from '@fern-api/ir-sdk'
+} from "@fern-api/ir-sdk"
 
-import { FernFileContext } from '../FernFileContext'
-import { ExampleResolver } from '../resolvers/ExampleResolver'
-import { ResolvedType } from '../resolvers/ResolvedType'
-import { TypeResolver } from '../resolvers/TypeResolver'
-import { ExampleViolation } from './exampleViolation'
-import { getViolationsForMisshapenExample } from './getViolationsForMisshapenExample'
-import { validateTypeExample } from './validateTypeExample'
+import { FernFileContext } from "../FernFileContext"
+import { ExampleResolver } from "../resolvers/ExampleResolver"
+import { ResolvedType } from "../resolvers/ResolvedType"
+import { TypeResolver } from "../resolvers/TypeResolver"
+import { ExampleViolation } from "./exampleViolation"
+import { getViolationsForMisshapenExample } from "./getViolationsForMisshapenExample"
+import { validateTypeExample } from "./validateTypeExample"
 
 // https://stackoverflow.com/questions/12756159/regex-and-iso8601-formatted-datetime
 const ISO_8601_REGEX =
@@ -53,12 +53,12 @@ export function validateTypeReferenceExample({
         // This comment never reaches the user and serves as a termination condition for the recursion.
         return [
             {
-                message: 'Example is too deeply nested. This may indicate a circular reference.'
+                message: "Example is too deeply nested. This may indicate a circular reference."
             }
         ]
     }
 
-    if (typeof example === 'string' && example.startsWith(EXAMPLE_REFERENCE_PREFIX)) {
+    if (typeof example === "string" && example.startsWith(EXAMPLE_REFERENCE_PREFIX)) {
         // if it's a reference to another example, we just need to compare the
         // expected type with the referenced type
         const resolvedExpectedType = typeResolver.resolveType({
@@ -127,7 +127,7 @@ export function validateTypeReferenceExample({
             },
             map: ({ keyType, valueType }) => {
                 if (!isPlainObject(example)) {
-                    return getViolationsForMisshapenExample(example, 'a map')
+                    return getViolationsForMisshapenExample(example, "a map")
                 }
                 return Object.entries(example).flatMap(([exampleKey, exampleValue]) => [
                     ...validateTypeReferenceExample({
@@ -154,7 +154,7 @@ export function validateTypeReferenceExample({
             },
             list: (itemType) => {
                 if (!Array.isArray(example)) {
-                    return getViolationsForMisshapenExample(example, 'a list')
+                    return getViolationsForMisshapenExample(example, "a list")
                 }
                 return example.flatMap((exampleItem, idx) =>
                     validateTypeReferenceExample({
@@ -171,17 +171,17 @@ export function validateTypeReferenceExample({
             },
             set: (itemType) => {
                 if (!Array.isArray(example)) {
-                    return getViolationsForMisshapenExample(example, 'a list')
+                    return getViolationsForMisshapenExample(example, "a list")
                 }
 
                 const duplicates = getDuplicates(example)
                 if (duplicates.length > 0) {
                     return [
                         {
-                            severity: 'fatal',
+                            severity: "fatal",
                             message:
-                                'Set has duplicate elements:\n' +
-                                duplicates.map((item) => `  - ${JSON.stringify(item)}`).join('\n')
+                                "Set has duplicate elements:\n" +
+                                duplicates.map((item) => `  - ${JSON.stringify(item)}`).join("\n")
                         }
                     ]
                 }
@@ -234,12 +234,12 @@ export function validateTypeReferenceExample({
             },
             literal: (expectedLiteral) => {
                 switch (expectedLiteral.type) {
-                    case 'boolean':
+                    case "boolean":
                         return createValidator(
                             (e) => e === expectedLiteral.boolean,
                             expectedLiteral.boolean.toString()
                         )(example)
-                    case 'string':
+                    case "string":
                         return createValidator(
                             (e) => e === expectedLiteral.string,
                             `"${expectedLiteral.string}"`
@@ -287,7 +287,7 @@ function validatePrimitiveExample({
             base64: () => validateString(example),
             bigInteger: () => validateString(example),
             _other: () => {
-                throw new Error('Unknown primitive type v2: ' + primitiveType.v2)
+                throw new Error("Unknown primitive type v2: " + primitiveType.v2)
             }
         })
     }
@@ -306,7 +306,7 @@ function validatePrimitiveExample({
         base64: () => validateString(example),
         bigInteger: () => validateString(example),
         _other: () => {
-            throw new Error('Unknown primitive type: ' + primitiveType.v1)
+            throw new Error("Unknown primitive type: " + primitiveType.v1)
         }
     })
 }
@@ -439,28 +439,28 @@ function validateStringWithRules({
     return []
 }
 
-const validateString = createValidator((example) => typeof example === 'string', 'a string')
-const validateInteger = createValidator((example) => Number.isInteger(example), 'an integer')
+const validateString = createValidator((example) => typeof example === "string", "a string")
+const validateInteger = createValidator((example) => Number.isInteger(example), "an integer")
 const validateUint = createValidator(
-    (example) => Number.isInteger(example) && typeof example === 'number' && example >= 0,
-    'a uint'
+    (example) => Number.isInteger(example) && typeof example === "number" && example >= 0,
+    "a uint"
 )
 const validateUint64 = createValidator(
-    (example) => Number.isInteger(example) && typeof example === 'number' && example >= 0,
-    'a uint64'
+    (example) => Number.isInteger(example) && typeof example === "number" && example >= 0,
+    "a uint64"
 )
-const validateFloat = createValidator((example) => typeof example === 'number', 'a float')
-const validateDouble = createValidator((example) => typeof example === 'number', 'a double')
-const validateLong = createValidator((example) => Number.isInteger(example), 'an integer')
-const validateBoolean = createValidator((example) => typeof example === 'boolean', 'a boolean')
-const validateUuid = createValidator((example) => typeof example === 'string' && UUID_REGEX.test(example), 'a UUID')
+const validateFloat = createValidator((example) => typeof example === "number", "a float")
+const validateDouble = createValidator((example) => typeof example === "number", "a double")
+const validateLong = createValidator((example) => Number.isInteger(example), "an integer")
+const validateBoolean = createValidator((example) => typeof example === "boolean", "a boolean")
+const validateUuid = createValidator((example) => typeof example === "string" && UUID_REGEX.test(example), "a UUID")
 const validateDateTime = createValidator(
-    (example) => typeof example === 'string' && ISO_8601_REGEX.test(example),
-    'an ISO 8601 timestamp'
+    (example) => typeof example === "string" && ISO_8601_REGEX.test(example),
+    "an ISO 8601 timestamp"
 )
 const validateDate = createValidator(
-    (example) => typeof example === 'string' && RFC_3339_DATE_REGEX.test(example) && ISO_8601_REGEX.test(example),
-    'a date'
+    (example) => typeof example === "string" && RFC_3339_DATE_REGEX.test(example) && ISO_8601_REGEX.test(example),
+    "a date"
 )
 
 function createValidator(
@@ -476,45 +476,45 @@ function createValidator(
 }
 
 function areResolvedTypesEquivalent({ expected, actual }: { expected: ResolvedType; actual: ResolvedType }): boolean {
-    if (expected._type === 'unknown') {
+    if (expected._type === "unknown") {
         return true
     }
-    if (expected._type === 'primitive') {
-        return actual._type === 'primitive' && expected.primitive.v1 === actual.primitive.v1
+    if (expected._type === "primitive") {
+        return actual._type === "primitive" && expected.primitive.v1 === actual.primitive.v1
     }
-    if (expected._type === 'container') {
+    if (expected._type === "container") {
         switch (expected.container._type) {
-            case 'list':
-            case 'set':
+            case "list":
+            case "set":
                 return (
-                    actual._type === 'container' &&
+                    actual._type === "container" &&
                     actual.container._type === expected.container._type &&
                     areResolvedTypesEquivalent({
                         expected: expected.container.itemType,
                         actual: actual.container.itemType
                     })
                 )
-            case 'optional':
+            case "optional":
                 // special case: if expected is an optional but actual is not, that's okay
                 return areResolvedTypesEquivalent({
                     expected: expected.container.itemType,
                     actual:
-                        actual._type === 'container' && actual.container._type === 'optional'
+                        actual._type === "container" && actual.container._type === "optional"
                             ? actual.container.itemType
                             : actual
                 })
-            case 'nullable':
+            case "nullable":
                 // special case: if expected is a nullable but actual is not, that's okay
                 return areResolvedTypesEquivalent({
                     expected: expected.container.itemType,
                     actual:
-                        actual._type === 'container' && actual.container._type === 'nullable'
+                        actual._type === "container" && actual.container._type === "nullable"
                             ? actual.container.itemType
                             : actual
                 })
-            case 'map':
+            case "map":
                 return (
-                    actual._type === 'container' &&
+                    actual._type === "container" &&
                     actual.container._type === expected.container._type &&
                     areResolvedTypesEquivalent({
                         expected: expected.container.keyType,
@@ -525,8 +525,8 @@ function areResolvedTypesEquivalent({ expected, actual }: { expected: ResolvedTy
                         actual: actual.container.valueType
                     })
                 )
-            case 'literal':
-                if (actual._type !== 'container' || actual.container._type !== expected.container._type) {
+            case "literal":
+                if (actual._type !== "container" || actual.container._type !== expected.container._type) {
                     return false
                 }
                 return areLiteralTypesEquivalent({
@@ -538,8 +538,8 @@ function areResolvedTypesEquivalent({ expected, actual }: { expected: ResolvedTy
         }
     }
 
-    if (expected._type === 'named') {
-        return actual._type === 'named' && actual.filepath === expected.filepath && actual.rawName === expected.rawName
+    if (expected._type === "named") {
+        return actual._type === "named" && actual.filepath === expected.filepath && actual.rawName === expected.rawName
     }
 
     assertNever(expected)
@@ -547,10 +547,10 @@ function areResolvedTypesEquivalent({ expected, actual }: { expected: ResolvedTy
 
 function areLiteralTypesEquivalent({ expected, actual }: { expected: Literal; actual: Literal }) {
     switch (expected.type) {
-        case 'boolean':
-            return actual.type === 'boolean' ? expected.boolean === actual.boolean : false
-        case 'string':
-            return actual.type === 'string' ? expected.string === actual.string : false
+        case "boolean":
+            return actual.type === "boolean" ? expected.boolean === actual.boolean : false
+        case "string":
+            return actual.type === "string" ? expected.string === actual.string : false
         default:
             assertNever(expected)
     }

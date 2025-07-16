@@ -1,7 +1,7 @@
-import { OpenAPIV3 } from 'openapi-types'
+import { OpenAPIV3 } from "openapi-types"
 
-import { getExtension } from '../../../getExtension'
-import { FernOpenAPIExtension } from './fernExtensions'
+import { getExtension } from "../../../getExtension"
+import { FernOpenAPIExtension } from "./fernExtensions"
 
 export interface FernResolutionSchema {
     name: string

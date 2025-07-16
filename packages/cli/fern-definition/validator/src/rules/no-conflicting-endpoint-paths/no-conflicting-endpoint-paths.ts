@@ -1,14 +1,14 @@
-import chalk from 'chalk'
+import chalk from "chalk"
 
-import { visitAllDefinitionFiles } from '@fern-api/api-workspace-commons'
+import { visitAllDefinitionFiles } from "@fern-api/api-workspace-commons"
 
-import { Rule } from '../../Rule'
-import { visitDefinitionFileYamlAst } from '../../ast'
-import { EndpointPathRegistry } from './EndpointPathRegistry'
-import { getFullEndpointPath } from './getFullEndpointPath'
+import { Rule } from "../../Rule"
+import { visitDefinitionFileYamlAst } from "../../ast"
+import { EndpointPathRegistry } from "./EndpointPathRegistry"
+import { getFullEndpointPath } from "./getFullEndpointPath"
 
 export const NoConflictingEndpointPathsRule: Rule = {
-    name: 'no-conflicting-endpoint-paths',
+    name: "no-conflicting-endpoint-paths",
     create: ({ workspace }) => {
         const endpointPathRegistry = new EndpointPathRegistry()
 
@@ -41,7 +41,7 @@ export const NoConflictingEndpointPathsRule: Rule = {
 
                     return [
                         {
-                            severity: 'warning',
+                            severity: "warning",
                             message: [
                                 `Endpoint path ${getFullEndpointPath({
                                     service,
@@ -58,7 +58,7 @@ export const NoConflictingEndpointPathsRule: Rule = {
                                             })
                                         )}`
                                 )
-                            ].join('\n')
+                            ].join("\n")
                         }
                     ]
                 }

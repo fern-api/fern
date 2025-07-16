@@ -1,7 +1,7 @@
-import { escapeSwiftStringLiteral } from '../utils/escapeSwiftStringLiteral'
-import { AccessLevel } from './AccessLevel'
-import { AstNode, Writer } from './core'
-import { isReservedKeyword } from './syntax'
+import { escapeSwiftStringLiteral } from "../utils/escapeSwiftStringLiteral"
+import { AccessLevel } from "./AccessLevel"
+import { AstNode, Writer } from "./core"
+import { isReservedKeyword } from "./syntax"
 
 export declare namespace EnumWithRawValues {
     interface Case {
@@ -34,34 +34,34 @@ export class EnumWithRawValues extends AstNode {
     public write(writer: Writer): void {
         if (this.accessLevel != null) {
             writer.write(this.accessLevel)
-            writer.write(' ')
+            writer.write(" ")
         }
         writer.write(`enum ${this.name}`)
         this.conformances?.forEach((conformance, index) => {
             if (index === 0) {
-                writer.write(': ')
+                writer.write(": ")
             } else if (index > 0) {
-                writer.write(', ')
+                writer.write(", ")
             }
             writer.write(conformance)
         })
-        writer.write(' {')
+        writer.write(" {")
         writer.newLine()
         writer.indent()
         this.cases.forEach((case_) => {
-            writer.write('case ')
+            writer.write("case ")
             if (isReservedKeyword(case_.unsafeName)) {
                 writer.write(`\`${case_.unsafeName}\``)
             } else {
                 writer.write(case_.unsafeName)
             }
             if (case_.rawValue !== case_.unsafeName) {
-                writer.write(' = ')
+                writer.write(" = ")
                 writer.write(`"${escapeSwiftStringLiteral(case_.rawValue)}"`)
             }
             writer.newLine()
         })
         writer.dedent()
-        writer.write('}')
+        writer.write("}")
     }
 }

@@ -1,11 +1,11 @@
-import { readdir, writeFile } from 'fs/promises'
-import tmp from 'tmp-promise'
+import { readdir, writeFile } from "fs/promises"
+import tmp from "tmp-promise"
 
-import { AbsoluteFilePath } from '@fern-api/fs-utils'
-import { Logger } from '@fern-api/logger'
-import { LoggingExecutable, createLoggingExecutable } from '@fern-api/logging-execa'
+import { AbsoluteFilePath } from "@fern-api/fs-utils"
+import { Logger } from "@fern-api/logger"
+import { LoggingExecutable, createLoggingExecutable } from "@fern-api/logging-execa"
 
-const GENERATOR_AGENT_NPM_PACKAGE = '@fern-api/generator-cli'
+const GENERATOR_AGENT_NPM_PACKAGE = "@fern-api/generator-cli"
 
 export class GeneratorAgentClient {
     private logger: Logger
@@ -23,7 +23,7 @@ export class GeneratorAgentClient {
         const readmeConfigFilepath = await this.writeConfig({
             config: readmeConfig
         })
-        const args = ['generate', 'readme', '--config', readmeConfigFilepath]
+        const args = ["generate", "readme", "--config", readmeConfigFilepath]
         const cli = await this.getOrInstall()
         const content = await cli(args)
         return content.stdout
@@ -33,7 +33,7 @@ export class GeneratorAgentClient {
         const githubConfigFilepath = await this.writeConfig({
             config: githubConfig
         })
-        const args = ['github', 'push', '--config', githubConfigFilepath]
+        const args = ["github", "push", "--config", githubConfigFilepath]
         const cli = await this.getOrInstall()
 
         const content = await cli(args)
@@ -48,7 +48,7 @@ export class GeneratorAgentClient {
         const referenceConfigFilepath = await this.writeConfig({
             config: referenceConfig
         })
-        const args = ['generate-reference', '--config', referenceConfigFilepath]
+        const args = ["generate-reference", "--config", referenceConfigFilepath]
         const cli = await this.getOrInstall()
         const content = await cli(args)
         return content.stdout
@@ -65,7 +65,7 @@ export class GeneratorAgentClient {
             return this.cli
         }
         if (this.skipInstall) {
-            this.cli = createLoggingExecutable('generator-cli', {
+            this.cli = createLoggingExecutable("generator-cli", {
                 cwd: process.cwd(),
                 logger: this.logger
             })
@@ -75,13 +75,13 @@ export class GeneratorAgentClient {
     }
 
     private async install(): Promise<LoggingExecutable> {
-        const npm = createLoggingExecutable('npm', {
+        const npm = createLoggingExecutable("npm", {
             cwd: process.cwd(),
             logger: this.logger
         })
         this.logger.debug(`Installing ${GENERATOR_AGENT_NPM_PACKAGE} ...`)
         try {
-            await npm(['install', '-f', '-g', GENERATOR_AGENT_NPM_PACKAGE])
+            await npm(["install", "-f", "-g", GENERATOR_AGENT_NPM_PACKAGE])
         } catch (error) {
             this.logger.debug(
                 `Failed to install ${GENERATOR_AGENT_NPM_PACKAGE}, falling back to already installed version: ${error}`
@@ -89,11 +89,11 @@ export class GeneratorAgentClient {
             // Continue execution as the package might already be installed
         }
 
-        const cli = createLoggingExecutable('generator-cli', {
+        const cli = createLoggingExecutable("generator-cli", {
             cwd: process.cwd(),
             logger: this.logger
         })
-        const version = await cli(['--version'])
+        const version = await cli(["--version"])
         this.logger.debug(`Successfully installed ${GENERATOR_AGENT_NPM_PACKAGE} version ${version.stdout}`)
 
         this.cli = cli

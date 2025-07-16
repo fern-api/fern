@@ -1,6 +1,6 @@
-import { CodeBlock as CommonCodeBlock } from '@fern-api/browser-compatible-base-generator'
+import { CodeBlock as CommonCodeBlock } from "@fern-api/browser-compatible-base-generator"
 
-import { AstNode, Writer } from '../csharp'
+import { AstNode, Writer } from "../csharp"
 
 export declare namespace CodeBlock {
     /* Write arbitrary code */

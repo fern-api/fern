@@ -1,12 +1,12 @@
-import { assertNever } from '@fern-api/core-utils'
-import { csharp } from '@fern-api/csharp-codegen'
+import { assertNever } from "@fern-api/core-utils"
+import { csharp } from "@fern-api/csharp-codegen"
 
-import { HttpHeader, Literal } from '@fern-fern/ir-sdk/api'
+import { HttpHeader, Literal } from "@fern-fern/ir-sdk/api"
 
-import { SdkGeneratorContext } from '../SdkGeneratorContext'
+import { SdkGeneratorContext } from "../SdkGeneratorContext"
 
-export const BASE_URL_FIELD_NAME = 'BaseUrl'
-export const BASE_URL_SUMMARY = 'The Base URL for the API.'
+export const BASE_URL_FIELD_NAME = "BaseUrl"
+export const BASE_URL_SUMMARY = "The Base URL for the API."
 const BASE_URL_FIELD = csharp.field({
     access: csharp.Access.Public,
     name: BASE_URL_FIELD_NAME,
@@ -36,18 +36,18 @@ export class BaseOptionsGenerator {
     public getHttpClientField({ optional, includeInitializer }: OptionArgs): csharp.Field {
         const type = csharp.Type.reference(
             csharp.classReference({
-                name: 'HttpClient',
-                namespace: 'System.Net.Http'
+                name: "HttpClient",
+                namespace: "System.Net.Http"
             })
         )
         return csharp.field({
             access: csharp.Access.Public,
-            name: 'HttpClient',
+            name: "HttpClient",
             get: true,
             init: true,
             type: optional ? csharp.Type.optional(type) : type,
-            initializer: includeInitializer ? csharp.codeblock('new HttpClient()') : undefined,
-            summary: 'The http client used to make requests.'
+            initializer: includeInitializer ? csharp.codeblock("new HttpClient()") : undefined,
+            summary: "The http client used to make requests."
         })
     }
 
@@ -60,12 +60,12 @@ export class BaseOptionsGenerator {
         return csharp.field({
             // Classes implementing internal interface field cannot have an access modifier
             access: !interfaceReference ? csharp.Access.Internal : undefined,
-            name: 'Headers',
+            name: "Headers",
             get: true,
             init: true,
             type: optional ? csharp.Type.optional(headersReference) : headersReference,
-            initializer: includeInitializer ? csharp.codeblock('new()') : undefined,
-            summary: 'The http headers sent with the request.',
+            initializer: includeInitializer ? csharp.codeblock("new()") : undefined,
+            summary: "The http headers sent with the request.",
             interfaceReference
         })
     }
@@ -74,30 +74,30 @@ export class BaseOptionsGenerator {
         const type = csharp.Type.integer()
         return csharp.field({
             access: csharp.Access.Public,
-            name: 'MaxRetries',
+            name: "MaxRetries",
             get: true,
             init: true,
             type: optional ? csharp.Type.optional(type) : type,
-            initializer: includeInitializer ? csharp.codeblock('2') : undefined,
-            summary: 'The http client used to make requests.'
+            initializer: includeInitializer ? csharp.codeblock("2") : undefined,
+            summary: "The http client used to make requests."
         })
     }
 
     public getTimeoutField({ optional, includeInitializer }: OptionArgs): csharp.Field {
         const type = csharp.Types.reference(
             csharp.classReference({
-                name: 'TimeSpan',
-                namespace: 'System'
+                name: "TimeSpan",
+                namespace: "System"
             })
         )
         return csharp.field({
             access: csharp.Access.Public,
-            name: 'Timeout',
+            name: "Timeout",
             get: true,
             init: true,
             type: optional ? csharp.Type.optional(type) : type,
-            initializer: includeInitializer ? csharp.codeblock('TimeSpan.FromSeconds(30)') : undefined,
-            summary: 'The timeout for the request.'
+            initializer: includeInitializer ? csharp.codeblock("TimeSpan.FromSeconds(30)") : undefined,
+            summary: "The timeout for the request."
         })
     }
 
@@ -110,8 +110,8 @@ export class BaseOptionsGenerator {
     }): csharp.Field {
         const type = csharp.Type.reference(
             csharp.classReference({
-                name: 'IEnumerable',
-                namespace: 'System.Collections.Generic',
+                name: "IEnumerable",
+                namespace: "System.Collections.Generic",
                 generics: [
                     csharp.Type.reference(
                         this.context.getKeyValuePairsClassReference({
@@ -124,11 +124,11 @@ export class BaseOptionsGenerator {
         )
         return csharp.field({
             access: csharp.Access.Public,
-            name: 'AdditionalHeaders',
+            name: "AdditionalHeaders",
             get: true,
             init: true,
             type,
-            initializer: includeInitializer ? csharp.codeblock('[]') : undefined,
+            initializer: includeInitializer ? csharp.codeblock("[]") : undefined,
             summary
         })
     }
@@ -140,7 +140,7 @@ export class BaseOptionsGenerator {
         header: HttpHeader
         options: OptionArgs
     }): csharp.Field | undefined {
-        if (header.valueType.type !== 'container' || header.valueType.container.type !== 'literal') {
+        if (header.valueType.type !== "container" || header.valueType.container.type !== "literal") {
             return undefined
         }
         return csharp.field({
@@ -150,7 +150,7 @@ export class BaseOptionsGenerator {
             init: true,
             type: this.getLiteralRootClientParameterType({ literal: header.valueType.container.literal }),
             summary: header.docs,
-            initializer: options.includeInitializer ? csharp.codeblock('null') : undefined
+            initializer: options.includeInitializer ? csharp.codeblock("null") : undefined
         })
     }
 
@@ -169,7 +169,7 @@ export class BaseOptionsGenerator {
             }),
             this.getAdditionalHeadersField({
                 summary:
-                    'Additional headers to be sent with the request.\nHeaders previously set with matching keys will be overwritten.',
+                    "Additional headers to be sent with the request.\nHeaders previously set with matching keys will be overwritten.",
                 includeInitializer: true
             }),
             this.getMaxRetriesField(optionArgs),
@@ -194,7 +194,7 @@ export class BaseOptionsGenerator {
             this.getHttpHeadersField({ optional: false, includeInitializer: false, interfaceReference: undefined }),
             this.getAdditionalHeadersField({
                 summary:
-                    'Additional headers to be sent with the request.\nHeaders previously set with matching keys will be overwritten.',
+                    "Additional headers to be sent with the request.\nHeaders previously set with matching keys will be overwritten.",
                 includeInitializer: false
             }),
             this.getMaxRetriesField(optionArgs),
@@ -230,9 +230,9 @@ export class BaseOptionsGenerator {
 
     private getLiteralRootClientParameterType({ literal }: { literal: Literal }): csharp.Type {
         switch (literal.type) {
-            case 'string':
+            case "string":
                 return csharp.Type.optional(csharp.Type.string())
-            case 'boolean':
+            case "boolean":
                 return csharp.Type.optional(csharp.Type.boolean())
             default:
                 assertNever(literal)
@@ -242,9 +242,9 @@ export class BaseOptionsGenerator {
     private getQueryParametersField({ includeInitializer }: OptionArgs): csharp.Field {
         return csharp.field({
             access: csharp.Access.Public,
-            name: 'AdditionalQueryParameters',
+            name: "AdditionalQueryParameters",
             type: this.context.getAdditionalQueryParametersType(),
-            summary: 'Additional query parameters sent with the request.',
+            summary: "Additional query parameters sent with the request.",
             get: true,
             init: true,
             skipDefaultInitializer: true,
@@ -259,12 +259,12 @@ export class BaseOptionsGenerator {
     private getBodyPropertiesField({ includeInitializer }: OptionArgs): csharp.Field {
         return csharp.field({
             access: csharp.Access.Public,
-            name: 'AdditionalBodyProperties',
+            name: "AdditionalBodyProperties",
             type: this.context.getAdditionalBodyPropertiesType(),
-            summary: 'Additional body properties sent with the request.\nThis is only applied to JSON requests.',
+            summary: "Additional body properties sent with the request.\nThis is only applied to JSON requests.",
             get: true,
             init: true,
-            initializer: includeInitializer ? csharp.codeblock('null') : undefined
+            initializer: includeInitializer ? csharp.codeblock("null") : undefined
         })
     }
 }

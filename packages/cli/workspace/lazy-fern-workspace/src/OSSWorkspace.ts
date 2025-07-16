@@ -1,6 +1,6 @@
-import { readFile } from 'fs/promises'
-import { OpenAPIV3_1 } from 'openapi-types'
-import { v4 as uuidv4 } from 'uuid'
+import { readFile } from "fs/promises"
+import { OpenAPIV3_1 } from "openapi-types"
+import { v4 as uuidv4 } from "uuid"
 
 import {
     AbstractAPIWorkspace,
@@ -11,27 +11,27 @@ import {
     ProtobufSpec,
     Spec,
     getOpenAPISettings
-} from '@fern-api/api-workspace-commons'
-import { AsyncAPIConverter, AsyncAPIConverterContext } from '@fern-api/asyncapi-to-ir'
-import { Audiences } from '@fern-api/configuration'
-import { isNonNullish } from '@fern-api/core-utils'
-import { AbsoluteFilePath, RelativeFilePath, cwd, doesPathExist, join, relativize } from '@fern-api/fs-utils'
-import { IntermediateRepresentation, serialization } from '@fern-api/ir-sdk'
-import { mergeIntermediateRepresentation } from '@fern-api/ir-utils'
-import { createLoggingExecutable } from '@fern-api/logging-execa'
-import { OpenApiIntermediateRepresentation } from '@fern-api/openapi-ir'
-import { parse } from '@fern-api/openapi-ir-parser'
-import { OpenAPI3_1Converter, OpenAPIConverterContext3_1 } from '@fern-api/openapi-to-ir'
-import { OpenRPCConverter, OpenRPCConverterContext3_1 } from '@fern-api/openrpc-to-ir'
-import { TaskContext } from '@fern-api/task-context'
-import { ErrorCollector } from '@fern-api/v2-importer-commons'
+} from "@fern-api/api-workspace-commons"
+import { AsyncAPIConverter, AsyncAPIConverterContext } from "@fern-api/asyncapi-to-ir"
+import { Audiences } from "@fern-api/configuration"
+import { isNonNullish } from "@fern-api/core-utils"
+import { AbsoluteFilePath, RelativeFilePath, cwd, doesPathExist, join, relativize } from "@fern-api/fs-utils"
+import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk"
+import { mergeIntermediateRepresentation } from "@fern-api/ir-utils"
+import { createLoggingExecutable } from "@fern-api/logging-execa"
+import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir"
+import { parse } from "@fern-api/openapi-ir-parser"
+import { OpenAPI3_1Converter, OpenAPIConverterContext3_1 } from "@fern-api/openapi-to-ir"
+import { OpenRPCConverter, OpenRPCConverterContext3_1 } from "@fern-api/openrpc-to-ir"
+import { TaskContext } from "@fern-api/task-context"
+import { ErrorCollector } from "@fern-api/v2-importer-commons"
 
-import { constructCasingsGenerator } from '../../../../commons/casings-generator/src/CasingsGenerator'
-import { loadOpenRpc } from './loaders'
-import { OpenAPILoader } from './loaders/OpenAPILoader'
-import { ProtobufIRGenerator } from './protobuf/ProtobufIRGenerator'
-import { MaybeValid } from './protobuf/utils'
-import { getAllOpenAPISpecs } from './utils/getAllOpenAPISpecs'
+import { constructCasingsGenerator } from "../../../../commons/casings-generator/src/CasingsGenerator"
+import { loadOpenRpc } from "./loaders"
+import { OpenAPILoader } from "./loaders/OpenAPILoader"
+import { ProtobufIRGenerator } from "./protobuf/ProtobufIRGenerator"
+import { MaybeValid } from "./protobuf/utils"
+import { getAllOpenAPISpecs } from "./utils/getAllOpenAPISpecs"
 
 export declare namespace OSSWorkspace {
     export interface Args extends AbstractAPIWorkspace.Args {
@@ -43,7 +43,7 @@ export declare namespace OSSWorkspace {
 }
 
 export class OSSWorkspace extends BaseOpenAPIWorkspace {
-    public type: string = 'oss'
+    public type: string = "oss"
     public allSpecs: Spec[]
     public specs: (OpenAPISpec | ProtobufSpec)[]
     public sources: IdentifiableSource[]
@@ -59,12 +59,12 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             inlinePathParameters: specs.every((spec) => spec.settings?.inlinePathParameters),
             objectQueryParameters: specs.every((spec) => spec.settings?.objectQueryParameters),
             useBytesForBinaryResponse: specs
-                .filter((spec) => spec.type === 'openapi' && spec.source.type === 'openapi')
+                .filter((spec) => spec.type === "openapi" && spec.source.type === "openapi")
 
                 // TODO: Update this to '.every' once AsyncAPI sources are correctly recognized.
                 .some((spec) => spec.settings?.useBytesForBinaryResponse),
             respectForwardCompatibleEnums: specs
-                .filter((spec) => spec.type === 'openapi' && spec.source.type === 'openapi')
+                .filter((spec) => spec.type === "openapi" && spec.source.type === "openapi")
 
                 // TODO: Update this to '.every' once AsyncAPI sources are correctly recognized.
                 .some((spec) => spec.settings?.respectForwardCompatibleEnums),
@@ -128,7 +128,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         const authOverrides =
             this.generatorsConfiguration?.api?.auth != null ? { ...this.generatorsConfiguration?.api } : undefined
         if (authOverrides) {
-            context.logger.trace('Using auth overrides from generators configuration')
+            context.logger.trace("Using auth overrides from generators configuration")
         }
 
         const environmentOverrides =
@@ -136,13 +136,13 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 ? { ...this.generatorsConfiguration?.api }
                 : undefined
         if (environmentOverrides) {
-            context.logger.trace('Using environment overrides from generators configuration')
+            context.logger.trace("Using environment overrides from generators configuration")
         }
 
         const globalHeaderOverrides =
             this.generatorsConfiguration?.api?.headers != null ? { ...this.generatorsConfiguration?.api } : undefined
         if (globalHeaderOverrides) {
-            context.logger.trace('Using global header overrides from generators configuration')
+            context.logger.trace("Using global header overrides from generators configuration")
         }
 
         let mergedIr: IntermediateRepresentation | undefined
@@ -150,7 +150,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         const errorCollectors: ErrorCollector[] = []
 
         for (const document of documents) {
-            const absoluteFilepathToSpec = join(this.absoluteFilePath, RelativeFilePath.of(document.source?.file ?? ''))
+            const absoluteFilepathToSpec = join(this.absoluteFilePath, RelativeFilePath.of(document.source?.file ?? ""))
             const relativeFilepathToSpec = relativize(cwd(), absoluteFilepathToSpec)
 
             const errorCollector = new ErrorCollector({ logger: context.logger, relativeFilepathToSpec })
@@ -159,10 +159,10 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             let result: IntermediateRepresentation | undefined = undefined
 
             switch (document.type) {
-                case 'openapi': {
+                case "openapi": {
                     const converterContext = new OpenAPIConverterContext3_1({
                         namespace: document.namespace,
-                        generationLanguage: 'typescript',
+                        generationLanguage: "typescript",
                         logger: context.logger,
                         smartCasing: false,
                         spec: document.value as OpenAPIV3_1.Document,
@@ -179,10 +179,10 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     result = await converter.convert()
                     break
                 }
-                case 'asyncapi': {
+                case "asyncapi": {
                     const converterContext = new AsyncAPIConverterContext({
                         namespace: document.namespace,
-                        generationLanguage: 'typescript',
+                        generationLanguage: "typescript",
                         logger: context.logger,
                         smartCasing: false,
                         // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
@@ -206,7 +206,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             }
 
             const casingsGenerator = constructCasingsGenerator({
-                generationLanguage: 'typescript',
+                generationLanguage: "typescript",
                 keywords: undefined,
                 smartCasing: false
             })
@@ -219,7 +219,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             }
         }
         for (const spec of this.allSpecs) {
-            if (spec.type === 'openrpc') {
+            if (spec.type === "openrpc") {
                 const absoluteFilepathToSpec = spec.absoluteFilepath
                 const relativeFilepathToSpec = relativize(cwd(), absoluteFilepathToSpec)
 
@@ -228,7 +228,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
 
                 const converterContext = new OpenRPCConverterContext3_1({
                     namespace: spec.namespace,
-                    generationLanguage: 'typescript',
+                    generationLanguage: "typescript",
                     logger: context.logger,
                     smartCasing: false,
                     spec: await loadOpenRpc({
@@ -247,7 +247,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 const result = await converter.convert()
 
                 const casingsGenerator = constructCasingsGenerator({
-                    generationLanguage: 'typescript',
+                    generationLanguage: "typescript",
                     keywords: undefined,
                     smartCasing: false
                 })
@@ -258,7 +258,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                             ? result
                             : mergeIntermediateRepresentation(mergedIr, result, casingsGenerator)
                 }
-            } else if (spec.type === 'protobuf') {
+            } else if (spec.type === "protobuf") {
                 // Handle protobuf specs by calling buf generate with protoc-gen-fern
                 try {
                     const protobufIRGenerator = new ProtobufIRGenerator({ context })
@@ -268,10 +268,10 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                         local: true
                     })
 
-                    const result = await readFile(protobufIRFilepath, 'utf-8')
+                    const result = await readFile(protobufIRFilepath, "utf-8")
 
                     const casingsGenerator = constructCasingsGenerator({
-                        generationLanguage: 'typescript',
+                        generationLanguage: "typescript",
                         keywords: undefined,
                         smartCasing: false
                     })
@@ -296,11 +296,11 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                                 throw new Error()
                             }
                         } catch (error) {
-                            context.logger.log('error', 'Failed to parse protobuf IR: ')
+                            context.logger.log("error", "Failed to parse protobuf IR: ")
                         }
                     }
                 } catch (error) {
-                    context.logger.log('warn', 'Failed to parse protobuf IR: ' + error)
+                    context.logger.log("warn", "Failed to parse protobuf IR: " + error)
                 }
             }
         }
@@ -310,30 +310,30 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 const errorStats = errorCollector.getErrorStats()
                 const specInfo = errorCollector.relativeFilepathToSpec
                     ? ` for ${errorCollector.relativeFilepathToSpec}`
-                    : ''
+                    : ""
 
                 if (errorStats.numErrors > 0) {
                     context.logger.log(
-                        'error',
+                        "error",
                         `API validation${specInfo} completed with ${errorStats.numErrors} errors and ${errorStats.numWarnings} warnings.`
                     )
                 } else if (errorStats.numWarnings > 0) {
                     context.logger.log(
-                        'warn',
+                        "warn",
                         `API validation${specInfo} completed with ${errorStats.numWarnings} warnings.`
                     )
                 } else {
-                    context.logger.log('info', `All checks passed when parsing OpenAPI${specInfo}.`)
+                    context.logger.log("info", `All checks passed when parsing OpenAPI${specInfo}.`)
                 }
 
-                context.logger.log('info', '')
+                context.logger.log("info", "")
 
                 await errorCollector.logErrors({ logWarnings: false })
             }
         }
 
         if (mergedIr === undefined) {
-            throw new Error('Failed to generate intermediate representation')
+            throw new Error("Failed to generate intermediate representation")
         }
         return mergedIr
     }
@@ -361,7 +361,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             this.absoluteFilePath,
             ...this.allSpecs
                 .flatMap((spec) => [
-                    spec.type === 'protobuf' ? spec.absoluteFilepathToProtobufTarget : spec.absoluteFilepath,
+                    spec.type === "protobuf" ? spec.absoluteFilepathToProtobufTarget : spec.absoluteFilepath,
                     spec.absoluteFilepathToOverrides
                 ])
                 .filter(isNonNullish)
@@ -377,7 +377,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         const result: IdentifiableSource[] = []
         return specs.reduce((acc, spec) => {
             const absoluteFilePath =
-                spec.type === 'protobuf' ? spec.absoluteFilepathToProtobufRoot : spec.absoluteFilepath
+                spec.type === "protobuf" ? spec.absoluteFilepathToProtobufRoot : spec.absoluteFilepath
 
             if (!seen.has(absoluteFilePath)) {
                 seen.add(absoluteFilePath)

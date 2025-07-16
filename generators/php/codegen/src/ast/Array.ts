@@ -1,5 +1,5 @@
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export declare namespace Array_ {
     interface Args {
@@ -16,13 +16,13 @@ export class Array_ extends AstNode {
     }
 
     public write(writer: Writer): void {
-        writer.write('[')
+        writer.write("[")
         this.entries.forEach((entry, index) => {
             if (index > 0) {
-                writer.write(', ')
+                writer.write(", ")
             }
             entry.write(writer)
         })
-        writer.write(']')
+        writer.write("]")
     }
 }

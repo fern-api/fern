@@ -1,11 +1,11 @@
-import { RelativeFilePath } from '@fern-api/fs-utils'
-import { FileGenerator, PhpFile } from '@fern-api/php-base'
-import { php } from '@fern-api/php-codegen'
+import { RelativeFilePath } from "@fern-api/fs-utils"
+import { FileGenerator, PhpFile } from "@fern-api/php-base"
+import { php } from "@fern-api/php-codegen"
 
-import { ObjectTypeDeclaration, TypeDeclaration } from '@fern-fern/ir-sdk/api'
+import { ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api"
 
-import { ModelCustomConfigSchema } from '../ModelCustomConfig'
-import { ModelGeneratorContext } from '../ModelGeneratorContext'
+import { ModelCustomConfigSchema } from "../ModelCustomConfig"
+import { ModelGeneratorContext } from "../ModelGeneratorContext"
 
 export class TraitGenerator extends FileGenerator<PhpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
     private readonly typeDeclaration: TypeDeclaration

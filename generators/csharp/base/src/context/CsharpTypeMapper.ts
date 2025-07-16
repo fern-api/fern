@@ -1,7 +1,7 @@
-import { assertNever } from '@fern-api/core-utils'
-import { BaseCsharpCustomConfigSchema, csharp } from '@fern-api/csharp-codegen'
+import { assertNever } from "@fern-api/core-utils"
+import { BaseCsharpCustomConfigSchema, csharp } from "@fern-api/csharp-codegen"
 
-import { FernIr } from '@fern-fern/ir-sdk'
+import { FernIr } from "@fern-fern/ir-sdk"
 import {
     ContainerType,
     DeclaredTypeName,
@@ -11,9 +11,9 @@ import {
     PrimitiveTypeV1,
     TypeId,
     TypeReference
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { AbstractCsharpGeneratorContext } from './AbstractCsharpGeneratorContext'
+import { AbstractCsharpGeneratorContext } from "./AbstractCsharpGeneratorContext"
 
 export declare namespace CsharpTypeMapper {
     interface Args {
@@ -34,16 +34,16 @@ export class CsharpTypeMapper {
 
     public convert({ reference, unboxOptionals = false, fullyQualified = false }: CsharpTypeMapper.Args): csharp.Type {
         switch (reference.type) {
-            case 'container':
+            case "container":
                 return this.convertContainer({
                     container: reference.container,
                     unboxOptionals
                 })
-            case 'named':
+            case "named":
                 return this.convertNamed({ named: reference, fullyQualified })
-            case 'primitive':
+            case "primitive":
                 return this.convertPrimitive(reference)
-            case 'unknown':
+            case "unknown":
                 return csharp.Type.object()
             default:
                 assertNever(reference)
@@ -52,11 +52,11 @@ export class CsharpTypeMapper {
 
     public convertFromFileProperty({ property }: { property: FernIr.FileProperty }): csharp.Type {
         switch (property.type) {
-            case 'file': {
+            case "file": {
                 const csharpType = csharp.Type.fileParam(this.context.getFileParamClassReference())
                 return property.isOptional ? csharp.Type.optional(csharpType) : csharpType
             }
-            case 'fileArray': {
+            case "fileArray": {
                 const csharpType = csharp.Type.list(csharp.Type.fileParam(this.context.getFileParamClassReference()))
                 return property.isOptional ? csharp.Type.optional(csharpType) : csharpType
             }
@@ -85,28 +85,28 @@ export class CsharpTypeMapper {
         unboxOptionals: boolean
     }): csharp.Type {
         switch (container.type) {
-            case 'list':
+            case "list":
                 return csharp.Type.list(this.convert({ reference: container.list, unboxOptionals: true }))
-            case 'map': {
+            case "map": {
                 const key = this.convert({ reference: container.keyType })
                 const value = this.convert({ reference: container.valueType })
-                if (value.internalType.type === 'object') {
+                if (value.internalType.type === "object") {
                     // object map values should be nullable.
                     return csharp.Type.map(key, csharp.Type.optional(value))
                 }
                 return csharp.Type.map(key, value)
             }
-            case 'set':
+            case "set":
                 return csharp.Type.set(this.convert({ reference: container.set, unboxOptionals: true }))
-            case 'optional':
+            case "optional":
                 return unboxOptionals
                     ? this.convert({ reference: container.optional, unboxOptionals })
                     : csharp.Type.optional(this.convert({ reference: container.optional }))
-            case 'nullable':
+            case "nullable":
                 return unboxOptionals
                     ? this.convert({ reference: container.nullable, unboxOptionals })
                     : csharp.Type.optional(this.convert({ reference: container.nullable }))
-            case 'literal':
+            case "literal":
                 return this.convertLiteral({ literal: container.literal })
             default:
                 assertNever(container)
@@ -135,9 +135,9 @@ export class CsharpTypeMapper {
 
     private convertLiteral({ literal }: { literal: Literal }): csharp.Type {
         switch (literal.type) {
-            case 'boolean':
+            case "boolean":
                 return csharp.Type.boolean()
-            case 'string':
+            case "string":
                 return csharp.Type.string()
         }
     }
@@ -158,18 +158,18 @@ export class CsharpTypeMapper {
         }
         const typeDeclaration = this.context.getTypeDeclarationOrThrow(named.typeId)
         switch (typeDeclaration.shape.type) {
-            case 'alias':
+            case "alias":
                 return this.convert({ reference: typeDeclaration.shape.aliasOf })
-            case 'enum':
+            case "enum":
                 return csharp.Type.reference(objectClassReference)
-            case 'object':
+            case "object":
                 return csharp.Type.reference(objectClassReference)
-            case 'union':
+            case "union":
                 if (this.context.shouldGenerateDiscriminatedUnions()) {
                     return csharp.Type.reference(objectClassReference)
                 }
                 return csharp.Type.object()
-            case 'undiscriminatedUnion': {
+            case "undiscriminatedUnion": {
                 return csharp.Type.oneOf(
                     typeDeclaration.shape.members.map((member) => {
                         return this.convert({ reference: member.type })

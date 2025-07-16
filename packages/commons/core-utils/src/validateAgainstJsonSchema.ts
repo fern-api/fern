@@ -1,5 +1,5 @@
-import Ajv, { ErrorObject } from 'ajv'
-import { JSONSchema4 } from 'json-schema'
+import Ajv, { ErrorObject } from "ajv"
+import { JSONSchema4 } from "json-schema"
 
 export declare namespace validateAgainstJsonSchema {
     export interface ValidationSuccess {
@@ -39,8 +39,8 @@ export function validateAgainstJsonSchema(
             // Find the most specific error by prioritizing non-oneOf/anyOf errors
             // and using instancePath length as a tiebreaker
             for (const error of validate.errors ?? []) {
-                const currentIsOneOf = error.keyword === 'oneOf' || error.keyword === 'anyOf'
-                const existingIsOneOf = mostGranularError.keyword === 'oneOf' || mostGranularError.keyword === 'anyOf'
+                const currentIsOneOf = error.keyword === "oneOf" || error.keyword === "anyOf"
+                const existingIsOneOf = mostGranularError.keyword === "oneOf" || mostGranularError.keyword === "anyOf"
 
                 // Prefer non-oneOf errors over oneOf errors
                 if (!currentIsOneOf && existingIsOneOf) {
@@ -55,7 +55,7 @@ export function validateAgainstJsonSchema(
                 }
             }
 
-            if (mostGranularError.keyword === 'additionalProperties') {
+            if (mostGranularError.keyword === "additionalProperties") {
                 const additionalProp = mostGranularError.params.additionalProperty
                 return {
                     success: false,
@@ -65,7 +65,7 @@ export function validateAgainstJsonSchema(
                     },
                     allErrors: validate.errors ?? []
                 }
-            } else if (mostGranularError.keyword === 'required') {
+            } else if (mostGranularError.keyword === "required") {
                 const missingProperty = mostGranularError.params.missingProperty
                 return {
                     success: false,
@@ -75,16 +75,16 @@ export function validateAgainstJsonSchema(
                     },
                     allErrors: validate.errors ?? []
                 }
-            } else if (mostGranularError.keyword === 'enum') {
+            } else if (mostGranularError.keyword === "enum") {
                 return {
                     success: false,
                     error: {
                         ...mostGranularError,
-                        message: `Invalid value: must be one of [${mostGranularError.params.allowedValues.join(', ')}]`
+                        message: `Invalid value: must be one of [${mostGranularError.params.allowedValues.join(", ")}]`
                     },
                     allErrors: validate.errors ?? []
                 }
-            } else if (mostGranularError.keyword === 'format') {
+            } else if (mostGranularError.keyword === "format") {
                 return {
                     success: false,
                     error: {
@@ -93,7 +93,7 @@ export function validateAgainstJsonSchema(
                     },
                     allErrors: validate.errors ?? []
                 }
-            } else if (mostGranularError.keyword === 'pattern') {
+            } else if (mostGranularError.keyword === "pattern") {
                 return {
                     success: false,
                     error: {
@@ -102,7 +102,7 @@ export function validateAgainstJsonSchema(
                     },
                     allErrors: validate.errors ?? []
                 }
-            } else if (mostGranularError.keyword === 'maximum') {
+            } else if (mostGranularError.keyword === "maximum") {
                 return {
                     success: false,
                     error: {
@@ -111,7 +111,7 @@ export function validateAgainstJsonSchema(
                     },
                     allErrors: validate.errors ?? []
                 }
-            } else if (mostGranularError.keyword === 'minimum') {
+            } else if (mostGranularError.keyword === "minimum") {
                 return {
                     success: false,
                     error: {
@@ -120,7 +120,7 @@ export function validateAgainstJsonSchema(
                     },
                     allErrors: validate.errors ?? []
                 }
-            } else if (mostGranularError.keyword === 'maxLength') {
+            } else if (mostGranularError.keyword === "maxLength") {
                 return {
                     success: false,
                     error: {
@@ -129,7 +129,7 @@ export function validateAgainstJsonSchema(
                     },
                     allErrors: validate.errors ?? []
                 }
-            } else if (mostGranularError.keyword === 'minLength') {
+            } else if (mostGranularError.keyword === "minLength") {
                 return {
                     success: false,
                     error: {
@@ -143,7 +143,7 @@ export function validateAgainstJsonSchema(
                 success: false,
                 error: {
                     ...mostGranularError,
-                    message: 'Failed to parse because JSON schema validation failed'
+                    message: "Failed to parse because JSON schema validation failed"
                 },
                 allErrors: validate.errors ?? []
             }
@@ -151,7 +151,7 @@ export function validateAgainstJsonSchema(
             return {
                 success: false,
                 error: {
-                    message: 'Failed to parse because JSON schema validation failed',
+                    message: "Failed to parse because JSON schema validation failed",
                     ...validate.errors[0]
                 },
                 allErrors: validate.errors ?? []

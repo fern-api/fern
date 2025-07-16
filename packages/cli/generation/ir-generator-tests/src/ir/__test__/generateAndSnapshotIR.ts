@@ -1,10 +1,10 @@
-import { SourceResolverImpl } from '@fern-api/cli-source-resolver'
-import { Audiences } from '@fern-api/configuration-loader'
-import { AbsoluteFilePath, RelativeFilePath, join, streamObjectToFile } from '@fern-api/fs-utils'
-import { generateIntermediateRepresentation } from '@fern-api/ir-generator'
-import { IntermediateRepresentation, serialization as IrSerialization } from '@fern-api/ir-sdk'
-import { createMockTaskContext } from '@fern-api/task-context'
-import { AbstractAPIWorkspace, loadAPIWorkspace } from '@fern-api/workspace-loader'
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver"
+import { Audiences } from "@fern-api/configuration-loader"
+import { AbsoluteFilePath, RelativeFilePath, join, streamObjectToFile } from "@fern-api/fs-utils"
+import { generateIntermediateRepresentation } from "@fern-api/ir-generator"
+import { IntermediateRepresentation, serialization as IrSerialization } from "@fern-api/ir-sdk"
+import { createMockTaskContext } from "@fern-api/task-context"
+import { AbstractAPIWorkspace, loadAPIWorkspace } from "@fern-api/workspace-loader"
 
 export async function generateAndSnapshotIRFromPath({
     absolutePathToWorkspace,
@@ -22,7 +22,7 @@ export async function generateAndSnapshotIRFromPath({
     const workspace = await loadAPIWorkspace({
         absolutePathToWorkspace,
         context,
-        cliVersion: '0.0.0',
+        cliVersion: "0.0.0",
         workspaceName
     })
     if (!workspace.didSucceed) {
@@ -44,7 +44,7 @@ export async function generateIRFromPath({
     const workspace = await loadAPIWorkspace({
         absolutePathToWorkspace,
         context,
-        cliVersion: '0.0.0',
+        cliVersion: "0.0.0",
         workspaceName
     })
     if (!workspace.didSucceed) {
@@ -103,7 +103,7 @@ export async function generateAndSnapshotIR({
     const intermediateRepresentationJson = IrSerialization.IntermediateRepresentation.jsonOrThrow(
         intermediateRepresentation,
         {
-            unrecognizedObjectKeys: 'strip'
+            unrecognizedObjectKeys: "strip"
         }
     )
 

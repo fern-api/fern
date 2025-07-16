@@ -1,9 +1,9 @@
-import chalk from 'chalk'
+import chalk from "chalk"
 
-import { RawSchemas } from '@fern-api/fern-definition-schema'
-import { FernFileContext, ResolvedType, TypeResolver } from '@fern-api/ir-generator'
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator"
 
-import { RuleViolation } from '../../Rule'
+import { RuleViolation } from "../../Rule"
 import {
     RequestPropertyValidator,
     ResponsePropertyValidator,
@@ -11,7 +11,7 @@ import {
     getResponsePropertyComponents,
     requestTypeHasProperty,
     resolvedTypeHasProperty
-} from '../../utils/propertyValidatorUtils'
+} from "../../utils/propertyValidatorUtils"
 
 export function validateResultsProperty({
     endpointId,
@@ -33,7 +33,7 @@ export function validateResultsProperty({
         resolvedResponseType,
         responseProperty: resultsProperty,
         propertyValidator: {
-            propertyID: 'results',
+            propertyID: "results",
             validate: isValidResultsProperty
         }
     })
@@ -59,7 +59,7 @@ export function validateRequestProperty({
     const requestPropertyComponents = getRequestPropertyComponents(requestProperty)
     if (requestPropertyComponents == null) {
         violations.push({
-            severity: 'fatal',
+            severity: "fatal",
             message: `Pagination configuration for endpoint ${chalk.bold(endpointId)} must define a dot-delimited '${
                 propertyValidator.propertyID
             }' property starting with $request (e.g. $request.${propertyValidator.propertyID}).`
@@ -76,7 +76,7 @@ export function validateRequestProperty({
         })
     ) {
         violations.push({
-            severity: 'fatal',
+            severity: "fatal",
             message: `Pagination configuration for endpoint ${chalk.bold(endpointId)} specifies '${
                 propertyValidator.propertyID
             }' ${requestProperty}, which is not a valid '${propertyValidator.propertyID}' type.`
@@ -106,7 +106,7 @@ export function validateResponseProperty({
     const responsePropertyComponents = getResponsePropertyComponents(responseProperty)
     if (responsePropertyComponents == null) {
         violations.push({
-            severity: 'fatal',
+            severity: "fatal",
             message: `Pagination configuration for endpoint ${chalk.bold(endpointId)} must define a dot-delimited '${
                 propertyValidator.propertyID
             }' property starting with $response (e.g. $response.${propertyValidator.propertyID}).`
@@ -123,7 +123,7 @@ export function validateResponseProperty({
         })
     ) {
         violations.push({
-            severity: 'fatal',
+            severity: "fatal",
             message: `Pagination configuration for endpoint ${chalk.bold(endpointId)} specifies '${
                 propertyValidator.propertyID
             }' ${responseProperty}, which is not a valid '${propertyValidator.propertyID}' type.`

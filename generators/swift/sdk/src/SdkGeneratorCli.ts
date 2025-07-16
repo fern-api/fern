@@ -1,12 +1,12 @@
-import { GeneratorNotificationService } from '@fern-api/base-generator'
-import { AbstractSwiftGeneratorCli } from '@fern-api/swift-base'
-import { generateModels } from '@fern-api/swift-model'
+import { GeneratorNotificationService } from "@fern-api/base-generator"
+import { AbstractSwiftGeneratorCli } from "@fern-api/swift-base"
+import { generateModels } from "@fern-api/swift-model"
 
-import { FernGeneratorExec } from '@fern-fern/generator-exec-sdk'
-import { IntermediateRepresentation } from '@fern-fern/ir-sdk/api'
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk"
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api"
 
-import { SdkCustomConfigSchema } from './SdkCustomConfig'
-import { SdkGeneratorContext } from './SdkGeneratorContext'
+import { SdkCustomConfigSchema } from "./SdkCustomConfig"
+import { SdkGeneratorContext } from "./SdkGeneratorContext"
 
 export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -36,7 +36,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     }
 
     protected async publishPackage(_context: SdkGeneratorContext): Promise<void> {
-        throw new Error('Method not implemented.')
+        throw new Error("Method not implemented.")
     }
 
     protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {

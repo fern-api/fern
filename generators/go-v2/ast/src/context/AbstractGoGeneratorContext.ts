@@ -2,9 +2,9 @@ import {
     AbstractGeneratorContext,
     FernGeneratorExec,
     GeneratorNotificationService
-} from '@fern-api/browser-compatible-base-generator'
-import { assertNever } from '@fern-api/core-utils'
-import { RelativeFilePath } from '@fern-api/path-utils'
+} from "@fern-api/browser-compatible-base-generator"
+import { assertNever } from "@fern-api/core-utils"
+import { RelativeFilePath } from "@fern-api/path-utils"
 
 import {
     ErrorDeclaration,
@@ -21,15 +21,15 @@ import {
     TypeDeclaration,
     TypeId,
     TypeReference
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { go } from '..'
-import { IoReaderTypeReference, TimeTypeReference, UuidTypeReference } from '../ast/Type'
-import { BaseGoCustomConfigSchema } from '../custom-config/BaseGoCustomConfigSchema'
-import { resolveRootImportPath } from '../custom-config/resolveRootImportPath'
-import { GoTypeMapper } from './GoTypeMapper'
-import { GoValueFormatter } from './GoValueFormatter'
-import { GoZeroValueMapper } from './GoZeroValueMapper'
+import { go } from ".."
+import { IoReaderTypeReference, TimeTypeReference, UuidTypeReference } from "../ast/Type"
+import { BaseGoCustomConfigSchema } from "../custom-config/BaseGoCustomConfigSchema"
+import { resolveRootImportPath } from "../custom-config/resolveRootImportPath"
+import { GoTypeMapper } from "./GoTypeMapper"
+import { GoValueFormatter } from "./GoValueFormatter"
+import { GoZeroValueMapper } from "./GoZeroValueMapper"
 
 export interface FileLocation {
     importPath: string
@@ -129,42 +129,42 @@ export abstract class AbstractGoGeneratorContext<
 
     public maybeUnwrapIterable(typeReference: TypeReference): TypeReference | undefined {
         switch (typeReference.type) {
-            case 'container': {
+            case "container": {
                 const container = typeReference.container
                 switch (container.type) {
-                    case 'list':
+                    case "list":
                         return container.list
-                    case 'set':
+                    case "set":
                         return container.set
-                    case 'optional':
+                    case "optional":
                         return this.maybeUnwrapIterable(container.optional)
-                    case 'nullable':
+                    case "nullable":
                         return this.maybeUnwrapIterable(container.nullable)
-                    case 'literal':
-                    case 'map':
+                    case "literal":
+                    case "map":
                         return undefined
                     default:
                         assertNever(container)
                 }
                 break
             }
-            case 'named': {
+            case "named": {
                 const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId).shape
                 switch (typeDeclaration.type) {
-                    case 'alias':
+                    case "alias":
                         return this.maybeUnwrapIterable(typeDeclaration.aliasOf)
-                    case 'enum':
-                    case 'object':
-                    case 'union':
-                    case 'undiscriminatedUnion':
+                    case "enum":
+                    case "object":
+                    case "union":
+                    case "undiscriminatedUnion":
                         return undefined
                     default:
                         assertNever(typeDeclaration)
                 }
                 break
             }
-            case 'primitive':
-            case 'unknown':
+            case "primitive":
+            case "unknown":
                 return undefined
             default:
                 assertNever(typeReference)
@@ -173,26 +173,26 @@ export abstract class AbstractGoGeneratorContext<
 
     public maybeUnwrapOptionalOrNullable(typeReference: TypeReference): TypeReference | undefined {
         switch (typeReference.type) {
-            case 'container': {
+            case "container": {
                 const container = typeReference.container
                 switch (container.type) {
-                    case 'optional':
+                    case "optional":
                         return container.optional
-                    case 'nullable':
+                    case "nullable":
                         return container.nullable
-                    case 'list':
-                    case 'set':
-                    case 'literal':
-                    case 'map':
+                    case "list":
+                    case "set":
+                    case "literal":
+                    case "map":
                         return undefined
                     default:
                         assertNever(container)
                 }
                 break
             }
-            case 'named':
-            case 'primitive':
-            case 'unknown':
+            case "named":
+            case "primitive":
+            case "unknown":
                 return undefined
             default:
                 assertNever(typeReference)
@@ -208,26 +208,26 @@ export abstract class AbstractGoGeneratorContext<
      */
     public needsOptionalDereference(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
-            case 'named': {
+            case "named": {
                 const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId).shape
                 switch (typeDeclaration.type) {
-                    case 'alias':
+                    case "alias":
                         return this.needsOptionalDereference(typeDeclaration.aliasOf)
-                    case 'enum':
+                    case "enum":
                         return true
-                    case 'object':
-                    case 'union':
-                    case 'undiscriminatedUnion':
+                    case "object":
+                    case "union":
+                    case "undiscriminatedUnion":
                         return false
                     default:
                         assertNever(typeDeclaration)
                 }
                 break
             }
-            case 'primitive':
+            case "primitive":
                 return true
-            case 'container':
-            case 'unknown':
+            case "container":
+            case "unknown":
                 return false
             default:
                 assertNever(typeReference)
@@ -235,13 +235,13 @@ export abstract class AbstractGoGeneratorContext<
     }
 
     public getLiteralAsString(literal: Literal): string {
-        return literal.type === 'string' ? `"${literal.string}"` : literal.boolean ? '"true"' : '"false"'
+        return literal.type === "string" ? `"${literal.string}"` : literal.boolean ? '"true"' : '"false"'
     }
 
     public getContextTypeReference(): go.TypeReference {
         return go.typeReference({
-            name: 'Context',
-            importPath: 'context'
+            name: "Context",
+            importPath: "context"
         })
     }
 
@@ -273,23 +273,23 @@ export abstract class AbstractGoGeneratorContext<
 
     public isOptional(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
-            case 'container':
+            case "container":
                 switch (typeReference.container.type) {
-                    case 'optional':
+                    case "optional":
                         return true
-                    case 'nullable':
+                    case "nullable":
                         return this.isOptional(typeReference.container.nullable)
                 }
                 return false
-            case 'named': {
+            case "named": {
                 const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId)
-                if (typeDeclaration.shape.type === 'alias') {
+                if (typeDeclaration.shape.type === "alias") {
                     return this.isOptional(typeDeclaration.shape.aliasOf)
                 }
                 return false
             }
-            case 'primitive':
-            case 'unknown':
+            case "primitive":
+            case "unknown":
                 return false
             default:
                 assertNever(typeReference)
@@ -298,23 +298,23 @@ export abstract class AbstractGoGeneratorContext<
 
     public isNullable(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
-            case 'container':
+            case "container":
                 switch (typeReference.container.type) {
-                    case 'nullable':
+                    case "nullable":
                         return true
-                    case 'optional':
+                    case "optional":
                         return this.isNullable(typeReference.container.optional)
                 }
                 return false
-            case 'named': {
+            case "named": {
                 const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId)
-                if (typeDeclaration.shape.type === 'alias') {
+                if (typeDeclaration.shape.type === "alias") {
                     return this.isNullable(typeDeclaration.shape.aliasOf)
                 }
                 return false
             }
-            case 'primitive':
-            case 'unknown':
+            case "primitive":
+            case "unknown":
                 return false
             default:
                 assertNever(typeReference)
@@ -323,20 +323,20 @@ export abstract class AbstractGoGeneratorContext<
 
     public isEnum(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
-            case 'container':
+            case "container":
                 switch (typeReference.container.type) {
-                    case 'optional':
+                    case "optional":
                         return this.isEnum(typeReference.container.optional)
-                    case 'nullable':
+                    case "nullable":
                         return this.isEnum(typeReference.container.nullable)
                 }
                 return false
-            case 'named': {
+            case "named": {
                 const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId)
                 return this.typeDeclarationIsEnum(declaration)
             }
-            case 'primitive':
-            case 'unknown':
+            case "primitive":
+            case "unknown":
                 return false
             default:
                 assertNever(typeReference)
@@ -344,10 +344,10 @@ export abstract class AbstractGoGeneratorContext<
     }
 
     public typeDeclarationIsEnum(declaration: TypeDeclaration): boolean {
-        if (declaration.shape.type === 'alias') {
+        if (declaration.shape.type === "alias") {
             return this.isEnum(declaration.shape.aliasOf)
         }
-        return declaration.shape.type === 'enum'
+        return declaration.shape.type === "enum"
     }
 
     public isDate(typeReference: TypeReference): boolean {
@@ -370,34 +370,34 @@ export abstract class AbstractGoGeneratorContext<
 
     public maybePrimitive(typeReference: TypeReference): PrimitiveTypeV1 | undefined {
         switch (typeReference.type) {
-            case 'container': {
+            case "container": {
                 const container = typeReference.container
                 switch (container.type) {
-                    case 'optional':
+                    case "optional":
                         return this.maybePrimitive(container.optional)
-                    case 'nullable':
+                    case "nullable":
                         return this.maybePrimitive(container.nullable)
-                    case 'list':
-                    case 'set':
-                    case 'literal':
-                    case 'map':
+                    case "list":
+                    case "set":
+                    case "literal":
+                    case "map":
                         return undefined
                     default:
                         assertNever(container)
                 }
                 break
             }
-            case 'named': {
+            case "named": {
                 const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId)
-                if (declaration.shape.type === 'alias') {
+                if (declaration.shape.type === "alias") {
                     return this.maybePrimitive(declaration.shape.aliasOf)
                 }
                 return undefined
             }
-            case 'primitive': {
+            case "primitive": {
                 return typeReference.primitive.v1
             }
-            case 'unknown': {
+            case "unknown": {
                 return undefined
             }
             default:
@@ -406,7 +406,7 @@ export abstract class AbstractGoGeneratorContext<
     }
 
     public maybeLiteral(typeReference: TypeReference): Literal | undefined {
-        if (typeReference.type === 'container' && typeReference.container.type === 'literal') {
+        if (typeReference.type === "container" && typeReference.container.type === "literal") {
             return typeReference.container.literal
         }
         return undefined
@@ -446,8 +446,8 @@ export abstract class AbstractGoGeneratorContext<
         let parts = names.map((name) => name.camelCase.safeName.toLowerCase())
         parts = suffix != null ? [...parts, suffix] : parts
         return {
-            importPath: [this.getRootImportPath(), ...parts].join('/'),
-            directory: RelativeFilePath.of(parts.join('/'))
+            importPath: [this.getRootImportPath(), ...parts].join("/"),
+            directory: RelativeFilePath.of(parts.join("/"))
         }
     }
 }

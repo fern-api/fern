@@ -1,9 +1,9 @@
-import { csharp } from '@fern-api/csharp-codegen'
+import { csharp } from "@fern-api/csharp-codegen"
 
-import { HttpEndpoint, SdkRequest } from '@fern-fern/ir-sdk/api'
+import { HttpEndpoint, SdkRequest } from "@fern-fern/ir-sdk/api"
 
-import { SdkGeneratorContext } from '../../SdkGeneratorContext'
-import { RawClient } from '../http/RawClient'
+import { SdkGeneratorContext } from "../../SdkGeneratorContext"
+import { RawClient } from "../http/RawClient"
 
 export interface QueryParameterCodeBlock {
     code: csharp.CodeBlock
@@ -32,7 +32,7 @@ export abstract class EndpointRequest {
     }
 
     public getRequestBodyVariableName(): string {
-        return 'requestBody'
+        return "requestBody"
     }
 
     public abstract getParameterType(): csharp.Type

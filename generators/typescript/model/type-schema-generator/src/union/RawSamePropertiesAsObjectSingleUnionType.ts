@@ -1,9 +1,9 @@
-import { Zurg } from '@fern-typescript/commons'
-import { ModelContext } from '@fern-typescript/contexts'
-import { AbstractRawSingleUnionType } from '@fern-typescript/union-schema-generator'
-import { OptionalKind, PropertySignatureStructure, ts } from 'ts-morph'
+import { Zurg } from "@fern-typescript/commons"
+import { ModelContext } from "@fern-typescript/contexts"
+import { AbstractRawSingleUnionType } from "@fern-typescript/union-schema-generator"
+import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph"
 
-import { DeclaredTypeName } from '@fern-fern/ir-sdk/api'
+import { DeclaredTypeName } from "@fern-fern/ir-sdk/api"
 
 export declare namespace RawSamePropertiesAsObjectSingleUnionType {
     export interface Init extends AbstractRawSingleUnionType.Init {
@@ -31,7 +31,7 @@ export class RawSamePropertiesAsObjectSingleUnionType<
 
     protected getNonDiscriminantPropertiesForSchema(
         context: Context
-    ): Zurg.union.SingleUnionType['nonDiscriminantProperties'] {
+    ): Zurg.union.SingleUnionType["nonDiscriminantProperties"] {
         return context.typeSchema.getSchemaOfNamedType(this.extended, {
             isGeneratingSchema: true
         }) as Zurg.ObjectSchema

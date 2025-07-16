@@ -3,14 +3,14 @@ import {
     EXTERNAL_PROTO_LIST_VALUE_CLASS_REFERENCE,
     EXTERNAL_PROTO_VALUE_CLASS_REFERENCE,
     FileGenerator
-} from '@fern-api/csharp-base'
-import { csharp } from '@fern-api/csharp-codegen'
-import { RelativeFilePath, join } from '@fern-api/fs-utils'
+} from "@fern-api/csharp-base"
+import { csharp } from "@fern-api/csharp-codegen"
+import { RelativeFilePath, join } from "@fern-api/fs-utils"
 
-import { TypeDeclaration } from '@fern-fern/ir-sdk/api'
+import { TypeDeclaration } from "@fern-fern/ir-sdk/api"
 
-import { ModelCustomConfigSchema } from '../ModelCustomConfig'
-import { ModelGeneratorContext } from '../ModelGeneratorContext'
+import { ModelCustomConfigSchema } from "../ModelCustomConfig"
+import { ModelGeneratorContext } from "../ModelGeneratorContext"
 
 export declare namespace WellKnownProtoValueGenerator {
     interface Args {
@@ -59,11 +59,11 @@ export class WellKnownProtoValueGenerator extends FileGenerator<
             primaryConstructor: {
                 parameters: [
                     csharp.parameter({
-                        name: 'value',
+                        name: "value",
                         type: csharp.Type.oneOf(oneOfTypes)
                     })
                 ],
-                superClassArguments: [csharp.codeblock('value')]
+                superClassArguments: [csharp.codeblock("value")]
             },
             annotations: [this.context.getSerializableAttribute()]
         })
@@ -88,49 +88,49 @@ export class WellKnownProtoValueGenerator extends FileGenerator<
 
     private getToProtoMethod(): csharp.Method {
         return csharp.method({
-            name: 'ToProto',
+            name: "ToProto",
             access: csharp.Access.Internal,
             isAsync: false,
             parameters: [],
             return_: csharp.Type.reference(EXTERNAL_PROTO_VALUE_CLASS_REFERENCE),
             body: csharp.codeblock((writer) => {
-                writer.write('return ')
+                writer.write("return ")
                 writer.writeNodeStatement(
                     csharp.invokeMethod({
-                        method: 'Match',
+                        method: "Match",
                         generics: [csharp.Type.reference(EXTERNAL_PROTO_VALUE_CLASS_REFERENCE)],
                         arguments_: [
                             csharp.codeblock((writer) => {
                                 writer.writeNode(EXTERNAL_PROTO_VALUE_CLASS_REFERENCE)
-                                writer.write('.ForString')
+                                writer.write(".ForString")
                             }),
                             csharp.codeblock((writer) => {
                                 writer.writeNode(EXTERNAL_PROTO_VALUE_CLASS_REFERENCE)
-                                writer.write('.ForNumber')
+                                writer.write(".ForNumber")
                             }),
                             csharp.codeblock((writer) => {
                                 writer.writeNode(EXTERNAL_PROTO_VALUE_CLASS_REFERENCE)
-                                writer.write('.ForBool')
+                                writer.write(".ForBool")
                             }),
                             csharp.codeblock((writer) => {
-                                writer.write('list => new ')
+                                writer.write("list => new ")
                                 writer.writeNode(EXTERNAL_PROTO_VALUE_CLASS_REFERENCE)
-                                writer.write(' { ListValue = new ')
+                                writer.write(" { ListValue = new ")
                                 writer.writeNode(EXTERNAL_PROTO_LIST_VALUE_CLASS_REFERENCE)
-                                writer.write(' { Values = { list.Select(item => item?.ToProto()) } } }')
+                                writer.write(" { Values = { list.Select(item => item?.ToProto()) } } }")
                             }),
                             csharp.codeblock((writer) => {
-                                writer.write('nested => new ')
+                                writer.write("nested => new ")
                                 writer.writeNode(EXTERNAL_PROTO_VALUE_CLASS_REFERENCE)
-                                writer.write(' { StructValue = ')
+                                writer.write(" { StructValue = ")
                                 writer.writeNode(
                                     csharp.invokeMethod({
-                                        on: csharp.codeblock('nested'),
-                                        method: 'ToProto',
+                                        on: csharp.codeblock("nested"),
+                                        method: "ToProto",
                                         arguments_: []
                                     })
                                 )
-                                writer.write(' }')
+                                writer.write(" }")
                             })
                         ]
                     })
@@ -141,65 +141,65 @@ export class WellKnownProtoValueGenerator extends FileGenerator<
 
     private getFromProtoMethod(): csharp.Method {
         return csharp.method({
-            name: 'FromProto',
+            name: "FromProto",
             access: csharp.Access.Internal,
             type: csharp.MethodType.STATIC,
             isAsync: false,
             parameters: [
                 csharp.parameter({
-                    name: 'value',
+                    name: "value",
                     type: csharp.Type.reference(EXTERNAL_PROTO_VALUE_CLASS_REFERENCE)
                 })
             ],
             return_: csharp.Type.optional(csharp.Type.reference(this.classReference)),
             body: csharp.codeblock((writer) => {
-                writer.write('return ')
+                writer.write("return ")
                 writer.writeNodeStatement(
                     csharp.switch_({
-                        condition: csharp.codeblock('value.KindCase'),
+                        condition: csharp.codeblock("value.KindCase"),
                         cases: [
                             {
                                 label: csharp.codeblock((writer) => {
                                     writer.writeNode(csharp.Type.reference(EXTERNAL_PROTO_VALUE_CLASS_REFERENCE))
-                                    writer.write('.KindOneofCase.StringValue')
+                                    writer.write(".KindOneofCase.StringValue")
                                 }),
-                                value: csharp.codeblock('value.StringValue')
+                                value: csharp.codeblock("value.StringValue")
                             },
                             {
                                 label: csharp.codeblock((writer) => {
                                     writer.writeNode(csharp.Type.reference(EXTERNAL_PROTO_VALUE_CLASS_REFERENCE))
-                                    writer.write('.KindOneofCase.NumberValue')
+                                    writer.write(".KindOneofCase.NumberValue")
                                 }),
-                                value: csharp.codeblock('value.NumberValue')
+                                value: csharp.codeblock("value.NumberValue")
                             },
                             {
                                 label: csharp.codeblock((writer) => {
                                     writer.writeNode(csharp.Type.reference(EXTERNAL_PROTO_VALUE_CLASS_REFERENCE))
-                                    writer.write('.KindOneofCase.BoolValue')
+                                    writer.write(".KindOneofCase.BoolValue")
                                 }),
-                                value: csharp.codeblock('value.BoolValue')
+                                value: csharp.codeblock("value.BoolValue")
                             },
                             {
                                 label: csharp.codeblock((writer) => {
                                     writer.writeNode(csharp.Type.reference(EXTERNAL_PROTO_VALUE_CLASS_REFERENCE))
-                                    writer.write('.KindOneofCase.ListValue')
+                                    writer.write(".KindOneofCase.ListValue")
                                 }),
-                                value: csharp.codeblock('value.ListValue.Values.Select(FromProto).ToList()')
+                                value: csharp.codeblock("value.ListValue.Values.Select(FromProto).ToList()")
                             },
                             {
                                 label: csharp.codeblock((writer) => {
                                     writer.writeNode(csharp.Type.reference(EXTERNAL_PROTO_VALUE_CLASS_REFERENCE))
-                                    writer.write('.KindOneofCase.StructValue')
+                                    writer.write(".KindOneofCase.StructValue")
                                 }),
                                 value: csharp.invokeMethod({
                                     on: this.protoStructClassReference,
-                                    method: 'FromProto',
-                                    arguments_: [csharp.codeblock('value.StructValue')]
+                                    method: "FromProto",
+                                    arguments_: [csharp.codeblock("value.StructValue")]
                                 })
                             },
                             {
-                                label: csharp.codeblock('_'),
-                                value: csharp.codeblock('null')
+                                label: csharp.codeblock("_"),
+                                value: csharp.codeblock("null")
                             }
                         ]
                     })
@@ -287,9 +287,9 @@ export class WellKnownProtoValueGenerator extends FileGenerator<
             }
         ]
         return operatorSpecs.map((operatorSpec) => ({
-            type: 'implicit',
+            type: "implicit",
             parameter: csharp.parameter({
-                name: 'value',
+                name: "value",
                 type: operatorSpec.parameterType
             }),
             body: operatorSpec.body,
@@ -298,43 +298,43 @@ export class WellKnownProtoValueGenerator extends FileGenerator<
     }
 
     private newValue(): csharp.CodeBlock {
-        return csharp.codeblock('new(value)')
+        return csharp.codeblock("new(value)")
     }
 
     private linqMap(node: csharp.AstNode): csharp.CodeBlock {
         return csharp.codeblock((writer) => {
-            writer.write('new(value.Select(v => ')
+            writer.write("new(value.Select(v => ")
             writer.writeNode(node)
-            writer.write(').ToList())')
+            writer.write(").ToList())")
         })
     }
 
     private wrapTernary(node: csharp.AstNode): csharp.AstNode {
         return csharp.ternary({
-            condition: csharp.codeblock('v != null'),
+            condition: csharp.codeblock("v != null"),
             true_: node,
-            false_: csharp.codeblock('null')
+            false_: csharp.codeblock("null")
         })
     }
 
     private instantiateProtoValue(): csharp.ClassInstantiation {
         return csharp.instantiateClass({
             classReference: this.classReference,
-            arguments_: [csharp.codeblock('v')]
+            arguments_: [csharp.codeblock("v")]
         })
     }
 
     private instantiateProtoValueWithOptional(): csharp.ClassInstantiation {
         return csharp.instantiateClass({
             classReference: this.classReference,
-            arguments_: [csharp.codeblock('v.Value')]
+            arguments_: [csharp.codeblock("v.Value")]
         })
     }
 
     protected getFilepath(): RelativeFilePath {
         return join(
             this.context.project.filepaths.getSourceFileDirectory(),
-            RelativeFilePath.of(this.classReference.name + '.cs')
+            RelativeFilePath.of(this.classReference.name + ".cs")
         )
     }
 }

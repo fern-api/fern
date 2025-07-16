@@ -1,19 +1,19 @@
-import { GetReferenceOpts, getPropertyKey } from '@fern-typescript/commons'
-import { BaseContext, GeneratedUnion, GeneratedUnionType } from '@fern-typescript/contexts'
-import { GeneratedUnionImpl } from '@fern-typescript/union-generator'
-import { ModuleDeclarationStructure, StatementStructures, WriterFunction, ts } from 'ts-morph'
+import { GetReferenceOpts, getPropertyKey } from "@fern-typescript/commons"
+import { BaseContext, GeneratedUnion, GeneratedUnionType } from "@fern-typescript/contexts"
+import { GeneratedUnionImpl } from "@fern-typescript/union-generator"
+import { ModuleDeclarationStructure, StatementStructures, WriterFunction, ts } from "ts-morph"
 
 import {
     ExampleSingleUnionTypeProperties,
     ExampleTypeShape,
     SingleUnionTypeProperty,
     UnionTypeDeclaration
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { AbstractGeneratedType } from '../AbstractGeneratedType'
-import { ParsedSingleUnionTypeForUnion } from './ParsedSingleUnionTypeForUnion'
-import { UnknownSingleUnionType } from './UnknownSingleUnionType'
-import { UnknownSingleUnionTypeGenerator } from './UnknownSingleUnionTypeGenerator'
+import { AbstractGeneratedType } from "../AbstractGeneratedType"
+import { ParsedSingleUnionTypeForUnion } from "./ParsedSingleUnionTypeForUnion"
+import { UnknownSingleUnionType } from "./UnknownSingleUnionType"
+import { UnknownSingleUnionTypeGenerator } from "./UnknownSingleUnionTypeGenerator"
 
 export declare namespace GeneratedUnionTypeImpl {
     export interface Init<Context extends BaseContext>
@@ -28,7 +28,7 @@ export class GeneratedUnionTypeImpl<Context extends BaseContext>
     extends AbstractGeneratedType<UnionTypeDeclaration, Context>
     implements GeneratedUnionType<Context>
 {
-    public readonly type = 'union'
+    public readonly type = "union"
 
     private generatedUnion: GeneratedUnionImpl<Context>
     private readonly inline: boolean
@@ -106,8 +106,8 @@ export class GeneratedUnionTypeImpl<Context extends BaseContext>
     }
 
     public buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {
-        if (example.type !== 'union') {
-            throw new Error('Example is not for an union')
+        if (example.type !== "union") {
+            throw new Error("Example is not for an union")
         }
 
         return this.generatedUnion.build({
@@ -122,7 +122,7 @@ export class GeneratedUnionTypeImpl<Context extends BaseContext>
                             .buildExample(ExampleTypeShape.object(exampleNamedType.object), context, opts),
                     noProperties: () => undefined,
                     _other: () => {
-                        throw new Error('Unknown ExampleSingleUnionTypeProperties: ' + example.type)
+                        throw new Error("Unknown ExampleSingleUnionTypeProperties: " + example.type)
                     }
                 }
             ),
@@ -135,8 +135,8 @@ export class GeneratedUnionTypeImpl<Context extends BaseContext>
                                 member.discriminantValue.wireValue ===
                                 example.singleUnionType.wireDiscriminantValue.wireValue
                         )
-                        if (unionMember == null || unionMember.shape.propertiesType !== 'singleProperty') {
-                            throw new Error('Cannot generate union example because union member is not singleProperty.')
+                        if (unionMember == null || unionMember.shape.propertiesType !== "singleProperty") {
+                            throw new Error("Cannot generate union example because union member is not singleProperty.")
                         }
                         return [
                             ts.factory.createPropertyAssignment(
@@ -152,7 +152,7 @@ export class GeneratedUnionTypeImpl<Context extends BaseContext>
                     },
                     samePropertiesAsObject: (exampleNamedType) => {
                         const generatedType = context.type.getGeneratedTypeById(exampleNamedType.typeId)
-                        if (generatedType.type !== 'object') {
+                        if (generatedType.type !== "object") {
                             throw new Error(
                                 `Cannot generate union example because ${exampleNamedType.typeId} is not an object`
                             )
@@ -165,7 +165,7 @@ export class GeneratedUnionTypeImpl<Context extends BaseContext>
                     },
                     noProperties: () => [],
                     _other: () => {
-                        throw new Error('Unknown ExampleSingleUnionTypeProperties: ' + example.type)
+                        throw new Error("Unknown ExampleSingleUnionTypeProperties: " + example.type)
                     }
                 }
             ),

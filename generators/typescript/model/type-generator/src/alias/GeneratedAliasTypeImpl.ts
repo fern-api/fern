@@ -3,8 +3,8 @@ import {
     generateInlineAliasModule,
     getTextOfTsNode,
     maybeAddDocsStructure
-} from '@fern-typescript/commons'
-import { BaseContext, NotBrandedGeneratedAliasType } from '@fern-typescript/contexts'
+} from "@fern-typescript/commons"
+import { BaseContext, NotBrandedGeneratedAliasType } from "@fern-typescript/contexts"
 import {
     ModuleDeclarationStructure,
     StatementStructures,
@@ -12,17 +12,17 @@ import {
     TypeAliasDeclarationStructure,
     WriterFunction,
     ts
-} from 'ts-morph'
+} from "ts-morph"
 
-import { ExampleTypeShape, TypeReference } from '@fern-fern/ir-sdk/api'
+import { ExampleTypeShape, TypeReference } from "@fern-fern/ir-sdk/api"
 
-import { AbstractGeneratedType } from '../AbstractGeneratedType'
+import { AbstractGeneratedType } from "../AbstractGeneratedType"
 
 export class GeneratedAliasTypeImpl<Context extends BaseContext>
     extends AbstractGeneratedType<TypeReference, Context>
     implements NotBrandedGeneratedAliasType<Context>
 {
-    public readonly type = 'alias'
+    public readonly type = "alias"
     public readonly isBranded = false
 
     public generateStatements(
@@ -66,8 +66,8 @@ export class GeneratedAliasTypeImpl<Context extends BaseContext>
     }
 
     public buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {
-        if (example.type !== 'alias') {
-            throw new Error('Example is not for an alias')
+        if (example.type !== "alias") {
+            throw new Error("Example is not for an alias")
         }
         return context.type.getGeneratedExample(example.value).build(context, opts)
     }

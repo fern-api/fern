@@ -7,7 +7,7 @@ import {
     Property,
     SerializableObject,
     UndiscriminatedUnion
-} from '@fern-api/ruby-codegen'
+} from "@fern-api/ruby-codegen"
 
 import {
     AliasTypeDeclaration,
@@ -19,7 +19,7 @@ import {
     TypeReference,
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
 export function generateAliasDefinitionFromTypeDeclaration(
     classReferenceFactory: ClassReferenceFactory,

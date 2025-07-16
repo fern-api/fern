@@ -1,10 +1,10 @@
-import { ts } from 'ts-morph'
+import { ts } from "ts-morph"
 
-import { Reference } from '../referencing'
-import { CoreUtility } from './CoreUtility'
+import { Reference } from "../referencing"
+import { CoreUtility } from "./CoreUtility"
 
 export interface SchemaOptions {
-    unrecognizedObjectKeys?: 'fail' | 'passthrough' | 'strip'
+    unrecognizedObjectKeys?: "fail" | "passthrough" | "strip"
     allowUnrecognizedUnionMembers?: boolean
     allowUnrecognizedEnumValues?: boolean
     skipValidation?: boolean
@@ -50,20 +50,20 @@ export interface Zurg {
     }
 
     MaybeValid: {
-        ok: 'ok'
+        ok: "ok"
 
         Valid: {
-            value: 'value'
+            value: "value"
         }
 
         Invalid: {
-            errors: 'errors'
+            errors: "errors"
         }
     }
 
     ValidationError: {
-        path: 'path'
-        message: 'message'
+        path: "path"
+        message: "message"
     }
 }
 
@@ -132,16 +132,16 @@ export declare namespace Zurg {
 }
 
 export const MANIFEST: CoreUtility.Manifest = {
-    name: 'schemas',
-    pathInCoreUtilities: { nameOnDisk: 'schemas', exportDeclaration: { namespaceExport: 'serialization' } },
+    name: "schemas",
+    pathInCoreUtilities: { nameOnDisk: "schemas", exportDeclaration: { namespaceExport: "serialization" } },
     getFilesPatterns: () => {
-        return { patterns: ['src/core/schemas/**', 'tests/unit/schemas/**'] }
+        return { patterns: ["src/core/schemas/**", "tests/unit/schemas/**"] }
     }
 }
 export class ZurgImpl extends CoreUtility implements Zurg {
     public readonly MANIFEST = MANIFEST
 
-    public object = this.withExportedName('object', (object) => (properties: Zurg.Property[]): Zurg.ObjectSchema => {
+    public object = this.withExportedName("object", (object) => (properties: Zurg.Property[]): Zurg.ObjectSchema => {
         const baseSchema: Zurg.BaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -160,7 +160,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
     })
 
     public objectWithoutOptionalProperties = this.withExportedName(
-        'objectWithoutOptionalProperties',
+        "objectWithoutOptionalProperties",
         (objectWithoutOptionalProperties) =>
             (properties: Zurg.Property[]): Zurg.ObjectSchema => {
                 const baseSchema: Zurg.BaseSchema = {
@@ -205,7 +205,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
                         ts.factory.createCallExpression(
                             ts.factory.createPropertyAccessExpression(
                                 objectSchema.toExpression(),
-                                ts.factory.createIdentifier('passthrough')
+                                ts.factory.createIdentifier("passthrough")
                             ),
                             undefined,
                             []
@@ -230,7 +230,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
                 ts.factory.createCallExpression(
                     ts.factory.createPropertyAccessExpression(
                         objectSchema.toExpression(),
-                        ts.factory.createIdentifier('extend')
+                        ts.factory.createIdentifier("extend")
                     ),
                     undefined,
                     [extension.toExpression()]
@@ -246,7 +246,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
     }
 
     private property = this.withExportedName(
-        'property',
+        "property",
         (property) =>
             (rawValue: string, value: ts.Expression): ts.Expression => {
                 return ts.factory.createCallExpression(property.getExpression(), undefined, [
@@ -274,13 +274,13 @@ export class ZurgImpl extends CoreUtility implements Zurg {
                 ts.factory.createCallExpression(
                     ts.factory.createPropertyAccessExpression(
                         objectLike.toExpression(),
-                        ts.factory.createIdentifier('withParsedProperties')
+                        ts.factory.createIdentifier("withParsedProperties")
                     ),
                     undefined,
                     [
                         ts.factory.createObjectLiteralExpression(
                             additionalProperties.map((property) => {
-                                const parsedIdentifier = ts.factory.createIdentifier('parsed')
+                                const parsedIdentifier = ts.factory.createIdentifier("parsed")
                                 const context = { didAccessParsed: false }
                                 const getReferenceToParsed = () => {
                                     context.didAccessParsed = true
@@ -333,7 +333,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
     }
 
     public union = this.withExportedName(
-        'union',
+        "union",
         (union: Reference) =>
             ({ parsedDiscriminant, rawDiscriminant, singleUnionTypes }: Zurg.union.Args): Zurg.ObjectLikeSchema => {
                 const discriminantArgument =
@@ -368,7 +368,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
     )
 
     private discriminant = this.withExportedName(
-        'discriminant',
+        "discriminant",
         (discriminant) =>
             ({
                 parsedDiscriminant,
@@ -385,7 +385,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
     )
 
     public undiscriminatedUnion = this.withExportedName(
-        'undiscriminatedUnion',
+        "undiscriminatedUnion",
         (undiscriminatedUnion: Reference) => (schemas: Zurg.Schema[]) => {
             const baseSchema: Zurg.BaseSchema = {
                 isOptional: false,
@@ -403,7 +403,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
         }
     )
 
-    public list = this.withExportedName('list', (list: Reference) => (itemSchema: Zurg.Schema) => {
+    public list = this.withExportedName("list", (list: Reference) => (itemSchema: Zurg.Schema) => {
         const baseSchema: Zurg.BaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -417,7 +417,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
         }
     })
 
-    public set = this.withExportedName('set', (set: Reference) => (itemSchema: Zurg.Schema) => {
+    public set = this.withExportedName("set", (set: Reference) => (itemSchema: Zurg.Schema) => {
         const baseSchema: Zurg.BaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -432,7 +432,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
     })
 
     public record = this.withExportedName(
-        'record',
+        "record",
         (record: Reference) =>
             ({ keySchema, valueSchema }: { keySchema: Zurg.Schema; valueSchema: Zurg.Schema }) => {
                 const baseSchema: Zurg.BaseSchema = {
@@ -452,7 +452,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
             }
     )
 
-    public enum = this.withExportedName('enum_', (enum_: Reference) => (values: string[]) => {
+    public enum = this.withExportedName("enum_", (enum_: Reference) => (values: string[]) => {
         const baseSchema: Zurg.BaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -470,7 +470,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
         }
     })
 
-    public string = this.withExportedName('string', (string: Reference) => () => {
+    public string = this.withExportedName("string", (string: Reference) => () => {
         const baseSchema: Zurg.BaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -483,7 +483,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
         }
     })
 
-    public stringLiteral = this.withExportedName('stringLiteral', (stringLiteral: Reference) => (literal: string) => {
+    public stringLiteral = this.withExportedName("stringLiteral", (stringLiteral: Reference) => (literal: string) => {
         const baseSchema: Zurg.BaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -500,7 +500,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
     })
 
     public booleanLiteral = this.withExportedName(
-        'booleanLiteral',
+        "booleanLiteral",
         (booleanLiteral: Reference) => (literal: boolean) => {
             const baseSchema: Zurg.BaseSchema = {
                 isOptional: false,
@@ -518,7 +518,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
         }
     )
 
-    public number = this.withExportedName('number', (number: Reference) => () => {
+    public number = this.withExportedName("number", (number: Reference) => () => {
         const baseSchema: Zurg.BaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -531,7 +531,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
         }
     })
 
-    public bigint = this.withExportedName('bigint', (bigint: Reference) => () => {
+    public bigint = this.withExportedName("bigint", (bigint: Reference) => () => {
         const baseSchema: Zurg.BaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -544,7 +544,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
         }
     })
 
-    public boolean = this.withExportedName('boolean', (boolean: Reference) => () => {
+    public boolean = this.withExportedName("boolean", (boolean: Reference) => () => {
         const baseSchema: Zurg.BaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -557,7 +557,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
         }
     })
 
-    public date = this.withExportedName('date', (date: Reference) => () => {
+    public date = this.withExportedName("date", (date: Reference) => () => {
         const baseSchema: Zurg.BaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -570,7 +570,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
         }
     })
 
-    public any = this.withExportedName('any', (any: Reference) => () => {
+    public any = this.withExportedName("any", (any: Reference) => () => {
         const baseSchema: Zurg.BaseSchema = {
             isOptional: false,
             isNullable: true,
@@ -583,7 +583,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
         }
     })
 
-    public unknown = this.withExportedName('unknown', (unknown: Reference) => () => {
+    public unknown = this.withExportedName("unknown", (unknown: Reference) => () => {
         const baseSchema: Zurg.BaseSchema = {
             isOptional: true,
             isNullable: false,
@@ -603,25 +603,25 @@ export class ZurgImpl extends CoreUtility implements Zurg {
             optionalNullable: () => this.optionalNullable(baseSchema),
             parse: (raw, opts) =>
                 ts.factory.createCallExpression(
-                    ts.factory.createPropertyAccessExpression(baseSchema.toExpression(), 'parse'),
+                    ts.factory.createPropertyAccessExpression(baseSchema.toExpression(), "parse"),
                     undefined,
                     [raw, ...this.constructSchemaOptionsArgs(opts)]
                 ),
             json: (parsed, opts) =>
                 ts.factory.createCallExpression(
-                    ts.factory.createPropertyAccessExpression(baseSchema.toExpression(), 'json'),
+                    ts.factory.createPropertyAccessExpression(baseSchema.toExpression(), "json"),
                     undefined,
                     [parsed, ...this.constructSchemaOptionsArgs(opts)]
                 ),
             parseOrThrow: (raw, opts) =>
                 ts.factory.createCallExpression(
-                    ts.factory.createPropertyAccessExpression(baseSchema.toExpression(), 'parseOrThrow'),
+                    ts.factory.createPropertyAccessExpression(baseSchema.toExpression(), "parseOrThrow"),
                     undefined,
                     [raw, ...this.constructSchemaOptionsArgs(opts)]
                 ),
             jsonOrThrow: (parsed, opts) =>
                 ts.factory.createCallExpression(
-                    ts.factory.createPropertyAccessExpression(baseSchema.toExpression(), 'jsonOrThrow'),
+                    ts.factory.createPropertyAccessExpression(baseSchema.toExpression(), "jsonOrThrow"),
                     undefined,
                     [parsed, ...this.constructSchemaOptionsArgs(opts)]
                 ),
@@ -644,10 +644,10 @@ export class ZurgImpl extends CoreUtility implements Zurg {
     private constructSchemaOptionsArgs(schemaOptions: Required<SchemaOptions>): ts.Expression[] {
         const properties: ts.ObjectLiteralElementLike[] = []
 
-        if (schemaOptions.unrecognizedObjectKeys !== 'fail') {
+        if (schemaOptions.unrecognizedObjectKeys !== "fail") {
             properties.push(
                 ts.factory.createPropertyAssignment(
-                    ts.factory.createIdentifier('unrecognizedObjectKeys'),
+                    ts.factory.createIdentifier("unrecognizedObjectKeys"),
                     ts.factory.createStringLiteral(schemaOptions.unrecognizedObjectKeys)
                 )
             )
@@ -655,7 +655,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
         if (schemaOptions.allowUnrecognizedUnionMembers) {
             properties.push(
                 ts.factory.createPropertyAssignment(
-                    ts.factory.createIdentifier('allowUnrecognizedUnionMembers'),
+                    ts.factory.createIdentifier("allowUnrecognizedUnionMembers"),
                     ts.factory.createTrue()
                 )
             )
@@ -663,7 +663,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
         if (schemaOptions.allowUnrecognizedEnumValues) {
             properties.push(
                 ts.factory.createPropertyAssignment(
-                    ts.factory.createIdentifier('allowUnrecognizedEnumValues'),
+                    ts.factory.createIdentifier("allowUnrecognizedEnumValues"),
                     ts.factory.createTrue()
                 )
             )
@@ -671,7 +671,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
         if (schemaOptions.skipValidation) {
             properties.push(
                 ts.factory.createPropertyAssignment(
-                    ts.factory.createIdentifier('skipValidation'),
+                    ts.factory.createIdentifier("skipValidation"),
                     ts.factory.createTrue()
                 )
             )
@@ -679,7 +679,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
         if (schemaOptions.omitUndefined) {
             properties.push(
                 ts.factory.createPropertyAssignment(
-                    ts.factory.createIdentifier('omitUndefined'),
+                    ts.factory.createIdentifier("omitUndefined"),
                     ts.factory.createTrue()
                 )
             )
@@ -687,7 +687,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
         if (schemaOptions.breadcrumbsPrefix.length > 0) {
             properties.push(
                 ts.factory.createPropertyAssignment(
-                    ts.factory.createIdentifier('breadcrumbsPrefix'),
+                    ts.factory.createIdentifier("breadcrumbsPrefix"),
                     ts.factory.createArrayLiteralExpression(
                         schemaOptions.breadcrumbsPrefix.map((breadcrumb) => ts.factory.createStringLiteral(breadcrumb))
                     )
@@ -710,7 +710,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
                 ts.factory.createCallExpression(
                     ts.factory.createPropertyAccessExpression(
                         schema.toExpression(),
-                        ts.factory.createIdentifier('nullable')
+                        ts.factory.createIdentifier("nullable")
                     ),
                     undefined,
                     []
@@ -731,7 +731,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
                 ts.factory.createCallExpression(
                     ts.factory.createPropertyAccessExpression(
                         schema.toExpression(),
-                        ts.factory.createIdentifier('optional')
+                        ts.factory.createIdentifier("optional")
                     ),
                     undefined,
                     []
@@ -752,7 +752,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
                 ts.factory.createCallExpression(
                     ts.factory.createPropertyAccessExpression(
                         schema.toExpression(),
-                        ts.factory.createIdentifier('optionalNullable')
+                        ts.factory.createIdentifier("optionalNullable")
                     ),
                     undefined,
                     []
@@ -776,7 +776,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
                 ts.factory.createCallExpression(
                     ts.factory.createPropertyAccessExpression(
                         schema.toExpression(),
-                        ts.factory.createIdentifier('transform')
+                        ts.factory.createIdentifier("transform")
                     ),
                     newShape != null ? [newShape] : undefined,
                     [transformer.toExpression()]
@@ -789,7 +789,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
         }
     }
 
-    public lazy = this.withExportedName('lazy', (lazy) => (schema: Zurg.Schema): Zurg.Schema => {
+    public lazy = this.withExportedName("lazy", (lazy) => (schema: Zurg.Schema): Zurg.Schema => {
         const baseSchema: Zurg.BaseSchema = {
             isOptional: schema.isOptional,
             isNullable: schema.isNullable,
@@ -806,7 +806,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
     })
 
     public lazyObject = this.withExportedName(
-        'lazyObject',
+        "lazyObject",
         (lazyObject) =>
             (schema: Zurg.Schema): Zurg.ObjectSchema => {
                 const baseSchema: Zurg.BaseSchema = {
@@ -836,7 +836,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
 
     public Schema = {
         _getReferenceToType: this.withExportedName(
-            'Schema',
+            "Schema",
             (Schema) =>
                 ({ rawShape, parsedShape }: { rawShape: ts.TypeNode; parsedShape: ts.TypeNode }) =>
                     ts.factory.createTypeReferenceNode(Schema.getEntityName(), [rawShape, parsedShape])
@@ -872,8 +872,8 @@ export class ZurgImpl extends CoreUtility implements Zurg {
             return this.Schema._fromExpression(
                 ts.factory.createObjectLiteralExpression(
                     [
-                        ts.factory.createPropertyAssignment('transform', transform),
-                        ts.factory.createPropertyAssignment('untransform', untransform)
+                        ts.factory.createPropertyAssignment("transform", transform),
+                        ts.factory.createPropertyAssignment("untransform", untransform)
                     ],
                     true
                 )
@@ -915,7 +915,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
 
     public ObjectSchema = {
         _getReferenceToType: this.withExportedName(
-            'ObjectSchema',
+            "ObjectSchema",
             (ObjectSchema) =>
                 ({ rawShape, parsedShape }: { rawShape: ts.TypeNode; parsedShape: ts.TypeNode }) =>
                     ts.factory.createTypeReferenceNode(ObjectSchema.getEntityName(), [rawShape, parsedShape])
@@ -923,17 +923,17 @@ export class ZurgImpl extends CoreUtility implements Zurg {
     }
 
     public MaybeValid = {
-        ok: 'ok' as const,
+        ok: "ok" as const,
         Valid: {
-            value: 'value' as const
+            value: "value" as const
         },
         Invalid: {
-            errors: 'errors' as const
+            errors: "errors" as const
         }
     }
 
     public ValidationError = {
-        path: 'path' as const,
-        message: 'message' as const
+        path: "path" as const,
+        message: "message" as const
     }
 }

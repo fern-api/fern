@@ -1,16 +1,16 @@
-import { FernToken } from '@fern-api/auth'
-import { fernConfigJson, generatorsYml } from '@fern-api/configuration'
-import { AbsoluteFilePath } from '@fern-api/fs-utils'
-import { TaskContext } from '@fern-api/task-context'
+import { FernToken } from "@fern-api/auth"
+import { fernConfigJson, generatorsYml } from "@fern-api/configuration"
+import { AbsoluteFilePath } from "@fern-api/fs-utils"
+import { TaskContext } from "@fern-api/task-context"
 import {
     AbstractAPIWorkspace,
     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
-} from '@fern-api/workspace-loader'
+} from "@fern-api/workspace-loader"
 
-import { FernFiddle } from '@fern-fern/fiddle-sdk'
+import { FernFiddle } from "@fern-fern/fiddle-sdk"
 
-import { downloadSnippetsForTask } from './downloadSnippetsForTask'
-import { runRemoteGenerationForGenerator } from './runRemoteGenerationForGenerator'
+import { downloadSnippetsForTask } from "./downloadSnippetsForTask"
+import { runRemoteGenerationForGenerator } from "./runRemoteGenerationForGenerator"
 
 export interface RemoteGenerationForAPIWorkspaceResponse {
     snippetsProducedBy: generatorsYml.GeneratorInvocation[]
@@ -39,10 +39,10 @@ export async function runRemoteGenerationForAPIWorkspace({
     token: FernToken
     whitelabel: FernFiddle.WhitelabelConfig | undefined
     absolutePathToPreview: AbsoluteFilePath | undefined
-    mode: 'pull-request' | undefined
+    mode: "pull-request" | undefined
 }): Promise<RemoteGenerationForAPIWorkspaceResponse | null> {
     if (generatorGroup.generators.length === 0) {
-        context.logger.warn('No generators specified.')
+        context.logger.warn("No generators specified.")
         return null
     }
 
@@ -68,11 +68,11 @@ export async function runRemoteGenerationForAPIWorkspace({
                             github: (val) => {
                                 return FernFiddle.OutputMode.github({
                                     ...val,
-                                    makePr: mode === 'pull-request'
+                                    makePr: mode === "pull-request"
                                 })
                             },
                             githubV2: (val) => {
-                                if (mode === 'pull-request') {
+                                if (mode === "pull-request") {
                                     return FernFiddle.OutputMode.githubV2(
                                         FernFiddle.GithubOutputModeV2.pullRequest(val)
                                     )

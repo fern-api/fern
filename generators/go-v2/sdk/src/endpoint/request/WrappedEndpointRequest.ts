@@ -1,5 +1,5 @@
-import { assertNever } from '@fern-api/core-utils'
-import { go } from '@fern-api/go-ast'
+import { assertNever } from "@fern-api/core-utils"
+import { go } from "@fern-api/go-ast"
 
 import {
     FileProperty,
@@ -12,10 +12,10 @@ import {
     SdkRequest,
     SdkRequestWrapper,
     ServiceId
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 
-import { SdkGeneratorContext } from '../../SdkGeneratorContext'
-import { EndpointRequest } from './EndpointRequest'
+import { SdkGeneratorContext } from "../../SdkGeneratorContext"
+import { EndpointRequest } from "./EndpointRequest"
 
 export declare namespace WrappedEndpointRequest {
     interface Args {
@@ -48,11 +48,11 @@ export class WrappedEndpointRequest extends EndpointRequest {
         const requestBody = this.endpoint.requestBody
         if (requestBody != null) {
             switch (requestBody.type) {
-                case 'fileUpload':
-                    return go.codeblock('writer.Buffer()')
-                case 'inlinedRequestBody':
-                case 'reference':
-                case 'bytes':
+                case "fileUpload":
+                    return go.codeblock("writer.Buffer()")
+                case "inlinedRequestBody":
+                case "reference":
+                case "bytes":
                     break
                 default:
                     assertNever(requestBody)
@@ -73,11 +73,11 @@ export class WrappedEndpointRequest extends EndpointRequest {
             return undefined
         }
         switch (requestBody.type) {
-            case 'fileUpload':
+            case "fileUpload":
                 return this.getRequestBodyBlockForFileUpload(requestBody)
-            case 'inlinedRequestBody':
-            case 'reference':
-            case 'bytes':
+            case "inlinedRequestBody":
+            case "reference":
+            case "bytes":
                 return undefined
             default:
                 assertNever(requestBody)
@@ -86,7 +86,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
     private getRequestBodyBlockForFileUpload(fileUploadRequest: FileUploadRequest): go.AstNode {
         return go.codeblock((writer) => {
-            writer.write('writer := ')
+            writer.write("writer := ")
             writer.writeNode(this.context.callNewMultipartWriter([]))
             writer.newLine()
             fileUploadRequest.properties.forEach((property, idx) => {
@@ -95,11 +95,11 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 }
                 this.writeFileUploadProperty({ writer, property })
             })
-            writer.writeLine('if err := writer.Close(); err != nil {')
+            writer.writeLine("if err := writer.Close(); err != nil {")
             writer.indent()
-            writer.writeLine('return nil, err')
+            writer.writeLine("return nil, err")
             writer.dedent()
-            writer.writeLine('}')
+            writer.writeLine("}")
             writer.writeLine('headers.Set("Content-Type", writer.ContentType())')
         })
     }
@@ -112,10 +112,10 @@ export class WrappedEndpointRequest extends EndpointRequest {
         property: FileUploadRequestProperty
     }): void {
         switch (property.type) {
-            case 'file':
+            case "file":
                 this.writeFileProperty({ writer, fileProperty: property.value })
                 break
-            case 'bodyProperty':
+            case "bodyProperty":
                 this.writeBodyProperty({ writer, bodyProperty: property })
                 break
             default:
@@ -125,17 +125,17 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
     private writeFileProperty({ writer, fileProperty }: { writer: go.Writer; fileProperty: FileProperty }): void {
         switch (fileProperty.type) {
-            case 'file':
+            case "file":
                 this.writeFileUploadField({
                     writer,
                     key: fileProperty.key.wireValue,
                     value: go.codeblock(
                         this.getRequestPropertyReference({ fieldName: fileProperty.key.name, isFile: true })
                     ),
-                    format: 'file'
+                    format: "file"
                 })
                 break
-            case 'fileArray':
+            case "fileArray":
                 writer.writeLine(
                     `for _, f := range ${this.getRequestPropertyReference({ fieldName: fileProperty.key.name, isFile: true })} {`
                 )
@@ -143,11 +143,11 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 this.writeFileUploadField({
                     writer,
                     key: fileProperty.key.wireValue,
-                    value: go.codeblock('f'),
-                    format: 'file'
+                    value: go.codeblock("f"),
+                    format: "file"
                 })
                 writer.dedent()
-                writer.writeLine('}')
+                writer.writeLine("}")
                 break
             default:
                 assertNever(fileProperty)
@@ -167,7 +167,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 writer,
                 key: bodyProperty.name.wireValue,
                 value: go.codeblock(this.context.getLiteralAsString(literal)),
-                format: 'field'
+                format: "field"
             })
             return
         }
@@ -176,18 +176,18 @@ export class WrappedEndpointRequest extends EndpointRequest {
             reference: bodyProperty.valueType,
             value: go.codeblock(field)
         })
-        const formatType = format.isPrimitive ? 'field' : 'json'
+        const formatType = format.isPrimitive ? "field" : "json"
         if (format.isIterable) {
             writer.writeLine(`for _, part := range ${field} {`)
             writer.indent()
             this.writeFileUploadField({
                 writer,
                 key: bodyProperty.name.wireValue,
-                value: go.codeblock('part'),
+                value: go.codeblock("part"),
                 format: formatType
             })
             writer.dedent()
-            writer.writeLine('}')
+            writer.writeLine("}")
             return
         }
         if (format.isOptional) {
@@ -201,7 +201,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 format: formatType
             })
             writer.dedent()
-            writer.writeLine('}')
+            writer.writeLine("}")
             return
         }
         this.writeFileUploadField({
@@ -228,15 +228,15 @@ export class WrappedEndpointRequest extends EndpointRequest {
         writer: go.Writer
         key: string
         value: go.AstNode
-        format: 'file' | 'field' | 'json'
+        format: "file" | "field" | "json"
     }): void {
-        const method = format === 'file' ? 'WriteFile' : format === 'field' ? 'WriteField' : 'WriteJSON'
+        const method = format === "file" ? "WriteFile" : format === "field" ? "WriteField" : "WriteJSON"
         writer.write(`if err := writer.${method}("${key}", `)
         writer.writeNode(value)
-        writer.writeLine('); err != nil {')
+        writer.writeLine("); err != nil {")
         writer.indent()
-        writer.writeLine('return nil, err')
+        writer.writeLine("return nil, err")
         writer.dedent()
-        writer.writeLine('}')
+        writer.writeLine("}")
     }
 }

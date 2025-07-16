@@ -1,25 +1,25 @@
-import chalk from 'chalk'
-import { readFile } from 'fs/promises'
-import yaml from 'js-yaml'
+import chalk from "chalk"
+import { readFile } from "fs/promises"
+import yaml from "js-yaml"
 
-import { RelativeFilePath, doesPathExist, join } from '@fern-api/fs-utils'
-import { AbsoluteFilePath } from '@fern-api/fs-utils'
-import { TaskContext } from '@fern-api/task-context'
+import { RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils"
+import { AbsoluteFilePath } from "@fern-api/fs-utils"
+import { TaskContext } from "@fern-api/task-context"
 
-import * as serializers from '@fern-fern/generators-sdk/serialization'
+import * as serializers from "@fern-fern/generators-sdk/serialization"
 
-import { loadCliWorkspace } from '../../loadGeneratorWorkspaces'
+import { loadCliWorkspace } from "../../loadGeneratorWorkspaces"
 
 export async function validateCliRelease({ context }: { context: TaskContext }): Promise<void> {
     const cliWorkspace = await loadCliWorkspace()
 
     if (cliWorkspace == null) {
-        context.logger.error('Failed to load CLI workspace')
+        context.logger.error("Failed to load CLI workspace")
         return
     }
 
     if (cliWorkspace.workspaceConfig.changelogLocation == null) {
-        context.logger.warn('No changelog location specified')
+        context.logger.warn("No changelog location specified")
         return
     }
 
@@ -63,7 +63,7 @@ async function validateCliChangelog({
         }
     }
     if (!hasErrors) {
-        context.logger.info(chalk.green('All changelogs are valid'))
+        context.logger.info(chalk.green("All changelogs are valid"))
     } else {
         context.failAndThrow()
     }

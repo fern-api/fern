@@ -1,16 +1,16 @@
-import { RawSchemas, isRawObjectDefinition } from '@fern-api/fern-definition-schema'
-import { SingleUnionType, SingleUnionTypeProperties, Type, TypeReference } from '@fern-api/ir-sdk'
+import { RawSchemas, isRawObjectDefinition } from "@fern-api/fern-definition-schema"
+import { SingleUnionType, SingleUnionTypeProperties, Type, TypeReference } from "@fern-api/ir-sdk"
 
-import { FernFileContext } from '../../FernFileContext'
-import { TypeResolver } from '../../resolvers/TypeResolver'
-import { getAvailability } from '../../utils/getAvailability'
-import { getDisplayName } from '../../utils/getDisplayName'
-import { getDocs } from '../../utils/getDocs'
-import { parseTypeName } from '../../utils/parseTypeName'
-import { convertDeclaration } from '../convertDeclaration'
-import { getExtensionsAsList, getPropertyAccess, getPropertyName } from './convertObjectTypeDeclaration'
+import { FernFileContext } from "../../FernFileContext"
+import { TypeResolver } from "../../resolvers/TypeResolver"
+import { getAvailability } from "../../utils/getAvailability"
+import { getDisplayName } from "../../utils/getDisplayName"
+import { getDocs } from "../../utils/getDocs"
+import { parseTypeName } from "../../utils/parseTypeName"
+import { convertDeclaration } from "../convertDeclaration"
+import { getExtensionsAsList, getPropertyAccess, getPropertyName } from "./convertObjectTypeDeclaration"
 
-const DEFAULT_UNION_VALUE_PROPERTY_VALUE = 'value'
+const DEFAULT_UNION_VALUE_PROPERTY_VALUE = "value"
 
 export function convertDiscriminatedUnionTypeDeclaration({
     union,
@@ -29,8 +29,8 @@ export function convertDiscriminatedUnionTypeDeclaration({
         }),
         extends: getExtensionsAsList(union.extends).map((extended) => parseTypeName({ typeName: extended, file })),
         baseProperties:
-            union['base-properties'] != null
-                ? Object.entries(union['base-properties']).map(([propertyKey, propertyDefinition]) => ({
+            union["base-properties"] != null
+                ? Object.entries(union["base-properties"]).map(([propertyKey, propertyDefinition]) => ({
                       ...convertDeclaration(propertyDefinition),
                       name: file.casingsGenerator.generateNameAndWireValue({
                           wireValue: propertyKey,
@@ -46,9 +46,9 @@ export function convertDiscriminatedUnionTypeDeclaration({
                 : [],
         types: Object.entries(union.union).map(([unionKey, rawSingleUnionType]): SingleUnionType => {
             const rawType: string | undefined =
-                typeof rawSingleUnionType === 'string'
+                typeof rawSingleUnionType === "string"
                     ? rawSingleUnionType
-                    : typeof rawSingleUnionType.type === 'string'
+                    : typeof rawSingleUnionType.type === "string"
                       ? rawSingleUnionType.type
                       : undefined
 
@@ -90,9 +90,9 @@ export function convertDiscriminatedUnionTypeDeclaration({
 
 export function getUnionDiscriminant(union: RawSchemas.DiscriminatedUnionSchema): string {
     if (union.discriminant == null) {
-        return 'type'
+        return "type"
     }
-    if (typeof union.discriminant === 'string') {
+    if (typeof union.discriminant === "string") {
         return union.discriminant
     }
     return union.discriminant.value
@@ -102,7 +102,7 @@ export function getUnionDiscriminantName(union: RawSchemas.DiscriminatedUnionSch
     name: string
     wasExplicitlySet: boolean
 } {
-    if (union.discriminant != null && typeof union.discriminant !== 'string' && union.discriminant.name != null) {
+    if (union.discriminant != null && typeof union.discriminant !== "string" && union.discriminant.name != null) {
         return {
             name: union.discriminant.name,
             wasExplicitlySet: true
@@ -124,7 +124,7 @@ export function getSingleUnionTypeName({
     name: string
     wasExplicitlySet: boolean
 } {
-    if (typeof rawSingleUnionType !== 'string' && rawSingleUnionType.name != null) {
+    if (typeof rawSingleUnionType !== "string" && rawSingleUnionType.name != null) {
         return {
             name: rawSingleUnionType.name,
             wasExplicitlySet: true
@@ -150,11 +150,11 @@ export function getSingleUnionTypeProperties({
     file: FernFileContext
     typeResolver: TypeResolver
 }): SingleUnionTypeProperties.SamePropertiesAsObject | SingleUnionTypeProperties.SingleProperty {
-    const singlePropertyKey = typeof rawSingleUnionType !== 'string' ? rawSingleUnionType.key : undefined
+    const singlePropertyKey = typeof rawSingleUnionType !== "string" ? rawSingleUnionType.key : undefined
 
     const resolvedType = typeResolver.resolveTypeOrThrow({ type: rawValueType, file })
     if (
-        resolvedType._type === 'named' &&
+        resolvedType._type === "named" &&
         isRawObjectDefinition(resolvedType.declaration) &&
         singlePropertyKey == null
     ) {
@@ -173,7 +173,7 @@ function getSinglePropertyKeyName(
     rawSingleUnionType: string | RawSchemas.SingleUnionTypeKeySchema | undefined
 ): string {
     if (rawSingleUnionType != null) {
-        if (typeof rawSingleUnionType === 'string') {
+        if (typeof rawSingleUnionType === "string") {
             return rawSingleUnionType
         }
         return rawSingleUnionType.name ?? rawSingleUnionType.value
@@ -185,7 +185,7 @@ function getSinglePropertyKeyValue(
     rawSingleUnionType: string | RawSchemas.SingleUnionTypeKeySchema | undefined
 ): string {
     if (rawSingleUnionType != null) {
-        if (typeof rawSingleUnionType === 'string') {
+        if (typeof rawSingleUnionType === "string") {
             return rawSingleUnionType
         }
         return rawSingleUnionType.value

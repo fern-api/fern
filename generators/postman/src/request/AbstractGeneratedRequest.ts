@@ -6,7 +6,7 @@ import {
     HttpService,
     IntermediateRepresentation,
     TypeDeclaration
-} from '@fern-fern/ir-sdk/api'
+} from "@fern-fern/ir-sdk/api"
 import {
     PostmanHeader,
     PostmanMethod,
@@ -14,10 +14,10 @@ import {
     PostmanRequest,
     PostmanRequestBodyMode,
     PostmanUrlVariable
-} from '@fern-fern/postman-sdk/api'
+} from "@fern-fern/postman-sdk/api"
 
-import { ORIGIN_VARIABLE_NAME, getReferenceToVariable } from '../utils'
-import { GeneratedRequest } from './GeneratedRequest'
+import { ORIGIN_VARIABLE_NAME, getReferenceToVariable } from "../utils"
+import { GeneratedRequest } from "./GeneratedRequest"
 
 export declare namespace AbstractGeneratedRequest {
     export interface Init {
@@ -53,9 +53,9 @@ export abstract class AbstractGeneratedRequest implements GeneratedRequest {
         ]
         const queryParams = this.getQueryParams()
 
-        let rawUrl = [...hostArr, ...pathArr].join('/')
+        let rawUrl = [...hostArr, ...pathArr].join("/")
         if (queryParams.length > 0) {
-            rawUrl += '?' + new URLSearchParams(queryParams.map((param) => [param.key, param.value])).toString()
+            rawUrl += "?" + new URLSearchParams(queryParams.map((param) => [param.key, param.value])).toString()
         }
 
         const requestBody = this.getRequestBody()
@@ -92,8 +92,8 @@ export abstract class AbstractGeneratedRequest implements GeneratedRequest {
         return {
             key: header.name.wireValue,
             description: header.docs ?? undefined,
-            type: 'text',
-            value: valueOrDefault != null ? JSON.stringify(valueOrDefault) : ''
+            type: "text",
+            value: valueOrDefault != null ? JSON.stringify(valueOrDefault) : ""
         }
     }
 
@@ -105,14 +105,14 @@ export abstract class AbstractGeneratedRequest implements GeneratedRequest {
             patch: () => PostmanMethod.Patch,
             delete: () => PostmanMethod.Delete,
             _other: () => {
-                throw new Error('Unexpected httpMethod: ' + httpMethod)
+                throw new Error("Unexpected httpMethod: " + httpMethod)
             }
         })
     }
 
     private getPathArray(path: HttpPath): string[] {
         const urlParts: string[] = []
-        if (path.head !== '/') {
+        if (path.head !== "/") {
             this.splitPathString(path.head).forEach((splitPart) => urlParts.push(splitPart))
         }
         path.parts.forEach((part) => {
@@ -123,7 +123,7 @@ export abstract class AbstractGeneratedRequest implements GeneratedRequest {
     }
 
     private splitPathString(path: string): string[] {
-        return path.split('/').filter((val) => val.length > 0 && val !== '/')
+        return path.split("/").filter((val) => val.length > 0 && val !== "/")
     }
 
     protected abstract getQueryParams(): PostmanUrlVariable[]

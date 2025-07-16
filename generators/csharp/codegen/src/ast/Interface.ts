@@ -1,9 +1,9 @@
-import { Access } from './Access'
-import { ClassReference } from './ClassReference'
-import { Field } from './Field'
-import { Method } from './Method'
-import { AstNode } from './core/AstNode'
-import { Writer } from './core/Writer'
+import { Access } from "./Access"
+import { ClassReference } from "./ClassReference"
+import { Field } from "./Field"
+import { Method } from "./Method"
+import { AstNode } from "./core/AstNode"
+import { Writer } from "./core/Writer"
 
 export declare namespace Interface {
     interface Args {
@@ -72,37 +72,37 @@ export class Interface extends AstNode {
         }
         writer.write(`${this.access} `)
         if (this.partial) {
-            writer.write('partial ')
+            writer.write("partial ")
         }
-        writer.write('interface ')
+        writer.write("interface ")
         writer.writeLine(`${this.name}`)
 
         if (this.interfaceReferences.length > 0) {
-            writer.write(' : ')
+            writer.write(" : ")
             this.interfaceReferences.forEach((interfaceReference, index) => {
                 interfaceReference.write(writer)
                 // Don't write a comma after the last interface
                 if (index < this.interfaceReferences.length - 1) {
-                    writer.write(', ')
+                    writer.write(", ")
                 }
             })
         }
-        writer.writeLine('{')
+        writer.writeLine("{")
 
         writer.indent()
         for (const field of this.fields) {
             field.write(writer)
-            writer.writeLine('')
+            writer.writeLine("")
         }
         writer.dedent()
 
         writer.indent()
         for (const method of this.methods) {
             method.write(writer)
-            writer.writeLine('')
+            writer.writeLine("")
         }
         writer.dedent()
 
-        writer.writeLine('}')
+        writer.writeLine("}")
     }
 }

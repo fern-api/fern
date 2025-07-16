@@ -1,11 +1,11 @@
-import { ExportedFilePath, PackageId, Reference } from '@fern-typescript/commons'
+import { ExportedFilePath, PackageId, Reference } from "@fern-typescript/commons"
 
-import { RelativeFilePath } from '@fern-api/fs-utils'
+import { RelativeFilePath } from "@fern-api/fs-utils"
 
-import { HttpEndpoint } from '@fern-fern/ir-sdk/api'
+import { HttpEndpoint } from "@fern-fern/ir-sdk/api"
 
-import { AbstractExpressServiceDeclarationReferencer } from './AbstractExpressServiceDeclarationReferencer'
-import { DeclarationReferencer } from './DeclarationReferencer'
+import { AbstractExpressServiceDeclarationReferencer } from "./AbstractExpressServiceDeclarationReferencer"
+import { DeclarationReferencer } from "./DeclarationReferencer"
 
 export declare namespace ExpressInlinedRequestBodyDeclarationReferencer {
     export interface Name {
@@ -14,7 +14,7 @@ export declare namespace ExpressInlinedRequestBodyDeclarationReferencer {
     }
 }
 
-const REQUESTS_DIRECTORY_NAME = 'requests'
+const REQUESTS_DIRECTORY_NAME = "requests"
 
 export class ExpressInlinedRequestBodyDeclarationReferencer extends AbstractExpressServiceDeclarationReferencer<ExpressInlinedRequestBodyDeclarationReferencer.Name> {
     public getExportedFilepath(name: ExpressInlinedRequestBodyDeclarationReferencer.Name): ExportedFilePath {
@@ -44,8 +44,8 @@ export class ExpressInlinedRequestBodyDeclarationReferencer extends AbstractExpr
     }
 
     public getExportedName(name: ExpressInlinedRequestBodyDeclarationReferencer.Name): string {
-        if (name.endpoint.requestBody?.type !== 'inlinedRequestBody') {
-            throw new Error('Cannot get exported name for inlined request, because endpoint request is not inlined')
+        if (name.endpoint.requestBody?.type !== "inlinedRequestBody") {
+            throw new Error("Cannot get exported name for inlined request, because endpoint request is not inlined")
         }
         return name.endpoint.requestBody.name.pascalCase.unsafeName
     }

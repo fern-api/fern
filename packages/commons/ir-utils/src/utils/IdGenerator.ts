@@ -1,13 +1,13 @@
-import { DeclaredErrorName, DeclaredServiceName, DeclaredTypeName, FernFilepath, FernIr } from '@fern-api/ir-sdk'
+import { DeclaredErrorName, DeclaredServiceName, DeclaredTypeName, FernFilepath, FernIr } from "@fern-api/ir-sdk"
 
-import { stringifyFernFilepath } from './stringifyFernFilepath'
+import { stringifyFernFilepath } from "./stringifyFernFilepath"
 
 export const IdGenerator = {
-    generateTypeId: (typeName: Omit<DeclaredTypeName, 'typeId'>): FernIr.commons.TypeId => {
+    generateTypeId: (typeName: Omit<DeclaredTypeName, "typeId">): FernIr.commons.TypeId => {
         const joinedFernFilePath = stringifyFernFilepath(typeName.fernFilepath)
         return `type_${joinedFernFilePath}:${typeName.name.originalName}`
     },
-    generateErrorId: (errorName: Omit<DeclaredErrorName, 'errorId'>): FernIr.commons.TypeId => {
+    generateErrorId: (errorName: Omit<DeclaredErrorName, "errorId">): FernIr.commons.TypeId => {
         const joinedFernFilePath = stringifyFernFilepath(errorName.fernFilepath)
         return `error_${joinedFernFilePath}:${errorName.name.originalName}`
     },
@@ -25,7 +25,7 @@ export const IdGenerator = {
     },
     generateEndpointId: (
         declaredServiceName: DeclaredServiceName,
-        httpEndpoint: Omit<FernIr.http.HttpEndpoint, 'id'>
+        httpEndpoint: Omit<FernIr.http.HttpEndpoint, "id">
     ): string => {
         const joinedFernFilePath = stringifyFernFilepath(declaredServiceName.fernFilepath)
         const endpointId = httpEndpoint.name.originalName

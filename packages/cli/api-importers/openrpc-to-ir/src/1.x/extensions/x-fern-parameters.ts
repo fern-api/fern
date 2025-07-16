@@ -1,9 +1,9 @@
-import { OpenAPIV3 } from 'openapi-types'
-import { z } from 'zod'
+import { OpenAPIV3 } from "openapi-types"
+import { z } from "zod"
 
-import { AbstractConverterContext, AbstractExtension } from '@fern-api/v2-importer-commons'
+import { AbstractConverterContext, AbstractExtension } from "@fern-api/v2-importer-commons"
 
-const REQUEST_PREFIX = '$request.'
+const REQUEST_PREFIX = "$request."
 
 const ParameterBaseObjectSchema = z.object({
     description: z.string().optional(),
@@ -36,7 +36,7 @@ export declare namespace FernParametersExtension {
 
 export class FernParametersExtension extends AbstractExtension<FernParametersExtension.Output> {
     private readonly operation: object
-    public readonly key = 'x-fern-parameters'
+    public readonly key = "x-fern-parameters"
 
     constructor({ breadcrumbs, operation, context }: FernParametersExtension.Args) {
         super({ breadcrumbs, context })
