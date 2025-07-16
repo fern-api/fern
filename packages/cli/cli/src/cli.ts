@@ -613,7 +613,7 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 .option('audience', {
                     type: 'array',
                     string: true,
-                    default: new Array<string>(),
+                    default: [] as string[],
                     description: 'Filter the IR for certain audiences'
                 })
                 .option('smart-casing', {
@@ -712,7 +712,7 @@ function addDynamicIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext
                 .option('audience', {
                     type: 'array',
                     string: true,
-                    default: new Array<string>(),
+                    default: [] as string[],
                     description: 'Filter the IR for certain audiences'
                 })
                 .option('smart-casing', {
@@ -761,7 +761,7 @@ function addFdrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 .option('audience', {
                     type: 'array',
                     string: true,
-                    default: new Array<string>(),
+                    default: [] as string[],
                     description: 'Filter the FDR API definition for certain audiences'
                 })
                 .option('v2', {
