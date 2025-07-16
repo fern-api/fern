@@ -151,7 +151,10 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                 return context.type.getGeneratedType(typeName).buildExample(example, context, opts);
             },
             unknown: (value) => {
-                const parsed = ts.parseJsonText("example.json", escapeStringForComment(JSON.stringify(value, undefined, 4))).statements[0];
+                const parsed = ts.parseJsonText(
+                    "example.json",
+                    escapeStringForComment(JSON.stringify(value, undefined, 4))
+                ).statements[0];
                 if (parsed == null) {
                     throw new Error("Could not parse unknown example");
                 }
