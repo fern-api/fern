@@ -6,6 +6,7 @@ from .actor import Actor
 from .actress import Actress
 from .big_entity import BigEntity
 from .cast_member import CastMember
+from .cron_job import CronJob
 from .directory import Directory
 from .entity import Entity
 from .exception import Exception, Exception_Generic, Exception_Timeout
@@ -31,6 +32,7 @@ __all__ = [
     "Actress",
     "BigEntity",
     "CastMember",
+    "CronJob",
     "Directory",
     "Entity",
     "Exception",
