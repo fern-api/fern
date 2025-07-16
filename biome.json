@@ -302,6 +302,47 @@
 				"**/*.mdx"
 			],
 			"formatter": { "indentWidth": 2 }
+		},
+		{
+			"includes":[
+				"packages/cli/api-importers/conjure/conjure-sdk/**",
+				"packages/cli/api-importers/openapi/openapi-ir/**",
+				"packages/cli/fern-definition/schema/src/schemas/**",
+				"packages/cli/configuration/src/generators-yml/schemas/**",
+				"packages/ir-sdk/**",
+				"packages/cli/configuration/src/docs-yml/schemas/**",
+				"packages/cli/openapi-ir-sdk/**",
+				"packages/seed/src/config/**",
+				"generators/csharp/codegen/src/asIs/**/*.Template.*",
+				"generators/typescript/**/*.template.*",
+				"seed/**/*",
+				"docker/seed/**",
+				"**/*.yaml",
+				"**/*.yml",
+				"**/*.mdx",
+				"**/*.md",
+				"**/*.json",
+				"**/*.py",
+				"**/*.rb",
+				"**/*.java",
+				"**/*.js",
+				"**/*.zip",
+				"**/*.cjs",
+				"**/*.mjs",
+				"**/*.snap",
+				"**/*.props",
+				"**/*.lock",
+				"**/*.gradle",
+				"**/*.bat",
+				"**/*.sh",
+				"*.d.ts",
+				"__snapshots__",
+				".yarn",
+				".turbo",
+				"node_modules",
+				"fern"
+			],
+			"formatter": { "enabled": false }
 		}
 	],
 	"assist": {
