@@ -17,6 +17,10 @@ import { createReadStream } from "fs";
     await client.service.upload(await createUint8ArrayFromFile("./package.json"));
 
     await client.service.upload({
+        path: "./package.json",
+    });
+
+    await client.service.upload({
         data: await createBlobFromFile("./package.json", "application/json"),
     });
     await client.service.upload({
