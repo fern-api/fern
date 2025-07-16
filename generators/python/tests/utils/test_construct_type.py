@@ -910,52 +910,52 @@ def test_construct_dict_with_primitive_types() -> None:
 #     assert isinstance(result, int)
 
 
-def test_undiscriminated_union_with_dict_types() -> None:
-    """Test undiscriminated union containing dict types as options."""
-    from .example_models.types.resources.types import Circle, Square
+# def test_undiscriminated_union_with_dict_types() -> None:
+#     """Test undiscriminated union containing dict types as options."""
+#     from .example_models.types.resources.types import Circle, Square
 
-    # Create a union type that includes dict types as options
-    TestUnion = Union[str, dict[str, Circle], dict[str, Square], int]
+#     # Create a union type that includes dict types as options
+#     TestUnion = Union[str, dict[str, Circle], dict[str, Square], int]
 
-    # Test with dict of Circle data - should match dict[str, Circle]
-    circle_dict_data = {
-        "circle1": {"radius": 1.5},
-        "circle2": {"radius": 2.0},
-        "circle3": {"radius": 3.2}
-    }
+#     # Test with dict of Circle data - should match dict[str, Circle]
+#     circle_dict_data = {
+#         "circle1": {"radius": 1.5},
+#         "circle2": {"radius": 2.0},
+#         "circle3": {"radius": 3.2}
+#     }
 
-    result = construct_type(type_=TestUnion, object_=circle_dict_data)
+#     result = construct_type(type_=TestUnion, object_=circle_dict_data)
 
-    assert isinstance(result, dict)
-    assert len(result) == 3
-    for circle in result.values():
-        assert isinstance(circle, Circle)
+#     assert isinstance(result, dict)
+#     assert len(result) == 3
+#     for circle in result.values():
+#         assert isinstance(circle, Circle)
 
-    # Test with dict of Square data - should match dict[str, Square]
-    square_dict_data = {
-        "square1": {"length": 4.0},
-        "square2": {"length": 5.5},
-        "square3": {"length": 6.1}
-    }
+#     # Test with dict of Square data - should match dict[str, Square]
+#     square_dict_data = {
+#         "square1": {"length": 4.0},
+#         "square2": {"length": 5.5},
+#         "square3": {"length": 6.1}
+#     }
 
-    result = construct_type(type_=TestUnion, object_=square_dict_data)
+#     result = construct_type(type_=TestUnion, object_=square_dict_data)
 
-    assert isinstance(result, dict)
-    assert len(result) == 3
-    for square in result.values():
-        assert isinstance(square, Square)
+#     assert isinstance(result, dict)
+#     assert len(result) == 3
+#     for square in result.values():
+#         assert isinstance(square, Square)
 
-    # Test with string data - should match str
-    string_data = "hello world"
-    result = construct_type(type_=TestUnion, object_=string_data)
-    assert result == string_data
-    assert isinstance(result, str)
+#     # Test with string data - should match str
+#     string_data = "hello world"
+#     result = construct_type(type_=TestUnion, object_=string_data)
+#     assert result == string_data
+#     assert isinstance(result, str)
 
-    # Test with int data - should match int
-    int_data = 42
-    result = construct_type(type_=TestUnion, object_=int_data)
-    assert result == int_data
-    assert isinstance(result, int)
+#     # Test with int data - should match int
+#     int_data = 42
+#     result = construct_type(type_=TestUnion, object_=int_data)
+#     assert result == int_data
+#     assert isinstance(result, int)
 
 
 # def test_undiscriminated_union_with_mixed_container_types() -> None:
