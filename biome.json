@@ -339,7 +339,9 @@
 				".yarn",
 				".turbo",
 				"node_modules",
-				"fern"
+				"fern",
+				"packages/**/lib/**",
+				"generators/**/lib/**"
 			],
 			"formatter": { "enabled": false }
 		}
