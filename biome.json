@@ -298,6 +298,7 @@
 				"**/*.yaml",
 				"**/*.json",
 				"**/*.md",
+				"**/*.css",
 				"**/*.mdx"
 			],
 			"formatter": { "indentWidth": 2 }
