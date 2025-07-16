@@ -23,7 +23,8 @@
         "type_types:Request": "from seed.types import Request\n\nRequest(\n    request={},\n)\n",
         "type_types:Response": "from seed import Identifier\nfrom seed.types import Response\n\nResponse(\n    response=\"Initializing...\",\n    identifiers=[\n        Identifier(\n            type=\"primitive\",\n            value=\"example\",\n            label=\"Primitive\",\n        ),\n        Identifier(\n            type=\"unknown\",\n            value=\"{}\",\n            label=\"Unknown\",\n        ),\n    ],\n)\n",
         "type_types:Test": "from seed.types import Test_And\n\nTest_And(value=True)\n",
-        "type_types:Entity": "from seed.types import Entity\n\nEntity(\n    type=\"unknown\",\n    name=\"unknown\",\n)\n"
+        "type_types:Entity": "from seed.types import Entity\n\nEntity(\n    type=\"unknown\",\n    name=\"unknown\",\n)\n",
+        "type_types:CronJob": "from seed.types import CronJob\n\nCronJob(\n    expression=\"0 */6 * * *\",\n)\n"
     },
     "endpoints": [
         {

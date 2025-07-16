@@ -5,5 +5,4 @@
 from . import service
 from .client import AsyncSeedBytesUpload, SeedBytesUpload
 from .version import __version__
-
 __all__ = ["AsyncSeedBytesUpload", "SeedBytesUpload", "__version__", "service"]
