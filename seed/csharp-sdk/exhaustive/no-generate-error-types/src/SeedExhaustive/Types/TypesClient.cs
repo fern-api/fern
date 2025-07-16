@@ -9,10 +9,13 @@ public partial class TypesClient
     internal TypesClient(RawClient client)
     {
         _client = client;
+        Docs = new DocsClient(_client);
         Enum = new EnumClient(_client);
         Object = new ObjectClient(_client);
         Union = new UnionClient(_client);
     }
+
+    public DocsClient Docs { get; }
 
     public EnumClient Enum { get; }
 
