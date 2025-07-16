@@ -96,6 +96,10 @@ export abstract class AbstractGoGeneratorContext<
         return name.snakeCase.unsafeName;
     }
 
+    public getReceiverName(name: Name): string {
+        return name.camelCase.unsafeName.charAt(0).toUpperCase();
+    }
+
     public getRootImportPath(): string {
         return this.rootImportPath;
     }
@@ -434,12 +438,12 @@ export abstract class AbstractGoGeneratorContext<
         return this.getPackageLocation(errorDeclaration.name.fernFilepath);
     }
 
-    protected getFileLocation(filepath: FernFilepath, suffix?: string): FileLocation {
-        return this.getLocation(filepath.allParts, suffix);
+    public getPackageLocation(filepath: FernFilepath, suffix?: string): FileLocation {
+        return this.getLocation(filepath.packagePath, suffix);
     }
 
-    protected getPackageLocation(filepath: FernFilepath, suffix?: string): FileLocation {
-        return this.getLocation(filepath.packagePath, suffix);
+    protected getFileLocation(filepath: FernFilepath, suffix?: string): FileLocation {
+        return this.getLocation(filepath.allParts, suffix);
     }
 
     private getLocation(names: Name[], suffix?: string): FileLocation {

@@ -3,8 +3,6 @@
 package complex
 
 import (
-	context "context"
-	fern "github.com/pagination/fern"
 	core "github.com/pagination/fern/core"
 	internal "github.com/pagination/fern/internal"
 	option "github.com/pagination/fern/option"
@@ -12,10 +10,9 @@ import (
 )
 
 type Client struct {
-	baseURL string
-	caller  *internal.Caller
-	header  http.Header
-
+	baseURL         string
+	caller          *internal.Caller
+	header          http.Header
 	WithRawResponse *RawClient
 }
 
@@ -32,46 +29,4 @@ func NewClient(opts ...option.RequestOption) *Client {
 		header:          options.ToHeader(),
 		WithRawResponse: NewRawClient(options),
 	}
-}
-
-func (c *Client) Search(
-	ctx context.Context,
-	index string,
-	request *fern.SearchRequest,
-	opts ...option.RequestOption,
-) (*fern.PaginatedConversationResponse, error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
-	)
-	endpointURL := internal.EncodeURL(
-		baseURL+"/%v/conversations/search",
-		index,
-	)
-	headers := internal.MergeHeaders(
-		c.header.Clone(),
-		options.ToHeader(),
-	)
-	headers.Set("Content-Type", "application/json")
-
-	var response *fern.PaginatedConversationResponse
-	if _, err := c.caller.Call(
-		ctx,
-		&internal.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodPost,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Request:         request,
-			Response:        &response,
-		},
-	); err != nil {
-		return nil, err
-	}
-	return response, nil
 }

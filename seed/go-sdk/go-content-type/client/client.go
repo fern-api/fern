@@ -14,8 +14,7 @@ type Client struct {
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header
-
-	Imdb *imdb.Client
+	Imdb    *imdb.Client
 }
 
 func NewClient(opts ...option.RequestOption) *Client {

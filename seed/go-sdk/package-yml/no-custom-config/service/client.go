@@ -11,10 +11,9 @@ import (
 )
 
 type Client struct {
-	baseURL string
-	caller  *internal.Caller
-	header  http.Header
-
+	baseURL         string
+	caller          *internal.Caller
+	header          http.Header
 	WithRawResponse *RawClient
 }
 
@@ -39,34 +38,13 @@ func (c *Client) Nop(
 	nestedId string,
 	opts ...option.RequestOption,
 ) error {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
-	)
-	endpointURL := internal.EncodeURL(
-		baseURL+"/%v//%v",
+	_, err := c.WithRawResponse.Nop(
+		ctx,
 		id,
 		nestedId,
+		opts...,
 	)
-	headers := internal.MergeHeaders(
-		c.header.Clone(),
-		options.ToHeader(),
-	)
-
-	if _, err := c.caller.Call(
-		ctx,
-		&internal.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodGet,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-		},
-	); err != nil {
+	if err != nil {
 		return err
 	}
 	return nil

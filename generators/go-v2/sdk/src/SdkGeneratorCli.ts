@@ -10,6 +10,7 @@ import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
+import { ClientGenerator } from "./client/ClientGenerator";
 import { ModuleConfigWriter } from "./module/ModuleConfigWriter";
 import { RawClientGenerator } from "./raw-client/RawClientGenerator";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
@@ -55,6 +56,7 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
         await this.writeGoMod(context);
+        this.generateClients(context);
         this.generateRawClients(context);
 
         if (this.shouldGenerateReadme(context)) {
@@ -104,6 +106,39 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
             });
             context.project.addGoFiles(rawClient.generate());
         }
+    }
+
+    private generateClients(context: SdkGeneratorContext) {
+        this.generateRootClient(context);
+        for (const subpackage of Object.values(context.ir.subpackages)) {
+            if (!context.shouldGenerateSubpackageClient(subpackage)) {
+                continue;
+            }
+            const client = new ClientGenerator({
+                context,
+                fernFilepath: subpackage.fernFilepath,
+                subpackage,
+                nestedSubpackages: subpackage.subpackages,
+                serviceId: subpackage.service,
+                service: subpackage.service != null ? context.getHttpServiceOrThrow(subpackage.service) : undefined
+            });
+            context.project.addGoFiles(client.generate());
+        }
+    }
+
+    private generateRootClient(context: SdkGeneratorContext) {
+        const client = new ClientGenerator({
+            context,
+            fernFilepath: context.ir.rootPackage.fernFilepath,
+            subpackage: undefined,
+            nestedSubpackages: context.ir.rootPackage.subpackages,
+            serviceId: context.ir.rootPackage.service,
+            service:
+                context.ir.rootPackage.service != null
+                    ? context.getHttpServiceOrThrow(context.ir.rootPackage.service)
+                    : undefined
+        });
+        context.project.addGoFiles(client.generate());
     }
 
     private generateSnippets({ context }: { context: SdkGeneratorContext }): Endpoint[] {

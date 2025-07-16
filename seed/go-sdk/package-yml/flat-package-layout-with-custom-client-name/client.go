@@ -11,12 +11,11 @@ import (
 )
 
 type Acme struct {
-	baseURL string
-	caller  *internal.Caller
-	header  http.Header
-
-	WithRawResponse *RawAcme
+	baseURL         string
+	caller          *internal.Caller
+	header          http.Header
 	Service         *ServiceClient
+	WithRawResponse *RawAcme
 }
 
 func New(opts ...option.RequestOption) *Acme {
@@ -30,8 +29,8 @@ func New(opts ...option.RequestOption) *Acme {
 			},
 		),
 		header:          options.ToHeader(),
-		WithRawResponse: NewRawAcme(options),
 		Service:         NewServiceClient(opts...),
+		WithRawResponse: NewRawAcme(options),
 	}
 }
 
@@ -41,37 +40,14 @@ func (a *Acme) Echo(
 	request *EchoRequest,
 	opts ...option.RequestOption,
 ) (string, error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		a.baseURL,
-		"",
-	)
-	endpointURL := internal.EncodeURL(
-		baseURL+"/%v/",
-		id,
-	)
-	headers := internal.MergeHeaders(
-		a.header.Clone(),
-		options.ToHeader(),
-	)
-
-	var response string
-	if _, err := a.caller.Call(
+	response, err := a.WithRawResponse.Echo(
 		ctx,
-		&internal.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodPost,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Request:         request,
-			Response:        &response,
-		},
-	); err != nil {
+		id,
+		request,
+		opts...,
+	)
+	if err != nil {
 		return "", err
 	}
-	return response, nil
+	return response.Body, nil
 }

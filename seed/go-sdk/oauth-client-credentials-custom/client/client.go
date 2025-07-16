@@ -14,8 +14,7 @@ type Client struct {
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header
-
-	Auth *auth.Client
+	Auth    *auth.Client
 }
 
 func NewClient(opts ...option.RequestOption) *Client {

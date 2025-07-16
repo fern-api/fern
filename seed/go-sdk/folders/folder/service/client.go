@@ -5,17 +5,15 @@ package service
 import (
 	context "context"
 	core "github.com/folders/fern/core"
-	folder "github.com/folders/fern/folder"
 	internal "github.com/folders/fern/internal"
 	option "github.com/folders/fern/option"
 	http "net/http"
 )
 
 type Client struct {
-	baseURL string
-	caller  *internal.Caller
-	header  http.Header
-
+	baseURL         string
+	caller          *internal.Caller
+	header          http.Header
 	WithRawResponse *RawClient
 }
 
@@ -38,30 +36,11 @@ func (c *Client) Endpoint(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) error {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
-	)
-	endpointURL := baseURL + "/service"
-	headers := internal.MergeHeaders(
-		c.header.Clone(),
-		options.ToHeader(),
-	)
-
-	if _, err := c.caller.Call(
+	_, err := c.WithRawResponse.Endpoint(
 		ctx,
-		&internal.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodGet,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-		},
-	); err != nil {
+		opts...,
+	)
+	if err != nil {
 		return err
 	}
 	return nil
@@ -69,42 +48,15 @@ func (c *Client) Endpoint(
 
 func (c *Client) UnknownRequest(
 	ctx context.Context,
-	request interface{},
+	request any,
 	opts ...option.RequestOption,
 ) error {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
-	)
-	endpointURL := baseURL + "/service"
-	headers := internal.MergeHeaders(
-		c.header.Clone(),
-		options.ToHeader(),
-	)
-	errorCodes := internal.ErrorCodes{
-		404: func(apiError *core.APIError) error {
-			return &folder.NotFoundError{
-				APIError: apiError,
-			}
-		},
-	}
-
-	if _, err := c.caller.Call(
+	_, err := c.WithRawResponse.UnknownRequest(
 		ctx,
-		&internal.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodPost,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Request:         request,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
-		},
-	); err != nil {
+		request,
+		opts...,
+	)
+	if err != nil {
 		return err
 	}
 	return nil

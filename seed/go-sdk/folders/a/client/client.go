@@ -3,7 +3,7 @@
 package client
 
 import (
-	bclient "github.com/folders/fern/a/b/client"
+	client "github.com/folders/fern/a/b/client"
 	cclient "github.com/folders/fern/a/c/client"
 	core "github.com/folders/fern/core"
 	internal "github.com/folders/fern/internal"
@@ -15,9 +15,8 @@ type Client struct {
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header
-
-	B *bclient.Client
-	C *cclient.Client
+	B       *client.Client
+	C       *cclient.Client
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -31,7 +30,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 			},
 		),
 		header: options.ToHeader(),
-		B:      bclient.NewClient(opts...),
+		B:      client.NewClient(opts...),
 		C:      cclient.NewClient(opts...),
 	}
 }

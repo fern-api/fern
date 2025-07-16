@@ -11,12 +11,11 @@ import (
 )
 
 type Client struct {
-	baseURL string
-	caller  *internal.Caller
-	header  http.Header
-
-	WithRawResponse *RawClient
+	baseURL         string
+	caller          *internal.Caller
+	header          http.Header
 	Service         *ServiceClient
+	WithRawResponse *RawClient
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -30,8 +29,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 			},
 		),
 		header:          options.ToHeader(),
-		WithRawResponse: NewRawClient(options),
 		Service:         NewServiceClient(opts...),
+		WithRawResponse: NewRawClient(options),
 	}
 }
 
@@ -41,37 +40,14 @@ func (c *Client) Echo(
 	request *EchoRequest,
 	opts ...option.RequestOption,
 ) (string, error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
-	)
-	endpointURL := internal.EncodeURL(
-		baseURL+"/%v/",
-		id,
-	)
-	headers := internal.MergeHeaders(
-		c.header.Clone(),
-		options.ToHeader(),
-	)
-
-	var response string
-	if _, err := c.caller.Call(
+	response, err := c.WithRawResponse.Echo(
 		ctx,
-		&internal.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodPost,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Request:         request,
-			Response:        &response,
-		},
-	); err != nil {
+		id,
+		request,
+		opts...,
+	)
+	if err != nil {
 		return "", err
 	}
-	return response, nil
+	return response.Body, nil
 }

@@ -12,10 +12,9 @@ import (
 )
 
 type Client struct {
-	baseURL string
-	caller  *internal.Caller
-	header  http.Header
-
+	baseURL         string
+	caller          *internal.Caller
+	header          http.Header
 	WithRawResponse *RawClient
 }
 
@@ -34,8 +33,6 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
-// Retrieve a user.
-// This endpoint is used to retrieve a user.
 func (c *Client) GetUser(
 	ctx context.Context,
 	// The ID of the user to retrieve.
@@ -43,73 +40,29 @@ func (c *Client) GetUser(
 	userId string,
 	opts ...option.RequestOption,
 ) error {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
-	)
-	endpointURL := internal.EncodeURL(
-		baseURL+"/users/%v",
-		userId,
-	)
-	headers := internal.MergeHeaders(
-		c.header.Clone(),
-		options.ToHeader(),
-	)
-
-	if _, err := c.caller.Call(
+	_, err := c.WithRawResponse.GetUser(
 		ctx,
-		&internal.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodGet,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-		},
-	); err != nil {
+		userId,
+		opts...,
+	)
+	if err != nil {
 		return err
 	}
 	return nil
 }
 
-// Create a new user.
-// This endpoint is used to create a new user.
 func (c *Client) CreateUser(
 	ctx context.Context,
 	request *fern.CreateUserRequest,
 	opts ...option.RequestOption,
 ) (*fern.User, error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
-	)
-	endpointURL := baseURL + "/users"
-	headers := internal.MergeHeaders(
-		c.header.Clone(),
-		options.ToHeader(),
-	)
-
-	var response *fern.User
-	if _, err := c.caller.Call(
+	response, err := c.WithRawResponse.CreateUser(
 		ctx,
-		&internal.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodPost,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Request:         request,
-			Response:        &response,
-		},
-	); err != nil {
+		request,
+		opts...,
+	)
+	if err != nil {
 		return nil, err
 	}
-	return response, nil
+	return response.Body, nil
 }

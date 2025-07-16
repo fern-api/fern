@@ -4,7 +4,6 @@ package service
 
 import (
 	context "context"
-	fern "github.com/accept-header/fern"
 	core "github.com/accept-header/fern/core"
 	internal "github.com/accept-header/fern/internal"
 	option "github.com/accept-header/fern/option"
@@ -12,10 +11,9 @@ import (
 )
 
 type Client struct {
-	baseURL string
-	caller  *internal.Caller
-	header  http.Header
-
+	baseURL         string
+	caller          *internal.Caller
+	header          http.Header
 	WithRawResponse *RawClient
 }
 
@@ -38,38 +36,11 @@ func (c *Client) Endpoint(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) error {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
-	)
-	endpointURL := baseURL + "/container/"
-	headers := internal.MergeHeaders(
-		c.header.Clone(),
-		options.ToHeader(),
-	)
-	errorCodes := internal.ErrorCodes{
-		404: func(apiError *core.APIError) error {
-			return &fern.NotFoundError{
-				APIError: apiError,
-			}
-		},
-	}
-
-	if _, err := c.caller.Call(
+	_, err := c.WithRawResponse.Endpoint(
 		ctx,
-		&internal.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodDelete,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
-		},
-	); err != nil {
+		opts...,
+	)
+	if err != nil {
 		return err
 	}
 	return nil

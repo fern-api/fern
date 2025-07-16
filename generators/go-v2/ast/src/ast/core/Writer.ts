@@ -51,8 +51,9 @@ export class Writer extends AbstractWriter {
 
     /**
      * Adds the given import path to the rolling set, and returns the associated alias
-     * that should be used to reference the package. If a conflict exists, we prepend a
-     * prefix to the alias until we find a unique one.
+     * that should be used to reference the package. If a conflict exists, we try to use
+     * path components to create a unique alias, and only fall back to prepending '_'
+     * as a last resort.
      */
     public addImport(importPath: string): string {
         const maybeAlias = this.imports[importPath];
@@ -60,6 +61,19 @@ export class Writer extends AbstractWriter {
             return maybeAlias;
         }
         const set = new Set<Alias>(Object.values(this.imports));
+        const pathElements = importPath.split("/");
+
+        // Try using progressively more path components to create a unique alias.
+        for (let i = 1; i <= pathElements.length; i++) {
+            const elements = pathElements.slice(-i);
+            const alias = this.getValidAlias(elements.join(""));
+            if (!set.has(alias)) {
+                this.imports[importPath] = alias;
+                return alias;
+            }
+        }
+
+        // Fall back to prepending '_' until we find a unique alias.
         let alias = this.getValidAlias(basename(importPath));
         while (set.has(alias)) {
             alias = "_" + alias;

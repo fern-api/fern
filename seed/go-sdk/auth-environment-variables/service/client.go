@@ -4,7 +4,6 @@ package service
 
 import (
 	context "context"
-	fmt "fmt"
 	fern "github.com/auth-environment-variables/fern"
 	core "github.com/auth-environment-variables/fern/core"
 	internal "github.com/auth-environment-variables/fern/internal"
@@ -14,10 +13,9 @@ import (
 )
 
 type Client struct {
-	baseURL string
-	caller  *internal.Caller
-	header  http.Header
-
+	baseURL         string
+	caller          *internal.Caller
+	header          http.Header
 	WithRawResponse *RawClient
 }
 
@@ -45,76 +43,32 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
-// GET request with custom api key
 func (c *Client) GetWithApiKey(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (string, error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
-	)
-	endpointURL := baseURL + "/apiKey"
-	headers := internal.MergeHeaders(
-		c.header.Clone(),
-		options.ToHeader(),
-	)
-
-	var response string
-	if _, err := c.caller.Call(
+	response, err := c.WithRawResponse.GetWithApiKey(
 		ctx,
-		&internal.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodGet,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Response:        &response,
-		},
-	); err != nil {
+		opts...,
+	)
+	if err != nil {
 		return "", err
 	}
-	return response, nil
+	return response.Body, nil
 }
 
-// GET request with custom api key
 func (c *Client) GetWithHeader(
 	ctx context.Context,
 	request *fern.HeaderAuthRequest,
 	opts ...option.RequestOption,
 ) (string, error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
-	)
-	endpointURL := baseURL + "/apiKeyInHeader"
-	headers := internal.MergeHeaders(
-		c.header.Clone(),
-		options.ToHeader(),
-	)
-	headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
-
-	var response string
-	if _, err := c.caller.Call(
+	response, err := c.WithRawResponse.GetWithHeader(
 		ctx,
-		&internal.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodGet,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Response:        &response,
-		},
-	); err != nil {
+		request,
+		opts...,
+	)
+	if err != nil {
 		return "", err
 	}
-	return response, nil
+	return response.Body, nil
 }

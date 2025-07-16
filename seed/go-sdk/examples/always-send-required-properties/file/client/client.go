@@ -4,7 +4,7 @@ package client
 
 import (
 	core "github.com/examples/fern/core"
-	notificationclient "github.com/examples/fern/file/notification/client"
+	client "github.com/examples/fern/file/notification/client"
 	service "github.com/examples/fern/file/service"
 	internal "github.com/examples/fern/internal"
 	option "github.com/examples/fern/option"
@@ -12,11 +12,10 @@ import (
 )
 
 type Client struct {
-	baseURL string
-	caller  *internal.Caller
-	header  http.Header
-
-	Notification *notificationclient.Client
+	baseURL      string
+	caller       *internal.Caller
+	header       http.Header
+	Notification *client.Client
 	Service      *service.Client
 }
 
@@ -31,7 +30,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 			},
 		),
 		header:       options.ToHeader(),
-		Notification: notificationclient.NewClient(opts...),
+		Notification: client.NewClient(opts...),
 		Service:      service.NewClient(opts...),
 	}
 }

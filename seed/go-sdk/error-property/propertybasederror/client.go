@@ -3,23 +3,17 @@
 package propertybasederror
 
 import (
-	bytes "bytes"
 	context "context"
-	json "encoding/json"
-	errors "errors"
-	fern "github.com/error-property/fern"
 	core "github.com/error-property/fern/core"
 	internal "github.com/error-property/fern/internal"
 	option "github.com/error-property/fern/option"
-	io "io"
 	http "net/http"
 )
 
 type Client struct {
-	baseURL string
-	caller  *internal.Caller
-	header  http.Header
-
+	baseURL         string
+	caller          *internal.Caller
+	header          http.Header
 	WithRawResponse *RawClient
 }
 
@@ -38,64 +32,16 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
-// GET request that always throws an error
 func (c *Client) ThrowError(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (string, error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
-	)
-	endpointURL := baseURL + "/property-based-error"
-	headers := internal.MergeHeaders(
-		c.header.Clone(),
-		options.ToHeader(),
-	)
-	errorDecoder := func(statusCode int, header http.Header, body io.Reader) error {
-		raw, err := io.ReadAll(body)
-		if err != nil {
-			return err
-		}
-		apiError := core.NewAPIError(statusCode, header, errors.New(string(raw)))
-		decoder := json.NewDecoder(bytes.NewReader(raw))
-		var discriminant struct {
-			ErrorName string          `json:"errorName"`
-			Content   json.RawMessage `json:"content"`
-		}
-		if err := decoder.Decode(&discriminant); err != nil {
-			return apiError
-		}
-		switch discriminant.ErrorName {
-		case "PropertyBasedErrorTest":
-			value := new(fern.PropertyBasedErrorTest)
-			value.APIError = apiError
-			if err := json.Unmarshal(discriminant.Content, value); err != nil {
-				return apiError
-			}
-			return value
-		}
-		return apiError
-	}
-
-	var response string
-	if _, err := c.caller.Call(
+	response, err := c.WithRawResponse.ThrowError(
 		ctx,
-		&internal.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodGet,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Response:        &response,
-			ErrorDecoder:    errorDecoder,
-		},
-	); err != nil {
+		opts...,
+	)
+	if err != nil {
 		return "", err
 	}
-	return response, nil
+	return response.Body, nil
 }

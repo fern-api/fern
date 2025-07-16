@@ -14,7 +14,6 @@ type Client struct {
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header
-
 	Service *service.Client
 }
 

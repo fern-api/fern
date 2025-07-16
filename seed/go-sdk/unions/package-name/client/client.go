@@ -12,10 +12,9 @@ import (
 )
 
 type Client struct {
-	baseURL string
-	caller  *internal.Caller
-	header  http.Header
-
+	baseURL  string
+	caller   *internal.Caller
+	header   http.Header
 	Bigunion *bigunion.Client
 	Union    *union.Client
 }

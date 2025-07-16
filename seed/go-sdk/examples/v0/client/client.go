@@ -6,7 +6,7 @@ import (
 	context "context"
 	fern "github.com/examples/fern"
 	core "github.com/examples/fern/core"
-	fileclient "github.com/examples/fern/file/client"
+	client "github.com/examples/fern/file/client"
 	healthclient "github.com/examples/fern/health/client"
 	internal "github.com/examples/fern/internal"
 	option "github.com/examples/fern/option"
@@ -15,14 +15,13 @@ import (
 )
 
 type Client struct {
-	baseURL string
-	caller  *internal.Caller
-	header  http.Header
-
-	WithRawResponse *RawClient
-	File            *fileclient.Client
+	baseURL         string
+	caller          *internal.Caller
+	header          http.Header
+	File            *client.Client
 	Health          *healthclient.Client
 	Service         *service.Client
+	WithRawResponse *RawClient
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -36,10 +35,10 @@ func NewClient(opts ...option.RequestOption) *Client {
 			},
 		),
 		header:          options.ToHeader(),
-		WithRawResponse: NewRawClient(options),
-		File:            fileclient.NewClient(opts...),
+		File:            client.NewClient(opts...),
 		Health:          healthclient.NewClient(opts...),
 		Service:         service.NewClient(opts...),
+		WithRawResponse: NewRawClient(options),
 	}
 }
 
@@ -48,36 +47,15 @@ func (c *Client) Echo(
 	request string,
 	opts ...option.RequestOption,
 ) (string, error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
-	)
-	endpointURL := baseURL
-	headers := internal.MergeHeaders(
-		c.header.Clone(),
-		options.ToHeader(),
-	)
-
-	var response string
-	if _, err := c.caller.Call(
+	response, err := c.WithRawResponse.Echo(
 		ctx,
-		&internal.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodPost,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Request:         request,
-			Response:        &response,
-		},
-	); err != nil {
+		request,
+		opts...,
+	)
+	if err != nil {
 		return "", err
 	}
-	return response, nil
+	return response.Body, nil
 }
 
 func (c *Client) CreateType(
@@ -85,34 +63,13 @@ func (c *Client) CreateType(
 	request *fern.Type,
 	opts ...option.RequestOption,
 ) (*fern.Identifier, error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
-	)
-	endpointURL := baseURL
-	headers := internal.MergeHeaders(
-		c.header.Clone(),
-		options.ToHeader(),
-	)
-
-	var response *fern.Identifier
-	if _, err := c.caller.Call(
+	response, err := c.WithRawResponse.CreateType(
 		ctx,
-		&internal.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodPost,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Request:         request,
-			Response:        &response,
-		},
-	); err != nil {
+		request,
+		opts...,
+	)
+	if err != nil {
 		return nil, err
 	}
-	return response, nil
+	return response.Body, nil
 }
