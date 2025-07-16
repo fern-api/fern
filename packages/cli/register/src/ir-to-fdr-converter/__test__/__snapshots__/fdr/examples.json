@@ -1138,6 +1138,24 @@
           }
         ]
       }
+    },
+    "type_types:CronJob": {
+      "name": "CronJob",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "expression",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
     }
   },
   "subpackages": {
@@ -2054,7 +2072,8 @@
         "type_types:ResponseType",
         "type_types:Test",
         "type_types:Entity",
-        "type_types:BigEntity"
+        "type_types:BigEntity",
+        "type_types:CronJob"
       ],
       "subpackages": []
     }
