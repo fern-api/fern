@@ -37,20 +37,21 @@ export class Service {
     }
 
     /**
-     * @param {File | fs.ReadStream | Blob} bytes
+     * @param {core.fileUpload.FileUpload} bytes
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      */
     public upload(
-        bytes: File | fs.ReadStream | Blob,
+        bytes: core.fileUpload.FileUpload,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__upload(bytes, requestOptions));
     }
 
     private async __upload(
-        bytes: File | fs.ReadStream | Blob,
+        bytes: core.fileUpload.FileUpload,
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
+        const _fileUploadRequest = await core.fileUpload.toBinaryUploadRequest(bytes);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -58,11 +59,11 @@ export class Service {
                 "upload-content",
             ),
             method: "POST",
-            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
+            headers: mergeHeaders(this._options?.headers, _fileUploadRequest.headers, requestOptions?.headers),
             contentType: "application/octet-stream",
             requestType: "bytes",
             duplex: "half",
-            body: bytes,
+            body: _fileUploadRequest.body,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
