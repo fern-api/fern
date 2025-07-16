@@ -616,6 +616,50 @@ client.endpoints.union.get_and_return_union(
 
 ```python
 from seed import SeedExhaustive
+
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client.endpoints.urls.with_mixed_case(
+    
+)
+
+```
+
+
+```python
+from seed import SeedExhaustive
+
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client.endpoints.urls.no_ending_slash(
+    
+)
+
+```
+
+
+```python
+from seed import SeedExhaustive
+
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client.endpoints.urls.with_ending_slash(
+    
+)
+
+```
+
+
+```python
+from seed import SeedExhaustive
+
+client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
+client.endpoints.urls.with_underscores(
+    
+)
+
+```
+
+
+```python
+from seed import SeedExhaustive
 from seed.types.object import ObjectWithOptionalField
 
 client = SeedExhaustive(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        

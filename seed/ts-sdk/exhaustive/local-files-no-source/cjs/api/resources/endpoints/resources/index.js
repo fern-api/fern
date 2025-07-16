@@ -36,7 +36,7 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.union = exports.primitive = exports.params = exports.object = exports.httpMethods = exports.enum_ = exports.contentType = exports.container = exports.put = void 0;
+exports.urls = exports.union = exports.primitive = exports.params = exports.object = exports.httpMethods = exports.enum_ = exports.contentType = exports.container = exports.put = void 0;
 exports.put = __importStar(require("./put/index.js"));
 __exportStar(require("./put/types/index.js"), exports);
 exports.container = __importStar(require("./container/index.js"));
@@ -47,5 +47,6 @@ exports.object = __importStar(require("./object/index.js"));
 exports.params = __importStar(require("./params/index.js"));
 exports.primitive = __importStar(require("./primitive/index.js"));
 exports.union = __importStar(require("./union/index.js"));
+exports.urls = __importStar(require("./urls/index.js"));
 __exportStar(require("./params/client/requests/index.js"), exports);
 __exportStar(require("./put/client/requests/index.js"), exports);

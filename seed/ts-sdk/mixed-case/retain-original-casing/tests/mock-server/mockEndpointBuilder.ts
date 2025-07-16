@@ -1,5 +1,6 @@
 import { DefaultBodyType, HttpHandler, HttpResponse, HttpResponseResolver, http } from "msw";
 
+import { url } from "../../src/core";
 import { toJson } from "../../src/core/json";
 import { withHeaders } from "./withHeaders";
 import { withJson } from "./withJson";
@@ -132,23 +133,17 @@ class RequestBuilder implements MethodStage, RequestHeadersStage, RequestBodySta
     }
 
     respondWith(): ResponseStatusStage {
-        return new ResponseBuilder(this.method, this.buildPath(), this.predicates, this.handlerOptions);
+        return new ResponseBuilder(this.method, this.buildUrl(), this.predicates, this.handlerOptions);
     }
 
-    private buildPath(): string {
-        if (this._baseUrl.endsWith("/") && this.path.startsWith("/")) {
-            return this._baseUrl + this.path.slice(1);
-        }
-        if (!this._baseUrl.endsWith("/") && !this.path.startsWith("/")) {
-            return this._baseUrl + "/" + this.path;
-        }
-        return this._baseUrl + this.path;
+    private buildUrl(): string {
+        return url.join(this._baseUrl, this.path);
     }
 }
 
 class ResponseBuilder implements ResponseStatusStage, ResponseHeaderStage, ResponseBodyStage, BuildStage {
     private readonly method: HttpMethod;
-    private readonly path: string;
+    private readonly url: string;
     private readonly requestPredicates: ((resolver: HttpResponseResolver) => HttpResponseResolver)[];
     private readonly handlerOptions?: HttpHandlerBuilderOptions;
 
@@ -158,12 +153,12 @@ class ResponseBuilder implements ResponseStatusStage, ResponseHeaderStage, Respo
 
     constructor(
         method: HttpMethod,
-        path: string,
+        url: string,
         requestPredicates: ((resolver: HttpResponseResolver) => HttpResponseResolver)[],
         options?: HttpHandlerBuilderOptions,
     ) {
         this.method = method;
-        this.path = path;
+        this.url = url;
         this.requestPredicates = requestPredicates;
         this.handlerOptions = options;
     }
@@ -198,7 +193,7 @@ class ResponseBuilder implements ResponseStatusStage, ResponseHeaderStage, Respo
 
         const finalResolver = this.requestPredicates.reduceRight((acc, predicate) => predicate(acc), responseResolver);
 
-        const handler = http[this.method](this.path, finalResolver, this.handlerOptions);
+        const handler = http[this.method](this.url, finalResolver, this.handlerOptions);
         this.handlerOptions?.onBuild?.(handler);
         return handler;
     }

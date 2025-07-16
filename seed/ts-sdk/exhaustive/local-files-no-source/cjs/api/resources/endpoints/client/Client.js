@@ -13,6 +13,7 @@ const Client_js_6 = require("../resources/params/client/Client.js");
 const Client_js_7 = require("../resources/primitive/client/Client.js");
 const Client_js_8 = require("../resources/put/client/Client.js");
 const Client_js_9 = require("../resources/union/client/Client.js");
+const Client_js_10 = require("../resources/urls/client/Client.js");
 class Endpoints {
     constructor(_options) {
         this._options = _options;
@@ -52,6 +53,10 @@ class Endpoints {
     get union() {
         var _a;
         return ((_a = this._union) !== null && _a !== void 0 ? _a : (this._union = new Client_js_9.Union(this._options)));
+    }
+    get urls() {
+        var _a;
+        return ((_a = this._urls) !== null && _a !== void 0 ? _a : (this._urls = new Client_js_10.Urls(this._options)));
     }
 }
 exports.Endpoints = Endpoints;

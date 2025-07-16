@@ -484,6 +484,54 @@
         {
             "example_identifier": null,
             "id": {
+                "path": "/urls/MixedCase",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/urls.withMixedCase"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Urls.WithMixedCaseAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/urls/no-ending-slash",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/urls.noEndingSlash"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Urls.NoEndingSlashAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/urls/with-ending-slash/",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/urls.withEndingSlash"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Urls.WithEndingSlashAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/urls/with_underscores",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/urls.withUnderscores"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Urls.WithUnderscoresAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
                 "path": "/req-bodies/object",
                 "method": "POST",
                 "identifier_override": "endpoint_inlined-requests.postWithObjectBodyandResponse"
