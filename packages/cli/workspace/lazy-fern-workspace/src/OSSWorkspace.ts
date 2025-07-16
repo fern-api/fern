@@ -267,7 +267,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     const protobufIRGenerator = new ProtobufIRGenerator({ context });
                     const protobufIRFilepath = await protobufIRGenerator.generate({
                         absoluteFilepathToProtobufRoot: spec.absoluteFilepathToProtobufRoot,
-                        relativeFilepathToProtobufRoot: spec.relativeFilepathToProtobufRoot,
+                        absoluteFilepathToProtobufTarget: spec.absoluteFilepathToProtobufTarget,
                         local: true
                     });
 

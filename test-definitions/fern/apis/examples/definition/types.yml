@@ -312,3 +312,11 @@ types:
       node: optional<Node>
       directory: optional<Directory>
       moment: optional<Moment>
+
+  CronJob:
+    properties:
+      expression: string
+    examples:
+      - name: example1
+        value: 
+          expression: 0 */6 * * *

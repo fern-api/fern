@@ -6,6 +6,7 @@ from .actor import Actor
 from .actress import Actress
 from .big_entity import BigEntity
 from .cast_member import CastMember
+from .cron_job import CronJob
 from .directory import Directory
 from .entity import Entity
 from .exception import Exception, Exception_Generic, Exception_Timeout
@@ -25,4 +26,4 @@ from .response_type import ResponseType
 from .stunt_double import StuntDouble
 from .test import Test, Test_And, Test_Or
 from .tree import Tree
-__all__ = ["Actor", "Actress", "BigEntity", "CastMember", "Directory", "Entity", "Exception", "ExceptionInfo", "Exception_Generic", "Exception_Timeout", "ExtendedMovie", "File", "Metadata", "Metadata_Html", "Metadata_Markdown", "Migration", "MigrationStatus", "Moment", "Movie", "MovieId", "Node", "Request", "Response", "ResponseType", "StuntDouble", "Test", "Test_And", "Test_Or", "Tree"]
+__all__ = ["Actor", "Actress", "BigEntity", "CastMember", "CronJob", "Directory", "Entity", "Exception", "ExceptionInfo", "Exception_Generic", "Exception_Timeout", "ExtendedMovie", "File", "Metadata", "Metadata_Html", "Metadata_Markdown", "Migration", "MigrationStatus", "Moment", "Movie", "MovieId", "Node", "Request", "Response", "ResponseType", "StuntDouble", "Test", "Test_And", "Test_Or", "Tree"]

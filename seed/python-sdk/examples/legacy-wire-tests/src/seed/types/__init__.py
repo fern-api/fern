@@ -2,10 +2,10 @@
 
 # isort: skip_file
 
-from .types import Actor, Actress, BigEntity, CastMember, Directory, Entity, Exception, ExceptionInfo, Exception_Generic, Exception_Timeout, ExtendedMovie, File, Metadata, Metadata_Html, Metadata_Markdown, Migration, MigrationStatus, Moment, Movie, MovieId, Node, Request, Response, ResponseType, StuntDouble, Test, Test_And, Test_Or, Tree
+from .types import Actor, Actress, BigEntity, CastMember, CronJob, Directory, Entity, Exception, ExceptionInfo, Exception_Generic, Exception_Timeout, ExtendedMovie, File, Metadata, Metadata_Html, Metadata_Markdown, Migration, MigrationStatus, Moment, Movie, MovieId, Node, Request, Response, ResponseType, StuntDouble, Test, Test_And, Test_Or, Tree
 from .errors import NotFoundError
 from .basic_type import BasicType
 from .complex_type import ComplexType
 from .identifier import Identifier
 from .type import Type
-__all__ = ["Actor", "Actress", "BasicType", "BigEntity", "CastMember", "ComplexType", "Directory", "Entity", "Exception", "ExceptionInfo", "Exception_Generic", "Exception_Timeout", "ExtendedMovie", "File", "Identifier", "Metadata", "Metadata_Html", "Metadata_Markdown", "Migration", "MigrationStatus", "Moment", "Movie", "MovieId", "Node", "NotFoundError", "Request", "Response", "ResponseType", "StuntDouble", "Test", "Test_And", "Test_Or", "Tree", "Type"]
+__all__ = ["Actor", "Actress", "BasicType", "BigEntity", "CastMember", "ComplexType", "CronJob", "Directory", "Entity", "Exception", "ExceptionInfo", "Exception_Generic", "Exception_Timeout", "ExtendedMovie", "File", "Identifier", "Metadata", "Metadata_Html", "Metadata_Markdown", "Migration", "MigrationStatus", "Moment", "Movie", "MovieId", "Node", "NotFoundError", "Request", "Response", "ResponseType", "StuntDouble", "Test", "Test_And", "Test_Or", "Tree", "Type"]

@@ -5054,6 +5054,104 @@
                 }
             ],
             "additionalProperties": false
+        },
+        "type_types:CronJob": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "CronJob",
+                    "camelCase": {
+                        "unsafeName": "cronJob",
+                        "safeName": "cronJob"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "cron_job",
+                        "safeName": "cron_job"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CRON_JOB",
+                        "safeName": "CRON_JOB"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "CronJob",
+                        "safeName": "CronJob"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "types",
+                            "camelCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TYPES",
+                                "safeName": "TYPES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Types",
+                                "safeName": "Types"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "types",
+                        "camelCase": {
+                            "unsafeName": "types",
+                            "safeName": "types"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "types",
+                            "safeName": "types"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TYPES",
+                            "safeName": "TYPES"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Types",
+                            "safeName": "Types"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "expression",
+                            "camelCase": {
+                                "unsafeName": "expression",
+                                "safeName": "expression"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "expression",
+                                "safeName": "expression"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "EXPRESSION",
+                                "safeName": "EXPRESSION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Expression",
+                                "safeName": "Expression"
+                            }
+                        },
+                        "wireValue": "expression"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    }
+                }
+            ],
+            "additionalProperties": false
         }
     },
     "headers": [],

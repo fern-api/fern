@@ -36,7 +36,9 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.union = exports.object = exports.enum_ = void 0;
+exports.union = exports.object = exports.enum_ = exports.docs = void 0;
+exports.docs = __importStar(require("./docs/index.js"));
+__exportStar(require("./docs/types/index.js"), exports);
 exports.enum_ = __importStar(require("./enum/index.js"));
 __exportStar(require("./enum/types/index.js"), exports);
 exports.object = __importStar(require("./object/index.js"));

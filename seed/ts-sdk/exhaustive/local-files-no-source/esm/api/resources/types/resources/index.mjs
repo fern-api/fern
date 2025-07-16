@@ -1,3 +1,5 @@
+export * as docs from "./docs/index.mjs";
+export * from "./docs/types/index.mjs";
 export * as enum_ from "./enum/index.mjs";
 export * from "./enum/types/index.mjs";
 export * as object from "./object/index.mjs";

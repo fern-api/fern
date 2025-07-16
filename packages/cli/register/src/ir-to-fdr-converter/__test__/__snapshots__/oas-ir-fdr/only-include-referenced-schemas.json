@@ -18212,16 +18212,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "18722269-a019-46c4-87d7-50d0f6f8a990",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "18722269-a019-46c4-87d7-50d0f6f8a990",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -18244,16 +18242,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "9818bd03-9cc6-4ab8-8e7c-20a45ac58e97",
-                        "errors": [
-                          {
-                            "code": "admin_not_found",
-                            "message": "Admin for admin_id not found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "9818bd03-9cc6-4ab8-8e7c-20a45ac58e97",
+                      "errors": [
+                        {
+                          "code": "admin_not_found",
+                          "message": "Admin for admin_id not found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -18456,16 +18452,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "06d9eefd-2b3a-48f7-938a-5a10383a4ebf",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "06d9eefd-2b3a-48f7-938a-5a10383a4ebf",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -18665,16 +18659,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "4ba8121e-4a4a-4668-adb2-363c561f3c52",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "4ba8121e-4a4a-4668-adb2-363c561f3c52",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -18824,16 +18816,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "83978032-1473-4696-b755-b497d46a23cf",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "83978032-1473-4696-b755-b497d46a23cf",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -18856,16 +18846,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "989bdb0b-1e8c-46cc-8953-9733dad40562",
-                        "errors": [
-                          {
-                            "code": "admin_not_found",
-                            "message": "Admin not found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "989bdb0b-1e8c-46cc-8953-9733dad40562",
+                      "errors": [
+                        {
+                          "code": "admin_not_found",
+                          "message": "Admin not found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -18998,16 +18986,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "86d69044-5966-428e-9a40-2b39fba3f823",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "86d69044-5966-428e-9a40-2b39fba3f823",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -19177,16 +19163,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "e0ea220d-8030-4e0c-9fa9-6b40e9ed4fbd",
-                        "errors": [
-                          {
-                            "code": "parameter_not_found",
-                            "message": "author_id must be in the main body or default locale translated_content object"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "e0ea220d-8030-4e0c-9fa9-6b40e9ed4fbd",
+                      "errors": [
+                        {
+                          "code": "parameter_not_found",
+                          "message": "author_id must be in the main body or default locale translated_content object"
+                        }
+                      ]
                     }
                   }
                 }
@@ -19209,16 +19193,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "f223a1d9-5377-4337-92bb-00fb39157f11",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "f223a1d9-5377-4337-92bb-00fb39157f11",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -19454,16 +19436,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "62ab4791-7e4d-4400-a56b-b06a0ce3ba1a",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "62ab4791-7e4d-4400-a56b-b06a0ce3ba1a",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -19486,16 +19466,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "99c73902-e8ea-4872-b412-1d55ce4582fb",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "Resource Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "99c73902-e8ea-4872-b412-1d55ce4582fb",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "Resource Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -19680,16 +19658,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "15b4f214-c670-43d7-ad8f-648791fddf9b",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "15b4f214-c670-43d7-ad8f-648791fddf9b",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -19712,16 +19688,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "891b6ff4-181f-4b98-861b-d34ef16bfc4b",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "Resource Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "891b6ff4-181f-4b98-861b-d34ef16bfc4b",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "Resource Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -19927,16 +19901,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "85d43c53-f28f-4295-b937-9a43ea71d0c3",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "85d43c53-f28f-4295-b937-9a43ea71d0c3",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -19959,16 +19931,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "60da5f23-613c-4f84-84bd-e9dbd3d67187",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "Resource Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "60da5f23-613c-4f84-84bd-e9dbd3d67187",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "Resource Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -20134,16 +20104,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "626c6766-ee1a-489d-b87a-230d9b980c7d",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "626c6766-ee1a-489d-b87a-230d9b980c7d",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -20321,16 +20289,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "ccedcb48-7d08-4cc9-bcff-0622f70daf74",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "ccedcb48-7d08-4cc9-bcff-0622f70daf74",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -20520,16 +20486,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "1f4fd741-8681-4c21-911a-47d7bb39d080",
-                        "errors": [
-                          {
-                            "code": "parameter_not_found",
-                            "message": "Name is a required parameter."
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "1f4fd741-8681-4c21-911a-47d7bb39d080",
+                      "errors": [
+                        {
+                          "code": "parameter_not_found",
+                          "message": "Name is a required parameter."
+                        }
+                      ]
                     }
                   }
                 }
@@ -20552,16 +20516,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "8afa14e4-0e7c-4159-8aab-dfa3dcb6a8b4",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "8afa14e4-0e7c-4159-8aab-dfa3dcb6a8b4",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -20737,16 +20699,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "bf1acd76-8c6e-45f4-8dbe-54391843270a",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "bf1acd76-8c6e-45f4-8dbe-54391843270a",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -20769,16 +20729,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "2970f0f3-7020-4382-8892-eac24818ca88",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "Resource Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "2970f0f3-7020-4382-8892-eac24818ca88",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "Resource Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -20939,16 +20897,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "67002700-07f8-4a56-a9bc-464254c3a5bd",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "67002700-07f8-4a56-a9bc-464254c3a5bd",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -20971,16 +20927,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "35e7f185-f547-4ae1-a23d-afc9027fc5a6",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "Resource Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "35e7f185-f547-4ae1-a23d-afc9027fc5a6",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "Resource Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -21158,16 +21112,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "e00bc89b-b9a9-4bc2-84a0-5c9d4710bfcf",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "e00bc89b-b9a9-4bc2-84a0-5c9d4710bfcf",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -21190,16 +21142,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "a35712b4-90b6-47fb-843d-757d9fdd81e6",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "Resource Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "a35712b4-90b6-47fb-843d-757d9fdd81e6",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "Resource Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -21331,16 +21281,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "794a475b-0155-40b2-a288-ba0d48fdbd3f",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "794a475b-0155-40b2-a288-ba0d48fdbd3f",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -21363,16 +21311,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "c6e7d3f6-8a46-460e-8264-e07c2e7302aa",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "Resource Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "c6e7d3f6-8a46-460e-8264-e07c2e7302aa",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "Resource Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -21493,16 +21439,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "c96a4779-a06d-45bb-aa39-eb96c587c2c7",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "c96a4779-a06d-45bb-aa39-eb96c587c2c7",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -21700,16 +21644,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "6ef54f1c-70a4-4779-b3a6-29e4fd65d9dd",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "6ef54f1c-70a4-4779-b3a6-29e4fd65d9dd",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -21732,16 +21674,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "c97dd75f-a434-4c83-a8e8-c4d1887d6c48",
-                        "errors": [
-                          {
-                            "code": "company_not_found",
-                            "message": "Company Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "c97dd75f-a434-4c83-a8e8-c4d1887d6c48",
+                      "errors": [
+                        {
+                          "code": "company_not_found",
+                          "message": "Company Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -21934,16 +21874,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": null,
-                        "errors": [
-                          {
-                            "code": "bad_request",
-                            "message": "bad 'test' parameter"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": null,
+                      "errors": [
+                        {
+                          "code": "bad_request",
+                          "message": "bad 'test' parameter"
+                        }
+                      ]
                     }
                   }
                 }
@@ -21966,16 +21904,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "9b0d6fb9-d2d7-4904-a13c-97557a802323",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "9b0d6fb9-d2d7-4904-a13c-97557a802323",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -22177,16 +22113,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "c4e2fcb8-815e-4bee-80c7-9d5b1ab0f6fe",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "c4e2fcb8-815e-4bee-80c7-9d5b1ab0f6fe",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -22209,16 +22143,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "b49593ed-49a6-4497-8fb7-220ff74527f6",
-                        "errors": [
-                          {
-                            "code": "company_not_found",
-                            "message": "Company Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "b49593ed-49a6-4497-8fb7-220ff74527f6",
+                      "errors": [
+                        {
+                          "code": "company_not_found",
+                          "message": "Company Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -22386,16 +22318,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "3f26a216-ddff-4782-9529-514f5bad56ea",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "3f26a216-ddff-4782-9529-514f5bad56ea",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -22418,16 +22348,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "b1ce72df-630f-4925-b212-fca6e833eb8d",
-                        "errors": [
-                          {
-                            "code": "company_not_found",
-                            "message": "Company Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "b1ce72df-630f-4925-b212-fca6e833eb8d",
+                      "errors": [
+                        {
+                          "code": "company_not_found",
+                          "message": "Company Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -22595,16 +22523,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "0a1a5065-69fe-47a4-9804-4cb2347671ef",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "0a1a5065-69fe-47a4-9804-4cb2347671ef",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -22627,16 +22553,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "35a9b551-331e-499e-a63f-20396bfd29f5",
-                        "errors": [
-                          {
-                            "code": "company_not_found",
-                            "message": "Company Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "35a9b551-331e-499e-a63f-20396bfd29f5",
+                      "errors": [
+                        {
+                          "code": "company_not_found",
+                          "message": "Company Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -22768,16 +22692,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "fe20b681-f988-4154-bec9-a5087fe0842e",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "fe20b681-f988-4154-bec9-a5087fe0842e",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -22800,16 +22722,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "a6381081-a166-4e8e-952d-38bb2cd1c2b4",
-                        "errors": [
-                          {
-                            "code": "company_not_found",
-                            "message": "Company Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "a6381081-a166-4e8e-952d-38bb2cd1c2b4",
+                      "errors": [
+                        {
+                          "code": "company_not_found",
+                          "message": "Company Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -22953,16 +22873,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "66fcc654-48ed-4f53-824e-831b5c96c9dc",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "66fcc654-48ed-4f53-824e-831b5c96c9dc",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -22985,16 +22903,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "22add598-fd33-4c34-971f-cf215117aab3",
-                        "errors": [
-                          {
-                            "code": "company_not_found",
-                            "message": "Company Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "22add598-fd33-4c34-971f-cf215117aab3",
+                      "errors": [
+                        {
+                          "code": "company_not_found",
+                          "message": "Company Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -23145,16 +23061,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "6f8cb4ca-9a95-43bd-aee1-597b85d1d13f",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "6f8cb4ca-9a95-43bd-aee1-597b85d1d13f",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -23345,16 +23259,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "4b3ca8b1-8983-4fb8-abc5-b20a4ece5d32",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "4b3ca8b1-8983-4fb8-abc5-b20a4ece5d32",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -23558,16 +23470,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "9297dcfc-1896-43a3-a3f9-131238422ed2",
-                        "errors": [
-                          {
-                            "code": "parameter_not_found",
-                            "message": "company not specified"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "9297dcfc-1896-43a3-a3f9-131238422ed2",
+                      "errors": [
+                        {
+                          "code": "parameter_not_found",
+                          "message": "company not specified"
+                        }
+                      ]
                     }
                   }
                 }
@@ -23590,16 +23500,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "99739bbd-2dbe-4ce3-ae91-af23379b5cd7",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "99739bbd-2dbe-4ce3-ae91-af23379b5cd7",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -23622,16 +23530,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "32d121d8-fcbf-4c59-9c60-204f7d602f36",
-                        "errors": [
-                          {
-                            "code": "company_not_found",
-                            "message": "Company Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "32d121d8-fcbf-4c59-9c60-204f7d602f36",
+                      "errors": [
+                        {
+                          "code": "company_not_found",
+                          "message": "Company Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -23847,16 +23753,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "d8c1ab2d-4044-4c4f-98f0-176860747112",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "d8c1ab2d-4044-4c4f-98f0-176860747112",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -23879,16 +23783,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "cd4f1648-724c-45f0-b6e1-72a1bc6479ee",
-                        "errors": [
-                          {
-                            "code": "company_not_found",
-                            "message": "Company Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "cd4f1648-724c-45f0-b6e1-72a1bc6479ee",
+                      "errors": [
+                        {
+                          "code": "company_not_found",
+                          "message": "Company Not Found"
+                        }
+                      ]
                     }
                   }
                 },
@@ -23897,16 +23799,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "d316defc-0a2f-49e7-b8ff-4cb6ccf46c90",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "User Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "d316defc-0a2f-49e7-b8ff-4cb6ccf46c90",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "User Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -24085,16 +23985,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "d211ec8c-df9b-420c-86df-23c27ad54bc5",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "d211ec8c-df9b-420c-86df-23c27ad54bc5",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -24117,16 +24015,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "b9d7374d-1780-4668-bb62-0e1ff9cdab45",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "User Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "b9d7374d-1780-4668-bb62-0e1ff9cdab45",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "User Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -24322,16 +24218,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "d2927c64-9c5a-4593-997b-381f8c2356ea",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "d2927c64-9c5a-4593-997b-381f8c2356ea",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -24354,16 +24248,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "7d4ab1a9-5990-4338-b5d9-0f3f55f1acb7",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "User Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "7d4ab1a9-5990-4338-b5d9-0f3f55f1acb7",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "User Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -24511,16 +24403,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "82a95655-569d-4e5d-b0d9-f8a6c7a379f3",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "82a95655-569d-4e5d-b0d9-f8a6c7a379f3",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -24543,16 +24433,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "3f481052-cf49-4b95-a492-734223865981",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "User Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "3f481052-cf49-4b95-a492-734223865981",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "User Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -24768,16 +24656,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "97383559-0fb0-4084-8a9a-8e3407c46108",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "97383559-0fb0-4084-8a9a-8e3407c46108",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -24800,16 +24686,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "2b513026-b78c-4c67-b073-da0266f62cc7",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "User Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "2b513026-b78c-4c67-b073-da0266f62cc7",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "User Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -24951,16 +24835,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "f70085f1-f655-43ee-9585-d2061b260fcd",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "f70085f1-f655-43ee-9585-d2061b260fcd",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -25283,16 +25165,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "b1b88e2d-938c-4a26-b65d-26ff65a0af36",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "b1b88e2d-938c-4a26-b65d-26ff65a0af36",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -25613,16 +25493,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "0bce3945-d2ec-4b8e-a790-b16fd52d9f11",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "0bce3945-d2ec-4b8e-a790-b16fd52d9f11",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -25750,16 +25628,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "57b64228-0e60-4e35-833d-39c4e4067dde",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "57b64228-0e60-4e35-833d-39c4e4067dde",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -26072,16 +25948,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "2b28c47b-8fa3-4e17-8fc1-6ba80f1cc844",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "2b28c47b-8fa3-4e17-8fc1-6ba80f1cc844",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -26237,16 +26111,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "d5bac7ff-7961-4fe5-8aed-6f1b031b38af",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "d5bac7ff-7961-4fe5-8aed-6f1b031b38af",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -26382,16 +26254,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "c18ca0d4-ad2c-41e7-9a71-1df806f9c954",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "c18ca0d4-ad2c-41e7-9a71-1df806f9c954",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -26934,16 +26804,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "e93f90a6-4c85-4dbf-b063-96b649318371",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "User Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "e93f90a6-4c85-4dbf-b063-96b649318371",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "User Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -27247,16 +27115,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "d7c69ce6-3195-46be-b2cb-0dce355d2919",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "Resource Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "d7c69ce6-3195-46be-b2cb-0dce355d2919",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "Resource Not Found"
+                        }
+                      ]
                     }
                   }
                 },
@@ -27265,16 +27131,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "2e3bd274-9ac6-43c3-a419-bcc8e6a03a1d",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "User Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "2e3bd274-9ac6-43c3-a419-bcc8e6a03a1d",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "User Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -27494,16 +27358,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "b29ebc05-ba35-4db8-aac6-d74617769643",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "b29ebc05-ba35-4db8-aac6-d74617769643",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -27526,16 +27388,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "7e37eb4e-9f1e-47fa-a393-8d9b2c20983a",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "Resource Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "7e37eb4e-9f1e-47fa-a393-8d9b2c20983a",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "Resource Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -27735,16 +27595,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "377d162e-82a5-4148-a26f-29c9c760dadc",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "377d162e-82a5-4148-a26f-29c9c760dadc",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -27767,16 +27625,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "cf0f6fd6-7c5e-492b-909d-f60b35eea1c4",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "User Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "cf0f6fd6-7c5e-492b-909d-f60b35eea1c4",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "User Not Found"
+                        }
+                      ]
                     }
                   }
                 },
@@ -27785,16 +27641,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "3f852f45-1a80-4ade-9bc6-72b377d2bbd8",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "Resource Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "3f852f45-1a80-4ade-9bc6-72b377d2bbd8",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "Resource Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -28032,16 +27886,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "99fba0c6-2252-4658-abd2-1d2ff16a508b",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "99fba0c6-2252-4658-abd2-1d2ff16a508b",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -28064,16 +27916,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "7bc429e4-e887-4f53-b69c-94e6e55d2125",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "User Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "7bc429e4-e887-4f53-b69c-94e6e55d2125",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "User Not Found"
+                        }
+                      ]
                     }
                   }
                 },
@@ -28082,16 +27932,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "66ebc1f5-5e02-4584-8028-f2559a41e8df",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "Resource Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "66ebc1f5-5e02-4584-8028-f2559a41e8df",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "Resource Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -28237,16 +28085,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "5fb6b003-d6a6-4641-b71b-c5c468c87448",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "5fb6b003-d6a6-4641-b71b-c5c468c87448",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -28450,16 +28296,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "63a2828f-107e-4d51-9398-a220b81a7bce",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "63a2828f-107e-4d51-9398-a220b81a7bce",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -28482,16 +28326,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "1bbd7e4b-718e-46f4-b682-a429aea78f01",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "User Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "1bbd7e4b-718e-46f4-b682-a429aea78f01",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "User Not Found"
+                        }
+                      ]
                     }
                   }
                 },
@@ -28500,16 +28342,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "a1a28017-728a-423b-adc0-2705d375f533",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "Resource Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "a1a28017-728a-423b-adc0-2705d375f533",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "Resource Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -28709,16 +28549,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "e97d9f1b-8c9e-4caf-b473-3bce411c697e",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "e97d9f1b-8c9e-4caf-b473-3bce411c697e",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -28741,16 +28579,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "6f735483-c309-4e94-b9ab-143aedc0c691",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "User Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "6f735483-c309-4e94-b9ab-143aedc0c691",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "User Not Found"
+                        }
+                      ]
                     }
                   }
                 },
@@ -28759,16 +28595,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "9e780671-29b3-4913-b4be-15234ea0bc6a",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "Resource Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "9e780671-29b3-4913-b4be-15234ea0bc6a",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "Resource Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -28933,16 +28767,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "95cacea0-4744-4de8-a2bf-da4419f75732",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "95cacea0-4744-4de8-a2bf-da4419f75732",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -28965,16 +28797,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "840d35aa-2414-402a-b3c6-763a410e0d16",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "Conversation not found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "840d35aa-2414-402a-b3c6-763a410e0d16",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "Conversation not found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -29180,16 +29010,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "f083d6b1-e9d2-43b3-86df-67539007fc3e",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "f083d6b1-e9d2-43b3-86df-67539007fc3e",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -29212,16 +29040,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "f78f63ba-911d-47b8-a389-b33e3ccbe77e",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "Conversation not found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "f78f63ba-911d-47b8-a389-b33e3ccbe77e",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "Conversation not found"
+                        }
+                      ]
                     }
                   }
                 },
@@ -29230,16 +29056,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "0d00d069-2cf1-496f-b887-a4db74ee320d",
-                        "errors": [
-                          {
-                            "code": "tag_not_found",
-                            "message": "Tag not found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "0d00d069-2cf1-496f-b887-a4db74ee320d",
+                      "errors": [
+                        {
+                          "code": "tag_not_found",
+                          "message": "Tag not found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -29405,16 +29229,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "c83a3efe-433a-4555-a5e2-e393588be29f",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "c83a3efe-433a-4555-a5e2-e393588be29f",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -29548,16 +29370,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "a7afe3c5-be52-4b69-9268-50ef1d917a1b",
-                        "errors": [
-                          {
-                            "code": "parameter_invalid",
-                            "message": "invalid tag parameters"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "a7afe3c5-be52-4b69-9268-50ef1d917a1b",
+                      "errors": [
+                        {
+                          "code": "parameter_invalid",
+                          "message": "invalid tag parameters"
+                        }
+                      ]
                     }
                   }
                 }
@@ -29580,16 +29400,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "3609e8b1-a6aa-4c57-a994-3d95743f20a2",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "3609e8b1-a6aa-4c57-a994-3d95743f20a2",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -29612,16 +29430,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "f0f84d9b-3c51-4904-9c21-34faba76ebf5",
-                        "errors": [
-                          {
-                            "code": "company_not_found",
-                            "message": "Company Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "f0f84d9b-3c51-4904-9c21-34faba76ebf5",
+                      "errors": [
+                        {
+                          "code": "company_not_found",
+                          "message": "Company Not Found"
+                        }
+                      ]
                     }
                   }
                 },
@@ -29630,16 +29446,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "786848c6-5b9f-4e9b-aa78-2bdec45a09f5",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "User Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "786848c6-5b9f-4e9b-aa78-2bdec45a09f5",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "User Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -29855,16 +29669,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "76a1d79d-3f0d-49bb-8d15-38d1ae6df738",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "76a1d79d-3f0d-49bb-8d15-38d1ae6df738",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -29887,16 +29699,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "20b89fb6-f224-4f81-98ca-4cb4b36df959",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "Resource Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "20b89fb6-f224-4f81-98ca-4cb4b36df959",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "Resource Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -30017,16 +29827,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "41086388-9b3b-4e07-9633-502b9b10c926",
-                        "errors": [
-                          {
-                            "code": "tag_has_dependent_objects",
-                            "message": "Unable to delete Tag with dependent objects. Segments: Seg 1."
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "41086388-9b3b-4e07-9633-502b9b10c926",
+                      "errors": [
+                        {
+                          "code": "tag_has_dependent_objects",
+                          "message": "Unable to delete Tag with dependent objects. Segments: Seg 1."
+                        }
+                      ]
                     }
                   }
                 }
@@ -30049,16 +29857,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "3dcedf54-ed30-4337-8992-94e36900e695",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "3dcedf54-ed30-4337-8992-94e36900e695",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -30081,16 +29887,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "111586bb-ad78-43b9-b0a0-bf864d9a3744",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "Resource Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "111586bb-ad78-43b9-b0a0-bf864d9a3744",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "Resource Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -30241,16 +30045,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "a502f48f-c80d-48fd-bea5-cafe7e24d9f9",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "a502f48f-c80d-48fd-bea5-cafe7e24d9f9",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -30273,16 +30075,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "e11d8f55-82fe-4c0d-b4c6-6f22c6a694e9",
-                        "errors": [
-                          {
-                            "code": "ticket_not_found",
-                            "message": "Ticket not found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "e11d8f55-82fe-4c0d-b4c6-6f22c6a694e9",
+                      "errors": [
+                        {
+                          "code": "ticket_not_found",
+                          "message": "Ticket not found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -30488,16 +30288,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "0d3be117-0a9e-4e88-9a05-4fdd7f93d7bc",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "0d3be117-0a9e-4e88-9a05-4fdd7f93d7bc",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -30520,16 +30318,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "ffa08bb4-3994-4132-b9e3-14837e0723e8",
-                        "errors": [
-                          {
-                            "code": "ticket_not_found",
-                            "message": "Ticket not found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "ffa08bb4-3994-4132-b9e3-14837e0723e8",
+                      "errors": [
+                        {
+                          "code": "ticket_not_found",
+                          "message": "Ticket not found"
+                        }
+                      ]
                     }
                   }
                 },
@@ -30538,16 +30334,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "d2385995-502c-4c03-bf4b-93ef3d24037b",
-                        "errors": [
-                          {
-                            "code": "tag_not_found",
-                            "message": "Tag not found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "d2385995-502c-4c03-bf4b-93ef3d24037b",
+                      "errors": [
+                        {
+                          "code": "tag_not_found",
+                          "message": "Tag not found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -30752,16 +30546,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "18db64a8-7a08-4967-9ec6-0416178306f9",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "18db64a8-7a08-4967-9ec6-0416178306f9",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -30784,16 +30576,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "a91eac55-8d70-454d-a01d-c6bb875aaa35",
-                        "errors": [
-                          {
-                            "code": "api_plan_restricted",
-                            "message": "Active subscription needed."
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "a91eac55-8d70-454d-a01d-c6bb875aaa35",
+                      "errors": [
+                        {
+                          "code": "api_plan_restricted",
+                          "message": "Active subscription needed."
+                        }
+                      ]
                     }
                   }
                 }
@@ -31053,16 +30843,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "af9757fc-4e1d-463c-ac9d-788503f04a95",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "af9757fc-4e1d-463c-ac9d-788503f04a95",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -31085,16 +30873,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "c7a35217-6720-48bd-a2ae-c2acb5adea30",
-                        "errors": [
-                          {
-                            "code": "api_plan_restricted",
-                            "message": "Active subscription needed."
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "c7a35217-6720-48bd-a2ae-c2acb5adea30",
+                      "errors": [
+                        {
+                          "code": "api_plan_restricted",
+                          "message": "Active subscription needed."
+                        }
+                      ]
                     }
                   }
                 }
@@ -31117,16 +30903,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "ed0ab0c5-57b8-4413-a7a9-bbc134b40876",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "User Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "ed0ab0c5-57b8-4413-a7a9-bbc134b40876",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "User Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -31320,16 +31104,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "b1f6adfd-f7da-4880-8d11-d842235126ae",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "b1f6adfd-f7da-4880-8d11-d842235126ae",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -31352,16 +31134,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "c7b0a10f-d482-4352-8d7b-1ad26b902473",
-                        "errors": [
-                          {
-                            "code": "api_plan_restricted",
-                            "message": "Active subscription needed."
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "c7b0a10f-d482-4352-8d7b-1ad26b902473",
+                      "errors": [
+                        {
+                          "code": "api_plan_restricted",
+                          "message": "Active subscription needed."
+                        }
+                      ]
                     }
                   }
                 }
@@ -31384,16 +31164,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "978c1e65-1eba-4995-9acb-ff8f33b283e3",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "Resource Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "978c1e65-1eba-4995-9acb-ff8f33b283e3",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "Resource Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -31676,16 +31454,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "58e6b9ee-4a28-4597-9c20-faf34b6894dc",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "58e6b9ee-4a28-4597-9c20-faf34b6894dc",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -31708,16 +31484,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "cf6fb162-88c9-45ec-9f97-c3fcad93b7c1",
-                        "errors": [
-                          {
-                            "code": "api_plan_restricted",
-                            "message": "Active subscription needed."
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "cf6fb162-88c9-45ec-9f97-c3fcad93b7c1",
+                      "errors": [
+                        {
+                          "code": "api_plan_restricted",
+                          "message": "Active subscription needed."
+                        }
+                      ]
                     }
                   }
                 }
@@ -31740,16 +31514,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "e4c692dd-cccd-46bf-834a-cda7a3a9029c",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "Resource Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "e4c692dd-cccd-46bf-834a-cda7a3a9029c",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "Resource Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -32419,16 +32191,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "7435aa28-13bd-40b1-ba99-66009e92a1ba",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "7435aa28-13bd-40b1-ba99-66009e92a1ba",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -32451,16 +32221,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "9fe5809c-cf0b-4a0f-af80-9913d3beb1eb",
-                        "errors": [
-                          {
-                            "code": "api_plan_restricted",
-                            "message": "Active subscription needed."
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "9fe5809c-cf0b-4a0f-af80-9913d3beb1eb",
+                      "errors": [
+                        {
+                          "code": "api_plan_restricted",
+                          "message": "Active subscription needed."
+                        }
+                      ]
                     }
                   }
                 }
@@ -32483,16 +32251,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "8193a639-aba8-4b0e-9fdd-ee48807e3ee7",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "Resource Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "8193a639-aba8-4b0e-9fdd-ee48807e3ee7",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "Resource Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -33259,16 +33025,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "ae0581d2-199e-437c-bf51-1eb9fe2e12fc",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "ae0581d2-199e-437c-bf51-1eb9fe2e12fc",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -33291,16 +33055,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "a7e069bb-f013-45bc-8e0a-f58c3de4e034",
-                        "errors": [
-                          {
-                            "code": "api_plan_restricted",
-                            "message": "Active subscription needed."
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "a7e069bb-f013-45bc-8e0a-f58c3de4e034",
+                      "errors": [
+                        {
+                          "code": "api_plan_restricted",
+                          "message": "Active subscription needed."
+                        }
+                      ]
                     }
                   }
                 }
@@ -33323,16 +33085,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "1bfc14e1-07ef-4999-9448-f029b112cf1b",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "Resource Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "1bfc14e1-07ef-4999-9448-f029b112cf1b",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "Resource Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -34271,16 +34031,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "8aeac960-c7fb-41f7-8cc9-cd3d62f6ff92",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "8aeac960-c7fb-41f7-8cc9-cd3d62f6ff92",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -34303,16 +34061,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "037980c4-84cb-4d3a-ad64-66e4e563a275",
-                        "errors": [
-                          {
-                            "code": "api_plan_restricted",
-                            "message": "Active subscription needed."
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "037980c4-84cb-4d3a-ad64-66e4e563a275",
+                      "errors": [
+                        {
+                          "code": "api_plan_restricted",
+                          "message": "Active subscription needed."
+                        }
+                      ]
                     }
                   }
                 }
@@ -34335,16 +34091,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "9d88a5a7-6df9-42ff-b324-2387db7be984",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "Resource Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "9d88a5a7-6df9-42ff-b324-2387db7be984",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "Resource Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -34657,16 +34411,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "4f00c4c6-a8f7-436e-bf95-d1adfa315906",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "4f00c4c6-a8f7-436e-bf95-d1adfa315906",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -34689,16 +34441,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "3d1c3371-6ba4-4d5a-9368-ac983292136d",
-                        "errors": [
-                          {
-                            "code": "api_plan_restricted",
-                            "message": "Active subscription needed."
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "3d1c3371-6ba4-4d5a-9368-ac983292136d",
+                      "errors": [
+                        {
+                          "code": "api_plan_restricted",
+                          "message": "Active subscription needed."
+                        }
+                      ]
                     }
                   }
                 }
@@ -34721,16 +34471,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "1fd64942-5bf0-4a51-a6cb-db4a778bb1f4",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "Resource Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "1fd64942-5bf0-4a51-a6cb-db4a778bb1f4",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "Resource Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -34941,16 +34689,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "d35f1b37-765c-4afe-8738-81c0560710a6",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "d35f1b37-765c-4afe-8738-81c0560710a6",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -34973,16 +34719,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "d30f18d4-2e0a-4528-a66b-4590b733713c",
-                        "errors": [
-                          {
-                            "code": "api_plan_restricted",
-                            "message": "Active subscription needed."
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "d30f18d4-2e0a-4528-a66b-4590b733713c",
+                      "errors": [
+                        {
+                          "code": "api_plan_restricted",
+                          "message": "Active subscription needed."
+                        }
+                      ]
                     }
                   }
                 }
@@ -35005,16 +34749,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "579f0f7a-d773-41d6-9d36-8cc0b3fbcc41",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "Resource Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "579f0f7a-d773-41d6-9d36-8cc0b3fbcc41",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "Resource Not Found"
+                        }
+                      ]
                     }
                   }
                 },
@@ -35023,16 +34765,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "44531412-2973-4b92-b14d-80abac5c1b4d",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "User Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "44531412-2973-4b92-b14d-80abac5c1b4d",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "User Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -35055,16 +34795,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "35a0444f-8a1e-40e9-a5fc-dd1ae2df8bc6",
-                        "errors": [
-                          {
-                            "code": "parameter_invalid",
-                            "message": "Removing the last customer is not allowed"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "35a0444f-8a1e-40e9-a5fc-dd1ae2df8bc6",
+                      "errors": [
+                        {
+                          "code": "parameter_invalid",
+                          "message": "Removing the last customer is not allowed"
+                        }
+                      ]
                     }
                   }
                 }
@@ -35294,16 +35032,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "1b830d07-a249-4ff8-a7bf-41bf83fd53b2",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "1b830d07-a249-4ff8-a7bf-41bf83fd53b2",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -35326,16 +35062,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "0c016386-49f4-431f-92dc-7e739cbf98e1",
-                        "errors": [
-                          {
-                            "code": "conversation_part_or_message_not_found",
-                            "message": "Conversation part or message not found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "0c016386-49f4-431f-92dc-7e739cbf98e1",
+                      "errors": [
+                        {
+                          "code": "conversation_part_or_message_not_found",
+                          "message": "Conversation part or message not found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -35684,16 +35418,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "74656c1a-0a17-4c80-a7b9-66fa45c6d71b",
-                        "errors": [
-                          {
-                            "code": "parameter_invalid",
-                            "message": "Ticket type is not a customer ticket type"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "74656c1a-0a17-4c80-a7b9-66fa45c6d71b",
+                      "errors": [
+                        {
+                          "code": "parameter_invalid",
+                          "message": "Ticket type is not a customer ticket type"
+                        }
+                      ]
                     }
                   }
                 }
@@ -36037,16 +35769,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "6e76e914-a34d-4125-8310-62fdfc4e651e",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "6e76e914-a34d-4125-8310-62fdfc4e651e",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -36657,16 +36387,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "bcd93885-3f01-4b92-9918-c96a3f4492e8",
-                        "errors": [
-                          {
-                            "code": "parameter_invalid",
-                            "message": "You already have 'The One Ring' in your company data. To save this as new people data, use a different name."
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "bcd93885-3f01-4b92-9918-c96a3f4492e8",
+                      "errors": [
+                        {
+                          "code": "parameter_invalid",
+                          "message": "You already have 'The One Ring' in your company data. To save this as new people data, use a different name."
+                        }
+                      ]
                     }
                   }
                 },
@@ -36675,16 +36403,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "7420c5e3-22c3-46be-8a23-72fef8f8ec0e",
-                        "errors": [
-                          {
-                            "code": "parameter_invalid",
-                            "message": "Your name for this attribute must only contain alphanumeric characters, currency symbols, and hyphens"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "7420c5e3-22c3-46be-8a23-72fef8f8ec0e",
+                      "errors": [
+                        {
+                          "code": "parameter_invalid",
+                          "message": "Your name for this attribute must only contain alphanumeric characters, currency symbols, and hyphens"
+                        }
+                      ]
                     }
                   }
                 },
@@ -36693,16 +36419,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "c844551a-05d3-4f8c-931a-32e96bf3a508",
-                        "errors": [
-                          {
-                            "code": "parameter_invalid",
-                            "message": "You already have 'The One Ring' in your company data. To save this as new company data, use a different name."
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "c844551a-05d3-4f8c-931a-32e96bf3a508",
+                      "errors": [
+                        {
+                          "code": "parameter_invalid",
+                          "message": "You already have 'The One Ring' in your company data. To save this as new company data, use a different name."
+                        }
+                      ]
                     }
                   }
                 },
@@ -36711,16 +36435,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "b8c58b81-8445-473d-8fe3-7880c04f9547",
-                        "errors": [
-                          {
-                            "code": "parameter_invalid",
-                            "message": "Data Type isn't an option"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "b8c58b81-8445-473d-8fe3-7880c04f9547",
+                      "errors": [
+                        {
+                          "code": "parameter_invalid",
+                          "message": "Data Type isn't an option"
+                        }
+                      ]
                     }
                   }
                 },
@@ -36729,16 +36451,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "119e3822-3a45-48cf-b5ab-037f27a948c8",
-                        "errors": [
-                          {
-                            "code": "parameter_invalid",
-                            "message": "The Data Attribute model field must be either contact or company"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "119e3822-3a45-48cf-b5ab-037f27a948c8",
+                      "errors": [
+                        {
+                          "code": "parameter_invalid",
+                          "message": "The Data Attribute model field must be either contact or company"
+                        }
+                      ]
                     }
                   }
                 }
@@ -36761,16 +36481,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "b74d8980-6e99-44db-a3d8-2a65a63fe590",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "b74d8980-6e99-44db-a3d8-2a65a63fe590",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -37071,16 +36789,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "6615f20c-01df-443c-9ea1-c954ba6b09d6",
-                        "errors": [
-                          {
-                            "code": "parameter_invalid",
-                            "message": "Options isn't an array"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "6615f20c-01df-443c-9ea1-c954ba6b09d6",
+                      "errors": [
+                        {
+                          "code": "parameter_invalid",
+                          "message": "Options isn't an array"
+                        }
+                      ]
                     }
                   }
                 }
@@ -37103,16 +36819,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "0cfc97c0-32be-4e68-aef2-f5744e4e85f7",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "0cfc97c0-32be-4e68-aef2-f5744e4e85f7",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -37135,16 +36849,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "2680a225-4f79-4098-8438-8db993c639fe",
-                        "errors": [
-                          {
-                            "code": "field_not_found",
-                            "message": "We couldn't find that data attribute to update"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "2680a225-4f79-4098-8438-8db993c639fe",
+                      "errors": [
+                        {
+                          "code": "field_not_found",
+                          "message": "We couldn't find that data attribute to update"
+                        }
+                      ]
                     }
                   }
                 }
@@ -37167,16 +36879,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "fbc508f1-9cbf-4134-90ea-baa1065760d2",
-                        "errors": [
-                          {
-                            "code": "data_invalid",
-                            "message": "The Data Attribute you are trying to archive has a dependant object"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "fbc508f1-9cbf-4134-90ea-baa1065760d2",
+                      "errors": [
+                        {
+                          "code": "data_invalid",
+                          "message": "The Data Attribute you are trying to archive has a dependant object"
+                        }
+                      ]
                     }
                   }
                 }
@@ -37464,16 +37174,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "bfdcc6de-2dcb-4725-acc7-232c10838586",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "bfdcc6de-2dcb-4725-acc7-232c10838586",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -37601,16 +37309,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "c6b3dcbd-33be-4a80-abb4-c5b3315250d0",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "c6b3dcbd-33be-4a80-abb4-c5b3315250d0",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -37715,16 +37421,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "110801d1-2f7b-436f-8f03-2245545a1432",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "110801d1-2f7b-436f-8f03-2245545a1432",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -38277,16 +37981,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "4a52a34f-c7e2-4e70-adf2-ea7f41beb2a1",
-                        "errors": [
-                          {
-                            "code": "parameter_invalid",
-                            "message": "Body is required"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "4a52a34f-c7e2-4e70-adf2-ea7f41beb2a1",
+                      "errors": [
+                        {
+                          "code": "parameter_invalid",
+                          "message": "Body is required"
+                        }
+                      ]
                     }
                   }
                 },
@@ -38295,16 +37997,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "7d54191b-c0fc-4860-a01c-9da6b4e45b7f",
-                        "errors": [
-                          {
-                            "code": "parameter_invalid",
-                            "message": "Body is required"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "7d54191b-c0fc-4860-a01c-9da6b4e45b7f",
+                      "errors": [
+                        {
+                          "code": "parameter_invalid",
+                          "message": "Body is required"
+                        }
+                      ]
                     }
                   }
                 }
@@ -38327,16 +38027,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "ee3ea56e-d0ce-47db-871a-57740e165e5c",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "ee3ea56e-d0ce-47db-871a-57740e165e5c",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -38359,16 +38057,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "fab7034a-78bd-4413-a652-8f38783e7bf1",
-                        "errors": [
-                          {
-                            "code": "api_plan_restricted",
-                            "message": "Active subscription needed."
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "fab7034a-78bd-4413-a652-8f38783e7bf1",
+                      "errors": [
+                        {
+                          "code": "api_plan_restricted",
+                          "message": "Active subscription needed."
+                        }
+                      ]
                     }
                   }
                 }
@@ -38391,16 +38087,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "f54ba906-3255-4fc6-a660-0dab0043ff2b",
-                        "errors": [
-                          {
-                            "code": "parameter_not_found",
-                            "message": "No subject supplied for email message"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "f54ba906-3255-4fc6-a660-0dab0043ff2b",
+                      "errors": [
+                        {
+                          "code": "parameter_not_found",
+                          "message": "No subject supplied for email message"
+                        }
+                      ]
                     }
                   }
                 }
@@ -38657,16 +38351,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "7b27151d-7bb0-402e-87fe-5780690d9f32",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "7b27151d-7bb0-402e-87fe-5780690d9f32",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -38888,16 +38580,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "c36202f1-6bf3-4ea6-9442-192123f506b0",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "c36202f1-6bf3-4ea6-9442-192123f506b0",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -39120,16 +38810,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "cc6af01d-81e3-4a74-8a62-807a3239e1ad",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "cc6af01d-81e3-4a74-8a62-807a3239e1ad",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -39152,16 +38840,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "0f4b439e-9b57-4019-886e-15cc08582914",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "Resource Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "0f4b439e-9b57-4019-886e-15cc08582914",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "Resource Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -39347,16 +39033,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "f780a591-4aa2-4382-80c4-e0f2d655bf2e",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "f780a591-4aa2-4382-80c4-e0f2d655bf2e",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -39379,16 +39063,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "fe6e217d-70bc-4090-b33a-b32ec0e6a391",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "Resource Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "fe6e217d-70bc-4090-b33a-b32ec0e6a391",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "Resource Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -39602,16 +39284,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "521cb8a5-4d47-43dd-94cb-ef54f6f8ce0a",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "521cb8a5-4d47-43dd-94cb-ef54f6f8ce0a",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -39634,16 +39314,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "a191b999-6f71-4676-a8db-1a79ccc4f114",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "Resource Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "a191b999-6f71-4676-a8db-1a79ccc4f114",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "Resource Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -39775,16 +39453,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "de07bbcf-64ff-4fc8-a7e5-fcbe772b85a5",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "de07bbcf-64ff-4fc8-a7e5-fcbe772b85a5",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -39909,16 +39585,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "d00f8d67-1e7c-464b-b0b7-b2409d706076",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "d00f8d67-1e7c-464b-b0b7-b2409d706076",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -40090,16 +39764,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "185ce494-34e2-4cda-85cb-c51ad7281292",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "185ce494-34e2-4cda-85cb-c51ad7281292",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -40240,16 +39912,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "d70c184d-852a-4f67-8298-3cf9a327adb3",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "d70c184d-852a-4f67-8298-3cf9a327adb3",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -40413,16 +40083,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "a9c190ff-16eb-43f9-94fc-7c22da2766af",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "a9c190ff-16eb-43f9-94fc-7c22da2766af",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -40445,16 +40113,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "fe79fa5e-c8eb-40a6-be76-d618833c2840",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "Resource Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "fe79fa5e-c8eb-40a6-be76-d618833c2840",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "Resource Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -40596,16 +40262,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "5da7a3e7-dcb0-4378-8575-0a0e9bae3862",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "5da7a3e7-dcb0-4378-8575-0a0e9bae3862",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -40820,16 +40484,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "006b2c8f-9a29-463e-be69-ad213576aee6",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "006b2c8f-9a29-463e-be69-ad213576aee6",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -40957,16 +40619,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "110ad8e4-99ed-461a-bd93-92a5cdbaa6b2",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "110ad8e4-99ed-461a-bd93-92a5cdbaa6b2",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -40989,16 +40649,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "4745dfce-7275-4864-abfd-44e0d84bf52a",
-                        "errors": [
-                          {
-                            "code": "team_not_found",
-                            "message": "Team not found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "4745dfce-7275-4864-abfd-44e0d84bf52a",
+                      "errors": [
+                        {
+                          "code": "team_not_found",
+                          "message": "Team not found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -41155,16 +40813,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "3bc672fa-e051-4ede-b6e9-79f518231ba9",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "3bc672fa-e051-4ede-b6e9-79f518231ba9",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -41374,16 +41030,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "6e45414c-e627-4769-bdbd-d51f2c19e1e9",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "6e45414c-e627-4769-bdbd-d51f2c19e1e9",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -41542,16 +41196,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "50823491-2ab1-4b84-9700-2d92c4f367fd",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "50823491-2ab1-4b84-9700-2d92c4f367fd",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -41833,16 +41485,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "7c4784fe-d3e4-4182-b9c4-918bdf253eef",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "7c4784fe-d3e4-4182-b9c4-918bdf253eef",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -42097,16 +41747,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "b0100f38-119c-4e30-8560-a25561d97c66",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "b0100f38-119c-4e30-8560-a25561d97c66",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -42399,16 +42047,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "2b0554fe-ba10-41d4-ab7b-715c2b7b8e47",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "2b0554fe-ba10-41d4-ab7b-715c2b7b8e47",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -42719,16 +42365,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "b8b42c55-347c-4704-b4c1-92220c01f4ac",
-                        "errors": [
-                          {
-                            "code": "parameter_mismatch",
-                            "message": "User replies are not allowed on Backoffice tickets"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "b8b42c55-347c-4704-b4c1-92220c01f4ac",
+                      "errors": [
+                        {
+                          "code": "parameter_mismatch",
+                          "message": "User replies are not allowed on Backoffice tickets"
+                        }
+                      ]
                     }
                   }
                 }
@@ -42751,16 +42395,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "bb012854-cca8-4fa7-972e-6c38204e8294",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "bb012854-cca8-4fa7-972e-6c38204e8294",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -42783,16 +42425,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "c23e8dab-6102-483c-bb1b-c62923be35ab",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "Resource Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "c23e8dab-6102-483c-bb1b-c62923be35ab",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "Resource Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -43085,16 +42725,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "745c921a-7c5a-40d4-ab28-6d28a8d2ed47",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "745c921a-7c5a-40d4-ab28-6d28a8d2ed47",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -43469,16 +43107,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "e7ba89f2-3bc8-4fc3-97bc-56f62f342680",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "e7ba89f2-3bc8-4fc3-97bc-56f62f342680",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -43841,16 +43477,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "e5202025-e8f9-400a-9107-192ae8bfd50c",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "e5202025-e8f9-400a-9107-192ae8bfd50c",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -44843,16 +44477,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "25dace4f-4916-492c-823b-f0cca227dff0",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "25dace4f-4916-492c-823b-f0cca227dff0",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -44875,16 +44507,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "7359afef-98f5-4b22-9de7-902f7a214729",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "Visitor Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "7359afef-98f5-4b22-9de7-902f7a214729",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "Visitor Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -45100,16 +44730,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "82df3971-fb7c-410d-a919-e8bc1b3d991a",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "82df3971-fb7c-410d-a919-e8bc1b3d991a",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
@@ -45132,16 +44760,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "1f35dc86-17d2-4bfe-8cb1-9afa74adc24c",
-                        "errors": [
-                          {
-                            "code": "not_found",
-                            "message": "Visitor Not Found"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "1f35dc86-17d2-4bfe-8cb1-9afa74adc24c",
+                      "errors": [
+                        {
+                          "code": "not_found",
+                          "message": "Visitor Not Found"
+                        }
+                      ]
                     }
                   }
                 }
@@ -45375,16 +45001,14 @@
                   "responseBody": {
                     "type": "json",
                     "value": {
-                      "value": {
-                        "type": "error.list",
-                        "request_id": "fe1a587a-e682-4a96-bd30-ea08b726e6fa",
-                        "errors": [
-                          {
-                            "code": "unauthorized",
-                            "message": "Access Token Invalid"
-                          }
-                        ]
-                      }
+                      "type": "error.list",
+                      "request_id": "fe1a587a-e682-4a96-bd30-ea08b726e6fa",
+                      "errors": [
+                        {
+                          "code": "unauthorized",
+                          "message": "Access Token Invalid"
+                        }
+                      ]
                     }
                   }
                 }
