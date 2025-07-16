@@ -1,4 +1,5 @@
 import { ReferenceConfigBuilder } from "@fern-api/base-generator";
+import { java } from "@fern-api/java-ast";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { HttpEndpoint, HttpService, ServiceId, TypeReference } from "@fern-fern/ir-sdk/api";
@@ -65,6 +66,7 @@ function getEndpointReference({
     endpoint: HttpEndpoint;
     singleEndpointSnippet: SingleEndpointSnippet;
 }): FernGeneratorCli.EndpointReference {
+    const returnValue = getReturnValue({ context, endpoint });
     return {
         title: {
             snippetParts: [
@@ -78,7 +80,7 @@ function getEndpointReference({
                     text: getReferenceEndpointInvocationParameters({ context, endpoint })
                 }
             ],
-            returnValue: getReturnValue({ context, endpoint })
+            returnValue
         },
         description: endpoint.docs,
         snippet: singleEndpointSnippet.endpointCall.trim(),
@@ -105,12 +107,10 @@ function getReferenceEndpointInvocationParameters({
 }): string {
     const parameters: string[] = [];
 
-    // Add path parameters
     endpoint.allPathParameters.forEach((pathParam) => {
         parameters.push(pathParam.name.camelCase.safeName);
     });
 
-    // Add request parameter if exists
     if (endpoint.requestBody != null) {
         switch (endpoint.requestBody.type) {
             case "inlinedRequestBody":
@@ -149,45 +149,25 @@ function getReturnValue({
 }
 
 function getSimpleTypeName(returnType: unknown, context: SdkGeneratorContext): string {
-    // Get the full type string to check if it's void
-    const fullTypeString = (
-        returnType as { toString: (args: { packageName: string; customConfig: unknown }) => string }
-    ).toString({
+    const javaType = returnType as java.Type;
+
+    const simpleWriter = new java.Writer({
         packageName: context.getCorePackageName(),
         customConfig: context.customConfig
     });
 
-    if (fullTypeString === "void") {
+    javaType.write(simpleWriter);
+
+    const typeName = simpleWriter.buffer.trim();
+
+    // Handle void case
+    if (typeName === "Void") {
         return "void";
     }
 
-    // Extract just the class name without package/imports
-    const lines = fullTypeString.split("\n");
+    const escapedTypeName = typeName.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-    // Find the actual type declaration (skip package and import lines)
-    for (const line of lines) {
-        const trimmedLine = line.trim();
-
-        // Skip empty lines, package statements, and import statements
-        if (!trimmedLine || trimmedLine.startsWith("package ") || trimmedLine.startsWith("import ")) {
-            continue;
-        }
-
-        // This should be the actual type - return it as is
-        return trimmedLine;
-    }
-
-    // Fallback: try to extract the last meaningful identifier
-    // Look for patterns like "SomeClass" or "Optional<SomeClass>"
-    const cleanedString = fullTypeString.replace(/package\s+[^;]+;/g, "").replace(/import\s+[^;]+;/g, "");
-    const typeMatch = cleanedString.match(/([A-Z][a-zA-Z0-9_]*(?:<[^>]+>)?)/);
-    if (typeMatch && typeMatch[1]) {
-        return typeMatch[1];
-    }
-
-    // Final fallback: return the full string but log a warning
-    context.logger.warn(`Could not extract simple type name from: ${fullTypeString}`);
-    return fullTypeString;
+    return escapedTypeName;
 }
 
 function getEndpointParameters({
@@ -199,7 +179,6 @@ function getEndpointParameters({
 }): FernGeneratorCli.ParameterReference[] {
     const parameters: FernGeneratorCli.ParameterReference[] = [];
 
-    // Add path parameters
     endpoint.allPathParameters.forEach((pathParam) => {
         parameters.push({
             name: pathParam.name.camelCase.safeName,
@@ -209,7 +188,6 @@ function getEndpointParameters({
         });
     });
 
-    // Add query parameters
     endpoint.queryParameters.forEach((queryParam) => {
         parameters.push({
             name: queryParam.name.name.camelCase.safeName,
@@ -219,7 +197,6 @@ function getEndpointParameters({
         });
     });
 
-    // Add header parameters
     endpoint.headers.forEach((header) => {
         parameters.push({
             name: header.name.name.camelCase.safeName,
@@ -228,6 +205,24 @@ function getEndpointParameters({
             required: true
         });
     });
+
+    if (endpoint.requestBody != null && endpoint.requestBody.type === "inlinedRequestBody") {
+        endpoint.requestBody.properties.forEach((property) => {
+            parameters.push({
+                name: property.name.name.camelCase.safeName,
+                type: getJavaTypeString({ context, typeReference: property.valueType }),
+                description: property.docs,
+                required: true
+            });
+        });
+    } else if (endpoint.requestBody != null && endpoint.requestBody.type === "reference") {
+        parameters.push({
+            name: "request",
+            type: getJavaTypeString({ context, typeReference: endpoint.requestBody.requestBodyType }),
+            description: endpoint.requestBody.docs,
+            required: true
+        });
+    }
 
     return parameters;
 }
@@ -243,10 +238,30 @@ function getJavaTypeString({
     // For now, we'll provide basic type mapping
     try {
         const javaType = context.javaTypeMapper.convert({ reference: typeReference });
-        return getSimpleTypeName(javaType, context);
+        return getJavaTypeStringForParameter(javaType, context);
     } catch {
         return "Object";
     }
+}
+
+function getJavaTypeStringForParameter(returnType: unknown, context: SdkGeneratorContext): string {
+    const javaType = returnType as java.Type;
+
+    const simpleWriter = new java.Writer({
+        packageName: context.getCorePackageName(),
+        customConfig: context.customConfig
+    });
+
+    javaType.write(simpleWriter);
+
+    const typeName = simpleWriter.buffer.trim();
+
+    // Handle void case
+    if (typeName === "Void") {
+        return "void";
+    }
+
+    return typeName;
 }
 
 function isRootServiceId({ context, serviceId }: { context: SdkGeneratorContext; serviceId: ServiceId }): boolean {

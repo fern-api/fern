@@ -1,6 +1,6 @@
 # Reference
 ## Endpoints Container
-<details><summary><code>client.endpoints.container.getAndReturnListOfPrimitives(request) -> List<String></code></summary>
+<details><summary><code>client.endpoints.container.getAndReturnListOfPrimitives(request) -> List&lt;String&gt;</code></summary>
 <dl>
 <dd>
 
@@ -24,12 +24,27 @@ client.endpoints().container().getAndReturnListOfPrimitives(
 </dd>
 </dl>
 
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `List<String>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.getAndReturnListOfObjects(request) -> List<ObjectWithRequiredField></code></summary>
+<details><summary><code>client.endpoints.container.getAndReturnListOfObjects(request) -> List&lt;ObjectWithRequiredField&gt;</code></summary>
 <dl>
 <dd>
 
@@ -62,12 +77,27 @@ client.endpoints().container().getAndReturnListOfObjects(
 </dd>
 </dl>
 
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `List<ObjectWithRequiredField>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.getAndReturnSetOfPrimitives(request) -> Set<String></code></summary>
+<details><summary><code>client.endpoints.container.getAndReturnSetOfPrimitives(request) -> Set&lt;String&gt;</code></summary>
 <dl>
 <dd>
 
@@ -91,12 +121,27 @@ client.endpoints().container().getAndReturnSetOfPrimitives(
 </dd>
 </dl>
 
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Set<String>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.getAndReturnSetOfObjects(request) -> Set<ObjectWithRequiredField></code></summary>
+<details><summary><code>client.endpoints.container.getAndReturnSetOfObjects(request) -> Set&lt;ObjectWithRequiredField&gt;</code></summary>
 <dl>
 <dd>
 
@@ -125,12 +170,27 @@ client.endpoints().container().getAndReturnSetOfObjects(
 </dd>
 </dl>
 
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Set<ObjectWithRequiredField>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.getAndReturnMapPrimToPrim(request) -> Map<String, String></code></summary>
+<details><summary><code>client.endpoints.container.getAndReturnMapPrimToPrim(request) -> Map&lt;String, String&gt;</code></summary>
 <dl>
 <dd>
 
@@ -154,12 +214,27 @@ client.endpoints().container().getAndReturnMapPrimToPrim(
 </dd>
 </dl>
 
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Map<String, String>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.getAndReturnMapOfPrimToObject(request) -> Map<String, ObjectWithRequiredField></code></summary>
+<details><summary><code>client.endpoints.container.getAndReturnMapOfPrimToObject(request) -> Map&lt;String, ObjectWithRequiredField&gt;</code></summary>
 <dl>
 <dd>
 
@@ -186,12 +261,27 @@ client.endpoints().container().getAndReturnMapOfPrimToObject(
 </dd>
 </dl>
 
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Map<String, ObjectWithRequiredField>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.getAndReturnOptional(request) -> Optional<ObjectWithRequiredField></code></summary>
+<details><summary><code>client.endpoints.container.getAndReturnOptional(request) -> Optional&lt;ObjectWithRequiredField&gt;</code></summary>
 <dl>
 <dd>
 
@@ -218,13 +308,28 @@ client.endpoints().container().getAndReturnOptional(
 </dd>
 </dl>
 
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Optional<ObjectWithRequiredField>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
 </details>
 
 ## Endpoints ContentType
-<details><summary><code>client.endpoints.contentType.postJsonPatchContentType(request) -> Void</code></summary>
+<details><summary><code>client.endpoints.contentType.postJsonPatchContentType(request)</code></summary>
 <dl>
 <dd>
 
@@ -273,12 +378,27 @@ client.endpoints().contentType().postJsonPatchContentType(
 </dd>
 </dl>
 
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithOptionalField` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.contentType.postJsonPatchContentWithCharsetType(request) -> Void</code></summary>
+<details><summary><code>client.endpoints.contentType.postJsonPatchContentWithCharsetType(request)</code></summary>
 <dl>
 <dd>
 
@@ -327,6 +447,21 @@ client.endpoints().contentType().postJsonPatchContentWithCharsetType(
 </dd>
 </dl>
 
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithOptionalField` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
@@ -348,6 +483,21 @@ client.endpoints().contentType().postJsonPatchContentWithCharsetType(
 ```java
 client.endpoints().enum_().getAndReturnEnum(WeatherReport.SUNNY);
 ```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `WeatherReport` 
+    
 </dd>
 </dl>
 </dd>
@@ -424,6 +574,21 @@ client.endpoints().httpMethods().testPost(
 </dd>
 </dl>
 
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithRequiredField` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
@@ -464,6 +629,14 @@ client.endpoints().httpMethods().testPut(
 <dd>
 
 **id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -534,6 +707,14 @@ client.endpoints().httpMethods().testPatch(
 <dd>
 
 **id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithOptionalField` 
     
 </dd>
 </dl>
@@ -635,6 +816,21 @@ client.endpoints().object().getAndReturnWithOptionalField(
 </dd>
 </dl>
 
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithOptionalField` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
@@ -660,6 +856,21 @@ client.endpoints().object().getAndReturnWithRequiredField(
         .build()
 );
 ```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithRequiredField` 
+    
 </dd>
 </dl>
 </dd>
@@ -696,6 +907,21 @@ client.endpoints().object().getAndReturnWithMapOfMap(
         .build()
 );
 ```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithMapOfMap` 
+    
 </dd>
 </dl>
 </dd>
@@ -756,6 +982,21 @@ client.endpoints().object().getAndReturnNestedWithOptionalField(
         .build()
 );
 ```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `NestedObjectWithOptionalField` 
+    
 </dd>
 </dl>
 </dd>
@@ -831,6 +1072,14 @@ client.endpoints().object().getAndReturnNestedWithRequiredField(
 <dd>
 
 **string:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `NestedObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -930,6 +1179,21 @@ client.endpoints().object().getAndReturnNestedWithRequiredFieldAsList(
     )
 );
 ```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `List<NestedObjectWithRequiredField>` 
+    
 </dd>
 </dl>
 </dd>
@@ -1049,7 +1313,7 @@ client.endpoints().params().getWithPath("param");
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.getWithQuery() -> Void</code></summary>
+<details><summary><code>client.endpoints.params.getWithQuery()</code></summary>
 <dl>
 <dd>
 
@@ -1117,7 +1381,7 @@ client.endpoints().params().getWithQuery(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.getWithAllowMultipleQuery() -> Void</code></summary>
+<details><summary><code>client.endpoints.params.getWithAllowMultipleQuery()</code></summary>
 <dl>
 <dd>
 
@@ -1185,7 +1449,7 @@ client.endpoints().params().getWithQuery(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.getWithPathAndQuery(param) -> Void</code></summary>
+<details><summary><code>client.endpoints.params.getWithPathAndQuery(param)</code></summary>
 <dl>
 <dd>
 
@@ -1253,7 +1517,7 @@ client.endpoints().params().getWithPathAndQuery(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.getWithInlinePathAndQuery(param) -> Void</code></summary>
+<details><summary><code>client.endpoints.params.getWithInlinePathAndQuery(param)</code></summary>
 <dl>
 <dd>
 
@@ -1367,6 +1631,14 @@ client.endpoints().params().modifyWithPath("param", "string");
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request:** `String` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -1421,6 +1693,14 @@ client.endpoints().params().modifyWithPath("param", "string");
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request:** `String` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -1445,6 +1725,21 @@ client.endpoints().params().modifyWithPath("param", "string");
 ```java
 client.endpoints().primitive().getAndReturnString("string");
 ```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `String` 
+    
 </dd>
 </dl>
 </dd>
@@ -1475,6 +1770,21 @@ client.endpoints().primitive().getAndReturnInt(1);
 </dd>
 </dl>
 
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Integer` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
@@ -1495,6 +1805,21 @@ client.endpoints().primitive().getAndReturnInt(1);
 ```java
 client.endpoints().primitive().getAndReturnLong(1000000L);
 ```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Integer` 
+    
 </dd>
 </dl>
 </dd>
@@ -1525,6 +1850,21 @@ client.endpoints().primitive().getAndReturnDouble(1.1);
 </dd>
 </dl>
 
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Float` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
@@ -1545,6 +1885,21 @@ client.endpoints().primitive().getAndReturnDouble(1.1);
 ```java
 client.endpoints().primitive().getAndReturnBool(true);
 ```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Boolean` 
+    
 </dd>
 </dl>
 </dd>
@@ -1575,6 +1930,21 @@ client.endpoints().primitive().getAndReturnDatetime(OffsetDateTime.parse("2024-0
 </dd>
 </dl>
 
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `OffsetDateTime` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
@@ -1595,6 +1965,21 @@ client.endpoints().primitive().getAndReturnDatetime(OffsetDateTime.parse("2024-0
 ```java
 client.endpoints().primitive().getAndReturnDate("2023-01-15");
 ```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `String` 
+    
 </dd>
 </dl>
 </dd>
@@ -1625,6 +2010,21 @@ client.endpoints().primitive().getAndReturnUuid(UUID.fromString("d5e9c84f-c2b2-4
 </dd>
 </dl>
 
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `String` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
@@ -1645,6 +2045,21 @@ client.endpoints().primitive().getAndReturnUuid(UUID.fromString("d5e9c84f-c2b2-4
 ```java
 client.endpoints().primitive().getAndReturnBase64("SGVsbG8gd29ybGQh".getBytes());
 ```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `String` 
+    
 </dd>
 </dl>
 </dd>
@@ -1725,6 +2140,21 @@ client.endpoints().union().getAndReturnUnion(
     )
 );
 ```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Animal` 
+    
 </dd>
 </dl>
 </dd>
@@ -1907,6 +2337,37 @@ client.inlinedRequests().postWithObjectBodyandResponse(
 </dd>
 </dl>
 
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**string:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**integer:** `Integer` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**nestedObject:** `ObjectWithOptionalField` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
@@ -1944,6 +2405,21 @@ client.noAuth().postWithNoAuth(new
 HashMap<String, Object>() {{put("key", "value");
 }});
 ```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Object` 
+    
 </dd>
 </dl>
 </dd>
@@ -2006,7 +2482,7 @@ client.noReqBody().postWithNoRequestBody();
 </details>
 
 ## ReqWithHeaders
-<details><summary><code>client.reqWithHeaders.getWithCustomHeader(request) -> Void</code></summary>
+<details><summary><code>client.reqWithHeaders.getWithCustomHeader(request)</code></summary>
 <dl>
 <dd>
 
@@ -2042,6 +2518,14 @@ client.reqWithHeaders().getWithCustomHeader(
 <dd>
 
 **xTestEndpointHeader:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `String` 
     
 </dd>
 </dl>
