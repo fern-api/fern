@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |  
+        Use the nested "value" field for OpenAPI examples if it exists.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-15"
+  version: 0.65.17
+
+- changelogEntry:
+    - summary: |  
         Add a fallback version for buf export config.
       type: fix
   irVersion: 58
