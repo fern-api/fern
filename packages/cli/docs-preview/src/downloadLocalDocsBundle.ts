@@ -168,21 +168,24 @@ export async function downloadBundle({
                     const target = file.data.toString();
                     const symlinkPath = path.resolve('output-directory', file.path);
                     const targetPath = path.resolve(path.dirname(symlinkPath), target);
-                    if (!fs.existsSync(targetPath)) {
-                      // Dangling symlink, skip it
-                    //   logger.debug(`Dangling symlink: ${symlinkPath} -> ${targetPath}`);
-                      if (platform() === 'win32') {
-                        if (targetPath.includes("node_modules/next") || targetPath.includes("node_modules\\next")) {
-                            logger.debug(`Skipping symlink: \n\t${symlinkPath} -> \n\t${targetPath}`);
-                        }
-                        return false;
-                      }
-                      return true;
+                    if (targetPath.includes("node_modules/next") || targetPath.includes("node_modules\\next")) {
+                        logger.debug(`Found symlink: \n\t${symlinkPath} -> \n\t${targetPath}`);
                     }
-                  }
-              return true;
+                    if (!fs.existsSync(targetPath)) {
+                        // Dangling symlink, skip it
+                        //   logger.debug(`Dangling symlink: ${symlinkPath} -> ${targetPath}`);
+                        if (targetPath.includes("node_modules/next") || targetPath.includes("node_modules\\next")) {
+                            logger.debug(`Dangling symlink: \n\t${symlinkPath} -> \n\t${targetPath}`);
+                        }
+                        if (platform() === 'win32') {
+                            return false;
+                        }
+                        return true;
+                    }
+                }
+                return true;
             }
-          });
+        });
 
         // write etag
         logger.debug("Writing etag file");
