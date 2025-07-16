@@ -1,8 +1,8 @@
 import decompress from "decompress";
+import fs from "fs";
 import { mkdir, readFile, rm, writeFile } from "fs/promises";
 import { homedir, platform } from "os";
 import path from "path";
-import fs from "fs";
 import tmp from "tmp-promise";
 import xml2js from "xml2js";
 
@@ -144,9 +144,11 @@ export async function downloadBundle({
         // logger.debug("Writing docs bundle zip to file");
         // await writeFile(outputZipPath, new Uint8Array(nodeBuffer));
         // logger.debug(`Wrote ${tryTar ? "output.tar.gz" : "output.zip"} to ${outputZipPath}`);
-        const outputZipPath = "C:\\Users\\cathe\\git\\fern-platform\\docs_bundle.tar.gz";
+        const outputZipPath =
+            process.platform === "win32"
+                ? "C:\\Users\\cathe\\git\\fern-platform\\docs_bundle.tar.gz"
+                : "/Volumes/git/fern-platform/docs_bundle.tar.gz";
         logger.debug(`outputZipPath: ${outputZipPath}`);
-        
 
         logger.debug("Getting path to preview folder");
         const absolutePathToPreviewFolder = getPathToPreviewFolder({ app });
@@ -163,13 +165,15 @@ export async function downloadBundle({
         const absolutePathToBundleFolder = getPathToBundleFolder({ app });
         logger.debug("Creating bundle folder");
         await mkdir(absolutePathToBundleFolder, { recursive: true });
-        logger.debug(`Calling decompress with outputZipPath: ${outputZipPath}, absolutePathToBundleFolder: ${absolutePathToBundleFolder}`);
+        logger.debug(
+            `Calling decompress with outputZipPath: ${outputZipPath}, absolutePathToBundleFolder: ${absolutePathToBundleFolder}`
+        );
         await decompress(outputZipPath, absolutePathToBundleFolder, {
-            filter: file => {
-                if (file.type === 'symlink') {
+            filter: (file) => {
+                if (file.type === "symlink") {
                     // file.data contains the symlink target as a Buffer
                     const target = file.data.toString();
-                    const symlinkPath = path.resolve('output-directory', file.path);
+                    const symlinkPath = path.resolve("output-directory", file.path);
                     const targetPath = path.resolve(path.dirname(symlinkPath), target);
                     if (targetPath.includes("node_modules/next") || targetPath.includes("node_modules\\next")) {
                         logger.debug(`Found symlink: \n\t${symlinkPath} -> \n\t${targetPath}`);
@@ -180,7 +184,7 @@ export async function downloadBundle({
                         if (targetPath.includes("node_modules/next") || targetPath.includes("node_modules\\next")) {
                             logger.debug(`Dangling symlink: \n\t${symlinkPath} -> \n\t${targetPath}`);
                         }
-                        if (platform() === 'win32') {
+                        if (platform() === "win32") {
                             return false;
                         }
                         return true;
