@@ -1,0 +1,1 @@
+class Movie; end
