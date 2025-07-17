@@ -8,7 +8,7 @@ import { DocsDefinitionResolver } from "../DocsDefinitionResolver";
 
 const context = createMockTaskContext();
 
-// eslint-disable-next-line jest/no-disabled-tests
+// biome-ignore lint/suspicious/noSkippedTests: allow
 it.skip("converts to api reference node", async () => {
     const docsWorkspace = await loadDocsWorkspace({
         fernDirectory: resolve(AbsoluteFilePath.of(__dirname), "fixtures/dry/fern"),

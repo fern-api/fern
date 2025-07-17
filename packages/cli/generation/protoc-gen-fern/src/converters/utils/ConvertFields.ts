@@ -49,12 +49,12 @@ export function convertFields({
             };
 
             // Check if oneofIndex is actually set vs default value of 0
-            const hasOneofIndex = Object.prototype.hasOwnProperty.call(field, "oneofIndex");
+            const hasOneofIndex = Object.hasOwn(field, "oneofIndex");
             if (hasOneofIndex && field.oneofIndex != null) {
                 if (oneOfFields[field.oneofIndex] == null) {
                     oneOfFields[field.oneofIndex] = [];
                 }
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                // biome-ignore lint/style/noNonNullAssertion: allow
                 oneOfFields[field.oneofIndex]!.push(field);
                 continue;
             }

@@ -64,7 +64,7 @@ export async function getGeneratorList({
                     }
 
                     // If the current generator is not in the specified generators, skip it
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    // biome-ignore lint/style/noNonNullAssertion: allow
                     generators[apiName]![group.groupName] = group.generators
                         .filter((generator) => {
                             let include = true;

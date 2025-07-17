@@ -15,7 +15,7 @@ export declare namespace FunctionNode {
 
 // TODO: generalize and move into @fern-api/typescript-ast
 export class FunctionNode extends ts.AstNode {
-    readonly async: boolean;
+    readonly ["async"]: boolean;
 
     constructor(private readonly args: FunctionNode.Args) {
         super();

@@ -28,11 +28,11 @@ export function generateIr({ req, options }: { req: CodeGeneratorRequest; option
             context: new ProtofileConverterContext({
                 codeGeneratorRequest: req,
                 spec: protoFile,
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                 settings: {} as any,
                 errorCollector: new ErrorCollector({
                     logger: {
-                        // eslint-disable-next-line @typescript-eslint/no-empty-function
+                        // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
                         log: (level, ...args) => {}
                     },
                     relativeFilepathToSpec: undefined

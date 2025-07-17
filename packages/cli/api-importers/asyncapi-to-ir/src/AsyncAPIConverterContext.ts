@@ -11,7 +11,6 @@ import { AsyncAPIV3 } from "./3.0";
  */
 export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3> {
     public isReferenceObject(parameter: unknown): parameter is OpenAPIV3.ReferenceObject | OpenAPIV3_1.ReferenceObject {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return parameter != null && typeof parameter === "object" && "$ref" in parameter;
     }
 

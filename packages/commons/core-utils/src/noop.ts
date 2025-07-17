@@ -1,2 +1,2 @@
-// eslint-disable-next-line @typescript-eslint/no-empty-function
+// biome-ignore lint/suspicious/noEmptyBlockStatements: allow
 export function noop(): void {}

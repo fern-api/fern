@@ -54,7 +54,7 @@ describe("fern generate", () => {
     // TODO: Re-enable this test if and when it doesn't require the user to be logged in.
     // It's otherwise flaky on developer machines that haven't logged in with the fern CLI.
     //
-    // eslint-disable-next-line jest/no-disabled-tests
+    // biome-ignore lint/suspicious/noSkippedTests: allow
     it.skip("missing docs page", async () => {
         const { stdout } = await runFernCli(["generate", "--docs"], {
             cwd: join(fixturesDir, RelativeFilePath.of("docs-missing-page")),
