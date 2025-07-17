@@ -24,11 +24,11 @@ public struct Address: Codable, Hashable {
 
     public func encode(to encoder: Encoder) throws -> Void {
         var container = try encoder.container(keyedBy: CodingKeys.self)
+        try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.street, forKey: .street)
         try container.encode(self.city, forKey: .city)
         try container.encode(self.state, forKey: .state)
         try container.encode(self.zipCode, forKey: .zipCode)
-        try encoder.encodeAdditionalProperties(self.additionalProperties)
     }
 
     enum CodingKeys: String, CodingKey, CaseIterable {

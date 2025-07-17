@@ -24,11 +24,11 @@ public struct User: Codable, Hashable {
 
     public func encode(to encoder: Encoder) throws -> Void {
         var container = try encoder.container(keyedBy: CodingKeys.self)
+        try encoder.encodeAdditionalProperties(self._additionalProperties)
         try container.encode(self.id, forKey: .id)
         try container.encode(self.email, forKey: .email)
         try container.encode(self.isActive, forKey: .isActive)
         try container.encode(self.additionalProperties, forKey: .additionalProperties)
-        try encoder.encodeAdditionalProperties(self._additionalProperties)
     }
 
     enum CodingKeys: String, CodingKey, CaseIterable {

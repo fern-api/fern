@@ -200,6 +200,22 @@ export class ObjectGenerator {
                         ])
                     )
                 ),
+                swift.Statement.expressionStatement(
+                    swift.Expression.try(
+                        swift.Expression.methodCall(
+                            swift.Expression.reference("encoder"),
+                            "encodeAdditionalProperties",
+                            [
+                                swift.functionArgument({
+                                    value: swift.Expression.memberAccess(
+                                        swift.Expression.rawValue("self"),
+                                        this.additionalPropertiesInfo.propertyName
+                                    )
+                                })
+                            ]
+                        )
+                    )
+                ),
                 ...this.objectTypeDeclaration.properties.map((p) =>
                     swift.Statement.expressionStatement(
                         swift.Expression.try(
@@ -219,22 +235,6 @@ export class ObjectGenerator {
                                     })
                                 ]
                             )
-                        )
-                    )
-                ),
-                swift.Statement.expressionStatement(
-                    swift.Expression.try(
-                        swift.Expression.methodCall(
-                            swift.Expression.reference("encoder"),
-                            "encodeAdditionalProperties",
-                            [
-                                swift.functionArgument({
-                                    value: swift.Expression.memberAccess(
-                                        swift.Expression.rawValue("self"),
-                                        this.additionalPropertiesInfo.propertyName
-                                    )
-                                })
-                            ]
                         )
                     )
                 )

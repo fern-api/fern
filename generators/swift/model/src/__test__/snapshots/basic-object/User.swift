@@ -33,6 +33,7 @@ public struct User: Codable, Hashable {
 
     public func encode(to encoder: Encoder) throws -> Void {
         var container = try encoder.container(keyedBy: CodingKeys.self)
+        try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.id, forKey: .id)
         try container.encode(self.name, forKey: .name)
         try container.encode(self.email, forKey: .email)
@@ -40,7 +41,6 @@ public struct User: Codable, Hashable {
         try container.encode(self.isActive, forKey: .isActive)
         try container.encode(self.balance, forKey: .balance)
         try container.encode(self.tags, forKey: .tags)
-        try encoder.encodeAdditionalProperties(self.additionalProperties)
     }
 
     enum CodingKeys: String, CodingKey, CaseIterable {
