@@ -51,6 +51,7 @@ export class ObjectGenerator {
                         this.generatePrimaryInitializer(this.typeDeclaration.shape),
                         this.generateInitializerForDecoder(this.typeDeclaration.shape)
                     ],
+                    methods: [this.generateEncodeMethod(this.typeDeclaration.shape)],
                     nestedTypes: codingKeysEnum ? [codingKeysEnum] : undefined
                 });
             }
@@ -122,6 +123,57 @@ export class ObjectGenerator {
                                         value: swift.Expression.memberAccess(
                                             this.generateAstNodeForTypeReference(p.valueType),
                                             "self"
+                                        )
+                                    }),
+                                    swift.functionArgument({
+                                        label: "forKey",
+                                        value: swift.Expression.enumCaseShorthand(p.name.name.camelCase.unsafeName)
+                                    })
+                                ]
+                            )
+                        )
+                    )
+                )
+            ])
+        });
+    }
+
+    private generateEncodeMethod(type: Type.Object_): swift.Method {
+        return swift.method({
+            unsafeName: "encode",
+            accessLevel: swift.AccessLevel.Public,
+            parameters: [
+                swift.functionParameter({
+                    argumentLabel: "to",
+                    unsafeName: "encoder",
+                    type: swift.Type.custom("Encoder")
+                })
+            ],
+            throws: true,
+            returnType: swift.Type.custom("Void"),
+            body: swift.CodeBlock.withStatements([
+                swift.Statement.variableDeclaration(
+                    "container",
+                    swift.Expression.try(
+                        swift.Expression.methodCall(swift.Expression.reference("encoder"), "container", [
+                            swift.functionArgument({
+                                label: "keyedBy",
+                                value: swift.Expression.rawValue("CodingKeys.self")
+                            })
+                        ])
+                    )
+                ),
+                ...type.properties.map((p) =>
+                    swift.Statement.expressionStatement(
+                        swift.Expression.try(
+                            swift.Expression.methodCall(
+                                swift.Expression.reference("container"),
+                                isOptionalProperty(p) ? "encodeIfPresent" : "encode",
+                                [
+                                    swift.functionArgument({
+                                        value: swift.Expression.memberAccess(
+                                            swift.Expression.rawValue("self"),
+                                            p.name.name.camelCase.unsafeName
                                         )
                                     }),
                                     swift.functionArgument({

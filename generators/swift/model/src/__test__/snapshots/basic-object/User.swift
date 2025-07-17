@@ -28,6 +28,17 @@ public struct User: Codable, Hashable {
         self.tags = try container.decode([String].self, forKey: .tags)
     }
 
+    public func encode(to encoder: Encoder) throws -> Void {
+        var container = try encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(self.id, forKey: .id)
+        try container.encode(self.name, forKey: .name)
+        try container.encode(self.email, forKey: .email)
+        try container.encodeIfPresent(self.age, forKey: .age)
+        try container.encode(self.isActive, forKey: .isActive)
+        try container.encode(self.balance, forKey: .balance)
+        try container.encode(self.tags, forKey: .tags)
+    }
+
     enum CodingKeys: String, CodingKey {
         case id
         case name

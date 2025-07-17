@@ -17,8 +17,8 @@ export declare namespace Initializer {
 
 export class Initializer extends AstNode {
     public readonly accessLevel?: AccessLevel;
-    public readonly failable?: boolean;
-    public readonly throws?: boolean;
+    public readonly failable?: true;
+    public readonly throws?: true;
     public readonly parameters?: FunctionParameter[];
     public readonly body: CodeBlock;
 

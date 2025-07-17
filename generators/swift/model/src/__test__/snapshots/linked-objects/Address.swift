@@ -19,6 +19,14 @@ public struct Address: Codable, Hashable {
         self.zipCode = try container.decode(Int.self, forKey: .zipCode)
     }
 
+    public func encode(to encoder: Encoder) throws -> Void {
+        var container = try encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(self.street, forKey: .street)
+        try container.encode(self.city, forKey: .city)
+        try container.encode(self.state, forKey: .state)
+        try container.encode(self.zipCode, forKey: .zipCode)
+    }
+
     enum CodingKeys: String, CodingKey {
         case street
         case city

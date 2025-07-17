@@ -19,6 +19,14 @@ public struct User: Codable, Hashable {
         self.billingAddress = try container.decodeIfPresent(Address.self, forKey: .billingAddress)
     }
 
+    public func encode(to encoder: Encoder) throws -> Void {
+        var container = try encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(self.id, forKey: .id)
+        try container.encode(self.name, forKey: .name)
+        try container.encode(self.address, forKey: .address)
+        try container.encodeIfPresent(self.billingAddress, forKey: .billingAddress)
+    }
+
     enum CodingKeys: String, CodingKey {
         case id
         case name
