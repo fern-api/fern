@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  User:
+    properties:
+      id: string
+      email: string
+      is_active: boolean
+      additional_properties: list<string>
