@@ -18,10 +18,10 @@ export class ObjectGenerator {
     public constructor(typeDeclaration: TypeDeclaration, objectTypeDeclaration: ObjectTypeDeclaration) {
         this.typeDeclaration = typeDeclaration;
         this.objectTypeDeclaration = objectTypeDeclaration;
-        this.additionalPropertiesInfo = this.generateAdditionalPropertiesInfo(objectTypeDeclaration);
+        this.additionalPropertiesInfo = this.getAdditionalPropertiesInfo(objectTypeDeclaration);
     }
 
-    private generateAdditionalPropertiesInfo(otd: ObjectTypeDeclaration) {
+    private getAdditionalPropertiesInfo(otd: ObjectTypeDeclaration) {
         const propertyNames = new Set(otd.properties.map((p) => p.name.name.camelCase.unsafeName));
         let propertyName = "additionalProperties";
         while (propertyNames.has(propertyName)) {
@@ -34,8 +34,8 @@ export class ObjectGenerator {
     }
 
     public generate(): SwiftFile {
-        const struct = this.generateStructForTypeDeclaration();
-        const fileContents = struct.toString();
+        const swiftStruct = this.generateStructForTypeDeclaration();
+        const fileContents = swiftStruct.toString();
         return new SwiftFile({
             filename: this.getFilename(),
             directory: this.getFileDirectory(),

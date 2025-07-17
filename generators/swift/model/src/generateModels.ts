@@ -9,7 +9,7 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
     for (const [_typeId, typeDeclaration] of Object.entries(context.ir.types)) {
         const file = typeDeclaration.shape._visit<SwiftFile | undefined>({
             alias: () => undefined,
-            enum: () => new StringEnumGenerator(typeDeclaration).generate(),
+            enum: (etd) => new StringEnumGenerator(typeDeclaration, etd).generate(),
             object: (otd) => new ObjectGenerator(typeDeclaration, otd).generate(),
             undiscriminatedUnion: () => undefined,
             union: () => undefined,
