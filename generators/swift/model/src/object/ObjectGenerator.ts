@@ -55,45 +55,31 @@ export class ObjectGenerator {
     }
 
     private generateAstNodeForTypeDeclaration(): swift.Struct | null {
-        switch (this.typeDeclaration.shape.type) {
-            case "object": {
-                const codingKeysEnum = this.generateCodingKeysEnum(this.typeDeclaration.shape);
-                return swift.struct({
-                    name: this.typeDeclaration.name.name.pascalCase.safeName,
+        const codingKeysEnum = this.generateCodingKeysEnum();
+        return swift.struct({
+            name: this.typeDeclaration.name.name.pascalCase.safeName,
+            accessLevel: swift.AccessLevel.Public,
+            conformances: ["Codable", "Hashable"],
+            properties: [
+                ...this.objectTypeDeclaration.properties.map((p) => this.generateAstNodeForProperty(p)),
+                swift.property({
+                    unsafeName: this.additionalPropertiesInfo.propertyName,
                     accessLevel: swift.AccessLevel.Public,
-                    conformances: ["Codable", "Hashable"],
-                    properties: [
-                        ...this.typeDeclaration.shape.properties.map((p) => this.generateAstNodeForProperty(p)),
-                        swift.property({
-                            unsafeName: this.additionalPropertiesInfo.propertyName,
-                            accessLevel: swift.AccessLevel.Public,
-                            declarationType: swift.DeclarationType.Let,
-                            type: this.additionalPropertiesInfo.swiftType
-                        })
-                    ],
-                    initializers: [
-                        this.generatePrimaryInitializer(this.typeDeclaration.shape),
-                        this.generateInitializerForDecoder(this.typeDeclaration.shape)
-                    ],
-                    methods: [this.generateEncodeMethod(this.typeDeclaration.shape)],
-                    nestedTypes: codingKeysEnum ? [codingKeysEnum] : undefined
-                });
-            }
-            case "alias":
-            case "enum":
-            case "undiscriminatedUnion":
-            case "union":
-                return null;
-            default:
-                assertNever(this.typeDeclaration.shape);
-        }
+                    declarationType: swift.DeclarationType.Let,
+                    type: this.additionalPropertiesInfo.swiftType
+                })
+            ],
+            initializers: [this.generatePrimaryInitializer(), this.generateInitializerForDecoder()],
+            methods: [this.generateEncodeMethod()],
+            nestedTypes: codingKeysEnum ? [codingKeysEnum] : undefined
+        });
     }
 
-    private generatePrimaryInitializer(type: Type.Object_): swift.Initializer {
+    private generatePrimaryInitializer(): swift.Initializer {
         return swift.initializer({
             accessLevel: swift.AccessLevel.Public,
             parameters: [
-                ...type.properties.map((p) =>
+                ...this.objectTypeDeclaration.properties.map((p) =>
                     swift.functionParameter({
                         argumentLabel: p.name.name.camelCase.unsafeName,
                         unsafeName: p.name.name.camelCase.unsafeName,
@@ -110,7 +96,7 @@ export class ObjectGenerator {
                 })
             ],
             body: swift.CodeBlock.withStatements([
-                ...type.properties.map((p) =>
+                ...this.objectTypeDeclaration.properties.map((p) =>
                     swift.Statement.propertyAssignment(
                         p.name.name.camelCase.unsafeName,
                         swift.Expression.reference(p.name.name.camelCase.unsafeName)
@@ -124,7 +110,7 @@ export class ObjectGenerator {
         });
     }
 
-    private generateInitializerForDecoder(type: Type.Object_): swift.Initializer {
+    private generateInitializerForDecoder(): swift.Initializer {
         return swift.initializer({
             accessLevel: swift.AccessLevel.Public,
             throws: true,
@@ -147,7 +133,7 @@ export class ObjectGenerator {
                         ])
                     )
                 ),
-                ...type.properties.map((p) =>
+                ...this.objectTypeDeclaration.properties.map((p) =>
                     swift.Statement.propertyAssignment(
                         p.name.name.camelCase.unsafeName,
                         swift.Expression.try(
@@ -189,7 +175,7 @@ export class ObjectGenerator {
         });
     }
 
-    private generateEncodeMethod(type: Type.Object_): swift.Method {
+    private generateEncodeMethod(): swift.Method {
         return swift.method({
             unsafeName: "encode",
             accessLevel: swift.AccessLevel.Public,
@@ -214,7 +200,7 @@ export class ObjectGenerator {
                         ])
                     )
                 ),
-                ...type.properties.map((p) =>
+                ...this.objectTypeDeclaration.properties.map((p) =>
                     swift.Statement.expressionStatement(
                         swift.Expression.try(
                             swift.Expression.methodCall(
@@ -256,11 +242,11 @@ export class ObjectGenerator {
         });
     }
 
-    private generateCodingKeysEnum(type: Type.Object_): swift.EnumWithRawValues {
+    private generateCodingKeysEnum(): swift.EnumWithRawValues {
         return swift.enumWithRawValues({
             name: "CodingKeys",
             conformances: ["String", "CodingKey", "CaseIterable"],
-            cases: type.properties.map((property) => {
+            cases: this.objectTypeDeclaration.properties.map((property) => {
                 return {
                     unsafeName: property.name.name.camelCase.unsafeName,
                     rawValue: property.name.name.originalName
