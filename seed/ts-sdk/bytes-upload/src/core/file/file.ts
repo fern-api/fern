@@ -1,5 +1,25 @@
 import { Uploadable } from "./types.js";
 
+export async function toBinaryUploadRequest(
+    file: Uploadable,
+): Promise<{ body: Uploadable.FileLike; headers?: Record<string, string> }> {
+    const { data, filename, contentLength, contentType } = await getFileWithMetadata(file);
+    const request = {
+        body: data,
+        headers: {} as Record<string, string>,
+    };
+    if (filename) {
+        request.headers["Content-Disposition"] = `attachment; filename="${filename}"`;
+    }
+    if (contentType) {
+        request.headers["Content-Type"] = contentType;
+    }
+    if (contentLength != null) {
+        request.headers["Content-Length"] = contentLength.toString();
+    }
+    return request;
+}
+
 async function getFileWithMetadata(file: Uploadable): Promise<Uploadable.WithMetadata> {
     if (isFileLike(file)) {
         return getFileWithMetadata({
@@ -36,27 +56,7 @@ async function getFileWithMetadata(file: Uploadable): Promise<Uploadable.WithMet
     throw new Error(`Invalid FileUpload of type ${typeof file}: ${JSON.stringify(file)}`);
 }
 
-export async function toBinaryUploadRequest(
-    file: Uploadable,
-): Promise<{ body: Uploadable.FileLike; headers?: Record<string, string> }> {
-    const { data, filename, contentLength, contentType } = await getFileWithMetadata(file);
-    const request = {
-        body: data,
-        headers: {} as Record<string, string>,
-    };
-    if (filename) {
-        request.headers["Content-Disposition"] = `attachment; filename="${filename}"`;
-    }
-    if (contentType) {
-        request.headers["Content-Type"] = contentType;
-    }
-    if (contentLength != null) {
-        request.headers["Content-Length"] = contentLength.toString();
-    }
-    return request;
-}
-
-export function isFileLike(value: unknown): value is Uploadable.FileLike {
+function isFileLike(value: unknown): value is Uploadable.FileLike {
     return (
         isBuffer(value) ||
         isArrayBufferView(value) ||
@@ -69,7 +69,7 @@ export function isFileLike(value: unknown): value is Uploadable.FileLike {
     );
 }
 
-export async function tryGetFileSizeFromPath(path: string): Promise<number | undefined> {
+async function tryGetFileSizeFromPath(path: string): Promise<number | undefined> {
     try {
         const fs = await import("fs");
         if (!fs || !fs.promises || !fs.promises.stat) {
@@ -82,7 +82,7 @@ export async function tryGetFileSizeFromPath(path: string): Promise<number | und
     }
 }
 
-export function tryGetNameFromFileLike(data: Uploadable.FileLike): string | undefined {
+function tryGetNameFromFileLike(data: Uploadable.FileLike): string | undefined {
     if (isNamedValue(data)) {
         return data.name;
     }
@@ -92,7 +92,7 @@ export function tryGetNameFromFileLike(data: Uploadable.FileLike): string | unde
     return undefined;
 }
 
-export async function tryGetContentLengthFromFileLike(data: Uploadable.FileLike): Promise<number | undefined> {
+async function tryGetContentLengthFromFileLike(data: Uploadable.FileLike): Promise<number | undefined> {
     if (isBuffer(data)) {
         return data.length;
     }
@@ -114,7 +114,7 @@ export async function tryGetContentLengthFromFileLike(data: Uploadable.FileLike)
     return undefined;
 }
 
-export function tryGetContentTypeFromFileLike(data: Uploadable.FileLike): string | undefined {
+function tryGetContentTypeFromFileLike(data: Uploadable.FileLike): string | undefined {
     if (isBlob(data)) {
         return data.type;
     }
@@ -125,7 +125,7 @@ export function tryGetContentTypeFromFileLike(data: Uploadable.FileLike): string
     return undefined;
 }
 
-export function getNameFromPath(path: string): string | undefined {
+function getNameFromPath(path: string): string | undefined {
     const lastForwardSlash = path.lastIndexOf("/");
     const lastBackSlash = path.lastIndexOf("\\");
     const lastSlashIndex = Math.max(lastForwardSlash, lastBackSlash);
