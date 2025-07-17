@@ -1,6 +1,6 @@
-import { FileLike, FileUpload, FileWithMetadata } from "./types";
+import { Uploadable } from "./types.js";
 
-async function getFileWithMetadata(file: FileUpload): Promise<FileWithMetadata> {
+async function getFileWithMetadata(file: Uploadable): Promise<Uploadable.WithMetadata> {
     if (isFileLike(file)) {
         return getFileWithMetadata({
             data: file,
@@ -37,8 +37,8 @@ async function getFileWithMetadata(file: FileUpload): Promise<FileWithMetadata> 
 }
 
 export async function toBinaryUploadRequest(
-    file: FileUpload,
-): Promise<{ body: FileLike; headers?: Record<string, string> }> {
+    file: Uploadable,
+): Promise<{ body: Uploadable.FileLike; headers?: Record<string, string> }> {
     const { data, filename, contentLength, contentType } = await getFileWithMetadata(file);
     const request = {
         body: data,
@@ -56,7 +56,7 @@ export async function toBinaryUploadRequest(
     return request;
 }
 
-export function isFileLike(value: unknown): value is FileLike {
+export function isFileLike(value: unknown): value is Uploadable.FileLike {
     return (
         isBuffer(value) ||
         isArrayBufferView(value) ||
@@ -82,7 +82,7 @@ export async function tryGetFileSizeFromPath(path: string): Promise<number | und
     }
 }
 
-export function tryGetNameFromFileLike(data: FileLike): string | undefined {
+export function tryGetNameFromFileLike(data: Uploadable.FileLike): string | undefined {
     if (isNamedValue(data)) {
         return data.name;
     }
@@ -92,7 +92,7 @@ export function tryGetNameFromFileLike(data: FileLike): string | undefined {
     return undefined;
 }
 
-export async function tryGetContentLengthFromFileLike(data: FileLike): Promise<number | undefined> {
+export async function tryGetContentLengthFromFileLike(data: Uploadable.FileLike): Promise<number | undefined> {
     if (isBuffer(data)) {
         return data.length;
     }
@@ -114,7 +114,7 @@ export async function tryGetContentLengthFromFileLike(data: FileLike): Promise<n
     return undefined;
 }
 
-export function tryGetContentTypeFromFileLike(data: FileLike): string | undefined {
+export function tryGetContentTypeFromFileLike(data: Uploadable.FileLike): string | undefined {
     if (isBlob(data)) {
         return data.type;
     }

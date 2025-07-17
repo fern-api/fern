@@ -1,9 +1,13 @@
 import { Readable } from "stream";
 import { ReadableStream } from "stream/web";
-import { SeedBytesUploadClient } from "./dist/esm/index.mjs";
+import { SeedBytesUploadClient, SeedBytesUpload, core } from "./dist/esm/index.mjs";
 import { createReadStream } from "fs";
 
+
 (async () => {
+    const sample: core.file.PathFileUpload = {
+        path: "./package.json",
+    };
     const client = new SeedBytesUploadClient({
         environment: "http://localhost:3000",
     });

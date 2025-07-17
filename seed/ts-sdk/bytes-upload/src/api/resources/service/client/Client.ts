@@ -37,18 +37,18 @@ export class Service {
     }
 
     /**
-     * @param {core.file.FileUpload} bytes
+     * @param {core.file.Uploadable} bytes
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      */
     public upload(
-        bytes: core.file.FileUpload,
+        bytes: core.file.Uploadable,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__upload(bytes, requestOptions));
     }
 
     private async __upload(
-        bytes: core.file.FileUpload,
+        bytes: core.file.Uploadable,
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _fileUploadRequest = await core.file.toBinaryUploadRequest(bytes);
