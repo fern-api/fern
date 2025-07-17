@@ -40,6 +40,12 @@ type MethodCall = {
     arguments_?: FunctionArgument[];
 };
 
+type ContextualMethodCall = {
+    type: "contextual-method-call";
+    methodName: string;
+    arguments_?: FunctionArgument[];
+};
+
 type Try = {
     type: "try";
     expression: Expression;
@@ -50,7 +56,15 @@ type RawValue = {
     value: string;
 };
 
-type InternalExpression = Reference | MemberAccess | EnumCaseShorthand | FunctionCall | MethodCall | Try | RawValue;
+type InternalExpression =
+    | Reference
+    | MemberAccess
+    | EnumCaseShorthand
+    | FunctionCall
+    | MethodCall
+    | ContextualMethodCall
+    | Try
+    | RawValue;
 
 export class Expression extends AstNode {
     private internalExpression: InternalExpression;
@@ -98,6 +112,18 @@ export class Expression extends AstNode {
                 });
                 writer.write(")");
                 break;
+            case "contextual-method-call":
+                writer.write(".");
+                writer.write(this.internalExpression.methodName);
+                writer.write("(");
+                this.internalExpression.arguments_?.forEach((argument: FunctionArgument, argumentIdx: number) => {
+                    if (argumentIdx > 0) {
+                        writer.write(", ");
+                    }
+                    argument.write(writer);
+                });
+                writer.write(")");
+                break;
             case "try":
                 writer.write("try ");
                 this.internalExpression.expression.write(writer);
@@ -128,6 +154,10 @@ export class Expression extends AstNode {
 
     public static methodCall(target: Expression, methodName: string, arguments_?: FunctionArgument[]): Expression {
         return new this({ type: "method-call", target, methodName, arguments_ });
+    }
+
+    public static contextualMethodCall(methodName: string, arguments_?: FunctionArgument[]): Expression {
+        return new this({ type: "contextual-method-call", methodName, arguments_ });
     }
 
     public static try(expression: Expression): Expression {
