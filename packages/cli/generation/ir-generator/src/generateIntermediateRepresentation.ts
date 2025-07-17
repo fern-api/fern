@@ -543,7 +543,7 @@ export function generateIntermediateRepresentation({
 }
 
 function formatAllDocs<T>(obj: T): T {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     const visit = (value: any): any => {
         if (!value || typeof value !== "object") {
             return value;

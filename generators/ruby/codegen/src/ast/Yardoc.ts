@@ -111,7 +111,7 @@ export class Yardoc extends AstNode {
         if (
             parameter.type.length > 1 ||
             parameter.type[0] instanceof DiscriminatedUnionClassReference ||
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            // biome-ignore lint/style/noNonNullAssertion: allow
             (parameter.type.length === 1 && this.isUnion(parameter.type[0]!))
         ) {
             return this.writeParameterAsClass(parameter, startingTabSpaces);

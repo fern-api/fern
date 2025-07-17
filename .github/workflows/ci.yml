@@ -51,7 +51,7 @@ jobs:
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
 
-  eslint:
+  biome:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -60,8 +60,8 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
-      - name: lint:eslint
-        run: pnpm lint:eslint
+      - name: lint:biome
+        run: pnpm lint:biome
 
   test:
     if: github.repository == 'fern-api/fern'
