@@ -34,8 +34,8 @@ export class ObjectGenerator {
     }
 
     public generate(): SwiftFile {
-        const astNode = this.generateAstNodeForTypeDeclaration();
-        const fileContents = astNode?.toString() ?? "";
+        const struct = this.generateStructForTypeDeclaration();
+        const fileContents = struct.toString();
         return new SwiftFile({
             filename: this.getFilename(),
             directory: this.getFileDirectory(),
@@ -54,14 +54,14 @@ export class ObjectGenerator {
         );
     }
 
-    private generateAstNodeForTypeDeclaration(): swift.Struct | null {
+    private generateStructForTypeDeclaration(): swift.Struct {
         const codingKeysEnum = this.generateCodingKeysEnum();
         return swift.struct({
             name: this.typeDeclaration.name.name.pascalCase.safeName,
             accessLevel: swift.AccessLevel.Public,
             conformances: ["Codable", "Hashable"],
             properties: [
-                ...this.objectTypeDeclaration.properties.map((p) => this.generateAstNodeForProperty(p)),
+                ...this.objectTypeDeclaration.properties.map((p) => this.generateSwiftPropertyForProperty(p)),
                 swift.property({
                     unsafeName: this.additionalPropertiesInfo.propertyName,
                     accessLevel: swift.AccessLevel.Public,
@@ -83,7 +83,7 @@ export class ObjectGenerator {
                     swift.functionParameter({
                         argumentLabel: p.name.name.camelCase.unsafeName,
                         unsafeName: p.name.name.camelCase.unsafeName,
-                        type: this.generateAstNodeForTypeReference(p.valueType),
+                        type: this.generateSwiftTypeForTypeReference(p.valueType),
                         optional: isOptionalProperty(p),
                         defaultValue: isOptionalProperty(p) ? swift.Expression.rawValue("nil") : undefined
                     })
@@ -143,7 +143,7 @@ export class ObjectGenerator {
                                 [
                                     swift.functionArgument({
                                         value: swift.Expression.memberAccess(
-                                            this.generateAstNodeForTypeReference(p.valueType),
+                                            this.generateSwiftTypeForTypeReference(p.valueType),
                                             "self"
                                         )
                                     }),
@@ -255,17 +255,17 @@ export class ObjectGenerator {
         });
     }
 
-    private generateAstNodeForProperty(property: ObjectProperty): swift.Property {
+    private generateSwiftPropertyForProperty(property: ObjectProperty): swift.Property {
         return swift.property({
             unsafeName: property.name.name.camelCase.unsafeName,
             accessLevel: swift.AccessLevel.Public,
             declarationType: swift.DeclarationType.Let,
-            type: this.generateAstNodeForTypeReference(property.valueType),
+            type: this.generateSwiftTypeForTypeReference(property.valueType),
             optional: isOptionalProperty(property)
         });
     }
 
-    private generateAstNodeForTypeReference(typeReference: TypeReference): swift.Type {
+    private generateSwiftTypeForTypeReference(typeReference: TypeReference): swift.Type {
         switch (typeReference.type) {
             case "container":
                 return typeReference.container._visit({
@@ -274,8 +274,8 @@ export class ObjectGenerator {
                     map: () => swift.Type.any(),
                     set: () => swift.Type.any(),
                     nullable: () => swift.Type.any(),
-                    optional: (ref) => this.generateAstNodeForTypeReference(ref),
-                    list: (ref) => swift.Type.array(this.generateAstNodeForTypeReference(ref)),
+                    optional: (ref) => this.generateSwiftTypeForTypeReference(ref),
+                    list: (ref) => swift.Type.array(this.generateSwiftTypeForTypeReference(ref)),
                     _other: () => swift.Type.any()
                 });
             case "primitive":
