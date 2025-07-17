@@ -163,7 +163,7 @@ def _convert_undiscriminated_union_type(union_type: typing.Type[typing.Any], obj
                 if inspect.isclass(list_inner_type) and issubclass(list_inner_type, pydantic.BaseModel):
                     # Validate that all items in the list are compatible with the target type
                     if _validate_collection_items_compatible(object_, list_inner_type):
-                        parsed_list = [construct_type(object_=item, type_=list_inner_type) for item in object_]
+                        parsed_list = [parse_obj_as(object_=item, type_=list_inner_type) for item in object_]
                         return parsed_list
             except Exception:
                 pass
