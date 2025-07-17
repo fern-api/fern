@@ -355,7 +355,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
      */
     private cleanDescriptionForDisplayName(description: string): string | undefined {
         // Take first sentence, clean it up, make it a valid identifier
-        const firstSentence = description?.split('.')[0]?.trim();
+        const firstSentence = description?.split(".")[0]?.trim();
         if (!firstSentence) {
             return undefined;
         }
@@ -363,38 +363,38 @@ export class OneOfSchemaConverter extends AbstractConverter<
         // Comprehensive function words to exclude from naming
         const functionWords = new Set([
             // Articles
-            'a', 'an', 'the',
+            "a", "an", "the",
             // Conjunctions
-            'and', 'or', 'but', 'nor', 'yet', 'so',
+            "and", "or", "but", "nor", "yet", "so",
             // Prepositions
-            'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'from', 'up', 'about', 
-            'into', 'through', 'during', 'before', 'after', 'above', 'below', 'between', 
-            'among', 'under', 'over', 'across', 'against', 'along', 'around', 'behind',
-            'beneath', 'beside', 'beyond', 'down', 'inside', 'near', 'off', 'outside',
-            'since', 'toward', 'until', 'upon', 'within', 'without',
+            "in", "on", "at", "to", "for", "of", "with", "by", "from", "up", "about", 
+            "into", "through", "during", "before", "after", "above", "below", "between", 
+            "among", "under", "over", "across", "against", "along", "around", "behind",
+            "beneath", "beside", "beyond", "down", "inside", "near", "off", "outside",
+            "since", "toward", "until", "upon", "within", "without",
             // Auxiliary verbs
-            'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had',
-            'do', 'does', 'did', 'will', 'would', 'could', 'should', 'may', 'might',
-            'must', 'can', 'shall',
+            "is", "are", "was", "were", "be", "been", "being", "have", "has", "had",
+            "do", "does", "did", "will", "would", "could", "should", "may", "might",
+            "must", "can", "shall",
             // Pronouns
-            'this', 'that', 'these', 'those', 'it', 'its', 'they', 'them', 'their',
+            "this", "that", "these", "those", "it", "its", "they", "them", "their",
             // Question words
-            'when', 'where', 'why', 'how', 'what', 'which', 'who', 'whom', 'whose',
+            "when", "where", "why", "how", "what", "which", "who", "whom", "whose",
             // Generic verbs/participles that don't add meaning
-            'used', 'using', 'containing', 'including', 'having', 'showing', 'providing',
-            'created', 'generated', 'processed', 'stored', 'managed', 'handled', 'returned',
-            'sent', 'received', 'given', 'taken', 'made', 'done', 'called', 'named',
+            "used", "using", "containing", "including", "having", "showing", "providing",
+            "created", "generated", "processed", "stored", "managed", "handled", "returned",
+            "sent", "received", "given", "taken", "made", "done", "called", "named",
             // Generic adjectives/adverbs
-            'available', 'current', 'existing', 'present', 'new', 'old', 'main', 'primary',
-            'secondary', 'additional', 'extra', 'special', 'specific', 'general', 'common',
-            'basic', 'simple', 'complex', 'full', 'empty', 'complete', 'partial',
+            "available", "current", "existing", "present", "new", "old", "main", "primary",
+            "secondary", "additional", "extra", "special", "specific", "general", "common",
+            "basic", "simple", "complex", "full", "empty", "complete", "partial",
             // Other meaningless connectors
-            'also', 'then', 'now', 'here', 'there', 'only', 'just', 'even', 'still',
-            'already', 'always', 'never', 'sometimes', 'often', 'usually', 'mostly'
+            "also", "then", "now", "here", "there", "only", "just", "even", "still",
+            "already", "always", "never", "sometimes", "often", "usually", "mostly"
         ]);
 
         const meaningfulWords = firstSentence
-            .replace(/[^a-zA-Z0-9\s]/g, '') // Remove special chars
+            .replace(/[^a-zA-Z0-9\s]/g, "") // Remove special chars
             .trim()
             .split(/\s+/)
             .filter(word => word.length > 0)
@@ -410,7 +410,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
         
         const cleaned = reorderedWords
             .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-            .join('');
+            .join("");
 
         return cleaned.length > 0 ? cleaned : undefined;
     }
@@ -424,8 +424,8 @@ export class OneOfSchemaConverter extends AbstractConverter<
         }
 
         // More conservative reordering - only move modifying entities to the end
-        const modifyingEntities = new Set(['system', 'service', 'api']);
-        const descriptiveTypes = new Set(['object', 'method', 'function', 'interface', 'model']);
+        const modifyingEntities = new Set(["system", "service", "api"]);
+        const descriptiveTypes = new Set(["object", "method", "function", "interface", "model"]);
         
         const reordered: string[] = [];
         const modifiers: string[] = [];
@@ -478,7 +478,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 .map(prop => this.capitalizePropertyName(prop));
             
             if (nameParts.length > 0) {
-                return nameParts.join('');
+                return nameParts.join("");
             }
         }
 
@@ -488,7 +488,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
             const nameParts = significantProperties
                 .slice(0, 1) // Take only the most significant property for cleaner names
                 .map(prop => this.capitalizePropertyName(prop));
-            return nameParts.join('');
+            return nameParts.join("");
         }
 
         return undefined;
@@ -531,20 +531,20 @@ export class OneOfSchemaConverter extends AbstractConverter<
     private getMostSignificantProperties(properties: string[]): string[] {
         // High-priority business/API terms that are very meaningful for naming
         const highPriorityTerms = [
-            'status', 'error', 'type', 'kind', 'mode', 'state', 'action', 'method',
-            'enabled', 'disabled', 'active', 'inactive', 'success', 'failed'
+            "status", "error", "type", "kind", "mode", "state", "action", "method",
+            "enabled", "disabled", "active", "inactive", "success", "failed"
         ];
         
         // Medium-priority terms that are meaningful but less specific
         const mediumPriorityTerms = [
-            'config', 'configuration', 'setting', 'option', 'message', 'code',
-            'user', 'account', 'profile', 'auth', 'token', 'key',
-            'response', 'request', 'result', 'output', 'input', 'payload', 'body'
+            "config", "configuration", "setting", "option", "message", "code",
+            "user", "account", "profile", "auth", "token", "key",
+            "response", "request", "result", "output", "input", "payload", "body"
         ];
         
         // Lower-priority terms that are generic but still useful
         const lowPriorityTerms = [
-            'name', 'id', 'value', 'data', 'info'
+            "name", "id", "value", "data", "info"
         ];
         
         // Calculate significance score for each property
@@ -599,10 +599,10 @@ export class OneOfSchemaConverter extends AbstractConverter<
      */
     private capitalizePropertyName(prop: string): string {
         // Handle camelCase and snake_case
-        if (prop.includes('_')) {
-            return prop.split('_')
+        if (prop.includes("_")) {
+            return prop.split("_")
                 .map(part => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
-                .join('');
+                .join("");
         } else {
             // Assume camelCase, just capitalize first letter
             return prop.charAt(0).toUpperCase() + prop.slice(1);
