@@ -18,10 +18,10 @@ export class ObjectGenerator {
     public constructor(typeDeclaration: TypeDeclaration, objectTypeDeclaration: ObjectTypeDeclaration) {
         this.typeDeclaration = typeDeclaration;
         this.objectTypeDeclaration = objectTypeDeclaration;
-        this.additionalPropertiesInfo = this.generateAdditionalPropertiesProperty(objectTypeDeclaration);
+        this.additionalPropertiesInfo = this.generateAdditionalPropertiesInfo(objectTypeDeclaration);
     }
 
-    private generateAdditionalPropertiesProperty(otd: ObjectTypeDeclaration) {
+    private generateAdditionalPropertiesInfo(otd: ObjectTypeDeclaration) {
         const propertyNames = new Set(otd.properties.map((p) => p.name.name.camelCase.unsafeName));
         let propertyName = "additionalProperties";
         while (propertyNames.has(propertyName)) {
