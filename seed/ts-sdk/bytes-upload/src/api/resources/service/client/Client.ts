@@ -3,8 +3,6 @@
  */
 
 import * as core from "../../../../core/index.js";
-import * as fs from "fs";
-import { Blob } from "buffer";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
 
@@ -37,21 +35,21 @@ export class Service {
     }
 
     /**
-     * @param {core.file.Uploadable} bytes
+     * @param {core.file.Uploadable} uploadable
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      */
     public upload(
-        bytes: core.file.Uploadable,
+        uploadable: core.file.Uploadable,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__upload(bytes, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__upload(uploadable, requestOptions));
     }
 
     private async __upload(
-        bytes: core.file.Uploadable,
+        uploadable: core.file.Uploadable,
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        const _fileUploadRequest = await core.file.toBinaryUploadRequest(bytes);
+        const _binaryUploadRequest = await core.file.toBinaryUploadRequest(uploadable);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -59,11 +57,11 @@ export class Service {
                 "upload-content",
             ),
             method: "POST",
-            headers: mergeHeaders(this._options?.headers, _fileUploadRequest.headers, requestOptions?.headers),
+            headers: mergeHeaders(this._options?.headers, _binaryUploadRequest.headers, requestOptions?.headers),
             contentType: "application/octet-stream",
             requestType: "bytes",
             duplex: "half",
-            body: _fileUploadRequest.body,
+            body: _binaryUploadRequest.body,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
