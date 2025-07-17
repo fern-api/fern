@@ -1,5 +1,6 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractPythonGeneratorContext, PythonProject } from "@fern-api/python-base";
+import { PythonWireTestGenerator } from "./test-generation";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
@@ -24,6 +25,20 @@ export class SdkGeneratorContext extends AbstractPythonGeneratorContext<SdkCusto
             config: this.config,
             ir: this.ir
         });
+
+        // Generate wire tests if enabled
+        if (true) {  // TODO: ADD CONFIG FOR THIS
+            // Add required dependencies for wire tests
+            this.addWireTestDependencies();
+            
+            const wireTestGenerator = new PythonWireTestGenerator(this);
+            const wireTestFiles = wireTestGenerator.generateWireTests();
+            
+            // Add wire test files to the project
+            wireTestFiles.forEach(file => {
+                this.project.addRawFiles(file);
+            });
+        }
     }
 
     public getRawAsIsFiles(): string[] {
@@ -32,5 +47,9 @@ export class SdkGeneratorContext extends AbstractPythonGeneratorContext<SdkCusto
 
     public isSelfHosted(): boolean {
         return this.ir.selfHosted ?? false;
+    }
+
+    private addWireTestDependencies(): void {
+        // TODO: handle extra deps
     }
 }
