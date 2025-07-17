@@ -13,17 +13,17 @@ export namespace UnionSchemaNamingUtils {
         index: number,
         allVariants: OpenAPIV3_1.SchemaObject[]
     ): string | undefined {
-        // Try description first
+        // Try title first
+        if (subSchema.title) {
+            return subSchema.title;
+        }
+
+        // Try description
         if (subSchema.description) {
             const nameFromDescription = cleanDescriptionForDisplayName(subSchema.description);
             if (nameFromDescription) {
                 return nameFromDescription;
             }
-        }
-
-        // Try title
-        if (subSchema.title) {
-            return subSchema.title;
         }
 
         // For object schemas, try to generate name from properties
