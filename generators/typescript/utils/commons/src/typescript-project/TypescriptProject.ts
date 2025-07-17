@@ -130,7 +130,7 @@ export abstract class TypescriptProject {
     public async persist(): Promise<PersistedTypescriptProject> {
         // write to disk
         const directoryOnDiskToWriteTo = AbsoluteFilePath.of((await tmp.dir()).path);
-        // eslint-disable-next-line no-console
+        // biome-ignore lint/suspicious/noConsole: allow console
         console.log("Persisted typescript project to " + directoryOnDiskToWriteTo);
 
         await this.writeSrcToVolume();

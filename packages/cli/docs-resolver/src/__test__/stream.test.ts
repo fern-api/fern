@@ -15,7 +15,7 @@ const context = createMockTaskContext();
 
 const apiDefinitionId = "550e8400-e29b-41d4-a716-446655440000";
 
-// eslint-disable-next-line jest/no-disabled-tests
+// biome-ignore lint/suspicious/noSkippedTests: allow
 it.skip("converts to api reference node", async () => {
     const docsWorkspace = await loadDocsWorkspace({
         fernDirectory: resolve(AbsoluteFilePath.of(__dirname), "fixtures/stream/fern"),

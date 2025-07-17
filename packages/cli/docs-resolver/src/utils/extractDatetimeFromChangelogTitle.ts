@@ -8,6 +8,7 @@ export function extractDatetimeFromChangelogTitle(filename: string): Date | unde
     if (match != null) {
         try {
             return new Date(match);
+            // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
         } catch (error) {}
     }
     return undefined;

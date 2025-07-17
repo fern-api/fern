@@ -1,4 +1,3 @@
-/* eslint-disable jest/no-disabled-tests */
 import { FdrAPI } from "@fern-api/fdr-sdk";
 
 import { ApiDefinitionHolderLatest } from "../ApiDefinitionHolderLatest";
