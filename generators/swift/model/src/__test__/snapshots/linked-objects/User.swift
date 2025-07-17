@@ -28,10 +28,10 @@ public struct User: Codable, Hashable {
         try container.encode(self.name, forKey: .name)
         try container.encode(self.address, forKey: .address)
         try container.encodeIfPresent(self.billingAddress, forKey: .billingAddress)
-        try encoder.encodeAdditionalProperties(additionalProperties)
+        try encoder.encodeAdditionalProperties(self.additionalProperties)
     }
 
-    enum CodingKeys: String, CodingKey {
+    enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case name
         case address

@@ -3,7 +3,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 
-import { ObjectProperty, Type } from "@fern-fern/ir-sdk/api";
+import { ObjectProperty, ObjectTypeDeclaration, Type } from "@fern-fern/ir-sdk/api";
 import { PrimitiveTypeV1, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 
 function isOptionalProperty(p: ObjectProperty) {
@@ -12,9 +12,25 @@ function isOptionalProperty(p: ObjectProperty) {
 
 export class ObjectGenerator {
     private readonly typeDeclaration: TypeDeclaration;
+    private readonly objectTypeDeclaration: ObjectTypeDeclaration;
+    private readonly additionalPropertiesInfo;
 
-    public constructor(typeDeclaration: TypeDeclaration) {
+    public constructor(typeDeclaration: TypeDeclaration, objectTypeDeclaration: ObjectTypeDeclaration) {
         this.typeDeclaration = typeDeclaration;
+        this.objectTypeDeclaration = objectTypeDeclaration;
+        this.additionalPropertiesInfo = this.generateAdditionalPropertiesProperty(objectTypeDeclaration);
+    }
+
+    private generateAdditionalPropertiesProperty(otd: ObjectTypeDeclaration) {
+        const propertyNames = new Set(otd.properties.map((p) => p.name.name.camelCase.unsafeName));
+        let propertyName = "additionalProperties";
+        while (propertyNames.has(propertyName)) {
+            propertyName = "_" + propertyName;
+        }
+        return {
+            propertyName,
+            swiftType: swift.Type.dictionary(swift.Type.string(), swift.Type.custom("JSONValue"))
+        };
     }
 
     public generate(): SwiftFile {
@@ -48,12 +64,11 @@ export class ObjectGenerator {
                     conformances: ["Codable", "Hashable"],
                     properties: [
                         ...this.typeDeclaration.shape.properties.map((p) => this.generateAstNodeForProperty(p)),
-                        // TODO: Make dynamic
                         swift.property({
-                            unsafeName: "additionalProperties", // TODO: Handle conflicts
+                            unsafeName: this.additionalPropertiesInfo.propertyName,
                             accessLevel: swift.AccessLevel.Public,
                             declarationType: swift.DeclarationType.Let,
-                            type: swift.Type.dictionary(swift.Type.string(), swift.Type.custom("JSONValue"))
+                            type: this.additionalPropertiesInfo.swiftType
                         })
                     ],
                     initializers: [
@@ -88,10 +103,9 @@ export class ObjectGenerator {
                     })
                 ),
                 swift.functionParameter({
-                    // TODO: Handle conflicts
-                    argumentLabel: "additionalProperties",
-                    unsafeName: "additionalProperties",
-                    type: swift.Type.dictionary(swift.Type.string(), swift.Type.custom("JSONValue")),
+                    argumentLabel: this.additionalPropertiesInfo.propertyName,
+                    unsafeName: this.additionalPropertiesInfo.propertyName,
+                    type: this.additionalPropertiesInfo.swiftType,
                     defaultValue: swift.Expression.contextualMethodCall("init")
                 })
             ],
@@ -103,8 +117,8 @@ export class ObjectGenerator {
                     )
                 ),
                 swift.Statement.propertyAssignment(
-                    "additionalProperties", // TODO: Handle conflicts
-                    swift.Expression.reference("additionalProperties")
+                    this.additionalPropertiesInfo.propertyName,
+                    swift.Expression.reference(this.additionalPropertiesInfo.propertyName)
                 )
             ])
         });
@@ -157,7 +171,7 @@ export class ObjectGenerator {
                     )
                 ),
                 swift.Statement.propertyAssignment(
-                    "additionalProperties", // TODO: Handle conflicts
+                    this.additionalPropertiesInfo.propertyName,
                     swift.Expression.try(
                         swift.Expression.methodCall(
                             swift.Expression.reference("decoder"),
@@ -229,7 +243,10 @@ export class ObjectGenerator {
                             "encodeAdditionalProperties",
                             [
                                 swift.functionArgument({
-                                    value: swift.Expression.reference("additionalProperties") // TODO: Handle conflicts
+                                    value: swift.Expression.memberAccess(
+                                        swift.Expression.rawValue("self"),
+                                        this.additionalPropertiesInfo.propertyName
+                                    )
                                 })
                             ]
                         )
@@ -242,7 +259,7 @@ export class ObjectGenerator {
     private generateCodingKeysEnum(type: Type.Object_): swift.EnumWithRawValues {
         return swift.enumWithRawValues({
             name: "CodingKeys",
-            conformances: ["String", "CodingKey"],
+            conformances: ["String", "CodingKey", "CaseIterable"],
             cases: type.properties.map((property) => {
                 return {
                     unsafeName: property.name.name.camelCase.unsafeName,

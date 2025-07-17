@@ -28,10 +28,10 @@ public struct Address: Codable, Hashable {
         try container.encode(self.city, forKey: .city)
         try container.encode(self.state, forKey: .state)
         try container.encode(self.zipCode, forKey: .zipCode)
-        try encoder.encodeAdditionalProperties(additionalProperties)
+        try encoder.encodeAdditionalProperties(self.additionalProperties)
     }
 
-    enum CodingKeys: String, CodingKey {
+    enum CodingKeys: String, CodingKey, CaseIterable {
         case street
         case city
         case state
