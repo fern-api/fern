@@ -1909,6 +1909,9 @@ importers:
       '@fern-api/python-base':
         specifier: workspace:*
         version: link:../base
+      '@fern-api/python-dynamic-snippets':
+        specifier: workspace:*
+        version: link:../dynamic-snippets
       '@fern-fern/generator-cli-sdk':
         specifier: 0.0.28
         version: 0.0.28
