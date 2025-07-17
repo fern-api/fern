@@ -44,7 +44,7 @@ export class ObjectGenerator {
     }
 
     private getFilename(): string {
-        // TODO: File names need to be unique across the generated output so we'll need to validate this
+        // TODO(kafkas): File names need to be unique across the generated output so we'll need to validate this
         return this.typeDeclaration.name.name.pascalCase.unsafeName + ".swift";
     }
 
@@ -269,7 +269,7 @@ export class ObjectGenerator {
         switch (typeReference.type) {
             case "container":
                 return typeReference.container._visit({
-                    // TODO: Handle these cases
+                    // TODO(kafkas): Handle these cases
                     literal: () => swift.Type.any(),
                     map: () => swift.Type.any(),
                     set: () => swift.Type.any(),
@@ -279,7 +279,7 @@ export class ObjectGenerator {
                     _other: () => swift.Type.any()
                 });
             case "primitive":
-                // TODO: Do we not look at typeReference.primitive.v2?
+                // TODO(kafkas): Do we not look at typeReference.primitive.v2?
                 return PrimitiveTypeV1._visit(typeReference.primitive.v1, {
                     string: () => swift.Type.string(),
                     boolean: () => swift.Type.bool(),
@@ -289,7 +289,7 @@ export class ObjectGenerator {
                     long: () => swift.Type.int64(),
                     float: () => swift.Type.float(),
                     double: () => swift.Type.double(),
-                    // TODO: We may need to implement our own value type for this
+                    // TODO(kafkas): We may need to implement our own value type for this
                     bigInteger: () => swift.Type.string(),
                     date: () => swift.Type.date(),
                     dateTime: () => swift.Type.date(),

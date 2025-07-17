@@ -23,7 +23,7 @@ export class StringEnumGenerator {
     }
 
     private getFilename(): string {
-        // TODO: File names need to be unique across the generated output so we'll need to validate this
+        // TODO(kafkas): File names need to be unique across the generated output so we'll need to validate this
         return this.typeDeclaration.name.name.pascalCase.unsafeName + ".swift";
     }
 
