@@ -1761,14 +1761,16 @@
             "type": {
               "type": "id",
               "value": "text_request_url"
-            }
+            },
+            "displayName": "text_request_url"
           },
           {
             "typeName": "text_request_text",
             "type": {
               "type": "id",
               "value": "text_request_text"
-            }
+            },
+            "displayName": "text_request_text"
           }
         ]
       }
@@ -3625,7 +3627,8 @@
             "value": "video"
           }
         ]
-      }
+      },
+      "displayName": "OurPublicModelsAll"
     },
     "V1ListenPostParametersModel": {
       "name": "V1ListenPostParametersModel",
@@ -3638,7 +3641,8 @@
             "type": {
               "type": "id",
               "value": "V1ListenPostParametersModel0"
-            }
+            },
+            "displayName": "OurPublicModelsAll"
           },
           {
             "description": "Custom string if you've had a model trained by Deepgram",
@@ -3835,7 +3839,8 @@
             "value": "latest"
           }
         ]
-      }
+      },
+      "displayName": "UseModelLatestVersion"
     },
     "V1ListenPostParametersVersion": {
       "name": "V1ListenPostParametersVersion",
@@ -3848,7 +3853,8 @@
             "type": {
               "type": "id",
               "value": "V1ListenPostParametersVersion0"
-            }
+            },
+            "displayName": "UseModelLatestVersion"
           },
           {
             "description": "Use a previous version of a model",
@@ -6077,14 +6083,16 @@
             "type": {
               "type": "id",
               "value": "stt_models"
-            }
+            },
+            "displayName": "stt_models"
           },
           {
             "typeName": "tts_models",
             "type": {
               "type": "id",
               "value": "tts_models"
-            }
+            },
+            "displayName": "tts_models"
           }
         ]
       }
@@ -9951,7 +9959,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "FormattedOutput"
     },
     "V1ModelsModelIdGetResponsesContentApplicationJsonSchemaOneOf1Metadata": {
       "name": "V1ModelsModelIdGetResponsesContentApplicationJsonSchemaOneOf1Metadata",
@@ -10120,7 +10129,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Metadata"
     },
     "Management API_getModel_Response_200": {
       "name": "Management API_getModel_Response_200",
@@ -10132,14 +10142,16 @@
             "type": {
               "type": "id",
               "value": "ManagementApiGetModelResponse2000"
-            }
+            },
+            "displayName": "FormattedOutput"
           },
           {
             "typeName": "ManagementApiGetModelResponse2001",
             "type": {
               "type": "id",
               "value": "ManagementApiGetModelResponse2001"
-            }
+            },
+            "displayName": "Metadata"
           }
         ]
       }
@@ -11457,7 +11469,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Type"
     },
     "ChannelsListenMessagesControlMessagesRequestOneOf1Type": {
       "description": "Close the websocket connection",
@@ -11489,7 +11502,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Type"
     },
     "ChannelsListenMessagesControlMessagesRequestOneOf2Type": {
       "description": "Used to keep the websocket connection alive",
@@ -11521,7 +11535,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Type"
     },
     "listen_controlMessagesRequest": {
       "name": "listen_controlMessagesRequest",
@@ -11533,21 +11548,24 @@
             "type": {
               "type": "id",
               "value": "ListenControlMessagesRequest0"
-            }
+            },
+            "displayName": "Type"
           },
           {
             "typeName": "ListenControlMessagesRequest1",
             "type": {
               "type": "id",
               "value": "ListenControlMessagesRequest1"
-            }
+            },
+            "displayName": "Type"
           },
           {
             "typeName": "ListenControlMessagesRequest2",
             "type": {
               "type": "id",
               "value": "ListenControlMessagesRequest2"
-            }
+            },
+            "displayName": "Type"
           }
         ]
       }
