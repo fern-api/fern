@@ -465,9 +465,7 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
     }
 
     private getMethodCall(endpoint: EndpointWithFilepath): string {
-        return `${this.getAccessFromRootClient(endpoint.fernFilepath)}.${this.getEndpointMethodName(
-            endpoint.endpoint
-        )}`;
+        return `${this.getAccessFromRootClient(endpoint.fernFilepath)}.${this.getEndpointMethodName(endpoint.endpoint)}`;
     }
 
     private getAccessFromRootClient(fernFilepath: FernFilepath): string {

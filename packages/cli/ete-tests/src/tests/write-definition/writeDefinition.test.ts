@@ -60,26 +60,22 @@ describe("validate single with endpoint async", () => {
 });
 
 function itFixture(fixtureName: string) {
-    it(
-        // eslint-disable-next-line jest/valid-title
-        fixtureName,
-        async () => {
-            const fixturePath = path.join(FIXTURES_DIR, fixtureName);
-            const definitionOutputPath = path.join(fixturePath, "fern", ".definition");
-            if (await doesPathExist(AbsoluteFilePath.of(definitionOutputPath))) {
-                await rm(definitionOutputPath, { force: true, recursive: true });
-            }
+    it(// eslint-disable-next-line jest/valid-title
+    fixtureName, async () => {
+        const fixturePath = path.join(FIXTURES_DIR, fixtureName);
+        const definitionOutputPath = path.join(fixturePath, "fern", ".definition");
+        if (await doesPathExist(AbsoluteFilePath.of(definitionOutputPath))) {
+            await rm(definitionOutputPath, { force: true, recursive: true });
+        }
 
-            await runFernCli(["write-definition", "--log-level", "debug"], {
-                cwd: fixturePath
-            });
+        await runFernCli(["write-definition", "--log-level", "debug"], {
+            cwd: fixturePath
+        });
 
-            expect(await getDirectoryContentsForSnapshot(AbsoluteFilePath.of(definitionOutputPath))).toMatchSnapshot();
+        expect(await getDirectoryContentsForSnapshot(AbsoluteFilePath.of(definitionOutputPath))).toMatchSnapshot();
 
-            await runFernCli(["check", "--log-level", "debug"], {
-                cwd: fixturePath
-            });
-        },
-        90_000
-    );
+        await runFernCli(["check", "--log-level", "debug"], {
+            cwd: fixturePath
+        });
+    }, 90_000);
 }

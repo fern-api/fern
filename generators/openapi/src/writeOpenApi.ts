@@ -47,7 +47,7 @@ export async function writeOpenApi(mode: Mode, pathToConfig: string): Promise<vo
                 throw new Error("Failed to convert IR to OpenAPI");
             }
 
-            // eslint-disable-next-line no-console
+            // biome-ignore lint/suspicious/noConsole: allow console
             console.log(`openapi before override ${JSON.stringify(openapi)}`);
 
             if (customConfig.customOverrides != null) {
@@ -55,7 +55,7 @@ export async function writeOpenApi(mode: Mode, pathToConfig: string): Promise<vo
                     data: openapi,
                     overrides: customConfig.customOverrides
                 });
-                // eslint-disable-next-line no-console
+                // biome-ignore lint/suspicious/noConsole: allow console
                 console.log(`openapi after override ${JSON.stringify(openapi)}`);
             }
 
@@ -73,9 +73,9 @@ export async function writeOpenApi(mode: Mode, pathToConfig: string): Promise<vo
             await generatorLoggingClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful({})));
         } catch (e) {
             if (e instanceof Error) {
-                // eslint-disable-next-line no-console
+                // biome-ignore lint/suspicious/noConsole: allow console
                 console.log((e as Error)?.message);
-                // eslint-disable-next-line no-console
+                // biome-ignore lint/suspicious/noConsole: allow console
                 console.log((e as Error)?.stack);
             }
             await generatorLoggingClient.sendUpdate(
@@ -87,7 +87,7 @@ export async function writeOpenApi(mode: Mode, pathToConfig: string): Promise<vo
             );
         }
     } catch (e) {
-        // eslint-disable-next-line no-console
+        // biome-ignore lint/suspicious/noConsole: allow console
         console.log("Encountered error", e);
         throw e;
     }

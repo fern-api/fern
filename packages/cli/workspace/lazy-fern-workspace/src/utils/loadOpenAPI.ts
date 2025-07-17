@@ -36,12 +36,12 @@ export async function loadOpenAPI({
         overridesFilepath = absolutePathToOpenAPIOverrides;
     } else if (
         typeof parsed === "object" &&
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         (parsed as any)[FernOpenAPIExtension.OPENAPI_OVERIDES_FILEPATH] != null
     ) {
         overridesFilepath = join(
             dirname(absolutePathToOpenAPI),
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
             RelativeFilePath.of((parsed as any)[FernOpenAPIExtension.OPENAPI_OVERIDES_FILEPATH])
         );
     }

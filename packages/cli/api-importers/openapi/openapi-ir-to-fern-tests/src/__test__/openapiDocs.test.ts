@@ -14,35 +14,30 @@ describe("openapi-ir-to-fern docs", async () => {
             continue;
         }
 
-        it(
-            fixture.name,
-            async () => {
-                const fixturePath = join(FIXTURES_DIR, RelativeFilePath.of(fixture.name), RelativeFilePath.of("fern"));
-                const context = createMockTaskContext();
-                const workspace = await loadAPIWorkspace({
-                    absolutePathToWorkspace: fixturePath,
-                    context,
-                    cliVersion: "0.0.0",
-                    workspaceName: fixture.name
-                });
-                if (!workspace.didSucceed) {
-                    throw new Error(
-                        `Failed to load OpenAPI fixture ${fixture.name}\n${JSON.stringify(workspace.failures)}`
-                    );
-                }
-
-                const definition = await workspace.workspace.getDefinition(
-                    {
-                        context,
-                        absoluteFilePath: AbsoluteFilePath.of("/DUMMY_PATH")
-                    },
-                    { enableUniqueErrorsPerEndpoint: true, preserveSchemaIds: true }
+        it(fixture.name, async () => {
+            const fixturePath = join(FIXTURES_DIR, RelativeFilePath.of(fixture.name), RelativeFilePath.of("fern"));
+            const context = createMockTaskContext();
+            const workspace = await loadAPIWorkspace({
+                absolutePathToWorkspace: fixturePath,
+                context,
+                cliVersion: "0.0.0",
+                workspaceName: fixture.name
+            });
+            if (!workspace.didSucceed) {
+                throw new Error(
+                    `Failed to load OpenAPI fixture ${fixture.name}\n${JSON.stringify(workspace.failures)}`
                 );
+            }
 
-                // eslint-disable-next-line jest/no-standalone-expect
-                await expect(definition).toMatchFileSnapshot(`./__snapshots__/openapi-docs/${fixture.name}.json`);
-            },
-            90_000
-        );
+            const definition = await workspace.workspace.getDefinition(
+                {
+                    context,
+                    absoluteFilePath: AbsoluteFilePath.of("/DUMMY_PATH")
+                },
+                { enableUniqueErrorsPerEndpoint: true, preserveSchemaIds: true }
+            );
+
+            await expect(definition).toMatchFileSnapshot(`./__snapshots__/openapi-docs/${fixture.name}.json`);
+        }, 90_000);
     }
 });

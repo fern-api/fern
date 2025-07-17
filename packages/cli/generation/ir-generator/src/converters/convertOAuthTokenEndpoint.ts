@@ -42,6 +42,7 @@ export function convertOAuthTokenEndpoint({
                       propertyComponents: tokenEndpoint.responseProperties.expires_in
                   })
                 : undefined;
+        // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
     } catch {}
 
     return {

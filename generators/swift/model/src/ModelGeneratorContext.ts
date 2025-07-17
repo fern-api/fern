@@ -6,6 +6,7 @@ import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
 
 export class ModelGeneratorContext extends AbstractSwiftGeneratorContext<ModelCustomConfigSchema> {
+    // biome-ignore lint/complexity/noUselessConstructor: allow
     public constructor(
         ir: IntermediateRepresentation,
         config: FernGeneratorExec.config.GeneratorConfig,

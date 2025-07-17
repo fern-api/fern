@@ -6,6 +6,7 @@ import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { EndpointRequest } from "./EndpointRequest";
 
 export class BytesRequest extends EndpointRequest {
+    // biome-ignore lint/complexity/noUselessConstructor: allow
     public constructor(
         context: SdkGeneratorContext,
         sdkRequest: SdkRequest,
