@@ -243,7 +243,7 @@ export async function downloadBundle({
                 logger.debug("Installing esbuild");
                 await loggingExeca(logger, "pnpm", ["i", "esbuild"], {
                     cwd: absolutePathToBundleFolder,
-                    doNotPipeOutput: true
+                    doNotPipeOutput: false
                 });
             } catch (error) {
                 logger.error("Failed to install required package. Please reach out to support@buildwithfern.com.");
@@ -265,7 +265,7 @@ export async function downloadBundle({
                 logger.debug("Resolve esbuild imports");
                 await loggingExeca(logger, "node", ["install-esbuild.js"], {
                     cwd: absolutePathToBundleFolder,
-                    doNotPipeOutput: true
+                    doNotPipeOutput: false
                 });
             } catch (error) {
                 logger.error("Failed to resolve imports. Please reach out to support@buildwithfern.com.");
