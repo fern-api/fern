@@ -146,8 +146,8 @@ export async function downloadBundle({
         // logger.debug(`Wrote ${tryTar ? "output.tar.gz" : "output.zip"} to ${outputZipPath}`);
         const outputZipPath =
             process.platform === "win32"
-                ? "C:\\Users\\cathe\\git\\fern-platform\\docs_bundle.tar.gz"
-                : "/Volumes/git/fern-platform/docs_bundle.tar.gz";
+                ? "C:\\Users\\cathe\\git\\fern-platform\\packages\\fern-docs\\bundle\\next.tar.gz"
+                : "/Volumes/git/fern-platform/packages/fern-docs/bundle/next.tar.gz";
         logger.debug(`outputZipPath: ${outputZipPath}`);
 
         logger.debug("Getting path to preview folder");
