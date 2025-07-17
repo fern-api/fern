@@ -202,6 +202,7 @@ function getGenericArgumentCounts(workspace: FernWorkspace): Record<string, numb
                     const maybeGeneric = parseGeneric(typeName.name);
                     if (maybeGeneric != null) {
                         visitRawTypeDeclaration(declaration, {
+                            // biome-ignore-start lint/suspicious/noEmptyBlockStatements: allow
                             alias: () => {},
                             enum: () => {},
                             object: () => {
@@ -211,6 +212,7 @@ function getGenericArgumentCounts(workspace: FernWorkspace): Record<string, numb
                             },
                             discriminatedUnion: () => {},
                             undiscriminatedUnion: () => {}
+                            // biome-ignore-end lint/suspicious/noEmptyBlockStatements: allow
                         });
                     }
                 }

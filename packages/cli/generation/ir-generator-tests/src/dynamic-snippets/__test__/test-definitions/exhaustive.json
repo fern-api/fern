@@ -993,6 +993,143 @@
             ],
             "additionalProperties": false
         },
+        "type_types/docs:ObjectWithDocs": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "ObjectWithDocs",
+                    "camelCase": {
+                        "unsafeName": "objectWithDocs",
+                        "safeName": "objectWithDocs"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "object_with_docs",
+                        "safeName": "object_with_docs"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "OBJECT_WITH_DOCS",
+                        "safeName": "OBJECT_WITH_DOCS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ObjectWithDocs",
+                        "safeName": "ObjectWithDocs"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "types",
+                            "camelCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TYPES",
+                                "safeName": "TYPES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Types",
+                                "safeName": "Types"
+                            }
+                        },
+                        {
+                            "originalName": "docs",
+                            "camelCase": {
+                                "unsafeName": "docs",
+                                "safeName": "docs"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "docs",
+                                "safeName": "docs"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DOCS",
+                                "safeName": "DOCS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Docs",
+                                "safeName": "Docs"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "types",
+                            "camelCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TYPES",
+                                "safeName": "TYPES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Types",
+                                "safeName": "Types"
+                            }
+                        }
+                    ],
+                    "file": {
+                        "originalName": "docs",
+                        "camelCase": {
+                            "unsafeName": "docs",
+                            "safeName": "docs"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "docs",
+                            "safeName": "docs"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DOCS",
+                            "safeName": "DOCS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Docs",
+                            "safeName": "Docs"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "string",
+                            "camelCase": {
+                                "unsafeName": "string",
+                                "safeName": "string"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "string",
+                                "safeName": "string"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "STRING",
+                                "safeName": "STRING"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "String",
+                                "safeName": "String"
+                            }
+                        },
+                        "wireValue": "string"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    }
+                }
+            ],
+            "additionalProperties": false
+        },
         "type_types/enum:WeatherReport": {
             "type": "enum",
             "declaration": {

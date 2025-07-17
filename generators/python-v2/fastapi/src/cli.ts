@@ -1,6 +1,6 @@
 void runCli();
 
 export async function runCli(): Promise<void> {
-    // eslint-disable-next-line no-console
+    // biome-ignore lint/suspicious/noConsole: allow console
     console.log("Noop...");
 }

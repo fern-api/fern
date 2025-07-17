@@ -535,6 +535,52 @@ func (c *CastMember) Accept(visitor CastMemberVisitor) error {
 	return fmt.Errorf("type %T does not include a non-empty union type", c)
 }
 
+type CronJob struct {
+	Expression string `json:"expression" url:"expression"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CronJob) GetExpression() string {
+	if c == nil {
+		return ""
+	}
+	return c.Expression
+}
+
+func (c *CronJob) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CronJob) UnmarshalJSON(data []byte) error {
+	type unmarshaler CronJob
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CronJob(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CronJob) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
 type Directory struct {
 	Name        string       `json:"name" url:"name"`
 	Files       []*File      `json:"files,omitempty" url:"files,omitempty"`

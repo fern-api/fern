@@ -39,7 +39,7 @@ export async function convertMarkdown({
             title: data.title,
             subtitle: data.description,
             layout: data.mode != null ? "reference" : undefined,
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
             image: data["og:image"] as any,
             slug: FernRegistry.navigation.latest.Slug(slug),
 

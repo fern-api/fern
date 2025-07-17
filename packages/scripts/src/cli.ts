@@ -39,7 +39,7 @@ async function main() {
                     const outputPath = path.resolve(argv.output);
                     await mkdir(outputPath, { recursive: true });
                     await writeFile(path.join(outputPath, "versions.yml"), yaml.stringify(yaml.parse(versionsYml)));
-                    // eslint-disable-next-line no-console
+                    // biome-ignore lint/suspicious/noConsole: allow console
                     console.log(`Successfully wrote versions to ${path.join(outputPath, "versions.yml")}`);
                 }
             )
@@ -47,7 +47,7 @@ async function main() {
             .help()
             .parse();
     } catch (error) {
-        // eslint-disable-next-line no-console
+        // biome-ignore lint/suspicious/noConsole: allow console
         console.error("Error:", error);
         process.exit(1);
     }

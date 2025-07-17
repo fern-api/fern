@@ -19,7 +19,7 @@ export declare namespace Function {
 export class Function extends AstNode {
     readonly name: string;
     readonly parameters: Parameter[];
-    readonly async: boolean;
+    readonly ["async"]: boolean;
     readonly body: CodeBlock;
     readonly return_: Type | undefined;
     readonly docs: string | undefined;

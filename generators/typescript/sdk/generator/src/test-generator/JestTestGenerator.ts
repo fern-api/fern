@@ -326,7 +326,7 @@ describe("test", () => {
                     return;
                 }
             },
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
+            // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
             _other: () => {}
         });
 
