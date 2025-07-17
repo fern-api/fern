@@ -213,10 +213,9 @@ export class OneOfSchemaConverter extends AbstractConverter<
         let inlinedTypes: Record<TypeId, SchemaConverter.ConvertedSchema> = {};
 
         // Collect all inlined object schemas for better naming
-        const allInlinedSchemas = [
-            ...(this.schema.oneOf ?? []),
-            ...(this.schema.anyOf ?? [])
-        ].filter(schema => !this.context.isReferenceObject(schema)) as OpenAPIV3_1.SchemaObject[];
+        const allInlinedSchemas = [...(this.schema.oneOf ?? []), ...(this.schema.anyOf ?? [])].filter(
+            (schema) => !this.context.isReferenceObject(schema)
+        ) as OpenAPIV3_1.SchemaObject[];
 
         for (const [index, subSchema] of [
             ...(this.schema.oneOf ?? []).entries(),
@@ -241,7 +240,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 } else {
                     maybeTypeReference = this.context.convertReferenceToTypeReference({
                         reference: subSchema,
-                        displayNameOverride: subSchema.$ref.split('/').pop(),
+                        displayNameOverride: subSchema.$ref.split("/").pop(),
                         displayNameOverrideSource: "schema_identifier"
                     });
                 }
@@ -262,7 +261,11 @@ export class OneOfSchemaConverter extends AbstractConverter<
             const extendedSubSchema = this.extendSubSchema(subSchema);
 
             const schemaId = this.context.convertBreadcrumbsToName([`${this.id}_${index}`]);
-            const displayName = UnionSchemaNamingUtils.generateDisplayNameForInlinedObject(subSchema, index, allInlinedSchemas);
+            const displayName = UnionSchemaNamingUtils.generateDisplayNameForInlinedObject(
+                subSchema,
+                index,
+                allInlinedSchemas
+            );
             const schemaConverter = new SchemaConverter({
                 context: this.context,
                 id: schemaId,
