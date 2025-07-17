@@ -165,7 +165,7 @@ function generatePrimitiveStringExample({
                 example: ExamplePrimitive.string({ original: minLengthExample }),
                 jsonExample: minLengthExample
             };
-        } else if (maxLength) {
+        } else if (maxLength != null && maxLength < 10) {
             const maxLengthExample = getStringExampleOfLength(maxLength);
             return {
                 type: "success",
