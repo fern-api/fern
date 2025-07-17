@@ -68,6 +68,9 @@ class SDKCustomConfig(pydantic.BaseModel):
     # Feature flag that enables generation of Python websocket clients
     should_generate_websocket_clients: bool = False
 
+    # Feature flag that enables generation of wire tests for the SDK
+    should_generate_wire_tests: bool = False
+
     # deprecated, use client config instead
     client_class_name: Optional[str] = None
     # deprecated, use client config instead
