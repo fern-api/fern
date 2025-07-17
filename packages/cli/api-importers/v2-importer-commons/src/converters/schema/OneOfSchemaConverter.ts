@@ -588,7 +588,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
         // Sort by score (highest first), then alphabetically
         return scoredProperties
             .sort((a, b) => {
-                if (a.score !== b.score) return b.score - a.score;
+                if (a.score !== b.score) { return b.score - a.score; }
                 return a.prop.localeCompare(b.prop);
             })
             .map(item => item.prop);
