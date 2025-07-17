@@ -241,7 +241,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 } else {
                     maybeTypeReference = this.context.convertReferenceToTypeReference({
                         reference: subSchema,
-                        displayNameOverride: subSchema.$ref,
+                        displayNameOverride: subSchema.$ref.split('/').pop(),
                         displayNameOverrideSource: "schema_identifier"
                     });
                 }
