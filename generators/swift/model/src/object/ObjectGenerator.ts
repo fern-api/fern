@@ -46,7 +46,16 @@ export class ObjectGenerator {
                     name: this.typeDeclaration.name.name.pascalCase.safeName,
                     accessLevel: swift.AccessLevel.Public,
                     conformances: ["Codable", "Hashable"],
-                    properties: this.typeDeclaration.shape.properties.map((p) => this.generateAstNodeForProperty(p)),
+                    properties: [
+                        ...this.typeDeclaration.shape.properties.map((p) => this.generateAstNodeForProperty(p)),
+                        // TODO: Make dynamic
+                        swift.property({
+                            unsafeName: "additionalProperties", // TODO: Handle conflicts
+                            accessLevel: swift.AccessLevel.Public,
+                            declarationType: swift.DeclarationType.Let,
+                            type: swift.Type.dictionary(swift.Type.string(), swift.Type.custom("JSONValue"))
+                        })
+                    ],
                     initializers: [
                         this.generatePrimaryInitializer(this.typeDeclaration.shape),
                         this.generateInitializerForDecoder(this.typeDeclaration.shape)
@@ -68,23 +77,36 @@ export class ObjectGenerator {
     private generatePrimaryInitializer(type: Type.Object_): swift.Initializer {
         return swift.initializer({
             accessLevel: swift.AccessLevel.Public,
-            parameters: type.properties.map((p) =>
+            parameters: [
+                ...type.properties.map((p) =>
+                    swift.functionParameter({
+                        argumentLabel: p.name.name.camelCase.unsafeName,
+                        unsafeName: p.name.name.camelCase.unsafeName,
+                        type: this.generateAstNodeForTypeReference(p.valueType),
+                        optional: isOptionalProperty(p),
+                        defaultValue: isOptionalProperty(p) ? swift.Expression.rawValue("nil") : undefined
+                    })
+                ),
                 swift.functionParameter({
-                    argumentLabel: p.name.name.camelCase.unsafeName,
-                    unsafeName: p.name.name.camelCase.unsafeName,
-                    type: this.generateAstNodeForTypeReference(p.valueType),
-                    optional: isOptionalProperty(p),
-                    defaultValue: isOptionalProperty(p) ? swift.Expression.rawValue("nil") : undefined
+                    // TODO: Handle conflicts
+                    argumentLabel: "additionalProperties",
+                    unsafeName: "additionalProperties",
+                    type: swift.Type.dictionary(swift.Type.string(), swift.Type.custom("JSONValue")),
+                    defaultValue: swift.Expression.contextualMethodCall("init")
                 })
-            ),
-            body: swift.CodeBlock.withStatements(
-                type.properties.map((p) =>
+            ],
+            body: swift.CodeBlock.withStatements([
+                ...type.properties.map((p) =>
                     swift.Statement.propertyAssignment(
                         p.name.name.camelCase.unsafeName,
                         swift.Expression.reference(p.name.name.camelCase.unsafeName)
                     )
+                ),
+                swift.Statement.propertyAssignment(
+                    "additionalProperties", // TODO: Handle conflicts
+                    swift.Expression.reference("additionalProperties")
                 )
-            )
+            ])
         });
     }
 
@@ -131,6 +153,21 @@ export class ObjectGenerator {
                                     })
                                 ]
                             )
+                        )
+                    )
+                ),
+                swift.Statement.propertyAssignment(
+                    "additionalProperties", // TODO: Handle conflicts
+                    swift.Expression.try(
+                        swift.Expression.methodCall(
+                            swift.Expression.reference("decoder"),
+                            "decodeAdditionalProperties",
+                            [
+                                swift.functionArgument({
+                                    label: "using",
+                                    value: swift.Expression.rawValue("CodingKeys.self")
+                                })
+                            ]
                         )
                     )
                 )
@@ -182,6 +219,19 @@ export class ObjectGenerator {
                                     })
                                 ]
                             )
+                        )
+                    )
+                ),
+                swift.Statement.expressionStatement(
+                    swift.Expression.try(
+                        swift.Expression.methodCall(
+                            swift.Expression.reference("encoder"),
+                            "encodeAdditionalProperties",
+                            [
+                                swift.functionArgument({
+                                    value: swift.Expression.reference("additionalProperties") // TODO: Handle conflicts
+                                })
+                            ]
                         )
                     )
                 )

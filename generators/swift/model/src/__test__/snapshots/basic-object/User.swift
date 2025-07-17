@@ -6,8 +6,9 @@ public struct User: Codable, Hashable {
     public let isActive: Bool
     public let balance: Double
     public let tags: [String]
+    public let additionalProperties: [String: JSONValue]
 
-    public init(id: String, name: String, email: String, age: Int? = nil, isActive: Bool, balance: Double, tags: [String]) {
+    public init(id: String, name: String, email: String, age: Int? = nil, isActive: Bool, balance: Double, tags: [String], additionalProperties: [String: JSONValue] = .init()) {
         self.id = id
         self.name = name
         self.email = email
@@ -15,6 +16,7 @@ public struct User: Codable, Hashable {
         self.isActive = isActive
         self.balance = balance
         self.tags = tags
+        self.additionalProperties = additionalProperties
     }
 
     public init(from decoder: Decoder) throws {
@@ -26,6 +28,7 @@ public struct User: Codable, Hashable {
         self.isActive = try container.decode(Bool.self, forKey: .isActive)
         self.balance = try container.decode(Double.self, forKey: .balance)
         self.tags = try container.decode([String].self, forKey: .tags)
+        self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
@@ -37,6 +40,7 @@ public struct User: Codable, Hashable {
         try container.encode(self.isActive, forKey: .isActive)
         try container.encode(self.balance, forKey: .balance)
         try container.encode(self.tags, forKey: .tags)
+        try encoder.encodeAdditionalProperties(additionalProperties)
     }
 
     enum CodingKeys: String, CodingKey {
