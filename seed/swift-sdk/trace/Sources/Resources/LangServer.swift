@@ -1,2 +1,7 @@
 public final class LangServerClient: Sendable {
+    private let httpClient: HTTPClient
+
+    public init(config: ClientConfig) {
+        self.httpClient = HTTPClient(config: config)
+    }
 }
