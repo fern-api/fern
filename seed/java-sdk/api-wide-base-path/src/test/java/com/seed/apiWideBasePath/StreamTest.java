@@ -18,7 +18,7 @@ public final class StreamTest {
     @Test
     public void testJsonStream() {
         List<Map> messages = List.of(Map.of("message", "hello"), Map.of("message", "world"));
-        List jsonStrings = messages.stream().map(StreamTest::mapToJson).toList();
+        List jsonStrings = messages.stream().map(StreamTest::mapToJson).collect(Collectors.toList());
         String input = String.join("\n", jsonStrings);
         StringReader jsonInput = new StringReader(input);
         Stream<Map> jsonStream = Stream.fromJson(Map.class, jsonInput);
@@ -34,7 +34,7 @@ public final class StreamTest {
     @Test
     public void testSseStream() {
         List<Map> events = List.of(Map.of("event", "start"), Map.of("event", "end"));
-        List sseStrings = events.stream().map(StreamTest::mapToSse).toList();
+        List sseStrings = events.stream().map(StreamTest::mapToSse).collect(Collectors.toList());
         String input = String.join("\n" + "\n", sseStrings);
         StringReader sseInput = new StringReader(input);
         Stream<Map> sseStream = Stream.fromSse(Map.class, sseInput);
