@@ -2295,6 +2295,272 @@
               "codeSamples": []
             }
           ]
+        },
+        {
+          "auth": false,
+          "description": "Test pagination with nullable double parameter wrapped in optional",
+          "method": "GET",
+          "id": "listWithOptionalNullableDouble",
+          "originalEndpointId": "endpoint_users.listWithOptionalNullableDouble",
+          "name": "List With Optional Nullable Double",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/users"
+              },
+              {
+                "type": "literal",
+                "value": "/nullable-double"
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "description": "Page number with double type that can be null or absent",
+              "key": "page",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "nullable",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "default": 0
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "description": "Defaults to per page",
+              "key": "per_page",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            },
+            {
+              "key": "order",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_users:Order"
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_users:ListUsersPaginationResponse"
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/users/nullable-double",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "hasNextPage": true,
+                "page": {
+                  "page": 1,
+                  "next": {
+                    "page": 1,
+                    "starting_after": "starting_after"
+                  },
+                  "per_page": 1,
+                  "total_page": 1
+                },
+                "total_count": 1,
+                "data": [
+                  {
+                    "name": "name",
+                    "id": 1
+                  },
+                  {
+                    "name": "name",
+                    "id": 1
+                  }
+                ]
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "hasNextPage": true,
+                  "page": {
+                    "page": 1,
+                    "next": {
+                      "page": 1,
+                      "starting_after": "starting_after"
+                    },
+                    "per_page": 1,
+                    "total_page": 1
+                  },
+                  "total_count": 1,
+                  "data": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                }
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "description": "Test pagination with nullable integer parameter wrapped in optional",
+          "method": "GET",
+          "id": "listWithOptionalNullableInteger",
+          "originalEndpointId": "endpoint_users.listWithOptionalNullableInteger",
+          "name": "List With Optional Nullable Integer",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/users"
+              },
+              {
+                "type": "literal",
+                "value": "/nullable-integer"
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "description": "Page number with integer type that can be null or absent",
+              "key": "page",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "nullable",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer",
+                      "default": 0
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "description": "Defaults to per page",
+              "key": "per_page",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            },
+            {
+              "key": "order",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_users:Order"
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_users:ListUsersPaginationResponse"
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/users/nullable-integer",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "hasNextPage": true,
+                "page": {
+                  "page": 1,
+                  "next": {
+                    "page": 1,
+                    "starting_after": "starting_after"
+                  },
+                  "per_page": 1,
+                  "total_page": 1
+                },
+                "total_count": 1,
+                "data": [
+                  {
+                    "name": "name",
+                    "id": 1
+                  },
+                  {
+                    "name": "name",
+                    "id": 1
+                  }
+                ]
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "hasNextPage": true,
+                  "page": {
+                    "page": 1,
+                    "next": {
+                      "page": 1,
+                      "starting_after": "starting_after"
+                    },
+                    "per_page": 1,
+                    "total_page": 1
+                  },
+                  "total_count": 1,
+                  "data": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                }
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],
