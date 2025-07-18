@@ -206,13 +206,14 @@ export async function downloadBundle({
 
         const absolutePathToPreviewFolder = getPathToPreviewFolder({ app });
         if (await doesPathExist(absolutePathToPreviewFolder)) {
+            logger.debug(`Removing previously cached bundle at: ${absolutePathToPreviewFolder}`);
             await rm(absolutePathToPreviewFolder, { recursive: true });
         }
         await mkdir(absolutePathToPreviewFolder, { recursive: true });
-        logger.debug(`rm -rf ${absolutePathToPreviewFolder}`);
 
         const absolutePathToBundleFolder = getPathToBundleFolder({ app });
         await mkdir(absolutePathToBundleFolder, { recursive: true });
+        logger.debug(`Decompressing bundle from ${outputZipPath} to ${absolutePathToBundleFolder}`);
         await decompress(outputZipPath, absolutePathToBundleFolder, {
             // skip extraction of symlinks on windows
             filter: (file) => !(PLATFORM_IS_WINDOWS && file.type === "symlink")
