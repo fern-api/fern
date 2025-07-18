@@ -3,6 +3,9 @@ import { mkdir, readFile, rm, writeFile } from "fs/promises";
 import { homedir } from "os";
 import tmp from "tmp-promise";
 import xml2js from "xml2js";
+import path from "path";
+import fs from "fs";
+
 
 import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
@@ -10,9 +13,11 @@ import { loggingExeca } from "@fern-api/logging-execa";
 
 const ETAG_FILENAME = "etag";
 const PREVIEW_FOLDER_NAME = "preview";
-const APP_PREVIEW_FOLDER_NAME = "app-preview";
+const APP_PREVIEW_FOLDER_NAME = "app-preview-fernlocal-3";
 const BUNDLE_FOLDER_NAME = "bundle";
 const NEXT_BUNDLE_FOLDER_NAME = ".next";
+const STANDALONE_FOLDER_NAME = "standalone";
+const INSTRUMENTATION_PATH = "packages/fern-docs/bundle/.next/server/instrumentation.js"
 const LOCAL_STORAGE_FOLDER = process.env.LOCAL_STORAGE_FOLDER ?? ".fern";
 
 export function getLocalStorageFolder(): AbsoluteFilePath {
@@ -21,26 +26,35 @@ export function getLocalStorageFolder(): AbsoluteFilePath {
 
 export function getPathToPreviewFolder({ app = false }: { app?: boolean }): AbsoluteFilePath {
     return join(
-        AbsoluteFilePath.of(homedir()),
-        RelativeFilePath.of(LOCAL_STORAGE_FOLDER),
+        getLocalStorageFolder(),
         RelativeFilePath.of(app ? APP_PREVIEW_FOLDER_NAME : PREVIEW_FOLDER_NAME)
     );
 }
 
 export function getPathToBundleFolder({ app = false }: { app?: boolean }): AbsoluteFilePath {
     return join(
-        AbsoluteFilePath.of(homedir()),
-        RelativeFilePath.of(LOCAL_STORAGE_FOLDER),
-        RelativeFilePath.of(app ? APP_PREVIEW_FOLDER_NAME : PREVIEW_FOLDER_NAME),
+        getPathToPreviewFolder({ app }),
         RelativeFilePath.of(app ? NEXT_BUNDLE_FOLDER_NAME : BUNDLE_FOLDER_NAME)
     );
 }
 
+export function getPathToStandaloneFolder({ app = false }: { app?: boolean }): AbsoluteFilePath {
+    return join(
+        getPathToBundleFolder({app}),
+        RelativeFilePath.of(STANDALONE_FOLDER_NAME)
+    );
+}
+
+export function getPathToInstrumentationJs({ app = false }: { app?: boolean }): AbsoluteFilePath {
+    return join(
+        getPathToStandaloneFolder({ app }),
+        RelativeFilePath.of(INSTRUMENTATION_PATH)
+    )
+}
+
 export function getPathToEtagFile({ app = false }: { app?: boolean }): AbsoluteFilePath {
     return join(
-        AbsoluteFilePath.of(homedir()),
-        RelativeFilePath.of(LOCAL_STORAGE_FOLDER),
-        RelativeFilePath.of(app ? APP_PREVIEW_FOLDER_NAME : PREVIEW_FOLDER_NAME),
+        getPathToPreviewFolder({ app }),
         RelativeFilePath.of(ETAG_FILENAME)
     );
 }
@@ -147,7 +161,10 @@ export async function downloadBundle({
 
         const absolutePathToBundleFolder = getPathToBundleFolder({ app });
         await mkdir(absolutePathToBundleFolder, { recursive: true });
-        await decompress(outputZipPath, absolutePathToBundleFolder);
+        await decompress(outputZipPath, absolutePathToBundleFolder, {
+            // skip extraction of symlinks on windows
+            filter: (file) => !(process.platform === "win32" && file.type === "symlink")
+        });
 
         // write etag
         await writeFile(eTagFilepath, eTag);
@@ -159,12 +176,12 @@ export async function downloadBundle({
             try {
                 await loggingExeca(logger, process.platform === "win32" ? "where" : "which", ["pnpm"], {
                     cwd: absolutePathToBundleFolder,
-                    doNotPipeOutput: true
+                    doNotPipeOutput: false
                 });
             } catch (error) {
                 logger.debug("pnpm not found, installing pnpm");
                 await loggingExeca(logger, "npm", ["install", "-g", "pnpm"], {
-                    doNotPipeOutput: true
+                    doNotPipeOutput: false
                 });
             }
 
@@ -172,7 +189,7 @@ export async function downloadBundle({
             try {
                 await loggingExeca(logger, process.platform === "win32" ? "where" : "which", ["pnpm"], {
                     cwd: absolutePathToBundleFolder,
-                    doNotPipeOutput: true
+                    doNotPipeOutput: false
                 });
             } catch (error) {
                 logger.error(
@@ -194,7 +211,7 @@ export async function downloadBundle({
                 logger.debug("Installing esbuild");
                 await loggingExeca(logger, "pnpm", ["i", "esbuild"], {
                     cwd: absolutePathToBundleFolder,
-                    doNotPipeOutput: true
+                    doNotPipeOutput: false
                 });
             } catch (error) {
                 logger.error("Failed to install required package. Please reach out to support@buildwithfern.com.");
@@ -214,7 +231,7 @@ export async function downloadBundle({
                 logger.debug("Resolve esbuild imports");
                 await loggingExeca(logger, "node", ["install-esbuild.js"], {
                     cwd: absolutePathToBundleFolder,
-                    doNotPipeOutput: true
+                    doNotPipeOutput: false
                 });
             } catch (error) {
                 logger.error("Failed to resolve imports. Please reach out to support@buildwithfern.com.");
@@ -227,6 +244,46 @@ export async function downloadBundle({
                 return {
                     type: "failure"
                 };
+            }
+
+            if (process.platform === "win32") {
+                const absPathToStandalone = getPathToStandaloneFolder({ app });
+                const absPathToInstrumentationJs = getPathToInstrumentationJs({ app });
+                // Add workspace config files
+                const fs = await import('fs/promises');
+                const pathModule = require('path');
+                const pnpmWorkspacePath = pathModule.join(absPathToStandalone, 'pnpm-workspace.yaml');
+                const pnpmfilePath = pathModule.join(absPathToStandalone, '.pnpmfile.cjs');
+                const npmrcPath = pathModule.join(absPathToStandalone, '.npmrc');
+
+                if (!(await doesPathExist(pnpmWorkspacePath))) {
+                    await fs.writeFile(
+                        pnpmWorkspacePath,
+                        `packages:\n  - \"packages/**\"\n  - \"!**/dist\"\n`
+                    );
+                }
+                if (!(await doesPathExist(pnpmfilePath))) {
+                    await fs.writeFile(
+                        pnpmfilePath,
+                        `module.exports = {\n    hooks: {\n        readPackage(pkg) {\n            // Remove all workspace:* dependencies\n            if (pkg.dependencies) {\n                Object.keys(pkg.dependencies).forEach(dep => {\n                    if (pkg.dependencies[dep] === 'workspace:*') {\n                        delete pkg.dependencies[dep]; } });\n                    }\n            if (pkg.devDependencies) {\n                Object.keys(pkg.devDependencies).forEach(dep => {\n                    if (pkg.devDependencies[dep] === 'workspace:*') {\n                        delete pkg.devDependencies[dep]; } });\n            } return pkg;\n        }\n    }\n};\n`
+                    );
+                }
+                if (!(await doesPathExist(npmrcPath))) {
+                    await fs.writeFile(
+                        npmrcPath,
+                        `@fern-fern:registry=https://npm.buildwithfern.com\n`
+                    );
+                }
+                if (await doesPathExist(absPathToInstrumentationJs)) {
+                    await fs.unlink(absPathToInstrumentationJs);
+                }
+
+                // pnpm install within standalone
+                logger.debug("Resolve esbuild imports");
+                await loggingExeca(logger, "pnpm", ["install"], {
+                    cwd: absPathToStandalone,
+                    doNotPipeOutput: false
+                });
             }
         }
 
