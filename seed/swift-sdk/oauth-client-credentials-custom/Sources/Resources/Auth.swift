@@ -6,8 +6,10 @@ public final class AuthClient: Sendable {
     }
 
     public func getTokenWithClientCredentials(requestOptions: RequestOptions? = nil) async throws -> TokenResponse {
+        fatalError("Not implemented.")
     }
 
     public func refreshToken(requestOptions: RequestOptions? = nil) async throws -> TokenResponse {
+        fatalError("Not implemented.")
     }
 }

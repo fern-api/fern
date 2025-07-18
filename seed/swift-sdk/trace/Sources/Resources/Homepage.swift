@@ -6,8 +6,10 @@ public final class HomepageClient: Sendable {
     }
 
     public func getHomepageProblems(requestOptions: RequestOptions? = nil) async throws -> [ProblemId] {
+        fatalError("Not implemented.")
     }
 
     public func setHomepageProblems(requestOptions: RequestOptions? = nil) async throws -> Any {
+        fatalError("Not implemented.")
     }
 }

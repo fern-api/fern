@@ -6,5 +6,6 @@ public final class PackageClient: Sendable {
     }
 
     public func test(requestOptions: RequestOptions? = nil) async throws -> Any {
+        fatalError("Not implemented.")
     }
 }

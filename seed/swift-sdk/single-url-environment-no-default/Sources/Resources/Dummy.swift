@@ -6,5 +6,6 @@ public final class DummyClient: Sendable {
     }
 
     public func getDummy(requestOptions: RequestOptions? = nil) async throws -> String {
+        fatalError("Not implemented.")
     }
 }

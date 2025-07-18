@@ -108,7 +108,16 @@ export class SubClientGenerator {
                         streaming: () => swift.Type.custom("Any"),
                         streamParameter: () => swift.Type.custom("Any"),
                         _other: () => swift.Type.custom("Any")
-                    }) ?? swift.Type.custom("Any")
+                    }) ?? swift.Type.custom("Any"),
+                body: swift.CodeBlock.withStatements([
+                    swift.Statement.expressionStatement(
+                        swift.Expression.functionCall("fatalError", [
+                            swift.functionArgument({
+                                value: swift.Expression.rawStringValue("Not implemented.")
+                            })
+                        ])
+                    )
+                ])
             });
         });
     }

@@ -6,5 +6,6 @@ public final class OptionalClient: Sendable {
     }
 
     public func sendOptionalBody(requestOptions: RequestOptions? = nil) async throws -> String {
+        fatalError("Not implemented.")
     }
 }

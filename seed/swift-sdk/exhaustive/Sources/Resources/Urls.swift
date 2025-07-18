@@ -6,14 +6,18 @@ public final class UrlsClient: Sendable {
     }
 
     public func withMixedCase(requestOptions: RequestOptions? = nil) async throws -> String {
+        fatalError("Not implemented.")
     }
 
     public func noEndingSlash(requestOptions: RequestOptions? = nil) async throws -> String {
+        fatalError("Not implemented.")
     }
 
     public func withEndingSlash(requestOptions: RequestOptions? = nil) async throws -> String {
+        fatalError("Not implemented.")
     }
 
     public func withUnderscores(requestOptions: RequestOptions? = nil) async throws -> String {
+        fatalError("Not implemented.")
     }
 }

@@ -6,8 +6,10 @@ public final class PaymentClient: Sendable {
     }
 
     public func create(requestOptions: RequestOptions? = nil) async throws -> UUID {
+        fatalError("Not implemented.")
     }
 
     public func delete(requestOptions: RequestOptions? = nil) async throws -> Any {
+        fatalError("Not implemented.")
     }
 }

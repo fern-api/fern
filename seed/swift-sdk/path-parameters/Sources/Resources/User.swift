@@ -6,14 +6,18 @@ public final class UserClient: Sendable {
     }
 
     public func getUser(requestOptions: RequestOptions? = nil) async throws -> User {
+        fatalError("Not implemented.")
     }
 
     public func createUser(requestOptions: RequestOptions? = nil) async throws -> User {
+        fatalError("Not implemented.")
     }
 
     public func updateUser(requestOptions: RequestOptions? = nil) async throws -> User {
+        fatalError("Not implemented.")
     }
 
     public func searchUsers(requestOptions: RequestOptions? = nil) async throws -> [User] {
+        fatalError("Not implemented.")
     }
 }

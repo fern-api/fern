@@ -6,5 +6,6 @@ public final class Ec2Client: Sendable {
     }
 
     public func bootInstance(requestOptions: RequestOptions? = nil) async throws -> Any {
+        fatalError("Not implemented.")
     }
 }

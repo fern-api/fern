@@ -6,5 +6,6 @@ public final class MigrationClient: Sendable {
     }
 
     public func getAttemptedMigrations(requestOptions: RequestOptions? = nil) async throws -> [Migration] {
+        fatalError("Not implemented.")
     }
 }

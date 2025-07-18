@@ -6,8 +6,10 @@ public final class ContentTypeClient: Sendable {
     }
 
     public func postJsonPatchContentType(requestOptions: RequestOptions? = nil) async throws -> Any {
+        fatalError("Not implemented.")
     }
 
     public func postJsonPatchContentWithCharsetType(requestOptions: RequestOptions? = nil) async throws -> Any {
+        fatalError("Not implemented.")
     }
 }

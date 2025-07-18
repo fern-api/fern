@@ -6,5 +6,6 @@ public final class CompletionsClient: Sendable {
     }
 
     public func stream(requestOptions: RequestOptions? = nil) async throws -> Any {
+        fatalError("Not implemented.")
     }
 }

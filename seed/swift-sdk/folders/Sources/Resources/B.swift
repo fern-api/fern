@@ -6,5 +6,6 @@ public final class BClient: Sendable {
     }
 
     public func foo(requestOptions: RequestOptions? = nil) async throws -> Any {
+        fatalError("Not implemented.")
     }
 }

@@ -6,5 +6,6 @@ public final class ComplexClient: Sendable {
     }
 
     public func search(requestOptions: RequestOptions? = nil) async throws -> PaginatedConversationResponse {
+        fatalError("Not implemented.")
     }
 }

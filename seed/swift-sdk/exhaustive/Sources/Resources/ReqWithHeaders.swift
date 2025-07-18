@@ -6,5 +6,6 @@ public final class ReqWithHeadersClient: Sendable {
     }
 
     public func getWithCustomHeader(requestOptions: RequestOptions? = nil) async throws -> Any {
+        fatalError("Not implemented.")
     }
 }

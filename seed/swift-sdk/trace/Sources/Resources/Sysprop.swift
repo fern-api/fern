@@ -6,8 +6,10 @@ public final class SyspropClient: Sendable {
     }
 
     public func setNumWarmInstances(requestOptions: RequestOptions? = nil) async throws -> Any {
+        fatalError("Not implemented.")
     }
 
     public func getNumWarmInstances(requestOptions: RequestOptions? = nil) async throws -> Any {
+        fatalError("Not implemented.")
     }
 }

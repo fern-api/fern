@@ -6,5 +6,6 @@ public final class PathClient: Sendable {
     }
 
     public func send(requestOptions: RequestOptions? = nil) async throws -> SendResponse {
+        fatalError("Not implemented.")
     }
 }

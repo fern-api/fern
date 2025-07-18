@@ -6,8 +6,10 @@ public final class UnionClient: Sendable {
     }
 
     public func get(requestOptions: RequestOptions? = nil) async throws -> Shape {
+        fatalError("Not implemented.")
     }
 
     public func update(requestOptions: RequestOptions? = nil) async throws -> Bool {
+        fatalError("Not implemented.")
     }
 }

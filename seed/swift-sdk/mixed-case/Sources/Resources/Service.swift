@@ -6,8 +6,10 @@ public final class ServiceClient: Sendable {
     }
 
     public func getResource(requestOptions: RequestOptions? = nil) async throws -> Resource {
+        fatalError("Not implemented.")
     }
 
     public func listResources(requestOptions: RequestOptions? = nil) async throws -> [Resource] {
+        fatalError("Not implemented.")
     }
 }

@@ -6,5 +6,6 @@ public final class PropertyBasedErrorClient: Sendable {
     }
 
     public func throwError(requestOptions: RequestOptions? = nil) async throws -> String {
+        fatalError("Not implemented.")
     }
 }

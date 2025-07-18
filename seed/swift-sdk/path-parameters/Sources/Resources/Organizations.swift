@@ -6,11 +6,14 @@ public final class OrganizationsClient: Sendable {
     }
 
     public func getOrganization(requestOptions: RequestOptions? = nil) async throws -> Organization {
+        fatalError("Not implemented.")
     }
 
     public func getOrganizationUser(requestOptions: RequestOptions? = nil) async throws -> User {
+        fatalError("Not implemented.")
     }
 
     public func searchOrganizations(requestOptions: RequestOptions? = nil) async throws -> [Organization] {
+        fatalError("Not implemented.")
     }
 }

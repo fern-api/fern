@@ -6,5 +6,6 @@ public final class ServiceClient: Sendable {
     }
 
     public func getDirectThread(requestOptions: RequestOptions? = nil) async throws -> Response {
+        fatalError("Not implemented.")
     }
 }

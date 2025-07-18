@@ -5,16 +5,19 @@ public final class ProblemClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getLightweightProblems(requestOptions: RequestOptions? = nil) async throws -> [LightweightProblemInfoV2] {
+    public func createProblem(requestOptions: RequestOptions? = nil) async throws -> CreateProblemResponse {
+        fatalError("Not implemented.")
     }
 
-    public func getProblems(requestOptions: RequestOptions? = nil) async throws -> [ProblemInfoV2] {
+    public func updateProblem(requestOptions: RequestOptions? = nil) async throws -> UpdateProblemResponse {
+        fatalError("Not implemented.")
     }
 
-    public func getLatestProblem(requestOptions: RequestOptions? = nil) async throws -> ProblemInfoV2 {
+    public func deleteProblem(requestOptions: RequestOptions? = nil) async throws -> Any {
+        fatalError("Not implemented.")
     }
 
-    public func getProblemVersion(requestOptions: RequestOptions? = nil) async throws -> ProblemInfoV2 {
+    public func getDefaultStarterFiles(requestOptions: RequestOptions? = nil) async throws -> GetDefaultStarterFilesResponse {
+        fatalError("Not implemented.")
     }
-}}
 }

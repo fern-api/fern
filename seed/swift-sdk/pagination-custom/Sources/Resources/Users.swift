@@ -6,5 +6,6 @@ public final class UsersClient: Sendable {
     }
 
     public func listUsernamesCustom(requestOptions: RequestOptions? = nil) async throws -> UsernameCursor {
+        fatalError("Not implemented.")
     }
 }

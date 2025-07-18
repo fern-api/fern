@@ -6,8 +6,10 @@ public final class CustomAuthClient: Sendable {
     }
 
     public func getWithCustomAuth(requestOptions: RequestOptions? = nil) async throws -> Bool {
+        fatalError("Not implemented.")
     }
 
     public func postWithCustomAuth(requestOptions: RequestOptions? = nil) async throws -> Bool {
+        fatalError("Not implemented.")
     }
 }

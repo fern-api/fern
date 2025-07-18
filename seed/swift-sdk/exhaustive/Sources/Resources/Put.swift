@@ -6,5 +6,6 @@ public final class PutClient: Sendable {
     }
 
     public func add(requestOptions: RequestOptions? = nil) async throws -> PutResponse {
+        fatalError("Not implemented.")
     }
 }

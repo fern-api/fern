@@ -6,5 +6,6 @@ public final class UserClient: Sendable {
     }
 
     public func list(requestOptions: RequestOptions? = nil) async throws -> [User] {
+        fatalError("Not implemented.")
     }
 }

@@ -6,5 +6,6 @@ public final class NoAuthClient: Sendable {
     }
 
     public func postWithNoAuth(requestOptions: RequestOptions? = nil) async throws -> Bool {
+        fatalError("Not implemented.")
     }
 }

@@ -6,8 +6,10 @@ public final class ServiceClient: Sendable {
     }
 
     public func getWithApiKey(requestOptions: RequestOptions? = nil) async throws -> String {
+        fatalError("Not implemented.")
     }
 
     public func getWithHeader(requestOptions: RequestOptions? = nil) async throws -> String {
+        fatalError("Not implemented.")
     }
 }

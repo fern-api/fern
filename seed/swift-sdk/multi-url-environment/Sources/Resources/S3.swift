@@ -6,5 +6,6 @@ public final class S3Client: Sendable {
     }
 
     public func getPresignedUrl(requestOptions: RequestOptions? = nil) async throws -> String {
+        fatalError("Not implemented.")
     }
 }

@@ -6,5 +6,6 @@ public final class ServiceClient: Sendable {
     }
 
     public func getWithBearerToken(requestOptions: RequestOptions? = nil) async throws -> String {
+        fatalError("Not implemented.")
     }
 }

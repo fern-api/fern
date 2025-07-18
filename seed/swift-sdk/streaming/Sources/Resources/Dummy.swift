@@ -6,8 +6,10 @@ public final class DummyClient: Sendable {
     }
 
     public func generateStream(requestOptions: RequestOptions? = nil) async throws -> Any {
+        fatalError("Not implemented.")
     }
 
     public func generate(requestOptions: RequestOptions? = nil) async throws -> StreamResponse {
+        fatalError("Not implemented.")
     }
 }
