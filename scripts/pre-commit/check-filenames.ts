@@ -18,9 +18,7 @@ function checkFilenames(): void {
                 "❌ Invalid filenames found:",
                 ...invalidFiles.map((file: string) => `  - ${file}`),
                 "",
-                // biome-ignore lint/suspicious/noControlCharactersInRegex: intentional
                 "Filenames cannot contain: < > : \" | ? * or control characters",
-                // biome-ignore lint/suspicious/noControlCharactersInRegex: intentional
                 "Reserved names: CON, PRN, AUX, NUL, COM1-9, LPT1-9"
             ].join("\n");
             
