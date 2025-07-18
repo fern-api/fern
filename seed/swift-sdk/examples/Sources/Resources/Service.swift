@@ -5,12 +5,10 @@ public final class ServiceClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func check(requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func getMovie(requestOptions: RequestOptions? = nil) async throws -> Movie {
     }
 
-    public func ping(requestOptions: RequestOptions? = nil) async throws -> Bool {
-    }
-}vieId {
+    public func createMovie(requestOptions: RequestOptions? = nil) async throws -> MovieId {
     }
 
     public func getMetadata(requestOptions: RequestOptions? = nil) async throws -> Metadata {

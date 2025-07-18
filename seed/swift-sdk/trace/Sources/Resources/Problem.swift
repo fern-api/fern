@@ -5,15 +5,16 @@ public final class ProblemClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func createProblem(requestOptions: RequestOptions? = nil) async throws -> CreateProblemResponse {
+    public func getLightweightProblems(requestOptions: RequestOptions? = nil) async throws -> [LightweightProblemInfoV2] {
     }
 
-    public func updateProblem(requestOptions: RequestOptions? = nil) async throws -> UpdateProblemResponse {
+    public func getProblems(requestOptions: RequestOptions? = nil) async throws -> [ProblemInfoV2] {
     }
 
-    public func deleteProblem(requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func getLatestProblem(requestOptions: RequestOptions? = nil) async throws -> ProblemInfoV2 {
     }
 
-    public func getDefaultStarterFiles(requestOptions: RequestOptions? = nil) async throws -> GetDefaultStarterFilesResponse {
+    public func getProblemVersion(requestOptions: RequestOptions? = nil) async throws -> ProblemInfoV2 {
     }
+}}
 }

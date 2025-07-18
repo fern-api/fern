@@ -240,7 +240,10 @@ export class ObjectGenerator {
         });
     }
 
-    private generateCodingKeysEnum(): swift.EnumWithRawValues {
+    private generateCodingKeysEnum(): swift.EnumWithRawValues | undefined {
+        if (this.objectTypeDeclaration.properties.length === 0) {
+            return undefined;
+        }
         return swift.enumWithRawValues({
             name: "CodingKeys",
             conformances: ["String", swift.Protocol.CodingKey, swift.Protocol.CaseIterable],

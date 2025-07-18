@@ -14,7 +14,4 @@ public struct TerminatedResponse: Codable, Hashable {
         var container = try encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
     }
-
-    enum CodingKeys: String, CodingKey, CaseIterable {
-    }
 }
