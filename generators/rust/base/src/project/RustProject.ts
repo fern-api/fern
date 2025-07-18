@@ -92,7 +92,7 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
             if (typeof config === "string") {
                 cargo += `${name} = "${config}"\n`;
             } else {
-                cargo += `${name} = ${JSON.stringify(config)}\n`;
+                cargo += `${name} = ${this.objectToToml(config)}\n`;
             }
         }
 
@@ -104,6 +104,28 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
         }
 
         return cargo + "\n";
+    }
+
+    private objectToToml(obj: any): string {
+        if (typeof obj === "string") {
+            return `"${obj}"`;
+        }
+        if (Array.isArray(obj)) {
+            return `[${obj.map(item => `"${item}"`).join(", ")}]`;
+        }
+        if (typeof obj === "object" && obj !== null) {
+            const pairs = Object.entries(obj).map(([key, value]) => {
+                if (typeof value === "string") {
+                    return `${key} = "${value}"`;
+                } else if (Array.isArray(value)) {
+                    return `${key} = [${value.map(item => `"${item}"`).join(", ")}]`;
+                } else {
+                    return `${key} = ${this.objectToToml(value)}`;
+                }
+            });
+            return `{ ${pairs.join(", ")} }`;
+        }
+        return String(obj);
     }
 
     private async writeGitignore(): Promise<void> {
