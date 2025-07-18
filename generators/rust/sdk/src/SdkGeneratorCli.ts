@@ -1,5 +1,5 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { AbstractRustGeneratorCli } from "@fern-api/rust-base";
+import { AbstractRustGeneratorCli, RustFile } from "@fern-api/rust-base";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { RelativeFilePath } from "@fern-api/fs-utils";
@@ -35,7 +35,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
     protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {
         await this.generate(context);
-        if (context.isSelfHosted()) {
+        if (context.ir.selfHosted) {
             await this.generateGitHub({ context });
         }
     }
@@ -47,29 +47,54 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     protected async generate(context: SdkGeneratorContext): Promise<void> {
         // Generate lib.rs
         const libContent = this.generateLibRs(context);
-        context.project.addSourceFile(RelativeFilePath.of("src/lib.rs"), libContent);
+        const libFile = new RustFile({
+            filename: "lib.rs",
+            directory: RelativeFilePath.of("src"),
+            fileContents: libContent
+        });
 
         // Generate client.rs
         const clientContent = this.generateClientRs(context);
-        context.project.addSourceFile(RelativeFilePath.of("src/client.rs"), clientContent);
+        const clientFile = new RustFile({
+            filename: "client.rs",
+            directory: RelativeFilePath.of("src"),
+            fileContents: clientContent
+        });
 
         // Generate error.rs
         const errorContent = this.generateErrorRs();
-        context.project.addSourceFile(RelativeFilePath.of("src/error.rs"), errorContent);
+        const errorFile = new RustFile({
+            filename: "error.rs",
+            directory: RelativeFilePath.of("src"),
+            fileContents: errorContent
+        });
+
+        const files = [libFile, clientFile, errorFile];
 
         // Generate types if they exist
         if (Object.keys(context.ir.types).length > 0) {
             const typesContent = this.generateTypesRs(context);
-            context.project.addSourceFile(RelativeFilePath.of("src/types.rs"), typesContent);
+            const typesFile = new RustFile({
+                filename: "types.rs",
+                directory: RelativeFilePath.of("src"),
+                fileContents: typesContent
+            });
+            files.push(typesFile);
         }
 
         // Generate services
         for (const [serviceId, service] of Object.entries(context.ir.services)) {
             const serviceName = service.name.fernFilepath.allParts.map((part: any) => part.snakeCase.safeName).join("_");
             const serviceContent = this.generateServiceRs(context, service);
-            context.project.addSourceFile(RelativeFilePath.of(`src/${serviceName}.rs`), serviceContent);
+            const serviceFile = new RustFile({
+                filename: `${serviceName}.rs`,
+                directory: RelativeFilePath.of("src"),
+                fileContents: serviceContent
+            });
+            files.push(serviceFile);
         }
 
+        context.project.addSourceFiles(...files);
         await context.project.persist();
     }
 

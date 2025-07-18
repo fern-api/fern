@@ -2515,37 +2515,6 @@ importers:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
 
-  generators/rust/formatter:
-    dependencies:
-      '@fern-api/base-generator':
-        specifier: workspace:*
-        version: link:../../base
-    devDependencies:
-      '@fern-api/configs':
-        specifier: workspace:*
-        version: link:../../../packages/configs
-      '@trivago/prettier-plugin-sort-imports':
-        specifier: ^5.2.1
-        version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
-      '@types/node':
-        specifier: 18.15.3
-        version: 18.15.3
-      depcheck:
-        specifier: ^1.4.7
-        version: 1.4.7
-      eslint:
-        specifier: ^8.56.0
-        version: 8.57.1
-      prettier:
-        specifier: ^3.4.2
-        version: 3.5.3
-      typescript:
-        specifier: 5.7.2
-        version: 5.7.2
-      vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
-
   generators/rust/model:
     devDependencies:
       '@fern-api/base-generator':

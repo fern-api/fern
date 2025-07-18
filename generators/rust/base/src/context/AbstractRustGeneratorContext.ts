@@ -1,53 +1,39 @@
-import {
-    AbstractGeneratorContext,
-    AbstractGeneratorNotificationService,
-    GeneratorNotificationService
-} from "@fern-api/base-generator";
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
+import { z } from "zod";
+
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { BaseRustCustomConfigSchema } from "../custom-config";
-import { RustProject } from "../project/RustProject";
-import { RUST_KEYWORDS, RUST_RESERVED_TYPES } from "../constants";
+
+import { RustProject } from "../project";
+
+export const BaseRustCustomConfigSchema = z.object({
+    packageName: z.string().optional(),
+    packageVersion: z.string().optional(),
+    extraDependencies: z.record(z.string()).optional(),
+    extraDevDependencies: z.record(z.string()).optional()
+});
+
+export type BaseRustCustomConfigSchema = z.infer<typeof BaseRustCustomConfigSchema>;
 
 export abstract class AbstractRustGeneratorContext<
-    CustomConfig extends BaseRustCustomConfigSchema = BaseRustCustomConfigSchema
+    CustomConfig extends BaseRustCustomConfigSchema
 > extends AbstractGeneratorContext {
     public readonly project: RustProject;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
-        public readonly config: FernGeneratorExec.GeneratorConfig,
+        public readonly config: FernGeneratorExec.config.GeneratorConfig,
         public readonly customConfig: CustomConfig,
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(config, generatorNotificationService);
         this.project = new RustProject({
             context: this,
-            packageName: this.getPackageName(),
-            packageVersion: this.getPackageVersion()
+            packageName: customConfig.packageName ?? this.getDefaultPackageName(),
+            packageVersion: customConfig.packageVersion ?? "0.1.0"
         });
     }
 
-    public getPackageName(): string {
-        return this.customConfig.packageName ?? this.ir.apiName.snakeCase.safeName;
-    }
-
-    public getPackageVersion(): string {
-        return this.customConfig.packageVersion ?? "0.1.0";
-    }
-
-    public isReservedKeyword(name: string): boolean {
-        return RUST_KEYWORDS.has(name) || RUST_RESERVED_TYPES.has(name);
-    }
-
-    public makeNameSafe(name: string): string {
-        if (this.isReservedKeyword(name)) {
-            return `${name}_`;
-        }
-        return name;
-    }
-
-    public isSelfHosted(): boolean {
-        return this.ir.selfHosted ?? false;
+    private getDefaultPackageName(): string {
+        return `${this.config.organization}_${this.ir.apiName.snakeCase.unsafeName}`.toLowerCase();
     }
 } 

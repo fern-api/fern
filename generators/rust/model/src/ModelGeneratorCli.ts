@@ -1,5 +1,5 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { AbstractRustGeneratorCli } from "@fern-api/rust-base";
+import { AbstractRustGeneratorCli, RustFile } from "@fern-api/rust-base";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { RelativeFilePath } from "@fern-api/fs-utils";
@@ -43,13 +43,22 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
     }
 
     protected async generate(context: ModelGeneratorContext): Promise<void> {
+        const files: RustFile[] = [];
+
         // Generate lib.rs
         const libContent = this.generateLibRs(context);
-        context.project.addSourceFile(RelativeFilePath.of("src/lib.rs"), libContent);
+        const libFile = new RustFile({
+            filename: "lib.rs",
+            directory: RelativeFilePath.of("src"),
+            fileContents: libContent
+        });
+        files.push(libFile);
 
         // Generate models
-        this.generateModels(context);
+        const modelFiles = this.generateModels(context);
+        files.push(...modelFiles);
 
+        context.project.addSourceFiles(...files);
         await context.project.persist();
     }
 
@@ -69,16 +78,17 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
         return writer.toString();
     }
 
-    private generateModels(context: ModelGeneratorContext): void {
-        if (!context.ir.types) return;
+    private generateModels(context: ModelGeneratorContext): RustFile[] {
+        if (!context.ir.types) return [];
 
-        Object.entries(context.ir.types).forEach(([typeId, typeDeclaration]) => {
+        return Object.entries(context.ir.types).map(([typeId, typeDeclaration]) => {
             const moduleName = this.getTypeModuleName(typeId);
             const content = this.generateTypeDeclaration(context, typeDeclaration);
-            context.project.addSourceFile(
-                RelativeFilePath.of(`src/${moduleName}.rs`),
-                content
-            );
+            return new RustFile({
+                filename: `${moduleName}.rs`,
+                directory: RelativeFilePath.of("src"),
+                fileContents: content
+            });
         });
     }
 
@@ -89,7 +99,7 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
         const writer = new Writer();
         
         // Add derives
-        const derives = ["Serialize", "Deserialize"];
+        const derives = ["Serialize test", "Deserialize"];
         if (context.customConfig.deriveDebug) derives.push("Debug");
         if (context.customConfig.deriveClone) derives.push("Clone");
         

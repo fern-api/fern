@@ -1,1 +1,2 @@
-export * from "./RustProject"; 
+export { RustProject } from "./RustProject";
+export { RustFile } from "./RustFile"; 

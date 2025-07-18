@@ -1,79 +1,109 @@
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
-import { AbstractGeneratorContext, File } from "@fern-api/base-generator";
-import { mkdir, writeFile } from "fs/promises";
-import path from "path";
+import { mkdir } from "fs/promises";
+
+import { AbstractProject } from "@fern-api/base-generator";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
+
+import { AbstractRustGeneratorContext, BaseRustCustomConfigSchema } from "../context/AbstractRustGeneratorContext";
+import { RustFile } from "./RustFile";
+
+const SRC_DIRECTORY_NAME = "src";
 
 export interface RustProjectConfig {
-    context: AbstractGeneratorContext;
+    context: AbstractRustGeneratorContext<BaseRustCustomConfigSchema>;
     packageName: string;
     packageVersion: string;
 }
 
-export class RustProject {
-    private context: AbstractGeneratorContext;
+export class RustProject extends AbstractProject<AbstractRustGeneratorContext<BaseRustCustomConfigSchema>> {
     private packageName: string;
     private packageVersion: string;
-    private sourceFiles: Map<RelativeFilePath, string> = new Map();
+    private sourceFiles: RustFile[] = [];
 
-    constructor(config: RustProjectConfig) {
-        this.context = config.context;
-        this.packageName = config.packageName;
-        this.packageVersion = config.packageVersion;
+    public constructor({ context, packageName, packageVersion }: RustProjectConfig) {
+        super(context);
+        this.packageName = packageName;
+        this.packageVersion = packageVersion;
     }
 
-    public addSourceFile(filepath: RelativeFilePath, contents: string): void {
-        this.sourceFiles.set(filepath, contents);
+    public get sourceFileDirectory(): RelativeFilePath {
+        return RelativeFilePath.of(SRC_DIRECTORY_NAME);
+    }
+
+    public addSourceFiles(...files: RustFile[]): void {
+        this.sourceFiles.push(...files);
     }
 
     public async persist(): Promise<void> {
-        // Generate Cargo.toml
+        // Create source directory
+        const absolutePathToSrcDirectory = join(this.absolutePathToOutputDirectory, this.sourceFileDirectory);
+        this.context.logger.debug(`mkdir ${absolutePathToSrcDirectory}`);
+        await mkdir(absolutePathToSrcDirectory, { recursive: true });
+
+        // Write all source files
+        await Promise.all(this.sourceFiles.map((file) => file.write(this.absolutePathToOutputDirectory)));
+
+        // Generate basic project files
         await this.writeCargoToml();
-
-        // Generate src files
-        for (const [filepath, contents] of this.sourceFiles) {
-            const absoluteFilepath = join(
-                AbsoluteFilePath.of(this.context.config.output.path),
-                RelativeFilePath.of(filepath)
-            );
-            await mkdir(path.dirname(absoluteFilepath), { recursive: true });
-            await writeFile(absoluteFilepath, contents);
-        }
-
-        // Generate .gitignore
         await this.writeGitignore();
-
-        // Generate rustfmt.toml
         await this.writeRustfmtConfig();
     }
 
     private async writeCargoToml(): Promise<void> {
         const cargoToml = this.generateCargoToml();
-        const filepath = join(
-            AbsoluteFilePath.of(this.context.config.output.path),
-            RelativeFilePath.of("Cargo.toml")
-        );
-        await writeFile(filepath, cargoToml);
+        const cargoFile = new RustFile({
+            filename: "Cargo.toml",
+            directory: RelativeFilePath.of(""),
+            fileContents: cargoToml
+        });
+        await cargoFile.write(this.absolutePathToOutputDirectory);
     }
 
     private generateCargoToml(): string {
-        const lines: string[] = [
-            `[package]`,
-            `name = "${this.packageName}"`,
-            `version = "${this.packageVersion}"`,
-            `edition = "2021"`,
-            ``,
-            `[dependencies]`,
-            `serde = { version = "1.0", features = ["derive"] }`,
-            `serde_json = "1.0"`,
-            `reqwest = { version = "0.11", features = ["json"] }`,
-            `tokio = { version = "1.0", features = ["full"] }`,
-            `thiserror = "1.0"`,
-            ``,
-            `[dev-dependencies]`,
-            `tokio-test = "0.4"`
-        ];
+        const baseDependencies = {
+            serde: { version: "1.0", features: ["derive"] },
+            serde_json: "1.0",
+            reqwest: { version: "0.11", features: ["json"] },
+            tokio: { version: "1.0", features: ["full"] },
+            thiserror: "1.0"
+        };
 
-        return lines.join("\n") + "\n";
+        const baseDevDependencies = {
+            "tokio-test": "0.4"
+        };
+
+        // Merge with custom dependencies from config
+        const dependencies = {
+            ...baseDependencies,
+            ...this.context.customConfig.extraDependencies
+        };
+
+        const devDependencies = {
+            ...baseDevDependencies,
+            ...this.context.customConfig.extraDevDependencies
+        };
+
+        let cargo = `[package]\n`;
+        cargo += `name = "${this.packageName}"\n`;
+        cargo += `version = "${this.packageVersion}"\n`;
+        cargo += `edition = "2021"\n\n`;
+
+        cargo += `[dependencies]\n`;
+        for (const [name, config] of Object.entries(dependencies)) {
+            if (typeof config === "string") {
+                cargo += `${name} = "${config}"\n`;
+            } else {
+                cargo += `${name} = ${JSON.stringify(config)}\n`;
+            }
+        }
+
+        if (Object.keys(devDependencies).length > 0) {
+            cargo += `\n[dev-dependencies]\n`;
+            for (const [name, version] of Object.entries(devDependencies)) {
+                cargo += `${name} = "${version}"\n`;
+            }
+        }
+
+        return cargo + "\n";
     }
 
     private async writeGitignore(): Promise<void> {
@@ -85,11 +115,12 @@ export class RustProject {
             "*.swp"
         ].join("\n") + "\n";
 
-        const filepath = join(
-            AbsoluteFilePath.of(this.context.config.output.path),
-            RelativeFilePath.of(".gitignore")
-        );
-        await writeFile(filepath, gitignore);
+        const gitignoreFile = new RustFile({
+            filename: ".gitignore",
+            directory: RelativeFilePath.of(""),
+            fileContents: gitignore
+        });
+        await gitignoreFile.write(this.absolutePathToOutputDirectory);
     }
 
     private async writeRustfmtConfig(): Promise<void> {
@@ -102,10 +133,11 @@ group_imports = "StdExternalCrate"
 format_code_in_doc_comments = true
 `;
 
-        const filepath = join(
-            AbsoluteFilePath.of(this.context.config.output.path),
-            RelativeFilePath.of("rustfmt.toml")
-        );
-        await writeFile(filepath, rustfmtConfig);
+        const rustfmtFile = new RustFile({
+            filename: "rustfmt.toml",
+            directory: RelativeFilePath.of(""),
+            fileContents: rustfmtConfig
+        });
+        await rustfmtFile.write(this.absolutePathToOutputDirectory);
     }
 } 
