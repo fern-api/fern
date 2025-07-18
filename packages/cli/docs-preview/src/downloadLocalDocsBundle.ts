@@ -273,7 +273,6 @@ export async function downloadBundle({
             }
 
             if (PLATFORM_IS_WINDOWS) {
-                const fsp = fs.promises;
                 const absPathToStandalone = getPathToStandaloneFolder({ app });
                 const absPathToInstrumentationJs = getPathToInstrumentationJs({ app });
                 const pnpmWorkspacePath = getPathToPnpmWorkspaceYaml({app})
@@ -296,17 +295,17 @@ export async function downloadBundle({
                 // Write pnpm-workspace.yaml if it does not exist
                 if (!pnpmWorkspaceExists) {
                     logger.debug(`Writing pnpm-workspace.yaml at ${pnpmWorkspacePath}`);
-                    await fsp.writeFile(pnpmWorkspacePath, PNPM_WORKSPACE_YAML_CONTENTS);
+                    await writeFile(pnpmWorkspacePath, PNPM_WORKSPACE_YAML_CONTENTS);
                 }
                 // Write pnpmfile.cjs if it does not exist
                 if (!pnpmfileExists) {
                     logger.debug(`Writing pnpmfile.cjs at ${pnpmfilePath}`);
-                    await fsp.writeFile(pnpmfilePath, PNPMFILE_CJS_CONTENTS);
+                    await writeFile(pnpmfilePath, PNPMFILE_CJS_CONTENTS);
                 }
                 // Write .npmrc if it does not exist
                 if (!npmrcExists) {
                     logger.debug(`Writing .npmrc at ${npmrcPath}`);
-                    await fsp.writeFile(npmrcPath, NPMRC_CONTENTS);
+                    await writeFile(npmrcPath, NPMRC_CONTENTS);
                 }
                 // Remove instrumentation.js if it exists
                 if (instrumentationJsExists) {
@@ -327,7 +326,7 @@ export async function downloadBundle({
             type: "success"
         };
     } catch (error) {
-        logger.error(`Failed to download docs preview bundle. Error: ${error}`);
+        logger.error(`Error: ${error}`);
 
         // remove incomplete bundle
         const absolutePathToPreviewFolder = getPathToPreviewFolder({ app });
