@@ -5,6 +5,6 @@ public final class MigrationClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getAttemptedMigrations(requestOptions: RequestOptions? = nil) throws -> [Migration] {
+    public func getAttemptedMigrations(requestOptions: RequestOptions? = nil) async throws -> [Migration] {
     }
 }

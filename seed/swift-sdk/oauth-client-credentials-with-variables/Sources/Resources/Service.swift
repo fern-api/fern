@@ -5,6 +5,6 @@ public final class ServiceClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func post(requestOptions: RequestOptions? = nil) throws -> Any {
+    public func post(requestOptions: RequestOptions? = nil) async throws -> Any {
     }
 }

@@ -5,6 +5,6 @@ public final class MetadataClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getMetadata(requestOptions: RequestOptions? = nil) throws -> Metadata {
+    public func getMetadata(requestOptions: RequestOptions? = nil) async throws -> Metadata {
     }
 }

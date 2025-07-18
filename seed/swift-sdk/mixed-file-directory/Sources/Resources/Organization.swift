@@ -5,6 +5,6 @@ public final class OrganizationClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func create(requestOptions: RequestOptions? = nil) throws -> Organization {
+    public func create(requestOptions: RequestOptions? = nil) async throws -> Organization {
     }
 }

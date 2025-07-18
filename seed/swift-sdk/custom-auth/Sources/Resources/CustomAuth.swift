@@ -5,9 +5,9 @@ public final class CustomAuthClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getWithCustomAuth(requestOptions: RequestOptions? = nil) throws -> Bool {
+    public func getWithCustomAuth(requestOptions: RequestOptions? = nil) async throws -> Bool {
     }
 
-    public func postWithCustomAuth(requestOptions: RequestOptions? = nil) throws -> Bool {
+    public func postWithCustomAuth(requestOptions: RequestOptions? = nil) async throws -> Bool {
     }
 }

@@ -5,9 +5,9 @@ public final class UnionClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func get(requestOptions: RequestOptions? = nil) throws -> Shape {
+    public func get(requestOptions: RequestOptions? = nil) async throws -> Shape {
     }
 
-    public func update(requestOptions: RequestOptions? = nil) throws -> Bool {
+    public func update(requestOptions: RequestOptions? = nil) async throws -> Bool {
     }
 }

@@ -5,6 +5,6 @@ public final class CompletionsClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func stream(requestOptions: RequestOptions? = nil) throws -> Any {
+    public func stream(requestOptions: RequestOptions? = nil) async throws -> Any {
     }
 }

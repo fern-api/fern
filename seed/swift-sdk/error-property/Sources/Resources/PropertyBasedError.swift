@@ -5,6 +5,6 @@ public final class PropertyBasedErrorClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func throwError(requestOptions: RequestOptions? = nil) throws -> String {
+    public func throwError(requestOptions: RequestOptions? = nil) async throws -> String {
     }
 }

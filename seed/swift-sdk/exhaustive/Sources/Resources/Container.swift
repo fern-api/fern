@@ -5,24 +5,24 @@ public final class ContainerClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getAndReturnListOfPrimitives(requestOptions: RequestOptions? = nil) throws -> [String] {
+    public func getAndReturnListOfPrimitives(requestOptions: RequestOptions? = nil) async throws -> [String] {
     }
 
-    public func getAndReturnListOfObjects(requestOptions: RequestOptions? = nil) throws -> [ObjectWithRequiredField] {
+    public func getAndReturnListOfObjects(requestOptions: RequestOptions? = nil) async throws -> [ObjectWithRequiredField] {
     }
 
-    public func getAndReturnSetOfPrimitives(requestOptions: RequestOptions? = nil) throws -> Any {
+    public func getAndReturnSetOfPrimitives(requestOptions: RequestOptions? = nil) async throws -> Any {
     }
 
-    public func getAndReturnSetOfObjects(requestOptions: RequestOptions? = nil) throws -> Any {
+    public func getAndReturnSetOfObjects(requestOptions: RequestOptions? = nil) async throws -> Any {
     }
 
-    public func getAndReturnMapPrimToPrim(requestOptions: RequestOptions? = nil) throws -> Any {
+    public func getAndReturnMapPrimToPrim(requestOptions: RequestOptions? = nil) async throws -> Any {
     }
 
-    public func getAndReturnMapOfPrimToObject(requestOptions: RequestOptions? = nil) throws -> Any {
+    public func getAndReturnMapOfPrimToObject(requestOptions: RequestOptions? = nil) async throws -> Any {
     }
 
-    public func getAndReturnOptional(requestOptions: RequestOptions? = nil) throws -> ObjectWithRequiredField {
+    public func getAndReturnOptional(requestOptions: RequestOptions? = nil) async throws -> ObjectWithRequiredField {
     }
 }

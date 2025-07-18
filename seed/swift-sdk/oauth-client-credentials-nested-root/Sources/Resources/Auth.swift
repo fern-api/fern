@@ -5,6 +5,6 @@ public final class AuthClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getToken(requestOptions: RequestOptions? = nil) throws -> TokenResponse {
+    public func getToken(requestOptions: RequestOptions? = nil) async throws -> TokenResponse {
     }
 }

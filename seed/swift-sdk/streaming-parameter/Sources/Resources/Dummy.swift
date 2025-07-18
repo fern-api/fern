@@ -5,6 +5,6 @@ public final class DummyClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func generate(requestOptions: RequestOptions? = nil) throws -> Any {
+    public func generate(requestOptions: RequestOptions? = nil) async throws -> Any {
     }
 }

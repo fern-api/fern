@@ -5,6 +5,6 @@ public final class FooClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func find(requestOptions: RequestOptions? = nil) throws -> ImportingType {
+    public func find(requestOptions: RequestOptions? = nil) async throws -> ImportingType {
     }
 }

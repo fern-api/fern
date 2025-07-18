@@ -5,15 +5,15 @@ public final class ProblemClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func createProblem(requestOptions: RequestOptions? = nil) throws -> CreateProblemResponse {
+    public func createProblem(requestOptions: RequestOptions? = nil) async throws -> CreateProblemResponse {
     }
 
-    public func updateProblem(requestOptions: RequestOptions? = nil) throws -> UpdateProblemResponse {
+    public func updateProblem(requestOptions: RequestOptions? = nil) async throws -> UpdateProblemResponse {
     }
 
-    public func deleteProblem(requestOptions: RequestOptions? = nil) throws -> Any {
+    public func deleteProblem(requestOptions: RequestOptions? = nil) async throws -> Any {
     }
 
-    public func getDefaultStarterFiles(requestOptions: RequestOptions? = nil) throws -> GetDefaultStarterFilesResponse {
+    public func getDefaultStarterFiles(requestOptions: RequestOptions? = nil) async throws -> GetDefaultStarterFilesResponse {
     }
 }

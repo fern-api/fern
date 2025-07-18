@@ -5,6 +5,6 @@ public final class OptionalClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func sendOptionalBody(requestOptions: RequestOptions? = nil) throws -> String {
+    public func sendOptionalBody(requestOptions: RequestOptions? = nil) async throws -> String {
     }
 }

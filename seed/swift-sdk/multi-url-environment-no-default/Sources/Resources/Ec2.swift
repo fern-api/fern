@@ -5,6 +5,6 @@ public final class Ec2Client: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func bootInstance(requestOptions: RequestOptions? = nil) throws -> Any {
+    public func bootInstance(requestOptions: RequestOptions? = nil) async throws -> Any {
     }
 }

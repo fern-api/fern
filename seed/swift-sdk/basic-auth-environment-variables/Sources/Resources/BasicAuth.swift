@@ -5,9 +5,9 @@ public final class BasicAuthClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getWithBasicAuth(requestOptions: RequestOptions? = nil) throws -> Bool {
+    public func getWithBasicAuth(requestOptions: RequestOptions? = nil) async throws -> Bool {
     }
 
-    public func postWithBasicAuth(requestOptions: RequestOptions? = nil) throws -> Bool {
+    public func postWithBasicAuth(requestOptions: RequestOptions? = nil) async throws -> Bool {
     }
 }

@@ -5,6 +5,6 @@ public final class ComplexClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func search(requestOptions: RequestOptions? = nil) throws -> PaginatedConversationResponse {
+    public func search(requestOptions: RequestOptions? = nil) async throws -> PaginatedConversationResponse {
     }
 }

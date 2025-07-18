@@ -5,9 +5,9 @@ public final class ImdbClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func createMovie(requestOptions: RequestOptions? = nil) throws -> MovieId {
+    public func createMovie(requestOptions: RequestOptions? = nil) async throws -> MovieId {
     }
 
-    public func getMovie(requestOptions: RequestOptions? = nil) throws -> Movie {
+    public func getMovie(requestOptions: RequestOptions? = nil) async throws -> Movie {
     }
 }

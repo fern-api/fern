@@ -5,18 +5,18 @@ public final class HttpMethodsClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func testGet(requestOptions: RequestOptions? = nil) throws -> String {
+    public func testGet(requestOptions: RequestOptions? = nil) async throws -> String {
     }
 
-    public func testPost(requestOptions: RequestOptions? = nil) throws -> ObjectWithOptionalField {
+    public func testPost(requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
     }
 
-    public func testPut(requestOptions: RequestOptions? = nil) throws -> ObjectWithOptionalField {
+    public func testPut(requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
     }
 
-    public func testPatch(requestOptions: RequestOptions? = nil) throws -> ObjectWithOptionalField {
+    public func testPatch(requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
     }
 
-    public func testDelete(requestOptions: RequestOptions? = nil) throws -> Bool {
+    public func testDelete(requestOptions: RequestOptions? = nil) async throws -> Bool {
     }
 }

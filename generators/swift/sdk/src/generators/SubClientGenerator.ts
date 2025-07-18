@@ -97,6 +97,7 @@ export class SubClientGenerator {
                         defaultValue: swift.Expression.rawValue("nil")
                     })
                 ],
+                async: true,
                 throws: true,
                 returnType:
                     endpoint.response?.body?._visit({

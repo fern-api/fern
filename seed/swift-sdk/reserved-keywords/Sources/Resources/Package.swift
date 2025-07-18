@@ -5,6 +5,6 @@ public final class PackageClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func test(requestOptions: RequestOptions? = nil) throws -> Any {
+    public func test(requestOptions: RequestOptions? = nil) async throws -> Any {
     }
 }

@@ -5,6 +5,6 @@ public final class CClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func foo(requestOptions: RequestOptions? = nil) throws -> Any {
+    public func foo(requestOptions: RequestOptions? = nil) async throws -> Any {
     }
 }

@@ -5,6 +5,6 @@ public final class NoAuthClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func postWithNoAuth(requestOptions: RequestOptions? = nil) throws -> Bool {
+    public func postWithNoAuth(requestOptions: RequestOptions? = nil) async throws -> Bool {
     }
 }

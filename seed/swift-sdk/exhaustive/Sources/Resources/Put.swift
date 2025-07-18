@@ -5,6 +5,6 @@ public final class PutClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func add(requestOptions: RequestOptions? = nil) throws -> PutResponse {
+    public func add(requestOptions: RequestOptions? = nil) async throws -> PutResponse {
     }
 }

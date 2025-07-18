@@ -5,6 +5,6 @@ public final class UserClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getUser(requestOptions: RequestOptions? = nil) throws -> User {
+    public func getUser(requestOptions: RequestOptions? = nil) async throws -> User {
     }
 }

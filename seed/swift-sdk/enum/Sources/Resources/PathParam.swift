@@ -5,6 +5,6 @@ public final class PathParamClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func send(requestOptions: RequestOptions? = nil) throws -> Any {
+    public func send(requestOptions: RequestOptions? = nil) async throws -> Any {
     }
 }

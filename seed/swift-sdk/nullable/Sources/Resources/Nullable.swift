@@ -5,12 +5,12 @@ public final class NullableClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getUsers(requestOptions: RequestOptions? = nil) throws -> [User] {
+    public func getUsers(requestOptions: RequestOptions? = nil) async throws -> [User] {
     }
 
-    public func createUser(requestOptions: RequestOptions? = nil) throws -> User {
+    public func createUser(requestOptions: RequestOptions? = nil) async throws -> User {
     }
 
-    public func deleteUser(requestOptions: RequestOptions? = nil) throws -> Bool {
+    public func deleteUser(requestOptions: RequestOptions? = nil) async throws -> Bool {
     }
 }

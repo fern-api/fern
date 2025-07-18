@@ -5,6 +5,6 @@ public final class EventsClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func listEvents(requestOptions: RequestOptions? = nil) throws -> [Event] {
+    public func listEvents(requestOptions: RequestOptions? = nil) async throws -> [Event] {
     }
 }

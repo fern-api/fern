@@ -5,12 +5,12 @@ public final class BigunionClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func get(requestOptions: RequestOptions? = nil) throws -> BigUnion {
+    public func get(requestOptions: RequestOptions? = nil) async throws -> BigUnion {
     }
 
-    public func update(requestOptions: RequestOptions? = nil) throws -> Bool {
+    public func update(requestOptions: RequestOptions? = nil) async throws -> Bool {
     }
 
-    public func updateMany(requestOptions: RequestOptions? = nil) throws -> Any {
+    public func updateMany(requestOptions: RequestOptions? = nil) async throws -> Any {
     }
 }

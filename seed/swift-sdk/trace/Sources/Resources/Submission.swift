@@ -5,15 +5,15 @@ public final class SubmissionClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func createExecutionSession(requestOptions: RequestOptions? = nil) throws -> ExecutionSessionResponse {
+    public func createExecutionSession(requestOptions: RequestOptions? = nil) async throws -> ExecutionSessionResponse {
     }
 
-    public func getExecutionSession(requestOptions: RequestOptions? = nil) throws -> ExecutionSessionResponse {
+    public func getExecutionSession(requestOptions: RequestOptions? = nil) async throws -> ExecutionSessionResponse {
     }
 
-    public func stopExecutionSession(requestOptions: RequestOptions? = nil) throws -> Any {
+    public func stopExecutionSession(requestOptions: RequestOptions? = nil) async throws -> Any {
     }
 
-    public func getExecutionSessionsState(requestOptions: RequestOptions? = nil) throws -> GetExecutionSessionStateResponse {
+    public func getExecutionSessionsState(requestOptions: RequestOptions? = nil) async throws -> GetExecutionSessionStateResponse {
     }
 }

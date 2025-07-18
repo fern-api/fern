@@ -5,6 +5,6 @@ public final class UsersClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func listUsernamesCustom(requestOptions: RequestOptions? = nil) throws -> UsernameCursor {
+    public func listUsernamesCustom(requestOptions: RequestOptions? = nil) async throws -> UsernameCursor {
     }
 }

@@ -5,6 +5,6 @@ public final class ReferenceClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func send(requestOptions: RequestOptions? = nil) throws -> SendResponse {
+    public func send(requestOptions: RequestOptions? = nil) async throws -> SendResponse {
     }
 }

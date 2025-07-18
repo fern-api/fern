@@ -5,39 +5,39 @@ public final class UsersClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func listWithCursorPagination(requestOptions: RequestOptions? = nil) throws -> ListUsersPaginationResponse {
+    public func listWithCursorPagination(requestOptions: RequestOptions? = nil) async throws -> ListUsersPaginationResponse {
     }
 
-    public func listWithMixedTypeCursorPagination(requestOptions: RequestOptions? = nil) throws -> ListUsersMixedTypePaginationResponse {
+    public func listWithMixedTypeCursorPagination(requestOptions: RequestOptions? = nil) async throws -> ListUsersMixedTypePaginationResponse {
     }
 
-    public func listWithBodyCursorPagination(requestOptions: RequestOptions? = nil) throws -> ListUsersPaginationResponse {
+    public func listWithBodyCursorPagination(requestOptions: RequestOptions? = nil) async throws -> ListUsersPaginationResponse {
     }
 
-    public func listWithOffsetPagination(requestOptions: RequestOptions? = nil) throws -> ListUsersPaginationResponse {
+    public func listWithOffsetPagination(requestOptions: RequestOptions? = nil) async throws -> ListUsersPaginationResponse {
     }
 
-    public func listWithDoubleOffsetPagination(requestOptions: RequestOptions? = nil) throws -> ListUsersPaginationResponse {
+    public func listWithDoubleOffsetPagination(requestOptions: RequestOptions? = nil) async throws -> ListUsersPaginationResponse {
     }
 
-    public func listWithBodyOffsetPagination(requestOptions: RequestOptions? = nil) throws -> ListUsersPaginationResponse {
+    public func listWithBodyOffsetPagination(requestOptions: RequestOptions? = nil) async throws -> ListUsersPaginationResponse {
     }
 
-    public func listWithOffsetStepPagination(requestOptions: RequestOptions? = nil) throws -> ListUsersPaginationResponse {
+    public func listWithOffsetStepPagination(requestOptions: RequestOptions? = nil) async throws -> ListUsersPaginationResponse {
     }
 
-    public func listWithOffsetPaginationHasNextPage(requestOptions: RequestOptions? = nil) throws -> ListUsersPaginationResponse {
+    public func listWithOffsetPaginationHasNextPage(requestOptions: RequestOptions? = nil) async throws -> ListUsersPaginationResponse {
     }
 
-    public func listWithExtendedResults(requestOptions: RequestOptions? = nil) throws -> ListUsersExtendedResponse {
+    public func listWithExtendedResults(requestOptions: RequestOptions? = nil) async throws -> ListUsersExtendedResponse {
     }
 
-    public func listWithExtendedResultsAndOptionalData(requestOptions: RequestOptions? = nil) throws -> ListUsersExtendedOptionalListResponse {
+    public func listWithExtendedResultsAndOptionalData(requestOptions: RequestOptions? = nil) async throws -> ListUsersExtendedOptionalListResponse {
     }
 
-    public func listUsernames(requestOptions: RequestOptions? = nil) throws -> UsernameCursor {
+    public func listUsernames(requestOptions: RequestOptions? = nil) async throws -> UsernameCursor {
     }
 
-    public func listWithGlobalConfig(requestOptions: RequestOptions? = nil) throws -> UsernameContainer {
+    public func listWithGlobalConfig(requestOptions: RequestOptions? = nil) async throws -> UsernameContainer {
     }
 }

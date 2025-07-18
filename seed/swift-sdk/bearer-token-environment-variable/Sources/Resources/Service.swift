@@ -5,6 +5,6 @@ public final class ServiceClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getWithBearerToken(requestOptions: RequestOptions? = nil) throws -> String {
+    public func getWithBearerToken(requestOptions: RequestOptions? = nil) async throws -> String {
     }
 }

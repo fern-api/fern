@@ -5,15 +5,15 @@ public final class UrlsClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func withMixedCase(requestOptions: RequestOptions? = nil) throws -> String {
+    public func withMixedCase(requestOptions: RequestOptions? = nil) async throws -> String {
     }
 
-    public func noEndingSlash(requestOptions: RequestOptions? = nil) throws -> String {
+    public func noEndingSlash(requestOptions: RequestOptions? = nil) async throws -> String {
     }
 
-    public func withEndingSlash(requestOptions: RequestOptions? = nil) throws -> String {
+    public func withEndingSlash(requestOptions: RequestOptions? = nil) async throws -> String {
     }
 
-    public func withUnderscores(requestOptions: RequestOptions? = nil) throws -> String {
+    public func withUnderscores(requestOptions: RequestOptions? = nil) async throws -> String {
     }
 }

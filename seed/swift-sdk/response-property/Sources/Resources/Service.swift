@@ -5,24 +5,24 @@ public final class ServiceClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getMovie(requestOptions: RequestOptions? = nil) throws -> Response {
+    public func getMovie(requestOptions: RequestOptions? = nil) async throws -> Response {
     }
 
-    public func getMovieDocs(requestOptions: RequestOptions? = nil) throws -> Response {
+    public func getMovieDocs(requestOptions: RequestOptions? = nil) async throws -> Response {
     }
 
-    public func getMovieName(requestOptions: RequestOptions? = nil) throws -> StringResponse {
+    public func getMovieName(requestOptions: RequestOptions? = nil) async throws -> StringResponse {
     }
 
-    public func getMovieMetadata(requestOptions: RequestOptions? = nil) throws -> Response {
+    public func getMovieMetadata(requestOptions: RequestOptions? = nil) async throws -> Response {
     }
 
-    public func getOptionalMovie(requestOptions: RequestOptions? = nil) throws -> Response {
+    public func getOptionalMovie(requestOptions: RequestOptions? = nil) async throws -> Response {
     }
 
-    public func getOptionalMovieDocs(requestOptions: RequestOptions? = nil) throws -> OptionalWithDocs {
+    public func getOptionalMovieDocs(requestOptions: RequestOptions? = nil) async throws -> OptionalWithDocs {
     }
 
-    public func getOptionalMovieName(requestOptions: RequestOptions? = nil) throws -> OptionalStringResponse {
+    public func getOptionalMovieName(requestOptions: RequestOptions? = nil) async throws -> OptionalStringResponse {
     }
 }

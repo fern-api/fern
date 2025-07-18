@@ -5,9 +5,9 @@ public final class ServiceClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getResource(requestOptions: RequestOptions? = nil) throws -> Resource {
+    public func getResource(requestOptions: RequestOptions? = nil) async throws -> Resource {
     }
 
-    public func listResources(requestOptions: RequestOptions? = nil) throws -> [Resource] {
+    public func listResources(requestOptions: RequestOptions? = nil) async throws -> [Resource] {
     }
 }

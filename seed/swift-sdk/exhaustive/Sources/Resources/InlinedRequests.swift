@@ -5,6 +5,6 @@ public final class InlinedRequestsClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func postWithObjectBodyandResponse(requestOptions: RequestOptions? = nil) throws -> ObjectWithOptionalField {
+    public func postWithObjectBodyandResponse(requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
     }
 }

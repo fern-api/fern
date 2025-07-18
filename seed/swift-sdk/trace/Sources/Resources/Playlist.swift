@@ -5,18 +5,18 @@ public final class PlaylistClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func createPlaylist(requestOptions: RequestOptions? = nil) throws -> Playlist {
+    public func createPlaylist(requestOptions: RequestOptions? = nil) async throws -> Playlist {
     }
 
-    public func getPlaylists(requestOptions: RequestOptions? = nil) throws -> [Playlist] {
+    public func getPlaylists(requestOptions: RequestOptions? = nil) async throws -> [Playlist] {
     }
 
-    public func getPlaylist(requestOptions: RequestOptions? = nil) throws -> Playlist {
+    public func getPlaylist(requestOptions: RequestOptions? = nil) async throws -> Playlist {
     }
 
-    public func updatePlaylist(requestOptions: RequestOptions? = nil) throws -> Playlist {
+    public func updatePlaylist(requestOptions: RequestOptions? = nil) async throws -> Playlist {
     }
 
-    public func deletePlaylist(requestOptions: RequestOptions? = nil) throws -> Any {
+    public func deletePlaylist(requestOptions: RequestOptions? = nil) async throws -> Any {
     }
 }

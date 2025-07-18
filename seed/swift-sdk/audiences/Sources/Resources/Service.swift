@@ -5,6 +5,6 @@ public final class ServiceClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getDirectThread(requestOptions: RequestOptions? = nil) throws -> Response {
+    public func getDirectThread(requestOptions: RequestOptions? = nil) async throws -> Response {
     }
 }

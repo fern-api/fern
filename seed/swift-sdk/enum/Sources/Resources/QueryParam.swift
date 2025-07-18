@@ -5,9 +5,9 @@ public final class QueryParamClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func send(requestOptions: RequestOptions? = nil) throws -> Any {
+    public func send(requestOptions: RequestOptions? = nil) async throws -> Any {
     }
 
-    public func sendList(requestOptions: RequestOptions? = nil) throws -> Any {
+    public func sendList(requestOptions: RequestOptions? = nil) async throws -> Any {
     }
 }

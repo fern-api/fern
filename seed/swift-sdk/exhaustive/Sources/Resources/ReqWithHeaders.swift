@@ -5,6 +5,6 @@ public final class ReqWithHeadersClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getWithCustomHeader(requestOptions: RequestOptions? = nil) throws -> Any {
+    public func getWithCustomHeader(requestOptions: RequestOptions? = nil) async throws -> Any {
     }
 }

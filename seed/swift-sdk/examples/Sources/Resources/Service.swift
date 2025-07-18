@@ -5,17 +5,17 @@ public final class ServiceClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func check(requestOptions: RequestOptions? = nil) throws -> Any {
+    public func check(requestOptions: RequestOptions? = nil) async throws -> Any {
     }
 
-    public func ping(requestOptions: RequestOptions? = nil) throws -> Bool {
+    public func ping(requestOptions: RequestOptions? = nil) async throws -> Bool {
     }
 }vieId {
     }
 
-    public func getMetadata(requestOptions: RequestOptions? = nil) throws -> Metadata {
+    public func getMetadata(requestOptions: RequestOptions? = nil) async throws -> Metadata {
     }
 
-    public func createBigEntity(requestOptions: RequestOptions? = nil) throws -> Response {
+    public func createBigEntity(requestOptions: RequestOptions? = nil) async throws -> Response {
     }
 }

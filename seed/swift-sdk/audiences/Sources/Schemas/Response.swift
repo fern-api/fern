@@ -22,4 +22,6 @@ public struct Response: Codable, Hashable {
     enum CodingKeys: String, CodingKey, CaseIterable {
         case foo
     }
+} case foo
+    }
 }

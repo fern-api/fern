@@ -5,9 +5,9 @@ public final class HomepageClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getHomepageProblems(requestOptions: RequestOptions? = nil) throws -> [ProblemId] {
+    public func getHomepageProblems(requestOptions: RequestOptions? = nil) async throws -> [ProblemId] {
     }
 
-    public func setHomepageProblems(requestOptions: RequestOptions? = nil) throws -> Any {
+    public func setHomepageProblems(requestOptions: RequestOptions? = nil) async throws -> Any {
     }
 }

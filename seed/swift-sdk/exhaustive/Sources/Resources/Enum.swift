@@ -5,6 +5,6 @@ public final class EnumClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getAndReturnEnum(requestOptions: RequestOptions? = nil) throws -> WeatherReport {
+    public func getAndReturnEnum(requestOptions: RequestOptions? = nil) async throws -> WeatherReport {
     }
 }
