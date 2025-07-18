@@ -1,7 +1,7 @@
 import { AstNode } from "./AstNode";
 import { Reference } from "./Reference";
-import { PrimitiveType } from "./types";
 import { Writer } from "./Writer";
+import { PrimitiveType } from "./types";
 
 export abstract class Type extends AstNode {
     public static primitive(primitive: PrimitiveType): Type {
@@ -70,7 +70,10 @@ class OptionType extends Type {
 }
 
 class ResultType extends Type {
-    constructor(private readonly ok: Type, private readonly err: Type) {
+    constructor(
+        private readonly ok: Type,
+        private readonly err: Type
+    ) {
         super();
     }
 
@@ -96,7 +99,10 @@ class VecType extends Type {
 }
 
 class HashMapType extends Type {
-    constructor(private readonly key: Type, private readonly value: Type) {
+    constructor(
+        private readonly key: Type,
+        private readonly value: Type
+    ) {
         super();
     }
 
@@ -113,4 +119,4 @@ class StrType extends Type {
     public write(writer: Writer): void {
         writer.write("&str");
     }
-} 
+}

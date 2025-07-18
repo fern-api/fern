@@ -107,7 +107,7 @@ function getGeneratorMetadataFromName(generatorName: string, context?: TaskConte
             return "php-sdk";
         case "fern-php-model":
             return "php-model";
-        
+
         // Rust
         case "fern-rust-sdk":
             return "rust-sdk";

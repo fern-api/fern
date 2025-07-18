@@ -37,4 +37,4 @@ export class Reference extends AstNode {
     public getName(): string {
         return this.name;
     }
-} 
+}

@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import { BaseRustCustomConfigSchema } from "@fern-api/rust-base";
 
 export const ModelCustomConfigSchema = BaseRustCustomConfigSchema.extend({
@@ -7,4 +8,4 @@ export const ModelCustomConfigSchema = BaseRustCustomConfigSchema.extend({
     deriveClone: z.boolean().optional().default(true)
 });
 
-export type ModelCustomConfigSchema = z.infer<typeof ModelCustomConfigSchema>; 
+export type ModelCustomConfigSchema = z.infer<typeof ModelCustomConfigSchema>;

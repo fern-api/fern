@@ -16,4 +16,4 @@ export abstract class AbstractRustGeneratorCli<
             parse: IrSerialization.IntermediateRepresentation.parse
         });
     }
-} 
+}

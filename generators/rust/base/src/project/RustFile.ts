@@ -13,4 +13,4 @@ export class RustFile extends File {
     constructor(args: RustFile.Args) {
         super(args.filename, args.directory, args.fileContents);
     }
-} 
+}

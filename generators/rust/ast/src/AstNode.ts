@@ -8,4 +8,4 @@ export abstract class AstNode {
         this.write(writer);
         return writer.toString();
     }
-} 
+}

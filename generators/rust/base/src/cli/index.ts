@@ -1,1 +1,1 @@
-export * from "./AbstractRustGeneratorCli"; 
+export * from "./AbstractRustGeneratorCli";

@@ -1,1 +1,1 @@
-module.exports = require("@fern-api/configs/prettier"); 
+module.exports = require("../../../.prettierrc.json"); 

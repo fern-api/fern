@@ -1,11 +1,13 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { RelativeFilePath } from "@fern-api/fs-utils";
+import { Writer } from "@fern-api/rust-ast";
 import { AbstractRustGeneratorCli, RustFile } from "@fern-api/rust-base";
+
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { RelativeFilePath } from "@fern-api/fs-utils";
+
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
-import { Writer } from "@fern-api/rust-ast";
 
 export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfigSchema, ModelGeneratorContext> {
     protected constructContext({
@@ -66,10 +68,10 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
         const writer = new Writer();
         writer.writeLine("//! Generated models by Fern");
         writer.newLine();
-        
+
         // Add module declarations for each type
         if (context.ir.types) {
-            Object.keys(context.ir.types).forEach(typeId => {
+            Object.keys(context.ir.types).forEach((typeId) => {
                 const typeName = this.getTypeModuleName(typeId);
                 writer.writeLine(`pub mod ${typeName};`);
             });
@@ -92,23 +94,20 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
         });
     }
 
-    private generateTypeDeclaration(
-        context: ModelGeneratorContext,
-        typeDeclaration: any
-    ): string {
+    private generateTypeDeclaration(context: ModelGeneratorContext, typeDeclaration: any): string {
         const writer = new Writer();
-        
+
         // Add derives
         const derives = ["Serialize test", "Deserialize"];
         if (context.customConfig.deriveDebug) derives.push("Debug");
         if (context.customConfig.deriveClone) derives.push("Clone");
-        
+
         writer.writeLine(`use serde::{Serialize, Deserialize};`);
         writer.newLine();
         writer.writeLine(`#[derive(${derives.join(", ")})]`);
-        
+
         const typeName = typeDeclaration.name.name.pascalCase.safeName;
-        
+
         // For now, generate a simple struct
         writer.writeBlock(`pub struct ${typeName}`, () => {
             writer.writeLine("// TODO: Add fields based on type shape");
@@ -119,9 +118,6 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
 
     private getTypeModuleName(typeId: string): string {
         // Convert type ID to snake_case module name
-        return typeId
-            .split("_")
-            .join("_")
-            .toLowerCase();
+        return typeId.split("_").join("_").toLowerCase();
     }
-} 
+}

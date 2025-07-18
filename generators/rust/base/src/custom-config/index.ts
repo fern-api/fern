@@ -12,4 +12,4 @@ export const BaseRustCustomConfigSchema = z.object({
     useTokio: z.boolean().optional().default(true)
 });
 
-export type BaseRustCustomConfigSchema = z.infer<typeof BaseRustCustomConfigSchema>; 
+export type BaseRustCustomConfigSchema = z.infer<typeof BaseRustCustomConfigSchema>;

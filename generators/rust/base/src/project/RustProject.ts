@@ -111,14 +111,14 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
             return `"${obj}"`;
         }
         if (Array.isArray(obj)) {
-            return `[${obj.map(item => `"${item}"`).join(", ")}]`;
+            return `[${obj.map((item) => `"${item}"`).join(", ")}]`;
         }
         if (typeof obj === "object" && obj !== null) {
             const pairs = Object.entries(obj).map(([key, value]) => {
                 if (typeof value === "string") {
                     return `${key} = "${value}"`;
                 } else if (Array.isArray(value)) {
-                    return `${key} = [${value.map(item => `"${item}"`).join(", ")}]`;
+                    return `${key} = [${value.map((item) => `"${item}"`).join(", ")}]`;
                 } else {
                     return `${key} = ${this.objectToToml(value)}`;
                 }
@@ -129,13 +129,7 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
     }
 
     private async writeGitignore(): Promise<void> {
-        const gitignore = [
-            "/target",
-            "**/*.rs.bk",
-            "Cargo.lock",
-            ".DS_Store",
-            "*.swp"
-        ].join("\n") + "\n";
+        const gitignore = ["/target", "**/*.rs.bk", "Cargo.lock", ".DS_Store", "*.swp"].join("\n") + "\n";
 
         const gitignoreFile = new RustFile({
             filename: ".gitignore",
@@ -162,4 +156,4 @@ format_code_in_doc_comments = true
         });
         await rustfmtFile.write(this.absolutePathToOutputDirectory);
     }
-} 
+}

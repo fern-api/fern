@@ -1,9 +1,11 @@
+import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractRustGeneratorContext } from "@fern-api/rust-base";
+
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { SdkCustomConfigSchema } from "./SdkCustomConfig";
+
 import { RustGeneratorAgent } from "./RustGeneratorAgent";
+import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 
 export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomConfigSchema> {
     public readonly generatorAgent: RustGeneratorAgent;
@@ -25,4 +27,4 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
     public getClientName(): string {
         return this.customConfig.clientName ?? `${this.ir.apiName.pascalCase.safeName}Client`;
     }
-} 
+}

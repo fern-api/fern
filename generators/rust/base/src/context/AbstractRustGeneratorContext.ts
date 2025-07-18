@@ -1,5 +1,6 @@
-import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { z } from "zod";
+
+import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
@@ -36,4 +37,4 @@ export abstract class AbstractRustGeneratorContext<
     private getDefaultPackageName(): string {
         return `${this.config.organization}_${this.ir.apiName.snakeCase.unsafeName}`.toLowerCase();
     }
-} 
+}

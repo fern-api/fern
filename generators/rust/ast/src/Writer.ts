@@ -42,4 +42,4 @@ export class Writer {
         this.dedent();
         this.writeLine("}");
     }
-} 
+}

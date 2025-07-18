@@ -28,4 +28,4 @@ export interface Visibility {
 }
 
 export const PUBLIC: Visibility = { type: "public" };
-export const PRIVATE: Visibility = { type: "private" }; 
+export const PRIVATE: Visibility = { type: "private" };
