@@ -1,9 +1,9 @@
-import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
+import { generateSwiftTypeForTypeReference } from "@fern-api/swift-model";
 
-import { HttpService, PrimitiveTypeV1, ServiceId, Subpackage, TypeReference } from "@fern-fern/ir-sdk/api";
+import { HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
@@ -101,7 +101,7 @@ export class SubClientGenerator {
                 throws: true,
                 returnType:
                     endpoint.response?.body?._visit({
-                        json: (resp) => this.generateSwiftTypeForTypeReference(resp.responseBodyType),
+                        json: (resp) => generateSwiftTypeForTypeReference(resp.responseBodyType),
                         fileDownload: () => swift.Type.custom("Any"),
                         text: () => swift.Type.custom("Any"),
                         bytes: () => swift.Type.custom("Any"),
@@ -111,45 +111,6 @@ export class SubClientGenerator {
                     }) ?? swift.Type.custom("Any")
             });
         });
-    }
-
-    // TODO: Needs to be reused between SubClientGenerator and ObjectGenerator
-    private generateSwiftTypeForTypeReference(typeReference: TypeReference): swift.Type {
-        switch (typeReference.type) {
-            case "container":
-                return typeReference.container._visit({
-                    literal: () => swift.Type.any(),
-                    map: () => swift.Type.any(),
-                    set: () => swift.Type.any(),
-                    nullable: () => swift.Type.any(),
-                    optional: (ref) => this.generateSwiftTypeForTypeReference(ref),
-                    list: (ref) => swift.Type.array(this.generateSwiftTypeForTypeReference(ref)),
-                    _other: () => swift.Type.any()
-                });
-            case "primitive":
-                return PrimitiveTypeV1._visit(typeReference.primitive.v1, {
-                    string: () => swift.Type.string(),
-                    boolean: () => swift.Type.bool(),
-                    integer: () => swift.Type.int(),
-                    uint: () => swift.Type.uint(),
-                    uint64: () => swift.Type.uint64(),
-                    long: () => swift.Type.int64(),
-                    float: () => swift.Type.float(),
-                    double: () => swift.Type.double(),
-                    bigInteger: () => swift.Type.string(),
-                    date: () => swift.Type.date(),
-                    dateTime: () => swift.Type.date(),
-                    base64: () => swift.Type.string(),
-                    uuid: () => swift.Type.uuid(),
-                    _other: () => swift.Type.any()
-                });
-            case "named":
-                return swift.Type.custom(typeReference.name.pascalCase.unsafeName);
-            case "unknown":
-                return swift.Type.any();
-            default:
-                assertNever(typeReference);
-        }
     }
 
     private getSubpackages(): Subpackage[] {
