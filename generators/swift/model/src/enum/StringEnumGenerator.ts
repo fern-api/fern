@@ -30,9 +30,7 @@ export class StringEnumGenerator {
     }
 
     private getFileDirectory(): RelativeFilePath {
-        return RelativeFilePath.of(
-            [...this.typeDeclaration.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName)].join("/")
-        );
+        return RelativeFilePath.of("Schemas");
     }
 
     private generateEnumForTypeDeclaration(): swift.EnumWithRawValues {
