@@ -51,31 +51,25 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
             this.context.logger.debug(`Found ${asIsFiles.length} as-is files to copy: ${asIsFiles.join(', ')}`);
             
             for (const filename of asIsFiles) {
-                this.coreFiles.push(await this.createAsIsFile({ filename }));
+                this.coreFiles.push(await this.createAsIsFile({ 
+                    filename,
+                    gemNamespace: this.context.config.organization || 'fern'
+                }));
             }
         } else {
             this.context.logger.debug('Context does not have getCoreAsIsFiles method');
         }
     }
 
-    private async createAsIsFile({ filename }: { filename: string }): Promise<File> {
-        let contents: string;
-        
-        // Read template from file (asIs directory is copied to lib during build)
-        if (filename === "model/field.Template.rb") {
-            const templatePath = pathJoin(__dirname, "asIs", filename);
-            contents = await readFile(templatePath, "utf-8");
-        } else {
-            throw new Error(`Unknown as-is file: ${filename}`);
-        }
-        
+    private async createAsIsFile({ filename, gemNamespace }: { filename: string; gemNamespace: string }): Promise<File> {
+        const contents = (await readFile(getAsIsFilepath(filename))).toString();
         return new File(
             filename.replace(".Template", ""),
             RelativeFilePath.of("lib/internal/types"),
             replaceTemplate({
                 contents,
                 variables: getTemplateVariables({
-                    gemNamespace: this.context.config.organization || 'fern'
+                    gemNamespace
                 })
             })
         );
@@ -101,6 +95,10 @@ function getTemplateVariables({ gemNamespace }: { gemNamespace: string }): Recor
     return {
         gem_namespace: gemNamespace
     };
+}
+
+function getAsIsFilepath(filename: string): AbsoluteFilePath {
+    return AbsoluteFilePath.of(pathJoin(__dirname, "asIs", filename));
 }
 
 declare namespace Gemfile {
