@@ -1,5 +1,5 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { AbstractSwiftGeneratorCli } from "@fern-api/swift-base";
+import { AbstractSwiftGeneratorCli, SwiftFile } from "@fern-api/swift-base";
 import { generateModels } from "@fern-api/swift-model";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -48,8 +48,13 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
-        const files = generateModels({ context });
-        context.project.addSourceFiles(...files);
+        const projectFiles = this.generateProjectFiles(context);
+        context.project.addSourceFiles(...projectFiles);
         await context.project.persist();
+    }
+
+    private generateProjectFiles(context: SdkGeneratorContext): SwiftFile[] {
+        const modelFiles = generateModels({ context });
+        return modelFiles;
     }
 }

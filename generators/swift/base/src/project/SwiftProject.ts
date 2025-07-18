@@ -7,7 +7,7 @@ import { BaseSwiftCustomConfigSchema } from "@fern-api/swift-codegen";
 import { AbstractSwiftGeneratorContext } from "../context/AbstractSwiftGeneratorContext";
 import { SwiftFile } from "./SwiftFile";
 
-const SRC_DIRECTORY_NAME = "src";
+const SRC_DIRECTORY_NAME = "Sources";
 
 export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<BaseSwiftCustomConfigSchema>> {
     private name: string;
