@@ -1,7 +1,7 @@
 import { execSync } from "child_process";
 
-const invalidChars = /[<>:"|?*\x00-\x1F]/;
-const reservedNames = /^(CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9])(\.|$)/i;
+// biome-ignore lint/suspicious/noControlCharactersInRegex: control characters are needed to detect invalid filenames
+const [invalidChars, reservedNames] = [/[<>:"|?*\x00-\x1F]/, /^(CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9])(\.|$)/i];
 
 function checkFilenames(): void {
     try {
@@ -25,7 +25,7 @@ function checkFilenames(): void {
 
         process.stdout.write("✅ All filenames are valid for cross-platform compatibility");
     } catch (error) {
-        process.stderr.write("Error checking filenames:", (error as Error).message);
+        process.stderr.write(`Error checking filenames: ${(error as Error).message}`);
         process.exit(1);
     }
 }
