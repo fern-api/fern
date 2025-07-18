@@ -111,7 +111,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "DefaultAndValidationRulesResponse2001"
     },
     "defaultAndValidationRules_Response_200": {
       "name": "defaultAndValidationRules_Response_200",
@@ -123,14 +124,16 @@
             "type": {
               "type": "id",
               "value": "Schema"
-            }
+            },
+            "displayName": "Schema"
           },
           {
             "typeName": "DefaultAndValidationRulesResponse2001",
             "type": {
               "type": "id",
               "value": "DefaultAndValidationRulesResponse2001"
-            }
+            },
+            "displayName": "DefaultAndValidationRulesResponse2001"
           }
         ]
       }

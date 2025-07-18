@@ -7611,14 +7611,16 @@
             "type": {
               "type": "id",
               "value": "GetSiteActivityLogsRequestForbiddenError0"
-            }
+            },
+            "displayName": "GetSiteActivityLogsRequestForbiddenError0"
           },
           {
             "typeName": "GetSiteActivityLogsRequestForbiddenError1",
             "type": {
               "type": "id",
               "value": "GetSiteActivityLogsRequestForbiddenError1"
-            }
+            },
+            "displayName": "GetSiteActivityLogsRequestForbiddenError1"
           }
         ]
       }
@@ -20326,14 +20328,16 @@
             "type": {
               "type": "id",
               "value": "ListUsersRequestForbiddenError0"
-            }
+            },
+            "displayName": "ListUsersRequestForbiddenError0"
           },
           {
             "typeName": "ListUsersRequestForbiddenError1",
             "type": {
               "type": "id",
               "value": "ListUsersRequestForbiddenError1"
-            }
+            },
+            "displayName": "ListUsersRequestForbiddenError1"
           }
         ]
       }
@@ -20908,14 +20912,16 @@
             "type": {
               "type": "id",
               "value": "GetUserRequestForbiddenError0"
-            }
+            },
+            "displayName": "GetUserRequestForbiddenError0"
           },
           {
             "typeName": "GetUserRequestForbiddenError1",
             "type": {
               "type": "id",
               "value": "GetUserRequestForbiddenError1"
-            }
+            },
+            "displayName": "GetUserRequestForbiddenError1"
           }
         ]
       }
@@ -21193,14 +21199,16 @@
             "type": {
               "type": "id",
               "value": "DeleteUserRequestForbiddenError0"
-            }
+            },
+            "displayName": "DeleteUserRequestForbiddenError0"
           },
           {
             "typeName": "DeleteUserRequestForbiddenError1",
             "type": {
               "type": "id",
               "value": "DeleteUserRequestForbiddenError1"
-            }
+            },
+            "displayName": "DeleteUserRequestForbiddenError1"
           }
         ]
       }
@@ -21823,14 +21831,16 @@
             "type": {
               "type": "id",
               "value": "UpdateUserRequestForbiddenError0"
-            }
+            },
+            "displayName": "UpdateUserRequestForbiddenError0"
           },
           {
             "typeName": "UpdateUserRequestForbiddenError1",
             "type": {
               "type": "id",
               "value": "UpdateUserRequestForbiddenError1"
-            }
+            },
+            "displayName": "UpdateUserRequestForbiddenError1"
           }
         ]
       }
@@ -22405,14 +22415,16 @@
             "type": {
               "type": "id",
               "value": "InviteUserRequestForbiddenError0"
-            }
+            },
+            "displayName": "InviteUserRequestForbiddenError0"
           },
           {
             "typeName": "InviteUserRequestForbiddenError1",
             "type": {
               "type": "id",
               "value": "InviteUserRequestForbiddenError1"
-            }
+            },
+            "displayName": "InviteUserRequestForbiddenError1"
           }
         ]
       }
@@ -22549,14 +22561,16 @@
             "type": {
               "type": "id",
               "value": "InviteUserRequestConflictError0"
-            }
+            },
+            "displayName": "InviteUserRequestConflictError0"
           },
           {
             "typeName": "InviteUserRequestConflictError1",
             "type": {
               "type": "id",
               "value": "InviteUserRequestConflictError1"
-            }
+            },
+            "displayName": "InviteUserRequestConflictError1"
           }
         ]
       }
@@ -23004,14 +23018,16 @@
             "type": {
               "type": "id",
               "value": "ListAccessGroupsRequestForbiddenError0"
-            }
+            },
+            "displayName": "ListAccessGroupsRequestForbiddenError0"
           },
           {
             "typeName": "ListAccessGroupsRequestForbiddenError1",
             "type": {
               "type": "id",
               "value": "ListAccessGroupsRequestForbiddenError1"
-            }
+            },
+            "displayName": "ListAccessGroupsRequestForbiddenError1"
           }
         ]
       }
