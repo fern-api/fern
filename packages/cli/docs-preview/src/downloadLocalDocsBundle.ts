@@ -22,7 +22,7 @@ const LOCAL_STORAGE_FOLDER = process.env.LOCAL_STORAGE_FOLDER ?? ".fern";
 // Const for windows post-processing
 const INSTRUMENTATION_PATH = "packages/fern-docs/bundle/.next/server/instrumentation.js";
 const NPMRC_NAME = ".npmrc";
-const PNPMFILE_CJS_NAME = "pnpmfile.cjs";
+const PNPMFILE_CJS_NAME = ".pnpmfile.cjs";
 const PNPM_WORKSPACE_YAML_NAME = "pnpm-workspace.yaml";
 
 export function getLocalStorageFolder(): AbsoluteFilePath {
@@ -228,12 +228,12 @@ export async function downloadBundle({
             try {
                 await loggingExeca(logger, PLATFORM_IS_WINDOWS ? "where" : "which", ["pnpm"], {
                     cwd: absolutePathToBundleFolder,
-                    doNotPipeOutput: false
+                    doNotPipeOutput: true
                 });
             } catch (error) {
                 logger.debug("pnpm not found, installing pnpm");
                 await loggingExeca(logger, "npm", ["install", "-g", "pnpm"], {
-                    doNotPipeOutput: false
+                    doNotPipeOutput: true
                 });
             }
 
@@ -241,7 +241,7 @@ export async function downloadBundle({
             try {
                 await loggingExeca(logger, PLATFORM_IS_WINDOWS ? "where" : "which", ["pnpm"], {
                     cwd: absolutePathToBundleFolder,
-                    doNotPipeOutput: false
+                    doNotPipeOutput: true
                 });
             } catch (error) {
                 throw new Error(
@@ -254,7 +254,7 @@ export async function downloadBundle({
                 logger.debug("Installing esbuild");
                 await loggingExeca(logger, "pnpm", ["i", "esbuild"], {
                     cwd: absolutePathToBundleFolder,
-                    doNotPipeOutput: false
+                    doNotPipeOutput: true
                 });
             } catch (error) {
                 throw contactFernSupportError("Failed to install required package.");
@@ -265,7 +265,7 @@ export async function downloadBundle({
                 logger.debug("Resolve esbuild imports");
                 await loggingExeca(logger, "node", ["install-esbuild.js"], {
                     cwd: absolutePathToBundleFolder,
-                    doNotPipeOutput: false
+                    doNotPipeOutput: true
                 });
             } catch (error) {
                 throw contactFernSupportError("Failed to resolve imports.");
@@ -294,55 +294,30 @@ export async function downloadBundle({
 
                 // Write pnpm-workspace.yaml if it does not exist
                 if (!pnpmWorkspaceExists) {
-                    try {
-                        logger.debug(`Writing pnpm-workspace.yaml at ${pnpmWorkspacePath}`);
-                        await fsp.writeFile(
-                            pnpmWorkspacePath,
-                            PNPM_WORKSPACE_YAML_CONTENTS
-                        );
-                    } catch (error) {
-                        throw contactFernSupportError(`Failed to write pnpm-workspace.yaml at ${pnpmWorkspacePath}: ${error}`);
-                    }
+                    logger.debug(`Writing pnpm-workspace.yaml at ${pnpmWorkspacePath}`);
+                    await fsp.writeFile(pnpmWorkspacePath, PNPM_WORKSPACE_YAML_CONTENTS);
                 }
                 // Write pnpmfile.cjs if it does not exist
                 if (!pnpmfileExists) {
-                    try {
-                        logger.debug(`Writing pnpmfile.cjs at ${pnpmfilePath}`);
-                        await fsp.writeFile(
-                            pnpmfilePath,
-                            PNPMFILE_CJS_CONTENTS
-                        );
-                    } catch (error) {
-                        throw contactFernSupportError(`Failed to write pnpmfile.cjs at ${pnpmfilePath}: ${error}`);
-                    }
+                    logger.debug(`Writing pnpmfile.cjs at ${pnpmfilePath}`);
+                    await fsp.writeFile(pnpmfilePath, PNPMFILE_CJS_CONTENTS);
                 }
                 // Write .npmrc if it does not exist
                 if (!npmrcExists) {
-                    try {
-                        logger.debug(`Writing .npmrc at ${npmrcPath}`);
-                        await fsp.writeFile(
-                            npmrcPath,
-                            NPMRC_CONTENTS
-                        );
-                    } catch (error) {
-                        throw contactFernSupportError(`Failed to write .npmrc at ${npmrcPath}: ${error}`);
-                    }
+                    logger.debug(`Writing .npmrc at ${npmrcPath}`);
+                    await fsp.writeFile(npmrcPath, NPMRC_CONTENTS);
                 }
                 // Remove instrumentation.js if it exists
                 if (instrumentationJsExists) {
-                    try {
-                        logger.debug(`Removing instrumentation.js at ${absPathToInstrumentationJs}`);
-                        await rm(absPathToInstrumentationJs);
-                    } catch (error) {
-                        throw contactFernSupportError(`Failed to remove instrumentation.js at ${absPathToInstrumentationJs}: ${error}`);
-                    }
+                    logger.debug(`Removing instrumentation.js at ${absPathToInstrumentationJs}`);
+                    await rm(absPathToInstrumentationJs);
                 }
 
                 // pnpm install within standalone
                 logger.debug("Running pnpm install within standalone");
                 await loggingExeca(logger, "pnpm", ["install"], {
                     cwd: absPathToStandalone,
-                    doNotPipeOutput: false
+                    doNotPipeOutput: true
                 });
             }
         }
