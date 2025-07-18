@@ -53,8 +53,9 @@ You can upload files to a file upload endpoint like this:
 
 ```typescript
 import { createReadStream } from "fs";
+import { ..., Uploadable } from "@fern/bytes-upload"
 
-const file = createReadStream("path/to/file");
+const file: Uploadable = createReadStream("path/to/file");
 await client.service.upload(file, ...);
 ```
 
@@ -68,9 +69,9 @@ You can upload files using the following types:
 You can configure metadata when uploading a file:
 
 ```typescript
-const file = {
+const file: Uploadable.WithMetadata = {
     data: createReadStream("path/to/file"),
-    fileName: "my-file", // optional
+    filename: "my-file", // optional
     contentType: "audio/mpeg", // optional
     contentLength: 1949, // optional
 };
@@ -79,9 +80,9 @@ const file = {
 Alternatively, you can upload a file directly from a file path:
 
 ```typescript
-const file = {
+const file: Uploadable.FromPath = {
     path: "path/to/file",
-    fileName: "my-file", // optional
+    filename: "my-file", // optional
     contentType: "audio/mpeg", // optional
     contentLength: 1949, // optional
 };
