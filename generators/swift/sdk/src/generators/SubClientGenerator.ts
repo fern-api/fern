@@ -33,7 +33,7 @@ export class SubClientGenerator {
             name: `${this.subpackage.name.pascalCase.safeName}Client`,
             final: true,
             accessLevel: swift.AccessLevel.Public,
-            conformances: ["Sendable"],
+            conformances: [swift.Protocol.Sendable],
             properties: []
         });
         const fileContents = swiftClass.toString();

@@ -24,7 +24,7 @@ describe("EnumWithAssociatedValues", () => {
             const enum_ = swift.enumWithAssociatedValues({
                 name: "Result",
                 accessLevel: AccessLevel.Public,
-                conformances: ["Codable", "Equatable"],
+                conformances: [swift.Protocol.Codable, swift.Protocol.Equatable],
                 cases: [
                     { unsafeName: "success", associatedValue: [swift.Type.string()] },
                     { unsafeName: "failure", associatedValue: [swift.Type.string()] }

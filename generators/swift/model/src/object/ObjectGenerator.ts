@@ -57,7 +57,7 @@ export class ObjectGenerator {
         return swift.struct({
             name: this.typeDeclaration.name.name.pascalCase.safeName,
             accessLevel: swift.AccessLevel.Public,
-            conformances: ["Codable", "Hashable"],
+            conformances: [swift.Protocol.Codable, swift.Protocol.Hashable],
             properties: [
                 ...this.objectTypeDeclaration.properties.map((p) => this.generateSwiftPropertyForProperty(p)),
                 swift.property({
@@ -243,7 +243,7 @@ export class ObjectGenerator {
     private generateCodingKeysEnum(): swift.EnumWithRawValues {
         return swift.enumWithRawValues({
             name: "CodingKeys",
-            conformances: ["String", "CodingKey", "CaseIterable"],
+            conformances: ["String", swift.Protocol.CodingKey, swift.Protocol.CaseIterable],
             cases: this.objectTypeDeclaration.properties.map((property) => {
                 return {
                     unsafeName: property.name.name.camelCase.unsafeName,

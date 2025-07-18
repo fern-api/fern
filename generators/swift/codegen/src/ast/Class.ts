@@ -2,6 +2,7 @@ import { AccessLevel } from "./AccessLevel";
 import { Initializer } from "./Initializer";
 import { Method } from "./Method";
 import { Property } from "./Property";
+import { Protocol } from "./Protocol";
 import { AstNode, Writer } from "./core";
 
 export declare namespace Class {
@@ -9,7 +10,7 @@ export declare namespace Class {
         name: string;
         final?: true;
         accessLevel?: AccessLevel;
-        conformances?: string[];
+        conformances?: Protocol[];
         properties: Property[];
         initializers?: Initializer[];
         methods?: Method[];
@@ -20,7 +21,7 @@ export class Class extends AstNode {
     public readonly name: string;
     public readonly final?: true;
     public readonly accessLevel?: AccessLevel;
-    public readonly conformances?: string[];
+    public readonly conformances?: Protocol[];
     public readonly properties: Property[];
     public readonly initializers?: Initializer[];
     public readonly methods?: Method[];

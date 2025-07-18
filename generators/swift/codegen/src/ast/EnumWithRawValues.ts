@@ -1,4 +1,5 @@
 import { AccessLevel } from "./AccessLevel";
+import { Protocol } from "./Protocol";
 import { AstNode, Writer } from "./core";
 import { escapeSwiftStringLiteral, isReservedKeyword } from "./syntax";
 
@@ -11,7 +12,7 @@ export declare namespace EnumWithRawValues {
     interface Args {
         name: string;
         accessLevel?: AccessLevel;
-        conformances?: string[];
+        conformances?: (Protocol | "String")[];
         cases: Case[];
     }
 }
@@ -19,7 +20,7 @@ export declare namespace EnumWithRawValues {
 export class EnumWithRawValues extends AstNode {
     public readonly name: string;
     public readonly accessLevel?: AccessLevel;
-    public readonly conformances?: string[];
+    public readonly conformances?: (Protocol | "String")[];
     public readonly cases: EnumWithRawValues.Case[];
 
     public constructor({ accessLevel, name, conformances, cases }: EnumWithRawValues.Args) {

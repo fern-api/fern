@@ -37,7 +37,13 @@ export class StringEnumGenerator {
         return swift.enumWithRawValues({
             name: this.typeDeclaration.name.name.pascalCase.unsafeName,
             accessLevel: swift.AccessLevel.Public,
-            conformances: ["String", "Codable", "Hashable", "Sendable", "CaseIterable"],
+            conformances: [
+                "String",
+                swift.Protocol.Codable,
+                swift.Protocol.Hashable,
+                swift.Protocol.Sendable,
+                swift.Protocol.CaseIterable
+            ],
             cases: this.enumTypeDeclaration.values.map((val) => ({
                 unsafeName: val.name.name.camelCase.unsafeName,
                 rawValue: val.name.wireValue
