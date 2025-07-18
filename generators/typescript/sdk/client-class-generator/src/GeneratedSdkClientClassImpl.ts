@@ -9,6 +9,7 @@ import {
     maybeAddDocsStructure
 } from "@fern-typescript/commons";
 import {
+    EndpointSampleCode,
     GeneratedEndpointImplementation,
     GeneratedSdkClientClass,
     GeneratedWebsocketImplementation,
@@ -447,7 +448,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         endpointId: string;
         example: ExampleEndpointCall;
         clientReference: ts.Identifier;
-    }): ts.Expression | undefined {
+    }): EndpointSampleCode | undefined {
         const generatedEndpoint = this.getGeneratedEndpointImplementation(args.endpointId);
         if (generatedEndpoint == null) {
             return undefined;
@@ -472,7 +473,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
         return generatedEndpoint.maybeLeverageInvocation({
             context: args.context,
-            invocation
+            invocation: invocation.endpointInvocation
         });
     }
 

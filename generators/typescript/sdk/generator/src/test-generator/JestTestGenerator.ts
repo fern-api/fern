@@ -453,9 +453,9 @@ describe("${serviceName}", () => {
             
         ${
             isHeadersResponse
-                ? code`const headers = ${getTextOfTsNode(generatedExample)};
+                ? code`const headers = ${getTextOfTsNode(generatedExample.endpointInvocation)};
         expect(headers).toBeInstanceOf(Headers);`
-                : code`const response = ${getTextOfTsNode(generatedExample)};
+                : code`const response = ${getTextOfTsNode(generatedExample.endpointInvocation)};
         expect(response).toEqual(${expected});`
         }
     });
