@@ -5,7 +5,6 @@ import tmp from "tmp-promise";
 import xml2js from "xml2js";
 import fs from "fs";
 
-
 import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
@@ -30,10 +29,7 @@ export function getLocalStorageFolder(): AbsoluteFilePath {
 }
 
 export function getPathToPreviewFolder({ app = false }: { app?: boolean }): AbsoluteFilePath {
-    return join(
-        getLocalStorageFolder(),
-        RelativeFilePath.of(app ? APP_PREVIEW_FOLDER_NAME : PREVIEW_FOLDER_NAME)
-    );
+    return join(getLocalStorageFolder(), RelativeFilePath.of(app ? APP_PREVIEW_FOLDER_NAME : PREVIEW_FOLDER_NAME));
 }
 
 export function getPathToBundleFolder({ app = false }: { app?: boolean }): AbsoluteFilePath {
@@ -44,38 +40,23 @@ export function getPathToBundleFolder({ app = false }: { app?: boolean }): Absol
 }
 
 export function getPathToStandaloneFolder({ app = false }: { app?: boolean }): AbsoluteFilePath {
-    return join(
-        getPathToBundleFolder({app}),
-        RelativeFilePath.of(STANDALONE_FOLDER_NAME)
-    );
+    return join(getPathToBundleFolder({ app }), RelativeFilePath.of(STANDALONE_FOLDER_NAME));
 }
 
 export function getPathToInstrumentationJs({ app = false }: { app?: boolean }): AbsoluteFilePath {
-    return join(
-        getPathToStandaloneFolder({ app }),
-        RelativeFilePath.of(INSTRUMENTATION_PATH)
-    )
+    return join(getPathToStandaloneFolder({ app }), RelativeFilePath.of(INSTRUMENTATION_PATH));
 }
 
 function getPathToPnpmWorkspaceYaml({ app = false }: { app?: boolean }): AbsoluteFilePath {
-    return join(
-        getPathToStandaloneFolder({ app }),
-        RelativeFilePath.of(PNPM_WORKSPACE_YAML_NAME)
-    );
+    return join(getPathToStandaloneFolder({ app }), RelativeFilePath.of(PNPM_WORKSPACE_YAML_NAME));
 }
 
 function getPathToPnpmfileCjs({ app = false }: { app?: boolean }): AbsoluteFilePath {
-    return join(
-        getPathToStandaloneFolder({ app }),
-        RelativeFilePath.of(PNPMFILE_CJS_NAME)
-    );
+    return join(getPathToStandaloneFolder({ app }), RelativeFilePath.of(PNPMFILE_CJS_NAME));
 }
 
 function getPathToNpmrc({ app = false }: { app?: boolean }): AbsoluteFilePath {
-    return join(
-        getPathToStandaloneFolder({ app }),
-        RelativeFilePath.of(NPMRC_NAME)
-    );
+    return join(getPathToStandaloneFolder({ app }), RelativeFilePath.of(NPMRC_NAME));
 }
 
 function contactFernSupportError(errorMessage: string): Error {
@@ -83,10 +64,7 @@ function contactFernSupportError(errorMessage: string): Error {
 }
 
 export function getPathToEtagFile({ app = false }: { app?: boolean }): AbsoluteFilePath {
-    return join(
-        getPathToPreviewFolder({ app }),
-        RelativeFilePath.of(ETAG_FILENAME)
-    );
+    return join(getPathToPreviewFolder({ app }), RelativeFilePath.of(ETAG_FILENAME));
 }
 
 export declare namespace DownloadLocalBundle {
@@ -275,17 +253,12 @@ export async function downloadBundle({
             if (PLATFORM_IS_WINDOWS) {
                 const absPathToStandalone = getPathToStandaloneFolder({ app });
                 const absPathToInstrumentationJs = getPathToInstrumentationJs({ app });
-                const pnpmWorkspacePath = getPathToPnpmWorkspaceYaml({app})
-                const pnpmfilePath = getPathToPnpmfileCjs({app});
-                const npmrcPath = getPathToNpmrc({app});
+                const pnpmWorkspacePath = getPathToPnpmWorkspaceYaml({ app });
+                const pnpmfilePath = getPathToPnpmfileCjs({ app });
+                const npmrcPath = getPathToNpmrc({ app });
 
                 // Check all paths in parallel
-                const [
-                    pnpmWorkspaceExists,
-                    pnpmfileExists,
-                    npmrcExists,
-                    instrumentationJsExists
-                ] = await Promise.all([
+                const [pnpmWorkspaceExists, pnpmfileExists, npmrcExists, instrumentationJsExists] = await Promise.all([
                     doesPathExist(pnpmWorkspacePath),
                     doesPathExist(pnpmfilePath),
                     doesPathExist(npmrcPath),
