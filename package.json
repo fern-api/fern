@@ -62,7 +62,8 @@
     "docs:generate": "pnpm fern generate --local --api docs-yml",
     "definition:generate": "pnpm fern generate --local --api fern-definition",
     "generators:generate": "pnpm fern generate --local --api generators-yml",
-    "prepare": "husky"
+    "prepare": "husky",
+    "pre-commit": "tsx scripts/pre-commit.ts"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
@@ -103,6 +104,7 @@
     "stylelint-config-standard-scss": "^5.0.0",
     "tailwindcss": "^3.3.2",
     "ts-node": "^10.9.2",
+    "tsx": "^4.20.3",
     "turbo": "^2.5.4",
     "typescript": "5.7.2",
     "vitest": "^2.1.9"
