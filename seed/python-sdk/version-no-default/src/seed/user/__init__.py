@@ -3,5 +3,4 @@
 # isort: skip_file
 
 from .types import User, UserId
-
 __all__ = ["User", "UserId"]
