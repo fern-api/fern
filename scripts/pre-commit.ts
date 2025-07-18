@@ -49,7 +49,7 @@ function runPreCommitScripts(): void {
         process.stdout.write(`\n🎉 All pre-commit scripts passed successfully!`);
         process.exit(0);
     } catch (error) {
-        process.stderr.write("Error running pre-commit scripts:", (error as Error).message);
+        process.stderr.write(`Error running pre-commit scripts: ${(error as Error).message}`);
         process.exit(1);
     }
 }

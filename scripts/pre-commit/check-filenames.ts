@@ -14,19 +14,27 @@ function checkFilenames(): void {
         });
 
         if (invalidFiles.length > 0) {
-            process.stderr.write("❌ Invalid filenames found:");
-            invalidFiles.forEach((file: string) => {
-                process.stderr.write(`  - ${file}`);
-            });
-            process.stderr.write('\nFilenames cannot contain: < > : " | ? * or control characters');
-            process.stderr.write("Reserved names: CON, PRN, AUX, NUL, COM1-9, LPT1-9");
-            process.exit(1);
+            const errorMessage = [
+                "❌ Invalid filenames found:",
+                ...invalidFiles.map((file: string) => `  - ${file}`),
+                "",
+                "Filenames cannot contain: < > : \" | ? * or control characters",
+                "Reserved names: CON, PRN, AUX, NUL, COM1-9, LPT1-9"
+            ].join("\n");
+            
+            process.stderr.write(errorMessage + "\n");
+            throw new Error("Invalid filenames detected");
         }
 
-        process.stdout.write("✅ All filenames are valid for cross-platform compatibility");
+        process.stdout.write("✅ All filenames are valid for cross-platform compatibility\n");
     } catch (error) {
-        process.stderr.write(`Error checking filenames: ${(error as Error).message}`);
-        process.exit(1);
+        if (error instanceof Error && error.message === "Invalid filenames detected") {
+            // Re-throw our custom error
+            throw error;
+        }
+        // Handle other errors (like git command failures)
+        process.stderr.write(`Error checking filenames: ${(error as Error).message}\n`);
+        throw new Error(`Filename check failed: ${(error as Error).message}`);
     }
 }
 
