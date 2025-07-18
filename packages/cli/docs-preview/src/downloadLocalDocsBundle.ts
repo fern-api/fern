@@ -17,8 +17,13 @@ const APP_PREVIEW_FOLDER_NAME = "app-preview-fernlocal-4";
 const BUNDLE_FOLDER_NAME = "bundle";
 const NEXT_BUNDLE_FOLDER_NAME = ".next";
 const STANDALONE_FOLDER_NAME = "standalone";
-const INSTRUMENTATION_PATH = "packages/fern-docs/bundle/.next/server/instrumentation.js"
 const LOCAL_STORAGE_FOLDER = process.env.LOCAL_STORAGE_FOLDER ?? ".fern";
+
+// Const for windows post-processing
+const INSTRUMENTATION_PATH = "packages/fern-docs/bundle/.next/server/instrumentation.js";
+const NPMRC_NAME = ".npmrc";
+const PNPMFILE_CJS_NAME = "pnpmfile.cjs";
+const PNPM_WORKSPACE_YAML_NAME = "pnpm-workspace.yaml";
 
 export function getLocalStorageFolder(): AbsoluteFilePath {
     return join(AbsoluteFilePath.of(homedir()), RelativeFilePath.of(LOCAL_STORAGE_FOLDER));
@@ -52,6 +57,27 @@ export function getPathToInstrumentationJs({ app = false }: { app?: boolean }): 
     )
 }
 
+function getPathToPnpmWorkspaceYaml({ app = false }: { app?: boolean }): AbsoluteFilePath {
+    return join(
+        getPathToStandaloneFolder({ app }),
+        RelativeFilePath.of(PNPM_WORKSPACE_YAML_NAME)
+    );
+}
+
+function getPathToPnpmfileCjs({ app = false }: { app?: boolean }): AbsoluteFilePath {
+    return join(
+        getPathToStandaloneFolder({ app }),
+        RelativeFilePath.of(PNPMFILE_CJS_NAME)
+    );
+}
+
+function getPathToNpmrc({ app = false }: { app?: boolean }): AbsoluteFilePath {
+    return join(
+        getPathToStandaloneFolder({ app }),
+        RelativeFilePath.of(NPMRC_NAME)
+    );
+}
+
 export function getPathToEtagFile({ app = false }: { app?: boolean }): AbsoluteFilePath {
     return join(
         getPathToPreviewFolder({ app }),
@@ -70,6 +96,33 @@ export declare namespace DownloadLocalBundle {
         type: "failure";
     }
 }
+
+// Config file contents as constants
+const PNPM_WORKSPACE_YAML_CONTENTS = `packages:
+  - "packages/**"
+  - "!**/dist"
+`;
+
+const PNPMFILE_CJS_CONTENTS = `module.exports = {
+    hooks: {
+        readPackage(pkg) {
+            // Remove all workspace:* dependencies
+            if (pkg.dependencies) {
+                Object.keys(pkg.dependencies).forEach(dep => {
+                    if (pkg.dependencies[dep] === 'workspace:*') {
+                        delete pkg.dependencies[dep]; } });
+                    }
+            if (pkg.devDependencies) {
+                Object.keys(pkg.devDependencies).forEach(dep => {
+                    if (pkg.devDependencies[dep] === 'workspace:*') {
+                        delete pkg.devDependencies[dep]; } });
+            } return pkg;
+        }
+    }
+};
+`;
+
+const NPMRC_CONTENTS = "@fern-fern:registry=https://npm.buildwithfern.com\n";
 
 export async function downloadBundle({
     bucketUrl,
@@ -250,33 +303,64 @@ export async function downloadBundle({
             const absPathToStandalone = getPathToStandaloneFolder({ app });
             const absPathToInstrumentationJs = getPathToInstrumentationJs({ app });
             // Add workspace config files
-            const fs = await import('fs/promises');
-            const pathModule = require('path');
-            const pnpmWorkspacePath = pathModule.join(absPathToStandalone, 'pnpm-workspace.yaml');
-            const pnpmfilePath = pathModule.join(absPathToStandalone, '.pnpmfile.cjs');
-            const npmrcPath = pathModule.join(absPathToStandalone, '.npmrc');
+            // const fs = await import('fs/promises');
+            // const pathModule = require('path');
+            const pnpmWorkspacePath = getPathToPnpmWorkspaceYaml({app})
+            const pnpmfilePath = getPathToPnpmfileCjs({app});
+            const npmrcPath = getPathToNpmrc({app});
 
-            if (!(await doesPathExist(pnpmWorkspacePath))) {
-                await fs.writeFile(
-                    pnpmWorkspacePath,
-                    `packages:\n  - \"packages/**\"\n  - \"!**/dist\"\n`
+            const foo = doesPathExist(pnpmWorkspacePath);
+
+            await Promise.all([
+                doesPathExist(pnpmWorkspacePath).then((exists) => { if (exists) return fs.writeFile(pnpmWorkspacePath, PNPM_WORKSPACE_YAML_CONTENTS)}),
+                doesPathExist(pnpmfilePath).then(fs.writeFile(pnpmfilePath, PNPMFILE_CJS_CONTENTS)),
+                doesPathExist(npmrcPath).then(fs.writeFile(npmrcPath, NPMRC_CONTENTS)),
+                doesPathExist()
+            ]
+                
+            )
+            // Check all paths in parallel
+            const [
+                pnpmWorkspaceExists,
+                pnpmfileExists,
+                npmrcExists,
+                instrumentationJsExists
+            ] = await Promise.all([
+                doesPathExist(pnpmWorkspacePath),
+                doesPathExist(pnpmfilePath),
+                doesPathExist(npmrcPath),
+                doesPathExist(absPathToInstrumentationJs)
+            ]);
+
+            const writePromises = [];
+            if (!pnpmWorkspaceExists) {
+                writePromises.push(
+                    fs.writeFile(
+                        pnpmWorkspacePath,
+                        PNPM_WORKSPACE_YAML_CONTEN
+                    )
                 );
             }
-            if (!(await doesPathExist(pnpmfilePath))) {
-                await fs.writeFile(
-                    pnpmfilePath,
-                    `module.exports = {\n    hooks: {\n        readPackage(pkg) {\n            // Remove all workspace:* dependencies\n            if (pkg.dependencies) {\n                Object.keys(pkg.dependencies).forEach(dep => {\n                    if (pkg.dependencies[dep] === 'workspace:*') {\n                        delete pkg.dependencies[dep]; } });\n                    }\n            if (pkg.devDependencies) {\n                Object.keys(pkg.devDependencies).forEach(dep => {\n                    if (pkg.devDependencies[dep] === 'workspace:*') {\n                        delete pkg.devDependencies[dep]; } });\n            } return pkg;\n        }\n    }\n};\n`
+            if (!pnpmfileExists) {
+                writePromises.push(
+                    fs.writeFile(
+                        pnpmfilePath,
+                        PNPMFILE_CJS
+                    )
                 );
             }
-            if (!(await doesPathExist(npmrcPath))) {
-                await fs.writeFile(
-                    npmrcPath,
-                    `@fern-fern:registry=https://npm.buildwithfern.com\n`
+            if (!npmrcExists) {
+                writePromises.push(
+                    fs.writeFile(
+                        npmrcPath,
+                        NPMRC
+                    )
                 );
             }
-            if (await doesPathExist(absPathToInstrumentationJs)) {
-                await fs.unlink(absPathToInstrumentationJs);
+            if (instrumentationJsExists) {
+                writePromises.push(fs.unlink(absPathToInstrumentationJs));
             }
+            await Promise.all(writePromises);
 
             // pnpm install within standalone
             logger.debug("Resolve esbuild imports");
