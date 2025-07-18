@@ -14,6 +14,15 @@ export interface GeneratedEndpointRequest {
     getReferenceToRequestBody: (context: SdkContext) => ts.Expression | undefined;
     getReferenceToPathParameter: (pathParameterKey: string, context: SdkContext) => ts.Expression;
     getReferenceToQueryParameter: (queryParameterKey: string, context: SdkContext) => ts.Expression;
+    getExampleEndpointImports({
+        context,
+        example,
+        opts
+    }: {
+        context: SdkContext;
+        example: ExampleEndpointCall;
+        opts: GetReferenceOpts;
+    }): ts.Statement[];
     getExampleEndpointParameters({
         context,
         example,

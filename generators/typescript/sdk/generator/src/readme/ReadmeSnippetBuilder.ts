@@ -32,6 +32,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static readonly RAW_RESPONSES_FEATURE_ID: FernGeneratorCli.FeatureId = "ACCESS_RAW_RESPONSE_DATA";
     private static readonly ADDITIONAL_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "ADDITIONAL_HEADERS";
     public static readonly BINARY_RESPONSE_FEATURE_ID: FernGeneratorCli.FeatureId = "BINARY_RESPONSE";
+    public static readonly FILE_UPLOAD_REQUEST_FEATURE_ID: FernGeneratorCli.FeatureId = "FILE_UPLOADS";
 
     private readonly context: SdkContext;
     private readonly isPaginationEnabled: boolean;
@@ -80,6 +81,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID] = this.buildExceptionHandlingSnippets();
         snippets[ReadmeSnippetBuilder.RUNTIME_COMPATIBILITY_FEATURE_ID] = this.buildRuntimeCompatibilitySnippets();
         snippets[ReadmeSnippetBuilder.STREAMING_FEATURE_ID] = this.buildStreamingSnippets();
+        snippets[ReadmeSnippetBuilder.FILE_UPLOAD_REQUEST_FEATURE_ID] = this.buildFileUploadRequestSnippet();
         snippets[ReadmeSnippetBuilder.BINARY_RESPONSE_FEATURE_ID] = this.buildBinaryResponseSnippet();
         snippets[ReadmeSnippetBuilder.RAW_RESPONSES_FEATURE_ID] = this.buildRawResponseSnippets();
         snippets[ReadmeSnippetBuilder.ADDITIONAL_HEADERS_FEATURE_ID] = this.buildAdditionalHeadersSnippets();
@@ -223,6 +225,36 @@ const response = await ${this.getMethodCall(headerEndpoint)}(..., {
 `
             )
         );
+    }
+
+    private buildFileUploadRequestSnippet(): string[] {
+        const binaryRequestEndpoints = Object.values(this.context.ir.services).flatMap((service) =>
+            service.endpoints
+                .filter((endpoint) => endpoint.requestBody?.type === "bytes")
+                .map((endpoint) => ({
+                    endpoint,
+                    fernFilepath: service.name.fernFilepath
+                }))
+        );
+        if (binaryRequestEndpoints.length === 0) {
+            return [];
+        }
+        const binaryRequestEndpoint = binaryRequestEndpoints[0] as EndpointWithFilepath;
+        return [
+            this.writeCode(
+                code`
+import { createReadStream } from "fs";
+
+await ${this.getMethodCall(binaryRequestEndpoint)}(createReadStream("path/to/file"), ...);
+await ${this.getMethodCall(binaryRequestEndpoint)}(new ReadableStream(), ...);
+await ${this.getMethodCall(binaryRequestEndpoint)}(Buffer.from('binary data'), ...);
+await ${this.getMethodCall(binaryRequestEndpoint)}(new Blob(['binary data'], { type: 'audio/mpeg' }), ...);
+await ${this.getMethodCall(binaryRequestEndpoint)}(new File(['binary data'], 'file.mp3'), ...);
+await ${this.getMethodCall(binaryRequestEndpoint)}(new ArrayBuffer(8), ...);
+await ${this.getMethodCall(binaryRequestEndpoint)}(new Uint8Array([0, 1, 2]), ...);
+`
+            )
+        ];
     }
 
     private buildBinaryResponseSnippet(): string[] {

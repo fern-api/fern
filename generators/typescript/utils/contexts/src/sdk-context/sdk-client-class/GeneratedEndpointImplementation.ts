@@ -4,6 +4,7 @@ import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 
 import { SdkContext } from "../SdkContext";
+import { EndpointSampleCode } from "../../commons/EndpointSampleCode";
 
 export namespace GeneratedEndpointImplementation {
     export interface EndpointSignature {
@@ -23,7 +24,7 @@ export interface GeneratedEndpointImplementation {
         example: ExampleEndpointCall;
         opts: GetReferenceOpts;
         clientReference: ts.Identifier;
-    }) => ts.Expression | undefined;
+    }) => EndpointSampleCode | undefined;
     maybeLeverageInvocation: (args: { invocation: ts.Expression; context: SdkContext }) => ts.Node[] | undefined;
     isPaginated: (context: SdkContext) => boolean;
 }
