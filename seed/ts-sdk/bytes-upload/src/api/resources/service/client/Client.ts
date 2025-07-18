@@ -37,6 +37,10 @@ export class Service {
     /**
      * @param {core.file.Uploadable} uploadable
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     import { createReadStream } from "fs";
+     *     await client.service.upload(createReadStream("path/to/file"))
      */
     public upload(
         uploadable: core.file.Uploadable,
