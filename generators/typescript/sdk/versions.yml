@@ -13,18 +13,18 @@
         
         await client.upload({
             data: createReadStream("path/to/file"),
-            fileName: "my-file",
+            filename: "my-file",
             contentType: "audio/mpeg",
             contentLength: 1949,
         });
         ```
-        The `fileName`, `contentType`, and `contentLength` properties are optional.
+        The `filename`, `contentType`, and `contentLength` properties are optional.
 
         Alternatively, users can use the `Uploadable.FromPath` type to upload directly from a file path:
         ```typescript
         await client.upload({
             path: "path/to/file",
-            fileName: "my-file",
+            filename: "my-file",
             contentType: "audio/mpeg",
             contentLength: 1949,
         });

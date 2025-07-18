@@ -25,19 +25,19 @@ features:
 
       You can configure metadata when uploading a file:
       ```typescript
-      const file = {
+      const file: Uploadable.WithMetadata = {
           data: createReadStream("path/to/file"),
-          fileName: "my-file",        // optional
-          contentType: "audio/mpeg",  // optional
-          contentLength: 1949,        // optional
+          filename: "my-file",       // optional
+          contentType: "audio/mpeg", // optional
+          contentLength: 1949,       // optional
       };
       ```
 
       Alternatively, you can upload a file directly from a file path:
       ```typescript
-      const file = {
+      const file : Uploadable.FromPath = {
           path: "path/to/file",
-          fileName: "my-file",        // optional
+          filename: "my-file",        // optional
           contentType: "audio/mpeg",  // optional
           contentLength: 1949,        // optional
       };

@@ -244,8 +244,9 @@ const response = await ${this.getMethodCall(headerEndpoint)}(..., {
             this.writeCode(
                 code`
 import { createReadStream } from "fs";
+import { ..., Uploadable } from "${this.rootPackageName}"
 
-const file = createReadStream("path/to/file");
+const file: Uploadable = createReadStream("path/to/file");
 await ${this.getMethodCall(binaryRequestEndpoint)}(file, ...);
 `
             )

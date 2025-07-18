@@ -8,6 +8,7 @@ import {
     ImportsManager,
     NpmPackage,
     PackageId,
+    PublicExportsManager,
     SimpleTypescriptProject,
     TypescriptProject,
     getFullPathForEndpoint,
@@ -167,6 +168,7 @@ export class SdkGenerator {
     private project: Project;
     private rootDirectory: Directory;
     private exportsManager: ExportsManager;
+    private readonly publicExportsManager: PublicExportsManager;
     private dependencyManager = new DependencyManager();
     private coreUtilitiesManager: CoreUtilitiesManager;
     private typeResolver: TypeResolver;
@@ -261,6 +263,7 @@ export class SdkGenerator {
         this.exportsManager = new ExportsManager({
             packagePath: this.relativePackagePath
         });
+        this.publicExportsManager = new PublicExportsManager();
         this.coreUtilitiesManager = new CoreUtilitiesManager({
             streamType: this.config.streamType,
             formDataSupport: this.config.formDataSupport,
@@ -694,6 +697,13 @@ export class SdkGenerator {
         pathToRoot: AbsoluteFilePath;
     }): Promise<void> {
         await this.coreUtilitiesManager.copyCoreUtilities({ pathToSrc, pathToRoot });
+    }
+
+    public async generatePublicExports({ pathToSrc }: { pathToSrc: AbsoluteFilePath }): Promise<void> {
+        await this.publicExportsManager.generatePublicExportsFiles({
+            pathToSrc
+        });
+        this.context.logger.debug("Generated public exports");
     }
 
     private generateTypeDeclarations() {
