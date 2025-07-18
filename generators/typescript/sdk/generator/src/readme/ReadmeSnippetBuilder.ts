@@ -32,7 +32,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static readonly RAW_RESPONSES_FEATURE_ID: FernGeneratorCli.FeatureId = "ACCESS_RAW_RESPONSE_DATA";
     private static readonly ADDITIONAL_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "ADDITIONAL_HEADERS";
     public static readonly BINARY_RESPONSE_FEATURE_ID: FernGeneratorCli.FeatureId = "BINARY_RESPONSE";
-    public static readonly FILE_UPLOAD_REQUEST_FEATURE_ID: FernGeneratorCli.FeatureId = "FILE_UPLOAD";
+    public static readonly FILE_UPLOAD_REQUEST_FEATURE_ID: FernGeneratorCli.FeatureId = "FILE_UPLOADS";
 
     private readonly context: SdkContext;
     private readonly isPaginationEnabled: boolean;
@@ -244,10 +244,14 @@ const response = await ${this.getMethodCall(headerEndpoint)}(..., {
             this.writeCode(
                 code`
 import { createReadStream } from "fs";
-import { ..., Uploadable } from "${this.rootPackageName}"
 
-const file: Uploadable = createReadStream("path/to/file");
-await ${this.getMethodCall(binaryRequestEndpoint)}(file, ...);
+await ${this.getMethodCall(binaryRequestEndpoint)}(createReadStream("path/to/file"), ...);
+await ${this.getMethodCall(binaryRequestEndpoint)}(new ReadableStream(), ...);
+await ${this.getMethodCall(binaryRequestEndpoint)}(Buffer.from('binary data'), ...);
+await ${this.getMethodCall(binaryRequestEndpoint)}(new Blob(['binary data'], { type: 'audio/mpeg' }), ...);
+await ${this.getMethodCall(binaryRequestEndpoint)}(new File(['binary data'], 'file.mp3'), ...);
+await ${this.getMethodCall(binaryRequestEndpoint)}(new ArrayBuffer(8), ...);
+await ${this.getMethodCall(binaryRequestEndpoint)}(new Uint8Array([0, 1, 2]), ...);
 `
             )
         ];

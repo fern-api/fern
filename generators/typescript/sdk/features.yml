@@ -13,11 +13,11 @@ features:
       When the API returns a non-success status code (4xx or 5xx response), a subclass of the following error
       will be thrown.
 
-  - id: FILE_UPLOAD
+  - id: FILE_UPLOADS
     description: |
-      You can upload files to a file upload endpoint like this:
+      You can upload files using the client:
     addendum: |
-      You can upload files using the following types:
+      The client accepts a variety of types for file upload parameters:
       * Stream types: `fs.ReadStream`, `stream.Readable`, and `ReadableStream`
       * Buffered types: `Buffer`, `Blob`, `File`, `ArrayBuffer`, `ArrayBufferView`, and `Uint8Array`
 

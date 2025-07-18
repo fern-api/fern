@@ -47,19 +47,23 @@ try {
 }
 ```
 
-## File Upload
+## File Uploads
 
-You can upload files to a file upload endpoint like this:
+You can upload files using the client:
 
 ```typescript
 import { createReadStream } from "fs";
-import { ..., Uploadable } from "@fern/bytes-upload"
 
-const file: Uploadable = createReadStream("path/to/file");
-await client.service.upload(file, ...);
+await client.service.upload(createReadStream("path/to/file"), ...);
+await client.service.upload(new ReadableStream(), ...);
+await client.service.upload(Buffer.from('binary data'), ...);
+await client.service.upload(new Blob(['binary data'], { type: 'audio/mpeg' }), ...);
+await client.service.upload(new File(['binary data'], 'file.mp3'), ...);
+await client.service.upload(new ArrayBuffer(8), ...);
+await client.service.upload(new Uint8Array([0, 1, 2]), ...);
 ```
 
-You can upload files using the following types:
+The client accepts a variety of types for file upload parameters:
 
 - Stream types: `fs.ReadStream`, `stream.Readable`, and `ReadableStream`
 - Buffered types: `Buffer`, `Blob`, `File`, `ArrayBuffer`, `ArrayBufferView`, and `Uint8Array`
