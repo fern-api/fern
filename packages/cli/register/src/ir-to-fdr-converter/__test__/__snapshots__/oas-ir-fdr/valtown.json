@@ -1745,7 +1745,8 @@
             }
           }
         }
-      }
+      },
+      "displayName": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args0"
     },
     "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1ArgsOneOf1": {
       "description": "A value to be used as a parameter",
@@ -1800,7 +1801,8 @@
             }
           }
         }
-      }
+      },
+      "displayName": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args1"
     },
     "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args": {
       "description": "List of arguments to be used in the given statement",
@@ -1813,14 +1815,16 @@
             "type": {
               "type": "id",
               "value": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args0"
-            }
+            },
+            "displayName": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args0"
           },
           {
             "typeName": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args1",
             "type": {
               "type": "id",
               "value": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args1"
-            }
+            },
+            "displayName": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args1"
           }
         ]
       }
@@ -1927,7 +1931,8 @@
             }
           }
         }
-      }
+      },
+      "displayName": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args0"
     },
     "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1ArgsOneOf1": {
       "description": "A value to be used as a parameter",
@@ -1982,7 +1987,8 @@
             }
           }
         }
-      }
+      },
+      "displayName": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args1"
     },
     "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args": {
       "description": "List of arguments to be used in the given statement",
@@ -1995,14 +2001,16 @@
             "type": {
               "type": "id",
               "value": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args0"
-            }
+            },
+            "displayName": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args0"
           },
           {
             "typeName": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args1",
             "type": {
               "type": "id",
               "value": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args1"
-            }
+            },
+            "displayName": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args1"
           }
         ]
       }
