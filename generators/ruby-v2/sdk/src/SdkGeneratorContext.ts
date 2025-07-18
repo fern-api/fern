@@ -21,6 +21,6 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
     }
 
     public getCoreAsIsFiles(): string[] {
-        return [AsIsFiles.ModelField, AsIsFiles.Model];
+        return [AsIsFiles.ModelField, AsIsFiles.Model, AsIsFiles.Array];
     }
 }
