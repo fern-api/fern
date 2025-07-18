@@ -1,0 +1,19 @@
+{
+  "ignores": [
+    "@types/node",
+    "@fern-api/configs",
+    "@trivago/prettier-plugin-sort-imports",
+    "eslint",
+    "prettier",
+    "typescript",
+    "vitest",
+    "depcheck",
+    "@yarnpkg/esbuild-plugin-pnp",
+    "esbuild",
+    "tsup"
+  ],
+  "ignore-patterns": [
+    "lib",
+    "dist"
+  ]
+} 

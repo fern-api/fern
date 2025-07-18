@@ -1,0 +1,8 @@
+use crate::client::ExhaustiveClient;
+use crate::error::Error;
+
+impl ExhaustiveClient {
+    // InlinedRequests methods
+    
+    // TODO: Generate actual service methods based on endpoints
+}

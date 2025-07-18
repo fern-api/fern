@@ -1,0 +1,49 @@
+irVersion: v58
+displayName: Rust SDK
+image: fernapi/fern-rust-sdk
+changelogLocation: ../../generators/rust/sdk/versions.yml
+
+buildScripts:
+  compileScript:
+    commands:
+      - cargo build --all-features
+  testScript:
+    commands:
+      - cargo test
+
+publish:
+  workingDirectory: generators/rust
+  preBuildCommands:
+    - pnpm --filter @fern-api/rust-sdk dist:cli
+  docker:
+    file: ./generators/rust/sdk/Dockerfile
+    image: fernapi/fern-rust-sdk
+    context: .
+
+test:
+  docker:
+    image: fernapi/fern-rust-sdk:latest
+    command: pnpm --filter @fern-api/rust-sdk dist:cli && docker build -f ./generators/rust/sdk/Dockerfile -t fernapi/fern-rust-sdk:latest .
+  local:
+    workingDirectory: generators/rust
+    buildCommand:
+      - pnpm --filter @fern-api/rust-sdk dist:cli
+    runCommand: node ./sdk/dist/cli.cjs
+
+language: rust
+generatorType: SDK
+defaultOutputMode: github
+
+customFixtureConfig:
+  customConfig:
+    packageName: test_sdk
+    packageVersion: "0.1.0"
+
+fixtures:
+  simple:
+    - customConfig: null
+      outputFolder: basic
+  imdb:
+    - customConfig:
+        clientName: ImdbClient
+      outputFolder: imdb 
