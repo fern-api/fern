@@ -189,7 +189,7 @@ public class PaginationPathUtils {
                                     "$T $L = ",
                                     ParameterizedTypeName.get(ClassName.get(Optional.class), enrichedGetter.typeName()),
                                     enrichedGetter.propertyName())
-                            .add("$L.map($L -> ", enrichedGetter.getter(), enrichedGetter.propertyName() + "_")
+                            .add("$L.map(($T $L) -> ", enrichedGetter.getter(), enrichedGetter.typeName(), enrichedGetter.propertyName() + "_")
                             .add(
                                     "$T.builder().from($L).$L($L).build()",
                                     enrichedGetter.typeName(),
@@ -219,10 +219,11 @@ public class PaginationPathUtils {
                                                 ClassName.get(Optional.class), enrichedGetter.typeName()),
                                         enrichedGetter.propertyName())
                                 .add(
-                                        "$L.flatMap($L -> ",
+                                        "$L.flatMap(($T $L) -> ",
                                         enrichedGetter.previous().get().propertyName(),
+                                        enrichedGetter.previous().get().typeName(),
                                         enrichedGetter.previous().get().propertyName() + "_")
-                                .add("$L.map($L -> ", enrichedGetter.getter(), enrichedGetter.propertyName() + "_")
+                                .add("$L.map(($T $L) -> ", enrichedGetter.getter(), enrichedGetter.typeName(), enrichedGetter.propertyName() + "_")
                                 .add(
                                         "$T.builder().from($L).$L($L).build()",
                                         enrichedGetter.typeName(),
@@ -236,8 +237,9 @@ public class PaginationPathUtils {
                         builder.setter(CodeBlock.builder()
                                 .add("$T $L = ", enrichedGetter.typeName(), enrichedGetter.propertyName())
                                 .add(
-                                        "$L.map($L -> ",
+                                        "$L.map(($T $L) -> ",
                                         enrichedGetter.previous().get().propertyName(),
+                                        enrichedGetter.previous().get().typeName(),
                                         enrichedGetter.previous().get().propertyName() + "_")
                                 .add(
                                         "$T.builder().from($L).$L($L).build()",
@@ -256,7 +258,7 @@ public class PaginationPathUtils {
                                         ParameterizedTypeName.get(
                                                 ClassName.get(Optional.class), enrichedGetter.typeName()),
                                         enrichedGetter.propertyName())
-                                .add("$L.map($L -> ", enrichedGetter.getter(), enrichedGetter.propertyName() + "_")
+                                .add("$L.map(($T $L) -> ", enrichedGetter.getter(), enrichedGetter.typeName(), enrichedGetter.propertyName() + "_")
                                 .add(
                                         "$T.builder().from($L).$L($L).build()",
                                         enrichedGetter.typeName(),
