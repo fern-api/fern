@@ -2488,10 +2488,6 @@ importers:
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
 
   generators/rust/model:
-    dependencies:
-      encoding:
-        specifier: ^0.1.13
-        version: 0.1.13
     devDependencies:
       '@fern-api/base-generator':
         specifier: workspace:*
@@ -2549,10 +2545,6 @@ importers:
         version: 3.25.76
 
   generators/rust/sdk:
-    dependencies:
-      encoding:
-        specifier: ^0.1.13
-        version: 0.1.13
     devDependencies:
       '@fern-api/base-generator':
         specifier: workspace:*
@@ -21760,6 +21752,7 @@ snapshots:
   encoding@0.1.13:
     dependencies:
       iconv-lite: 0.6.3
+    optional: true
 
   end-of-stream@1.4.5:
     dependencies:

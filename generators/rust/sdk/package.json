@@ -28,9 +28,7 @@
     "publish:cli": "pnpm dist:cli && cd dist && yarn npm publish",
     "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-rust-sdk:latest ../../.."
   },
-  "dependencies": {
-    "encoding": "^0.1.13"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@fern-api/base-generator": "workspace:*",
     "@fern-api/configs": "workspace:*",

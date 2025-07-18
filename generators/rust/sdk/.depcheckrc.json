@@ -11,5 +11,9 @@
     "@yarnpkg/esbuild-plugin-pnp",
     "esbuild",
     "tsup"
+  ],
+  "ignore-patterns": [
+    "lib",
+    "dist"
   ]
 } 
