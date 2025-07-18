@@ -1,3 +1,11 @@
+- version: 2.38.5
+  changelogEntry:
+    - summary: |
+        Remove internal OkHttp utility dependency and use a more robust file closing method. 
+      type: chore
+  createdAt: '2025-07-18'
+  irVersion: 58
+
 - version: 2.38.4
   changelogEntry:
     - summary: |
