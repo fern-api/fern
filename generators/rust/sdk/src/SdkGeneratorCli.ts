@@ -65,7 +65,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
         // Generate services
         for (const [serviceId, service] of Object.entries(context.ir.services)) {
-            const serviceName = service.name.fernFilepath.allParts.join("_").toLowerCase();
+            const serviceName = service.name.fernFilepath.allParts.map((part: any) => part.snakeCase.safeName).join("_");
             const serviceContent = this.generateServiceRs(context, service);
             context.project.addSourceFile(RelativeFilePath.of(`src/${serviceName}.rs`), serviceContent);
         }
@@ -85,7 +85,7 @@ pub mod error;`;
         }
         
         for (const service of services) {
-            const serviceName = service.name.fernFilepath.allParts.join("_").toLowerCase();
+            const serviceName = service.name.fernFilepath.allParts.map((part: any) => part.snakeCase.safeName).join("_");
             modules += `\npub mod ${serviceName};`;
         }
         
@@ -190,7 +190,7 @@ pub struct ${typeName} {
 
     private generateServiceRs(context: SdkGeneratorContext, service: any): string {
         const clientName = context.getClientName();
-        const serviceName = service.displayName || service.name.fernFilepath.allParts.join("_");
+        const serviceName = service.displayName || service.name.fernFilepath.allParts.map((part: any) => part.pascalCase.safeName).join(" ");
         
         return `use crate::client::${clientName};
 use crate::error::Error;
