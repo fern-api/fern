@@ -1,2 +1,2 @@
-public struct ExampleStruct: Codable, Sendable {
+public final class EndpointsClient: Sendable {
 }

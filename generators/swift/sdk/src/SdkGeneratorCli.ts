@@ -1,4 +1,5 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractSwiftGeneratorCli, SwiftFile } from "@fern-api/swift-base";
 import { generateModels } from "@fern-api/swift-model";
 
@@ -7,7 +8,7 @@ import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
-import { SubPackageClientGenerator } from "./subpackage-client";
+import { RootClientGenerator, SubClientGenerator } from "./generators";
 
 export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -57,19 +58,27 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     private generateProjectFiles(context: SdkGeneratorContext): SwiftFile[] {
         const files: SwiftFile[] = [];
 
-        // Resources
+        // Client.swift
+        const rootClientGenerator = new RootClientGenerator({
+            projectNamePascalCase: "Petstore", // TODO: Make dynamic
+            package_: context.ir.rootPackage,
+            context
+        });
+        files.push(rootClientGenerator.generate());
+
+        // Resources/**/*.swift
         Object.entries(context.ir.subpackages).forEach(([_, subpackage]) => {
             const service = subpackage.service != null ? context.getHttpServiceOrThrow(subpackage.service) : undefined;
-            const subClient = new SubPackageClientGenerator({
+            const subclientGenerator = new SubClientGenerator({
                 context,
                 subpackage,
                 serviceId: subpackage.service,
                 service
             });
-            files.push(subClient.generate());
+            files.push(subclientGenerator.generate());
         });
 
-        // Schemas
+        // Schemas/**/*.swift
         const modelFiles = generateModels({ context });
         files.push(...modelFiles);
 

@@ -1,4 +1,4 @@
-import { RelativeFilePath, join } from "@fern-api/fs-utils";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 
@@ -15,7 +15,7 @@ export declare namespace SubClientGenerator {
     }
 }
 
-export class SubPackageClientGenerator {
+export class SubClientGenerator {
     private readonly subpackage: Subpackage;
     private readonly context: SdkGeneratorContext;
     private readonly serviceId?: ServiceId;
@@ -29,22 +29,19 @@ export class SubPackageClientGenerator {
     }
 
     public generate(): SwiftFile {
-        const swiftStruct = swift.struct({
-            name: "ExampleStruct",
+        const swiftClass = swift.class_({
+            name: `${this.subpackage.name.pascalCase.safeName}Client`,
+            final: true,
             accessLevel: swift.AccessLevel.Public,
-            conformances: ["Codable", "Sendable"],
+            conformances: ["Sendable"],
             properties: []
         });
-        const fileContents = swiftStruct.toString();
+        const fileContents = swiftClass.toString();
         return new SwiftFile({
             filename: this.subpackage.name.pascalCase.safeName + ".swift",
             directory: RelativeFilePath.of("Resources"),
             fileContents
         });
-    }
-
-    private generateEndpoints(): swift.Method[] {
-        return [];
     }
 
     private getSubpackages(): Subpackage[] {

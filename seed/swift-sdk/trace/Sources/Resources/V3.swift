@@ -1,2 +1,2 @@
-public struct ExampleStruct: Codable, Sendable {
+public final class V3Client: Sendable {
 }

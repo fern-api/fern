@@ -1,2 +1,2 @@
-public struct ExampleStruct: Codable, Sendable {
+public final class PathParamClient: Sendable {
 }
