@@ -189,7 +189,11 @@ public class PaginationPathUtils {
                                     "$T $L = ",
                                     ParameterizedTypeName.get(ClassName.get(Optional.class), enrichedGetter.typeName()),
                                     enrichedGetter.propertyName())
-                            .add("$L.map(($T $L) -> ", enrichedGetter.getter(), enrichedGetter.typeName(), enrichedGetter.propertyName() + "_")
+                            .add(
+                                    "$L.map(($T $L) -> ",
+                                    enrichedGetter.getter(),
+                                    enrichedGetter.typeName(),
+                                    enrichedGetter.propertyName() + "_")
                             .add(
                                     "$T.builder().from($L).$L($L).build()",
                                     enrichedGetter.typeName(),
@@ -223,7 +227,11 @@ public class PaginationPathUtils {
                                         enrichedGetter.previous().get().propertyName(),
                                         enrichedGetter.previous().get().typeName(),
                                         enrichedGetter.previous().get().propertyName() + "_")
-                                .add("$L.map(($T $L) -> ", enrichedGetter.getter(), enrichedGetter.typeName(), enrichedGetter.propertyName() + "_")
+                                .add(
+                                        "$L.map(($T $L) -> ",
+                                        enrichedGetter.getter(),
+                                        enrichedGetter.typeName(),
+                                        enrichedGetter.propertyName() + "_")
                                 .add(
                                         "$T.builder().from($L).$L($L).build()",
                                         enrichedGetter.typeName(),
@@ -258,7 +266,11 @@ public class PaginationPathUtils {
                                         ParameterizedTypeName.get(
                                                 ClassName.get(Optional.class), enrichedGetter.typeName()),
                                         enrichedGetter.propertyName())
-                                .add("$L.map(($T $L) -> ", enrichedGetter.getter(), enrichedGetter.typeName(), enrichedGetter.propertyName() + "_")
+                                .add(
+                                        "$L.map(($T $L) -> ",
+                                        enrichedGetter.getter(),
+                                        enrichedGetter.typeName(),
+                                        enrichedGetter.propertyName() + "_")
                                 .add(
                                         "$T.builder().from($L).$L($L).build()",
                                         enrichedGetter.typeName(),

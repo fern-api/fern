@@ -1185,16 +1185,19 @@ public abstract class AbstractHttpResponseParserGenerator {
 
             // Extract the actual underlying type from Optional<> or Nullable<>
             com.fern.ir.model.types.TypeReference numberType;
-            if (pageIsOptional && pageType.getContainer().isPresent() && pageType.getContainer().get().isOptional()) {
+            if (pageIsOptional
+                    && pageType.getContainer().isPresent()
+                    && pageType.getContainer().get().isOptional()) {
                 numberType = pageType.getContainer().get().getOptional().get();
-                
-                if (numberType.getContainer().isPresent() && numberType.getContainer().get().isNullable()) {
+
+                if (numberType.getContainer().isPresent()
+                        && numberType.getContainer().get().isNullable()) {
                     numberType = numberType.getContainer().get().getNullable().get();
                 }
             } else {
                 numberType = pageType;
             }
-            
+
             TypeName numberTypeName =
                     clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, numberType);
 
@@ -1205,18 +1208,18 @@ public abstract class AbstractHttpResponseParserGenerator {
 
             if (pageIsOptional) {
                 String zero = one.equals(DECIMAL_ONE) ? "0.0" : "0";
-                
+
                 TypeName lambdaParamType = numberTypeName;
                 if (numberTypeName.isPrimitive()) {
                     lambdaParamType = numberTypeName.box();
                 }
-                
+
                 httpResponseBuilder.addStatement(CodeBlock.of(
                         "$T $L = $L.map(($T page) -> page + $L).orElse($L)",
                         numberTypeName,
                         variables.getNewPageNumberVariableName(),
                         newNumberGetter,
-                        lambdaParamType,  // Use boxed type for lambda parameter
+                        lambdaParamType, // Use boxed type for lambda parameter
                         one,
                         one));
             } else {
