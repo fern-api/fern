@@ -4,8 +4,7 @@ import { ruby } from "@fern-api/ruby-ast";
 import { NameAndWireValue, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
-
-
+import { generateFields } from "../generateFields";
 
 export interface GeneratorContextLike {
     customConfig: unknown;
@@ -27,18 +26,27 @@ export class ObjectGenerator extends FileGenerator<RubyFile, ModelCustomConfigSc
     }
 
     public doGenerate(): RubyFile {
+        // Extract properties from the object declaration
+        const properties = this.objectDeclaration.properties || [];
+        
+        // Generate field declarations using the helper function
+        const statements = generateFields({
+            properties,
+            context: this.context
+        });
+
         return new RubyFile({
             node: ruby.class_({
                 name: this.typeDeclaration.name.name.pascalCase.safeName,
                 docstring: this.typeDeclaration.docs ?? undefined,
+                statements: statements
             }),
             directory: this.getFilepath(),
-            filename: `${this.typeDeclaration.name.name.pascalCase.safeName}.rb`,
+            filename: `${this.typeDeclaration.name.name.snakeCase.safeName}.rb`,
             customConfig: this.context.customConfig
         });
     }
 }
-
 // export class ObjectGenerator {
 //     private readonly context: GeneratorContextLike;
 //     private readonly typeDeclaration: TypeDeclaration;
@@ -87,3 +95,4 @@ export class ObjectGenerator extends FileGenerator<RubyFile, ModelCustomConfigSc
 //     private getPropertyName(propName: NameAndWireValue["name"]): string {
 //         return propName.snakeCase.safeName;
 //     }
+

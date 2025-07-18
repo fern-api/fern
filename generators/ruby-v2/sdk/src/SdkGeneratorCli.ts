@@ -54,7 +54,6 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
             context.project.addRawFiles(file);
         }
 
-
         await context.project.persist();
     }
 }
