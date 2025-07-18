@@ -11,7 +11,6 @@ export namespace UnionSchemaNamingUtils {
      */
     export function generateDisplayNameForInlinedObject(
         subSchema: OpenAPIV3_1.SchemaObject & { typeName?: string },
-        index: number,
         allVariants: OpenAPIV3_1.SchemaObject[]
     ): string | undefined {
         // Try title first

@@ -262,8 +262,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
 
             const schemaId = this.context.convertBreadcrumbsToName([`${this.id}_${index}`]);
             const displayName = UnionSchemaNamingUtils.generateDisplayNameForInlinedObject(
-                subSchema,
-                index,
+                { ...subSchema, typeName: schemaId },
                 allInlinedSchemas
             );
             const schemaConverter = new SchemaConverter({

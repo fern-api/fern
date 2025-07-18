@@ -3628,7 +3628,7 @@
           }
         ]
       },
-      "displayName": "OurPublicModelsAll"
+      "displayName": "V1ListenPostParametersModel0"
     },
     "V1ListenPostParametersModel": {
       "name": "V1ListenPostParametersModel",
@@ -3642,7 +3642,7 @@
               "type": "id",
               "value": "V1ListenPostParametersModel0"
             },
-            "displayName": "OurPublicModelsAll"
+            "displayName": "V1ListenPostParametersModel0"
           },
           {
             "description": "Custom string if you've had a model trained by Deepgram",
@@ -3684,7 +3684,8 @@
             "value": "V1ListenPostParametersRedactSchemaOneOf1Items"
           }
         }
-      }
+      },
+      "displayName": "V1ListenPostParametersRedact1"
     },
     "V1ListenPostParametersRedact": {
       "name": "V1ListenPostParametersRedact",
@@ -3704,7 +3705,8 @@
             "type": {
               "type": "id",
               "value": "V1ListenPostParametersRedact1"
-            }
+            },
+            "displayName": "V1ListenPostParametersRedact1"
           }
         ]
       }
@@ -3840,7 +3842,7 @@
           }
         ]
       },
-      "displayName": "UseModelLatestVersion"
+      "displayName": "V1ListenPostParametersVersion0"
     },
     "V1ListenPostParametersVersion": {
       "name": "V1ListenPostParametersVersion",
@@ -3854,7 +3856,7 @@
               "type": "id",
               "value": "V1ListenPostParametersVersion0"
             },
-            "displayName": "UseModelLatestVersion"
+            "displayName": "V1ListenPostParametersVersion0"
           },
           {
             "description": "Use a previous version of a model",
@@ -9960,7 +9962,7 @@
           }
         ]
       },
-      "displayName": "FormattedOutput"
+      "displayName": "ManagementApiGetModelResponse2000"
     },
     "V1ModelsModelIdGetResponsesContentApplicationJsonSchemaOneOf1Metadata": {
       "name": "V1ModelsModelIdGetResponsesContentApplicationJsonSchemaOneOf1Metadata",
@@ -10130,7 +10132,7 @@
           }
         ]
       },
-      "displayName": "Metadata"
+      "displayName": "ManagementApiGetModelResponse2001"
     },
     "Management API_getModel_Response_200": {
       "name": "Management API_getModel_Response_200",
@@ -10143,7 +10145,7 @@
               "type": "id",
               "value": "ManagementApiGetModelResponse2000"
             },
-            "displayName": "FormattedOutput"
+            "displayName": "ManagementApiGetModelResponse2000"
           },
           {
             "typeName": "ManagementApiGetModelResponse2001",
@@ -10151,7 +10153,7 @@
               "type": "id",
               "value": "ManagementApiGetModelResponse2001"
             },
-            "displayName": "Metadata"
+            "displayName": "ManagementApiGetModelResponse2001"
           }
         ]
       }
@@ -11470,7 +11472,7 @@
           }
         ]
       },
-      "displayName": "Type"
+      "displayName": "ListenControlMessagesRequest0"
     },
     "ChannelsListenMessagesControlMessagesRequestOneOf1Type": {
       "description": "Close the websocket connection",
@@ -11503,7 +11505,7 @@
           }
         ]
       },
-      "displayName": "Type"
+      "displayName": "ListenControlMessagesRequest1"
     },
     "ChannelsListenMessagesControlMessagesRequestOneOf2Type": {
       "description": "Used to keep the websocket connection alive",
@@ -11536,7 +11538,7 @@
           }
         ]
       },
-      "displayName": "Type"
+      "displayName": "ListenControlMessagesRequest2"
     },
     "listen_controlMessagesRequest": {
       "name": "listen_controlMessagesRequest",
@@ -11549,7 +11551,7 @@
               "type": "id",
               "value": "ListenControlMessagesRequest0"
             },
-            "displayName": "Type"
+            "displayName": "ListenControlMessagesRequest0"
           },
           {
             "typeName": "ListenControlMessagesRequest1",
@@ -11557,7 +11559,7 @@
               "type": "id",
               "value": "ListenControlMessagesRequest1"
             },
-            "displayName": "Type"
+            "displayName": "ListenControlMessagesRequest1"
           },
           {
             "typeName": "ListenControlMessagesRequest2",
@@ -11565,7 +11567,7 @@
               "type": "id",
               "value": "ListenControlMessagesRequest2"
             },
-            "displayName": "Type"
+            "displayName": "ListenControlMessagesRequest2"
           }
         ]
       }
