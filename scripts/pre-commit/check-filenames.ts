@@ -14,18 +14,18 @@ function checkFilenames(): void {
         });
 
         if (invalidFiles.length > 0) {
-            console.error("❌ Invalid filenames found:");
+            process.stderr.write("❌ Invalid filenames found:");
             invalidFiles.forEach((file: string) => {
-                console.error(`  - ${file}`);
+                process.stderr.write(`  - ${file}`);
             });
-            console.error('\nFilenames cannot contain: < > : " | ? * or control characters');
-            console.error("Reserved names: CON, PRN, AUX, NUL, COM1-9, LPT1-9");
+            process.stderr.write('\nFilenames cannot contain: < > : " | ? * or control characters');
+            process.stderr.write("Reserved names: CON, PRN, AUX, NUL, COM1-9, LPT1-9");
             process.exit(1);
         }
 
-        console.log("✅ All filenames are valid for cross-platform compatibility");
+        process.stdout.write("✅ All filenames are valid for cross-platform compatibility");
     } catch (error) {
-        console.error("Error checking filenames:", (error as Error).message);
+        process.stderr.write("Error checking filenames:", (error as Error).message);
         process.exit(1);
     }
 }

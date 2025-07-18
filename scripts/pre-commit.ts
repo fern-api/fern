@@ -12,44 +12,44 @@ function runPreCommitScripts(): void {
             .sort(); // Sort for consistent execution order
 
         if (files.length === 0) {
-            console.log("ℹ️  No pre-commit scripts found in scripts/pre-commit/");
+            process.stdout.write("ℹ️  No pre-commit scripts found in scripts/pre-commit/");
             return;
         }
 
-        console.log(`🚀 Running ${files.length} pre-commit script(s)...\n`);
+        process.stdout.write(`🚀 Running ${files.length} pre-commit script(s)...\n`);
 
         let successCount = 0;
         let failureCount = 0;
 
         for (const file of files) {
             const scriptPath = join(preCommitDir, file);
-            console.log(`📋 Running: ${file}`);
+            process.stdout.write(`📋 Running: ${file}`);
 
             try {
                 execSync(`npx tsx ${scriptPath}`, {
                     stdio: "inherit",
                     cwd: process.cwd()
                 });
-                console.log(`✅ ${file} completed successfully\n`);
+                process.stdout.write(`✅ ${file} completed successfully\n`);
                 successCount++;
             } catch (error) {
-                console.log(`❌ ${file} failed\n`);
+                process.stdout.write(`❌ ${file} failed\n`);
                 failureCount++;
             }
         }
 
-        console.log(`📊 Pre-commit summary:`);
-        console.log(`   ✅ Successful: ${successCount}/${files.length}`);
+        process.stdout.write(`📊 Pre-commit summary:`);
+        process.stdout.write(`   ✅ Successful: ${successCount}/${files.length}`);
 
         if (failureCount > 0) {
-            console.error(`\n💥 Pre-commit failed with ${failureCount} error(s)`);
+            process.stderr.write(`\n💥 Pre-commit failed with ${failureCount} error(s)`);
             process.exit(1);
         }
 
-        console.log(`\n🎉 All pre-commit scripts passed successfully!`);
+        process.stdout.write(`\n🎉 All pre-commit scripts passed successfully!`);
         process.exit(0);
     } catch (error) {
-        console.error("Error running pre-commit scripts:", (error as Error).message);
+        process.stderr.write("Error running pre-commit scripts:", (error as Error).message);
         process.exit(1);
     }
 }
