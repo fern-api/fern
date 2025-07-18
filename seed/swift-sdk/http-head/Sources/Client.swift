@@ -1,2 +1,2 @@
-public final class PetstoreClient: Sendable {
+public final class HttpHeadClient: Sendable {
 }

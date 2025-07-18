@@ -60,7 +60,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
 
         // Client.swift
         const rootClientGenerator = new RootClientGenerator({
-            projectNamePascalCase: "Petstore", // TODO: Make dynamic
+            projectNamePascalCase: context.ir.apiName.pascalCase.unsafeName,
             package_: context.ir.rootPackage,
             context
         });
