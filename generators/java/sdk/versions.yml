@@ -1,3 +1,11 @@
+- version: 2.38.6
+  changelogEntry:
+    - summary: |
+        Exclude legacy-sdk test from the build process.
+      type: chore
+  createdAt: '2025-07-19'
+  irVersion: 58
+
 - version: 2.38.5
   changelogEntry:
     - summary: |

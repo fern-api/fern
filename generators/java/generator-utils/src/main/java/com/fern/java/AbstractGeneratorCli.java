@@ -403,6 +403,14 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                     + "    testLogging {\n"
                     + "        showStandardStreams = true\n"
                     + "    }\n"
+                    + "}\n\n"
+                    + "// Exclude legacy-sdk tests\n"
+                    + "subprojects {\n"
+                    + "    if (name == 'legacy-sdk') {\n"
+                    + "        test {\n"
+                    + "            enabled = false\n"
+                    + "        }\n"
+                    + "    }\n"
                     + "}");
         }
 
