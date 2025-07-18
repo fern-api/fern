@@ -13,7 +13,7 @@ import { loggingExeca } from "@fern-api/logging-execa";
 
 const ETAG_FILENAME = "etag";
 const PREVIEW_FOLDER_NAME = "preview";
-const APP_PREVIEW_FOLDER_NAME = "app-preview-fernlocal-3";
+const APP_PREVIEW_FOLDER_NAME = "app-preview-fernlocal-4";
 const BUNDLE_FOLDER_NAME = "bundle";
 const NEXT_BUNDLE_FOLDER_NAME = ".next";
 const STANDALONE_FOLDER_NAME = "standalone";
@@ -246,45 +246,45 @@ export async function downloadBundle({
                 };
             }
 
-            if (process.platform === "win32") {
-                const absPathToStandalone = getPathToStandaloneFolder({ app });
-                const absPathToInstrumentationJs = getPathToInstrumentationJs({ app });
-                // Add workspace config files
-                const fs = await import('fs/promises');
-                const pathModule = require('path');
-                const pnpmWorkspacePath = pathModule.join(absPathToStandalone, 'pnpm-workspace.yaml');
-                const pnpmfilePath = pathModule.join(absPathToStandalone, '.pnpmfile.cjs');
-                const npmrcPath = pathModule.join(absPathToStandalone, '.npmrc');
+            // if (process.platform === "win32") {
+            const absPathToStandalone = getPathToStandaloneFolder({ app });
+            const absPathToInstrumentationJs = getPathToInstrumentationJs({ app });
+            // Add workspace config files
+            const fs = await import('fs/promises');
+            const pathModule = require('path');
+            const pnpmWorkspacePath = pathModule.join(absPathToStandalone, 'pnpm-workspace.yaml');
+            const pnpmfilePath = pathModule.join(absPathToStandalone, '.pnpmfile.cjs');
+            const npmrcPath = pathModule.join(absPathToStandalone, '.npmrc');
 
-                if (!(await doesPathExist(pnpmWorkspacePath))) {
-                    await fs.writeFile(
-                        pnpmWorkspacePath,
-                        `packages:\n  - \"packages/**\"\n  - \"!**/dist\"\n`
-                    );
-                }
-                if (!(await doesPathExist(pnpmfilePath))) {
-                    await fs.writeFile(
-                        pnpmfilePath,
-                        `module.exports = {\n    hooks: {\n        readPackage(pkg) {\n            // Remove all workspace:* dependencies\n            if (pkg.dependencies) {\n                Object.keys(pkg.dependencies).forEach(dep => {\n                    if (pkg.dependencies[dep] === 'workspace:*') {\n                        delete pkg.dependencies[dep]; } });\n                    }\n            if (pkg.devDependencies) {\n                Object.keys(pkg.devDependencies).forEach(dep => {\n                    if (pkg.devDependencies[dep] === 'workspace:*') {\n                        delete pkg.devDependencies[dep]; } });\n            } return pkg;\n        }\n    }\n};\n`
-                    );
-                }
-                if (!(await doesPathExist(npmrcPath))) {
-                    await fs.writeFile(
-                        npmrcPath,
-                        `@fern-fern:registry=https://npm.buildwithfern.com\n`
-                    );
-                }
-                if (await doesPathExist(absPathToInstrumentationJs)) {
-                    await fs.unlink(absPathToInstrumentationJs);
-                }
-
-                // pnpm install within standalone
-                logger.debug("Resolve esbuild imports");
-                await loggingExeca(logger, "pnpm", ["install"], {
-                    cwd: absPathToStandalone,
-                    doNotPipeOutput: false
-                });
+            if (!(await doesPathExist(pnpmWorkspacePath))) {
+                await fs.writeFile(
+                    pnpmWorkspacePath,
+                    `packages:\n  - \"packages/**\"\n  - \"!**/dist\"\n`
+                );
             }
+            if (!(await doesPathExist(pnpmfilePath))) {
+                await fs.writeFile(
+                    pnpmfilePath,
+                    `module.exports = {\n    hooks: {\n        readPackage(pkg) {\n            // Remove all workspace:* dependencies\n            if (pkg.dependencies) {\n                Object.keys(pkg.dependencies).forEach(dep => {\n                    if (pkg.dependencies[dep] === 'workspace:*') {\n                        delete pkg.dependencies[dep]; } });\n                    }\n            if (pkg.devDependencies) {\n                Object.keys(pkg.devDependencies).forEach(dep => {\n                    if (pkg.devDependencies[dep] === 'workspace:*') {\n                        delete pkg.devDependencies[dep]; } });\n            } return pkg;\n        }\n    }\n};\n`
+                );
+            }
+            if (!(await doesPathExist(npmrcPath))) {
+                await fs.writeFile(
+                    npmrcPath,
+                    `@fern-fern:registry=https://npm.buildwithfern.com\n`
+                );
+            }
+            if (await doesPathExist(absPathToInstrumentationJs)) {
+                await fs.unlink(absPathToInstrumentationJs);
+            }
+
+            // pnpm install within standalone
+            logger.debug("Resolve esbuild imports");
+            await loggingExeca(logger, "pnpm", ["install"], {
+                cwd: absPathToStandalone,
+                doNotPipeOutput: false
+            });
+            // }
         }
 
         return {
