@@ -314,3 +314,45 @@ service:
           offset:
             type: optional<integer>
       response: UsernameContainer
+
+    listWithOptionalNullableDouble:
+      docs: Test pagination with nullable double parameter wrapped in optional
+      pagination:
+        offset: $request.page
+        results: $response.data
+      method: GET
+      path: "/nullable-double"
+      request:
+        name: ListUsersOptionalNullableDoubleRequest
+        query-parameters:
+          page:
+            type: optional<nullable<double>>
+            docs: Page number with double type that can be null or absent
+            default: 0.0
+          per_page:
+            type: optional<integer>
+            docs: Defaults to per page
+          order:
+            type: optional<Order>
+      response: ListUsersPaginationResponse
+
+    listWithOptionalNullableInteger:
+      docs: Test pagination with nullable integer parameter wrapped in optional
+      pagination:
+        offset: $request.page
+        results: $response.data
+      method: GET
+      path: "/nullable-integer"
+      request:
+        name: ListUsersOptionalNullableIntegerRequest
+        query-parameters:
+          page:
+            type: optional<nullable<integer>>
+            docs: Page number with integer type that can be null or absent
+            default: 0
+          per_page:
+            type: optional<integer>
+            docs: Defaults to per page
+          order:
+            type: optional<Order>
+      response: ListUsersPaginationResponse
