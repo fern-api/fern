@@ -1,7 +1,6 @@
-import { escapeSwiftStringLiteral } from "../utils/escapeSwiftStringLiteral";
 import { AccessLevel } from "./AccessLevel";
 import { AstNode, Writer } from "./core";
-import { isReservedKeyword } from "./syntax";
+import { escapeSwiftStringLiteral, isReservedKeyword } from "./syntax";
 
 export declare namespace EnumWithRawValues {
     interface Case {
