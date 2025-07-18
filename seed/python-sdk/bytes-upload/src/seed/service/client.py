@@ -42,6 +42,15 @@ class ServiceClient:
         Returns
         -------
         None
+
+        Examples
+        --------
+        from seed import SeedBytesUpload
+
+        client = SeedBytesUpload(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.upload()
         """
         _response = self._raw_client.upload(request=request, request_options=request_options)
         return _response.data
@@ -79,6 +88,23 @@ class AsyncServiceClient:
         Returns
         -------
         None
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedBytesUpload
+
+        client = AsyncSeedBytesUpload(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.service.upload()
+
+
+        asyncio.run(main())
         """
         _response = await self._raw_client.upload(request=request, request_options=request_options)
         return _response.data
