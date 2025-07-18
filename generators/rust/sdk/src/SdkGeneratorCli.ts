@@ -87,7 +87,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         // Generate services
         for (const [serviceId, service] of Object.entries(context.ir.services)) {
             const serviceName = service.name.fernFilepath.allParts
-                .map((part: any) => part.snakeCase.safeName)
+                .map((part: { snakeCase: { safeName: string } }) => part.snakeCase.safeName)
                 .join("_");
             const serviceContent = this.generateServiceRs(context, service);
             const serviceFile = new RustFile({
@@ -106,16 +106,15 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         const hasTypes = Object.keys(context.ir.types).length > 0;
         const services = Object.values(context.ir.services);
 
-        let modules = `pub mod client;
-pub mod error;`;
+        let modules = "pub mod client;\npub mod error;";
 
         if (hasTypes) {
-            modules += `\npub mod types;`;
+            modules += "\npub mod types;";
         }
 
         for (const service of services) {
             const serviceName = service.name.fernFilepath.allParts
-                .map((part: any) => part.snakeCase.safeName)
+                .map((part: { snakeCase: { safeName: string } }) => part.snakeCase.safeName)
                 .join("_");
             modules += `\npub mod ${serviceName};`;
         }
@@ -203,7 +202,7 @@ pub enum ${typeName} {
                 for (const value of type.shape.values) {
                     content += `    ${value.name.name.pascalCase.safeName},\n`;
                 }
-                content += `}\n\n`;
+                content += "}\n\n";
             } else if (type.shape.type === "object") {
                 content += `#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ${typeName} {
@@ -212,18 +211,26 @@ pub struct ${typeName} {
                     const fieldName = property.name.name.snakeCase.safeName;
                     content += `    pub ${fieldName}: String, // TODO: Implement proper type\n`;
                 }
-                content += `}\n\n`;
+                content += "}\n\n";
             }
         }
 
         return content;
     }
 
-    private generateServiceRs(context: SdkGeneratorContext, service: any): string {
+    private generateServiceRs(
+        context: SdkGeneratorContext,
+        service: {
+            displayName?: string;
+            name: { fernFilepath: { allParts: Array<{ pascalCase: { safeName: string } }> } };
+        }
+    ): string {
         const clientName = context.getClientName();
         const serviceName =
             service.displayName ||
-            service.name.fernFilepath.allParts.map((part: any) => part.pascalCase.safeName).join(" ");
+            service.name.fernFilepath.allParts
+                .map((part: { pascalCase: { safeName: string } }) => part.pascalCase.safeName)
+                .join(" ");
 
         return `use crate::client::${clientName};
 use crate::error::Error;

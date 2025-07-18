@@ -82,12 +82,12 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
             ...this.context.customConfig.extraDevDependencies
         };
 
-        let cargo = `[package]\n`;
+        let cargo = "[package]\n";
         cargo += `name = "${this.packageName}"\n`;
         cargo += `version = "${this.packageVersion}"\n`;
-        cargo += `edition = "2021"\n\n`;
+        cargo += 'edition = "2021"\n\n';
 
-        cargo += `[dependencies]\n`;
+        cargo += "[dependencies]\n";
         for (const [name, config] of Object.entries(dependencies)) {
             if (typeof config === "string") {
                 cargo += `${name} = "${config}"\n`;
@@ -97,7 +97,7 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
         }
 
         if (Object.keys(devDependencies).length > 0) {
-            cargo += `\n[dev-dependencies]\n`;
+            cargo += "\n[dev-dependencies]\n";
             for (const [name, version] of Object.entries(devDependencies)) {
                 cargo += `${name} = "${version}"\n`;
             }
@@ -106,7 +106,7 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
         return cargo + "\n";
     }
 
-    private objectToToml(obj: any): string {
+    private objectToToml(obj: unknown): string {
         if (typeof obj === "string") {
             return `"${obj}"`;
         }

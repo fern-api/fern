@@ -4,7 +4,7 @@ import { Writer } from "@fern-api/rust-ast";
 import { AbstractRustGeneratorCli, RustFile } from "@fern-api/rust-base";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { IntermediateRepresentation, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
@@ -81,7 +81,9 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
     }
 
     private generateModels(context: ModelGeneratorContext): RustFile[] {
-        if (!context.ir.types) return [];
+        if (!context.ir.types) {
+            return [];
+        }
 
         return Object.entries(context.ir.types).map(([typeId, typeDeclaration]) => {
             const moduleName = this.getTypeModuleName(typeId);
@@ -94,15 +96,19 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
         });
     }
 
-    private generateTypeDeclaration(context: ModelGeneratorContext, typeDeclaration: any): string {
+    private generateTypeDeclaration(context: ModelGeneratorContext, typeDeclaration: TypeDeclaration): string {
         const writer = new Writer();
 
         // Add derives
-        const derives = ["Serialize test", "Deserialize"];
-        if (context.customConfig.deriveDebug) derives.push("Debug");
-        if (context.customConfig.deriveClone) derives.push("Clone");
+        const derives = ["Serialize", "Deserialize"];
+        if (context.customConfig.deriveDebug) {
+            derives.push("Debug");
+        }
+        if (context.customConfig.deriveClone) {
+            derives.push("Clone");
+        }
 
-        writer.writeLine(`use serde::{Serialize, Deserialize};`);
+        writer.writeLine("use serde::{Serialize, Deserialize};");
         writer.newLine();
         writer.writeLine(`#[derive(${derives.join(", ")})]`);
 

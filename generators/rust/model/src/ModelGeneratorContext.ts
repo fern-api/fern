@@ -7,12 +7,5 @@ import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
 
 export class ModelGeneratorContext extends AbstractRustGeneratorContext<ModelCustomConfigSchema> {
-    constructor(
-        ir: IntermediateRepresentation,
-        generatorConfig: FernGeneratorExec.GeneratorConfig,
-        customConfig: ModelCustomConfigSchema,
-        generatorNotificationService: GeneratorNotificationService
-    ) {
-        super(ir, generatorConfig, customConfig, generatorNotificationService);
-    }
+    // Constructor removed as it was useless - just called super with same parameters
 }
