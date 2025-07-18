@@ -47,6 +47,7 @@ function runPreCommitScripts(): void {
     }
     
     console.log(`\n🎉 All pre-commit scripts passed successfully!`);
+    process.exit(0);
     
   } catch (error) {
     console.error('Error running pre-commit scripts:', (error as Error).message);
