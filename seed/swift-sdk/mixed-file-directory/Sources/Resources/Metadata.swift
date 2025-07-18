@@ -4,4 +4,7 @@ public final class MetadataClient: Sendable {
     public init(config: ClientConfig) {
         self.httpClient = HTTPClient(config: config)
     }
+
+    public func getMetadata(requestOptions: RequestOptions? = nil) throws -> Metadata {
+    }
 }

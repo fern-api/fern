@@ -4,4 +4,7 @@ public final class UsersClient: Sendable {
     public init(config: ClientConfig) {
         self.httpClient = HTTPClient(config: config)
     }
+
+    public func listUsernamesCustom(requestOptions: RequestOptions? = nil) throws -> UsernameCursor {
+    }
 }

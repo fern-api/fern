@@ -4,4 +4,10 @@ public final class HomepageClient: Sendable {
     public init(config: ClientConfig) {
         self.httpClient = HTTPClient(config: config)
     }
+
+    public func getHomepageProblems(requestOptions: RequestOptions? = nil) throws -> [ProblemId] {
+    }
+
+    public func setHomepageProblems(requestOptions: RequestOptions? = nil) throws -> Any {
+    }
 }

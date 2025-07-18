@@ -4,4 +4,6 @@ public final class UnionClient: Sendable {
     public init(config: ClientConfig) {
         self.httpClient = HTTPClient(config: config)
     }
+}    public func getAndReturnUnion(requestOptions: RequestOptions? = nil) throws -> Animal {
+    }
 }

@@ -4,4 +4,7 @@ public final class OptionalClient: Sendable {
     public init(config: ClientConfig) {
         self.httpClient = HTTPClient(config: config)
     }
+
+    public func sendOptionalBody(requestOptions: RequestOptions? = nil) throws -> String {
+    }
 }

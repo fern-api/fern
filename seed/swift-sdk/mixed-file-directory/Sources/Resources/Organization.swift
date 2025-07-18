@@ -4,4 +4,7 @@ public final class OrganizationClient: Sendable {
     public init(config: ClientConfig) {
         self.httpClient = HTTPClient(config: config)
     }
+
+    public func create(requestOptions: RequestOptions? = nil) throws -> Organization {
+    }
 }

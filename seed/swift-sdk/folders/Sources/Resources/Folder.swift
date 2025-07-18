@@ -4,4 +4,7 @@ public final class FolderClient: Sendable {
     public init(config: ClientConfig) {
         self.httpClient = HTTPClient(config: config)
     }
+
+    public func foo(requestOptions: RequestOptions? = nil) throws -> Any {
+    }
 }

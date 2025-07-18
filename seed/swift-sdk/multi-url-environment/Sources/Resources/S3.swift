@@ -4,4 +4,7 @@ public final class S3Client: Sendable {
     public init(config: ClientConfig) {
         self.httpClient = HTTPClient(config: config)
     }
+
+    public func getPresignedUrl(requestOptions: RequestOptions? = nil) throws -> String {
+    }
 }

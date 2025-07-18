@@ -4,4 +4,7 @@ public final class AuthClient: Sendable {
     public init(config: ClientConfig) {
         self.httpClient = HTTPClient(config: config)
     }
+
+    public func getToken(requestOptions: RequestOptions? = nil) throws -> TokenResponse {
+    }
 }

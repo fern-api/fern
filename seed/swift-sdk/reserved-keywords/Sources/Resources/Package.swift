@@ -4,4 +4,7 @@ public final class PackageClient: Sendable {
     public init(config: ClientConfig) {
         self.httpClient = HTTPClient(config: config)
     }
+
+    public func test(requestOptions: RequestOptions? = nil) throws -> Any {
+    }
 }

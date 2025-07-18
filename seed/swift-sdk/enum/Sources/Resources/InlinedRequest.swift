@@ -4,4 +4,7 @@ public final class InlinedRequestClient: Sendable {
     public init(config: ClientConfig) {
         self.httpClient = HTTPClient(config: config)
     }
+
+    public func send(requestOptions: RequestOptions? = nil) throws -> Any {
+    }
 }

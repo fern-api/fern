@@ -4,4 +4,7 @@ public final class CompletionsClient: Sendable {
     public init(config: ClientConfig) {
         self.httpClient = HTTPClient(config: config)
     }
+
+    public func stream(requestOptions: RequestOptions? = nil) throws -> Any {
+    }
 }

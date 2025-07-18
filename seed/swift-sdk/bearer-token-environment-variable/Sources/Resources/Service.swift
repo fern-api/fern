@@ -4,4 +4,7 @@ public final class ServiceClient: Sendable {
     public init(config: ClientConfig) {
         self.httpClient = HTTPClient(config: config)
     }
+
+    public func getWithBearerToken(requestOptions: RequestOptions? = nil) throws -> String {
+    }
 }

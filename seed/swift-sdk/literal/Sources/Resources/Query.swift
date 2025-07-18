@@ -4,4 +4,7 @@ public final class QueryClient: Sendable {
     public init(config: ClientConfig) {
         self.httpClient = HTTPClient(config: config)
     }
+
+    public func send(requestOptions: RequestOptions? = nil) throws -> SendResponse {
+    }
 }

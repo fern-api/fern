@@ -4,4 +4,7 @@ public final class UserClient: Sendable {
     public init(config: ClientConfig) {
         self.httpClient = HTTPClient(config: config)
     }
+
+    public func createUser(requestOptions: RequestOptions? = nil) throws -> User {
+    }
 }

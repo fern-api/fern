@@ -4,4 +4,10 @@ public final class ServiceClient: Sendable {
     public init(config: ClientConfig) {
         self.httpClient = HTTPClient(config: config)
     }
+
+    public func getWithApiKey(requestOptions: RequestOptions? = nil) throws -> String {
+    }
+
+    public func getWithHeader(requestOptions: RequestOptions? = nil) throws -> String {
+    }
 }

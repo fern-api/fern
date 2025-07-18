@@ -4,4 +4,10 @@ public final class ServiceClient: Sendable {
     public init(config: ClientConfig) {
         self.httpClient = HTTPClient(config: config)
     }
+
+    public func simple(requestOptions: RequestOptions? = nil) throws -> Any {
+    }
+
+    public func downloadFile(requestOptions: RequestOptions? = nil) throws -> Any {
+    }
 }

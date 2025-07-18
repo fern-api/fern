@@ -4,4 +4,10 @@ public final class ServiceClient: Sendable {
     public init(config: ClientConfig) {
         self.httpClient = HTTPClient(config: config)
     }
+
+    public func endpoint(requestOptions: RequestOptions? = nil) throws -> Any {
+    }
+
+    public func unknownRequest(requestOptions: RequestOptions? = nil) throws -> Any {
+    }
 }

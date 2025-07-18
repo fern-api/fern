@@ -4,4 +4,7 @@ public final class EventsClient: Sendable {
     public init(config: ClientConfig) {
         self.httpClient = HTTPClient(config: config)
     }
+
+    public func listEvents(requestOptions: RequestOptions? = nil) throws -> [Event] {
+    }
 }

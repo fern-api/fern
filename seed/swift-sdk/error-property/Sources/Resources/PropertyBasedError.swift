@@ -4,4 +4,7 @@ public final class PropertyBasedErrorClient: Sendable {
     public init(config: ClientConfig) {
         self.httpClient = HTTPClient(config: config)
     }
+
+    public func throwError(requestOptions: RequestOptions? = nil) throws -> String {
+    }
 }

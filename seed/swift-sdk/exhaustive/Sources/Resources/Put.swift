@@ -4,4 +4,7 @@ public final class PutClient: Sendable {
     public init(config: ClientConfig) {
         self.httpClient = HTTPClient(config: config)
     }
+
+    public func add(requestOptions: RequestOptions? = nil) throws -> PutResponse {
+    }
 }

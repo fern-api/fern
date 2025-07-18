@@ -4,4 +4,7 @@ public final class HeadersClient: Sendable {
     public init(config: ClientConfig) {
         self.httpClient = HTTPClient(config: config)
     }
+
+    public func send(requestOptions: RequestOptions? = nil) throws -> SendResponse {
+    }
 }

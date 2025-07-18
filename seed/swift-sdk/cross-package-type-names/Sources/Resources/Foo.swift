@@ -4,4 +4,7 @@ public final class FooClient: Sendable {
     public init(config: ClientConfig) {
         self.httpClient = HTTPClient(config: config)
     }
+
+    public func find(requestOptions: RequestOptions? = nil) throws -> ImportingType {
+    }
 }

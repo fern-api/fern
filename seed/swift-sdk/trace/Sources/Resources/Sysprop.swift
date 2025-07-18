@@ -4,4 +4,10 @@ public final class SyspropClient: Sendable {
     public init(config: ClientConfig) {
         self.httpClient = HTTPClient(config: config)
     }
+
+    public func setNumWarmInstances(requestOptions: RequestOptions? = nil) throws -> Any {
+    }
+
+    public func getNumWarmInstances(requestOptions: RequestOptions? = nil) throws -> Any {
+    }
 }

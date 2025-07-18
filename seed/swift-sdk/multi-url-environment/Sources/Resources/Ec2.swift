@@ -4,4 +4,7 @@ public final class Ec2Client: Sendable {
     public init(config: ClientConfig) {
         self.httpClient = HTTPClient(config: config)
     }
+
+    public func bootInstance(requestOptions: RequestOptions? = nil) throws -> Any {
+    }
 }
