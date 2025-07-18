@@ -1,5 +1,6 @@
 import { AbstractFormatter, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractRubyGeneratorContext } from "@fern-api/ruby-ast";
+import { AsIsFiles } from "@fern-api/ruby-base";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernFilepath, IntermediateRepresentation, TypeId } from "@fern-fern/ir-sdk/api";
@@ -14,5 +15,9 @@ export class ModelGeneratorContext extends AbstractRubyGeneratorContext<ModelCus
         generatorNotificationService: GeneratorNotificationService
     ) {
         super(ir, config, customConfig, generatorNotificationService);
+    }
+
+    public getCoreAsIsFiles(): string[] {
+        return [AsIsFiles.ModelField];
     }
 }
