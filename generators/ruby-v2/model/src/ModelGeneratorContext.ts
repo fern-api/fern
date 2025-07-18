@@ -18,6 +18,6 @@ export class ModelGeneratorContext extends AbstractRubyGeneratorContext<ModelCus
     }
 
     public getCoreAsIsFiles(): string[] {
-        return [AsIsFiles.ModelField, AsIsFiles.Model];
+        return [AsIsFiles.ModelField, AsIsFiles.Model, AsIsFiles.Array];
     }
 }
