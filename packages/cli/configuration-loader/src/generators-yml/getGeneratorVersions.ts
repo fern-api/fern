@@ -107,6 +107,12 @@ function getGeneratorMetadataFromName(generatorName: string, context?: TaskConte
             return "php-sdk";
         case "fern-php-model":
             return "php-model";
+        
+        // Rust
+        case "fern-rust-sdk":
+            return "rust-sdk";
+        case "fern-rust-model":
+            return "rust-model";
 
         default: {
             context?.logger.warn(`Unrecognized generator name found, attempting to parse manually: ${generatorName}`);
