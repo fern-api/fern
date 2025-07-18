@@ -154,6 +154,10 @@ fixtures:
           extra_fields: "allow"
       outputFolder: pydantic-extra-fields
     - customConfig:
+        pydantic_config:
+          extra_fields: "ignore"
+      outputFolder: pydantic-ignore-fields
+    - customConfig:
         pyproject_python_version: "^3.8.1"
         extra_dependencies:
           boto3: 1.28.57

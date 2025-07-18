@@ -55,6 +55,9 @@ class Pydantic:
         def allow(self) -> AST.Expression:
             return AST.Expression(_export(self.version_compatibility, "Extra", "allow"))
 
+        def ignore(self) -> AST.Expression:
+            return AST.Expression(_export(self.version_compatibility, "Extra", "ignore"))
+
     def __init__(self, version_compatibility: PydanticVersionCompatibility):
         self.version_compatibility = version_compatibility
 

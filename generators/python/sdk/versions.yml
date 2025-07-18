@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.25.5
+  changelogEntry:
+    - summary: |
+        Enabled "ignore" as an option for extra fields
+      type: feat
+  createdAt: '2025-07-17'
+  irVersion: 58
+
 - version: 4.25.4
   changelogEntry:
     - summary: |

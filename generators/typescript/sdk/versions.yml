@@ -40,6 +40,13 @@
       type: feat
   createdAt: "2025-07-17"
   irVersion: 58
+  
+- version: 2.4.11
+  changelogEntry:
+    - summary: Bump the docker image for the generator to node:22.12-alpine3.20
+      type: chore
+  createdAt: "2025-07-18"
+  irVersion: 58
 
 - version: 2.4.10
   changelogEntry:
