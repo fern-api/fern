@@ -3,7 +3,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 
-import { ObjectProperty, ObjectTypeDeclaration, Type } from "@fern-fern/ir-sdk/api";
+import { ObjectProperty, ObjectTypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { PrimitiveTypeV1, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 
 function isOptionalProperty(p: ObjectProperty) {
