@@ -18,7 +18,7 @@ export namespace UnionSchemaNamingUtils {
             return subSchema.title;
         }
 
-        // Try typeName 
+        // Try typeName
         if (subSchema.typeName) {
             return convertToPascalCase(subSchema.typeName);
         }
@@ -58,7 +58,7 @@ export namespace UnionSchemaNamingUtils {
                 .map((part) => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
                 .join("");
         }
-        
+
         // Handle camelCase - just capitalize the first letter
         return str.charAt(0).toUpperCase() + str.slice(1);
     }
