@@ -124,6 +124,6 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
 
     private getTypeModuleName(typeId: string): string {
         // Convert type ID to snake_case module name
-        return typeId.split("_").join("_").toLowerCase();
+        return typeId.replaceAll(":", "-").toLowerCase();
     }
 }
