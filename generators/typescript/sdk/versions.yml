@@ -30,7 +30,7 @@
         });
         ```
 
-        The metadata is used to set the `Content-Length`, `Content-Type`, and `Content-Disposition` headers. If not provided, the SDK will attempt to determine them automatically.
+        The metadata is used to set the `Content-Length`, `Content-Type`, and `Content-Disposition` headers. If not provided, the client will attempt to determine them automatically.
         For example, `fs.ReadStream` has a `path` property which the SDK uses to retrieve the file size from the filesystem without loading it into memory:
         ```typescript
         import { createReadStream } from "fs";

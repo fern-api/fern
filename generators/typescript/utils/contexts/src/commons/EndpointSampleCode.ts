@@ -10,6 +10,6 @@ export namespace EndpointSampleCode {
     export function convertToString(sample: EndpointSampleCode): string {
         const imports = sample.imports.map(getTextOfTsNode).join("\n");
         const endpointInvocation = getTextOfTsNode(sample.endpointInvocation);
-        return `${imports}\n${endpointInvocation}`;
+        return `${imports}\n${endpointInvocation}`.trim();
     }
 }

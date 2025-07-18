@@ -697,7 +697,6 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *
      *     await client.service.simple()
      */
     public simple(requestOptions?: Service.RequestOptions): core.HttpResponsePromise<void> {
