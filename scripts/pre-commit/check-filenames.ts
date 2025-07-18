@@ -18,10 +18,10 @@ function checkFilenames(): void {
                 "❌ Invalid filenames found:",
                 ...invalidFiles.map((file: string) => `  - ${file}`),
                 "",
-                "Filenames cannot contain: < > : \" | ? * or control characters",
+                'Filenames cannot contain: < > : " | ? * or control characters',
                 "Reserved names: CON, PRN, AUX, NUL, COM1-9, LPT1-9"
             ].join("\n");
-            
+
             process.stderr.write(errorMessage + "\n");
             throw new Error("Invalid filenames detected");
         }
