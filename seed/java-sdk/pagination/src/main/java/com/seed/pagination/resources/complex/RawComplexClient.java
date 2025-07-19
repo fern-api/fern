@@ -74,7 +74,7 @@ public class RawComplexClient {
                         .flatMap(CursorPages::getNext)
                         .flatMap(StartingAfterPaging::getStartingAfter);
                 Optional<StartingAfterPaging> pagination = request.getPagination()
-                        .map(pagination_ -> StartingAfterPaging.builder()
+                        .map((StartingAfterPaging pagination_) -> StartingAfterPaging.builder()
                                 .from(pagination_)
                                 .startingAfter(startingAfter)
                                 .build());

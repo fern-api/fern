@@ -23,6 +23,8 @@ import com.seed.pagination.resources.users.requests.ListUsersExtendedRequestForO
 import com.seed.pagination.resources.users.requests.ListUsersMixedTypeCursorPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersOffsetPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginationRequest;
+import com.seed.pagination.resources.users.requests.ListUsersOptionalNullableDoubleRequest;
+import com.seed.pagination.resources.users.requests.ListUsersOptionalNullableIntegerRequest;
 import com.seed.pagination.resources.users.requests.ListWithGlobalConfigRequest;
 import com.seed.pagination.resources.users.requests.ListWithOffsetPaginationHasNextPageRequest;
 import com.seed.pagination.resources.users.types.ListUsersExtendedOptionalListResponse;
@@ -274,7 +276,7 @@ public class AsyncRawUsersClient {
                         Optional<String> startingAfter =
                                 parsedResponse.getPage().flatMap(Page::getNext).map(NextPage::getStartingAfter);
                         Optional<WithCursor> pagination = request.getPagination()
-                                .map(pagination_ -> WithCursor.builder()
+                                .map((WithCursor pagination_) -> WithCursor.builder()
                                         .from(pagination_)
                                         .cursor(startingAfter)
                                         .build());
@@ -367,8 +369,9 @@ public class AsyncRawUsersClient {
                     if (response.isSuccessful()) {
                         ListUsersPaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
                                 responseBody.string(), ListUsersPaginationResponse.class);
-                        int newPageNumber =
-                                request.getPage().map(page -> page + 1).orElse(1);
+                        int newPageNumber = request.getPage()
+                                .map((Integer page) -> page + 1)
+                                .orElse(1);
                         ListUsersOffsetPaginationRequest nextRequest = ListUsersOffsetPaginationRequest.builder()
                                 .from(request)
                                 .page(newPageNumber)
@@ -457,8 +460,9 @@ public class AsyncRawUsersClient {
                     if (response.isSuccessful()) {
                         ListUsersPaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
                                 responseBody.string(), ListUsersPaginationResponse.class);
-                        double newPageNumber =
-                                request.getPage().map(page -> page + 1.0).orElse(1.0);
+                        double newPageNumber = request.getPage()
+                                .map((Double page) -> page + 1.0)
+                                .orElse(1.0);
                         ListUsersDoubleOffsetPaginationRequest nextRequest =
                                 ListUsersDoubleOffsetPaginationRequest.builder()
                                         .from(request)
@@ -543,12 +547,13 @@ public class AsyncRawUsersClient {
                                 responseBody.string(), ListUsersPaginationResponse.class);
                         int newPageNumber = request.getPagination()
                                 .flatMap(WithPage::getPage)
-                                .map(page -> page + 1)
+                                .map((Integer page) -> page + 1)
                                 .orElse(1);
-                        Optional<WithPage> pagination = request.getPagination().map(pagination_ -> WithPage.builder()
-                                .from(pagination_)
-                                .page(newPageNumber)
-                                .build());
+                        Optional<WithPage> pagination = request.getPagination()
+                                .map((WithPage pagination_) -> WithPage.builder()
+                                        .from(pagination_)
+                                        .page(newPageNumber)
+                                        .build());
                         ListUsersBodyOffsetPaginationRequest nextRequest =
                                 ListUsersBodyOffsetPaginationRequest.builder()
                                         .from(request)
@@ -634,8 +639,9 @@ public class AsyncRawUsersClient {
                     if (response.isSuccessful()) {
                         ListUsersPaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
                                 responseBody.string(), ListUsersPaginationResponse.class);
-                        int newPageNumber =
-                                request.getPage().map(page -> page + 1).orElse(1);
+                        int newPageNumber = request.getPage()
+                                .map((Integer page) -> page + 1)
+                                .orElse(1);
                         ListUsersOffsetStepPaginationRequest nextRequest =
                                 ListUsersOffsetStepPaginationRequest.builder()
                                         .from(request)
@@ -722,8 +728,9 @@ public class AsyncRawUsersClient {
                     if (response.isSuccessful()) {
                         ListUsersPaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
                                 responseBody.string(), ListUsersPaginationResponse.class);
-                        int newPageNumber =
-                                request.getPage().map(page -> page + 1).orElse(1);
+                        int newPageNumber = request.getPage()
+                                .map((Integer page) -> page + 1)
+                                .orElse(1);
                         ListWithOffsetPaginationHasNextPageRequest nextRequest =
                                 ListWithOffsetPaginationHasNextPageRequest.builder()
                                         .from(request)
@@ -1033,8 +1040,9 @@ public class AsyncRawUsersClient {
                     if (response.isSuccessful()) {
                         UsernameContainer parsedResponse =
                                 ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UsernameContainer.class);
-                        int newPageNumber =
-                                request.getOffset().map(page -> page + 1).orElse(1);
+                        int newPageNumber = request.getOffset()
+                                .map((Integer page) -> page + 1)
+                                .orElse(1);
                         ListWithGlobalConfigRequest nextRequest = ListWithGlobalConfigRequest.builder()
                                 .from(request)
                                 .offset(newPageNumber)
@@ -1044,6 +1052,202 @@ public class AsyncRawUsersClient {
                                 new SyncPagingIterable<String>(true, result, () -> {
                                     try {
                                         return listWithGlobalConfig(nextRequest, requestOptions)
+                                                .get()
+                                                .body();
+                                    } catch (InterruptedException | ExecutionException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                }),
+                                response));
+                        return;
+                    }
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    future.completeExceptionally(new SeedPaginationApiException(
+                            "Error with status code " + response.code(),
+                            response.code(),
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
+                    return;
+                } catch (IOException e) {
+                    future.completeExceptionally(
+                            new SeedPaginationException("Network error executing HTTP request", e));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                future.completeExceptionally(new SeedPaginationException("Network error executing HTTP request", e));
+            }
+        });
+        return future;
+    }
+
+    /**
+     * Test pagination with nullable double parameter wrapped in optional
+     */
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithOptionalNullableDouble() {
+        return listWithOptionalNullableDouble(
+                ListUsersOptionalNullableDoubleRequest.builder().build());
+    }
+
+    /**
+     * Test pagination with nullable double parameter wrapped in optional
+     */
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithOptionalNullableDouble(
+            ListUsersOptionalNullableDoubleRequest request) {
+        return listWithOptionalNullableDouble(request, null);
+    }
+
+    /**
+     * Test pagination with nullable double parameter wrapped in optional
+     */
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithOptionalNullableDouble(
+            ListUsersOptionalNullableDoubleRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("users")
+                .addPathSegments("nullable-double");
+        if (request.getPage().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "page", request.getPage().get(), false);
+        }
+        if (request.getPerPage().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "per_page", request.getPerPage().get(), false);
+        }
+        if (request.getOrder().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "order", request.getOrder().get(), false);
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> future = new CompletableFuture<>();
+        client.newCall(okhttpRequest).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    if (response.isSuccessful()) {
+                        ListUsersPaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
+                                responseBody.string(), ListUsersPaginationResponse.class);
+                        double newPageNumber = request.getPage()
+                                .map((Double page) -> page + 1.0)
+                                .orElse(1.0);
+                        ListUsersOptionalNullableDoubleRequest nextRequest =
+                                ListUsersOptionalNullableDoubleRequest.builder()
+                                        .from(request)
+                                        .page(newPageNumber)
+                                        .build();
+                        List<User> result = parsedResponse.getData();
+                        future.complete(new SeedPaginationHttpResponse<>(
+                                new SyncPagingIterable<User>(true, result, () -> {
+                                    try {
+                                        return listWithOptionalNullableDouble(nextRequest, requestOptions)
+                                                .get()
+                                                .body();
+                                    } catch (InterruptedException | ExecutionException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                }),
+                                response));
+                        return;
+                    }
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    future.completeExceptionally(new SeedPaginationApiException(
+                            "Error with status code " + response.code(),
+                            response.code(),
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                            response));
+                    return;
+                } catch (IOException e) {
+                    future.completeExceptionally(
+                            new SeedPaginationException("Network error executing HTTP request", e));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                future.completeExceptionally(new SeedPaginationException("Network error executing HTTP request", e));
+            }
+        });
+        return future;
+    }
+
+    /**
+     * Test pagination with nullable integer parameter wrapped in optional
+     */
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithOptionalNullableInteger() {
+        return listWithOptionalNullableInteger(
+                ListUsersOptionalNullableIntegerRequest.builder().build());
+    }
+
+    /**
+     * Test pagination with nullable integer parameter wrapped in optional
+     */
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithOptionalNullableInteger(
+            ListUsersOptionalNullableIntegerRequest request) {
+        return listWithOptionalNullableInteger(request, null);
+    }
+
+    /**
+     * Test pagination with nullable integer parameter wrapped in optional
+     */
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithOptionalNullableInteger(
+            ListUsersOptionalNullableIntegerRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("users")
+                .addPathSegments("nullable-integer");
+        if (request.getPage().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "page", request.getPage().get(), false);
+        }
+        if (request.getPerPage().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "per_page", request.getPerPage().get(), false);
+        }
+        if (request.getOrder().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "order", request.getOrder().get(), false);
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> future = new CompletableFuture<>();
+        client.newCall(okhttpRequest).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    if (response.isSuccessful()) {
+                        ListUsersPaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
+                                responseBody.string(), ListUsersPaginationResponse.class);
+                        int newPageNumber = request.getPage()
+                                .map((Integer page) -> page + 1)
+                                .orElse(1);
+                        ListUsersOptionalNullableIntegerRequest nextRequest =
+                                ListUsersOptionalNullableIntegerRequest.builder()
+                                        .from(request)
+                                        .page(newPageNumber)
+                                        .build();
+                        List<User> result = parsedResponse.getData();
+                        future.complete(new SeedPaginationHttpResponse<>(
+                                new SyncPagingIterable<User>(true, result, () -> {
+                                    try {
+                                        return listWithOptionalNullableInteger(nextRequest, requestOptions)
                                                 .get()
                                                 .body();
                                     } catch (InterruptedException | ExecutionException e) {
