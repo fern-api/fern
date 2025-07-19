@@ -25,7 +25,7 @@ describe("Struct", () => {
             const struct = swift.struct({
                 name: "User",
                 accessLevel: AccessLevel.Public,
-                conformances: ["Codable", "Equatable"],
+                conformances: [swift.Protocol.Codable, swift.Protocol.Equatable],
                 properties
             });
 
@@ -209,7 +209,7 @@ describe("Struct", () => {
                 nestedTypes: [
                     swift.enumWithRawValues({
                         name: "Status",
-                        conformances: ["String", "Codable", "CaseIterable"],
+                        conformances: ["String", swift.Protocol.Codable, swift.Protocol.CaseIterable],
                         cases: [
                             { unsafeName: "available", rawValue: "available" },
                             { unsafeName: "pending", rawValue: "pending" }
@@ -239,7 +239,7 @@ describe("Struct", () => {
                 nestedTypes: [
                     swift.enumWithRawValues({
                         name: "Status",
-                        conformances: ["String", "Codable", "CaseIterable"],
+                        conformances: ["String", swift.Protocol.Codable, swift.Protocol.CaseIterable],
                         cases: [
                             { unsafeName: "available", rawValue: "available" },
                             { unsafeName: "pending", rawValue: "pending" }
@@ -247,7 +247,7 @@ describe("Struct", () => {
                     }),
                     swift.enumWithRawValues({
                         name: "CodingKeys",
-                        conformances: ["String", "CodingKey"],
+                        conformances: ["String", swift.Protocol.CodingKey],
                         cases: [
                             { unsafeName: "id", rawValue: "id" },
                             { unsafeName: "name", rawValue: "name" }
