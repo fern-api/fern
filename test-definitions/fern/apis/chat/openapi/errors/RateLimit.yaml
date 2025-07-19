@@ -1,0 +1,8 @@
+description: 'Too many requests'
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        data:
+          type: string
