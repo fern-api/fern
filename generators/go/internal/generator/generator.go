@@ -639,7 +639,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				rootSubpackages = append(rootSubpackages, subpackage)
 			}
 			if ir.RootPackage.Service != nil {
-				file, generatedClient, err := g.generateRootService(
+				_, generatedClient, err := g.generateRootService(
 					ir,
 					ir.Services[*ir.RootPackage.Service],
 					rootSubpackages,
@@ -650,13 +650,12 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				if err != nil {
 					return nil, err
 				}
-				files = append(files, file)
 
 				// Merge this client's endpoints with the root generated client.
 				generatedRootClient.Endpoints = append(generatedRootClient.Endpoints, generatedClient.Endpoints...)
 
 			} else {
-				file, generatedClient, err := g.generateRootServiceWithoutEndpoints(
+				_, generatedClient, err := g.generateRootServiceWithoutEndpoints(
 					ir,
 					ir.RootPackage.FernFilepath,
 					rootSubpackages,
@@ -666,7 +665,6 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				if err != nil {
 					return nil, err
 				}
-				files = append(files, file)
 
 				// Merge this client's endpoints with the root generated client.
 				generatedRootClient.Endpoints = append(generatedRootClient.Endpoints, generatedClient.Endpoints...)
@@ -694,7 +692,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 					// This subpackage doesn't have a service, but we still need
 					// to generate an intermediary client for it to access the
 					// nested endpoints.
-					file, err := g.generateServiceWithoutEndpoints(
+					_, err := g.generateServiceWithoutEndpoints(
 						ir,
 						irSubpackage,
 						subpackages,
@@ -704,11 +702,10 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 					if err != nil {
 						return nil, err
 					}
-					files = append(files, file)
 					continue
 				}
 				// This service has endpoints, so we proceed with the normal flow.
-				file, generatedClient, err := g.generateService(
+				_, generatedClient, err := g.generateService(
 					ir,
 					ir.Services[*irSubpackage.Service],
 					subpackages,
@@ -718,7 +715,6 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				if err != nil {
 					return nil, err
 				}
-				files = append(files, file)
 
 				// Merge this client's endpoints with the root generated client.
 				generatedRootClient.Endpoints = append(generatedRootClient.Endpoints, generatedClient.Endpoints...)

@@ -13,8 +13,7 @@ type Client struct {
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header
-
-	Imdb *ImdbClient
+	Imdb    *ImdbClient
 }
 
 func NewClient(opts ...option.RequestOption) *Client {

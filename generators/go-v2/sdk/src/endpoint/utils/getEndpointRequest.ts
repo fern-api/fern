@@ -3,7 +3,6 @@ import { assertNever } from "@fern-api/core-utils";
 import { HttpEndpoint, HttpService, SdkRequest, ServiceId } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { EndpointSignatureInfo } from "../EndpointSignatureInfo";
 import { BytesRequest } from "../request/BytesRequest";
 import { EndpointRequest } from "../request/EndpointRequest";
 import { ReferencedEndpointRequest } from "../request/ReferencedEndpointRequest";

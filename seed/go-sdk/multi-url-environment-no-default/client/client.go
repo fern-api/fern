@@ -15,9 +15,8 @@ type Client struct {
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header
-
-	Ec2 *ec2.Client
-	S3  *s3.Client
+	Ec2     *ec2.Client
+	S3      *s3.Client
 }
 
 func NewClient(opts ...option.RequestOption) *Client {

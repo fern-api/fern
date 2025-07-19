@@ -13,8 +13,7 @@ type Acme struct {
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header
-
-	Imdb *ImdbClient
+	Imdb    *ImdbClient
 }
 
 func New(opts ...option.RequestOption) *Acme {

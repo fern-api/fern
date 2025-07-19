@@ -20,6 +20,8 @@ export declare namespace Struct {
     interface Constructor {
         parameters: Parameter[];
         body: AstNode;
+        /* Overrides the default name of the constructor. */
+        name?: string;
     }
 }
 
@@ -82,7 +84,11 @@ export class Struct extends AstNode {
     }
 
     private writeConstructor({ writer, constructor }: { writer: Writer; constructor: Struct.Constructor }): void {
-        writer.write(`func New${this.name}(`);
+        if (constructor.name != null) {
+            writer.write(`func ${constructor.name}(`);
+        } else {
+            writer.write(`func New${this.name}(`);
+        }
         constructor.parameters.forEach((parameter, index) => {
             if (index > 0) {
                 writer.write(", ");

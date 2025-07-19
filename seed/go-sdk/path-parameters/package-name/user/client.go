@@ -4,7 +4,7 @@ package user
 
 import (
 	context "context"
-	pathparametersgo "github.com/fern-api/path-parameters-go"
+	path "github.com/fern-api/path-parameters-go"
 	core "github.com/fern-api/path-parameters-go/core"
 	internal "github.com/fern-api/path-parameters-go/internal"
 	option "github.com/fern-api/path-parameters-go/option"
@@ -12,10 +12,9 @@ import (
 )
 
 type Client struct {
-	baseURL string
-	caller  *internal.Caller
-	header  http.Header
-
+	baseURL         string
+	caller          *internal.Caller
+	header          http.Header
 	WithRawResponse *RawClient
 }
 
@@ -36,169 +35,66 @@ func NewClient(opts ...option.RequestOption) *Client {
 
 func (c *Client) GetUser(
 	ctx context.Context,
-	request *pathparametersgo.GetUsersRequest,
+	request *path.GetUsersRequest,
 	opts ...option.RequestOption,
-) (*pathparametersgo.User, error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
-	)
-	endpointURL := internal.EncodeURL(
-		baseURL+"/%v/user/%v",
-		request.TenantId,
-		request.UserId,
-	)
-	headers := internal.MergeHeaders(
-		c.header.Clone(),
-		options.ToHeader(),
-	)
-
-	var response *pathparametersgo.User
-	if _, err := c.caller.Call(
+) (*path.User, error) {
+	response, err := c.WithRawResponse.GetUser(
 		ctx,
-		&internal.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodGet,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Response:        &response,
-		},
-	); err != nil {
+		request,
+		opts...,
+	)
+	if err != nil {
 		return nil, err
 	}
-	return response, nil
+	return response.Body, nil
 }
 
 func (c *Client) CreateUser(
 	ctx context.Context,
 	tenantId string,
-	request *pathparametersgo.User,
+	request *path.User,
 	opts ...option.RequestOption,
-) (*pathparametersgo.User, error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
-	)
-	endpointURL := internal.EncodeURL(
-		baseURL+"/%v/user/",
-		tenantId,
-	)
-	headers := internal.MergeHeaders(
-		c.header.Clone(),
-		options.ToHeader(),
-	)
-
-	var response *pathparametersgo.User
-	if _, err := c.caller.Call(
+) (*path.User, error) {
+	response, err := c.WithRawResponse.CreateUser(
 		ctx,
-		&internal.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodPost,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Request:         request,
-			Response:        &response,
-		},
-	); err != nil {
+		tenantId,
+		request,
+		opts...,
+	)
+	if err != nil {
 		return nil, err
 	}
-	return response, nil
+	return response.Body, nil
 }
 
 func (c *Client) UpdateUser(
 	ctx context.Context,
-	request *pathparametersgo.UpdateUserRequest,
+	request *path.UpdateUserRequest,
 	opts ...option.RequestOption,
-) (*pathparametersgo.User, error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
-	)
-	endpointURL := internal.EncodeURL(
-		baseURL+"/%v/user/%v",
-		request.TenantId,
-		request.UserId,
-	)
-	headers := internal.MergeHeaders(
-		c.header.Clone(),
-		options.ToHeader(),
-	)
-
-	var response *pathparametersgo.User
-	if _, err := c.caller.Call(
+) (*path.User, error) {
+	response, err := c.WithRawResponse.UpdateUser(
 		ctx,
-		&internal.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodPatch,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Request:         request,
-			Response:        &response,
-		},
-	); err != nil {
+		request,
+		opts...,
+	)
+	if err != nil {
 		return nil, err
 	}
-	return response, nil
+	return response.Body, nil
 }
 
 func (c *Client) SearchUsers(
 	ctx context.Context,
-	request *pathparametersgo.SearchUsersRequest,
+	request *path.SearchUsersRequest,
 	opts ...option.RequestOption,
-) ([]*pathparametersgo.User, error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
+) ([]*path.User, error) {
+	response, err := c.WithRawResponse.SearchUsers(
+		ctx,
+		request,
+		opts...,
 	)
-	endpointURL := internal.EncodeURL(
-		baseURL+"/%v/user/%v/search",
-		request.TenantId,
-		request.UserId,
-	)
-	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
 	}
-	if len(queryParams) > 0 {
-		endpointURL += "?" + queryParams.Encode()
-	}
-	headers := internal.MergeHeaders(
-		c.header.Clone(),
-		options.ToHeader(),
-	)
-
-	var response []*pathparametersgo.User
-	if _, err := c.caller.Call(
-		ctx,
-		&internal.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodGet,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Response:        &response,
-		},
-	); err != nil {
-		return nil, err
-	}
-	return response, nil
+	return response.Body, nil
 }

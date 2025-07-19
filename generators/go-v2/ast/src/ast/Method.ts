@@ -18,7 +18,7 @@ export declare namespace Method {
         /* The name of the method */
         name?: string;
         /* The body of the method */
-        body?: CodeBlock;
+        body?: AstNode;
         /* Documentation for the method */
         docs?: string;
         /* The class this method belongs to, if any */
@@ -34,7 +34,7 @@ export class Method extends AstNode {
     public readonly parameters: Parameter[];
     public readonly return_: Type[];
     public readonly name: string | undefined;
-    public readonly body: CodeBlock | undefined;
+    public readonly body: AstNode | undefined;
     public readonly docs: string | undefined;
     public readonly typeReference: GoTypeReference | undefined;
     public readonly multiline: boolean | undefined;

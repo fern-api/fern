@@ -12,6 +12,7 @@ export interface EndpointSignatureInfo {
 
     // All endpoints return an error by default; these fields are only set
     // if the endpoint returns a non-error value.
+    pageReturnType: go.Type | undefined;
     returnType: go.Type | undefined;
     returnZeroValue: go.TypeInstantiation | undefined;
 }

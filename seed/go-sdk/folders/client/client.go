@@ -4,7 +4,7 @@ package client
 
 import (
 	context "context"
-	aclient "github.com/folders/fern/a/client"
+	client "github.com/folders/fern/a/client"
 	core "github.com/folders/fern/core"
 	folderclient "github.com/folders/fern/folder/client"
 	internal "github.com/folders/fern/internal"
@@ -13,13 +13,12 @@ import (
 )
 
 type Client struct {
-	baseURL string
-	caller  *internal.Caller
-	header  http.Header
-
-	WithRawResponse *RawClient
-	A               *aclient.Client
+	baseURL         string
+	caller          *internal.Caller
+	header          http.Header
+	A               *client.Client
 	Folder          *folderclient.Client
+	WithRawResponse *RawClient
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -33,9 +32,9 @@ func NewClient(opts ...option.RequestOption) *Client {
 			},
 		),
 		header:          options.ToHeader(),
-		WithRawResponse: NewRawClient(options),
-		A:               aclient.NewClient(opts...),
+		A:               client.NewClient(opts...),
 		Folder:          folderclient.NewClient(opts...),
+		WithRawResponse: NewRawClient(options),
 	}
 }
 
@@ -43,30 +42,11 @@ func (c *Client) Foo(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) error {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
-	)
-	endpointURL := baseURL
-	headers := internal.MergeHeaders(
-		c.header.Clone(),
-		options.ToHeader(),
-	)
-
-	if _, err := c.caller.Call(
+	_, err := c.WithRawResponse.Foo(
 		ctx,
-		&internal.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodPost,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-		},
-	); err != nil {
+		opts...,
+	)
+	if err != nil {
 		return err
 	}
 	return nil

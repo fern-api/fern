@@ -12,10 +12,9 @@ import (
 )
 
 type Client struct {
-	baseURL string
-	caller  *internal.Caller
-	header  http.Header
-
+	baseURL         string
+	caller          *internal.Caller
+	header          http.Header
 	WithRawResponse *RawClient
 }
 
@@ -50,8 +49,7 @@ func (c *Client) Stream(
 		c.header.Clone(),
 		options.ToHeader(),
 	)
-	headers.Set("Accept", "text/event-stream")
-
+	headers.Add("Accept", "text/event-stream")
 	streamer := internal.NewStreamer[fern.StreamedCompletion](c.caller)
 	return streamer.Stream(
 		ctx,
@@ -59,12 +57,12 @@ func (c *Client) Stream(
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
-			Prefix:          internal.DefaultSSEDataPrefix,
-			Terminator:      "[[DONE]]",
 			MaxAttempts:     options.MaxAttempts,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
+			Prefix:          internal.DefaultSSEDataPrefix,
+			Terminator:      "[[DONE]]",
 			Request:         request,
 		},
 	)

@@ -29,7 +29,7 @@ export class Func extends AstNode {
         return this.func.name;
     }
 
-    public get body(): CodeBlock | undefined {
+    public get body(): AstNode | undefined {
         return this.func.body;
     }
 

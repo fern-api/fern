@@ -164,6 +164,24 @@ export class Type extends AstNode {
         return this.internalType.type === "optional";
     }
 
+    public isIterable(): boolean {
+        return this.internalType.type === "slice" || this.internalType.type === "variadic";
+    }
+
+    public iterableElement(): Type | undefined {
+        if (this.internalType.type === "slice" || this.internalType.type === "variadic") {
+            return this.internalType.value;
+        }
+        return undefined;
+    }
+
+    public underlying(): Type {
+        if (this.internalType.type === "optional") {
+            return this.internalType.value;
+        }
+        return this;
+    }
+
     /* Static factory methods for creating a Type */
     public static any(): Type {
         return new this({
@@ -193,6 +211,13 @@ export class Type extends AstNode {
         return new this({
             type: "dateTime"
         });
+    }
+
+    public static dereference(value: Type): Type {
+        if (value.internalType.type === "optional") {
+            return value.internalType.value;
+        }
+        return value;
     }
 
     public static error(): Type {

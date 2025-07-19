@@ -94,6 +94,18 @@ export class Caller {
     }
 
     public call(args: Caller.CallArgs): go.AstNode {
+        return go.codeblock((writer) => {
+            writer.writeNode(
+                go.invokeMethod({
+                    on: args.clientReference,
+                    method: Caller.CALL_METHOD_NAME,
+                    arguments_: [this.context.getContextParameterReference(), this.instantiateCallParams(args)]
+                })
+            );
+        });
+    }
+
+    public instantiateCallParams(args: Omit<Caller.CallArgs, "clientReference">): go.TypeInstantiation {
         const arguments_: go.StructField[] = [
             {
                 name: "URL",
@@ -162,20 +174,9 @@ export class Caller {
                 value: go.TypeInstantiation.reference(this.context.callNewErrorDecoder([args.errorCodes]))
             });
         }
-        return go.codeblock((writer) => {
-            writer.writeNode(
-                go.invokeMethod({
-                    on: args.clientReference,
-                    method: Caller.CALL_METHOD_NAME,
-                    arguments_: [
-                        this.context.getContextParameterReference(),
-                        go.TypeInstantiation.structPointer({
-                            typeReference: this.getCallParamsTypeReference(),
-                            fields: arguments_
-                        })
-                    ]
-                })
-            );
+        return go.TypeInstantiation.structPointer({
+            typeReference: this.getCallParamsTypeReference(),
+            fields: arguments_
         });
     }
 }
