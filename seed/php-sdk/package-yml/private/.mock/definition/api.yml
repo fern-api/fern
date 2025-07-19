@@ -1,0 +1,4 @@
+name: package-yml
+base-path: /{id}
+path-parameters:
+  id: string
