@@ -91,6 +91,18 @@ types:
       encoding: optional<encoding.EncodingSchema>
       source: optional<source.SourceSchema>
       inline: optional<boolean>
+      name: TypeDeclarationName
+
+  TypeDeclarationName:
+    discriminated: false
+    union:
+      - string
+      - TypeDeclarationCasing
+  
+  TypeDeclarationCasing:
+    properties:
+      value: optional<string>
+      casing: optional<CasingOverridesSchema>
 
   ### Aliases ####
 
@@ -165,8 +177,8 @@ types:
   CasingOverridesSchema:
     properties:
       camel: optional<string>
-      snake: optional<string>
       pascal: optional<string>
+      snake: optional<string>
       screaming-snake: optional<string>
 
   #### Discriminated Union ####
