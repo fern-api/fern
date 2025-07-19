@@ -543,6 +543,10 @@ navigation:
           - page: Customize API Reference Layout
             icon: fa-regular fa-arrows-up-down-left-right
             path: ./pages/docs/api-references/customize-api-ref.mdx
+          - page: Referenced Packages
+            icon: fa-regular fa-boxes-stacked
+            path: ./pages/docs/api-references/referenced-packages.mdx
+            slug: referenced-packages
           - page: Write Markdown in API Reference
             icon: fa-regular fa-pencil
             path: ./pages/docs/api-references/api-ref-content.mdx

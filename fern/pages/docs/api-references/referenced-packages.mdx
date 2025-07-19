@@ -1,0 +1,57 @@
+---
+title: Reference packages in your API layout
+description: Use `referencedPackages` in your docs layout to modularly include subpackages within custom sections of your API Reference.
+---
+
+Fern allows you to reuse and reorganize parts of your API by referencing packages directly in your `docs.yml`. With `referencedPackages`, you can inject one or more API subpackages into any section of your API Reference, enabling complete control over the structure and visibility of your documentation.
+
+## When Should You Use?
+
+Use `referencedPackages` when:
+- You want to control where a specific API subpackage appears in your sidebar
+- You want to group multiple subpackages under one section
+- You want to customize the layout of your documentation while keeping your API modular
+
+## Example
+
+Your API workspace is structured like this:
+
+```bash
+apis/
+├── public-api/
+│   └── definition/
+│       ├── _package_.yml
+│       ├── api.yml
+│       └── ...
+```
+
+You can reference this package in your `docs.yml`:
+
+```yaml title="docs.yml"
+- section: Public API
+  referencedPackages:
+    - public-api
+```
+
+This will render all endpoints, types, and objects from the `public-api` package inline under the **Public API** section in your API Reference sidebar.
+
+## Configuration
+
+To reference one or more subpackages in your API Reference, add the `referencedPackages` field to a section inside your `docs.yml`.
+
+<CodeBlock title="docs.yml">
+```yaml
+navigation:
+  - api: API Reference
+    layout:
+      - section: Public API
+        referencedPackages:
+          - public-api  # <--- must match the folder name inside your apis/ directory
+```
+</CodeBlock>
+
+## Plan Availability
+
+`referencedPackages` is available on all Fern plans that support [custom documentation layouts](/learn/docs/building-your-docs/navigation).
+
+If you’re not sure whether this feature is included in your current plan, [contact Fern support](https://buildwithfern.com/contact).
