@@ -75,7 +75,7 @@ export class Attribute extends AstNode {
         
         skipSerializingIf: (condition: string): Attribute => new Attribute({
             name: "serde",
-            args: [`skip_serializing_if = "${condition}"`]
+            args: [`skip_serializing_if = ${condition}`]
         })
     };
 } 

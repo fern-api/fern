@@ -2,9 +2,10 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { rust, Attribute, PUBLIC } from "@fern-api/rust-codegen";
 
-import { AliasTypeDeclaration, TypeDeclaration, PrimitiveTypeV1 } from "@fern-fern/ir-sdk/api";
+import { AliasTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { generateRustTypeForTypeReference } from "../converters";
+import { isChronoType, isUuidType, isCollectionType, isUnknownType, isDateTimeType } from "../utils/primitiveTypeUtils";
 
 export class AliasGenerator {
     private readonly typeDeclaration: TypeDeclaration;
@@ -57,59 +58,22 @@ export class AliasGenerator {
         const innerType = this.aliasTypeDeclaration.aliasOf;
         
         // Add chrono if aliasing a datetime
-        if (innerType.type === "primitive") {
-            const isDateTime = PrimitiveTypeV1._visit(innerType.primitive.v1, {
-                string: () => false,
-                boolean: () => false,
-                integer: () => false,
-                uint: () => false,
-                uint64: () => false,
-                long: () => false,
-                float: () => false,
-                double: () => false,
-                bigInteger: () => false,
-                date: () => true,
-                dateTime: () => true,
-                base64: () => false,
-                uuid: () => false,
-                _other: () => false
-            });
-            
-            if (isDateTime) {
-                writer.writeLine("use chrono::{DateTime, Utc};");
-            }
-            
-            // Add uuid if aliasing a UUID
-            const isUuid = PrimitiveTypeV1._visit(innerType.primitive.v1, {
-                string: () => false,
-                boolean: () => false,
-                integer: () => false,
-                uint: () => false,
-                uint64: () => false,
-                long: () => false,
-                float: () => false,
-                double: () => false,
-                bigInteger: () => false,
-                date: () => false,
-                dateTime: () => false,
-                base64: () => false,
-                uuid: () => true,
-                _other: () => false
-            });
-            
-            if (isUuid) {
-                writer.writeLine("use uuid::Uuid;");
-            }
+        if (isChronoType(innerType)) {
+            writer.writeLine("use chrono::{DateTime, Utc};");
+        }
+        
+        // Add uuid if aliasing a UUID
+        if (isUuidType(innerType)) {
+            writer.writeLine("use uuid::Uuid;");
         }
         
         // Add collections if aliasing a map or set
-        if (innerType.type === "container" && 
-            (innerType.container.type === "map" || innerType.container.type === "set")) {
+        if (isCollectionType(innerType)) {
             writer.writeLine("use std::collections::HashMap;");
         }
         
         // Add serde_json if aliasing unknown type
-        if (innerType.type === "unknown") {
+        if (isUnknownType(innerType)) {
             writer.writeLine("use serde_json::Value;");
         }
     }
@@ -133,28 +97,9 @@ export class AliasGenerator {
         
         // Add additional serde attributes for special types
         const innerType = this.aliasTypeDeclaration.aliasOf;
-        if (innerType.type === "primitive") {
-            const isDateTime = PrimitiveTypeV1._visit(innerType.primitive.v1, {
-                string: () => false,
-                boolean: () => false,
-                integer: () => false,
-                uint: () => false,
-                uint64: () => false,
-                long: () => false,
-                float: () => false,
-                double: () => false,
-                bigInteger: () => false,
-                date: () => false,
-                dateTime: () => true,
-                base64: () => false,
-                uuid: () => false,
-                _other: () => false
-            });
-            
-            if (isDateTime) {
-                // For datetime newtypes, we might want custom serialization
-                attributes.push(Attribute.serde.with("chrono::serde::ts_seconds"));
-            }
+        if (isDateTimeType(innerType)) {
+            // For datetime newtypes, we might want custom serialization
+            attributes.push(Attribute.serde.with("chrono::serde::ts_seconds"));
         }
         
         return attributes;

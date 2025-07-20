@@ -107,34 +107,4 @@ export function generateRustTypeForTypeReference(typeReference: TypeReference): 
     }
 }
 
-// Helper function to determine if a type should be Optional based on the type reference
-export function isOptionalType(typeReference: TypeReference): boolean {
-    if (typeReference.type === "container") {
-        return typeReference.container._visit({
-            literal: () => false,
-            map: () => false,
-            set: () => false,
-            nullable: () => true,
-            optional: () => true,
-            list: () => false,
-            _other: () => false
-        });
-    }
-    return false;
-}
-
-// Helper function to get the inner type from an optional/nullable container
-export function getInnerTypeFromOptional(typeReference: TypeReference): TypeReference {
-    if (typeReference.type === "container") {
-        return typeReference.container._visit({
-            literal: () => typeReference,
-            map: () => typeReference,
-            set: () => typeReference,
-            nullable: (inner) => inner,
-            optional: (inner) => inner,
-            list: () => typeReference,
-            _other: () => typeReference
-        });
-    }
-    return typeReference;
-} 
+ 

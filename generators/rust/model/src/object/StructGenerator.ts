@@ -2,9 +2,10 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { rust, Attribute, PUBLIC } from "@fern-api/rust-codegen";
 
-import { ObjectProperty, ObjectTypeDeclaration, TypeDeclaration, PrimitiveTypeV1 } from "@fern-fern/ir-sdk/api";
+import { ObjectProperty, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
-import { generateRustTypeForTypeReference, isOptionalType, getInnerTypeFromOptional } from "../converters/getRustTypeForTypeReference";
+import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference";
+import { isDateTimeType, isUuidType, isCollectionType, isUnknownType, isOptionalType, getInnerTypeFromOptional } from "../utils/primitiveTypeUtils";
 
 export class StructGenerator {
     private readonly typeDeclaration: TypeDeclaration;
@@ -128,7 +129,7 @@ export class StructGenerator {
         
         // Add skip_serializing_if for optional fields to omit null values
         if (isOptionalType(property.valueType)) {
-            attributes.push(Attribute.serde.skipSerializingIf("Option::is_none"));
+            attributes.push(Attribute.serde.skipSerializingIf('"Option::is_none"'));
         }
         
         return attributes;
@@ -139,26 +140,7 @@ export class StructGenerator {
             ? getInnerTypeFromOptional(property.valueType)
             : property.valueType;
             
-        if (typeRef.type !== "primitive") {
-            return false;
-        }
-        
-        return PrimitiveTypeV1._visit(typeRef.primitive.v1, {
-            string: () => false,
-            boolean: () => false,
-            integer: () => false,
-            uint: () => false,
-            uint64: () => false,
-            long: () => false,
-            float: () => false,
-            double: () => false,
-            bigInteger: () => false,
-            date: () => true,
-            dateTime: () => true,
-            base64: () => false,
-            uuid: () => false,
-            _other: () => false
-        });
+        return isDateTimeType(typeRef);
     }
 
     private hasDateTimeFields(): boolean {
@@ -171,8 +153,7 @@ export class StructGenerator {
                 ? getInnerTypeFromOptional(prop.valueType)
                 : prop.valueType;
             
-            return typeRef.type === "container" && 
-                   (typeRef.container.type === "map" || typeRef.container.type === "set");
+            return isCollectionType(typeRef);
         });
     }
 
@@ -182,26 +163,7 @@ export class StructGenerator {
                 ? getInnerTypeFromOptional(prop.valueType)
                 : prop.valueType;
                 
-            if (typeRef.type !== "primitive") {
-                return false;
-            }
-            
-            return PrimitiveTypeV1._visit(typeRef.primitive.v1, {
-                string: () => false,
-                boolean: () => false,
-                integer: () => false,
-                uint: () => false,
-                uint64: () => false,
-                long: () => false,
-                float: () => false,
-                double: () => false,
-                bigInteger: () => false,
-                date: () => false,
-                dateTime: () => false,
-                base64: () => false,
-                uuid: () => true,
-                _other: () => false
-            });
+            return isUuidType(typeRef);
         });
     }
 
@@ -211,7 +173,7 @@ export class StructGenerator {
                 ? getInnerTypeFromOptional(prop.valueType)
                 : prop.valueType;
                 
-            return typeRef.type === "unknown";
+            return isUnknownType(typeRef);
         });
     }
 } 
