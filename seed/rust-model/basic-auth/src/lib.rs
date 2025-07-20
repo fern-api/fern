@@ -1,3 +1,3 @@
 //! Generated models by Fern
 
-pub mod type_errors-unauthorizedrequesterrorbody;
+pub mod unauthorized_request_error_body;

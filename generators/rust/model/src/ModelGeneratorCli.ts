@@ -71,8 +71,8 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
 
         // Add module declarations for each type
         if (context.ir.types) {
-            Object.keys(context.ir.types).forEach((typeId) => {
-                const typeName = this.getTypeModuleName(typeId);
+            Object.values(context.ir.types).forEach((typeDeclaration) => {
+                const typeName = this.getTypeModuleName(typeDeclaration);
                 writer.writeLine(`pub mod ${typeName};`);
             });
         }
@@ -85,8 +85,8 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
             return [];
         }
 
-        return Object.entries(context.ir.types).map(([typeId, typeDeclaration]) => {
-            const moduleName = this.getTypeModuleName(typeId);
+        return Object.values(context.ir.types).map((typeDeclaration) => {
+            const moduleName = this.getTypeModuleName(typeDeclaration);
             const content = this.generateTypeDeclaration(context, typeDeclaration);
             return new RustFile({
                 filename: `${moduleName}.rs`,
@@ -122,8 +122,8 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
         return writer.toString();
     }
 
-    private getTypeModuleName(typeId: string): string {
-        // Convert type ID to snake_case module name
-        return typeId.replaceAll(":", "-").toLowerCase();
+    private getTypeModuleName(typeDeclaration: TypeDeclaration): string {
+        // Use the proper snake_case name from the IR
+        return typeDeclaration.name.name.snakeCase.safeName;
     }
 }
