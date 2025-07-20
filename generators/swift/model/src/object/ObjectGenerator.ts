@@ -90,7 +90,7 @@ export class ObjectGenerator {
                     argumentLabel: this.additionalPropertiesInfo.propertyName,
                     unsafeName: this.additionalPropertiesInfo.propertyName,
                     type: this.additionalPropertiesInfo.swiftType,
-                    defaultValue: swift.Expression.contextualMethodCall("init")
+                    defaultValue: swift.Expression.contextualMethodCall({ methodName: "init" })
                 })
             ],
             body: swift.CodeBlock.withStatements([
@@ -123,50 +123,54 @@ export class ObjectGenerator {
                 swift.Statement.constantDeclaration(
                     "container",
                     swift.Expression.try(
-                        swift.Expression.methodCall(swift.Expression.reference("decoder"), "container", [
-                            swift.functionArgument({
-                                label: "keyedBy",
-                                value: swift.Expression.rawValue("CodingKeys.self")
-                            })
-                        ])
+                        swift.Expression.methodCall({
+                            target: swift.Expression.reference("decoder"),
+                            methodName: "container",
+                            arguments_: [
+                                swift.functionArgument({
+                                    label: "keyedBy",
+                                    value: swift.Expression.rawValue("CodingKeys.self")
+                                })
+                            ]
+                        })
                     )
                 ),
                 ...this.objectTypeDeclaration.properties.map((p) =>
                     swift.Statement.propertyAssignment(
                         p.name.name.camelCase.unsafeName,
                         swift.Expression.try(
-                            swift.Expression.methodCall(
-                                swift.Expression.reference("container"),
-                                isOptionalProperty(p) ? "decodeIfPresent" : "decode",
-                                [
+                            swift.Expression.methodCall({
+                                target: swift.Expression.reference("container"),
+                                methodName: isOptionalProperty(p) ? "decodeIfPresent" : "decode",
+                                arguments_: [
                                     swift.functionArgument({
-                                        value: swift.Expression.memberAccess(
-                                            generateSwiftTypeForTypeReference(p.valueType),
-                                            "self"
-                                        )
+                                        value: swift.Expression.memberAccess({
+                                            target: generateSwiftTypeForTypeReference(p.valueType),
+                                            memberName: "self"
+                                        })
                                     }),
                                     swift.functionArgument({
                                         label: "forKey",
                                         value: swift.Expression.enumCaseShorthand(p.name.name.camelCase.unsafeName)
                                     })
                                 ]
-                            )
+                            })
                         )
                     )
                 ),
                 swift.Statement.propertyAssignment(
                     this.additionalPropertiesInfo.propertyName,
                     swift.Expression.try(
-                        swift.Expression.methodCall(
-                            swift.Expression.reference("decoder"),
-                            "decodeAdditionalProperties",
-                            [
+                        swift.Expression.methodCall({
+                            target: swift.Expression.reference("decoder"),
+                            methodName: "decodeAdditionalProperties",
+                            arguments_: [
                                 swift.functionArgument({
                                     label: "using",
                                     value: swift.Expression.rawValue("CodingKeys.self")
                                 })
                             ]
-                        )
+                        })
                     )
                 )
             ])
@@ -190,49 +194,53 @@ export class ObjectGenerator {
                 swift.Statement.variableDeclaration(
                     "container",
                     swift.Expression.try(
-                        swift.Expression.methodCall(swift.Expression.reference("encoder"), "container", [
-                            swift.functionArgument({
-                                label: "keyedBy",
-                                value: swift.Expression.rawValue("CodingKeys.self")
-                            })
-                        ])
+                        swift.Expression.methodCall({
+                            target: swift.Expression.reference("encoder"),
+                            methodName: "container",
+                            arguments_: [
+                                swift.functionArgument({
+                                    label: "keyedBy",
+                                    value: swift.Expression.rawValue("CodingKeys.self")
+                                })
+                            ]
+                        })
                     )
                 ),
                 swift.Statement.expressionStatement(
                     swift.Expression.try(
-                        swift.Expression.methodCall(
-                            swift.Expression.reference("encoder"),
-                            "encodeAdditionalProperties",
-                            [
+                        swift.Expression.methodCall({
+                            target: swift.Expression.reference("encoder"),
+                            methodName: "encodeAdditionalProperties",
+                            arguments_: [
                                 swift.functionArgument({
-                                    value: swift.Expression.memberAccess(
-                                        swift.Expression.rawValue("self"),
-                                        this.additionalPropertiesInfo.propertyName
-                                    )
+                                    value: swift.Expression.memberAccess({
+                                        target: swift.Expression.rawValue("self"),
+                                        memberName: this.additionalPropertiesInfo.propertyName
+                                    })
                                 })
                             ]
-                        )
+                        })
                     )
                 ),
                 ...this.objectTypeDeclaration.properties.map((p) =>
                     swift.Statement.expressionStatement(
                         swift.Expression.try(
-                            swift.Expression.methodCall(
-                                swift.Expression.reference("container"),
-                                isOptionalProperty(p) ? "encodeIfPresent" : "encode",
-                                [
+                            swift.Expression.methodCall({
+                                target: swift.Expression.reference("container"),
+                                methodName: isOptionalProperty(p) ? "encodeIfPresent" : "encode",
+                                arguments_: [
                                     swift.functionArgument({
-                                        value: swift.Expression.memberAccess(
-                                            swift.Expression.rawValue("self"),
-                                            p.name.name.camelCase.unsafeName
-                                        )
+                                        value: swift.Expression.memberAccess({
+                                            target: swift.Expression.rawValue("self"),
+                                            memberName: p.name.name.camelCase.unsafeName
+                                        })
                                     }),
                                     swift.functionArgument({
                                         label: "forKey",
                                         value: swift.Expression.enumCaseShorthand(p.name.name.camelCase.unsafeName)
                                     })
                                 ]
-                            )
+                            })
                         )
                     )
                 )

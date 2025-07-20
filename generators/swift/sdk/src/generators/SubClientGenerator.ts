@@ -75,9 +75,12 @@ export class SubClientGenerator {
             body: swift.CodeBlock.withStatements([
                 swift.Statement.propertyAssignment(
                     "httpClient",
-                    swift.Expression.classInitialization("HTTPClient", [
-                        swift.functionArgument({ label: "config", value: swift.Expression.reference("config") })
-                    ])
+                    swift.Expression.classInitialization({
+                        unsafeName: "HTTPClient",
+                        arguments_: [
+                            swift.functionArgument({ label: "config", value: swift.Expression.reference("config") })
+                        ]
+                    })
                 )
             ])
         });
@@ -110,12 +113,23 @@ export class SubClientGenerator {
                         _other: () => swift.Type.custom("Any")
                     }) ?? swift.Type.custom("Any"),
                 body: swift.CodeBlock.withStatements([
-                    swift.Statement.expressionStatement(
-                        swift.Expression.functionCall("fatalError", [
-                            swift.functionArgument({
-                                value: swift.Expression.rawStringValue("Not implemented.")
-                            })
-                        ])
+                    swift.Statement.return(
+                        swift.Expression.try(
+                            swift.Expression.await(
+                                // TODO: Method name changes based on request type
+                                swift.Expression.methodCall({
+                                    target: swift.Expression.reference("httpClient"),
+                                    methodName: "performRequest",
+                                    arguments_: [
+                                        swift.functionArgument({
+                                            label: "method",
+                                            value: swift.Expression.enumCaseShorthand("post") // TODO: Make dynamic
+                                        })
+                                    ],
+                                    multiline: true
+                                })
+                            )
+                        )
                     )
                 ])
             });
