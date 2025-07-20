@@ -1,1 +1,1 @@
-export { AliasGenerator } from "./AliasGenerator"; 
+export { AliasGenerator } from "./AliasGenerator";

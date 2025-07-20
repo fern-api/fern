@@ -8,7 +8,7 @@ export function isDateTimeType(typeRef: TypeReference): boolean {
     if (typeRef.type !== "primitive") {
         return false;
     }
-    
+
     return PrimitiveTypeV1._visit(typeRef.primitive.v1, {
         string: () => false,
         boolean: () => false,
@@ -31,7 +31,7 @@ export function isUuidType(typeRef: TypeReference): boolean {
     if (typeRef.type !== "primitive") {
         return false;
     }
-    
+
     return PrimitiveTypeV1._visit(typeRef.primitive.v1, {
         string: () => false,
         boolean: () => false,
@@ -54,7 +54,7 @@ export function isChronoType(typeRef: TypeReference): boolean {
     if (typeRef.type !== "primitive") {
         return false;
     }
-    
+
     return PrimitiveTypeV1._visit(typeRef.primitive.v1, {
         string: () => false,
         boolean: () => false,
@@ -74,8 +74,7 @@ export function isChronoType(typeRef: TypeReference): boolean {
 }
 
 export function isCollectionType(typeRef: TypeReference): boolean {
-    return typeRef.type === "container" && 
-           (typeRef.container.type === "map" || typeRef.container.type === "set");
+    return typeRef.type === "container" && (typeRef.container.type === "map" || typeRef.container.type === "set");
 }
 
 export function isUnknownType(typeRef: TypeReference): boolean {
@@ -108,16 +107,34 @@ export function getInnerTypeFromOptional(typeReference: TypeReference): TypeRefe
             return container._visit<TypeReference>({
                 optional: (optional) => optional,
                 nullable: (nullable) => nullable,
-                list: () => { throw new Error("Type is not optional"); },
-                map: () => { throw new Error("Type is not optional"); },
-                set: () => { throw new Error("Type is not optional"); },
-                literal: () => { throw new Error("Type is not optional"); },
-                _other: () => { throw new Error("Type is not optional"); }
+                list: () => {
+                    throw new Error("Type is not optional");
+                },
+                map: () => {
+                    throw new Error("Type is not optional");
+                },
+                set: () => {
+                    throw new Error("Type is not optional");
+                },
+                literal: () => {
+                    throw new Error("Type is not optional");
+                },
+                _other: () => {
+                    throw new Error("Type is not optional");
+                }
             });
         },
-        primitive: () => { throw new Error("Type is not optional"); },
-        named: () => { throw new Error("Type is not optional"); },
-        unknown: () => { throw new Error("Type is not optional"); },
-        _other: () => { throw new Error("Type is not optional"); }
+        primitive: () => {
+            throw new Error("Type is not optional");
+        },
+        named: () => {
+            throw new Error("Type is not optional");
+        },
+        unknown: () => {
+            throw new Error("Type is not optional");
+        },
+        _other: () => {
+            throw new Error("Type is not optional");
+        }
     });
-} 
+}

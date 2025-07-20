@@ -87,7 +87,7 @@ export const rust = {
     attribute,
     field,
     struct,
-    enum_: enum_,
+    enum_,
     enumVariant,
     newtypeStruct,
     writer,
@@ -98,4 +98,4 @@ export const rust = {
 };
 
 // Re-export all AST types and utilities
-export * from "./ast"; 
+export * from "./ast";

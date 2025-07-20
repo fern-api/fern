@@ -38,7 +38,7 @@ export class Field extends AstNode {
         }
 
         writer.write("    "); // Indentation for the field itself
-        
+
         // Write visibility
         if (this.visibility) {
             this.writeVisibility(writer, this.visibility);
@@ -67,4 +67,4 @@ export class Field extends AstNode {
                 break;
         }
     }
-} 
+}

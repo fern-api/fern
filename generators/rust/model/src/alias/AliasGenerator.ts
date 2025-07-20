@@ -36,42 +36,42 @@ export class AliasGenerator {
 
     private generateFileContents(rustNewtype: rust.NewtypeStruct): string {
         const writer = rust.writer();
-        
+
         // Add use statements
         this.writeUseStatements(writer);
         writer.newLine();
-        
+
         // Write the newtype struct
         rustNewtype.write(writer);
-        
+
         return writer.toString();
     }
 
     private writeUseStatements(writer: rust.Writer): void {
         writer.writeLine("use serde::{Deserialize, Serialize};");
-        
+
         // Add additional use statements based on the inner type
         this.writeAdditionalUseStatements(writer);
     }
 
     private writeAdditionalUseStatements(writer: rust.Writer): void {
         const innerType = this.aliasTypeDeclaration.aliasOf;
-        
+
         // Add chrono if aliasing a datetime
         if (isChronoType(innerType)) {
             writer.writeLine("use chrono::{DateTime, Utc};");
         }
-        
+
         // Add uuid if aliasing a UUID
         if (isUuidType(innerType)) {
             writer.writeLine("use uuid::Uuid;");
         }
-        
+
         // Add collections if aliasing a map or set
         if (isCollectionType(innerType)) {
             writer.writeLine("use std::collections::HashMap;");
         }
-        
+
         // Add serde_json if aliasing unknown type
         if (isUnknownType(innerType)) {
             writer.writeLine("use serde_json::Value;");
@@ -90,18 +90,18 @@ export class AliasGenerator {
 
     private generateNewtypeAttributes(): rust.Attribute[] {
         const attributes: rust.Attribute[] = [];
-        
+
         // Always add basic derives
         const derives = ["Debug", "Clone", "Serialize", "Deserialize", "PartialEq"];
         attributes.push(Attribute.derive(derives));
-        
+
         // Add additional serde attributes for special types
         const innerType = this.aliasTypeDeclaration.aliasOf;
         if (isDateTimeType(innerType)) {
             // For datetime newtypes, we might want custom serialization
             attributes.push(Attribute.serde.with("chrono::serde::ts_seconds"));
         }
-        
+
         return attributes;
     }
-} 
+}

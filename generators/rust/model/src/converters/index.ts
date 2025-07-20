@@ -1,1 +1,1 @@
-export * from "./getRustTypeForTypeReference"; 
+export * from "./getRustTypeForTypeReference";

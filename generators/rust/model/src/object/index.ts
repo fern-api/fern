@@ -1,1 +1,1 @@
-export { StructGenerator } from "./StructGenerator"; 
+export { StructGenerator } from "./StructGenerator";

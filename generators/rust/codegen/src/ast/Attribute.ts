@@ -23,7 +23,7 @@ export class Attribute extends AstNode {
 
     public write(writer: Writer): void {
         writer.write(`#[${this.name}`);
-        
+
         if (this.args && this.args.length > 0) {
             writer.write("(");
             this.args.forEach((arg, index) => {
@@ -34,7 +34,7 @@ export class Attribute extends AstNode {
             });
             writer.write(")");
         }
-        
+
         if (this.nested && this.nested.length > 0) {
             writer.write("(");
             this.nested.forEach((attr, index) => {
@@ -45,7 +45,7 @@ export class Attribute extends AstNode {
             });
             writer.write(")");
         }
-        
+
         writer.write("]");
     }
 
@@ -58,24 +58,28 @@ export class Attribute extends AstNode {
     }
 
     public static serde = {
-        rename: (value: string): Attribute => new Attribute({
-            name: "serde",
-            args: [`rename = "${value}"`]
-        }),
-        
-        with: (path: string): Attribute => new Attribute({
-            name: "serde",
-            args: [`with = "${path}"`]
-        }),
-        
-        skip: (): Attribute => new Attribute({
-            name: "serde",
-            args: ["skip"]
-        }),
-        
-        skipSerializingIf: (condition: string): Attribute => new Attribute({
-            name: "serde",
-            args: [`skip_serializing_if = ${condition}`]
-        })
+        rename: (value: string): Attribute =>
+            new Attribute({
+                name: "serde",
+                args: [`rename = "${value}"`]
+            }),
+
+        with: (path: string): Attribute =>
+            new Attribute({
+                name: "serde",
+                args: [`with = "${path}"`]
+            }),
+
+        skip: (): Attribute =>
+            new Attribute({
+                name: "serde",
+                args: ["skip"]
+            }),
+
+        skipSerializingIf: (condition: string): Attribute =>
+            new Attribute({
+                name: "serde",
+                args: [`skip_serializing_if = ${condition}`]
+            })
     };
-} 
+}

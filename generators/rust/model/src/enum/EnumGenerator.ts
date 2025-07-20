@@ -33,14 +33,14 @@ export class EnumGenerator {
 
     private generateFileContents(rustEnum: rust.Enum): string {
         const writer = rust.writer();
-        
+
         // Add use statements
         this.writeUseStatements(writer);
         writer.newLine();
-        
+
         // Write the enum
         rustEnum.write(writer);
-        
+
         return writer.toString();
     }
 
@@ -53,33 +53,31 @@ export class EnumGenerator {
             name: this.typeDeclaration.name.name.pascalCase.unsafeName,
             visibility: PUBLIC,
             attributes: this.generateEnumAttributes(),
-            variants: this.enumTypeDeclaration.values.map((enumValue) => 
-                this.generateEnumVariant(enumValue)
-            )
+            variants: this.enumTypeDeclaration.values.map((enumValue) => this.generateEnumVariant(enumValue))
         });
     }
 
     private generateEnumAttributes(): rust.Attribute[] {
         const attributes: rust.Attribute[] = [];
-        
+
         // Always add basic derives
         const derives = ["Debug", "Clone", "Serialize", "Deserialize", "PartialEq"];
         attributes.push(Attribute.derive(derives));
-        
+
         return attributes;
     }
 
     private generateEnumVariant(enumValue: EnumTypeDeclaration["values"][0]): rust.EnumVariant {
         const variantAttributes: rust.Attribute[] = [];
-        
+
         // Add serde rename if the variant name differs from wire value
         if (enumValue.name.name.pascalCase.unsafeName !== enumValue.name.wireValue) {
             variantAttributes.push(Attribute.serde.rename(enumValue.name.wireValue));
         }
-        
+
         return rust.enumVariant({
             name: enumValue.name.name.pascalCase.unsafeName,
             attributes: variantAttributes.length > 0 ? variantAttributes : undefined
         });
     }
-} 
+}

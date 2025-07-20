@@ -41,7 +41,7 @@ export class Enum extends AstNode {
             this.writeVisibility(writer, this.visibility);
             writer.write(" ");
         }
-        
+
         writer.write(`enum ${this.name} {`);
         writer.newLine();
 
@@ -70,4 +70,4 @@ export class Enum extends AstNode {
                 break;
         }
     }
-} 
+}

@@ -9,7 +9,7 @@ import { AliasGenerator } from "./alias";
 
 export function generateModels({ context }: { context: ModelGeneratorContext }): RustFile[] {
     const files: RustFile[] = [];
-    
+
     for (const [_typeId, typeDeclaration] of Object.entries(context.ir.types)) {
         const file = typeDeclaration.shape._visit<RustFile | undefined>({
             alias: (aliasTypeDeclaration) => {
@@ -36,11 +36,11 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
                 return undefined;
             }
         });
-        
+
         if (file != null) {
             files.push(file);
         }
     }
-    
+
     return files;
-} 
+}

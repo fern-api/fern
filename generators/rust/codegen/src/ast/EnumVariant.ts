@@ -66,4 +66,4 @@ export class EnumVariant extends AstNode {
 
         writer.write(",");
     }
-} 
+}

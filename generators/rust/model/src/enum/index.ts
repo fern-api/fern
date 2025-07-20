@@ -1,1 +1,1 @@
-export { EnumGenerator } from "./EnumGenerator"; 
+export { EnumGenerator } from "./EnumGenerator";

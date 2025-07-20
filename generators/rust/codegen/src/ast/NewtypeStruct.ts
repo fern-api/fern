@@ -44,15 +44,15 @@ export class NewtypeStruct extends AstNode {
             this.writeVisibility(writer, this.visibility);
             writer.write(" ");
         }
-        
+
         writer.write(`struct ${this.name}(`);
-        
+
         // Write inner field visibility
         if (this.innerVisibility) {
             this.writeVisibility(writer, this.innerVisibility);
             writer.write(" ");
         }
-        
+
         // Write inner type
         this.innerType.write(writer);
         writer.write(");");
@@ -74,4 +74,4 @@ export class NewtypeStruct extends AstNode {
                 break;
         }
     }
-} 
+}

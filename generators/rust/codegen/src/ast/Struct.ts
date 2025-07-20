@@ -41,7 +41,7 @@ export class Struct extends AstNode {
             this.writeVisibility(writer, this.visibility);
             writer.write(" ");
         }
-        
+
         writer.write(`struct ${this.name} {`);
         writer.newLine();
 
@@ -70,4 +70,4 @@ export class Struct extends AstNode {
                 break;
         }
     }
-} 
+}

@@ -6,4 +6,4 @@ export * from "./converters";
 export * from "./object";
 export * from "./enum";
 export * from "./alias";
-export * from "./utils/primitiveTypeUtils"; 
+export * from "./utils/primitiveTypeUtils";

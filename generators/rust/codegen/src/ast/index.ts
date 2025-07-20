@@ -8,12 +8,12 @@ export { Struct } from "./Struct";
 export { NewtypeStruct } from "./NewtypeStruct";
 export { Enum } from "./Enum";
 export { EnumVariant } from "./EnumVariant";
-export { 
-    PrimitiveType, 
-    PUBLIC, 
-    PRIVATE 
+export {
+    PrimitiveType,
+    PUBLIC,
+    PRIVATE
 } from "./types";
-export type { 
-    RustTypeOptions, 
-    Visibility 
+export type {
+    RustTypeOptions,
+    Visibility
 } from "./types";
