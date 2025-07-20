@@ -63,6 +63,11 @@ type Try = {
     expression: Expression;
 };
 
+type Await = {
+    type: "await";
+    expression: Expression;
+};
+
 type RawValue = {
     type: "raw-value";
     value: string;
@@ -78,6 +83,7 @@ type InternalExpression =
     | MethodCall
     | ContextualMethodCall
     | Try
+    | Await
     | RawValue;
 
 export class Expression extends AstNode {
@@ -144,6 +150,10 @@ export class Expression extends AstNode {
                 writer.write("try ");
                 this.internalExpression.expression.write(writer);
                 break;
+            case "await":
+                writer.write("await ");
+                this.internalExpression.expression.write(writer);
+                break;
             case "raw-value":
                 writer.write(this.internalExpression.value);
                 break;
@@ -198,6 +208,10 @@ export class Expression extends AstNode {
 
     public static try(expression: Expression): Expression {
         return new this({ type: "try", expression });
+    }
+
+    public static await(expression: Expression): Expression {
+        return new this({ type: "await", expression });
     }
 
     public static rawStringValue(value: string): Expression {
