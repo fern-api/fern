@@ -1,9 +1,10 @@
+import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { generateSwiftTypeForTypeReference } from "@fern-api/swift-model";
 
-import { HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, HttpMethod, HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
@@ -91,49 +92,102 @@ export class SubClientGenerator {
             return swift.method({
                 unsafeName: endpoint.name.camelCase.unsafeName,
                 accessLevel: swift.AccessLevel.Public,
-                parameters: [
-                    swift.functionParameter({
-                        argumentLabel: "requestOptions",
-                        unsafeName: "requestOptions",
-                        type: swift.Type.custom("RequestOptions"),
-                        optional: true,
-                        defaultValue: swift.Expression.rawValue("nil")
-                    })
-                ],
+                parameters: this.getMethodParametersForEndpoint(endpoint),
                 async: true,
                 throws: true,
-                returnType:
-                    endpoint.response?.body?._visit({
-                        json: (resp) => generateSwiftTypeForTypeReference(resp.responseBodyType),
-                        fileDownload: () => swift.Type.custom("Any"),
-                        text: () => swift.Type.custom("Any"),
-                        bytes: () => swift.Type.custom("Any"),
-                        streaming: () => swift.Type.custom("Any"),
-                        streamParameter: () => swift.Type.custom("Any"),
-                        _other: () => swift.Type.custom("Any")
-                    }) ?? swift.Type.custom("Any"),
-                body: swift.CodeBlock.withStatements([
-                    swift.Statement.return(
-                        swift.Expression.try(
-                            swift.Expression.await(
-                                // TODO: Method name changes based on request type
-                                swift.Expression.methodCall({
-                                    target: swift.Expression.reference("httpClient"),
-                                    methodName: "performRequest",
-                                    arguments_: [
-                                        swift.functionArgument({
-                                            label: "method",
-                                            value: swift.Expression.enumCaseShorthand("post") // TODO: Make dynamic
-                                        })
-                                    ],
-                                    multiline: true
-                                })
-                            )
-                        )
-                    )
-                ])
+                returnType: this.getMethodReturnTypeForEndpoint(endpoint),
+                body: this.getMethodBodyForEndpoint(endpoint)
             });
         });
+    }
+
+    private getMethodParametersForEndpoint(endpoint: HttpEndpoint): swift.FunctionParameter[] {
+        const params = [
+            // TODO(kafkas): Implement
+
+            swift.functionParameter({
+                argumentLabel: "requestOptions",
+                unsafeName: "requestOptions",
+                type: swift.Type.custom("RequestOptions"),
+                optional: true,
+                defaultValue: swift.Expression.rawValue("nil")
+            })
+        ];
+        return params;
+    }
+
+    private getMethodReturnTypeForEndpoint(endpoint: HttpEndpoint): swift.Type {
+        return (
+            endpoint.response?.body?._visit({
+                json: (resp) => generateSwiftTypeForTypeReference(resp.responseBodyType),
+                fileDownload: () => swift.Type.custom("Any"),
+                text: () => swift.Type.custom("Any"),
+                bytes: () => swift.Type.custom("Any"),
+                streaming: () => swift.Type.custom("Any"),
+                streamParameter: () => swift.Type.custom("Any"),
+                _other: () => swift.Type.custom("Any")
+            }) ?? swift.Type.custom("Any")
+        );
+    }
+
+    private getMethodBodyForEndpoint(endpoint: HttpEndpoint): swift.CodeBlock {
+        const arguments_ = [
+            swift.functionArgument({
+                label: "method",
+                value: swift.Expression.enumCaseShorthand(this.getEnumCaseNameForHttpMethod(endpoint.method))
+            }),
+            swift.functionArgument({
+                label: "path",
+                value: swift.Expression.rawStringValue(this.getEndpointPath(endpoint))
+            }),
+
+            // TODO(kafkas): Add `headers`
+            // TODO(kafkas): Add `queryParams`
+            // TODO(kafkas): Add `body`
+
+            swift.functionArgument({
+                label: "requestOptions",
+                value: swift.Expression.reference("requestOptions")
+            })
+        ];
+        return swift.CodeBlock.withStatements([
+            swift.Statement.return(
+                swift.Expression.try(
+                    swift.Expression.await(
+                        swift.Expression.methodCall({
+                            target: swift.Expression.reference("httpClient"),
+                            // TODO(kafkas): Changes based on content type
+                            methodName: "performRequest",
+                            arguments_,
+                            multiline: true
+                        })
+                    )
+                )
+            )
+        ]);
+    }
+
+    private getEndpointPath(endpoint: HttpEndpoint): string {
+        return endpoint.fullPath.parts.map((part) => [part.pathParameter, part.tail].join("/")).join("/");
+    }
+
+    private getEnumCaseNameForHttpMethod(method: HttpMethod): string {
+        switch (method) {
+            case "GET":
+                return "get";
+            case "POST":
+                return "post";
+            case "PUT":
+                return "put";
+            case "DELETE":
+                return "delete";
+            case "PATCH":
+                return "patch";
+            case "HEAD":
+                return "head";
+            default:
+                assertNever(method);
+        }
     }
 
     private getSubpackages(): Subpackage[] {
