@@ -1,6 +1,7 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
+use serde_json::Value;
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct MyObject {
-    // TODO: Add fields based on type shape
+    pub unknown: serde_json::Value,
 }

@@ -1,6 +1,9 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct BasicType {
-    // TODO: Add fields based on type shape
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub enum BasicType {
+    #[serde(rename = "primitive")]
+    Primitive,
+    #[serde(rename = "literal")]
+    Literal,
 }

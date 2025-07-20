@@ -1,6 +1,9 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct SinglyLinkedListValue {
-    // TODO: Add fields based on type shape
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub head: Option<NodeId>,
+    pub nodes: HashMap<NodeId, SinglyLinkedListNodeValue>,
 }

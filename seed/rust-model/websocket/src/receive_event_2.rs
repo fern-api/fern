@@ -1,6 +1,8 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct ReceiveEvent2 {
-    // TODO: Add fields based on type shape
+    pub gamma: String,
+    pub delta: i32,
+    pub epsilon: bool,
 }

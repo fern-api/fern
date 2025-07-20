@@ -1,6 +1,9 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct ObjectType {
-    // TODO: Add fields based on type shape
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub enum ObjectType {
+    #[serde(rename = "FOO")]
+    Foo,
+    #[serde(rename = "BAR")]
+    Bar,
 }

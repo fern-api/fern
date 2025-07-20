@@ -1,6 +1,17 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct RecordingResponseNotification {
-    // TODO: Add fields based on type shape
+    #[serde(rename = "submissionId")]
+    pub submission_id: SubmissionId,
+    #[serde(rename = "testCaseId")]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub test_case_id: Option<String>,
+    #[serde(rename = "lineNumber")]
+    pub line_number: i32,
+    #[serde(rename = "lightweightStackInfo")]
+    pub lightweight_stack_info: LightweightStackframeInformation,
+    #[serde(rename = "tracedFile")]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub traced_file: Option<TracedFile>,
 }

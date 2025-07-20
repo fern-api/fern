@@ -8,6 +8,7 @@ import { IntermediateRepresentation, TypeDeclaration } from "@fern-fern/ir-sdk/a
 
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
+import { generateModels } from "./generateModels";
 
 export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfigSchema, ModelGeneratorContext> {
     protected constructContext({
@@ -56,8 +57,8 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
         });
         files.push(libFile);
 
-        // Generate models
-        const modelFiles = this.generateModels(context);
+        // Generate models using the new generator system
+        const modelFiles = generateModels({ context });
         files.push(...modelFiles);
 
         context.project.addSourceFiles(...files);

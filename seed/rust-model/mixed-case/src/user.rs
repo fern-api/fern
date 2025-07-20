@@ -1,6 +1,11 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct User {
-    // TODO: Add fields based on type shape
+    #[serde(rename = "userName")]
+    pub user_name: String,
+    pub metadata_tags: Vec<String>,
+    #[serde(rename = "EXTRA_PROPERTIES")]
+    pub extra_properties: HashMap<String, String>,
 }

@@ -1,6 +1,11 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct ComplexType {
-    // TODO: Add fields based on type shape
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub enum ComplexType {
+    #[serde(rename = "object")]
+    Object,
+    #[serde(rename = "union")]
+    Union,
+    #[serde(rename = "unknown")]
+    Unknown,
 }

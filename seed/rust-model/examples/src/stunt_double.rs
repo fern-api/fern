@@ -1,6 +1,8 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct StuntDouble {
-    // TODO: Add fields based on type shape
+    pub name: String,
+    #[serde(rename = "actorOrActressId")]
+    pub actor_or_actress_id: String,
 }

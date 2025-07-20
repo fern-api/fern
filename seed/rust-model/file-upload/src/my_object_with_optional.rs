@@ -1,6 +1,9 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct MyObjectWithOptional {
-    // TODO: Add fields based on type shape
+    pub prop: String,
+    #[serde(rename = "optionalProp")]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub optional_prop: Option<String>,
 }

@@ -1,6 +1,9 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct NestedUser {
-    // TODO: Add fields based on type shape
+    #[serde(rename = "Name")]
+    pub name: String,
+    #[serde(rename = "NestedUser")]
+    pub nested_user: User,
 }

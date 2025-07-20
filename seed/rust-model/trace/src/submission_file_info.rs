@@ -1,6 +1,8 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct SubmissionFileInfo {
-    // TODO: Add fields based on type shape
+    pub directory: String,
+    pub filename: String,
+    pub contents: String,
 }

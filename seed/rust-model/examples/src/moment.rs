@@ -1,6 +1,12 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
+use chrono::{DateTime, Utc};
+use uuid::Uuid;
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Moment {
-    // TODO: Add fields based on type shape
+    pub id: uuid::Uuid,
+    #[serde(with = "chrono::serde::ts_seconds")]
+    pub date: chrono::NaiveDate,
+    #[serde(with = "chrono::serde::ts_seconds")]
+    pub datetime: chrono::DateTime<chrono::Utc>,
 }

@@ -1,6 +1,8 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Patient {
-    // TODO: Add fields based on type shape
+    pub resource_type: String,
+    pub name: String,
+    pub scripts: Vec<Script>,
 }

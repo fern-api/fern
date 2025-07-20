@@ -1,6 +1,10 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct GradedResponse {
-    // TODO: Add fields based on type shape
+    #[serde(rename = "submissionId")]
+    pub submission_id: SubmissionId,
+    #[serde(rename = "testCases")]
+    pub test_cases: HashMap<String, TestCaseResultWithStdout>,
 }

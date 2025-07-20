@@ -1,6 +1,9 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct TestCaseWithActualResultImplementation {
-    // TODO: Add fields based on type shape
+    #[serde(rename = "getActualResult")]
+    pub get_actual_result: NonVoidFunctionDefinition,
+    #[serde(rename = "assertCorrectnessCheck")]
+    pub assert_correctness_check: AssertCorrectnessCheck,
 }

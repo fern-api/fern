@@ -1,6 +1,14 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
+use chrono::{DateTime, Utc};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct GetSubmissionStateResponse {
-    // TODO: Add fields based on type shape
+    #[serde(rename = "timeSubmitted")]
+    #[serde(with = "chrono::serde::ts_seconds")]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub time_submitted: Option<chrono::DateTime<chrono::Utc>>,
+    pub submission: String,
+    pub language: Language,
+    #[serde(rename = "submissionTypeState")]
+    pub submission_type_state: SubmissionTypeState,
 }

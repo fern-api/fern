@@ -1,6 +1,8 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct StartingAfterPaging {
-    // TODO: Add fields based on type shape
+    pub per_page: i32,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub starting_after: Option<String>,
 }

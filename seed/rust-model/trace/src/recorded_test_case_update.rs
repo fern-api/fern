@@ -1,6 +1,9 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct RecordedTestCaseUpdate {
-    // TODO: Add fields based on type shape
+    #[serde(rename = "testCaseId")]
+    pub test_case_id: TestCaseId,
+    #[serde(rename = "traceResponsesSize")]
+    pub trace_responses_size: i32,
 }

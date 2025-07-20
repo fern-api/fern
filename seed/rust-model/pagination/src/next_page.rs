@@ -1,6 +1,7 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct NextPage {
-    // TODO: Add fields based on type shape
+    pub page: i32,
+    pub starting_after: String,
 }

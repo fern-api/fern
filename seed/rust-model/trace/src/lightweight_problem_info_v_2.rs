@@ -1,6 +1,14 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct LightweightProblemInfoV2 {
-    // TODO: Add fields based on type shape
+    #[serde(rename = "problemId")]
+    pub problem_id: ProblemId,
+    #[serde(rename = "problemName")]
+    pub problem_name: String,
+    #[serde(rename = "problemVersion")]
+    pub problem_version: i32,
+    #[serde(rename = "variableTypes")]
+    pub variable_types: std::collections::HashSet<VariableType>,
 }

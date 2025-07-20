@@ -1,6 +1,9 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct LightweightStackframeInformation {
-    // TODO: Add fields based on type shape
+    #[serde(rename = "numStackFrames")]
+    pub num_stack_frames: i32,
+    #[serde(rename = "topStackFrameMethodName")]
+    pub top_stack_frame_method_name: String,
 }

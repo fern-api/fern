@@ -1,6 +1,9 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct WorkspaceFiles {
-    // TODO: Add fields based on type shape
+    #[serde(rename = "mainFile")]
+    pub main_file: FileInfo,
+    #[serde(rename = "readOnlyFiles")]
+    pub read_only_files: Vec<FileInfo>,
 }

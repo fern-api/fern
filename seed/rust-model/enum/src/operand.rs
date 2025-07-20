@@ -1,6 +1,11 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct Operand {
-    // TODO: Add fields based on type shape
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub enum Operand {
+    #[serde(rename = ">")]
+    GreaterThan,
+    #[serde(rename = "=")]
+    EqualTo,
+    #[serde(rename = "less_than")]
+    LessThan,
 }

@@ -1,6 +1,7 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct WorkspaceTracedUpdate {
-    // TODO: Add fields based on type shape
+    #[serde(rename = "traceResponsesSize")]
+    pub trace_responses_size: i32,
 }

@@ -1,6 +1,8 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct BaseResource {
-    // TODO: Add fields based on type shape
+    pub id: String,
+    pub related_resources: Vec<ResourceList>,
+    pub memo: Memo,
 }

@@ -1,6 +1,9 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct FileInfoV2 {
-    // TODO: Add fields based on type shape
+    pub filename: String,
+    pub directory: String,
+    pub contents: String,
+    pub editable: bool,
 }

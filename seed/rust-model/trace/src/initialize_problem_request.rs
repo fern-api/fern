@@ -1,6 +1,10 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct InitializeProblemRequest {
-    // TODO: Add fields based on type shape
+    #[serde(rename = "problemId")]
+    pub problem_id: ProblemId,
+    #[serde(rename = "problemVersion")]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub problem_version: Option<i32>,
 }

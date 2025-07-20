@@ -1,6 +1,9 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
+use uuid::Uuid;
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct UserPage {
-    // TODO: Add fields based on type shape
+    pub data: UserListContainer,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub next: Option<uuid::Uuid>,
 }

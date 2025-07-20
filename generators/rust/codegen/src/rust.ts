@@ -3,7 +3,15 @@ import {
     Reference,
     Writer,
     AstNode,
-    PrimitiveType
+    PrimitiveType,
+    Attribute,
+    Field,
+    Struct,
+    Enum,
+    EnumVariant,
+    NewtypeStruct,
+    Visibility,
+    PUBLIC
 } from "./ast";
 
 // Factory functions for Type creation
@@ -36,10 +44,58 @@ export function reference(args: { name: string; module?: string; genericArgs?: A
     return new Reference(args);
 }
 
+// Factory functions for new AST nodes
+export function attribute(args: Attribute.Args): Attribute {
+    return new Attribute(args);
+}
+
+export function field(args: Field.Args): Field {
+    return new Field(args);
+}
+
+export function struct(args: Struct.Args): Struct {
+    return new Struct(args);
+}
+
+export function enum_(args: Enum.Args): Enum {
+    return new Enum(args);
+}
+
+export function enumVariant(args: EnumVariant.Args): EnumVariant {
+    return new EnumVariant(args);
+}
+
+export function newtypeStruct(args: NewtypeStruct.Args): NewtypeStruct {
+    return new NewtypeStruct(args);
+}
+
 // Factory function for Writer creation
 export function writer(): Writer {
     return new Writer();
 }
+
+// Convenience object for common patterns
+export const rust = {
+    Type,
+    Reference,
+    Attribute,
+    Field,
+    Struct,
+    Enum,
+    EnumVariant,
+    NewtypeStruct,
+    attribute,
+    field,
+    struct,
+    enum_: enum_,
+    enumVariant,
+    newtypeStruct,
+    writer,
+    visibility: {
+        public: PUBLIC as Visibility,
+        private: { type: "private" } as Visibility
+    }
+};
 
 // Re-export all AST types and utilities
 export * from "./ast"; 

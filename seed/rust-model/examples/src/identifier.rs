@@ -1,6 +1,8 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Identifier {
-    // TODO: Add fields based on type shape
+    pub type: Type,
+    pub value: String,
+    pub label: String,
 }

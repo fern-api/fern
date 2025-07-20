@@ -1,6 +1,11 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct TestCaseV2 {
-    // TODO: Add fields based on type shape
+    pub metadata: TestCaseMetadata,
+    pub implementation: TestCaseImplementationReference,
+    pub arguments: HashMap<ParameterId, VariableValue>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub expects: Option<TestCaseExpects>,
 }

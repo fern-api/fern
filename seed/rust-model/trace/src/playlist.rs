@@ -1,6 +1,8 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Playlist {
-    // TODO: Add fields based on type shape
+    pub playlist_id: PlaylistId,
+    #[serde(rename = "owner-id")]
+    pub owner_id: UserId,
 }

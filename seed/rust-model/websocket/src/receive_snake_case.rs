@@ -1,6 +1,7 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct ReceiveSnakeCase {
-    // TODO: Add fields based on type shape
+    pub receive_text: String,
+    pub receive_int: i32,
 }

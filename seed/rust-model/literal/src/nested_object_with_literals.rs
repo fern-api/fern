@@ -1,6 +1,11 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct NestedObjectWithLiterals {
-    // TODO: Add fields based on type shape
+    #[serde(rename = "literal1")]
+    pub literal_1: String,
+    #[serde(rename = "literal2")]
+    pub literal_2: String,
+    #[serde(rename = "strProp")]
+    pub str_prop: String,
 }

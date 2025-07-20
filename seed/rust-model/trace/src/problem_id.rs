@@ -1,6 +1,4 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct ProblemId {
-    // TODO: Add fields based on type shape
-}
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct ProblemId(pub String);

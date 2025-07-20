@@ -1,6 +1,11 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
+use chrono::{DateTime, Utc};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct TestSubmissionUpdate {
-    // TODO: Add fields based on type shape
+    #[serde(rename = "updateTime")]
+    #[serde(with = "chrono::serde::ts_seconds")]
+    pub update_time: chrono::DateTime<chrono::Utc>,
+    #[serde(rename = "updateInfo")]
+    pub update_info: TestSubmissionUpdateInfo,
 }

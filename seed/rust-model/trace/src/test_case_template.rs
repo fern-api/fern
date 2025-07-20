@@ -1,6 +1,9 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct TestCaseTemplate {
-    // TODO: Add fields based on type shape
+    #[serde(rename = "templateId")]
+    pub template_id: TestCaseTemplateId,
+    pub name: String,
+    pub implementation: TestCaseImplementation,
 }

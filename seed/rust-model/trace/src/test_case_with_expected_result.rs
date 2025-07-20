@@ -1,6 +1,9 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct TestCaseWithExpectedResult {
-    // TODO: Add fields based on type shape
+    #[serde(rename = "testCase")]
+    pub test_case: TestCase,
+    #[serde(rename = "expectedResult")]
+    pub expected_result: VariableValue,
 }

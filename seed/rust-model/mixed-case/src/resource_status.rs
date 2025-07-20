@@ -1,6 +1,9 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct ResourceStatus {
-    // TODO: Add fields based on type shape
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub enum ResourceStatus {
+    #[serde(rename = "ACTIVE")]
+    Active,
+    #[serde(rename = "INACTIVE")]
+    Inactive,
 }

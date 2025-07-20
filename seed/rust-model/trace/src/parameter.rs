@@ -1,6 +1,10 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Parameter {
-    // TODO: Add fields based on type shape
+    #[serde(rename = "parameterId")]
+    pub parameter_id: ParameterId,
+    pub name: String,
+    #[serde(rename = "variableType")]
+    pub variable_type: VariableType,
 }

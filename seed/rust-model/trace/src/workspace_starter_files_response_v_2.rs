@@ -1,6 +1,8 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct WorkspaceStarterFilesResponseV2 {
-    // TODO: Add fields based on type shape
+    #[serde(rename = "filesByLanguage")]
+    pub files_by_language: HashMap<Language, Files>,
 }

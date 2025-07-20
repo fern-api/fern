@@ -1,6 +1,11 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct ExceptionInfo {
-    // TODO: Add fields based on type shape
+    #[serde(rename = "exceptionType")]
+    pub exception_type: String,
+    #[serde(rename = "exceptionMessage")]
+    pub exception_message: String,
+    #[serde(rename = "exceptionStacktrace")]
+    pub exception_stacktrace: String,
 }

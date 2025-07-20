@@ -1,6 +1,8 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
+use serde_json::Value;
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Metadata {
-    // TODO: Add fields based on type shape
+    pub id: Id,
+    pub value: serde_json::Value,
 }

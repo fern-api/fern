@@ -1,6 +1,9 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct WorkspaceRanResponse {
-    // TODO: Add fields based on type shape
+    #[serde(rename = "submissionId")]
+    pub submission_id: SubmissionId,
+    #[serde(rename = "runDetails")]
+    pub run_details: WorkspaceRunDetails,
 }

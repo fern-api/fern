@@ -1,6 +1,7 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct ReceiveEvent3 {
-    // TODO: Add fields based on type shape
+    #[serde(rename = "receiveText3")]
+    pub receive_text_3: String,
 }

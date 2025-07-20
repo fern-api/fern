@@ -1,6 +1,9 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Metadata {
-    // TODO: Add fields based on type shape
+    pub id: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub data: Option<HashMap<String, String>>,
 }

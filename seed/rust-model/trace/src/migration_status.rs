@@ -1,6 +1,11 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct MigrationStatus {
-    // TODO: Add fields based on type shape
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub enum MigrationStatus {
+    #[serde(rename = "RUNNING")]
+    Running,
+    #[serde(rename = "FAILED")]
+    Failed,
+    #[serde(rename = "FINISHED")]
+    Finished,
 }

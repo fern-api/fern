@@ -1,6 +1,8 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Dog {
-    // TODO: Add fields based on type shape
+    pub name: String,
+    #[serde(rename = "likesToWoof")]
+    pub likes_to_woof: bool,
 }

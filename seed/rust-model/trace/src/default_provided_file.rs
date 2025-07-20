@@ -1,6 +1,8 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct DefaultProvidedFile {
-    // TODO: Add fields based on type shape
+    pub file: FileInfoV2,
+    #[serde(rename = "relatedTypes")]
+    pub related_types: Vec<VariableType>,
 }

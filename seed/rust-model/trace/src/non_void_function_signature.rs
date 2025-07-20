@@ -1,6 +1,8 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct NonVoidFunctionSignature {
-    // TODO: Add fields based on type shape
+    pub parameters: Vec<Parameter>,
+    #[serde(rename = "returnType")]
+    pub return_type: VariableType,
 }

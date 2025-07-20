@@ -1,6 +1,12 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct TestSubmissionStatusV2 {
-    // TODO: Add fields based on type shape
+    pub updates: Vec<TestSubmissionUpdate>,
+    #[serde(rename = "problemId")]
+    pub problem_id: ProblemId,
+    #[serde(rename = "problemVersion")]
+    pub problem_version: i32,
+    #[serde(rename = "problemInfo")]
+    pub problem_info: ProblemInfoV2,
 }

@@ -1,6 +1,11 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct Language {
-    // TODO: Add fields based on type shape
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub enum Language {
+    #[serde(rename = "JAVA")]
+    Java,
+    #[serde(rename = "JAVASCRIPT")]
+    Javascript,
+    #[serde(rename = "PYTHON")]
+    Python,
 }

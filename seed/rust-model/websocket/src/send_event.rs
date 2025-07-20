@@ -1,6 +1,9 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct SendEvent {
-    // TODO: Add fields based on type shape
+    #[serde(rename = "sendText")]
+    pub send_text: String,
+    #[serde(rename = "sendParam")]
+    pub send_param: i32,
 }

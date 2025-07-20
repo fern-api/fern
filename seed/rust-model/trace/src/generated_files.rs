@@ -1,6 +1,11 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct GeneratedFiles {
-    // TODO: Add fields based on type shape
+    #[serde(rename = "generatedTestCaseFiles")]
+    pub generated_test_case_files: HashMap<Language, Files>,
+    #[serde(rename = "generatedTemplateFiles")]
+    pub generated_template_files: HashMap<Language, Files>,
+    pub other: HashMap<Language, Files>,
 }

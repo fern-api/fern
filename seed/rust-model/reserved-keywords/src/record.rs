@@ -1,6 +1,9 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Record {
-    // TODO: Add fields based on type shape
+    pub foo: HashMap<String, String>,
+    #[serde(rename = "3d")]
+    pub 3_d: i32,
 }

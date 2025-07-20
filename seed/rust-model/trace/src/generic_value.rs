@@ -1,6 +1,10 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct GenericValue {
-    // TODO: Add fields based on type shape
+    #[serde(rename = "stringifiedType")]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub stringified_type: Option<String>,
+    #[serde(rename = "stringifiedValue")]
+    pub stringified_value: String,
 }

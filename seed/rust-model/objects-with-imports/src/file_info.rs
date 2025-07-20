@@ -1,6 +1,9 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct FileInfo {
-    // TODO: Add fields based on type shape
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub enum FileInfo {
+    #[serde(rename = "REGULAR")]
+    Regular,
+    #[serde(rename = "DIRECTORY")]
+    Directory,
 }

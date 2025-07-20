@@ -1,6 +1,11 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct ErrorCategory {
-    // TODO: Add fields based on type shape
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub enum ErrorCategory {
+    #[serde(rename = "API_ERROR")]
+    ApiError,
+    #[serde(rename = "AUTHENTICATION_ERROR")]
+    AuthenticationError,
+    #[serde(rename = "INVALID_REQUEST_ERROR")]
+    InvalidRequestError,
 }

@@ -1,6 +1,9 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct BinaryTreeNodeAndTreeValue {
-    // TODO: Add fields based on type shape
+    #[serde(rename = "nodeId")]
+    pub node_id: NodeId,
+    #[serde(rename = "fullTree")]
+    pub full_tree: BinaryTreeValue,
 }

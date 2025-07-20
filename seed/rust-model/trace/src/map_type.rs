@@ -1,6 +1,9 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct MapType {
-    // TODO: Add fields based on type shape
+    #[serde(rename = "keyType")]
+    pub key_type: VariableType,
+    #[serde(rename = "valueType")]
+    pub value_type: VariableType,
 }

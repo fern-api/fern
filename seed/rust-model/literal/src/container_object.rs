@@ -1,6 +1,7 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct ContainerObject {
-    // TODO: Add fields based on type shape
+    #[serde(rename = "nestedObjects")]
+    pub nested_objects: Vec<NestedObjectWithLiterals>,
 }
