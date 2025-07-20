@@ -1,3 +1,11 @@
+- version: 2.38.6
+  changelogEntry:
+    - summary: |
+        Add explicit type to pagination lambda parameters
+      type: fix
+  createdAt: '2025-07-21'
+  irVersion: 58
+
 - version: 2.38.5
   changelogEntry:
     - summary: |

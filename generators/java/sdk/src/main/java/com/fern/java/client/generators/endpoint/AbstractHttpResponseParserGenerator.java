@@ -1219,7 +1219,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                         numberTypeName,
                         variables.getNewPageNumberVariableName(),
                         newNumberGetter,
-                        lambdaParamType, // Use boxed type for lambda parameter
+                        lambdaParamType,
                         one,
                         one));
             } else {
