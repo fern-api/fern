@@ -7,6 +7,8 @@ import { generateSwiftTypeForTypeReference } from "@fern-api/swift-model";
 import { HttpEndpoint, HttpMethod, HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { formatEndpointPathForSwift } from "./util/format-endpoint-path-for-swift";
+import { parseEndpointPath } from "./util/parse-endpoint-path";
 
 export declare namespace SubClientGenerator {
     interface Args {
@@ -102,9 +104,25 @@ export class SubClientGenerator {
     }
 
     private getMethodParametersForEndpoint(endpoint: HttpEndpoint): swift.FunctionParameter[] {
-        const params = [
-            // TODO(kafkas): Implement
+        const params: swift.FunctionParameter[] = [];
 
+        const { pathParts } = parseEndpointPath(endpoint);
+
+        pathParts.forEach((pathPart) => {
+            if (pathPart.type === "path-parameter") {
+                params.push(
+                    swift.functionParameter({
+                        argumentLabel: pathPart.unsafeNameCamelCase,
+                        unsafeName: pathPart.unsafeNameCamelCase,
+                        type: swift.Type.custom("String")
+                    })
+                );
+            }
+        });
+
+        // TODO(kafkas): Implement
+
+        params.push(
             swift.functionParameter({
                 argumentLabel: "requestOptions",
                 unsafeName: "requestOptions",
@@ -112,7 +130,8 @@ export class SubClientGenerator {
                 optional: true,
                 defaultValue: swift.Expression.rawValue("nil")
             })
-        ];
+        );
+
         return params;
     }
 
@@ -138,7 +157,7 @@ export class SubClientGenerator {
             }),
             swift.functionArgument({
                 label: "path",
-                value: swift.Expression.rawStringValue(this.getEndpointPath(endpoint))
+                value: swift.Expression.rawStringValue(formatEndpointPathForSwift(endpoint))
             }),
 
             // TODO(kafkas): Add `headers`
@@ -165,10 +184,6 @@ export class SubClientGenerator {
                 )
             )
         ]);
-    }
-
-    private getEndpointPath(endpoint: HttpEndpoint): string {
-        return endpoint.fullPath.parts.map((part) => [part.pathParameter, part.tail].join("/")).join("/");
     }
 
     private getEnumCaseNameForHttpMethod(method: HttpMethod): string {
