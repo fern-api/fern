@@ -514,19 +514,50 @@ export abstract class AbstractConverterContext<Spec extends object> {
             schema = resolved.value;
         }
 
-        if (schema.readOnly && schema.writeOnly) {
+        // Check for readOnly/writeOnly in the current schema and any allOf schemas
+        const { readOnly, writeOnly } = this.getReadOnlyWriteOnlyFromSchema(schema);
+
+        if (readOnly && writeOnly) {
             return undefined;
         }
 
-        if (schema.readOnly) {
+        if (readOnly) {
             return ObjectPropertyAccess.ReadOnly;
         }
 
-        if (schema.writeOnly) {
+        if (writeOnly) {
             return ObjectPropertyAccess.WriteOnly;
         }
 
         return undefined;
+    }
+
+    private getReadOnlyWriteOnlyFromSchema(schema: OpenAPIV3_1.SchemaObject): { readOnly: boolean; writeOnly: boolean } {
+        let readOnly = Boolean(schema.readOnly);
+        let writeOnly = Boolean(schema.writeOnly);
+
+        // Check allOf schemas for readOnly/writeOnly properties
+        if (schema.allOf) {
+            for (const allOfSchema of schema.allOf) {
+                let resolvedAllOfSchema = allOfSchema;
+                
+                // Resolve reference if needed
+                if (this.isReferenceObject(allOfSchema)) {
+                    const resolved = this.resolveReference<OpenAPIV3_1.SchemaObject>({ reference: allOfSchema });
+                    if (!resolved.resolved) {
+                        continue;
+                    }
+                    resolvedAllOfSchema = resolved.value;
+                }
+
+                // Recursively check for readOnly/writeOnly in allOf schemas
+                const allOfResult = this.getReadOnlyWriteOnlyFromSchema(resolvedAllOfSchema);
+                readOnly = readOnly || allOfResult.readOnly;
+                writeOnly = writeOnly || allOfResult.writeOnly;
+            }
+        }
+
+        return { readOnly, writeOnly };
     }
 
     public getAudiences({
