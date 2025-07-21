@@ -33,6 +33,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
+// Get event metadata.
 func (c *Client) GetMetadata(
 	ctx context.Context,
 	request *events.GetEventMetadataRequest,

@@ -33,6 +33,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
+// Retrieve a user.
+// This endpoint is used to retrieve a user.
 func (c *Client) GetUser(
 	ctx context.Context,
 	// The ID of the user to retrieve.
@@ -51,6 +53,8 @@ func (c *Client) GetUser(
 	return nil
 }
 
+// Create a new user.
+// This endpoint is used to create a new user.
 func (c *Client) CreateUser(
 	ctx context.Context,
 	request *fern.CreateUserRequest,

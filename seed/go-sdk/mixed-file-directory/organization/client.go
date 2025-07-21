@@ -33,6 +33,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
+// Create a new organization.
 func (c *Client) Create(
 	ctx context.Context,
 	request *fern.CreateOrganizationRequest,

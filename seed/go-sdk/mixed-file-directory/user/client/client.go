@@ -36,6 +36,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
+// List all users.
 func (c *Client) List(
 	ctx context.Context,
 	request *fern.ListUsersRequest,

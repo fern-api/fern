@@ -36,6 +36,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
+// GET request with custom api key
 func (c *Client) GetWithBearerToken(
 	ctx context.Context,
 	opts ...option.RequestOption,

@@ -33,6 +33,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
+// Add a movie to the database
 func (c *Client) CreateMovie(
 	ctx context.Context,
 	request *fern.CreateMovieRequest,

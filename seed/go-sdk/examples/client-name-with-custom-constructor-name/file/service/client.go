@@ -34,6 +34,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
+// This endpoint returns a file by its name.
 func (c *Client) GetFile(
 	ctx context.Context,
 	// This is a filename

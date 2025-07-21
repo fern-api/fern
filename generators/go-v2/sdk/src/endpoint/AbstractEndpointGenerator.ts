@@ -158,6 +158,7 @@ export abstract class AbstractEndpointGenerator {
 
     private getSingleFileParameter({ fileProperty }: { fileProperty: FilePropertySingle }): go.Parameter {
         return go.parameter({
+            docs: fileProperty.docs,
             type: go.Type.reference(this.context.getIoReaderTypeReference()),
             name: this.context.getParameterName(fileProperty.key.name)
         });
@@ -165,6 +166,7 @@ export abstract class AbstractEndpointGenerator {
 
     private getFileArrayParameter({ fileProperty }: { fileProperty: FilePropertyArray }): go.Parameter {
         return go.parameter({
+            docs: fileProperty.docs,
             type: go.Type.slice(go.Type.reference(this.context.getIoReaderTypeReference())),
             name: this.context.getParameterName(fileProperty.key.name)
         });

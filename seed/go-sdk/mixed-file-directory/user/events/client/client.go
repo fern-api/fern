@@ -36,6 +36,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
+// List all user events.
 func (c *Client) ListEvents(
 	ctx context.Context,
 	request *user.ListUserEventsRequest,

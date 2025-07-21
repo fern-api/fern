@@ -32,6 +32,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
+// GET request with custom auth scheme
 func (c *Client) GetWithCustomAuth(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -46,6 +47,7 @@ func (c *Client) GetWithCustomAuth(
 	return response.Body, nil
 }
 
+// POST request with custom auth scheme
 func (c *Client) PostWithCustomAuth(
 	ctx context.Context,
 	request any,

@@ -32,6 +32,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
+// GET request that always throws an error
 func (c *Client) ThrowError(
 	ctx context.Context,
 	opts ...option.RequestOption,

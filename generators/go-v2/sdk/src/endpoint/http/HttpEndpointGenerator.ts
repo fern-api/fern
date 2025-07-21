@@ -18,8 +18,6 @@ import {
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
 import { EndpointSignatureInfo } from "../EndpointSignatureInfo";
-import { EndpointRequest } from "../request/EndpointRequest";
-import { getEndpointRequest } from "../utils/getEndpointRequest";
 import { getPaginationInfo } from "../utils/getPaginationInfo";
 
 export declare namespace HttpEndpointGenerator {
@@ -73,7 +71,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 fernFilepath: service.name.fernFilepath,
                 subpackage
             }),
-            pointerReceiver: true
+            pointerReceiver: true,
+            docs: endpoint.docs
         });
     }
 

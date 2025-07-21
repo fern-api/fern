@@ -32,6 +32,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
+// GET request with basic auth scheme
 func (c *Client) GetWithBasicAuth(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -46,6 +47,7 @@ func (c *Client) GetWithBasicAuth(
 	return response.Body, nil
 }
 
+// POST request with basic auth scheme
 func (c *Client) PostWithBasicAuth(
 	ctx context.Context,
 	request any,

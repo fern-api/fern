@@ -43,6 +43,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
+// GET request with custom api key
 func (c *Client) GetWithApiKey(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -57,6 +58,7 @@ func (c *Client) GetWithApiKey(
 	return response.Body, nil
 }
 
+// GET request with custom api key
 func (c *Client) GetWithHeader(
 	ctx context.Context,
 	request *fern.HeaderAuthRequest,

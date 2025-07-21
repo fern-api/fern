@@ -32,6 +32,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
+// This endpoint checks the health of a resource.
 func (c *Client) Check(
 	ctx context.Context,
 	// The id to check
@@ -49,6 +50,7 @@ func (c *Client) Check(
 	return nil
 }
 
+// This endpoint checks the health of the service.
 func (c *Client) Ping(
 	ctx context.Context,
 	opts ...option.RequestOption,
