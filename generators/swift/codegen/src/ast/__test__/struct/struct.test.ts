@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
 
-import { swift } from "../..";
-import { AccessLevel } from "../AccessLevel";
-import { DeclarationType } from "../DeclarationType";
-import { Type } from "../Type";
+import { swift } from "../../..";
+import { AccessLevel } from "../../AccessLevel";
+import { DeclarationType } from "../../DeclarationType";
+import { Type } from "../../Type";
 
 describe("Struct", () => {
     describe("write", () => {

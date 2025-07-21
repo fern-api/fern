@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { swift } from "../..";
+import { swift } from "../../..";
 
 describe("Expression", () => {
     describe("functionCall multiline vs single-line", () => {
