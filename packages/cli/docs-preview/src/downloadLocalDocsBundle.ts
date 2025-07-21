@@ -207,12 +207,12 @@ export async function downloadBundle({
             try {
                 await loggingExeca(logger, PLATFORM_IS_WINDOWS ? "where" : "which", ["pnpm"], {
                     cwd: absolutePathToBundleFolder,
-                    doNotPipeOutput: false
+                    doNotPipeOutput: true
                 });
             } catch (error) {
                 logger.debug("pnpm not found, installing pnpm");
                 await loggingExeca(logger, "npm", ["install", "-g", "pnpm"], {
-                    doNotPipeOutput: false
+                    doNotPipeOutput: true
                 });
             }
 
@@ -220,7 +220,7 @@ export async function downloadBundle({
             try {
                 await loggingExeca(logger, PLATFORM_IS_WINDOWS ? "where" : "which", ["pnpm"], {
                     cwd: absolutePathToBundleFolder,
-                    doNotPipeOutput: false
+                    doNotPipeOutput: true
                 });
             } catch (error) {
                 throw new Error(
@@ -233,10 +233,35 @@ export async function downloadBundle({
                 logger.debug("Installing esbuild");
                 await loggingExeca(logger, "pnpm", ["i", "esbuild"], {
                     cwd: absolutePathToBundleFolder,
-                    doNotPipeOutput: false
+                    doNotPipeOutput: true
                 });
             } catch (error) {
-                throw contactFernSupportError(`Failed to install required package due to error: ${error}`);
+                if (error instanceof Error) {
+                    // If error message contains "Cannot find matching keyid:", try to upgrade corepack
+                    if (typeof error?.message === "string" && error.message.includes("Cannot find matching keyid:")) {
+                        logger.debug("Encountered 'Cannot find matching keyid:', attempting to upgrade corepack");
+                        try {
+                            await loggingExeca(logger, "npm", ["install", "-g", "corepack@latest"], {
+                                doNotPipeOutput: true
+                            });
+                        } catch (corepackError) {
+                            throw contactFernSupportError(`Failed to update corepack due to error: ${corepackError}`);
+                        }
+                        try {
+                            // Try installing esbuild again after upgrading corepack
+                            await loggingExeca(logger, "pnpm", ["i", "esbuild"], {
+                                cwd: absolutePathToBundleFolder,
+                                doNotPipeOutput: true
+                            });
+                        } catch (installError) {
+                            throw contactFernSupportError(
+                                `Failed to install required package after updating corepack due to error: ${installError}`
+                            );
+                        }
+                    }
+                } else {
+                    throw contactFernSupportError(`Failed to install required package due to error: ${error}.`);
+                }
             }
 
             try {
@@ -244,7 +269,7 @@ export async function downloadBundle({
                 logger.debug("Resolve esbuild imports");
                 await loggingExeca(logger, "node", ["install-esbuild.js"], {
                     cwd: absolutePathToBundleFolder,
-                    doNotPipeOutput: false
+                    doNotPipeOutput: true
                 });
             } catch (error) {
                 throw contactFernSupportError(`Failed to resolve imports due to error: ${error}`);
@@ -291,7 +316,7 @@ export async function downloadBundle({
                     logger.debug("Running pnpm install within standalone");
                     await loggingExeca(logger, "pnpm", ["install"], {
                         cwd: absPathToStandalone,
-                        doNotPipeOutput: false
+                        doNotPipeOutput: true
                     });
                 } catch (error) {
                     throw contactFernSupportError(`Failed to install required package due to error: ${error}`);
