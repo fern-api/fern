@@ -3,13 +3,14 @@ import type { EnumWithRawValues } from "./EnumWithRawValues";
 import { Initializer } from "./Initializer";
 import { Method } from "./Method";
 import { Property } from "./Property";
+import { Protocol } from "./Protocol";
 import { AstNode, Writer } from "./core";
 
 export declare namespace Struct {
     interface Args {
         name: string;
         accessLevel?: AccessLevel;
-        conformances?: string[];
+        conformances?: Protocol[];
         properties: Property[];
         initializers?: Initializer[];
         nestedTypes?: (Struct | EnumWithRawValues)[];

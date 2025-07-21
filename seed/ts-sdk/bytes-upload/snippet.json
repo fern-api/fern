@@ -1,4 +1,16 @@
 {
-    "endpoints": [],
+    "endpoints": [
+        {
+            "id": {
+                "path": "/upload-content",
+                "method": "POST",
+                "identifier_override": "endpoint_service.upload"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { createReadStream } from \"fs\";\nimport { SeedBytesUploadClient } from \"@fern/bytes-upload\";\n\nconst client = new SeedBytesUploadClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.upload(createReadStream(\"path/to/file\"));\n"
+            }
+        }
+    ],
     "types": {}
 }

@@ -1,17 +1,17 @@
 import { mkdir } from "fs/promises";
 
 import { AbstractProject } from "@fern-api/base-generator";
-import { RelativeFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 import { BaseSwiftCustomConfigSchema } from "@fern-api/swift-codegen";
 
 import { AbstractSwiftGeneratorContext } from "../context/AbstractSwiftGeneratorContext";
 import { SwiftFile } from "./SwiftFile";
 
-const SRC_DIRECTORY_NAME = "src";
+const SRC_DIRECTORY_NAME = "Sources";
 
 export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<BaseSwiftCustomConfigSchema>> {
-    private name: string;
-    private sourceFiles: SwiftFile[] = [];
+    private readonly name: string;
+    private readonly sourceFiles: SwiftFile[] = [];
 
     public constructor({
         context,
@@ -24,12 +24,8 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
         this.name = name;
     }
 
-    public get sourceFileDirectory(): RelativeFilePath {
-        return RelativeFilePath.of(SRC_DIRECTORY_NAME);
-    }
-
-    public get projectDirectory(): RelativeFilePath {
-        return join(this.sourceFileDirectory, RelativeFilePath.of(this.name));
+    public get absolutePathToSrcDirectory(): AbsoluteFilePath {
+        return join(this.absolutePathToOutputDirectory, RelativeFilePath.of(SRC_DIRECTORY_NAME));
     }
 
     public addSourceFiles(...files: SwiftFile[]): void {
@@ -37,14 +33,9 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
     }
 
     public async persist(): Promise<void> {
-        const absolutePathToSrcDirectory = join(this.absolutePathToOutputDirectory, this.sourceFileDirectory);
+        const { absolutePathToSrcDirectory } = this;
         this.context.logger.debug(`mkdir ${absolutePathToSrcDirectory}`);
         await mkdir(absolutePathToSrcDirectory, { recursive: true });
-
-        const absolutePathToProjectDirectory = join(absolutePathToSrcDirectory, RelativeFilePath.of(this.name));
-        this.context.logger.debug(`mkdir ${absolutePathToProjectDirectory}`);
-        await mkdir(absolutePathToProjectDirectory, { recursive: true });
-
-        await Promise.all(this.sourceFiles.map((file) => file.write(absolutePathToProjectDirectory)));
+        await Promise.all(this.sourceFiles.map((file) => file.write(absolutePathToSrcDirectory)));
     }
 }
