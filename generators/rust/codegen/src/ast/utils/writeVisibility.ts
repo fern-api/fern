@@ -16,4 +16,4 @@ export function writeVisibility(writer: Writer, visibility: Visibility): void {
             // Don't write anything for private
             break;
     }
-} 
+}
