@@ -3,6 +3,7 @@ import { Writer } from "./Writer";
 import { Type } from "./Type";
 import { Attribute } from "./Attribute";
 import { Visibility } from "./types";
+import { writeVisibility } from "./utils/writeVisibility";
 
 export declare namespace Field {
     interface Args {
@@ -41,7 +42,7 @@ export class Field extends AstNode {
 
         // Write visibility
         if (this.visibility) {
-            this.writeVisibility(writer, this.visibility);
+            writeVisibility(writer, this.visibility);
             writer.write(" ");
         }
 
@@ -49,22 +50,5 @@ export class Field extends AstNode {
         writer.write(`${this.name}: `);
         this.type.write(writer);
         writer.write(",");
-    }
-
-    private writeVisibility(writer: Writer, visibility: Visibility): void {
-        switch (visibility.type) {
-            case "public":
-                writer.write("pub");
-                break;
-            case "pub_crate":
-                writer.write("pub(crate)");
-                break;
-            case "pub_super":
-                writer.write("pub(super)");
-                break;
-            case "private":
-                // Don't write anything for private
-                break;
-        }
     }
 }
