@@ -863,7 +863,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
     private addHeaderValue({ wireValue, value }: { wireValue: string; value: go.AstNode }): go.CodeBlock {
         return go.codeblock((writer) => {
-            writer.newLine();
+            writer.writeNewLineIfLastLineNot();
             writer.write(`headers.Add("${wireValue}", `);
             writer.writeNode(value);
             writer.write(")");
@@ -872,14 +872,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
     private addQueryValue({ wireValue, value }: { wireValue: string; value: string }): go.CodeBlock {
         return go.codeblock((writer) => {
-            writer.newLine();
+            writer.writeNewLineIfLastLineNot();
             writer.write(`queryParams.Add("${wireValue}", "${value}")`);
         });
     }
 
     private setHeaderValue({ wireValue, value }: { wireValue: string; value: string }): go.CodeBlock {
         return go.codeblock((writer) => {
-            writer.newLine();
+            writer.writeNewLineIfLastLineNot();
             writer.write(`headers.Add("${wireValue}", "${value}")`);
         });
     }

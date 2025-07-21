@@ -228,9 +228,25 @@ export abstract class AbstractGoGeneratorContext<
                 }
                 break;
             }
+            case "container":
+                const containerType = typeReference.container;
+                switch (containerType.type) {
+                    case "optional":
+                        return this.needsOptionalDereference(containerType.optional);
+                    case "nullable":
+                        return this.needsOptionalDereference(containerType.nullable);
+                    case "literal":
+                        return true;
+                    case "list":
+                    case "set":
+                    case "map":
+                        return false;
+                    default:
+                        assertNever(containerType);
+                }
+                break;
             case "primitive":
                 return true;
-            case "container":
             case "unknown":
                 return false;
             default:
