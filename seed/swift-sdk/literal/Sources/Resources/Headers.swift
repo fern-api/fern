@@ -9,7 +9,10 @@ public final class HeadersClient: Sendable {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/headers", 
-            headers: [:], 
+            headers: [
+                "endpointVersion": endpointVersion, 
+                "async": async
+            ], 
             requestOptions: requestOptions
         )
     }

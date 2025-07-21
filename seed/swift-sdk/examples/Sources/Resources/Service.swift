@@ -25,7 +25,9 @@ public final class ServiceClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/metadata", 
-            headers: [:], 
+            headers: [
+                "X-API-Version": xApiVersion
+            ], 
             requestOptions: requestOptions
         )
     }

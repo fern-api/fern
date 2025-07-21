@@ -190,8 +190,13 @@ export class SubClientGenerator {
             arguments_.push(
                 swift.functionArgument({
                     label: "headers",
-                    // TODO(kafkas): Implement
-                    value: swift.Expression.rawValue("[:]")
+                    value: swift.Expression.dictionaryLiteral({
+                        entries: endpoint.headers.map((header) => [
+                            swift.Expression.rawStringValue(header.name.name.originalName),
+                            swift.Expression.reference(header.name.name.camelCase.unsafeName)
+                        ]),
+                        multiline: true
+                    })
                 })
             );
         }

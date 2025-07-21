@@ -9,7 +9,9 @@ public final class MigrationClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/migration-info/all", 
-            headers: [:], 
+            headers: [
+                "admin-key-header": adminKeyHeader
+            ], 
             requestOptions: requestOptions
         )
     }

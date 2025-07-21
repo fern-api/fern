@@ -9,7 +9,9 @@ public final class ReqWithHeadersClient: Sendable {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/test-headers/custom-header", 
-            headers: [:], 
+            headers: [
+                "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader
+            ], 
             requestOptions: requestOptions
         )
     }
