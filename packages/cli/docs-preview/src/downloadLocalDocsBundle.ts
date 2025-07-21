@@ -12,7 +12,7 @@ import { loggingExeca } from "@fern-api/logging-execa";
 const PLATFORM_IS_WINDOWS = process.platform === "win32";
 const ETAG_FILENAME = "etag";
 const PREVIEW_FOLDER_NAME = "preview";
-const APP_PREVIEW_FOLDER_NAME = "app-preview-fernlocal";
+const APP_PREVIEW_FOLDER_NAME = "app-preview";
 const BUNDLE_FOLDER_NAME = "bundle";
 const NEXT_BUNDLE_FOLDER_NAME = ".next";
 const STANDALONE_FOLDER_NAME = "standalone";
@@ -236,7 +236,7 @@ export async function downloadBundle({
                     doNotPipeOutput: true
                 });
             } catch (error) {
-                throw contactFernSupportError("Failed to install required package.");
+                throw contactFernSupportError(`Failed to install required package due to error: ${error}`);
             }
 
             try {
@@ -247,7 +247,7 @@ export async function downloadBundle({
                     doNotPipeOutput: true
                 });
             } catch (error) {
-                throw contactFernSupportError("Failed to resolve imports.");
+                throw contactFernSupportError(`Failed to resolve imports due to error: ${error}`);
             }
 
             if (PLATFORM_IS_WINDOWS) {
