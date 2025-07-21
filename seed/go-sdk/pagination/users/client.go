@@ -72,7 +72,6 @@ func (c *Client) ListWithCursorPagination(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			Request:         request,
 			Response:        pageRequest.Response,
 		}
 	}
@@ -130,7 +129,6 @@ func (c *Client) ListWithMixedTypeCursorPagination(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			Request:         request,
 			Response:        pageRequest.Response,
 		}
 	}
@@ -204,7 +202,6 @@ func (c *Client) ListWithOffsetPagination(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			Request:         request,
 			Response:        pageRequest.Response,
 		}
 	}
@@ -265,7 +262,6 @@ func (c *Client) ListWithDoubleOffsetPagination(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			Request:         request,
 			Response:        pageRequest.Response,
 		}
 	}
@@ -342,7 +338,6 @@ func (c *Client) ListWithOffsetStepPagination(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			Request:         request,
 			Response:        pageRequest.Response,
 		}
 	}
@@ -403,7 +398,6 @@ func (c *Client) ListWithOffsetPaginationHasNextPage(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			Request:         request,
 			Response:        pageRequest.Response,
 		}
 	}
@@ -464,7 +458,6 @@ func (c *Client) ListWithExtendedResults(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			Request:         request,
 			Response:        pageRequest.Response,
 		}
 	}
@@ -522,7 +515,6 @@ func (c *Client) ListWithExtendedResultsAndOptionalData(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			Request:         request,
 			Response:        pageRequest.Response,
 		}
 	}
@@ -580,7 +572,6 @@ func (c *Client) ListUsernames(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			Request:         request,
 			Response:        pageRequest.Response,
 		}
 	}
@@ -641,7 +632,6 @@ func (c *Client) ListWithGlobalConfig(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			Request:         request,
 			Response:        pageRequest.Response,
 		}
 	}

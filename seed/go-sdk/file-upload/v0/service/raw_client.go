@@ -183,7 +183,6 @@ func (r *RawClient) JustFile(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			Request:         writer.Buffer(),
 		},
 	)
 	if err != nil {
