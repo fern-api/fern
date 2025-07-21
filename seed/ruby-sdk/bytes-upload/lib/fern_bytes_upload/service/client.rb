@@ -17,6 +17,9 @@ module SeedBytesUploadClient
     # @param request [String, IO] Base64 encoded bytes, or an IO object (e.g. Faraday::UploadIO, etc.)
     # @param request_options [SeedBytesUploadClient::RequestOptions]
     # @return [Void]
+    # @example
+    #  bytes_upload = SeedBytesUploadClient::Client.new(base_url: "https://api.example.com")
+    #  bytes_upload.service.upload
     def upload(request:, request_options: nil)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -48,6 +51,9 @@ module SeedBytesUploadClient
     # @param request [String, IO] Base64 encoded bytes, or an IO object (e.g. Faraday::UploadIO, etc.)
     # @param request_options [SeedBytesUploadClient::RequestOptions]
     # @return [Void]
+    # @example
+    #  bytes_upload = SeedBytesUploadClient::Client.new(base_url: "https://api.example.com")
+    #  bytes_upload.service.upload
     def upload(request:, request_options: nil)
       Async do
         @request_client.conn.post do |req|

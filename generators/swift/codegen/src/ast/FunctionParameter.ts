@@ -1,3 +1,4 @@
+import { Expression } from "./Expression";
 import { Type } from "./Type";
 import { AstNode, Writer } from "./core";
 
@@ -9,7 +10,7 @@ export declare namespace FunctionParameter {
         unsafeName: string;
         type: Type;
         optional?: boolean;
-        defaultRawValue?: string;
+        defaultValue?: Expression;
     }
 }
 
@@ -18,15 +19,15 @@ export class FunctionParameter extends AstNode {
     public readonly unsafeName: string;
     public readonly type: Type;
     public readonly optional?: boolean;
-    public readonly defaultRawValue?: string;
+    public readonly defaultValue?: Expression;
 
-    constructor({ argumentLabel, unsafeName, type, optional, defaultRawValue }: FunctionParameter.Args) {
+    constructor({ argumentLabel, unsafeName, type, optional, defaultValue }: FunctionParameter.Args) {
         super();
         this.argumentLabel = argumentLabel;
         this.unsafeName = unsafeName;
         this.type = type;
         this.optional = optional;
-        this.defaultRawValue = defaultRawValue;
+        this.defaultValue = defaultValue;
     }
 
     public write(writer: Writer): void {
@@ -43,9 +44,9 @@ export class FunctionParameter extends AstNode {
         if (this.optional) {
             writer.write("?");
         }
-        if (this.defaultRawValue != null) {
+        if (this.defaultValue != null) {
             writer.write(" = ");
-            writer.write(this.defaultRawValue);
+            this.defaultValue.write(writer);
         }
     }
 }

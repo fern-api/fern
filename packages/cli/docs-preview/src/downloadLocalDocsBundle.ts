@@ -3,46 +3,68 @@ import { mkdir, readFile, rm, writeFile } from "fs/promises";
 import { homedir } from "os";
 import tmp from "tmp-promise";
 import xml2js from "xml2js";
+import fs from "fs";
 
 import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
 
+const PLATFORM_IS_WINDOWS = process.platform === "win32";
 const ETAG_FILENAME = "etag";
 const PREVIEW_FOLDER_NAME = "preview";
-const APP_PREVIEW_FOLDER_NAME = "app-preview";
+const APP_PREVIEW_FOLDER_NAME = "app-preview-fernlocal";
 const BUNDLE_FOLDER_NAME = "bundle";
 const NEXT_BUNDLE_FOLDER_NAME = ".next";
+const STANDALONE_FOLDER_NAME = "standalone";
 const LOCAL_STORAGE_FOLDER = process.env.LOCAL_STORAGE_FOLDER ?? ".fern";
+
+// Const for windows post-processing
+const INSTRUMENTATION_PATH = "packages/fern-docs/bundle/.next/server/instrumentation.js";
+const NPMRC_NAME = ".npmrc";
+const PNPMFILE_CJS_NAME = ".pnpmfile.cjs";
+const PNPM_WORKSPACE_YAML_NAME = "pnpm-workspace.yaml";
 
 export function getLocalStorageFolder(): AbsoluteFilePath {
     return join(AbsoluteFilePath.of(homedir()), RelativeFilePath.of(LOCAL_STORAGE_FOLDER));
 }
 
 export function getPathToPreviewFolder({ app = false }: { app?: boolean }): AbsoluteFilePath {
-    return join(
-        AbsoluteFilePath.of(homedir()),
-        RelativeFilePath.of(LOCAL_STORAGE_FOLDER),
-        RelativeFilePath.of(app ? APP_PREVIEW_FOLDER_NAME : PREVIEW_FOLDER_NAME)
-    );
+    return join(getLocalStorageFolder(), RelativeFilePath.of(app ? APP_PREVIEW_FOLDER_NAME : PREVIEW_FOLDER_NAME));
 }
 
 export function getPathToBundleFolder({ app = false }: { app?: boolean }): AbsoluteFilePath {
     return join(
-        AbsoluteFilePath.of(homedir()),
-        RelativeFilePath.of(LOCAL_STORAGE_FOLDER),
-        RelativeFilePath.of(app ? APP_PREVIEW_FOLDER_NAME : PREVIEW_FOLDER_NAME),
+        getPathToPreviewFolder({ app }),
         RelativeFilePath.of(app ? NEXT_BUNDLE_FOLDER_NAME : BUNDLE_FOLDER_NAME)
     );
 }
 
+export function getPathToStandaloneFolder({ app = false }: { app?: boolean }): AbsoluteFilePath {
+    return join(getPathToBundleFolder({ app }), RelativeFilePath.of(STANDALONE_FOLDER_NAME));
+}
+
+export function getPathToInstrumentationJs({ app = false }: { app?: boolean }): AbsoluteFilePath {
+    return join(getPathToStandaloneFolder({ app }), RelativeFilePath.of(INSTRUMENTATION_PATH));
+}
+
+function getPathToPnpmWorkspaceYaml({ app = false }: { app?: boolean }): AbsoluteFilePath {
+    return join(getPathToStandaloneFolder({ app }), RelativeFilePath.of(PNPM_WORKSPACE_YAML_NAME));
+}
+
+function getPathToPnpmfileCjs({ app = false }: { app?: boolean }): AbsoluteFilePath {
+    return join(getPathToStandaloneFolder({ app }), RelativeFilePath.of(PNPMFILE_CJS_NAME));
+}
+
+function getPathToNpmrc({ app = false }: { app?: boolean }): AbsoluteFilePath {
+    return join(getPathToStandaloneFolder({ app }), RelativeFilePath.of(NPMRC_NAME));
+}
+
+function contactFernSupportError(errorMessage: string): Error {
+    return new Error(`${errorMessage}. Please reach out to support@buildwithfern.com.`);
+}
+
 export function getPathToEtagFile({ app = false }: { app?: boolean }): AbsoluteFilePath {
-    return join(
-        AbsoluteFilePath.of(homedir()),
-        RelativeFilePath.of(LOCAL_STORAGE_FOLDER),
-        RelativeFilePath.of(app ? APP_PREVIEW_FOLDER_NAME : PREVIEW_FOLDER_NAME),
-        RelativeFilePath.of(ETAG_FILENAME)
-    );
+    return join(getPathToPreviewFolder({ app }), RelativeFilePath.of(ETAG_FILENAME));
 }
 
 export declare namespace DownloadLocalBundle {
@@ -56,6 +78,33 @@ export declare namespace DownloadLocalBundle {
         type: "failure";
     }
 }
+
+// Config file contents as constants
+const PNPM_WORKSPACE_YAML_CONTENTS = `packages:
+  - "packages/**"
+  - "!**/dist"
+`;
+
+const PNPMFILE_CJS_CONTENTS = `module.exports = {
+    hooks: {
+        readPackage(pkg) {
+            // Remove all workspace:* dependencies
+            if (pkg.dependencies) {
+                Object.keys(pkg.dependencies).forEach(dep => {
+                    if (pkg.dependencies[dep] === 'workspace:*') {
+                        delete pkg.dependencies[dep]; } });
+                    }
+            if (pkg.devDependencies) {
+                Object.keys(pkg.devDependencies).forEach(dep => {
+                    if (pkg.devDependencies[dep] === 'workspace:*') {
+                        delete pkg.devDependencies[dep]; } });
+            } return pkg;
+        }
+    }
+};
+`;
+
+const NPMRC_CONTENTS = "@fern-fern:registry=https://npm.buildwithfern.com\n";
 
 export async function downloadBundle({
     bucketUrl,
@@ -118,10 +167,7 @@ export async function downloadBundle({
     try {
         const docsBundleZipResponse = await fetch(docsBundleUrl);
         if (!docsBundleZipResponse.ok) {
-            logger.error(`Failed to download docs preview bundle. Status code: ${docsBundleZipResponse.status}`);
-            return {
-                type: "failure"
-            };
+            throw new Error(`Failed to download docs preview bundle. Status code: ${docsBundleZipResponse.status}`);
         }
         const outputZipPath = join(
             absoluteDirectoryToTmpDir,
@@ -129,9 +175,7 @@ export async function downloadBundle({
         );
 
         if (docsBundleZipResponse.body == null) {
-            return {
-                type: "failure"
-            };
+            throw contactFernSupportError("Docs bundle has empty response body");
         }
 
         const nodeBuffer = Buffer.from(await docsBundleZipResponse.arrayBuffer());
@@ -140,14 +184,18 @@ export async function downloadBundle({
 
         const absolutePathToPreviewFolder = getPathToPreviewFolder({ app });
         if (await doesPathExist(absolutePathToPreviewFolder)) {
+            logger.debug(`Removing previously cached bundle at: ${absolutePathToPreviewFolder}`);
             await rm(absolutePathToPreviewFolder, { recursive: true });
         }
         await mkdir(absolutePathToPreviewFolder, { recursive: true });
-        logger.debug(`rm -rf ${absolutePathToPreviewFolder}`);
 
         const absolutePathToBundleFolder = getPathToBundleFolder({ app });
         await mkdir(absolutePathToBundleFolder, { recursive: true });
-        await decompress(outputZipPath, absolutePathToBundleFolder);
+        logger.debug(`Decompressing bundle from ${outputZipPath} to ${absolutePathToBundleFolder}`);
+        await decompress(outputZipPath, absolutePathToBundleFolder, {
+            // skip extraction of symlinks on windows
+            filter: (file) => !(PLATFORM_IS_WINDOWS && file.type === "symlink")
+        });
 
         // write etag
         await writeFile(eTagFilepath, eTag);
@@ -157,7 +205,7 @@ export async function downloadBundle({
             // check if pnpm exists
             logger.debug("Checking if pnpm is installed");
             try {
-                await loggingExeca(logger, process.platform === "win32" ? "where" : "which", ["pnpm"], {
+                await loggingExeca(logger, PLATFORM_IS_WINDOWS ? "where" : "which", ["pnpm"], {
                     cwd: absolutePathToBundleFolder,
                     doNotPipeOutput: true
                 });
@@ -170,23 +218,14 @@ export async function downloadBundle({
 
             // if pnpm still hasn't been installed, user should install themselves
             try {
-                await loggingExeca(logger, process.platform === "win32" ? "where" : "which", ["pnpm"], {
+                await loggingExeca(logger, PLATFORM_IS_WINDOWS ? "where" : "which", ["pnpm"], {
                     cwd: absolutePathToBundleFolder,
                     doNotPipeOutput: true
                 });
             } catch (error) {
-                logger.error(
+                throw new Error(
                     "Requires [pnpm] to run local development. Please run: npm install -g pnpm, and then: fern docs dev"
                 );
-
-                // remove incomplete bundle
-                if (await doesPathExist(absolutePathToPreviewFolder)) {
-                    await rm(absolutePathToPreviewFolder, { recursive: true });
-                }
-                logger.debug(`rm -rf ${absolutePathToPreviewFolder}`);
-                return {
-                    type: "failure"
-                };
             }
 
             try {
@@ -197,16 +236,7 @@ export async function downloadBundle({
                     doNotPipeOutput: true
                 });
             } catch (error) {
-                logger.error("Failed to install required package. Please reach out to support@buildwithfern.com.");
-
-                // remove incomplete bundle
-                if (await doesPathExist(absolutePathToPreviewFolder)) {
-                    await rm(absolutePathToPreviewFolder, { recursive: true });
-                }
-                logger.debug(`rm -rf ${absolutePathToPreviewFolder}`);
-                return {
-                    type: "failure"
-                };
+                throw contactFernSupportError("Failed to install required package.");
             }
 
             try {
@@ -217,16 +247,51 @@ export async function downloadBundle({
                     doNotPipeOutput: true
                 });
             } catch (error) {
-                logger.error("Failed to resolve imports. Please reach out to support@buildwithfern.com.");
+                throw contactFernSupportError("Failed to resolve imports.");
+            }
 
-                // remove incomplete bundle
-                if (await doesPathExist(absolutePathToPreviewFolder)) {
-                    await rm(absolutePathToPreviewFolder, { recursive: true });
+            if (PLATFORM_IS_WINDOWS) {
+                const absPathToStandalone = getPathToStandaloneFolder({ app });
+                const absPathToInstrumentationJs = getPathToInstrumentationJs({ app });
+                const pnpmWorkspacePath = getPathToPnpmWorkspaceYaml({ app });
+                const pnpmfilePath = getPathToPnpmfileCjs({ app });
+                const npmrcPath = getPathToNpmrc({ app });
+
+                // Check all paths in parallel
+                const [pnpmWorkspaceExists, pnpmfileExists, npmrcExists, instrumentationJsExists] = await Promise.all([
+                    doesPathExist(pnpmWorkspacePath),
+                    doesPathExist(pnpmfilePath),
+                    doesPathExist(npmrcPath),
+                    doesPathExist(absPathToInstrumentationJs)
+                ]);
+
+                // Write pnpm-workspace.yaml if it does not exist
+                if (!pnpmWorkspaceExists) {
+                    logger.debug(`Writing pnpm-workspace.yaml at ${pnpmWorkspacePath}`);
+                    await writeFile(pnpmWorkspacePath, PNPM_WORKSPACE_YAML_CONTENTS);
                 }
-                logger.debug(`rm -rf ${absolutePathToPreviewFolder}`);
-                return {
-                    type: "failure"
-                };
+                // Write pnpmfile.cjs if it does not exist
+                if (!pnpmfileExists) {
+                    logger.debug(`Writing pnpmfile.cjs at ${pnpmfilePath}`);
+                    await writeFile(pnpmfilePath, PNPMFILE_CJS_CONTENTS);
+                }
+                // Write .npmrc if it does not exist
+                if (!npmrcExists) {
+                    logger.debug(`Writing .npmrc at ${npmrcPath}`);
+                    await writeFile(npmrcPath, NPMRC_CONTENTS);
+                }
+                // Remove instrumentation.js if it exists
+                if (instrumentationJsExists) {
+                    logger.debug(`Removing instrumentation.js at ${absPathToInstrumentationJs}`);
+                    await rm(absPathToInstrumentationJs);
+                }
+
+                // pnpm install within standalone
+                logger.debug("Running pnpm install within standalone");
+                await loggingExeca(logger, "pnpm", ["install"], {
+                    cwd: absPathToStandalone,
+                    doNotPipeOutput: true
+                });
             }
         }
 
@@ -234,7 +299,15 @@ export async function downloadBundle({
             type: "success"
         };
     } catch (error) {
-        logger.error(`Failed to download docs preview bundle. Error: ${error}`);
+        logger.error(`Error: ${error}`);
+
+        // remove incomplete bundle
+        const absolutePathToPreviewFolder = getPathToPreviewFolder({ app });
+        if (await doesPathExist(absolutePathToPreviewFolder)) {
+            await rm(absolutePathToPreviewFolder, { recursive: true });
+        }
+        logger.debug(`Removing incomplete bundle: rm -rf ${absolutePathToPreviewFolder}`);
+
         return {
             type: "failure"
         };
