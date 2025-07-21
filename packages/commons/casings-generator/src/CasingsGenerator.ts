@@ -28,7 +28,6 @@ export function constructCasingsGenerator({
 }): CasingsGenerator {
     const casingsGenerator: CasingsGenerator = {
         generateName: (name, opts) => {
-            console.log(`Generating name for: ${name} with options: ${JSON.stringify(opts)}`);
             const generateSafeAndUnsafeString = (unsafeString: string): SafeAndUnsafeString => ({
                 unsafeName: unsafeString,
                 safeName: sanitizeName({
@@ -87,13 +86,16 @@ export function constructCasingsGenerator({
                     .map((part) => part.split(/(\d+)/).map(snakeCase).join(""))
                     .join("_");
             }
-
             return {
                 originalName: name,
                 camelCase: generateSafeAndUnsafeString(opts?.casingOverrides?.camel ?? camelCaseName),
                 snakeCase: generateSafeAndUnsafeString(opts?.casingOverrides?.snake ?? snakeCaseName),
                 screamingSnakeCase: generateSafeAndUnsafeString(
-                    opts?.casingOverrides?.["screaming-snake"] ?? snakeCaseName.toUpperCase()
+                    opts?.casingOverrides?.["screaming-snake"] ??
+                        // for some reason, `screamingSnake` is the real property name in the object, but the schema uses `screaming-snake`
+                        // TS-SDK serde bug?
+                        (opts?.casingOverrides as { screamingSnake?: string })?.screamingSnake ??
+                        snakeCaseName.toUpperCase()
                 ),
                 pascalCase: generateSafeAndUnsafeString(opts?.casingOverrides?.pascal ?? pascalCaseName)
             };

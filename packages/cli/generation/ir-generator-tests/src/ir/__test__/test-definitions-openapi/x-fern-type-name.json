@@ -37,20 +37,20 @@
                 "name": {
                     "originalName": "OpenAISettings",
                     "camelCase": {
-                        "unsafeName": "openAiSettings",
-                        "safeName": "openAiSettings"
+                        "unsafeName": "openAISettings",
+                        "safeName": "openAISettings"
                     },
                     "snakeCase": {
-                        "unsafeName": "open_ai_settings",
-                        "safeName": "open_ai_settings"
+                        "unsafeName": "openai_settings",
+                        "safeName": "openai_settings"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "OPEN_AI_SETTINGS",
-                        "safeName": "OPEN_AI_SETTINGS"
+                        "unsafeName": "OPENAI_SETTINGS",
+                        "safeName": "OPENAI_SETTINGS"
                     },
                     "pascalCase": {
-                        "unsafeName": "OpenAiSettings",
-                        "safeName": "OpenAiSettings"
+                        "unsafeName": "OpenAISettings",
+                        "safeName": "OpenAISettings"
                     }
                 },
                 "fernFilepath": {
@@ -135,20 +135,20 @@
                 "name": {
                     "originalName": "FooURLsBar",
                     "camelCase": {
-                        "unsafeName": "fooUrLsBar",
-                        "safeName": "fooUrLsBar"
+                        "unsafeName": "fooURLsBar",
+                        "safeName": "fooURLsBar"
                     },
                     "snakeCase": {
-                        "unsafeName": "foo_ur_ls_bar",
-                        "safeName": "foo_ur_ls_bar"
+                        "unsafeName": "foo_urls_bar",
+                        "safeName": "foo_urls_bar"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "FOO_UR_LS_BAR",
-                        "safeName": "FOO_UR_LS_BAR"
+                        "unsafeName": "FOO_URLS_BAR",
+                        "safeName": "FOO_URLS_BAR"
                     },
                     "pascalCase": {
-                        "unsafeName": "FooUrLsBar",
-                        "safeName": "FooUrLsBar"
+                        "unsafeName": "FooURLsBar",
+                        "safeName": "FooURLsBar"
                     }
                 },
                 "fernFilepath": {
@@ -511,20 +511,20 @@
                     "name": {
                         "originalName": "OpenAISettings",
                         "camelCase": {
-                            "unsafeName": "openAiSettings",
-                            "safeName": "openAiSettings"
+                            "unsafeName": "openAISettings",
+                            "safeName": "openAISettings"
                         },
                         "snakeCase": {
-                            "unsafeName": "open_ai_settings",
-                            "safeName": "open_ai_settings"
+                            "unsafeName": "openai_settings",
+                            "safeName": "openai_settings"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "OPEN_AI_SETTINGS",
-                            "safeName": "OPEN_AI_SETTINGS"
+                            "unsafeName": "OPENAI_SETTINGS",
+                            "safeName": "OPENAI_SETTINGS"
                         },
                         "pascalCase": {
-                            "unsafeName": "OpenAiSettings",
-                            "safeName": "OpenAiSettings"
+                            "unsafeName": "OpenAISettings",
+                            "safeName": "OpenAISettings"
                         }
                     },
                     "fernFilepath": {
@@ -574,20 +574,20 @@
                     "name": {
                         "originalName": "FooURLsBar",
                         "camelCase": {
-                            "unsafeName": "fooUrLsBar",
-                            "safeName": "fooUrLsBar"
+                            "unsafeName": "fooURLsBar",
+                            "safeName": "fooURLsBar"
                         },
                         "snakeCase": {
-                            "unsafeName": "foo_ur_ls_bar",
-                            "safeName": "foo_ur_ls_bar"
+                            "unsafeName": "foo_urls_bar",
+                            "safeName": "foo_urls_bar"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "FOO_UR_LS_BAR",
-                            "safeName": "FOO_UR_LS_BAR"
+                            "unsafeName": "FOO_URLS_BAR",
+                            "safeName": "FOO_URLS_BAR"
                         },
                         "pascalCase": {
-                            "unsafeName": "FooUrLsBar",
-                            "safeName": "FooUrLsBar"
+                            "unsafeName": "FooURLsBar",
+                            "safeName": "FooURLsBar"
                         }
                     },
                     "fernFilepath": {

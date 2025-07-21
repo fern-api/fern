@@ -17,7 +17,6 @@ export function parseTypeName({
     typeDeclaration: RawSchemas.TypeDeclarationSchema | undefined;
     file: FernFileContext;
 }): DeclaredTypeName {
-    console.log(`Parsing type name: ${typeName} with declaration: ${JSON.stringify(typeDeclaration)}`);
     const reference = parseReferenceToTypeName({
         reference: typeName,
         referencedIn: file.relativeFilepath,
@@ -27,10 +26,10 @@ export function parseTypeName({
         throw new Error("Failed to locate type: " + typeName);
     }
 
-    const casing = undefined; //typeDeclaration != null ? getCasingOverrides(typeDeclaration) : undefined;
+    const casing = typeDeclaration != null ? getCasingOverrides(typeDeclaration) : undefined;
     const nameWithoutId = {
         name: file.casingsGenerator.generateName(
-            typeDeclaration != null ? getTypeDeclarationName(typeDeclaration, typeName) : typeName,
+            typeDeclaration != null ? getTypeDeclarationName(typeDeclaration, reference.typeName) : reference.typeName,
             {
                 casingOverrides: casing
             }

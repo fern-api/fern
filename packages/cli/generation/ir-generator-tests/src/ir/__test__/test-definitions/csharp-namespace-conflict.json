@@ -796,22 +796,22 @@
                         "valueType": {
                             "_type": "named",
                             "name": {
-                                "originalName": "aa.A",
+                                "originalName": "A",
                                 "camelCase": {
-                                    "unsafeName": "aaA",
-                                    "safeName": "aaA"
+                                    "unsafeName": "a",
+                                    "safeName": "a"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "aa_a",
-                                    "safeName": "aa_a"
+                                    "unsafeName": "a",
+                                    "safeName": "a"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "AA_A",
-                                    "safeName": "AA_A"
+                                    "unsafeName": "A",
+                                    "safeName": "A"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "AaA",
-                                    "safeName": "AaA"
+                                    "unsafeName": "A",
+                                    "safeName": "A"
                                 }
                             },
                             "fernFilepath": {
@@ -898,7 +898,7 @@
                                 "file": null
                             },
                             "displayName": null,
-                            "typeId": "type_a/aa:aa.A",
+                            "typeId": "type_a/aa:A",
                             "default": null,
                             "inline": null
                         },
@@ -936,22 +936,22 @@
                         "valueType": {
                             "_type": "named",
                             "name": {
-                                "originalName": "aa.B",
+                                "originalName": "B",
                                 "camelCase": {
-                                    "unsafeName": "aaB",
-                                    "safeName": "aaB"
+                                    "unsafeName": "b",
+                                    "safeName": "b"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "aa_b",
-                                    "safeName": "aa_b"
+                                    "unsafeName": "b",
+                                    "safeName": "b"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "AA_B",
-                                    "safeName": "AA_B"
+                                    "unsafeName": "B",
+                                    "safeName": "B"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "AaB",
-                                    "safeName": "AaB"
+                                    "unsafeName": "B",
+                                    "safeName": "B"
                                 }
                             },
                             "fernFilepath": {
@@ -1038,7 +1038,7 @@
                                 "file": null
                             },
                             "displayName": null,
-                            "typeId": "type_a/aa:aa.B",
+                            "typeId": "type_a/aa:B",
                             "default": null,
                             "inline": null
                         },
@@ -1055,8 +1055,8 @@
                 "extendedProperties": []
             },
             "referencedTypes": [
-                "type_a/aa:aa.A",
-                "type_a/aa:aa.B"
+                "type_a/aa:A",
+                "type_a/aa:B"
             ],
             "encoding": {
                 "json": {},
@@ -1875,7 +1875,7 @@
                         },
                         "typeReference": {
                             "type": "named",
-                            "value": "type_a/aa:aa.A"
+                            "value": "type_a/aa:A"
                         }
                     },
                     {
@@ -1903,7 +1903,7 @@
                         },
                         "typeReference": {
                             "type": "named",
-                            "value": "type_a/aa:aa.B"
+                            "value": "type_a/aa:B"
                         }
                     }
                 ],

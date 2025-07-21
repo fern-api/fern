@@ -32,7 +32,6 @@ export function getObjectPropertiesFromRawObjectSchema(
     if (object.properties == null) {
         return [];
     }
-    console.log(`object: ${JSON.stringify(object)}`);
     return Object.entries(object.properties).map(([propertyKey, propertyDefinition]) => ({
         ...convertDeclaration(propertyDefinition),
         name: file.casingsGenerator.generateNameAndWireValue({

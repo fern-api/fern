@@ -479,7 +479,7 @@
                     },
                     "typeReference": {
                         "type": "named",
-                        "value": "type_a/aa:aa.A"
+                        "value": "type_a/aa:A"
                     }
                 },
                 {
@@ -507,7 +507,7 @@
                     },
                     "typeReference": {
                         "type": "named",
-                        "value": "type_a/aa:aa.B"
+                        "value": "type_a/aa:B"
                     }
                 }
             ],
