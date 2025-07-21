@@ -3,6 +3,8 @@
 package complex
 
 import (
+	context "context"
+	fern "github.com/pagination/fern"
 	core "github.com/pagination/fern/core"
 	internal "github.com/pagination/fern/internal"
 	option "github.com/pagination/fern/option"
@@ -29,4 +31,22 @@ func NewClient(opts ...option.RequestOption) *Client {
 		),
 		header: options.ToHeader(),
 	}
+}
+
+func (c *Client) Search(
+	ctx context.Context,
+	index string,
+	request *fern.SearchRequest,
+	opts ...option.RequestOption,
+) (*fern.PaginatedConversationResponse, error) {
+	response, err := c.WithRawResponse.Search(
+		ctx,
+		index,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
 }

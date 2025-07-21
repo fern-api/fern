@@ -44,9 +44,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         subpackage: Subpackage | undefined;
         endpoint: HttpEndpoint;
     }): go.Method | undefined {
-        if (!this.shouldGenerateEndpoint({ endpoint })) {
-            return undefined;
-        }
         const signature = this.getEndpointSignatureInfo({ serviceId, service, endpoint });
         return this.generateEndpoint({ service, endpoint, signature, subpackage });
     }
@@ -76,17 +73,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         });
     }
 
-    private shouldGenerateEndpoint({ endpoint }: { endpoint: HttpEndpoint }): boolean {
-        if (this.context.isPaginationWithRequestBodyEndpoint(endpoint)) {
-            // TODO: The Go generator does not support pagination with request body properties.
-            // We need to add support here and remove this short circuit.
-            return false;
-        }
-        return true;
-    }
-
     private shouldGenerateRawEndpoint({ endpoint }: { endpoint: HttpEndpoint }): boolean {
-        return !this.context.isPaginationEndpoint(endpoint) && !this.context.isStreamingEndpoint(endpoint);
+        return !this.context.isEnabledPaginationEndpoint(endpoint) && !this.context.isStreamingEndpoint(endpoint);
     }
 
     private getEndpointBody({
@@ -108,7 +96,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             });
         }
         const pagination = this.context.getPagination(endpoint);
-        if (pagination != null) {
+        if (pagination != null && this.context.isEnabledPaginationEndpoint(endpoint)) {
             return this.getPaginationEndpointBody({ signature, endpoint, subpackage, pagination });
         }
         return this.generateDelegatingEndpointBody({ endpoint, signature, subpackage });
@@ -627,7 +615,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
     private getResponseInitialization({ endpoint }: { endpoint: HttpEndpoint }): go.CodeBlock | undefined {
         const responseBody = endpoint.response?.body;
-        if (responseBody == null || endpoint.pagination != null) {
+        if (responseBody == null || this.context.isEnabledPaginationEndpoint(endpoint)) {
             return undefined;
         }
         switch (responseBody.type) {
@@ -858,11 +846,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         }
     }
 
-    private getContentTypeHeaderValueForWrapper({
-        requestBody
-    }: {
-        requestBody: HttpRequestBody;
-    }): string | undefined {
+    private getContentTypeHeaderValueForWrapper({ requestBody }: { requestBody: HttpRequestBody }): string | undefined {
         switch (requestBody.type) {
             case "bytes":
                 return requestBody.contentType ?? HttpEndpointGenerator.OCTET_STREAM_CONTENT_TYPE;
@@ -943,7 +927,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         if (signature.returnType == null) {
             return [go.Type.error()];
         }
-        if (this.context.isPaginationEndpoint(endpoint) && signature.pageReturnType != null) {
+        if (this.context.isEnabledPaginationEndpoint(endpoint) && signature.pageReturnType != null) {
             return [signature.pageReturnType, go.Type.error()];
         }
         return [signature.returnType, go.Type.error()];

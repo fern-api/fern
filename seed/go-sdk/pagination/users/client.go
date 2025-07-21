@@ -151,6 +151,22 @@ func (c *Client) ListWithMixedTypeCursorPagination(
 	return pager.GetPage(ctx, request.Cursor)
 }
 
+func (c *Client) ListWithBodyCursorPagination(
+	ctx context.Context,
+	request *fern.ListUsersBodyCursorPaginationRequest,
+	opts ...option.RequestOption,
+) (*fern.ListUsersPaginationResponse, error) {
+	response, err := c.WithRawResponse.ListWithBodyCursorPagination(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
 func (c *Client) ListWithOffsetPagination(
 	ctx context.Context,
 	request *fern.ListUsersOffsetPaginationRequest,
@@ -271,6 +287,22 @@ func (c *Client) ListWithDoubleOffsetPagination(
 		readPageResponse,
 	)
 	return pager.GetPage(ctx, &next)
+}
+
+func (c *Client) ListWithBodyOffsetPagination(
+	ctx context.Context,
+	request *fern.ListUsersBodyOffsetPaginationRequest,
+	opts ...option.RequestOption,
+) (*fern.ListUsersPaginationResponse, error) {
+	response, err := c.WithRawResponse.ListWithBodyOffsetPagination(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
 }
 
 func (c *Client) ListWithOffsetStepPagination(

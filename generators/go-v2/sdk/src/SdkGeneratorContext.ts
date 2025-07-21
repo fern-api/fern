@@ -516,8 +516,15 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         }
     }
 
-    public isPaginationEndpoint(endpoint: HttpEndpoint): boolean {
-        return this.getPagination(endpoint) != null;
+    public isEnabledPaginationEndpoint(endpoint: HttpEndpoint): boolean {
+        if (this.isPaginationWithRequestBodyEndpoint(endpoint)) {
+            // TODO: The original Go generator did not handle pagination endpoints with request body properties.
+            // To preserve compatibility, we generate a delegating endpoint for these cases.
+            //
+            // We'll need to add an opt-in feature flag to resolve this gap.
+            return false;
+        }
+        return this.isPaginationEndpoint(endpoint);
     }
 
     public isPaginationWithRequestBodyEndpoint(endpoint: HttpEndpoint): boolean {
@@ -534,6 +541,10 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             default:
                 assertNever(pagination);
         }
+    }
+
+    public isPaginationEndpoint(endpoint: HttpEndpoint): boolean {
+        return this.getPagination(endpoint) != null;
     }
 
     public getPagination(endpoint: HttpEndpoint): Pagination | undefined {
