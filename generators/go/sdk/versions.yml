@@ -1,10 +1,10 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 1.4.1
+- version: 1.5.0
   changelogEntry:
     - summary: |
         Update the primary client to delegate to the new raw client to reduce code duplication.
       type: internal
-  createdAt: '2025-07-16'
+  createdAt: '2025-07-21'
   irVersion: 58
 
 - version: 1.4.0
