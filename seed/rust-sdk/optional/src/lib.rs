@@ -7,5 +7,5 @@ pub mod error;
 pub mod optional;
 
 pub use client::ObjectsWithImportsClient;
-pub use error::Error;
+pub use error::ApiError;
 

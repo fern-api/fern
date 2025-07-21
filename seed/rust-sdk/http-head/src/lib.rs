@@ -8,6 +8,6 @@ pub mod types;
 pub mod user;
 
 pub use client::HttpHeadClient;
-pub use error::Error;
+pub use error::ApiError;
 
 pub use types::*;

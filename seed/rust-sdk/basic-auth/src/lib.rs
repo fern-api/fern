@@ -8,6 +8,6 @@ pub mod types;
 pub mod basic_auth;
 
 pub use client::BasicAuthClient;
-pub use error::Error;
+pub use error::ApiError;
 
 pub use types::*;

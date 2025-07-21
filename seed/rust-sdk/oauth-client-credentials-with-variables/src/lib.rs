@@ -9,6 +9,6 @@ pub mod auth;
 pub mod service;
 
 pub use client::OauthClientCredentialsWithVariablesClient;
-pub use error::Error;
+pub use error::ApiError;
 
 pub use types::*;

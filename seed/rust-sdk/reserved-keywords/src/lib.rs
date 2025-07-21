@@ -8,6 +8,6 @@ pub mod types;
 pub mod package;
 
 pub use client::NurseryApiClient;
-pub use error::Error;
+pub use error::ApiError;
 
 pub use types::*;

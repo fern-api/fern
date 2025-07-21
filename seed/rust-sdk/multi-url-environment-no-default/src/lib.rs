@@ -8,5 +8,5 @@ pub mod ec_2;
 pub mod s_3;
 
 pub use client::MultiUrlEnvironmentNoDefaultClient;
-pub use error::Error;
+pub use error::ApiError;
 
