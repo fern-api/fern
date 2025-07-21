@@ -869,6 +869,7 @@
                     "safeName": "Errors"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -946,6 +947,7 @@
                     "safeName": "PropertyBasedError"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {

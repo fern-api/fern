@@ -11391,6 +11391,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
   },
   "subpackages": {
     "subpackage_endpoints": {
+      "displayName": undefined,
       "docs": undefined,
       "errors": [],
       "fernFilepath": {
@@ -11474,6 +11475,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       "websocket": undefined,
     },
     "subpackage_endpoints/container": {
+      "displayName": undefined,
       "docs": undefined,
       "errors": [],
       "fernFilepath": {
@@ -11586,6 +11588,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       "websocket": undefined,
     },
     "subpackage_endpoints/enum": {
+      "displayName": undefined,
       "docs": undefined,
       "errors": [],
       "fernFilepath": {
@@ -11698,6 +11701,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       "websocket": undefined,
     },
     "subpackage_endpoints/http-methods": {
+      "displayName": undefined,
       "docs": undefined,
       "errors": [],
       "fernFilepath": {
@@ -11810,6 +11814,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       "websocket": undefined,
     },
     "subpackage_endpoints/object": {
+      "displayName": undefined,
       "docs": undefined,
       "errors": [],
       "fernFilepath": {
@@ -11922,6 +11927,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       "websocket": undefined,
     },
     "subpackage_endpoints/params": {
+      "displayName": undefined,
       "docs": undefined,
       "errors": [],
       "fernFilepath": {
@@ -12034,6 +12040,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       "websocket": undefined,
     },
     "subpackage_endpoints/primitive": {
+      "displayName": undefined,
       "docs": undefined,
       "errors": [],
       "fernFilepath": {
@@ -12146,6 +12153,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       "websocket": undefined,
     },
     "subpackage_endpoints/union": {
+      "displayName": undefined,
       "docs": undefined,
       "errors": [],
       "fernFilepath": {
@@ -12258,6 +12266,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       "websocket": undefined,
     },
     "subpackage_general-errors": {
+      "displayName": undefined,
       "docs": undefined,
       "errors": [
         "error_general-errors:BadRequestBody",
@@ -12335,6 +12344,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       "websocket": undefined,
     },
     "subpackage_inlined-requests": {
+      "displayName": undefined,
       "docs": undefined,
       "errors": [],
       "fernFilepath": {
@@ -12408,6 +12418,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       "websocket": undefined,
     },
     "subpackage_no-auth": {
+      "displayName": undefined,
       "docs": undefined,
       "errors": [],
       "fernFilepath": {
@@ -12481,6 +12492,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       "websocket": undefined,
     },
     "subpackage_no-req-body": {
+      "displayName": undefined,
       "docs": undefined,
       "errors": [],
       "fernFilepath": {
@@ -12554,6 +12566,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       "websocket": undefined,
     },
     "subpackage_req-with-headers": {
+      "displayName": undefined,
       "docs": undefined,
       "errors": [],
       "fernFilepath": {
@@ -12627,6 +12640,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       "websocket": undefined,
     },
     "subpackage_types": {
+      "displayName": undefined,
       "docs": undefined,
       "errors": [],
       "fernFilepath": {
@@ -12706,6 +12720,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       "websocket": undefined,
     },
     "subpackage_types/enum": {
+      "displayName": undefined,
       "docs": undefined,
       "errors": [
         "error_types/enum:ErrorWithEnumBody",
@@ -12822,6 +12837,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       "websocket": undefined,
     },
     "subpackage_types/object": {
+      "displayName": undefined,
       "docs": undefined,
       "errors": [
         "error_types/object:ObjectWithOptionalFieldError",
@@ -12944,6 +12960,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       "websocket": undefined,
     },
     "subpackage_types/union": {
+      "displayName": undefined,
       "docs": undefined,
       "errors": [
         "error_types/union:ErrorWithUnionBody",
