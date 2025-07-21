@@ -243,7 +243,7 @@ export async function downloadBundle({
                         typeof error?.message === "string" &&
                         error.message.includes(COREPACK_MISSING_KEYID_ERROR_MESSAGE)
                     ) {
-                        logger.debug("Encountered 'Cannot find matching keyid:', attempting to upgrade corepack");
+                        logger.debug("Detected corepack missing keyid error. Attempting to upgrade corepack");
                         try {
                             await loggingExeca(logger, "npm", ["install", "-g", "corepack@latest"], {
                                 doNotPipeOutput: true
@@ -253,6 +253,7 @@ export async function downloadBundle({
                         }
                         try {
                             // Try installing esbuild again after upgrading corepack
+                            logger.debug("Installing esbuild after upgrading corepack");
                             await loggingExeca(logger, "pnpm", ["i", "esbuild"], {
                                 cwd: absolutePathToBundleFolder,
                                 doNotPipeOutput: true
