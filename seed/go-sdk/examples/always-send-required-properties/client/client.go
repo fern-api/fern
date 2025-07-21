@@ -15,30 +15,30 @@ import (
 )
 
 type Client struct {
-	baseURL         string
-	caller          *internal.Caller
-	header          http.Header
+	WithRawResponse *RawClient
 	File            *client.Client
 	Health          *healthclient.Client
 	Service         *service.Client
-	WithRawResponse *RawClient
+	baseURL         string
+	caller          *internal.Caller
+	header          http.Header
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		baseURL: options.BaseURL,
+		File:            client.NewClient(opts...),
+		Health:          healthclient.NewClient(opts...),
+		Service:         service.NewClient(opts...),
+		WithRawResponse: NewRawClient(options),
+		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header:          options.ToHeader(),
-		File:            client.NewClient(opts...),
-		Health:          healthclient.NewClient(opts...),
-		Service:         service.NewClient(opts...),
-		WithRawResponse: NewRawClient(options),
+		header: options.ToHeader(),
 	}
 }
 

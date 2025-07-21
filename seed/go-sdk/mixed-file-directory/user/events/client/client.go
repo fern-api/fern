@@ -13,26 +13,26 @@ import (
 )
 
 type Client struct {
+	WithRawResponse *RawClient
+	Metadata        *metadata.Client
 	baseURL         string
 	caller          *internal.Caller
 	header          http.Header
-	Metadata        *metadata.Client
-	WithRawResponse *RawClient
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		baseURL: options.BaseURL,
+		Metadata:        metadata.NewClient(opts...),
+		WithRawResponse: NewRawClient(options),
+		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header:          options.ToHeader(),
-		Metadata:        metadata.NewClient(opts...),
-		WithRawResponse: NewRawClient(options),
+		header: options.ToHeader(),
 	}
 }
 

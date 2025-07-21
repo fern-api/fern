@@ -13,11 +13,11 @@ import (
 )
 
 type Client struct {
+	Auth    *auth.Client
+	User    *user.Client
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header
-	Auth    *auth.Client
-	User    *user.Client
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -29,6 +29,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 		options.ApiKey = os.Getenv("MY_API_KEY")
 	}
 	return &Client{
+		Auth:    auth.NewClient(opts...),
+		User:    user.NewClient(opts...),
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -37,7 +39,5 @@ func NewClient(opts ...option.RequestOption) *Client {
 			},
 		),
 		header: options.ToHeader(),
-		Auth:   auth.NewClient(opts...),
-		User:   user.NewClient(opts...),
 	}
 }

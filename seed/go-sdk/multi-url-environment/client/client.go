@@ -12,16 +12,18 @@ import (
 )
 
 type Client struct {
+	Ec2     *ec2.Client
+	S3      *s3.Client
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header
-	Ec2     *ec2.Client
-	S3      *s3.Client
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
+		Ec2:     ec2.NewClient(opts...),
+		S3:      s3.NewClient(opts...),
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -30,7 +32,5 @@ func NewClient(opts ...option.RequestOption) *Client {
 			},
 		),
 		header: options.ToHeader(),
-		Ec2:    ec2.NewClient(opts...),
-		S3:     s3.NewClient(opts...),
 	}
 }

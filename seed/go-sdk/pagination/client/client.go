@@ -12,16 +12,18 @@ import (
 )
 
 type Client struct {
+	Complex *complex.Client
+	Users   *users.Client
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header
-	Complex *complex.Client
-	Users   *users.Client
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
+		Complex: complex.NewClient(opts...),
+		Users:   users.NewClient(opts...),
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -29,8 +31,6 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header:  options.ToHeader(),
-		Complex: complex.NewClient(opts...),
-		Users:   users.NewClient(opts...),
+		header: options.ToHeader(),
 	}
 }

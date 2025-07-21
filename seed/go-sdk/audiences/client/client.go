@@ -13,17 +13,20 @@ import (
 )
 
 type Client struct {
-	baseURL string
-	caller  *internal.Caller
-	header  http.Header
 	FolderA *client.Client
 	FolderD *folderdclient.Client
 	Foo     *foo.Client
+	baseURL string
+	caller  *internal.Caller
+	header  http.Header
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
+		FolderA: client.NewClient(opts...),
+		FolderD: folderdclient.NewClient(opts...),
+		Foo:     foo.NewClient(opts...),
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -31,9 +34,6 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header:  options.ToHeader(),
-		FolderA: client.NewClient(opts...),
-		FolderD: folderdclient.NewClient(opts...),
-		Foo:     foo.NewClient(opts...),
+		header: options.ToHeader(),
 	}
 }

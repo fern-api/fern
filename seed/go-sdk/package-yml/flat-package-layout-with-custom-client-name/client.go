@@ -11,26 +11,26 @@ import (
 )
 
 type Acme struct {
+	WithRawResponse *RawAcme
+	Service         *ServiceClient
 	baseURL         string
 	caller          *internal.Caller
 	header          http.Header
-	Service         *ServiceClient
-	WithRawResponse *RawAcme
 }
 
 func New(opts ...option.RequestOption) *Acme {
 	options := core.NewRequestOptions(opts...)
 	return &Acme{
-		baseURL: options.BaseURL,
+		Service:         NewServiceClient(opts...),
+		WithRawResponse: NewRawAcme(options),
+		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header:          options.ToHeader(),
-		Service:         NewServiceClient(opts...),
-		WithRawResponse: NewRawAcme(options),
+		header: options.ToHeader(),
 	}
 }
 

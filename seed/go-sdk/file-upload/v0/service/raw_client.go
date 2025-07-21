@@ -270,17 +270,17 @@ func (r *RawClient) WithContentType(
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
-	if err := writer.WriteFile("file", file); err != nil {
+	if err := writer.WriteFile("file", file, internal.WithDefaultContentType("application/octet-stream")); err != nil {
 		return nil, err
 	}
 	if err := writer.WriteField("foo", request.Foo); err != nil {
 		return nil, err
 	}
-	if err := writer.WriteJSON("bar", request.Bar); err != nil {
+	if err := writer.WriteJSON("bar", request.Bar, internal.WithDefaultContentType("application/json")); err != nil {
 		return nil, err
 	}
 	if request.FooBar != nil {
-		if err := writer.WriteJSON("foo_bar", request.FooBar); err != nil {
+		if err := writer.WriteJSON("foo_bar", request.FooBar, internal.WithDefaultContentType("application/json")); err != nil {
 			return nil, err
 		}
 	}
@@ -330,7 +330,7 @@ func (r *RawClient) WithFormEncoding(
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
-	if err := writer.WriteFile("file", file); err != nil {
+	if err := writer.WriteFile("file", file, internal.WithDefaultContentType("application/octet-stream")); err != nil {
 		return nil, err
 	}
 	if err := writer.WriteField("foo", request.Foo); err != nil {
@@ -507,11 +507,11 @@ func (r *RawClient) OptionalArgs(
 	)
 	headers.Add("Content-Type", "multipart/form-data")
 	writer := internal.NewMultipartWriter()
-	if err := writer.WriteFile("image_file", imageFile); err != nil {
+	if err := writer.WriteFile("image_file", imageFile, internal.WithDefaultContentType("image/jpeg")); err != nil {
 		return nil, err
 	}
 	if request.Request != nil {
-		if err := writer.WriteJSON("request", request.Request); err != nil {
+		if err := writer.WriteJSON("request", request.Request, internal.WithDefaultContentType("application/json; charset=utf-8")); err != nil {
 			return nil, err
 		}
 	}

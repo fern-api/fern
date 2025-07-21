@@ -11,15 +11,16 @@ import (
 )
 
 type Client struct {
+	Payment *payment.Client
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header
-	Payment *payment.Client
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
+		Payment: payment.NewClient(opts...),
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -27,7 +28,6 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header:  options.ToHeader(),
-		Payment: payment.NewClient(opts...),
+		header: options.ToHeader(),
 	}
 }

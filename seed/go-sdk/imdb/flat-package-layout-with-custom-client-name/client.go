@@ -10,15 +10,16 @@ import (
 )
 
 type Acme struct {
+	Imdb    *ImdbClient
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header
-	Imdb    *ImdbClient
 }
 
 func New(opts ...option.RequestOption) *Acme {
 	options := core.NewRequestOptions(opts...)
 	return &Acme{
+		Imdb:    NewImdbClient(opts...),
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -27,6 +28,5 @@ func New(opts ...option.RequestOption) *Acme {
 			},
 		),
 		header: options.ToHeader(),
-		Imdb:   NewImdbClient(opts...),
 	}
 }
