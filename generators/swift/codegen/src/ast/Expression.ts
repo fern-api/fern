@@ -48,6 +48,12 @@ type ClassInitialization = {
     multiline?: true;
 };
 
+type DictionaryLiteral = {
+    type: "dictionary-literal";
+    entries?: [Expression, Expression][];
+    multiline?: true;
+};
+
 type MethodCall = {
     type: "method-call";
     target: Expression;
@@ -85,6 +91,7 @@ type InternalExpression =
     | FunctionCall
     | StructInitialization
     | ClassInitialization
+    | DictionaryLiteral
     | MethodCall
     | ContextualMethodCall
     | Try
@@ -144,6 +151,9 @@ export class Expression extends AstNode {
                     multiline: !!this.internalExpression.multiline
                 });
                 break;
+            case "dictionary-literal":
+                this.writeDictionaryLiteral(writer, this.internalExpression);
+                break;
             case "method-call":
                 this.internalExpression.target.write(writer);
                 writer.write(".");
@@ -202,6 +212,35 @@ export class Expression extends AstNode {
         writer.write(")");
     }
 
+    private writeDictionaryLiteral(writer: Writer, dictLiteral: DictionaryLiteral): void {
+        if (!dictLiteral.entries || dictLiteral.entries.length === 0) {
+            writer.write("[:]");
+            return;
+        }
+        writer.write("[");
+        const multiline = !!dictLiteral.multiline;
+        if (multiline) {
+            writer.newLine();
+            writer.indent();
+        }
+        dictLiteral.entries?.forEach(([key, value], entryIdx) => {
+            if (entryIdx > 0) {
+                writer.write(", ");
+                if (multiline) {
+                    writer.newLine();
+                }
+            }
+            key.write(writer);
+            writer.write(": ");
+            value.write(writer);
+        });
+        if (multiline) {
+            writer.newLine();
+            writer.dedent();
+        }
+        writer.write("]");
+    }
+
     public static reference(unsafeName: string): Expression {
         return new this({ type: "reference", unsafeName });
     }
@@ -224,6 +263,10 @@ export class Expression extends AstNode {
 
     public static classInitialization(params: Omit<ClassInitialization, "type">): Expression {
         return new this({ type: "class-initialization", ...params });
+    }
+
+    public static dictionaryLiteral(params: Omit<DictionaryLiteral, "type">): Expression {
+        return new this({ type: "dictionary-literal", ...params });
     }
 
     public static methodCall(params: Omit<MethodCall, "type">): Expression {
