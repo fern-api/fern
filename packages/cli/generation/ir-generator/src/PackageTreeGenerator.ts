@@ -221,6 +221,7 @@ export class PackageTreeGenerator {
                 docs: undefined,
                 fernFilepath: fernFilepathForNextParent,
                 name: nextPart,
+                displayName: undefined,
                 service: undefined,
                 types: [],
                 errors: [],

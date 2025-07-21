@@ -491,6 +491,7 @@
                     "safeName": "Optional"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {

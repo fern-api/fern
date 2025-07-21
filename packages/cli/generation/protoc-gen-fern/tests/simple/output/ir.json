@@ -94068,6 +94068,7 @@
           "safeName": "AndurilEntitymanagerV1"
         }
       },
+      "displayName": "anduril.entitymanager.v1",
       "fernFilepath": {
         "allParts": [
           {
@@ -94143,6 +94144,7 @@
           "safeName": "EntityManagerApi"
         }
       },
+      "displayName": "EntityManagerAPI",
       "fernFilepath": {
         "allParts": [
           {
@@ -94216,6 +94218,7 @@
           "safeName": "AndurilTaskmanagerV1"
         }
       },
+      "displayName": "anduril.taskmanager.v1",
       "fernFilepath": {
         "allParts": [
           {
@@ -94291,6 +94294,7 @@
           "safeName": "TaskManagerApi"
         }
       },
+      "displayName": "TaskManagerAPI",
       "fernFilepath": {
         "allParts": [
           {

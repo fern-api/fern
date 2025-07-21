@@ -1422,6 +1422,7 @@
                     "safeName": "BasicAuth"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -1495,6 +1496,7 @@
                     "safeName": "Errors"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {

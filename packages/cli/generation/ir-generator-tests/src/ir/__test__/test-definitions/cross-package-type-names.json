@@ -6256,6 +6256,7 @@
                     "safeName": "Commons"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -6331,6 +6332,7 @@
                     "safeName": "FolderA"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -6408,6 +6410,7 @@
                     "safeName": "Service"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -6522,6 +6525,7 @@
                     "safeName": "FolderB"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -6599,6 +6603,7 @@
                     "safeName": "Common"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -6713,6 +6718,7 @@
                     "safeName": "FolderC"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -6790,6 +6796,7 @@
                     "safeName": "Common"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -6904,6 +6911,7 @@
                     "safeName": "FolderD"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -6981,6 +6989,7 @@
                     "safeName": "Service"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -7095,6 +7104,7 @@
                     "safeName": "Foo"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
