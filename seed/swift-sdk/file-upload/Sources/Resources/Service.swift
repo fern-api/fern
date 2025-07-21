@@ -21,7 +21,7 @@ public final class ServiceClient: Sendable {
         )
     }
 
-    public func justFileWithQueryParams(requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func justFileWithQueryParams(maybeString: String? = nil, integer: Int, maybeInteger: Int? = nil, listOfStrings: String, optionalListOfStrings: String? = nil, requestOptions: RequestOptions? = nil) async throws -> Any {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/just-file-with-query-params", 

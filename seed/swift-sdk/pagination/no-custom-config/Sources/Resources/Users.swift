@@ -5,7 +5,7 @@ public final class UsersClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func listWithCursorPagination(requestOptions: RequestOptions? = nil) async throws -> ListUsersPaginationResponse {
+    public func listWithCursorPagination(page: Int? = nil, perPage: Int? = nil, order: Order? = nil, startingAfter: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListUsersPaginationResponse {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/users", 
@@ -13,7 +13,7 @@ public final class UsersClient: Sendable {
         )
     }
 
-    public func listWithMixedTypeCursorPagination(requestOptions: RequestOptions? = nil) async throws -> ListUsersMixedTypePaginationResponse {
+    public func listWithMixedTypeCursorPagination(cursor: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListUsersMixedTypePaginationResponse {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/users", 
@@ -29,7 +29,7 @@ public final class UsersClient: Sendable {
         )
     }
 
-    public func listWithOffsetPagination(requestOptions: RequestOptions? = nil) async throws -> ListUsersPaginationResponse {
+    public func listWithOffsetPagination(page: Int? = nil, perPage: Int? = nil, order: Order? = nil, startingAfter: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListUsersPaginationResponse {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/users", 
@@ -37,7 +37,7 @@ public final class UsersClient: Sendable {
         )
     }
 
-    public func listWithDoubleOffsetPagination(requestOptions: RequestOptions? = nil) async throws -> ListUsersPaginationResponse {
+    public func listWithDoubleOffsetPagination(page: Double? = nil, perPage: Double? = nil, order: Order? = nil, startingAfter: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListUsersPaginationResponse {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/users", 
@@ -53,7 +53,7 @@ public final class UsersClient: Sendable {
         )
     }
 
-    public func listWithOffsetStepPagination(requestOptions: RequestOptions? = nil) async throws -> ListUsersPaginationResponse {
+    public func listWithOffsetStepPagination(page: Int? = nil, limit: Int? = nil, order: Order? = nil, requestOptions: RequestOptions? = nil) async throws -> ListUsersPaginationResponse {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/users", 
@@ -61,7 +61,7 @@ public final class UsersClient: Sendable {
         )
     }
 
-    public func listWithOffsetPaginationHasNextPage(requestOptions: RequestOptions? = nil) async throws -> ListUsersPaginationResponse {
+    public func listWithOffsetPaginationHasNextPage(page: Int? = nil, limit: Int? = nil, order: Order? = nil, requestOptions: RequestOptions? = nil) async throws -> ListUsersPaginationResponse {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/users", 
@@ -69,7 +69,7 @@ public final class UsersClient: Sendable {
         )
     }
 
-    public func listWithExtendedResults(requestOptions: RequestOptions? = nil) async throws -> ListUsersExtendedResponse {
+    public func listWithExtendedResults(cursor: UUID? = nil, requestOptions: RequestOptions? = nil) async throws -> ListUsersExtendedResponse {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/users", 
@@ -77,7 +77,7 @@ public final class UsersClient: Sendable {
         )
     }
 
-    public func listWithExtendedResultsAndOptionalData(requestOptions: RequestOptions? = nil) async throws -> ListUsersExtendedOptionalListResponse {
+    public func listWithExtendedResultsAndOptionalData(cursor: UUID? = nil, requestOptions: RequestOptions? = nil) async throws -> ListUsersExtendedOptionalListResponse {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/users", 
@@ -85,7 +85,7 @@ public final class UsersClient: Sendable {
         )
     }
 
-    public func listUsernames(requestOptions: RequestOptions? = nil) async throws -> UsernameCursor {
+    public func listUsernames(startingAfter: String? = nil, requestOptions: RequestOptions? = nil) async throws -> UsernameCursor {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/users", 
@@ -93,7 +93,7 @@ public final class UsersClient: Sendable {
         )
     }
 
-    public func listWithGlobalConfig(requestOptions: RequestOptions? = nil) async throws -> UsernameContainer {
+    public func listWithGlobalConfig(offset: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> UsernameContainer {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/users", 

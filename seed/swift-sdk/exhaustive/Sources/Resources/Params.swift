@@ -21,7 +21,7 @@ public final class ParamsClient: Sendable {
         )
     }
 
-    public func getWithQuery(requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func getWithQuery(query: String, number: Int, requestOptions: RequestOptions? = nil) async throws -> Any {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/params", 
@@ -29,7 +29,7 @@ public final class ParamsClient: Sendable {
         )
     }
 
-    public func getWithAllowMultipleQuery(requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func getWithAllowMultipleQuery(query: String, number: Int, requestOptions: RequestOptions? = nil) async throws -> Any {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/params", 
@@ -37,7 +37,7 @@ public final class ParamsClient: Sendable {
         )
     }
 
-    public func getWithPathAndQuery(param: String, requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func getWithPathAndQuery(param: String, query: String, requestOptions: RequestOptions? = nil) async throws -> Any {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/params/path-query/\(param)", 
@@ -45,7 +45,7 @@ public final class ParamsClient: Sendable {
         )
     }
 
-    public func getWithInlinePathAndQuery(param: String, requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func getWithInlinePathAndQuery(param: String, query: String, requestOptions: RequestOptions? = nil) async throws -> Any {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/params/path-query/\(param)", 

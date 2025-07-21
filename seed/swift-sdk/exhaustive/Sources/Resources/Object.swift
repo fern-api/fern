@@ -4,8 +4,7 @@ public final class ObjectClient: Sendable {
     public init(config: ClientConfig) {
         self.httpClient = HTTPClient(config: config)
     }
-
-    public func getAndReturnWithOptionalField(requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
+}    public func getAndReturnWithOptionalField(requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/object/get-and-return-with-optional-field", 

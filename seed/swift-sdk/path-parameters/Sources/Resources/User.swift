@@ -29,7 +29,7 @@ public final class UserClient: Sendable {
         )
     }
 
-    public func searchUsers(tenantId: String, userId: String, requestOptions: RequestOptions? = nil) async throws -> [User] {
+    public func searchUsers(tenantId: String, userId: String, limit: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> [User] {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/\(tenantId)/user/\(userId)/search", 

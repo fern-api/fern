@@ -5,7 +5,7 @@ public final class UsersClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func listUsernamesCustom(requestOptions: RequestOptions? = nil) async throws -> UsernameCursor {
+    public func listUsernamesCustom(startingAfter: String? = nil, requestOptions: RequestOptions? = nil) async throws -> UsernameCursor {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/users", 

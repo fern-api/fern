@@ -5,7 +5,7 @@ public final class QueryParamClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func send(requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func send(operand: Operand, maybeOperand: Operand? = nil, operandOrColor: ColorOrOperand, maybeOperandOrColor: ColorOrOperand? = nil, requestOptions: RequestOptions? = nil) async throws -> Any {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/query", 
@@ -13,7 +13,7 @@ public final class QueryParamClient: Sendable {
         )
     }
 
-    public func sendList(requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func sendList(operand: Operand, maybeOperand: Operand? = nil, operandOrColor: ColorOrOperand, maybeOperandOrColor: ColorOrOperand? = nil, requestOptions: RequestOptions? = nil) async throws -> Any {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/query-list", 

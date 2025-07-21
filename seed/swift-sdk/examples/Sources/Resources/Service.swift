@@ -5,26 +5,23 @@ public final class ServiceClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func check(id: String, requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func getMovie(movieId: String, requestOptions: RequestOptions? = nil) async throws -> Movie {
         return try await httpClient.performRequest(
             method: .get, 
-            path: "/check/\(id)", 
+            path: "/movie/\(movieId)", 
             requestOptions: requestOptions
         )
     }
 
-    public func ping(requestOptions: RequestOptions? = nil) async throws -> Bool {
+    public func createMovie(requestOptions: RequestOptions? = nil) async throws -> MovieId {
         return try await httpClient.performRequest(
-            method: .get, 
-            path: "/ping", 
+            method: .post, 
+            path: "/movie", 
             requestOptions: requestOptions
         )
     }
-}stOptions
-        )
-    }
 
-    public func getMetadata(requestOptions: RequestOptions? = nil) async throws -> Metadata {
+    public func getMetadata(shallow: Bool? = nil, tag: String? = nil, requestOptions: RequestOptions? = nil) async throws -> Metadata {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/metadata", 

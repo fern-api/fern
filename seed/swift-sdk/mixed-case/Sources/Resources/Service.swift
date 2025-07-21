@@ -13,7 +13,7 @@ public final class ServiceClient: Sendable {
         )
     }
 
-    public func listResources(requestOptions: RequestOptions? = nil) async throws -> [Resource] {
+    public func listResources(pageLimit: Int, beforeDate: Date, requestOptions: RequestOptions? = nil) async throws -> [Resource] {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/resource", 

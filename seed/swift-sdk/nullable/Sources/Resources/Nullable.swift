@@ -5,7 +5,7 @@ public final class NullableClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getUsers(requestOptions: RequestOptions? = nil) async throws -> [User] {
+    public func getUsers(usernames: String? = nil, avatar: String? = nil, activated: Bool? = nil, tags: Any? = nil, extra: Any? = nil, requestOptions: RequestOptions? = nil) async throws -> [User] {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/users", 

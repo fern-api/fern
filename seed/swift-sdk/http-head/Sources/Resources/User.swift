@@ -13,7 +13,7 @@ public final class UserClient: Sendable {
         )
     }
 
-    public func list(requestOptions: RequestOptions? = nil) async throws -> [User] {
+    public func list(limit: Int, requestOptions: RequestOptions? = nil) async throws -> [User] {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/users", 

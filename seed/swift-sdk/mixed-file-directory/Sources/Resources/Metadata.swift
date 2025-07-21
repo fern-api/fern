@@ -5,7 +5,7 @@ public final class MetadataClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getMetadata(requestOptions: RequestOptions? = nil) async throws -> Metadata {
+    public func getMetadata(id: Id, requestOptions: RequestOptions? = nil) async throws -> Metadata {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/users/events/metadata", 

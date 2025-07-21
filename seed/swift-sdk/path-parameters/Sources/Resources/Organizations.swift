@@ -21,7 +21,7 @@ public final class OrganizationsClient: Sendable {
         )
     }
 
-    public func searchOrganizations(tenantId: String, organizationId: String, requestOptions: RequestOptions? = nil) async throws -> [Organization] {
+    public func searchOrganizations(tenantId: String, organizationId: String, limit: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> [Organization] {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/\(tenantId)/organizations/\(organizationId)/search", 
