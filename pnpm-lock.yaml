@@ -2508,6 +2508,9 @@ importers:
       '@fern-api/rust-codegen':
         specifier: workspace:*
         version: link:../codegen
+      '@fern-api/test-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/test-utils
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
         version: 0.0.1045
@@ -2565,6 +2568,9 @@ importers:
       '@fern-api/rust-base':
         specifier: workspace:*
         version: link:../base
+      '@fern-api/test-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/test-utils
       '@fern-fern/generator-cli-sdk':
         specifier: 0.0.28
         version: 0.0.28
