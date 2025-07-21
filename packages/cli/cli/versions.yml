@@ -1,6 +1,51 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Override the casing of types in OpenAPI using the `x-fern-type-name` extension.
+
+        This lets you preserve the casing and grouping of your brand name.
+        For example, OpenAI could be kept as one word and cased as desired depending on camel, pascal, snake, or screaming snake case
+        ```yml
+        components:
+          schemas:
+            OpenAISettings:
+              x-fern-type-name:
+                value: OpenAISettings
+                casing:
+                  camel: openAISettings
+                  pascal: OpenAISettings
+                  snake: openai_settings
+                  screaming-snake: OPENAI_SETTINGS
+        ```
+
+        For non-brand names, Fern recommends not uppercasing abbreviations/initialisms. For example, `Acme` + `URL` is best cased like this:
+        * camel: `acmeUrl`
+        * pascal: `AcmeUrl`
+        * snake: `acme_url`
+        * screaming-snake: `ACME_URL`
+      type: feat
+    - summary: |
+        Override the casing of types in Fern Definition using the `name` field.
+
+        This lets you preserve the casing and grouping of your brand name.
+        For example, OpenAI could be kept as one word and cased as desired depending on camel, pascal, snake, or screaming snake case
+        ```yml
+        types:
+          OpenAISettings:
+            name:
+              casing:
+                camel: openAISettings
+                pascal: OpenAISettings
+                screamingSnake: OPENAI_SETTINGS
+                snake: openai_settings
+        ```
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-21"
+  version: 0.66.00
+
+- changelogEntry:
+    - summary: |
         `fern docs dev` server connection should no longer require frequent refresh.
       type: fix
   irVersion: 58
@@ -16,7 +61,7 @@
   version: 0.65.22
 
 - changelogEntry:
-    - summary: |  
+    - summary: |
         Auto upgrade corepack within fern docs dev if corepack missing key error.
       type: fix
   irVersion: 58
@@ -24,7 +69,7 @@
   version: 0.65.22
 
 - changelogEntry:
-    - summary: |  
+    - summary: |
         Improve logging in fern docs dev.
       type: fix
   irVersion: 58
@@ -32,7 +77,7 @@
   version: 0.65.21
 
 - changelogEntry:
-    - summary: |  
+    - summary: |
         Added smart display naming for undiscriminated unions.
       type: feat
   irVersion: 58
@@ -40,7 +85,7 @@
   version: 0.65.20
 
 - changelogEntry:
-    - summary: |  
+    - summary: |
         Upgrade docs dev to use new docs bundle on Windows.
       type: feat
   irVersion: 58
@@ -48,7 +93,7 @@
   version: 0.65.19
 
 - changelogEntry:
-    - summary: |  
+    - summary: |
         Add reference.md generation for Java SDKs.
       type: feat
   irVersion: 58
@@ -56,7 +101,7 @@
   version: 0.65.18
 
 - changelogEntry:
-    - summary: |  
+    - summary: |
         Use the nested "value" field for OpenAPI examples if it exists.
       type: fix
   irVersion: 58
@@ -64,7 +109,7 @@
   version: 0.65.17
 
 - changelogEntry:
-    - summary: |  
+    - summary: |
         Add a fallback version for buf export config.
       type: fix
   irVersion: 58
@@ -72,7 +117,7 @@
   version: 0.65.16
 
 - changelogEntry:
-    - summary: |  
+    - summary: |
         Fix enum type reference conversions for protobuf docs generation.
       type: fix
   irVersion: 58
@@ -80,7 +125,7 @@
   version: 0.65.15
 
 - changelogEntry:
-    - summary: |  
+    - summary: |
         Ignore buf.yaml and buf.gen.yaml when copying/exporting protobuf files.
       type: fix
   irVersion: 58
@@ -88,7 +133,7 @@
   version: 0.65.14
 
 - changelogEntry:
-    - summary: |  
+    - summary: |
         Add support for specifying target protobuf files for gRPC docs generation.
       type: feat
   irVersion: 58
@@ -96,7 +141,7 @@
   version: 0.65.13
 
 - changelogEntry:
-    - summary: |  
+    - summary: |
         Use service display name for grpc services.
       type: feat
   irVersion: 58
@@ -104,11 +149,11 @@
   version: 0.65.12
 
 - changelogEntry:
-    - summary: |  
+    - summary: |
         The extension `x-fern-global-headers` now supports a type field that can point to 
         arbitrary schemas. For example you can do the following to describe a header 
         that is an enum.
-        
+
         ```yml
         x-fern-global-headers:
           - header: X-API-Version
@@ -121,7 +166,7 @@
   version: 0.65.11
 
 - changelogEntry:
-    - summary: |  
+    - summary: |
         Clarify `fern upgrade` command description.
       type: feat
   irVersion: 58
@@ -129,7 +174,7 @@
   version: 0.65.10
 
 - changelogEntry:
-    - summary: |  
+    - summary: |
         Convert relevant endpoints to GrpcNode type in ApiReferenceNodeConverter
       type: feat
   irVersion: 58
@@ -137,7 +182,7 @@
   version: 0.65.9
 
 - changelogEntry:
-    - summary: |  
+    - summary: |
         Support date and date-time in v3 example generation. Change fallback string example to use "string" instead of "foo".
       type: feat
   irVersion: 58
@@ -145,7 +190,7 @@
   version: 0.65.8
 
 - changelogEntry:
-    - summary: |  
+    - summary: |
         Support example generation for gRPC docs.
       type: feat
   irVersion: 58
@@ -153,7 +198,7 @@
   version: 0.65.7
 
 - changelogEntry:
-    - summary: |  
+    - summary: |
         Support response error examples in the v3 parser.
       type: feat
   irVersion: 58
@@ -161,7 +206,7 @@
   version: 0.65.6
 
 - changelogEntry:
-    - summary: |  
+    - summary: |
         Fix how multipart encoding is handled in the v3 parser
       type: fix
   irVersion: 58
@@ -169,7 +214,7 @@
   version: 0.65.5
 
 - changelogEntry:
-    - summary: |  
+    - summary: |
         Previously if the OpenAPI parser v3 was enabled where the CLI would skip parsing any additional Fern Definitions
         along the OpenAPI spec. With the fix, you can use whatever combination of OpenAPI Spec(s) and Fern Definitions that 
         you would like.
@@ -179,7 +224,7 @@
   version: 0.65.4
 
 - changelogEntry:
-    - summary: |  
+    - summary: |
         Update `fern init` for java and go SDKs.
       type: fix
   irVersion: 58
@@ -187,7 +232,7 @@
   version: 0.65.3
 
 - changelogEntry:
-    - summary: |  
+    - summary: |
         Global header examples are only used when a corresponding endpoint header with the same name is not present.
       type: fix
   irVersion: 58
@@ -195,7 +240,7 @@
   version: 0.65.2
 
 - changelogEntry:
-    - summary: |  
+    - summary: |
         Re-release changes from 0.65.0.
       type: chore
   irVersion: 58
@@ -203,22 +248,22 @@
   version: 0.65.1
 
 - changelogEntry:
-    - summary: |  
+    - summary: |
         Rename the TypeScript SDK generator image from `fernapi/fern-typescript-node-sdk` to `fernapi/fern-typescript-sdk`.
       type: feat
   irVersion: 58
   createdAt: "2025-07-03"
   version: 0.65.0
-  
+
 - changelogEntry:
-    - summary: |  
+    - summary: |
         Rename the TypeScript SDK generator image from `fernapi/fern-typescript-node-sdk` to `fernapi/fern-typescript-sdk`.
       type: feat
   irVersion: 58
   createdAt: "2025-07-03"
   version: 0.65.0-rc0
 - changelogEntry:
-    - summary: |  
+    - summary: |
         Remove default docs for well known types in gRPC. Add support for field-level docs.
       type: fix
   irVersion: 58
@@ -226,7 +271,7 @@
   version: 0.64.37
 
 - changelogEntry:
-    - summary: |  
+    - summary: |
         Change grpc converters to use the fully qualified name with package prefix for all conversions. Build support for well-known types.
       type: fix
   irVersion: 58
@@ -234,7 +279,7 @@
   version: 0.64.36
 
 - changelogEntry:
-    - summary: |  
+    - summary: |
         Upgrade fdr and fdr-cjs dependencies to support grpc endpoints in convertIrToFdrApi.
       type: fix
   irVersion: 58
@@ -242,7 +287,7 @@
   version: 0.64.35
 
 - changelogEntry:
-    - summary: |  
+    - summary: |
         Add global headers in endpoint example generation.
       type: fix
   irVersion: 58
@@ -250,7 +295,7 @@
   version: 0.64.34
 
 - changelogEntry:
-    - summary: |  
+    - summary: |
         GA release with support for protobuf generation
       type: feat
   irVersion: 58
@@ -258,7 +303,7 @@
   version: 0.64.33
 
 - changelogEntry:
-    - summary: |  
+    - summary: |
         Use 'fern protoc-gen-fern' in buf shell proxy instead of local cli build.
       type: feat
   irVersion: 58
@@ -266,7 +311,7 @@
   version: 0.64.32-rc1
 
 - changelogEntry:
-    - summary: |  
+    - summary: |
         Reintroduce buf command/dependency.
       type: feat
   irVersion: 58
@@ -274,7 +319,7 @@
   version: 0.64.32-rc0
 
 - changelogEntry:
-    - summary: |  
+    - summary: |
         Revert dependency on bufbuild package.
       type: fix
   irVersion: 58
@@ -282,7 +327,7 @@
   version: 0.64.31
 
 - changelogEntry:
-    - summary: |  
+    - summary: |
         Support the `x-displayName` extension on the tag definition in OpenAPI. This allows OpenAPI
          specifications to define custom display names for tags that will be used in generated documentation.
       type: feat
@@ -291,7 +336,7 @@
   version: 0.64.28
 
 - changelogEntry:
-    - summary: |  
+    - summary: |
         Fixes the OpenAPI parser to correctly include query parameters in `Content-Type: application/octet-stream` requests.
       type: fix
   irVersion: 58
@@ -299,7 +344,7 @@
   version: 0.64.26
 
 - changelogEntry:
-    - summary: |  
+    - summary: |
         Remove all org-specific legacy preview pins.
       type: feat
   irVersion: 58
@@ -307,7 +352,7 @@
   version: 0.64.25
 
 - changelogEntry:
-    - summary: |  
+    - summary: |
         Added Server-Sent Events (SSE) support to Java stream implementation. The Java SDK generator now 
         supports SSE streaming alongside existing JSON streaming, enabling real-time incremental responses 
         for chat applications and live data feeds.
@@ -353,13 +398,12 @@
           - $ref: '#/components/schemas/Square'
         x-fern-discriminated: false  # Treat as undiscriminated union
         ```
-        
+
         When `x-fern-discriminated` is set to `false`, the oneOf will be treated as an undiscriminated union instead of a discriminated union.
       type: feat
   irVersion: 58
   createdAt: "2025-06-24"
   version: 0.64.21
-
 
 - changelogEntry:
     - summary: |
@@ -484,7 +528,7 @@
 
 - changelogEntry:
     - summary: |
-        Relative links between markdown files now works for docs using custom subpaths. 
+        Relative links between markdown files now works for docs using custom subpaths.
       type: fix
   irVersion: 58
   createdAt: "2025-06-12"
@@ -613,7 +657,7 @@
   version: 0.63.33
 
 - changelogEntry:
-    - summary: | 
+    - summary: |
         Disable v1 example generation for v3 docs IR generation.
         Correctly handle `x-fern-availability` extension in v3 parsing.
       type: fix
@@ -622,15 +666,15 @@
   version: 0.63.32
 
 - changelogEntry:
-    - summary: | 
+    - summary: |
         Manual redeployment to release changes from 0.63.29 and 0.63.30
       type: chore
   irVersion: 58
   createdAt: "2025-06-05"
   version: 0.63.31
-  
+
 - changelogEntry:
-    - summary: | 
+    - summary: |
         Support endpoint-level servers in OpenRPC.
       type: feat
   irVersion: 58
@@ -638,7 +682,7 @@
   version: 0.63.30
 
 - changelogEntry:
-    - summary: | 
+    - summary: |
         The v3 OpenAPI parser now appropriately creates inlined types for references to 
         inlined schemas like `$ref: /components/schemas/MySchema/properties/foo`
       type: fix
@@ -747,7 +791,7 @@
   version: 0.63.17
 
 - changelogEntry:
-    - summary: | 
+    - summary: |
         Added support for `oneOf` within `allOf` schemas in OpenAPI conversion. When an `allOf` schema contains a `oneOf` schema, we now properly merge the properties while preserving the union type structure. For example:
 
         ```yaml
@@ -771,7 +815,7 @@
   version: 0.63.16
 
 - changelogEntry:
-    - summary: | 
+    - summary: |
         The `<Code>` component now supports more flexible prop ordering and additional properties. You can now specify `maxLines` and `focus` props in any order relative to the `src` prop. For example:
 
         ```mdx
@@ -805,7 +849,7 @@
   irVersion: 58
   createdAt: "2025-05-28"
   version: 0.63.12
-  
+
 - changelogEntry:
     - summary: |
         Mark readonly fields as optional in the IR.
