@@ -317,7 +317,7 @@ export class ReconnectingWebSocket {
         if (this._options.debug) {
             // not using spread because compiled version uses Symbols
             // tslint:disable-next-line
-            // eslint-disable-next-line no-console
+            // biome-ignore lint/suspicious/noConsole: allow console
             console.log.apply(console, ["RWS>", ...args]);
         }
     }

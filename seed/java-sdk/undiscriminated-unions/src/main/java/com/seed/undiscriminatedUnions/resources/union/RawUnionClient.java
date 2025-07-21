@@ -15,6 +15,8 @@ import com.seed.undiscriminatedUnions.core.SeedUndiscriminatedUnionsHttpResponse
 import com.seed.undiscriminatedUnions.resources.union.types.Key;
 import com.seed.undiscriminatedUnions.resources.union.types.MetadataUnion;
 import com.seed.undiscriminatedUnions.resources.union.types.MyUnion;
+import com.seed.undiscriminatedUnions.resources.union.types.NestedUnionRoot;
+import com.seed.undiscriminatedUnions.resources.union.types.UnionWithDuplicateTypes;
 import java.io.IOException;
 import java.util.Map;
 import okhttp3.Headers;
@@ -203,6 +205,98 @@ public class RawUnionClient {
             if (response.isSuccessful()) {
                 return new SeedUndiscriminatedUnionsHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), boolean.class), response);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedUndiscriminatedUnionsApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
+        } catch (IOException e) {
+            throw new SeedUndiscriminatedUnionsException("Network error executing HTTP request", e);
+        }
+    }
+
+    public SeedUndiscriminatedUnionsHttpResponse<UnionWithDuplicateTypes> duplicateTypesUnion(
+            UnionWithDuplicateTypes request) {
+        return duplicateTypesUnion(request, null);
+    }
+
+    public SeedUndiscriminatedUnionsHttpResponse<UnionWithDuplicateTypes> duplicateTypesUnion(
+            UnionWithDuplicateTypes request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("duplicate")
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new SeedUndiscriminatedUnionsException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return new SeedUndiscriminatedUnionsHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UnionWithDuplicateTypes.class),
+                        response);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedUndiscriminatedUnionsApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
+        } catch (IOException e) {
+            throw new SeedUndiscriminatedUnionsException("Network error executing HTTP request", e);
+        }
+    }
+
+    public SeedUndiscriminatedUnionsHttpResponse<String> nestedUnions(NestedUnionRoot request) {
+        return nestedUnions(request, null);
+    }
+
+    public SeedUndiscriminatedUnionsHttpResponse<String> nestedUnions(
+            NestedUnionRoot request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("nested")
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new SeedUndiscriminatedUnionsException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return new SeedUndiscriminatedUnionsHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class), response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedUndiscriminatedUnionsApiException(

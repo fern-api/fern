@@ -1,8 +1,33 @@
 # Seed Java Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FJava)
+[![Maven Central](https://img.shields.io/maven-central/v/com.fern/java-inline-types)](https://central.sonatype.com/artifact/com.fern/java-inline-types)
 
 The Seed Java library provides convenient access to the Seed API from Java.
+
+## Installation
+
+### Gradle
+
+Add the dependency in your `build.gradle` file:
+
+```groovy
+dependencies {
+  implementation 'com.fern:java-inline-types'
+}
+```
+
+### Maven
+
+Add the dependency in your `pom.xml` file:
+
+```xml
+<dependency>
+  <groupId>com.fern</groupId>
+  <artifactId>java-inline-types</artifactId>
+  <version>0.0.1</version>
+</dependency>
+```
 
 ## Usage
 

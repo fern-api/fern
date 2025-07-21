@@ -954,6 +954,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
                     "safeName": "Imported"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -1033,6 +1034,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
                     "safeName": "Y"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -1108,6 +1110,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
                     "safeName": "X"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -1237,4 +1240,4 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies > file dependencies 1`] = `3540428`;
+exports[`dependencies > file dependencies 1`] = `3540494`;

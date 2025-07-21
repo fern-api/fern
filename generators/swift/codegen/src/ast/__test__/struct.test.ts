@@ -25,7 +25,7 @@ describe("Struct", () => {
             const struct = swift.struct({
                 name: "User",
                 accessLevel: AccessLevel.Public,
-                conformances: ["Codable", "Equatable"],
+                conformances: [swift.Protocol.Codable, swift.Protocol.Equatable],
                 properties
             });
 
@@ -189,6 +189,253 @@ describe("Struct", () => {
                   fileprivate let fileprivateArray: [Double]
               }"
             `);
+        });
+
+        it("should write struct with 1 nested enum", async () => {
+            const struct = swift.struct({
+                name: "Order",
+                properties: [
+                    swift.property({
+                        unsafeName: "id",
+                        type: Type.int64(),
+                        declarationType: DeclarationType.Let
+                    }),
+                    swift.property({
+                        unsafeName: "petId",
+                        type: Type.string(),
+                        declarationType: DeclarationType.Let
+                    })
+                ],
+                nestedTypes: [
+                    swift.enumWithRawValues({
+                        name: "Status",
+                        conformances: ["String", swift.Protocol.Codable, swift.Protocol.CaseIterable],
+                        cases: [
+                            { unsafeName: "available", rawValue: "available" },
+                            { unsafeName: "pending", rawValue: "pending" }
+                        ]
+                    })
+                ]
+            });
+
+            await expect(struct.toString()).toMatchFileSnapshot("snapshots/struct_with_1_nested_enum.swift");
+        });
+
+        it("should write struct with 2 nested enums", async () => {
+            const struct = swift.struct({
+                name: "Pet",
+                properties: [
+                    swift.property({
+                        unsafeName: "id",
+                        type: Type.int(),
+                        declarationType: DeclarationType.Let
+                    }),
+                    swift.property({
+                        unsafeName: "name",
+                        type: Type.string(),
+                        declarationType: DeclarationType.Let
+                    })
+                ],
+                nestedTypes: [
+                    swift.enumWithRawValues({
+                        name: "Status",
+                        conformances: ["String", swift.Protocol.Codable, swift.Protocol.CaseIterable],
+                        cases: [
+                            { unsafeName: "available", rawValue: "available" },
+                            { unsafeName: "pending", rawValue: "pending" }
+                        ]
+                    }),
+                    swift.enumWithRawValues({
+                        name: "CodingKeys",
+                        conformances: ["String", swift.Protocol.CodingKey],
+                        cases: [
+                            { unsafeName: "id", rawValue: "id" },
+                            { unsafeName: "name", rawValue: "name" }
+                        ]
+                    })
+                ]
+            });
+
+            await expect(struct.toString()).toMatchFileSnapshot("snapshots/struct_with_2_nested_enums.swift");
+        });
+
+        it("should write struct with methods", async () => {
+            const struct = swift.struct({
+                name: "User",
+                accessLevel: AccessLevel.Public,
+                conformances: ["Codable"],
+                properties: [
+                    swift.property({
+                        unsafeName: "id",
+                        declarationType: DeclarationType.Let,
+                        type: Type.int()
+                    }),
+                    swift.property({
+                        unsafeName: "name",
+                        accessLevel: AccessLevel.Private,
+                        declarationType: DeclarationType.Var,
+                        type: Type.string()
+                    })
+                ],
+                methods: [
+                    swift.method({
+                        unsafeName: "getId",
+                        accessLevel: AccessLevel.Public,
+                        returnType: Type.int(),
+                        body: swift.codeBlock((writer) => {
+                            writer.writeLine("return self.id");
+                        })
+                    }),
+                    swift.method({
+                        unsafeName: "getName",
+                        accessLevel: AccessLevel.Public,
+                        returnType: Type.string(),
+                        body: swift.codeBlock((writer) => {
+                            writer.writeLine("return self.name");
+                        })
+                    }),
+                    swift.method({
+                        unsafeName: "create",
+                        accessLevel: AccessLevel.Public,
+                        static_: true,
+                        parameters: [
+                            swift.functionParameter({
+                                argumentLabel: "with",
+                                unsafeName: "id",
+                                type: Type.int()
+                            }),
+                            swift.functionParameter({
+                                argumentLabel: "name",
+                                unsafeName: "name",
+                                type: Type.string()
+                            })
+                        ],
+                        returnType: Type.custom("User"),
+                        body: swift.codeBlock((writer) => {
+                            writer.writeLine("return User(id: id, name: name)");
+                        })
+                    })
+                ]
+            });
+
+            await expect(struct.toString()).toMatchFileSnapshot("snapshots/struct_with_3_methods.swift");
+        });
+
+        it("should write struct with basic initializer", async () => {
+            const struct = swift.struct({
+                name: "User",
+                accessLevel: AccessLevel.Public,
+                conformances: ["Codable"],
+                properties: [
+                    swift.property({
+                        unsafeName: "id",
+                        declarationType: DeclarationType.Let,
+                        type: Type.int()
+                    }),
+                    swift.property({
+                        unsafeName: "name",
+                        declarationType: DeclarationType.Let,
+                        type: Type.string()
+                    })
+                ],
+                initializers: [
+                    swift.initializer({
+                        accessLevel: AccessLevel.Public,
+                        parameters: [
+                            swift.functionParameter({
+                                argumentLabel: "id",
+                                unsafeName: "id",
+                                type: Type.int()
+                            }),
+                            swift.functionParameter({
+                                argumentLabel: "name",
+                                unsafeName: "name",
+                                type: Type.string()
+                            })
+                        ],
+                        body: swift.CodeBlock.withStatements([
+                            swift.Statement.propertyAssignment("id", swift.Expression.reference("id")),
+                            swift.Statement.propertyAssignment("name", swift.Expression.reference("name"))
+                        ])
+                    })
+                ]
+            });
+
+            await expect(struct.toString()).toMatchFileSnapshot("snapshots/struct_with_basic_initializer.swift");
+        });
+
+        it("should write struct with multiple initializers using statements", async () => {
+            const struct = swift.struct({
+                name: "Product",
+                accessLevel: AccessLevel.Public,
+                properties: [
+                    swift.property({
+                        unsafeName: "id",
+                        declarationType: DeclarationType.Let,
+                        type: Type.int()
+                    }),
+                    swift.property({
+                        unsafeName: "name",
+                        declarationType: DeclarationType.Let,
+                        type: Type.string()
+                    }),
+                    swift.property({
+                        unsafeName: "price",
+                        declarationType: DeclarationType.Let,
+                        type: Type.double()
+                    })
+                ],
+                initializers: [
+                    swift.initializer({
+                        accessLevel: AccessLevel.Public,
+                        parameters: [
+                            swift.functionParameter({
+                                argumentLabel: "id",
+                                unsafeName: "id",
+                                type: Type.int()
+                            }),
+                            swift.functionParameter({
+                                argumentLabel: "name",
+                                unsafeName: "name",
+                                type: Type.string()
+                            }),
+                            swift.functionParameter({
+                                argumentLabel: "price",
+                                unsafeName: "price",
+                                type: Type.double()
+                            })
+                        ],
+                        body: swift.CodeBlock.withStatements([
+                            swift.Statement.propertyAssignment("id", swift.Expression.reference("id")),
+                            swift.Statement.propertyAssignment("name", swift.Expression.reference("name")),
+                            swift.Statement.propertyAssignment("price", swift.Expression.reference("price"))
+                        ])
+                    }),
+                    swift.initializer({
+                        accessLevel: AccessLevel.Public,
+                        failable: true,
+                        parameters: [
+                            swift.functionParameter({
+                                argumentLabel: "from",
+                                unsafeName: "dictionary",
+                                type: Type.dictionary(Type.string(), Type.any())
+                            })
+                        ],
+                        body: swift.codeBlock((writer) => {
+                            writer.writeLine('guard let id = dictionary["id"] as? Int,');
+                            writer.writeLine('      let name = dictionary["name"] as? String,');
+                            writer.writeLine('      let price = dictionary["price"] as? Double else {');
+                            writer.writeLine("    return nil");
+                            writer.writeLine("}");
+                            writer.writeLine("self.id = id");
+                            writer.writeLine("self.name = name");
+                            writer.writeLine("self.price = price");
+                        })
+                    })
+                ]
+            });
+
+            await expect(struct.toString()).toMatchFileSnapshot("snapshots/struct_with_multiple_initializers.swift");
         });
     });
 });

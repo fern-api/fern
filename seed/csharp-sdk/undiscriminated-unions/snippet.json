@@ -48,6 +48,30 @@
                 "type": "csharp",
                 "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnionsClient();\nawait client.Union.CallAsync(\n    new Request\n    {\n        Union = new Dictionary<string, object>()\n        {\n            {\n                \"union\",\n                new Dictionary<object, object?>() { { \"key\", \"value\" } }\n            },\n        },\n    }\n);\n"
             }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/duplicate",
+                "method": "POST",
+                "identifier_override": "endpoint_union.duplicateTypesUnion"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnionsClient();\nawait client.Union.DuplicateTypesUnionAsync(\"string\");\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/nested",
+                "method": "POST",
+                "identifier_override": "endpoint_union.nestedUnions"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnionsClient();\nawait client.Union.NestedUnionsAsync(\"string\");\n"
+            }
         }
     ]
 }

@@ -1,4 +1,85 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.5.0
+  changelogEntry:
+    - summary: |
+        Support uploading file-like types for binary upload endpoints (not multipart-form):
+        * Buffered types: `Buffer`, `Blob`, `File`, `ArrayBuffer`, `ArrayBufferView`, and `Uint8Array`
+        * Stream types: `fs.ReadStream`, `stream.Readable`, and `ReadableStream`
+      type: feat
+    - summary: |
+        Users can configure metadata when uploading a file to a binary upload endpoint using the `Uploadable.WithMetadata` type:
+        ```typescript
+        import { createReadStream } from "fs";
+        
+        await client.upload({
+            data: createReadStream("path/to/file"),
+            filename: "my-file",
+            contentType: "audio/mpeg",
+            contentLength: 1949,
+        });
+        ```
+        The `filename`, `contentType`, and `contentLength` properties are optional.
+
+        Alternatively, users can use the `Uploadable.FromPath` type to upload directly from a file path:
+        ```typescript
+        await client.upload({
+            path: "path/to/file",
+            filename: "my-file",
+            contentType: "audio/mpeg",
+            contentLength: 1949,
+        });
+        ```
+
+        The metadata is used to set the `Content-Length`, `Content-Type`, and `Content-Disposition` headers. If not provided, the client will attempt to determine them automatically.
+        For example, `fs.ReadStream` has a `path` property which the SDK uses to retrieve the file size from the filesystem without loading it into memory:
+        ```typescript
+        import { createReadStream } from "fs";
+        
+        await client.upload(createReadStream("path/to/file"));
+        ```
+      type: feat
+  createdAt: "2025-07-17"
+  irVersion: 58
+  
+- version: 2.4.11
+  changelogEntry:
+    - summary: Bump the docker image for the generator to node:22.12-alpine3.20
+      type: chore
+  createdAt: "2025-07-18"
+  irVersion: 58
+
+- version: 2.4.10
+  changelogEntry:
+    - summary: Escape strings containing `*/` inside of JSDoc comments to avoid premature JSDoc block ending.
+      type: fix
+  createdAt: "2025-07-15"
+  irVersion: 58
+
+- version: 2.4.9
+  changelogEntry:
+    - summary: Preserve trailing slash of URL and path if present
+      type: fix
+  createdAt: "2025-07-15"
+  irVersion: 58
+
+- version: 2.4.8
+  changelogEntry:
+    - summary: |
+        Fix ts readme snippet where const was reassigned. Changed to let.
+      type: fix
+  createdAt: "2025-07-10"
+  irVersion: 58
+
+- version: 2.4.7
+  changelogEntry:
+    - summary: |
+        Make sure `extraDependencies`, `extraPeerDependencies`, `extraPeerDependenciesMeta`, and `extraDevDependencies` are always merged into _package.json_.
+        This was previously fixed for `shouldBundle: true`, but not for `shouldBundle: false` (default).
+        All dependencies should now come through.
+      type: fix
+  createdAt: "2025-07-10"
+  irVersion: 58
+
 - version: 2.4.6
   changelogEntry:
     - summary: |

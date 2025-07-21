@@ -6,11 +6,11 @@ types:
       street: string
       city: string
       state: string
-      zipCode: integer
+      zip_code: integer
 
   User:
     properties:
       id: string
       name: string
       address: Address
-      billingAddress: optional<Address>
+      billing_address: optional<Address>

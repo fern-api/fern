@@ -3944,35 +3944,40 @@
             "type": {
               "type": "id",
               "value": "SessionBegins"
-            }
+            },
+            "displayName": "SessionBegins"
           },
           {
             "typeName": "PartialTranscript",
             "type": {
               "type": "id",
               "value": "PartialTranscript"
-            }
+            },
+            "displayName": "PartialTranscript"
           },
           {
             "typeName": "FinalTranscript",
             "type": {
               "type": "id",
               "value": "FinalTranscript"
-            }
+            },
+            "displayName": "FinalTranscript"
           },
           {
             "typeName": "SessionTerminated",
             "type": {
               "type": "id",
               "value": "SessionTerminated"
-            }
+            },
+            "displayName": "SessionTerminated"
           },
           {
             "typeName": "RealtimeError",
             "type": {
               "type": "id",
               "value": "RealtimeError"
-            }
+            },
+            "displayName": "RealtimeError"
           }
         ]
       }
@@ -4021,14 +4026,16 @@
             "type": {
               "type": "id",
               "value": "PartialTranscript"
-            }
+            },
+            "displayName": "PartialTranscript"
           },
           {
             "typeName": "FinalTranscript",
             "type": {
               "type": "id",
               "value": "FinalTranscript"
-            }
+            },
+            "displayName": "FinalTranscript"
           }
         ]
       }
@@ -4400,12 +4407,12 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "upload_url": "foo"
+                "upload_url": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "upload_url": "foo"
+                  "upload_url": "string"
                 }
               }
             }
@@ -4633,20 +4640,20 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "page_details": {
-                  "limit": 42,
-                  "result_count": 42,
-                  "current_url": "foo",
-                  "prev_url": "foo",
-                  "next_url": "foo"
+                  "limit": 1,
+                  "result_count": 1,
+                  "current_url": "string",
+                  "prev_url": "string",
+                  "next_url": "string"
                 },
                 "transcripts": [
                   {
-                    "id": "foo",
-                    "resource_url": "foo",
+                    "id": "string",
+                    "resource_url": "string",
                     "status": "queued",
-                    "created": "foo",
-                    "completed": "foo",
-                    "audio_url": "foo"
+                    "created": "string",
+                    "completed": "string",
+                    "audio_url": "string"
                   }
                 ]
               },
@@ -4654,20 +4661,20 @@
                 "type": "json",
                 "value": {
                   "page_details": {
-                    "limit": 42,
-                    "result_count": 42,
-                    "current_url": "foo",
-                    "prev_url": "foo",
-                    "next_url": "foo"
+                    "limit": 1,
+                    "result_count": 1,
+                    "current_url": "string",
+                    "prev_url": "string",
+                    "next_url": "string"
                   },
                   "transcripts": [
                     {
-                      "id": "foo",
-                      "resource_url": "foo",
+                      "id": "string",
+                      "resource_url": "string",
                       "status": "queued",
-                      "created": "foo",
-                      "completed": "foo",
-                      "audio_url": "foo"
+                      "created": "string",
+                      "completed": "string",
+                      "audio_url": "string"
                     }
                   ]
                 }
@@ -4832,110 +4839,110 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "audio_url": "foo"
+                "audio_url": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "audio_url": "foo"
+                  "audio_url": "string"
                 }
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "id": "foo",
-                "language_model": "foo",
-                "acoustic_model": "foo",
+                "id": "string",
+                "language_model": "string",
+                "acoustic_model": "string",
                 "status": "queued",
                 "language_code": "en_us",
-                "audio_url": "foo",
-                "text": "foo",
+                "audio_url": "string",
+                "text": "string",
                 "words": [
                   {
-                    "confidence": 42,
-                    "start": 42,
-                    "end": 42,
-                    "text": "foo",
-                    "speaker": "foo"
+                    "confidence": 1.1,
+                    "start": 1,
+                    "end": 1,
+                    "text": "string",
+                    "speaker": "string"
                   }
                 ],
                 "utterances": [
                   {
-                    "channel": "foo",
-                    "confidence": 42,
-                    "start": 42,
-                    "end": 42,
-                    "text": "foo",
+                    "channel": "string",
+                    "confidence": 1.1,
+                    "start": 1,
+                    "end": 1,
+                    "text": "string",
                     "words": [
                       {
-                        "confidence": 42,
-                        "start": 42,
-                        "end": 42,
-                        "text": "foo",
-                        "speaker": "foo"
+                        "confidence": 1.1,
+                        "start": 1,
+                        "end": 1,
+                        "text": "string",
+                        "speaker": "string"
                       }
                     ]
                   }
                 ],
-                "confidence": 42,
-                "audio_duration": 42,
+                "confidence": 1.1,
+                "audio_duration": 1.1,
                 "punctuate": true,
                 "format_text": true,
                 "dual_channel": true,
-                "webhook_url": "foo",
-                "webhook_status_code": 42,
+                "webhook_url": "string",
+                "webhook_status_code": 1,
                 "webhook_auth": true,
-                "webhook_auth_header_name": "foo",
+                "webhook_auth_header_name": "string",
                 "speed_boost": true,
                 "auto_highlights": true,
                 "auto_highlights_result": {
                   "results": [
                     {
-                      "count": 42,
-                      "rank": 42,
-                      "text": "foo",
+                      "count": 1,
+                      "rank": 1.1,
+                      "text": "string",
                       "timestamps": [
                         {
-                          "start": 42,
-                          "end": 42
+                          "start": 1,
+                          "end": 1
                         }
                       ]
                     }
                   ]
                 },
-                "audio_start_from": 42,
-                "audio_end_at": 42,
+                "audio_start_from": 1,
+                "audio_end_at": 1,
                 "word_boost": [
-                  "foo"
+                  "string"
                 ],
-                "boost_param": "foo",
+                "boost_param": "string",
                 "filter_profanity": true,
                 "redact_pii": true,
                 "redact_pii_audio": true,
-                "redact_pii_audio_quality": "foo",
+                "redact_pii_audio_quality": "string",
                 "redact_pii_policies": [
                   "medical_process"
                 ],
                 "redact_pii_sub": "entity_type",
                 "speaker_labels": true,
-                "speakers_expected": 42,
+                "speakers_expected": 1,
                 "content_safety": true,
                 "content_safety_labels": {
                   "status": "success",
                   "results": [
                     {
-                      "text": "foo",
+                      "text": "string",
                       "labels": [
                         {
-                          "label": "foo",
-                          "confidence": 42,
-                          "severity": 42
+                          "label": "string",
+                          "confidence": 1.1,
+                          "severity": 1.1
                         }
                       ],
-                      "sentences_idx_start": 42,
-                      "sentences_idx_end": 42,
+                      "sentences_idx_start": 1,
+                      "sentences_idx_end": 1,
                       "timestamp": {
-                        "start": 42,
-                        "end": 42
+                        "start": 1,
+                        "end": 1
                       },
                       "summary": {},
                       "severity_score_summary": {}
@@ -4947,16 +4954,16 @@
                   "status": "success",
                   "results": [
                     {
-                      "text": "foo",
+                      "text": "string",
                       "labels": [
                         {
-                          "relevance": 42,
-                          "label": "foo"
+                          "relevance": 1.1,
+                          "label": "string"
                         }
                       ],
                       "timestamp": {
-                        "start": 42,
-                        "end": 42
+                        "start": 1,
+                        "end": 1
                       }
                     }
                   ],
@@ -4966,151 +4973,151 @@
                 "custom_spelling": [
                   {
                     "from": [
-                      "foo"
+                      "string"
                     ],
-                    "to": "foo"
+                    "to": "string"
                   }
                 ],
                 "auto_chapters": true,
                 "chapters": [
                   {
-                    "gist": "foo",
-                    "headline": "foo",
-                    "summary": "foo",
-                    "start": 42,
-                    "end": 42
+                    "gist": "string",
+                    "headline": "string",
+                    "summary": "string",
+                    "start": 1,
+                    "end": 1
                   }
                 ],
                 "summarization": true,
-                "summary_type": "foo",
-                "summary_model": "foo",
-                "summary": "foo",
+                "summary_type": "string",
+                "summary_model": "string",
+                "summary": "string",
                 "custom_topics": true,
                 "topics": [
-                  "foo"
+                  "string"
                 ],
                 "disfluencies": true,
                 "sentiment_analysis": true,
                 "sentiment_analysis_results": [
                   {
-                    "text": "foo",
-                    "start": 42,
-                    "end": 42,
+                    "text": "string",
+                    "start": 1,
+                    "end": 1,
                     "sentiment": "POSITIVE",
-                    "confidence": 42,
-                    "speaker": "foo"
+                    "confidence": 1.1,
+                    "speaker": "string"
                   }
                 ],
                 "entity_detection": true,
                 "entities": [
                   {
                     "entity_type": "banking_information",
-                    "text": "foo",
-                    "start": 42,
-                    "end": 42
+                    "text": "string",
+                    "start": 1,
+                    "end": 1
                   }
                 ],
-                "speech_threshold": 42,
+                "speech_threshold": 1.1,
                 "throttled": true,
-                "error": "foo"
+                "error": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "foo",
-                  "language_model": "foo",
-                  "acoustic_model": "foo",
+                  "id": "string",
+                  "language_model": "string",
+                  "acoustic_model": "string",
                   "status": "queued",
                   "language_code": "en_us",
-                  "audio_url": "foo",
-                  "text": "foo",
+                  "audio_url": "string",
+                  "text": "string",
                   "words": [
                     {
-                      "confidence": 42,
-                      "start": 42,
-                      "end": 42,
-                      "text": "foo",
-                      "speaker": "foo"
+                      "confidence": 1.1,
+                      "start": 1,
+                      "end": 1,
+                      "text": "string",
+                      "speaker": "string"
                     }
                   ],
                   "utterances": [
                     {
-                      "channel": "foo",
-                      "confidence": 42,
-                      "start": 42,
-                      "end": 42,
-                      "text": "foo",
+                      "channel": "string",
+                      "confidence": 1.1,
+                      "start": 1,
+                      "end": 1,
+                      "text": "string",
                       "words": [
                         {
-                          "confidence": 42,
-                          "start": 42,
-                          "end": 42,
-                          "text": "foo",
-                          "speaker": "foo"
+                          "confidence": 1.1,
+                          "start": 1,
+                          "end": 1,
+                          "text": "string",
+                          "speaker": "string"
                         }
                       ]
                     }
                   ],
-                  "confidence": 42,
-                  "audio_duration": 42,
+                  "confidence": 1.1,
+                  "audio_duration": 1.1,
                   "punctuate": true,
                   "format_text": true,
                   "dual_channel": true,
-                  "webhook_url": "foo",
-                  "webhook_status_code": 42,
+                  "webhook_url": "string",
+                  "webhook_status_code": 1,
                   "webhook_auth": true,
-                  "webhook_auth_header_name": "foo",
+                  "webhook_auth_header_name": "string",
                   "speed_boost": true,
                   "auto_highlights": true,
                   "auto_highlights_result": {
                     "results": [
                       {
-                        "count": 42,
-                        "rank": 42,
-                        "text": "foo",
+                        "count": 1,
+                        "rank": 1.1,
+                        "text": "string",
                         "timestamps": [
                           {
-                            "start": 42,
-                            "end": 42
+                            "start": 1,
+                            "end": 1
                           }
                         ]
                       }
                     ]
                   },
-                  "audio_start_from": 42,
-                  "audio_end_at": 42,
+                  "audio_start_from": 1,
+                  "audio_end_at": 1,
                   "word_boost": [
-                    "foo"
+                    "string"
                   ],
-                  "boost_param": "foo",
+                  "boost_param": "string",
                   "filter_profanity": true,
                   "redact_pii": true,
                   "redact_pii_audio": true,
-                  "redact_pii_audio_quality": "foo",
+                  "redact_pii_audio_quality": "string",
                   "redact_pii_policies": [
                     "medical_process"
                   ],
                   "redact_pii_sub": "entity_type",
                   "speaker_labels": true,
-                  "speakers_expected": 42,
+                  "speakers_expected": 1,
                   "content_safety": true,
                   "content_safety_labels": {
                     "status": "success",
                     "results": [
                       {
-                        "text": "foo",
+                        "text": "string",
                         "labels": [
                           {
-                            "label": "foo",
-                            "confidence": 42,
-                            "severity": 42
+                            "label": "string",
+                            "confidence": 1.1,
+                            "severity": 1.1
                           }
                         ],
-                        "sentences_idx_start": 42,
-                        "sentences_idx_end": 42,
+                        "sentences_idx_start": 1,
+                        "sentences_idx_end": 1,
                         "timestamp": {
-                          "start": 42,
-                          "end": 42
+                          "start": 1,
+                          "end": 1
                         },
                         "summary": {},
                         "severity_score_summary": {}
@@ -5122,16 +5129,16 @@
                     "status": "success",
                     "results": [
                       {
-                        "text": "foo",
+                        "text": "string",
                         "labels": [
                           {
-                            "relevance": 42,
-                            "label": "foo"
+                            "relevance": 1.1,
+                            "label": "string"
                           }
                         ],
                         "timestamp": {
-                          "start": 42,
-                          "end": 42
+                          "start": 1,
+                          "end": 1
                         }
                       }
                     ],
@@ -5141,53 +5148,53 @@
                   "custom_spelling": [
                     {
                       "from": [
-                        "foo"
+                        "string"
                       ],
-                      "to": "foo"
+                      "to": "string"
                     }
                   ],
                   "auto_chapters": true,
                   "chapters": [
                     {
-                      "gist": "foo",
-                      "headline": "foo",
-                      "summary": "foo",
-                      "start": 42,
-                      "end": 42
+                      "gist": "string",
+                      "headline": "string",
+                      "summary": "string",
+                      "start": 1,
+                      "end": 1
                     }
                   ],
                   "summarization": true,
-                  "summary_type": "foo",
-                  "summary_model": "foo",
-                  "summary": "foo",
+                  "summary_type": "string",
+                  "summary_model": "string",
+                  "summary": "string",
                   "custom_topics": true,
                   "topics": [
-                    "foo"
+                    "string"
                   ],
                   "disfluencies": true,
                   "sentiment_analysis": true,
                   "sentiment_analysis_results": [
                     {
-                      "text": "foo",
-                      "start": 42,
-                      "end": 42,
+                      "text": "string",
+                      "start": 1,
+                      "end": 1,
                       "sentiment": "POSITIVE",
-                      "confidence": 42,
-                      "speaker": "foo"
+                      "confidence": 1.1,
+                      "speaker": "string"
                     }
                   ],
                   "entity_detection": true,
                   "entities": [
                     {
                       "entity_type": "banking_information",
-                      "text": "foo",
-                      "start": 42,
-                      "end": 42
+                      "text": "string",
+                      "start": 1,
+                      "end": 1
                     }
                   ],
-                  "speech_threshold": 42,
+                  "speech_threshold": 1.1,
                   "throttled": true,
-                  "error": "foo"
+                  "error": "string"
                 }
               }
             }
@@ -5357,100 +5364,100 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "id": "foo",
-                "language_model": "foo",
-                "acoustic_model": "foo",
+                "id": "string",
+                "language_model": "string",
+                "acoustic_model": "string",
                 "status": "queued",
                 "language_code": "en_us",
-                "audio_url": "foo",
-                "text": "foo",
+                "audio_url": "string",
+                "text": "string",
                 "words": [
                   {
-                    "confidence": 42,
-                    "start": 42,
-                    "end": 42,
-                    "text": "foo",
-                    "speaker": "foo"
+                    "confidence": 1.1,
+                    "start": 1,
+                    "end": 1,
+                    "text": "string",
+                    "speaker": "string"
                   }
                 ],
                 "utterances": [
                   {
-                    "channel": "foo",
-                    "confidence": 42,
-                    "start": 42,
-                    "end": 42,
-                    "text": "foo",
+                    "channel": "string",
+                    "confidence": 1.1,
+                    "start": 1,
+                    "end": 1,
+                    "text": "string",
                     "words": [
                       {
-                        "confidence": 42,
-                        "start": 42,
-                        "end": 42,
-                        "text": "foo",
-                        "speaker": "foo"
+                        "confidence": 1.1,
+                        "start": 1,
+                        "end": 1,
+                        "text": "string",
+                        "speaker": "string"
                       }
                     ]
                   }
                 ],
-                "confidence": 42,
-                "audio_duration": 42,
+                "confidence": 1.1,
+                "audio_duration": 1.1,
                 "punctuate": true,
                 "format_text": true,
                 "dual_channel": true,
-                "webhook_url": "foo",
-                "webhook_status_code": 42,
+                "webhook_url": "string",
+                "webhook_status_code": 1,
                 "webhook_auth": true,
-                "webhook_auth_header_name": "foo",
+                "webhook_auth_header_name": "string",
                 "speed_boost": true,
                 "auto_highlights": true,
                 "auto_highlights_result": {
                   "results": [
                     {
-                      "count": 42,
-                      "rank": 42,
-                      "text": "foo",
+                      "count": 1,
+                      "rank": 1.1,
+                      "text": "string",
                       "timestamps": [
                         {
-                          "start": 42,
-                          "end": 42
+                          "start": 1,
+                          "end": 1
                         }
                       ]
                     }
                   ]
                 },
-                "audio_start_from": 42,
-                "audio_end_at": 42,
+                "audio_start_from": 1,
+                "audio_end_at": 1,
                 "word_boost": [
-                  "foo"
+                  "string"
                 ],
-                "boost_param": "foo",
+                "boost_param": "string",
                 "filter_profanity": true,
                 "redact_pii": true,
                 "redact_pii_audio": true,
-                "redact_pii_audio_quality": "foo",
+                "redact_pii_audio_quality": "string",
                 "redact_pii_policies": [
                   "medical_process"
                 ],
                 "redact_pii_sub": "entity_type",
                 "speaker_labels": true,
-                "speakers_expected": 42,
+                "speakers_expected": 1,
                 "content_safety": true,
                 "content_safety_labels": {
                   "status": "success",
                   "results": [
                     {
-                      "text": "foo",
+                      "text": "string",
                       "labels": [
                         {
-                          "label": "foo",
-                          "confidence": 42,
-                          "severity": 42
+                          "label": "string",
+                          "confidence": 1.1,
+                          "severity": 1.1
                         }
                       ],
-                      "sentences_idx_start": 42,
-                      "sentences_idx_end": 42,
+                      "sentences_idx_start": 1,
+                      "sentences_idx_end": 1,
                       "timestamp": {
-                        "start": 42,
-                        "end": 42
+                        "start": 1,
+                        "end": 1
                       },
                       "summary": {},
                       "severity_score_summary": {}
@@ -5462,16 +5469,16 @@
                   "status": "success",
                   "results": [
                     {
-                      "text": "foo",
+                      "text": "string",
                       "labels": [
                         {
-                          "relevance": 42,
-                          "label": "foo"
+                          "relevance": 1.1,
+                          "label": "string"
                         }
                       ],
                       "timestamp": {
-                        "start": 42,
-                        "end": 42
+                        "start": 1,
+                        "end": 1
                       }
                     }
                   ],
@@ -5481,151 +5488,151 @@
                 "custom_spelling": [
                   {
                     "from": [
-                      "foo"
+                      "string"
                     ],
-                    "to": "foo"
+                    "to": "string"
                   }
                 ],
                 "auto_chapters": true,
                 "chapters": [
                   {
-                    "gist": "foo",
-                    "headline": "foo",
-                    "summary": "foo",
-                    "start": 42,
-                    "end": 42
+                    "gist": "string",
+                    "headline": "string",
+                    "summary": "string",
+                    "start": 1,
+                    "end": 1
                   }
                 ],
                 "summarization": true,
-                "summary_type": "foo",
-                "summary_model": "foo",
-                "summary": "foo",
+                "summary_type": "string",
+                "summary_model": "string",
+                "summary": "string",
                 "custom_topics": true,
                 "topics": [
-                  "foo"
+                  "string"
                 ],
                 "disfluencies": true,
                 "sentiment_analysis": true,
                 "sentiment_analysis_results": [
                   {
-                    "text": "foo",
-                    "start": 42,
-                    "end": 42,
+                    "text": "string",
+                    "start": 1,
+                    "end": 1,
                     "sentiment": "POSITIVE",
-                    "confidence": 42,
-                    "speaker": "foo"
+                    "confidence": 1.1,
+                    "speaker": "string"
                   }
                 ],
                 "entity_detection": true,
                 "entities": [
                   {
                     "entity_type": "banking_information",
-                    "text": "foo",
-                    "start": 42,
-                    "end": 42
+                    "text": "string",
+                    "start": 1,
+                    "end": 1
                   }
                 ],
-                "speech_threshold": 42,
+                "speech_threshold": 1.1,
                 "throttled": true,
-                "error": "foo"
+                "error": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "foo",
-                  "language_model": "foo",
-                  "acoustic_model": "foo",
+                  "id": "string",
+                  "language_model": "string",
+                  "acoustic_model": "string",
                   "status": "queued",
                   "language_code": "en_us",
-                  "audio_url": "foo",
-                  "text": "foo",
+                  "audio_url": "string",
+                  "text": "string",
                   "words": [
                     {
-                      "confidence": 42,
-                      "start": 42,
-                      "end": 42,
-                      "text": "foo",
-                      "speaker": "foo"
+                      "confidence": 1.1,
+                      "start": 1,
+                      "end": 1,
+                      "text": "string",
+                      "speaker": "string"
                     }
                   ],
                   "utterances": [
                     {
-                      "channel": "foo",
-                      "confidence": 42,
-                      "start": 42,
-                      "end": 42,
-                      "text": "foo",
+                      "channel": "string",
+                      "confidence": 1.1,
+                      "start": 1,
+                      "end": 1,
+                      "text": "string",
                       "words": [
                         {
-                          "confidence": 42,
-                          "start": 42,
-                          "end": 42,
-                          "text": "foo",
-                          "speaker": "foo"
+                          "confidence": 1.1,
+                          "start": 1,
+                          "end": 1,
+                          "text": "string",
+                          "speaker": "string"
                         }
                       ]
                     }
                   ],
-                  "confidence": 42,
-                  "audio_duration": 42,
+                  "confidence": 1.1,
+                  "audio_duration": 1.1,
                   "punctuate": true,
                   "format_text": true,
                   "dual_channel": true,
-                  "webhook_url": "foo",
-                  "webhook_status_code": 42,
+                  "webhook_url": "string",
+                  "webhook_status_code": 1,
                   "webhook_auth": true,
-                  "webhook_auth_header_name": "foo",
+                  "webhook_auth_header_name": "string",
                   "speed_boost": true,
                   "auto_highlights": true,
                   "auto_highlights_result": {
                     "results": [
                       {
-                        "count": 42,
-                        "rank": 42,
-                        "text": "foo",
+                        "count": 1,
+                        "rank": 1.1,
+                        "text": "string",
                         "timestamps": [
                           {
-                            "start": 42,
-                            "end": 42
+                            "start": 1,
+                            "end": 1
                           }
                         ]
                       }
                     ]
                   },
-                  "audio_start_from": 42,
-                  "audio_end_at": 42,
+                  "audio_start_from": 1,
+                  "audio_end_at": 1,
                   "word_boost": [
-                    "foo"
+                    "string"
                   ],
-                  "boost_param": "foo",
+                  "boost_param": "string",
                   "filter_profanity": true,
                   "redact_pii": true,
                   "redact_pii_audio": true,
-                  "redact_pii_audio_quality": "foo",
+                  "redact_pii_audio_quality": "string",
                   "redact_pii_policies": [
                     "medical_process"
                   ],
                   "redact_pii_sub": "entity_type",
                   "speaker_labels": true,
-                  "speakers_expected": 42,
+                  "speakers_expected": 1,
                   "content_safety": true,
                   "content_safety_labels": {
                     "status": "success",
                     "results": [
                       {
-                        "text": "foo",
+                        "text": "string",
                         "labels": [
                           {
-                            "label": "foo",
-                            "confidence": 42,
-                            "severity": 42
+                            "label": "string",
+                            "confidence": 1.1,
+                            "severity": 1.1
                           }
                         ],
-                        "sentences_idx_start": 42,
-                        "sentences_idx_end": 42,
+                        "sentences_idx_start": 1,
+                        "sentences_idx_end": 1,
                         "timestamp": {
-                          "start": 42,
-                          "end": 42
+                          "start": 1,
+                          "end": 1
                         },
                         "summary": {},
                         "severity_score_summary": {}
@@ -5637,16 +5644,16 @@
                     "status": "success",
                     "results": [
                       {
-                        "text": "foo",
+                        "text": "string",
                         "labels": [
                           {
-                            "relevance": 42,
-                            "label": "foo"
+                            "relevance": 1.1,
+                            "label": "string"
                           }
                         ],
                         "timestamp": {
-                          "start": 42,
-                          "end": 42
+                          "start": 1,
+                          "end": 1
                         }
                       }
                     ],
@@ -5656,53 +5663,53 @@
                   "custom_spelling": [
                     {
                       "from": [
-                        "foo"
+                        "string"
                       ],
-                      "to": "foo"
+                      "to": "string"
                     }
                   ],
                   "auto_chapters": true,
                   "chapters": [
                     {
-                      "gist": "foo",
-                      "headline": "foo",
-                      "summary": "foo",
-                      "start": 42,
-                      "end": 42
+                      "gist": "string",
+                      "headline": "string",
+                      "summary": "string",
+                      "start": 1,
+                      "end": 1
                     }
                   ],
                   "summarization": true,
-                  "summary_type": "foo",
-                  "summary_model": "foo",
-                  "summary": "foo",
+                  "summary_type": "string",
+                  "summary_model": "string",
+                  "summary": "string",
                   "custom_topics": true,
                   "topics": [
-                    "foo"
+                    "string"
                   ],
                   "disfluencies": true,
                   "sentiment_analysis": true,
                   "sentiment_analysis_results": [
                     {
-                      "text": "foo",
-                      "start": 42,
-                      "end": 42,
+                      "text": "string",
+                      "start": 1,
+                      "end": 1,
                       "sentiment": "POSITIVE",
-                      "confidence": 42,
-                      "speaker": "foo"
+                      "confidence": 1.1,
+                      "speaker": "string"
                     }
                   ],
                   "entity_detection": true,
                   "entities": [
                     {
                       "entity_type": "banking_information",
-                      "text": "foo",
-                      "start": 42,
-                      "end": 42
+                      "text": "string",
+                      "start": 1,
+                      "end": 1
                     }
                   ],
-                  "speech_threshold": 42,
+                  "speech_threshold": 1.1,
                   "throttled": true,
-                  "error": "foo"
+                  "error": "string"
                 }
               }
             }
@@ -5872,100 +5879,100 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "id": "foo",
-                "language_model": "foo",
-                "acoustic_model": "foo",
+                "id": "string",
+                "language_model": "string",
+                "acoustic_model": "string",
                 "status": "queued",
                 "language_code": "en_us",
-                "audio_url": "foo",
-                "text": "foo",
+                "audio_url": "string",
+                "text": "string",
                 "words": [
                   {
-                    "confidence": 42,
-                    "start": 42,
-                    "end": 42,
-                    "text": "foo",
-                    "speaker": "foo"
+                    "confidence": 1.1,
+                    "start": 1,
+                    "end": 1,
+                    "text": "string",
+                    "speaker": "string"
                   }
                 ],
                 "utterances": [
                   {
-                    "channel": "foo",
-                    "confidence": 42,
-                    "start": 42,
-                    "end": 42,
-                    "text": "foo",
+                    "channel": "string",
+                    "confidence": 1.1,
+                    "start": 1,
+                    "end": 1,
+                    "text": "string",
                     "words": [
                       {
-                        "confidence": 42,
-                        "start": 42,
-                        "end": 42,
-                        "text": "foo",
-                        "speaker": "foo"
+                        "confidence": 1.1,
+                        "start": 1,
+                        "end": 1,
+                        "text": "string",
+                        "speaker": "string"
                       }
                     ]
                   }
                 ],
-                "confidence": 42,
-                "audio_duration": 42,
+                "confidence": 1.1,
+                "audio_duration": 1.1,
                 "punctuate": true,
                 "format_text": true,
                 "dual_channel": true,
-                "webhook_url": "foo",
-                "webhook_status_code": 42,
+                "webhook_url": "string",
+                "webhook_status_code": 1,
                 "webhook_auth": true,
-                "webhook_auth_header_name": "foo",
+                "webhook_auth_header_name": "string",
                 "speed_boost": true,
                 "auto_highlights": true,
                 "auto_highlights_result": {
                   "results": [
                     {
-                      "count": 42,
-                      "rank": 42,
-                      "text": "foo",
+                      "count": 1,
+                      "rank": 1.1,
+                      "text": "string",
                       "timestamps": [
                         {
-                          "start": 42,
-                          "end": 42
+                          "start": 1,
+                          "end": 1
                         }
                       ]
                     }
                   ]
                 },
-                "audio_start_from": 42,
-                "audio_end_at": 42,
+                "audio_start_from": 1,
+                "audio_end_at": 1,
                 "word_boost": [
-                  "foo"
+                  "string"
                 ],
-                "boost_param": "foo",
+                "boost_param": "string",
                 "filter_profanity": true,
                 "redact_pii": true,
                 "redact_pii_audio": true,
-                "redact_pii_audio_quality": "foo",
+                "redact_pii_audio_quality": "string",
                 "redact_pii_policies": [
                   "medical_process"
                 ],
                 "redact_pii_sub": "entity_type",
                 "speaker_labels": true,
-                "speakers_expected": 42,
+                "speakers_expected": 1,
                 "content_safety": true,
                 "content_safety_labels": {
                   "status": "success",
                   "results": [
                     {
-                      "text": "foo",
+                      "text": "string",
                       "labels": [
                         {
-                          "label": "foo",
-                          "confidence": 42,
-                          "severity": 42
+                          "label": "string",
+                          "confidence": 1.1,
+                          "severity": 1.1
                         }
                       ],
-                      "sentences_idx_start": 42,
-                      "sentences_idx_end": 42,
+                      "sentences_idx_start": 1,
+                      "sentences_idx_end": 1,
                       "timestamp": {
-                        "start": 42,
-                        "end": 42
+                        "start": 1,
+                        "end": 1
                       },
                       "summary": {},
                       "severity_score_summary": {}
@@ -5977,16 +5984,16 @@
                   "status": "success",
                   "results": [
                     {
-                      "text": "foo",
+                      "text": "string",
                       "labels": [
                         {
-                          "relevance": 42,
-                          "label": "foo"
+                          "relevance": 1.1,
+                          "label": "string"
                         }
                       ],
                       "timestamp": {
-                        "start": 42,
-                        "end": 42
+                        "start": 1,
+                        "end": 1
                       }
                     }
                   ],
@@ -5996,151 +6003,151 @@
                 "custom_spelling": [
                   {
                     "from": [
-                      "foo"
+                      "string"
                     ],
-                    "to": "foo"
+                    "to": "string"
                   }
                 ],
                 "auto_chapters": true,
                 "chapters": [
                   {
-                    "gist": "foo",
-                    "headline": "foo",
-                    "summary": "foo",
-                    "start": 42,
-                    "end": 42
+                    "gist": "string",
+                    "headline": "string",
+                    "summary": "string",
+                    "start": 1,
+                    "end": 1
                   }
                 ],
                 "summarization": true,
-                "summary_type": "foo",
-                "summary_model": "foo",
-                "summary": "foo",
+                "summary_type": "string",
+                "summary_model": "string",
+                "summary": "string",
                 "custom_topics": true,
                 "topics": [
-                  "foo"
+                  "string"
                 ],
                 "disfluencies": true,
                 "sentiment_analysis": true,
                 "sentiment_analysis_results": [
                   {
-                    "text": "foo",
-                    "start": 42,
-                    "end": 42,
+                    "text": "string",
+                    "start": 1,
+                    "end": 1,
                     "sentiment": "POSITIVE",
-                    "confidence": 42,
-                    "speaker": "foo"
+                    "confidence": 1.1,
+                    "speaker": "string"
                   }
                 ],
                 "entity_detection": true,
                 "entities": [
                   {
                     "entity_type": "banking_information",
-                    "text": "foo",
-                    "start": 42,
-                    "end": 42
+                    "text": "string",
+                    "start": 1,
+                    "end": 1
                   }
                 ],
-                "speech_threshold": 42,
+                "speech_threshold": 1.1,
                 "throttled": true,
-                "error": "foo"
+                "error": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "foo",
-                  "language_model": "foo",
-                  "acoustic_model": "foo",
+                  "id": "string",
+                  "language_model": "string",
+                  "acoustic_model": "string",
                   "status": "queued",
                   "language_code": "en_us",
-                  "audio_url": "foo",
-                  "text": "foo",
+                  "audio_url": "string",
+                  "text": "string",
                   "words": [
                     {
-                      "confidence": 42,
-                      "start": 42,
-                      "end": 42,
-                      "text": "foo",
-                      "speaker": "foo"
+                      "confidence": 1.1,
+                      "start": 1,
+                      "end": 1,
+                      "text": "string",
+                      "speaker": "string"
                     }
                   ],
                   "utterances": [
                     {
-                      "channel": "foo",
-                      "confidence": 42,
-                      "start": 42,
-                      "end": 42,
-                      "text": "foo",
+                      "channel": "string",
+                      "confidence": 1.1,
+                      "start": 1,
+                      "end": 1,
+                      "text": "string",
                       "words": [
                         {
-                          "confidence": 42,
-                          "start": 42,
-                          "end": 42,
-                          "text": "foo",
-                          "speaker": "foo"
+                          "confidence": 1.1,
+                          "start": 1,
+                          "end": 1,
+                          "text": "string",
+                          "speaker": "string"
                         }
                       ]
                     }
                   ],
-                  "confidence": 42,
-                  "audio_duration": 42,
+                  "confidence": 1.1,
+                  "audio_duration": 1.1,
                   "punctuate": true,
                   "format_text": true,
                   "dual_channel": true,
-                  "webhook_url": "foo",
-                  "webhook_status_code": 42,
+                  "webhook_url": "string",
+                  "webhook_status_code": 1,
                   "webhook_auth": true,
-                  "webhook_auth_header_name": "foo",
+                  "webhook_auth_header_name": "string",
                   "speed_boost": true,
                   "auto_highlights": true,
                   "auto_highlights_result": {
                     "results": [
                       {
-                        "count": 42,
-                        "rank": 42,
-                        "text": "foo",
+                        "count": 1,
+                        "rank": 1.1,
+                        "text": "string",
                         "timestamps": [
                           {
-                            "start": 42,
-                            "end": 42
+                            "start": 1,
+                            "end": 1
                           }
                         ]
                       }
                     ]
                   },
-                  "audio_start_from": 42,
-                  "audio_end_at": 42,
+                  "audio_start_from": 1,
+                  "audio_end_at": 1,
                   "word_boost": [
-                    "foo"
+                    "string"
                   ],
-                  "boost_param": "foo",
+                  "boost_param": "string",
                   "filter_profanity": true,
                   "redact_pii": true,
                   "redact_pii_audio": true,
-                  "redact_pii_audio_quality": "foo",
+                  "redact_pii_audio_quality": "string",
                   "redact_pii_policies": [
                     "medical_process"
                   ],
                   "redact_pii_sub": "entity_type",
                   "speaker_labels": true,
-                  "speakers_expected": 42,
+                  "speakers_expected": 1,
                   "content_safety": true,
                   "content_safety_labels": {
                     "status": "success",
                     "results": [
                       {
-                        "text": "foo",
+                        "text": "string",
                         "labels": [
                           {
-                            "label": "foo",
-                            "confidence": 42,
-                            "severity": 42
+                            "label": "string",
+                            "confidence": 1.1,
+                            "severity": 1.1
                           }
                         ],
-                        "sentences_idx_start": 42,
-                        "sentences_idx_end": 42,
+                        "sentences_idx_start": 1,
+                        "sentences_idx_end": 1,
                         "timestamp": {
-                          "start": 42,
-                          "end": 42
+                          "start": 1,
+                          "end": 1
                         },
                         "summary": {},
                         "severity_score_summary": {}
@@ -6152,16 +6159,16 @@
                     "status": "success",
                     "results": [
                       {
-                        "text": "foo",
+                        "text": "string",
                         "labels": [
                           {
-                            "relevance": 42,
-                            "label": "foo"
+                            "relevance": 1.1,
+                            "label": "string"
                           }
                         ],
                         "timestamp": {
-                          "start": 42,
-                          "end": 42
+                          "start": 1,
+                          "end": 1
                         }
                       }
                     ],
@@ -6171,53 +6178,53 @@
                   "custom_spelling": [
                     {
                       "from": [
-                        "foo"
+                        "string"
                       ],
-                      "to": "foo"
+                      "to": "string"
                     }
                   ],
                   "auto_chapters": true,
                   "chapters": [
                     {
-                      "gist": "foo",
-                      "headline": "foo",
-                      "summary": "foo",
-                      "start": 42,
-                      "end": 42
+                      "gist": "string",
+                      "headline": "string",
+                      "summary": "string",
+                      "start": 1,
+                      "end": 1
                     }
                   ],
                   "summarization": true,
-                  "summary_type": "foo",
-                  "summary_model": "foo",
-                  "summary": "foo",
+                  "summary_type": "string",
+                  "summary_model": "string",
+                  "summary": "string",
                   "custom_topics": true,
                   "topics": [
-                    "foo"
+                    "string"
                   ],
                   "disfluencies": true,
                   "sentiment_analysis": true,
                   "sentiment_analysis_results": [
                     {
-                      "text": "foo",
-                      "start": 42,
-                      "end": 42,
+                      "text": "string",
+                      "start": 1,
+                      "end": 1,
                       "sentiment": "POSITIVE",
-                      "confidence": 42,
-                      "speaker": "foo"
+                      "confidence": 1.1,
+                      "speaker": "string"
                     }
                   ],
                   "entity_detection": true,
                   "entities": [
                     {
                       "entity_type": "banking_information",
-                      "text": "foo",
-                      "start": 42,
-                      "end": 42
+                      "text": "string",
+                      "start": 1,
+                      "end": 1
                     }
                   ],
-                  "speech_threshold": 42,
+                  "speech_threshold": 1.1,
                   "throttled": true,
-                  "error": "foo"
+                  "error": "string"
                 }
               }
             }
@@ -6586,22 +6593,22 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "id": "foo",
-                "confidence": 42,
-                "audio_duration": 42,
+                "id": "string",
+                "confidence": 1.1,
+                "audio_duration": 1.1,
                 "sentences": [
                   {
-                    "text": "foo",
-                    "start": 42,
-                    "end": 42,
-                    "confidence": 42,
+                    "text": "string",
+                    "start": 1,
+                    "end": 1,
+                    "confidence": 1.1,
                     "words": [
                       {
-                        "confidence": 42,
-                        "start": 42,
-                        "end": 42,
-                        "text": "foo",
-                        "speaker": "foo"
+                        "confidence": 1.1,
+                        "start": 1,
+                        "end": 1,
+                        "text": "string",
+                        "speaker": "string"
                       }
                     ]
                   }
@@ -6610,22 +6617,22 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "foo",
-                  "confidence": 42,
-                  "audio_duration": 42,
+                  "id": "string",
+                  "confidence": 1.1,
+                  "audio_duration": 1.1,
                   "sentences": [
                     {
-                      "text": "foo",
-                      "start": 42,
-                      "end": 42,
-                      "confidence": 42,
+                      "text": "string",
+                      "start": 1,
+                      "end": 1,
+                      "confidence": 1.1,
                       "words": [
                         {
-                          "confidence": 42,
-                          "start": 42,
-                          "end": 42,
-                          "text": "foo",
-                          "speaker": "foo"
+                          "confidence": 1.1,
+                          "start": 1,
+                          "end": 1,
+                          "text": "string",
+                          "speaker": "string"
                         }
                       ]
                     }
@@ -6799,22 +6806,22 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "id": "foo",
-                "confidence": 42,
-                "audio_duration": 42,
+                "id": "string",
+                "confidence": 1.1,
+                "audio_duration": 1.1,
                 "paragraphs": [
                   {
-                    "text": "foo",
-                    "start": 42,
-                    "end": 42,
-                    "confidence": 42,
+                    "text": "string",
+                    "start": 1,
+                    "end": 1,
+                    "confidence": 1.1,
                     "words": [
                       {
-                        "confidence": 42,
-                        "start": 42,
-                        "end": 42,
-                        "text": "foo",
-                        "speaker": "foo"
+                        "confidence": 1.1,
+                        "start": 1,
+                        "end": 1,
+                        "text": "string",
+                        "speaker": "string"
                       }
                     ]
                   }
@@ -6823,22 +6830,22 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "foo",
-                  "confidence": 42,
-                  "audio_duration": 42,
+                  "id": "string",
+                  "confidence": 1.1,
+                  "audio_duration": 1.1,
                   "paragraphs": [
                     {
-                      "text": "foo",
-                      "start": 42,
-                      "end": 42,
-                      "confidence": 42,
+                      "text": "string",
+                      "start": 1,
+                      "end": 1,
+                      "confidence": 1.1,
                       "words": [
                         {
-                          "confidence": 42,
-                          "start": 42,
-                          "end": 42,
-                          "text": "foo",
-                          "speaker": "foo"
+                          "confidence": 1.1,
+                          "start": 1,
+                          "end": 1,
+                          "text": "string",
+                          "speaker": "string"
                         }
                       ]
                     }
@@ -7024,25 +7031,25 @@
               },
               "queryParameters": {
                 "words": [
-                  "foo"
+                  "string"
                 ]
               },
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "id": "foo",
-                "total_count": 42,
+                "id": "string",
+                "total_count": 1,
                 "matches": [
                   {
-                    "text": "foo",
-                    "count": 42,
+                    "text": "string",
+                    "count": 1,
                     "timestamps": [
                       [
-                        42
+                        1
                       ]
                     ],
                     "indexes": [
-                      42
+                      1
                     ]
                   }
                 ]
@@ -7050,19 +7057,19 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "foo",
-                  "total_count": 42,
+                  "id": "string",
+                  "total_count": 1,
                   "matches": [
                     {
-                      "text": "foo",
-                      "count": 42,
+                      "text": "string",
+                      "count": 1,
                       "timestamps": [
                         [
-                          42
+                          1
                         ]
                       ],
                       "indexes": [
-                        42
+                        1
                       ]
                     }
                   ]
@@ -7236,13 +7243,13 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "status": "redacted_audio_ready",
-                "redacted_audio_url": "foo"
+                "redacted_audio_url": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "status": "redacted_audio_ready",
-                  "redacted_audio_url": "foo"
+                  "redacted_audio_url": "string"
                 }
               }
             }
@@ -7416,22 +7423,22 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "expires_in": 42
+                "expires_in": 1
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "expires_in": 42
+                  "expires_in": 1
                 }
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "token": "foo"
+                "token": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "token": "foo"
+                  "token": "string"
                 }
               }
             }
@@ -7606,27 +7613,27 @@
               "headers": {},
               "requestBody": {
                 "transcript_ids": [
-                  "foo"
+                  "string"
                 ]
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "transcript_ids": [
-                    "foo"
+                    "string"
                   ]
                 }
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "request_id": "foo",
-                "response": "foo"
+                "request_id": "string",
+                "response": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "request_id": "foo",
-                  "response": "foo"
+                  "request_id": "string",
+                  "response": "string"
                 }
               }
             }
@@ -7790,11 +7797,11 @@
               "headers": {},
               "requestBody": {
                 "transcript_ids": [
-                  "foo"
+                  "string"
                 ],
                 "questions": [
                   {
-                    "question": "foo"
+                    "question": "string"
                   }
                 ]
               },
@@ -7802,33 +7809,33 @@
                 "type": "json",
                 "value": {
                   "transcript_ids": [
-                    "foo"
+                    "string"
                   ],
                   "questions": [
                     {
-                      "question": "foo"
+                      "question": "string"
                     }
                   ]
                 }
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "request_id": "foo",
+                "request_id": "string",
                 "response": [
                   {
-                    "question": "foo",
-                    "answer": "foo"
+                    "question": "string",
+                    "answer": "string"
                   }
                 ]
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "request_id": "foo",
+                  "request_id": "string",
                   "response": [
                     {
-                      "question": "foo",
-                      "answer": "foo"
+                      "question": "string",
+                      "answer": "string"
                     }
                   ]
                 }
@@ -7994,27 +8001,27 @@
               "headers": {},
               "requestBody": {
                 "transcript_ids": [
-                  "foo"
+                  "string"
                 ]
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "transcript_ids": [
-                    "foo"
+                    "string"
                   ]
                 }
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "request_id": "foo",
-                "response": "foo"
+                "request_id": "string",
+                "response": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "request_id": "foo",
-                  "response": "foo"
+                  "request_id": "string",
+                  "response": "string"
                 }
               }
             }
@@ -8178,29 +8185,29 @@
               "headers": {},
               "requestBody": {
                 "transcript_ids": [
-                  "foo"
+                  "string"
                 ],
-                "prompt": "foo"
+                "prompt": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "transcript_ids": [
-                    "foo"
+                    "string"
                   ],
-                  "prompt": "foo"
+                  "prompt": "string"
                 }
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "request_id": "foo",
-                "response": "foo"
+                "request_id": "string",
+                "response": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "request_id": "foo",
-                  "response": "foo"
+                  "request_id": "string",
+                  "response": "string"
                 }
               }
             }
@@ -8370,15 +8377,15 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "request_id": "foo",
-                "request_id_to_purge": "foo",
+                "request_id": "string",
+                "request_id_to_purge": "string",
                 "deleted": true
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "request_id": "foo",
-                  "request_id_to_purge": "foo",
+                  "request_id": "string",
+                  "request_id_to_purge": "string",
                   "deleted": true
                 }
               }

@@ -35,7 +35,7 @@ export async function tryRunCli(): Promise<void> {
             // if error is null, it's a yargs validation error
             if (error == null) {
                 argv.showHelp();
-                // eslint-disable-next-line
+                // biome-ignore lint: ignore next line
                 console.error(message);
             }
         });
@@ -190,6 +190,12 @@ function addRunCommand(cli: Argv) {
                     demandOption: true,
                     description: "Path to the fern definition"
                 })
+                .option("output-path", {
+                    type: "string",
+                    string: true,
+                    demandOption: false,
+                    description: "Path to output the generated files (defaults to tmp dir)"
+                })
                 .option("log-level", {
                     default: LogLevel.Info,
                     choices: LOG_LEVELS
@@ -221,7 +227,12 @@ function addRunCommand(cli: Argv) {
                 workspace: generator,
                 logLevel: argv["log-level"],
                 audience: argv.audience,
-                skipScripts: argv.skipScripts
+                skipScripts: argv.skipScripts,
+                outputPath: argv["output-path"]
+                    ? argv["output-path"].startsWith("/")
+                        ? AbsoluteFilePath.of(argv["output-path"])
+                        : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(argv["output-path"]))
+                    : undefined
             });
         }
     );
@@ -277,9 +288,9 @@ function addPublishCommands(cli: Argv) {
                             : {
                                   // These assertions should be safe given the check with `yargs` above
                                   //
-                                  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                                  // biome-ignore lint/style/noNonNullAssertion: allow
                                   latestChangelogPath: argv.changelog!,
-                                  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                                  // biome-ignore lint/style/noNonNullAssertion: allow
                                   previousChangelogPath: argv.previousChangelog!
                               },
                         context,
@@ -346,9 +357,9 @@ function addPublishCommands(cli: Argv) {
                             : {
                                   // These assertions should be safe given the check with `yargs` above
                                   //
-                                  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                                  // biome-ignore lint/style/noNonNullAssertion: allow
                                   latestChangelogPath: argv.changelog!,
-                                  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                                  // biome-ignore lint/style/noNonNullAssertion: allow
                                   previousChangelogPath: argv.previousChangelog!
                               },
                         context

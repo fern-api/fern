@@ -10,6 +10,7 @@ require_relative "params/client"
 require_relative "primitive/client"
 require_relative "put/client"
 require_relative "union/client"
+require_relative "urls/client"
 
 module SeedExhaustiveClient
   module Endpoints
@@ -32,6 +33,8 @@ module SeedExhaustiveClient
       attr_reader :put
       # @return [SeedExhaustiveClient::Endpoints::UnionClient]
       attr_reader :union
+      # @return [SeedExhaustiveClient::Endpoints::UrlsClient]
+      attr_reader :urls
 
       # @param request_client [SeedExhaustiveClient::RequestClient]
       # @return [SeedExhaustiveClient::Endpoints::Client]
@@ -45,6 +48,7 @@ module SeedExhaustiveClient
         @primitive = SeedExhaustiveClient::Endpoints::PrimitiveClient.new(request_client: request_client)
         @put = SeedExhaustiveClient::Endpoints::PutClient.new(request_client: request_client)
         @union = SeedExhaustiveClient::Endpoints::UnionClient.new(request_client: request_client)
+        @urls = SeedExhaustiveClient::Endpoints::UrlsClient.new(request_client: request_client)
       end
     end
 
@@ -67,6 +71,8 @@ module SeedExhaustiveClient
       attr_reader :put
       # @return [SeedExhaustiveClient::Endpoints::AsyncUnionClient]
       attr_reader :union
+      # @return [SeedExhaustiveClient::Endpoints::AsyncUrlsClient]
+      attr_reader :urls
 
       # @param request_client [SeedExhaustiveClient::AsyncRequestClient]
       # @return [SeedExhaustiveClient::Endpoints::AsyncClient]
@@ -80,6 +86,7 @@ module SeedExhaustiveClient
         @primitive = SeedExhaustiveClient::Endpoints::AsyncPrimitiveClient.new(request_client: request_client)
         @put = SeedExhaustiveClient::Endpoints::AsyncPutClient.new(request_client: request_client)
         @union = SeedExhaustiveClient::Endpoints::AsyncUnionClient.new(request_client: request_client)
+        @urls = SeedExhaustiveClient::Endpoints::AsyncUrlsClient.new(request_client: request_client)
       end
     end
   end

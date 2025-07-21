@@ -9,9 +9,13 @@ from .resources import (
     MetadataUnion,
     MyUnion,
     NamedMetadata,
+    NestedUnionL1,
+    NestedUnionL2,
+    NestedUnionRoot,
     OptionalMetadata,
     Request,
     TypeWithOptionalUnion,
+    UnionWithDuplicateTypes,
     union,
 )
 
@@ -22,8 +26,12 @@ __all__ = [
     "MetadataUnion",
     "MyUnion",
     "NamedMetadata",
+    "NestedUnionL1",
+    "NestedUnionL2",
+    "NestedUnionRoot",
     "OptionalMetadata",
     "Request",
     "TypeWithOptionalUnion",
+    "UnionWithDuplicateTypes",
     "union",
 ]

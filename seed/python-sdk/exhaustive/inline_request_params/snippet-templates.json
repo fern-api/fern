@@ -41,7 +41,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.container.get_and_return_list_of_primitives(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.container.get_and_return_list_of_primitives(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -108,7 +108,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.container.get_and_return_list_of_primitives(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.container.get_and_return_list_of_primitives(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -187,7 +187,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.container.get_and_return_list_of_objects(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.container.get_and_return_list_of_objects(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -268,7 +268,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.container.get_and_return_list_of_objects(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.container.get_and_return_list_of_objects(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -361,7 +361,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.container.get_and_return_set_of_primitives(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.container.get_and_return_set_of_primitives(\n    $FERN_INPUT\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",\n\t",
                 "type": "generic"
@@ -400,7 +400,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.container.get_and_return_set_of_primitives(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.container.get_and_return_set_of_primitives(\n    $FERN_INPUT\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",\n\t",
                     "type": "generic"
@@ -451,7 +451,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.container.get_and_return_set_of_objects(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.container.get_and_return_set_of_objects(\n    $FERN_INPUT\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",\n\t",
                 "type": "generic"
@@ -490,7 +490,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.container.get_and_return_set_of_objects(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.container.get_and_return_set_of_objects(\n    $FERN_INPUT\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",\n\t",
                     "type": "generic"
@@ -541,7 +541,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.container.get_and_return_map_prim_to_prim(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.container.get_and_return_map_prim_to_prim(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -622,7 +622,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.container.get_and_return_map_prim_to_prim(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.container.get_and_return_map_prim_to_prim(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -715,7 +715,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.container.get_and_return_map_of_prim_to_object(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.container.get_and_return_map_of_prim_to_object(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -810,7 +810,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.container.get_and_return_map_of_prim_to_object(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.container.get_and_return_map_of_prim_to_object(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -917,7 +917,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.container.get_and_return_optional(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.container.get_and_return_optional(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -987,7 +987,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.container.get_and_return_optional(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.container.get_and_return_optional(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -1069,7 +1069,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.content_type.post_json_patch_content_type(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.content_type.post_json_patch_content_type(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -1337,7 +1337,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.content_type.post_json_patch_content_type(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.content_type.post_json_patch_content_type(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -1617,7 +1617,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.content_type.post_json_patch_content_with_charset_type(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.content_type.post_json_patch_content_with_charset_type(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -1885,7 +1885,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.content_type.post_json_patch_content_with_charset_type(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.content_type.post_json_patch_content_with_charset_type(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -2165,7 +2165,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.enum.get_and_return_enum(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.enum.get_and_return_enum(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -2224,7 +2224,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.enum.get_and_return_enum(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.enum.get_and_return_enum(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -2295,7 +2295,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.http_methods.test_get(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.http_methods.test_get(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -2351,7 +2351,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.http_methods.test_get(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.http_methods.test_get(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -2419,7 +2419,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.http_methods.test_post(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.http_methods.test_post(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -2475,7 +2475,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.http_methods.test_post(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.http_methods.test_post(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -2543,7 +2543,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.http_methods.test_put(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.http_methods.test_put(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -2615,7 +2615,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.http_methods.test_put(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.http_methods.test_put(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -2699,7 +2699,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.http_methods.test_patch(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.http_methods.test_patch(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -2983,7 +2983,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.http_methods.test_patch(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.http_methods.test_patch(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -3279,7 +3279,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.http_methods.test_delete(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.http_methods.test_delete(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -3335,7 +3335,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.http_methods.test_delete(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.http_methods.test_delete(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -3403,7 +3403,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.object.get_and_return_with_optional_field(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.object.get_and_return_with_optional_field(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -3671,7 +3671,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.object.get_and_return_with_optional_field(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.object.get_and_return_with_optional_field(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -3951,7 +3951,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.object.get_and_return_with_required_field(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.object.get_and_return_with_required_field(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -4007,7 +4007,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.object.get_and_return_with_required_field(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.object.get_and_return_with_required_field(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -4075,7 +4075,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.object.get_and_return_with_map_of_map(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.object.get_and_return_with_map_of_map(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -4181,7 +4181,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.object.get_and_return_with_map_of_map(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.object.get_and_return_with_map_of_map(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -4299,7 +4299,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.object.get_and_return_nested_with_optional_field(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.object.get_and_return_nested_with_optional_field(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -4597,7 +4597,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.object.get_and_return_nested_with_optional_field(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.object.get_and_return_nested_with_optional_field(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -4907,7 +4907,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.object.get_and_return_nested_with_required_field(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.object.get_and_return_nested_with_required_field(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -5221,7 +5221,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.object.get_and_return_nested_with_required_field(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.object.get_and_return_nested_with_required_field(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -5547,7 +5547,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.object.get_and_return_nested_with_required_field_as_list(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.object.get_and_return_nested_with_required_field_as_list(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -5870,7 +5870,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.object.get_and_return_nested_with_required_field_as_list(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.object.get_and_return_nested_with_required_field_as_list(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -6205,7 +6205,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.params.get_with_path(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.params.get_with_path(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -6261,7 +6261,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.params.get_with_path(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.params.get_with_path(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -6329,7 +6329,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.params.get_with_inline_path(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.params.get_with_inline_path(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -6385,7 +6385,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.params.get_with_inline_path(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.params.get_with_inline_path(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -6453,7 +6453,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.params.get_with_query(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.params.get_with_query(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -6525,7 +6525,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.params.get_with_query(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.params.get_with_query(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -6609,7 +6609,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.params.get_with_allow_multiple_query(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.params.get_with_allow_multiple_query(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -6681,7 +6681,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.params.get_with_allow_multiple_query(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.params.get_with_allow_multiple_query(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -6765,7 +6765,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.params.get_with_path_and_query(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.params.get_with_path_and_query(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -6837,7 +6837,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.params.get_with_path_and_query(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.params.get_with_path_and_query(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -6921,7 +6921,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.params.get_with_inline_path_and_query(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.params.get_with_inline_path_and_query(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -6993,7 +6993,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.params.get_with_inline_path_and_query(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.params.get_with_inline_path_and_query(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -7077,7 +7077,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.params.modify_with_path(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.params.modify_with_path(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -7149,7 +7149,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.params.modify_with_path(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.params.modify_with_path(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -7233,7 +7233,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.params.modify_with_inline_path(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.params.modify_with_inline_path(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -7305,7 +7305,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.params.modify_with_inline_path(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.params.modify_with_inline_path(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -7389,7 +7389,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.primitive.get_and_return_string(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.primitive.get_and_return_string(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -7445,7 +7445,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.primitive.get_and_return_string(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.primitive.get_and_return_string(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -7513,7 +7513,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.primitive.get_and_return_int(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.primitive.get_and_return_int(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -7569,7 +7569,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.primitive.get_and_return_int(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.primitive.get_and_return_int(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -7637,7 +7637,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.primitive.get_and_return_long(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.primitive.get_and_return_long(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -7693,7 +7693,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.primitive.get_and_return_long(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.primitive.get_and_return_long(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -7761,7 +7761,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.primitive.get_and_return_double(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.primitive.get_and_return_double(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -7817,7 +7817,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.primitive.get_and_return_double(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.primitive.get_and_return_double(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -7885,7 +7885,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.primitive.get_and_return_bool(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.primitive.get_and_return_bool(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -7941,7 +7941,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.primitive.get_and_return_bool(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.primitive.get_and_return_bool(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -8009,7 +8009,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.primitive.get_and_return_datetime(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.primitive.get_and_return_datetime(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -8065,7 +8065,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.primitive.get_and_return_datetime(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.primitive.get_and_return_datetime(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -8133,7 +8133,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.primitive.get_and_return_date(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.primitive.get_and_return_date(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -8189,7 +8189,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.primitive.get_and_return_date(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.primitive.get_and_return_date(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -8257,7 +8257,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.primitive.get_and_return_uuid(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.primitive.get_and_return_uuid(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -8313,7 +8313,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.primitive.get_and_return_uuid(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.primitive.get_and_return_uuid(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -8381,7 +8381,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.primitive.get_and_return_base_64(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.primitive.get_and_return_base_64(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -8437,7 +8437,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.primitive.get_and_return_base_64(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.primitive.get_and_return_base_64(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -8505,7 +8505,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.put.add(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.put.add(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -8561,7 +8561,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.put.add(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.put.add(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -8629,7 +8629,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.endpoints.union.get_and_return_union(\n\t$FERN_INPUT\n)",
+                "templateString": "client.endpoints.union.get_and_return_union(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -8768,7 +8768,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.endpoints.union.get_and_return_union(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.endpoints.union.get_and_return_union(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -8884,6 +8884,366 @@
             "type": "python"
         },
         "endpointId": {
+            "path": "/urls/MixedCase",
+            "method": "GET",
+            "identifierOverride": "endpoint_endpoints/urls.withMixedCase"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "from seed import SeedExhaustive"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": false,
+                            "templateString": "token=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "AUTH",
+                                    "path": "token",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "client.endpoints.urls.with_mixed_case(\n    $FERN_INPUT\n)",
+                "templateInputs": [],
+                "inputDelimiter": ",\n\t",
+                "type": "generic"
+            },
+            "type": "v1"
+        },
+        "additionalTemplates": {
+            "async": {
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed import AsyncSeedExhaustive"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
+                    "templateInputs": [
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": false,
+                                "templateString": "token=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "AUTH",
+                                        "path": "token",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        }
+                    ],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
+                "functionInvocation": {
+                    "imports": [],
+                    "isOptional": true,
+                    "templateString": "await client.endpoints.urls.with_mixed_case(\n    $FERN_INPUT\n)",
+                    "templateInputs": [],
+                    "inputDelimiter": ",\n\t",
+                    "type": "generic"
+                },
+                "type": "v1"
+            }
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/urls/no-ending-slash",
+            "method": "GET",
+            "identifierOverride": "endpoint_endpoints/urls.noEndingSlash"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "from seed import SeedExhaustive"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": false,
+                            "templateString": "token=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "AUTH",
+                                    "path": "token",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "client.endpoints.urls.no_ending_slash(\n    $FERN_INPUT\n)",
+                "templateInputs": [],
+                "inputDelimiter": ",\n\t",
+                "type": "generic"
+            },
+            "type": "v1"
+        },
+        "additionalTemplates": {
+            "async": {
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed import AsyncSeedExhaustive"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
+                    "templateInputs": [
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": false,
+                                "templateString": "token=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "AUTH",
+                                        "path": "token",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        }
+                    ],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
+                "functionInvocation": {
+                    "imports": [],
+                    "isOptional": true,
+                    "templateString": "await client.endpoints.urls.no_ending_slash(\n    $FERN_INPUT\n)",
+                    "templateInputs": [],
+                    "inputDelimiter": ",\n\t",
+                    "type": "generic"
+                },
+                "type": "v1"
+            }
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/urls/with-ending-slash",
+            "method": "GET",
+            "identifierOverride": "endpoint_endpoints/urls.withEndingSlash"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "from seed import SeedExhaustive"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": false,
+                            "templateString": "token=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "AUTH",
+                                    "path": "token",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "client.endpoints.urls.with_ending_slash(\n    $FERN_INPUT\n)",
+                "templateInputs": [],
+                "inputDelimiter": ",\n\t",
+                "type": "generic"
+            },
+            "type": "v1"
+        },
+        "additionalTemplates": {
+            "async": {
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed import AsyncSeedExhaustive"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
+                    "templateInputs": [
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": false,
+                                "templateString": "token=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "AUTH",
+                                        "path": "token",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        }
+                    ],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
+                "functionInvocation": {
+                    "imports": [],
+                    "isOptional": true,
+                    "templateString": "await client.endpoints.urls.with_ending_slash(\n    $FERN_INPUT\n)",
+                    "templateInputs": [],
+                    "inputDelimiter": ",\n\t",
+                    "type": "generic"
+                },
+                "type": "v1"
+            }
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/urls/with_underscores",
+            "method": "GET",
+            "identifierOverride": "endpoint_endpoints/urls.withUnderscores"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "from seed import SeedExhaustive"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": false,
+                            "templateString": "token=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "AUTH",
+                                    "path": "token",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "client.endpoints.urls.with_underscores(\n    $FERN_INPUT\n)",
+                "templateInputs": [],
+                "inputDelimiter": ",\n\t",
+                "type": "generic"
+            },
+            "type": "v1"
+        },
+        "additionalTemplates": {
+            "async": {
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed import AsyncSeedExhaustive"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedExhaustive(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
+                    "templateInputs": [
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": false,
+                                "templateString": "token=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "AUTH",
+                                        "path": "token",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        }
+                    ],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
+                "functionInvocation": {
+                    "imports": [],
+                    "isOptional": true,
+                    "templateString": "await client.endpoints.urls.with_underscores(\n    $FERN_INPUT\n)",
+                    "templateInputs": [],
+                    "inputDelimiter": ",\n\t",
+                    "type": "generic"
+                },
+                "type": "v1"
+            }
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
             "path": "/req-bodies/object",
             "method": "POST",
             "identifierOverride": "endpoint_inlined-requests.postWithObjectBodyandResponse"
@@ -8919,7 +9279,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.inlined_requests.post_with_object_bodyand_response(\n\t$FERN_INPUT\n)",
+                "templateString": "client.inlined_requests.post_with_object_bodyand_response(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -9233,7 +9593,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.inlined_requests.post_with_object_bodyand_response(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.inlined_requests.post_with_object_bodyand_response(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -9559,7 +9919,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.no_auth.post_with_no_auth(\n\t$FERN_INPUT\n)",
+                "templateString": "client.no_auth.post_with_no_auth(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -9615,7 +9975,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.no_auth.post_with_no_auth(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.no_auth.post_with_no_auth(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",
@@ -9683,7 +10043,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.no_req_body.get_with_no_request_body(\n\t$FERN_INPUT\n)",
+                "templateString": "client.no_req_body.get_with_no_request_body(\n    $FERN_INPUT\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",\n\t",
                 "type": "generic"
@@ -9722,7 +10082,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.no_req_body.get_with_no_request_body(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.no_req_body.get_with_no_request_body(\n    $FERN_INPUT\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",\n\t",
                     "type": "generic"
@@ -9773,7 +10133,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.no_req_body.post_with_no_request_body(\n\t$FERN_INPUT\n)",
+                "templateString": "client.no_req_body.post_with_no_request_body(\n    $FERN_INPUT\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",\n\t",
                 "type": "generic"
@@ -9812,7 +10172,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.no_req_body.post_with_no_request_body(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.no_req_body.post_with_no_request_body(\n    $FERN_INPUT\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",\n\t",
                     "type": "generic"
@@ -9863,7 +10223,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.req_with_headers.get_with_custom_header(\n\t$FERN_INPUT\n)",
+                "templateString": "client.req_with_headers.get_with_custom_header(\n    $FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -9935,7 +10295,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.req_with_headers.get_with_custom_header(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.req_with_headers.get_with_custom_header(\n    $FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",

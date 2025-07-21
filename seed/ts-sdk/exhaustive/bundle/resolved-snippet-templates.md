@@ -695,6 +695,54 @@ const client = new FiddleClient({
   environment: "YOUR_BASE_URL",
   token: "YOUR_TOKEN",
 });
+await client.endpoints.urls.withMixedCase();
+
+```
+
+
+```typescript
+import { FiddleClient } from "@fern/exhaustive";
+
+const client = new FiddleClient({
+  environment: "YOUR_BASE_URL",
+  token: "YOUR_TOKEN",
+});
+await client.endpoints.urls.noEndingSlash();
+
+```
+
+
+```typescript
+import { FiddleClient } from "@fern/exhaustive";
+
+const client = new FiddleClient({
+  environment: "YOUR_BASE_URL",
+  token: "YOUR_TOKEN",
+});
+await client.endpoints.urls.withEndingSlash();
+
+```
+
+
+```typescript
+import { FiddleClient } from "@fern/exhaustive";
+
+const client = new FiddleClient({
+  environment: "YOUR_BASE_URL",
+  token: "YOUR_TOKEN",
+});
+await client.endpoints.urls.withUnderscores();
+
+```
+
+
+```typescript
+import { FiddleClient } from "@fern/exhaustive";
+
+const client = new FiddleClient({
+  environment: "YOUR_BASE_URL",
+  token: "YOUR_TOKEN",
+});
 await client.inlinedRequests.postWithObjectBodyandResponse({
   string: "string",
   integer: 1,

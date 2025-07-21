@@ -617,7 +617,7 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 .option("audience", {
                     type: "array",
                     string: true,
-                    default: new Array<string>(),
+                    default: [] as string[],
                     description: "Filter the IR for certain audiences"
                 })
                 .option("smart-casing", {
@@ -716,7 +716,7 @@ function addDynamicIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext
                 .option("audience", {
                     type: "array",
                     string: true,
-                    default: new Array<string>(),
+                    default: [] as string[],
                     description: "Filter the IR for certain audiences"
                 })
                 .option("smart-casing", {
@@ -765,7 +765,7 @@ function addFdrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 .option("audience", {
                     type: "array",
                     string: true,
-                    default: new Array<string>(),
+                    default: [] as string[],
                     description: "Filter the FDR API definition for certain audiences"
                 })
                 .option("v2", {
@@ -938,7 +938,7 @@ function addUpgradeCommand({
 }) {
     cli.command(
         "upgrade",
-        `Upgrades version in ${PROJECT_CONFIG_FILENAME}. Also upgrades generators in ${GENERATORS_CONFIGURATION_FILENAME} to their minimum-compatible versions.`,
+        `Upgrades Fern CLI version in ${PROJECT_CONFIG_FILENAME}`,
         (yargs) =>
             yargs
                 .option("rc", {
@@ -1251,7 +1251,7 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                 port,
                 bundlePath,
                 brokenLinks: argv.brokenLinks,
-                legacyPreview: argv.legacy || process.platform === "win32",
+                legacyPreview: argv.legacy,
                 backendPort
             });
         }
@@ -1387,7 +1387,7 @@ function addProtocGenFernCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
     cli.command(
         "protoc-gen-fern",
         false,
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
         (yargs) => {},
         async () => {
             const plugin = protocGenFern;

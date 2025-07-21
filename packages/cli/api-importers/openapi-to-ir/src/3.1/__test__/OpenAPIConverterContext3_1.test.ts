@@ -19,13 +19,13 @@ describe("OpenAPIConverterContext3_1", async () => {
 
         const context = new OpenAPIConverterContext3_1({
             spec,
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
             logger: undefined as any,
             generationLanguage: undefined,
             smartCasing: false,
             exampleGenerationArgs: { disabled: false },
             errorCollector: new ErrorCollector({
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                 logger: undefined as any
             }),
             enableUniqueErrorsPerEndpoint: false,

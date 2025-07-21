@@ -38,6 +38,9 @@
         "test:browser": "jest --selectProjects browser",
         "test:wire": "jest --selectProjects wire"
     },
+    "dependencies": {
+        "lodash": "4.17.21"
+    },
     "devDependencies": {
         "webpack": "^5.97.1",
         "ts-loader": "^9.5.1",

@@ -537,7 +537,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "MetadataCreate0"
     },
     "MetadataCreateOneOf1Items": {
       "name": "MetadataCreateOneOf1Items",
@@ -587,7 +588,8 @@
             "value": "MetadataCreateOneOf1Items"
           }
         }
-      }
+      },
+      "displayName": "MetadataCreate1"
     },
     "MetadataCreate": {
       "description": "Metadata has two allowed formats. Either array format or object format. Refer to the metadata section in this documentation for more information.",
@@ -601,7 +603,8 @@
             "type": {
               "type": "id",
               "value": "MetadataCreate0"
-            }
+            },
+            "displayName": "MetadataCreate0"
           },
           {
             "typeName": "MetadataCreate1",
@@ -609,7 +612,8 @@
             "type": {
               "type": "id",
               "value": "MetadataCreate1"
-            }
+            },
+            "displayName": "MetadataCreate1"
           }
         ]
       }
@@ -2493,21 +2497,24 @@
             "type": {
               "type": "id",
               "value": "Airport"
-            }
+            },
+            "displayName": "Airport"
           },
           {
             "typeName": "Placeport",
             "type": {
               "type": "id",
               "value": "Placeport"
-            }
+            },
+            "displayName": "Placeport"
           },
           {
             "typeName": "Manufacturer",
             "type": {
               "type": "id",
               "value": "Manufacturer"
-            }
+            },
+            "displayName": "Manufacturer"
           }
         ]
       }
@@ -8880,21 +8887,24 @@
             "type": {
               "type": "id",
               "value": "Shipment"
-            }
+            },
+            "displayName": "Shipment"
           },
           {
             "typeName": "ShipmentLeg",
             "type": {
               "type": "id",
               "value": "ShipmentLeg"
-            }
+            },
+            "displayName": "ShipmentLeg"
           },
           {
             "typeName": "OceanShipmentContainerLeg",
             "type": {
               "type": "id",
               "value": "OceanShipmentContainerLeg"
-            }
+            },
+            "displayName": "OceanShipmentContainerLeg"
           }
         ]
       }
@@ -23452,9 +23462,9 @@
           "examples": [
             {
               "description": "",
-              "path": "/booking_line_items/42",
+              "path": "/booking_line_items/1",
               "pathParameters": {
-                "id": 42
+                "id": 1
               },
               "queryParameters": {},
               "headers": {},
@@ -25140,9 +25150,9 @@
           "examples": [
             {
               "description": "",
-              "path": "/bookings/42",
+              "path": "/bookings/1",
               "pathParameters": {
-                "id": 42
+                "id": 1
               },
               "queryParameters": {},
               "headers": {},
@@ -26200,7 +26210,7 @@
                   {
                     "product_sku": "PRODUCT-123",
                     "quantity": {
-                      "value": 42,
+                      "value": 1.1,
                       "unit": "pcs"
                     },
                     "value": {},
@@ -26218,7 +26228,7 @@
                     {
                       "product_sku": "PRODUCT-123",
                       "quantity": {
-                        "value": 42,
+                        "value": 1.1,
                         "unit": "pcs"
                       },
                       "value": {},
@@ -28076,8 +28086,8 @@
                 "version": 2,
                 "data": {
                   "_object": "/api/collections/paginated",
-                  "prev": "foo",
-                  "next": "foo",
+                  "prev": "string",
+                  "next": "string",
                   "data": [
                     {
                       "_object": "/event",
@@ -28094,10 +28104,10 @@
                           "id": 2983,
                           "name": "ABC Shipment",
                           "booking": {
-                            "_object": "foo",
-                            "link": "foo",
-                            "ref_type": "foo",
-                            "id": "foo"
+                            "_object": "string",
+                            "link": "string",
+                            "ref_type": "string",
+                            "id": "string"
                           },
                           "transportation_mode": "ocean",
                           "freight_type": "port_to_door",
@@ -28114,15 +28124,15 @@
                           },
                           "pieces": 8372,
                           "it_number": "V12345678",
-                          "created_date": "foo",
+                          "created_date": "2024-01-15T09:30:00Z",
                           "status": "seller_location",
                           "priority": "standard",
-                          "updated_at": "foo",
-                          "estimated_departure_date": "foo",
-                          "actual_departure_date": "foo",
-                          "estimated_arrival_date": "foo",
-                          "actual_arrival_date": "foo",
-                          "cargo_ready_date": "foo",
+                          "updated_at": "2024-01-15T09:30:00Z",
+                          "estimated_departure_date": "2024-01-15T09:30:00Z",
+                          "actual_departure_date": "2024-01-15T09:30:00Z",
+                          "estimated_arrival_date": "2024-01-15T09:30:00Z",
+                          "actual_arrival_date": "2024-01-15T09:30:00Z",
+                          "cargo_ready_date": "2023-01-15",
                           "wants_freight_management_bco": true,
                           "wants_flexport_freight": true,
                           "wants_commercial_invoice_transcription": true,
@@ -28146,11 +28156,11 @@
                             "link": "https://api.flexport.com/shipments/123",
                             "id": 123
                           },
-                          "estimated_picked_up_in_full_date": "foo",
-                          "actual_picked_up_in_full_date": "foo",
-                          "target_delivery_date": "foo",
-                          "estimated_delivered_in_full_date": "foo",
-                          "actual_delivered_in_full_date": "foo",
+                          "estimated_picked_up_in_full_date": "2024-01-15T09:30:00Z",
+                          "actual_picked_up_in_full_date": "2024-01-15T09:30:00Z",
+                          "target_delivery_date": "2023-01-15",
+                          "estimated_delivered_in_full_date": "2024-01-15T09:30:00Z",
+                          "actual_delivered_in_full_date": "2024-01-15T09:30:00Z",
                           "wants_export_customs_service": true,
                           "wants_import_customs_service": true,
                           "ocean_shipment": {
@@ -28402,10 +28412,10 @@
                             "ref_type": "/document",
                             "link": "https://api.flexport.com/document?f.shipment.id=2983"
                           },
-                          "departure_date": "foo",
-                          "arrival_date": "foo",
-                          "picked_up_in_full_date": "foo",
-                          "delivered_in_full_date": "foo"
+                          "departure_date": "2024-01-15T09:30:00Z",
+                          "arrival_date": "2024-01-15T09:30:00Z",
+                          "picked_up_in_full_date": "2024-01-15T09:30:00Z",
+                          "delivered_in_full_date": "2024-01-15T09:30:00Z"
                         },
                         "shipment": {
                           "metadata": {},
@@ -28413,10 +28423,10 @@
                           "id": 2983,
                           "name": "ABC Shipment",
                           "booking": {
-                            "_object": "foo",
-                            "link": "foo",
-                            "ref_type": "foo",
-                            "id": "foo"
+                            "_object": "string",
+                            "link": "string",
+                            "ref_type": "string",
+                            "id": "string"
                           },
                           "transportation_mode": "ocean",
                           "freight_type": "port_to_door",
@@ -28433,15 +28443,15 @@
                           },
                           "pieces": 8372,
                           "it_number": "V12345678",
-                          "created_date": "foo",
+                          "created_date": "2024-01-15T09:30:00Z",
                           "status": "seller_location",
                           "priority": "standard",
-                          "updated_at": "foo",
-                          "estimated_departure_date": "foo",
-                          "actual_departure_date": "foo",
-                          "estimated_arrival_date": "foo",
-                          "actual_arrival_date": "foo",
-                          "cargo_ready_date": "foo",
+                          "updated_at": "2024-01-15T09:30:00Z",
+                          "estimated_departure_date": "2024-01-15T09:30:00Z",
+                          "actual_departure_date": "2024-01-15T09:30:00Z",
+                          "estimated_arrival_date": "2024-01-15T09:30:00Z",
+                          "actual_arrival_date": "2024-01-15T09:30:00Z",
+                          "cargo_ready_date": "2023-01-15",
                           "wants_freight_management_bco": true,
                           "wants_flexport_freight": true,
                           "wants_commercial_invoice_transcription": true,
@@ -28465,11 +28475,11 @@
                             "link": "https://api.flexport.com/shipments/123",
                             "id": 123
                           },
-                          "estimated_picked_up_in_full_date": "foo",
-                          "actual_picked_up_in_full_date": "foo",
-                          "target_delivery_date": "foo",
-                          "estimated_delivered_in_full_date": "foo",
-                          "actual_delivered_in_full_date": "foo",
+                          "estimated_picked_up_in_full_date": "2024-01-15T09:30:00Z",
+                          "actual_picked_up_in_full_date": "2024-01-15T09:30:00Z",
+                          "target_delivery_date": "2023-01-15",
+                          "estimated_delivered_in_full_date": "2024-01-15T09:30:00Z",
+                          "actual_delivered_in_full_date": "2024-01-15T09:30:00Z",
                           "wants_export_customs_service": true,
                           "wants_import_customs_service": true,
                           "ocean_shipment": {
@@ -28721,10 +28731,10 @@
                             "ref_type": "/document",
                             "link": "https://api.flexport.com/document?f.shipment.id=2983"
                           },
-                          "departure_date": "foo",
-                          "arrival_date": "foo",
-                          "picked_up_in_full_date": "foo",
-                          "delivered_in_full_date": "foo"
+                          "departure_date": "2024-01-15T09:30:00Z",
+                          "arrival_date": "2024-01-15T09:30:00Z",
+                          "picked_up_in_full_date": "2024-01-15T09:30:00Z",
+                          "delivered_in_full_date": "2024-01-15T09:30:00Z"
                         },
                         "location": {
                           "_object": "/shipment_node",
@@ -28786,20 +28796,20 @@
                             "container_size": "twenty_ft",
                             "seal_number": "UE_WQ2934875",
                             "pickup_number": "ABCD1234",
-                            "estimated_departure_date": "foo",
-                            "actual_departure_date": "foo",
-                            "estimated_arrival_date": "foo",
-                            "actual_arrival_date": "foo",
-                            "estimated_pickup_date": "foo",
-                            "actual_pickup_date": "foo",
-                            "estimated_delivery_date": "foo",
-                            "actual_delivery_date": "foo",
-                            "last_free_day_date": "foo",
-                            "empty_ready_date": "foo",
-                            "empty_returned_date": "foo",
-                            "cargo_ready_date": "foo",
-                            "available_for_pickup_date": "foo",
-                            "estimated_available_for_pickup_date": "foo",
+                            "estimated_departure_date": "2024-01-15T09:30:00Z",
+                            "actual_departure_date": "2024-01-15T09:30:00Z",
+                            "estimated_arrival_date": "2024-01-15T09:30:00Z",
+                            "actual_arrival_date": "2024-01-15T09:30:00Z",
+                            "estimated_pickup_date": "2024-01-15T09:30:00Z",
+                            "actual_pickup_date": "2024-01-15T09:30:00Z",
+                            "estimated_delivery_date": "2024-01-15T09:30:00Z",
+                            "actual_delivery_date": "2024-01-15T09:30:00Z",
+                            "last_free_day_date": "2024-01-15T09:30:00Z",
+                            "empty_ready_date": "string",
+                            "empty_returned_date": "2023-01-15",
+                            "cargo_ready_date": "2023-01-15",
+                            "available_for_pickup_date": "2024-01-15T09:30:00Z",
+                            "estimated_available_for_pickup_date": "2024-01-15T09:30:00Z",
                             "shipment": {
                               "_object": "/api/refs/object",
                               "ref_type": "/shipment",
@@ -28867,7 +28877,7 @@
                           }
                         ],
                         "exception": {
-                          "_object": "foo",
+                          "_object": "string",
                           "message": "US Customs Hold",
                           "root_cause_name": "Government Agency",
                           "root_cause_slug": "carrier"
@@ -28885,8 +28895,8 @@
                   "version": 2,
                   "data": {
                     "_object": "/api/collections/paginated",
-                    "prev": "foo",
-                    "next": "foo",
+                    "prev": "string",
+                    "next": "string",
                     "data": [
                       {
                         "_object": "/event",
@@ -28903,10 +28913,10 @@
                             "id": 2983,
                             "name": "ABC Shipment",
                             "booking": {
-                              "_object": "foo",
-                              "link": "foo",
-                              "ref_type": "foo",
-                              "id": "foo"
+                              "_object": "string",
+                              "link": "string",
+                              "ref_type": "string",
+                              "id": "string"
                             },
                             "transportation_mode": "ocean",
                             "freight_type": "port_to_door",
@@ -28923,15 +28933,15 @@
                             },
                             "pieces": 8372,
                             "it_number": "V12345678",
-                            "created_date": "foo",
+                            "created_date": "2024-01-15T09:30:00Z",
                             "status": "seller_location",
                             "priority": "standard",
-                            "updated_at": "foo",
-                            "estimated_departure_date": "foo",
-                            "actual_departure_date": "foo",
-                            "estimated_arrival_date": "foo",
-                            "actual_arrival_date": "foo",
-                            "cargo_ready_date": "foo",
+                            "updated_at": "2024-01-15T09:30:00Z",
+                            "estimated_departure_date": "2024-01-15T09:30:00Z",
+                            "actual_departure_date": "2024-01-15T09:30:00Z",
+                            "estimated_arrival_date": "2024-01-15T09:30:00Z",
+                            "actual_arrival_date": "2024-01-15T09:30:00Z",
+                            "cargo_ready_date": "2023-01-15",
                             "wants_freight_management_bco": true,
                             "wants_flexport_freight": true,
                             "wants_commercial_invoice_transcription": true,
@@ -28955,11 +28965,11 @@
                               "link": "https://api.flexport.com/shipments/123",
                               "id": 123
                             },
-                            "estimated_picked_up_in_full_date": "foo",
-                            "actual_picked_up_in_full_date": "foo",
-                            "target_delivery_date": "foo",
-                            "estimated_delivered_in_full_date": "foo",
-                            "actual_delivered_in_full_date": "foo",
+                            "estimated_picked_up_in_full_date": "2024-01-15T09:30:00Z",
+                            "actual_picked_up_in_full_date": "2024-01-15T09:30:00Z",
+                            "target_delivery_date": "2023-01-15",
+                            "estimated_delivered_in_full_date": "2024-01-15T09:30:00Z",
+                            "actual_delivered_in_full_date": "2024-01-15T09:30:00Z",
                             "wants_export_customs_service": true,
                             "wants_import_customs_service": true,
                             "ocean_shipment": {
@@ -29211,10 +29221,10 @@
                               "ref_type": "/document",
                               "link": "https://api.flexport.com/document?f.shipment.id=2983"
                             },
-                            "departure_date": "foo",
-                            "arrival_date": "foo",
-                            "picked_up_in_full_date": "foo",
-                            "delivered_in_full_date": "foo"
+                            "departure_date": "2024-01-15T09:30:00Z",
+                            "arrival_date": "2024-01-15T09:30:00Z",
+                            "picked_up_in_full_date": "2024-01-15T09:30:00Z",
+                            "delivered_in_full_date": "2024-01-15T09:30:00Z"
                           },
                           "shipment": {
                             "metadata": {},
@@ -29222,10 +29232,10 @@
                             "id": 2983,
                             "name": "ABC Shipment",
                             "booking": {
-                              "_object": "foo",
-                              "link": "foo",
-                              "ref_type": "foo",
-                              "id": "foo"
+                              "_object": "string",
+                              "link": "string",
+                              "ref_type": "string",
+                              "id": "string"
                             },
                             "transportation_mode": "ocean",
                             "freight_type": "port_to_door",
@@ -29242,15 +29252,15 @@
                             },
                             "pieces": 8372,
                             "it_number": "V12345678",
-                            "created_date": "foo",
+                            "created_date": "2024-01-15T09:30:00Z",
                             "status": "seller_location",
                             "priority": "standard",
-                            "updated_at": "foo",
-                            "estimated_departure_date": "foo",
-                            "actual_departure_date": "foo",
-                            "estimated_arrival_date": "foo",
-                            "actual_arrival_date": "foo",
-                            "cargo_ready_date": "foo",
+                            "updated_at": "2024-01-15T09:30:00Z",
+                            "estimated_departure_date": "2024-01-15T09:30:00Z",
+                            "actual_departure_date": "2024-01-15T09:30:00Z",
+                            "estimated_arrival_date": "2024-01-15T09:30:00Z",
+                            "actual_arrival_date": "2024-01-15T09:30:00Z",
+                            "cargo_ready_date": "2023-01-15",
                             "wants_freight_management_bco": true,
                             "wants_flexport_freight": true,
                             "wants_commercial_invoice_transcription": true,
@@ -29274,11 +29284,11 @@
                               "link": "https://api.flexport.com/shipments/123",
                               "id": 123
                             },
-                            "estimated_picked_up_in_full_date": "foo",
-                            "actual_picked_up_in_full_date": "foo",
-                            "target_delivery_date": "foo",
-                            "estimated_delivered_in_full_date": "foo",
-                            "actual_delivered_in_full_date": "foo",
+                            "estimated_picked_up_in_full_date": "2024-01-15T09:30:00Z",
+                            "actual_picked_up_in_full_date": "2024-01-15T09:30:00Z",
+                            "target_delivery_date": "2023-01-15",
+                            "estimated_delivered_in_full_date": "2024-01-15T09:30:00Z",
+                            "actual_delivered_in_full_date": "2024-01-15T09:30:00Z",
                             "wants_export_customs_service": true,
                             "wants_import_customs_service": true,
                             "ocean_shipment": {
@@ -29530,10 +29540,10 @@
                               "ref_type": "/document",
                               "link": "https://api.flexport.com/document?f.shipment.id=2983"
                             },
-                            "departure_date": "foo",
-                            "arrival_date": "foo",
-                            "picked_up_in_full_date": "foo",
-                            "delivered_in_full_date": "foo"
+                            "departure_date": "2024-01-15T09:30:00Z",
+                            "arrival_date": "2024-01-15T09:30:00Z",
+                            "picked_up_in_full_date": "2024-01-15T09:30:00Z",
+                            "delivered_in_full_date": "2024-01-15T09:30:00Z"
                           },
                           "location": {
                             "_object": "/shipment_node",
@@ -29595,20 +29605,20 @@
                               "container_size": "twenty_ft",
                               "seal_number": "UE_WQ2934875",
                               "pickup_number": "ABCD1234",
-                              "estimated_departure_date": "foo",
-                              "actual_departure_date": "foo",
-                              "estimated_arrival_date": "foo",
-                              "actual_arrival_date": "foo",
-                              "estimated_pickup_date": "foo",
-                              "actual_pickup_date": "foo",
-                              "estimated_delivery_date": "foo",
-                              "actual_delivery_date": "foo",
-                              "last_free_day_date": "foo",
-                              "empty_ready_date": "foo",
-                              "empty_returned_date": "foo",
-                              "cargo_ready_date": "foo",
-                              "available_for_pickup_date": "foo",
-                              "estimated_available_for_pickup_date": "foo",
+                              "estimated_departure_date": "2024-01-15T09:30:00Z",
+                              "actual_departure_date": "2024-01-15T09:30:00Z",
+                              "estimated_arrival_date": "2024-01-15T09:30:00Z",
+                              "actual_arrival_date": "2024-01-15T09:30:00Z",
+                              "estimated_pickup_date": "2024-01-15T09:30:00Z",
+                              "actual_pickup_date": "2024-01-15T09:30:00Z",
+                              "estimated_delivery_date": "2024-01-15T09:30:00Z",
+                              "actual_delivery_date": "2024-01-15T09:30:00Z",
+                              "last_free_day_date": "2024-01-15T09:30:00Z",
+                              "empty_ready_date": "string",
+                              "empty_returned_date": "2023-01-15",
+                              "cargo_ready_date": "2023-01-15",
+                              "available_for_pickup_date": "2024-01-15T09:30:00Z",
+                              "estimated_available_for_pickup_date": "2024-01-15T09:30:00Z",
                               "shipment": {
                                 "_object": "/api/refs/object",
                                 "ref_type": "/shipment",
@@ -29676,7 +29686,7 @@
                             }
                           ],
                           "exception": {
-                            "_object": "foo",
+                            "_object": "string",
                             "message": "US Customs Hold",
                             "root_cause_name": "Government Agency",
                             "root_cause_slug": "carrier"
@@ -29770,9 +29780,9 @@
           "examples": [
             {
               "description": "",
-              "path": "/events/42",
+              "path": "/events/1",
               "pathParameters": {
-                "id": 42
+                "id": 1
               },
               "queryParameters": {},
               "headers": {},
@@ -29796,10 +29806,10 @@
                       "id": 2983,
                       "name": "ABC Shipment",
                       "booking": {
-                        "_object": "foo",
-                        "link": "foo",
-                        "ref_type": "foo",
-                        "id": "foo"
+                        "_object": "string",
+                        "link": "string",
+                        "ref_type": "string",
+                        "id": "string"
                       },
                       "transportation_mode": "ocean",
                       "freight_type": "port_to_door",
@@ -29816,15 +29826,15 @@
                       },
                       "pieces": 8372,
                       "it_number": "V12345678",
-                      "created_date": "foo",
+                      "created_date": "2024-01-15T09:30:00Z",
                       "status": "seller_location",
                       "priority": "standard",
-                      "updated_at": "foo",
-                      "estimated_departure_date": "foo",
-                      "actual_departure_date": "foo",
-                      "estimated_arrival_date": "foo",
-                      "actual_arrival_date": "foo",
-                      "cargo_ready_date": "foo",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                      "estimated_departure_date": "2024-01-15T09:30:00Z",
+                      "actual_departure_date": "2024-01-15T09:30:00Z",
+                      "estimated_arrival_date": "2024-01-15T09:30:00Z",
+                      "actual_arrival_date": "2024-01-15T09:30:00Z",
+                      "cargo_ready_date": "2023-01-15",
                       "wants_freight_management_bco": true,
                       "wants_flexport_freight": true,
                       "wants_commercial_invoice_transcription": true,
@@ -29848,11 +29858,11 @@
                         "link": "https://api.flexport.com/shipments/123",
                         "id": 123
                       },
-                      "estimated_picked_up_in_full_date": "foo",
-                      "actual_picked_up_in_full_date": "foo",
-                      "target_delivery_date": "foo",
-                      "estimated_delivered_in_full_date": "foo",
-                      "actual_delivered_in_full_date": "foo",
+                      "estimated_picked_up_in_full_date": "2024-01-15T09:30:00Z",
+                      "actual_picked_up_in_full_date": "2024-01-15T09:30:00Z",
+                      "target_delivery_date": "2023-01-15",
+                      "estimated_delivered_in_full_date": "2024-01-15T09:30:00Z",
+                      "actual_delivered_in_full_date": "2024-01-15T09:30:00Z",
                       "wants_export_customs_service": true,
                       "wants_import_customs_service": true,
                       "ocean_shipment": {
@@ -30104,10 +30114,10 @@
                         "ref_type": "/document",
                         "link": "https://api.flexport.com/document?f.shipment.id=2983"
                       },
-                      "departure_date": "foo",
-                      "arrival_date": "foo",
-                      "picked_up_in_full_date": "foo",
-                      "delivered_in_full_date": "foo"
+                      "departure_date": "2024-01-15T09:30:00Z",
+                      "arrival_date": "2024-01-15T09:30:00Z",
+                      "picked_up_in_full_date": "2024-01-15T09:30:00Z",
+                      "delivered_in_full_date": "2024-01-15T09:30:00Z"
                     },
                     "shipment": {
                       "metadata": {},
@@ -30115,10 +30125,10 @@
                       "id": 2983,
                       "name": "ABC Shipment",
                       "booking": {
-                        "_object": "foo",
-                        "link": "foo",
-                        "ref_type": "foo",
-                        "id": "foo"
+                        "_object": "string",
+                        "link": "string",
+                        "ref_type": "string",
+                        "id": "string"
                       },
                       "transportation_mode": "ocean",
                       "freight_type": "port_to_door",
@@ -30135,15 +30145,15 @@
                       },
                       "pieces": 8372,
                       "it_number": "V12345678",
-                      "created_date": "foo",
+                      "created_date": "2024-01-15T09:30:00Z",
                       "status": "seller_location",
                       "priority": "standard",
-                      "updated_at": "foo",
-                      "estimated_departure_date": "foo",
-                      "actual_departure_date": "foo",
-                      "estimated_arrival_date": "foo",
-                      "actual_arrival_date": "foo",
-                      "cargo_ready_date": "foo",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                      "estimated_departure_date": "2024-01-15T09:30:00Z",
+                      "actual_departure_date": "2024-01-15T09:30:00Z",
+                      "estimated_arrival_date": "2024-01-15T09:30:00Z",
+                      "actual_arrival_date": "2024-01-15T09:30:00Z",
+                      "cargo_ready_date": "2023-01-15",
                       "wants_freight_management_bco": true,
                       "wants_flexport_freight": true,
                       "wants_commercial_invoice_transcription": true,
@@ -30167,11 +30177,11 @@
                         "link": "https://api.flexport.com/shipments/123",
                         "id": 123
                       },
-                      "estimated_picked_up_in_full_date": "foo",
-                      "actual_picked_up_in_full_date": "foo",
-                      "target_delivery_date": "foo",
-                      "estimated_delivered_in_full_date": "foo",
-                      "actual_delivered_in_full_date": "foo",
+                      "estimated_picked_up_in_full_date": "2024-01-15T09:30:00Z",
+                      "actual_picked_up_in_full_date": "2024-01-15T09:30:00Z",
+                      "target_delivery_date": "2023-01-15",
+                      "estimated_delivered_in_full_date": "2024-01-15T09:30:00Z",
+                      "actual_delivered_in_full_date": "2024-01-15T09:30:00Z",
                       "wants_export_customs_service": true,
                       "wants_import_customs_service": true,
                       "ocean_shipment": {
@@ -30423,10 +30433,10 @@
                         "ref_type": "/document",
                         "link": "https://api.flexport.com/document?f.shipment.id=2983"
                       },
-                      "departure_date": "foo",
-                      "arrival_date": "foo",
-                      "picked_up_in_full_date": "foo",
-                      "delivered_in_full_date": "foo"
+                      "departure_date": "2024-01-15T09:30:00Z",
+                      "arrival_date": "2024-01-15T09:30:00Z",
+                      "picked_up_in_full_date": "2024-01-15T09:30:00Z",
+                      "delivered_in_full_date": "2024-01-15T09:30:00Z"
                     },
                     "location": {
                       "_object": "/shipment_node",
@@ -30488,20 +30498,20 @@
                         "container_size": "twenty_ft",
                         "seal_number": "UE_WQ2934875",
                         "pickup_number": "ABCD1234",
-                        "estimated_departure_date": "foo",
-                        "actual_departure_date": "foo",
-                        "estimated_arrival_date": "foo",
-                        "actual_arrival_date": "foo",
-                        "estimated_pickup_date": "foo",
-                        "actual_pickup_date": "foo",
-                        "estimated_delivery_date": "foo",
-                        "actual_delivery_date": "foo",
-                        "last_free_day_date": "foo",
-                        "empty_ready_date": "foo",
-                        "empty_returned_date": "foo",
-                        "cargo_ready_date": "foo",
-                        "available_for_pickup_date": "foo",
-                        "estimated_available_for_pickup_date": "foo",
+                        "estimated_departure_date": "2024-01-15T09:30:00Z",
+                        "actual_departure_date": "2024-01-15T09:30:00Z",
+                        "estimated_arrival_date": "2024-01-15T09:30:00Z",
+                        "actual_arrival_date": "2024-01-15T09:30:00Z",
+                        "estimated_pickup_date": "2024-01-15T09:30:00Z",
+                        "actual_pickup_date": "2024-01-15T09:30:00Z",
+                        "estimated_delivery_date": "2024-01-15T09:30:00Z",
+                        "actual_delivery_date": "2024-01-15T09:30:00Z",
+                        "last_free_day_date": "2024-01-15T09:30:00Z",
+                        "empty_ready_date": "string",
+                        "empty_returned_date": "2023-01-15",
+                        "cargo_ready_date": "2023-01-15",
+                        "available_for_pickup_date": "2024-01-15T09:30:00Z",
+                        "estimated_available_for_pickup_date": "2024-01-15T09:30:00Z",
                         "shipment": {
                           "_object": "/api/refs/object",
                           "ref_type": "/shipment",
@@ -30569,7 +30579,7 @@
                       }
                     ],
                     "exception": {
-                      "_object": "foo",
+                      "_object": "string",
                       "message": "US Customs Hold",
                       "root_cause_name": "Government Agency",
                       "root_cause_slug": "carrier"
@@ -30598,10 +30608,10 @@
                         "id": 2983,
                         "name": "ABC Shipment",
                         "booking": {
-                          "_object": "foo",
-                          "link": "foo",
-                          "ref_type": "foo",
-                          "id": "foo"
+                          "_object": "string",
+                          "link": "string",
+                          "ref_type": "string",
+                          "id": "string"
                         },
                         "transportation_mode": "ocean",
                         "freight_type": "port_to_door",
@@ -30618,15 +30628,15 @@
                         },
                         "pieces": 8372,
                         "it_number": "V12345678",
-                        "created_date": "foo",
+                        "created_date": "2024-01-15T09:30:00Z",
                         "status": "seller_location",
                         "priority": "standard",
-                        "updated_at": "foo",
-                        "estimated_departure_date": "foo",
-                        "actual_departure_date": "foo",
-                        "estimated_arrival_date": "foo",
-                        "actual_arrival_date": "foo",
-                        "cargo_ready_date": "foo",
+                        "updated_at": "2024-01-15T09:30:00Z",
+                        "estimated_departure_date": "2024-01-15T09:30:00Z",
+                        "actual_departure_date": "2024-01-15T09:30:00Z",
+                        "estimated_arrival_date": "2024-01-15T09:30:00Z",
+                        "actual_arrival_date": "2024-01-15T09:30:00Z",
+                        "cargo_ready_date": "2023-01-15",
                         "wants_freight_management_bco": true,
                         "wants_flexport_freight": true,
                         "wants_commercial_invoice_transcription": true,
@@ -30650,11 +30660,11 @@
                           "link": "https://api.flexport.com/shipments/123",
                           "id": 123
                         },
-                        "estimated_picked_up_in_full_date": "foo",
-                        "actual_picked_up_in_full_date": "foo",
-                        "target_delivery_date": "foo",
-                        "estimated_delivered_in_full_date": "foo",
-                        "actual_delivered_in_full_date": "foo",
+                        "estimated_picked_up_in_full_date": "2024-01-15T09:30:00Z",
+                        "actual_picked_up_in_full_date": "2024-01-15T09:30:00Z",
+                        "target_delivery_date": "2023-01-15",
+                        "estimated_delivered_in_full_date": "2024-01-15T09:30:00Z",
+                        "actual_delivered_in_full_date": "2024-01-15T09:30:00Z",
                         "wants_export_customs_service": true,
                         "wants_import_customs_service": true,
                         "ocean_shipment": {
@@ -30906,10 +30916,10 @@
                           "ref_type": "/document",
                           "link": "https://api.flexport.com/document?f.shipment.id=2983"
                         },
-                        "departure_date": "foo",
-                        "arrival_date": "foo",
-                        "picked_up_in_full_date": "foo",
-                        "delivered_in_full_date": "foo"
+                        "departure_date": "2024-01-15T09:30:00Z",
+                        "arrival_date": "2024-01-15T09:30:00Z",
+                        "picked_up_in_full_date": "2024-01-15T09:30:00Z",
+                        "delivered_in_full_date": "2024-01-15T09:30:00Z"
                       },
                       "shipment": {
                         "metadata": {},
@@ -30917,10 +30927,10 @@
                         "id": 2983,
                         "name": "ABC Shipment",
                         "booking": {
-                          "_object": "foo",
-                          "link": "foo",
-                          "ref_type": "foo",
-                          "id": "foo"
+                          "_object": "string",
+                          "link": "string",
+                          "ref_type": "string",
+                          "id": "string"
                         },
                         "transportation_mode": "ocean",
                         "freight_type": "port_to_door",
@@ -30937,15 +30947,15 @@
                         },
                         "pieces": 8372,
                         "it_number": "V12345678",
-                        "created_date": "foo",
+                        "created_date": "2024-01-15T09:30:00Z",
                         "status": "seller_location",
                         "priority": "standard",
-                        "updated_at": "foo",
-                        "estimated_departure_date": "foo",
-                        "actual_departure_date": "foo",
-                        "estimated_arrival_date": "foo",
-                        "actual_arrival_date": "foo",
-                        "cargo_ready_date": "foo",
+                        "updated_at": "2024-01-15T09:30:00Z",
+                        "estimated_departure_date": "2024-01-15T09:30:00Z",
+                        "actual_departure_date": "2024-01-15T09:30:00Z",
+                        "estimated_arrival_date": "2024-01-15T09:30:00Z",
+                        "actual_arrival_date": "2024-01-15T09:30:00Z",
+                        "cargo_ready_date": "2023-01-15",
                         "wants_freight_management_bco": true,
                         "wants_flexport_freight": true,
                         "wants_commercial_invoice_transcription": true,
@@ -30969,11 +30979,11 @@
                           "link": "https://api.flexport.com/shipments/123",
                           "id": 123
                         },
-                        "estimated_picked_up_in_full_date": "foo",
-                        "actual_picked_up_in_full_date": "foo",
-                        "target_delivery_date": "foo",
-                        "estimated_delivered_in_full_date": "foo",
-                        "actual_delivered_in_full_date": "foo",
+                        "estimated_picked_up_in_full_date": "2024-01-15T09:30:00Z",
+                        "actual_picked_up_in_full_date": "2024-01-15T09:30:00Z",
+                        "target_delivery_date": "2023-01-15",
+                        "estimated_delivered_in_full_date": "2024-01-15T09:30:00Z",
+                        "actual_delivered_in_full_date": "2024-01-15T09:30:00Z",
                         "wants_export_customs_service": true,
                         "wants_import_customs_service": true,
                         "ocean_shipment": {
@@ -31225,10 +31235,10 @@
                           "ref_type": "/document",
                           "link": "https://api.flexport.com/document?f.shipment.id=2983"
                         },
-                        "departure_date": "foo",
-                        "arrival_date": "foo",
-                        "picked_up_in_full_date": "foo",
-                        "delivered_in_full_date": "foo"
+                        "departure_date": "2024-01-15T09:30:00Z",
+                        "arrival_date": "2024-01-15T09:30:00Z",
+                        "picked_up_in_full_date": "2024-01-15T09:30:00Z",
+                        "delivered_in_full_date": "2024-01-15T09:30:00Z"
                       },
                       "location": {
                         "_object": "/shipment_node",
@@ -31290,20 +31300,20 @@
                           "container_size": "twenty_ft",
                           "seal_number": "UE_WQ2934875",
                           "pickup_number": "ABCD1234",
-                          "estimated_departure_date": "foo",
-                          "actual_departure_date": "foo",
-                          "estimated_arrival_date": "foo",
-                          "actual_arrival_date": "foo",
-                          "estimated_pickup_date": "foo",
-                          "actual_pickup_date": "foo",
-                          "estimated_delivery_date": "foo",
-                          "actual_delivery_date": "foo",
-                          "last_free_day_date": "foo",
-                          "empty_ready_date": "foo",
-                          "empty_returned_date": "foo",
-                          "cargo_ready_date": "foo",
-                          "available_for_pickup_date": "foo",
-                          "estimated_available_for_pickup_date": "foo",
+                          "estimated_departure_date": "2024-01-15T09:30:00Z",
+                          "actual_departure_date": "2024-01-15T09:30:00Z",
+                          "estimated_arrival_date": "2024-01-15T09:30:00Z",
+                          "actual_arrival_date": "2024-01-15T09:30:00Z",
+                          "estimated_pickup_date": "2024-01-15T09:30:00Z",
+                          "actual_pickup_date": "2024-01-15T09:30:00Z",
+                          "estimated_delivery_date": "2024-01-15T09:30:00Z",
+                          "actual_delivery_date": "2024-01-15T09:30:00Z",
+                          "last_free_day_date": "2024-01-15T09:30:00Z",
+                          "empty_ready_date": "string",
+                          "empty_returned_date": "2023-01-15",
+                          "cargo_ready_date": "2023-01-15",
+                          "available_for_pickup_date": "2024-01-15T09:30:00Z",
+                          "estimated_available_for_pickup_date": "2024-01-15T09:30:00Z",
                           "shipment": {
                             "_object": "/api/refs/object",
                             "ref_type": "/shipment",
@@ -31371,7 +31381,7 @@
                         }
                       ],
                       "exception": {
-                        "_object": "foo",
+                        "_object": "string",
                         "message": "US Customs Hold",
                         "root_cause_name": "Government Agency",
                         "root_cause_slug": "carrier"
@@ -36141,9 +36151,9 @@
           "examples": [
             {
               "description": "",
-              "path": "/ocean/shipment_container_legs/42",
+              "path": "/ocean/shipment_container_legs/1",
               "pathParameters": {
-                "id": 42
+                "id": 1
               },
               "queryParameters": {},
               "headers": {},
@@ -38280,9 +38290,9 @@
           "examples": [
             {
               "description": "",
-              "path": "/purchase_order_line_items/42",
+              "path": "/purchase_order_line_items/1",
               "pathParameters": {
-                "id": 42
+                "id": 1
               },
               "queryParameters": {},
               "headers": {},
@@ -40169,9 +40179,9 @@
           "examples": [
             {
               "description": "",
-              "path": "/purchase_orders/42",
+              "path": "/purchase_orders/1",
               "pathParameters": {
-                "id": 42
+                "id": 1
               },
               "queryParameters": {},
               "headers": {},
@@ -40707,9 +40717,9 @@
             {
               "name": "PurchaseOrder_purchase_order_update_example",
               "description": "",
-              "path": "/purchase_orders/42",
+              "path": "/purchase_orders/1",
               "pathParameters": {
-                "id": 42
+                "id": 1
               },
               "queryParameters": {},
               "headers": {},
@@ -40963,9 +40973,9 @@
             {
               "name": "Success",
               "description": "",
-              "path": "/purchase_orders/42",
+              "path": "/purchase_orders/1",
               "pathParameters": {
-                "id": 42
+                "id": 1
               },
               "queryParameters": {},
               "headers": {},
@@ -41957,9 +41967,9 @@
           "examples": [
             {
               "description": "",
-              "path": "/shipment_legs/42",
+              "path": "/shipment_legs/1",
               "pathParameters": {
-                "id": 42
+                "id": 1
               },
               "queryParameters": {},
               "headers": {},

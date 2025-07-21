@@ -12,6 +12,7 @@ import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
+import { buildReference } from "./reference/buildReference";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
 import { convertIr } from "./utils/convertIr";
 
@@ -55,6 +56,9 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
         if (context.config.output.snippetFilepath != null) {
+            // Pre-populate snippets cache following C# approach
+            await context.snippetGenerator.populateSnippetsCache();
+
             const snippetFilepath = context.config.output.snippetFilepath;
             let endpointSnippets: Endpoint[] = [];
             try {
@@ -70,6 +74,12 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
                 });
             } catch (e) {
                 context.logger.warn("Failed to generate README.md, this is OK.");
+            }
+
+            try {
+                await this.generateReference({ context });
+            } catch (e) {
+                context.logger.warn("Failed to generate reference.md, this is OK.");
             }
 
             try {
@@ -141,6 +151,14 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
         const content = await context.generatorAgent.generateReadme({ context, endpointSnippets });
         context.project.addRawFiles(
             new File(context.generatorAgent.README_FILENAME, RelativeFilePath.of("."), content)
+        );
+    }
+
+    private async generateReference({ context }: { context: SdkGeneratorContext }): Promise<void> {
+        const builder = buildReference({ context });
+        const content = await context.generatorAgent.generateReference(builder);
+        context.project.addRawFiles(
+            new File(context.generatorAgent.REFERENCE_FILENAME, RelativeFilePath.of("."), content)
         );
     }
 

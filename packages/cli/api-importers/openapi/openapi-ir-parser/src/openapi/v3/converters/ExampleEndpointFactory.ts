@@ -10,7 +10,6 @@ import {
     FullExample,
     GlobalHeader,
     HeaderExample,
-    HeaderWithExample,
     NamedFullExample,
     PathParameterExample,
     PrimitiveSchemaValueWithExample,
@@ -495,7 +494,7 @@ function consolidateRequestResponseExamples(
 
         let paired = false;
         for (let idx = 0; idx < responseExamples.length; idx++) {
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            // biome-ignore lint/style/noNonNullAssertion: allow
             const [responseId, responseExample] = responseExamples[idx]!;
             if (responseId == null || visitedResponseIdx.has(idx)) {
                 continue;
@@ -526,7 +525,7 @@ function consolidateRequestResponseExamples(
         if (visitedResponseIdx.has(idx)) {
             continue;
         }
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        // biome-ignore lint/style/noNonNullAssertion: allow
         const [responseId, responseExample] = responseExamples[idx]!;
 
         const requestExample = requestExamples.find(([requestId]) => requestId == null)?.[1] ?? requestExamples[0]?.[1];

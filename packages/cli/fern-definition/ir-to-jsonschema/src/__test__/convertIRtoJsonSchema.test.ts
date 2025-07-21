@@ -59,7 +59,6 @@ describe("convertIRtoJsonSchema", async () => {
                     ajv.compile(jsonschema);
 
                     const json = JSON.stringify(jsonschema, undefined, 2);
-                    // eslint-disable-next-line jest/no-standalone-expect
                     await expect(json).toMatchFileSnapshot(
                         RelativeFilePath.of(
                             `./__snapshots__/${workspace.workspaceName}/${typeId.replaceAll(":", "_")}.json`

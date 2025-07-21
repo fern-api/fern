@@ -510,7 +510,7 @@ navigation:
           - page: Changelog
             path: ./pages/docs/writing-content/changelog.mdx
             icon: fa-regular fa-clock-rotate-left
-          - page: Visual Editor (Beta)
+          - page: Visual Editor
             path: ./pages/docs/writing-content/visual-editor.mdx
             icon: fa-regular fa-paintbrush
 
@@ -583,6 +583,8 @@ navigation:
                 path: ./pages/docs/integrations/analytics/fullstory.mdx
               - page: Segment
                 path: ./pages/docs/integrations/analytics/segment.mdx
+              - page: Mixpanel
+                path: ./pages/docs/integrations/analytics/mixpanel.mdx
           - section: Support
             icon: fa-regular fa-headset
             slug: support
@@ -836,4 +838,7 @@ redirects:
     permanent: true
   - source: /learn/ai-search/customer-showcase
     destination: /learn/ask-fern/customer-showcase
+    permanent: true
+  - source: /learn/docs/writing-content/visual-editor-beta
+    destination: /learn/docs/writing-content/visual-editor
     permanent: true

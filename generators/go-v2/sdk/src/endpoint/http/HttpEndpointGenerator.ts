@@ -7,8 +7,8 @@ import {
     HttpResponseBody,
     HttpService,
     JsonResponse,
+    Pagination,
     SdkRequestBodyType,
-    SdkRequestWrapper,
     ServiceId,
     StreamingResponse,
     Subpackage
@@ -17,8 +17,7 @@ import {
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
 import { EndpointSignatureInfo } from "../EndpointSignatureInfo";
-import { EndpointRequest } from "../request/EndpointRequest";
-import { getEndpointRequest } from "../utils/getEndpointRequest";
+import { getPaginationInfo } from "../utils/getPaginationInfo";
 
 export declare namespace HttpEndpointGenerator {
     export const OCTET_STREAM_CONTENT_TYPE = "application/octet-stream";
@@ -43,9 +42,195 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         service: HttpService;
         subpackage: Subpackage | undefined;
         endpoint: HttpEndpoint;
-    }): go.Method[] {
-        const methods: go.Method[] = [];
-        return methods;
+    }): go.Method | undefined {
+        const signature = this.getEndpointSignatureInfo({ serviceId, service, endpoint });
+        return this.generateEndpoint({ service, endpoint, signature, subpackage });
+    }
+
+    private generateEndpoint({
+        service,
+        endpoint,
+        signature,
+        subpackage
+    }: {
+        service: HttpService;
+        endpoint: HttpEndpoint;
+        signature: EndpointSignatureInfo;
+        subpackage: Subpackage | undefined;
+    }): go.Method {
+        return new go.Method({
+            name: this.context.getMethodName(endpoint.name),
+            parameters: signature.allParameters,
+            return_: this.getReturnSignature({ endpoint, signature }),
+            body: this.getEndpointBody({ signature, endpoint, subpackage }),
+            typeReference: this.context.getClientClassReference({
+                fernFilepath: service.name.fernFilepath,
+                subpackage
+            }),
+            pointerReceiver: true,
+            docs: endpoint.docs
+        });
+    }
+
+    private shouldGenerateRawEndpoint({ endpoint }: { endpoint: HttpEndpoint }): boolean {
+        return !this.context.isEnabledPaginationEndpoint(endpoint) && !this.context.isStreamingEndpoint(endpoint);
+    }
+
+    private getEndpointBody({
+        signature,
+        endpoint,
+        subpackage
+    }: {
+        signature: EndpointSignatureInfo;
+        endpoint: HttpEndpoint;
+        subpackage: Subpackage | undefined;
+    }): go.CodeBlock {
+        const streamingResponse = this.context.getStreamingResponse(endpoint);
+        if (streamingResponse != null) {
+            return this.getStreamingEndpointBody({
+                signature,
+                endpoint,
+                subpackage,
+                streamingResponse
+            });
+        }
+        const pagination = this.context.getPagination(endpoint);
+        if (pagination != null && this.context.isEnabledPaginationEndpoint(endpoint)) {
+            return this.getPaginationEndpointBody({ signature, endpoint, subpackage, pagination });
+        }
+        return this.generateDelegatingEndpointBody({ endpoint, signature, subpackage });
+    }
+
+    private getStreamingEndpointBody({
+        signature,
+        endpoint,
+        subpackage,
+        streamingResponse
+    }: {
+        signature: EndpointSignatureInfo;
+        endpoint: HttpEndpoint;
+        subpackage: Subpackage | undefined;
+        streamingResponse: StreamingResponse;
+    }): go.CodeBlock {
+        const errorDecoder = this.buildErrorDecoder({ endpoint });
+        const streamPayload = this.context.getStreamPayload(streamingResponse);
+        const streamerVariable = go.codeblock("streamer");
+        return go.codeblock((writer) => {
+            writer.writeNode(
+                this.prepareRequestCall({
+                    signature,
+                    endpoint,
+                    subpackage,
+                    errorDecoder,
+                    rawClient: false
+                })
+            );
+            writer.newLine();
+            writer.writeNode(streamerVariable);
+            writer.write(" := ");
+            writer.writeNode(
+                this.context.callNewStreamer({
+                    arguments_: [this.getCallerFieldReference({ subpackage })],
+                    streamPayload
+                })
+            );
+            writer.newLine();
+            writer.write("return ");
+            writer.writeNode(
+                this.context.streamer.stream({
+                    endpoint,
+                    streamerVariable,
+                    optionsReference: go.codeblock("options"),
+                    url: go.codeblock("endpointURL"),
+                    request: signature.request?.getRequestReference(),
+                    errorCodes: errorDecoder != null ? go.codeblock("errorCodes") : undefined,
+                    streamingResponse
+                })
+            );
+        });
+    }
+
+    private getPaginationEndpointBody({
+        signature,
+        endpoint,
+        subpackage,
+        pagination
+    }: {
+        signature: EndpointSignatureInfo;
+        endpoint: HttpEndpoint;
+        subpackage: Subpackage | undefined;
+        pagination: Pagination;
+    }): go.CodeBlock {
+        const errorDecoder = this.buildErrorDecoder({ endpoint });
+        const paginationInfo = getPaginationInfo({
+            context: this.context,
+            pagination,
+            signature,
+            callerReference: this.getCallerFieldReference({ subpackage }),
+            endpoint,
+            errorDecoder
+        });
+        return go.codeblock((writer) => {
+            writer.writeNode(
+                this.prepareRequestCall({
+                    signature,
+                    endpoint,
+                    subpackage,
+                    errorDecoder,
+                    rawClient: false,
+                    encodeQuery: false
+                })
+            );
+            writer.newLine();
+            writer.writeNode(paginationInfo.prepareCall);
+            writer.writeNewLineIfLastLineNot();
+            writer.writeNode(paginationInfo.readPageResponse);
+            writer.writeNewLineIfLastLineNot();
+            writer.writeNode(paginationInfo.initializePager);
+            writer.writeNewLineIfLastLineNot();
+            writer.writeNode(paginationInfo.callGetPage);
+            writer.writeNewLineIfLastLineNot();
+        });
+    }
+
+    private generateDelegatingEndpointBody({
+        endpoint,
+        signature,
+        subpackage
+    }: {
+        endpoint: HttpEndpoint;
+        signature: EndpointSignatureInfo;
+        subpackage: Subpackage | undefined;
+    }): go.CodeBlock {
+        return go.codeblock((writer) => {
+            if (signature.returnType != null) {
+                writer.write("response, err := ");
+            } else {
+                writer.write("_, err := ");
+            }
+            writer.writeNode(
+                go.invokeMethod({
+                    method: this.context.getMethodName(endpoint.name),
+                    arguments_: [
+                        ...signature.allParameters.slice(0, -1).map((param) => go.codeblock(param.name)),
+                        go.codeblock("opts...")
+                    ],
+                    on: go.selector({
+                        on: this.getReceiverCodeBlock({ subpackage }),
+                        selector: go.codeblock("WithRawResponse")
+                    })
+                })
+            );
+            writer.newLine();
+            writer.writeLine("if err != nil {");
+            writer.indent();
+            writer.writeNode(this.writeReturnZeroValueWithError({ signature }));
+            writer.newLine();
+            writer.dedent();
+            writer.writeLine("}");
+            writer.writeNode(this.getResponseReturnStatement({ signature, endpoint }));
+            writer.newLine();
+        });
     }
 
     public generateRaw({
@@ -58,96 +243,125 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         service: HttpService;
         subpackage: Subpackage | undefined;
         endpoint: HttpEndpoint;
-    }): go.Method[] {
+    }): go.Method | undefined {
         if (!this.shouldGenerateRawEndpoint({ endpoint })) {
-            return [];
+            return undefined;
         }
         const signature = this.getEndpointSignatureInfo({ serviceId, service, endpoint });
-        const endpointRequest = getEndpointRequest({ context: this.context, endpoint, serviceId, service });
-        return [
-            this.generateRawUnaryEndpoint({ serviceId, service, endpoint, signature, subpackage, endpointRequest })
-        ];
+        return this.generateRawEndpoint({ service, endpoint, signature, subpackage });
     }
 
-    private shouldGenerateRawEndpoint({ endpoint }: { endpoint: HttpEndpoint }): boolean {
-        return !this.context.isPaginationEndpoint(endpoint) && !this.context.isStreamingEndpoint(endpoint);
-    }
-
-    private generateRawUnaryEndpoint({
-        serviceId,
+    private generateRawEndpoint({
         service,
         endpoint,
         signature,
-        subpackage,
-        endpointRequest
+        subpackage
     }: {
-        serviceId: ServiceId;
         service: HttpService;
         endpoint: HttpEndpoint;
         signature: EndpointSignatureInfo;
         subpackage: Subpackage | undefined;
-        endpointRequest: EndpointRequest | undefined;
     }): go.Method {
         return new go.Method({
             name: this.context.getMethodName(endpoint.name),
             parameters: signature.allParameters,
             return_: this.getRawReturnSignature({ signature }),
-            body: this.getRawUnaryEndpointBody({ signature, endpoint, endpointRequest }),
-            typeReference: this.getRawClientTypeReference({ service, subpackage }),
+            body: this.getRawUnaryEndpointBody({ signature, endpoint, subpackage }),
+            typeReference: this.context.getRawClientClassReference({
+                fernFilepath: service.name.fernFilepath,
+                subpackage
+            }),
             pointerReceiver: true
         });
-    }
-
-    private getRawReturnSignature({ signature }: { signature: EndpointSignatureInfo }): go.Type[] {
-        return [go.Type.pointer(go.Type.reference(signature.rawReturnTypeReference)), go.Type.error()];
-    }
-
-    private getRawClientTypeReference({
-        service,
-        subpackage
-    }: {
-        service: HttpService;
-        subpackage: Subpackage | undefined;
-    }): go.TypeReference {
-        if (subpackage == null) {
-            return this.context.getRootRawClientClassReference();
-        }
-        return this.context.getRawClientClassReference({ service, subpackage });
     }
 
     private getRawUnaryEndpointBody({
         signature,
         endpoint,
-        endpointRequest
+        subpackage
     }: {
         signature: EndpointSignatureInfo;
         endpoint: HttpEndpoint;
-        endpointRequest: EndpointRequest | undefined;
+        subpackage: Subpackage | undefined;
+    }): go.CodeBlock {
+        const errorDecoder = this.buildErrorDecoder({ endpoint });
+        return go.codeblock((writer) => {
+            writer.writeNode(
+                this.prepareRequestCall({
+                    signature,
+                    endpoint,
+                    subpackage,
+                    errorDecoder,
+                    rawClient: true
+                })
+            );
+            writer.newLine();
+            writer.write("raw, err := ");
+            writer.writeNode(
+                this.context.caller.call({
+                    endpoint,
+                    clientReference: this.getCallerFieldReference({ rawClient: true }),
+                    optionsReference: go.codeblock("options"),
+                    url: go.codeblock("endpointURL"),
+                    request: signature.request?.getRequestReference(),
+                    response: this.getResponseParameterReference({ endpoint }),
+                    errorCodes: errorDecoder != null ? go.codeblock("errorCodes") : undefined
+                })
+            );
+            writer.newLine();
+            writer.writeLine("if err != nil {");
+            writer.indent();
+            writer.writeNode(this.writeReturnZeroValueWithError({ signature, rawClient: true }));
+            writer.newLine();
+            writer.dedent();
+            writer.writeLine("}");
+            writer.writeNode(this.getRawResponseReturnStatement({ endpoint, signature }));
+        });
+    }
+
+    private prepareRequestCall({
+        signature,
+        endpoint,
+        subpackage,
+        errorDecoder,
+        rawClient,
+        encodeQuery = true
+    }: {
+        signature: EndpointSignatureInfo;
+        endpoint: HttpEndpoint;
+        subpackage: Subpackage | undefined;
+        errorDecoder: go.CodeBlock | undefined;
+        rawClient: boolean;
+        encodeQuery?: boolean;
     }): go.CodeBlock {
         return go.codeblock((writer) => {
             writer.writeNode(this.buildRequestOptions({ endpoint }));
             writer.newLine();
-            writer.writeNode(this.buildBaseUrl({ endpoint }));
+            writer.writeNode(this.buildBaseUrl({ endpoint, subpackage, rawClient }));
             writer.newLine();
             writer.writeNode(this.buildEndpointUrl({ endpoint, signature }));
 
-            const buildQueryParameters = this.buildQueryParameters({ signature, endpoint, endpointRequest });
+            const buildQueryParameters = this.buildQueryParameters({
+                signature,
+                endpoint,
+                rawClient,
+                encodeQuery
+            });
             if (buildQueryParameters != null) {
                 writer.newLine();
                 writer.writeNode(buildQueryParameters);
             }
 
-            const buildHeaders = this.buildHeaders({ endpoint });
-            writer.newLine();
+            const buildHeaders = this.buildHeaders({ endpoint, subpackage, rawClient });
+            writer.writeNewLineIfLastLineNot();
             writer.writeNode(buildHeaders);
 
-            const buildErrorDecoder = this.buildErrorDecoder({ endpoint });
-            if (buildErrorDecoder != null) {
+            if (errorDecoder != null) {
                 writer.newLine();
-                writer.writeNode(buildErrorDecoder);
+                writer.writeNode(errorDecoder);
             }
 
-            const requestBody = endpointRequest?.getRequestBodyBlock();
+            const requestBody = signature.request?.getRequestBodyBlock();
             if (requestBody != null) {
                 writer.newLine();
                 writer.writeNode(requestBody);
@@ -158,29 +372,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 writer.newLine();
                 writer.writeNode(responseInitialization);
             }
-
-            writer.newLine();
-            writer.write("raw, err := ");
-            writer.writeNode(
-                this.context.caller.call({
-                    endpoint,
-                    clientReference: this.getCallerFieldReference(),
-                    optionsReference: go.codeblock("options"),
-                    url: go.codeblock("endpointURL"),
-                    request: endpointRequest?.getRequestReference(),
-                    response: this.getResponseParameterReference({ endpoint }),
-                    errorCodes: buildErrorDecoder != null ? go.codeblock("errorCodes") : undefined
-                })
-            );
-            writer.newLine();
-            writer.writeLine("if err != nil {");
-            writer.indent();
-            writer.writeNode(this.writeRawReturnZeroValueWithError());
-            writer.newLine();
-            writer.dedent();
-            writer.writeLine("}");
-
-            writer.writeNode(this.getRawResponseReturnStatement({ endpoint, signature }));
         });
     }
 
@@ -195,7 +386,15 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         });
     }
 
-    private buildBaseUrl({ endpoint }: { endpoint: HttpEndpoint }): go.CodeBlock {
+    private buildBaseUrl({
+        endpoint,
+        subpackage,
+        rawClient
+    }: {
+        endpoint: HttpEndpoint;
+        subpackage: Subpackage | undefined;
+        rawClient?: boolean;
+    }): go.CodeBlock {
         return go.codeblock((writer) => {
             writer.write("baseURL := ");
             writer.writeNode(
@@ -205,7 +404,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         selector: go.codeblock("BaseURL")
                     }),
                     go.selector({
-                        on: this.getRawClientReceiverCodeBlock(),
+                        on: this.getReceiverCodeBlock({ subpackage, rawClient }),
                         selector: go.codeblock("baseURL")
                     }),
                     this.context.getDefaultBaseUrlTypeInstantiation(endpoint)
@@ -244,12 +443,15 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     private buildQueryParameters({
         signature,
         endpoint,
-        endpointRequest
+        encodeQuery,
+        rawClient
     }: {
         signature: EndpointSignatureInfo;
         endpoint: HttpEndpoint;
-        endpointRequest: EndpointRequest | undefined;
+        encodeQuery: boolean;
+        rawClient?: boolean;
     }): go.CodeBlock | undefined {
+        const endpointRequest = signature.request;
         if (endpointRequest == null || endpoint.queryParameters.length === 0) {
             return undefined;
         }
@@ -259,7 +461,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             writer.newLine();
             writer.writeLine("if err != nil {");
             writer.indent();
-            writer.writeNode(this.writeRawReturnZeroValueWithError());
+            writer.writeNode(this.writeReturnZeroValueWithError({ signature, rawClient }));
             writer.newLine();
             writer.dedent();
             writer.writeLine("}");
@@ -276,20 +478,44 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     continue;
                 }
             }
-            writer.writeLine("if len(queryParams) > 0 {");
-            writer.indent();
-            writer.writeLine('endpointURL += "?" + queryParams.Encode()');
-            writer.dedent();
-            writer.write("}");
+            if (encodeQuery) {
+                this.encodeQuery({ writer, endpointUrlReference: go.codeblock("endpointURL") });
+            }
         });
     }
 
-    private buildHeaders({ endpoint }: { endpoint: HttpEndpoint }): go.CodeBlock {
+    private encodeQuery({
+        writer,
+        endpointUrlReference
+    }: {
+        writer: go.Writer;
+        endpointUrlReference: go.AstNode;
+    }): void {
+        writer.writeLine("if len(queryParams) > 0 {");
+        writer.indent();
+        writer.writeNode(endpointUrlReference);
+        writer.writeLine(' += "?" + queryParams.Encode()');
+        writer.dedent();
+        writer.writeLine("}");
+    }
+
+    private buildHeaders({
+        endpoint,
+        subpackage,
+        rawClient
+    }: {
+        endpoint: HttpEndpoint;
+        subpackage: Subpackage | undefined;
+        rawClient?: boolean;
+    }): go.CodeBlock {
         return go.codeblock((writer) => {
             writer.write("headers := ");
             writer.writeNode(
                 this.context.callMergeHeaders([
-                    go.codeblock(`${this.getRawClientReceiver()}.header.Clone()`),
+                    go.selector({
+                        on: this.getReceiverCodeBlock({ subpackage, rawClient }),
+                        selector: go.codeblock("header.Clone()")
+                    }),
                     go.codeblock("options.ToHeader()")
                 ])
             );
@@ -388,7 +614,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
     private getResponseInitialization({ endpoint }: { endpoint: HttpEndpoint }): go.CodeBlock | undefined {
         const responseBody = endpoint.response?.body;
-        if (responseBody == null) {
+        if (responseBody == null || this.context.isEnabledPaginationEndpoint(endpoint)) {
             return undefined;
         }
         switch (responseBody.type) {
@@ -407,8 +633,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 });
             case "streaming":
             case "streamParameter":
-                // TODO: Implement stream responses.
-                return undefined;
             case "bytes":
                 return undefined;
             default:
@@ -435,6 +659,28 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         }
     }
 
+    private getResponseReturnStatement({
+        signature,
+        endpoint
+    }: {
+        signature: EndpointSignatureInfo;
+        endpoint: HttpEndpoint;
+    }): go.CodeBlock {
+        return go.codeblock((writer) => {
+            writer.write("return ");
+            if (signature.returnType != null) {
+                writer.writeNode(
+                    go.selector({
+                        on: go.codeblock("response"),
+                        selector: endpoint.method === "HEAD" ? go.codeblock("Header") : go.codeblock("Body")
+                    })
+                );
+                writer.write(", ");
+            }
+            writer.write("nil");
+        });
+    }
+
     private getRawResponseReturnStatement({
         endpoint,
         signature
@@ -450,7 +696,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             if (signature.rawReturnTypeReference != null) {
                 writer.writeNode(
                     this.wrapWithRawResponseType({
-                        context: this.context,
                         rawReturnTypeReference: signature.rawReturnTypeReference,
                         responseBodyReference
                     })
@@ -467,13 +712,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 return this.getResponseBodyReferenceForJson({ jsonResponse: responseBody.value });
             case "bytes":
             case "fileDownload":
+            case "streaming":
+            case "streamParameter":
                 return go.codeblock("response");
             case "text":
                 return go.codeblock("response.String()");
-            case "streaming":
-            case "streamParameter":
-                // TODO: Implement stream responses.
-                return go.codeblock("nil");
             default:
                 assertNever(responseBody);
         }
@@ -496,11 +739,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }
 
     private wrapWithRawResponseType({
-        context,
         rawReturnTypeReference,
         responseBodyReference
     }: {
-        context: SdkGeneratorContext;
         rawReturnTypeReference: go.TypeReference;
         responseBodyReference: go.AstNode;
     }): go.TypeInstantiation {
@@ -582,7 +823,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 if (requestBody == null) {
                     return undefined;
                 }
-                return this.getContentTypeHeaderValueForWrapper({ wrapper: sdkRequest.shape, requestBody });
+                return this.getContentTypeHeaderValueForWrapper({ requestBody });
             }
             default:
                 assertNever(sdkRequest.shape);
@@ -604,20 +845,16 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         }
     }
 
-    private getContentTypeHeaderValueForWrapper({
-        wrapper,
-        requestBody
-    }: {
-        wrapper: SdkRequestWrapper;
-        requestBody: HttpRequestBody;
-    }): string | undefined {
+    private getContentTypeHeaderValueForWrapper({ requestBody }: { requestBody: HttpRequestBody }): string | undefined {
         switch (requestBody.type) {
             case "bytes":
                 return requestBody.contentType ?? HttpEndpointGenerator.OCTET_STREAM_CONTENT_TYPE;
-            case "fileUpload":
             case "inlinedRequestBody":
             case "reference":
                 return requestBody.contentType;
+            case "fileUpload":
+                // The Content-Type boundary is generated by the multipart/form-data writer.
+                return undefined;
             default:
                 assertNever(requestBody);
         }
@@ -625,7 +862,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
     private addHeaderValue({ wireValue, value }: { wireValue: string; value: go.AstNode }): go.CodeBlock {
         return go.codeblock((writer) => {
-            writer.newLine();
+            writer.writeNewLineIfLastLineNot();
             writer.write(`headers.Add("${wireValue}", `);
             writer.writeNode(value);
             writer.write(")");
@@ -634,31 +871,69 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
     private addQueryValue({ wireValue, value }: { wireValue: string; value: string }): go.CodeBlock {
         return go.codeblock((writer) => {
-            writer.newLine();
+            writer.writeNewLineIfLastLineNot();
             writer.write(`queryParams.Add("${wireValue}", "${value}")`);
         });
     }
 
     private setHeaderValue({ wireValue, value }: { wireValue: string; value: string }): go.CodeBlock {
         return go.codeblock((writer) => {
-            writer.newLine();
+            writer.writeNewLineIfLastLineNot();
             writer.write(`headers.Add("${wireValue}", "${value}")`);
         });
     }
 
-    private writeRawReturnZeroValueWithError(): go.CodeBlock {
-        return go.codeblock("return nil, err");
+    private writeReturnZeroValueWithError({
+        signature,
+        rawClient
+    }: {
+        signature: EndpointSignatureInfo;
+        rawClient?: boolean;
+    }): go.CodeBlock {
+        if (rawClient) {
+            return go.codeblock("return nil, err");
+        }
+        return go.codeblock((writer) => {
+            writer.write("return ");
+            if (signature.returnZeroValue != null) {
+                writer.writeNode(signature.returnZeroValue);
+                writer.write(", ");
+            }
+            writer.write("err");
+        });
     }
 
-    private getRawClientReceiverCodeBlock(): go.AstNode {
-        return go.codeblock(this.getRawClientReceiver());
-    }
-
-    private getCallerFieldReference(): go.AstNode {
+    private getCallerFieldReference({
+        subpackage,
+        rawClient
+    }: {
+        subpackage?: Subpackage;
+        rawClient?: boolean;
+    }): go.AstNode {
         return go.selector({
-            on: this.getRawClientReceiverCodeBlock(),
+            on: this.getReceiverCodeBlock({ subpackage, rawClient }),
             selector: go.codeblock("caller")
         });
+    }
+
+    private getReturnSignature({
+        endpoint,
+        signature
+    }: {
+        endpoint: HttpEndpoint;
+        signature: EndpointSignatureInfo;
+    }): go.Type[] {
+        if (signature.returnType == null) {
+            return [go.Type.error()];
+        }
+        if (this.context.isEnabledPaginationEndpoint(endpoint) && signature.pageReturnType != null) {
+            return [signature.pageReturnType, go.Type.error()];
+        }
+        return [signature.returnType, go.Type.error()];
+    }
+
+    private getRawReturnSignature({ signature }: { signature: EndpointSignatureInfo }): go.Type[] {
+        return [go.Type.pointer(go.Type.reference(signature.rawReturnTypeReference)), go.Type.error()];
     }
 
     private getRequestParameterName({ endpoint }: { endpoint: HttpEndpoint }): string {
@@ -667,6 +942,29 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             return "request";
         }
         return this.context.getParameterName(requestParameterName);
+    }
+
+    private getReceiverCodeBlock({
+        subpackage,
+        rawClient
+    }: {
+        subpackage?: Subpackage;
+        rawClient?: boolean;
+    }): go.AstNode {
+        if (rawClient) {
+            return go.codeblock(this.getRawClientReceiver());
+        }
+        return go.codeblock(this.getClientReceiver({ subpackage }));
+    }
+
+    private getClientReceiver({ subpackage }: { subpackage?: Subpackage }): string {
+        if (subpackage == null) {
+            return this.context.getRootClientReceiverName();
+        }
+        if (subpackage != null && this.context.isFlatPackageLayout()) {
+            return this.context.getReceiverName(subpackage.name);
+        }
+        return "c";
     }
 
     private getRawClientReceiver(): string {

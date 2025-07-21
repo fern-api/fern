@@ -78,6 +78,44 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Request'
+  /duplicate:
+    post:
+      operationId: union_duplicateTypesUnion
+      tags:
+        - Union
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnionWithDuplicateTypes'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnionWithDuplicateTypes'
+  /nested:
+    post:
+      operationId: union_nestedUnions
+      tags:
+        - Union
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NestedUnionRoot'
 components:
   schemas:
     Request:
@@ -114,6 +152,50 @@ components:
           items:
             type: string
       description: Several different types are accepted.
+    NestedUnionL2:
+      title: NestedUnionL2
+      oneOf:
+        - type: boolean
+        - type: array
+          items:
+            type: string
+        - type: array
+          items:
+            type: string
+      description: Nested layer 2.
+    NestedUnionL1:
+      title: NestedUnionL1
+      oneOf:
+        - type: integer
+        - type: array
+          items:
+            type: string
+        - type: array
+          items:
+            type: string
+        - $ref: '#/components/schemas/NestedUnionL2'
+      description: Nested layer 1.
+    NestedUnionRoot:
+      title: NestedUnionRoot
+      oneOf:
+        - type: string
+        - type: array
+          items:
+            type: string
+        - $ref: '#/components/schemas/NestedUnionL1'
+      description: Nested union root.
+    UnionWithDuplicateTypes:
+      title: UnionWithDuplicateTypes
+      oneOf:
+        - type: string
+        - type: array
+          items:
+            type: string
+        - type: integer
+        - type: array
+          items:
+            type: string
+      description: Duplicate types.
     MetadataUnion:
       title: MetadataUnion
       oneOf:

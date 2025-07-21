@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.16.5
+  changelogEntry:
+    - summary: |
+        Fix duplicate array types in undiscriminated union properties. Previously, nested unions 
+        containing different array types (e.g., `array<string, mixed>` and `array<Recipient>`) would 
+        generate duplicate array annotations in PHP union types (array|array|null). The fix implements 
+        recursive union flattening with proper deduplication during type generation.
+      type: fix
+  createdAt: '2025-07-10'
+  irVersion: 58
 - version: 1.16.4
   changelogEntry:
     - summary: |

@@ -201,7 +201,7 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
         if (this.npmPackage?.license != null) {
             packageJson = {
                 ...packageJson,
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                 license: this.npmPackage.license as any
             };
         }
@@ -283,7 +283,7 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
                 fs: false,
                 os: false,
                 path: false
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
             } as any;
 
             draft["packageManager"] = "yarn@1.22.22";

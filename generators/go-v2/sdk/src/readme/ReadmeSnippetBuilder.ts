@@ -288,9 +288,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private getMethodCall(endpoint: EndpointWithFilepath): string {
-        return `${this.getAccessFromRootClient(endpoint.fernFilepath)}.${this.getEndpointMethodName(
-            endpoint.endpoint
-        )}`;
+        return `${this.getAccessFromRootClient(endpoint.fernFilepath)}.${this.getEndpointMethodName(endpoint.endpoint)}`;
     }
 
     private getWithRawResponseMethodCall(endpoint: EndpointWithFilepath): string {

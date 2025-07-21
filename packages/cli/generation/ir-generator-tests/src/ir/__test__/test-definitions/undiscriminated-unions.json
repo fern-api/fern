@@ -624,6 +624,704 @@
             "availability": null,
             "docs": "Several different types are accepted."
         },
+        "type_union:NestedUnionL2": {
+            "inline": null,
+            "name": {
+                "name": {
+                    "originalName": "NestedUnionL2",
+                    "camelCase": {
+                        "unsafeName": "nestedUnionL2",
+                        "safeName": "nestedUnionL2"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "nested_union_l2",
+                        "safeName": "nested_union_l2"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "NESTED_UNION_L2",
+                        "safeName": "NESTED_UNION_L2"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "NestedUnionL2",
+                        "safeName": "NestedUnionL2"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "union",
+                            "camelCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNION",
+                                "safeName": "UNION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Union",
+                                "safeName": "Union"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "union",
+                        "camelCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UNION",
+                            "safeName": "UNION"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Union",
+                            "safeName": "Union"
+                        }
+                    }
+                },
+                "displayName": null,
+                "typeId": "type_union:NestedUnionL2"
+            },
+            "shape": {
+                "_type": "undiscriminatedUnion",
+                "members": [
+                    {
+                        "type": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "BOOLEAN",
+                                "v2": {
+                                    "type": "boolean",
+                                    "default": null
+                                }
+                            }
+                        },
+                        "docs": null
+                    },
+                    {
+                        "type": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "set",
+                                "set": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "docs": null
+                    },
+                    {
+                        "type": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "list",
+                                "list": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "docs": null
+                    }
+                ]
+            },
+            "referencedTypes": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "v2Examples": null,
+            "availability": null,
+            "docs": "Nested layer 2."
+        },
+        "type_union:NestedUnionL1": {
+            "inline": null,
+            "name": {
+                "name": {
+                    "originalName": "NestedUnionL1",
+                    "camelCase": {
+                        "unsafeName": "nestedUnionL1",
+                        "safeName": "nestedUnionL1"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "nested_union_l1",
+                        "safeName": "nested_union_l1"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "NESTED_UNION_L1",
+                        "safeName": "NESTED_UNION_L1"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "NestedUnionL1",
+                        "safeName": "NestedUnionL1"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "union",
+                            "camelCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNION",
+                                "safeName": "UNION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Union",
+                                "safeName": "Union"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "union",
+                        "camelCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UNION",
+                            "safeName": "UNION"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Union",
+                            "safeName": "Union"
+                        }
+                    }
+                },
+                "displayName": null,
+                "typeId": "type_union:NestedUnionL1"
+            },
+            "shape": {
+                "_type": "undiscriminatedUnion",
+                "members": [
+                    {
+                        "type": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "INTEGER",
+                                "v2": {
+                                    "type": "integer",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
+                        },
+                        "docs": null
+                    },
+                    {
+                        "type": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "set",
+                                "set": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "docs": null
+                    },
+                    {
+                        "type": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "list",
+                                "list": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "docs": null
+                    },
+                    {
+                        "type": {
+                            "_type": "named",
+                            "name": {
+                                "originalName": "NestedUnionL2",
+                                "camelCase": {
+                                    "unsafeName": "nestedUnionL2",
+                                    "safeName": "nestedUnionL2"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "nested_union_l2",
+                                    "safeName": "nested_union_l2"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "NESTED_UNION_L2",
+                                    "safeName": "NESTED_UNION_L2"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "NestedUnionL2",
+                                    "safeName": "NestedUnionL2"
+                                }
+                            },
+                            "fernFilepath": {
+                                "allParts": [
+                                    {
+                                        "originalName": "union",
+                                        "camelCase": {
+                                            "unsafeName": "union",
+                                            "safeName": "union"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "union",
+                                            "safeName": "union"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "UNION",
+                                            "safeName": "UNION"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Union",
+                                            "safeName": "Union"
+                                        }
+                                    }
+                                ],
+                                "packagePath": [],
+                                "file": {
+                                    "originalName": "union",
+                                    "camelCase": {
+                                        "unsafeName": "union",
+                                        "safeName": "union"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "union",
+                                        "safeName": "union"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "UNION",
+                                        "safeName": "UNION"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Union",
+                                        "safeName": "Union"
+                                    }
+                                }
+                            },
+                            "displayName": "Nested Union L2",
+                            "typeId": "type_union:NestedUnionL2",
+                            "default": null,
+                            "inline": null
+                        },
+                        "docs": null
+                    }
+                ]
+            },
+            "referencedTypes": [
+                "type_union:NestedUnionL2"
+            ],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "v2Examples": null,
+            "availability": null,
+            "docs": "Nested layer 1."
+        },
+        "type_union:NestedUnionRoot": {
+            "inline": null,
+            "name": {
+                "name": {
+                    "originalName": "NestedUnionRoot",
+                    "camelCase": {
+                        "unsafeName": "nestedUnionRoot",
+                        "safeName": "nestedUnionRoot"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "nested_union_root",
+                        "safeName": "nested_union_root"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "NESTED_UNION_ROOT",
+                        "safeName": "NESTED_UNION_ROOT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "NestedUnionRoot",
+                        "safeName": "NestedUnionRoot"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "union",
+                            "camelCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNION",
+                                "safeName": "UNION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Union",
+                                "safeName": "Union"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "union",
+                        "camelCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UNION",
+                            "safeName": "UNION"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Union",
+                            "safeName": "Union"
+                        }
+                    }
+                },
+                "displayName": null,
+                "typeId": "type_union:NestedUnionRoot"
+            },
+            "shape": {
+                "_type": "undiscriminatedUnion",
+                "members": [
+                    {
+                        "type": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
+                        },
+                        "docs": null
+                    },
+                    {
+                        "type": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "list",
+                                "list": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "docs": null
+                    },
+                    {
+                        "type": {
+                            "_type": "named",
+                            "name": {
+                                "originalName": "NestedUnionL1",
+                                "camelCase": {
+                                    "unsafeName": "nestedUnionL1",
+                                    "safeName": "nestedUnionL1"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "nested_union_l1",
+                                    "safeName": "nested_union_l1"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "NESTED_UNION_L1",
+                                    "safeName": "NESTED_UNION_L1"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "NestedUnionL1",
+                                    "safeName": "NestedUnionL1"
+                                }
+                            },
+                            "fernFilepath": {
+                                "allParts": [
+                                    {
+                                        "originalName": "union",
+                                        "camelCase": {
+                                            "unsafeName": "union",
+                                            "safeName": "union"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "union",
+                                            "safeName": "union"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "UNION",
+                                            "safeName": "UNION"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Union",
+                                            "safeName": "Union"
+                                        }
+                                    }
+                                ],
+                                "packagePath": [],
+                                "file": {
+                                    "originalName": "union",
+                                    "camelCase": {
+                                        "unsafeName": "union",
+                                        "safeName": "union"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "union",
+                                        "safeName": "union"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "UNION",
+                                        "safeName": "UNION"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Union",
+                                        "safeName": "Union"
+                                    }
+                                }
+                            },
+                            "displayName": "Nested Union L1",
+                            "typeId": "type_union:NestedUnionL1",
+                            "default": null,
+                            "inline": null
+                        },
+                        "docs": null
+                    }
+                ]
+            },
+            "referencedTypes": [
+                "type_union:NestedUnionL1",
+                "type_union:NestedUnionL2"
+            ],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "v2Examples": null,
+            "availability": null,
+            "docs": "Nested union root."
+        },
+        "type_union:UnionWithDuplicateTypes": {
+            "inline": null,
+            "name": {
+                "name": {
+                    "originalName": "UnionWithDuplicateTypes",
+                    "camelCase": {
+                        "unsafeName": "unionWithDuplicateTypes",
+                        "safeName": "unionWithDuplicateTypes"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "union_with_duplicate_types",
+                        "safeName": "union_with_duplicate_types"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UNION_WITH_DUPLICATE_TYPES",
+                        "safeName": "UNION_WITH_DUPLICATE_TYPES"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UnionWithDuplicateTypes",
+                        "safeName": "UnionWithDuplicateTypes"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "union",
+                            "camelCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNION",
+                                "safeName": "UNION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Union",
+                                "safeName": "Union"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "union",
+                        "camelCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UNION",
+                            "safeName": "UNION"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Union",
+                            "safeName": "Union"
+                        }
+                    }
+                },
+                "displayName": null,
+                "typeId": "type_union:UnionWithDuplicateTypes"
+            },
+            "shape": {
+                "_type": "undiscriminatedUnion",
+                "members": [
+                    {
+                        "type": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
+                        },
+                        "docs": null
+                    },
+                    {
+                        "type": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "list",
+                                "list": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "docs": null
+                    },
+                    {
+                        "type": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "INTEGER",
+                                "v2": {
+                                    "type": "integer",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
+                        },
+                        "docs": null
+                    },
+                    {
+                        "type": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "set",
+                                "set": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "docs": null
+                    }
+                ]
+            },
+            "referencedTypes": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "v2Examples": null,
+            "availability": null,
+            "docs": "Duplicate types."
+        },
         "type_union:MetadataUnion": {
             "inline": null,
             "name": {
@@ -5064,6 +5762,880 @@
                     "audiences": null,
                     "availability": null,
                     "docs": null
+                },
+                {
+                    "id": "endpoint_union.duplicateTypesUnion",
+                    "name": {
+                        "originalName": "duplicateTypesUnion",
+                        "camelCase": {
+                            "unsafeName": "duplicateTypesUnion",
+                            "safeName": "duplicateTypesUnion"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "duplicate_types_union",
+                            "safeName": "duplicate_types_union"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DUPLICATE_TYPES_UNION",
+                            "safeName": "DUPLICATE_TYPES_UNION"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "DuplicateTypesUnion",
+                            "safeName": "DuplicateTypesUnion"
+                        }
+                    },
+                    "displayName": null,
+                    "auth": false,
+                    "idempotent": false,
+                    "baseUrl": null,
+                    "v2BaseUrls": null,
+                    "method": "POST",
+                    "basePath": null,
+                    "path": {
+                        "head": "/duplicate",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "/duplicate",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": {
+                        "type": "reference",
+                        "requestBodyType": {
+                            "_type": "named",
+                            "name": {
+                                "originalName": "UnionWithDuplicateTypes",
+                                "camelCase": {
+                                    "unsafeName": "unionWithDuplicateTypes",
+                                    "safeName": "unionWithDuplicateTypes"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "union_with_duplicate_types",
+                                    "safeName": "union_with_duplicate_types"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "UNION_WITH_DUPLICATE_TYPES",
+                                    "safeName": "UNION_WITH_DUPLICATE_TYPES"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "UnionWithDuplicateTypes",
+                                    "safeName": "UnionWithDuplicateTypes"
+                                }
+                            },
+                            "fernFilepath": {
+                                "allParts": [
+                                    {
+                                        "originalName": "union",
+                                        "camelCase": {
+                                            "unsafeName": "union",
+                                            "safeName": "union"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "union",
+                                            "safeName": "union"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "UNION",
+                                            "safeName": "UNION"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Union",
+                                            "safeName": "Union"
+                                        }
+                                    }
+                                ],
+                                "packagePath": [],
+                                "file": {
+                                    "originalName": "union",
+                                    "camelCase": {
+                                        "unsafeName": "union",
+                                        "safeName": "union"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "union",
+                                        "safeName": "union"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "UNION",
+                                        "safeName": "UNION"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Union",
+                                        "safeName": "Union"
+                                    }
+                                }
+                            },
+                            "displayName": null,
+                            "typeId": "type_union:UnionWithDuplicateTypes",
+                            "default": null,
+                            "inline": null
+                        },
+                        "docs": null,
+                        "contentType": null,
+                        "v2Examples": null
+                    },
+                    "sdkRequest": {
+                        "shape": {
+                            "type": "justRequestBody",
+                            "value": {
+                                "type": "typeReference",
+                                "requestBodyType": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "UnionWithDuplicateTypes",
+                                        "camelCase": {
+                                            "unsafeName": "unionWithDuplicateTypes",
+                                            "safeName": "unionWithDuplicateTypes"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "union_with_duplicate_types",
+                                            "safeName": "union_with_duplicate_types"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "UNION_WITH_DUPLICATE_TYPES",
+                                            "safeName": "UNION_WITH_DUPLICATE_TYPES"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "UnionWithDuplicateTypes",
+                                            "safeName": "UnionWithDuplicateTypes"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [
+                                            {
+                                                "originalName": "union",
+                                                "camelCase": {
+                                                    "unsafeName": "union",
+                                                    "safeName": "union"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "union",
+                                                    "safeName": "union"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "UNION",
+                                                    "safeName": "UNION"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Union",
+                                                    "safeName": "Union"
+                                                }
+                                            }
+                                        ],
+                                        "packagePath": [],
+                                        "file": {
+                                            "originalName": "union",
+                                            "camelCase": {
+                                                "unsafeName": "union",
+                                                "safeName": "union"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "union",
+                                                "safeName": "union"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "UNION",
+                                                "safeName": "UNION"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Union",
+                                                "safeName": "Union"
+                                            }
+                                        }
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_union:UnionWithDuplicateTypes",
+                                    "default": null,
+                                    "inline": null
+                                },
+                                "docs": null,
+                                "contentType": null,
+                                "v2Examples": null
+                            }
+                        },
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        },
+                        "streamParameter": null
+                    },
+                    "response": {
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "UnionWithDuplicateTypes",
+                                        "camelCase": {
+                                            "unsafeName": "unionWithDuplicateTypes",
+                                            "safeName": "unionWithDuplicateTypes"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "union_with_duplicate_types",
+                                            "safeName": "union_with_duplicate_types"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "UNION_WITH_DUPLICATE_TYPES",
+                                            "safeName": "UNION_WITH_DUPLICATE_TYPES"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "UnionWithDuplicateTypes",
+                                            "safeName": "UnionWithDuplicateTypes"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [
+                                            {
+                                                "originalName": "union",
+                                                "camelCase": {
+                                                    "unsafeName": "union",
+                                                    "safeName": "union"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "union",
+                                                    "safeName": "union"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "UNION",
+                                                    "safeName": "UNION"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Union",
+                                                    "safeName": "Union"
+                                                }
+                                            }
+                                        ],
+                                        "packagePath": [],
+                                        "file": {
+                                            "originalName": "union",
+                                            "camelCase": {
+                                                "unsafeName": "union",
+                                                "safeName": "union"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "union",
+                                                "safeName": "union"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "UNION",
+                                                "safeName": "UNION"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Union",
+                                                "safeName": "Union"
+                                            }
+                                        }
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_union:UnionWithDuplicateTypes",
+                                    "default": null,
+                                    "inline": null
+                                },
+                                "docs": null,
+                                "v2Examples": null
+                            }
+                        },
+                        "status-code": null
+                    },
+                    "errors": [],
+                    "userSpecifiedExamples": [],
+                    "autogeneratedExamples": [
+                        {
+                            "example": {
+                                "id": "49320e3f",
+                                "url": "/duplicate",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": {
+                                    "type": "reference",
+                                    "shape": {
+                                        "type": "named",
+                                        "shape": {
+                                            "type": "undiscriminatedUnion",
+                                            "index": 0,
+                                            "singleUnionType": {
+                                                "shape": {
+                                                    "type": "primitive",
+                                                    "primitive": {
+                                                        "type": "string",
+                                                        "string": {
+                                                            "original": "string"
+                                                        }
+                                                    }
+                                                },
+                                                "jsonExample": "string"
+                                            }
+                                        },
+                                        "typeName": {
+                                            "name": {
+                                                "originalName": "UnionWithDuplicateTypes",
+                                                "camelCase": {
+                                                    "unsafeName": "unionWithDuplicateTypes",
+                                                    "safeName": "unionWithDuplicateTypes"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "union_with_duplicate_types",
+                                                    "safeName": "union_with_duplicate_types"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "UNION_WITH_DUPLICATE_TYPES",
+                                                    "safeName": "UNION_WITH_DUPLICATE_TYPES"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "UnionWithDuplicateTypes",
+                                                    "safeName": "UnionWithDuplicateTypes"
+                                                }
+                                            },
+                                            "fernFilepath": {
+                                                "allParts": [
+                                                    {
+                                                        "originalName": "union",
+                                                        "camelCase": {
+                                                            "unsafeName": "union",
+                                                            "safeName": "union"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "union",
+                                                            "safeName": "union"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "UNION",
+                                                            "safeName": "UNION"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Union",
+                                                            "safeName": "Union"
+                                                        }
+                                                    }
+                                                ],
+                                                "packagePath": [],
+                                                "file": {
+                                                    "originalName": "union",
+                                                    "camelCase": {
+                                                        "unsafeName": "union",
+                                                        "safeName": "union"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "union",
+                                                        "safeName": "union"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "UNION",
+                                                        "safeName": "UNION"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Union",
+                                                        "safeName": "Union"
+                                                    }
+                                                }
+                                            },
+                                            "displayName": null,
+                                            "typeId": "type_union:UnionWithDuplicateTypes"
+                                        }
+                                    },
+                                    "jsonExample": "string"
+                                },
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "named",
+                                                "shape": {
+                                                    "type": "undiscriminatedUnion",
+                                                    "index": 0,
+                                                    "singleUnionType": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "string",
+                                                                "string": {
+                                                                    "original": "string"
+                                                                }
+                                                            }
+                                                        },
+                                                        "jsonExample": "string"
+                                                    }
+                                                },
+                                                "typeName": {
+                                                    "name": {
+                                                        "originalName": "UnionWithDuplicateTypes",
+                                                        "camelCase": {
+                                                            "unsafeName": "unionWithDuplicateTypes",
+                                                            "safeName": "unionWithDuplicateTypes"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "union_with_duplicate_types",
+                                                            "safeName": "union_with_duplicate_types"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "UNION_WITH_DUPLICATE_TYPES",
+                                                            "safeName": "UNION_WITH_DUPLICATE_TYPES"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "UnionWithDuplicateTypes",
+                                                            "safeName": "UnionWithDuplicateTypes"
+                                                        }
+                                                    },
+                                                    "fernFilepath": {
+                                                        "allParts": [
+                                                            {
+                                                                "originalName": "union",
+                                                                "camelCase": {
+                                                                    "unsafeName": "union",
+                                                                    "safeName": "union"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "union",
+                                                                    "safeName": "union"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "UNION",
+                                                                    "safeName": "UNION"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Union",
+                                                                    "safeName": "Union"
+                                                                }
+                                                            }
+                                                        ],
+                                                        "packagePath": [],
+                                                        "file": {
+                                                            "originalName": "union",
+                                                            "camelCase": {
+                                                                "unsafeName": "union",
+                                                                "safeName": "union"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "union",
+                                                                "safeName": "union"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "UNION",
+                                                                "safeName": "UNION"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Union",
+                                                                "safeName": "Union"
+                                                            }
+                                                        }
+                                                    },
+                                                    "displayName": null,
+                                                    "typeId": "type_union:UnionWithDuplicateTypes"
+                                                }
+                                            },
+                                            "jsonExample": "string"
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            }
+                        }
+                    ],
+                    "pagination": null,
+                    "transport": null,
+                    "v2Examples": null,
+                    "source": null,
+                    "audiences": null,
+                    "availability": null,
+                    "docs": null
+                },
+                {
+                    "id": "endpoint_union.nestedUnions",
+                    "name": {
+                        "originalName": "nestedUnions",
+                        "camelCase": {
+                            "unsafeName": "nestedUnions",
+                            "safeName": "nestedUnions"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "nested_unions",
+                            "safeName": "nested_unions"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NESTED_UNIONS",
+                            "safeName": "NESTED_UNIONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "NestedUnions",
+                            "safeName": "NestedUnions"
+                        }
+                    },
+                    "displayName": null,
+                    "auth": false,
+                    "idempotent": false,
+                    "baseUrl": null,
+                    "v2BaseUrls": null,
+                    "method": "POST",
+                    "basePath": null,
+                    "path": {
+                        "head": "/nested",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "/nested",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": {
+                        "type": "reference",
+                        "requestBodyType": {
+                            "_type": "named",
+                            "name": {
+                                "originalName": "NestedUnionRoot",
+                                "camelCase": {
+                                    "unsafeName": "nestedUnionRoot",
+                                    "safeName": "nestedUnionRoot"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "nested_union_root",
+                                    "safeName": "nested_union_root"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "NESTED_UNION_ROOT",
+                                    "safeName": "NESTED_UNION_ROOT"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "NestedUnionRoot",
+                                    "safeName": "NestedUnionRoot"
+                                }
+                            },
+                            "fernFilepath": {
+                                "allParts": [
+                                    {
+                                        "originalName": "union",
+                                        "camelCase": {
+                                            "unsafeName": "union",
+                                            "safeName": "union"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "union",
+                                            "safeName": "union"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "UNION",
+                                            "safeName": "UNION"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Union",
+                                            "safeName": "Union"
+                                        }
+                                    }
+                                ],
+                                "packagePath": [],
+                                "file": {
+                                    "originalName": "union",
+                                    "camelCase": {
+                                        "unsafeName": "union",
+                                        "safeName": "union"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "union",
+                                        "safeName": "union"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "UNION",
+                                        "safeName": "UNION"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Union",
+                                        "safeName": "Union"
+                                    }
+                                }
+                            },
+                            "displayName": null,
+                            "typeId": "type_union:NestedUnionRoot",
+                            "default": null,
+                            "inline": null
+                        },
+                        "docs": null,
+                        "contentType": null,
+                        "v2Examples": null
+                    },
+                    "sdkRequest": {
+                        "shape": {
+                            "type": "justRequestBody",
+                            "value": {
+                                "type": "typeReference",
+                                "requestBodyType": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "NestedUnionRoot",
+                                        "camelCase": {
+                                            "unsafeName": "nestedUnionRoot",
+                                            "safeName": "nestedUnionRoot"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "nested_union_root",
+                                            "safeName": "nested_union_root"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "NESTED_UNION_ROOT",
+                                            "safeName": "NESTED_UNION_ROOT"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "NestedUnionRoot",
+                                            "safeName": "NestedUnionRoot"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [
+                                            {
+                                                "originalName": "union",
+                                                "camelCase": {
+                                                    "unsafeName": "union",
+                                                    "safeName": "union"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "union",
+                                                    "safeName": "union"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "UNION",
+                                                    "safeName": "UNION"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Union",
+                                                    "safeName": "Union"
+                                                }
+                                            }
+                                        ],
+                                        "packagePath": [],
+                                        "file": {
+                                            "originalName": "union",
+                                            "camelCase": {
+                                                "unsafeName": "union",
+                                                "safeName": "union"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "union",
+                                                "safeName": "union"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "UNION",
+                                                "safeName": "UNION"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Union",
+                                                "safeName": "Union"
+                                            }
+                                        }
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_union:NestedUnionRoot",
+                                    "default": null,
+                                    "inline": null
+                                },
+                                "docs": null,
+                                "contentType": null,
+                                "v2Examples": null
+                            }
+                        },
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        },
+                        "streamParameter": null
+                    },
+                    "response": {
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                },
+                                "docs": null,
+                                "v2Examples": null
+                            }
+                        },
+                        "status-code": null
+                    },
+                    "errors": [],
+                    "userSpecifiedExamples": [],
+                    "autogeneratedExamples": [
+                        {
+                            "example": {
+                                "id": "ff754ee4",
+                                "url": "/nested",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": {
+                                    "type": "reference",
+                                    "shape": {
+                                        "type": "named",
+                                        "shape": {
+                                            "type": "undiscriminatedUnion",
+                                            "index": 0,
+                                            "singleUnionType": {
+                                                "shape": {
+                                                    "type": "primitive",
+                                                    "primitive": {
+                                                        "type": "string",
+                                                        "string": {
+                                                            "original": "string"
+                                                        }
+                                                    }
+                                                },
+                                                "jsonExample": "string"
+                                            }
+                                        },
+                                        "typeName": {
+                                            "name": {
+                                                "originalName": "NestedUnionRoot",
+                                                "camelCase": {
+                                                    "unsafeName": "nestedUnionRoot",
+                                                    "safeName": "nestedUnionRoot"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "nested_union_root",
+                                                    "safeName": "nested_union_root"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "NESTED_UNION_ROOT",
+                                                    "safeName": "NESTED_UNION_ROOT"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "NestedUnionRoot",
+                                                    "safeName": "NestedUnionRoot"
+                                                }
+                                            },
+                                            "fernFilepath": {
+                                                "allParts": [
+                                                    {
+                                                        "originalName": "union",
+                                                        "camelCase": {
+                                                            "unsafeName": "union",
+                                                            "safeName": "union"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "union",
+                                                            "safeName": "union"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "UNION",
+                                                            "safeName": "UNION"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Union",
+                                                            "safeName": "Union"
+                                                        }
+                                                    }
+                                                ],
+                                                "packagePath": [],
+                                                "file": {
+                                                    "originalName": "union",
+                                                    "camelCase": {
+                                                        "unsafeName": "union",
+                                                        "safeName": "union"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "union",
+                                                        "safeName": "union"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "UNION",
+                                                        "safeName": "UNION"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Union",
+                                                        "safeName": "Union"
+                                                    }
+                                                }
+                                            },
+                                            "displayName": null,
+                                            "typeId": "type_union:NestedUnionRoot"
+                                        }
+                                    },
+                                    "jsonExample": "string"
+                                },
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "string"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "string"
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            }
+                        }
+                    ],
+                    "pagination": null,
+                    "transport": null,
+                    "v2Examples": null,
+                    "source": null,
+                    "audiences": null,
+                    "availability": null,
+                    "docs": null
                 }
             ],
             "audiences": null
@@ -5105,6 +6677,10 @@
             "service_union": [
                 "type_union:Request",
                 "type_union:MyUnion",
+                "type_union:NestedUnionL2",
+                "type_union:NestedUnionL1",
+                "type_union:NestedUnionRoot",
+                "type_union:UnionWithDuplicateTypes",
                 "type_union:MetadataUnion",
                 "type_union:NamedMetadata",
                 "type_union:OptionalMetadata",
@@ -5425,6 +7001,359 @@
                                 "value": "INTEGER"
                             }
                         }
+                    },
+                    {
+                        "type": "set",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    }
+                ]
+            },
+            "type_union:NestedUnionL2": {
+                "type": "undiscriminatedUnion",
+                "declaration": {
+                    "name": {
+                        "originalName": "NestedUnionL2",
+                        "camelCase": {
+                            "unsafeName": "nestedUnionL2",
+                            "safeName": "nestedUnionL2"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "nested_union_l2",
+                            "safeName": "nested_union_l2"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NESTED_UNION_L2",
+                            "safeName": "NESTED_UNION_L2"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "NestedUnionL2",
+                            "safeName": "NestedUnionL2"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "union",
+                                "camelCase": {
+                                    "unsafeName": "union",
+                                    "safeName": "union"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "union",
+                                    "safeName": "union"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "UNION",
+                                    "safeName": "UNION"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Union",
+                                    "safeName": "Union"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "union",
+                            "camelCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNION",
+                                "safeName": "UNION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Union",
+                                "safeName": "Union"
+                            }
+                        }
+                    }
+                },
+                "types": [
+                    {
+                        "type": "primitive",
+                        "value": "BOOLEAN"
+                    },
+                    {
+                        "type": "set",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    {
+                        "type": "list",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    }
+                ]
+            },
+            "type_union:NestedUnionL1": {
+                "type": "undiscriminatedUnion",
+                "declaration": {
+                    "name": {
+                        "originalName": "NestedUnionL1",
+                        "camelCase": {
+                            "unsafeName": "nestedUnionL1",
+                            "safeName": "nestedUnionL1"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "nested_union_l1",
+                            "safeName": "nested_union_l1"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NESTED_UNION_L1",
+                            "safeName": "NESTED_UNION_L1"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "NestedUnionL1",
+                            "safeName": "NestedUnionL1"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "union",
+                                "camelCase": {
+                                    "unsafeName": "union",
+                                    "safeName": "union"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "union",
+                                    "safeName": "union"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "UNION",
+                                    "safeName": "UNION"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Union",
+                                    "safeName": "Union"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "union",
+                            "camelCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNION",
+                                "safeName": "UNION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Union",
+                                "safeName": "Union"
+                            }
+                        }
+                    }
+                },
+                "types": [
+                    {
+                        "type": "primitive",
+                        "value": "INTEGER"
+                    },
+                    {
+                        "type": "set",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    {
+                        "type": "list",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    {
+                        "type": "named",
+                        "value": "type_union:NestedUnionL2"
+                    }
+                ]
+            },
+            "type_union:NestedUnionRoot": {
+                "type": "undiscriminatedUnion",
+                "declaration": {
+                    "name": {
+                        "originalName": "NestedUnionRoot",
+                        "camelCase": {
+                            "unsafeName": "nestedUnionRoot",
+                            "safeName": "nestedUnionRoot"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "nested_union_root",
+                            "safeName": "nested_union_root"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NESTED_UNION_ROOT",
+                            "safeName": "NESTED_UNION_ROOT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "NestedUnionRoot",
+                            "safeName": "NestedUnionRoot"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "union",
+                                "camelCase": {
+                                    "unsafeName": "union",
+                                    "safeName": "union"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "union",
+                                    "safeName": "union"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "UNION",
+                                    "safeName": "UNION"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Union",
+                                    "safeName": "Union"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "union",
+                            "camelCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNION",
+                                "safeName": "UNION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Union",
+                                "safeName": "Union"
+                            }
+                        }
+                    }
+                },
+                "types": [
+                    {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    {
+                        "type": "list",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    {
+                        "type": "named",
+                        "value": "type_union:NestedUnionL1"
+                    }
+                ]
+            },
+            "type_union:UnionWithDuplicateTypes": {
+                "type": "undiscriminatedUnion",
+                "declaration": {
+                    "name": {
+                        "originalName": "UnionWithDuplicateTypes",
+                        "camelCase": {
+                            "unsafeName": "unionWithDuplicateTypes",
+                            "safeName": "unionWithDuplicateTypes"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "union_with_duplicate_types",
+                            "safeName": "union_with_duplicate_types"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UNION_WITH_DUPLICATE_TYPES",
+                            "safeName": "UNION_WITH_DUPLICATE_TYPES"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "UnionWithDuplicateTypes",
+                            "safeName": "UnionWithDuplicateTypes"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "union",
+                                "camelCase": {
+                                    "unsafeName": "union",
+                                    "safeName": "union"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "union",
+                                    "safeName": "union"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "UNION",
+                                    "safeName": "UNION"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Union",
+                                    "safeName": "Union"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "union",
+                            "camelCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNION",
+                                "safeName": "UNION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Union",
+                                "safeName": "Union"
+                            }
+                        }
+                    }
+                },
+                "types": [
+                    {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    {
+                        "type": "list",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    {
+                        "type": "primitive",
+                        "value": "INTEGER"
                     },
                     {
                         "type": "set",
@@ -6335,6 +8264,178 @@
                     "type": "json"
                 },
                 "examples": null
+            },
+            "endpoint_union.duplicateTypesUnion": {
+                "auth": null,
+                "declaration": {
+                    "name": {
+                        "originalName": "duplicateTypesUnion",
+                        "camelCase": {
+                            "unsafeName": "duplicateTypesUnion",
+                            "safeName": "duplicateTypesUnion"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "duplicate_types_union",
+                            "safeName": "duplicate_types_union"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DUPLICATE_TYPES_UNION",
+                            "safeName": "DUPLICATE_TYPES_UNION"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "DuplicateTypesUnion",
+                            "safeName": "DuplicateTypesUnion"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "union",
+                                "camelCase": {
+                                    "unsafeName": "union",
+                                    "safeName": "union"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "union",
+                                    "safeName": "union"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "UNION",
+                                    "safeName": "UNION"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Union",
+                                    "safeName": "Union"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "union",
+                            "camelCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNION",
+                                "safeName": "UNION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Union",
+                                "safeName": "Union"
+                            }
+                        }
+                    }
+                },
+                "location": {
+                    "method": "POST",
+                    "path": "/duplicate"
+                },
+                "request": {
+                    "type": "body",
+                    "pathParameters": [],
+                    "body": {
+                        "type": "typeReference",
+                        "value": {
+                            "type": "named",
+                            "value": "type_union:UnionWithDuplicateTypes"
+                        }
+                    }
+                },
+                "response": {
+                    "type": "json"
+                },
+                "examples": null
+            },
+            "endpoint_union.nestedUnions": {
+                "auth": null,
+                "declaration": {
+                    "name": {
+                        "originalName": "nestedUnions",
+                        "camelCase": {
+                            "unsafeName": "nestedUnions",
+                            "safeName": "nestedUnions"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "nested_unions",
+                            "safeName": "nested_unions"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NESTED_UNIONS",
+                            "safeName": "NESTED_UNIONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "NestedUnions",
+                            "safeName": "NestedUnions"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "union",
+                                "camelCase": {
+                                    "unsafeName": "union",
+                                    "safeName": "union"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "union",
+                                    "safeName": "union"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "UNION",
+                                    "safeName": "UNION"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Union",
+                                    "safeName": "Union"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "union",
+                            "camelCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNION",
+                                "safeName": "UNION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Union",
+                                "safeName": "Union"
+                            }
+                        }
+                    }
+                },
+                "location": {
+                    "method": "POST",
+                    "path": "/nested"
+                },
+                "request": {
+                    "type": "body",
+                    "pathParameters": [],
+                    "body": {
+                        "type": "typeReference",
+                        "value": {
+                            "type": "named",
+                            "value": "type_union:NestedUnionRoot"
+                        }
+                    }
+                },
+                "response": {
+                    "type": "json"
+                },
+                "examples": null
             }
         },
         "pathParameters": [],
@@ -6363,6 +8464,7 @@
                     "safeName": "Union"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -6411,6 +8513,10 @@
                 "type_union:Request",
                 "type_union:TypeWithOptionalUnion",
                 "type_union:MyUnion",
+                "type_union:NestedUnionL2",
+                "type_union:NestedUnionL1",
+                "type_union:NestedUnionRoot",
+                "type_union:UnionWithDuplicateTypes",
                 "type_union:MetadataUnion",
                 "type_union:NamedMetadata",
                 "type_union:OptionalMetadata",

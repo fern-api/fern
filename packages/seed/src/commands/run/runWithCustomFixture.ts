@@ -22,17 +22,19 @@ export async function runWithCustomFixture({
     workspace,
     logLevel,
     audience,
-    skipScripts
+    skipScripts,
+    outputPath
 }: {
     pathToFixture: AbsoluteFilePath;
     workspace: GeneratorWorkspace;
     logLevel: LogLevel;
     audience: string | undefined;
     skipScripts: boolean | undefined;
+    outputPath?: AbsoluteFilePath;
 }): Promise<void> {
     const lock = new Semaphore(1);
-    const outputDir = await tmp.dir();
-    const absolutePathToOutput = AbsoluteFilePath.of(outputDir.path);
+    const absolutePathToOutput = outputPath ?? AbsoluteFilePath.of((await tmp.dir()).path);
+
     const taskContextFactory = new TaskContextFactory(logLevel);
     const customFixtureConfig = workspace.workspaceConfig.customFixtureConfig;
 

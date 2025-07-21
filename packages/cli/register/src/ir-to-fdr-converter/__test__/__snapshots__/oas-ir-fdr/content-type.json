@@ -133,7 +133,7 @@
             "queryParameters": {},
             "headers": {},
             "requestBody": {
-              "file": "foo"
+              "file": "string"
             },
             "requestBodyV3": {
               "type": "form",
@@ -149,15 +149,15 @@
                 },
                 "file": {
                   "type": "filename",
-                  "value": "foo"
+                  "value": "string"
                 }
               }
             },
             "responseStatusCode": 201,
-            "responseBody": "foo",
+            "responseBody": "string",
             "responseBodyV3": {
               "type": "json",
-              "value": "foo"
+              "value": "string"
             }
           }
         ],
@@ -259,10 +259,10 @@
               "value": {}
             },
             "responseStatusCode": 201,
-            "responseBody": "foo",
+            "responseBody": "string",
             "responseBodyV3": {
               "type": "json",
-              "value": "foo"
+              "value": "string"
             }
           }
         ],

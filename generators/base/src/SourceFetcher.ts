@@ -141,7 +141,7 @@ export class SourceFetcher {
         }
         const fileStream = createWriteStream(destinationPath);
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         await promisify(pipeline)(response.body as any, fileStream);
     }
 

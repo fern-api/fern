@@ -23,6 +23,7 @@ fern generate --docs
 ```
 
 ### Usage in GitHub Actions
+
 To automate the publishing process, you can use a GitHub Action workflow to publish your docs when a push is made to the `main` branch. [Be sure to add the `FERN_TOKEN` for your organization to the repository](/learn/cli-api/cli-reference/commands#fern-token). 
 
 ```yaml .github/workflows/publish-docs.yml
@@ -50,6 +51,29 @@ jobs:
         run: fern generate --docs
 ```
 
+## Unpublishing your docs
+
+If you need to take down your docs site or remove confidential information, you cannot unpublish the site itself. Instead, you should replace the `navigation` object with an empty list. Once published, this will remove all content and lead the user to a `404 error` page.
+
+1. **Update the navigation** in `docs.yml` by changing the file content to:
+
+```yml
+instances:
+  - <organization>.docs.buildwithfern.com
+navigation: []
+```
+
+2. **Publish the site** by running `fern generate --docs`.
+
+This approach will:
+- Replace your existing docs with an empty site
+- Remove any of your information
+- Provide a clean slate if you want to rebuild your documentation later
+
+### Getting help
+
+If you need assistance with this process, join our [community Slack](https://buildwithfern.com/slack) and ask in the #help channel
+
 ## Hosting 
 
 When you publish your docs, Fern takes care of hosting them for you. To publish your docs to a custom domain, check out our docs [here](/learn/docs/building-your-docs/custom-domain). 
@@ -60,4 +84,4 @@ When you publish your docs, Fern takes care of hosting them for you. To publish 
 This feature is available on the Enterprise plan. [Contact us](https://buildwithfern.com/contact) to learn more.
 </Tip>
 
-If you need access to your docs offline or would like to host your docs on your own server, Fern offers that option as well. Self-hosted docs have limited access to certain features (including search). 
+If you need access to your docs offline or want to host them on your own infrastructure, Fern offers an easy self-hosting option. We provide your documentation site as a ready-to-run Docker container. Simply deploy it to your server or cloud environment to maintain full control over uptime, access, and security.

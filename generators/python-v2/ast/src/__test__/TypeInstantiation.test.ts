@@ -68,7 +68,7 @@ describe("TypeInstantiation", () => {
             TypeInstantiation.str(
                 // prettier-ignore
 
-                "{{ chat_history[-1][\"text\"] }}",
+                '{{ chat_history[-1]["text"] }}',
                 {
                     multiline: true
                 }

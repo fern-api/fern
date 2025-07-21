@@ -4,7 +4,7 @@ package client
 
 import (
 	context "context"
-	aclient "github.com/folders/fern/a/client"
+	client "github.com/folders/fern/a/client"
 	core "github.com/folders/fern/core"
 	folderclient "github.com/folders/fern/folder/client"
 	internal "github.com/folders/fern/internal"
@@ -13,29 +13,29 @@ import (
 )
 
 type Client struct {
+	WithRawResponse *RawClient
+	A               *client.Client
+	Folder          *folderclient.Client
+
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header
-
-	WithRawResponse *RawClient
-	A               *aclient.Client
-	Folder          *folderclient.Client
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		baseURL: options.BaseURL,
+		A:               client.NewClient(opts...),
+		Folder:          folderclient.NewClient(opts...),
+		WithRawResponse: NewRawClient(options),
+		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header:          options.ToHeader(),
-		WithRawResponse: NewRawClient(options),
-		A:               aclient.NewClient(opts...),
-		Folder:          folderclient.NewClient(opts...),
+		header: options.ToHeader(),
 	}
 }
 
@@ -43,30 +43,11 @@ func (c *Client) Foo(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) error {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
-	)
-	endpointURL := baseURL
-	headers := internal.MergeHeaders(
-		c.header.Clone(),
-		options.ToHeader(),
-	)
-
-	if _, err := c.caller.Call(
+	_, err := c.WithRawResponse.Foo(
 		ctx,
-		&internal.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodPost,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-		},
-	); err != nil {
+		opts...,
+	)
+	if err != nil {
 		return err
 	}
 	return nil

@@ -1761,14 +1761,16 @@
             "type": {
               "type": "id",
               "value": "text_request_url"
-            }
+            },
+            "displayName": "text_request_url"
           },
           {
             "typeName": "text_request_text",
             "type": {
               "type": "id",
               "value": "text_request_text"
-            }
+            },
+            "displayName": "text_request_text"
           }
         ]
       }
@@ -3625,7 +3627,8 @@
             "value": "video"
           }
         ]
-      }
+      },
+      "displayName": "V1ListenPostParametersModel0"
     },
     "V1ListenPostParametersModel": {
       "name": "V1ListenPostParametersModel",
@@ -3638,7 +3641,8 @@
             "type": {
               "type": "id",
               "value": "V1ListenPostParametersModel0"
-            }
+            },
+            "displayName": "V1ListenPostParametersModel0"
           },
           {
             "description": "Custom string if you've had a model trained by Deepgram",
@@ -3680,7 +3684,8 @@
             "value": "V1ListenPostParametersRedactSchemaOneOf1Items"
           }
         }
-      }
+      },
+      "displayName": "V1ListenPostParametersRedact1"
     },
     "V1ListenPostParametersRedact": {
       "name": "V1ListenPostParametersRedact",
@@ -3700,7 +3705,8 @@
             "type": {
               "type": "id",
               "value": "V1ListenPostParametersRedact1"
-            }
+            },
+            "displayName": "V1ListenPostParametersRedact1"
           }
         ]
       }
@@ -3835,7 +3841,8 @@
             "value": "latest"
           }
         ]
-      }
+      },
+      "displayName": "V1ListenPostParametersVersion0"
     },
     "V1ListenPostParametersVersion": {
       "name": "V1ListenPostParametersVersion",
@@ -3848,7 +3855,8 @@
             "type": {
               "type": "id",
               "value": "V1ListenPostParametersVersion0"
-            }
+            },
+            "displayName": "V1ListenPostParametersVersion0"
           },
           {
             "description": "Use a previous version of a model",
@@ -6077,14 +6085,16 @@
             "type": {
               "type": "id",
               "value": "stt_models"
-            }
+            },
+            "displayName": "stt_models"
           },
           {
             "typeName": "tts_models",
             "type": {
               "type": "id",
               "value": "tts_models"
-            }
+            },
+            "displayName": "tts_models"
           }
         ]
       }
@@ -9951,7 +9961,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "ManagementApiGetModelResponse2000"
     },
     "V1ModelsModelIdGetResponsesContentApplicationJsonSchemaOneOf1Metadata": {
       "name": "V1ModelsModelIdGetResponsesContentApplicationJsonSchemaOneOf1Metadata",
@@ -10120,7 +10131,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "ManagementApiGetModelResponse2001"
     },
     "Management API_getModel_Response_200": {
       "name": "Management API_getModel_Response_200",
@@ -10132,14 +10144,16 @@
             "type": {
               "type": "id",
               "value": "ManagementApiGetModelResponse2000"
-            }
+            },
+            "displayName": "ManagementApiGetModelResponse2000"
           },
           {
             "typeName": "ManagementApiGetModelResponse2001",
             "type": {
               "type": "id",
               "value": "ManagementApiGetModelResponse2001"
-            }
+            },
+            "displayName": "ManagementApiGetModelResponse2001"
           }
         ]
       }
@@ -11457,7 +11471,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "ListenControlMessagesRequest0"
     },
     "ChannelsListenMessagesControlMessagesRequestOneOf1Type": {
       "description": "Close the websocket connection",
@@ -11489,7 +11504,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "ListenControlMessagesRequest1"
     },
     "ChannelsListenMessagesControlMessagesRequestOneOf2Type": {
       "description": "Used to keep the websocket connection alive",
@@ -11521,7 +11537,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "ListenControlMessagesRequest2"
     },
     "listen_controlMessagesRequest": {
       "name": "listen_controlMessagesRequest",
@@ -11533,21 +11550,24 @@
             "type": {
               "type": "id",
               "value": "ListenControlMessagesRequest0"
-            }
+            },
+            "displayName": "ListenControlMessagesRequest0"
           },
           {
             "typeName": "ListenControlMessagesRequest1",
             "type": {
               "type": "id",
               "value": "ListenControlMessagesRequest1"
-            }
+            },
+            "displayName": "ListenControlMessagesRequest1"
           },
           {
             "typeName": "ListenControlMessagesRequest2",
             "type": {
               "type": "id",
               "value": "ListenControlMessagesRequest2"
-            }
+            },
+            "displayName": "ListenControlMessagesRequest2"
           }
         ]
       }
@@ -14815,89 +14835,89 @@
                     {
                       "search": [
                         {
-                          "query": "foo",
+                          "query": "string",
                           "hits": [
                             {
-                              "confidence": 42,
-                              "start": 42,
-                              "end": 42,
-                              "snippet": "foo"
+                              "confidence": 1.1,
+                              "start": 1.1,
+                              "end": 1.1,
+                              "snippet": "string"
                             }
                           ]
                         }
                       ],
                       "alternatives": [
                         {
-                          "transcript": "foo",
-                          "confidence": 42,
+                          "transcript": "string",
+                          "confidence": 1.1,
                           "words": [
                             {
-                              "word": "foo",
-                              "start": 42,
-                              "end": 42,
-                              "confidence": 42
+                              "word": "string",
+                              "start": 1.1,
+                              "end": 1.1,
+                              "confidence": 1.1
                             }
                           ],
                           "paragraphs": {
-                            "transcript": "foo",
+                            "transcript": "string",
                             "paragraphs": [
                               {
                                 "sentences": [
                                   {
-                                    "text": "foo",
-                                    "start": 42,
-                                    "end": 42
+                                    "text": "string",
+                                    "start": 1.1,
+                                    "end": 1.1
                                   }
                                 ],
-                                "speaker": 42,
-                                "num_words": 42,
-                                "start": 42,
-                                "end": 42
+                                "speaker": 1,
+                                "num_words": 1,
+                                "start": 1.1,
+                                "end": 1.1
                               }
                             ]
                           },
                           "summaries": [
                             {
-                              "summary": "foo",
-                              "start_word": 42,
-                              "end_word": 42
+                              "summary": "string",
+                              "start_word": 1,
+                              "end_word": 1
                             }
                           ],
                           "topics": [
                             {
-                              "text": "foo",
-                              "start_word": 42,
-                              "end_word": 42,
+                              "text": "string",
+                              "start_word": 1,
+                              "end_word": 1,
                               "topics": [
-                                "foo"
+                                "string"
                               ]
                             }
                           ]
                         }
                       ],
-                      "detected_language": "foo"
+                      "detected_language": "string"
                     }
                   ],
                   "utterances": [
                     {
-                      "start": 42,
-                      "end": 42,
-                      "confidence": 42,
-                      "channel": 42,
-                      "transcript": "foo",
+                      "start": 1.1,
+                      "end": 1.1,
+                      "confidence": 1.1,
+                      "channel": 1,
+                      "transcript": "string",
                       "words": [
                         {
-                          "word": "foo",
-                          "start": 42,
-                          "end": 42,
-                          "confidence": 42,
-                          "speaker": 42,
-                          "speaker_confidence": 42,
-                          "punctuated_word": "foo"
+                          "word": "string",
+                          "start": 1.1,
+                          "end": 1.1,
+                          "confidence": 1.1,
+                          "speaker": 1,
+                          "speaker_confidence": 1,
+                          "punctuated_word": "string"
                         }
                       ],
-                      "speaker": 42,
-                      "id": "foo"
+                      "speaker": 1,
+                      "id": "string"
                     }
                   ],
                   "summary": {
@@ -15002,89 +15022,89 @@
                       {
                         "search": [
                           {
-                            "query": "foo",
+                            "query": "string",
                             "hits": [
                               {
-                                "confidence": 42,
-                                "start": 42,
-                                "end": 42,
-                                "snippet": "foo"
+                                "confidence": 1.1,
+                                "start": 1.1,
+                                "end": 1.1,
+                                "snippet": "string"
                               }
                             ]
                           }
                         ],
                         "alternatives": [
                           {
-                            "transcript": "foo",
-                            "confidence": 42,
+                            "transcript": "string",
+                            "confidence": 1.1,
                             "words": [
                               {
-                                "word": "foo",
-                                "start": 42,
-                                "end": 42,
-                                "confidence": 42
+                                "word": "string",
+                                "start": 1.1,
+                                "end": 1.1,
+                                "confidence": 1.1
                               }
                             ],
                             "paragraphs": {
-                              "transcript": "foo",
+                              "transcript": "string",
                               "paragraphs": [
                                 {
                                   "sentences": [
                                     {
-                                      "text": "foo",
-                                      "start": 42,
-                                      "end": 42
+                                      "text": "string",
+                                      "start": 1.1,
+                                      "end": 1.1
                                     }
                                   ],
-                                  "speaker": 42,
-                                  "num_words": 42,
-                                  "start": 42,
-                                  "end": 42
+                                  "speaker": 1,
+                                  "num_words": 1,
+                                  "start": 1.1,
+                                  "end": 1.1
                                 }
                               ]
                             },
                             "summaries": [
                               {
-                                "summary": "foo",
-                                "start_word": 42,
-                                "end_word": 42
+                                "summary": "string",
+                                "start_word": 1,
+                                "end_word": 1
                               }
                             ],
                             "topics": [
                               {
-                                "text": "foo",
-                                "start_word": 42,
-                                "end_word": 42,
+                                "text": "string",
+                                "start_word": 1,
+                                "end_word": 1,
                                 "topics": [
-                                  "foo"
+                                  "string"
                                 ]
                               }
                             ]
                           }
                         ],
-                        "detected_language": "foo"
+                        "detected_language": "string"
                       }
                     ],
                     "utterances": [
                       {
-                        "start": 42,
-                        "end": 42,
-                        "confidence": 42,
-                        "channel": 42,
-                        "transcript": "foo",
+                        "start": 1.1,
+                        "end": 1.1,
+                        "confidence": 1.1,
+                        "channel": 1,
+                        "transcript": "string",
                         "words": [
                           {
-                            "word": "foo",
-                            "start": 42,
-                            "end": 42,
-                            "confidence": 42,
-                            "speaker": 42,
-                            "speaker_confidence": 42,
-                            "punctuated_word": "foo"
+                            "word": "string",
+                            "start": 1.1,
+                            "end": 1.1,
+                            "confidence": 1.1,
+                            "speaker": 1,
+                            "speaker_confidence": 1,
+                            "punctuated_word": "string"
                           }
                         ],
-                        "speaker": 42,
-                        "id": "foo"
+                        "speaker": 1,
+                        "id": "string"
                       }
                     ],
                     "summary": {
@@ -15902,12 +15922,12 @@
               },
               "headers": {},
               "requestBody": {
-                "url": "foo"
+                "url": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "url": "foo"
+                  "url": "string"
                 }
               },
               "responseStatusCode": 200,
@@ -15918,24 +15938,24 @@
                     "created": "2024-11-18T23:47:44.674Z",
                     "language": "en",
                     "summary_info": {
-                      "model_uuid": "foo",
-                      "input_tokens": 42,
-                      "output_tokens": 42
+                      "model_uuid": "string",
+                      "input_tokens": 1,
+                      "output_tokens": 1
                     },
                     "sentiment_info": {
-                      "model_uuid": "foo",
-                      "input_tokens": 42,
-                      "output_tokens": 42
+                      "model_uuid": "string",
+                      "input_tokens": 1,
+                      "output_tokens": 1
                     },
                     "topics_info": {
-                      "model_uuid": "foo",
-                      "input_tokens": 42,
-                      "output_tokens": 42
+                      "model_uuid": "string",
+                      "input_tokens": 1,
+                      "output_tokens": 1
                     },
                     "intents_info": {
-                      "model_uuid": "foo",
-                      "input_tokens": 42,
-                      "output_tokens": 42
+                      "model_uuid": "string",
+                      "input_tokens": 1,
+                      "output_tokens": 1
                     }
                   }
                 },
@@ -16011,24 +16031,24 @@
                       "created": "2024-11-18T23:47:44.674Z",
                       "language": "en",
                       "summary_info": {
-                        "model_uuid": "foo",
-                        "input_tokens": 42,
-                        "output_tokens": 42
+                        "model_uuid": "string",
+                        "input_tokens": 1,
+                        "output_tokens": 1
                       },
                       "sentiment_info": {
-                        "model_uuid": "foo",
-                        "input_tokens": 42,
-                        "output_tokens": 42
+                        "model_uuid": "string",
+                        "input_tokens": 1,
+                        "output_tokens": 1
                       },
                       "topics_info": {
-                        "model_uuid": "foo",
-                        "input_tokens": 42,
-                        "output_tokens": 42
+                        "model_uuid": "string",
+                        "input_tokens": 1,
+                        "output_tokens": 1
                       },
                       "intents_info": {
-                        "model_uuid": "foo",
-                        "input_tokens": 42,
-                        "output_tokens": 42
+                        "model_uuid": "string",
+                        "input_tokens": 1,
+                        "output_tokens": 1
                       }
                     }
                   },
@@ -16557,8 +16577,8 @@
               "responseBody": {
                 "projects": [
                   {
-                    "project_id": "foo",
-                    "name": "foo"
+                    "project_id": "string",
+                    "name": "string"
                   }
                 ]
               },
@@ -16567,8 +16587,8 @@
                 "value": {
                   "projects": [
                     {
-                      "project_id": "foo",
-                      "name": "foo"
+                      "project_id": "string",
+                      "name": "string"
                     }
                   ]
                 }
@@ -16752,14 +16772,14 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "project_id": "foo",
-                "name": "foo"
+                "project_id": "string",
+                "name": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "project_id": "foo",
-                  "name": "foo"
+                  "project_id": "string",
+                  "name": "string"
                 }
               }
             }
@@ -18359,7 +18379,7 @@
               "responseBody": {
                 "members": [
                   {
-                    "member_id": "foo"
+                    "member_id": "string"
                   }
                 ]
               },
@@ -18368,7 +18388,7 @@
                 "value": {
                   "members": [
                     {
-                      "member_id": "foo"
+                      "member_id": "string"
                     }
                   ]
                 }
@@ -18628,14 +18648,14 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "scopes": [
-                  "foo"
+                  "string"
                 ]
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "scopes": [
-                    "foo"
+                    "string"
                   ]
                 }
               }
@@ -18873,8 +18893,8 @@
               "responseBody": {
                 "invites": [
                   {
-                    "email": "foo",
-                    "scope": "foo"
+                    "email": "string",
+                    "scope": "string"
                   }
                 ]
               },
@@ -18883,8 +18903,8 @@
                 "value": {
                   "invites": [
                     {
-                      "email": "foo",
-                      "scope": "foo"
+                      "email": "string",
+                      "scope": "string"
                     }
                   ]
                 }
@@ -19007,24 +19027,24 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "email": "foo",
-                "scope": "foo"
+                "email": "string",
+                "scope": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "email": "foo",
-                  "scope": "foo"
+                  "email": "string",
+                  "scope": "string"
                 }
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "message": "foo"
+                "message": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "message": "foo"
+                  "message": "string"
                 }
               }
             }
@@ -19150,12 +19170,12 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "message": "foo"
+                "message": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "message": "foo"
+                  "message": "string"
                 }
               }
             }
@@ -19262,12 +19282,12 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "message": "foo"
+                "message": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "message": "foo"
+                  "message": "string"
                 }
               }
             }
@@ -19450,38 +19470,38 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "page": 42,
-                "limit": 42,
+                "page": 1,
+                "limit": 1,
                 "requests": [
                   {
-                    "request_id": "foo",
-                    "project_uuid": "foo",
-                    "created": "foo",
-                    "path": "foo",
-                    "api_key_id": "foo",
+                    "request_id": "string",
+                    "project_uuid": "string",
+                    "created": "2024-01-15T09:30:00Z",
+                    "path": "string",
+                    "api_key_id": "string",
                     "response": {},
-                    "code": 42,
-                    "deployment": "foo",
-                    "callback": "foo"
+                    "code": 1,
+                    "deployment": "string",
+                    "callback": "string"
                   }
                 ]
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "page": 42,
-                  "limit": 42,
+                  "page": 1,
+                  "limit": 1,
                   "requests": [
                     {
-                      "request_id": "foo",
-                      "project_uuid": "foo",
-                      "created": "foo",
-                      "path": "foo",
-                      "api_key_id": "foo",
+                      "request_id": "string",
+                      "project_uuid": "string",
+                      "created": "2024-01-15T09:30:00Z",
+                      "path": "string",
+                      "api_key_id": "string",
                       "response": {},
-                      "code": 42,
-                      "deployment": "foo",
-                      "callback": "foo"
+                      "code": 1,
+                      "deployment": "string",
+                      "callback": "string"
                     }
                   ]
                 }
@@ -19583,30 +19603,30 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "request": {
-                  "request_id": "foo",
-                  "project_uuid": "foo",
-                  "created": "foo",
-                  "path": "foo",
-                  "api_key_id": "foo",
+                  "request_id": "string",
+                  "project_uuid": "string",
+                  "created": "2024-01-15T09:30:00Z",
+                  "path": "string",
+                  "api_key_id": "string",
                   "response": {},
-                  "code": 42,
-                  "deployment": "foo",
-                  "callback": "foo"
+                  "code": 1,
+                  "deployment": "string",
+                  "callback": "string"
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "request": {
-                    "request_id": "foo",
-                    "project_uuid": "foo",
-                    "created": "foo",
-                    "path": "foo",
-                    "api_key_id": "foo",
+                    "request_id": "string",
+                    "project_uuid": "string",
+                    "created": "2024-01-15T09:30:00Z",
+                    "path": "string",
+                    "api_key_id": "string",
                     "response": {},
-                    "code": 42,
-                    "deployment": "foo",
-                    "callback": "foo"
+                    "code": 1,
+                    "deployment": "string",
+                    "callback": "string"
                   }
                 }
               }

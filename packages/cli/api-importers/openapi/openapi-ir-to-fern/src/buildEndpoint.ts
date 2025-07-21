@@ -398,7 +398,7 @@ function convertEndpointExamples({
         try {
             return buildEndpointExample({ endpointExample, context });
         } catch (e) {
-            // eslint-disable-next-line no-console
+            // biome-ignore lint/suspicious/noConsole: allow console
             console.error(`Error building endpoint example: ${e}`);
             throw e;
         }

@@ -1745,7 +1745,8 @@
             }
           }
         }
-      }
+      },
+      "displayName": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args0"
     },
     "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1ArgsOneOf1": {
       "description": "A value to be used as a parameter",
@@ -1800,7 +1801,8 @@
             }
           }
         }
-      }
+      },
+      "displayName": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args1"
     },
     "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args": {
       "description": "List of arguments to be used in the given statement",
@@ -1813,14 +1815,16 @@
             "type": {
               "type": "id",
               "value": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args0"
-            }
+            },
+            "displayName": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args0"
           },
           {
             "typeName": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args1",
             "type": {
               "type": "id",
               "value": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args1"
-            }
+            },
+            "displayName": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args1"
           }
         ]
       }
@@ -1927,7 +1931,8 @@
             }
           }
         }
-      }
+      },
+      "displayName": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args0"
     },
     "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1ArgsOneOf1": {
       "description": "A value to be used as a parameter",
@@ -1982,7 +1987,8 @@
             }
           }
         }
-      }
+      },
+      "displayName": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args1"
     },
     "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args": {
       "description": "List of arguments to be used in the given statement",
@@ -1995,14 +2001,16 @@
             "type": {
               "type": "id",
               "value": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args0"
-            }
+            },
+            "displayName": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args0"
           },
           {
             "typeName": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args1",
             "type": {
               "type": "id",
               "value": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args1"
-            }
+            },
+            "displayName": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args1"
           }
         ]
       }
@@ -3281,30 +3289,30 @@
               "responseBody": {
                 "data": [
                   {
-                    "name": "foo",
-                    "id": "foo",
-                    "version": 42,
-                    "code": "foo",
+                    "name": "string",
+                    "id": "string",
+                    "version": 1,
+                    "code": "string",
                     "public": true,
-                    "createdAt": "foo",
+                    "createdAt": "2024-01-15T09:30:00Z",
                     "privacy": "public",
                     "type": "interval",
-                    "url": "foo",
+                    "url": "string",
                     "links": {
-                      "self": "foo",
-                      "versions": "foo",
-                      "module": "foo"
+                      "self": "string",
+                      "versions": "string",
+                      "module": "string"
                     },
                     "author": {
-                      "id": "foo",
-                      "username": "foo"
+                      "id": "string",
+                      "username": "string"
                     }
                   }
                 ],
                 "links": {
-                  "self": "foo",
-                  "prev": "foo",
-                  "next": "foo"
+                  "self": "string",
+                  "prev": "string",
+                  "next": "string"
                 }
               },
               "responseBodyV3": {
@@ -3312,30 +3320,30 @@
                 "value": {
                   "data": [
                     {
-                      "name": "foo",
-                      "id": "foo",
-                      "version": 42,
-                      "code": "foo",
+                      "name": "string",
+                      "id": "string",
+                      "version": 1,
+                      "code": "string",
                       "public": true,
-                      "createdAt": "foo",
+                      "createdAt": "2024-01-15T09:30:00Z",
                       "privacy": "public",
                       "type": "interval",
-                      "url": "foo",
+                      "url": "string",
                       "links": {
-                        "self": "foo",
-                        "versions": "foo",
-                        "module": "foo"
+                        "self": "string",
+                        "versions": "string",
+                        "module": "string"
                       },
                       "author": {
-                        "id": "foo",
-                        "username": "foo"
+                        "id": "string",
+                        "username": "string"
                       }
                     }
                   ],
                   "links": {
-                    "self": "foo",
-                    "prev": "foo",
-                    "next": "foo"
+                    "self": "string",
+                    "prev": "string",
+                    "next": "string"
                   }
                 }
               }
@@ -3433,7 +3441,7 @@
                 "profileImageUrl": null,
                 "url": "https://val.town/u/tmcw",
                 "links": {
-                  "self": "foo"
+                  "self": "string"
                 }
               },
               "responseBodyV3": {
@@ -3445,7 +3453,7 @@
                   "profileImageUrl": null,
                   "url": "https://val.town/u/tmcw",
                   "links": {
-                    "self": "foo"
+                    "self": "string"
                   }
                 }
               }
@@ -3545,52 +3553,52 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "name": "foo",
-                "id": "foo",
-                "version": 42,
-                "code": "foo",
+                "name": "string",
+                "id": "string",
+                "version": 1,
+                "code": "string",
                 "public": true,
-                "createdAt": "foo",
+                "createdAt": "2024-01-15T09:30:00Z",
                 "privacy": "public",
                 "type": "interval",
-                "url": "foo",
+                "url": "string",
                 "links": {
-                  "self": "foo",
-                  "versions": "foo",
-                  "module": "foo"
+                  "self": "string",
+                  "versions": "string",
+                  "module": "string"
                 },
                 "author": {
-                  "id": "foo",
-                  "username": "foo"
+                  "id": "string",
+                  "username": "string"
                 },
-                "likeCount": 42,
-                "referenceCount": 42,
-                "readme": "foo"
+                "likeCount": 1,
+                "referenceCount": 1,
+                "readme": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "foo",
-                  "id": "foo",
-                  "version": 42,
-                  "code": "foo",
+                  "name": "string",
+                  "id": "string",
+                  "version": 1,
+                  "code": "string",
                   "public": true,
-                  "createdAt": "foo",
+                  "createdAt": "2024-01-15T09:30:00Z",
                   "privacy": "public",
                   "type": "interval",
-                  "url": "foo",
+                  "url": "string",
                   "links": {
-                    "self": "foo",
-                    "versions": "foo",
-                    "module": "foo"
+                    "self": "string",
+                    "versions": "string",
+                    "module": "string"
                   },
                   "author": {
-                    "id": "foo",
-                    "username": "foo"
+                    "id": "string",
+                    "username": "string"
                   },
-                  "likeCount": 42,
-                  "referenceCount": 42,
-                  "readme": "foo"
+                  "likeCount": 1,
+                  "referenceCount": 1,
+                  "readme": "string"
                 }
               }
             }
@@ -3664,9 +3672,9 @@
                 "bio": "Hello world",
                 "username": "tmcw",
                 "profileImageUrl": null,
-                "url": "foo",
+                "url": "string",
                 "links": {
-                  "self": "foo"
+                  "self": "string"
                 },
                 "tier": "pro",
                 "email": "example@example.com"
@@ -3678,9 +3686,9 @@
                   "bio": "Hello world",
                   "username": "tmcw",
                   "profileImageUrl": null,
-                  "url": "foo",
+                  "url": "string",
                   "links": {
-                    "self": "foo"
+                    "self": "string"
                   },
                   "tier": "pro",
                   "email": "example@example.com"
@@ -3773,30 +3781,30 @@
               "responseBody": {
                 "data": [
                   {
-                    "name": "foo",
-                    "id": "foo",
-                    "version": 42,
-                    "code": "foo",
+                    "name": "string",
+                    "id": "string",
+                    "version": 1,
+                    "code": "string",
                     "public": true,
-                    "createdAt": "foo",
+                    "createdAt": "2024-01-15T09:30:00Z",
                     "privacy": "public",
                     "type": "interval",
-                    "url": "foo",
+                    "url": "string",
                     "links": {
-                      "self": "foo",
-                      "versions": "foo",
-                      "module": "foo"
+                      "self": "string",
+                      "versions": "string",
+                      "module": "string"
                     },
                     "author": {
-                      "id": "foo",
-                      "username": "foo"
+                      "id": "string",
+                      "username": "string"
                     }
                   }
                 ],
                 "links": {
-                  "self": "foo",
-                  "prev": "foo",
-                  "next": "foo"
+                  "self": "string",
+                  "prev": "string",
+                  "next": "string"
                 }
               },
               "responseBodyV3": {
@@ -3804,30 +3812,30 @@
                 "value": {
                   "data": [
                     {
-                      "name": "foo",
-                      "id": "foo",
-                      "version": 42,
-                      "code": "foo",
+                      "name": "string",
+                      "id": "string",
+                      "version": 1,
+                      "code": "string",
                       "public": true,
-                      "createdAt": "foo",
+                      "createdAt": "2024-01-15T09:30:00Z",
                       "privacy": "public",
                       "type": "interval",
-                      "url": "foo",
+                      "url": "string",
                       "links": {
-                        "self": "foo",
-                        "versions": "foo",
-                        "module": "foo"
+                        "self": "string",
+                        "versions": "string",
+                        "module": "string"
                       },
                       "author": {
-                        "id": "foo",
-                        "username": "foo"
+                        "id": "string",
+                        "username": "string"
                       }
                     }
                   ],
                   "links": {
-                    "self": "foo",
-                    "prev": "foo",
-                    "next": "foo"
+                    "self": "string",
+                    "prev": "string",
+                    "next": "string"
                   }
                 }
               }
@@ -3955,29 +3963,29 @@
               "responseBody": {
                 "data": [
                   {
-                    "comment": "foo",
-                    "id": "foo",
-                    "createdAt": "foo",
+                    "comment": "string",
+                    "id": "string",
+                    "createdAt": "2024-01-15T09:30:00Z",
                     "author": {
-                      "id": "foo",
-                      "username": "foo"
+                      "id": "string",
+                      "username": "string"
                     },
                     "val": {
-                      "name": "foo",
-                      "id": "foo",
-                      "version": 42,
+                      "name": "string",
+                      "id": "string",
+                      "version": 1,
                       "privacy": "public",
                       "author": {
-                        "id": "foo",
-                        "username": "foo"
+                        "id": "string",
+                        "username": "string"
                       }
                     }
                   }
                 ],
                 "links": {
-                  "self": "foo",
-                  "prev": "foo",
-                  "next": "foo"
+                  "self": "string",
+                  "prev": "string",
+                  "next": "string"
                 }
               },
               "responseBodyV3": {
@@ -3985,29 +3993,29 @@
                 "value": {
                   "data": [
                     {
-                      "comment": "foo",
-                      "id": "foo",
-                      "createdAt": "foo",
+                      "comment": "string",
+                      "id": "string",
+                      "createdAt": "2024-01-15T09:30:00Z",
                       "author": {
-                        "id": "foo",
-                        "username": "foo"
+                        "id": "string",
+                        "username": "string"
                       },
                       "val": {
-                        "name": "foo",
-                        "id": "foo",
-                        "version": 42,
+                        "name": "string",
+                        "id": "string",
+                        "version": 1,
                         "privacy": "public",
                         "author": {
-                          "id": "foo",
-                          "username": "foo"
+                          "id": "string",
+                          "username": "string"
                         }
                       }
                     }
                   ],
                   "links": {
-                    "self": "foo",
-                    "prev": "foo",
-                    "next": "foo"
+                    "self": "string",
+                    "prev": "string",
+                    "next": "string"
                   }
                 }
               }
@@ -4127,24 +4135,24 @@
                 "data": [
                   {
                     "reference": {
-                      "id": "foo",
-                      "username": "foo",
-                      "author_id": "foo",
-                      "name": "foo"
+                      "id": "string",
+                      "username": "string",
+                      "author_id": "string",
+                      "name": "string"
                     },
                     "dependsOn": {
-                      "id": "foo",
-                      "username": "foo",
-                      "author_id": "foo",
-                      "name": "foo"
+                      "id": "string",
+                      "username": "string",
+                      "author_id": "string",
+                      "name": "string"
                     },
-                    "referencedAt": "foo"
+                    "referencedAt": "2024-01-15T09:30:00Z"
                   }
                 ],
                 "links": {
-                  "self": "foo",
-                  "prev": "foo",
-                  "next": "foo"
+                  "self": "string",
+                  "prev": "string",
+                  "next": "string"
                 }
               },
               "responseBodyV3": {
@@ -4153,24 +4161,24 @@
                   "data": [
                     {
                       "reference": {
-                        "id": "foo",
-                        "username": "foo",
-                        "author_id": "foo",
-                        "name": "foo"
+                        "id": "string",
+                        "username": "string",
+                        "author_id": "string",
+                        "name": "string"
                       },
                       "dependsOn": {
-                        "id": "foo",
-                        "username": "foo",
-                        "author_id": "foo",
-                        "name": "foo"
+                        "id": "string",
+                        "username": "string",
+                        "author_id": "string",
+                        "name": "string"
                       },
-                      "referencedAt": "foo"
+                      "referencedAt": "2024-01-15T09:30:00Z"
                     }
                   ],
                   "links": {
-                    "self": "foo",
-                    "prev": "foo",
-                    "next": "foo"
+                    "self": "string",
+                    "prev": "string",
+                    "next": "string"
                   }
                 }
               }
@@ -4432,10 +4440,10 @@
               },
               "queryParameters": {},
               "headers": {},
-              "requestBody": "foo",
+              "requestBody": "string",
               "requestBodyV3": {
                 "type": "json",
-                "value": "foo"
+                "value": "string"
               },
               "responseStatusCode": 200
             }
@@ -4599,7 +4607,7 @@
                 "profileImageUrl": null,
                 "url": "https://val.town/u/tmcw",
                 "links": {
-                  "self": "foo"
+                  "self": "string"
                 }
               },
               "responseBodyV3": {
@@ -4611,7 +4619,7 @@
                   "profileImageUrl": null,
                   "url": "https://val.town/u/tmcw",
                   "links": {
-                    "self": "foo"
+                    "self": "string"
                   }
                 }
               }
@@ -4723,30 +4731,30 @@
               "responseBody": {
                 "data": [
                   {
-                    "name": "foo",
-                    "id": "foo",
-                    "version": 42,
-                    "code": "foo",
+                    "name": "string",
+                    "id": "string",
+                    "version": 1,
+                    "code": "string",
                     "public": true,
-                    "createdAt": "foo",
+                    "createdAt": "2024-01-15T09:30:00Z",
                     "privacy": "public",
                     "type": "interval",
-                    "url": "foo",
+                    "url": "string",
                     "links": {
-                      "self": "foo",
-                      "versions": "foo",
-                      "module": "foo"
+                      "self": "string",
+                      "versions": "string",
+                      "module": "string"
                     },
                     "author": {
-                      "id": "foo",
-                      "username": "foo"
+                      "id": "string",
+                      "username": "string"
                     }
                   }
                 ],
                 "links": {
-                  "self": "foo",
-                  "prev": "foo",
-                  "next": "foo"
+                  "self": "string",
+                  "prev": "string",
+                  "next": "string"
                 }
               },
               "responseBodyV3": {
@@ -4754,30 +4762,30 @@
                 "value": {
                   "data": [
                     {
-                      "name": "foo",
-                      "id": "foo",
-                      "version": 42,
-                      "code": "foo",
+                      "name": "string",
+                      "id": "string",
+                      "version": 1,
+                      "code": "string",
                       "public": true,
-                      "createdAt": "foo",
+                      "createdAt": "2024-01-15T09:30:00Z",
                       "privacy": "public",
                       "type": "interval",
-                      "url": "foo",
+                      "url": "string",
                       "links": {
-                        "self": "foo",
-                        "versions": "foo",
-                        "module": "foo"
+                        "self": "string",
+                        "versions": "string",
+                        "module": "string"
                       },
                       "author": {
-                        "id": "foo",
-                        "username": "foo"
+                        "id": "string",
+                        "username": "string"
                       }
                     }
                   ],
                   "links": {
-                    "self": "foo",
-                    "prev": "foo",
-                    "next": "foo"
+                    "self": "string",
+                    "prev": "string",
+                    "next": "string"
                   }
                 }
               }
@@ -4879,35 +4887,35 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "columns": [
-                  "foo"
+                  "string"
                 ],
                 "columnTypes": [
-                  "foo"
+                  "string"
                 ],
                 "rows": [
                   [
                     null
                   ]
                 ],
-                "rowsAffected": 42,
-                "lastInsertRowid": "foo"
+                "rowsAffected": 1.1,
+                "lastInsertRowid": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "columns": [
-                    "foo"
+                    "string"
                   ],
                   "columnTypes": [
-                    "foo"
+                    "string"
                   ],
                   "rows": [
                     [
                       null
                     ]
                   ],
-                  "rowsAffected": 42,
-                  "lastInsertRowid": "foo"
+                  "rowsAffected": 1.1,
+                  "lastInsertRowid": "string"
                 }
               }
             },
@@ -4940,35 +4948,35 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "columns": [
-                  "foo"
+                  "string"
                 ],
                 "columnTypes": [
-                  "foo"
+                  "string"
                 ],
                 "rows": [
                   [
                     null
                   ]
                 ],
-                "rowsAffected": 42,
-                "lastInsertRowid": "foo"
+                "rowsAffected": 1.1,
+                "lastInsertRowid": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "columns": [
-                    "foo"
+                    "string"
                   ],
                   "columnTypes": [
-                    "foo"
+                    "string"
                   ],
                   "rows": [
                     [
                       null
                     ]
                   ],
-                  "rowsAffected": 42,
-                  "lastInsertRowid": "foo"
+                  "rowsAffected": 1.1,
+                  "lastInsertRowid": "string"
                 }
               }
             }
@@ -5724,52 +5732,52 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "name": "foo",
-                "id": "foo",
-                "version": 42,
-                "code": "foo",
+                "name": "string",
+                "id": "string",
+                "version": 1,
+                "code": "string",
                 "public": true,
-                "createdAt": "foo",
+                "createdAt": "2024-01-15T09:30:00Z",
                 "privacy": "public",
                 "type": "interval",
-                "url": "foo",
+                "url": "string",
                 "links": {
-                  "self": "foo",
-                  "versions": "foo",
-                  "module": "foo"
+                  "self": "string",
+                  "versions": "string",
+                  "module": "string"
                 },
                 "author": {
-                  "id": "foo",
-                  "username": "foo"
+                  "id": "string",
+                  "username": "string"
                 },
-                "likeCount": 42,
-                "referenceCount": 42,
-                "readme": "foo"
+                "likeCount": 1,
+                "referenceCount": 1,
+                "readme": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "foo",
-                  "id": "foo",
-                  "version": 42,
-                  "code": "foo",
+                  "name": "string",
+                  "id": "string",
+                  "version": 1,
+                  "code": "string",
                   "public": true,
-                  "createdAt": "foo",
+                  "createdAt": "2024-01-15T09:30:00Z",
                   "privacy": "public",
                   "type": "interval",
-                  "url": "foo",
+                  "url": "string",
                   "links": {
-                    "self": "foo",
-                    "versions": "foo",
-                    "module": "foo"
+                    "self": "string",
+                    "versions": "string",
+                    "module": "string"
                   },
                   "author": {
-                    "id": "foo",
-                    "username": "foo"
+                    "id": "string",
+                    "username": "string"
                   },
-                  "likeCount": 42,
-                  "referenceCount": 42,
-                  "readme": "foo"
+                  "likeCount": 1,
+                  "referenceCount": 1,
+                  "readme": "string"
                 }
               }
             }
@@ -5942,52 +5950,52 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "name": "foo",
-                "id": "foo",
-                "version": 42,
-                "code": "foo",
+                "name": "string",
+                "id": "string",
+                "version": 1,
+                "code": "string",
                 "public": true,
-                "createdAt": "foo",
+                "createdAt": "2024-01-15T09:30:00Z",
                 "privacy": "public",
                 "type": "interval",
-                "url": "foo",
+                "url": "string",
                 "links": {
-                  "self": "foo",
-                  "versions": "foo",
-                  "module": "foo"
+                  "self": "string",
+                  "versions": "string",
+                  "module": "string"
                 },
                 "author": {
-                  "id": "foo",
-                  "username": "foo"
+                  "id": "string",
+                  "username": "string"
                 },
-                "likeCount": 42,
-                "referenceCount": 42,
-                "readme": "foo"
+                "likeCount": 1,
+                "referenceCount": 1,
+                "readme": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "foo",
-                  "id": "foo",
-                  "version": 42,
-                  "code": "foo",
+                  "name": "string",
+                  "id": "string",
+                  "version": 1,
+                  "code": "string",
                   "public": true,
-                  "createdAt": "foo",
+                  "createdAt": "2024-01-15T09:30:00Z",
                   "privacy": "public",
                   "type": "interval",
-                  "url": "foo",
+                  "url": "string",
                   "links": {
-                    "self": "foo",
-                    "versions": "foo",
-                    "module": "foo"
+                    "self": "string",
+                    "versions": "string",
+                    "module": "string"
                   },
                   "author": {
-                    "id": "foo",
-                    "username": "foo"
+                    "id": "string",
+                    "username": "string"
                   },
-                  "likeCount": 42,
-                  "referenceCount": 42,
-                  "readme": "foo"
+                  "likeCount": 1,
+                  "referenceCount": 1,
+                  "readme": "string"
                 }
               }
             }
@@ -6340,15 +6348,15 @@
               "responseBody": {
                 "data": [
                   {
-                    "val_id": "foo",
-                    "version": 42,
-                    "createdAt": "foo"
+                    "val_id": "string",
+                    "version": 1,
+                    "createdAt": "2024-01-15T09:30:00Z"
                   }
                 ],
                 "links": {
-                  "self": "foo",
-                  "prev": "foo",
-                  "next": "foo"
+                  "self": "string",
+                  "prev": "string",
+                  "next": "string"
                 }
               },
               "responseBodyV3": {
@@ -6356,15 +6364,15 @@
                 "value": {
                   "data": [
                     {
-                      "val_id": "foo",
-                      "version": 42,
-                      "createdAt": "foo"
+                      "val_id": "string",
+                      "version": 1,
+                      "createdAt": "2024-01-15T09:30:00Z"
                     }
                   ],
                   "links": {
-                    "self": "foo",
-                    "prev": "foo",
-                    "next": "foo"
+                    "self": "string",
+                    "prev": "string",
+                    "next": "string"
                   }
                 }
               }
@@ -6539,52 +6547,52 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "name": "foo",
-                "id": "foo",
-                "version": 42,
-                "code": "foo",
+                "name": "string",
+                "id": "string",
+                "version": 1,
+                "code": "string",
                 "public": true,
-                "createdAt": "foo",
+                "createdAt": "2024-01-15T09:30:00Z",
                 "privacy": "public",
                 "type": "interval",
-                "url": "foo",
+                "url": "string",
                 "links": {
-                  "self": "foo",
-                  "versions": "foo",
-                  "module": "foo"
+                  "self": "string",
+                  "versions": "string",
+                  "module": "string"
                 },
                 "author": {
-                  "id": "foo",
-                  "username": "foo"
+                  "id": "string",
+                  "username": "string"
                 },
-                "likeCount": 42,
-                "referenceCount": 42,
-                "readme": "foo"
+                "likeCount": 1,
+                "referenceCount": 1,
+                "readme": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "foo",
-                  "id": "foo",
-                  "version": 42,
-                  "code": "foo",
+                  "name": "string",
+                  "id": "string",
+                  "version": 1,
+                  "code": "string",
                   "public": true,
-                  "createdAt": "foo",
+                  "createdAt": "2024-01-15T09:30:00Z",
                   "privacy": "public",
                   "type": "interval",
-                  "url": "foo",
+                  "url": "string",
                   "links": {
-                    "self": "foo",
-                    "versions": "foo",
-                    "module": "foo"
+                    "self": "string",
+                    "versions": "string",
+                    "module": "string"
                   },
                   "author": {
-                    "id": "foo",
-                    "username": "foo"
+                    "id": "string",
+                    "username": "string"
                   },
-                  "likeCount": 42,
-                  "referenceCount": 42,
-                  "readme": "foo"
+                  "likeCount": 1,
+                  "referenceCount": 1,
+                  "readme": "string"
                 }
               }
             }
@@ -6702,10 +6710,10 @@
           "examples": [
             {
               "description": "",
-              "path": "/v1/vals/val_id/versions/42",
+              "path": "/v1/vals/val_id/versions/1",
               "pathParameters": {
                 "val_id": "val_id",
-                "version": 42
+                "version": 1
               },
               "queryParameters": {
                 "offset": 0,
@@ -6714,52 +6722,52 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "name": "foo",
-                "id": "foo",
-                "version": 42,
-                "code": "foo",
+                "name": "string",
+                "id": "string",
+                "version": 1,
+                "code": "string",
                 "public": true,
-                "createdAt": "foo",
+                "createdAt": "2024-01-15T09:30:00Z",
                 "privacy": "public",
                 "type": "interval",
-                "url": "foo",
+                "url": "string",
                 "links": {
-                  "self": "foo",
-                  "versions": "foo",
-                  "module": "foo"
+                  "self": "string",
+                  "versions": "string",
+                  "module": "string"
                 },
                 "author": {
-                  "id": "foo",
-                  "username": "foo"
+                  "id": "string",
+                  "username": "string"
                 },
-                "likeCount": 42,
-                "referenceCount": 42,
-                "readme": "foo"
+                "likeCount": 1,
+                "referenceCount": 1,
+                "readme": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "foo",
-                  "id": "foo",
-                  "version": 42,
-                  "code": "foo",
+                  "name": "string",
+                  "id": "string",
+                  "version": 1,
+                  "code": "string",
                   "public": true,
-                  "createdAt": "foo",
+                  "createdAt": "2024-01-15T09:30:00Z",
                   "privacy": "public",
                   "type": "interval",
-                  "url": "foo",
+                  "url": "string",
                   "links": {
-                    "self": "foo",
-                    "versions": "foo",
-                    "module": "foo"
+                    "self": "string",
+                    "versions": "string",
+                    "module": "string"
                   },
                   "author": {
-                    "id": "foo",
-                    "username": "foo"
+                    "id": "string",
+                    "username": "string"
                   },
-                  "likeCount": 42,
-                  "referenceCount": 42,
-                  "readme": "foo"
+                  "likeCount": 1,
+                  "referenceCount": 1,
+                  "readme": "string"
                 }
               }
             }
@@ -6853,10 +6861,10 @@
           "examples": [
             {
               "description": "",
-              "path": "/v1/vals/val_id/versions/42",
+              "path": "/v1/vals/val_id/versions/1",
               "pathParameters": {
                 "val_id": "val_id",
-                "version": 42
+                "version": 1
               },
               "queryParameters": {},
               "headers": {},
@@ -7197,12 +7205,12 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "message": "foo"
+                "message": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "message": "foo"
+                  "message": "string"
                 }
               }
             }

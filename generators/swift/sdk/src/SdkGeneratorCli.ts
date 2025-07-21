@@ -1,5 +1,6 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { AbstractSwiftGeneratorCli } from "@fern-api/swift-base";
+import { RelativeFilePath } from "@fern-api/fs-utils";
+import { AbstractSwiftGeneratorCli, SwiftFile } from "@fern-api/swift-base";
 import { generateModels } from "@fern-api/swift-model";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -7,6 +8,7 @@ import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
+import { RootClientGenerator, SubClientGenerator } from "./generators";
 
 export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -39,8 +41,8 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         throw new Error("Method not implemented.");
     }
 
-    protected async writeForGithub(_context: SdkGeneratorContext): Promise<void> {
-        throw new Error("Method not implemented.");
+    protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {
+        await this.writeForDownload(context);
     }
 
     protected async writeForDownload(context: SdkGeneratorContext): Promise<void> {
@@ -48,8 +50,38 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
-        const files = generateModels({ context });
-        context.project.addSourceFiles(...files);
+        const projectFiles = this.generateProjectFiles(context);
+        context.project.addSourceFiles(...projectFiles);
         await context.project.persist();
+    }
+
+    private generateProjectFiles(context: SdkGeneratorContext): SwiftFile[] {
+        const files: SwiftFile[] = [];
+
+        // Client.swift
+        const rootClientGenerator = new RootClientGenerator({
+            projectNamePascalCase: context.ir.apiName.pascalCase.unsafeName,
+            package_: context.ir.rootPackage,
+            context
+        });
+        files.push(rootClientGenerator.generate());
+
+        // Resources/**/*.swift
+        Object.entries(context.ir.subpackages).forEach(([_, subpackage]) => {
+            const service = subpackage.service != null ? context.getHttpServiceOrThrow(subpackage.service) : undefined;
+            const subclientGenerator = new SubClientGenerator({
+                context,
+                subpackage,
+                serviceId: subpackage.service,
+                service
+            });
+            files.push(subclientGenerator.generate());
+        });
+
+        // Schemas/**/*.swift
+        const modelFiles = generateModels({ context });
+        files.push(...modelFiles);
+
+        return files;
     }
 }

@@ -72,6 +72,11 @@ fixtures:
         pydantic_config:
           include_union_utils: true
       outputFolder: include-validators
+    - customConfig:
+        include_validators: True
+        pydantic_config:
+          extra_fields: ignore
+      outputFolder: ignore-extra-fields
   file-download:
     - customConfig: null
       outputFolder: no-custom-config

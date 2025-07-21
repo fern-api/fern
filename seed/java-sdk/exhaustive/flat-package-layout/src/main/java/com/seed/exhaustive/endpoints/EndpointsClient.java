@@ -28,6 +28,8 @@ public class EndpointsClient {
 
     protected final Supplier<UnionClient> unionClient;
 
+    protected final Supplier<UrlsClient> urlsClient;
+
     public EndpointsClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.containerClient = Suppliers.memoize(() -> new ContainerClient(clientOptions));
@@ -39,6 +41,7 @@ public class EndpointsClient {
         this.primitiveClient = Suppliers.memoize(() -> new PrimitiveClient(clientOptions));
         this.putClient = Suppliers.memoize(() -> new PutClient(clientOptions));
         this.unionClient = Suppliers.memoize(() -> new UnionClient(clientOptions));
+        this.urlsClient = Suppliers.memoize(() -> new UrlsClient(clientOptions));
     }
 
     public ContainerClient container() {
@@ -75,5 +78,9 @@ public class EndpointsClient {
 
     public UnionClient union() {
         return this.unionClient.get();
+    }
+
+    public UrlsClient urls() {
+        return this.urlsClient.get();
     }
 }

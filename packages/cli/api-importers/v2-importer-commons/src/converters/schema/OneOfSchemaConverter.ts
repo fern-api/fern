@@ -14,6 +14,7 @@ import {
 import { AbstractConverter, AbstractConverterContext } from "../..";
 import { FernDiscriminatedExtension } from "../../extensions/x-fern-discriminated";
 import { convertProperties } from "../../utils/ConvertProperties";
+import { UnionSchemaNamingUtils } from "../../utils/UnionSchemaNamingUtils";
 import { SchemaConverter } from "./SchemaConverter";
 import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter";
 
@@ -211,6 +212,11 @@ export class OneOfSchemaConverter extends AbstractConverter<
         const referencedTypes: Set<string> = new Set();
         let inlinedTypes: Record<TypeId, SchemaConverter.ConvertedSchema> = {};
 
+        // Collect all inlined object schemas for better naming
+        const allInlinedSchemas = [...(this.schema.oneOf ?? []), ...(this.schema.anyOf ?? [])].filter(
+            (schema) => !this.context.isReferenceObject(schema)
+        ) as OpenAPIV3_1.SchemaObject[];
+
         for (const [index, subSchema] of [
             ...(this.schema.oneOf ?? []).entries(),
             ...(this.schema.anyOf ?? []).entries()
@@ -234,6 +240,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 } else {
                     maybeTypeReference = this.context.convertReferenceToTypeReference({
                         reference: subSchema,
+                        displayNameOverride: subSchema.$ref.split("/").pop(),
                         displayNameOverrideSource: "schema_identifier"
                     });
                 }
@@ -254,7 +261,10 @@ export class OneOfSchemaConverter extends AbstractConverter<
             const extendedSubSchema = this.extendSubSchema(subSchema);
 
             const schemaId = this.context.convertBreadcrumbsToName([`${this.id}_${index}`]);
-            const displayName = subSchema.title;
+            const displayName = UnionSchemaNamingUtils.generateDisplayNameForInlinedObject(
+                { ...subSchema, typeName: schemaId },
+                allInlinedSchemas
+            );
             const schemaConverter = new SchemaConverter({
                 context: this.context,
                 id: schemaId,
@@ -372,7 +382,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
         return {
             type: Type.alias({
                 aliasOf: wrappedType,
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                 resolvedType: wrappedType as any
             }),
             referencedTypes: convertedSchema.schema?.typeDeclaration.referencedTypes ?? new Set(),

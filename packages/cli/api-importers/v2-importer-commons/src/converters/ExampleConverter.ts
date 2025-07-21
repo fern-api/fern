@@ -1,5 +1,7 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
+import { Examples } from "@fern-api/core-utils";
+
 import { APIError, AbstractConverter, AbstractConverterContext } from "..";
 
 export declare namespace ExampleConverter {
@@ -60,10 +62,12 @@ export declare namespace ExampleConverter {
 
 export class ExampleConverter extends AbstractConverter<AbstractConverterContext<object>, ExampleConverter.Output> {
     protected readonly MAX_DEPTH = 12;
-    protected readonly EXAMPLE_STRING = "foo";
-    protected readonly EXAMPLE_NUMBER = 42.0;
-    protected readonly EXAMPLE_BOOLEAN = true;
-    protected readonly EXAMPLE_INTEGER = 42;
+    protected readonly EXAMPLE_STRING = Examples.STRING;
+    protected readonly EXAMPLE_NUMBER = Examples.DOUBLE;
+    protected readonly EXAMPLE_BOOLEAN = Examples.BOOLEAN;
+    protected readonly EXAMPLE_INTEGER = Examples.INT;
+    protected readonly EXAMPLE_DATE = Examples.DATE;
+    protected readonly EXAMPLE_DATE_TIME = Examples.DATE_TIME;
 
     private readonly schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
     private readonly example: unknown;
@@ -425,10 +429,26 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             };
         }
 
+        // Check for date formats and use appropriate examples
+        const resolvedSchema = this.context.isReferenceObject(this.schema)
+            ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                  schemaOrReference: this.schema,
+                  breadcrumbs: this.breadcrumbs,
+                  skipErrorCollector: true
+              })
+            : this.schema;
+
+        const dateFallbackExample =
+            resolvedSchema?.format === "date"
+                ? this.EXAMPLE_DATE
+                : resolvedSchema?.format === "date-time"
+                  ? this.EXAMPLE_DATE_TIME
+                  : this.EXAMPLE_STRING;
+
         return {
             isValid: false,
             coerced: false,
-            validExample: this.maybeResolveSchemaExample<string>(this.schema) ?? this.EXAMPLE_STRING,
+            validExample: this.maybeResolveSchemaExample<string>(this.schema) ?? dateFallbackExample,
             errors: [
                 {
                     message: `Example cannot be converted to string: ${JSON.stringify(this.example, null, 2)}`,
@@ -649,7 +669,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                               { type: "object" },
                               { type: "array" }
                           ]
-                          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                          // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                       } as any);
 
             // Find properties in the example that are not defined in the schema

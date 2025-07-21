@@ -1,5 +1,150 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: |
+        `fern docs dev` server connection should no longer require frequent refresh.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-21"
+  version: 0.65.23
+
+- changelogEntry:
+    - summary: |
+        Add support for subpackage display names.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-21"
+  version: 0.65.22
+
+- changelogEntry:
+    - summary: |  
+        Auto upgrade corepack within fern docs dev if corepack missing key error.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-21"
+  version: 0.65.22
+
+- changelogEntry:
+    - summary: |  
+        Improve logging in fern docs dev.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-21"
+  version: 0.65.21
+
+- changelogEntry:
+    - summary: |  
+        Added smart display naming for undiscriminated unions.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-18"
+  version: 0.65.20
+
+- changelogEntry:
+    - summary: |  
+        Upgrade docs dev to use new docs bundle on Windows.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-18"
+  version: 0.65.19
+
+- changelogEntry:
+    - summary: |  
+        Add reference.md generation for Java SDKs.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-16"
+  version: 0.65.18
+
+- changelogEntry:
+    - summary: |  
+        Use the nested "value" field for OpenAPI examples if it exists.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-15"
+  version: 0.65.17
+
+- changelogEntry:
+    - summary: |  
+        Add a fallback version for buf export config.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-15"
+  version: 0.65.16
+
+- changelogEntry:
+    - summary: |  
+        Fix enum type reference conversions for protobuf docs generation.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-15"
+  version: 0.65.15
+
+- changelogEntry:
+    - summary: |  
+        Ignore buf.yaml and buf.gen.yaml when copying/exporting protobuf files.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-15"
+  version: 0.65.14
+
+- changelogEntry:
+    - summary: |  
+        Add support for specifying target protobuf files for gRPC docs generation.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-15"
+  version: 0.65.13
+
+- changelogEntry:
+    - summary: |  
+        Use service display name for grpc services.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-14"
+  version: 0.65.12
+
+- changelogEntry:
+    - summary: |  
+        The extension `x-fern-global-headers` now supports a type field that can point to 
+        arbitrary schemas. For example you can do the following to describe a header 
+        that is an enum.
+        
+        ```yml
+        x-fern-global-headers:
+          - header: X-API-Version
+            name: version
+            type: VersionEnum
+        ```
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-12"
+  version: 0.65.11
+
+- changelogEntry:
+    - summary: |  
+        Clarify `fern upgrade` command description.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-12"
+  version: 0.65.10
+
+- changelogEntry:
+    - summary: |  
+        Convert relevant endpoints to GrpcNode type in ApiReferenceNodeConverter
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-11"
+  version: 0.65.9
+
+- changelogEntry:
+    - summary: |  
+        Support date and date-time in v3 example generation. Change fallback string example to use "string" instead of "foo".
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-10"
+  version: 0.65.8
+
+- changelogEntry:
     - summary: |  
         Support example generation for gRPC docs.
       type: feat

@@ -6,7 +6,8 @@ import {
     Availability,
     LiteralSchemaValue,
     PrimitiveSchemaValueWithExample,
-    SchemaWithExample
+    SchemaWithExample,
+    Source
 } from "@fern-api/openapi-ir";
 
 import { getExtension } from "../../../getExtension";
@@ -364,8 +365,18 @@ export function getSchemaFromFernType({
                     namespace,
                     groupName
                 }),
-            named: () => {
-                return undefined;
+            named: (reference: string) => {
+                return SchemaWithExample.reference({
+                    schema: reference,
+                    nameOverride,
+                    generatedName,
+                    title,
+                    description,
+                    availability,
+                    namespace,
+                    groupName,
+                    source: Source.openapi({ file: "<memory>" })
+                });
             }
         }
     });

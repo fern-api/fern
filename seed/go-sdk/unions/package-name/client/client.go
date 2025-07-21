@@ -12,26 +12,26 @@ import (
 )
 
 type Client struct {
+	Bigunion *bigunion.Client
+	Union    *union.Client
+
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header
-
-	Bigunion *bigunion.Client
-	Union    *union.Client
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		baseURL: options.BaseURL,
+		Bigunion: bigunion.NewClient(opts...),
+		Union:    union.NewClient(opts...),
+		baseURL:  options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header:   options.ToHeader(),
-		Bigunion: bigunion.NewClient(opts...),
-		Union:    union.NewClient(opts...),
+		header: options.ToHeader(),
 	}
 }

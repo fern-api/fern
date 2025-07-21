@@ -4849,7 +4849,8 @@
             "value": "ResourceRoleRead"
           }
         }
-      }
+      },
+      "displayName": "ResourceRoleListRoles0"
     },
     "ResourceRoleListRoles": {
       "name": "ResourceRoleListRoles",
@@ -4861,7 +4862,8 @@
             "type": {
               "type": "id",
               "value": "ResourceRoleListRoles0"
-            }
+            },
+            "displayName": "ResourceRoleListRoles0"
           },
           {
             "typeName": "PaginatedResult_ResourceRoleRead_",
@@ -5585,7 +5587,8 @@
             "value": "RoleRead"
           }
         }
-      }
+      },
+      "displayName": "RoleListRoles0"
     },
     "RoleListRoles": {
       "name": "RoleListRoles",
@@ -5597,7 +5600,8 @@
             "type": {
               "type": "id",
               "value": "RoleListRoles0"
-            }
+            },
+            "displayName": "RoleListRoles0"
           },
           {
             "typeName": "PaginatedResult_RoleRead_",
@@ -6869,7 +6873,8 @@
             "value": "ResourceRead"
           }
         }
-      }
+      },
+      "displayName": "ResourcesListResourcesResponse2001"
     },
     "Resources_list_resources_Response_200": {
       "name": "Resources_list_resources_Response_200",
@@ -6889,7 +6894,8 @@
             "type": {
               "type": "id",
               "value": "ResourcesListResourcesResponse2001"
-            }
+            },
+            "displayName": "ResourcesListResourcesResponse2001"
           }
         ]
       }
@@ -6905,7 +6911,8 @@
             "value": "RoleRead"
           }
         }
-      }
+      },
+      "displayName": "RolesListRolesResponse2001"
     },
     "Roles_list_roles_Response_200": {
       "name": "Roles_list_roles_Response_200",
@@ -6925,7 +6932,8 @@
             "type": {
               "type": "id",
               "value": "RolesListRolesResponse2001"
-            }
+            },
+            "displayName": "RolesListRolesResponse2001"
           }
         ]
       }
@@ -6941,7 +6949,8 @@
             "value": "ConditionSetRead"
           }
         }
-      }
+      },
+      "displayName": "ConditionSetsListConditionSetsResponse2001"
     },
     "Condition Sets_list_condition_sets_Response_200": {
       "name": "Condition Sets_list_condition_sets_Response_200",
@@ -6961,7 +6970,8 @@
             "type": {
               "type": "id",
               "value": "ConditionSetsListConditionSetsResponse2001"
-            }
+            },
+            "displayName": "ConditionSetsListConditionSetsResponse2001"
           }
         ]
       }
@@ -6977,7 +6987,8 @@
             "value": "TenantRead"
           }
         }
-      }
+      },
+      "displayName": "TenantsListTenantsResponse2001"
     },
     "Tenants_list_tenants_Response_200": {
       "name": "Tenants_list_tenants_Response_200",
@@ -6997,7 +7008,8 @@
             "type": {
               "type": "id",
               "value": "TenantsListTenantsResponse2001"
-            }
+            },
+            "displayName": "TenantsListTenantsResponse2001"
           }
         ]
       }
@@ -7108,12 +7120,12 @@
               "responseStatusCode": 200,
               "responseBody": [
                 {
-                  "key": "foo",
-                  "id": "foo",
+                  "key": "string",
+                  "id": "string",
                   "is_enterprise": true,
-                  "created_at": "foo",
-                  "updated_at": "foo",
-                  "name": "foo",
+                  "created_at": "2024-01-15T09:30:00Z",
+                  "updated_at": "2024-01-15T09:30:00Z",
+                  "name": "string",
                   "settings": {}
                 }
               ],
@@ -7121,12 +7133,12 @@
                 "type": "json",
                 "value": [
                   {
-                    "key": "foo",
-                    "id": "foo",
+                    "key": "string",
+                    "id": "string",
                     "is_enterprise": true,
-                    "created_at": "foo",
-                    "updated_at": "foo",
-                    "name": "foo",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "name": "string",
                     "settings": {}
                   }
                 ]
@@ -7213,40 +7225,40 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "key": "foo",
-                "name": "foo"
+                "key": "string",
+                "name": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "key": "foo",
-                  "name": "foo"
+                  "key": "string",
+                  "name": "string"
                 }
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "key": "foo",
-                "id": "foo",
+                "key": "string",
+                "id": "string",
                 "is_enterprise": true,
-                "created_at": "foo",
-                "updated_at": "foo",
-                "name": "foo",
+                "created_at": "2024-01-15T09:30:00Z",
+                "updated_at": "2024-01-15T09:30:00Z",
+                "name": "string",
                 "settings": {},
-                "api_key_id": "foo",
-                "api_key_secret": "foo"
+                "api_key_id": "string",
+                "api_key_secret": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "key": "foo",
-                  "id": "foo",
+                  "key": "string",
+                  "id": "string",
                   "is_enterprise": true,
-                  "created_at": "foo",
-                  "updated_at": "foo",
-                  "name": "foo",
+                  "created_at": "2024-01-15T09:30:00Z",
+                  "updated_at": "2024-01-15T09:30:00Z",
+                  "name": "string",
                   "settings": {},
-                  "api_key_id": "foo",
-                  "api_key_secret": "foo"
+                  "api_key_id": "string",
+                  "api_key_secret": "string"
                 }
               }
             }
@@ -7340,23 +7352,23 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "key": "foo",
-                "id": "foo",
+                "key": "string",
+                "id": "string",
                 "is_enterprise": true,
-                "created_at": "foo",
-                "updated_at": "foo",
-                "name": "foo",
+                "created_at": "2024-01-15T09:30:00Z",
+                "updated_at": "2024-01-15T09:30:00Z",
+                "name": "string",
                 "settings": {}
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "key": "foo",
-                  "id": "foo",
+                  "key": "string",
+                  "id": "string",
                   "is_enterprise": true,
-                  "created_at": "foo",
-                  "updated_at": "foo",
-                  "name": "foo",
+                  "created_at": "2024-01-15T09:30:00Z",
+                  "updated_at": "2024-01-15T09:30:00Z",
+                  "name": "string",
                   "settings": {}
                 }
               }
@@ -7548,23 +7560,23 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "key": "foo",
-                "id": "foo",
+                "key": "string",
+                "id": "string",
                 "is_enterprise": true,
-                "created_at": "foo",
-                "updated_at": "foo",
-                "name": "foo",
+                "created_at": "2024-01-15T09:30:00Z",
+                "updated_at": "2024-01-15T09:30:00Z",
+                "name": "string",
                 "settings": {}
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "key": "foo",
-                  "id": "foo",
+                  "key": "string",
+                  "id": "string",
                   "is_enterprise": true,
-                  "created_at": "foo",
-                  "updated_at": "foo",
-                  "name": "foo",
+                  "created_at": "2024-01-15T09:30:00Z",
+                  "updated_at": "2024-01-15T09:30:00Z",
+                  "name": "string",
                   "settings": {}
                 }
               }
@@ -7638,23 +7650,23 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "key": "foo",
-                "id": "foo",
+                "key": "string",
+                "id": "string",
                 "is_enterprise": true,
-                "created_at": "foo",
-                "updated_at": "foo",
-                "name": "foo",
+                "created_at": "2024-01-15T09:30:00Z",
+                "updated_at": "2024-01-15T09:30:00Z",
+                "name": "string",
                 "settings": {}
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "key": "foo",
-                  "id": "foo",
+                  "key": "string",
+                  "id": "string",
                   "is_enterprise": true,
-                  "created_at": "foo",
-                  "updated_at": "foo",
-                  "name": "foo",
+                  "created_at": "2024-01-15T09:30:00Z",
+                  "updated_at": "2024-01-15T09:30:00Z",
+                  "name": "string",
                   "settings": {}
                 }
               }
@@ -7774,32 +7786,32 @@
               "responseStatusCode": 200,
               "responseBody": [
                 {
-                  "key": "foo",
-                  "urn_namespace": "foo",
-                  "id": "foo",
-                  "organization_id": "foo",
-                  "created_at": "foo",
-                  "updated_at": "foo",
-                  "name": "foo",
-                  "description": "foo",
+                  "key": "string",
+                  "urn_namespace": "string",
+                  "id": "string",
+                  "organization_id": "string",
+                  "created_at": "2024-01-15T09:30:00Z",
+                  "updated_at": "2024-01-15T09:30:00Z",
+                  "name": "string",
+                  "description": "string",
                   "settings": {},
-                  "active_policy_repo_id": "foo"
+                  "active_policy_repo_id": "string"
                 }
               ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
                   {
-                    "key": "foo",
-                    "urn_namespace": "foo",
-                    "id": "foo",
-                    "organization_id": "foo",
-                    "created_at": "foo",
-                    "updated_at": "foo",
-                    "name": "foo",
-                    "description": "foo",
+                    "key": "string",
+                    "urn_namespace": "string",
+                    "id": "string",
+                    "organization_id": "string",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "name": "string",
+                    "description": "string",
                     "settings": {},
-                    "active_policy_repo_id": "foo"
+                    "active_policy_repo_id": "string"
                   }
                 ]
               }
@@ -7885,42 +7897,42 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "key": "foo",
-                "name": "foo"
+                "key": "string",
+                "name": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "key": "foo",
-                  "name": "foo"
+                  "key": "string",
+                  "name": "string"
                 }
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "key": "foo",
-                "urn_namespace": "foo",
-                "id": "foo",
-                "organization_id": "foo",
-                "created_at": "foo",
-                "updated_at": "foo",
-                "name": "foo",
-                "description": "foo",
+                "key": "string",
+                "urn_namespace": "string",
+                "id": "string",
+                "organization_id": "string",
+                "created_at": "2024-01-15T09:30:00Z",
+                "updated_at": "2024-01-15T09:30:00Z",
+                "name": "string",
+                "description": "string",
                 "settings": {},
-                "active_policy_repo_id": "foo"
+                "active_policy_repo_id": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "key": "foo",
-                  "urn_namespace": "foo",
-                  "id": "foo",
-                  "organization_id": "foo",
-                  "created_at": "foo",
-                  "updated_at": "foo",
-                  "name": "foo",
-                  "description": "foo",
+                  "key": "string",
+                  "urn_namespace": "string",
+                  "id": "string",
+                  "organization_id": "string",
+                  "created_at": "2024-01-15T09:30:00Z",
+                  "updated_at": "2024-01-15T09:30:00Z",
+                  "name": "string",
+                  "description": "string",
                   "settings": {},
-                  "active_policy_repo_id": "foo"
+                  "active_policy_repo_id": "string"
                 }
               }
             }
@@ -8014,30 +8026,30 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "key": "foo",
-                "urn_namespace": "foo",
-                "id": "foo",
-                "organization_id": "foo",
-                "created_at": "foo",
-                "updated_at": "foo",
-                "name": "foo",
-                "description": "foo",
+                "key": "string",
+                "urn_namespace": "string",
+                "id": "string",
+                "organization_id": "string",
+                "created_at": "2024-01-15T09:30:00Z",
+                "updated_at": "2024-01-15T09:30:00Z",
+                "name": "string",
+                "description": "string",
                 "settings": {},
-                "active_policy_repo_id": "foo"
+                "active_policy_repo_id": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "key": "foo",
-                  "urn_namespace": "foo",
-                  "id": "foo",
-                  "organization_id": "foo",
-                  "created_at": "foo",
-                  "updated_at": "foo",
-                  "name": "foo",
-                  "description": "foo",
+                  "key": "string",
+                  "urn_namespace": "string",
+                  "id": "string",
+                  "organization_id": "string",
+                  "created_at": "2024-01-15T09:30:00Z",
+                  "updated_at": "2024-01-15T09:30:00Z",
+                  "name": "string",
+                  "description": "string",
                   "settings": {},
-                  "active_policy_repo_id": "foo"
+                  "active_policy_repo_id": "string"
                 }
               }
             }
@@ -8228,30 +8240,30 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "key": "foo",
-                "urn_namespace": "foo",
-                "id": "foo",
-                "organization_id": "foo",
-                "created_at": "foo",
-                "updated_at": "foo",
-                "name": "foo",
-                "description": "foo",
+                "key": "string",
+                "urn_namespace": "string",
+                "id": "string",
+                "organization_id": "string",
+                "created_at": "2024-01-15T09:30:00Z",
+                "updated_at": "2024-01-15T09:30:00Z",
+                "name": "string",
+                "description": "string",
                 "settings": {},
-                "active_policy_repo_id": "foo"
+                "active_policy_repo_id": "string"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "key": "foo",
-                  "urn_namespace": "foo",
-                  "id": "foo",
-                  "organization_id": "foo",
-                  "created_at": "foo",
-                  "updated_at": "foo",
-                  "name": "foo",
-                  "description": "foo",
+                  "key": "string",
+                  "urn_namespace": "string",
+                  "id": "string",
+                  "organization_id": "string",
+                  "created_at": "2024-01-15T09:30:00Z",
+                  "updated_at": "2024-01-15T09:30:00Z",
+                  "name": "string",
+                  "description": "string",
                   "settings": {},
-                  "active_policy_repo_id": "foo"
+                  "active_policy_repo_id": "string"
                 }
               }
             }
@@ -8373,15 +8385,15 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "key": "foo",
-                "id": "foo",
-                "organization_id": "foo",
-                "project_id": "foo",
-                "created_at": "foo",
-                "updated_at": "foo",
-                "name": "foo",
-                "description": "foo",
-                "custom_branch_name": "foo",
+                "key": "string",
+                "id": "string",
+                "organization_id": "string",
+                "project_id": "string",
+                "created_at": "2024-01-15T09:30:00Z",
+                "updated_at": "2024-01-15T09:30:00Z",
+                "name": "string",
+                "description": "string",
+                "custom_branch_name": "string",
                 "jwks": {
                   "keys": [
                     {}
@@ -8390,72 +8402,72 @@
                 "settings": {},
                 "pdp_configs": [
                   {
-                    "id": "foo",
-                    "name": "foo",
-                    "organization_id": "foo",
-                    "project_id": "foo",
-                    "environment_id": "foo",
-                    "client_secret": "foo"
+                    "id": "string",
+                    "name": "string",
+                    "organization_id": "string",
+                    "project_id": "string",
+                    "environment_id": "string",
+                    "client_secret": "string"
                   }
                 ],
                 "stats": {
-                  "roles": 42,
-                  "users": 42,
-                  "policies": 42,
-                  "resources": 42,
-                  "tenants": 42,
+                  "roles": 1,
+                  "users": 1,
+                  "policies": 1,
+                  "resources": 1,
+                  "tenants": 1,
                   "has_decision_logs": true,
                   "members": [
                     {
-                      "id": "foo",
-                      "email": "foo",
+                      "id": "string",
+                      "email": "string",
                       "email_verified": true,
-                      "name": "foo",
-                      "given_name": "foo",
-                      "family_name": "foo",
-                      "picture": "foo",
+                      "name": "string",
+                      "given_name": "string",
+                      "family_name": "string",
+                      "picture": "string",
                       "is_superuser": true,
                       "is_onboarding": true,
                       "onboarding_step": "create_organization",
-                      "created_at": "foo",
-                      "last_login": "foo",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "last_login": "2024-01-15T09:30:00Z",
                       "last_ip": "0.0.0.0",
                       "logins_count": 0,
                       "identities": [
                         {
-                          "user_id": "foo",
-                          "provider": "foo",
-                          "sub": "foo",
-                          "email": "foo",
+                          "user_id": "string",
+                          "provider": "string",
+                          "sub": "string",
+                          "email": "string",
                           "email_verified": true,
                           "auth0_info": {}
                         }
                       ],
                       "invite": {
-                        "member_id": "foo",
-                        "email": "foo",
+                        "member_id": "string",
+                        "email": "string",
                         "role": "admin",
-                        "id": "foo",
-                        "organization_id": "foo",
-                        "invite_code": "foo",
-                        "created_at": "foo",
+                        "id": "string",
+                        "organization_id": "string",
+                        "invite_code": "string",
+                        "created_at": "2024-01-15T09:30:00Z",
                         "status": "pending",
-                        "failed_reason": "foo"
+                        "failed_reason": "string"
                       },
                       "settings": {},
                       "grants": [
                         {
-                          "organization_id": "foo",
-                          "project_id": "foo",
-                          "environment_id": "foo",
+                          "organization_id": "string",
+                          "project_id": "string",
+                          "environment_id": "string",
                           "object_type": "org",
                           "access_level": "admin",
-                          "organization_key": "foo",
-                          "project_key": "foo",
-                          "environment_key": "foo",
-                          "organization_name": "foo",
-                          "project_name": "foo",
-                          "environment_name": "foo"
+                          "organization_key": "string",
+                          "project_key": "string",
+                          "environment_key": "string",
+                          "organization_name": "string",
+                          "project_name": "string",
+                          "environment_name": "string"
                         }
                       ]
                     }
@@ -8465,15 +8477,15 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "key": "foo",
-                  "id": "foo",
-                  "organization_id": "foo",
-                  "project_id": "foo",
-                  "created_at": "foo",
-                  "updated_at": "foo",
-                  "name": "foo",
-                  "description": "foo",
-                  "custom_branch_name": "foo",
+                  "key": "string",
+                  "id": "string",
+                  "organization_id": "string",
+                  "project_id": "string",
+                  "created_at": "2024-01-15T09:30:00Z",
+                  "updated_at": "2024-01-15T09:30:00Z",
+                  "name": "string",
+                  "description": "string",
+                  "custom_branch_name": "string",
                   "jwks": {
                     "keys": [
                       {}
@@ -8482,72 +8494,72 @@
                   "settings": {},
                   "pdp_configs": [
                     {
-                      "id": "foo",
-                      "name": "foo",
-                      "organization_id": "foo",
-                      "project_id": "foo",
-                      "environment_id": "foo",
-                      "client_secret": "foo"
+                      "id": "string",
+                      "name": "string",
+                      "organization_id": "string",
+                      "project_id": "string",
+                      "environment_id": "string",
+                      "client_secret": "string"
                     }
                   ],
                   "stats": {
-                    "roles": 42,
-                    "users": 42,
-                    "policies": 42,
-                    "resources": 42,
-                    "tenants": 42,
+                    "roles": 1,
+                    "users": 1,
+                    "policies": 1,
+                    "resources": 1,
+                    "tenants": 1,
                     "has_decision_logs": true,
                     "members": [
                       {
-                        "id": "foo",
-                        "email": "foo",
+                        "id": "string",
+                        "email": "string",
                         "email_verified": true,
-                        "name": "foo",
-                        "given_name": "foo",
-                        "family_name": "foo",
-                        "picture": "foo",
+                        "name": "string",
+                        "given_name": "string",
+                        "family_name": "string",
+                        "picture": "string",
                         "is_superuser": true,
                         "is_onboarding": true,
                         "onboarding_step": "create_organization",
-                        "created_at": "foo",
-                        "last_login": "foo",
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "last_login": "2024-01-15T09:30:00Z",
                         "last_ip": "0.0.0.0",
                         "logins_count": 0,
                         "identities": [
                           {
-                            "user_id": "foo",
-                            "provider": "foo",
-                            "sub": "foo",
-                            "email": "foo",
+                            "user_id": "string",
+                            "provider": "string",
+                            "sub": "string",
+                            "email": "string",
                             "email_verified": true,
                             "auth0_info": {}
                           }
                         ],
                         "invite": {
-                          "member_id": "foo",
-                          "email": "foo",
+                          "member_id": "string",
+                          "email": "string",
                           "role": "admin",
-                          "id": "foo",
-                          "organization_id": "foo",
-                          "invite_code": "foo",
-                          "created_at": "foo",
+                          "id": "string",
+                          "organization_id": "string",
+                          "invite_code": "string",
+                          "created_at": "2024-01-15T09:30:00Z",
                           "status": "pending",
-                          "failed_reason": "foo"
+                          "failed_reason": "string"
                         },
                         "settings": {},
                         "grants": [
                           {
-                            "organization_id": "foo",
-                            "project_id": "foo",
-                            "environment_id": "foo",
+                            "organization_id": "string",
+                            "project_id": "string",
+                            "environment_id": "string",
                             "object_type": "org",
                             "access_level": "admin",
-                            "organization_key": "foo",
-                            "project_key": "foo",
-                            "environment_key": "foo",
-                            "organization_name": "foo",
-                            "project_name": "foo",
-                            "environment_name": "foo"
+                            "organization_key": "string",
+                            "project_key": "string",
+                            "environment_key": "string",
+                            "organization_name": "string",
+                            "project_name": "string",
+                            "environment_name": "string"
                           }
                         ]
                       }
@@ -8682,15 +8694,15 @@
               "responseStatusCode": 200,
               "responseBody": [
                 {
-                  "key": "foo",
-                  "id": "foo",
-                  "organization_id": "foo",
-                  "project_id": "foo",
-                  "created_at": "foo",
-                  "updated_at": "foo",
-                  "name": "foo",
-                  "description": "foo",
-                  "custom_branch_name": "foo",
+                  "key": "string",
+                  "id": "string",
+                  "organization_id": "string",
+                  "project_id": "string",
+                  "created_at": "2024-01-15T09:30:00Z",
+                  "updated_at": "2024-01-15T09:30:00Z",
+                  "name": "string",
+                  "description": "string",
+                  "custom_branch_name": "string",
                   "jwks": {
                     "keys": [
                       {}
@@ -8703,15 +8715,15 @@
                 "type": "json",
                 "value": [
                   {
-                    "key": "foo",
-                    "id": "foo",
-                    "organization_id": "foo",
-                    "project_id": "foo",
-                    "created_at": "foo",
-                    "updated_at": "foo",
-                    "name": "foo",
-                    "description": "foo",
-                    "custom_branch_name": "foo",
+                    "key": "string",
+                    "id": "string",
+                    "organization_id": "string",
+                    "project_id": "string",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "name": "string",
+                    "description": "string",
+                    "custom_branch_name": "string",
                     "jwks": {
                       "keys": [
                         {}
@@ -8824,27 +8836,27 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "key": "foo",
-                "name": "foo"
+                "key": "string",
+                "name": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "key": "foo",
-                  "name": "foo"
+                  "key": "string",
+                  "name": "string"
                 }
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "key": "foo",
-                "id": "foo",
-                "organization_id": "foo",
-                "project_id": "foo",
-                "created_at": "foo",
-                "updated_at": "foo",
-                "name": "foo",
-                "description": "foo",
-                "custom_branch_name": "foo",
+                "key": "string",
+                "id": "string",
+                "organization_id": "string",
+                "project_id": "string",
+                "created_at": "2024-01-15T09:30:00Z",
+                "updated_at": "2024-01-15T09:30:00Z",
+                "name": "string",
+                "description": "string",
+                "custom_branch_name": "string",
                 "jwks": {
                   "keys": [
                     {}
@@ -8855,15 +8867,15 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "key": "foo",
-                  "id": "foo",
-                  "organization_id": "foo",
-                  "project_id": "foo",
-                  "created_at": "foo",
-                  "updated_at": "foo",
-                  "name": "foo",
-                  "description": "foo",
-                  "custom_branch_name": "foo",
+                  "key": "string",
+                  "id": "string",
+                  "organization_id": "string",
+                  "project_id": "string",
+                  "created_at": "2024-01-15T09:30:00Z",
+                  "updated_at": "2024-01-15T09:30:00Z",
+                  "name": "string",
+                  "description": "string",
+                  "custom_branch_name": "string",
                   "jwks": {
                     "keys": [
                       {}
@@ -8982,15 +8994,15 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "key": "foo",
-                "id": "foo",
-                "organization_id": "foo",
-                "project_id": "foo",
-                "created_at": "foo",
-                "updated_at": "foo",
-                "name": "foo",
-                "description": "foo",
-                "custom_branch_name": "foo",
+                "key": "string",
+                "id": "string",
+                "organization_id": "string",
+                "project_id": "string",
+                "created_at": "2024-01-15T09:30:00Z",
+                "updated_at": "2024-01-15T09:30:00Z",
+                "name": "string",
+                "description": "string",
+                "custom_branch_name": "string",
                 "jwks": {
                   "keys": [
                     {}
@@ -9001,15 +9013,15 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "key": "foo",
-                  "id": "foo",
-                  "organization_id": "foo",
-                  "project_id": "foo",
-                  "created_at": "foo",
-                  "updated_at": "foo",
-                  "name": "foo",
-                  "description": "foo",
-                  "custom_branch_name": "foo",
+                  "key": "string",
+                  "id": "string",
+                  "organization_id": "string",
+                  "project_id": "string",
+                  "created_at": "2024-01-15T09:30:00Z",
+                  "updated_at": "2024-01-15T09:30:00Z",
+                  "name": "string",
+                  "description": "string",
+                  "custom_branch_name": "string",
                   "jwks": {
                     "keys": [
                       {}
@@ -9244,15 +9256,15 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "key": "foo",
-                "id": "foo",
-                "organization_id": "foo",
-                "project_id": "foo",
-                "created_at": "foo",
-                "updated_at": "foo",
-                "name": "foo",
-                "description": "foo",
-                "custom_branch_name": "foo",
+                "key": "string",
+                "id": "string",
+                "organization_id": "string",
+                "project_id": "string",
+                "created_at": "2024-01-15T09:30:00Z",
+                "updated_at": "2024-01-15T09:30:00Z",
+                "name": "string",
+                "description": "string",
+                "custom_branch_name": "string",
                 "jwks": {
                   "keys": [
                     {}
@@ -9263,15 +9275,15 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "key": "foo",
-                  "id": "foo",
-                  "organization_id": "foo",
-                  "project_id": "foo",
-                  "created_at": "foo",
-                  "updated_at": "foo",
-                  "name": "foo",
-                  "description": "foo",
-                  "custom_branch_name": "foo",
+                  "key": "string",
+                  "id": "string",
+                  "organization_id": "string",
+                  "project_id": "string",
+                  "created_at": "2024-01-15T09:30:00Z",
+                  "updated_at": "2024-01-15T09:30:00Z",
+                  "name": "string",
+                  "description": "string",
+                  "custom_branch_name": "string",
                   "jwks": {
                     "keys": [
                       {}
@@ -9412,15 +9424,15 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "key": "foo",
-                "id": "foo",
-                "organization_id": "foo",
-                "project_id": "foo",
-                "created_at": "foo",
-                "updated_at": "foo",
-                "name": "foo",
-                "description": "foo",
-                "custom_branch_name": "foo",
+                "key": "string",
+                "id": "string",
+                "organization_id": "string",
+                "project_id": "string",
+                "created_at": "2024-01-15T09:30:00Z",
+                "updated_at": "2024-01-15T09:30:00Z",
+                "name": "string",
+                "description": "string",
+                "custom_branch_name": "string",
                 "jwks": {
                   "keys": [
                     {}
@@ -9431,15 +9443,15 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "key": "foo",
-                  "id": "foo",
-                  "organization_id": "foo",
-                  "project_id": "foo",
-                  "created_at": "foo",
-                  "updated_at": "foo",
-                  "name": "foo",
-                  "description": "foo",
-                  "custom_branch_name": "foo",
+                  "key": "string",
+                  "id": "string",
+                  "organization_id": "string",
+                  "project_id": "string",
+                  "created_at": "2024-01-15T09:30:00Z",
+                  "updated_at": "2024-01-15T09:30:00Z",
+                  "name": "string",
+                  "description": "string",
+                  "custom_branch_name": "string",
                   "jwks": {
                     "keys": [
                       {}
@@ -9643,22 +9655,22 @@
               "responseBody": {
                 "data": [
                   {
-                    "key": "foo",
-                    "id": "foo",
-                    "organization_id": "foo",
-                    "project_id": "foo",
-                    "environment_id": "foo",
-                    "created_at": "foo",
-                    "updated_at": "foo",
-                    "name": "foo",
-                    "urn": "foo",
-                    "description": "foo",
+                    "key": "string",
+                    "id": "string",
+                    "organization_id": "string",
+                    "project_id": "string",
+                    "environment_id": "string",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "name": "string",
+                    "urn": "string",
+                    "description": "string",
                     "actions": {},
                     "attributes": {},
                     "action_groups": {}
                   }
                 ],
-                "total_count": 42,
+                "total_count": 1,
                 "page_count": 0
               },
               "responseBodyV3": {
@@ -9666,22 +9678,22 @@
                 "value": {
                   "data": [
                     {
-                      "key": "foo",
-                      "id": "foo",
-                      "organization_id": "foo",
-                      "project_id": "foo",
-                      "environment_id": "foo",
-                      "created_at": "foo",
-                      "updated_at": "foo",
-                      "name": "foo",
-                      "urn": "foo",
-                      "description": "foo",
+                      "key": "string",
+                      "id": "string",
+                      "organization_id": "string",
+                      "project_id": "string",
+                      "environment_id": "string",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                      "name": "string",
+                      "urn": "string",
+                      "description": "string",
                       "actions": {},
                       "attributes": {},
                       "action_groups": {}
                     }
                   ],
-                  "total_count": 42,
+                  "total_count": 1,
                   "page_count": 0
                 }
               }
@@ -10263,13 +10275,13 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "name": "foo",
+                "name": "string",
                 "actions": {}
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "foo",
+                  "name": "string",
                   "actions": {}
                 }
               },
@@ -10858,36 +10870,36 @@
               "responseStatusCode": 200,
               "responseBody": [
                 {
-                  "name": "foo",
-                  "description": "foo",
+                  "name": "string",
+                  "description": "string",
                   "attributes": {},
-                  "key": "foo",
-                  "id": "foo",
-                  "permission_name": "foo",
-                  "organization_id": "foo",
-                  "project_id": "foo",
-                  "environment_id": "foo",
-                  "resource_id": "foo",
-                  "created_at": "foo",
-                  "updated_at": "foo"
+                  "key": "string",
+                  "id": "string",
+                  "permission_name": "string",
+                  "organization_id": "string",
+                  "project_id": "string",
+                  "environment_id": "string",
+                  "resource_id": "string",
+                  "created_at": "2024-01-15T09:30:00Z",
+                  "updated_at": "2024-01-15T09:30:00Z"
                 }
               ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
                   {
-                    "name": "foo",
-                    "description": "foo",
+                    "name": "string",
+                    "description": "string",
                     "attributes": {},
-                    "key": "foo",
-                    "id": "foo",
-                    "permission_name": "foo",
-                    "organization_id": "foo",
-                    "project_id": "foo",
-                    "environment_id": "foo",
-                    "resource_id": "foo",
-                    "created_at": "foo",
-                    "updated_at": "foo"
+                    "key": "string",
+                    "id": "string",
+                    "permission_name": "string",
+                    "organization_id": "string",
+                    "project_id": "string",
+                    "environment_id": "string",
+                    "resource_id": "string",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2024-01-15T09:30:00Z"
                   }
                 ]
               }
@@ -11759,40 +11771,40 @@
               "responseStatusCode": 200,
               "responseBody": [
                 {
-                  "name": "foo",
-                  "description": "foo",
+                  "name": "string",
+                  "description": "string",
                   "attributes": {},
                   "actions": [
-                    "foo"
+                    "string"
                   ],
-                  "key": "foo",
-                  "id": "foo",
-                  "organization_id": "foo",
-                  "project_id": "foo",
-                  "environment_id": "foo",
-                  "resource_id": "foo",
-                  "created_at": "foo",
-                  "updated_at": "foo"
+                  "key": "string",
+                  "id": "string",
+                  "organization_id": "string",
+                  "project_id": "string",
+                  "environment_id": "string",
+                  "resource_id": "string",
+                  "created_at": "2024-01-15T09:30:00Z",
+                  "updated_at": "2024-01-15T09:30:00Z"
                 }
               ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
                   {
-                    "name": "foo",
-                    "description": "foo",
+                    "name": "string",
+                    "description": "string",
                     "attributes": {},
                     "actions": [
-                      "foo"
+                      "string"
                     ],
-                    "key": "foo",
-                    "id": "foo",
-                    "organization_id": "foo",
-                    "project_id": "foo",
-                    "environment_id": "foo",
-                    "resource_id": "foo",
-                    "created_at": "foo",
-                    "updated_at": "foo"
+                    "key": "string",
+                    "id": "string",
+                    "organization_id": "string",
+                    "project_id": "string",
+                    "environment_id": "string",
+                    "resource_id": "string",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2024-01-15T09:30:00Z"
                   }
                 ]
               }
@@ -12686,46 +12698,46 @@
               "responseStatusCode": 200,
               "responseBody": [
                 {
-                  "name": "foo",
-                  "description": "foo",
+                  "name": "string",
+                  "description": "string",
                   "permissions": [
-                    "foo"
+                    "string"
                   ],
                   "attributes": {},
                   "extends": [
-                    "foo"
+                    "string"
                   ],
-                  "key": "foo",
-                  "id": "foo",
-                  "organization_id": "foo",
-                  "project_id": "foo",
-                  "environment_id": "foo",
-                  "resource_id": "foo",
-                  "created_at": "foo",
-                  "updated_at": "foo"
+                  "key": "string",
+                  "id": "string",
+                  "organization_id": "string",
+                  "project_id": "string",
+                  "environment_id": "string",
+                  "resource_id": "string",
+                  "created_at": "2024-01-15T09:30:00Z",
+                  "updated_at": "2024-01-15T09:30:00Z"
                 }
               ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
                   {
-                    "name": "foo",
-                    "description": "foo",
+                    "name": "string",
+                    "description": "string",
                     "permissions": [
-                      "foo"
+                      "string"
                     ],
                     "attributes": {},
                     "extends": [
-                      "foo"
+                      "string"
                     ],
-                    "key": "foo",
-                    "id": "foo",
-                    "organization_id": "foo",
-                    "project_id": "foo",
-                    "environment_id": "foo",
-                    "resource_id": "foo",
-                    "created_at": "foo",
-                    "updated_at": "foo"
+                    "key": "string",
+                    "id": "string",
+                    "organization_id": "string",
+                    "project_id": "string",
+                    "environment_id": "string",
+                    "resource_id": "string",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2024-01-15T09:30:00Z"
                   }
                 ]
               }
@@ -14043,23 +14055,23 @@
               "responseBody": {
                 "roles": [
                   {
-                    "name": "foo",
-                    "description": "foo",
+                    "name": "string",
+                    "description": "string",
                     "permissions": [
-                      "foo"
+                      "string"
                     ],
                     "attributes": {},
                     "extends": [
-                      "foo"
+                      "string"
                     ],
-                    "key": "foo",
-                    "id": "foo",
-                    "organization_id": "foo",
-                    "project_id": "foo",
-                    "environment_id": "foo",
-                    "resource_id": "foo",
-                    "created_at": "foo",
-                    "updated_at": "foo"
+                    "key": "string",
+                    "id": "string",
+                    "organization_id": "string",
+                    "project_id": "string",
+                    "environment_id": "string",
+                    "resource_id": "string",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2024-01-15T09:30:00Z"
                   }
                 ]
               },
@@ -14068,23 +14080,23 @@
                 "value": {
                   "roles": [
                     {
-                      "name": "foo",
-                      "description": "foo",
+                      "name": "string",
+                      "description": "string",
                       "permissions": [
-                        "foo"
+                        "string"
                       ],
                       "attributes": {},
                       "extends": [
-                        "foo"
+                        "string"
                       ],
-                      "key": "foo",
-                      "id": "foo",
-                      "organization_id": "foo",
-                      "project_id": "foo",
-                      "environment_id": "foo",
-                      "resource_id": "foo",
-                      "created_at": "foo",
-                      "updated_at": "foo"
+                      "key": "string",
+                      "id": "string",
+                      "organization_id": "string",
+                      "project_id": "string",
+                      "environment_id": "string",
+                      "resource_id": "string",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "updated_at": "2024-01-15T09:30:00Z"
                     }
                   ]
                 }
@@ -14238,23 +14250,23 @@
               "responseBody": {
                 "roles": [
                   {
-                    "name": "foo",
-                    "description": "foo",
+                    "name": "string",
+                    "description": "string",
                     "permissions": [
-                      "foo"
+                      "string"
                     ],
                     "attributes": {},
                     "extends": [
-                      "foo"
+                      "string"
                     ],
-                    "key": "foo",
-                    "id": "foo",
-                    "organization_id": "foo",
-                    "project_id": "foo",
-                    "environment_id": "foo",
-                    "resource_id": "foo",
-                    "created_at": "foo",
-                    "updated_at": "foo"
+                    "key": "string",
+                    "id": "string",
+                    "organization_id": "string",
+                    "project_id": "string",
+                    "environment_id": "string",
+                    "resource_id": "string",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2024-01-15T09:30:00Z"
                   }
                 ]
               },
@@ -14263,23 +14275,23 @@
                 "value": {
                   "roles": [
                     {
-                      "name": "foo",
-                      "description": "foo",
+                      "name": "string",
+                      "description": "string",
                       "permissions": [
-                        "foo"
+                        "string"
                       ],
                       "attributes": {},
                       "extends": [
-                        "foo"
+                        "string"
                       ],
-                      "key": "foo",
-                      "id": "foo",
-                      "organization_id": "foo",
-                      "project_id": "foo",
-                      "environment_id": "foo",
-                      "resource_id": "foo",
-                      "created_at": "foo",
-                      "updated_at": "foo"
+                      "key": "string",
+                      "id": "string",
+                      "organization_id": "string",
+                      "project_id": "string",
+                      "environment_id": "string",
+                      "resource_id": "string",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "updated_at": "2024-01-15T09:30:00Z"
                     }
                   ]
                 }
@@ -14460,16 +14472,16 @@
               "responseBody": [
                 {
                   "type": "bool",
-                  "description": "foo",
-                  "key": "foo",
-                  "id": "foo",
-                  "resource_id": "foo",
-                  "resource_key": "foo",
-                  "organization_id": "foo",
-                  "project_id": "foo",
-                  "environment_id": "foo",
-                  "created_at": "foo",
-                  "updated_at": "foo",
+                  "description": "string",
+                  "key": "string",
+                  "id": "string",
+                  "resource_id": "string",
+                  "resource_key": "string",
+                  "organization_id": "string",
+                  "project_id": "string",
+                  "environment_id": "string",
+                  "created_at": "2024-01-15T09:30:00Z",
+                  "updated_at": "2024-01-15T09:30:00Z",
                   "built_in": true
                 }
               ],
@@ -14478,16 +14490,16 @@
                 "value": [
                   {
                     "type": "bool",
-                    "description": "foo",
-                    "key": "foo",
-                    "id": "foo",
-                    "resource_id": "foo",
-                    "resource_key": "foo",
-                    "organization_id": "foo",
-                    "project_id": "foo",
-                    "environment_id": "foo",
-                    "created_at": "foo",
-                    "updated_at": "foo",
+                    "description": "string",
+                    "key": "string",
+                    "id": "string",
+                    "resource_id": "string",
+                    "resource_key": "string",
+                    "organization_id": "string",
+                    "project_id": "string",
+                    "environment_id": "string",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2024-01-15T09:30:00Z",
                     "built_in": true
                   }
                 ]
@@ -15393,16 +15405,16 @@
               "responseBody": [
                 {
                   "type": "bool",
-                  "description": "foo",
-                  "key": "foo",
-                  "id": "foo",
-                  "resource_id": "foo",
-                  "resource_key": "foo",
-                  "organization_id": "foo",
-                  "project_id": "foo",
-                  "environment_id": "foo",
-                  "created_at": "foo",
-                  "updated_at": "foo",
+                  "description": "string",
+                  "key": "string",
+                  "id": "string",
+                  "resource_id": "string",
+                  "resource_key": "string",
+                  "organization_id": "string",
+                  "project_id": "string",
+                  "environment_id": "string",
+                  "created_at": "2024-01-15T09:30:00Z",
+                  "updated_at": "2024-01-15T09:30:00Z",
                   "built_in": true
                 }
               ],
@@ -15411,16 +15423,16 @@
                 "value": [
                   {
                     "type": "bool",
-                    "description": "foo",
-                    "key": "foo",
-                    "id": "foo",
-                    "resource_id": "foo",
-                    "resource_key": "foo",
-                    "organization_id": "foo",
-                    "project_id": "foo",
-                    "environment_id": "foo",
-                    "created_at": "foo",
-                    "updated_at": "foo",
+                    "description": "string",
+                    "key": "string",
+                    "id": "string",
+                    "resource_id": "string",
+                    "resource_key": "string",
+                    "organization_id": "string",
+                    "project_id": "string",
+                    "environment_id": "string",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2024-01-15T09:30:00Z",
                     "built_in": true
                   }
                 ]
@@ -16316,25 +16328,25 @@
               "responseBody": {
                 "data": [
                   {
-                    "name": "foo",
-                    "description": "foo",
+                    "name": "string",
+                    "description": "string",
                     "permissions": [
-                      "foo"
+                      "string"
                     ],
                     "attributes": {},
                     "extends": [
-                      "foo"
+                      "string"
                     ],
-                    "key": "foo",
-                    "id": "foo",
-                    "organization_id": "foo",
-                    "project_id": "foo",
-                    "environment_id": "foo",
-                    "created_at": "foo",
-                    "updated_at": "foo"
+                    "key": "string",
+                    "id": "string",
+                    "organization_id": "string",
+                    "project_id": "string",
+                    "environment_id": "string",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2024-01-15T09:30:00Z"
                   }
                 ],
-                "total_count": 42,
+                "total_count": 1,
                 "page_count": 0
               },
               "responseBodyV3": {
@@ -16342,25 +16354,25 @@
                 "value": {
                   "data": [
                     {
-                      "name": "foo",
-                      "description": "foo",
+                      "name": "string",
+                      "description": "string",
                       "permissions": [
-                        "foo"
+                        "string"
                       ],
                       "attributes": {},
                       "extends": [
-                        "foo"
+                        "string"
                       ],
-                      "key": "foo",
-                      "id": "foo",
-                      "organization_id": "foo",
-                      "project_id": "foo",
-                      "environment_id": "foo",
-                      "created_at": "foo",
-                      "updated_at": "foo"
+                      "key": "string",
+                      "id": "string",
+                      "organization_id": "string",
+                      "project_id": "string",
+                      "environment_id": "string",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "updated_at": "2024-01-15T09:30:00Z"
                     }
                   ],
-                  "total_count": 42,
+                  "total_count": 1,
                   "page_count": 0
                 }
               }
@@ -17535,22 +17547,22 @@
               "responseBody": {
                 "roles": [
                   {
-                    "name": "foo",
-                    "description": "foo",
+                    "name": "string",
+                    "description": "string",
                     "permissions": [
-                      "foo"
+                      "string"
                     ],
                     "attributes": {},
                     "extends": [
-                      "foo"
+                      "string"
                     ],
-                    "key": "foo",
-                    "id": "foo",
-                    "organization_id": "foo",
-                    "project_id": "foo",
-                    "environment_id": "foo",
-                    "created_at": "foo",
-                    "updated_at": "foo"
+                    "key": "string",
+                    "id": "string",
+                    "organization_id": "string",
+                    "project_id": "string",
+                    "environment_id": "string",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2024-01-15T09:30:00Z"
                   }
                 ]
               },
@@ -17559,22 +17571,22 @@
                 "value": {
                   "roles": [
                     {
-                      "name": "foo",
-                      "description": "foo",
+                      "name": "string",
+                      "description": "string",
                       "permissions": [
-                        "foo"
+                        "string"
                       ],
                       "attributes": {},
                       "extends": [
-                        "foo"
+                        "string"
                       ],
-                      "key": "foo",
-                      "id": "foo",
-                      "organization_id": "foo",
-                      "project_id": "foo",
-                      "environment_id": "foo",
-                      "created_at": "foo",
-                      "updated_at": "foo"
+                      "key": "string",
+                      "id": "string",
+                      "organization_id": "string",
+                      "project_id": "string",
+                      "environment_id": "string",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "updated_at": "2024-01-15T09:30:00Z"
                     }
                   ]
                 }
@@ -17709,22 +17721,22 @@
               "responseBody": {
                 "roles": [
                   {
-                    "name": "foo",
-                    "description": "foo",
+                    "name": "string",
+                    "description": "string",
                     "permissions": [
-                      "foo"
+                      "string"
                     ],
                     "attributes": {},
                     "extends": [
-                      "foo"
+                      "string"
                     ],
-                    "key": "foo",
-                    "id": "foo",
-                    "organization_id": "foo",
-                    "project_id": "foo",
-                    "environment_id": "foo",
-                    "created_at": "foo",
-                    "updated_at": "foo"
+                    "key": "string",
+                    "id": "string",
+                    "organization_id": "string",
+                    "project_id": "string",
+                    "environment_id": "string",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2024-01-15T09:30:00Z"
                   }
                 ]
               },
@@ -17733,22 +17745,22 @@
                 "value": {
                   "roles": [
                     {
-                      "name": "foo",
-                      "description": "foo",
+                      "name": "string",
+                      "description": "string",
                       "permissions": [
-                        "foo"
+                        "string"
                       ],
                       "attributes": {},
                       "extends": [
-                        "foo"
+                        "string"
                       ],
-                      "key": "foo",
-                      "id": "foo",
-                      "organization_id": "foo",
-                      "project_id": "foo",
-                      "environment_id": "foo",
-                      "created_at": "foo",
-                      "updated_at": "foo"
+                      "key": "string",
+                      "id": "string",
+                      "organization_id": "string",
+                      "project_id": "string",
+                      "environment_id": "string",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "updated_at": "2024-01-15T09:30:00Z"
                     }
                   ]
                 }
@@ -17945,38 +17957,38 @@
               "responseBody": {
                 "data": [
                   {
-                    "key": "foo",
+                    "key": "string",
                     "type": "userset",
                     "autogenerated": false,
-                    "resource_id": "foo",
-                    "id": "foo",
-                    "organization_id": "foo",
-                    "project_id": "foo",
-                    "environment_id": "foo",
-                    "created_at": "foo",
-                    "updated_at": "foo",
+                    "resource_id": "string",
+                    "id": "string",
+                    "organization_id": "string",
+                    "project_id": "string",
+                    "environment_id": "string",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2024-01-15T09:30:00Z",
                     "resource": {
-                      "key": "foo",
-                      "id": "foo",
-                      "organization_id": "foo",
-                      "project_id": "foo",
-                      "environment_id": "foo",
-                      "created_at": "foo",
-                      "updated_at": "foo",
-                      "name": "foo",
-                      "urn": "foo",
-                      "description": "foo",
+                      "key": "string",
+                      "id": "string",
+                      "organization_id": "string",
+                      "project_id": "string",
+                      "environment_id": "string",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                      "name": "string",
+                      "urn": "string",
+                      "description": "string",
                       "actions": {},
                       "attributes": {},
                       "action_groups": {}
                     },
-                    "name": "foo",
-                    "description": "foo",
+                    "name": "string",
+                    "description": "string",
                     "conditions": {},
-                    "parent_id": "foo"
+                    "parent_id": "string"
                   }
                 ],
-                "total_count": 42,
+                "total_count": 1,
                 "page_count": 0
               },
               "responseBodyV3": {
@@ -17984,38 +17996,38 @@
                 "value": {
                   "data": [
                     {
-                      "key": "foo",
+                      "key": "string",
                       "type": "userset",
                       "autogenerated": false,
-                      "resource_id": "foo",
-                      "id": "foo",
-                      "organization_id": "foo",
-                      "project_id": "foo",
-                      "environment_id": "foo",
-                      "created_at": "foo",
-                      "updated_at": "foo",
+                      "resource_id": "string",
+                      "id": "string",
+                      "organization_id": "string",
+                      "project_id": "string",
+                      "environment_id": "string",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "updated_at": "2024-01-15T09:30:00Z",
                       "resource": {
-                        "key": "foo",
-                        "id": "foo",
-                        "organization_id": "foo",
-                        "project_id": "foo",
-                        "environment_id": "foo",
-                        "created_at": "foo",
-                        "updated_at": "foo",
-                        "name": "foo",
-                        "urn": "foo",
-                        "description": "foo",
+                        "key": "string",
+                        "id": "string",
+                        "organization_id": "string",
+                        "project_id": "string",
+                        "environment_id": "string",
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "updated_at": "2024-01-15T09:30:00Z",
+                        "name": "string",
+                        "urn": "string",
+                        "description": "string",
                         "actions": {},
                         "attributes": {},
                         "action_groups": {}
                       },
-                      "name": "foo",
-                      "description": "foo",
+                      "name": "string",
+                      "description": "string",
                       "conditions": {},
-                      "parent_id": "foo"
+                      "parent_id": "string"
                     }
                   ],
-                  "total_count": 42,
+                  "total_count": 1,
                   "page_count": 0
                 }
               }
@@ -18975,70 +18987,70 @@
               "responseStatusCode": 200,
               "responseBody": [
                 {
-                  "key": "foo",
+                  "key": "string",
                   "type": "userset",
                   "autogenerated": false,
-                  "resource_id": "foo",
-                  "id": "foo",
-                  "organization_id": "foo",
-                  "project_id": "foo",
-                  "environment_id": "foo",
-                  "created_at": "foo",
-                  "updated_at": "foo",
+                  "resource_id": "string",
+                  "id": "string",
+                  "organization_id": "string",
+                  "project_id": "string",
+                  "environment_id": "string",
+                  "created_at": "2024-01-15T09:30:00Z",
+                  "updated_at": "2024-01-15T09:30:00Z",
                   "resource": {
-                    "key": "foo",
-                    "id": "foo",
-                    "organization_id": "foo",
-                    "project_id": "foo",
-                    "environment_id": "foo",
-                    "created_at": "foo",
-                    "updated_at": "foo",
-                    "name": "foo",
-                    "urn": "foo",
-                    "description": "foo",
+                    "key": "string",
+                    "id": "string",
+                    "organization_id": "string",
+                    "project_id": "string",
+                    "environment_id": "string",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "name": "string",
+                    "urn": "string",
+                    "description": "string",
                     "actions": {},
                     "attributes": {},
                     "action_groups": {}
                   },
-                  "name": "foo",
-                  "description": "foo",
+                  "name": "string",
+                  "description": "string",
                   "conditions": {},
-                  "parent_id": "foo"
+                  "parent_id": "string"
                 }
               ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
                   {
-                    "key": "foo",
+                    "key": "string",
                     "type": "userset",
                     "autogenerated": false,
-                    "resource_id": "foo",
-                    "id": "foo",
-                    "organization_id": "foo",
-                    "project_id": "foo",
-                    "environment_id": "foo",
-                    "created_at": "foo",
-                    "updated_at": "foo",
+                    "resource_id": "string",
+                    "id": "string",
+                    "organization_id": "string",
+                    "project_id": "string",
+                    "environment_id": "string",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2024-01-15T09:30:00Z",
                     "resource": {
-                      "key": "foo",
-                      "id": "foo",
-                      "organization_id": "foo",
-                      "project_id": "foo",
-                      "environment_id": "foo",
-                      "created_at": "foo",
-                      "updated_at": "foo",
-                      "name": "foo",
-                      "urn": "foo",
-                      "description": "foo",
+                      "key": "string",
+                      "id": "string",
+                      "organization_id": "string",
+                      "project_id": "string",
+                      "environment_id": "string",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                      "name": "string",
+                      "urn": "string",
+                      "description": "string",
                       "actions": {},
                       "attributes": {},
                       "action_groups": {}
                     },
-                    "name": "foo",
-                    "description": "foo",
+                    "name": "string",
+                    "description": "string",
                     "conditions": {},
-                    "parent_id": "foo"
+                    "parent_id": "string"
                   }
                 ]
               }
@@ -19207,70 +19219,70 @@
               "responseStatusCode": 200,
               "responseBody": [
                 {
-                  "key": "foo",
+                  "key": "string",
                   "type": "userset",
                   "autogenerated": false,
-                  "resource_id": "foo",
-                  "id": "foo",
-                  "organization_id": "foo",
-                  "project_id": "foo",
-                  "environment_id": "foo",
-                  "created_at": "foo",
-                  "updated_at": "foo",
+                  "resource_id": "string",
+                  "id": "string",
+                  "organization_id": "string",
+                  "project_id": "string",
+                  "environment_id": "string",
+                  "created_at": "2024-01-15T09:30:00Z",
+                  "updated_at": "2024-01-15T09:30:00Z",
                   "resource": {
-                    "key": "foo",
-                    "id": "foo",
-                    "organization_id": "foo",
-                    "project_id": "foo",
-                    "environment_id": "foo",
-                    "created_at": "foo",
-                    "updated_at": "foo",
-                    "name": "foo",
-                    "urn": "foo",
-                    "description": "foo",
+                    "key": "string",
+                    "id": "string",
+                    "organization_id": "string",
+                    "project_id": "string",
+                    "environment_id": "string",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "name": "string",
+                    "urn": "string",
+                    "description": "string",
                     "actions": {},
                     "attributes": {},
                     "action_groups": {}
                   },
-                  "name": "foo",
-                  "description": "foo",
+                  "name": "string",
+                  "description": "string",
                   "conditions": {},
-                  "parent_id": "foo"
+                  "parent_id": "string"
                 }
               ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
                   {
-                    "key": "foo",
+                    "key": "string",
                     "type": "userset",
                     "autogenerated": false,
-                    "resource_id": "foo",
-                    "id": "foo",
-                    "organization_id": "foo",
-                    "project_id": "foo",
-                    "environment_id": "foo",
-                    "created_at": "foo",
-                    "updated_at": "foo",
+                    "resource_id": "string",
+                    "id": "string",
+                    "organization_id": "string",
+                    "project_id": "string",
+                    "environment_id": "string",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2024-01-15T09:30:00Z",
                     "resource": {
-                      "key": "foo",
-                      "id": "foo",
-                      "organization_id": "foo",
-                      "project_id": "foo",
-                      "environment_id": "foo",
-                      "created_at": "foo",
-                      "updated_at": "foo",
-                      "name": "foo",
-                      "urn": "foo",
-                      "description": "foo",
+                      "key": "string",
+                      "id": "string",
+                      "organization_id": "string",
+                      "project_id": "string",
+                      "environment_id": "string",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                      "name": "string",
+                      "urn": "string",
+                      "description": "string",
                       "actions": {},
                       "attributes": {},
                       "action_groups": {}
                     },
-                    "name": "foo",
-                    "description": "foo",
+                    "name": "string",
+                    "description": "string",
                     "conditions": {},
-                    "parent_id": "foo"
+                    "parent_id": "string"
                   }
                 ]
               }
@@ -19454,33 +19466,33 @@
               "responseBody": {
                 "data": [
                   {
-                    "key": "foo",
-                    "id": "foo",
-                    "organization_id": "foo",
-                    "project_id": "foo",
-                    "environment_id": "foo",
+                    "key": "string",
+                    "id": "string",
+                    "organization_id": "string",
+                    "project_id": "string",
+                    "environment_id": "string",
                     "associated_tenants": [
                       {
-                        "tenant": "foo",
+                        "tenant": "string",
                         "roles": [
-                          "foo"
+                          "string"
                         ],
                         "status": "active"
                       }
                     ],
                     "roles": [
                       {
-                        "role": "foo",
-                        "tenant": "foo"
+                        "role": "string",
+                        "tenant": "string"
                       }
                     ],
-                    "email": "foo",
-                    "first_name": "foo",
-                    "last_name": "foo",
+                    "email": "string",
+                    "first_name": "string",
+                    "last_name": "string",
                     "attributes": {}
                   }
                 ],
-                "total_count": 42,
+                "total_count": 1,
                 "page_count": 0
               },
               "responseBodyV3": {
@@ -19488,33 +19500,33 @@
                 "value": {
                   "data": [
                     {
-                      "key": "foo",
-                      "id": "foo",
-                      "organization_id": "foo",
-                      "project_id": "foo",
-                      "environment_id": "foo",
+                      "key": "string",
+                      "id": "string",
+                      "organization_id": "string",
+                      "project_id": "string",
+                      "environment_id": "string",
                       "associated_tenants": [
                         {
-                          "tenant": "foo",
+                          "tenant": "string",
                           "roles": [
-                            "foo"
+                            "string"
                           ],
                           "status": "active"
                         }
                       ],
                       "roles": [
                         {
-                          "role": "foo",
-                          "tenant": "foo"
+                          "role": "string",
+                          "tenant": "string"
                         }
                       ],
-                      "email": "foo",
-                      "first_name": "foo",
-                      "last_name": "foo",
+                      "email": "string",
+                      "first_name": "string",
+                      "last_name": "string",
                       "attributes": {}
                     }
                   ],
-                  "total_count": 42,
+                  "total_count": 1,
                   "page_count": 0
                 }
               }
@@ -21117,33 +21129,33 @@
               "responseBody": {
                 "data": [
                   {
-                    "key": "foo",
-                    "id": "foo",
-                    "organization_id": "foo",
-                    "project_id": "foo",
-                    "environment_id": "foo",
+                    "key": "string",
+                    "id": "string",
+                    "organization_id": "string",
+                    "project_id": "string",
+                    "environment_id": "string",
                     "associated_tenants": [
                       {
-                        "tenant": "foo",
+                        "tenant": "string",
                         "roles": [
-                          "foo"
+                          "string"
                         ],
                         "status": "active"
                       }
                     ],
                     "roles": [
                       {
-                        "role": "foo",
-                        "tenant": "foo"
+                        "role": "string",
+                        "tenant": "string"
                       }
                     ],
-                    "email": "foo",
-                    "first_name": "foo",
-                    "last_name": "foo",
+                    "email": "string",
+                    "first_name": "string",
+                    "last_name": "string",
                     "attributes": {}
                   }
                 ],
-                "total_count": 42,
+                "total_count": 1,
                 "page_count": 0
               },
               "responseBodyV3": {
@@ -21151,33 +21163,33 @@
                 "value": {
                   "data": [
                     {
-                      "key": "foo",
-                      "id": "foo",
-                      "organization_id": "foo",
-                      "project_id": "foo",
-                      "environment_id": "foo",
+                      "key": "string",
+                      "id": "string",
+                      "organization_id": "string",
+                      "project_id": "string",
+                      "environment_id": "string",
                       "associated_tenants": [
                         {
-                          "tenant": "foo",
+                          "tenant": "string",
                           "roles": [
-                            "foo"
+                            "string"
                           ],
                           "status": "active"
                         }
                       ],
                       "roles": [
                         {
-                          "role": "foo",
-                          "tenant": "foo"
+                          "role": "string",
+                          "tenant": "string"
                         }
                       ],
-                      "email": "foo",
-                      "first_name": "foo",
-                      "last_name": "foo",
+                      "email": "string",
+                      "first_name": "string",
+                      "last_name": "string",
                       "attributes": {}
                     }
                   ],
-                  "total_count": 42,
+                  "total_count": 1,
                   "page_count": 0
                 }
               }
@@ -21352,20 +21364,20 @@
               "responseBody": {
                 "data": [
                   {
-                    "key": "foo",
-                    "id": "foo",
-                    "organization_id": "foo",
-                    "project_id": "foo",
-                    "environment_id": "foo",
-                    "created_at": "foo",
-                    "updated_at": "foo",
-                    "last_action_at": "foo",
-                    "name": "foo",
-                    "description": "foo",
+                    "key": "string",
+                    "id": "string",
+                    "organization_id": "string",
+                    "project_id": "string",
+                    "environment_id": "string",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "last_action_at": "2024-01-15T09:30:00Z",
+                    "name": "string",
+                    "description": "string",
                     "attributes": {}
                   }
                 ],
-                "total_count": 42,
+                "total_count": 1,
                 "page_count": 0
               },
               "responseBodyV3": {
@@ -21373,20 +21385,20 @@
                 "value": {
                   "data": [
                     {
-                      "key": "foo",
-                      "id": "foo",
-                      "organization_id": "foo",
-                      "project_id": "foo",
-                      "environment_id": "foo",
-                      "created_at": "foo",
-                      "updated_at": "foo",
-                      "last_action_at": "foo",
-                      "name": "foo",
-                      "description": "foo",
+                      "key": "string",
+                      "id": "string",
+                      "organization_id": "string",
+                      "project_id": "string",
+                      "environment_id": "string",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "updated_at": "2024-01-15T09:30:00Z",
+                      "last_action_at": "2024-01-15T09:30:00Z",
+                      "name": "string",
+                      "description": "string",
                       "attributes": {}
                     }
                   ],
-                  "total_count": 42,
+                  "total_count": 1,
                   "page_count": 0
                 }
               }
@@ -22368,34 +22380,34 @@
               "responseStatusCode": 200,
               "responseBody": [
                 {
-                  "id": "foo",
-                  "user": "foo",
-                  "role": "foo",
-                  "tenant": "foo",
-                  "user_id": "foo",
-                  "role_id": "foo",
-                  "tenant_id": "foo",
-                  "organization_id": "foo",
-                  "project_id": "foo",
-                  "environment_id": "foo",
-                  "created_at": "foo"
+                  "id": "string",
+                  "user": "string",
+                  "role": "string",
+                  "tenant": "string",
+                  "user_id": "string",
+                  "role_id": "string",
+                  "tenant_id": "string",
+                  "organization_id": "string",
+                  "project_id": "string",
+                  "environment_id": "string",
+                  "created_at": "2024-01-15T09:30:00Z"
                 }
               ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
                   {
-                    "id": "foo",
-                    "user": "foo",
-                    "role": "foo",
-                    "tenant": "foo",
-                    "user_id": "foo",
-                    "role_id": "foo",
-                    "tenant_id": "foo",
-                    "organization_id": "foo",
-                    "project_id": "foo",
-                    "environment_id": "foo",
-                    "created_at": "foo"
+                    "id": "string",
+                    "user": "string",
+                    "role": "string",
+                    "tenant": "string",
+                    "user_id": "string",
+                    "role_id": "string",
+                    "tenant_id": "string",
+                    "organization_id": "string",
+                    "project_id": "string",
+                    "environment_id": "string",
+                    "created_at": "2024-01-15T09:30:00Z"
                   }
                 ]
               }
@@ -22812,18 +22824,18 @@
               "headers": {},
               "requestBody": [
                 {
-                  "role": "foo",
-                  "tenant": "foo",
-                  "user": "foo"
+                  "role": "string",
+                  "tenant": "string",
+                  "user": "string"
                 }
               ],
               "requestBodyV3": {
                 "type": "json",
                 "value": [
                   {
-                    "role": "foo",
-                    "tenant": "foo",
-                    "user": "foo"
+                    "role": "string",
+                    "tenant": "string",
+                    "user": "string"
                   }
                 ]
               },
@@ -22962,18 +22974,18 @@
               "headers": {},
               "requestBody": [
                 {
-                  "role": "foo",
-                  "tenant": "foo",
-                  "user": "foo"
+                  "role": "string",
+                  "tenant": "string",
+                  "user": "string"
                 }
               ],
               "requestBodyV3": {
                 "type": "json",
                 "value": [
                   {
-                    "role": "foo",
-                    "tenant": "foo",
-                    "user": "foo"
+                    "role": "string",
+                    "tenant": "string",
+                    "user": "string"
                   }
                 ]
               },
@@ -23182,32 +23194,32 @@
               "responseStatusCode": 200,
               "responseBody": [
                 {
-                  "id": "foo",
-                  "key": "foo",
-                  "user_set": "foo",
-                  "permission": "foo",
-                  "resource_set": "foo",
-                  "organization_id": "foo",
-                  "project_id": "foo",
-                  "environment_id": "foo",
-                  "created_at": "foo",
-                  "updated_at": "foo"
+                  "id": "string",
+                  "key": "string",
+                  "user_set": "string",
+                  "permission": "string",
+                  "resource_set": "string",
+                  "organization_id": "string",
+                  "project_id": "string",
+                  "environment_id": "string",
+                  "created_at": "2024-01-15T09:30:00Z",
+                  "updated_at": "2024-01-15T09:30:00Z"
                 }
               ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
                   {
-                    "id": "foo",
-                    "key": "foo",
-                    "user_set": "foo",
-                    "permission": "foo",
-                    "resource_set": "foo",
-                    "organization_id": "foo",
-                    "project_id": "foo",
-                    "environment_id": "foo",
-                    "created_at": "foo",
-                    "updated_at": "foo"
+                    "id": "string",
+                    "key": "string",
+                    "user_set": "string",
+                    "permission": "string",
+                    "resource_set": "string",
+                    "organization_id": "string",
+                    "project_id": "string",
+                    "environment_id": "string",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2024-01-15T09:30:00Z"
                   }
                 ]
               }
@@ -23351,32 +23363,32 @@
               "responseStatusCode": 200,
               "responseBody": [
                 {
-                  "id": "foo",
-                  "key": "foo",
-                  "user_set": "foo",
-                  "permission": "foo",
-                  "resource_set": "foo",
-                  "organization_id": "foo",
-                  "project_id": "foo",
-                  "environment_id": "foo",
-                  "created_at": "foo",
-                  "updated_at": "foo"
+                  "id": "string",
+                  "key": "string",
+                  "user_set": "string",
+                  "permission": "string",
+                  "resource_set": "string",
+                  "organization_id": "string",
+                  "project_id": "string",
+                  "environment_id": "string",
+                  "created_at": "2024-01-15T09:30:00Z",
+                  "updated_at": "2024-01-15T09:30:00Z"
                 }
               ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
                   {
-                    "id": "foo",
-                    "key": "foo",
-                    "user_set": "foo",
-                    "permission": "foo",
-                    "resource_set": "foo",
-                    "organization_id": "foo",
-                    "project_id": "foo",
-                    "environment_id": "foo",
-                    "created_at": "foo",
-                    "updated_at": "foo"
+                    "id": "string",
+                    "key": "string",
+                    "user_set": "string",
+                    "permission": "string",
+                    "resource_set": "string",
+                    "organization_id": "string",
+                    "project_id": "string",
+                    "environment_id": "string",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2024-01-15T09:30:00Z"
                   }
                 ]
               }
@@ -23660,17 +23672,17 @@
               "responseStatusCode": 200,
               "responseBody": [
                 {
-                  "key": "foo",
-                  "tenant": "foo",
-                  "resource": "foo",
-                  "id": "foo",
-                  "organization_id": "foo",
-                  "project_id": "foo",
-                  "environment_id": "foo",
-                  "created_at": "foo",
-                  "updated_at": "foo",
-                  "resource_id": "foo",
-                  "tenant_id": "foo",
+                  "key": "string",
+                  "tenant": "string",
+                  "resource": "string",
+                  "id": "string",
+                  "organization_id": "string",
+                  "project_id": "string",
+                  "environment_id": "string",
+                  "created_at": "2024-01-15T09:30:00Z",
+                  "updated_at": "2024-01-15T09:30:00Z",
+                  "resource_id": "string",
+                  "tenant_id": "string",
                   "attributes": {}
                 }
               ],
@@ -23678,17 +23690,17 @@
                 "type": "json",
                 "value": [
                   {
-                    "key": "foo",
-                    "tenant": "foo",
-                    "resource": "foo",
-                    "id": "foo",
-                    "organization_id": "foo",
-                    "project_id": "foo",
-                    "environment_id": "foo",
-                    "created_at": "foo",
-                    "updated_at": "foo",
-                    "resource_id": "foo",
-                    "tenant_id": "foo",
+                    "key": "string",
+                    "tenant": "string",
+                    "resource": "string",
+                    "id": "string",
+                    "organization_id": "string",
+                    "project_id": "string",
+                    "environment_id": "string",
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2024-01-15T09:30:00Z",
+                    "resource_id": "string",
+                    "tenant_id": "string",
                     "attributes": {}
                   }
                 ]
@@ -24481,7 +24493,7 @@
               "requestBody": {
                 "operations": [
                   {
-                    "key": "foo"
+                    "key": "string"
                   }
                 ]
               },
@@ -24490,7 +24502,7 @@
                 "value": {
                   "operations": [
                     {
-                      "key": "foo"
+                      "key": "string"
                     }
                   ]
                 }
@@ -24624,7 +24636,7 @@
               "requestBody": {
                 "operations": [
                   {
-                    "key": "foo"
+                    "key": "string"
                   }
                 ]
               },
@@ -24633,7 +24645,7 @@
                 "value": {
                   "operations": [
                     {
-                      "key": "foo"
+                      "key": "string"
                     }
                   ]
                 }
@@ -24766,14 +24778,14 @@
               "headers": {},
               "requestBody": {
                 "idents": [
-                  "foo"
+                  "string"
                 ]
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "idents": [
-                    "foo"
+                    "string"
                   ]
                 }
               },
@@ -24906,8 +24918,8 @@
               "requestBody": {
                 "operations": [
                   {
-                    "key": "foo",
-                    "name": "foo"
+                    "key": "string",
+                    "name": "string"
                   }
                 ]
               },
@@ -24916,8 +24928,8 @@
                 "value": {
                   "operations": [
                     {
-                      "key": "foo",
-                      "name": "foo"
+                      "key": "string",
+                      "name": "string"
                     }
                   ]
                 }
@@ -25050,14 +25062,14 @@
               "headers": {},
               "requestBody": {
                 "idents": [
-                  "foo"
+                  "string"
                 ]
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "idents": [
-                    "foo"
+                    "string"
                   ]
                 }
               },

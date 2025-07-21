@@ -44,7 +44,8 @@
             "type": {
               "type": "id",
               "value": "Schema1"
-            }
+            },
+            "displayName": "Schema1"
           }
         ]
       }
@@ -95,14 +96,14 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "id": 42,
-              "name": "foo"
+              "id": 1,
+              "name": "string"
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "id": 42,
-                "name": "foo"
+                "id": 1,
+                "name": "string"
               }
             }
           }

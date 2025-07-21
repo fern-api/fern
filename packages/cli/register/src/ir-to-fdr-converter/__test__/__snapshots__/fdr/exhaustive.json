@@ -145,6 +145,25 @@
         ]
       }
     },
+    "type_types/docs:ObjectWithDocs": {
+      "name": "ObjectWithDocs",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "Characters that could lead to broken generated SDKs:\n\nJSDoc (JavaScript/TypeScript):\n- @: Used for JSDoc tags\n- {: }: Used for type definitions\n- <: >: HTML tags\n- *: Can interfere with comment blocks\n- /**: JSDoc comment start\n- ** /: JSDoc comment end\n- &: HTML entities\n\nXMLDoc (C#):\n- <: >: XML tags\n- &: ': \": <: >: XML special characters\n- {: }: Used for interpolated strings\n- ///: Comment marker\n- /**: Block comment start\n- ** /: Block comment end\n\nJavadoc (Java):\n- @: Used for Javadoc tags\n- <: >: HTML tags\n- &: HTML entities\n- *: Can interfere with comment blocks\n- /**: Javadoc comment start\n- ** /: Javadoc comment end\n\nDoxygen (C++):\n- \\: Used for Doxygen commands\n- @: Alternative command prefix\n- <: >: XML/HTML tags\n- &: HTML entities\n- /**: C-style comment start\n- ** /: C-style comment end\n\nRDoc (Ruby):\n- :: Used in symbol notation\n- =: Section markers\n- #: Comment marker\n- =begin: Block comment start\n- =end: Block comment end\n- @: Instance variable prefix\n- $: Global variable prefix\n- %: String literal delimiter\n- #{: String interpolation start\n- }: String interpolation end\n\nPHPDoc (PHP):\n- @: Used for PHPDoc tags\n- {: }: Used for type definitions\n- $: Variable prefix\n- /**: PHPDoc comment start\n- ** /: PHPDoc comment end\n- *: Can interfere with comment blocks\n- &: HTML entities",
+            "key": "string",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
     "type_types/enum:WeatherReport": {
       "name": "WeatherReport",
       "shape": {
@@ -589,7 +608,8 @@
         "subpackage_endpoints/params",
         "subpackage_endpoints/primitive",
         "subpackage_endpoints/put",
-        "subpackage_endpoints/union"
+        "subpackage_endpoints/union",
+        "subpackage_endpoints/urls"
       ]
     },
     "subpackage_endpoints/container": {
@@ -4003,6 +4023,212 @@
       "types": [],
       "subpackages": []
     },
+    "subpackage_endpoints/urls": {
+      "subpackageId": "subpackage_endpoints/urls",
+      "name": "urls",
+      "endpoints": [
+        {
+          "auth": true,
+          "method": "GET",
+          "id": "withMixedCase",
+          "originalEndpointId": "endpoint_endpoints/urls.withMixedCase",
+          "name": "With Mixed Case",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/urls"
+              },
+              {
+                "type": "literal",
+                "value": "/MixedCase"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/urls/MixedCase",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": "string",
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": true,
+          "method": "GET",
+          "id": "noEndingSlash",
+          "originalEndpointId": "endpoint_endpoints/urls.noEndingSlash",
+          "name": "No Ending Slash",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/urls"
+              },
+              {
+                "type": "literal",
+                "value": "/no-ending-slash"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/urls/no-ending-slash",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": "string",
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": true,
+          "method": "GET",
+          "id": "withEndingSlash",
+          "originalEndpointId": "endpoint_endpoints/urls.withEndingSlash",
+          "name": "With Ending Slash",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/urls"
+              },
+              {
+                "type": "literal",
+                "value": "/with-ending-slash/"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/urls/with-ending-slash/",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": "string",
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": true,
+          "method": "GET",
+          "id": "withUnderscores",
+          "originalEndpointId": "endpoint_endpoints/urls.withUnderscores",
+          "name": "With Underscores",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/urls"
+              },
+              {
+                "type": "literal",
+                "value": "/with_underscores"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/urls/with_underscores",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": "string",
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            }
+          ]
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    },
     "subpackage_general-errors": {
       "subpackageId": "subpackage_general-errors",
       "name": "general-errors",
@@ -4512,10 +4738,22 @@
       "websockets": [],
       "types": [],
       "subpackages": [
+        "subpackage_types/docs",
         "subpackage_types/enum",
         "subpackage_types/object",
         "subpackage_types/union"
       ]
+    },
+    "subpackage_types/docs": {
+      "subpackageId": "subpackage_types/docs",
+      "name": "docs",
+      "endpoints": [],
+      "webhooks": [],
+      "websockets": [],
+      "types": [
+        "type_types/docs:ObjectWithDocs"
+      ],
+      "subpackages": []
     },
     "subpackage_types/enum": {
       "subpackageId": "subpackage_types/enum",

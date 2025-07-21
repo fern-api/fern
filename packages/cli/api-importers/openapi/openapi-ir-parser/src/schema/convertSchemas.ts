@@ -323,7 +323,7 @@ export function convertSchemaObject(
             .filter((val) => val !== "null")
             .map((type) => {
                 return {
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                     type: type as any,
                     nullable: wrapVariantAsNullable
                 };
@@ -1020,7 +1020,7 @@ export function convertToReferencedSchema(
 ): ReferencedSchema {
     const overrideTypeName = getFernTypeNameExtension(schema, undefined, context.logger);
     const generatedName = getGeneratedTypeName(breadcrumbs, preserveSchemaIds);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     const description = (schema as any).description;
     const availability = convertAvailability(schema);
 
@@ -1364,16 +1364,16 @@ function getPossibleDiscriminantsForSchemaObject({
 // to generate a discriminated union, where an undiscriminated
 // union would otherwise be required.
 //
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: allow explicit any
 function getEnumSet(enums: any[] | undefined): any[] {
     if (!enums) {
         return [];
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     const set = new Set<any>();
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     enums.forEach((item: any) => {
         if (typeof item === "string") {
             set.add(item.toLowerCase());
@@ -1386,7 +1386,7 @@ function getEnumSet(enums: any[] | undefined): any[] {
 }
 
 export function getProperty<T>(object: object, property: string): T | undefined {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     const extensionValue = (object as any)[property];
     if (extensionValue != null) {
         return extensionValue as T;
