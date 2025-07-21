@@ -1,6 +1,6 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractPythonGeneratorContext, PythonProject } from "@fern-api/python-base";
-import { PythonWireTestGenerator } from "./test-generation";
+import { PythonWireTestGenerator } from "./test-generation/PythonWireTestGenerator";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
@@ -31,13 +31,18 @@ export class SdkGeneratorContext extends AbstractPythonGeneratorContext<SdkCusto
             // Add required dependencies for wire tests
             this.addWireTestDependencies();
             
-            const wireTestGenerator = new PythonWireTestGenerator(this);
-            const wireTestFiles = wireTestGenerator.generateWireTests();
-            
-            // Add wire test files to the project
-            wireTestFiles.forEach(file => {
-                this.project.addRawFiles(file);
-            });
+            // Generate wire tests synchronously in constructor like the original
+            try {
+                const wireTestGenerator = new PythonWireTestGenerator(this);
+                const wireTestFiles = wireTestGenerator.generateWireTests();
+                
+                // Add wire test files to the project
+                wireTestFiles.forEach((file: any) => {
+                    this.project.addRawFiles(file);
+                });
+            } catch (error) {
+                this.logger.warn(`Failed to generate wire tests: ${error}`);
+            }
         }
     }
 
@@ -52,4 +57,6 @@ export class SdkGeneratorContext extends AbstractPythonGeneratorContext<SdkCusto
     private addWireTestDependencies(): void {
         // TODO: handle extra deps
     }
+
+
 }
