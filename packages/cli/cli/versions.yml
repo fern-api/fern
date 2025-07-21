@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |  
-        Improvements to the docs dev server connection.
+        `fern docs dev` server connection should no longer require frequent refresh.
       type: fix
   irVersion: 58
   createdAt: "2025-07-21"
