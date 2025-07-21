@@ -16,9 +16,10 @@ import {
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { EndpointSignatureInfo } from "./EndpointSignatureInfo";
 import { EndpointRequest } from "./request/EndpointRequest";
+import { getEndpointPageReturnType } from "./utils/getEndpointPageReturnType";
 import { getEndpointRequest } from "./utils/getEndpointRequest";
-import { getEndpointReturnTypes } from "./utils/getEndpointReturnTypes";
-import { getEndpointReturnZeroValues } from "./utils/getEndpointReturnZeroValue";
+import { getEndpointReturnType } from "./utils/getEndpointReturnType";
+import { getEndpointReturnZeroValue } from "./utils/getEndpointReturnZeroValue";
 import { getRawEndpointReturnTypeReference } from "./utils/getRawEndpointReturnTypeReference";
 
 export abstract class AbstractEndpointGenerator {
@@ -50,18 +51,16 @@ export abstract class AbstractEndpointGenerator {
                 ? this.context.getVariadicIdempotentRequestOptionParameter()
                 : this.context.getVariadicRequestOptionParameter()
         ].filter((p): p is go.Parameter => p != null);
-        const returnType = getEndpointReturnTypes({ context: this.context, endpoint });
-        const rawReturnTypeReference = getRawEndpointReturnTypeReference({ context: this.context, endpoint });
-        const returnZeroValue = getEndpointReturnZeroValues({ context: this.context, endpoint });
         return {
-            allParameters,
             pathParameters,
             pathParameterReferences,
             request,
             requestParameter,
-            returnType,
-            rawReturnTypeReference,
-            returnZeroValue
+            allParameters,
+            returnType: getEndpointReturnType({ context: this.context, endpoint }),
+            pageReturnType: getEndpointPageReturnType({ context: this.context, endpoint }),
+            rawReturnTypeReference: getRawEndpointReturnTypeReference({ context: this.context, endpoint }),
+            returnZeroValue: getEndpointReturnZeroValue({ context: this.context, endpoint })
         };
     }
 
@@ -159,6 +158,7 @@ export abstract class AbstractEndpointGenerator {
 
     private getSingleFileParameter({ fileProperty }: { fileProperty: FilePropertySingle }): go.Parameter {
         return go.parameter({
+            docs: fileProperty.docs,
             type: go.Type.reference(this.context.getIoReaderTypeReference()),
             name: this.context.getParameterName(fileProperty.key.name)
         });
@@ -166,6 +166,7 @@ export abstract class AbstractEndpointGenerator {
 
     private getFileArrayParameter({ fileProperty }: { fileProperty: FilePropertyArray }): go.Parameter {
         return go.parameter({
+            docs: fileProperty.docs,
             type: go.Type.slice(go.Type.reference(this.context.getIoReaderTypeReference())),
             name: this.context.getParameterName(fileProperty.key.name)
         });

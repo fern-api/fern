@@ -12,11 +12,11 @@ import (
 )
 
 type Client struct {
+	Service *service.Client
+
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header
-
-	Service *service.Client
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -31,6 +31,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 		options.XApiVersion = os.Getenv("VERSION")
 	}
 	return &Client{
+		Service: service.NewClient(opts...),
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -38,7 +39,6 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header:  options.ToHeader(),
-		Service: service.NewClient(opts...),
+		header: options.ToHeader(),
 	}
 }

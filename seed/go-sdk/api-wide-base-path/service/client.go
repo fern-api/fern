@@ -11,25 +11,25 @@ import (
 )
 
 type Client struct {
+	WithRawResponse *RawClient
+
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header
-
-	WithRawResponse *RawClient
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		baseURL: options.BaseURL,
+		WithRawResponse: NewRawClient(options),
+		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header:          options.ToHeader(),
-		WithRawResponse: NewRawClient(options),
+		header: options.ToHeader(),
 	}
 }
 
@@ -41,36 +41,15 @@ func (c *Client) Post(
 	endpointParam int,
 	opts ...option.RequestOption,
 ) error {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
-	)
-	endpointURL := internal.EncodeURL(
-		baseURL+"/test/%v/%v/%v/%v",
+	_, err := c.WithRawResponse.Post(
+		ctx,
 		pathParam,
 		serviceParam,
-		endpointParam,
 		resourceParam,
+		endpointParam,
+		opts...,
 	)
-	headers := internal.MergeHeaders(
-		c.header.Clone(),
-		options.ToHeader(),
-	)
-
-	if _, err := c.caller.Call(
-		ctx,
-		&internal.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodPost,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-		},
-	); err != nil {
+	if err != nil {
 		return err
 	}
 	return nil

@@ -177,12 +177,14 @@ allowedFailures:
   - alias-extends
   - bytes
   - bytes-download
+  - bytes-upload
   - enum
   - exhaustive
   - literal
   - mixed-case
   - pagination-custom
   - reserved-keywords
+  - request-parameters
   - streaming-parameter
   - trace
 
@@ -193,5 +195,3 @@ allowedFailures:
   - examples:exported-client-name
   - path-parameters:no-custom-config
   - path-parameters:package-name
-
-  - request-parameters

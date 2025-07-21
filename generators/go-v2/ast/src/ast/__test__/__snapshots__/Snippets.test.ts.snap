@@ -216,14 +216,14 @@ exports[`file > import collision 1`] = `
 
 import (
     common "github.com/acme/acme-go/common"
-    _common "github.com/acme/acme-go/nested/common"
+    nestedcommon "github.com/acme/acme-go/nested/common"
 )
 
 type Foo struct {
     Name common.Identifier
 }
 type Bar struct {
-    Name _common.Identifier
+    Name nestedcommon.Identifier
 }
 "
 `;
