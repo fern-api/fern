@@ -54,35 +54,6 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
 
         struct.addConstructor(this.getConstructor());
 
-        struct.addField(
-            go.field({
-                name: "baseURL",
-                type: go.Type.string()
-            }),
-            this.context.caller.getField(),
-            go.field({
-                name: "header",
-                type: go.Type.reference(this.context.getNetHttpHeaderTypeReference())
-            })
-        );
-
-        for (const subpackageId of this.nestedSubpackages) {
-            const subpackage = this.context.getSubpackageOrThrow(subpackageId);
-            if (!this.context.shouldGenerateSubpackageClient(subpackage)) {
-                continue;
-            }
-            struct.addField(
-                go.field({
-                    name: this.context.getClassName(subpackage.name),
-                    type: go.Type.pointer(
-                        go.Type.reference(
-                            this.context.getClientClassReference({ fernFilepath: subpackage.fernFilepath, subpackage })
-                        )
-                    )
-                })
-            );
-        }
-
         if (this.serviceId != null && this.service != null) {
             for (const endpoint of this.service.endpoints) {
                 const methods = this.context.endpointGenerator.generate({
@@ -110,6 +81,35 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
             }
         }
 
+        for (const subpackageId of this.nestedSubpackages) {
+            const subpackage = this.context.getSubpackageOrThrow(subpackageId);
+            if (!this.context.shouldGenerateSubpackageClient(subpackage)) {
+                continue;
+            }
+            struct.addField(
+                go.field({
+                    name: this.context.getClassName(subpackage.name),
+                    type: go.Type.pointer(
+                        go.Type.reference(
+                            this.context.getClientClassReference({ fernFilepath: subpackage.fernFilepath, subpackage })
+                        )
+                    )
+                })
+            );
+        }
+
+        struct.addField(
+            go.field({
+                name: "baseURL",
+                type: go.Type.string()
+            }),
+            this.context.caller.getField(),
+            go.field({
+                name: "header",
+                type: go.Type.reference(this.context.getNetHttpHeaderTypeReference())
+            })
+        );
+
         return new GoFile({
             node: struct,
             rootImportPath: this.context.getRootImportPath(),
@@ -126,7 +126,24 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
     }
 
     private getConstructor(): go.Struct.Constructor {
-        const fields = [
+        const fields: go.StructField[] = [];
+        for (const subpackageId of this.nestedSubpackages) {
+            const subpackage = this.context.getSubpackageOrThrow(subpackageId);
+            if (!this.context.shouldGenerateSubpackageClient(subpackage)) {
+                continue;
+            }
+            fields.push({
+                name: this.context.getClassName(subpackage.name),
+                value: this.instantiateClient({ subpackage })
+            });
+        }
+        if (this.service != null && this.service.endpoints.length > 0) {
+            fields.push({
+                name: "WithRawResponse",
+                value: this.instantiateRawClient()
+            });
+        }
+        fields.push(
             {
                 name: "baseURL",
                 value: go.TypeInstantiation.reference(
@@ -164,23 +181,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                     })
                 )
             }
-        ];
-        for (const subpackageId of this.nestedSubpackages) {
-            const subpackage = this.context.getSubpackageOrThrow(subpackageId);
-            if (!this.context.shouldGenerateSubpackageClient(subpackage)) {
-                continue;
-            }
-            fields.push({
-                name: this.context.getClassName(subpackage.name),
-                value: this.instantiateClient({ subpackage })
-            });
-        }
-        if (this.service != null && this.service.endpoints.length > 0) {
-            fields.push({
-                name: "WithRawResponse",
-                value: this.instantiateRawClient()
-            });
-        }
+        );
         return {
             name: this.context.getClientConstructorName(this.subpackage),
             parameters: [this.context.getVariadicRequestOptionParameter()],
