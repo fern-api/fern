@@ -466,7 +466,8 @@ export async function runAppPreviewServer({
     })
 
     // await infinitely
-    // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    await new Promise(() => {});
+    await new Promise(() => {
+        // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
+    });
 }
