@@ -2240,6 +2240,7 @@
                     "safeName": "A"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -2319,6 +2320,7 @@
                     "safeName": "B"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -2432,6 +2434,7 @@
                     "safeName": "C"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -2545,6 +2548,7 @@
                     "safeName": "Folder"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -2622,6 +2626,7 @@
                     "safeName": "D"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -2737,6 +2742,7 @@
                     "safeName": "Types"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -2889,6 +2895,7 @@
                     "safeName": "Service"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {

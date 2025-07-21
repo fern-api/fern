@@ -704,6 +704,7 @@
   "sourceConfig": undefined,
   "subpackages": {
     "subpackage_types": {
+      "displayName": undefined,
       "docs": undefined,
       "errors": [],
       "fernFilepath": {
