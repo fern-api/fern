@@ -12,6 +12,7 @@ import (
 
 type Client struct {
 	Unknown *unknown.Client
+
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header

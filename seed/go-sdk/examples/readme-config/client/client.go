@@ -19,9 +19,10 @@ type Acme struct {
 	File            *client.Client
 	Health          *healthclient.Client
 	Service         *service.Client
-	baseURL         string
-	caller          *internal.Caller
-	header          http.Header
+
+	baseURL string
+	caller  *internal.Caller
+	header  http.Header
 }
 
 func New(opts ...option.RequestOption) *Acme {

@@ -13,9 +13,10 @@ import (
 type Acme struct {
 	WithRawResponse *RawAcme
 	Service         *ServiceClient
-	baseURL         string
-	caller          *internal.Caller
-	header          http.Header
+
+	baseURL string
+	caller  *internal.Caller
+	header  http.Header
 }
 
 func New(opts ...option.RequestOption) *Acme {

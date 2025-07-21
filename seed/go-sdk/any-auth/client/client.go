@@ -13,8 +13,9 @@ import (
 )
 
 type Client struct {
-	Auth    *auth.Client
-	User    *user.Client
+	Auth *auth.Client
+	User *user.Client
+
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header

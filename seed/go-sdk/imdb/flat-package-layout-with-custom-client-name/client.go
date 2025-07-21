@@ -10,7 +10,8 @@ import (
 )
 
 type Acme struct {
-	Imdb    *ImdbClient
+	Imdb *ImdbClient
+
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header

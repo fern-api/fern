@@ -14,6 +14,7 @@ import (
 type Client struct {
 	Complex *complex.Client
 	Users   *users.Client
+
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header

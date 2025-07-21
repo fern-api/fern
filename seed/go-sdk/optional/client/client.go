@@ -12,9 +12,10 @@ import (
 
 type Client struct {
 	Optional *optional.Client
-	baseURL  string
-	caller   *internal.Caller
-	header   http.Header
+
+	baseURL string
+	caller  *internal.Caller
+	header  http.Header
 }
 
 func NewClient(opts ...option.RequestOption) *Client {

@@ -12,8 +12,9 @@ import (
 )
 
 type Client struct {
-	B       *client.Client
-	C       *cclient.Client
+	B *client.Client
+	C *cclient.Client
+
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header

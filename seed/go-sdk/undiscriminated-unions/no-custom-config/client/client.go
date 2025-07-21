@@ -11,7 +11,8 @@ import (
 )
 
 type Client struct {
-	Union   *union.Client
+	Union *union.Client
+
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header

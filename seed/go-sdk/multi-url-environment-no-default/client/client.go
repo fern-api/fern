@@ -12,8 +12,9 @@ import (
 )
 
 type Client struct {
-	Ec2     *ec2.Client
-	S3      *s3.Client
+	Ec2 *ec2.Client
+	S3  *s3.Client
+
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header

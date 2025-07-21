@@ -12,6 +12,7 @@ import (
 
 type Client struct {
 	Payment *payment.Client
+
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header

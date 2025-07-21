@@ -13,6 +13,7 @@ import (
 
 type Client struct {
 	Service *service.Client
+
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header

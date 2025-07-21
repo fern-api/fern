@@ -14,9 +14,10 @@ import (
 type Client struct {
 	Organization *organization.Client
 	User         *client.Client
-	baseURL      string
-	caller       *internal.Caller
-	header       http.Header
+
+	baseURL string
+	caller  *internal.Caller
+	header  http.Header
 }
 
 func NewClient(opts ...option.RequestOption) *Client {

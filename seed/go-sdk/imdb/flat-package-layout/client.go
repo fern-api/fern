@@ -10,7 +10,8 @@ import (
 )
 
 type Client struct {
-	Imdb    *ImdbClient
+	Imdb *ImdbClient
+
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header

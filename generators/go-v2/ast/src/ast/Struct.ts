@@ -1,5 +1,3 @@
-import { CodeBlock } from "@fern-api/browser-compatible-base-generator";
-
 import { Comment } from "./Comment";
 import { Field } from "./Field";
 import { Method } from "./Method";
@@ -71,7 +69,17 @@ export class Struct extends AstNode {
         }
         writer.newLine();
         writer.indent();
-        for (const field of this.fields) {
+        const exportedFields = this.fields.filter((field) => this.isExported(field));
+        for (const field of exportedFields) {
+            writer.writeNode(field);
+            writer.newLine();
+        }
+        const unexportedFields = this.fields.filter((field) => !this.isExported(field));
+        if (exportedFields.length > 0 && unexportedFields.length > 0) {
+            // Exported fields are grouped separately from unexported fields.
+            writer.newLine();
+        }
+        for (const field of unexportedFields) {
             writer.writeNode(field);
             writer.newLine();
         }
@@ -106,5 +114,10 @@ export class Struct extends AstNode {
             writer.writeNode(method);
             writer.newLine();
         }
+    }
+
+    private isExported(field: Field): boolean {
+        const char = field.name.charAt(0);
+        return char === char.toUpperCase();
     }
 }

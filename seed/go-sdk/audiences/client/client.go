@@ -16,6 +16,7 @@ type Client struct {
 	FolderA *client.Client
 	FolderD *folderdclient.Client
 	Foo     *foo.Client
+
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header

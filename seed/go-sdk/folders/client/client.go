@@ -16,9 +16,10 @@ type Client struct {
 	WithRawResponse *RawClient
 	A               *client.Client
 	Folder          *folderclient.Client
-	baseURL         string
-	caller          *internal.Caller
-	header          http.Header
+
+	baseURL string
+	caller  *internal.Caller
+	header  http.Header
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
