@@ -183,16 +183,16 @@ export async function runAppPreviewServer({
                 context.logger.error(`Failed to kill server process: ${err}`);
             }
         }
-        
-        context.logger.debug("Cleaning up WebSocket connections...")
+
+        context.logger.debug("Cleaning up WebSocket connections...");
         for (const [ws, metadata] of connections) {
-          clearInterval(metadata.pingInterval)
-          if (ws.readyState === WebSocket.OPEN) {
-            ws.close(1000, "Server shutting down")
-          }
+            clearInterval(metadata.pingInterval);
+            if (ws.readyState === WebSocket.OPEN) {
+                ws.close(1000, "Server shutting down");
+            }
         }
-        connections.clear()
-        httpServer.close()
+        connections.clear();
+        httpServer.close();
     };
 
     // handle termination signals
@@ -236,107 +236,107 @@ export async function runAppPreviewServer({
 
     const app = express();
     const httpServer = http.createServer(app);
-    const wss = new WebSocketServer({ 
+    const wss = new WebSocketServer({
         server: httpServer,
         clientTracking: true,
         perMessageDeflate: false
-     });
+    });
 
     const connections = new Map<
         WebSocket,
         {
-        id: string
-        pingInterval: NodeJS.Timeout
-        isAlive: boolean
-        lastPong: number
+            id: string;
+            pingInterval: NodeJS.Timeout;
+            isAlive: boolean;
+            lastPong: number;
         }
-    >()
-   
-   function sendData(data: unknown) {
-        const message = JSON.stringify(data)
-        const deadConnections: WebSocket[] = []
+    >();
+
+    function sendData(data: unknown) {
+        const message = JSON.stringify(data);
+        const deadConnections: WebSocket[] = [];
 
         for (const [connection, metadata] of connections) {
             if (connection.readyState === WebSocket.OPEN) {
                 try {
-                connection.send(message)
+                    connection.send(message);
                 } catch (error) {
-                context.logger.debug(`Failed to send message to connection ${metadata.id}: ${error}`)
-                deadConnections.push(connection)
+                    context.logger.debug(`Failed to send message to connection ${metadata.id}: ${error}`);
+                    deadConnections.push(connection);
                 }
             } else {
-                deadConnections.push(connection)
+                deadConnections.push(connection);
             }
         }
 
         deadConnections.forEach((conn) => {
-            const metadata = connections.get(conn)
+            const metadata = connections.get(conn);
             if (metadata) {
-                clearInterval(metadata.pingInterval)
-                connections.delete(conn)
+                clearInterval(metadata.pingInterval);
+                connections.delete(conn);
             }
-        })
+        });
     }
 
     wss.on("connection", function connection(ws, req) {
-        const connectionId = `${req.socket.remoteAddress}:${req.socket.remotePort}-${Date.now()}`
-    
+        const connectionId = `${req.socket.remoteAddress}:${req.socket.remotePort}-${Date.now()}`;
+
         const metadata = {
             id: connectionId,
             isAlive: true,
             lastPong: Date.now(),
             pingInterval: setInterval(() => {
                 if (ws.readyState === WebSocket.OPEN) {
-                // check if we received a pong recently
-                const now = Date.now()
-                if (now - metadata.lastPong > 90000) {
-                    // 90 seconds timeout
-                    context.logger.debug(`Connection ${connectionId} timed out, closing`)
-                    ws.terminate()
-                    return
+                    // check if we received a pong recently
+                    const now = Date.now();
+                    if (now - metadata.lastPong > 90000) {
+                        // 90 seconds timeout
+                        context.logger.debug(`Connection ${connectionId} timed out, closing`);
+                        ws.terminate();
+                        return;
+                    }
+
+                    metadata.isAlive = false;
+                    try {
+                        ws.send(JSON.stringify({ type: "ping", timestamp: now }));
+                    } catch (error) {
+                        context.logger.debug(`Failed to send ping to ${connectionId}: ${error}`);
+                        ws.terminate();
+                    }
                 }
-        
-                metadata.isAlive = false
-                try {
-                    ws.send(JSON.stringify({ type: "ping", timestamp: now }))
-                } catch (error) {
-                    context.logger.debug(`Failed to send ping to ${connectionId}: ${error}`)
-                    ws.terminate()
-                }
-                }
-            }, 30000), // ping every 30 seconds
-        }
-    
-        connections.set(ws, metadata)
-    
+            }, 30000) // ping every 30 seconds
+        };
+
+        connections.set(ws, metadata);
+
         ws.on("message", function message(data) {
             try {
-                const parsed = JSON.parse(data.toString())
+                const parsed = JSON.parse(data.toString());
                 if (parsed.type === "pong") {
-                    metadata.isAlive = true
-                    metadata.lastPong = Date.now()
+                    metadata.isAlive = true;
+                    metadata.lastPong = Date.now();
                 }
             } catch (error) {
-                context.logger.debug(`Failed to parse message from ${connectionId}: ${error}`)
+                context.logger.debug(`Failed to parse message from ${connectionId}: ${error}`);
             }
-        })
-    
+        });
+
         ws.on("error", function error(err) {
-            context.logger.debug(`WebSocket error for connection ${connectionId}: ${err.message}`)
-        })
-    
+            context.logger.debug(`WebSocket error for connection ${connectionId}: ${err.message}`);
+        });
+
         ws.on("close", function close(code, reason) {
-            clearInterval(metadata.pingInterval)
-            connections.delete(ws)
-        })
-    
+            clearInterval(metadata.pingInterval);
+            connections.delete(ws);
+        });
+
         // Send initial connection confirmation
         try {
-            ws.send(JSON.stringify({ type: "connected", connectionId }))
+            ws.send(JSON.stringify({ type: "connected", connectionId }));
         } catch (error) {
-            context.logger.debug(`Failed to send connection confirmation: ${error}`)
+            context.logger.debug(`Failed to send connection confirmation: ${error}`);
         }
-    })
+    });
 
     app.use(cors());
 
@@ -459,11 +459,11 @@ export async function runAppPreviewServer({
     app.get(/^\/_local\/(.*)/, (req, res) => {
         return res.sendFile(`/${req.params[0]}`);
     });
-    
+
     httpServer.listen(backendPort, () => {
-        context.logger.info(chalk.dim(`Backend server running on http://localhost:${backendPort}`))
-        context.logger.info(`Development server ready on http://localhost:${port}`)
-    })
+        context.logger.info(chalk.dim(`Backend server running on http://localhost:${backendPort}`));
+        context.logger.info(`Development server ready on http://localhost:${port}`);
+    });
 
     // await infinitely
     // eslint-disable-next-line @typescript-eslint/no-empty-function
