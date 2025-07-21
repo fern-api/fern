@@ -505,7 +505,6 @@ func (r *RawClient) OptionalArgs(
 		r.header.Clone(),
 		options.ToHeader(),
 	)
-	headers.Add("Content-Type", "multipart/form-data")
 	writer := internal.NewMultipartWriter()
 	if err := writer.WriteFile("image_file", imageFile, internal.WithDefaultContentType("image/jpeg")); err != nil {
 		return nil, err
