@@ -6,6 +6,10 @@ public final class ServiceClient: Sendable {
     }
 
     public func patch(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .patch, 
+            path: "/", 
+            requestOptions: requestOptions
+        )
     }
 }

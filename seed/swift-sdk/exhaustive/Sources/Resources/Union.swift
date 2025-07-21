@@ -5,6 +5,10 @@ public final class UnionClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 }    public func getAndReturnUnion(requestOptions: RequestOptions? = nil) async throws -> Animal {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/union", 
+            requestOptions: requestOptions
+        )
     }
 }

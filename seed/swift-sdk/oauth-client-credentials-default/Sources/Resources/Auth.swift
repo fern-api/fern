@@ -6,6 +6,10 @@ public final class AuthClient: Sendable {
     }
 
     public func getToken(requestOptions: RequestOptions? = nil) async throws -> TokenResponse {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/token", 
+            requestOptions: requestOptions
+        )
     }
 }

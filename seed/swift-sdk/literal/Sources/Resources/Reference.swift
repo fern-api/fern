@@ -6,6 +6,10 @@ public final class ReferenceClient: Sendable {
     }
 
     public func send(requestOptions: RequestOptions? = nil) async throws -> SendResponse {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/reference", 
+            requestOptions: requestOptions
+        )
     }
 }

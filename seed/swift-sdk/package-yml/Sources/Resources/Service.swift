@@ -5,7 +5,11 @@ public final class ServiceClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func nop(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+    public func nop(id: String, nestedId: String, requestOptions: RequestOptions? = nil) async throws -> Any {
+        return try await httpClient.performRequest(
+            method: .get, 
+            path: "/\(id)//\(nestedId)", 
+            requestOptions: requestOptions
+        )
     }
 }

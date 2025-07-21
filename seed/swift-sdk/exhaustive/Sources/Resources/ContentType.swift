@@ -6,10 +6,18 @@ public final class ContentTypeClient: Sendable {
     }
 
     public func postJsonPatchContentType(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/foo/bar", 
+            requestOptions: requestOptions
+        )
     }
 
     public func postJsonPatchContentWithCharsetType(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/foo/baz", 
+            requestOptions: requestOptions
+        )
     }
 }

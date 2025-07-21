@@ -6,6 +6,10 @@ public final class UsersClient: Sendable {
     }
 
     public func listUsernamesCustom(requestOptions: RequestOptions? = nil) async throws -> UsernameCursor {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .get, 
+            path: "/users", 
+            requestOptions: requestOptions
+        )
     }
 }

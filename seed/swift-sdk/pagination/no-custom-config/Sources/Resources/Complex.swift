@@ -5,7 +5,11 @@ public final class ComplexClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func search(requestOptions: RequestOptions? = nil) async throws -> PaginatedConversationResponse {
-        fatalError("Not implemented.")
+    public func search(index: String, requestOptions: RequestOptions? = nil) async throws -> PaginatedConversationResponse {
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/\(index)/conversations/search", 
+            requestOptions: requestOptions
+        )
     }
 }

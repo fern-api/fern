@@ -5,15 +5,27 @@ public final class BigunionClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func get(requestOptions: RequestOptions? = nil) async throws -> BigUnion {
-        fatalError("Not implemented.")
+    public func get(id: String, requestOptions: RequestOptions? = nil) async throws -> BigUnion {
+        return try await httpClient.performRequest(
+            method: .get, 
+            path: "/\(id)", 
+            requestOptions: requestOptions
+        )
     }
 
     public func update(requestOptions: RequestOptions? = nil) async throws -> Bool {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .patch, 
+            path: "/", 
+            requestOptions: requestOptions
+        )
     }
 
     public func updateMany(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .patch, 
+            path: "/many", 
+            requestOptions: requestOptions
+        )
     }
 }

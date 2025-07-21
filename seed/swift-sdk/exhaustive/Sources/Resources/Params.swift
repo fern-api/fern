@@ -5,35 +5,67 @@ public final class ParamsClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getWithPath(requestOptions: RequestOptions? = nil) async throws -> String {
-        fatalError("Not implemented.")
+    public func getWithPath(param: String, requestOptions: RequestOptions? = nil) async throws -> String {
+        return try await httpClient.performRequest(
+            method: .get, 
+            path: "/params/path/\(param)", 
+            requestOptions: requestOptions
+        )
     }
 
-    public func getWithInlinePath(requestOptions: RequestOptions? = nil) async throws -> String {
-        fatalError("Not implemented.")
+    public func getWithInlinePath(param: String, requestOptions: RequestOptions? = nil) async throws -> String {
+        return try await httpClient.performRequest(
+            method: .get, 
+            path: "/params/path/\(param)", 
+            requestOptions: requestOptions
+        )
     }
 
     public func getWithQuery(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .get, 
+            path: "/params", 
+            requestOptions: requestOptions
+        )
     }
 
     public func getWithAllowMultipleQuery(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .get, 
+            path: "/params", 
+            requestOptions: requestOptions
+        )
     }
 
-    public func getWithPathAndQuery(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+    public func getWithPathAndQuery(param: String, requestOptions: RequestOptions? = nil) async throws -> Any {
+        return try await httpClient.performRequest(
+            method: .get, 
+            path: "/params/path-query/\(param)", 
+            requestOptions: requestOptions
+        )
     }
 
-    public func getWithInlinePathAndQuery(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+    public func getWithInlinePathAndQuery(param: String, requestOptions: RequestOptions? = nil) async throws -> Any {
+        return try await httpClient.performRequest(
+            method: .get, 
+            path: "/params/path-query/\(param)", 
+            requestOptions: requestOptions
+        )
     }
 
-    public func modifyWithPath(requestOptions: RequestOptions? = nil) async throws -> String {
-        fatalError("Not implemented.")
+    public func modifyWithPath(param: String, requestOptions: RequestOptions? = nil) async throws -> String {
+        return try await httpClient.performRequest(
+            method: .put, 
+            path: "/params/path/\(param)", 
+            requestOptions: requestOptions
+        )
     }
 
-    public func modifyWithInlinePath(requestOptions: RequestOptions? = nil) async throws -> String {
-        fatalError("Not implemented.")
+    public func modifyWithInlinePath(param: String, requestOptions: RequestOptions? = nil) async throws -> String {
+        return try await httpClient.performRequest(
+            method: .put, 
+            path: "/params/path/\(param)", 
+            requestOptions: requestOptions
+        )
     }
 }

@@ -6,10 +6,18 @@ public final class QueryParamClient: Sendable {
     }
 
     public func send(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/query", 
+            requestOptions: requestOptions
+        )
     }
 
     public func sendList(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/query-list", 
+            requestOptions: requestOptions
+        )
     }
 }

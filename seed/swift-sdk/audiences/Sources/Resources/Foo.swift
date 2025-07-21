@@ -6,6 +6,10 @@ public final class FooClient: Sendable {
     }
 
     public func find(requestOptions: RequestOptions? = nil) async throws -> ImportingType {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/", 
+            requestOptions: requestOptions
+        )
     }
 }

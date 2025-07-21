@@ -6,10 +6,18 @@ public final class BasicAuthClient: Sendable {
     }
 
     public func getWithBasicAuth(requestOptions: RequestOptions? = nil) async throws -> Bool {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .get, 
+            path: "/basic-auth", 
+            requestOptions: requestOptions
+        )
     }
 
     public func postWithBasicAuth(requestOptions: RequestOptions? = nil) async throws -> Bool {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/basic-auth", 
+            requestOptions: requestOptions
+        )
     }
 }

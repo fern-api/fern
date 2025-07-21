@@ -6,6 +6,10 @@ public final class Ec2Client: Sendable {
     }
 
     public func bootInstance(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/ec2/boot", 
+            requestOptions: requestOptions
+        )
     }
 }

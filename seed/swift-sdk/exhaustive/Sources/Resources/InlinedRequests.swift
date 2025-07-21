@@ -6,6 +6,10 @@ public final class InlinedRequestsClient: Sendable {
     }
 
     public func postWithObjectBodyandResponse(requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/req-bodies/object", 
+            requestOptions: requestOptions
+        )
     }
 }

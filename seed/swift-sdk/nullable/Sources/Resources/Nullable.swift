@@ -6,14 +6,26 @@ public final class NullableClient: Sendable {
     }
 
     public func getUsers(requestOptions: RequestOptions? = nil) async throws -> [User] {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .get, 
+            path: "/users", 
+            requestOptions: requestOptions
+        )
     }
 
     public func createUser(requestOptions: RequestOptions? = nil) async throws -> User {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/users", 
+            requestOptions: requestOptions
+        )
     }
 
     public func deleteUser(requestOptions: RequestOptions? = nil) async throws -> Bool {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .delete, 
+            path: "/users", 
+            requestOptions: requestOptions
+        )
     }
 }

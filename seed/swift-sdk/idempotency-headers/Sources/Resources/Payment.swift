@@ -6,10 +6,18 @@ public final class PaymentClient: Sendable {
     }
 
     public func create(requestOptions: RequestOptions? = nil) async throws -> UUID {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/payment", 
+            requestOptions: requestOptions
+        )
     }
 
-    public func delete(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+    public func delete(paymentId: String, requestOptions: RequestOptions? = nil) async throws -> Any {
+        return try await httpClient.performRequest(
+            method: .delete, 
+            path: "/payment/\(paymentId)", 
+            requestOptions: requestOptions
+        )
     }
 }

@@ -5,19 +5,38 @@ public final class ServiceClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getMovie(requestOptions: RequestOptions? = nil) async throws -> Movie {
-        fatalError("Not implemented.")
+    public func check(id: String, requestOptions: RequestOptions? = nil) async throws -> Any {
+        return try await httpClient.performRequest(
+            method: .get, 
+            path: "/check/\(id)", 
+            requestOptions: requestOptions
+        )
     }
 
-    public func createMovie(requestOptions: RequestOptions? = nil) async throws -> MovieId {
-        fatalError("Not implemented.")
+    public func ping(requestOptions: RequestOptions? = nil) async throws -> Bool {
+        return try await httpClient.performRequest(
+            method: .get, 
+            path: "/ping", 
+            requestOptions: requestOptions
+        )
+    }
+}stOptions
+        )
     }
 
     public func getMetadata(requestOptions: RequestOptions? = nil) async throws -> Metadata {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .get, 
+            path: "/metadata", 
+            requestOptions: requestOptions
+        )
     }
 
     public func createBigEntity(requestOptions: RequestOptions? = nil) async throws -> Response {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/big-entity", 
+            requestOptions: requestOptions
+        )
     }
 }

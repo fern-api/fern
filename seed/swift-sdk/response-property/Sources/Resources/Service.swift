@@ -6,30 +6,58 @@ public final class ServiceClient: Sendable {
     }
 
     public func getMovie(requestOptions: RequestOptions? = nil) async throws -> Response {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/movie", 
+            requestOptions: requestOptions
+        )
     }
 
     public func getMovieDocs(requestOptions: RequestOptions? = nil) async throws -> Response {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/movie", 
+            requestOptions: requestOptions
+        )
     }
 
     public func getMovieName(requestOptions: RequestOptions? = nil) async throws -> StringResponse {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/movie", 
+            requestOptions: requestOptions
+        )
     }
 
     public func getMovieMetadata(requestOptions: RequestOptions? = nil) async throws -> Response {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/movie", 
+            requestOptions: requestOptions
+        )
     }
 
     public func getOptionalMovie(requestOptions: RequestOptions? = nil) async throws -> Response {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/movie", 
+            requestOptions: requestOptions
+        )
     }
 
     public func getOptionalMovieDocs(requestOptions: RequestOptions? = nil) async throws -> OptionalWithDocs {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/movie", 
+            requestOptions: requestOptions
+        )
     }
 
     public func getOptionalMovieName(requestOptions: RequestOptions? = nil) async throws -> OptionalStringResponse {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/movie", 
+            requestOptions: requestOptions
+        )
     }
 }

@@ -6,10 +6,18 @@ public final class DummyClient: Sendable {
     }
 
     public func generateStream(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/generate-stream", 
+            requestOptions: requestOptions
+        )
     }
 
     public func generate(requestOptions: RequestOptions? = nil) async throws -> StreamResponse {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/generate", 
+            requestOptions: requestOptions
+        )
     }
 }

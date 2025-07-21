@@ -6,6 +6,10 @@ public final class EnumClient: Sendable {
     }
 
     public func getAndReturnEnum(requestOptions: RequestOptions? = nil) async throws -> WeatherReport {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/enum", 
+            requestOptions: requestOptions
+        )
     }
 }

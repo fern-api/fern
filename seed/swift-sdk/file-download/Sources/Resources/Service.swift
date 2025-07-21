@@ -6,10 +6,18 @@ public final class ServiceClient: Sendable {
     }
 
     public func simple(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/snippet", 
+            requestOptions: requestOptions
+        )
     }
 
     public func downloadFile(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/", 
+            requestOptions: requestOptions
+        )
     }
 }

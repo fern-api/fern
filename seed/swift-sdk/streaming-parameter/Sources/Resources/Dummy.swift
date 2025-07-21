@@ -6,6 +6,10 @@ public final class DummyClient: Sendable {
     }
 
     public func generate(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/generate", 
+            requestOptions: requestOptions
+        )
     }
 }

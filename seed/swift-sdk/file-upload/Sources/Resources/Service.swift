@@ -6,34 +6,66 @@ public final class ServiceClient: Sendable {
     }
 
     public func post(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/", 
+            requestOptions: requestOptions
+        )
     }
 
     public func justFile(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/just-file", 
+            requestOptions: requestOptions
+        )
     }
 
     public func justFileWithQueryParams(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/just-file-with-query-params", 
+            requestOptions: requestOptions
+        )
     }
 
     public func withContentType(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/with-content-type", 
+            requestOptions: requestOptions
+        )
     }
 
     public func withFormEncoding(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/with-form-encoding", 
+            requestOptions: requestOptions
+        )
     }
 
     public func withFormEncodedContainers(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/", 
+            requestOptions: requestOptions
+        )
     }
 
     public func optionalArgs(requestOptions: RequestOptions? = nil) async throws -> String {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/optional-args", 
+            requestOptions: requestOptions
+        )
     }
 
     public func simple(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/snippet", 
+            requestOptions: requestOptions
+        )
     }
 }

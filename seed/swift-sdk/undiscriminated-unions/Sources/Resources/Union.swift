@@ -6,26 +6,50 @@ public final class UnionClient: Sendable {
     }
 
     public func get(requestOptions: RequestOptions? = nil) async throws -> MyUnion {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/", 
+            requestOptions: requestOptions
+        )
     }
 
     public func getMetadata(requestOptions: RequestOptions? = nil) async throws -> Metadata {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .get, 
+            path: "/metadata", 
+            requestOptions: requestOptions
+        )
     }
 
     public func updateMetadata(requestOptions: RequestOptions? = nil) async throws -> Bool {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .put, 
+            path: "/metadata", 
+            requestOptions: requestOptions
+        )
     }
 
     public func call(requestOptions: RequestOptions? = nil) async throws -> Bool {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/call", 
+            requestOptions: requestOptions
+        )
     }
 
     public func duplicateTypesUnion(requestOptions: RequestOptions? = nil) async throws -> UnionWithDuplicateTypes {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/duplicate", 
+            requestOptions: requestOptions
+        )
     }
 
     public func nestedUnions(requestOptions: RequestOptions? = nil) async throws -> String {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/nested", 
+            requestOptions: requestOptions
+        )
     }
 }

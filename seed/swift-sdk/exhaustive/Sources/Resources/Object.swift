@@ -6,26 +6,50 @@ public final class ObjectClient: Sendable {
     }
 
     public func getAndReturnWithOptionalField(requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/object/get-and-return-with-optional-field", 
+            requestOptions: requestOptions
+        )
     }
 
     public func getAndReturnWithRequiredField(requestOptions: RequestOptions? = nil) async throws -> ObjectWithRequiredField {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/object/get-and-return-with-required-field", 
+            requestOptions: requestOptions
+        )
     }
 
     public func getAndReturnWithMapOfMap(requestOptions: RequestOptions? = nil) async throws -> ObjectWithMapOfMap {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/object/get-and-return-with-map-of-map", 
+            requestOptions: requestOptions
+        )
     }
 
     public func getAndReturnNestedWithOptionalField(requestOptions: RequestOptions? = nil) async throws -> NestedObjectWithOptionalField {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/object/get-and-return-nested-with-optional-field", 
+            requestOptions: requestOptions
+        )
     }
 
-    public func getAndReturnNestedWithRequiredField(requestOptions: RequestOptions? = nil) async throws -> NestedObjectWithRequiredField {
-        fatalError("Not implemented.")
+    public func getAndReturnNestedWithRequiredField(string: String, requestOptions: RequestOptions? = nil) async throws -> NestedObjectWithRequiredField {
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/object/get-and-return-nested-with-required-field/\(string)", 
+            requestOptions: requestOptions
+        )
     }
 
     public func getAndReturnNestedWithRequiredFieldAsList(requestOptions: RequestOptions? = nil) async throws -> NestedObjectWithRequiredField {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/object/get-and-return-nested-with-required-field-list", 
+            requestOptions: requestOptions
+        )
     }
 }

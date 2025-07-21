@@ -6,18 +6,34 @@ public final class UrlsClient: Sendable {
     }
 
     public func withMixedCase(requestOptions: RequestOptions? = nil) async throws -> String {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .get, 
+            path: "/urls/MixedCase", 
+            requestOptions: requestOptions
+        )
     }
 
     public func noEndingSlash(requestOptions: RequestOptions? = nil) async throws -> String {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .get, 
+            path: "/urls/no-ending-slash", 
+            requestOptions: requestOptions
+        )
     }
 
     public func withEndingSlash(requestOptions: RequestOptions? = nil) async throws -> String {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .get, 
+            path: "/urls/with-ending-slash", 
+            requestOptions: requestOptions
+        )
     }
 
     public func withUnderscores(requestOptions: RequestOptions? = nil) async throws -> String {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .get, 
+            path: "/urls/with_underscores", 
+            requestOptions: requestOptions
+        )
     }
 }

@@ -6,6 +6,10 @@ public final class MetadataClient: Sendable {
     }
 
     public func getMetadata(requestOptions: RequestOptions? = nil) async throws -> Metadata {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .get, 
+            path: "/users/events/metadata", 
+            requestOptions: requestOptions
+        )
     }
 }

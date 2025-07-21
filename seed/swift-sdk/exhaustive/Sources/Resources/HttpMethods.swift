@@ -5,23 +5,43 @@ public final class HttpMethodsClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func testGet(requestOptions: RequestOptions? = nil) async throws -> String {
-        fatalError("Not implemented.")
+    public func testGet(id: String, requestOptions: RequestOptions? = nil) async throws -> String {
+        return try await httpClient.performRequest(
+            method: .get, 
+            path: "/http-methods/\(id)", 
+            requestOptions: requestOptions
+        )
     }
 
     public func testPost(requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/http-methods", 
+            requestOptions: requestOptions
+        )
     }
 
-    public func testPut(requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
-        fatalError("Not implemented.")
+    public func testPut(id: String, requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
+        return try await httpClient.performRequest(
+            method: .put, 
+            path: "/http-methods/\(id)", 
+            requestOptions: requestOptions
+        )
     }
 
-    public func testPatch(requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
-        fatalError("Not implemented.")
+    public func testPatch(id: String, requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
+        return try await httpClient.performRequest(
+            method: .patch, 
+            path: "/http-methods/\(id)", 
+            requestOptions: requestOptions
+        )
     }
 
-    public func testDelete(requestOptions: RequestOptions? = nil) async throws -> Bool {
-        fatalError("Not implemented.")
+    public func testDelete(id: String, requestOptions: RequestOptions? = nil) async throws -> Bool {
+        return try await httpClient.performRequest(
+            method: .delete, 
+            path: "/http-methods/\(id)", 
+            requestOptions: requestOptions
+        )
     }
 }

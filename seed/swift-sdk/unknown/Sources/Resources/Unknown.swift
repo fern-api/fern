@@ -6,10 +6,18 @@ public final class UnknownClient: Sendable {
     }
 
     public func post(requestOptions: RequestOptions? = nil) async throws -> [Any] {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/", 
+            requestOptions: requestOptions
+        )
     }
 
     public func postObject(requestOptions: RequestOptions? = nil) async throws -> [Any] {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/with-object", 
+            requestOptions: requestOptions
+        )
     }
 }

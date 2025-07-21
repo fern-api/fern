@@ -6,6 +6,10 @@ public final class OrganizationClient: Sendable {
     }
 
     public func create(requestOptions: RequestOptions? = nil) async throws -> Organization {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/organizations", 
+            requestOptions: requestOptions
+        )
     }
 }

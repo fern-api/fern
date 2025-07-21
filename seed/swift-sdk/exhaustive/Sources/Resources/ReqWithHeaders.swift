@@ -6,6 +6,10 @@ public final class ReqWithHeadersClient: Sendable {
     }
 
     public func getWithCustomHeader(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/test-headers/custom-header", 
+            requestOptions: requestOptions
+        )
     }
 }

@@ -6,6 +6,10 @@ public final class EventsClient: Sendable {
     }
 
     public func listEvents(requestOptions: RequestOptions? = nil) async throws -> [Event] {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .get, 
+            path: "/users/events", 
+            requestOptions: requestOptions
+        )
     }
 }

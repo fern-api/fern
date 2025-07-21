@@ -6,6 +6,10 @@ public final class OptionalClient: Sendable {
     }
 
     public func sendOptionalBody(requestOptions: RequestOptions? = nil) async throws -> String {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/send-optional-body", 
+            requestOptions: requestOptions
+        )
     }
 }

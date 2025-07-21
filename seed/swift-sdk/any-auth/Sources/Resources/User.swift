@@ -6,6 +6,10 @@ public final class UserClient: Sendable {
     }
 
     public func get(requestOptions: RequestOptions? = nil) async throws -> [User] {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/users", 
+            requestOptions: requestOptions
+        )
     }
 }

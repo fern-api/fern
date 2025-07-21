@@ -6,6 +6,10 @@ public final class ServiceClient: Sendable {
     }
 
     public func upload(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/upload-content", 
+            requestOptions: requestOptions
+        )
     }
 }

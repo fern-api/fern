@@ -6,6 +6,10 @@ public final class NoAuthClient: Sendable {
     }
 
     public func postWithNoAuth(requestOptions: RequestOptions? = nil) async throws -> Bool {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/no-auth", 
+            requestOptions: requestOptions
+        )
     }
 }

@@ -6,18 +6,37 @@ public final class ProblemClient: Sendable {
     }
 
     public func createProblem(requestOptions: RequestOptions? = nil) async throws -> CreateProblemResponse {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/problem-crud/create", 
+            requestOptions: requestOptions
+        )
     }
 
-    public func updateProblem(requestOptions: RequestOptions? = nil) async throws -> UpdateProblemResponse {
-        fatalError("Not implemented.")
+    public func updateProblem(problemId: String, requestOptions: RequestOptions? = nil) async throws -> UpdateProblemResponse {
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/problem-crud/update/\(problemId)", 
+            requestOptions: requestOptions
+        )
     }
 
-    public func deleteProblem(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+    public func deleteProblem(problemId: String, requestOptions: RequestOptions? = nil) async throws -> Any {
+        return try await httpClient.performRequest(
+            method: .delete, 
+            path: "/problem-crud/delete/\(problemId)", 
+            requestOptions: requestOptions
+        )
     }
 
     public func getDefaultStarterFiles(requestOptions: RequestOptions? = nil) async throws -> GetDefaultStarterFilesResponse {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post, 
+            path: "/problem-crud/default-starter-files", 
+            requestOptions: requestOptions
+        )
+    }
+}          requestOptions: requestOptions
+        )
     }
 }
