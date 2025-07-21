@@ -21,10 +21,11 @@ public final class ServiceClient: Sendable {
         )
     }
 
-    public func getMetadata(shallow: Bool? = nil, tag: String? = nil, requestOptions: RequestOptions? = nil) async throws -> Metadata {
+    public func getMetadata(xApiVersion: String, shallow: Bool? = nil, tag: String? = nil, requestOptions: RequestOptions? = nil) async throws -> Metadata {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/metadata", 
+            headers: [:], 
             requestOptions: requestOptions
         )
     }

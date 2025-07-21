@@ -3,6 +3,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { getSwiftTypeForTypeReference } from "@fern-api/swift-model";
+import { isOptionalType } from "@fern-api/swift-model";
 
 import { HttpEndpoint, HttpMethod, HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
 
@@ -120,18 +121,26 @@ export class SubClientGenerator {
             }
         });
 
+        endpoint.headers.forEach((header) => {
+            params.push(
+                swift.functionParameter({
+                    argumentLabel: header.name.name.camelCase.unsafeName,
+                    unsafeName: header.name.name.camelCase.unsafeName,
+                    type: swift.Type.custom("String"),
+                    optional: isOptionalType(header.valueType),
+                    defaultValue: isOptionalType(header.valueType) ? swift.Expression.rawValue("nil") : undefined
+                })
+            );
+        });
+
         endpoint.queryParameters.forEach((queryParam) => {
             params.push(
                 swift.functionParameter({
                     argumentLabel: queryParam.name.name.camelCase.unsafeName,
                     unsafeName: queryParam.name.name.camelCase.unsafeName,
                     type: getSwiftTypeForTypeReference(queryParam.valueType),
-                    optional:
-                        queryParam.valueType.type === "container" && queryParam.valueType.container.type === "optional",
-                    defaultValue:
-                        queryParam.valueType.type === "container" && queryParam.valueType.container.type === "optional"
-                            ? swift.Expression.rawValue("nil")
-                            : undefined
+                    optional: isOptionalType(queryParam.valueType),
+                    defaultValue: isOptionalType(queryParam.valueType) ? swift.Expression.rawValue("nil") : undefined
                 })
             );
         });
@@ -164,6 +173,8 @@ export class SubClientGenerator {
     }
 
     private getMethodBodyForEndpoint(endpoint: HttpEndpoint): swift.CodeBlock {
+        // TODO(kafkas): Handle name collisions
+
         const arguments_ = [
             swift.functionArgument({
                 label: "method",
@@ -172,17 +183,34 @@ export class SubClientGenerator {
             swift.functionArgument({
                 label: "path",
                 value: swift.Expression.rawStringValue(formatEndpointPathForSwift(endpoint))
-            }),
+            })
+        ];
 
-            // TODO(kafkas): Add `headers`
+        if (endpoint.headers.length > 0) {
+            arguments_.push(
+                swift.functionArgument({
+                    label: "headers",
+                    // TODO(kafkas): Implement
+                    value: swift.Expression.rawValue("[:]")
+                })
+            );
+        }
+
+        if (endpoint.queryParameters.length > 0) {
             // TODO(kafkas): Add `queryParams`
-            // TODO(kafkas): Add `body`
+        }
 
+        // TODO(kafkas): Add `body` if has body
+
+        arguments_.push(
             swift.functionArgument({
                 label: "requestOptions",
                 value: swift.Expression.reference("requestOptions")
             })
-        ];
+        );
+
+        // TODO(kafkas): Add `responseType`
+
         return swift.CodeBlock.withStatements([
             swift.Statement.return(
                 swift.Expression.try(

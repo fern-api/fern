@@ -13,10 +13,11 @@ public final class ServiceClient: Sendable {
         )
     }
 
-    public func getWithHeader(requestOptions: RequestOptions? = nil) async throws -> String {
+    public func getWithHeader(xEndpointHeader: String, requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/apiKeyInHeader", 
+            headers: [:], 
             requestOptions: requestOptions
         )
     }

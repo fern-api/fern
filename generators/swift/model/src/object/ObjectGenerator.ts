@@ -5,10 +5,7 @@ import { swift } from "@fern-api/swift-codegen";
 import { ObjectProperty, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { getSwiftTypeForTypeReference } from "../converters";
-
-function isOptionalProperty(p: ObjectProperty) {
-    return p.valueType.type === "container" && p.valueType.container.type === "optional";
-}
+import { isOptionalProperty } from "../helpers";
 
 export class ObjectGenerator {
     private readonly typeDeclaration: TypeDeclaration;
