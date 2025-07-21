@@ -10,11 +10,11 @@ type PathPart =
           unsafeNameCamelCase: string;
       };
 
-export type ParsedEndpointResult = {
+export type ParseEndpointPathResult = {
     pathParts: PathPart[];
 };
 
-export function parseEndpointPath(endpoint: HttpEndpoint): ParsedEndpointResult {
+export function parseEndpointPath(endpoint: HttpEndpoint): ParseEndpointPathResult {
     const pathParts: PathPart[] = [];
 
     const pathParameterNamesByOriginalName = Object.fromEntries(

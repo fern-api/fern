@@ -2,7 +2,7 @@ import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
 
 import { parseEndpointPath } from "./parse-endpoint-path";
 
-export function getRawEndpointPath(endpoint: HttpEndpoint): string {
+export function formatEndpointPathForSwift(endpoint: HttpEndpoint): string {
     let path = "";
     const { pathParts } = parseEndpointPath(endpoint);
     pathParts.forEach((pathPart) => {
