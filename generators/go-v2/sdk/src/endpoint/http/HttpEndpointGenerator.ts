@@ -9,7 +9,6 @@ import {
     JsonResponse,
     Pagination,
     SdkRequestBodyType,
-    SdkRequestWrapper,
     ServiceId,
     StreamingResponse,
     Subpackage
