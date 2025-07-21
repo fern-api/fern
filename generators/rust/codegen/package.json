@@ -22,11 +22,9 @@
     "test:update": "vitest --passWithNoTests --run -u"
   },
   "dependencies": {
-    "@fern-api/ir-sdk": "workspace:*",
-    "@fern-api/rust-base": "workspace:*"
+    "@fern-api/configs": "workspace:*"
   },
   "devDependencies": {
-
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.6",
     "typescript": "5.7.2",

@@ -2471,12 +2471,9 @@ importers:
 
   generators/rust/codegen:
     dependencies:
-      '@fern-api/ir-sdk':
+      '@fern-api/configs':
         specifier: workspace:*
-        version: link:../../../packages/ir-sdk
-      '@fern-api/rust-base':
-        specifier: workspace:*
-        version: link:../base
+        version: link:../../../packages/configs
     devDependencies:
       '@types/node':
         specifier: ^18.7.18
