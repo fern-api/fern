@@ -12,7 +12,7 @@
 - version: 4.25.4
   changelogEntry:
     - summary: |
-        Updated python generator's construct_type function to handles undiscriminated unions with lists, sets, and dictionaries of objects.
+        Updated construct_type function to handles undiscriminated unions with lists, sets, and dictionaries of objects.
       type: fix
   createdAt: '2025-07-15'
   irVersion: 58

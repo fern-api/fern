@@ -17178,6 +17178,7 @@
                     "safeName": "Headers"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -17251,6 +17252,7 @@
                     "safeName": "Inlined"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -17330,6 +17332,7 @@
                     "safeName": "Path"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -17403,6 +17406,7 @@
                     "safeName": "Query"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -17479,6 +17483,7 @@
                     "safeName": "Reference"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
