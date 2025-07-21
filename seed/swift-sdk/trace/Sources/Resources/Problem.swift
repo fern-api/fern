@@ -5,38 +5,35 @@ public final class ProblemClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func createProblem(requestOptions: RequestOptions? = nil) async throws -> CreateProblemResponse {
+    public func getLightweightProblems(requestOptions: RequestOptions? = nil) async throws -> [LightweightProblemInfoV2] {
         return try await httpClient.performRequest(
-            method: .post, 
-            path: "/problem-crud/create", 
+            method: .get, 
+            path: "/problems-v2/lightweight-problem-info", 
             requestOptions: requestOptions
         )
     }
 
-    public func updateProblem(problemId: String, requestOptions: RequestOptions? = nil) async throws -> UpdateProblemResponse {
+    public func getProblems(requestOptions: RequestOptions? = nil) async throws -> [ProblemInfoV2] {
         return try await httpClient.performRequest(
-            method: .post, 
-            path: "/problem-crud/update/\(problemId)", 
+            method: .get, 
+            path: "/problems-v2/problem-info", 
             requestOptions: requestOptions
         )
     }
 
-    public func deleteProblem(problemId: String, requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func getLatestProblem(problemId: String, requestOptions: RequestOptions? = nil) async throws -> ProblemInfoV2 {
         return try await httpClient.performRequest(
-            method: .delete, 
-            path: "/problem-crud/delete/\(problemId)", 
+            method: .get, 
+            path: "/problems-v2/problem-info/\(problemId)", 
             requestOptions: requestOptions
         )
     }
 
-    public func getDefaultStarterFiles(requestOptions: RequestOptions? = nil) async throws -> GetDefaultStarterFilesResponse {
+    public func getProblemVersion(problemId: String, problemVersion: String, requestOptions: RequestOptions? = nil) async throws -> ProblemInfoV2 {
         return try await httpClient.performRequest(
-            method: .post, 
-            path: "/problem-crud/default-starter-files", 
+            method: .get, 
+            path: "/problems-v2/problem-info/\(problemId)/version/\(problemVersion)", 
             requestOptions: requestOptions
-        )
-    }
-}          requestOptions: requestOptions
         )
     }
 }
