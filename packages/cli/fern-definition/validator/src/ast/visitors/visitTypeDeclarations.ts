@@ -75,7 +75,7 @@ export function visitTypeDeclaration({
                     encoding: noop,
                     source: noop,
                     inline: noop,
-                    name: noop,
+                    name: noop
                 });
             }
         },
@@ -128,7 +128,7 @@ export function visitTypeDeclaration({
                 source: noop,
                 examples: visitExamples,
                 inline: noop,
-                name: noop,
+                name: noop
             });
         },
         discriminatedUnion: (union) => {

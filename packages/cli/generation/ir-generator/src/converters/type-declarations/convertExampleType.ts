@@ -579,9 +579,9 @@ function convertObject({
                                       property: originalTypeDeclaration.rawPropertyType
                                   }).name,
                                   wireValue: wireKey,
-                                    opts: {
-                                        casingOverrides: getCasingOverrides(originalTypeDeclaration.rawPropertyType)
-                                    }
+                                  opts: {
+                                      casingOverrides: getCasingOverrides(originalTypeDeclaration.rawPropertyType)
+                                  }
                               }),
                               value: valueExample,
                               originalTypeDeclaration: originalTypeDeclaration.typeName

@@ -167,13 +167,16 @@ export function convertSchemaObject(
     namespace: string | undefined,
     propertiesToExclude: Set<string> = new Set(),
     referencedAsRequest = false,
-    fallback?: string | number | boolean | unknown[],
+    fallback?: string | number | boolean | unknown[]
 ): SchemaWithExample {
     if (typeof schema === "string") {
         schema = { type: schema } as OpenAPIV3.SchemaObject;
     }
-    const overrideTypeName =
-        getFernTypeNameExtension(schema, (context.options.useTitlesAsName ? getTitleAsName(schema.title) : undefined), context.logger);
+    const overrideTypeName = getFernTypeNameExtension(
+        schema,
+        context.options.useTitlesAsName ? getTitleAsName(schema.title) : undefined,
+        context.logger
+    );
     const mixedGroupName =
         getExtension(schema, FernOpenAPIExtension.SDK_GROUP_NAME) ??
         getExtension<string[]>(schema, OpenAPIExtension.TAGS)?.[0];
@@ -208,7 +211,14 @@ export function convertSchemaObject(
         );
     }
 
-    const fernSchema = getFernTypeExtension({ schema, description, title, overrideTypeName, generatedName, availability });
+    const fernSchema = getFernTypeExtension({
+        schema,
+        description,
+        title,
+        overrideTypeName,
+        generatedName,
+        availability
+    });
     if (fernSchema != null) {
         return fernSchema;
     }

@@ -119,7 +119,7 @@ export function convertSchemaToSchemaWithExample(schema: Schema): SchemaWithExam
                     availability: schema.key.availability,
                     schema: convertToPrimitiveSchemaValue(schema.key.schema),
                     generatedName: schema.key.generatedName,
-                casing: schema.key.casing,
+                    casing: schema.key.casing,
                     nameOverride: schema.key.nameOverride,
                     title: schema.key.title,
                     namespace: schema.namespace,

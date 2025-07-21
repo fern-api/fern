@@ -53,7 +53,7 @@ export function convertErrorDeclaration({
         }),
         discriminantValue: file.casingsGenerator.generateNameAndWireValue({
             wireValue: errorName,
-            name: errorName,
+            name: errorName
         }),
         docs: typeof errorDeclaration !== "string" ? errorDeclaration.docs : undefined,
         statusCode: errorDeclaration["status-code"],

@@ -383,7 +383,6 @@ export function buildArrayTypeDeclaration({
     namespace: string | undefined;
     declarationDepth: number;
 }): ConvertedTypeDeclaration {
-    
     return {
         name: schema.nameOverride ?? schema.generatedName,
         schema: buildArrayTypeReference({

@@ -14,7 +14,7 @@ export function getTypeDeclarationName(
     if (typeof typeDeclaration === "string") {
         return fallback;
     }
-    if(typeDeclaration.name == null){
+    if (typeDeclaration.name == null) {
         return fallback;
     }
     if (typeof typeDeclaration.name === "string") {
