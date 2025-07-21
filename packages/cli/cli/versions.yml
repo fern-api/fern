@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |  
+        Added smart display naming for undiscriminated unions.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-07-18"
+  version: 0.65.20
+
+- changelogEntry:
+    - summary: |  
         Upgrade docs dev to use new docs bundle on Windows.
       type: feat
   irVersion: 58
