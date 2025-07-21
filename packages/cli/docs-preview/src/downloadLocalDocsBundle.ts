@@ -12,7 +12,7 @@ import { loggingExeca } from "@fern-api/logging-execa";
 const PLATFORM_IS_WINDOWS = process.platform === "win32";
 const ETAG_FILENAME = "etag";
 const PREVIEW_FOLDER_NAME = "preview";
-const APP_PREVIEW_FOLDER_NAME = "app-preview-fernlocal";
+const APP_PREVIEW_FOLDER_NAME = "app-preview";
 const BUNDLE_FOLDER_NAME = "bundle";
 const NEXT_BUNDLE_FOLDER_NAME = ".next";
 const STANDALONE_FOLDER_NAME = "standalone";
@@ -207,12 +207,12 @@ export async function downloadBundle({
             try {
                 await loggingExeca(logger, PLATFORM_IS_WINDOWS ? "where" : "which", ["pnpm"], {
                     cwd: absolutePathToBundleFolder,
-                    doNotPipeOutput: true
+                    doNotPipeOutput: false
                 });
             } catch (error) {
                 logger.debug("pnpm not found, installing pnpm");
                 await loggingExeca(logger, "npm", ["install", "-g", "pnpm"], {
-                    doNotPipeOutput: true
+                    doNotPipeOutput: false
                 });
             }
 
@@ -220,7 +220,7 @@ export async function downloadBundle({
             try {
                 await loggingExeca(logger, PLATFORM_IS_WINDOWS ? "where" : "which", ["pnpm"], {
                     cwd: absolutePathToBundleFolder,
-                    doNotPipeOutput: true
+                    doNotPipeOutput: false
                 });
             } catch (error) {
                 throw new Error(
@@ -233,10 +233,10 @@ export async function downloadBundle({
                 logger.debug("Installing esbuild");
                 await loggingExeca(logger, "pnpm", ["i", "esbuild"], {
                     cwd: absolutePathToBundleFolder,
-                    doNotPipeOutput: true
+                    doNotPipeOutput: false
                 });
             } catch (error) {
-                throw contactFernSupportError("Failed to install required package.");
+                throw contactFernSupportError(`Failed to install required package due to error: ${error}`);
             }
 
             try {
@@ -244,10 +244,10 @@ export async function downloadBundle({
                 logger.debug("Resolve esbuild imports");
                 await loggingExeca(logger, "node", ["install-esbuild.js"], {
                     cwd: absolutePathToBundleFolder,
-                    doNotPipeOutput: true
+                    doNotPipeOutput: false
                 });
             } catch (error) {
-                throw contactFernSupportError("Failed to resolve imports.");
+                throw contactFernSupportError(`Failed to resolve imports due to error: ${error}`);
             }
 
             if (PLATFORM_IS_WINDOWS) {
@@ -286,12 +286,16 @@ export async function downloadBundle({
                     await rm(absPathToInstrumentationJs);
                 }
 
-                // pnpm install within standalone
-                logger.debug("Running pnpm install within standalone");
-                await loggingExeca(logger, "pnpm", ["install"], {
-                    cwd: absPathToStandalone,
-                    doNotPipeOutput: true
-                });
+                try {
+                    // pnpm install within standalone
+                    logger.debug("Running pnpm install within standalone");
+                    await loggingExeca(logger, "pnpm", ["install"], {
+                        cwd: absPathToStandalone,
+                        doNotPipeOutput: false
+                    });
+                } catch (error) {
+                    throw contactFernSupportError(`Failed to install required package due to error: ${error}`);
+                }
             }
         }
 
