@@ -46,25 +46,23 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
     public getRequestReference(): go.AstNode | undefined {
         const requestBody = this.endpoint.requestBody;
-        if (requestBody != null) {
-            switch (requestBody.type) {
-                case "fileUpload":
-                    return go.codeblock("writer.Buffer()");
-                case "inlinedRequestBody":
-                case "reference":
-                case "bytes":
-                    break;
-                default:
-                    assertNever(requestBody);
-            }
-        }
         if (
+            requestBody == null ||
             this.wrapper.onlyPathParameters ||
             this.context.shouldSkipWrappedRequest({ endpoint: this.endpoint, wrapper: this.wrapper })
         ) {
             return undefined;
         }
-        return super.getRequestReference();
+        switch (requestBody.type) {
+            case "fileUpload":
+                return go.codeblock("writer.Buffer()");
+            case "inlinedRequestBody":
+            case "reference":
+            case "bytes":
+                return super.getRequestReference();
+            default:
+                assertNever(requestBody);
+        }
     }
 
     public getRequestBodyBlock(): go.AstNode | undefined {
