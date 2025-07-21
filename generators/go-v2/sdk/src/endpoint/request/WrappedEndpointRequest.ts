@@ -132,6 +132,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                     value: go.codeblock(
                         this.getRequestPropertyReference({ fieldName: fileProperty.key.name, isFile: true })
                     ),
+                    contentType: fileProperty.contentType,
                     format: "file"
                 });
                 break;
@@ -144,6 +145,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                     writer,
                     key: fileProperty.key.wireValue,
                     value: go.codeblock("f"),
+                    contentType: fileProperty.contentType,
                     format: "file"
                 });
                 writer.dedent();
@@ -167,6 +169,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 writer,
                 key: bodyProperty.name.wireValue,
                 value: go.codeblock(this.context.getLiteralAsString(literal)),
+                contentType: bodyProperty.contentType,
                 format: "field"
             });
             return;
@@ -184,6 +187,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 writer,
                 key: bodyProperty.name.wireValue,
                 value: go.codeblock("part"),
+                contentType: bodyProperty.contentType,
                 format: formatType
             });
             writer.dedent();
@@ -198,6 +202,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 writer,
                 key: bodyProperty.name.wireValue,
                 value: format.formatted,
+                contentType: bodyProperty.contentType,
                 format: formatType
             });
             writer.dedent();
@@ -208,6 +213,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
             writer,
             key: bodyProperty.name.wireValue,
             value: format.formatted,
+            contentType: bodyProperty.contentType,
             format: formatType
         });
     }
@@ -219,20 +225,27 @@ export class WrappedEndpointRequest extends EndpointRequest {
         return `${this.getRequestParameterName()}.${this.context.getFieldName(fieldName)}`;
     }
 
+    // TODO: Add support for custom Content-Type header values.
     private writeFileUploadField({
         writer,
         key,
         value,
+        contentType,
         format
     }: {
         writer: go.Writer;
         key: string;
         value: go.AstNode;
+        contentType: string | undefined;
         format: "file" | "field" | "json";
     }): void {
         const method = format === "file" ? "WriteFile" : format === "field" ? "WriteField" : "WriteJSON";
         writer.write(`if err := writer.${method}("${key}", `);
         writer.writeNode(value);
+        if (contentType != null) {
+            writer.write(", ");
+            writer.writeNode(this.context.callWithDefaultContentType(contentType));
+        }
         writer.writeLine("); err != nil {");
         writer.indent();
         writer.writeLine("return nil, err");

@@ -449,6 +449,14 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         return this.callInternalFunc({ name: "NewMultipartWriter", arguments_, multiline: false });
     }
 
+    public callWithDefaultContentType(contentType: string): go.FuncInvocation {
+        return this.callInternalFunc({
+            name: "WithDefaultContentType",
+            arguments_: [go.TypeInstantiation.string(contentType)],
+            multiline: false
+        });
+    }
+
     public callNewStreamer({
         arguments_,
         streamPayload
