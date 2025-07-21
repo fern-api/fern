@@ -141,7 +141,13 @@ export function buildEndpoint({
             namespace: maybeEndpointNamespace
         });
         headers[header.name] = headerSchema;
-        names.add(typeof headerSchema === "string" ? header.name : (headerSchema.name ?? header.name));
+        names.add(
+            (typeof headerSchema === "string"
+                ? header.name
+                : typeof headerSchema.name === "string"
+                  ? headerSchema.name
+                  : headerSchema.name?.value) ?? header.name
+        );
     }
 
     if (endpoint.request != null) {

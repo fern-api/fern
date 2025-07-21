@@ -185,22 +185,22 @@
                                 "optional": {
                                     "_type": "named",
                                     "name": {
-                                        "originalName": "Metadata",
+                                        "originalName": "metadata.Metadata",
                                         "camelCase": {
-                                            "unsafeName": "metadata",
-                                            "safeName": "metadata"
+                                            "unsafeName": "metadataMetadata",
+                                            "safeName": "metadataMetadata"
                                         },
                                         "snakeCase": {
-                                            "unsafeName": "metadata",
-                                            "safeName": "metadata"
+                                            "unsafeName": "metadata_metadata",
+                                            "safeName": "metadata_metadata"
                                         },
                                         "screamingSnakeCase": {
-                                            "unsafeName": "METADATA",
-                                            "safeName": "METADATA"
+                                            "unsafeName": "METADATA_METADATA",
+                                            "safeName": "METADATA_METADATA"
                                         },
                                         "pascalCase": {
-                                            "unsafeName": "Metadata",
-                                            "safeName": "Metadata"
+                                            "unsafeName": "MetadataMetadata",
+                                            "safeName": "MetadataMetadata"
                                         }
                                     },
                                     "fernFilepath": {
@@ -286,7 +286,7 @@
                                         }
                                     },
                                     "displayName": null,
-                                    "typeId": "type_commons/metadata:Metadata",
+                                    "typeId": "type_commons/metadata:metadata.Metadata",
                                     "default": null,
                                     "inline": null
                                 }
@@ -305,7 +305,7 @@
                 "extendedProperties": []
             },
             "referencedTypes": [
-                "type_commons/metadata:Metadata"
+                "type_commons/metadata:metadata.Metadata"
             ],
             "encoding": {
                 "json": {},
@@ -516,7 +516,7 @@
                                                 "shape": {
                                                     "type": "named",
                                                     "typeName": {
-                                                        "typeId": "type_commons/metadata:Metadata",
+                                                        "typeId": "type_commons/metadata:metadata.Metadata",
                                                         "fernFilepath": {
                                                             "allParts": [
                                                                 {
@@ -600,22 +600,22 @@
                                                             }
                                                         },
                                                         "name": {
-                                                            "originalName": "Metadata",
+                                                            "originalName": "metadata.Metadata",
                                                             "camelCase": {
-                                                                "unsafeName": "metadata",
-                                                                "safeName": "metadata"
+                                                                "unsafeName": "metadataMetadata",
+                                                                "safeName": "metadataMetadata"
                                                             },
                                                             "snakeCase": {
-                                                                "unsafeName": "metadata",
-                                                                "safeName": "metadata"
+                                                                "unsafeName": "metadata_metadata",
+                                                                "safeName": "metadata_metadata"
                                                             },
                                                             "screamingSnakeCase": {
-                                                                "unsafeName": "METADATA",
-                                                                "safeName": "METADATA"
+                                                                "unsafeName": "METADATA_METADATA",
+                                                                "safeName": "METADATA_METADATA"
                                                             },
                                                             "pascalCase": {
-                                                                "unsafeName": "Metadata",
-                                                                "safeName": "Metadata"
+                                                                "unsafeName": "MetadataMetadata",
+                                                                "safeName": "MetadataMetadata"
                                                             }
                                                         },
                                                         "displayName": null
@@ -659,7 +659,7 @@
                                                                     "jsonExample": "metadata-kjasf923"
                                                                 },
                                                                 "originalTypeDeclaration": {
-                                                                    "typeId": "type_commons/metadata:Metadata",
+                                                                    "typeId": "type_commons/metadata:metadata.Metadata",
                                                                     "fernFilepath": {
                                                                         "allParts": [
                                                                             {
@@ -743,22 +743,22 @@
                                                                         }
                                                                     },
                                                                     "name": {
-                                                                        "originalName": "Metadata",
+                                                                        "originalName": "metadata.Metadata",
                                                                         "camelCase": {
-                                                                            "unsafeName": "metadata",
-                                                                            "safeName": "metadata"
+                                                                            "unsafeName": "metadataMetadata",
+                                                                            "safeName": "metadataMetadata"
                                                                         },
                                                                         "snakeCase": {
-                                                                            "unsafeName": "metadata",
-                                                                            "safeName": "metadata"
+                                                                            "unsafeName": "metadata_metadata",
+                                                                            "safeName": "metadata_metadata"
                                                                         },
                                                                         "screamingSnakeCase": {
-                                                                            "unsafeName": "METADATA",
-                                                                            "safeName": "METADATA"
+                                                                            "unsafeName": "METADATA_METADATA",
+                                                                            "safeName": "METADATA_METADATA"
                                                                         },
                                                                         "pascalCase": {
-                                                                            "unsafeName": "Metadata",
-                                                                            "safeName": "Metadata"
+                                                                            "unsafeName": "MetadataMetadata",
+                                                                            "safeName": "MetadataMetadata"
                                                                         }
                                                                     },
                                                                     "displayName": null
@@ -916,7 +916,7 @@
                                                                     }
                                                                 },
                                                                 "originalTypeDeclaration": {
-                                                                    "typeId": "type_commons/metadata:Metadata",
+                                                                    "typeId": "type_commons/metadata:metadata.Metadata",
                                                                     "fernFilepath": {
                                                                         "allParts": [
                                                                             {
@@ -1000,22 +1000,22 @@
                                                                         }
                                                                     },
                                                                     "name": {
-                                                                        "originalName": "Metadata",
+                                                                        "originalName": "metadata.Metadata",
                                                                         "camelCase": {
-                                                                            "unsafeName": "metadata",
-                                                                            "safeName": "metadata"
+                                                                            "unsafeName": "metadataMetadata",
+                                                                            "safeName": "metadataMetadata"
                                                                         },
                                                                         "snakeCase": {
-                                                                            "unsafeName": "metadata",
-                                                                            "safeName": "metadata"
+                                                                            "unsafeName": "metadata_metadata",
+                                                                            "safeName": "metadata_metadata"
                                                                         },
                                                                         "screamingSnakeCase": {
-                                                                            "unsafeName": "METADATA",
-                                                                            "safeName": "METADATA"
+                                                                            "unsafeName": "METADATA_METADATA",
+                                                                            "safeName": "METADATA_METADATA"
                                                                         },
                                                                         "pascalCase": {
-                                                                            "unsafeName": "Metadata",
-                                                                            "safeName": "Metadata"
+                                                                            "unsafeName": "MetadataMetadata",
+                                                                            "safeName": "MetadataMetadata"
                                                                         }
                                                                     },
                                                                     "displayName": null
@@ -1035,22 +1035,22 @@
                                             "valueType": {
                                                 "_type": "named",
                                                 "name": {
-                                                    "originalName": "Metadata",
+                                                    "originalName": "metadata.Metadata",
                                                     "camelCase": {
-                                                        "unsafeName": "metadata",
-                                                        "safeName": "metadata"
+                                                        "unsafeName": "metadataMetadata",
+                                                        "safeName": "metadataMetadata"
                                                     },
                                                     "snakeCase": {
-                                                        "unsafeName": "metadata",
-                                                        "safeName": "metadata"
+                                                        "unsafeName": "metadata_metadata",
+                                                        "safeName": "metadata_metadata"
                                                     },
                                                     "screamingSnakeCase": {
-                                                        "unsafeName": "METADATA",
-                                                        "safeName": "METADATA"
+                                                        "unsafeName": "METADATA_METADATA",
+                                                        "safeName": "METADATA_METADATA"
                                                     },
                                                     "pascalCase": {
-                                                        "unsafeName": "Metadata",
-                                                        "safeName": "Metadata"
+                                                        "unsafeName": "MetadataMetadata",
+                                                        "safeName": "MetadataMetadata"
                                                     }
                                                 },
                                                 "fernFilepath": {
@@ -1136,7 +1136,7 @@
                                                     }
                                                 },
                                                 "displayName": null,
-                                                "typeId": "type_commons/metadata:Metadata",
+                                                "typeId": "type_commons/metadata:metadata.Metadata",
                                                 "default": null,
                                                 "inline": null
                                             }
@@ -1397,7 +1397,7 @@
                                                 "shape": {
                                                     "type": "named",
                                                     "typeName": {
-                                                        "typeId": "type_commons/metadata:Metadata",
+                                                        "typeId": "type_commons/metadata:metadata.Metadata",
                                                         "fernFilepath": {
                                                             "allParts": [
                                                                 {
@@ -1481,22 +1481,22 @@
                                                             }
                                                         },
                                                         "name": {
-                                                            "originalName": "Metadata",
+                                                            "originalName": "metadata.Metadata",
                                                             "camelCase": {
-                                                                "unsafeName": "metadata",
-                                                                "safeName": "metadata"
+                                                                "unsafeName": "metadataMetadata",
+                                                                "safeName": "metadataMetadata"
                                                             },
                                                             "snakeCase": {
-                                                                "unsafeName": "metadata",
-                                                                "safeName": "metadata"
+                                                                "unsafeName": "metadata_metadata",
+                                                                "safeName": "metadata_metadata"
                                                             },
                                                             "screamingSnakeCase": {
-                                                                "unsafeName": "METADATA",
-                                                                "safeName": "METADATA"
+                                                                "unsafeName": "METADATA_METADATA",
+                                                                "safeName": "METADATA_METADATA"
                                                             },
                                                             "pascalCase": {
-                                                                "unsafeName": "Metadata",
-                                                                "safeName": "Metadata"
+                                                                "unsafeName": "MetadataMetadata",
+                                                                "safeName": "MetadataMetadata"
                                                             }
                                                         },
                                                         "displayName": null
@@ -1540,7 +1540,7 @@
                                                                     "jsonExample": "metadata-lkasdfv9j"
                                                                 },
                                                                 "originalTypeDeclaration": {
-                                                                    "typeId": "type_commons/metadata:Metadata",
+                                                                    "typeId": "type_commons/metadata:metadata.Metadata",
                                                                     "fernFilepath": {
                                                                         "allParts": [
                                                                             {
@@ -1624,22 +1624,22 @@
                                                                         }
                                                                     },
                                                                     "name": {
-                                                                        "originalName": "Metadata",
+                                                                        "originalName": "metadata.Metadata",
                                                                         "camelCase": {
-                                                                            "unsafeName": "metadata",
-                                                                            "safeName": "metadata"
+                                                                            "unsafeName": "metadataMetadata",
+                                                                            "safeName": "metadataMetadata"
                                                                         },
                                                                         "snakeCase": {
-                                                                            "unsafeName": "metadata",
-                                                                            "safeName": "metadata"
+                                                                            "unsafeName": "metadata_metadata",
+                                                                            "safeName": "metadata_metadata"
                                                                         },
                                                                         "screamingSnakeCase": {
-                                                                            "unsafeName": "METADATA",
-                                                                            "safeName": "METADATA"
+                                                                            "unsafeName": "METADATA_METADATA",
+                                                                            "safeName": "METADATA_METADATA"
                                                                         },
                                                                         "pascalCase": {
-                                                                            "unsafeName": "Metadata",
-                                                                            "safeName": "Metadata"
+                                                                            "unsafeName": "MetadataMetadata",
+                                                                            "safeName": "MetadataMetadata"
                                                                         }
                                                                     },
                                                                     "displayName": null
@@ -1797,7 +1797,7 @@
                                                                     }
                                                                 },
                                                                 "originalTypeDeclaration": {
-                                                                    "typeId": "type_commons/metadata:Metadata",
+                                                                    "typeId": "type_commons/metadata:metadata.Metadata",
                                                                     "fernFilepath": {
                                                                         "allParts": [
                                                                             {
@@ -1881,22 +1881,22 @@
                                                                         }
                                                                     },
                                                                     "name": {
-                                                                        "originalName": "Metadata",
+                                                                        "originalName": "metadata.Metadata",
                                                                         "camelCase": {
-                                                                            "unsafeName": "metadata",
-                                                                            "safeName": "metadata"
+                                                                            "unsafeName": "metadataMetadata",
+                                                                            "safeName": "metadataMetadata"
                                                                         },
                                                                         "snakeCase": {
-                                                                            "unsafeName": "metadata",
-                                                                            "safeName": "metadata"
+                                                                            "unsafeName": "metadata_metadata",
+                                                                            "safeName": "metadata_metadata"
                                                                         },
                                                                         "screamingSnakeCase": {
-                                                                            "unsafeName": "METADATA",
-                                                                            "safeName": "METADATA"
+                                                                            "unsafeName": "METADATA_METADATA",
+                                                                            "safeName": "METADATA_METADATA"
                                                                         },
                                                                         "pascalCase": {
-                                                                            "unsafeName": "Metadata",
-                                                                            "safeName": "Metadata"
+                                                                            "unsafeName": "MetadataMetadata",
+                                                                            "safeName": "MetadataMetadata"
                                                                         }
                                                                     },
                                                                     "displayName": null
@@ -1916,22 +1916,22 @@
                                             "valueType": {
                                                 "_type": "named",
                                                 "name": {
-                                                    "originalName": "Metadata",
+                                                    "originalName": "metadata.Metadata",
                                                     "camelCase": {
-                                                        "unsafeName": "metadata",
-                                                        "safeName": "metadata"
+                                                        "unsafeName": "metadataMetadata",
+                                                        "safeName": "metadataMetadata"
                                                     },
                                                     "snakeCase": {
-                                                        "unsafeName": "metadata",
-                                                        "safeName": "metadata"
+                                                        "unsafeName": "metadata_metadata",
+                                                        "safeName": "metadata_metadata"
                                                     },
                                                     "screamingSnakeCase": {
-                                                        "unsafeName": "METADATA",
-                                                        "safeName": "METADATA"
+                                                        "unsafeName": "METADATA_METADATA",
+                                                        "safeName": "METADATA_METADATA"
                                                     },
                                                     "pascalCase": {
-                                                        "unsafeName": "Metadata",
-                                                        "safeName": "Metadata"
+                                                        "unsafeName": "MetadataMetadata",
+                                                        "safeName": "MetadataMetadata"
                                                     }
                                                 },
                                                 "fernFilepath": {
@@ -2017,7 +2017,7 @@
                                                     }
                                                 },
                                                 "displayName": null,
-                                                "typeId": "type_commons/metadata:Metadata",
+                                                "typeId": "type_commons/metadata:metadata.Metadata",
                                                 "default": null,
                                                 "inline": null
                                             }
@@ -2195,7 +2195,7 @@
             },
             "referencedTypes": [
                 "type_:Node",
-                "type_commons/metadata:Metadata"
+                "type_commons/metadata:metadata.Metadata"
             ],
             "encoding": {
                 "json": {},
@@ -2474,7 +2474,7 @@
                                                                                                 "shape": {
                                                                                                     "type": "named",
                                                                                                     "typeName": {
-                                                                                                        "typeId": "type_commons/metadata:Metadata",
+                                                                                                        "typeId": "type_commons/metadata:metadata.Metadata",
                                                                                                         "fernFilepath": {
                                                                                                             "allParts": [
                                                                                                                 {
@@ -2558,22 +2558,22 @@
                                                                                                             }
                                                                                                         },
                                                                                                         "name": {
-                                                                                                            "originalName": "Metadata",
+                                                                                                            "originalName": "metadata.Metadata",
                                                                                                             "camelCase": {
-                                                                                                                "unsafeName": "metadata",
-                                                                                                                "safeName": "metadata"
+                                                                                                                "unsafeName": "metadataMetadata",
+                                                                                                                "safeName": "metadataMetadata"
                                                                                                             },
                                                                                                             "snakeCase": {
-                                                                                                                "unsafeName": "metadata",
-                                                                                                                "safeName": "metadata"
+                                                                                                                "unsafeName": "metadata_metadata",
+                                                                                                                "safeName": "metadata_metadata"
                                                                                                             },
                                                                                                             "screamingSnakeCase": {
-                                                                                                                "unsafeName": "METADATA",
-                                                                                                                "safeName": "METADATA"
+                                                                                                                "unsafeName": "METADATA_METADATA",
+                                                                                                                "safeName": "METADATA_METADATA"
                                                                                                             },
                                                                                                             "pascalCase": {
-                                                                                                                "unsafeName": "Metadata",
-                                                                                                                "safeName": "Metadata"
+                                                                                                                "unsafeName": "MetadataMetadata",
+                                                                                                                "safeName": "MetadataMetadata"
                                                                                                             }
                                                                                                         },
                                                                                                         "displayName": null
@@ -2617,7 +2617,7 @@
                                                                                                                     "jsonExample": "metadata-kjasf923"
                                                                                                                 },
                                                                                                                 "originalTypeDeclaration": {
-                                                                                                                    "typeId": "type_commons/metadata:Metadata",
+                                                                                                                    "typeId": "type_commons/metadata:metadata.Metadata",
                                                                                                                     "fernFilepath": {
                                                                                                                         "allParts": [
                                                                                                                             {
@@ -2701,22 +2701,22 @@
                                                                                                                         }
                                                                                                                     },
                                                                                                                     "name": {
-                                                                                                                        "originalName": "Metadata",
+                                                                                                                        "originalName": "metadata.Metadata",
                                                                                                                         "camelCase": {
-                                                                                                                            "unsafeName": "metadata",
-                                                                                                                            "safeName": "metadata"
+                                                                                                                            "unsafeName": "metadataMetadata",
+                                                                                                                            "safeName": "metadataMetadata"
                                                                                                                         },
                                                                                                                         "snakeCase": {
-                                                                                                                            "unsafeName": "metadata",
-                                                                                                                            "safeName": "metadata"
+                                                                                                                            "unsafeName": "metadata_metadata",
+                                                                                                                            "safeName": "metadata_metadata"
                                                                                                                         },
                                                                                                                         "screamingSnakeCase": {
-                                                                                                                            "unsafeName": "METADATA",
-                                                                                                                            "safeName": "METADATA"
+                                                                                                                            "unsafeName": "METADATA_METADATA",
+                                                                                                                            "safeName": "METADATA_METADATA"
                                                                                                                         },
                                                                                                                         "pascalCase": {
-                                                                                                                            "unsafeName": "Metadata",
-                                                                                                                            "safeName": "Metadata"
+                                                                                                                            "unsafeName": "MetadataMetadata",
+                                                                                                                            "safeName": "MetadataMetadata"
                                                                                                                         }
                                                                                                                     },
                                                                                                                     "displayName": null
@@ -2874,7 +2874,7 @@
                                                                                                                     }
                                                                                                                 },
                                                                                                                 "originalTypeDeclaration": {
-                                                                                                                    "typeId": "type_commons/metadata:Metadata",
+                                                                                                                    "typeId": "type_commons/metadata:metadata.Metadata",
                                                                                                                     "fernFilepath": {
                                                                                                                         "allParts": [
                                                                                                                             {
@@ -2958,22 +2958,22 @@
                                                                                                                         }
                                                                                                                     },
                                                                                                                     "name": {
-                                                                                                                        "originalName": "Metadata",
+                                                                                                                        "originalName": "metadata.Metadata",
                                                                                                                         "camelCase": {
-                                                                                                                            "unsafeName": "metadata",
-                                                                                                                            "safeName": "metadata"
+                                                                                                                            "unsafeName": "metadataMetadata",
+                                                                                                                            "safeName": "metadataMetadata"
                                                                                                                         },
                                                                                                                         "snakeCase": {
-                                                                                                                            "unsafeName": "metadata",
-                                                                                                                            "safeName": "metadata"
+                                                                                                                            "unsafeName": "metadata_metadata",
+                                                                                                                            "safeName": "metadata_metadata"
                                                                                                                         },
                                                                                                                         "screamingSnakeCase": {
-                                                                                                                            "unsafeName": "METADATA",
-                                                                                                                            "safeName": "METADATA"
+                                                                                                                            "unsafeName": "METADATA_METADATA",
+                                                                                                                            "safeName": "METADATA_METADATA"
                                                                                                                         },
                                                                                                                         "pascalCase": {
-                                                                                                                            "unsafeName": "Metadata",
-                                                                                                                            "safeName": "Metadata"
+                                                                                                                            "unsafeName": "MetadataMetadata",
+                                                                                                                            "safeName": "MetadataMetadata"
                                                                                                                         }
                                                                                                                     },
                                                                                                                     "displayName": null
@@ -2993,22 +2993,22 @@
                                                                                             "valueType": {
                                                                                                 "_type": "named",
                                                                                                 "name": {
-                                                                                                    "originalName": "Metadata",
+                                                                                                    "originalName": "metadata.Metadata",
                                                                                                     "camelCase": {
-                                                                                                        "unsafeName": "metadata",
-                                                                                                        "safeName": "metadata"
+                                                                                                        "unsafeName": "metadataMetadata",
+                                                                                                        "safeName": "metadataMetadata"
                                                                                                     },
                                                                                                     "snakeCase": {
-                                                                                                        "unsafeName": "metadata",
-                                                                                                        "safeName": "metadata"
+                                                                                                        "unsafeName": "metadata_metadata",
+                                                                                                        "safeName": "metadata_metadata"
                                                                                                     },
                                                                                                     "screamingSnakeCase": {
-                                                                                                        "unsafeName": "METADATA",
-                                                                                                        "safeName": "METADATA"
+                                                                                                        "unsafeName": "METADATA_METADATA",
+                                                                                                        "safeName": "METADATA_METADATA"
                                                                                                     },
                                                                                                     "pascalCase": {
-                                                                                                        "unsafeName": "Metadata",
-                                                                                                        "safeName": "Metadata"
+                                                                                                        "unsafeName": "MetadataMetadata",
+                                                                                                        "safeName": "MetadataMetadata"
                                                                                                     }
                                                                                                 },
                                                                                                 "fernFilepath": {
@@ -3094,7 +3094,7 @@
                                                                                                     }
                                                                                                 },
                                                                                                 "displayName": null,
-                                                                                                "typeId": "type_commons/metadata:Metadata",
+                                                                                                "typeId": "type_commons/metadata:metadata.Metadata",
                                                                                                 "default": null,
                                                                                                 "inline": null
                                                                                             }
@@ -3366,7 +3366,7 @@
                                                                                                 "shape": {
                                                                                                     "type": "named",
                                                                                                     "typeName": {
-                                                                                                        "typeId": "type_commons/metadata:Metadata",
+                                                                                                        "typeId": "type_commons/metadata:metadata.Metadata",
                                                                                                         "fernFilepath": {
                                                                                                             "allParts": [
                                                                                                                 {
@@ -3450,22 +3450,22 @@
                                                                                                             }
                                                                                                         },
                                                                                                         "name": {
-                                                                                                            "originalName": "Metadata",
+                                                                                                            "originalName": "metadata.Metadata",
                                                                                                             "camelCase": {
-                                                                                                                "unsafeName": "metadata",
-                                                                                                                "safeName": "metadata"
+                                                                                                                "unsafeName": "metadataMetadata",
+                                                                                                                "safeName": "metadataMetadata"
                                                                                                             },
                                                                                                             "snakeCase": {
-                                                                                                                "unsafeName": "metadata",
-                                                                                                                "safeName": "metadata"
+                                                                                                                "unsafeName": "metadata_metadata",
+                                                                                                                "safeName": "metadata_metadata"
                                                                                                             },
                                                                                                             "screamingSnakeCase": {
-                                                                                                                "unsafeName": "METADATA",
-                                                                                                                "safeName": "METADATA"
+                                                                                                                "unsafeName": "METADATA_METADATA",
+                                                                                                                "safeName": "METADATA_METADATA"
                                                                                                             },
                                                                                                             "pascalCase": {
-                                                                                                                "unsafeName": "Metadata",
-                                                                                                                "safeName": "Metadata"
+                                                                                                                "unsafeName": "MetadataMetadata",
+                                                                                                                "safeName": "MetadataMetadata"
                                                                                                             }
                                                                                                         },
                                                                                                         "displayName": null
@@ -3509,7 +3509,7 @@
                                                                                                                     "jsonExample": "metadata-lkasdfv9j"
                                                                                                                 },
                                                                                                                 "originalTypeDeclaration": {
-                                                                                                                    "typeId": "type_commons/metadata:Metadata",
+                                                                                                                    "typeId": "type_commons/metadata:metadata.Metadata",
                                                                                                                     "fernFilepath": {
                                                                                                                         "allParts": [
                                                                                                                             {
@@ -3593,22 +3593,22 @@
                                                                                                                         }
                                                                                                                     },
                                                                                                                     "name": {
-                                                                                                                        "originalName": "Metadata",
+                                                                                                                        "originalName": "metadata.Metadata",
                                                                                                                         "camelCase": {
-                                                                                                                            "unsafeName": "metadata",
-                                                                                                                            "safeName": "metadata"
+                                                                                                                            "unsafeName": "metadataMetadata",
+                                                                                                                            "safeName": "metadataMetadata"
                                                                                                                         },
                                                                                                                         "snakeCase": {
-                                                                                                                            "unsafeName": "metadata",
-                                                                                                                            "safeName": "metadata"
+                                                                                                                            "unsafeName": "metadata_metadata",
+                                                                                                                            "safeName": "metadata_metadata"
                                                                                                                         },
                                                                                                                         "screamingSnakeCase": {
-                                                                                                                            "unsafeName": "METADATA",
-                                                                                                                            "safeName": "METADATA"
+                                                                                                                            "unsafeName": "METADATA_METADATA",
+                                                                                                                            "safeName": "METADATA_METADATA"
                                                                                                                         },
                                                                                                                         "pascalCase": {
-                                                                                                                            "unsafeName": "Metadata",
-                                                                                                                            "safeName": "Metadata"
+                                                                                                                            "unsafeName": "MetadataMetadata",
+                                                                                                                            "safeName": "MetadataMetadata"
                                                                                                                         }
                                                                                                                     },
                                                                                                                     "displayName": null
@@ -3766,7 +3766,7 @@
                                                                                                                     }
                                                                                                                 },
                                                                                                                 "originalTypeDeclaration": {
-                                                                                                                    "typeId": "type_commons/metadata:Metadata",
+                                                                                                                    "typeId": "type_commons/metadata:metadata.Metadata",
                                                                                                                     "fernFilepath": {
                                                                                                                         "allParts": [
                                                                                                                             {
@@ -3850,22 +3850,22 @@
                                                                                                                         }
                                                                                                                     },
                                                                                                                     "name": {
-                                                                                                                        "originalName": "Metadata",
+                                                                                                                        "originalName": "metadata.Metadata",
                                                                                                                         "camelCase": {
-                                                                                                                            "unsafeName": "metadata",
-                                                                                                                            "safeName": "metadata"
+                                                                                                                            "unsafeName": "metadataMetadata",
+                                                                                                                            "safeName": "metadataMetadata"
                                                                                                                         },
                                                                                                                         "snakeCase": {
-                                                                                                                            "unsafeName": "metadata",
-                                                                                                                            "safeName": "metadata"
+                                                                                                                            "unsafeName": "metadata_metadata",
+                                                                                                                            "safeName": "metadata_metadata"
                                                                                                                         },
                                                                                                                         "screamingSnakeCase": {
-                                                                                                                            "unsafeName": "METADATA",
-                                                                                                                            "safeName": "METADATA"
+                                                                                                                            "unsafeName": "METADATA_METADATA",
+                                                                                                                            "safeName": "METADATA_METADATA"
                                                                                                                         },
                                                                                                                         "pascalCase": {
-                                                                                                                            "unsafeName": "Metadata",
-                                                                                                                            "safeName": "Metadata"
+                                                                                                                            "unsafeName": "MetadataMetadata",
+                                                                                                                            "safeName": "MetadataMetadata"
                                                                                                                         }
                                                                                                                     },
                                                                                                                     "displayName": null
@@ -3885,22 +3885,22 @@
                                                                                             "valueType": {
                                                                                                 "_type": "named",
                                                                                                 "name": {
-                                                                                                    "originalName": "Metadata",
+                                                                                                    "originalName": "metadata.Metadata",
                                                                                                     "camelCase": {
-                                                                                                        "unsafeName": "metadata",
-                                                                                                        "safeName": "metadata"
+                                                                                                        "unsafeName": "metadataMetadata",
+                                                                                                        "safeName": "metadataMetadata"
                                                                                                     },
                                                                                                     "snakeCase": {
-                                                                                                        "unsafeName": "metadata",
-                                                                                                        "safeName": "metadata"
+                                                                                                        "unsafeName": "metadata_metadata",
+                                                                                                        "safeName": "metadata_metadata"
                                                                                                     },
                                                                                                     "screamingSnakeCase": {
-                                                                                                        "unsafeName": "METADATA",
-                                                                                                        "safeName": "METADATA"
+                                                                                                        "unsafeName": "METADATA_METADATA",
+                                                                                                        "safeName": "METADATA_METADATA"
                                                                                                     },
                                                                                                     "pascalCase": {
-                                                                                                        "unsafeName": "Metadata",
-                                                                                                        "safeName": "Metadata"
+                                                                                                        "unsafeName": "MetadataMetadata",
+                                                                                                        "safeName": "MetadataMetadata"
                                                                                                     }
                                                                                                 },
                                                                                                 "fernFilepath": {
@@ -3986,7 +3986,7 @@
                                                                                                     }
                                                                                                 },
                                                                                                 "displayName": null,
-                                                                                                "typeId": "type_commons/metadata:Metadata",
+                                                                                                "typeId": "type_commons/metadata:metadata.Metadata",
                                                                                                 "default": null,
                                                                                                 "inline": null
                                                                                             }
@@ -6442,22 +6442,22 @@
                                         "list": {
                                             "_type": "named",
                                             "name": {
-                                                "originalName": "File",
+                                                "originalName": "file.File",
                                                 "camelCase": {
-                                                    "unsafeName": "file",
-                                                    "safeName": "file"
+                                                    "unsafeName": "fileFile",
+                                                    "safeName": "fileFile"
                                                 },
                                                 "snakeCase": {
-                                                    "unsafeName": "file",
-                                                    "safeName": "file"
+                                                    "unsafeName": "file_file",
+                                                    "safeName": "file_file"
                                                 },
                                                 "screamingSnakeCase": {
-                                                    "unsafeName": "FILE",
-                                                    "safeName": "FILE"
+                                                    "unsafeName": "FILE_FILE",
+                                                    "safeName": "FILE_FILE"
                                                 },
                                                 "pascalCase": {
-                                                    "unsafeName": "File",
-                                                    "safeName": "File"
+                                                    "unsafeName": "FileFile",
+                                                    "safeName": "FileFile"
                                                 }
                                             },
                                             "fernFilepath": {
@@ -6504,7 +6504,7 @@
                                                 }
                                             },
                                             "displayName": null,
-                                            "typeId": "type_file:File",
+                                            "typeId": "type_file:file.File",
                                             "default": null,
                                             "inline": null
                                         }
@@ -6676,7 +6676,7 @@
                 "extendedProperties": []
             },
             "referencedTypes": [
-                "type_file:File",
+                "type_file:file.File",
                 "type_file:FileInfo",
                 "type_file/directory:Directory"
             ],
@@ -6888,7 +6888,7 @@
                                                                 "shape": {
                                                                     "type": "named",
                                                                     "typeName": {
-                                                                        "typeId": "type_file:File",
+                                                                        "typeId": "type_file:file.File",
                                                                         "fernFilepath": {
                                                                             "allParts": [
                                                                                 {
@@ -6933,22 +6933,22 @@
                                                                             }
                                                                         },
                                                                         "name": {
-                                                                            "originalName": "File",
+                                                                            "originalName": "file.File",
                                                                             "camelCase": {
-                                                                                "unsafeName": "file",
-                                                                                "safeName": "file"
+                                                                                "unsafeName": "fileFile",
+                                                                                "safeName": "fileFile"
                                                                             },
                                                                             "snakeCase": {
-                                                                                "unsafeName": "file",
-                                                                                "safeName": "file"
+                                                                                "unsafeName": "file_file",
+                                                                                "safeName": "file_file"
                                                                             },
                                                                             "screamingSnakeCase": {
-                                                                                "unsafeName": "FILE",
-                                                                                "safeName": "FILE"
+                                                                                "unsafeName": "FILE_FILE",
+                                                                                "safeName": "FILE_FILE"
                                                                             },
                                                                             "pascalCase": {
-                                                                                "unsafeName": "File",
-                                                                                "safeName": "File"
+                                                                                "unsafeName": "FileFile",
+                                                                                "safeName": "FileFile"
                                                                             }
                                                                         },
                                                                         "displayName": null
@@ -6992,7 +6992,7 @@
                                                                                     "jsonExample": "file.txt"
                                                                                 },
                                                                                 "originalTypeDeclaration": {
-                                                                                    "typeId": "type_file:File",
+                                                                                    "typeId": "type_file:file.File",
                                                                                     "fernFilepath": {
                                                                                         "allParts": [
                                                                                             {
@@ -7037,22 +7037,22 @@
                                                                                         }
                                                                                     },
                                                                                     "name": {
-                                                                                        "originalName": "File",
+                                                                                        "originalName": "file.File",
                                                                                         "camelCase": {
-                                                                                            "unsafeName": "file",
-                                                                                            "safeName": "file"
+                                                                                            "unsafeName": "fileFile",
+                                                                                            "safeName": "fileFile"
                                                                                         },
                                                                                         "snakeCase": {
-                                                                                            "unsafeName": "file",
-                                                                                            "safeName": "file"
+                                                                                            "unsafeName": "file_file",
+                                                                                            "safeName": "file_file"
                                                                                         },
                                                                                         "screamingSnakeCase": {
-                                                                                            "unsafeName": "FILE",
-                                                                                            "safeName": "FILE"
+                                                                                            "unsafeName": "FILE_FILE",
+                                                                                            "safeName": "FILE_FILE"
                                                                                         },
                                                                                         "pascalCase": {
-                                                                                            "unsafeName": "File",
-                                                                                            "safeName": "File"
+                                                                                            "unsafeName": "FileFile",
+                                                                                            "safeName": "FileFile"
                                                                                         }
                                                                                     },
                                                                                     "displayName": null
@@ -7094,7 +7094,7 @@
                                                                                     "jsonExample": "..."
                                                                                 },
                                                                                 "originalTypeDeclaration": {
-                                                                                    "typeId": "type_file:File",
+                                                                                    "typeId": "type_file:file.File",
                                                                                     "fernFilepath": {
                                                                                         "allParts": [
                                                                                             {
@@ -7139,22 +7139,22 @@
                                                                                         }
                                                                                     },
                                                                                     "name": {
-                                                                                        "originalName": "File",
+                                                                                        "originalName": "file.File",
                                                                                         "camelCase": {
-                                                                                            "unsafeName": "file",
-                                                                                            "safeName": "file"
+                                                                                            "unsafeName": "fileFile",
+                                                                                            "safeName": "fileFile"
                                                                                         },
                                                                                         "snakeCase": {
-                                                                                            "unsafeName": "file",
-                                                                                            "safeName": "file"
+                                                                                            "unsafeName": "file_file",
+                                                                                            "safeName": "file_file"
                                                                                         },
                                                                                         "screamingSnakeCase": {
-                                                                                            "unsafeName": "FILE",
-                                                                                            "safeName": "FILE"
+                                                                                            "unsafeName": "FILE_FILE",
+                                                                                            "safeName": "FILE_FILE"
                                                                                         },
                                                                                         "pascalCase": {
-                                                                                            "unsafeName": "File",
-                                                                                            "safeName": "File"
+                                                                                            "unsafeName": "FileFile",
+                                                                                            "safeName": "FileFile"
                                                                                         }
                                                                                     },
                                                                                     "displayName": null
@@ -7281,7 +7281,7 @@
                                                                                     "jsonExample": "REGULAR"
                                                                                 },
                                                                                 "originalTypeDeclaration": {
-                                                                                    "typeId": "type_file:File",
+                                                                                    "typeId": "type_file:file.File",
                                                                                     "fernFilepath": {
                                                                                         "allParts": [
                                                                                             {
@@ -7326,22 +7326,22 @@
                                                                                         }
                                                                                     },
                                                                                     "name": {
-                                                                                        "originalName": "File",
+                                                                                        "originalName": "file.File",
                                                                                         "camelCase": {
-                                                                                            "unsafeName": "file",
-                                                                                            "safeName": "file"
+                                                                                            "unsafeName": "fileFile",
+                                                                                            "safeName": "fileFile"
                                                                                         },
                                                                                         "snakeCase": {
-                                                                                            "unsafeName": "file",
-                                                                                            "safeName": "file"
+                                                                                            "unsafeName": "file_file",
+                                                                                            "safeName": "file_file"
                                                                                         },
                                                                                         "screamingSnakeCase": {
-                                                                                            "unsafeName": "FILE",
-                                                                                            "safeName": "FILE"
+                                                                                            "unsafeName": "FILE_FILE",
+                                                                                            "safeName": "FILE_FILE"
                                                                                         },
                                                                                         "pascalCase": {
-                                                                                            "unsafeName": "File",
-                                                                                            "safeName": "File"
+                                                                                            "unsafeName": "FileFile",
+                                                                                            "safeName": "FileFile"
                                                                                         }
                                                                                     },
                                                                                     "displayName": null
@@ -7360,22 +7360,22 @@
                                                         "itemType": {
                                                             "_type": "named",
                                                             "name": {
-                                                                "originalName": "File",
+                                                                "originalName": "file.File",
                                                                 "camelCase": {
-                                                                    "unsafeName": "file",
-                                                                    "safeName": "file"
+                                                                    "unsafeName": "fileFile",
+                                                                    "safeName": "fileFile"
                                                                 },
                                                                 "snakeCase": {
-                                                                    "unsafeName": "file",
-                                                                    "safeName": "file"
+                                                                    "unsafeName": "file_file",
+                                                                    "safeName": "file_file"
                                                                 },
                                                                 "screamingSnakeCase": {
-                                                                    "unsafeName": "FILE",
-                                                                    "safeName": "FILE"
+                                                                    "unsafeName": "FILE_FILE",
+                                                                    "safeName": "FILE_FILE"
                                                                 },
                                                                 "pascalCase": {
-                                                                    "unsafeName": "File",
-                                                                    "safeName": "File"
+                                                                    "unsafeName": "FileFile",
+                                                                    "safeName": "FileFile"
                                                                 }
                                                             },
                                                             "fernFilepath": {
@@ -7422,7 +7422,7 @@
                                                                 }
                                                             },
                                                             "displayName": null,
-                                                            "typeId": "type_file:File",
+                                                            "typeId": "type_file:file.File",
                                                             "default": null,
                                                             "inline": null
                                                         }
@@ -7443,22 +7443,22 @@
                                                     "list": {
                                                         "_type": "named",
                                                         "name": {
-                                                            "originalName": "File",
+                                                            "originalName": "file.File",
                                                             "camelCase": {
-                                                                "unsafeName": "file",
-                                                                "safeName": "file"
+                                                                "unsafeName": "fileFile",
+                                                                "safeName": "fileFile"
                                                             },
                                                             "snakeCase": {
-                                                                "unsafeName": "file",
-                                                                "safeName": "file"
+                                                                "unsafeName": "file_file",
+                                                                "safeName": "file_file"
                                                             },
                                                             "screamingSnakeCase": {
-                                                                "unsafeName": "FILE",
-                                                                "safeName": "FILE"
+                                                                "unsafeName": "FILE_FILE",
+                                                                "safeName": "FILE_FILE"
                                                             },
                                                             "pascalCase": {
-                                                                "unsafeName": "File",
-                                                                "safeName": "File"
+                                                                "unsafeName": "FileFile",
+                                                                "safeName": "FileFile"
                                                             }
                                                         },
                                                         "fernFilepath": {
@@ -7505,7 +7505,7 @@
                                                             }
                                                         },
                                                         "displayName": null,
-                                                        "typeId": "type_file:File",
+                                                        "typeId": "type_file:file.File",
                                                         "default": null,
                                                         "inline": null
                                                     }
@@ -7951,7 +7951,7 @@
                                                                                                                 "shape": {
                                                                                                                     "type": "named",
                                                                                                                     "typeName": {
-                                                                                                                        "typeId": "type_file:File",
+                                                                                                                        "typeId": "type_file:file.File",
                                                                                                                         "fernFilepath": {
                                                                                                                             "allParts": [
                                                                                                                                 {
@@ -7996,22 +7996,22 @@
                                                                                                                             }
                                                                                                                         },
                                                                                                                         "name": {
-                                                                                                                            "originalName": "File",
+                                                                                                                            "originalName": "file.File",
                                                                                                                             "camelCase": {
-                                                                                                                                "unsafeName": "file",
-                                                                                                                                "safeName": "file"
+                                                                                                                                "unsafeName": "fileFile",
+                                                                                                                                "safeName": "fileFile"
                                                                                                                             },
                                                                                                                             "snakeCase": {
-                                                                                                                                "unsafeName": "file",
-                                                                                                                                "safeName": "file"
+                                                                                                                                "unsafeName": "file_file",
+                                                                                                                                "safeName": "file_file"
                                                                                                                             },
                                                                                                                             "screamingSnakeCase": {
-                                                                                                                                "unsafeName": "FILE",
-                                                                                                                                "safeName": "FILE"
+                                                                                                                                "unsafeName": "FILE_FILE",
+                                                                                                                                "safeName": "FILE_FILE"
                                                                                                                             },
                                                                                                                             "pascalCase": {
-                                                                                                                                "unsafeName": "File",
-                                                                                                                                "safeName": "File"
+                                                                                                                                "unsafeName": "FileFile",
+                                                                                                                                "safeName": "FileFile"
                                                                                                                             }
                                                                                                                         },
                                                                                                                         "displayName": null
@@ -8055,7 +8055,7 @@
                                                                                                                                     "jsonExample": "another_file.txt"
                                                                                                                                 },
                                                                                                                                 "originalTypeDeclaration": {
-                                                                                                                                    "typeId": "type_file:File",
+                                                                                                                                    "typeId": "type_file:file.File",
                                                                                                                                     "fernFilepath": {
                                                                                                                                         "allParts": [
                                                                                                                                             {
@@ -8100,22 +8100,22 @@
                                                                                                                                         }
                                                                                                                                     },
                                                                                                                                     "name": {
-                                                                                                                                        "originalName": "File",
+                                                                                                                                        "originalName": "file.File",
                                                                                                                                         "camelCase": {
-                                                                                                                                            "unsafeName": "file",
-                                                                                                                                            "safeName": "file"
+                                                                                                                                            "unsafeName": "fileFile",
+                                                                                                                                            "safeName": "fileFile"
                                                                                                                                         },
                                                                                                                                         "snakeCase": {
-                                                                                                                                            "unsafeName": "file",
-                                                                                                                                            "safeName": "file"
+                                                                                                                                            "unsafeName": "file_file",
+                                                                                                                                            "safeName": "file_file"
                                                                                                                                         },
                                                                                                                                         "screamingSnakeCase": {
-                                                                                                                                            "unsafeName": "FILE",
-                                                                                                                                            "safeName": "FILE"
+                                                                                                                                            "unsafeName": "FILE_FILE",
+                                                                                                                                            "safeName": "FILE_FILE"
                                                                                                                                         },
                                                                                                                                         "pascalCase": {
-                                                                                                                                            "unsafeName": "File",
-                                                                                                                                            "safeName": "File"
+                                                                                                                                            "unsafeName": "FileFile",
+                                                                                                                                            "safeName": "FileFile"
                                                                                                                                         }
                                                                                                                                     },
                                                                                                                                     "displayName": null
@@ -8157,7 +8157,7 @@
                                                                                                                                     "jsonExample": "..."
                                                                                                                                 },
                                                                                                                                 "originalTypeDeclaration": {
-                                                                                                                                    "typeId": "type_file:File",
+                                                                                                                                    "typeId": "type_file:file.File",
                                                                                                                                     "fernFilepath": {
                                                                                                                                         "allParts": [
                                                                                                                                             {
@@ -8202,22 +8202,22 @@
                                                                                                                                         }
                                                                                                                                     },
                                                                                                                                     "name": {
-                                                                                                                                        "originalName": "File",
+                                                                                                                                        "originalName": "file.File",
                                                                                                                                         "camelCase": {
-                                                                                                                                            "unsafeName": "file",
-                                                                                                                                            "safeName": "file"
+                                                                                                                                            "unsafeName": "fileFile",
+                                                                                                                                            "safeName": "fileFile"
                                                                                                                                         },
                                                                                                                                         "snakeCase": {
-                                                                                                                                            "unsafeName": "file",
-                                                                                                                                            "safeName": "file"
+                                                                                                                                            "unsafeName": "file_file",
+                                                                                                                                            "safeName": "file_file"
                                                                                                                                         },
                                                                                                                                         "screamingSnakeCase": {
-                                                                                                                                            "unsafeName": "FILE",
-                                                                                                                                            "safeName": "FILE"
+                                                                                                                                            "unsafeName": "FILE_FILE",
+                                                                                                                                            "safeName": "FILE_FILE"
                                                                                                                                         },
                                                                                                                                         "pascalCase": {
-                                                                                                                                            "unsafeName": "File",
-                                                                                                                                            "safeName": "File"
+                                                                                                                                            "unsafeName": "FileFile",
+                                                                                                                                            "safeName": "FileFile"
                                                                                                                                         }
                                                                                                                                     },
                                                                                                                                     "displayName": null
@@ -8344,7 +8344,7 @@
                                                                                                                                     "jsonExample": "REGULAR"
                                                                                                                                 },
                                                                                                                                 "originalTypeDeclaration": {
-                                                                                                                                    "typeId": "type_file:File",
+                                                                                                                                    "typeId": "type_file:file.File",
                                                                                                                                     "fernFilepath": {
                                                                                                                                         "allParts": [
                                                                                                                                             {
@@ -8389,22 +8389,22 @@
                                                                                                                                         }
                                                                                                                                     },
                                                                                                                                     "name": {
-                                                                                                                                        "originalName": "File",
+                                                                                                                                        "originalName": "file.File",
                                                                                                                                         "camelCase": {
-                                                                                                                                            "unsafeName": "file",
-                                                                                                                                            "safeName": "file"
+                                                                                                                                            "unsafeName": "fileFile",
+                                                                                                                                            "safeName": "fileFile"
                                                                                                                                         },
                                                                                                                                         "snakeCase": {
-                                                                                                                                            "unsafeName": "file",
-                                                                                                                                            "safeName": "file"
+                                                                                                                                            "unsafeName": "file_file",
+                                                                                                                                            "safeName": "file_file"
                                                                                                                                         },
                                                                                                                                         "screamingSnakeCase": {
-                                                                                                                                            "unsafeName": "FILE",
-                                                                                                                                            "safeName": "FILE"
+                                                                                                                                            "unsafeName": "FILE_FILE",
+                                                                                                                                            "safeName": "FILE_FILE"
                                                                                                                                         },
                                                                                                                                         "pascalCase": {
-                                                                                                                                            "unsafeName": "File",
-                                                                                                                                            "safeName": "File"
+                                                                                                                                            "unsafeName": "FileFile",
+                                                                                                                                            "safeName": "FileFile"
                                                                                                                                         }
                                                                                                                                     },
                                                                                                                                     "displayName": null
@@ -8423,22 +8423,22 @@
                                                                                                         "itemType": {
                                                                                                             "_type": "named",
                                                                                                             "name": {
-                                                                                                                "originalName": "File",
+                                                                                                                "originalName": "file.File",
                                                                                                                 "camelCase": {
-                                                                                                                    "unsafeName": "file",
-                                                                                                                    "safeName": "file"
+                                                                                                                    "unsafeName": "fileFile",
+                                                                                                                    "safeName": "fileFile"
                                                                                                                 },
                                                                                                                 "snakeCase": {
-                                                                                                                    "unsafeName": "file",
-                                                                                                                    "safeName": "file"
+                                                                                                                    "unsafeName": "file_file",
+                                                                                                                    "safeName": "file_file"
                                                                                                                 },
                                                                                                                 "screamingSnakeCase": {
-                                                                                                                    "unsafeName": "FILE",
-                                                                                                                    "safeName": "FILE"
+                                                                                                                    "unsafeName": "FILE_FILE",
+                                                                                                                    "safeName": "FILE_FILE"
                                                                                                                 },
                                                                                                                 "pascalCase": {
-                                                                                                                    "unsafeName": "File",
-                                                                                                                    "safeName": "File"
+                                                                                                                    "unsafeName": "FileFile",
+                                                                                                                    "safeName": "FileFile"
                                                                                                                 }
                                                                                                             },
                                                                                                             "fernFilepath": {
@@ -8485,7 +8485,7 @@
                                                                                                                 }
                                                                                                             },
                                                                                                             "displayName": null,
-                                                                                                            "typeId": "type_file:File",
+                                                                                                            "typeId": "type_file:file.File",
                                                                                                             "default": null,
                                                                                                             "inline": null
                                                                                                         }
@@ -8506,22 +8506,22 @@
                                                                                                     "list": {
                                                                                                         "_type": "named",
                                                                                                         "name": {
-                                                                                                            "originalName": "File",
+                                                                                                            "originalName": "file.File",
                                                                                                             "camelCase": {
-                                                                                                                "unsafeName": "file",
-                                                                                                                "safeName": "file"
+                                                                                                                "unsafeName": "fileFile",
+                                                                                                                "safeName": "fileFile"
                                                                                                             },
                                                                                                             "snakeCase": {
-                                                                                                                "unsafeName": "file",
-                                                                                                                "safeName": "file"
+                                                                                                                "unsafeName": "file_file",
+                                                                                                                "safeName": "file_file"
                                                                                                             },
                                                                                                             "screamingSnakeCase": {
-                                                                                                                "unsafeName": "FILE",
-                                                                                                                "safeName": "FILE"
+                                                                                                                "unsafeName": "FILE_FILE",
+                                                                                                                "safeName": "FILE_FILE"
                                                                                                             },
                                                                                                             "pascalCase": {
-                                                                                                                "unsafeName": "File",
-                                                                                                                "safeName": "File"
+                                                                                                                "unsafeName": "FileFile",
+                                                                                                                "safeName": "FileFile"
                                                                                                             }
                                                                                                         },
                                                                                                         "fernFilepath": {
@@ -8568,7 +8568,7 @@
                                                                                                             }
                                                                                                         },
                                                                                                         "displayName": null,
-                                                                                                        "typeId": "type_file:File",
+                                                                                                        "typeId": "type_file:file.File",
                                                                                                         "default": null,
                                                                                                         "inline": null
                                                                                                     }
@@ -9263,7 +9263,7 @@
                             "type": "optional",
                             "value": {
                                 "type": "named",
-                                "value": "type_commons/metadata:Metadata"
+                                "value": "type_commons/metadata:metadata.Metadata"
                             }
                         }
                     }
@@ -9941,7 +9941,7 @@
                                 "type": "list",
                                 "value": {
                                     "type": "named",
-                                    "value": "type_file:File"
+                                    "value": "type_file:file.File"
                                 }
                             }
                         }

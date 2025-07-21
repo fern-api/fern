@@ -12,6 +12,7 @@ import { WithDescription } from "../../commons/types/WithDescription";
 import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithTitle } from "../../commons/types/WithTitle";
 import { WithInline } from "../../commons/types/WithInline";
+import { WithCasing } from "../../commons/types/WithCasing";
 
 export const NullableSchema: core.serialization.ObjectSchema<
     serializers.NullableSchema.Raw,
@@ -26,7 +27,8 @@ export const NullableSchema: core.serialization.ObjectSchema<
     .extend(WithDescription)
     .extend(WithAvailability)
     .extend(WithTitle)
-    .extend(WithInline);
+    .extend(WithInline)
+    .extend(WithCasing);
 
 export declare namespace NullableSchema {
     export interface Raw
@@ -36,7 +38,8 @@ export declare namespace NullableSchema {
             WithDescription.Raw,
             WithAvailability.Raw,
             WithTitle.Raw,
-            WithInline.Raw {
+            WithInline.Raw,
+            WithCasing.Raw {
         value: serializers.Schema.Raw;
     }
 }

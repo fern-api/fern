@@ -4,8 +4,10 @@ import { SingleUnionType, SingleUnionTypeProperties, Type, TypeReference } from 
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { getAvailability } from "../../utils/getAvailability";
+import { getCasingOverrides } from "../../utils/getCasingOverrides";
 import { getDisplayName } from "../../utils/getDisplayName";
 import { getDocs } from "../../utils/getDocs";
+import { getTypeDeclarationName } from "../../utils/getTypeDeclarationName";
 import { parseTypeName } from "../../utils/parseTypeName";
 import { convertDeclaration } from "../convertDeclaration";
 import { getExtensionsAsList, getPropertyAccess, getPropertyName } from "./convertObjectTypeDeclaration";
@@ -25,16 +27,24 @@ export function convertDiscriminatedUnionTypeDeclaration({
     return Type.union({
         discriminant: file.casingsGenerator.generateNameAndWireValue({
             wireValue: discriminant,
-            name: getUnionDiscriminantName(union).name
+            name: getUnionDiscriminantName(union).name,
+            opts: {
+                casingOverrides: getCasingOverrides(union)
+            }
         }),
-        extends: getExtensionsAsList(union.extends).map((extended) => parseTypeName({ typeName: extended, file })),
+        extends: getExtensionsAsList(union.extends).map((extended) =>
+            parseTypeName({ typeName: extended, typeDeclaration: undefined, file })
+        ),
         baseProperties:
             union["base-properties"] != null
                 ? Object.entries(union["base-properties"]).map(([propertyKey, propertyDefinition]) => ({
                       ...convertDeclaration(propertyDefinition),
                       name: file.casingsGenerator.generateNameAndWireValue({
                           wireValue: propertyKey,
-                          name: getPropertyName({ propertyKey, property: propertyDefinition }).name
+                          name: getPropertyName({ propertyKey, property: propertyDefinition }).name,
+                          opts: {
+                              casingOverrides: getCasingOverrides(propertyDefinition)
+                          }
                       }),
                       valueType: file.parseTypeReference(propertyDefinition),
                       propertyAccess: getPropertyAccess({ property: propertyDefinition }),
@@ -54,7 +64,10 @@ export function convertDiscriminatedUnionTypeDeclaration({
 
             const discriminantValue = file.casingsGenerator.generateNameAndWireValue({
                 wireValue: unionKey,
-                name: getSingleUnionTypeName({ unionKey, rawSingleUnionType }).name
+                name: getSingleUnionTypeName({ unionKey, rawSingleUnionType }).name,
+                opts: {
+                    casingOverrides: getCasingOverrides(rawSingleUnionType)
+                }
             });
 
             const docs = getDocs(rawSingleUnionType);
@@ -102,9 +115,10 @@ export function getUnionDiscriminantName(union: RawSchemas.DiscriminatedUnionSch
     name: string;
     wasExplicitlySet: boolean;
 } {
-    if (union.discriminant != null && typeof union.discriminant !== "string" && union.discriminant.name != null) {
+    const name = !!union.discriminant ? getTypeDeclarationName(union.discriminant) : undefined;
+    if (name) {
         return {
-            name: union.discriminant.name,
+            name,
             wasExplicitlySet: true
         };
     }
@@ -124,9 +138,10 @@ export function getSingleUnionTypeName({
     name: string;
     wasExplicitlySet: boolean;
 } {
-    if (typeof rawSingleUnionType !== "string" && rawSingleUnionType.name != null) {
+    const name = getTypeDeclarationName(rawSingleUnionType);
+    if (name) {
         return {
-            name: rawSingleUnionType.name,
+            name,
             wasExplicitlySet: true
         };
     }
@@ -163,7 +178,10 @@ export function getSingleUnionTypeProperties({
     return SingleUnionTypeProperties.singleProperty({
         name: file.casingsGenerator.generateNameAndWireValue({
             wireValue: getSinglePropertyKeyValue(singlePropertyKey),
-            name: getSinglePropertyKeyName(singlePropertyKey)
+            name: getSinglePropertyKeyName(singlePropertyKey),
+            opts: {
+                casingOverrides: getCasingOverrides(rawSingleUnionType)
+            }
         }),
         type: parsedValueType
     });

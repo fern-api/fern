@@ -5,19 +5,19 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { WithName } from "../../commons/types/WithName";
+import { TypeDeclarationName } from "./TypeDeclarationName";
 
 export const UnionDiscriminantSchema: core.serialization.ObjectSchema<
     serializers.UnionDiscriminantSchema.Raw,
     FernDefinition.UnionDiscriminantSchema
-> = core.serialization
-    .object({
-        value: core.serialization.string(),
-    })
-    .extend(WithName);
+> = core.serialization.object({
+    value: core.serialization.string(),
+    name: TypeDeclarationName.optional(),
+});
 
 export declare namespace UnionDiscriminantSchema {
-    export interface Raw extends WithName.Raw {
+    export interface Raw {
         value: string;
+        name?: TypeDeclarationName.Raw | null;
     }
 }

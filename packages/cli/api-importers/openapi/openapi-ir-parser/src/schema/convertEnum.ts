@@ -10,9 +10,10 @@ import { VALID_ENUM_NAME_REGEX } from "@fern-api/openapi-ir";
 
 import { FernEnumConfig } from "../openapi/v3/extensions/getFernEnum";
 import { SchemaParserContext } from "./SchemaParserContext";
+import { OverrideTypeName } from "../openapi/v3/extensions/getFernTypeNameExtension";
 
 export function convertEnum({
-    nameOverride,
+    overrideTypeName,
     generatedName,
     title,
     fernEnum,
@@ -28,7 +29,7 @@ export function convertEnum({
     source,
     inline
 }: {
-    nameOverride: string | undefined;
+    overrideTypeName: OverrideTypeName | undefined;
     generatedName: string;
     title: string | undefined;
     fernEnum: FernEnumConfig | undefined;
@@ -77,7 +78,7 @@ export function convertEnum({
     const _defaultEnumValue = _default != null ? values.find((value) => value.value === _default) : undefined;
     return wrapEnum({
         wrapAsNullable,
-        nameOverride,
+        overrideTypeName,
         generatedName,
         title,
         values,
@@ -93,7 +94,7 @@ export function convertEnum({
 
 export function wrapEnum({
     wrapAsNullable,
-    nameOverride,
+    overrideTypeName,
     generatedName,
     title,
     values,
@@ -106,7 +107,7 @@ export function wrapEnum({
     inline
 }: {
     wrapAsNullable: boolean;
-    nameOverride: string | undefined;
+    overrideTypeName: OverrideTypeName | undefined;
     generatedName: string;
     title: string | undefined;
     values: EnumValue[];
@@ -120,11 +121,13 @@ export function wrapEnum({
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
-            nameOverride,
+            nameOverride: overrideTypeName?.value,
+            casing: overrideTypeName?.casing,
             generatedName,
             title,
             value: SchemaWithExample.enum({
-                nameOverride,
+                nameOverride: overrideTypeName?.value,
+                casing: overrideTypeName?.casing,
                 generatedName,
                 title,
                 values,
@@ -145,7 +148,8 @@ export function wrapEnum({
         });
     }
     return SchemaWithExample.enum({
-        nameOverride,
+        nameOverride: overrideTypeName?.value,
+        casing: overrideTypeName?.casing,
         generatedName,
         title,
         values,

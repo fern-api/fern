@@ -13,6 +13,7 @@ export interface UnDiscriminatedOneOfSchema
         FernOpenapiIr.WithEncoding,
         FernOpenapiIr.WithSource,
         FernOpenapiIr.WithTitle,
-        FernOpenapiIr.WithInline {
+        FernOpenapiIr.WithInline,
+        FernOpenapiIr.WithCasing {
     schemas: FernOpenapiIr.Schema[];
 }

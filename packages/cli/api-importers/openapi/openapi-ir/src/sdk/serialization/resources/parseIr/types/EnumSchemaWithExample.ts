@@ -14,6 +14,7 @@ import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithSource } from "../../commons/types/WithSource";
 import { WithTitle } from "../../commons/types/WithTitle";
 import { WithInline } from "../../commons/types/WithInline";
+import { WithCasing } from "../../commons/types/WithCasing";
 
 export const EnumSchemaWithExample: core.serialization.ObjectSchema<
     serializers.EnumSchemaWithExample.Raw,
@@ -31,7 +32,8 @@ export const EnumSchemaWithExample: core.serialization.ObjectSchema<
     .extend(WithAvailability)
     .extend(WithSource)
     .extend(WithTitle)
-    .extend(WithInline);
+    .extend(WithInline)
+    .extend(WithCasing);
 
 export declare namespace EnumSchemaWithExample {
     export interface Raw
@@ -42,7 +44,8 @@ export declare namespace EnumSchemaWithExample {
             WithAvailability.Raw,
             WithSource.Raw,
             WithTitle.Raw,
-            WithInline.Raw {
+            WithInline.Raw,
+            WithCasing.Raw {
         default?: EnumValue.Raw | null;
         values: EnumValue.Raw[];
         example?: string | null;

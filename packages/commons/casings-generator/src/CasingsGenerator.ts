@@ -28,6 +28,7 @@ export function constructCasingsGenerator({
 }): CasingsGenerator {
     const casingsGenerator: CasingsGenerator = {
         generateName: (name, opts) => {
+            console.log(`Generating name for: ${name} with options: ${JSON.stringify(opts)}`);
             const generateSafeAndUnsafeString = (unsafeString: string): SafeAndUnsafeString => ({
                 unsafeName: unsafeString,
                 safeName: sanitizeName({

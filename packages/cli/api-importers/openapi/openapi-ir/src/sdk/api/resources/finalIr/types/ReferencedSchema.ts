@@ -11,6 +11,7 @@ export interface ReferencedSchema
         FernOpenapiIr.WithDescription,
         FernOpenapiIr.WithAvailability,
         FernOpenapiIr.WithSource,
-        FernOpenapiIr.WithTitle {
+        FernOpenapiIr.WithTitle,
+        FernOpenapiIr.WithCasing {
     schema: FernOpenapiIr.SchemaId;
 }

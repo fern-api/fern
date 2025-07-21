@@ -11,16 +11,16 @@ export const CasingOverridesSchema: core.serialization.ObjectSchema<
     FernDefinition.CasingOverridesSchema
 > = core.serialization.object({
     camel: core.serialization.string().optional(),
-    snake: core.serialization.string().optional(),
     pascal: core.serialization.string().optional(),
+    snake: core.serialization.string().optional(),
     "screaming-snake": core.serialization.string().optional(),
 });
 
 export declare namespace CasingOverridesSchema {
     export interface Raw {
         camel?: string | null;
-        snake?: string | null;
         pascal?: string | null;
+        snake?: string | null;
         "screaming-snake"?: string | null;
     }
 }

@@ -1,0 +1,44 @@
+openapi: 3.1.0
+info:
+  title: Fern Type Name extension
+  version: 0.1.0
+servers: 
+  - url: http://localhost 
+paths: {}
+components:
+  schemas:
+    OpenAISettings:
+      x-fern-type-name:
+        value: OpenAISettings
+        casing:
+          camel: openAISettings
+          pascal: OpenAISettings
+          snake: openai_settings
+          screaming-snake: OPENAI_SETTINGS
+      type: object
+      properties:
+        foo:
+          type: string
+    FooURLsBar:
+      x-fern-type-name:
+        value: FooURLsBar
+        casing:
+          camel: fooURLsBar
+          pascal: FooURLsBar
+          snake: foo_urls_bar
+          screaming-snake: FOO_URLS_BAR
+      type: object
+      properties:
+        foo:
+          type: string
+    NormalSchema:
+      type: object
+      properties:
+        foo:
+          type: string
+    OverriddenNameSchema:
+      x-fern-type-name: Overridden
+      type: object
+      properties:
+        foo:
+          type: string

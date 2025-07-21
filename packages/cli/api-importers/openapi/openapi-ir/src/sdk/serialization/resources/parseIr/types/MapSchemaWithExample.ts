@@ -14,6 +14,7 @@ import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithEncoding } from "../../commons/types/WithEncoding";
 import { WithTitle } from "../../commons/types/WithTitle";
 import { WithInline } from "../../commons/types/WithInline";
+import { WithCasing } from "../../commons/types/WithCasing";
 
 export const MapSchemaWithExample: core.serialization.ObjectSchema<
     serializers.MapSchemaWithExample.Raw,
@@ -31,7 +32,8 @@ export const MapSchemaWithExample: core.serialization.ObjectSchema<
     .extend(WithAvailability)
     .extend(WithEncoding)
     .extend(WithTitle)
-    .extend(WithInline);
+    .extend(WithInline)
+    .extend(WithCasing);
 
 export declare namespace MapSchemaWithExample {
     export interface Raw
@@ -42,7 +44,8 @@ export declare namespace MapSchemaWithExample {
             WithAvailability.Raw,
             WithEncoding.Raw,
             WithTitle.Raw,
-            WithInline.Raw {
+            WithInline.Raw,
+            WithCasing.Raw {
         key: PrimitiveSchemaWithExample.Raw;
         value: serializers.SchemaWithExample.Raw;
         example?: unknown | null;

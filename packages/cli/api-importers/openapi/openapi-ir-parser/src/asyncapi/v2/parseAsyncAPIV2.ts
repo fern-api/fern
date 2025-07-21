@@ -95,7 +95,8 @@ export function parseAsyncAPIV2({
                                   title: undefined,
                                   namespace: undefined,
                                   groupName: undefined,
-                                  nameOverride: undefined
+                                  nameOverride: undefined,
+                                  casing: undefined
                               }),
                     variableReference: undefined,
                     availability: convertAvailability(parameter),
@@ -389,7 +390,7 @@ function convertOneOfToSchema({
             description: event.description ?? event.message.description,
             availability: convertAvailability(event.message),
             subtypes,
-            nameOverride: event.operationId,
+            overrideTypeName: { value: event.operationId, casing: undefined },
             generatedName,
             title: event.message.title,
             groupName: undefined,

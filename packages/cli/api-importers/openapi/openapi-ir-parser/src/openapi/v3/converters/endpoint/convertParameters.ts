@@ -86,6 +86,7 @@ export function convertParameters({
                 : isRequired
                   ? SchemaWithExample.primitive({
                         nameOverride: undefined,
+                        casing: undefined,
                         generatedName,
                         title: undefined,
                         schema: PrimitiveSchemaValueWithExample.string({
@@ -106,10 +107,12 @@ export function convertParameters({
                     })
                   : SchemaWithExample.optional({
                         nameOverride: undefined,
+                        casing: undefined,
                         generatedName,
                         title: undefined,
                         value: SchemaWithExample.primitive({
                             nameOverride: undefined,
+                            casing: undefined,
                             generatedName,
                             title: undefined,
                             schema: PrimitiveSchemaValueWithExample.string({
@@ -146,6 +149,7 @@ export function convertParameters({
             if (typeof defaultValue === "string" && defaultValue.length > 0) {
                 schema = SchemaWithExample.literal({
                     nameOverride: undefined,
+                    casing: undefined,
                     generatedName,
                     title: undefined,
                     value: LiteralSchemaValue.string(defaultValue),

@@ -2,11 +2,12 @@ import { OpenAPIV3 } from "openapi-types";
 
 import { Availability, SchemaWithExample, SdkGroupName, Source } from "@fern-api/openapi-ir";
 
+import { OverrideTypeName } from "../openapi/v3/extensions/getFernTypeNameExtension";
 import { SchemaParserContext } from "./SchemaParserContext";
 import { convertSchema } from "./convertSchemas";
 
 export function convertArray({
-    nameOverride,
+    overrideTypeName,
     generatedName,
     title,
     breadcrumbs,
@@ -20,7 +21,7 @@ export function convertArray({
     example,
     source
 }: {
-    nameOverride: string | undefined;
+    overrideTypeName: OverrideTypeName | undefined;
     generatedName: string;
     title: string | undefined;
     breadcrumbs: string[];
@@ -37,7 +38,8 @@ export function convertArray({
     const itemSchema =
         item == null
             ? SchemaWithExample.unknown({
-                  nameOverride,
+                  nameOverride: overrideTypeName?.value,
+                  casing: overrideTypeName?.casing,
                   generatedName,
                   title,
                   description: undefined,
@@ -48,7 +50,7 @@ export function convertArray({
               })
             : convertSchema(item, false, context, [...breadcrumbs, "Item"], source, namespace);
     return wrapArray({
-        nameOverride,
+        overrideTypeName,
         generatedName,
         title,
         namespace,
@@ -62,7 +64,7 @@ export function convertArray({
 }
 
 export function wrapArray({
-    nameOverride,
+    overrideTypeName,
     generatedName,
     title,
     itemSchema,
@@ -73,7 +75,7 @@ export function wrapArray({
     groupName,
     example
 }: {
-    nameOverride: string | undefined;
+    overrideTypeName: OverrideTypeName | undefined;
     generatedName: string;
     title: string | undefined;
     itemSchema: SchemaWithExample;
@@ -86,11 +88,13 @@ export function wrapArray({
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
-            nameOverride,
+            nameOverride: overrideTypeName?.value,
+            casing: overrideTypeName?.casing,
             generatedName,
             title,
             value: SchemaWithExample.array({
-                nameOverride,
+                nameOverride: overrideTypeName?.value,
+                casing: overrideTypeName?.casing,
                 generatedName,
                 title,
                 value: itemSchema,
@@ -109,7 +113,8 @@ export function wrapArray({
         });
     }
     return SchemaWithExample.array({
-        nameOverride,
+        nameOverride: overrideTypeName?.value,
+        casing: overrideTypeName?.casing,
         generatedName,
         title,
         value: itemSchema,

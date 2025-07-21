@@ -5,26 +5,35 @@ import { Logger } from "@fern-api/logger";
 import { getExtensionAndValidate } from "../../../getExtension";
 import { FernOpenAPIExtension } from "./fernExtensions";
 
-export type TypeName = {
-    value: string;
-    casing?: {
-        camel?: string;
-        pascal?: string;
-        snake?: string;
-        "screaming-snake"?: string;
-    };
+export type OverrideTypeName = {
+    value: string | undefined;
+    casing:
+        | {
+              camel: string | undefined;
+              pascal: string | undefined;
+              snake: string | undefined;
+              screamingSnake: string | undefined;
+          }
+        | undefined;
 };
 
-export function getFernTypeNameExtension(key: string, object: object, logger: Logger): TypeName {
-    const nameOverride = getExtensionAndValidate<string | {
-        value?: string;
-        casing?: {
-            camel?: string;
-            pascal?: string;
-            snake?: string;
-            "screaming-snake"?: string;
-        };
-    }>(
+export function getFernTypeNameExtension(
+    object: object,
+    fallback: string | undefined,
+    logger: Logger
+): OverrideTypeName | undefined {
+    const nameOverride = getExtensionAndValidate<
+        | string
+        | {
+              value?: string;
+              casing?: {
+                  camel?: string;
+                  pascal?: string;
+                  snake?: string;
+                  "screaming-snake"?: string;
+              };
+          }
+    >(
         object,
         FernOpenAPIExtension.TYPE_NAME,
         z.optional(
@@ -45,18 +54,25 @@ export function getFernTypeNameExtension(key: string, object: object, logger: Lo
         ),
         logger
     );
-    if(nameOverride == null) {
+    if (nameOverride == null) {
         return {
-            value: key,
+            value: fallback,
+            casing: undefined
         };
     }
     if (typeof nameOverride === "string") {
         return {
-            value: nameOverride
+            value: nameOverride,
+            casing: undefined
         };
     }
     return {
-        value: nameOverride.value ?? key,
-        casing: nameOverride.casing
+        value: nameOverride.value ?? fallback,
+        casing: {
+            camel: nameOverride.casing?.camel,
+            pascal: nameOverride.casing?.pascal,
+            snake: nameOverride.casing?.snake,
+            screamingSnake: nameOverride.casing?.["screaming-snake"]
+        }
     };
 }

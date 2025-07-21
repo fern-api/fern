@@ -1,5 +1,5 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
-import { isRawAliasDefinition } from "@fern-api/fern-definition-schema";
+import { RawSchemas, isRawAliasDefinition } from "@fern-api/fern-definition-schema";
 import { FernDefinition } from "@fern-api/importer-commons";
 import { Schema } from "@fern-api/openapi-ir";
 import { RelativeFilePath } from "@fern-api/path-utils";
@@ -51,7 +51,22 @@ function addSchemas({
 
         // HACKHACK: Skip self-referencing schemas. I'm not sure if this is the right way to do this.
         if (isRawAliasDefinition(typeDeclaration.schema)) {
-            const aliasType = getTypeFromTypeReference(typeDeclaration.schema);
+            const typeRefSchema: RawSchemas.TypeReferenceSchema =
+                typeof typeDeclaration.schema === "string"
+                    ? typeDeclaration.schema
+                    : {
+                          type: typeDeclaration.schema.type,
+                          name:
+                              typeof typeDeclaration.schema.name === "string"
+                                  ? typeDeclaration.schema.name
+                                  : typeDeclaration.schema.name?.value,
+                          docs: typeDeclaration.schema.docs,
+                          validation: typeDeclaration.schema.validation,
+                          audiences: typeDeclaration.schema.audiences,
+                          availability: typeDeclaration.schema.availability,
+                          encoding: typeDeclaration.schema.encoding
+                      };
+            const aliasType = getTypeFromTypeReference(typeRefSchema);
             if (aliasType === (typeDeclaration.name ?? id) || aliasType === `optional<${typeDeclaration.name ?? id}>`) {
                 continue;
             }

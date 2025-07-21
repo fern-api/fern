@@ -27,6 +27,7 @@ import { ErrorResolver } from "../../resolvers/ErrorResolver";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { VariableResolver } from "../../resolvers/VariableResolver";
+import { getCasingOverrides } from "../../utils/getCasingOverrides";
 import { getEndpointPathParameters } from "../../utils/getEndpointPathParameters";
 import { parseErrorName } from "../../utils/parseErrorName";
 import {
@@ -91,7 +92,10 @@ export function convertExampleEndpointCall({
                                   queryParameterKey: wireKey,
                                   queryParameter: queryParameterDeclaration
                               }).name,
-                              wireValue: wireKey
+                              wireValue: wireKey,
+                              opts: {
+                                  casingOverrides: getCasingOverrides(queryParameterDeclaration)
+                              }
                           }),
                           value: convertTypeReferenceExample({
                               example: value,
@@ -189,25 +193,43 @@ function convertPathParameters({
             const endpointPathParameterDeclaration = rawEndpointPathParameters[key];
 
             if (rootPathParameterDeclaration != null) {
+                const casing =
+                    typeof rootPathParameterDeclaration !== "string" && "name" in rootPathParameterDeclaration
+                        ? getCasingOverrides(rootPathParameterDeclaration)
+                        : undefined;
                 rootPathParameters.push(
                     buildExamplePathParameter({
-                        name: file.casingsGenerator.generateName(key),
+                        name: file.casingsGenerator.generateName(key, {
+                            casingOverrides: casing
+                        }),
                         pathParameterDeclaration: rootPathParameterDeclaration,
                         examplePathParameter
                     })
                 );
             } else if (endpointPathParameterDeclaration != null) {
+                const casing =
+                    typeof endpointPathParameterDeclaration !== "string" && "name" in endpointPathParameterDeclaration
+                        ? getCasingOverrides(endpointPathParameterDeclaration)
+                        : undefined;
                 endpointPathParameters.push(
                     buildExamplePathParameter({
-                        name: file.casingsGenerator.generateName(key),
+                        name: file.casingsGenerator.generateName(key, {
+                            casingOverrides: casing
+                        }),
                         pathParameterDeclaration: endpointPathParameterDeclaration,
                         examplePathParameter
                     })
                 );
             } else if (servicePathParameterDeclaration != null) {
+                const casing =
+                    typeof servicePathParameterDeclaration !== "string" && "name" in servicePathParameterDeclaration
+                        ? getCasingOverrides(servicePathParameterDeclaration)
+                        : undefined;
                 servicePathParameters.push(
                     buildExamplePathParameter({
-                        name: file.casingsGenerator.generateName(key),
+                        name: file.casingsGenerator.generateName(key, {
+                            casingOverrides: casing
+                        }),
                         pathParameterDeclaration: servicePathParameterDeclaration,
                         examplePathParameter
                     })
@@ -257,7 +279,10 @@ function convertHeaders({
                 endpointHeaders.push({
                     name: file.casingsGenerator.generateNameAndWireValue({
                         name: getHeaderName({ headerKey: wireKey, header: endpointHeaderDeclaration }).name,
-                        wireValue: wireKey
+                        wireValue: wireKey,
+                        opts: {
+                            casingOverrides: getCasingOverrides(endpointHeaderDeclaration)
+                        }
                     }),
                     value: convertTypeReferenceExample({
                         example: exampleHeader,
@@ -276,7 +301,10 @@ function convertHeaders({
                 serviceHeaders.push({
                     name: file.casingsGenerator.generateNameAndWireValue({
                         name: getHeaderName({ headerKey: wireKey, header: serviceHeaderDeclaration }).name,
-                        wireValue: wireKey
+                        wireValue: wireKey,
+                        opts: {
+                            casingOverrides: getCasingOverrides(serviceHeaderDeclaration)
+                        }
                     }),
                     value: convertTypeReferenceExample({
                         example: exampleHeader,
@@ -384,7 +412,10 @@ function convertExampleRequestBody({
             exampleProperties.push({
                 name: file.casingsGenerator.generateNameAndWireValue({
                     name: getPropertyName({ propertyKey: wireKey, property: inlinedRequestPropertyDeclaration }).name,
-                    wireValue: wireKey
+                    wireValue: wireKey,
+                    opts: {
+                        casingOverrides: getCasingOverrides(inlinedRequestPropertyDeclaration)
+                    }
                 }),
                 value: convertTypeReferenceExample({
                     example: propertyExample,
@@ -414,7 +445,10 @@ function convertExampleRequestBody({
                 name: file.casingsGenerator.generateNameAndWireValue({
                     name: getPropertyName({ propertyKey: wireKey, property: originalTypeDeclaration.rawPropertyType })
                         .name,
-                    wireValue: wireKey
+                    wireValue: wireKey,
+                    opts: {
+                        casingOverrides: getCasingOverrides(originalTypeDeclaration.rawPropertyType)
+                    }
                 }),
                 value: convertTypeReferenceExample({
                     example: propertyExample,

@@ -14,6 +14,7 @@ import { WithEncoding } from "../../commons/types/WithEncoding";
 import { WithSource } from "../../commons/types/WithSource";
 import { WithTitle } from "../../commons/types/WithTitle";
 import { WithInline } from "../../commons/types/WithInline";
+import { WithCasing } from "../../commons/types/WithCasing";
 
 export const UnDiscriminatedOneOfSchemaWithExample: core.serialization.ObjectSchema<
     serializers.UnDiscriminatedOneOfSchemaWithExample.Raw,
@@ -30,7 +31,8 @@ export const UnDiscriminatedOneOfSchemaWithExample: core.serialization.ObjectSch
     .extend(WithEncoding)
     .extend(WithSource)
     .extend(WithTitle)
-    .extend(WithInline);
+    .extend(WithInline)
+    .extend(WithCasing);
 
 export declare namespace UnDiscriminatedOneOfSchemaWithExample {
     export interface Raw
@@ -42,7 +44,8 @@ export declare namespace UnDiscriminatedOneOfSchemaWithExample {
             WithEncoding.Raw,
             WithSource.Raw,
             WithTitle.Raw,
-            WithInline.Raw {
+            WithInline.Raw,
+            WithCasing.Raw {
         schemas: serializers.SchemaWithExample.Raw[];
     }
 }

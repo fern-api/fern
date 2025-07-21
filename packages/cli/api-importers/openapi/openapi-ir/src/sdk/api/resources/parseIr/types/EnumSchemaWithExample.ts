@@ -12,7 +12,8 @@ export interface EnumSchemaWithExample
         FernOpenapiIr.WithAvailability,
         FernOpenapiIr.WithSource,
         FernOpenapiIr.WithTitle,
-        FernOpenapiIr.WithInline {
+        FernOpenapiIr.WithInline,
+        FernOpenapiIr.WithCasing {
     default: FernOpenapiIr.EnumValue | undefined;
     values: FernOpenapiIr.EnumValue[];
     example: string | undefined;

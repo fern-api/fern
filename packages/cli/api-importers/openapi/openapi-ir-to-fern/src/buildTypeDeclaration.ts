@@ -300,9 +300,17 @@ export function buildObjectTypeDeclaration({
 
     objectTypeDeclaration.inline = getInline(schema, declarationDepth);
 
-    const name = schema.nameOverride ?? schema.generatedName;
+    let name = schema.nameOverride ?? schema.generatedName;
+    if (readOnlyPropertyPresent && context.respectReadonlySchemas && !shouldSkipReadonly) {
+        name = `${name}Read`;
+    }
+    if (schema.casing) {
+        objectTypeDeclaration.name = {
+            casing: schema.casing
+        };
+    }
     return {
-        name: readOnlyPropertyPresent && context.respectReadonlySchemas && !shouldSkipReadonly ? `${name}Read` : name,
+        name,
         schema: objectTypeDeclaration
     };
 }
@@ -375,6 +383,7 @@ export function buildArrayTypeDeclaration({
     namespace: string | undefined;
     declarationDepth: number;
 }): ConvertedTypeDeclaration {
+    
     return {
         name: schema.nameOverride ?? schema.generatedName,
         schema: buildArrayTypeReference({

@@ -59,7 +59,7 @@ export namespace Schema {
         type: "nullable";
     }
 
-    export interface Unknown extends FernOpenapiIr.WithName, _Utils {
+    export interface Unknown extends FernOpenapiIr.UnknownSchema, _Utils {
         type: "unknown";
     }
 
@@ -78,7 +78,7 @@ export namespace Schema {
         literal: (value: FernOpenapiIr.LiteralSchema) => _Result;
         oneOf: (value: FernOpenapiIr.OneOfSchema) => _Result;
         nullable: (value: FernOpenapiIr.NullableSchema) => _Result;
-        unknown: (value: FernOpenapiIr.WithName) => _Result;
+        unknown: (value: FernOpenapiIr.UnknownSchema) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -214,7 +214,7 @@ export const Schema = {
         };
     },
 
-    unknown: (value: FernOpenapiIr.WithName): FernOpenapiIr.Schema.Unknown => {
+    unknown: (value: FernOpenapiIr.UnknownSchema): FernOpenapiIr.Schema.Unknown => {
         return {
             ...value,
             type: "unknown",

@@ -10,6 +10,7 @@ export interface LiteralSchema
         FernOpenapiIr.WithName,
         FernOpenapiIr.WithDescription,
         FernOpenapiIr.WithAvailability,
-        FernOpenapiIr.WithTitle {
+        FernOpenapiIr.WithTitle,
+        FernOpenapiIr.WithCasing {
     value: FernOpenapiIr.LiteralSchemaValue;
 }

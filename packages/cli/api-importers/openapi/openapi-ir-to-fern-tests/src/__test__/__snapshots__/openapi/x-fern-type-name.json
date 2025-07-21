@@ -1,0 +1,126 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "types": {
+          "FooURLsBar": {
+            "docs": undefined,
+            "inline": undefined,
+            "name": {
+              "casing": {
+                "camel": "fooURLsBar",
+                "pascal": "FooURLsBar",
+                "screamingSnake": "FOO_URLS_BAR",
+                "snake": "foo_urls_bar",
+              },
+            },
+            "properties": {
+              "foo": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "NormalSchema": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "foo": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "OpenAISettings": {
+            "docs": undefined,
+            "inline": undefined,
+            "name": {
+              "casing": {
+                "camel": "openAISettings",
+                "pascal": "OpenAISettings",
+                "screamingSnake": "OPENAI_SETTINGS",
+                "snake": "openai_settings",
+              },
+            },
+            "properties": {
+              "foo": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Overridden": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "foo": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  OpenAISettings:
+    properties:
+      foo: optional<string>
+    source:
+      openapi: ../openapi.yml
+    name:
+      casing:
+        camel: openAISettings
+        pascal: OpenAISettings
+        snake: openai_settings
+        screamingSnake: OPENAI_SETTINGS
+  FooURLsBar:
+    properties:
+      foo: optional<string>
+    source:
+      openapi: ../openapi.yml
+    name:
+      casing:
+        camel: fooURLsBar
+        pascal: FooURLsBar
+        snake: foo_urls_bar
+        screamingSnake: FOO_URLS_BAR
+  NormalSchema:
+    properties:
+      foo: optional<string>
+    source:
+      openapi: ../openapi.yml
+  Overridden:
+    properties:
+      foo: optional<string>
+    source:
+      openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "default-environment": "Default",
+      "display-name": "Fern Type Name extension",
+      "environments": {
+        "Default": "http://localhost",
+      },
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Fern Type Name extension
+environments:
+  Default: http://localhost
+default-environment: Default
+",
+  },
+}

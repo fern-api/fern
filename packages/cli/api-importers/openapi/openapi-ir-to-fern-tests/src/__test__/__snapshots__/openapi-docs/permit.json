@@ -3108,6 +3108,7 @@ The actions represents the ways you can interact with a protected resource.",
             "properties": {
               "roles": {
                 "display-name": "Roles",
+                "name": "Roles",
                 "type": "Roles",
               },
             },
@@ -3366,6 +3367,7 @@ The actions represents the ways you can interact with a protected resource.",
             "properties": {
               "roles": {
                 "display-name": "Roles",
+                "name": "Roles",
                 "type": "Roles",
               },
             },
@@ -5746,6 +5748,7 @@ types:
       roles:
         display-name: Roles
         type: Roles
+        name: Roles
     source:
       openapi: ../openapi.json
   ResourceRoleRead:
@@ -5924,6 +5927,7 @@ types:
       roles:
         display-name: Roles
         type: Roles
+        name: Roles
     source:
       openapi: ../openapi.json
   RoleRead:

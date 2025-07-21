@@ -116,7 +116,7 @@
                         "type": "optional",
                         "value": {
                             "type": "named",
-                            "value": "type_commons/metadata:Metadata"
+                            "value": "type_commons/metadata:metadata.Metadata"
                         }
                     }
                 }
@@ -794,7 +794,7 @@
                             "type": "list",
                             "value": {
                                 "type": "named",
-                                "value": "type_file:File"
+                                "value": "type_file:file.File"
                             }
                         }
                     }

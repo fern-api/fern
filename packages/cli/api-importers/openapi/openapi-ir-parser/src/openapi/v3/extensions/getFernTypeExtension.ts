@@ -11,16 +11,17 @@ import {
 
 import { getExtension } from "../../../getExtension";
 import { FernOpenAPIExtension } from "./fernExtensions";
+import { OverrideTypeName } from "./getFernTypeNameExtension";
 
 export function getFernTypeExtension({
-    nameOverride,
+    overrideTypeName,
     generatedName,
     title,
     schema,
     description,
     availability
 }: {
-    nameOverride: string | undefined;
+    overrideTypeName: OverrideTypeName | undefined;
     generatedName: string;
     title: string | undefined;
     schema: OpenAPIV3.SchemaObject;
@@ -35,7 +36,7 @@ export function getFernTypeExtension({
     }
     return getSchemaFromFernType({
         fernType,
-        nameOverride,
+        overrideTypeName,
         generatedName,
         title,
         description,
@@ -47,7 +48,7 @@ export function getFernTypeExtension({
 
 export function getSchemaFromFernType({
     fernType,
-    nameOverride,
+    overrideTypeName,
     generatedName,
     title,
     description,
@@ -56,7 +57,7 @@ export function getSchemaFromFernType({
     groupName
 }: {
     fernType: string;
-    nameOverride: string | undefined;
+    overrideTypeName: OverrideTypeName | undefined;
     generatedName: string;
     title: string | undefined;
     description: string | undefined;
@@ -73,7 +74,8 @@ export function getSchemaFromFernType({
                 switch (primitive.v1) {
                     case "BASE_64":
                         return SchemaWithExample.primitive({
-                            nameOverride,
+                            nameOverride: overrideTypeName?.value,
+                            casing: overrideTypeName?.casing,
                             generatedName,
                             title,
                             description,
@@ -86,7 +88,8 @@ export function getSchemaFromFernType({
                         });
                     case "BOOLEAN":
                         return SchemaWithExample.primitive({
-                            nameOverride,
+                            nameOverride: overrideTypeName?.value,
+                            casing: overrideTypeName?.casing,
                             generatedName,
                             title,
                             description,
@@ -100,7 +103,8 @@ export function getSchemaFromFernType({
                         });
                     case "DATE":
                         return SchemaWithExample.primitive({
-                            nameOverride,
+                            nameOverride: overrideTypeName?.value,
+                            casing: overrideTypeName?.casing,
                             generatedName,
                             title,
                             description,
@@ -113,7 +117,8 @@ export function getSchemaFromFernType({
                         });
                     case "DATE_TIME":
                         return SchemaWithExample.primitive({
-                            nameOverride,
+                            nameOverride: overrideTypeName?.value,
+                            casing: overrideTypeName?.casing,
                             generatedName,
                             title,
                             description,
@@ -126,7 +131,8 @@ export function getSchemaFromFernType({
                         });
                     case "FLOAT":
                         return SchemaWithExample.primitive({
-                            nameOverride,
+                            nameOverride: overrideTypeName?.value,
+                            casing: overrideTypeName?.casing,
                             generatedName,
                             title,
                             description,
@@ -139,7 +145,8 @@ export function getSchemaFromFernType({
                         });
                     case "DOUBLE":
                         return SchemaWithExample.primitive({
-                            nameOverride,
+                            nameOverride: overrideTypeName?.value,
+                            casing: overrideTypeName?.casing,
                             generatedName,
                             title,
                             description,
@@ -158,7 +165,8 @@ export function getSchemaFromFernType({
                         });
                     case "UINT":
                         return SchemaWithExample.primitive({
-                            nameOverride,
+                            nameOverride: overrideTypeName?.value,
+                            casing: overrideTypeName?.casing,
                             generatedName,
                             title,
                             description,
@@ -172,7 +180,8 @@ export function getSchemaFromFernType({
                         });
                     case "INTEGER":
                         return SchemaWithExample.primitive({
-                            nameOverride,
+                            nameOverride: overrideTypeName?.value,
+                            casing: overrideTypeName?.casing,
                             generatedName,
                             title,
                             description,
@@ -191,7 +200,8 @@ export function getSchemaFromFernType({
                         });
                     case "UINT_64":
                         return SchemaWithExample.primitive({
-                            nameOverride,
+                            nameOverride: overrideTypeName?.value,
+                            casing: overrideTypeName?.casing,
                             generatedName,
                             title,
                             description,
@@ -205,7 +215,8 @@ export function getSchemaFromFernType({
                         });
                     case "LONG":
                         return SchemaWithExample.primitive({
-                            nameOverride,
+                            nameOverride: overrideTypeName?.value,
+                            casing: overrideTypeName?.casing,
                             generatedName,
                             title,
                             description,
@@ -221,7 +232,8 @@ export function getSchemaFromFernType({
                     case "UUID":
                     case "BIG_INTEGER":
                         return SchemaWithExample.primitive({
-                            nameOverride,
+                            nameOverride: overrideTypeName?.value,
+                            casing: overrideTypeName?.casing,
                             generatedName,
                             title,
                             description,
@@ -243,7 +255,8 @@ export function getSchemaFromFernType({
             },
             unknown: () => {
                 return SchemaWithExample.unknown({
-                    nameOverride,
+                    nameOverride: overrideTypeName?.value,
+                    casing: overrideTypeName?.casing,
                     generatedName,
                     title,
                     example: undefined,
@@ -256,7 +269,8 @@ export function getSchemaFromFernType({
             map: ({ keyType, valueType }) =>
                 keyType?.type === "primitive" && valueType != null
                     ? SchemaWithExample.map({
-                          nameOverride,
+                          nameOverride: overrideTypeName?.value,
+                          casing: overrideTypeName?.casing,
                           generatedName,
                           title,
                           key: keyType,
@@ -273,7 +287,8 @@ export function getSchemaFromFernType({
             list: (itemType) =>
                 itemType != null
                     ? SchemaWithExample.array({
-                          nameOverride,
+                          nameOverride: overrideTypeName?.value,
+                          casing: overrideTypeName?.casing,
                           generatedName,
                           title,
                           value: itemType,
@@ -288,7 +303,8 @@ export function getSchemaFromFernType({
             optional: (itemType) =>
                 itemType != null
                     ? SchemaWithExample.optional({
-                          nameOverride,
+                          nameOverride: overrideTypeName?.value,
+                          casing: overrideTypeName?.casing,
                           generatedName,
                           title,
                           value: itemType,
@@ -302,7 +318,8 @@ export function getSchemaFromFernType({
             nullable: (itemType) =>
                 itemType != null
                     ? SchemaWithExample.nullable({
-                          nameOverride,
+                          nameOverride: overrideTypeName?.value,
+                          casing: overrideTypeName?.casing,
                           generatedName,
                           title,
                           value: itemType,
@@ -316,7 +333,8 @@ export function getSchemaFromFernType({
             set: (itemType) =>
                 itemType != null
                     ? SchemaWithExample.array({
-                          nameOverride,
+                          nameOverride: overrideTypeName?.value,
+                          casing: overrideTypeName?.casing,
                           generatedName,
                           title,
                           value: itemType,
@@ -330,7 +348,8 @@ export function getSchemaFromFernType({
                     : undefined,
             literal: (literal) =>
                 SchemaWithExample.literal({
-                    nameOverride,
+                    nameOverride: overrideTypeName?.value,
+                    casing: overrideTypeName?.casing,
                     generatedName,
                     title,
                     value: literal._visit<LiteralSchemaValue>({

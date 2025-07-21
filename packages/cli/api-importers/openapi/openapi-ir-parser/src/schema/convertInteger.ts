@@ -1,9 +1,10 @@
 import { Availability, PrimitiveSchemaValueWithExample, SchemaWithExample, SdkGroupName } from "@fern-api/openapi-ir";
 
 import { wrapPrimitive } from "./convertSchemas";
+import { OverrideTypeName } from "../openapi/v3/extensions/getFernTypeNameExtension";
 
 export function convertInteger({
-    nameOverride,
+    overrideTypeName,
     generatedName,
     title,
     format,
@@ -20,7 +21,7 @@ export function convertInteger({
     namespace,
     groupName
 }: {
-    nameOverride: string | undefined;
+    overrideTypeName: OverrideTypeName | undefined;
     generatedName: string;
     title: string | undefined;
     format: string | undefined;
@@ -39,7 +40,7 @@ export function convertInteger({
 }): SchemaWithExample {
     if (format === "int64") {
         return wrapPrimitive({
-            nameOverride,
+            overrideTypeName,
             generatedName,
             title,
             primitive: PrimitiveSchemaValueWithExample.int64({
@@ -54,7 +55,7 @@ export function convertInteger({
         });
     } else if (format === "uint32") {
         return wrapPrimitive({
-            nameOverride,
+            overrideTypeName,
             generatedName,
             title,
             primitive: PrimitiveSchemaValueWithExample.uint({
@@ -69,7 +70,7 @@ export function convertInteger({
         });
     } else if (format === "uint64") {
         return wrapPrimitive({
-            nameOverride,
+            overrideTypeName,
             generatedName,
             title,
             primitive: PrimitiveSchemaValueWithExample.uint64({
@@ -84,7 +85,7 @@ export function convertInteger({
         });
     }
     return wrapPrimitive({
-        nameOverride,
+        overrideTypeName,
         generatedName,
         title,
         primitive: PrimitiveSchemaValueWithExample.int({

@@ -32,7 +32,7 @@ export function getIdempotencyHeaders(document: OpenAPIV3.Document): Idempotency
                           title: undefined,
                           namespace: undefined,
                           groupName: undefined,
-                          nameOverride: undefined
+                          overrideTypeName: undefined
                       })
                     : undefined
         });

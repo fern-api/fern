@@ -33,6 +33,7 @@ import {
 } from "./convertDiscriminatedUnionTypeDeclaration";
 import { getEnumNameFromEnumValue } from "./convertEnumTypeDeclaration";
 import { getPropertyName } from "./convertObjectTypeDeclaration";
+import { getCasingOverrides } from "../../utils/getCasingOverrides";
 
 export function convertTypeExample({
     typeName,
@@ -107,7 +108,10 @@ export function convertTypeExample({
             return ExampleTypeShape.union({
                 discriminant: fileContainingExample.casingsGenerator.generateNameAndWireValue({
                     name: getUnionDiscriminantName(rawUnion).name,
-                    wireValue: discriminant
+                    wireValue: discriminant,
+                    opts: {
+                        casingOverrides: getCasingOverrides(rawUnion)
+                    }
                 }),
                 singleUnionType: convertSingleUnionType({
                     rawValueType,
@@ -134,7 +138,10 @@ export function convertTypeExample({
             return ExampleTypeShape.enum({
                 value: fileContainingExample.casingsGenerator.generateNameAndWireValue({
                     name: getEnumNameFromEnumValue(example, rawEnum).name,
-                    wireValue: example
+                    wireValue: example,
+                    opts: {
+                        casingOverrides: getCasingOverrides(rawEnum)
+                    }
                 })
             });
         },
@@ -571,7 +578,10 @@ function convertObject({
                                       propertyKey: wireKey,
                                       property: originalTypeDeclaration.rawPropertyType
                                   }).name,
-                                  wireValue: wireKey
+                                  wireValue: wireKey,
+                                    opts: {
+                                        casingOverrides: getCasingOverrides(originalTypeDeclaration.rawPropertyType)
+                                    }
                               }),
                               value: valueExample,
                               originalTypeDeclaration: originalTypeDeclaration.typeName
@@ -677,7 +687,10 @@ function convertSingleUnionType({
 }): ExampleSingleUnionType {
     const wireDiscriminantValue = fileContainingExample.casingsGenerator.generateNameAndWireValue({
         name: getSingleUnionTypeName({ unionKey: discriminantValueForExample, rawSingleUnionType }).name,
-        wireValue: discriminantValueForExample
+        wireValue: discriminantValueForExample,
+        opts: {
+            casingOverrides: getCasingOverrides(rawSingleUnionType)
+        }
     });
     if (rawValueType == null) {
         return {

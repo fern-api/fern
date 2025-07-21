@@ -3,6 +3,8 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { ObjectProperty, ObjectPropertyAccess, Type } from "@fern-api/ir-sdk";
 
 import { FernFileContext } from "../../FernFileContext";
+import { getCasingOverrides } from "../../utils/getCasingOverrides";
+import { getTypeDeclarationName } from "../../utils/getTypeDeclarationName";
 import { parseTypeName } from "../../utils/parseTypeName";
 import { convertDeclaration } from "../convertDeclaration";
 
@@ -14,7 +16,9 @@ export function convertObjectTypeDeclaration({
     file: FernFileContext;
 }): Type {
     return Type.object({
-        extends: getExtensionsAsList(object.extends).map((extended) => parseTypeName({ typeName: extended, file })),
+        extends: getExtensionsAsList(object.extends).map((extended) =>
+            parseTypeName({ typeName: extended, typeDeclaration: undefined, file })
+        ),
         properties: getObjectPropertiesFromRawObjectSchema(object, file),
         extraProperties: object["extra-properties"] ?? false,
         extendedProperties: undefined
@@ -28,11 +32,15 @@ export function getObjectPropertiesFromRawObjectSchema(
     if (object.properties == null) {
         return [];
     }
+    console.log(`object: ${JSON.stringify(object)}`);
     return Object.entries(object.properties).map(([propertyKey, propertyDefinition]) => ({
         ...convertDeclaration(propertyDefinition),
         name: file.casingsGenerator.generateNameAndWireValue({
             wireValue: propertyKey,
-            name: getPropertyName({ propertyKey, property: propertyDefinition }).name
+            name: getPropertyName({ propertyKey, property: propertyDefinition }).name,
+            opts: {
+                casingOverrides: getCasingOverrides(propertyDefinition)
+            }
         }),
         valueType: file.parseTypeReference(propertyDefinition),
         propertyAccess: getPropertyAccess({ property: propertyDefinition }),
@@ -60,9 +68,10 @@ export function getPropertyName({
     propertyKey: string;
     property: RawSchemas.ObjectPropertySchema;
 }): { name: string; wasExplicitlySet: boolean } {
-    if (typeof property !== "string" && property.name != null) {
+    const name = getTypeDeclarationName(property);
+    if (name) {
         return {
-            name: property.name,
+            name,
             wasExplicitlySet: true
         };
     }

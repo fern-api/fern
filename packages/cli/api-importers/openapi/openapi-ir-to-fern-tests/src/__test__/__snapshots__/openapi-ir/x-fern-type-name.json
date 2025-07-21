@@ -1,0 +1,189 @@
+{
+  "title": "Fern Type Name extension",
+  "servers": [
+    {
+      "url": "http://localhost"
+    }
+  ],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "OpenAISettings": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "openAiSettingsFoo",
+            "key": "foo",
+            "schema": {
+              "generatedName": "openAiSettingsFoo",
+              "nameOverride": "OpenAISettings",
+              "casing": {
+                "camel": "openAISettings",
+                "pascal": "OpenAISettings",
+                "snake": "openai_settings",
+                "screamingSnake": "OPENAI_SETTINGS"
+              },
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "OpenAiSettingsFoo",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "OpenAiSettings",
+        "casing": {
+          "camel": "openAISettings",
+          "pascal": "OpenAISettings",
+          "snake": "openai_settings",
+          "screamingSnake": "OPENAI_SETTINGS"
+        },
+        "nameOverride": "OpenAISettings",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "FooURLsBar": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "fooUrLsBarFoo",
+            "key": "foo",
+            "schema": {
+              "generatedName": "fooUrLsBarFoo",
+              "nameOverride": "FooURLsBar",
+              "casing": {
+                "camel": "fooURLsBar",
+                "pascal": "FooURLsBar",
+                "snake": "foo_urls_bar",
+                "screamingSnake": "FOO_URLS_BAR"
+              },
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "FooUrLsBarFoo",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "FooUrLsBar",
+        "casing": {
+          "camel": "fooURLsBar",
+          "pascal": "FooURLsBar",
+          "snake": "foo_urls_bar",
+          "screamingSnake": "FOO_URLS_BAR"
+        },
+        "nameOverride": "FooURLsBar",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "NormalSchema": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "normalSchemaFoo",
+            "key": "foo",
+            "schema": {
+              "generatedName": "normalSchemaFoo",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "NormalSchemaFoo",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "NormalSchema",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "OverriddenNameSchema": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "overriddenNameSchemaFoo",
+            "key": "foo",
+            "schema": {
+              "generatedName": "overriddenNameSchemaFoo",
+              "nameOverride": "Overridden",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "OverriddenNameSchemaFoo",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "OverriddenNameSchema",
+        "nameOverride": "Overridden",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

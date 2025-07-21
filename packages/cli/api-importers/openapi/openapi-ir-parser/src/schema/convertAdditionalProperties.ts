@@ -15,9 +15,10 @@ import { ParseOpenAPIOptions } from "../options";
 import { SchemaParserContext } from "./SchemaParserContext";
 import { convertSchema } from "./convertSchemas";
 import { isReferenceObject } from "./utils/isReferenceObject";
+import { OverrideTypeName } from "../openapi/v3/extensions/getFernTypeNameExtension";
 
 export function convertAdditionalProperties({
-    nameOverride,
+    overrideTypeName,
     generatedName,
     title,
     breadcrumbs,
@@ -32,7 +33,7 @@ export function convertAdditionalProperties({
     encoding,
     source
 }: {
-    nameOverride: string | undefined;
+    overrideTypeName: OverrideTypeName | undefined;
     generatedName: string;
     title: string | undefined;
     breadcrumbs: string[];
@@ -53,7 +54,7 @@ export function convertAdditionalProperties({
 
     if (typeof additionalProperties === "boolean" || isAdditionalPropertiesAny(additionalProperties, context.options)) {
         return wrapMap({
-            nameOverride,
+            overrideTypeName,
             generatedName,
             title,
             wrapAsNullable,
@@ -61,6 +62,7 @@ export function convertAdditionalProperties({
             availability,
             keySchema: {
                 nameOverride: undefined,
+                casing: undefined,
                 generatedName: `${generatedName}Key`,
                 title: undefined,
                 description: undefined,
@@ -78,6 +80,7 @@ export function convertAdditionalProperties({
             },
             valueSchema: SchemaWithExample.unknown({
                 nameOverride: undefined,
+                casing: undefined,
                 generatedName: `${generatedName}Value`,
                 title: undefined,
                 description: undefined,
@@ -93,7 +96,7 @@ export function convertAdditionalProperties({
         });
     }
     return wrapMap({
-        nameOverride,
+        overrideTypeName,
         generatedName,
         title,
         wrapAsNullable,
@@ -101,6 +104,7 @@ export function convertAdditionalProperties({
         availability,
         keySchema: {
             nameOverride: undefined,
+            casing: undefined,
             generatedName: `${generatedName}Key`,
             title: undefined,
             description: undefined,
@@ -168,7 +172,7 @@ function addInline(schema: SchemaWithExample): SchemaWithExample {
 }
 
 export function wrapMap({
-    nameOverride,
+    overrideTypeName,
     generatedName,
     title,
     keySchema,
@@ -181,7 +185,7 @@ export function wrapMap({
     example,
     encoding
 }: {
-    nameOverride: string | undefined;
+    overrideTypeName: OverrideTypeName | undefined;
     generatedName: string;
     title: string | undefined;
     keySchema: PrimitiveSchemaWithExample;
@@ -196,11 +200,13 @@ export function wrapMap({
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
-            nameOverride,
+            nameOverride: overrideTypeName?.value,
+            casing: overrideTypeName?.casing,
             generatedName,
             title,
             value: SchemaWithExample.map({
-                nameOverride,
+                nameOverride: overrideTypeName?.value,
+                casing: overrideTypeName?.casing,
                 generatedName,
                 title,
                 description,
@@ -221,7 +227,8 @@ export function wrapMap({
         });
     }
     return SchemaWithExample.map({
-        nameOverride,
+        nameOverride: overrideTypeName?.value,
+        casing: overrideTypeName?.casing,
         generatedName,
         title,
         description,

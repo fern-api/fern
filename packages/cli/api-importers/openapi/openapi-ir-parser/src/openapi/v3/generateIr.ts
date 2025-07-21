@@ -476,6 +476,7 @@ function maybeAddBackDiscriminantsFromSchemas(
                         ...property,
                         schema: SchemaWithExample.literal({
                             nameOverride: undefined,
+                            casing: undefined,
                             generatedName: getGeneratedTypeName(
                                 [schema.generatedName, discriminantValue],
                                 context.options.preserveSchemaIds

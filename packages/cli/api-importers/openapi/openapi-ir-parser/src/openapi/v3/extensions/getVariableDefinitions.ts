@@ -27,6 +27,7 @@ export function getVariableDefinitions(
                     variableName,
                     {
                         nameOverride: undefined,
+                        casing: undefined,
                         generatedName: getGeneratedTypeName([variableName], preserveSchemaIds),
                         title: schema.title,
                         schema: PrimitiveSchemaValue.string({

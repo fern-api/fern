@@ -17,6 +17,7 @@ import { convertTypeExample } from "./convertExampleType";
 import { convertObjectTypeDeclaration } from "./convertObjectTypeDeclaration";
 import { convertUndiscriminatedUnionTypeDeclaration } from "./convertUndiscriminatedUnionTypeDeclaration";
 import { getReferencedTypesFromRawDeclaration } from "./getReferencedTypesFromRawDeclaration";
+import { getCasingOverrides } from "../../utils/getCasingOverrides";
 
 export interface TypeDeclarationWithDescendantFilepaths {
     typeDeclaration: TypeDeclaration;
@@ -44,7 +45,8 @@ export function convertTypeDeclaration({
     const declaration = convertDeclaration(typeDeclaration);
     const declaredTypeName = parseTypeName({
         typeName,
-        file
+        file,
+        typeDeclaration
     });
 
     const referencedTypes = getReferencedTypesFromRawDeclaration({ typeDeclaration, file, typeResolver });
@@ -75,7 +77,9 @@ export function convertTypeDeclaration({
                 typeof typeDeclaration !== "string" && typeDeclaration.examples != null
                     ? typeDeclaration.examples.map(
                           (example): ExampleType => ({
-                              name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
+                              name: example.name != null ? file.casingsGenerator.generateName(example.name, {
+                                    casingOverrides: getCasingOverrides(example)
+                              }) : undefined,
                               docs: example.docs,
                               jsonExample: exampleResolver.resolveAllReferencesInExampleOrThrow({
                                   example: example.value,

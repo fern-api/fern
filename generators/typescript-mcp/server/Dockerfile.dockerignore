@@ -1,7 +1,0 @@
-*
-!generators/typescript/asIs/
-!generators/typescript/utils/core-utilities/
-!generators/typescript/sdk/features.yml
-!generators/typescript/sdk/cli/node-docker/dist/nodeCli.cjs
-
-!generators/typescript-mcp/server/dist

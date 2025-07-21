@@ -12,6 +12,7 @@ import { WithName } from "../../commons/types/WithName";
 import { WithDescription } from "../../commons/types/WithDescription";
 import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithTitle } from "../../commons/types/WithTitle";
+import { WithCasing } from "../../commons/types/WithCasing";
 
 export const PrimitiveSchema: core.serialization.ObjectSchema<
     serializers.PrimitiveSchema.Raw,
@@ -25,7 +26,8 @@ export const PrimitiveSchema: core.serialization.ObjectSchema<
     .extend(WithName)
     .extend(WithDescription)
     .extend(WithAvailability)
-    .extend(WithTitle);
+    .extend(WithTitle)
+    .extend(WithCasing);
 
 export declare namespace PrimitiveSchema {
     export interface Raw
@@ -34,7 +36,8 @@ export declare namespace PrimitiveSchema {
             WithName.Raw,
             WithDescription.Raw,
             WithAvailability.Raw,
-            WithTitle.Raw {
+            WithTitle.Raw,
+            WithCasing.Raw {
         schema: PrimitiveSchemaValue.Raw;
     }
 }

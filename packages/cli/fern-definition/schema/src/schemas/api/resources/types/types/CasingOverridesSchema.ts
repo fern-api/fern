@@ -4,7 +4,7 @@
 
 export interface CasingOverridesSchema {
     camel?: string;
-    snake?: string;
     pascal?: string;
+    snake?: string;
     "screaming-snake"?: string;
 }

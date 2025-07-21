@@ -24,7 +24,9 @@ import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { PropertyResolver } from "../../resolvers/PropertyResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { VariableResolver } from "../../resolvers/VariableResolver";
+import { getCasingOverrides } from "../../utils/getCasingOverrides";
 import { getEndpointPathParameters } from "../../utils/getEndpointPathParameters";
+import { getTypeDeclarationName } from "../../utils/getTypeDeclarationName";
 import { convertAvailability, convertDeclaration } from "../convertDeclaration";
 import { convertCodeSample } from "./convertCodeSamples";
 import { convertExampleEndpointCall } from "./convertExampleEndpointCall";
@@ -236,9 +238,12 @@ function convertPathParameter({
     file: FernFileContext;
     variableResolver: VariableResolver;
 }): PathParameter {
+    const casing = typeof parameter !== "string" && "name" in parameter ? getCasingOverrides(parameter) : undefined;
     return {
         ...convertDeclaration(parameter),
-        name: file.casingsGenerator.generateName(parameterName),
+        name: file.casingsGenerator.generateName(parameterName, {
+            casingOverrides: casing
+        }),
         valueType: getPathParameterType({ parameter, variableResolver, file }),
         location,
         variable: isVariablePathParameter(parameter)
@@ -355,7 +360,10 @@ export function convertHttpHeader({
         ...convertDeclaration(header),
         name: file.casingsGenerator.generateNameAndWireValue({
             wireValue: headerKey,
-            name
+            name,
+            opts: {
+                casingOverrides: getCasingOverrides(header)
+            }
         }),
         valueType: file.parseTypeReference(header),
         env: typeof header === "string" ? undefined : header.env,
@@ -370,13 +378,12 @@ export function getHeaderName({ headerKey, header }: { headerKey: string; header
     name: string;
     wasExplicitlySet: boolean;
 } {
-    if (typeof header !== "string") {
-        if (header.name != null) {
-            return {
-                name: header.name,
-                wasExplicitlySet: true
-            };
-        }
+    const name = getTypeDeclarationName(header);
+    if (name) {
+        return {
+            name,
+            wasExplicitlySet: true
+        };
     }
     return {
         name: headerKey,

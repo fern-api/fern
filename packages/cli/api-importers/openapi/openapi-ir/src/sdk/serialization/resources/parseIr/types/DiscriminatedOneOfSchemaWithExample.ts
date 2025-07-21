@@ -14,6 +14,7 @@ import { WithEncoding } from "../../commons/types/WithEncoding";
 import { WithSource } from "../../commons/types/WithSource";
 import { WithTitle } from "../../commons/types/WithTitle";
 import { WithInline } from "../../commons/types/WithInline";
+import { WithCasing } from "../../commons/types/WithCasing";
 
 export const DiscriminatedOneOfSchemaWithExample: core.serialization.ObjectSchema<
     serializers.DiscriminatedOneOfSchemaWithExample.Raw,
@@ -37,7 +38,8 @@ export const DiscriminatedOneOfSchemaWithExample: core.serialization.ObjectSchem
     .extend(WithEncoding)
     .extend(WithSource)
     .extend(WithTitle)
-    .extend(WithInline);
+    .extend(WithInline)
+    .extend(WithCasing);
 
 export declare namespace DiscriminatedOneOfSchemaWithExample {
     export interface Raw
@@ -49,7 +51,8 @@ export declare namespace DiscriminatedOneOfSchemaWithExample {
             WithEncoding.Raw,
             WithSource.Raw,
             WithTitle.Raw,
-            WithInline.Raw {
+            WithInline.Raw,
+            WithCasing.Raw {
         discriminantProperty: string;
         commonProperties: serializers.CommonPropertyWithExample.Raw[];
         schemas: Record<string, serializers.SchemaWithExample.Raw>;

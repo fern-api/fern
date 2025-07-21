@@ -12,6 +12,7 @@ import { WithDescription } from "../../commons/types/WithDescription";
 import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithTitle } from "../../commons/types/WithTitle";
 import { WithInline } from "../../commons/types/WithInline";
+import { WithCasing } from "../../commons/types/WithCasing";
 
 export const ArraySchema: core.serialization.ObjectSchema<serializers.ArraySchema.Raw, FernOpenapiIr.ArraySchema> =
     core.serialization
@@ -24,7 +25,8 @@ export const ArraySchema: core.serialization.ObjectSchema<serializers.ArraySchem
         .extend(WithDescription)
         .extend(WithAvailability)
         .extend(WithTitle)
-        .extend(WithInline);
+        .extend(WithInline)
+        .extend(WithCasing);
 
 export declare namespace ArraySchema {
     export interface Raw
@@ -34,7 +36,8 @@ export declare namespace ArraySchema {
             WithDescription.Raw,
             WithAvailability.Raw,
             WithTitle.Raw,
-            WithInline.Raw {
+            WithInline.Raw,
+            WithCasing.Raw {
         value: serializers.Schema.Raw;
     }
 }

@@ -10,12 +10,13 @@ import {
     Source
 } from "@fern-api/openapi-ir";
 
+import { OverrideTypeName } from "../openapi/v3/extensions/getFernTypeNameExtension";
 import { SchemaParserContext } from "./SchemaParserContext";
 import { convertReferenceObject, convertSchema, convertSchemaObject } from "./convertSchemas";
 import { isReferenceObject } from "./utils/isReferenceObject";
 
 export function convertDiscriminatedOneOf({
-    nameOverride,
+    overrideTypeName,
     generatedName,
     title,
     breadcrumbs,
@@ -31,7 +32,7 @@ export function convertDiscriminatedOneOf({
     encoding,
     source
 }: {
-    nameOverride: string | undefined;
+    overrideTypeName: OverrideTypeName | undefined;
     generatedName: string;
     title: string | undefined;
     breadcrumbs: string[];
@@ -91,7 +92,7 @@ export function convertDiscriminatedOneOf({
             };
         });
     return wrapDiscriminatedOneOf({
-        nameOverride,
+        overrideTypeName,
         generatedName,
         title,
         wrapAsNullable,
@@ -107,7 +108,7 @@ export function convertDiscriminatedOneOf({
 }
 
 export function convertDiscriminatedOneOfWithVariants({
-    nameOverride,
+    overrideTypeName,
     generatedName,
     title,
     breadcrumbs,
@@ -124,7 +125,7 @@ export function convertDiscriminatedOneOfWithVariants({
     encoding,
     source
 }: {
-    nameOverride: string | undefined;
+    overrideTypeName: OverrideTypeName | undefined;
     generatedName: string;
     title: string | undefined;
     breadcrumbs: string[];
@@ -190,7 +191,7 @@ export function convertDiscriminatedOneOfWithVariants({
             };
         });
     return wrapDiscriminatedOneOf({
-        nameOverride,
+        overrideTypeName,
         generatedName,
         title,
         wrapAsNullable,
@@ -206,7 +207,7 @@ export function convertDiscriminatedOneOfWithVariants({
 }
 
 export function wrapDiscriminatedOneOf({
-    nameOverride,
+    overrideTypeName,
     generatedName,
     title,
     wrapAsNullable,
@@ -219,7 +220,7 @@ export function wrapDiscriminatedOneOf({
     groupName,
     source
 }: {
-    nameOverride: string | undefined;
+    overrideTypeName: OverrideTypeName | undefined;
     generatedName: string;
     title: string | undefined;
     wrapAsNullable: boolean;
@@ -234,7 +235,8 @@ export function wrapDiscriminatedOneOf({
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
-            nameOverride,
+            nameOverride: overrideTypeName?.value,
+            casing: overrideTypeName?.casing,
             generatedName,
             title,
             value: SchemaWithExample.oneOf(
@@ -242,7 +244,8 @@ export function wrapDiscriminatedOneOf({
                     description,
                     availability,
                     discriminantProperty: discriminant,
-                    nameOverride,
+                    nameOverride: overrideTypeName?.value,
+                    casing: overrideTypeName?.casing,
                     generatedName,
                     title,
                     schemas: subtypes,
@@ -266,7 +269,8 @@ export function wrapDiscriminatedOneOf({
             description,
             availability,
             discriminantProperty: discriminant,
-            nameOverride,
+            nameOverride: overrideTypeName?.value,
+            casing: overrideTypeName?.casing,
             generatedName,
             title,
             schemas: subtypes,

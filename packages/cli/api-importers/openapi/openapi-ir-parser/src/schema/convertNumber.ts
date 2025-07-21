@@ -1,9 +1,10 @@
 import { Availability, PrimitiveSchemaValueWithExample, SchemaWithExample, SdkGroupName } from "@fern-api/openapi-ir";
 
 import { wrapPrimitive } from "./convertSchemas";
+import { OverrideTypeName } from "../openapi/v3/extensions/getFernTypeNameExtension";
 
 export function convertNumber({
-    nameOverride,
+    overrideTypeName,
     generatedName,
     title,
     format,
@@ -20,7 +21,7 @@ export function convertNumber({
     namespace,
     groupName
 }: {
-    nameOverride: string | undefined;
+    overrideTypeName: OverrideTypeName | undefined;
     generatedName: string;
     title: string | undefined;
     format: string | undefined;
@@ -39,7 +40,7 @@ export function convertNumber({
 }): SchemaWithExample {
     if (format == null || format === "double") {
         return wrapPrimitive({
-            nameOverride,
+            overrideTypeName,
             generatedName,
             title,
             primitive: PrimitiveSchemaValueWithExample.double({
@@ -59,7 +60,7 @@ export function convertNumber({
         });
     } else if (format === "float") {
         return wrapPrimitive({
-            nameOverride,
+            overrideTypeName,
             generatedName,
             title,
             primitive: PrimitiveSchemaValueWithExample.float({
@@ -73,7 +74,7 @@ export function convertNumber({
         });
     } else if (format === "int32") {
         return wrapPrimitive({
-            nameOverride,
+            overrideTypeName,
             generatedName,
             title,
             primitive: PrimitiveSchemaValueWithExample.int({
@@ -93,7 +94,7 @@ export function convertNumber({
         });
     } else if (format === "int64") {
         return wrapPrimitive({
-            nameOverride,
+            overrideTypeName,
             generatedName,
             title,
             primitive: PrimitiveSchemaValueWithExample.int64({
@@ -108,7 +109,7 @@ export function convertNumber({
         });
     } else if (format === "uint32") {
         return wrapPrimitive({
-            nameOverride,
+            overrideTypeName,
             generatedName,
             title,
             primitive: PrimitiveSchemaValueWithExample.uint({
@@ -123,7 +124,7 @@ export function convertNumber({
         });
     } else if (format === "uint64") {
         return wrapPrimitive({
-            nameOverride,
+            overrideTypeName,
             generatedName,
             title,
             primitive: PrimitiveSchemaValueWithExample.uint64({
@@ -138,7 +139,7 @@ export function convertNumber({
         });
     } else if (format === "time-delta") {
         return wrapPrimitive({
-            nameOverride,
+            overrideTypeName,
             generatedName,
             title,
             primitive: PrimitiveSchemaValueWithExample.float({
@@ -152,7 +153,7 @@ export function convertNumber({
         });
     }
     return wrapPrimitive({
-        nameOverride,
+        overrideTypeName,
         generatedName,
         title,
         primitive: PrimitiveSchemaValueWithExample.float({

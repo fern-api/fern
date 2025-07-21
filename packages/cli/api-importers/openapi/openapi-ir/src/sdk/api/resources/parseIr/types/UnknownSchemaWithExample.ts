@@ -10,6 +10,7 @@ export interface UnknownSchemaWithExample
         FernOpenapiIr.WithName,
         FernOpenapiIr.WithDescription,
         FernOpenapiIr.WithAvailability,
-        FernOpenapiIr.WithTitle {
+        FernOpenapiIr.WithTitle,
+        FernOpenapiIr.WithCasing {
     example: unknown;
 }

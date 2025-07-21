@@ -5,8 +5,8 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
+import { TypeDeclarationName } from "./TypeDeclarationName";
 import { BaseTypeReferenceSchema } from "./BaseTypeReferenceSchema";
-import { WithName } from "../../commons/types/WithName";
 import { WithAudiences } from "../../commons/types/WithAudiences";
 
 export const TypeReferenceDeclarationWithName: core.serialization.ObjectSchema<
@@ -15,13 +15,14 @@ export const TypeReferenceDeclarationWithName: core.serialization.ObjectSchema<
 > = core.serialization
     .object({
         type: core.serialization.string(),
+        name: TypeDeclarationName.optional(),
     })
     .extend(BaseTypeReferenceSchema)
-    .extend(WithName)
     .extend(WithAudiences);
 
 export declare namespace TypeReferenceDeclarationWithName {
-    export interface Raw extends BaseTypeReferenceSchema.Raw, WithName.Raw, WithAudiences.Raw {
+    export interface Raw extends BaseTypeReferenceSchema.Raw, WithAudiences.Raw {
         type: string;
+        name?: TypeDeclarationName.Raw | null;
     }
 }

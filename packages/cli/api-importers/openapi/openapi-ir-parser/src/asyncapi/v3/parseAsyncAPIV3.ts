@@ -245,6 +245,7 @@ export function parseAsyncAPIV3({
                         namespace: undefined,
                         groupName: undefined,
                         nameOverride: undefined,
+                        casing: undefined,
                         inline: undefined
                     });
                 }

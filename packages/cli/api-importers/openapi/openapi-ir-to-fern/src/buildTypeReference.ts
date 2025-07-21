@@ -2,6 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     ArraySchema,
+    CasingOverrides,
     DoubleSchema,
     EnumSchema,
     IntSchema,
@@ -150,32 +151,38 @@ export function buildPrimitiveTypeReference(primitiveSchema: PrimitiveSchema): R
         case "string":
             return buildStringTypeReference({
                 description: primitiveSchema.description,
-                schema: primitiveSchema.schema
+                schema: primitiveSchema.schema,
+                casing: primitiveSchema.casing
             });
         case "int":
             return buildIntegerTypeReference({
                 description: primitiveSchema.description,
-                schema: primitiveSchema.schema
+                schema: primitiveSchema.schema,
+                casing: primitiveSchema.casing
             });
         case "float":
             return buildFloatTypeReference({
                 description: primitiveSchema.description,
-                schema: primitiveSchema.schema
+                schema: primitiveSchema.schema,
+                casing: primitiveSchema.casing
             });
         case "double":
             return buildDoubleTypeReference({
                 description: primitiveSchema.description,
-                schema: primitiveSchema.schema
+                schema: primitiveSchema.schema,
+                casing: primitiveSchema.casing
             });
         case "boolean":
             return buildBooleanTypeReference({
                 description: primitiveSchema.description,
-                schema: primitiveSchema.schema
+                schema: primitiveSchema.schema,
+                casing: primitiveSchema.casing
             });
         case "int64":
             return buildLongTypeReference({
                 description: primitiveSchema.description,
-                schema: primitiveSchema.schema
+                schema: primitiveSchema.schema,
+                casing: primitiveSchema.casing
             });
     }
     const typeReference = primitiveSchema.schema._visit({
@@ -207,10 +214,12 @@ export function buildPrimitiveTypeReference(primitiveSchema: PrimitiveSchema): R
 
 function buildBooleanTypeReference({
     description,
-    schema
+    schema,
+    casing
 }: {
     description: string | undefined;
     schema: PrimitiveSchemaValue.Boolean;
+    casing: CasingOverrides | undefined;
 }): RawSchemas.TypeReferenceSchema {
     const type = "boolean";
     if (description == null && schema.default == null) {
@@ -225,15 +234,20 @@ function buildBooleanTypeReference({
     if (schema.default != null) {
         result.default = schema.default;
     }
+    if (casing) {
+        result.name = { casing };
+    }
     return result;
 }
 
 function buildLongTypeReference({
     description,
-    schema
+    schema,
+    casing
 }: {
     description: string | undefined;
     schema: PrimitiveSchemaValue.Int64;
+    casing: CasingOverrides | undefined;
 }): RawSchemas.TypeReferenceSchema {
     const type = "long";
     if (description == null && schema.default == null) {
@@ -248,15 +262,20 @@ function buildLongTypeReference({
     if (schema.default != null) {
         result.default = schema.default;
     }
+    if (casing) {
+        result.name = { casing };
+    }
     return result;
 }
 
 function buildStringTypeReference({
     description,
-    schema
+    schema,
+    casing
 }: {
     description: string | undefined;
     schema: PrimitiveSchemaValue.String;
+    casing: CasingOverrides | undefined;
 }): RawSchemas.TypeReferenceSchema {
     const type = "string";
     const validation = maybeStringValidation(schema);
@@ -275,15 +294,20 @@ function buildStringTypeReference({
     if (validation != null) {
         result.validation = validation;
     }
+    if (casing) {
+        result.name = { casing };
+    }
     return result;
 }
 
 function buildIntegerTypeReference({
     description,
-    schema
+    schema,
+    casing
 }: {
     description: string | undefined;
     schema: PrimitiveSchemaValue.Int;
+    casing: CasingOverrides | undefined;
 }): RawSchemas.TypeReferenceSchema {
     const type = "integer";
     const validation = maybeNumberValidation(schema, type);
@@ -302,15 +326,20 @@ function buildIntegerTypeReference({
     if (validation != null) {
         result.validation = validation;
     }
+    if (casing) {
+        result.name = { casing };
+    }
     return result;
 }
 
 function buildFloatTypeReference({
     description,
-    schema
+    schema,
+    casing
 }: {
     description: string | undefined;
     schema: PrimitiveSchemaValue.Float;
+    casing: CasingOverrides | undefined;
 }): RawSchemas.TypeReferenceSchema {
     const type = "float";
     if (description == null) {
@@ -322,15 +351,20 @@ function buildFloatTypeReference({
     if (description != null) {
         result.docs = description;
     }
+    if (casing) {
+        result.name = { casing };
+    }
     return result;
 }
 
 function buildDoubleTypeReference({
     description,
-    schema
+    schema,
+    casing
 }: {
     description: string | undefined;
     schema: PrimitiveSchemaValue.Double;
+    casing: CasingOverrides | undefined;
 }): RawSchemas.TypeReferenceSchema {
     const type = "double";
     const validation = maybeNumberValidation(schema, type);
@@ -348,6 +382,9 @@ function buildDoubleTypeReference({
     }
     if (validation != null) {
         result.validation = validation;
+    }
+    if (casing) {
+        result.name = { casing: casing };
     }
     return result;
 }
@@ -475,7 +512,8 @@ export function buildReferenceTypeReference({
     return {
         type: resolvedSchema.type === "nullable" ? `optional<${typeWithPrefix}>` : typeWithPrefix,
         ...(schema.description != null ? { docs: schema.description } : {}),
-        ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {})
+        ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {}),
+        ...(schema.casing ? { name: { casing: schema.casing } } : {})
     };
 }
 
@@ -503,12 +541,13 @@ export function buildArrayTypeReference({
         declarationDepth
     });
     const type = `list<${getTypeFromTypeReference(item)}>`;
-    if (schema.description == null && schema.title == null) {
+    if (schema.description == null && schema.title == null && schema.casing == null) {
         return type;
     }
     return {
         ...(schema.description != null ? { docs: schema.description } : {}),
         ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {}),
+        ...(schema.casing ? { name: { casing: schema.casing } } : {}),
         type
     };
 }
@@ -553,6 +592,9 @@ export function buildMapTypeReference({
     }
     if (schema.availability != null) {
         result.availability = convertAvailability(schema.availability);
+    }
+    if (schema.casing) {
+        result.name = { casing: schema.casing };
     }
     return result;
 }
@@ -624,6 +666,9 @@ export function buildNullableTypeReference({
     if (schema.availability != null) {
         result.availability = convertAvailability(schema.availability);
     }
+    if (schema.casing) {
+        result.name = { casing: schema.casing };
+    }
 
     // Nullable schemas are always treated as optional.
     return wrapOptionalIfNotAlready({
@@ -685,6 +730,9 @@ export function buildOptionalTypeReference({
     if (schema.availability != null) {
         result.availability = convertAvailability(schema.availability);
     }
+    if (schema.casing) {
+        result.name = { casing: schema.casing };
+    }
     return result;
 }
 
@@ -712,7 +760,8 @@ export function buildLiteralTypeReference(schema: LiteralSchema): RawSchemas.Typ
     return {
         type: value,
         ...(schema.description != null ? { docs: schema.description } : {}),
-        ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {})
+        ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {}),
+        ...(schema.casing ? { name: { casing: schema.casing } } : {})
     };
 }
 
@@ -751,7 +800,9 @@ export function buildEnumTypeReference({
     if (schema.availability != null) {
         result.availability = convertAvailability(schema.availability);
     }
-
+    if (schema.casing) {
+        result.name = { casing: schema.casing };
+    }
     return result;
 }
 
@@ -789,7 +840,8 @@ export function buildObjectTypeReference({
     return {
         type: prefixedType,
         ...(schema.description != null ? { docs: schema.description } : {}),
-        ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {})
+        ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {}),
+        ...(schema.casing ? { name: { casing: schema.casing } } : {})
     };
 }
 
@@ -828,7 +880,8 @@ export function buildOneOfTypeReference({
         ...(schema.title != null ? { "display-name": schema.title } : {}),
         type: prefixedType,
         ...(schema.description != null ? { docs: schema.description } : {}),
-        ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {})
+        ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {}),
+        ...(schema.casing ? { name: { casing: schema.casing } } : { name })
     };
 }
 

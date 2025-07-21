@@ -5,9 +5,9 @@
 import * as serializers from "../../../index";
 import * as FernOpenapiIr from "../../../../api/index";
 import * as core from "../../../../core";
-import { CasingOverrides } from "./CasingOverrides";
 import { WithDescription } from "../../commons/types/WithDescription";
 import { WithAvailability } from "../../commons/types/WithAvailability";
+import { WithCasing } from "../../commons/types/WithCasing";
 
 export const EnumValue: core.serialization.ObjectSchema<serializers.EnumValue.Raw, FernOpenapiIr.EnumValue> =
     core.serialization
@@ -15,16 +15,15 @@ export const EnumValue: core.serialization.ObjectSchema<serializers.EnumValue.Ra
             nameOverride: core.serialization.string().optional(),
             generatedName: core.serialization.string(),
             value: core.serialization.string(),
-            casing: CasingOverrides.optional(),
         })
         .extend(WithDescription)
-        .extend(WithAvailability);
+        .extend(WithAvailability)
+        .extend(WithCasing);
 
 export declare namespace EnumValue {
-    export interface Raw extends WithDescription.Raw, WithAvailability.Raw {
+    export interface Raw extends WithDescription.Raw, WithAvailability.Raw, WithCasing.Raw {
         nameOverride?: string | null;
         generatedName: string;
         value: string;
-        casing?: CasingOverrides.Raw | null;
     }
 }

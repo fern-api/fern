@@ -12,5 +12,5 @@ export interface BaseTypeDeclarationSchema
     encoding?: FernDefinition.EncodingSchema;
     source?: FernDefinition.SourceSchema;
     inline?: boolean;
-    name: FernDefinition.TypeDeclarationName;
+    name?: FernDefinition.TypeDeclarationName;
 }

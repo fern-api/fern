@@ -22,7 +22,7 @@ export const BaseTypeDeclarationSchema: core.serialization.ObjectSchema<
         encoding: EncodingSchema.optional(),
         source: SourceSchema.optional(),
         inline: core.serialization.boolean().optional(),
-        name: TypeDeclarationName,
+        name: TypeDeclarationName.optional(),
     })
     .extend(WithDocsSchema)
     .extend(WithAvailability)
@@ -34,6 +34,6 @@ export declare namespace BaseTypeDeclarationSchema {
         encoding?: EncodingSchema.Raw | null;
         source?: SourceSchema.Raw | null;
         inline?: boolean | null;
-        name: TypeDeclarationName.Raw;
+        name?: TypeDeclarationName.Raw | null;
     }
 }

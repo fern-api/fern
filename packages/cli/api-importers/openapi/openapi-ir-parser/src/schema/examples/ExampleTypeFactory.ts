@@ -512,6 +512,7 @@ export class ExampleTypeFactory {
                                     description: undefined,
                                     generatedName: "",
                                     nameOverride: undefined,
+                                    casing: undefined,
                                     namespace: undefined,
                                     groupName: undefined
                                 }),

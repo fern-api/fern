@@ -6,6 +6,7 @@ import { EndpointResolver } from "../resolvers/EndpointResolver";
 import { PropertyResolver } from "../resolvers/PropertyResolver";
 import { convertOAuthClientCredentials } from "./convertOAuthClientCredentials";
 import { getRefreshTokenEndpoint, getTokenEndpoint } from "./convertOAuthUtils";
+import { getCasingOverrides } from "../utils/getCasingOverrides";
 
 export function convertApiAuth({
     rawApiFileSchema,
@@ -82,7 +83,10 @@ function convertSchemeReference({
                     docs,
                     name: file.casingsGenerator.generateNameAndWireValue({
                         name: rawHeader.name ?? reference,
-                        wireValue: rawHeader.header
+                        wireValue: rawHeader.header,
+                        opts: {
+                            casingOverrides: getCasingOverrides(rawHeader)
+                        }
                     }),
                     valueType: file.parseTypeReference(rawHeader.type ?? "string"),
                     prefix: rawHeader.prefix,
