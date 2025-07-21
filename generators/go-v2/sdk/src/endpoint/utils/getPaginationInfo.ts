@@ -446,7 +446,7 @@ function getResponsePropertySetter({
                     variableName: "response",
                     propertyPath: responsePropertyPath,
                     name: responseProperty.property.name.name,
-                    dereference: dereference // ?? requestPropertyType.internalType.type !== responsePropertyType.internalType.type
+                    dereference
                 })
             );
             writer.newLine();

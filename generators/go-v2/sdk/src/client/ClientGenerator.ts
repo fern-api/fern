@@ -309,7 +309,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
     }): void {
         writer.write("if ");
         writer.writeNode(propertyReference);
-        writer.writeLine(` == "" {`);
+        writer.writeLine(' == "" {');
         writer.indent();
         writer.writeNode(propertyReference);
         writer.write(" = ");
