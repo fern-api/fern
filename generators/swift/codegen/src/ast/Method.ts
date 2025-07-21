@@ -11,6 +11,7 @@ export declare namespace Method {
         accessLevel?: AccessLevel;
         static_?: boolean;
         parameters?: FunctionParameter[];
+        async?: true;
         throws?: true;
         returnType: Type;
         body?: CodeBlock;
@@ -22,16 +23,18 @@ export class Method extends AstNode {
     public readonly accessLevel?: AccessLevel;
     public readonly static_?: boolean;
     public readonly parameters?: FunctionParameter[];
+    public readonly async?: true;
     public readonly throws?: true;
     public readonly returnType: Type;
     public readonly body: CodeBlock;
 
-    constructor({ unsafeName, accessLevel, static_, parameters, throws, returnType, body }: Method.Args) {
+    constructor({ unsafeName, accessLevel, static_, parameters, async, throws, returnType, body }: Method.Args) {
         super();
         this.unsafeName = unsafeName;
         this.accessLevel = accessLevel;
         this.static_ = static_;
         this.parameters = parameters;
+        this.async = async;
         this.throws = throws;
         this.returnType = returnType;
         this.body = body ?? CodeBlock.empty();
@@ -55,6 +58,9 @@ export class Method extends AstNode {
             parameter.write(writer);
         });
         writer.write(")");
+        if (this.async) {
+            writer.write(" async");
+        }
         if (this.throws) {
             writer.write(" throws");
         }

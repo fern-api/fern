@@ -34,7 +34,15 @@
             }
           },
           "errorsV2": [],
-          "examples": []
+          "examples": [
+            {
+              "path": "/upload-content",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 204
+            }
+          ]
         }
       ],
       "webhooks": [],

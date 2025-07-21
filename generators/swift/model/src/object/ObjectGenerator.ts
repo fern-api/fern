@@ -1,10 +1,10 @@
-import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 
-import { ObjectProperty, ObjectTypeDeclaration, Type } from "@fern-fern/ir-sdk/api";
-import { PrimitiveTypeV1, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
+import { ObjectProperty, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
+
+import { generateSwiftTypeForTypeReference } from "../converters";
 
 function isOptionalProperty(p: ObjectProperty) {
     return p.valueType.type === "container" && p.valueType.container.type === "optional";
@@ -49,9 +49,7 @@ export class ObjectGenerator {
     }
 
     private getFileDirectory(): RelativeFilePath {
-        return RelativeFilePath.of(
-            [...this.typeDeclaration.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName)].join("/")
-        );
+        return RelativeFilePath.of("Schemas");
     }
 
     private generateStructForTypeDeclaration(): swift.Struct {
@@ -59,7 +57,7 @@ export class ObjectGenerator {
         return swift.struct({
             name: this.typeDeclaration.name.name.pascalCase.safeName,
             accessLevel: swift.AccessLevel.Public,
-            conformances: ["Codable", "Hashable"],
+            conformances: [swift.Protocol.Codable, swift.Protocol.Hashable],
             properties: [
                 ...this.objectTypeDeclaration.properties.map((p) => this.generateSwiftPropertyForProperty(p)),
                 swift.property({
@@ -83,7 +81,7 @@ export class ObjectGenerator {
                     swift.functionParameter({
                         argumentLabel: p.name.name.camelCase.unsafeName,
                         unsafeName: p.name.name.camelCase.unsafeName,
-                        type: this.generateSwiftTypeForTypeReference(p.valueType),
+                        type: generateSwiftTypeForTypeReference(p.valueType),
                         optional: isOptionalProperty(p),
                         defaultValue: isOptionalProperty(p) ? swift.Expression.rawValue("nil") : undefined
                     })
@@ -143,7 +141,7 @@ export class ObjectGenerator {
                                 [
                                     swift.functionArgument({
                                         value: swift.Expression.memberAccess(
-                                            this.generateSwiftTypeForTypeReference(p.valueType),
+                                            generateSwiftTypeForTypeReference(p.valueType),
                                             "self"
                                         )
                                     }),
@@ -242,10 +240,13 @@ export class ObjectGenerator {
         });
     }
 
-    private generateCodingKeysEnum(): swift.EnumWithRawValues {
+    private generateCodingKeysEnum(): swift.EnumWithRawValues | undefined {
+        if (this.objectTypeDeclaration.properties.length === 0) {
+            return undefined;
+        }
         return swift.enumWithRawValues({
             name: "CodingKeys",
-            conformances: ["String", "CodingKey", "CaseIterable"],
+            conformances: ["String", swift.Protocol.CodingKey, swift.Protocol.CaseIterable],
             cases: this.objectTypeDeclaration.properties.map((property) => {
                 return {
                     unsafeName: property.name.name.camelCase.unsafeName,
@@ -260,49 +261,8 @@ export class ObjectGenerator {
             unsafeName: property.name.name.camelCase.unsafeName,
             accessLevel: swift.AccessLevel.Public,
             declarationType: swift.DeclarationType.Let,
-            type: this.generateSwiftTypeForTypeReference(property.valueType),
+            type: generateSwiftTypeForTypeReference(property.valueType),
             optional: isOptionalProperty(property)
         });
-    }
-
-    private generateSwiftTypeForTypeReference(typeReference: TypeReference): swift.Type {
-        switch (typeReference.type) {
-            case "container":
-                return typeReference.container._visit({
-                    // TODO(kafkas): Handle these cases
-                    literal: () => swift.Type.any(),
-                    map: () => swift.Type.any(),
-                    set: () => swift.Type.any(),
-                    nullable: () => swift.Type.any(),
-                    optional: (ref) => this.generateSwiftTypeForTypeReference(ref),
-                    list: (ref) => swift.Type.array(this.generateSwiftTypeForTypeReference(ref)),
-                    _other: () => swift.Type.any()
-                });
-            case "primitive":
-                // TODO(kafkas): Do we not look at typeReference.primitive.v2?
-                return PrimitiveTypeV1._visit(typeReference.primitive.v1, {
-                    string: () => swift.Type.string(),
-                    boolean: () => swift.Type.bool(),
-                    integer: () => swift.Type.int(),
-                    uint: () => swift.Type.uint(),
-                    uint64: () => swift.Type.uint64(),
-                    long: () => swift.Type.int64(),
-                    float: () => swift.Type.float(),
-                    double: () => swift.Type.double(),
-                    // TODO(kafkas): We may need to implement our own value type for this
-                    bigInteger: () => swift.Type.string(),
-                    date: () => swift.Type.date(),
-                    dateTime: () => swift.Type.date(),
-                    base64: () => swift.Type.string(),
-                    uuid: () => swift.Type.uuid(),
-                    _other: () => swift.Type.any()
-                });
-            case "named":
-                return swift.Type.custom(typeReference.name.pascalCase.unsafeName);
-            case "unknown":
-                return swift.Type.any();
-            default:
-                assertNever(typeReference);
-        }
     }
 }

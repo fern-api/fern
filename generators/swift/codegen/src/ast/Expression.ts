@@ -33,6 +33,18 @@ type FunctionCall = {
     arguments_?: FunctionArgument[];
 };
 
+type StructInitialization = {
+    type: "struct-initialization";
+    unsafeName: string;
+    arguments_?: FunctionArgument[];
+};
+
+type ClassInitialization = {
+    type: "class-initialization";
+    unsafeName: string;
+    arguments_?: FunctionArgument[];
+};
+
 type MethodCall = {
     type: "method-call";
     target: Expression;
@@ -61,6 +73,8 @@ type InternalExpression =
     | MemberAccess
     | EnumCaseShorthand
     | FunctionCall
+    | StructInitialization
+    | ClassInitialization
     | MethodCall
     | ContextualMethodCall
     | Try
@@ -89,40 +103,42 @@ export class Expression extends AstNode {
                 writer.write(this.internalExpression.caseName);
                 break;
             case "function-call":
-                writer.write(escapeReservedKeyword(this.internalExpression.unsafeName));
-                writer.write("(");
-                this.internalExpression.arguments_?.forEach((argument: FunctionArgument, argumentIdx: number) => {
-                    if (argumentIdx > 0) {
-                        writer.write(", ");
-                    }
-                    argument.write(writer);
-                });
-                writer.write(")");
+                this.writeCallableExpression(
+                    writer,
+                    escapeReservedKeyword(this.internalExpression.unsafeName),
+                    this.internalExpression.arguments_
+                );
+                break;
+            case "struct-initialization":
+                this.writeCallableExpression(
+                    writer,
+                    escapeReservedKeyword(this.internalExpression.unsafeName),
+                    this.internalExpression.arguments_
+                );
+                break;
+            case "class-initialization":
+                this.writeCallableExpression(
+                    writer,
+                    escapeReservedKeyword(this.internalExpression.unsafeName),
+                    this.internalExpression.arguments_
+                );
                 break;
             case "method-call":
                 this.internalExpression.target.write(writer);
                 writer.write(".");
-                writer.write(this.internalExpression.methodName);
-                writer.write("(");
-                this.internalExpression.arguments_?.forEach((argument: FunctionArgument, argumentIdx: number) => {
-                    if (argumentIdx > 0) {
-                        writer.write(", ");
-                    }
-                    argument.write(writer);
-                });
-                writer.write(")");
+                this.writeCallableExpression(
+                    writer,
+                    this.internalExpression.methodName,
+                    this.internalExpression.arguments_
+                );
                 break;
             case "contextual-method-call":
                 writer.write(".");
-                writer.write(this.internalExpression.methodName);
-                writer.write("(");
-                this.internalExpression.arguments_?.forEach((argument: FunctionArgument, argumentIdx: number) => {
-                    if (argumentIdx > 0) {
-                        writer.write(", ");
-                    }
-                    argument.write(writer);
-                });
-                writer.write(")");
+                this.writeCallableExpression(
+                    writer,
+                    this.internalExpression.methodName,
+                    this.internalExpression.arguments_
+                );
                 break;
             case "try":
                 writer.write("try ");
@@ -134,6 +150,18 @@ export class Expression extends AstNode {
             default:
                 assertNever(this.internalExpression);
         }
+    }
+
+    private writeCallableExpression(writer: Writer, target: string, arguments_?: FunctionArgument[]): void {
+        writer.write(target);
+        writer.write("(");
+        arguments_?.forEach((argument: FunctionArgument, argumentIdx: number) => {
+            if (argumentIdx > 0) {
+                writer.write(", ");
+            }
+            argument.write(writer);
+        });
+        writer.write(")");
     }
 
     public static reference(unsafeName: string): Expression {
@@ -150,6 +178,14 @@ export class Expression extends AstNode {
 
     public static functionCall(unsafeName: string, arguments_?: FunctionArgument[]): Expression {
         return new this({ type: "function-call", unsafeName, arguments_ });
+    }
+
+    public static structInitialization(unsafeName: string, arguments_?: FunctionArgument[]): Expression {
+        return new this({ type: "struct-initialization", unsafeName, arguments_ });
+    }
+
+    public static classInitialization(unsafeName: string, arguments_?: FunctionArgument[]): Expression {
+        return new this({ type: "class-initialization", unsafeName, arguments_ });
     }
 
     public static methodCall(target: Expression, methodName: string, arguments_?: FunctionArgument[]): Expression {

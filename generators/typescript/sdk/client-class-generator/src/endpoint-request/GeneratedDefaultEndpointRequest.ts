@@ -134,6 +134,10 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         return parameters;
     }
 
+    public getExampleEndpointImports(): ts.Statement[] {
+        return [];
+    }
+
     public getExampleEndpointParameters({
         context,
         example,

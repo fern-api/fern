@@ -147,7 +147,8 @@ export const GenerationLanguage = {
     RUBY: "ruby",
     CSHARP: "csharp",
     SWIFT: "swift",
-    PHP: "php"
+    PHP: "php",
+    RUST: "rust"
 } as const;
 
 export type GenerationLanguage = Values<typeof GenerationLanguage>;

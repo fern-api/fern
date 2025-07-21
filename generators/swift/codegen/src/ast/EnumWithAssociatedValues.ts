@@ -1,4 +1,5 @@
 import { AccessLevel } from "./AccessLevel";
+import { Protocol } from "./Protocol";
 import { Type } from "./Type";
 import { AstNode, Writer } from "./core";
 import { isReservedKeyword } from "./syntax";
@@ -12,7 +13,7 @@ export declare namespace EnumWithAssociatedValues {
     interface Args {
         name: string;
         accessLevel?: AccessLevel;
-        conformances?: string[];
+        conformances?: Protocol[];
         cases: Case[];
     }
 }
@@ -20,7 +21,7 @@ export declare namespace EnumWithAssociatedValues {
 export class EnumWithAssociatedValues extends AstNode {
     public readonly name: string;
     public readonly accessLevel?: AccessLevel;
-    public readonly conformances?: string[];
+    public readonly conformances?: Protocol[];
     public readonly cases: EnumWithAssociatedValues.Case[];
 
     public constructor({ accessLevel, name, conformances, cases }: EnumWithAssociatedValues.Args) {
