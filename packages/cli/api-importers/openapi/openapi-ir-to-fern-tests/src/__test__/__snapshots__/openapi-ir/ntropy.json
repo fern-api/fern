@@ -9019,7 +9019,6 @@
             "key": "type",
             "schema": {
               "generatedName": "accountType",
-              "nameOverride": "Account",
               "title": "Account",
               "value": {
                 "schema": {
@@ -9042,7 +9041,6 @@
             "key": "number",
             "schema": {
               "generatedName": "accountNumber",
-              "nameOverride": "Account",
               "title": "Account",
               "value": {
                 "schema": {
@@ -9065,7 +9063,6 @@
             "key": "opening_balance",
             "schema": {
               "generatedName": "accountOpeningBalance",
-              "nameOverride": "Account",
               "title": "Account",
               "value": {
                 "schema": {
@@ -9087,7 +9084,6 @@
             "key": "closing_balance",
             "schema": {
               "generatedName": "accountClosingBalance",
-              "nameOverride": "Account",
               "title": "Account",
               "value": {
                 "schema": {
@@ -9109,7 +9105,6 @@
             "key": "iso_currency_code",
             "schema": {
               "generatedName": "accountIsoCurrencyCode",
-              "nameOverride": "Account",
               "title": "Account",
               "value": {
                 "schema": {
@@ -9147,7 +9142,6 @@
             "key": "type",
             "schema": {
               "generatedName": "accountHolderType",
-              "nameOverride": "AccountHolder",
               "title": "AccountHolder",
               "value": {
                 "generatedName": "AccountHolderType",
@@ -9171,7 +9165,6 @@
             "key": "name",
             "schema": {
               "generatedName": "accountHolderName",
-              "nameOverride": "AccountHolder",
               "title": "AccountHolder",
               "value": {
                 "schema": {
@@ -9194,7 +9187,6 @@
             "key": "address",
             "schema": {
               "generatedName": "accountHolderAddress",
-              "nameOverride": "AccountHolder",
               "title": "AccountHolder",
               "value": {
                 "generatedName": "AccountHolderAddress",
@@ -9269,7 +9261,6 @@
             "key": "name",
             "schema": {
               "generatedName": "accountHolderCreateName",
-              "nameOverride": "AccountHolderCreate",
               "title": "AccountHolderCreate",
               "value": {
                 "description": "The name of the account holder",
@@ -9344,7 +9335,6 @@
             "key": "name",
             "schema": {
               "generatedName": "accountHolderExternalName",
-              "nameOverride": "AccountHolderExternal",
               "title": "AccountHolderExternal",
               "value": {
                 "description": "The name of the account holder",
@@ -9496,7 +9486,6 @@
             "key": "street",
             "schema": {
               "generatedName": "addressStreet",
-              "nameOverride": "Address",
               "title": "Address",
               "value": {
                 "schema": {
@@ -9519,7 +9508,6 @@
             "key": "postcode",
             "schema": {
               "generatedName": "addressPostcode",
-              "nameOverride": "Address",
               "title": "Address",
               "value": {
                 "schema": {
@@ -9542,7 +9530,6 @@
             "key": "city",
             "schema": {
               "generatedName": "addressCity",
-              "nameOverride": "Address",
               "title": "Address",
               "value": {
                 "schema": {
@@ -9565,7 +9552,6 @@
             "key": "state",
             "schema": {
               "generatedName": "addressState",
-              "nameOverride": "Address",
               "title": "Address",
               "value": {
                 "schema": {
@@ -9588,7 +9574,6 @@
             "key": "country",
             "schema": {
               "generatedName": "addressCountry",
-              "nameOverride": "Address",
               "title": "Address",
               "value": {
                 "schema": {
@@ -9682,7 +9667,6 @@
             "key": "name",
             "schema": {
               "generatedName": "bankStatementName",
-              "nameOverride": "BankStatement",
               "title": "BankStatement",
               "value": {
                 "description": "The name of the bank statement file, if available.",
@@ -9756,7 +9740,6 @@
             "key": "error",
             "schema": {
               "generatedName": "bankStatementError",
-              "nameOverride": "BankStatement",
               "title": "BankStatement",
               "value": {
                 "generatedName": "BankStatementError",
@@ -9797,7 +9780,6 @@
             "key": "number",
             "schema": {
               "generatedName": "bankStatementAccountNumber",
-              "nameOverride": "BankStatementAccount",
               "title": "BankStatementAccount",
               "value": {
                 "description": "The account number, if available.",
@@ -9821,7 +9803,6 @@
             "key": "opening_balance",
             "schema": {
               "generatedName": "bankStatementAccountOpeningBalance",
-              "nameOverride": "BankStatementAccount",
               "title": "BankStatementAccount",
               "value": {
                 "description": "The opening balance of the account for the statement period.",
@@ -9844,7 +9825,6 @@
             "key": "closing_balance",
             "schema": {
               "generatedName": "bankStatementAccountClosingBalance",
-              "nameOverride": "BankStatementAccount",
               "title": "BankStatementAccount",
               "value": {
                 "description": "The closing balance of the account for the statement period.",
@@ -9867,7 +9847,6 @@
             "key": "start_date",
             "schema": {
               "generatedName": "bankStatementAccountStartDate",
-              "nameOverride": "BankStatementAccount",
               "title": "BankStatementAccount",
               "value": {
                 "description": "The start date of the statement period.",
@@ -9891,7 +9870,6 @@
             "key": "end_date",
             "schema": {
               "generatedName": "bankStatementAccountEndDate",
-              "nameOverride": "BankStatementAccount",
               "title": "BankStatementAccount",
               "value": {
                 "description": "The end date of the statement period.",
@@ -9915,7 +9893,6 @@
             "key": "is_balance_reconciled",
             "schema": {
               "generatedName": "bankStatementAccountIsBalanceReconciled",
-              "nameOverride": "BankStatementAccount",
               "title": "BankStatementAccount",
               "value": {
                 "description": "Indicates whether the balance has been reconciled.",
@@ -9938,7 +9915,6 @@
             "key": "total_incoming",
             "schema": {
               "generatedName": "bankStatementAccountTotalIncoming",
-              "nameOverride": "BankStatementAccount",
               "title": "BankStatementAccount",
               "value": {
                 "description": "The sum of amounts of all incoming transactions.",
@@ -9961,7 +9937,6 @@
             "key": "total_outgoing",
             "schema": {
               "generatedName": "bankStatementAccountTotalOutgoing",
-              "nameOverride": "BankStatementAccount",
               "title": "BankStatementAccount",
               "value": {
                 "description": "The sum of amounts of all outgoing transactions.",
@@ -10112,7 +10087,6 @@
             "key": "size",
             "schema": {
               "generatedName": "bankStatementFileSize",
-              "nameOverride": "BankStatementFile",
               "title": "BankStatementFile",
               "value": {
                 "description": "The size of the bank statement file in bytes, if available.",
@@ -10327,7 +10301,6 @@
             "key": "running_balance",
             "schema": {
               "generatedName": "bankStatementTransactionRunningBalance",
-              "nameOverride": "BankStatementTransaction",
               "title": "BankStatementTransaction",
               "value": {
                 "description": "The account's balance when this transaction was performed",
@@ -10659,7 +10632,6 @@
             "key": "general",
             "schema": {
               "generatedName": "categoriesGeneral",
-              "nameOverride": "Categories",
               "title": "Categories",
               "value": {
                 "description": "The category of the transaction. View the valid set of categories for your key [here](./docs/v3/enrichment/entities).",
@@ -10683,7 +10655,6 @@
             "key": "accounting",
             "schema": {
               "generatedName": "categoriesAccounting",
-              "nameOverride": "Categories",
               "title": "Categories",
               "value": {
                 "description": "The corresponding accounting category. Only available for `business` transactions.",
@@ -10815,7 +10786,6 @@
             "key": "id",
             "schema": {
               "generatedName": "counterpartyId",
-              "nameOverride": "Counterparty",
               "title": "Counterparty",
               "value": {
                 "description": "The unique UUID identifier of the entity",
@@ -10839,7 +10809,6 @@
             "key": "name",
             "schema": {
               "generatedName": "counterpartyName",
-              "nameOverride": "Counterparty",
               "title": "Counterparty",
               "value": {
                 "description": "The name of the entity",
@@ -10863,7 +10832,6 @@
             "key": "website",
             "schema": {
               "generatedName": "counterpartyWebsite",
-              "nameOverride": "Counterparty",
               "title": "Counterparty",
               "value": {
                 "description": "The website URL of the entity",
@@ -10887,7 +10855,6 @@
             "key": "logo",
             "schema": {
               "generatedName": "counterpartyLogo",
-              "nameOverride": "Counterparty",
               "title": "Counterparty",
               "value": {
                 "description": "Logo's URL",
@@ -10911,7 +10878,6 @@
             "key": "mccs",
             "schema": {
               "generatedName": "counterpartyMccs",
-              "nameOverride": "Counterparty",
               "title": "Counterparty",
               "value": {
                 "description": "A list of [Merchant Category Codes](https://en.wikipedia.org/wiki/Merchant_category_code)",
@@ -13087,7 +13053,6 @@
             "key": "entities",
             "schema": {
               "generatedName": "enrichedTransactionEntities",
-              "nameOverride": "EnrichedTransaction",
               "title": "EnrichedTransaction",
               "value": {
                 "generatedName": "EnrichedTransactionEntities",
@@ -13111,7 +13076,6 @@
             "key": "categories",
             "schema": {
               "generatedName": "enrichedTransactionCategories",
-              "nameOverride": "EnrichedTransaction",
               "title": "EnrichedTransaction",
               "value": {
                 "generatedName": "EnrichedTransactionCategories",
@@ -13135,7 +13099,6 @@
             "key": "location",
             "schema": {
               "generatedName": "enrichedTransactionLocation",
-              "nameOverride": "EnrichedTransaction",
               "title": "EnrichedTransaction",
               "value": {
                 "generatedName": "EnrichedTransactionLocation",
@@ -13159,7 +13122,6 @@
             "key": "error",
             "schema": {
               "generatedName": "enrichedTransactionError",
-              "nameOverride": "EnrichedTransaction",
               "title": "EnrichedTransaction",
               "value": {
                 "generatedName": "EnrichedTransactionError",
@@ -13272,7 +13234,6 @@
             "key": "counterparty",
             "schema": {
               "generatedName": "entitiesCounterparty",
-              "nameOverride": "Entities",
               "title": "Entities",
               "value": {
                 "generatedName": "EntitiesCounterparty",
@@ -13296,7 +13257,6 @@
             "key": "intermediaries",
             "schema": {
               "generatedName": "entitiesIntermediaries",
-              "nameOverride": "Entities",
               "title": "Entities",
               "value": {
                 "value": {
@@ -13342,7 +13302,6 @@
             "key": "id",
             "schema": {
               "generatedName": "entityId",
-              "nameOverride": "Entity",
               "title": "Entity",
               "value": {
                 "description": "The unique UUID identifier of the entity",
@@ -13366,7 +13325,6 @@
             "key": "name",
             "schema": {
               "generatedName": "entityName",
-              "nameOverride": "Entity",
               "title": "Entity",
               "value": {
                 "description": "The name of the entity",
@@ -13390,7 +13348,6 @@
             "key": "website",
             "schema": {
               "generatedName": "entityWebsite",
-              "nameOverride": "Entity",
               "title": "Entity",
               "value": {
                 "description": "The website URL of the entity",
@@ -13414,7 +13371,6 @@
             "key": "logo",
             "schema": {
               "generatedName": "entityLogo",
-              "nameOverride": "Entity",
               "title": "Entity",
               "value": {
                 "description": "Logo's URL",
@@ -13438,7 +13394,6 @@
             "key": "mccs",
             "schema": {
               "generatedName": "entityMccs",
-              "nameOverride": "Entity",
               "title": "Entity",
               "value": {
                 "description": "A list of [Merchant Category Codes](https://en.wikipedia.org/wiki/Merchant_category_code)",
@@ -13516,7 +13471,6 @@
             "key": "detail",
             "schema": {
               "generatedName": "httpValidationErrorDetail",
-              "nameOverride": "HTTPValidationError",
               "title": "HTTPValidationError",
               "value": {
                 "value": {
@@ -13561,7 +13515,6 @@
             "key": "id",
             "schema": {
               "generatedName": "intermediaryId",
-              "nameOverride": "Intermediary",
               "title": "Intermediary",
               "value": {
                 "description": "The unique UUID identifier of the entity",
@@ -13585,7 +13538,6 @@
             "key": "name",
             "schema": {
               "generatedName": "intermediaryName",
-              "nameOverride": "Intermediary",
               "title": "Intermediary",
               "value": {
                 "description": "The name of the entity",
@@ -13609,7 +13561,6 @@
             "key": "website",
             "schema": {
               "generatedName": "intermediaryWebsite",
-              "nameOverride": "Intermediary",
               "title": "Intermediary",
               "value": {
                 "description": "The website URL of the entity",
@@ -13633,7 +13584,6 @@
             "key": "logo",
             "schema": {
               "generatedName": "intermediaryLogo",
-              "nameOverride": "Intermediary",
               "title": "Intermediary",
               "value": {
                 "description": "Logo's URL",
@@ -13657,7 +13607,6 @@
             "key": "mccs",
             "schema": {
               "generatedName": "intermediaryMccs",
-              "nameOverride": "Intermediary",
               "title": "Intermediary",
               "value": {
                 "description": "A list of [Merchant Category Codes](https://en.wikipedia.org/wiki/Merchant_category_code)",
@@ -13743,7 +13692,6 @@
             "key": "raw_address",
             "schema": {
               "generatedName": "locationRawAddress",
-              "nameOverride": "Location",
               "title": "Location",
               "value": {
                 "description": "An unstructured string containing the address",
@@ -13766,7 +13714,6 @@
             "key": "structured",
             "schema": {
               "generatedName": "locationStructured",
-              "nameOverride": "Location",
               "title": "Location",
               "value": {
                 "description": "When raw is set, a structured representation of it.",
@@ -13806,7 +13753,6 @@
             "key": "raw_address",
             "schema": {
               "generatedName": "locationInputRawAddress",
-              "nameOverride": "LocationInput",
               "title": "LocationInput",
               "value": {
                 "description": "An unstructured string containing the address",
@@ -13863,7 +13809,6 @@
             "key": "street",
             "schema": {
               "generatedName": "locationStructuredStreet",
-              "nameOverride": "LocationStructured",
               "title": "LocationStructured",
               "value": {
                 "description": "The street name and number of the location",
@@ -13887,7 +13832,6 @@
             "key": "city",
             "schema": {
               "generatedName": "locationStructuredCity",
-              "nameOverride": "LocationStructured",
               "title": "LocationStructured",
               "value": {
                 "description": "The city where the location is situated",
@@ -13911,7 +13855,6 @@
             "key": "state",
             "schema": {
               "generatedName": "locationStructuredState",
-              "nameOverride": "LocationStructured",
               "title": "LocationStructured",
               "value": {
                 "description": "The state or region of the location",
@@ -13935,7 +13878,6 @@
             "key": "postcode",
             "schema": {
               "generatedName": "locationStructuredPostcode",
-              "nameOverride": "LocationStructured",
               "title": "LocationStructured",
               "value": {
                 "description": "The postal code or ZIP code of the location",
@@ -13959,7 +13901,6 @@
             "key": "country_code",
             "schema": {
               "generatedName": "locationStructuredCountryCode",
-              "nameOverride": "LocationStructured",
               "title": "LocationStructured",
               "value": {
                 "description": "The country code of the location in ISO 3166-2 format",
@@ -13982,7 +13923,6 @@
             "key": "country",
             "schema": {
               "generatedName": "locationStructuredCountry",
-              "nameOverride": "LocationStructured",
               "title": "LocationStructured",
               "value": {
                 "description": "The full name of the country",
@@ -14006,7 +13946,6 @@
             "key": "latitude",
             "schema": {
               "generatedName": "locationStructuredLatitude",
-              "nameOverride": "LocationStructured",
               "title": "LocationStructured",
               "value": {
                 "description": "The latitude coordinate of the location",
@@ -14030,7 +13969,6 @@
             "key": "longitude",
             "schema": {
               "generatedName": "locationStructuredLongitude",
-              "nameOverride": "LocationStructured",
               "title": "LocationStructured",
               "value": {
                 "description": "The longitude coordinate of the location",
@@ -14054,7 +13992,6 @@
             "key": "google_maps_url",
             "schema": {
               "generatedName": "locationStructuredGoogleMapsUrl",
-              "nameOverride": "LocationStructured",
               "title": "LocationStructured",
               "value": {
                 "description": "A URL link to view the location on Google Maps",
@@ -14077,7 +14014,6 @@
             "key": "apple_maps_url",
             "schema": {
               "generatedName": "locationStructuredAppleMapsUrl",
-              "nameOverride": "LocationStructured",
               "title": "LocationStructured",
               "value": {
                 "description": "A URL link to view the location on Apple Maps",
@@ -14100,7 +14036,6 @@
             "key": "store_number",
             "schema": {
               "generatedName": "locationStructuredStoreNumber",
-              "nameOverride": "LocationStructured",
               "title": "LocationStructured",
               "value": {
                 "description": "A unique identifier for a specific store or branch, if applicable",
@@ -14872,7 +14807,6 @@
             "key": "rejection_reason",
             "schema": {
               "generatedName": "reportRejectionReason",
-              "nameOverride": "Report",
               "title": "Report",
               "value": {
                 "description": "An explanation of why the report was rejected",
@@ -15017,7 +14951,6 @@
             "key": "institution",
             "schema": {
               "generatedName": "statementInfoInstitution",
-              "nameOverride": "StatementInfo",
               "title": "StatementInfo",
               "value": {
                 "schema": {
@@ -15040,7 +14973,6 @@
             "key": "start_date",
             "schema": {
               "generatedName": "statementInfoStartDate",
-              "nameOverride": "StatementInfo",
               "title": "StatementInfo",
               "value": {
                 "schema": {
@@ -15063,7 +14995,6 @@
             "key": "end_date",
             "schema": {
               "generatedName": "statementInfoEndDate",
-              "nameOverride": "StatementInfo",
               "title": "StatementInfo",
               "value": {
                 "schema": {
@@ -15086,7 +15017,6 @@
             "key": "account_holder",
             "schema": {
               "generatedName": "statementInfoAccountHolder",
-              "nameOverride": "StatementInfo",
               "title": "StatementInfo",
               "value": {
                 "generatedName": "StatementInfoAccountHolder",
@@ -15110,7 +15040,6 @@
             "key": "accounts",
             "schema": {
               "generatedName": "statementInfoAccounts",
-              "nameOverride": "StatementInfo",
               "title": "StatementInfo",
               "value": {
                 "value": {
@@ -15339,7 +15268,6 @@
             "key": "entities",
             "schema": {
               "generatedName": "transactionEntities",
-              "nameOverride": "Transaction",
               "title": "Transaction",
               "value": {
                 "generatedName": "TransactionEntities",
@@ -15363,7 +15291,6 @@
             "key": "categories",
             "schema": {
               "generatedName": "transactionCategories",
-              "nameOverride": "Transaction",
               "title": "Transaction",
               "value": {
                 "generatedName": "TransactionCategories",
@@ -15387,7 +15314,6 @@
             "key": "location",
             "schema": {
               "generatedName": "transactionLocation",
-              "nameOverride": "Transaction",
               "title": "Transaction",
               "value": {
                 "generatedName": "TransactionLocation",
@@ -15411,7 +15337,6 @@
             "key": "error",
             "schema": {
               "generatedName": "transactionError",
-              "nameOverride": "Transaction",
               "title": "Transaction",
               "value": {
                 "generatedName": "TransactionError",
@@ -15451,7 +15376,6 @@
             "key": "account_holder_id",
             "schema": {
               "generatedName": "transactionAccountHolderId",
-              "nameOverride": "Transaction",
               "title": "Transaction",
               "value": {
                 "description": "The unique ID of the account holder of the transaction",
@@ -15475,7 +15399,6 @@
             "key": "recurrence",
             "schema": {
               "generatedName": "transactionRecurrence",
-              "nameOverride": "Transaction",
               "title": "Transaction",
               "value": {
                 "generatedName": "TransactionRecurrence",
@@ -15711,7 +15634,6 @@
             "key": "location",
             "schema": {
               "generatedName": "transactionInputLocation",
-              "nameOverride": "TransactionInput",
               "title": "TransactionInput",
               "value": {
                 "generatedName": "TransactionInputLocation",
@@ -15921,7 +15843,6 @@
             "key": "token",
             "schema": {
               "generatedName": "webhookToken",
-              "nameOverride": "Webhook",
               "title": "Webhook",
               "value": {
                 "description": "A secret string used to authenticate the webhook. This value will be included in the `X-Ntropy-Token` header when sending requests to the webhook",
@@ -16092,7 +16013,6 @@
             "key": "token",
             "schema": {
               "generatedName": "webhookBaseToken",
-              "nameOverride": "WebhookBase",
               "title": "WebhookBase",
               "value": {
                 "description": "A secret string used to authenticate the webhook. This value will be included in the `X-Ntropy-Token` header when sending requests to the webhook",
@@ -16133,7 +16053,6 @@
             "key": "url",
             "schema": {
               "generatedName": "webhookPatchUrl",
-              "nameOverride": "WebhookPatch",
               "title": "WebhookPatch",
               "value": {
                 "description": "The URL of the webhook",
@@ -16160,7 +16079,6 @@
             "key": "events",
             "schema": {
               "generatedName": "webhookPatchEvents",
-              "nameOverride": "WebhookPatch",
               "title": "WebhookPatch",
               "value": {
                 "description": "A list of events that this webhook subscribes to",
@@ -16227,7 +16145,6 @@
             "key": "token",
             "schema": {
               "generatedName": "webhookPatchToken",
-              "nameOverride": "WebhookPatch",
               "title": "WebhookPatch",
               "value": {
                 "description": "A secret string used to authenticate the webhook. This value will be included in the `X-Ntropy-Token` header when sending requests to the webhook",
@@ -16252,7 +16169,6 @@
             "key": "enabled",
             "schema": {
               "generatedName": "webhookPatchEnabled",
-              "nameOverride": "WebhookPatch",
               "title": "WebhookPatch",
               "value": {
                 "description": "Whether the webhook is enabled or not.",
@@ -17216,7 +17132,6 @@
             "key": "then",
             "schema": {
               "generatedName": "ifThen",
-              "nameOverride": "if",
               "title": "if",
               "value": {
                 "value": {
@@ -17243,7 +17158,6 @@
             "key": "else",
             "schema": {
               "generatedName": "ifElse",
-              "nameOverride": "if",
               "title": "if",
               "value": {
                 "value": {

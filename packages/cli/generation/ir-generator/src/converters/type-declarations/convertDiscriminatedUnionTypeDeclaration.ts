@@ -115,7 +115,7 @@ export function getUnionDiscriminantName(union: RawSchemas.DiscriminatedUnionSch
     name: string;
     wasExplicitlySet: boolean;
 } {
-    const name = !!union.discriminant ? getTypeDeclarationName(union.discriminant) : undefined;
+    const name = union.discriminant ? getTypeDeclarationName(union.discriminant) : undefined;
     if (name) {
         return {
             name,

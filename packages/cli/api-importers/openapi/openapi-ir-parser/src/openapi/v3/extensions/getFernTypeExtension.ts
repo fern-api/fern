@@ -368,7 +368,8 @@ export function getSchemaFromFernType({
             named: (reference: string) => {
                 return SchemaWithExample.reference({
                     schema: reference,
-                    nameOverride,
+                    nameOverride: overrideTypeName?.value,
+                    casing: overrideTypeName?.casing,
                     generatedName,
                     title,
                     description,

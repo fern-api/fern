@@ -197,8 +197,8 @@ export function convertObject({
             const schema = isRequired
                 ? convertSchema(propertySchema, false, context, propertyBreadcrumbs, source, namespace)
                 : SchemaWithExample.optional({
-                      nameOverride: overrideTypeName?.value,
-                      casing: overrideTypeName?.casing,
+                      nameOverride: propertyNameOverride,
+                      casing: undefined,
                       generatedName,
                       title,
                       description: undefined,

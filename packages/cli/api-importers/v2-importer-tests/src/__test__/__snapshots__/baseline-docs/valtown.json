@@ -6468,22 +6468,22 @@
             "docs": "List of arguments to be used in the given statement",
             "name": {
               "name": {
-                "originalName": "args",
+                "originalName": "StatementArg",
                 "camelCase": {
-                  "unsafeName": "args",
-                  "safeName": "args"
+                  "unsafeName": "statementArg",
+                  "safeName": "statementArg"
                 },
                 "snakeCase": {
-                  "unsafeName": "args",
-                  "safeName": "args"
+                  "unsafeName": "statement_arg",
+                  "safeName": "statement_arg"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "ARGS",
-                  "safeName": "ARGS"
+                  "unsafeName": "STATEMENT_ARG",
+                  "safeName": "STATEMENT_ARG"
                 },
                 "pascalCase": {
-                  "unsafeName": "Args",
-                  "safeName": "Args"
+                  "unsafeName": "StatementArg",
+                  "safeName": "StatementArg"
                 }
               },
               "wireValue": "args"
@@ -28796,22 +28796,22 @@
           {
             "name": {
               "name": {
-                "originalName": "args",
+                "originalName": "StatementArg",
                 "camelCase": {
-                  "unsafeName": "args",
-                  "safeName": "args"
+                  "unsafeName": "statementArg",
+                  "safeName": "statementArg"
                 },
                 "snakeCase": {
-                  "unsafeName": "args",
-                  "safeName": "args"
+                  "unsafeName": "statement_arg",
+                  "safeName": "statement_arg"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "ARGS",
-                  "safeName": "ARGS"
+                  "unsafeName": "STATEMENT_ARG",
+                  "safeName": "STATEMENT_ARG"
                 },
                 "pascalCase": {
-                  "unsafeName": "Args",
-                  "safeName": "Args"
+                  "unsafeName": "StatementArg",
+                  "safeName": "StatementArg"
                 }
               },
               "wireValue": "args"

@@ -2124,7 +2124,6 @@
             "key": "phone",
             "schema": {
               "generatedName": "accountPhone",
-              "nameOverride": "Account",
               "title": "Account",
               "value": {
                 "schema": {
@@ -2147,7 +2146,6 @@
             "key": "email",
             "schema": {
               "generatedName": "accountEmail",
-              "nameOverride": "Account",
               "title": "Account",
               "value": {
                 "schema": {
@@ -2537,7 +2535,6 @@
             "key": "addressLine1",
             "schema": {
               "generatedName": "addressAddressLine1",
-              "nameOverride": "Address",
               "title": "Address",
               "value": {
                 "schema": {
@@ -2558,7 +2555,6 @@
             "key": "country",
             "schema": {
               "generatedName": "addressCountry",
-              "nameOverride": "Address",
               "title": "Address",
               "value": {
                 "schema": {
@@ -2579,7 +2575,6 @@
             "key": "addressLine2",
             "schema": {
               "generatedName": "addressAddressLine2",
-              "nameOverride": "Address",
               "title": "Address",
               "value": {
                 "schema": {
@@ -2600,7 +2595,6 @@
             "key": "state",
             "schema": {
               "generatedName": "addressState",
-              "nameOverride": "Address",
               "title": "Address",
               "value": {
                 "schema": {
@@ -2621,7 +2615,6 @@
             "key": "city",
             "schema": {
               "generatedName": "addressCity",
-              "nameOverride": "Address",
               "title": "Address",
               "value": {
                 "schema": {
@@ -2642,7 +2635,6 @@
             "key": "postalCode",
             "schema": {
               "generatedName": "addressPostalCode",
-              "nameOverride": "Address",
               "title": "Address",
               "value": {
                 "schema": {
@@ -2752,7 +2744,6 @@
             "key": "logoUrl",
             "schema": {
               "generatedName": "carrierLogoUrl",
-              "nameOverride": "Carrier",
               "title": "Carrier",
               "value": {
                 "schema": {
@@ -2803,7 +2794,6 @@
             "key": "property",
             "schema": {
               "generatedName": "coverageProperty",
-              "nameOverride": "Coverage",
               "title": "Coverage",
               "value": {
                 "schema": {
@@ -2895,7 +2885,6 @@
             "key": "limitPerPerson",
             "schema": {
               "generatedName": "coverageLimitPerPerson",
-              "nameOverride": "Coverage",
               "title": "Coverage",
               "value": {
                 "schema": {
@@ -2916,7 +2905,6 @@
             "key": "limitPerAccident",
             "schema": {
               "generatedName": "coverageLimitPerAccident",
-              "nameOverride": "Coverage",
               "title": "Coverage",
               "value": {
                 "schema": {
@@ -2937,7 +2925,6 @@
             "key": "deductible",
             "schema": {
               "generatedName": "coverageDeductible",
-              "nameOverride": "Coverage",
               "title": "Coverage",
               "value": {
                 "schema": {
@@ -3036,7 +3023,6 @@
             "key": "bodyStyle",
             "schema": {
               "generatedName": "vehicleBodyStyle",
-              "nameOverride": "Vehicle",
               "title": "Vehicle",
               "value": {
                 "schema": {
@@ -3129,7 +3115,6 @@
             "key": "property",
             "schema": {
               "generatedName": "insuredProperty",
-              "nameOverride": "Insured",
               "title": "Insured",
               "value": {
                 "schema": {
@@ -3178,7 +3163,6 @@
             "key": "dateOfBirthYear",
             "schema": {
               "generatedName": "insuredDateOfBirthYear",
-              "nameOverride": "Insured",
               "title": "Insured",
               "value": {
                 "schema": {
@@ -3199,7 +3183,6 @@
             "key": "licenseNo",
             "schema": {
               "generatedName": "insuredLicenseNo",
-              "nameOverride": "Insured",
               "title": "Insured",
               "value": {
                 "schema": {
@@ -3220,7 +3203,6 @@
             "key": "licenseState",
             "schema": {
               "generatedName": "insuredLicenseState",
-              "nameOverride": "Insured",
               "title": "Insured",
               "value": {
                 "schema": {
@@ -3241,7 +3223,6 @@
             "key": "licenseStatus",
             "schema": {
               "generatedName": "insuredLicenseStatus",
-              "nameOverride": "Insured",
               "title": "Insured",
               "value": {
                 "schema": {
@@ -3262,7 +3243,6 @@
             "key": "dateOfBirth",
             "schema": {
               "generatedName": "insuredDateOfBirth",
-              "nameOverride": "Insured",
               "title": "Insured",
               "value": {
                 "schema": {
@@ -3283,7 +3263,6 @@
             "key": "type",
             "schema": {
               "generatedName": "insuredType",
-              "nameOverride": "Insured",
               "title": "Insured",
               "value": {
                 "schema": {
@@ -3444,7 +3423,6 @@
             "key": "firstName",
             "schema": {
               "generatedName": "userFirstName",
-              "nameOverride": "User",
               "title": "User",
               "value": {
                 "description": "User's first name.",
@@ -3466,7 +3444,6 @@
             "key": "lastName",
             "schema": {
               "generatedName": "userLastName",
-              "nameOverride": "User",
               "title": "User",
               "value": {
                 "description": "User's last name.",
@@ -3488,7 +3465,6 @@
             "key": "email",
             "schema": {
               "generatedName": "userEmail",
-              "nameOverride": "User",
               "title": "User",
               "value": {
                 "description": "User's email address.",
@@ -3510,7 +3486,6 @@
             "key": "phone",
             "schema": {
               "generatedName": "userPhone",
-              "nameOverride": "User",
               "title": "User",
               "value": {
                 "description": "User's phone number in E.164 format.",
@@ -3560,7 +3535,6 @@
             "key": "success",
             "schema": {
               "generatedName": "errorSuccess",
-              "nameOverride": "Error",
               "title": "Error",
               "value": {
                 "generatedName": "ErrorSuccess",
@@ -3584,7 +3558,6 @@
             "key": "message",
             "schema": {
               "generatedName": "errorMessage",
-              "nameOverride": "Error",
               "title": "Error",
               "value": {
                 "description": "Provides a reason for why the operation failed, if available.",
