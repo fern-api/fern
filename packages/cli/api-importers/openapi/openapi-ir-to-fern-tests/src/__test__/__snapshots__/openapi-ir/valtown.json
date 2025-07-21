@@ -2892,6 +2892,7 @@
                 "key": "size",
                 "schema": {
                   "generatedName": "blobsListResponseItemSize",
+                  "nameOverride": "BlobListingItem",
                   "title": "BlobListingItem",
                   "value": {
                     "description": "Size in bytes of the object",
@@ -2913,6 +2914,7 @@
                 "key": "lastModified",
                 "schema": {
                   "generatedName": "blobsListResponseItemLastModified",
+                  "nameOverride": "BlobListingItem",
                   "title": "BlobListingItem",
                   "value": {
                     "description": "Creation date of the object",
@@ -5453,6 +5455,7 @@
                             "key": "name",
                             "schema": {
                               "generatedName": "emailsSendRequestFromEmailName",
+                              "nameOverride": "EmailNameAndAddress",
                               "title": "EmailNameAndAddress",
                               "value": {
                                 "schema": {
@@ -5546,6 +5549,7 @@
                                   "key": "name",
                                   "schema": {
                                     "generatedName": "emailsSendRequestToZeroEmailName",
+                                    "nameOverride": "EmailNameAndAddress",
                                     "title": "EmailNameAndAddress",
                                     "value": {
                                       "schema": {
@@ -5622,6 +5626,7 @@
                                     "key": "name",
                                     "schema": {
                                       "generatedName": "emailsSendRequestToItemEmailName",
+                                      "nameOverride": "EmailNameAndAddress",
                                       "title": "EmailNameAndAddress",
                                       "value": {
                                         "schema": {
@@ -5731,6 +5736,7 @@
                                   "key": "name",
                                   "schema": {
                                     "generatedName": "emailsSendRequestCcZeroEmailName",
+                                    "nameOverride": "EmailNameAndAddress",
                                     "title": "EmailNameAndAddress",
                                     "value": {
                                       "schema": {
@@ -5807,6 +5813,7 @@
                                     "key": "name",
                                     "schema": {
                                       "generatedName": "emailsSendRequestCcItemEmailName",
+                                      "nameOverride": "EmailNameAndAddress",
                                       "title": "EmailNameAndAddress",
                                       "value": {
                                         "schema": {
@@ -5916,6 +5923,7 @@
                                   "key": "name",
                                   "schema": {
                                     "generatedName": "emailsSendRequestBccZeroEmailName",
+                                    "nameOverride": "EmailNameAndAddress",
                                     "title": "EmailNameAndAddress",
                                     "value": {
                                       "schema": {
@@ -5992,6 +6000,7 @@
                                     "key": "name",
                                     "schema": {
                                       "generatedName": "emailsSendRequestBccItemEmailName",
+                                      "nameOverride": "EmailNameAndAddress",
                                       "title": "EmailNameAndAddress",
                                       "value": {
                                         "schema": {
@@ -6150,6 +6159,7 @@
                         "key": "type",
                         "schema": {
                           "generatedName": "emailsSendRequestAttachmentsItemType",
+                          "nameOverride": "AttachmentObject",
                           "title": "AttachmentObject",
                           "value": {
                             "schema": {
@@ -6170,6 +6180,7 @@
                         "key": "disposition",
                         "schema": {
                           "generatedName": "emailsSendRequestAttachmentsItemDisposition",
+                          "nameOverride": "AttachmentObject",
                           "title": "AttachmentObject",
                           "value": {
                             "schema": {
@@ -6190,6 +6201,7 @@
                         "key": "contentId",
                         "schema": {
                           "generatedName": "emailsSendRequestAttachmentsItemContentId",
+                          "nameOverride": "AttachmentObject",
                           "title": "AttachmentObject",
                           "value": {
                             "schema": {
@@ -6248,6 +6260,7 @@
                             "key": "name",
                             "schema": {
                               "generatedName": "emailsSendRequestReplyToListEmailName",
+                              "nameOverride": "EmailNameAndAddress",
                               "title": "EmailNameAndAddress",
                               "value": {
                                 "schema": {
@@ -6300,6 +6313,7 @@
                               "key": "name",
                               "schema": {
                                 "generatedName": "emailsSendRequestReplyToListItemName",
+                                "nameOverride": "EmailNameAndAddress",
                                 "title": "EmailNameAndAddress",
                                 "value": {
                                   "schema": {
@@ -9110,6 +9124,7 @@
             "key": "lastInsertRowid",
             "schema": {
               "generatedName": "resultSetLastInsertRowid",
+              "nameOverride": "ResultSet",
               "title": "ResultSet",
               "value": {
                 "generatedName": "ResultSetLastInsertRowid",

@@ -20,7 +20,6 @@
             "key": "id",
             "schema": {
               "generatedName": "baseUserId",
-              "nameOverride": "renamed_id",
               "value": {
                 "schema": {
                   "format": "uuid",

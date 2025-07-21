@@ -1930,6 +1930,7 @@
           {
             "key": "custom_session_id",
             "schema": {
+              "nameOverride": "Error",
               "generatedName": "errorCustomSessionId",
               "title": "Error",
               "value": {
@@ -5411,6 +5412,7 @@
           {
             "key": "custom_session_id",
             "schema": {
+              "nameOverride": "AssistantInput",
               "generatedName": "assistantInputCustomSessionId",
               "title": "AssistantInput",
               "value": {
@@ -5557,6 +5559,7 @@
           {
             "key": "custom_session_id",
             "schema": {
+              "nameOverride": "AudioInput",
               "generatedName": "audioInputCustomSessionId",
               "title": "AudioInput",
               "value": {
@@ -5658,6 +5661,7 @@
           {
             "key": "fallback_content",
             "schema": {
+              "nameOverride": "BuiltinToolConfig",
               "generatedName": "builtinToolConfigFallbackContent",
               "title": "BuiltinToolConfig",
               "value": {
@@ -5701,6 +5705,7 @@
           {
             "key": "type",
             "schema": {
+              "nameOverride": "Context",
               "generatedName": "contextType",
               "title": "Context",
               "value": {
@@ -5810,6 +5815,7 @@
           {
             "key": "type",
             "schema": {
+              "nameOverride": "PauseAssistantMessage",
               "generatedName": "pauseAssistantMessageType",
               "title": "PauseAssistantMessage",
               "value": {
@@ -5834,6 +5840,7 @@
           {
             "key": "custom_session_id",
             "schema": {
+              "nameOverride": "PauseAssistantMessage",
               "generatedName": "pauseAssistantMessageCustomSessionId",
               "title": "PauseAssistantMessage",
               "value": {
@@ -5878,6 +5885,7 @@
           {
             "key": "type",
             "schema": {
+              "nameOverride": "ResumeAssistantMessage",
               "generatedName": "resumeAssistantMessageType",
               "title": "ResumeAssistantMessage",
               "value": {
@@ -5902,6 +5910,7 @@
           {
             "key": "custom_session_id",
             "schema": {
+              "nameOverride": "ResumeAssistantMessage",
               "generatedName": "resumeAssistantMessageCustomSessionId",
               "title": "ResumeAssistantMessage",
               "value": {
@@ -5964,6 +5973,7 @@
           {
             "key": "custom_session_id",
             "schema": {
+              "nameOverride": "SessionSettings",
               "generatedName": "sessionSettingsCustomSessionId",
               "title": "SessionSettings",
               "value": {
@@ -5990,6 +6000,7 @@
           {
             "key": "system_prompt",
             "schema": {
+              "nameOverride": "SessionSettings",
               "generatedName": "sessionSettingsSystemPrompt",
               "title": "SessionSettings",
               "value": {
@@ -6016,6 +6027,7 @@
           {
             "key": "context",
             "schema": {
+              "nameOverride": "SessionSettings",
               "generatedName": "sessionSettingsContext",
               "title": "SessionSettings",
               "value": {
@@ -6043,6 +6055,7 @@
           {
             "key": "audio",
             "schema": {
+              "nameOverride": "SessionSettings",
               "generatedName": "sessionSettingsAudio",
               "title": "SessionSettings",
               "value": {
@@ -6070,6 +6083,7 @@
           {
             "key": "language_model_api_key",
             "schema": {
+              "nameOverride": "SessionSettings",
               "generatedName": "sessionSettingsLanguageModelApiKey",
               "title": "SessionSettings",
               "value": {
@@ -6096,6 +6110,7 @@
           {
             "key": "tools",
             "schema": {
+              "nameOverride": "SessionSettings",
               "generatedName": "sessionSettingsTools",
               "title": "SessionSettings",
               "value": {
@@ -6128,6 +6143,7 @@
           {
             "key": "builtin_tools",
             "schema": {
+              "nameOverride": "SessionSettings",
               "generatedName": "sessionSettingsBuiltinTools",
               "title": "SessionSettings",
               "value": {
@@ -6160,6 +6176,7 @@
           {
             "key": "metadata",
             "schema": {
+              "nameOverride": "SessionSettings",
               "generatedName": "sessionSettingsMetadata",
               "title": "SessionSettings",
               "value": {
@@ -6194,6 +6211,7 @@
           {
             "key": "variables",
             "schema": {
+              "nameOverride": "SessionSettings",
               "generatedName": "sessionSettingsVariables",
               "title": "SessionSettings",
               "value": {
@@ -6306,6 +6324,7 @@
           {
             "key": "description",
             "schema": {
+              "nameOverride": "Tool",
               "generatedName": "toolDescription",
               "title": "Tool",
               "value": {
@@ -6332,6 +6351,7 @@
           {
             "key": "fallback_content",
             "schema": {
+              "nameOverride": "Tool",
               "generatedName": "toolFallbackContent",
               "title": "Tool",
               "value": {
@@ -6376,6 +6396,7 @@
           {
             "key": "type",
             "schema": {
+              "nameOverride": "ToolErrorMessage",
               "generatedName": "toolErrorMessageType",
               "title": "ToolErrorMessage",
               "value": {
@@ -6400,6 +6421,7 @@
           {
             "key": "custom_session_id",
             "schema": {
+              "nameOverride": "ToolErrorMessage",
               "generatedName": "toolErrorMessageCustomSessionId",
               "title": "ToolErrorMessage",
               "value": {
@@ -6426,6 +6448,7 @@
           {
             "key": "tool_type",
             "schema": {
+              "nameOverride": "ToolErrorMessage",
               "generatedName": "toolErrorMessageToolType",
               "title": "ToolErrorMessage",
               "value": {
@@ -6469,6 +6492,7 @@
           {
             "key": "content",
             "schema": {
+              "nameOverride": "ToolErrorMessage",
               "generatedName": "toolErrorMessageContent",
               "title": "ToolErrorMessage",
               "value": {
@@ -6512,6 +6536,7 @@
           {
             "key": "code",
             "schema": {
+              "nameOverride": "ToolErrorMessage",
               "generatedName": "toolErrorMessageCode",
               "title": "ToolErrorMessage",
               "value": {
@@ -6538,6 +6563,7 @@
           {
             "key": "level",
             "schema": {
+              "nameOverride": "ToolErrorMessage",
               "generatedName": "toolErrorMessageLevel",
               "title": "ToolErrorMessage",
               "value": {
@@ -6583,6 +6609,7 @@
           {
             "key": "type",
             "schema": {
+              "nameOverride": "ToolResponseMessage",
               "generatedName": "toolResponseMessageType",
               "title": "ToolResponseMessage",
               "value": {
@@ -6607,6 +6634,7 @@
           {
             "key": "custom_session_id",
             "schema": {
+              "nameOverride": "ToolResponseMessage",
               "generatedName": "toolResponseMessageCustomSessionId",
               "title": "ToolResponseMessage",
               "value": {
@@ -6666,6 +6694,7 @@
           {
             "key": "tool_name",
             "schema": {
+              "nameOverride": "ToolResponseMessage",
               "generatedName": "toolResponseMessageToolName",
               "title": "ToolResponseMessage",
               "value": {
@@ -6691,6 +6720,7 @@
           {
             "key": "tool_type",
             "schema": {
+              "nameOverride": "ToolResponseMessage",
               "generatedName": "toolResponseMessageToolType",
               "title": "ToolResponseMessage",
               "value": {
@@ -6776,6 +6806,7 @@
           {
             "key": "custom_session_id",
             "schema": {
+              "nameOverride": "UserInput",
               "generatedName": "userInputCustomSessionId",
               "title": "UserInput",
               "value": {
@@ -6855,6 +6886,7 @@
           {
             "key": "custom_session_id",
             "schema": {
+              "nameOverride": "AssistantEnd",
               "generatedName": "assistantEndCustomSessionId",
               "title": "AssistantEnd",
               "value": {
@@ -6917,6 +6949,7 @@
           {
             "key": "custom_session_id",
             "schema": {
+              "nameOverride": "AssistantMessage",
               "generatedName": "assistantMessageCustomSessionId",
               "title": "AssistantMessage",
               "value": {
@@ -6943,6 +6976,7 @@
           {
             "key": "id",
             "schema": {
+              "nameOverride": "AssistantMessage",
               "generatedName": "assistantMessageId",
               "title": "AssistantMessage",
               "value": {
@@ -7053,6 +7087,7 @@
           {
             "key": "custom_session_id",
             "schema": {
+              "nameOverride": "AudioOutput",
               "generatedName": "audioOutputCustomSessionId",
               "title": "AudioOutput",
               "value": {
@@ -7182,6 +7217,7 @@
           {
             "key": "content",
             "schema": {
+              "nameOverride": "ChatMessage",
               "generatedName": "chatMessageContent",
               "title": "ChatMessage",
               "value": {
@@ -7208,6 +7244,7 @@
           {
             "key": "tool_call",
             "schema": {
+              "nameOverride": "ChatMessage",
               "generatedName": "chatMessageToolCall",
               "title": "ChatMessage",
               "value": {
@@ -7235,6 +7272,7 @@
           {
             "key": "tool_result",
             "schema": {
+              "nameOverride": "ChatMessage",
               "generatedName": "chatMessageToolResult",
               "title": "ChatMessage",
               "value": {
@@ -7324,6 +7362,7 @@
           {
             "key": "custom_session_id",
             "schema": {
+              "nameOverride": "ChatMetadata",
               "generatedName": "chatMetadataCustomSessionId",
               "title": "ChatMetadata",
               "value": {
@@ -8413,6 +8452,7 @@
           {
             "key": "type",
             "schema": {
+              "nameOverride": "ToolCallMessage",
               "generatedName": "toolCallMessageType",
               "title": "ToolCallMessage",
               "value": {
@@ -8437,6 +8477,7 @@
           {
             "key": "custom_session_id",
             "schema": {
+              "nameOverride": "ToolCallMessage",
               "generatedName": "toolCallMessageCustomSessionId",
               "title": "ToolCallMessage",
               "value": {
@@ -8533,6 +8574,7 @@
           {
             "key": "custom_session_id",
             "schema": {
+              "nameOverride": "UserInterruption",
               "generatedName": "userInterruptionCustomSessionId",
               "title": "UserInterruption",
               "value": {
@@ -8611,6 +8653,7 @@
           {
             "key": "custom_session_id",
             "schema": {
+              "nameOverride": "UserMessage",
               "generatedName": "userMessageCustomSessionId",
               "title": "UserMessage",
               "value": {

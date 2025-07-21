@@ -3265,6 +3265,7 @@
             "key": "llm",
             "schema": {
               "generatedName": "agentLlm",
+              "nameOverride": "Agent",
               "title": "Agent",
               "value": {
                 "key": {
@@ -3296,6 +3297,7 @@
             "key": "has_memory",
             "schema": {
               "generatedName": "agentHasMemory",
+              "nameOverride": "Agent",
               "title": "Agent",
               "value": {
                 "schema": {
@@ -3318,6 +3320,7 @@
             "key": "documentId",
             "schema": {
               "generatedName": "agentDocumentId",
+              "nameOverride": "Agent",
               "title": "Agent",
               "value": {
                 "schema": {
@@ -3340,6 +3343,7 @@
             "key": "promptId",
             "schema": {
               "generatedName": "agentPromptId",
+              "nameOverride": "Agent",
               "title": "Agent",
               "value": {
                 "schema": {
@@ -3362,6 +3366,7 @@
             "key": "toolId",
             "schema": {
               "generatedName": "agentToolId",
+              "nameOverride": "Agent",
               "title": "Agent",
               "value": {
                 "schema": {
@@ -3480,6 +3485,7 @@
             "key": "authorization",
             "schema": {
               "generatedName": "documentAuthorization",
+              "nameOverride": "Document",
               "title": "Document",
               "value": {
                 "key": {
@@ -3511,6 +3517,7 @@
             "key": "from_page",
             "schema": {
               "generatedName": "documentFromPage",
+              "nameOverride": "Document",
               "title": "Document",
               "value": {
                 "schema": {
@@ -3535,6 +3542,7 @@
             "key": "to_page",
             "schema": {
               "generatedName": "documentToPage",
+              "nameOverride": "Document",
               "title": "Document",
               "value": {
                 "schema": {
@@ -3556,6 +3564,7 @@
             "key": "splitter",
             "schema": {
               "generatedName": "documentSplitter",
+              "nameOverride": "Document",
               "title": "Document",
               "value": {
                 "key": {
@@ -3603,6 +3612,7 @@
             "key": "detail",
             "schema": {
               "generatedName": "httpValidationErrorDetail",
+              "nameOverride": "HTTPValidationError",
               "title": "HTTPValidationError",
               "value": {
                 "value": {
@@ -3672,6 +3682,7 @@
             "key": "has_streaming",
             "schema": {
               "generatedName": "predictAgentHasStreaming",
+              "nameOverride": "PredictAgent",
               "title": "PredictAgent",
               "value": {
                 "schema": {
@@ -3854,6 +3865,7 @@
             "key": "name",
             "schema": {
               "generatedName": "signUpName",
+              "nameOverride": "SignUp",
               "title": "SignUp",
               "value": {
                 "schema": {
@@ -3876,6 +3888,7 @@
             "key": "metadata",
             "schema": {
               "generatedName": "signUpMetadata",
+              "nameOverride": "SignUp",
               "title": "SignUp",
               "value": {
                 "key": {
@@ -3955,6 +3968,7 @@
             "key": "authorization",
             "schema": {
               "generatedName": "toolAuthorization",
+              "nameOverride": "Tool",
               "title": "Tool",
               "value": {
                 "key": {

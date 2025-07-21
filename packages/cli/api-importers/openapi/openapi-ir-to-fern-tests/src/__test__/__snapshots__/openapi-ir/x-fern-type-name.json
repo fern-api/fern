@@ -24,6 +24,13 @@
             "key": "foo",
             "schema": {
               "generatedName": "openAiSettingsFoo",
+              "nameOverride": "OpenAISettings",
+              "casing": {
+                "camel": "openAISettings",
+                "pascal": "OpenAISettings",
+                "snake": "openai_settings",
+                "screamingSnake": "OPENAI_SETTINGS"
+              },
               "value": {
                 "schema": {
                   "type": "string"
@@ -64,6 +71,13 @@
             "key": "foo",
             "schema": {
               "generatedName": "fooUrLsBarFoo",
+              "nameOverride": "FooURLsBar",
+              "casing": {
+                "camel": "fooURLsBar",
+                "pascal": "FooURLsBar",
+                "snake": "foo_urls_bar",
+                "screamingSnake": "FOO_URLS_BAR"
+              },
               "value": {
                 "schema": {
                   "type": "string"
@@ -137,6 +151,7 @@
             "key": "foo",
             "schema": {
               "generatedName": "overriddenNameSchemaFoo",
+              "nameOverride": "Overridden",
               "value": {
                 "schema": {
                   "type": "string"

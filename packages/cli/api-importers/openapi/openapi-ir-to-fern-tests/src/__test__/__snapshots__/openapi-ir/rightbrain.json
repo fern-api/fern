@@ -52714,6 +52714,7 @@
             "key": "title",
             "schema": {
               "generatedName": "chatTitle",
+              "nameOverride": "Chat",
               "title": "Chat",
               "value": {
                 "generatedName": "ChatTitle",
@@ -52739,6 +52740,7 @@
             "key": "description",
             "schema": {
               "generatedName": "chatDescription",
+              "nameOverride": "Chat",
               "title": "Chat",
               "value": {
                 "generatedName": "ChatDescription",
@@ -52764,6 +52766,7 @@
             "key": "summary",
             "schema": {
               "generatedName": "chatSummary",
+              "nameOverride": "Chat",
               "title": "Chat",
               "value": {
                 "generatedName": "ChatSummary",
@@ -52837,6 +52840,7 @@
             "key": "last_message",
             "schema": {
               "generatedName": "chatLastMessage",
+              "nameOverride": "Chat",
               "title": "Chat",
               "value": {
                 "generatedName": "ChatLastMessage",
@@ -52879,6 +52883,7 @@
             "key": "documents_have_been_modified",
             "schema": {
               "generatedName": "chatDocumentsHaveBeenModified",
+              "nameOverride": "Chat",
               "title": "Chat",
               "value": {
                 "schema": {
@@ -52917,6 +52922,7 @@
             "key": "llm",
             "schema": {
               "generatedName": "chatConfigInputLlm",
+              "nameOverride": "ChatConfig",
               "title": "ChatConfig",
               "value": {
                 "generatedName": "ChatConfigInputLlm",
@@ -53007,6 +53013,7 @@
             "key": "temperature",
             "schema": {
               "generatedName": "chatConfigInputTemperature",
+              "nameOverride": "ChatConfig",
               "title": "ChatConfig",
               "value": {
                 "schema": {
@@ -53032,6 +53039,7 @@
             "key": "knn",
             "schema": {
               "generatedName": "chatConfigInputKnn",
+              "nameOverride": "ChatConfig",
               "title": "ChatConfig",
               "value": {
                 "schema": {
@@ -53055,6 +53063,7 @@
             "key": "chat_system_commands",
             "schema": {
               "generatedName": "chatConfigInputChatSystemCommands",
+              "nameOverride": "ChatConfig",
               "title": "ChatConfig",
               "value": {
                 "generatedName": "ChatConfigInputChatSystemCommands",
@@ -53085,6 +53094,7 @@
             "key": "chat_guardrails",
             "schema": {
               "generatedName": "chatConfigInputChatGuardrails",
+              "nameOverride": "ChatConfig",
               "title": "ChatConfig",
               "value": {
                 "generatedName": "ChatConfigInputChatGuardrails",
@@ -53112,6 +53122,7 @@
             "key": "query_expansion",
             "schema": {
               "generatedName": "chatConfigInputQueryExpansion",
+              "nameOverride": "ChatConfig",
               "title": "ChatConfig",
               "value": {
                 "description": "Enable query expansion. Uses an LLM to generate multiple rephrasing of the original query for better broad spectrum vector retrieval",
@@ -53151,6 +53162,7 @@
             "key": "llm",
             "schema": {
               "generatedName": "chatConfigOutputLlm",
+              "nameOverride": "ChatConfig",
               "title": "ChatConfig",
               "value": {
                 "generatedName": "ChatConfigOutputLlm",
@@ -53241,6 +53253,7 @@
             "key": "temperature",
             "schema": {
               "generatedName": "chatConfigOutputTemperature",
+              "nameOverride": "ChatConfig",
               "title": "ChatConfig",
               "value": {
                 "schema": {
@@ -53266,6 +53279,7 @@
             "key": "knn",
             "schema": {
               "generatedName": "chatConfigOutputKnn",
+              "nameOverride": "ChatConfig",
               "title": "ChatConfig",
               "value": {
                 "schema": {
@@ -53289,6 +53303,7 @@
             "key": "chat_system_commands",
             "schema": {
               "generatedName": "chatConfigOutputChatSystemCommands",
+              "nameOverride": "ChatConfig",
               "title": "ChatConfig",
               "value": {
                 "generatedName": "ChatConfigOutputChatSystemCommands",
@@ -53319,6 +53334,7 @@
             "key": "chat_guardrails",
             "schema": {
               "generatedName": "chatConfigOutputChatGuardrails",
+              "nameOverride": "ChatConfig",
               "title": "ChatConfig",
               "value": {
                 "generatedName": "ChatConfigOutputChatGuardrails",
@@ -53346,6 +53362,7 @@
             "key": "query_expansion",
             "schema": {
               "generatedName": "chatConfigOutputQueryExpansion",
+              "nameOverride": "ChatConfig",
               "title": "ChatConfig",
               "value": {
                 "description": "Enable query expansion. Uses an LLM to generate multiple rephrasing of the original query for better broad spectrum vector retrieval",
@@ -53385,6 +53402,7 @@
             "key": "title",
             "schema": {
               "generatedName": "chatCreateTitle",
+              "nameOverride": "ChatCreate",
               "title": "ChatCreate",
               "value": {
                 "generatedName": "ChatCreateTitle",
@@ -53410,6 +53428,7 @@
             "key": "description",
             "schema": {
               "generatedName": "chatCreateDescription",
+              "nameOverride": "ChatCreate",
               "title": "ChatCreate",
               "value": {
                 "generatedName": "ChatCreateDescription",
@@ -53435,6 +53454,7 @@
             "key": "summary",
             "schema": {
               "generatedName": "chatCreateSummary",
+              "nameOverride": "ChatCreate",
               "title": "ChatCreate",
               "value": {
                 "generatedName": "ChatCreateSummary",
@@ -53524,6 +53544,7 @@
             "key": "description",
             "schema": {
               "generatedName": "chatDocumentDescription",
+              "nameOverride": "ChatDocument",
               "title": "ChatDocument",
               "value": {
                 "generatedName": "ChatDocumentDescription",
@@ -53549,6 +53570,7 @@
             "key": "source",
             "schema": {
               "generatedName": "chatDocumentSource",
+              "nameOverride": "ChatDocument",
               "title": "ChatDocument",
               "value": {
                 "generatedName": "ChatDocumentSource",
@@ -53638,6 +53660,7 @@
             "key": "source_meta",
             "schema": {
               "generatedName": "chatDocumentSourceMeta",
+              "nameOverride": "ChatDocument",
               "title": "ChatDocument",
               "value": {
                 "generatedName": "ChatDocumentSourceMeta",
@@ -53672,6 +53695,7 @@
             "key": "connection_id",
             "schema": {
               "generatedName": "chatDocumentConnectionId",
+              "nameOverride": "ChatDocument",
               "title": "ChatDocument",
               "value": {
                 "generatedName": "ChatDocumentConnectionId",
@@ -53787,6 +53811,7 @@
             "key": "config",
             "schema": {
               "generatedName": "chatDocumentEmbeddingInstanceConfig",
+              "nameOverride": "ChatDocumentEmbeddingInstance",
               "title": "ChatDocumentEmbeddingInstance",
               "value": {
                 "generatedName": "ChatDocumentEmbeddingInstanceConfig",
@@ -54014,6 +54039,7 @@
             "key": "description",
             "schema": {
               "generatedName": "chatDocumentUpdateDescription",
+              "nameOverride": "ChatDocumentUpdate",
               "title": "ChatDocumentUpdate",
               "value": {
                 "generatedName": "ChatDocumentUpdateDescription",
@@ -54166,6 +54192,7 @@
             "key": "add",
             "schema": {
               "generatedName": "chatIamMemberRoleUpdateAdd",
+              "nameOverride": "ChatIAMMemberRoleUpdate",
               "title": "ChatIAMMemberRoleUpdate",
               "value": {
                 "description": "A list of chat roles to grant to the member.\n\nRoles in this list are applied to the member AFTER any removals specified in `remove`.\n\nThis may be combined with `remove_all` to replace the member's entire role list.",
@@ -54212,6 +54239,7 @@
             "key": "remove",
             "schema": {
               "generatedName": "chatIamMemberRoleUpdateRemove",
+              "nameOverride": "ChatIAMMemberRoleUpdate",
               "title": "ChatIAMMemberRoleUpdate",
               "value": {
                 "description": "A list of chat roles to revoke from the member.",
@@ -54258,6 +54286,7 @@
             "key": "remove_all",
             "schema": {
               "generatedName": "chatIamMemberRoleUpdateRemoveAll",
+              "nameOverride": "ChatIAMMemberRoleUpdate",
               "title": "ChatIAMMemberRoleUpdate",
               "value": {
                 "generatedName": "ChatIamMemberRoleUpdateRemoveAll",
@@ -54375,6 +54404,7 @@
             "key": "member",
             "schema": {
               "generatedName": "chatIamPermissionTestMember",
+              "nameOverride": "ChatIAMPermissionTest",
               "title": "ChatIAMPermissionTest",
               "value": {
                 "generatedName": "ChatIamPermissionTestMember",
@@ -54661,6 +54691,7 @@
             "key": "summary",
             "schema": {
               "generatedName": "collectionSummary",
+              "nameOverride": "Collection",
               "title": "Collection",
               "value": {
                 "generatedName": "CollectionSummary",
@@ -54718,6 +54749,7 @@
             "key": "embedding_instances",
             "schema": {
               "generatedName": "collectionEmbeddingInstances",
+              "nameOverride": "Collection",
               "title": "Collection",
               "value": {
                 "value": {
@@ -54800,6 +54832,7 @@
             "key": "document_embedding_instance_ids",
             "schema": {
               "generatedName": "collectionCreateDocumentEmbeddingInstanceIds",
+              "nameOverride": "CollectionCreate",
               "title": "CollectionCreate",
               "value": {
                 "value": {
@@ -54881,6 +54914,7 @@
             "key": "add",
             "schema": {
               "generatedName": "collectionIamMemberRoleUpdateAdd",
+              "nameOverride": "CollectionIAMMemberRoleUpdate",
               "title": "CollectionIAMMemberRoleUpdate",
               "value": {
                 "description": "A list of collection roles to grant to the member.\n\nRoles in this list are applied to the member AFTER any removals specified in `remove`.\n\nThis may be combined with `remove_all` to replace the member's entire role list.",
@@ -54927,6 +54961,7 @@
             "key": "remove",
             "schema": {
               "generatedName": "collectionIamMemberRoleUpdateRemove",
+              "nameOverride": "CollectionIAMMemberRoleUpdate",
               "title": "CollectionIAMMemberRoleUpdate",
               "value": {
                 "description": "A list of collection roles to revoke from the member.",
@@ -54973,6 +55008,7 @@
             "key": "remove_all",
             "schema": {
               "generatedName": "collectionIamMemberRoleUpdateRemoveAll",
+              "nameOverride": "CollectionIAMMemberRoleUpdate",
               "title": "CollectionIAMMemberRoleUpdate",
               "value": {
                 "generatedName": "CollectionIamMemberRoleUpdateRemoveAll",
@@ -55110,6 +55146,7 @@
             "key": "member",
             "schema": {
               "generatedName": "collectionIamPermissionTestMember",
+              "nameOverride": "CollectionIAMPermissionTest",
               "title": "CollectionIAMPermissionTest",
               "value": {
                 "generatedName": "CollectionIamPermissionTestMember",
@@ -55353,6 +55390,7 @@
             "key": "topic",
             "schema": {
               "generatedName": "composeInitTopic",
+              "nameOverride": "ComposeInit",
               "title": "ComposeInit",
               "value": {
                 "generatedName": "ComposeInitTopic",
@@ -55378,6 +55416,7 @@
             "key": "purpose",
             "schema": {
               "generatedName": "composeInitPurpose",
+              "nameOverride": "ComposeInit",
               "title": "ComposeInit",
               "value": {
                 "generatedName": "ComposeInitPurpose",
@@ -55403,6 +55442,7 @@
             "key": "audience",
             "schema": {
               "generatedName": "composeInitAudience",
+              "nameOverride": "ComposeInit",
               "title": "ComposeInit",
               "value": {
                 "generatedName": "ComposeInitAudience",
@@ -55428,6 +55468,7 @@
             "key": "num_sections",
             "schema": {
               "generatedName": "composeInitNumSections",
+              "nameOverride": "ComposeInit",
               "title": "ComposeInit",
               "value": {
                 "generatedName": "ComposeInitNumSections",
@@ -55453,6 +55494,7 @@
             "key": "word_count",
             "schema": {
               "generatedName": "composeInitWordCount",
+              "nameOverride": "ComposeInit",
               "title": "ComposeInit",
               "value": {
                 "generatedName": "ComposeInitWordCount",
@@ -55478,6 +55520,7 @@
             "key": "voice",
             "schema": {
               "generatedName": "composeInitVoice",
+              "nameOverride": "ComposeInit",
               "title": "ComposeInit",
               "value": {
                 "generatedName": "ComposeInitVoice",
@@ -55503,6 +55546,7 @@
             "key": "domain",
             "schema": {
               "generatedName": "composeInitDomain",
+              "nameOverride": "ComposeInit",
               "title": "ComposeInit",
               "value": {
                 "generatedName": "ComposeInitDomain",
@@ -55528,6 +55572,7 @@
             "key": "tone",
             "schema": {
               "generatedName": "composeInitTone",
+              "nameOverride": "ComposeInit",
               "title": "ComposeInit",
               "value": {
                 "generatedName": "ComposeInitTone",
@@ -55553,6 +55598,7 @@
             "key": "favourable_words",
             "schema": {
               "generatedName": "composeInitFavourableWords",
+              "nameOverride": "ComposeInit",
               "title": "ComposeInit",
               "value": {
                 "generatedName": "ComposeInitFavourableWords",
@@ -55578,6 +55624,7 @@
             "key": "deny_words",
             "schema": {
               "generatedName": "composeInitDenyWords",
+              "nameOverride": "ComposeInit",
               "title": "ComposeInit",
               "value": {
                 "generatedName": "ComposeInitDenyWords",
@@ -55603,6 +55650,7 @@
             "key": "keywords",
             "schema": {
               "generatedName": "composeInitKeywords",
+              "nameOverride": "ComposeInit",
               "title": "ComposeInit",
               "value": {
                 "generatedName": "ComposeInitKeywords",
@@ -55628,6 +55676,7 @@
             "key": "cta",
             "schema": {
               "generatedName": "composeInitCta",
+              "nameOverride": "ComposeInit",
               "title": "ComposeInit",
               "value": {
                 "generatedName": "ComposeInitCta",
@@ -55653,6 +55702,7 @@
             "key": "content",
             "schema": {
               "generatedName": "composeInitContent",
+              "nameOverride": "ComposeInit",
               "title": "ComposeInit",
               "value": {
                 "generatedName": "ComposeInitContent",
@@ -55678,6 +55728,7 @@
             "key": "language",
             "schema": {
               "generatedName": "composeInitLanguage",
+              "nameOverride": "ComposeInit",
               "title": "ComposeInit",
               "value": {
                 "generatedName": "ComposeInitLanguage",
@@ -55847,6 +55898,7 @@
             "key": "text",
             "schema": {
               "generatedName": "composeSectionUpdateText",
+              "nameOverride": "ComposeSectionUpdate",
               "title": "ComposeSectionUpdate",
               "value": {
                 "generatedName": "ComposeSectionUpdateText",
@@ -55888,6 +55940,7 @@
             "key": "category",
             "schema": {
               "generatedName": "composeTopicPointCategory",
+              "nameOverride": "ComposeTopicPoint",
               "title": "ComposeTopicPoint",
               "value": {
                 "schema": {
@@ -55943,6 +55996,7 @@
             "key": "input",
             "schema": {
               "generatedName": "conversationalGuardrailsInput",
+              "nameOverride": "ConversationalGuardrails",
               "title": "ConversationalGuardrails",
               "value": {
                 "description": "List of valid Input Conversational Guardrails to enable",
@@ -55972,6 +56026,7 @@
             "key": "output",
             "schema": {
               "generatedName": "conversationalGuardrailsOutput",
+              "nameOverride": "ConversationalGuardrails",
               "title": "ConversationalGuardrails",
               "value": {
                 "description": "List of valid Output Conversational Guardrails to enable",
@@ -56133,6 +56188,7 @@
             "key": "private",
             "schema": {
               "generatedName": "datasourceConnectionPrivate",
+              "nameOverride": "DatasourceConnection",
               "title": "DatasourceConnection",
               "value": {
                 "generatedName": "DatasourceConnectionPrivate",
@@ -56158,6 +56214,7 @@
             "key": "project_id",
             "schema": {
               "generatedName": "datasourceConnectionProjectId",
+              "nameOverride": "DatasourceConnection",
               "title": "DatasourceConnection",
               "value": {
                 "generatedName": "DatasourceConnectionProjectId",
@@ -56184,6 +56241,7 @@
             "key": "datasource_id",
             "schema": {
               "generatedName": "datasourceConnectionDatasourceId",
+              "nameOverride": "DatasourceConnection",
               "title": "DatasourceConnection",
               "value": {
                 "generatedName": "DatasourceConnectionDatasourceId",
@@ -56210,6 +56268,7 @@
             "key": "config",
             "schema": {
               "generatedName": "datasourceConnectionConfig",
+              "nameOverride": "DatasourceConnection",
               "title": "DatasourceConnection",
               "value": {
                 "key": {
@@ -56241,6 +56300,7 @@
             "key": "token",
             "schema": {
               "generatedName": "datasourceConnectionToken",
+              "nameOverride": "DatasourceConnection",
               "title": "DatasourceConnection",
               "value": {
                 "schema": {
@@ -56264,6 +56324,7 @@
             "key": "created_by",
             "schema": {
               "generatedName": "datasourceConnectionCreatedBy",
+              "nameOverride": "DatasourceConnection",
               "title": "DatasourceConnection",
               "value": {
                 "generatedName": "DatasourceConnectionCreatedBy",
@@ -56436,6 +56497,7 @@
             "key": "config",
             "schema": {
               "generatedName": "datasourceConnectionPublicConfig",
+              "nameOverride": "DatasourceConnectionPublic",
               "title": "DatasourceConnectionPublic",
               "value": {
                 "key": {
@@ -56500,6 +56562,7 @@
             "key": "task_id",
             "schema": {
               "generatedName": "datasourceSyncRunTaskId",
+              "nameOverride": "DatasourceSyncRun",
               "title": "DatasourceSyncRun",
               "value": {
                 "generatedName": "DatasourceSyncRunTaskId",
@@ -56525,6 +56588,7 @@
             "key": "status",
             "schema": {
               "generatedName": "datasourceSyncRunStatus",
+              "nameOverride": "DatasourceSyncRun",
               "title": "DatasourceSyncRun",
               "value": {
                 "generatedName": "DatasourceSyncRunStatus",
@@ -56585,6 +56649,7 @@
             "key": "run_output",
             "schema": {
               "generatedName": "datasourceSyncRunRunOutput",
+              "nameOverride": "DatasourceSyncRun",
               "title": "DatasourceSyncRun",
               "value": {
                 "generatedName": "DatasourceSyncRunRunOutput",
@@ -56668,6 +56733,7 @@
             "key": "datasource_connection",
             "schema": {
               "generatedName": "datasourceSyncRunDatasourceConnection",
+              "nameOverride": "DatasourceSyncRun",
               "title": "DatasourceSyncRun",
               "value": {
                 "generatedName": "DatasourceSyncRunDatasourceConnection",
@@ -56774,6 +56840,7 @@
             "key": "info",
             "schema": {
               "generatedName": "documentCreateTaskInfo",
+              "nameOverride": "DocumentCreateTask",
               "title": "DocumentCreateTask",
               "value": {
                 "generatedName": "DocumentCreateTaskInfo",
@@ -56824,6 +56891,7 @@
             "key": "add",
             "schema": {
               "generatedName": "documentIamMemberRoleUpdateAdd",
+              "nameOverride": "DocumentIAMMemberRoleUpdate",
               "title": "DocumentIAMMemberRoleUpdate",
               "value": {
                 "description": "A list of document roles to grant to the member.\n\nRoles in this list are applied to the member AFTER any removals specified in `remove`.\n\nThis may be combined with `remove_all` to replace the member's entire role list.",
@@ -56870,6 +56938,7 @@
             "key": "remove",
             "schema": {
               "generatedName": "documentIamMemberRoleUpdateRemove",
+              "nameOverride": "DocumentIAMMemberRoleUpdate",
               "title": "DocumentIAMMemberRoleUpdate",
               "value": {
                 "description": "A list of document roles to revoke from the member.",
@@ -56916,6 +56985,7 @@
             "key": "remove_all",
             "schema": {
               "generatedName": "documentIamMemberRoleUpdateRemoveAll",
+              "nameOverride": "DocumentIAMMemberRoleUpdate",
               "title": "DocumentIAMMemberRoleUpdate",
               "value": {
                 "generatedName": "DocumentIamMemberRoleUpdateRemoveAll",
@@ -57033,6 +57103,7 @@
             "key": "member",
             "schema": {
               "generatedName": "documentIamPermissionTestMember",
+              "nameOverride": "DocumentIAMPermissionTest",
               "title": "DocumentIAMPermissionTest",
               "value": {
                 "generatedName": "DocumentIamPermissionTestMember",
@@ -57157,6 +57228,7 @@
             "key": "detail",
             "schema": {
               "generatedName": "httpValidationErrorDetail",
+              "nameOverride": "HTTPValidationError",
               "title": "HTTPValidationError",
               "value": {
                 "value": {
@@ -57339,6 +57411,7 @@
             "key": "roles",
             "schema": {
               "generatedName": "iamMemberRoles",
+              "nameOverride": "IAMMember",
               "title": "IAMMember",
               "value": {
                 "description": "A list of roles that the member holds on an entity.\n\nSome entities, such as Organizations, may contain members that exist without any roles.",
@@ -57367,6 +57440,7 @@
             "key": "name",
             "schema": {
               "generatedName": "iamMemberName",
+              "nameOverride": "IAMMember",
               "title": "IAMMember",
               "value": {
                 "generatedName": "IamMemberName",
@@ -57393,6 +57467,7 @@
             "key": "avatar_url",
             "schema": {
               "generatedName": "iamMemberAvatarUrl",
+              "nameOverride": "IAMMember",
               "title": "IAMMember",
               "value": {
                 "generatedName": "IamMemberAvatarUrl",
@@ -57419,6 +57494,7 @@
             "key": "total_subjects",
             "schema": {
               "generatedName": "iamMemberTotalSubjects",
+              "nameOverride": "IAMMember",
               "title": "IAMMember",
               "value": {
                 "description": "The total number of subjects that the member represents, which may be a value other than `1` if the member is not a User.",
@@ -57474,6 +57550,7 @@
             "key": "id",
             "schema": {
               "generatedName": "iamObjectErrorDetailsId",
+              "nameOverride": "IAMObjectErrorDetails",
               "title": "IAMObjectErrorDetails",
               "value": {
                 "generatedName": "IamObjectErrorDetailsId",
@@ -57536,6 +57613,7 @@
             "key": "member",
             "schema": {
               "generatedName": "iamPermissionTestMember",
+              "nameOverride": "IAMPermissionTest",
               "title": "IAMPermissionTest",
               "value": {
                 "generatedName": "IamPermissionTestMember",
@@ -57609,6 +57687,7 @@
             "key": "ideas",
             "schema": {
               "generatedName": "initialComposeSectionIdeas",
+              "nameOverride": "InitialComposeSection",
               "title": "InitialComposeSection",
               "value": {
                 "generatedName": "InitialComposeSectionIdeas",
@@ -57700,6 +57779,7 @@
             "key": "resource",
             "schema": {
               "generatedName": "invalidMemberErrorDetailsResource",
+              "nameOverride": "InvalidMemberErrorDetails",
               "title": "InvalidMemberErrorDetails",
               "value": {
                 "generatedName": "InvalidMemberErrorDetailsResource",
@@ -57726,6 +57806,7 @@
             "key": "subject",
             "schema": {
               "generatedName": "invalidMemberErrorDetailsSubject",
+              "nameOverride": "InvalidMemberErrorDetails",
               "title": "InvalidMemberErrorDetails",
               "value": {
                 "generatedName": "InvalidMemberErrorDetailsSubject",
@@ -57818,6 +57899,7 @@
             "key": "resource",
             "schema": {
               "generatedName": "invalidRoleErrorDetailsResource",
+              "nameOverride": "InvalidRoleErrorDetails",
               "title": "InvalidRoleErrorDetails",
               "value": {
                 "generatedName": "InvalidRoleErrorDetailsResource",
@@ -57926,6 +58008,7 @@
             "key": "subject",
             "schema": {
               "generatedName": "invalidSubjectTypeErrorDetailsSubject",
+              "nameOverride": "InvalidSubjectTypeErrorDetails",
               "title": "InvalidSubjectTypeErrorDetails",
               "value": {
                 "generatedName": "InvalidSubjectTypeErrorDetailsSubject",
@@ -58071,6 +58154,7 @@
             "key": "email",
             "schema": {
               "generatedName": "kratosIdentityTraitsEmail",
+              "nameOverride": "KratosIdentityTraits",
               "title": "KratosIdentityTraits",
               "value": {
                 "generatedName": "KratosIdentityTraitsEmail",
@@ -58097,6 +58181,7 @@
             "key": "name",
             "schema": {
               "generatedName": "kratosIdentityTraitsName",
+              "nameOverride": "KratosIdentityTraits",
               "title": "KratosIdentityTraits",
               "value": {
                 "generatedName": "KratosIdentityTraitsName",
@@ -58122,6 +58207,7 @@
             "key": "avatar_url",
             "schema": {
               "generatedName": "kratosIdentityTraitsAvatarUrl",
+              "nameOverride": "KratosIdentityTraits",
               "title": "KratosIdentityTraits",
               "value": {
                 "generatedName": "KratosIdentityTraitsAvatarUrl",
@@ -58147,6 +58233,7 @@
             "key": "project_id",
             "schema": {
               "generatedName": "kratosIdentityTraitsProjectId",
+              "nameOverride": "KratosIdentityTraits",
               "title": "KratosIdentityTraits",
               "value": {
                 "generatedName": "KratosIdentityTraitsProjectId",
@@ -58173,6 +58260,7 @@
             "key": "org_id",
             "schema": {
               "generatedName": "kratosIdentityTraitsOrgId",
+              "nameOverride": "KratosIdentityTraits",
               "title": "KratosIdentityTraits",
               "value": {
                 "generatedName": "KratosIdentityTraitsOrgId",
@@ -58199,6 +58287,7 @@
             "key": "sso_email_verified",
             "schema": {
               "generatedName": "kratosIdentityTraitsSsoEmailVerified",
+              "nameOverride": "KratosIdentityTraits",
               "title": "KratosIdentityTraits",
               "value": {
                 "generatedName": "KratosIdentityTraitsSsoEmailVerified",
@@ -58256,6 +58345,7 @@
             "key": "email",
             "schema": {
               "generatedName": "kratosWebhookEmail",
+              "nameOverride": "KratosWebhook",
               "title": "KratosWebhook",
               "value": {
                 "generatedName": "KratosWebhookEmail",
@@ -58282,6 +58372,7 @@
             "key": "bio",
             "schema": {
               "generatedName": "kratosWebhookBio",
+              "nameOverride": "KratosWebhook",
               "title": "KratosWebhook",
               "value": {
                 "generatedName": "KratosWebhookBio",
@@ -58307,6 +58398,7 @@
             "key": "flow_id",
             "schema": {
               "generatedName": "kratosWebhookFlowId",
+              "nameOverride": "KratosWebhook",
               "title": "KratosWebhook",
               "value": {
                 "generatedName": "KratosWebhookFlowId",
@@ -58333,6 +58425,7 @@
             "key": "flow_type",
             "schema": {
               "generatedName": "kratosWebhookFlowType",
+              "nameOverride": "KratosWebhook",
               "title": "KratosWebhook",
               "value": {
                 "generatedName": "KratosWebhookFlowType",
@@ -58358,6 +58451,7 @@
             "key": "identity",
             "schema": {
               "generatedName": "kratosWebhookIdentity",
+              "nameOverride": "KratosWebhook",
               "title": "KratosWebhook",
               "value": {
                 "generatedName": "KratosWebhookIdentity",
@@ -58384,6 +58478,7 @@
             "key": "ctx",
             "schema": {
               "generatedName": "kratosWebhookCtx",
+              "nameOverride": "KratosWebhook",
               "title": "KratosWebhook",
               "value": {
                 "generatedName": "KratosWebhookCtx",
@@ -58505,6 +58600,7 @@
             "key": "context",
             "schema": {
               "generatedName": "kratosWebhookDetailedMessageContext",
+              "nameOverride": "KratosWebhookDetailedMessage",
               "title": "KratosWebhookDetailedMessage",
               "value": {
                 "generatedName": "KratosWebhookDetailedMessageContext",
@@ -58553,6 +58649,7 @@
             "key": "messages",
             "schema": {
               "generatedName": "kratosWebhookErrorMessageMessages",
+              "nameOverride": "KratosWebhookErrorMessage",
               "title": "KratosWebhookErrorMessage",
               "value": {
                 "value": {
@@ -58598,6 +58695,7 @@
             "key": "messages",
             "schema": {
               "generatedName": "kratosWebhookResponseMessages",
+              "nameOverride": "KratosWebhookResponse",
               "title": "KratosWebhookResponse",
               "value": {
                 "generatedName": "KratosWebhookResponseMessages",
@@ -58629,6 +58727,7 @@
             "key": "identity",
             "schema": {
               "generatedName": "kratosWebhookResponseIdentity",
+              "nameOverride": "KratosWebhookResponse",
               "title": "KratosWebhookResponse",
               "value": {
                 "generatedName": "KratosWebhookResponseIdentity",
@@ -58865,6 +58964,7 @@
             "key": "resource",
             "schema": {
               "generatedName": "multipleRolesNotAllowedErrorDetailsResource",
+              "nameOverride": "MultipleRolesNotAllowedErrorDetails",
               "title": "MultipleRolesNotAllowedErrorDetails",
               "value": {
                 "generatedName": "MultipleRolesNotAllowedErrorDetailsResource",
@@ -58999,6 +59099,7 @@
             "key": "profile",
             "schema": {
               "generatedName": "oAuthClientCreateProfile",
+              "nameOverride": "OAuthClientCreate",
               "title": "OAuthClientCreate",
               "value": {
                 "generatedName": "OAuthClientCreateProfile",
@@ -59021,6 +59122,7 @@
             "key": "redirect_uris",
             "schema": {
               "generatedName": "oAuthClientCreateRedirectUris",
+              "nameOverride": "OAuthClientCreate",
               "title": "OAuthClientCreate",
               "value": {
                 "generatedName": "OAuthClientCreateRedirectUris",
@@ -59134,6 +59236,7 @@
             "key": "scope",
             "schema": {
               "generatedName": "oAuthClientCreateResponseScope",
+              "nameOverride": "OAuthClientCreateResponse",
               "title": "OAuthClientCreateResponse",
               "value": {
                 "schema": {
@@ -59238,6 +59341,7 @@
             "key": "synced",
             "schema": {
               "generatedName": "objectSynced",
+              "nameOverride": "Object",
               "title": "Object",
               "value": {
                 "schema": {
@@ -59261,6 +59365,7 @@
             "key": "size",
             "schema": {
               "generatedName": "objectSize",
+              "nameOverride": "Object",
               "title": "Object",
               "value": {
                 "generatedName": "ObjectSize",
@@ -59286,6 +59391,7 @@
             "key": "mimeType",
             "schema": {
               "generatedName": "objectMimeType",
+              "nameOverride": "Object",
               "title": "Object",
               "value": {
                 "generatedName": "ObjectMimeType",
@@ -59311,6 +59417,7 @@
             "key": "createdTime",
             "schema": {
               "generatedName": "objectCreatedTime",
+              "nameOverride": "Object",
               "title": "Object",
               "value": {
                 "generatedName": "ObjectCreatedTime",
@@ -59336,6 +59443,7 @@
             "key": "modifiedTime",
             "schema": {
               "generatedName": "objectModifiedTime",
+              "nameOverride": "Object",
               "title": "Object",
               "value": {
                 "generatedName": "ObjectModifiedTime",
@@ -59381,6 +59489,7 @@
             "key": "tags",
             "schema": {
               "generatedName": "objectTags",
+              "nameOverride": "Object",
               "title": "Object",
               "value": {
                 "value": {
@@ -59519,6 +59628,7 @@
             "key": "avatar_url",
             "schema": {
               "generatedName": "orgAvatarUrl",
+              "nameOverride": "Org",
               "title": "Org",
               "value": {
                 "generatedName": "OrgAvatarUrl",
@@ -59641,6 +59751,7 @@
             "key": "roles",
             "schema": {
               "generatedName": "orgInviteBaseRoles",
+              "nameOverride": "OrgInviteBase",
               "title": "OrgInviteBase",
               "value": {
                 "generatedName": "OrgInviteBaseRoles",
@@ -59748,6 +59859,7 @@
             "key": "contact_email",
             "schema": {
               "generatedName": "orgUpdateContactEmail",
+              "nameOverride": "OrgUpdate",
               "title": "OrgUpdate",
               "value": {
                 "generatedName": "OrgUpdateContactEmail",
@@ -59900,6 +60012,7 @@
             "key": "add",
             "schema": {
               "generatedName": "organizationIamMemberRoleUpdateAdd",
+              "nameOverride": "OrganizationIAMMemberRoleUpdate",
               "title": "OrganizationIAMMemberRoleUpdate",
               "value": {
                 "description": "A list of organization roles to grant to the member.\n\nRoles in this list are applied to the member AFTER any removals specified in `remove`.\n\nThis may be combined with `remove_all` to replace the member's entire role list.",
@@ -59946,6 +60059,7 @@
             "key": "remove",
             "schema": {
               "generatedName": "organizationIamMemberRoleUpdateRemove",
+              "nameOverride": "OrganizationIAMMemberRoleUpdate",
               "title": "OrganizationIAMMemberRoleUpdate",
               "value": {
                 "description": "A list of organization roles to revoke from the member.",
@@ -59992,6 +60106,7 @@
             "key": "remove_all",
             "schema": {
               "generatedName": "organizationIamMemberRoleUpdateRemoveAll",
+              "nameOverride": "OrganizationIAMMemberRoleUpdate",
               "title": "OrganizationIAMMemberRoleUpdate",
               "value": {
                 "generatedName": "OrganizationIamMemberRoleUpdateRemoveAll",
@@ -60109,6 +60224,7 @@
             "key": "member",
             "schema": {
               "generatedName": "organizationIamPermissionTestMember",
+              "nameOverride": "OrganizationIAMPermissionTest",
               "title": "OrganizationIAMPermissionTest",
               "value": {
                 "generatedName": "OrganizationIamPermissionTestMember",
@@ -60166,6 +60282,7 @@
             "key": "roles",
             "schema": {
               "generatedName": "organizationInviteRoles",
+              "nameOverride": "OrganizationInvite",
               "title": "OrganizationInvite",
               "value": {
                 "generatedName": "OrganizationInviteRoles",
@@ -61234,6 +61351,7 @@
             "key": "next_cursor",
             "schema": {
               "generatedName": "paginationDetailsNextCursor",
+              "nameOverride": "PaginationDetails",
               "title": "PaginationDetails",
               "value": {
                 "generatedName": "PaginationDetailsNextCursor",
@@ -61260,6 +61378,7 @@
             "key": "has_next",
             "schema": {
               "generatedName": "paginationDetailsHasNext",
+              "nameOverride": "PaginationDetails",
               "title": "PaginationDetails",
               "value": {
                 "generatedName": "PaginationDetailsHasNext",
@@ -61286,6 +61405,7 @@
             "key": "page_limit",
             "schema": {
               "generatedName": "paginationDetailsPageLimit",
+              "nameOverride": "PaginationDetails",
               "title": "PaginationDetails",
               "value": {
                 "generatedName": "PaginationDetailsPageLimit",
@@ -61328,6 +61448,7 @@
             "key": "subject",
             "schema": {
               "generatedName": "permissionCheckFailedErrorDetailsSubject",
+              "nameOverride": "PermissionCheckFailedErrorDetails",
               "title": "PermissionCheckFailedErrorDetails",
               "value": {
                 "generatedName": "PermissionCheckFailedErrorDetailsSubject",
@@ -61354,6 +61475,7 @@
             "key": "resource",
             "schema": {
               "generatedName": "permissionCheckFailedErrorDetailsResource",
+              "nameOverride": "PermissionCheckFailedErrorDetails",
               "title": "PermissionCheckFailedErrorDetails",
               "value": {
                 "generatedName": "PermissionCheckFailedErrorDetailsResource",
@@ -61478,6 +61600,7 @@
             "key": "avatar_url",
             "schema": {
               "generatedName": "projectAvatarUrl",
+              "nameOverride": "Project",
               "title": "Project",
               "value": {
                 "generatedName": "ProjectAvatarUrl",
@@ -61536,6 +61659,7 @@
             "key": "tasks_oauth_client_id",
             "schema": {
               "generatedName": "projectTasksOauthClientId",
+              "nameOverride": "Project",
               "title": "Project",
               "value": {
                 "generatedName": "ProjectTasksOauthClientId",
@@ -61578,6 +61702,7 @@
             "key": "llm",
             "schema": {
               "generatedName": "projectConfigInputLlm",
+              "nameOverride": "ProjectConfig",
               "title": "ProjectConfig",
               "value": {
                 "generatedName": "ProjectConfigInputLlm",
@@ -61668,6 +61793,7 @@
             "key": "temperature",
             "schema": {
               "generatedName": "projectConfigInputTemperature",
+              "nameOverride": "ProjectConfig",
               "title": "ProjectConfig",
               "value": {
                 "schema": {
@@ -61693,6 +61819,7 @@
             "key": "knn",
             "schema": {
               "generatedName": "projectConfigInputKnn",
+              "nameOverride": "ProjectConfig",
               "title": "ProjectConfig",
               "value": {
                 "schema": {
@@ -61716,6 +61843,7 @@
             "key": "chat_system_commands",
             "schema": {
               "generatedName": "projectConfigInputChatSystemCommands",
+              "nameOverride": "ProjectConfig",
               "title": "ProjectConfig",
               "value": {
                 "generatedName": "ProjectConfigInputChatSystemCommands",
@@ -61746,6 +61874,7 @@
             "key": "chat_guardrails",
             "schema": {
               "generatedName": "projectConfigInputChatGuardrails",
+              "nameOverride": "ProjectConfig",
               "title": "ProjectConfig",
               "value": {
                 "generatedName": "ProjectConfigInputChatGuardrails",
@@ -61772,6 +61901,7 @@
             "key": "query_expansion",
             "schema": {
               "generatedName": "projectConfigInputQueryExpansion",
+              "nameOverride": "ProjectConfig",
               "title": "ProjectConfig",
               "value": {
                 "description": "Enable query expansion. Uses an LLM to generate multiple rephrasing of the original query for better broad spectrum vector retrieval",
@@ -61811,6 +61941,7 @@
             "key": "llm",
             "schema": {
               "generatedName": "projectConfigOutputLlm",
+              "nameOverride": "ProjectConfig",
               "title": "ProjectConfig",
               "value": {
                 "generatedName": "ProjectConfigOutputLlm",
@@ -61901,6 +62032,7 @@
             "key": "temperature",
             "schema": {
               "generatedName": "projectConfigOutputTemperature",
+              "nameOverride": "ProjectConfig",
               "title": "ProjectConfig",
               "value": {
                 "schema": {
@@ -61926,6 +62058,7 @@
             "key": "knn",
             "schema": {
               "generatedName": "projectConfigOutputKnn",
+              "nameOverride": "ProjectConfig",
               "title": "ProjectConfig",
               "value": {
                 "schema": {
@@ -61949,6 +62082,7 @@
             "key": "chat_system_commands",
             "schema": {
               "generatedName": "projectConfigOutputChatSystemCommands",
+              "nameOverride": "ProjectConfig",
               "title": "ProjectConfig",
               "value": {
                 "generatedName": "ProjectConfigOutputChatSystemCommands",
@@ -61979,6 +62113,7 @@
             "key": "chat_guardrails",
             "schema": {
               "generatedName": "projectConfigOutputChatGuardrails",
+              "nameOverride": "ProjectConfig",
               "title": "ProjectConfig",
               "value": {
                 "generatedName": "ProjectConfigOutputChatGuardrails",
@@ -62005,6 +62140,7 @@
             "key": "query_expansion",
             "schema": {
               "generatedName": "projectConfigOutputQueryExpansion",
+              "nameOverride": "ProjectConfig",
               "title": "ProjectConfig",
               "value": {
                 "description": "Enable query expansion. Uses an LLM to generate multiple rephrasing of the original query for better broad spectrum vector retrieval",
@@ -62076,6 +62212,7 @@
             "key": "add",
             "schema": {
               "generatedName": "projectIamMemberRoleUpdateAdd",
+              "nameOverride": "ProjectIAMMemberRoleUpdate",
               "title": "ProjectIAMMemberRoleUpdate",
               "value": {
                 "description": "A list of project roles to grant to the member.\n\nRoles in this list are applied to the member AFTER any removals specified in `remove`.\n\nThis may be combined with `remove_all` to replace the member's entire role list.",
@@ -62147,6 +62284,7 @@
             "key": "remove",
             "schema": {
               "generatedName": "projectIamMemberRoleUpdateRemove",
+              "nameOverride": "ProjectIAMMemberRoleUpdate",
               "title": "ProjectIAMMemberRoleUpdate",
               "value": {
                 "description": "A list of project roles to revoke from the member.",
@@ -62218,6 +62356,7 @@
             "key": "remove_all",
             "schema": {
               "generatedName": "projectIamMemberRoleUpdateRemoveAll",
+              "nameOverride": "ProjectIAMMemberRoleUpdate",
               "title": "ProjectIAMMemberRoleUpdate",
               "value": {
                 "generatedName": "ProjectIamMemberRoleUpdateRemoveAll",
@@ -62415,6 +62554,7 @@
             "key": "member",
             "schema": {
               "generatedName": "projectIamPermissionTestMember",
+              "nameOverride": "ProjectIAMPermissionTest",
               "title": "ProjectIAMPermissionTest",
               "value": {
                 "generatedName": "ProjectIamPermissionTestMember",
@@ -62456,6 +62596,7 @@
             "key": "name",
             "schema": {
               "generatedName": "projectUpdateName",
+              "nameOverride": "ProjectUpdate",
               "title": "ProjectUpdate",
               "value": {
                 "generatedName": "ProjectUpdateName",
@@ -62513,6 +62654,7 @@
             "key": "avatar_url",
             "schema": {
               "generatedName": "projectWithDatasourcesAvatarUrl",
+              "nameOverride": "ProjectWithDatasources",
               "title": "ProjectWithDatasources",
               "value": {
                 "generatedName": "ProjectWithDatasourcesAvatarUrl",
@@ -62571,6 +62713,7 @@
             "key": "tasks_oauth_client_id",
             "schema": {
               "generatedName": "projectWithDatasourcesTasksOauthClientId",
+              "nameOverride": "ProjectWithDatasources",
               "title": "ProjectWithDatasources",
               "value": {
                 "generatedName": "ProjectWithDatasourcesTasksOauthClientId",
@@ -62597,6 +62740,7 @@
             "key": "datasource_connections",
             "schema": {
               "generatedName": "projectWithDatasourcesDatasourceConnections",
+              "nameOverride": "ProjectWithDatasources",
               "title": "ProjectWithDatasources",
               "value": {
                 "value": {
@@ -62663,6 +62807,7 @@
             "key": "max_crawl_depth",
             "schema": {
               "generatedName": "siteScrapeRequestMaxCrawlDepth",
+              "nameOverride": "SiteScrapeRequest",
               "title": "SiteScrapeRequest",
               "value": {
                 "schema": {
@@ -62815,6 +62960,7 @@
             "key": "description",
             "schema": {
               "generatedName": "taskDescription",
+              "nameOverride": "Task",
               "title": "Task",
               "value": {
                 "generatedName": "TaskDescription",
@@ -63065,6 +63211,7 @@
             "key": "llm_config",
             "schema": {
               "generatedName": "taskCreateLlmConfig",
+              "nameOverride": "TaskCreate",
               "title": "TaskCreate",
               "value": {
                 "description": "Specific configuration parameters for the LLM model.",
@@ -63156,6 +63303,7 @@
             "key": "task_forwarder_id",
             "schema": {
               "generatedName": "taskCreateTaskForwarderId",
+              "nameOverride": "TaskCreate",
               "title": "TaskCreate",
               "value": {
                 "generatedName": "TaskCreateTaskForwarderId",
@@ -63183,6 +63331,7 @@
             "key": "rag",
             "schema": {
               "generatedName": "taskCreateRag",
+              "nameOverride": "TaskCreate",
               "title": "TaskCreate",
               "availability": "Beta",
               "value": {
@@ -63214,6 +63363,7 @@
             "key": "image_required",
             "schema": {
               "generatedName": "taskCreateImageRequired",
+              "nameOverride": "TaskCreate",
               "title": "TaskCreate",
               "value": {
                 "description": "When `true` it requires an image to be sent in the Task Run request.",
@@ -63254,6 +63404,7 @@
             "key": "description",
             "schema": {
               "generatedName": "taskCreateDescription",
+              "nameOverride": "TaskCreate",
               "title": "TaskCreate",
               "value": {
                 "generatedName": "TaskCreateDescription",
@@ -63330,6 +63481,7 @@
             "key": "description",
             "schema": {
               "generatedName": "taskForwarderDescription",
+              "nameOverride": "TaskForwarder",
               "title": "TaskForwarder",
               "value": {
                 "generatedName": "TaskForwarderDescription",
@@ -63356,6 +63508,7 @@
             "key": "config",
             "schema": {
               "generatedName": "taskForwarderConfig",
+              "nameOverride": "TaskForwarder",
               "title": "TaskForwarder",
               "value": {
                 "generatedName": "TaskForwarderConfig",
@@ -63383,6 +63536,7 @@
             "key": "config_sensitive",
             "schema": {
               "generatedName": "taskForwarderConfigSensitive",
+              "nameOverride": "TaskForwarder",
               "title": "TaskForwarder",
               "value": {
                 "generatedName": "TaskForwarderConfigSensitive",
@@ -63544,6 +63698,7 @@
             "key": "description",
             "schema": {
               "generatedName": "taskForwarderCreateDescription",
+              "nameOverride": "TaskForwarderCreate",
               "title": "TaskForwarderCreate",
               "value": {
                 "generatedName": "TaskForwarderCreateDescription",
@@ -63570,6 +63725,7 @@
             "key": "config",
             "schema": {
               "generatedName": "taskForwarderCreateConfig",
+              "nameOverride": "TaskForwarderCreate",
               "title": "TaskForwarderCreate",
               "value": {
                 "generatedName": "TaskForwarderCreateConfig",
@@ -63597,6 +63753,7 @@
             "key": "config_sensitive",
             "schema": {
               "generatedName": "taskForwarderCreateConfigSensitive",
+              "nameOverride": "TaskForwarderCreate",
               "title": "TaskForwarderCreate",
               "value": {
                 "generatedName": "TaskForwarderCreateConfigSensitive",
@@ -63672,6 +63829,7 @@
             "key": "name",
             "schema": {
               "generatedName": "taskForwarderUpdateName",
+              "nameOverride": "TaskForwarderUpdate",
               "title": "TaskForwarderUpdate",
               "value": {
                 "generatedName": "TaskForwarderUpdateName",
@@ -63698,6 +63856,7 @@
             "key": "description",
             "schema": {
               "generatedName": "taskForwarderUpdateDescription",
+              "nameOverride": "TaskForwarderUpdate",
               "title": "TaskForwarderUpdate",
               "value": {
                 "generatedName": "TaskForwarderUpdateDescription",
@@ -63724,6 +63883,7 @@
             "key": "config",
             "schema": {
               "generatedName": "taskForwarderUpdateConfig",
+              "nameOverride": "TaskForwarderUpdate",
               "title": "TaskForwarderUpdate",
               "value": {
                 "generatedName": "TaskForwarderUpdateConfig",
@@ -63751,6 +63911,7 @@
             "key": "config_sensitive",
             "schema": {
               "generatedName": "taskForwarderUpdateConfigSensitive",
+              "nameOverride": "TaskForwarderUpdate",
               "title": "TaskForwarderUpdate",
               "value": {
                 "generatedName": "TaskForwarderUpdateConfigSensitive",
@@ -63794,6 +63955,7 @@
             "key": "add",
             "schema": {
               "generatedName": "taskIamMemberRoleUpdateAdd",
+              "nameOverride": "TaskIAMMemberRoleUpdate",
               "title": "TaskIAMMemberRoleUpdate",
               "value": {
                 "description": "A list of task roles to grant to the member.\n\nRoles in this list are applied to the member AFTER any removals specified in `remove`.\n\nThis may be combined with `remove_all` to replace the member's entire role list.",
@@ -63840,6 +64002,7 @@
             "key": "remove",
             "schema": {
               "generatedName": "taskIamMemberRoleUpdateRemove",
+              "nameOverride": "TaskIAMMemberRoleUpdate",
               "title": "TaskIAMMemberRoleUpdate",
               "value": {
                 "description": "A list of task roles to revoke from the member.",
@@ -63886,6 +64049,7 @@
             "key": "remove_all",
             "schema": {
               "generatedName": "taskIamMemberRoleUpdateRemoveAll",
+              "nameOverride": "TaskIAMMemberRoleUpdate",
               "title": "TaskIAMMemberRoleUpdate",
               "value": {
                 "generatedName": "TaskIamMemberRoleUpdateRemoveAll",
@@ -64003,6 +64167,7 @@
             "key": "member",
             "schema": {
               "generatedName": "taskIamPermissionTestMember",
+              "nameOverride": "TaskIAMPermissionTest",
               "title": "TaskIAMPermissionTest",
               "value": {
                 "generatedName": "TaskIamPermissionTestMember",
@@ -64044,6 +64209,7 @@
             "key": "temperature",
             "schema": {
               "generatedName": "taskLlmConfigTemperature",
+              "nameOverride": "TaskLLMConfig",
               "title": "TaskLLMConfig",
               "value": {
                 "description": "Controls randomness in the output. Lower values make the output more focused and deterministic, while higher values make it more creative and diverse.",
@@ -64233,6 +64399,7 @@
             "key": "llm_config",
             "schema": {
               "generatedName": "taskRevisionLlmConfig",
+              "nameOverride": "TaskRevision",
               "title": "TaskRevision",
               "value": {
                 "description": "Specific configuration parameters for the LLM model.",
@@ -64324,6 +64491,7 @@
             "key": "task_forwarder_id",
             "schema": {
               "generatedName": "taskRevisionTaskForwarderId",
+              "nameOverride": "TaskRevision",
               "title": "TaskRevision",
               "value": {
                 "generatedName": "TaskRevisionTaskForwarderId",
@@ -64351,6 +64519,7 @@
             "key": "rag",
             "schema": {
               "generatedName": "taskRevisionRag",
+              "nameOverride": "TaskRevision",
               "title": "TaskRevision",
               "availability": "Beta",
               "value": {
@@ -64382,6 +64551,7 @@
             "key": "image_required",
             "schema": {
               "generatedName": "taskRevisionImageRequired",
+              "nameOverride": "TaskRevision",
               "title": "TaskRevision",
               "value": {
                 "description": "When `true` it requires an image to be sent in the Task Run request.",
@@ -64457,6 +64627,7 @@
             "key": "active",
             "schema": {
               "generatedName": "taskRevisionActive",
+              "nameOverride": "TaskRevision",
               "title": "TaskRevision",
               "value": {
                 "description": "When `true` the Revision is the currently active version and will be activated when the Task Run is executed.",
@@ -64616,6 +64787,7 @@
             "key": "system_prompt",
             "schema": {
               "generatedName": "taskUpdateSystemPrompt",
+              "nameOverride": "TaskUpdate",
               "title": "TaskUpdate",
               "value": {
                 "generatedName": "TaskUpdateSystemPrompt",
@@ -64632,6 +64804,7 @@
             "key": "user_prompt",
             "schema": {
               "generatedName": "taskUpdateUserPrompt",
+              "nameOverride": "TaskUpdate",
               "title": "TaskUpdate",
               "value": {
                 "generatedName": "TaskUpdateUserPrompt",
@@ -64648,6 +64821,7 @@
             "key": "llm_model",
             "schema": {
               "generatedName": "taskUpdateLlmModel",
+              "nameOverride": "TaskUpdate",
               "title": "TaskUpdate",
               "value": {
                 "generatedName": "TaskUpdateLlmModel",
@@ -64737,6 +64911,7 @@
             "key": "llm_config",
             "schema": {
               "generatedName": "taskUpdateLlmConfig",
+              "nameOverride": "TaskUpdate",
               "title": "TaskUpdate",
               "value": {
                 "generatedName": "TaskUpdateLlmConfig",
@@ -64764,6 +64939,7 @@
             "key": "output_format",
             "schema": {
               "generatedName": "taskUpdateOutputFormat",
+              "nameOverride": "TaskUpdate",
               "title": "TaskUpdate",
               "value": {
                 "generatedName": "TaskUpdateOutputFormat",
@@ -64848,6 +65024,7 @@
             "key": "task_forwarder_id",
             "schema": {
               "generatedName": "taskUpdateTaskForwarderId",
+              "nameOverride": "TaskUpdate",
               "title": "TaskUpdate",
               "value": {
                 "generatedName": "TaskUpdateTaskForwarderId",
@@ -64875,6 +65052,7 @@
             "key": "rag",
             "schema": {
               "generatedName": "taskUpdateRag",
+              "nameOverride": "TaskUpdate",
               "title": "TaskUpdate",
               "availability": "Beta",
               "value": {
@@ -64906,6 +65084,7 @@
             "key": "image_required",
             "schema": {
               "generatedName": "taskUpdateImageRequired",
+              "nameOverride": "TaskUpdate",
               "title": "TaskUpdate",
               "value": {
                 "generatedName": "TaskUpdateImageRequired",
@@ -64932,6 +65111,7 @@
             "key": "name",
             "schema": {
               "generatedName": "taskUpdateName",
+              "nameOverride": "TaskUpdate",
               "title": "TaskUpdate",
               "value": {
                 "generatedName": "TaskUpdateName",
@@ -64958,6 +65138,7 @@
             "key": "description",
             "schema": {
               "generatedName": "taskUpdateDescription",
+              "nameOverride": "TaskUpdate",
               "title": "TaskUpdate",
               "value": {
                 "generatedName": "TaskUpdateDescription",
@@ -64984,6 +65165,7 @@
             "key": "enabled",
             "schema": {
               "generatedName": "taskUpdateEnabled",
+              "nameOverride": "TaskUpdate",
               "title": "TaskUpdate",
               "value": {
                 "generatedName": "TaskUpdateEnabled",
@@ -65062,6 +65244,7 @@
             "key": "bio",
             "schema": {
               "generatedName": "userBio",
+              "nameOverride": "User",
               "title": "User",
               "value": {
                 "generatedName": "UserBio",
@@ -65087,6 +65270,7 @@
             "key": "avatar_url",
             "schema": {
               "generatedName": "userAvatarUrl",
+              "nameOverride": "User",
               "title": "User",
               "value": {
                 "generatedName": "UserAvatarUrl",
@@ -65145,6 +65329,7 @@
             "key": "name",
             "schema": {
               "generatedName": "userProfileUpdateName",
+              "nameOverride": "UserProfileUpdate",
               "title": "UserProfileUpdate",
               "value": {
                 "generatedName": "UserProfileUpdateName",
@@ -65170,6 +65355,7 @@
             "key": "bio",
             "schema": {
               "generatedName": "userProfileUpdateBio",
+              "nameOverride": "UserProfileUpdate",
               "title": "UserProfileUpdate",
               "value": {
                 "generatedName": "UserProfileUpdateBio",

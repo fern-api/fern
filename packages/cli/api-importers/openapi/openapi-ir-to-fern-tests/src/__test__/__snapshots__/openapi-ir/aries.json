@@ -34682,6 +34682,7 @@
             "key": "aml",
             "schema": {
               "generatedName": "amlRecordAml",
+              "nameOverride": "AMLRecord",
               "title": "AMLRecord",
               "value": {
                 "key": {
@@ -34715,6 +34716,7 @@
             "key": "amlContext",
             "schema": {
               "generatedName": "amlRecordAmlContext",
+              "nameOverride": "AMLRecord",
               "title": "AMLRecord",
               "value": {
                 "schema": {
@@ -34735,6 +34737,7 @@
             "key": "version",
             "schema": {
               "generatedName": "amlRecordVersion",
+              "nameOverride": "AMLRecord",
               "title": "AMLRecord",
               "value": {
                 "schema": {
@@ -34771,6 +34774,7 @@
             "key": "result",
             "schema": {
               "generatedName": "actionMenuFetchResultResult",
+              "nameOverride": "ActionMenuFetchResult",
               "title": "ActionMenuFetchResult",
               "value": {
                 "generatedName": "ActionMenuFetchResultResult",
@@ -34827,6 +34831,7 @@
             "key": "config",
             "schema": {
               "generatedName": "adminConfigConfig",
+              "nameOverride": "AdminConfig",
               "title": "AdminConfig",
               "value": {
                 "allOf": [],
@@ -34869,6 +34874,7 @@
             "key": "mediator_terms",
             "schema": {
               "generatedName": "adminMediationDenyMediatorTerms",
+              "nameOverride": "AdminMediationDeny",
               "title": "AdminMediationDeny",
               "value": {
                 "description": "List of mediator rules for recipient",
@@ -34896,6 +34902,7 @@
             "key": "recipient_terms",
             "schema": {
               "generatedName": "adminMediationDenyRecipientTerms",
+              "nameOverride": "AdminMediationDeny",
               "title": "AdminMediationDeny",
               "value": {
                 "description": "List of recipient rules for mediation",
@@ -34939,6 +34946,7 @@
             "key": "result",
             "schema": {
               "generatedName": "adminModulesResult",
+              "nameOverride": "AdminModules",
               "title": "AdminModules",
               "value": {
                 "description": "List of admin modules",
@@ -35016,6 +35024,7 @@
             "key": "conductor",
             "schema": {
               "generatedName": "adminStatusConductor",
+              "nameOverride": "AdminStatus",
               "title": "AdminStatus",
               "value": {
                 "allOf": [],
@@ -35042,6 +35051,7 @@
             "key": "label",
             "schema": {
               "generatedName": "adminStatusLabel",
+              "nameOverride": "AdminStatus",
               "title": "AdminStatus",
               "value": {
                 "generatedName": "AdminStatusLabel",
@@ -35069,6 +35079,7 @@
             "key": "timing",
             "schema": {
               "generatedName": "adminStatusTiming",
+              "nameOverride": "AdminStatus",
               "title": "AdminStatus",
               "value": {
                 "allOf": [],
@@ -35095,6 +35106,7 @@
             "key": "version",
             "schema": {
               "generatedName": "adminStatusVersion",
+              "nameOverride": "AdminStatus",
               "title": "AdminStatus",
               "value": {
                 "description": "Version code",
@@ -35132,6 +35144,7 @@
             "key": "alive",
             "schema": {
               "generatedName": "adminStatusLivelinessAlive",
+              "nameOverride": "AdminStatusLiveliness",
               "title": "AdminStatusLiveliness",
               "value": {
                 "description": "Liveliness status",
@@ -35170,6 +35183,7 @@
             "key": "ready",
             "schema": {
               "generatedName": "adminStatusReadinessReady",
+              "nameOverride": "AdminStatusReadiness",
               "title": "AdminStatusReadiness",
               "value": {
                 "description": "Readiness status",
@@ -35208,6 +35222,7 @@
             "key": "@id",
             "schema": {
               "generatedName": "attachDecoratorId",
+              "nameOverride": "AttachDecorator",
               "title": "AttachDecorator",
               "value": {
                 "description": "Attachment identifier",
@@ -35230,6 +35245,7 @@
             "key": "byte_count",
             "schema": {
               "generatedName": "attachDecoratorByteCount",
+              "nameOverride": "AttachDecorator",
               "title": "AttachDecorator",
               "value": {
                 "description": "Byte count of data included by reference",
@@ -35269,6 +35285,7 @@
             "key": "description",
             "schema": {
               "generatedName": "attachDecoratorDescription",
+              "nameOverride": "AttachDecorator",
               "title": "AttachDecorator",
               "value": {
                 "description": "Human-readable description of content",
@@ -35291,6 +35308,7 @@
             "key": "filename",
             "schema": {
               "generatedName": "attachDecoratorFilename",
+              "nameOverride": "AttachDecorator",
               "title": "AttachDecorator",
               "value": {
                 "description": "File name",
@@ -35313,6 +35331,7 @@
             "key": "lastmod_time",
             "schema": {
               "generatedName": "attachDecoratorLastmodTime",
+              "nameOverride": "AttachDecorator",
               "title": "AttachDecorator",
               "value": {
                 "description": "Hint regarding last modification datetime, in ISO-8601 format",
@@ -35336,6 +35355,7 @@
             "key": "mime-type",
             "schema": {
               "generatedName": "attachDecoratorMimeType",
+              "nameOverride": "AttachDecorator",
               "title": "AttachDecorator",
               "value": {
                 "description": "MIME type",
@@ -35374,6 +35394,7 @@
             "key": "base64",
             "schema": {
               "generatedName": "attachDecoratorDataBase64",
+              "nameOverride": "AttachDecoratorData",
               "title": "AttachDecoratorData",
               "value": {
                 "description": "Base64-encoded data",
@@ -35397,6 +35418,7 @@
             "key": "json",
             "schema": {
               "generatedName": "attachDecoratorDataJson",
+              "nameOverride": "AttachDecoratorData",
               "title": "AttachDecoratorData",
               "value": {
                 "description": "JSON-serialized data",
@@ -35428,6 +35450,7 @@
             "key": "jws",
             "schema": {
               "generatedName": "attachDecoratorDataJws",
+              "nameOverride": "AttachDecoratorData",
               "title": "AttachDecoratorData",
               "value": {
                 "generatedName": "AttachDecoratorDataJws",
@@ -35451,6 +35474,7 @@
             "key": "links",
             "schema": {
               "generatedName": "attachDecoratorDataLinks",
+              "nameOverride": "AttachDecoratorData",
               "title": "AttachDecoratorData",
               "value": {
                 "description": "List of hypertext links to data",
@@ -35478,6 +35502,7 @@
             "key": "sha256",
             "schema": {
               "generatedName": "attachDecoratorDataSha256",
+              "nameOverride": "AttachDecoratorData",
               "title": "AttachDecoratorData",
               "value": {
                 "description": "SHA256 hash (binhex encoded) of content",
@@ -35593,6 +35618,7 @@
             "key": "header",
             "schema": {
               "generatedName": "attachDecoratorDataJwsHeader",
+              "nameOverride": "AttachDecoratorDataJWS",
               "title": "AttachDecoratorDataJWS",
               "value": {
                 "generatedName": "AttachDecoratorDataJwsHeader",
@@ -35616,6 +35642,7 @@
             "key": "protected",
             "schema": {
               "generatedName": "attachDecoratorDataJwsProtected",
+              "nameOverride": "AttachDecoratorDataJWS",
               "title": "AttachDecoratorDataJWS",
               "value": {
                 "description": "protected JWS header",
@@ -35641,6 +35668,7 @@
             "key": "signature",
             "schema": {
               "generatedName": "attachDecoratorDataJwsSignature",
+              "nameOverride": "AttachDecoratorDataJWS",
               "title": "AttachDecoratorDataJWS",
               "value": {
                 "description": "signature",
@@ -35666,6 +35694,7 @@
             "key": "signatures",
             "schema": {
               "generatedName": "attachDecoratorDataJwsSignatures",
+              "nameOverride": "AttachDecoratorDataJWS",
               "title": "AttachDecoratorDataJWS",
               "value": {
                 "description": "List of signatures",
@@ -35746,6 +35775,7 @@
             "key": "id",
             "schema": {
               "generatedName": "attachmentDefId",
+              "nameOverride": "AttachmentDef",
               "title": "AttachmentDef",
               "value": {
                 "description": "Attachment identifier",
@@ -35768,6 +35798,7 @@
             "key": "type",
             "schema": {
               "generatedName": "attachmentDefType",
+              "nameOverride": "AttachmentDef",
               "title": "AttachmentDef",
               "value": {
                 "description": "Attachment type",
@@ -35818,6 +35849,7 @@
             "key": "results",
             "schema": {
               "generatedName": "attributeMimeTypesResultResults",
+              "nameOverride": "AttributeMimeTypesResult",
               "title": "AttributeMimeTypesResult",
               "value": {
                 "generatedName": "AttributeMimeTypesResultResults",
@@ -35897,6 +35929,7 @@
             "key": "jwt",
             "schema": {
               "generatedName": "claimFormatJwt",
+              "nameOverride": "ClaimFormat",
               "title": "ClaimFormat",
               "value": {
                 "allOf": [],
@@ -35924,6 +35957,7 @@
             "key": "jwt_vc",
             "schema": {
               "generatedName": "claimFormatJwtVc",
+              "nameOverride": "ClaimFormat",
               "title": "ClaimFormat",
               "value": {
                 "allOf": [],
@@ -35950,6 +35984,7 @@
             "key": "jwt_vp",
             "schema": {
               "generatedName": "claimFormatJwtVp",
+              "nameOverride": "ClaimFormat",
               "title": "ClaimFormat",
               "value": {
                 "allOf": [],
@@ -35976,6 +36011,7 @@
             "key": "ldp",
             "schema": {
               "generatedName": "claimFormatLdp",
+              "nameOverride": "ClaimFormat",
               "title": "ClaimFormat",
               "value": {
                 "allOf": [],
@@ -36003,6 +36039,7 @@
             "key": "ldp_vc",
             "schema": {
               "generatedName": "claimFormatLdpVc",
+              "nameOverride": "ClaimFormat",
               "title": "ClaimFormat",
               "value": {
                 "allOf": [],
@@ -36029,6 +36066,7 @@
             "key": "ldp_vp",
             "schema": {
               "generatedName": "claimFormatLdpVp",
+              "nameOverride": "ClaimFormat",
               "title": "ClaimFormat",
               "value": {
                 "allOf": [],
@@ -36071,6 +36109,7 @@
             "key": "purge",
             "schema": {
               "generatedName": "clearPendingRevocationsRequestPurge",
+              "nameOverride": "ClearPendingRevocationsRequest",
               "title": "ClearPendingRevocationsRequest",
               "value": {
                 "description": "Credential revocation ids by revocation registry id: omit for all, specify null or empty list for all pending per revocation registry",
@@ -36130,6 +36169,7 @@
             "key": "accept",
             "schema": {
               "generatedName": "connRecordAccept",
+              "nameOverride": "ConnRecord",
               "title": "ConnRecord",
               "value": {
                 "description": "Connection acceptance: manual or auto",
@@ -36164,6 +36204,7 @@
             "key": "alias",
             "schema": {
               "generatedName": "connRecordAlias",
+              "nameOverride": "ConnRecord",
               "title": "ConnRecord",
               "value": {
                 "description": "Optional alias to apply to connection for later use",
@@ -36186,6 +36227,7 @@
             "key": "connection_id",
             "schema": {
               "generatedName": "connRecordConnectionId",
+              "nameOverride": "ConnRecord",
               "title": "ConnRecord",
               "value": {
                 "description": "Connection identifier",
@@ -36208,6 +36250,7 @@
             "key": "connection_protocol",
             "schema": {
               "generatedName": "connRecordConnectionProtocol",
+              "nameOverride": "ConnRecord",
               "title": "ConnRecord",
               "value": {
                 "description": "Connection protocol used",
@@ -36242,6 +36285,7 @@
             "key": "created_at",
             "schema": {
               "generatedName": "connRecordCreatedAt",
+              "nameOverride": "ConnRecord",
               "title": "ConnRecord",
               "value": {
                 "description": "Time of record creation",
@@ -36265,6 +36309,7 @@
             "key": "error_msg",
             "schema": {
               "generatedName": "connRecordErrorMsg",
+              "nameOverride": "ConnRecord",
               "title": "ConnRecord",
               "value": {
                 "description": "Error message",
@@ -36287,6 +36332,7 @@
             "key": "inbound_connection_id",
             "schema": {
               "generatedName": "connRecordInboundConnectionId",
+              "nameOverride": "ConnRecord",
               "title": "ConnRecord",
               "value": {
                 "description": "Inbound routing connection id to use",
@@ -36309,6 +36355,7 @@
             "key": "invitation_key",
             "schema": {
               "generatedName": "connRecordInvitationKey",
+              "nameOverride": "ConnRecord",
               "title": "ConnRecord",
               "value": {
                 "description": "Public key for connection",
@@ -36332,6 +36379,7 @@
             "key": "invitation_mode",
             "schema": {
               "generatedName": "connRecordInvitationMode",
+              "nameOverride": "ConnRecord",
               "title": "ConnRecord",
               "value": {
                 "description": "Invitation mode",
@@ -36371,6 +36419,7 @@
             "key": "invitation_msg_id",
             "schema": {
               "generatedName": "connRecordInvitationMsgId",
+              "nameOverride": "ConnRecord",
               "title": "ConnRecord",
               "value": {
                 "description": "ID of out-of-band invitation message",
@@ -36393,6 +36442,7 @@
             "key": "my_did",
             "schema": {
               "generatedName": "connRecordMyDid",
+              "nameOverride": "ConnRecord",
               "title": "ConnRecord",
               "value": {
                 "description": "Our DID for connection",
@@ -36416,6 +36466,7 @@
             "key": "request_id",
             "schema": {
               "generatedName": "connRecordRequestId",
+              "nameOverride": "ConnRecord",
               "title": "ConnRecord",
               "value": {
                 "description": "Connection request identifier",
@@ -36438,6 +36489,7 @@
             "key": "rfc23_state",
             "schema": {
               "generatedName": "connRecordRfc23State",
+              "nameOverride": "ConnRecord",
               "title": "ConnRecord",
               "value": {
                 "description": "State per RFC 23",
@@ -36461,6 +36513,7 @@
             "key": "routing_state",
             "schema": {
               "generatedName": "connRecordRoutingState",
+              "nameOverride": "ConnRecord",
               "title": "ConnRecord",
               "value": {
                 "description": "Routing state of connection",
@@ -36505,6 +36558,7 @@
             "key": "state",
             "schema": {
               "generatedName": "connRecordState",
+              "nameOverride": "ConnRecord",
               "title": "ConnRecord",
               "value": {
                 "description": "Current record state",
@@ -36527,6 +36581,7 @@
             "key": "their_did",
             "schema": {
               "generatedName": "connRecordTheirDid",
+              "nameOverride": "ConnRecord",
               "title": "ConnRecord",
               "value": {
                 "description": "Their DID for connection",
@@ -36550,6 +36605,7 @@
             "key": "their_label",
             "schema": {
               "generatedName": "connRecordTheirLabel",
+              "nameOverride": "ConnRecord",
               "title": "ConnRecord",
               "value": {
                 "description": "Their label for connection",
@@ -36572,6 +36628,7 @@
             "key": "their_public_did",
             "schema": {
               "generatedName": "connRecordTheirPublicDid",
+              "nameOverride": "ConnRecord",
               "title": "ConnRecord",
               "value": {
                 "description": "Other agent's public DID for connection",
@@ -36594,6 +36651,7 @@
             "key": "their_role",
             "schema": {
               "generatedName": "connRecordTheirRole",
+              "nameOverride": "ConnRecord",
               "title": "ConnRecord",
               "value": {
                 "description": "Their role in the connection protocol",
@@ -36638,6 +36696,7 @@
             "key": "updated_at",
             "schema": {
               "generatedName": "connRecordUpdatedAt",
+              "nameOverride": "ConnRecord",
               "title": "ConnRecord",
               "value": {
                 "description": "Time of last record update",
@@ -36677,6 +36736,7 @@
             "key": "@id",
             "schema": {
               "generatedName": "connectionInvitationId",
+              "nameOverride": "ConnectionInvitation",
               "title": "ConnectionInvitation",
               "value": {
                 "description": "Message identifier",
@@ -36699,6 +36759,7 @@
             "key": "@type",
             "schema": {
               "generatedName": "connectionInvitationType",
+              "nameOverride": "ConnectionInvitation",
               "title": "ConnectionInvitation",
               "value": {
                 "description": "Message type",
@@ -36722,6 +36783,7 @@
             "key": "did",
             "schema": {
               "generatedName": "connectionInvitationDid",
+              "nameOverride": "ConnectionInvitation",
               "title": "ConnectionInvitation",
               "value": {
                 "description": "DID for connection invitation",
@@ -36745,6 +36807,7 @@
             "key": "imageUrl",
             "schema": {
               "generatedName": "connectionInvitationImageUrl",
+              "nameOverride": "ConnectionInvitation",
               "title": "ConnectionInvitation",
               "value": {
                 "generatedName": "ConnectionInvitationImageUrl",
@@ -36774,6 +36837,7 @@
             "key": "label",
             "schema": {
               "generatedName": "connectionInvitationLabel",
+              "nameOverride": "ConnectionInvitation",
               "title": "ConnectionInvitation",
               "value": {
                 "description": "Optional label for connection invitation",
@@ -36796,6 +36860,7 @@
             "key": "recipientKeys",
             "schema": {
               "generatedName": "connectionInvitationRecipientKeys",
+              "nameOverride": "ConnectionInvitation",
               "title": "ConnectionInvitation",
               "value": {
                 "description": "List of recipient keys",
@@ -36825,6 +36890,7 @@
             "key": "routingKeys",
             "schema": {
               "generatedName": "connectionInvitationRoutingKeys",
+              "nameOverride": "ConnectionInvitation",
               "title": "ConnectionInvitation",
               "value": {
                 "description": "List of routing keys",
@@ -36854,6 +36920,7 @@
             "key": "serviceEndpoint",
             "schema": {
               "generatedName": "connectionInvitationServiceEndpoint",
+              "nameOverride": "ConnectionInvitation",
               "title": "ConnectionInvitation",
               "value": {
                 "description": "Service endpoint at which to reach this agent",
@@ -36892,6 +36959,7 @@
             "key": "results",
             "schema": {
               "generatedName": "connectionListResults",
+              "nameOverride": "ConnectionList",
               "title": "ConnectionList",
               "value": {
                 "description": "List of connection records",
@@ -36935,6 +37003,7 @@
             "key": "results",
             "schema": {
               "generatedName": "connectionMetadataResults",
+              "nameOverride": "ConnectionMetadata",
               "title": "ConnectionMetadata",
               "value": {
                 "allOf": [],
@@ -37030,6 +37099,7 @@
             "key": "alias",
             "schema": {
               "generatedName": "connectionStaticRequestAlias",
+              "nameOverride": "ConnectionStaticRequest",
               "title": "ConnectionStaticRequest",
               "value": {
                 "description": "Alias to assign to this connection",
@@ -37051,6 +37121,7 @@
             "key": "my_did",
             "schema": {
               "generatedName": "connectionStaticRequestMyDid",
+              "nameOverride": "ConnectionStaticRequest",
               "title": "ConnectionStaticRequest",
               "value": {
                 "description": "Local DID",
@@ -37074,6 +37145,7 @@
             "key": "my_seed",
             "schema": {
               "generatedName": "connectionStaticRequestMySeed",
+              "nameOverride": "ConnectionStaticRequest",
               "title": "ConnectionStaticRequest",
               "value": {
                 "description": "Seed to use for the local DID",
@@ -37095,6 +37167,7 @@
             "key": "their_did",
             "schema": {
               "generatedName": "connectionStaticRequestTheirDid",
+              "nameOverride": "ConnectionStaticRequest",
               "title": "ConnectionStaticRequest",
               "value": {
                 "description": "Remote DID",
@@ -37118,6 +37191,7 @@
             "key": "their_endpoint",
             "schema": {
               "generatedName": "connectionStaticRequestTheirEndpoint",
+              "nameOverride": "ConnectionStaticRequest",
               "title": "ConnectionStaticRequest",
               "value": {
                 "description": "URL endpoint for other party",
@@ -37141,6 +37215,7 @@
             "key": "their_label",
             "schema": {
               "generatedName": "connectionStaticRequestTheirLabel",
+              "nameOverride": "ConnectionStaticRequest",
               "title": "ConnectionStaticRequest",
               "value": {
                 "description": "Other party's label for this connection",
@@ -37162,6 +37237,7 @@
             "key": "their_seed",
             "schema": {
               "generatedName": "connectionStaticRequestTheirSeed",
+              "nameOverride": "ConnectionStaticRequest",
               "title": "ConnectionStaticRequest",
               "value": {
                 "description": "Seed to use for the remote DID",
@@ -37183,6 +37259,7 @@
             "key": "their_verkey",
             "schema": {
               "generatedName": "connectionStaticRequestTheirVerkey",
+              "nameOverride": "ConnectionStaticRequest",
               "title": "ConnectionStaticRequest",
               "value": {
                 "description": "Remote verification key",
@@ -37338,6 +37415,7 @@
             "key": "fields",
             "schema": {
               "generatedName": "constraintsFields",
+              "nameOverride": "Constraints",
               "title": "Constraints",
               "value": {
                 "value": {
@@ -37366,6 +37444,7 @@
             "key": "is_holder",
             "schema": {
               "generatedName": "constraintsIsHolder",
+              "nameOverride": "Constraints",
               "title": "Constraints",
               "value": {
                 "value": {
@@ -37393,6 +37472,7 @@
             "key": "limit_disclosure",
             "schema": {
               "generatedName": "constraintsLimitDisclosure",
+              "nameOverride": "Constraints",
               "title": "Constraints",
               "value": {
                 "description": "LimitDisclosure",
@@ -37415,6 +37495,7 @@
             "key": "status_active",
             "schema": {
               "generatedName": "constraintsStatusActive",
+              "nameOverride": "Constraints",
               "title": "Constraints",
               "value": {
                 "generatedName": "ConstraintsStatusActive",
@@ -37454,6 +37535,7 @@
             "key": "status_revoked",
             "schema": {
               "generatedName": "constraintsStatusRevoked",
+              "nameOverride": "Constraints",
               "title": "Constraints",
               "value": {
                 "generatedName": "ConstraintsStatusRevoked",
@@ -37493,6 +37575,7 @@
             "key": "status_suspended",
             "schema": {
               "generatedName": "constraintsStatusSuspended",
+              "nameOverride": "Constraints",
               "title": "Constraints",
               "value": {
                 "generatedName": "ConstraintsStatusSuspended",
@@ -37532,6 +37615,7 @@
             "key": "subject_is_issuer",
             "schema": {
               "generatedName": "constraintsSubjectIsIssuer",
+              "nameOverride": "Constraints",
               "title": "Constraints",
               "value": {
                 "description": "SubjectIsIssuer",
@@ -37583,6 +37667,7 @@
             "key": "mediation_id",
             "schema": {
               "generatedName": "createInvitationRequestMediationId",
+              "nameOverride": "CreateInvitationRequest",
               "title": "CreateInvitationRequest",
               "value": {
                 "description": "Identifier for active mediation record to be used",
@@ -37606,6 +37691,7 @@
             "key": "metadata",
             "schema": {
               "generatedName": "createInvitationRequestMetadata",
+              "nameOverride": "CreateInvitationRequest",
               "title": "CreateInvitationRequest",
               "value": {
                 "allOf": [],
@@ -37632,6 +37718,7 @@
             "key": "my_label",
             "schema": {
               "generatedName": "createInvitationRequestMyLabel",
+              "nameOverride": "CreateInvitationRequest",
               "title": "CreateInvitationRequest",
               "value": {
                 "description": "Optional label for connection invitation",
@@ -37654,6 +37741,7 @@
             "key": "recipient_keys",
             "schema": {
               "generatedName": "createInvitationRequestRecipientKeys",
+              "nameOverride": "CreateInvitationRequest",
               "title": "CreateInvitationRequest",
               "value": {
                 "description": "List of recipient keys",
@@ -37683,6 +37771,7 @@
             "key": "routing_keys",
             "schema": {
               "generatedName": "createInvitationRequestRoutingKeys",
+              "nameOverride": "CreateInvitationRequest",
               "title": "CreateInvitationRequest",
               "value": {
                 "description": "List of routing keys",
@@ -37712,6 +37801,7 @@
             "key": "service_endpoint",
             "schema": {
               "generatedName": "createInvitationRequestServiceEndpoint",
+              "nameOverride": "CreateInvitationRequest",
               "title": "CreateInvitationRequest",
               "value": {
                 "description": "Connection endpoint",
@@ -37750,6 +37840,7 @@
             "key": "image_url",
             "schema": {
               "generatedName": "createWalletRequestImageUrl",
+              "nameOverride": "CreateWalletRequest",
               "title": "CreateWalletRequest",
               "value": {
                 "description": "Image url for this wallet. This image url is publicized            (self-attested) to other agents as part of forming a connection.",
@@ -37772,6 +37863,7 @@
             "key": "key_management_mode",
             "schema": {
               "generatedName": "createWalletRequestKeyManagementMode",
+              "nameOverride": "CreateWalletRequest",
               "title": "CreateWalletRequest",
               "value": {
                 "description": "Key management method to use for this wallet.",
@@ -37794,6 +37886,7 @@
             "key": "label",
             "schema": {
               "generatedName": "createWalletRequestLabel",
+              "nameOverride": "CreateWalletRequest",
               "title": "CreateWalletRequest",
               "value": {
                 "description": "Label for this wallet. This label is publicized            (self-attested) to other agents as part of forming a connection.",
@@ -37816,6 +37909,7 @@
             "key": "wallet_dispatch_type",
             "schema": {
               "generatedName": "createWalletRequestWalletDispatchType",
+              "nameOverride": "CreateWalletRequest",
               "title": "CreateWalletRequest",
               "value": {
                 "description": "Webhook target dispatch type for this wallet.             default - Dispatch only to webhooks associated with this wallet.             base - Dispatch only to webhooks associated with the base wallet.             both - Dispatch to both webhook targets.",
@@ -37855,6 +37949,7 @@
             "key": "wallet_key",
             "schema": {
               "generatedName": "createWalletRequestWalletKey",
+              "nameOverride": "CreateWalletRequest",
               "title": "CreateWalletRequest",
               "value": {
                 "description": "Master key used for key derivation.",
@@ -37877,6 +37972,7 @@
             "key": "wallet_key_derivation",
             "schema": {
               "generatedName": "createWalletRequestWalletKeyDerivation",
+              "nameOverride": "CreateWalletRequest",
               "title": "CreateWalletRequest",
               "value": {
                 "description": "Key derivation",
@@ -37916,6 +38012,7 @@
             "key": "wallet_name",
             "schema": {
               "generatedName": "createWalletRequestWalletName",
+              "nameOverride": "CreateWalletRequest",
               "title": "CreateWalletRequest",
               "value": {
                 "description": "Wallet name",
@@ -37938,6 +38035,7 @@
             "key": "wallet_type",
             "schema": {
               "generatedName": "createWalletRequestWalletType",
+              "nameOverride": "CreateWalletRequest",
               "title": "CreateWalletRequest",
               "value": {
                 "description": "Type of the wallet to create",
@@ -37977,6 +38075,7 @@
             "key": "wallet_webhook_urls",
             "schema": {
               "generatedName": "createWalletRequestWalletWebhookUrls",
+              "nameOverride": "CreateWalletRequest",
               "title": "CreateWalletRequest",
               "value": {
                 "description": "List of Webhook URLs associated with this subwallet",
@@ -38021,6 +38120,7 @@
             "key": "created_at",
             "schema": {
               "generatedName": "createWalletResponseCreatedAt",
+              "nameOverride": "CreateWalletResponse",
               "title": "CreateWalletResponse",
               "value": {
                 "description": "Time of record creation",
@@ -38072,6 +38172,7 @@
             "key": "settings",
             "schema": {
               "generatedName": "createWalletResponseSettings",
+              "nameOverride": "CreateWalletResponse",
               "title": "CreateWalletResponse",
               "value": {
                 "allOf": [],
@@ -38098,6 +38199,7 @@
             "key": "state",
             "schema": {
               "generatedName": "createWalletResponseState",
+              "nameOverride": "CreateWalletResponse",
               "title": "CreateWalletResponse",
               "value": {
                 "description": "Current record state",
@@ -38120,6 +38222,7 @@
             "key": "token",
             "schema": {
               "generatedName": "createWalletResponseToken",
+              "nameOverride": "CreateWalletResponse",
               "title": "CreateWalletResponse",
               "value": {
                 "description": "Authorization token to authenticate wallet requests",
@@ -38142,6 +38245,7 @@
             "key": "updated_at",
             "schema": {
               "generatedName": "createWalletResponseUpdatedAt",
+              "nameOverride": "CreateWalletResponse",
               "title": "CreateWalletResponse",
               "value": {
                 "description": "Time of last record update",
@@ -38197,6 +38301,7 @@
             "key": "wallet_key",
             "schema": {
               "generatedName": "createWalletTokenRequestWalletKey",
+              "nameOverride": "CreateWalletTokenRequest",
               "title": "CreateWalletTokenRequest",
               "value": {
                 "description": "Master key used for key derivation. Only required for             unamanged wallets.",
@@ -38235,6 +38340,7 @@
             "key": "token",
             "schema": {
               "generatedName": "createWalletTokenResponseToken",
+              "nameOverride": "CreateWalletTokenResponse",
               "title": "CreateWalletTokenResponse",
               "value": {
                 "description": "Authorization token to authenticate wallet requests",
@@ -38273,6 +38379,7 @@
             "key": "mime-type",
             "schema": {
               "generatedName": "credAttrSpecMimeType",
+              "nameOverride": "CredAttrSpec",
               "title": "CredAttrSpec",
               "value": {
                 "generatedName": "CredAttrSpecMimeType",
@@ -38349,6 +38456,7 @@
             "key": "primary",
             "schema": {
               "generatedName": "credDefValuePrimary",
+              "nameOverride": "CredDefValue",
               "title": "CredDefValue",
               "value": {
                 "generatedName": "CredDefValuePrimary",
@@ -38372,6 +38480,7 @@
             "key": "revocation",
             "schema": {
               "generatedName": "credDefValueRevocation",
+              "nameOverride": "CredDefValue",
               "title": "CredDefValue",
               "value": {
                 "generatedName": "CredDefValueRevocation",
@@ -38411,6 +38520,7 @@
             "key": "n",
             "schema": {
               "generatedName": "credDefValuePrimaryN",
+              "nameOverride": "CredDefValuePrimary",
               "title": "CredDefValuePrimary",
               "value": {
                 "schema": {
@@ -38435,6 +38545,7 @@
             "key": "r",
             "schema": {
               "generatedName": "credDefValuePrimaryR",
+              "nameOverride": "CredDefValuePrimary",
               "title": "CredDefValuePrimary",
               "value": {
                 "generatedName": "CredDefValuePrimaryR",
@@ -38458,6 +38569,7 @@
             "key": "rctxt",
             "schema": {
               "generatedName": "credDefValuePrimaryRctxt",
+              "nameOverride": "CredDefValuePrimary",
               "title": "CredDefValuePrimary",
               "value": {
                 "schema": {
@@ -38482,6 +38594,7 @@
             "key": "s",
             "schema": {
               "generatedName": "credDefValuePrimaryS",
+              "nameOverride": "CredDefValuePrimary",
               "title": "CredDefValuePrimary",
               "value": {
                 "schema": {
@@ -38506,6 +38619,7 @@
             "key": "z",
             "schema": {
               "generatedName": "credDefValuePrimaryZ",
+              "nameOverride": "CredDefValuePrimary",
               "title": "CredDefValuePrimary",
               "value": {
                 "schema": {
@@ -38546,6 +38660,7 @@
             "key": "g",
             "schema": {
               "generatedName": "credDefValueRevocationG",
+              "nameOverride": "CredDefValueRevocation",
               "title": "CredDefValueRevocation",
               "value": {
                 "schema": {
@@ -38569,6 +38684,7 @@
             "key": "g_dash",
             "schema": {
               "generatedName": "credDefValueRevocationGDash",
+              "nameOverride": "CredDefValueRevocation",
               "title": "CredDefValueRevocation",
               "value": {
                 "schema": {
@@ -38591,6 +38707,7 @@
             "key": "h",
             "schema": {
               "generatedName": "credDefValueRevocationH",
+              "nameOverride": "CredDefValueRevocation",
               "title": "CredDefValueRevocation",
               "value": {
                 "schema": {
@@ -38614,6 +38731,7 @@
             "key": "h0",
             "schema": {
               "generatedName": "credDefValueRevocationH0",
+              "nameOverride": "CredDefValueRevocation",
               "title": "CredDefValueRevocation",
               "value": {
                 "schema": {
@@ -38636,6 +38754,7 @@
             "key": "h1",
             "schema": {
               "generatedName": "credDefValueRevocationH1",
+              "nameOverride": "CredDefValueRevocation",
               "title": "CredDefValueRevocation",
               "value": {
                 "schema": {
@@ -38658,6 +38777,7 @@
             "key": "h2",
             "schema": {
               "generatedName": "credDefValueRevocationH2",
+              "nameOverride": "CredDefValueRevocation",
               "title": "CredDefValueRevocation",
               "value": {
                 "schema": {
@@ -38680,6 +38800,7 @@
             "key": "h_cap",
             "schema": {
               "generatedName": "credDefValueRevocationHCap",
+              "nameOverride": "CredDefValueRevocation",
               "title": "CredDefValueRevocation",
               "value": {
                 "schema": {
@@ -38702,6 +38823,7 @@
             "key": "htilde",
             "schema": {
               "generatedName": "credDefValueRevocationHtilde",
+              "nameOverride": "CredDefValueRevocation",
               "title": "CredDefValueRevocation",
               "value": {
                 "schema": {
@@ -38725,6 +38847,7 @@
             "key": "pk",
             "schema": {
               "generatedName": "credDefValueRevocationPk",
+              "nameOverride": "CredDefValueRevocation",
               "title": "CredDefValueRevocation",
               "value": {
                 "schema": {
@@ -38748,6 +38871,7 @@
             "key": "u",
             "schema": {
               "generatedName": "credDefValueRevocationU",
+              "nameOverride": "CredDefValueRevocation",
               "title": "CredDefValueRevocation",
               "value": {
                 "schema": {
@@ -38771,6 +38895,7 @@
             "key": "y",
             "schema": {
               "generatedName": "credDefValueRevocationY",
+              "nameOverride": "CredDefValueRevocation",
               "title": "CredDefValueRevocation",
               "value": {
                 "schema": {
@@ -38810,6 +38935,7 @@
             "key": "results",
             "schema": {
               "generatedName": "credInfoListResults",
+              "nameOverride": "CredInfoList",
               "title": "CredInfoList",
               "value": {
                 "value": {
@@ -38852,6 +38978,7 @@
             "key": "rev_reg_delta",
             "schema": {
               "generatedName": "credRevIndyRecordsResultRevRegDelta",
+              "nameOverride": "CredRevIndyRecordsResult",
               "title": "CredRevIndyRecordsResult",
               "value": {
                 "allOf": [],
@@ -38894,6 +39021,7 @@
             "key": "results",
             "schema": {
               "generatedName": "credRevRecordDetailsResultResults",
+              "nameOverride": "CredRevRecordDetailsResult",
               "title": "CredRevRecordDetailsResult",
               "value": {
                 "value": {
@@ -38936,6 +39064,7 @@
             "key": "result",
             "schema": {
               "generatedName": "credRevRecordResultResult",
+              "nameOverride": "CredRevRecordResult",
               "title": "CredRevRecordResult",
               "value": {
                 "generatedName": "CredRevRecordResultResult",
@@ -38975,6 +39104,7 @@
             "key": "revoked",
             "schema": {
               "generatedName": "credRevokedResultRevoked",
+              "nameOverride": "CredRevokedResult",
               "title": "CredRevokedResult",
               "value": {
                 "description": "Whether credential is revoked on the ledger",
@@ -39068,6 +39198,7 @@
             "key": "expirationDate",
             "schema": {
               "generatedName": "credentialExpirationDate",
+              "nameOverride": "Credential",
               "title": "Credential",
               "value": {
                 "description": "The expiration date",
@@ -39093,6 +39224,7 @@
             "key": "id",
             "schema": {
               "generatedName": "credentialId",
+              "nameOverride": "Credential",
               "title": "Credential",
               "value": {
                 "schema": {
@@ -39163,6 +39295,7 @@
             "key": "proof",
             "schema": {
               "generatedName": "credentialProof",
+              "nameOverride": "Credential",
               "title": "Credential",
               "value": {
                 "generatedName": "CredentialProof",
@@ -39224,6 +39357,7 @@
             "key": "id",
             "schema": {
               "generatedName": "credentialDefinitionId",
+              "nameOverride": "CredentialDefinition",
               "title": "CredentialDefinition",
               "value": {
                 "description": "Credential definition identifier",
@@ -39247,6 +39381,7 @@
             "key": "schemaId",
             "schema": {
               "generatedName": "credentialDefinitionSchemaId",
+              "nameOverride": "CredentialDefinition",
               "title": "CredentialDefinition",
               "value": {
                 "description": "Schema identifier within credential definition identifier",
@@ -39269,6 +39404,7 @@
             "key": "tag",
             "schema": {
               "generatedName": "credentialDefinitionTag",
+              "nameOverride": "CredentialDefinition",
               "title": "CredentialDefinition",
               "value": {
                 "description": "Tag within credential definition identifier",
@@ -39291,6 +39427,7 @@
             "key": "type",
             "schema": {
               "generatedName": "credentialDefinitionType",
+              "nameOverride": "CredentialDefinition",
               "title": "CredentialDefinition",
               "value": {
                 "description": "Signature type: CL for Camenisch-Lysyanskaya",
@@ -39322,6 +39459,7 @@
             "key": "value",
             "schema": {
               "generatedName": "credentialDefinitionValue",
+              "nameOverride": "CredentialDefinition",
               "title": "CredentialDefinition",
               "value": {
                 "generatedName": "CredentialDefinitionValue",
@@ -39345,6 +39483,7 @@
             "key": "ver",
             "schema": {
               "generatedName": "credentialDefinitionVer",
+              "nameOverride": "CredentialDefinition",
               "title": "CredentialDefinition",
               "value": {
                 "description": "Node protocol version",
@@ -39384,6 +39523,7 @@
             "key": "credential_definition",
             "schema": {
               "generatedName": "credentialDefinitionGetResultCredentialDefinition",
+              "nameOverride": "CredentialDefinitionGetResult",
               "title": "CredentialDefinitionGetResult",
               "value": {
                 "generatedName": "CredentialDefinitionGetResultCredentialDefinition",
@@ -39423,6 +39563,7 @@
             "key": "revocation_registry_size",
             "schema": {
               "generatedName": "credentialDefinitionSendRequestRevocationRegistrySize",
+              "nameOverride": "CredentialDefinitionSendRequest",
               "title": "CredentialDefinitionSendRequest",
               "value": {
                 "description": "Revocation registry size",
@@ -39447,6 +39588,7 @@
             "key": "schema_id",
             "schema": {
               "generatedName": "credentialDefinitionSendRequestSchemaId",
+              "nameOverride": "CredentialDefinitionSendRequest",
               "title": "CredentialDefinitionSendRequest",
               "value": {
                 "description": "Schema identifier",
@@ -39470,6 +39612,7 @@
             "key": "support_revocation",
             "schema": {
               "generatedName": "credentialDefinitionSendRequestSupportRevocation",
+              "nameOverride": "CredentialDefinitionSendRequest",
               "title": "CredentialDefinitionSendRequest",
               "value": {
                 "description": "Revocation supported flag",
@@ -39491,6 +39634,7 @@
             "key": "tag",
             "schema": {
               "generatedName": "credentialDefinitionSendRequestTag",
+              "nameOverride": "CredentialDefinitionSendRequest",
               "title": "CredentialDefinitionSendRequest",
               "value": {
                 "description": "Credential definition identifier tag",
@@ -39529,6 +39673,7 @@
             "key": "credential_definition_id",
             "schema": {
               "generatedName": "credentialDefinitionSendResultCredentialDefinitionId",
+              "nameOverride": "CredentialDefinitionSendResult",
               "title": "CredentialDefinitionSendResult",
               "value": {
                 "description": "Credential definition identifier",
@@ -39568,6 +39713,7 @@
             "key": "credential_definition_ids",
             "schema": {
               "generatedName": "credentialDefinitionsCreatedResultCredentialDefinitionIds",
+              "nameOverride": "CredentialDefinitionsCreatedResult",
               "title": "CredentialDefinitionsCreatedResult",
               "value": {
                 "value": {
@@ -39612,6 +39758,7 @@
             "key": "@id",
             "schema": {
               "generatedName": "credentialOfferId",
+              "nameOverride": "CredentialOffer",
               "title": "CredentialOffer",
               "value": {
                 "description": "Message identifier",
@@ -39635,6 +39782,7 @@
             "key": "@type",
             "schema": {
               "generatedName": "credentialOfferType",
+              "nameOverride": "CredentialOffer",
               "title": "CredentialOffer",
               "value": {
                 "description": "Message type",
@@ -39659,6 +39807,7 @@
             "key": "comment",
             "schema": {
               "generatedName": "credentialOfferComment",
+              "nameOverride": "CredentialOffer",
               "title": "CredentialOffer",
               "value": {
                 "generatedName": "CredentialOfferComment",
@@ -39690,6 +39839,7 @@
             "key": "credential_preview",
             "schema": {
               "generatedName": "credentialOfferCredentialPreview",
+              "nameOverride": "CredentialOffer",
               "title": "CredentialOffer",
               "value": {
                 "generatedName": "CredentialOfferCredentialPreview",
@@ -39750,6 +39900,7 @@
             "key": "@type",
             "schema": {
               "generatedName": "credentialPreviewType",
+              "nameOverride": "CredentialPreview",
               "title": "CredentialPreview",
               "value": {
                 "description": "Message type identifier",
@@ -39808,6 +39959,7 @@
             "key": "@id",
             "schema": {
               "generatedName": "credentialProposalId",
+              "nameOverride": "CredentialProposal",
               "title": "CredentialProposal",
               "value": {
                 "description": "Message identifier",
@@ -39831,6 +39983,7 @@
             "key": "@type",
             "schema": {
               "generatedName": "credentialProposalType",
+              "nameOverride": "CredentialProposal",
               "title": "CredentialProposal",
               "value": {
                 "description": "Message type",
@@ -39855,6 +40008,7 @@
             "key": "comment",
             "schema": {
               "generatedName": "credentialProposalComment",
+              "nameOverride": "CredentialProposal",
               "title": "CredentialProposal",
               "value": {
                 "generatedName": "CredentialProposalComment",
@@ -39886,6 +40040,7 @@
             "key": "cred_def_id",
             "schema": {
               "generatedName": "credentialProposalCredDefId",
+              "nameOverride": "CredentialProposal",
               "title": "CredentialProposal",
               "value": {
                 "schema": {
@@ -39909,6 +40064,7 @@
             "key": "credential_proposal",
             "schema": {
               "generatedName": "credentialProposalCredentialProposal",
+              "nameOverride": "CredentialProposal",
               "title": "CredentialProposal",
               "value": {
                 "generatedName": "CredentialProposalCredentialProposal",
@@ -39932,6 +40088,7 @@
             "key": "issuer_did",
             "schema": {
               "generatedName": "credentialProposalIssuerDid",
+              "nameOverride": "CredentialProposal",
               "title": "CredentialProposal",
               "value": {
                 "schema": {
@@ -39955,6 +40112,7 @@
             "key": "schema_id",
             "schema": {
               "generatedName": "credentialProposalSchemaId",
+              "nameOverride": "CredentialProposal",
               "title": "CredentialProposal",
               "value": {
                 "schema": {
@@ -39978,6 +40136,7 @@
             "key": "schema_issuer_did",
             "schema": {
               "generatedName": "credentialProposalSchemaIssuerDid",
+              "nameOverride": "CredentialProposal",
               "title": "CredentialProposal",
               "value": {
                 "schema": {
@@ -40001,6 +40160,7 @@
             "key": "schema_name",
             "schema": {
               "generatedName": "credentialProposalSchemaName",
+              "nameOverride": "CredentialProposal",
               "title": "CredentialProposal",
               "value": {
                 "schema": {
@@ -40022,6 +40182,7 @@
             "key": "schema_version",
             "schema": {
               "generatedName": "credentialProposalSchemaVersion",
+              "nameOverride": "CredentialProposal",
               "title": "CredentialProposal",
               "value": {
                 "schema": {
@@ -40095,6 +40256,7 @@
             "key": "did",
             "schema": {
               "generatedName": "didDid",
+              "nameOverride": "DID",
               "title": "DID",
               "value": {
                 "description": "DID of interest",
@@ -40118,6 +40280,7 @@
             "key": "key_type",
             "schema": {
               "generatedName": "didKeyType",
+              "nameOverride": "DID",
               "title": "DID",
               "value": {
                 "description": "Key type associated with the DID",
@@ -40152,6 +40315,7 @@
             "key": "method",
             "schema": {
               "generatedName": "didMethod",
+              "nameOverride": "DID",
               "title": "DID",
               "value": {
                 "description": "Did method associated with the DID",
@@ -40174,6 +40338,7 @@
             "key": "posture",
             "schema": {
               "generatedName": "didPosture",
+              "nameOverride": "DID",
               "title": "DID",
               "value": {
                 "description": "Whether DID is current public DID, posted to ledger but not current public DID, or local to the wallet",
@@ -40213,6 +40378,7 @@
             "key": "verkey",
             "schema": {
               "generatedName": "didVerkey",
+              "nameOverride": "DID",
               "title": "DID",
               "value": {
                 "description": "Public verification key",
@@ -40252,6 +40418,7 @@
             "key": "method",
             "schema": {
               "generatedName": "didCreateMethod",
+              "nameOverride": "DIDCreate",
               "title": "DIDCreate",
               "value": {
                 "description": "Method for the requested DID.Supported methods are 'key', 'sov', and any other registered method.",
@@ -40274,6 +40441,7 @@
             "key": "options",
             "schema": {
               "generatedName": "didCreateOptions",
+              "nameOverride": "DIDCreate",
               "title": "DIDCreate",
               "value": {
                 "generatedName": "DidCreateOptions",
@@ -40297,6 +40465,7 @@
             "key": "seed",
             "schema": {
               "generatedName": "didCreateSeed",
+              "nameOverride": "DIDCreate",
               "title": "DIDCreate",
               "value": {
                 "description": "Optional seed to use for DID, Must beenabled in configuration before use.",
@@ -40335,6 +40504,7 @@
             "key": "did",
             "schema": {
               "generatedName": "didCreateOptionsDid",
+              "nameOverride": "DIDCreateOptions",
               "title": "DIDCreateOptions",
               "value": {
                 "description": "Specify final value of the did (including did:<method>: prefix)if the method supports or requires so.",
@@ -40422,6 +40592,7 @@
             "key": "endpoint",
             "schema": {
               "generatedName": "didEndpointEndpoint",
+              "nameOverride": "DIDEndpoint",
               "title": "DIDEndpoint",
               "value": {
                 "description": "Endpoint to set (omit to delete)",
@@ -40478,6 +40649,7 @@
             "key": "endpoint",
             "schema": {
               "generatedName": "didEndpointWithTypeEndpoint",
+              "nameOverride": "DIDEndpointWithType",
               "title": "DIDEndpointWithType",
               "value": {
                 "description": "Endpoint to set (omit to delete)",
@@ -40501,6 +40673,7 @@
             "key": "endpoint_type",
             "schema": {
               "generatedName": "didEndpointWithTypeEndpointType",
+              "nameOverride": "DIDEndpointWithType",
               "title": "DIDEndpointWithType",
               "value": {
                 "description": "Endpoint type to set (default 'Endpoint'); affects only public or posted DIDs",
@@ -40556,6 +40729,7 @@
             "key": "results",
             "schema": {
               "generatedName": "didListResults",
+              "nameOverride": "DIDList",
               "title": "DIDList",
               "value": {
                 "description": "DID list",
@@ -40599,6 +40773,7 @@
             "key": "result",
             "schema": {
               "generatedName": "didResultResult",
+              "nameOverride": "DIDResult",
               "title": "DIDResult",
               "value": {
                 "generatedName": "DidResultResult",
@@ -40638,6 +40813,7 @@
             "key": "@id",
             "schema": {
               "generatedName": "didxRequestId",
+              "nameOverride": "DIDXRequest",
               "title": "DIDXRequest",
               "value": {
                 "description": "Message identifier",
@@ -40660,6 +40836,7 @@
             "key": "@type",
             "schema": {
               "generatedName": "didxRequestType",
+              "nameOverride": "DIDXRequest",
               "title": "DIDXRequest",
               "value": {
                 "description": "Message type",
@@ -40683,6 +40860,7 @@
             "key": "did",
             "schema": {
               "generatedName": "didxRequestDid",
+              "nameOverride": "DIDXRequest",
               "title": "DIDXRequest",
               "value": {
                 "description": "DID of exchange",
@@ -40706,6 +40884,7 @@
             "key": "did_doc~attach",
             "schema": {
               "generatedName": "didxRequestDidDocAttach",
+              "nameOverride": "DIDXRequest",
               "title": "DIDXRequest",
               "value": {
                 "generatedName": "DidxRequestDidDocAttach",
@@ -40761,6 +40940,7 @@
             "key": "filter",
             "schema": {
               "generatedName": "difFieldFilter",
+              "nameOverride": "DIFField",
               "title": "DIFField",
               "value": {
                 "generatedName": "DifFieldFilter",
@@ -40784,6 +40964,7 @@
             "key": "id",
             "schema": {
               "generatedName": "difFieldId",
+              "nameOverride": "DIFField",
               "title": "DIFField",
               "value": {
                 "description": "ID",
@@ -40807,6 +40988,7 @@
             "key": "path",
             "schema": {
               "generatedName": "difFieldPath",
+              "nameOverride": "DIFField",
               "title": "DIFField",
               "value": {
                 "value": {
@@ -40835,6 +41017,7 @@
             "key": "predicate",
             "schema": {
               "generatedName": "difFieldPredicate",
+              "nameOverride": "DIFField",
               "title": "DIFField",
               "value": {
                 "description": "Preference",
@@ -40871,6 +41054,7 @@
             "key": "purpose",
             "schema": {
               "generatedName": "difFieldPurpose",
+              "nameOverride": "DIFField",
               "title": "DIFField",
               "value": {
                 "description": "Purpose",
@@ -40910,6 +41094,7 @@
             "key": "directive",
             "schema": {
               "generatedName": "difHolderDirective",
+              "nameOverride": "DIFHolder",
               "title": "DIFHolder",
               "value": {
                 "description": "Preference",
@@ -40946,6 +41131,7 @@
             "key": "field_id",
             "schema": {
               "generatedName": "difHolderFieldId",
+              "nameOverride": "DIFHolder",
               "title": "DIFHolder",
               "value": {
                 "value": {
@@ -40991,6 +41177,7 @@
             "key": "challenge",
             "schema": {
               "generatedName": "difOptionsChallenge",
+              "nameOverride": "DIFOptions",
               "title": "DIFOptions",
               "value": {
                 "description": "Challenge protect against replay attack",
@@ -41016,6 +41203,7 @@
             "key": "domain",
             "schema": {
               "generatedName": "difOptionsDomain",
+              "nameOverride": "DIFOptions",
               "title": "DIFOptions",
               "value": {
                 "description": "Domain protect against replay attack",
@@ -41056,6 +41244,7 @@
             "key": "issuer_id",
             "schema": {
               "generatedName": "difPresSpecIssuerId",
+              "nameOverride": "DIFPresSpec",
               "title": "DIFPresSpec",
               "value": {
                 "description": "Issuer identifier to sign the presentation, if different from current public DID",
@@ -41078,6 +41267,7 @@
             "key": "presentation_definition",
             "schema": {
               "generatedName": "difPresSpecPresentationDefinition",
+              "nameOverride": "DIFPresSpec",
               "title": "DIFPresSpec",
               "value": {
                 "generatedName": "DifPresSpecPresentationDefinition",
@@ -41101,6 +41291,7 @@
             "key": "record_ids",
             "schema": {
               "generatedName": "difPresSpecRecordIds",
+              "nameOverride": "DIFPresSpec",
               "title": "DIFPresSpec",
               "value": {
                 "allOf": [],
@@ -41128,6 +41319,7 @@
             "key": "reveal_doc",
             "schema": {
               "generatedName": "difPresSpecRevealDoc",
+              "nameOverride": "DIFPresSpec",
               "title": "DIFPresSpec",
               "value": {
                 "allOf": [],
@@ -41171,6 +41363,7 @@
             "key": "input_descriptors",
             "schema": {
               "generatedName": "difProofProposalInputDescriptors",
+              "nameOverride": "DIFProofProposal",
               "title": "DIFProofProposal",
               "value": {
                 "value": {
@@ -41198,6 +41391,7 @@
             "key": "options",
             "schema": {
               "generatedName": "difProofProposalOptions",
+              "nameOverride": "DIFProofProposal",
               "title": "DIFProofProposal",
               "value": {
                 "generatedName": "DifProofProposalOptions",
@@ -41237,6 +41431,7 @@
             "key": "options",
             "schema": {
               "generatedName": "difProofRequestOptions",
+              "nameOverride": "DIFProofRequest",
               "title": "DIFProofRequest",
               "value": {
                 "generatedName": "DifProofRequestOptions",
@@ -41324,6 +41519,7 @@
             "key": "@id",
             "schema": {
               "generatedName": "discloseId",
+              "nameOverride": "Disclose",
               "title": "Disclose",
               "value": {
                 "description": "Message identifier",
@@ -41347,6 +41543,7 @@
             "key": "@type",
             "schema": {
               "generatedName": "discloseType",
+              "nameOverride": "Disclose",
               "title": "Disclose",
               "value": {
                 "description": "Message type",
@@ -41410,6 +41607,7 @@
             "key": "@id",
             "schema": {
               "generatedName": "disclosuresId",
+              "nameOverride": "Disclosures",
               "title": "Disclosures",
               "value": {
                 "description": "Message identifier",
@@ -41433,6 +41631,7 @@
             "key": "@type",
             "schema": {
               "generatedName": "disclosuresType",
+              "nameOverride": "Disclosures",
               "title": "Disclosures",
               "value": {
                 "description": "Message type",
@@ -41572,6 +41771,7 @@
             "key": "endorser_name",
             "schema": {
               "generatedName": "endorserInfoEndorserName",
+              "nameOverride": "EndorserInfo",
               "title": "EndorserInfo",
               "value": {
                 "description": "Endorser Name",
@@ -41609,6 +41809,7 @@
             "key": "my_endpoint",
             "schema": {
               "generatedName": "endpointsResultMyEndpoint",
+              "nameOverride": "EndpointsResult",
               "title": "EndpointsResult",
               "value": {
                 "description": "My endpoint",
@@ -41632,6 +41833,7 @@
             "key": "their_endpoint",
             "schema": {
               "generatedName": "endpointsResultTheirEndpoint",
+              "nameOverride": "EndpointsResult",
               "title": "EndpointsResult",
               "value": {
                 "description": "Their endpoint",
@@ -41671,6 +41873,7 @@
             "key": "const",
             "schema": {
               "generatedName": "filterConst",
+              "nameOverride": "Filter",
               "title": "Filter",
               "value": {
                 "description": "Const",
@@ -41703,6 +41906,7 @@
             "key": "enum",
             "schema": {
               "generatedName": "filterEnum",
+              "nameOverride": "Filter",
               "title": "Filter",
               "value": {
                 "value": {
@@ -41740,6 +41944,7 @@
             "key": "exclusiveMaximum",
             "schema": {
               "generatedName": "filterExclusiveMaximum",
+              "nameOverride": "Filter",
               "title": "Filter",
               "value": {
                 "description": "ExclusiveMaximum",
@@ -41772,6 +41977,7 @@
             "key": "exclusiveMinimum",
             "schema": {
               "generatedName": "filterExclusiveMinimum",
+              "nameOverride": "Filter",
               "title": "Filter",
               "value": {
                 "description": "ExclusiveMinimum",
@@ -41804,6 +42010,7 @@
             "key": "format",
             "schema": {
               "generatedName": "filterFormat",
+              "nameOverride": "Filter",
               "title": "Filter",
               "value": {
                 "description": "Format",
@@ -41827,6 +42034,7 @@
             "key": "maxLength",
             "schema": {
               "generatedName": "filterMaxLength",
+              "nameOverride": "Filter",
               "title": "Filter",
               "value": {
                 "description": "Max Length",
@@ -41851,6 +42059,7 @@
             "key": "maximum",
             "schema": {
               "generatedName": "filterMaximum",
+              "nameOverride": "Filter",
               "title": "Filter",
               "value": {
                 "description": "Maximum",
@@ -41883,6 +42092,7 @@
             "key": "minLength",
             "schema": {
               "generatedName": "filterMinLength",
+              "nameOverride": "Filter",
               "title": "Filter",
               "value": {
                 "description": "Min Length",
@@ -41907,6 +42117,7 @@
             "key": "minimum",
             "schema": {
               "generatedName": "filterMinimum",
+              "nameOverride": "Filter",
               "title": "Filter",
               "value": {
                 "description": "Minimum",
@@ -41939,6 +42150,7 @@
             "key": "not",
             "schema": {
               "generatedName": "filterNot",
+              "nameOverride": "Filter",
               "title": "Filter",
               "value": {
                 "description": "Not",
@@ -41963,6 +42175,7 @@
             "key": "pattern",
             "schema": {
               "generatedName": "filterPattern",
+              "nameOverride": "Filter",
               "title": "Filter",
               "value": {
                 "description": "Pattern",
@@ -41986,6 +42199,7 @@
             "key": "type",
             "schema": {
               "generatedName": "filterType",
+              "nameOverride": "Filter",
               "title": "Filter",
               "value": {
                 "description": "Type",
@@ -42025,6 +42239,7 @@
             "key": "master_secret",
             "schema": {
               "generatedName": "generatedMasterSecret",
+              "nameOverride": "Generated",
               "title": "Generated",
               "value": {
                 "schema": {
@@ -42048,6 +42263,7 @@
             "key": "number",
             "schema": {
               "generatedName": "generatedNumber",
+              "nameOverride": "Generated",
               "title": "Generated",
               "value": {
                 "schema": {
@@ -42072,6 +42288,7 @@
             "key": "remainder",
             "schema": {
               "generatedName": "generatedRemainder",
+              "nameOverride": "Generated",
               "title": "Generated",
               "value": {
                 "schema": {
@@ -42112,6 +42329,7 @@
             "key": "endpoint",
             "schema": {
               "generatedName": "getDidEndpointResponseEndpoint",
+              "nameOverride": "GetDIDEndpointResponse",
               "title": "GetDIDEndpointResponse",
               "value": {
                 "generatedName": "GetDidEndpointResponseEndpoint",
@@ -42157,6 +42375,7 @@
             "key": "verkey",
             "schema": {
               "generatedName": "getDidVerkeyResponseVerkey",
+              "nameOverride": "GetDIDVerkeyResponse",
               "title": "GetDIDVerkeyResponse",
               "value": {
                 "generatedName": "GetDidVerkeyResponseVerkey",
@@ -42202,6 +42421,7 @@
             "key": "role",
             "schema": {
               "generatedName": "getNymRoleResponseRole",
+              "nameOverride": "GetNymRoleResponse",
               "title": "GetNymRoleResponse",
               "value": {
                 "description": "Ledger role",
@@ -42429,6 +42649,7 @@
             "key": "attrs",
             "schema": {
               "generatedName": "indyCredInfoAttrs",
+              "nameOverride": "IndyCredInfo",
               "title": "IndyCredInfo",
               "value": {
                 "description": "Attribute names and value",
@@ -42464,6 +42685,7 @@
             "key": "cred_def_id",
             "schema": {
               "generatedName": "indyCredInfoCredDefId",
+              "nameOverride": "IndyCredInfo",
               "title": "IndyCredInfo",
               "value": {
                 "description": "Credential definition identifier",
@@ -42487,6 +42709,7 @@
             "key": "cred_rev_id",
             "schema": {
               "generatedName": "indyCredInfoCredRevId",
+              "nameOverride": "IndyCredInfo",
               "title": "IndyCredInfo",
               "value": {
                 "generatedName": "IndyCredInfoCredRevId",
@@ -42516,6 +42739,7 @@
             "key": "referent",
             "schema": {
               "generatedName": "indyCredInfoReferent",
+              "nameOverride": "IndyCredInfo",
               "title": "IndyCredInfo",
               "value": {
                 "description": "Wallet referent",
@@ -42538,6 +42762,7 @@
             "key": "rev_reg_id",
             "schema": {
               "generatedName": "indyCredInfoRevRegId",
+              "nameOverride": "IndyCredInfo",
               "title": "IndyCredInfo",
               "value": {
                 "generatedName": "IndyCredInfoRevRegId",
@@ -42567,6 +42792,7 @@
             "key": "schema_id",
             "schema": {
               "generatedName": "indyCredInfoSchemaId",
+              "nameOverride": "IndyCredInfo",
               "title": "IndyCredInfo",
               "value": {
                 "description": "Schema identifier",
@@ -42606,6 +42832,7 @@
             "key": "cred_info",
             "schema": {
               "generatedName": "indyCredPrecisCredInfo",
+              "nameOverride": "IndyCredPrecis",
               "title": "IndyCredPrecis",
               "value": {
                 "generatedName": "IndyCredPrecisCredInfo",
@@ -42629,6 +42856,7 @@
             "key": "interval",
             "schema": {
               "generatedName": "indyCredPrecisInterval",
+              "nameOverride": "IndyCredPrecis",
               "title": "IndyCredPrecis",
               "value": {
                 "generatedName": "IndyCredPrecisInterval",
@@ -42652,6 +42880,7 @@
             "key": "presentation_referents",
             "schema": {
               "generatedName": "indyCredPrecisPresentationReferents",
+              "nameOverride": "IndyCredPrecis",
               "title": "IndyCredPrecis",
               "value": {
                 "value": {
@@ -42826,6 +43055,7 @@
             "key": "rev_reg",
             "schema": {
               "generatedName": "indyCredentialRevReg",
+              "nameOverride": "IndyCredential",
               "title": "IndyCredential",
               "value": {
                 "generatedName": "IndyCredentialRevReg",
@@ -42860,6 +43090,7 @@
             "key": "rev_reg_id",
             "schema": {
               "generatedName": "indyCredentialRevRegId",
+              "nameOverride": "IndyCredential",
               "title": "IndyCredential",
               "value": {
                 "generatedName": "IndyCredentialRevRegId",
@@ -42983,6 +43214,7 @@
             "key": "witness",
             "schema": {
               "generatedName": "indyCredentialWitness",
+              "nameOverride": "IndyCredential",
               "title": "IndyCredential",
               "value": {
                 "generatedName": "IndyCredentialWitness",
@@ -43035,6 +43267,7 @@
             "key": "a_prime",
             "schema": {
               "generatedName": "indyEqProofAPrime",
+              "nameOverride": "IndyEQProof",
               "title": "IndyEQProof",
               "value": {
                 "schema": {
@@ -43058,6 +43291,7 @@
             "key": "e",
             "schema": {
               "generatedName": "indyEqProofE",
+              "nameOverride": "IndyEQProof",
               "title": "IndyEQProof",
               "value": {
                 "schema": {
@@ -43082,6 +43316,7 @@
             "key": "m",
             "schema": {
               "generatedName": "indyEqProofM",
+              "nameOverride": "IndyEQProof",
               "title": "IndyEQProof",
               "value": {
                 "key": {
@@ -43119,6 +43354,7 @@
             "key": "m2",
             "schema": {
               "generatedName": "indyEqProofM2",
+              "nameOverride": "IndyEQProof",
               "title": "IndyEQProof",
               "value": {
                 "schema": {
@@ -43142,6 +43378,7 @@
             "key": "revealed_attrs",
             "schema": {
               "generatedName": "indyEqProofRevealedAttrs",
+              "nameOverride": "IndyEQProof",
               "title": "IndyEQProof",
               "value": {
                 "key": {
@@ -43178,6 +43415,7 @@
             "key": "v",
             "schema": {
               "generatedName": "indyEqProofV",
+              "nameOverride": "IndyEQProof",
               "title": "IndyEQProof",
               "value": {
                 "schema": {
@@ -43218,6 +43456,7 @@
             "key": "alpha",
             "schema": {
               "generatedName": "indyGeProofAlpha",
+              "nameOverride": "IndyGEProof",
               "title": "IndyGEProof",
               "value": {
                 "schema": {
@@ -43242,6 +43481,7 @@
             "key": "mj",
             "schema": {
               "generatedName": "indyGeProofMj",
+              "nameOverride": "IndyGEProof",
               "title": "IndyGEProof",
               "value": {
                 "schema": {
@@ -43266,6 +43506,7 @@
             "key": "predicate",
             "schema": {
               "generatedName": "indyGeProofPredicate",
+              "nameOverride": "IndyGEProof",
               "title": "IndyGEProof",
               "value": {
                 "generatedName": "IndyGeProofPredicate",
@@ -43289,6 +43530,7 @@
             "key": "r",
             "schema": {
               "generatedName": "indyGeProofR",
+              "nameOverride": "IndyGEProof",
               "title": "IndyGEProof",
               "value": {
                 "key": {
@@ -43326,6 +43568,7 @@
             "key": "t",
             "schema": {
               "generatedName": "indyGeProofT",
+              "nameOverride": "IndyGEProof",
               "title": "IndyGEProof",
               "value": {
                 "key": {
@@ -43363,6 +43606,7 @@
             "key": "u",
             "schema": {
               "generatedName": "indyGeProofU",
+              "nameOverride": "IndyGEProof",
               "title": "IndyGEProof",
               "value": {
                 "key": {
@@ -43416,6 +43660,7 @@
             "key": "attr_name",
             "schema": {
               "generatedName": "indyGeProofPredAttrName",
+              "nameOverride": "IndyGEProofPred",
               "title": "IndyGEProofPred",
               "value": {
                 "description": "Attribute name, indy-canonicalized",
@@ -43438,6 +43683,7 @@
             "key": "p_type",
             "schema": {
               "generatedName": "indyGeProofPredPType",
+              "nameOverride": "IndyGEProofPred",
               "title": "IndyGEProofPred",
               "value": {
                 "description": "Predicate type",
@@ -43483,6 +43729,7 @@
             "key": "value",
             "schema": {
               "generatedName": "indyGeProofPredValue",
+              "nameOverride": "IndyGEProofPred",
               "title": "IndyGEProofPred",
               "value": {
                 "description": "Predicate threshold value",
@@ -43603,6 +43850,7 @@
             "key": "c_list",
             "schema": {
               "generatedName": "indyNonRevocProofCList",
+              "nameOverride": "IndyNonRevocProof",
               "title": "IndyNonRevocProof",
               "value": {
                 "key": {
@@ -43637,6 +43885,7 @@
             "key": "x_list",
             "schema": {
               "generatedName": "indyNonRevocProofXList",
+              "nameOverride": "IndyNonRevocProof",
               "title": "IndyNonRevocProof",
               "value": {
                 "key": {
@@ -43687,6 +43936,7 @@
             "key": "from",
             "schema": {
               "generatedName": "indyNonRevocationIntervalFrom",
+              "nameOverride": "IndyNonRevocationInterval",
               "title": "IndyNonRevocationInterval",
               "value": {
                 "description": "Earliest time of interest in non-revocation interval",
@@ -43713,6 +43963,7 @@
             "key": "to",
             "schema": {
               "generatedName": "indyNonRevocationIntervalTo",
+              "nameOverride": "IndyNonRevocationInterval",
               "title": "IndyNonRevocationInterval",
               "value": {
                 "description": "Latest time of interest in non-revocation interval",
@@ -43755,6 +44006,7 @@
             "key": "cred_def_id",
             "schema": {
               "generatedName": "indyPresAttrSpecCredDefId",
+              "nameOverride": "IndyPresAttrSpec",
               "title": "IndyPresAttrSpec",
               "value": {
                 "schema": {
@@ -43777,6 +44029,7 @@
             "key": "mime-type",
             "schema": {
               "generatedName": "indyPresAttrSpecMimeType",
+              "nameOverride": "IndyPresAttrSpec",
               "title": "IndyPresAttrSpec",
               "value": {
                 "description": "MIME type (default null)",
@@ -43815,6 +44068,7 @@
             "key": "referent",
             "schema": {
               "generatedName": "indyPresAttrSpecReferent",
+              "nameOverride": "IndyPresAttrSpec",
               "title": "IndyPresAttrSpec",
               "value": {
                 "description": "Credential referent",
@@ -43837,6 +44091,7 @@
             "key": "value",
             "schema": {
               "generatedName": "indyPresAttrSpecValue",
+              "nameOverride": "IndyPresAttrSpec",
               "title": "IndyPresAttrSpec",
               "value": {
                 "description": "Attribute value",
@@ -43875,6 +44130,7 @@
             "key": "cred_def_id",
             "schema": {
               "generatedName": "indyPresPredSpecCredDefId",
+              "nameOverride": "IndyPresPredSpec",
               "title": "IndyPresPredSpec",
               "value": {
                 "description": "Credential definition identifier",
@@ -43987,6 +44243,7 @@
             "key": "@type",
             "schema": {
               "generatedName": "indyPresPreviewType",
+              "nameOverride": "IndyPresPreview",
               "title": "IndyPresPreview",
               "value": {
                 "description": "Message type identifier",
@@ -44153,6 +44410,7 @@
             "key": "trace",
             "schema": {
               "generatedName": "indyPresSpecTrace",
+              "nameOverride": "IndyPresSpec",
               "title": "IndyPresSpec",
               "value": {
                 "description": "Whether to trace event (default false)",
@@ -44191,6 +44449,7 @@
             "key": "eq_proof",
             "schema": {
               "generatedName": "indyPrimaryProofEqProof",
+              "nameOverride": "IndyPrimaryProof",
               "title": "IndyPrimaryProof",
               "value": {
                 "generatedName": "IndyPrimaryProofEqProof",
@@ -44214,6 +44473,7 @@
             "key": "ge_proofs",
             "schema": {
               "generatedName": "indyPrimaryProofGeProofs",
+              "nameOverride": "IndyPrimaryProof",
               "title": "IndyPrimaryProof",
               "value": {
                 "generatedName": "IndyPrimaryProofGeProofs",
@@ -44265,6 +44525,7 @@
             "key": "identifiers",
             "schema": {
               "generatedName": "indyProofIdentifiers",
+              "nameOverride": "IndyProof",
               "title": "IndyProof",
               "value": {
                 "description": "Indy proof.identifiers content",
@@ -44294,6 +44555,7 @@
             "key": "proof",
             "schema": {
               "generatedName": "indyProofProof",
+              "nameOverride": "IndyProof",
               "title": "IndyProof",
               "value": {
                 "generatedName": "IndyProofProof",
@@ -44317,6 +44579,7 @@
             "key": "requested_proof",
             "schema": {
               "generatedName": "indyProofRequestedProof",
+              "nameOverride": "IndyProof",
               "title": "IndyProof",
               "value": {
                 "generatedName": "IndyProofRequestedProof",
@@ -44356,6 +44619,7 @@
             "key": "cred_def_id",
             "schema": {
               "generatedName": "indyProofIdentifierCredDefId",
+              "nameOverride": "IndyProofIdentifier",
               "title": "IndyProofIdentifier",
               "value": {
                 "description": "Credential definition identifier",
@@ -44380,6 +44644,7 @@
             "key": "rev_reg_id",
             "schema": {
               "generatedName": "indyProofIdentifierRevRegId",
+              "nameOverride": "IndyProofIdentifier",
               "title": "IndyProofIdentifier",
               "value": {
                 "generatedName": "IndyProofIdentifierRevRegId",
@@ -44411,6 +44676,7 @@
             "key": "schema_id",
             "schema": {
               "generatedName": "indyProofIdentifierSchemaId",
+              "nameOverride": "IndyProofIdentifier",
               "title": "IndyProofIdentifier",
               "value": {
                 "description": "Schema identifier",
@@ -44435,6 +44701,7 @@
             "key": "timestamp",
             "schema": {
               "generatedName": "indyProofIdentifierTimestamp",
+              "nameOverride": "IndyProofIdentifier",
               "title": "IndyProofIdentifier",
               "value": {
                 "generatedName": "IndyProofIdentifierTimestamp",
@@ -44485,6 +44752,7 @@
             "key": "aggregated_proof",
             "schema": {
               "generatedName": "indyProofProofAggregatedProof",
+              "nameOverride": "IndyProofProof",
               "title": "IndyProofProof",
               "value": {
                 "generatedName": "IndyProofProofAggregatedProof",
@@ -44508,6 +44776,7 @@
             "key": "proofs",
             "schema": {
               "generatedName": "indyProofProofProofs",
+              "nameOverride": "IndyProofProof",
               "title": "IndyProofProof",
               "value": {
                 "description": "Indy proof proofs",
@@ -44553,6 +44822,7 @@
             "key": "c_hash",
             "schema": {
               "generatedName": "indyProofProofAggregatedProofCHash",
+              "nameOverride": "IndyProofProofAggregatedProof",
               "title": "IndyProofProofAggregatedProof",
               "value": {
                 "description": "c_hash value",
@@ -44575,6 +44845,7 @@
             "key": "c_list",
             "schema": {
               "generatedName": "indyProofProofAggregatedProofCList",
+              "nameOverride": "IndyProofProofAggregatedProof",
               "title": "IndyProofProofAggregatedProof",
               "value": {
                 "description": "c_list value",
@@ -44623,6 +44894,7 @@
             "key": "non_revoc_proof",
             "schema": {
               "generatedName": "indyProofProofProofsProofNonRevocProof",
+              "nameOverride": "IndyProofProofProofsProof",
               "title": "IndyProofProofProofsProof",
               "value": {
                 "generatedName": "IndyProofProofProofsProofNonRevocProof",
@@ -44646,6 +44918,7 @@
             "key": "primary_proof",
             "schema": {
               "generatedName": "indyProofProofProofsProofPrimaryProof",
+              "nameOverride": "IndyProofProofProofsProof",
               "title": "IndyProofProofProofsProof",
               "value": {
                 "generatedName": "IndyProofProofProofsProofPrimaryProof",
@@ -44685,6 +44958,7 @@
             "key": "name",
             "schema": {
               "generatedName": "indyProofReqAttrSpecName",
+              "nameOverride": "IndyProofReqAttrSpec",
               "title": "IndyProofReqAttrSpec",
               "value": {
                 "description": "Attribute name",
@@ -44707,6 +44981,7 @@
             "key": "names",
             "schema": {
               "generatedName": "indyProofReqAttrSpecNames",
+              "nameOverride": "IndyProofReqAttrSpec",
               "title": "IndyProofReqAttrSpec",
               "value": {
                 "description": "Attribute name group",
@@ -44734,6 +45009,7 @@
             "key": "non_revoked",
             "schema": {
               "generatedName": "indyProofReqAttrSpecNonRevoked",
+              "nameOverride": "IndyProofReqAttrSpec",
               "title": "IndyProofReqAttrSpec",
               "value": {
                 "generatedName": "IndyProofReqAttrSpecNonRevoked",
@@ -44757,6 +45033,7 @@
             "key": "restrictions",
             "schema": {
               "generatedName": "indyProofReqAttrSpecRestrictions",
+              "nameOverride": "IndyProofReqAttrSpec",
               "title": "IndyProofReqAttrSpec",
               "value": {
                 "description": "If present, credential must satisfy one of given restrictions: specify schema_id, schema_issuer_did, schema_name, schema_version, issuer_did, cred_def_id, and/or attr::<attribute-name>::value where <attribute-name> represents a credential attribute name",
@@ -44813,6 +45090,7 @@
             "key": "from",
             "schema": {
               "generatedName": "indyProofReqAttrSpecNonRevokedFrom",
+              "nameOverride": "IndyProofReqAttrSpecNonRevoked",
               "title": "IndyProofReqAttrSpecNonRevoked",
               "value": {
                 "description": "Earliest time of interest in non-revocation interval",
@@ -44839,6 +45117,7 @@
             "key": "to",
             "schema": {
               "generatedName": "indyProofReqAttrSpecNonRevokedTo",
+              "nameOverride": "IndyProofReqAttrSpecNonRevoked",
               "title": "IndyProofReqAttrSpecNonRevoked",
               "value": {
                 "description": "Latest time of interest in non-revocation interval",
@@ -44897,6 +45176,7 @@
             "key": "non_revoked",
             "schema": {
               "generatedName": "indyProofReqPredSpecNonRevoked",
+              "nameOverride": "IndyProofReqPredSpec",
               "title": "IndyProofReqPredSpec",
               "value": {
                 "generatedName": "IndyProofReqPredSpecNonRevoked",
@@ -44977,6 +45257,7 @@
             "key": "restrictions",
             "schema": {
               "generatedName": "indyProofReqPredSpecRestrictions",
+              "nameOverride": "IndyProofReqPredSpec",
               "title": "IndyProofReqPredSpec",
               "value": {
                 "description": "If present, credential must satisfy one of given restrictions: specify schema_id, schema_issuer_did, schema_name, schema_version, issuer_did, cred_def_id, and/or attr::<attribute-name>::value where <attribute-name> represents a credential attribute name",
@@ -45033,6 +45314,7 @@
             "key": "from",
             "schema": {
               "generatedName": "indyProofReqPredSpecNonRevokedFrom",
+              "nameOverride": "IndyProofReqPredSpecNonRevoked",
               "title": "IndyProofReqPredSpecNonRevoked",
               "value": {
                 "description": "Earliest time of interest in non-revocation interval",
@@ -45059,6 +45341,7 @@
             "key": "to",
             "schema": {
               "generatedName": "indyProofReqPredSpecNonRevokedTo",
+              "nameOverride": "IndyProofReqPredSpecNonRevoked",
               "title": "IndyProofReqPredSpecNonRevoked",
               "value": {
                 "description": "Latest time of interest in non-revocation interval",
@@ -45101,6 +45384,7 @@
             "key": "name",
             "schema": {
               "generatedName": "indyProofRequestName",
+              "nameOverride": "IndyProofRequest",
               "title": "IndyProofRequest",
               "value": {
                 "description": "Proof request name",
@@ -45123,6 +45407,7 @@
             "key": "non_revoked",
             "schema": {
               "generatedName": "indyProofRequestNonRevoked",
+              "nameOverride": "IndyProofRequest",
               "title": "IndyProofRequest",
               "value": {
                 "generatedName": "IndyProofRequestNonRevoked",
@@ -45146,6 +45431,7 @@
             "key": "nonce",
             "schema": {
               "generatedName": "indyProofRequestNonce",
+              "nameOverride": "IndyProofRequest",
               "title": "IndyProofRequest",
               "value": {
                 "description": "Nonce",
@@ -45227,6 +45513,7 @@
             "key": "version",
             "schema": {
               "generatedName": "indyProofRequestVersion",
+              "nameOverride": "IndyProofRequest",
               "title": "IndyProofRequest",
               "value": {
                 "description": "Proof request version",
@@ -45266,6 +45553,7 @@
             "key": "from",
             "schema": {
               "generatedName": "indyProofRequestNonRevokedFrom",
+              "nameOverride": "IndyProofRequestNonRevoked",
               "title": "IndyProofRequestNonRevoked",
               "value": {
                 "description": "Earliest time of interest in non-revocation interval",
@@ -45292,6 +45580,7 @@
             "key": "to",
             "schema": {
               "generatedName": "indyProofRequestNonRevokedTo",
+              "nameOverride": "IndyProofRequestNonRevoked",
               "title": "IndyProofRequestNonRevoked",
               "value": {
                 "description": "Latest time of interest in non-revocation interval",
@@ -45334,6 +45623,7 @@
             "key": "predicates",
             "schema": {
               "generatedName": "indyProofRequestedProofPredicates",
+              "nameOverride": "IndyProofRequestedProof",
               "title": "IndyProofRequestedProof",
               "value": {
                 "description": "Proof requested proof predicates.",
@@ -45371,6 +45661,7 @@
             "key": "revealed_attr_groups",
             "schema": {
               "generatedName": "indyProofRequestedProofRevealedAttrGroups",
+              "nameOverride": "IndyProofRequestedProof",
               "title": "IndyProofRequestedProof",
               "value": {
                 "generatedName": "IndyProofRequestedProofRevealedAttrGroups",
@@ -45419,6 +45710,7 @@
             "key": "revealed_attrs",
             "schema": {
               "generatedName": "indyProofRequestedProofRevealedAttrs",
+              "nameOverride": "IndyProofRequestedProof",
               "title": "IndyProofRequestedProof",
               "value": {
                 "generatedName": "IndyProofRequestedProofRevealedAttrs",
@@ -45467,6 +45759,7 @@
             "key": "self_attested_attrs",
             "schema": {
               "generatedName": "indyProofRequestedProofSelfAttestedAttrs",
+              "nameOverride": "IndyProofRequestedProof",
               "title": "IndyProofRequestedProof",
               "value": {
                 "allOf": [],
@@ -45494,6 +45787,7 @@
             "key": "unrevealed_attrs",
             "schema": {
               "generatedName": "indyProofRequestedProofUnrevealedAttrs",
+              "nameOverride": "IndyProofRequestedProof",
               "title": "IndyProofRequestedProof",
               "value": {
                 "allOf": [],
@@ -45537,6 +45831,7 @@
             "key": "sub_proof_index",
             "schema": {
               "generatedName": "indyProofRequestedProofPredicateSubProofIndex",
+              "nameOverride": "IndyProofRequestedProofPredicate",
               "title": "IndyProofRequestedProofPredicate",
               "value": {
                 "description": "Sub-proof index",
@@ -45575,6 +45870,7 @@
             "key": "encoded",
             "schema": {
               "generatedName": "indyProofRequestedProofRevealedAttrEncoded",
+              "nameOverride": "IndyProofRequestedProofRevealedAttr",
               "title": "IndyProofRequestedProofRevealedAttr",
               "value": {
                 "description": "Encoded value",
@@ -45600,6 +45896,7 @@
             "key": "raw",
             "schema": {
               "generatedName": "indyProofRequestedProofRevealedAttrRaw",
+              "nameOverride": "IndyProofRequestedProofRevealedAttr",
               "title": "IndyProofRequestedProofRevealedAttr",
               "value": {
                 "description": "Raw value",
@@ -45623,6 +45920,7 @@
             "key": "sub_proof_index",
             "schema": {
               "generatedName": "indyProofRequestedProofRevealedAttrSubProofIndex",
+              "nameOverride": "IndyProofRequestedProofRevealedAttr",
               "title": "IndyProofRequestedProofRevealedAttr",
               "value": {
                 "description": "Sub-proof index",
@@ -45661,6 +45959,7 @@
             "key": "sub_proof_index",
             "schema": {
               "generatedName": "indyProofRequestedProofRevealedAttrGroupSubProofIndex",
+              "nameOverride": "IndyProofRequestedProofRevealedAttrGroup",
               "title": "IndyProofRequestedProofRevealedAttrGroup",
               "value": {
                 "description": "Sub-proof index",
@@ -45683,6 +45982,7 @@
             "key": "values",
             "schema": {
               "generatedName": "indyProofRequestedProofRevealedAttrGroupValues",
+              "nameOverride": "IndyProofRequestedProofRevealedAttrGroup",
               "title": "IndyProofRequestedProofRevealedAttrGroup",
               "value": {
                 "description": "Indy proof requested proof revealed attr groups group value",
@@ -45752,6 +46052,7 @@
             "key": "revealed",
             "schema": {
               "generatedName": "indyRequestedCredsRequestedAttrRevealed",
+              "nameOverride": "IndyRequestedCredsRequestedAttr",
               "title": "IndyRequestedCredsRequestedAttr",
               "value": {
                 "description": "Whether to reveal attribute in proof (default true)",
@@ -45805,6 +46106,7 @@
             "key": "timestamp",
             "schema": {
               "generatedName": "indyRequestedCredsRequestedPredTimestamp",
+              "nameOverride": "IndyRequestedCredsRequestedPred",
               "title": "IndyRequestedCredsRequestedPred",
               "value": {
                 "description": "Epoch timestamp of interest for non-revocation proof",
@@ -45845,6 +46147,7 @@
             "key": "credDefId",
             "schema": {
               "generatedName": "indyRevRegDefCredDefId",
+              "nameOverride": "IndyRevRegDef",
               "title": "IndyRevRegDef",
               "value": {
                 "description": "Credential definition identifier",
@@ -45870,6 +46173,7 @@
             "key": "id",
             "schema": {
               "generatedName": "indyRevRegDefId",
+              "nameOverride": "IndyRevRegDef",
               "title": "IndyRevRegDef",
               "value": {
                 "description": "Indy revocation registry identifier",
@@ -45895,6 +46199,7 @@
             "key": "revocDefType",
             "schema": {
               "generatedName": "indyRevRegDefRevocDefType",
+              "nameOverride": "IndyRevRegDef",
               "title": "IndyRevRegDef",
               "value": {
                 "description": "Revocation registry type (specify CL_ACCUM)",
@@ -45919,6 +46224,7 @@
             "key": "tag",
             "schema": {
               "generatedName": "indyRevRegDefTag",
+              "nameOverride": "IndyRevRegDef",
               "title": "IndyRevRegDef",
               "value": {
                 "description": "Revocation registry tag",
@@ -45942,6 +46248,7 @@
             "key": "value",
             "schema": {
               "generatedName": "indyRevRegDefValue",
+              "nameOverride": "IndyRevRegDef",
               "title": "IndyRevRegDef",
               "value": {
                 "generatedName": "IndyRevRegDefValue",
@@ -45965,6 +46272,7 @@
             "key": "ver",
             "schema": {
               "generatedName": "indyRevRegDefVer",
+              "nameOverride": "IndyRevRegDef",
               "title": "IndyRevRegDef",
               "value": {
                 "description": "Version of revocation registry definition",
@@ -46006,6 +46314,7 @@
             "key": "issuanceType",
             "schema": {
               "generatedName": "indyRevRegDefValueIssuanceType",
+              "nameOverride": "IndyRevRegDefValue",
               "title": "IndyRevRegDefValue",
               "value": {
                 "description": "Issuance type",
@@ -46042,6 +46351,7 @@
             "key": "maxCredNum",
             "schema": {
               "generatedName": "indyRevRegDefValueMaxCredNum",
+              "nameOverride": "IndyRevRegDefValue",
               "title": "IndyRevRegDefValue",
               "value": {
                 "description": "Maximum number of credentials; registry size",
@@ -46067,6 +46377,7 @@
             "key": "publicKeys",
             "schema": {
               "generatedName": "indyRevRegDefValuePublicKeys",
+              "nameOverride": "IndyRevRegDefValue",
               "title": "IndyRevRegDefValue",
               "value": {
                 "generatedName": "IndyRevRegDefValuePublicKeys",
@@ -46090,6 +46401,7 @@
             "key": "tailsHash",
             "schema": {
               "generatedName": "indyRevRegDefValueTailsHash",
+              "nameOverride": "IndyRevRegDefValue",
               "title": "IndyRevRegDefValue",
               "value": {
                 "description": "Tails hash value",
@@ -46115,6 +46427,7 @@
             "key": "tailsLocation",
             "schema": {
               "generatedName": "indyRevRegDefValueTailsLocation",
+              "nameOverride": "IndyRevRegDefValue",
               "title": "IndyRevRegDefValue",
               "value": {
                 "description": "Tails file location",
@@ -46154,6 +46467,7 @@
             "key": "accumKey",
             "schema": {
               "generatedName": "indyRevRegDefValuePublicKeysAccumKey",
+              "nameOverride": "IndyRevRegDefValuePublicKeys",
               "title": "IndyRevRegDefValuePublicKeys",
               "value": {
                 "generatedName": "IndyRevRegDefValuePublicKeysAccumKey",
@@ -46193,6 +46507,7 @@
             "key": "z",
             "schema": {
               "generatedName": "indyRevRegDefValuePublicKeysAccumKeyZ",
+              "nameOverride": "IndyRevRegDefValuePublicKeysAccumKey",
               "title": "IndyRevRegDefValuePublicKeysAccumKey",
               "value": {
                 "description": "Value for z",
@@ -46233,6 +46548,7 @@
             "key": "value",
             "schema": {
               "generatedName": "indyRevRegEntryValue",
+              "nameOverride": "IndyRevRegEntry",
               "title": "IndyRevRegEntry",
               "value": {
                 "generatedName": "IndyRevRegEntryValue",
@@ -46256,6 +46572,7 @@
             "key": "ver",
             "schema": {
               "generatedName": "indyRevRegEntryVer",
+              "nameOverride": "IndyRevRegEntry",
               "title": "IndyRevRegEntry",
               "value": {
                 "description": "Version of revocation registry entry",
@@ -46297,6 +46614,7 @@
             "key": "accum",
             "schema": {
               "generatedName": "indyRevRegEntryValueAccum",
+              "nameOverride": "IndyRevRegEntryValue",
               "title": "IndyRevRegEntryValue",
               "value": {
                 "description": "Accumulator value",
@@ -46321,6 +46639,7 @@
             "key": "prevAccum",
             "schema": {
               "generatedName": "indyRevRegEntryValuePrevAccum",
+              "nameOverride": "IndyRevRegEntryValue",
               "title": "IndyRevRegEntryValue",
               "value": {
                 "description": "Previous accumulator value",
@@ -46345,6 +46664,7 @@
             "key": "revoked",
             "schema": {
               "generatedName": "indyRevRegEntryValueRevoked",
+              "nameOverride": "IndyRevRegEntryValue",
               "title": "IndyRevRegEntryValue",
               "value": {
                 "description": "Revoked credential revocation identifiers",
@@ -46389,6 +46709,7 @@
             "key": "constraints",
             "schema": {
               "generatedName": "inputDescriptorsConstraints",
+              "nameOverride": "InputDescriptors",
               "title": "InputDescriptors",
               "value": {
                 "generatedName": "InputDescriptorsConstraints",
@@ -46412,6 +46733,7 @@
             "key": "group",
             "schema": {
               "generatedName": "inputDescriptorsGroup",
+              "nameOverride": "InputDescriptors",
               "title": "InputDescriptors",
               "value": {
                 "value": {
@@ -46440,6 +46762,7 @@
             "key": "id",
             "schema": {
               "generatedName": "inputDescriptorsId",
+              "nameOverride": "InputDescriptors",
               "title": "InputDescriptors",
               "value": {
                 "description": "ID",
@@ -46463,6 +46786,7 @@
             "key": "metadata",
             "schema": {
               "generatedName": "inputDescriptorsMetadata",
+              "nameOverride": "InputDescriptors",
               "title": "InputDescriptors",
               "value": {
                 "allOf": [],
@@ -46491,6 +46815,7 @@
             "key": "name",
             "schema": {
               "generatedName": "inputDescriptorsName",
+              "nameOverride": "InputDescriptors",
               "title": "InputDescriptors",
               "value": {
                 "description": "Name",
@@ -46514,6 +46839,7 @@
             "key": "purpose",
             "schema": {
               "generatedName": "inputDescriptorsPurpose",
+              "nameOverride": "InputDescriptors",
               "title": "InputDescriptors",
               "value": {
                 "description": "Purpose",
@@ -46537,6 +46863,7 @@
             "key": "schema",
             "schema": {
               "generatedName": "inputDescriptorsSchema",
+              "nameOverride": "InputDescriptors",
               "title": "InputDescriptors",
               "value": {
                 "generatedName": "InputDescriptorsSchema",
@@ -46593,6 +46920,7 @@
             "key": "accept",
             "schema": {
               "generatedName": "invitationCreateRequestAccept",
+              "nameOverride": "InvitationCreateRequest",
               "title": "InvitationCreateRequest",
               "value": {
                 "description": "List of mime type in order of preference that should be use in responding to the message",
@@ -46619,6 +46947,7 @@
             "key": "alias",
             "schema": {
               "generatedName": "invitationCreateRequestAlias",
+              "nameOverride": "InvitationCreateRequest",
               "title": "InvitationCreateRequest",
               "value": {
                 "description": "Alias for connection",
@@ -46641,6 +46970,7 @@
             "key": "attachments",
             "schema": {
               "generatedName": "invitationCreateRequestAttachments",
+              "nameOverride": "InvitationCreateRequest",
               "title": "InvitationCreateRequest",
               "value": {
                 "description": "Optional invitation attachments",
@@ -46668,6 +46998,7 @@
             "key": "handshake_protocols",
             "schema": {
               "generatedName": "invitationCreateRequestHandshakeProtocols",
+              "nameOverride": "InvitationCreateRequest",
               "title": "InvitationCreateRequest",
               "value": {
                 "value": {
@@ -46695,6 +47026,7 @@
             "key": "mediation_id",
             "schema": {
               "generatedName": "invitationCreateRequestMediationId",
+              "nameOverride": "InvitationCreateRequest",
               "title": "InvitationCreateRequest",
               "value": {
                 "description": "Identifier for active mediation record to be used",
@@ -46718,6 +47050,7 @@
             "key": "metadata",
             "schema": {
               "generatedName": "invitationCreateRequestMetadata",
+              "nameOverride": "InvitationCreateRequest",
               "title": "InvitationCreateRequest",
               "value": {
                 "allOf": [],
@@ -46744,6 +47077,7 @@
             "key": "my_label",
             "schema": {
               "generatedName": "invitationCreateRequestMyLabel",
+              "nameOverride": "InvitationCreateRequest",
               "title": "InvitationCreateRequest",
               "value": {
                 "description": "Label for connection invitation",
@@ -46766,6 +47100,7 @@
             "key": "protocol_version",
             "schema": {
               "generatedName": "invitationCreateRequestProtocolVersion",
+              "nameOverride": "InvitationCreateRequest",
               "title": "InvitationCreateRequest",
               "value": {
                 "description": "OOB protocol version",
@@ -46788,6 +47123,7 @@
             "key": "use_public_did",
             "schema": {
               "generatedName": "invitationCreateRequestUsePublicDid",
+              "nameOverride": "InvitationCreateRequest",
               "title": "InvitationCreateRequest",
               "value": {
                 "description": "Whether to use public DID in invitation",
@@ -46826,6 +47162,7 @@
             "key": "@id",
             "schema": {
               "generatedName": "invitationMessageId",
+              "nameOverride": "InvitationMessage",
               "title": "InvitationMessage",
               "value": {
                 "description": "Message identifier",
@@ -46848,6 +47185,7 @@
             "key": "@type",
             "schema": {
               "generatedName": "invitationMessageType",
+              "nameOverride": "InvitationMessage",
               "title": "InvitationMessage",
               "value": {
                 "description": "Message type",
@@ -46870,6 +47208,7 @@
             "key": "accept",
             "schema": {
               "generatedName": "invitationMessageAccept",
+              "nameOverride": "InvitationMessage",
               "title": "InvitationMessage",
               "value": {
                 "description": "List of mime type in order of preference",
@@ -46896,6 +47235,7 @@
             "key": "handshake_protocols",
             "schema": {
               "generatedName": "invitationMessageHandshakeProtocols",
+              "nameOverride": "InvitationMessage",
               "title": "InvitationMessage",
               "value": {
                 "value": {
@@ -46923,6 +47263,7 @@
             "key": "imageUrl",
             "schema": {
               "generatedName": "invitationMessageImageUrl",
+              "nameOverride": "InvitationMessage",
               "title": "InvitationMessage",
               "value": {
                 "generatedName": "InvitationMessageImageUrl",
@@ -46952,6 +47293,7 @@
             "key": "label",
             "schema": {
               "generatedName": "invitationMessageLabel",
+              "nameOverride": "InvitationMessage",
               "title": "InvitationMessage",
               "value": {
                 "description": "Optional label",
@@ -46974,6 +47316,7 @@
             "key": "requests~attach",
             "schema": {
               "generatedName": "invitationMessageRequestsAttach",
+              "nameOverride": "InvitationMessage",
               "title": "InvitationMessage",
               "value": {
                 "description": "Optional request attachment",
@@ -47001,6 +47344,7 @@
             "key": "services",
             "schema": {
               "generatedName": "invitationMessageServices",
+              "nameOverride": "InvitationMessage",
               "title": "InvitationMessage",
               "value": {
                 "value": {
@@ -47052,6 +47396,7 @@
             "key": "created_at",
             "schema": {
               "generatedName": "invitationRecordCreatedAt",
+              "nameOverride": "InvitationRecord",
               "title": "InvitationRecord",
               "value": {
                 "description": "Time of record creation",
@@ -47075,6 +47420,7 @@
             "key": "invi_msg_id",
             "schema": {
               "generatedName": "invitationRecordInviMsgId",
+              "nameOverride": "InvitationRecord",
               "title": "InvitationRecord",
               "value": {
                 "description": "Invitation message identifier",
@@ -47097,6 +47443,7 @@
             "key": "invitation",
             "schema": {
               "generatedName": "invitationRecordInvitation",
+              "nameOverride": "InvitationRecord",
               "title": "InvitationRecord",
               "value": {
                 "generatedName": "InvitationRecordInvitation",
@@ -47120,6 +47467,7 @@
             "key": "invitation_id",
             "schema": {
               "generatedName": "invitationRecordInvitationId",
+              "nameOverride": "InvitationRecord",
               "title": "InvitationRecord",
               "value": {
                 "description": "Invitation record identifier",
@@ -47142,6 +47490,7 @@
             "key": "invitation_url",
             "schema": {
               "generatedName": "invitationRecordInvitationUrl",
+              "nameOverride": "InvitationRecord",
               "title": "InvitationRecord",
               "value": {
                 "description": "Invitation message URL",
@@ -47164,6 +47513,7 @@
             "key": "oob_id",
             "schema": {
               "generatedName": "invitationRecordOobId",
+              "nameOverride": "InvitationRecord",
               "title": "InvitationRecord",
               "value": {
                 "description": "Out of band record identifier",
@@ -47186,6 +47536,7 @@
             "key": "state",
             "schema": {
               "generatedName": "invitationRecordState",
+              "nameOverride": "InvitationRecord",
               "title": "InvitationRecord",
               "value": {
                 "description": "Out of band message exchange state",
@@ -47208,6 +47559,7 @@
             "key": "trace",
             "schema": {
               "generatedName": "invitationRecordTrace",
+              "nameOverride": "InvitationRecord",
               "title": "InvitationRecord",
               "value": {
                 "description": "Record trace information, based on agent configuration",
@@ -47229,6 +47581,7 @@
             "key": "updated_at",
             "schema": {
               "generatedName": "invitationRecordUpdatedAt",
+              "nameOverride": "InvitationRecord",
               "title": "InvitationRecord",
               "value": {
                 "description": "Time of last record update",
@@ -47268,6 +47621,7 @@
             "key": "connection_id",
             "schema": {
               "generatedName": "invitationResultConnectionId",
+              "nameOverride": "InvitationResult",
               "title": "InvitationResult",
               "value": {
                 "description": "Connection identifier",
@@ -47290,6 +47644,7 @@
             "key": "invitation",
             "schema": {
               "generatedName": "invitationResultInvitation",
+              "nameOverride": "InvitationResult",
               "title": "InvitationResult",
               "value": {
                 "generatedName": "InvitationResultInvitation",
@@ -47313,6 +47668,7 @@
             "key": "invitation_url",
             "schema": {
               "generatedName": "invitationResultInvitationUrl",
+              "nameOverride": "InvitationResult",
               "title": "InvitationResult",
               "value": {
                 "description": "Invitation URL",
@@ -47368,6 +47724,7 @@
             "key": "created_at",
             "schema": {
               "generatedName": "issuerCredRevRecordCreatedAt",
+              "nameOverride": "IssuerCredRevRecord",
               "title": "IssuerCredRevRecord",
               "value": {
                 "description": "Time of record creation",
@@ -47391,6 +47748,7 @@
             "key": "cred_def_id",
             "schema": {
               "generatedName": "issuerCredRevRecordCredDefId",
+              "nameOverride": "IssuerCredRevRecord",
               "title": "IssuerCredRevRecord",
               "value": {
                 "description": "Credential definition identifier",
@@ -47414,6 +47772,7 @@
             "key": "cred_ex_id",
             "schema": {
               "generatedName": "issuerCredRevRecordCredExId",
+              "nameOverride": "IssuerCredRevRecord",
               "title": "IssuerCredRevRecord",
               "value": {
                 "description": "Credential exchange record identifier at credential issue",
@@ -47436,6 +47795,7 @@
             "key": "cred_ex_version",
             "schema": {
               "generatedName": "issuerCredRevRecordCredExVersion",
+              "nameOverride": "IssuerCredRevRecord",
               "title": "IssuerCredRevRecord",
               "value": {
                 "description": "Credential exchange version",
@@ -47457,6 +47817,7 @@
             "key": "cred_rev_id",
             "schema": {
               "generatedName": "issuerCredRevRecordCredRevId",
+              "nameOverride": "IssuerCredRevRecord",
               "title": "IssuerCredRevRecord",
               "value": {
                 "description": "Credential revocation identifier",
@@ -47480,6 +47841,7 @@
             "key": "record_id",
             "schema": {
               "generatedName": "issuerCredRevRecordRecordId",
+              "nameOverride": "IssuerCredRevRecord",
               "title": "IssuerCredRevRecord",
               "value": {
                 "description": "Issuer credential revocation record identifier",
@@ -47502,6 +47864,7 @@
             "key": "rev_reg_id",
             "schema": {
               "generatedName": "issuerCredRevRecordRevRegId",
+              "nameOverride": "IssuerCredRevRecord",
               "title": "IssuerCredRevRecord",
               "value": {
                 "description": "Revocation registry identifier",
@@ -47525,6 +47888,7 @@
             "key": "state",
             "schema": {
               "generatedName": "issuerCredRevRecordState",
+              "nameOverride": "IssuerCredRevRecord",
               "title": "IssuerCredRevRecord",
               "value": {
                 "description": "Issue credential revocation record state",
@@ -47547,6 +47911,7 @@
             "key": "updated_at",
             "schema": {
               "generatedName": "issuerCredRevRecordUpdatedAt",
+              "nameOverride": "IssuerCredRevRecord",
               "title": "IssuerCredRevRecord",
               "value": {
                 "description": "Time of last record update",
@@ -47586,6 +47951,7 @@
             "key": "created_at",
             "schema": {
               "generatedName": "issuerRevRegRecordCreatedAt",
+              "nameOverride": "IssuerRevRegRecord",
               "title": "IssuerRevRegRecord",
               "value": {
                 "description": "Time of record creation",
@@ -47609,6 +47975,7 @@
             "key": "cred_def_id",
             "schema": {
               "generatedName": "issuerRevRegRecordCredDefId",
+              "nameOverride": "IssuerRevRegRecord",
               "title": "IssuerRevRegRecord",
               "value": {
                 "description": "Credential definition identifier",
@@ -47632,6 +47999,7 @@
             "key": "error_msg",
             "schema": {
               "generatedName": "issuerRevRegRecordErrorMsg",
+              "nameOverride": "IssuerRevRegRecord",
               "title": "IssuerRevRegRecord",
               "value": {
                 "description": "Error message",
@@ -47654,6 +48022,7 @@
             "key": "issuer_did",
             "schema": {
               "generatedName": "issuerRevRegRecordIssuerDid",
+              "nameOverride": "IssuerRevRegRecord",
               "title": "IssuerRevRegRecord",
               "value": {
                 "description": "Issuer DID",
@@ -47677,6 +48046,7 @@
             "key": "max_cred_num",
             "schema": {
               "generatedName": "issuerRevRegRecordMaxCredNum",
+              "nameOverride": "IssuerRevRegRecord",
               "title": "IssuerRevRegRecord",
               "value": {
                 "description": "Maximum number of credentials for revocation registry",
@@ -47699,6 +48069,7 @@
             "key": "pending_pub",
             "schema": {
               "generatedName": "issuerRevRegRecordPendingPub",
+              "nameOverride": "IssuerRevRegRecord",
               "title": "IssuerRevRegRecord",
               "value": {
                 "description": "Credential revocation identifier for credential revoked and pending publication to ledger",
@@ -47726,6 +48097,7 @@
             "key": "record_id",
             "schema": {
               "generatedName": "issuerRevRegRecordRecordId",
+              "nameOverride": "IssuerRevRegRecord",
               "title": "IssuerRevRegRecord",
               "value": {
                 "description": "Issuer revocation registry record identifier",
@@ -47748,6 +48120,7 @@
             "key": "revoc_def_type",
             "schema": {
               "generatedName": "issuerRevRegRecordRevocDefType",
+              "nameOverride": "IssuerRevRegRecord",
               "title": "IssuerRevRegRecord",
               "value": {
                 "description": "Revocation registry type (specify CL_ACCUM)",
@@ -47770,6 +48143,7 @@
             "key": "revoc_reg_def",
             "schema": {
               "generatedName": "issuerRevRegRecordRevocRegDef",
+              "nameOverride": "IssuerRevRegRecord",
               "title": "IssuerRevRegRecord",
               "value": {
                 "generatedName": "IssuerRevRegRecordRevocRegDef",
@@ -47793,6 +48167,7 @@
             "key": "revoc_reg_entry",
             "schema": {
               "generatedName": "issuerRevRegRecordRevocRegEntry",
+              "nameOverride": "IssuerRevRegRecord",
               "title": "IssuerRevRegRecord",
               "value": {
                 "generatedName": "IssuerRevRegRecordRevocRegEntry",
@@ -47816,6 +48191,7 @@
             "key": "revoc_reg_id",
             "schema": {
               "generatedName": "issuerRevRegRecordRevocRegId",
+              "nameOverride": "IssuerRevRegRecord",
               "title": "IssuerRevRegRecord",
               "value": {
                 "description": "Revocation registry identifier",
@@ -47839,6 +48215,7 @@
             "key": "state",
             "schema": {
               "generatedName": "issuerRevRegRecordState",
+              "nameOverride": "IssuerRevRegRecord",
               "title": "IssuerRevRegRecord",
               "value": {
                 "description": "Issue revocation registry record state",
@@ -47861,6 +48238,7 @@
             "key": "tag",
             "schema": {
               "generatedName": "issuerRevRegRecordTag",
+              "nameOverride": "IssuerRevRegRecord",
               "title": "IssuerRevRegRecord",
               "value": {
                 "description": "Tag within issuer revocation registry identifier",
@@ -47882,6 +48260,7 @@
             "key": "tails_hash",
             "schema": {
               "generatedName": "issuerRevRegRecordTailsHash",
+              "nameOverride": "IssuerRevRegRecord",
               "title": "IssuerRevRegRecord",
               "value": {
                 "description": "Tails hash",
@@ -47905,6 +48284,7 @@
             "key": "tails_local_path",
             "schema": {
               "generatedName": "issuerRevRegRecordTailsLocalPath",
+              "nameOverride": "IssuerRevRegRecord",
               "title": "IssuerRevRegRecord",
               "value": {
                 "description": "Local path to tails file",
@@ -47926,6 +48306,7 @@
             "key": "tails_public_uri",
             "schema": {
               "generatedName": "issuerRevRegRecordTailsPublicUri",
+              "nameOverride": "IssuerRevRegRecord",
               "title": "IssuerRevRegRecord",
               "value": {
                 "description": "Public URI for tails file",
@@ -47947,6 +48328,7 @@
             "key": "updated_at",
             "schema": {
               "generatedName": "issuerRevRegRecordUpdatedAt",
+              "nameOverride": "IssuerRevRegRecord",
               "title": "IssuerRevRegRecord",
               "value": {
                 "description": "Time of last record update",
@@ -47986,6 +48368,7 @@
             "key": "results",
             "schema": {
               "generatedName": "keylistResults",
+              "nameOverride": "Keylist",
               "title": "Keylist",
               "value": {
                 "description": "List of keylist records",
@@ -48029,6 +48412,7 @@
             "key": "@id",
             "schema": {
               "generatedName": "keylistQueryId",
+              "nameOverride": "KeylistQuery",
               "title": "KeylistQuery",
               "value": {
                 "description": "Message identifier",
@@ -48051,6 +48435,7 @@
             "key": "@type",
             "schema": {
               "generatedName": "keylistQueryType",
+              "nameOverride": "KeylistQuery",
               "title": "KeylistQuery",
               "value": {
                 "description": "Message type",
@@ -48074,6 +48459,7 @@
             "key": "filter",
             "schema": {
               "generatedName": "keylistQueryFilter",
+              "nameOverride": "KeylistQuery",
               "title": "KeylistQuery",
               "value": {
                 "allOf": [],
@@ -48100,6 +48486,7 @@
             "key": "paginate",
             "schema": {
               "generatedName": "keylistQueryPaginate",
+              "nameOverride": "KeylistQuery",
               "title": "KeylistQuery",
               "value": {
                 "generatedName": "KeylistQueryPaginate",
@@ -48139,6 +48526,7 @@
             "key": "filter",
             "schema": {
               "generatedName": "keylistQueryFilterRequestFilter",
+              "nameOverride": "KeylistQueryFilterRequest",
               "title": "KeylistQueryFilterRequest",
               "value": {
                 "allOf": [],
@@ -48181,6 +48569,7 @@
             "key": "limit",
             "schema": {
               "generatedName": "keylistQueryPaginateLimit",
+              "nameOverride": "KeylistQueryPaginate",
               "title": "KeylistQueryPaginate",
               "value": {
                 "description": "Limit for keylist query",
@@ -48205,6 +48594,7 @@
             "key": "offset",
             "schema": {
               "generatedName": "keylistQueryPaginateOffset",
+              "nameOverride": "KeylistQueryPaginate",
               "title": "KeylistQueryPaginate",
               "value": {
                 "description": "Offset value for query",
@@ -48245,6 +48635,7 @@
             "key": "@id",
             "schema": {
               "generatedName": "keylistUpdateId",
+              "nameOverride": "KeylistUpdate",
               "title": "KeylistUpdate",
               "value": {
                 "description": "Message identifier",
@@ -48267,6 +48658,7 @@
             "key": "@type",
             "schema": {
               "generatedName": "keylistUpdateType",
+              "nameOverride": "KeylistUpdate",
               "title": "KeylistUpdate",
               "value": {
                 "description": "Message type",
@@ -48290,6 +48682,7 @@
             "key": "updates",
             "schema": {
               "generatedName": "keylistUpdateUpdates",
+              "nameOverride": "KeylistUpdate",
               "title": "KeylistUpdate",
               "value": {
                 "description": "List of update rules",
@@ -48333,6 +48726,7 @@
             "key": "updates",
             "schema": {
               "generatedName": "keylistUpdateRequestUpdates",
+              "nameOverride": "KeylistUpdateRequest",
               "title": "KeylistUpdateRequest",
               "value": {
                 "value": {
@@ -48486,6 +48880,7 @@
             "key": "challenge",
             "schema": {
               "generatedName": "ldProofVcDetailOptionsChallenge",
+              "nameOverride": "LDProofVCDetailOptions",
               "title": "LDProofVCDetailOptions",
               "value": {
                 "description": "A challenge to include in the proof. SHOULD be provided by the requesting party of the credential (=holder)",
@@ -48510,6 +48905,7 @@
             "key": "created",
             "schema": {
               "generatedName": "ldProofVcDetailOptionsCreated",
+              "nameOverride": "LDProofVCDetailOptions",
               "title": "LDProofVCDetailOptions",
               "value": {
                 "description": "The date and time of the proof (with a maximum accuracy in seconds). Defaults to current system time",
@@ -48535,6 +48931,7 @@
             "key": "credentialStatus",
             "schema": {
               "generatedName": "ldProofVcDetailOptionsCredentialStatus",
+              "nameOverride": "LDProofVCDetailOptions",
               "title": "LDProofVCDetailOptions",
               "value": {
                 "generatedName": "LdProofVcDetailOptionsCredentialStatus",
@@ -48558,6 +48955,7 @@
             "key": "domain",
             "schema": {
               "generatedName": "ldProofVcDetailOptionsDomain",
+              "nameOverride": "LDProofVCDetailOptions",
               "title": "LDProofVCDetailOptions",
               "value": {
                 "description": "The intended domain of validity for the proof",
@@ -48582,6 +48980,7 @@
             "key": "proofPurpose",
             "schema": {
               "generatedName": "ldProofVcDetailOptionsProofPurpose",
+              "nameOverride": "LDProofVCDetailOptions",
               "title": "LDProofVCDetailOptions",
               "value": {
                 "description": "The proof purpose used for the proof. Should match proof purposes registered in the Linked Data Proofs Specification",
@@ -48640,6 +49039,7 @@
             "key": "genesis_file",
             "schema": {
               "generatedName": "ledgerConfigInstanceGenesisFile",
+              "nameOverride": "LedgerConfigInstance",
               "title": "LedgerConfigInstance",
               "value": {
                 "description": "genesis_file",
@@ -48661,6 +49061,7 @@
             "key": "genesis_transactions",
             "schema": {
               "generatedName": "ledgerConfigInstanceGenesisTransactions",
+              "nameOverride": "LedgerConfigInstance",
               "title": "LedgerConfigInstance",
               "value": {
                 "description": "genesis_transactions",
@@ -48682,6 +49083,7 @@
             "key": "genesis_url",
             "schema": {
               "generatedName": "ledgerConfigInstanceGenesisUrl",
+              "nameOverride": "LedgerConfigInstance",
               "title": "LedgerConfigInstance",
               "value": {
                 "description": "genesis_url",
@@ -48703,6 +49105,7 @@
             "key": "id",
             "schema": {
               "generatedName": "ledgerConfigInstanceId",
+              "nameOverride": "LedgerConfigInstance",
               "title": "LedgerConfigInstance",
               "value": {
                 "description": "ledger_id",
@@ -48724,6 +49127,7 @@
             "key": "is_production",
             "schema": {
               "generatedName": "ledgerConfigInstanceIsProduction",
+              "nameOverride": "LedgerConfigInstance",
               "title": "LedgerConfigInstance",
               "value": {
                 "description": "is_production",
@@ -48814,6 +49218,7 @@
             "key": "challenge",
             "schema": {
               "generatedName": "linkedDataProofChallenge",
+              "nameOverride": "LinkedDataProof",
               "title": "LinkedDataProof",
               "value": {
                 "description": "Associates a challenge with a proof, for use with a proofPurpose such as authentication",
@@ -48857,6 +49262,7 @@
             "key": "domain",
             "schema": {
               "generatedName": "linkedDataProofDomain",
+              "nameOverride": "LinkedDataProof",
               "title": "LinkedDataProof",
               "value": {
                 "description": "A string value specifying the restricted domain of the signature.",
@@ -48882,6 +49288,7 @@
             "key": "jws",
             "schema": {
               "generatedName": "linkedDataProofJws",
+              "nameOverride": "LinkedDataProof",
               "title": "LinkedDataProof",
               "value": {
                 "description": "Associates a Detached Json Web Signature with a proof",
@@ -48906,6 +49313,7 @@
             "key": "nonce",
             "schema": {
               "generatedName": "linkedDataProofNonce",
+              "nameOverride": "LinkedDataProof",
               "title": "LinkedDataProof",
               "value": {
                 "description": "The nonce",
@@ -48948,6 +49356,7 @@
             "key": "proofValue",
             "schema": {
               "generatedName": "linkedDataProofProofValue",
+              "nameOverride": "LinkedDataProof",
               "title": "LinkedDataProof",
               "value": {
                 "description": "The proof value of a proof",
@@ -49025,6 +49434,7 @@
             "key": "mediator_terms",
             "schema": {
               "generatedName": "mediationCreateRequestMediatorTerms",
+              "nameOverride": "MediationCreateRequest",
               "title": "MediationCreateRequest",
               "value": {
                 "description": "List of mediator rules for recipient",
@@ -49052,6 +49462,7 @@
             "key": "recipient_terms",
             "schema": {
               "generatedName": "mediationCreateRequestRecipientTerms",
+              "nameOverride": "MediationCreateRequest",
               "title": "MediationCreateRequest",
               "value": {
                 "description": "List of recipient rules for mediation",
@@ -49095,6 +49506,7 @@
             "key": "@id",
             "schema": {
               "generatedName": "mediationDenyId",
+              "nameOverride": "MediationDeny",
               "title": "MediationDeny",
               "value": {
                 "description": "Message identifier",
@@ -49117,6 +49529,7 @@
             "key": "@type",
             "schema": {
               "generatedName": "mediationDenyType",
+              "nameOverride": "MediationDeny",
               "title": "MediationDeny",
               "value": {
                 "description": "Message type",
@@ -49140,6 +49553,7 @@
             "key": "mediator_terms",
             "schema": {
               "generatedName": "mediationDenyMediatorTerms",
+              "nameOverride": "MediationDeny",
               "title": "MediationDeny",
               "value": {
                 "value": {
@@ -49166,6 +49580,7 @@
             "key": "recipient_terms",
             "schema": {
               "generatedName": "mediationDenyRecipientTerms",
+              "nameOverride": "MediationDeny",
               "title": "MediationDeny",
               "value": {
                 "value": {
@@ -49208,6 +49623,7 @@
             "key": "@id",
             "schema": {
               "generatedName": "mediationGrantId",
+              "nameOverride": "MediationGrant",
               "title": "MediationGrant",
               "value": {
                 "description": "Message identifier",
@@ -49230,6 +49646,7 @@
             "key": "@type",
             "schema": {
               "generatedName": "mediationGrantType",
+              "nameOverride": "MediationGrant",
               "title": "MediationGrant",
               "value": {
                 "description": "Message type",
@@ -49253,6 +49670,7 @@
             "key": "endpoint",
             "schema": {
               "generatedName": "mediationGrantEndpoint",
+              "nameOverride": "MediationGrant",
               "title": "MediationGrant",
               "value": {
                 "description": "endpoint on which messages destined for the recipient are received.",
@@ -49275,6 +49693,7 @@
             "key": "routing_keys",
             "schema": {
               "generatedName": "mediationGrantRoutingKeys",
+              "nameOverride": "MediationGrant",
               "title": "MediationGrant",
               "value": {
                 "value": {
@@ -49317,6 +49736,7 @@
             "key": "mediation_id",
             "schema": {
               "generatedName": "mediationIdMatchInfoMediationId",
+              "nameOverride": "MediationIdMatchInfo",
               "title": "MediationIdMatchInfo",
               "value": {
                 "description": "Mediation record identifier",
@@ -49356,6 +49776,7 @@
             "key": "results",
             "schema": {
               "generatedName": "mediationListResults",
+              "nameOverride": "MediationList",
               "title": "MediationList",
               "value": {
                 "description": "List of mediation records",
@@ -49413,6 +49834,7 @@
             "key": "created_at",
             "schema": {
               "generatedName": "mediationRecordCreatedAt",
+              "nameOverride": "MediationRecord",
               "title": "MediationRecord",
               "value": {
                 "description": "Time of record creation",
@@ -49436,6 +49858,7 @@
             "key": "endpoint",
             "schema": {
               "generatedName": "mediationRecordEndpoint",
+              "nameOverride": "MediationRecord",
               "title": "MediationRecord",
               "value": {
                 "schema": {
@@ -49456,6 +49879,7 @@
             "key": "mediation_id",
             "schema": {
               "generatedName": "mediationRecordMediationId",
+              "nameOverride": "MediationRecord",
               "title": "MediationRecord",
               "value": {
                 "schema": {
@@ -49476,6 +49900,7 @@
             "key": "mediator_terms",
             "schema": {
               "generatedName": "mediationRecordMediatorTerms",
+              "nameOverride": "MediationRecord",
               "title": "MediationRecord",
               "value": {
                 "value": {
@@ -49501,6 +49926,7 @@
             "key": "recipient_terms",
             "schema": {
               "generatedName": "mediationRecordRecipientTerms",
+              "nameOverride": "MediationRecord",
               "title": "MediationRecord",
               "value": {
                 "value": {
@@ -49540,6 +49966,7 @@
             "key": "routing_keys",
             "schema": {
               "generatedName": "mediationRecordRoutingKeys",
+              "nameOverride": "MediationRecord",
               "title": "MediationRecord",
               "value": {
                 "value": {
@@ -49567,6 +49994,7 @@
             "key": "state",
             "schema": {
               "generatedName": "mediationRecordState",
+              "nameOverride": "MediationRecord",
               "title": "MediationRecord",
               "value": {
                 "description": "Current record state",
@@ -49589,6 +50017,7 @@
             "key": "updated_at",
             "schema": {
               "generatedName": "mediationRecordUpdatedAt",
+              "nameOverride": "MediationRecord",
               "title": "MediationRecord",
               "value": {
                 "description": "Time of last record update",
@@ -49628,6 +50057,7 @@
             "key": "@id",
             "schema": {
               "generatedName": "menuId",
+              "nameOverride": "Menu",
               "title": "Menu",
               "value": {
                 "description": "Message identifier",
@@ -49651,6 +50081,7 @@
             "key": "@type",
             "schema": {
               "generatedName": "menuType",
+              "nameOverride": "Menu",
               "title": "Menu",
               "value": {
                 "description": "Message type",
@@ -49675,6 +50106,7 @@
             "key": "description",
             "schema": {
               "generatedName": "menuDescription",
+              "nameOverride": "Menu",
               "title": "Menu",
               "value": {
                 "description": "Introductory text for the menu",
@@ -49699,6 +50131,7 @@
             "key": "errormsg",
             "schema": {
               "generatedName": "menuErrormsg",
+              "nameOverride": "Menu",
               "title": "Menu",
               "value": {
                 "description": "An optional error message to display in menu header",
@@ -49746,6 +50179,7 @@
             "key": "title",
             "schema": {
               "generatedName": "menuTitle",
+              "nameOverride": "Menu",
               "title": "Menu",
               "value": {
                 "description": "Menu title",
@@ -49786,6 +50220,7 @@
             "key": "description",
             "schema": {
               "generatedName": "menuFormDescription",
+              "nameOverride": "MenuForm",
               "title": "MenuForm",
               "value": {
                 "description": "Additional descriptive text for menu form",
@@ -49810,6 +50245,7 @@
             "key": "params",
             "schema": {
               "generatedName": "menuFormParams",
+              "nameOverride": "MenuForm",
               "title": "MenuForm",
               "value": {
                 "description": "List of form parameters",
@@ -49839,6 +50275,7 @@
             "key": "submit-label",
             "schema": {
               "generatedName": "menuFormSubmitLabel",
+              "nameOverride": "MenuForm",
               "title": "MenuForm",
               "value": {
                 "description": "Alternative label for form submit button",
@@ -49862,6 +50299,7 @@
             "key": "title",
             "schema": {
               "generatedName": "menuFormTitle",
+              "nameOverride": "MenuForm",
               "title": "MenuForm",
               "value": {
                 "description": "Menu form title",
@@ -49902,6 +50340,7 @@
             "key": "default",
             "schema": {
               "generatedName": "menuFormParamDefault",
+              "nameOverride": "MenuFormParam",
               "title": "MenuFormParam",
               "value": {
                 "description": "Default parameter value",
@@ -49926,6 +50365,7 @@
             "key": "description",
             "schema": {
               "generatedName": "menuFormParamDescription",
+              "nameOverride": "MenuFormParam",
               "title": "MenuFormParam",
               "value": {
                 "description": "Additional descriptive text for menu form parameter",
@@ -49968,6 +50408,7 @@
             "key": "required",
             "schema": {
               "generatedName": "menuFormParamRequired",
+              "nameOverride": "MenuFormParam",
               "title": "MenuFormParam",
               "value": {
                 "description": "Whether parameter is required",
@@ -50010,6 +50451,7 @@
             "key": "type",
             "schema": {
               "generatedName": "menuFormParamType",
+              "nameOverride": "MenuFormParam",
               "title": "MenuFormParam",
               "value": {
                 "description": "Menu form parameter input type",
@@ -50050,6 +50492,7 @@
             "key": "description",
             "schema": {
               "generatedName": "menuJsonDescription",
+              "nameOverride": "MenuJson",
               "title": "MenuJson",
               "value": {
                 "description": "Introductory text for the menu",
@@ -50074,6 +50517,7 @@
             "key": "errormsg",
             "schema": {
               "generatedName": "menuJsonErrormsg",
+              "nameOverride": "MenuJson",
               "title": "MenuJson",
               "value": {
                 "description": "Optional error message to display in menu header",
@@ -50121,6 +50565,7 @@
             "key": "title",
             "schema": {
               "generatedName": "menuJsonTitle",
+              "nameOverride": "MenuJson",
               "title": "MenuJson",
               "value": {
                 "description": "Menu title",
@@ -50161,6 +50606,7 @@
             "key": "description",
             "schema": {
               "generatedName": "menuOptionDescription",
+              "nameOverride": "MenuOption",
               "title": "MenuOption",
               "value": {
                 "description": "Additional descriptive text for menu option",
@@ -50185,6 +50631,7 @@
             "key": "disabled",
             "schema": {
               "generatedName": "menuOptionDisabled",
+              "nameOverride": "MenuOption",
               "title": "MenuOption",
               "value": {
                 "description": "Whether to show option as disabled",
@@ -50209,6 +50656,7 @@
             "key": "form",
             "schema": {
               "generatedName": "menuOptionForm",
+              "nameOverride": "MenuOption",
               "title": "MenuOption",
               "value": {
                 "generatedName": "MenuOptionForm",
@@ -50301,6 +50749,7 @@
             "key": "attach_thread_id",
             "schema": {
               "generatedName": "oobRecordAttachThreadId",
+              "nameOverride": "OobRecord",
               "title": "OobRecord",
               "value": {
                 "description": "Connection record identifier",
@@ -50323,6 +50772,7 @@
             "key": "connection_id",
             "schema": {
               "generatedName": "oobRecordConnectionId",
+              "nameOverride": "OobRecord",
               "title": "OobRecord",
               "value": {
                 "description": "Connection record identifier",
@@ -50345,6 +50795,7 @@
             "key": "created_at",
             "schema": {
               "generatedName": "oobRecordCreatedAt",
+              "nameOverride": "OobRecord",
               "title": "OobRecord",
               "value": {
                 "description": "Time of record creation",
@@ -50417,6 +50868,7 @@
             "key": "our_recipient_key",
             "schema": {
               "generatedName": "oobRecordOurRecipientKey",
+              "nameOverride": "OobRecord",
               "title": "OobRecord",
               "value": {
                 "description": "Recipient key used for oob invitation",
@@ -50439,6 +50891,7 @@
             "key": "role",
             "schema": {
               "generatedName": "oobRecordRole",
+              "nameOverride": "OobRecord",
               "title": "OobRecord",
               "value": {
                 "description": "OOB Role",
@@ -50526,6 +50979,7 @@
             "key": "their_service",
             "schema": {
               "generatedName": "oobRecordTheirService",
+              "nameOverride": "OobRecord",
               "title": "OobRecord",
               "value": {
                 "generatedName": "OobRecordTheirService",
@@ -50549,6 +51003,7 @@
             "key": "trace",
             "schema": {
               "generatedName": "oobRecordTrace",
+              "nameOverride": "OobRecord",
               "title": "OobRecord",
               "value": {
                 "description": "Record trace information, based on agent configuration",
@@ -50570,6 +51025,7 @@
             "key": "updated_at",
             "schema": {
               "generatedName": "oobRecordUpdatedAt",
+              "nameOverride": "OobRecord",
               "title": "OobRecord",
               "value": {
                 "description": "Time of last record update",
@@ -50609,6 +51065,7 @@
             "key": "name",
             "schema": {
               "generatedName": "performRequestName",
+              "nameOverride": "PerformRequest",
               "title": "PerformRequest",
               "value": {
                 "description": "Menu option name",
@@ -50631,6 +51088,7 @@
             "key": "params",
             "schema": {
               "generatedName": "performRequestParams",
+              "nameOverride": "PerformRequest",
               "title": "PerformRequest",
               "value": {
                 "description": "Input parameter values",
@@ -50682,6 +51140,7 @@
             "key": "comment",
             "schema": {
               "generatedName": "pingRequestComment",
+              "nameOverride": "PingRequest",
               "title": "PingRequest",
               "value": {
                 "generatedName": "PingRequestComment",
@@ -50725,6 +51184,7 @@
             "key": "thread_id",
             "schema": {
               "generatedName": "pingRequestResponseThreadId",
+              "nameOverride": "PingRequestResponse",
               "title": "PingRequestResponse",
               "value": {
                 "description": "Thread ID of the ping message",
@@ -50762,6 +51222,7 @@
             "key": "format",
             "schema": {
               "generatedName": "presentationDefinitionFormat",
+              "nameOverride": "PresentationDefinition",
               "title": "PresentationDefinition",
               "value": {
                 "generatedName": "PresentationDefinitionFormat",
@@ -50785,6 +51246,7 @@
             "key": "id",
             "schema": {
               "generatedName": "presentationDefinitionId",
+              "nameOverride": "PresentationDefinition",
               "title": "PresentationDefinition",
               "value": {
                 "description": "Unique Resource Identifier",
@@ -50810,6 +51272,7 @@
             "key": "input_descriptors",
             "schema": {
               "generatedName": "presentationDefinitionInputDescriptors",
+              "nameOverride": "PresentationDefinition",
               "title": "PresentationDefinition",
               "value": {
                 "value": {
@@ -50837,6 +51300,7 @@
             "key": "name",
             "schema": {
               "generatedName": "presentationDefinitionName",
+              "nameOverride": "PresentationDefinition",
               "title": "PresentationDefinition",
               "value": {
                 "description": "Human-friendly name that describes what the presentation definition pertains to",
@@ -50860,6 +51324,7 @@
             "key": "purpose",
             "schema": {
               "generatedName": "presentationDefinitionPurpose",
+              "nameOverride": "PresentationDefinition",
               "title": "PresentationDefinition",
               "value": {
                 "description": "Describes the purpose for which the Presentation Definition's inputs are being requested",
@@ -50883,6 +51348,7 @@
             "key": "submission_requirements",
             "schema": {
               "generatedName": "presentationDefinitionSubmissionRequirements",
+              "nameOverride": "PresentationDefinition",
               "title": "PresentationDefinition",
               "value": {
                 "value": {
@@ -50926,6 +51392,7 @@
             "key": "@id",
             "schema": {
               "generatedName": "presentationProposalId",
+              "nameOverride": "PresentationProposal",
               "title": "PresentationProposal",
               "value": {
                 "description": "Message identifier",
@@ -50949,6 +51416,7 @@
             "key": "@type",
             "schema": {
               "generatedName": "presentationProposalType",
+              "nameOverride": "PresentationProposal",
               "title": "PresentationProposal",
               "value": {
                 "description": "Message type",
@@ -50973,6 +51441,7 @@
             "key": "comment",
             "schema": {
               "generatedName": "presentationProposalComment",
+              "nameOverride": "PresentationProposal",
               "title": "PresentationProposal",
               "value": {
                 "generatedName": "PresentationProposalComment",
@@ -51037,6 +51506,7 @@
             "key": "@id",
             "schema": {
               "generatedName": "presentationRequestId",
+              "nameOverride": "PresentationRequest",
               "title": "PresentationRequest",
               "value": {
                 "description": "Message identifier",
@@ -51060,6 +51530,7 @@
             "key": "@type",
             "schema": {
               "generatedName": "presentationRequestType",
+              "nameOverride": "PresentationRequest",
               "title": "PresentationRequest",
               "value": {
                 "description": "Message type",
@@ -51084,6 +51555,7 @@
             "key": "comment",
             "schema": {
               "generatedName": "presentationRequestComment",
+              "nameOverride": "PresentationRequest",
               "title": "PresentationRequest",
               "value": {
                 "generatedName": "PresentationRequestComment",
@@ -51168,6 +51640,7 @@
             "key": "roles",
             "schema": {
               "generatedName": "protocolDescriptorRoles",
+              "nameOverride": "ProtocolDescriptor",
               "title": "ProtocolDescriptor",
               "value": {
                 "generatedName": "ProtocolDescriptorRoles",
@@ -51222,6 +51695,7 @@
             "key": "rrid2crid",
             "schema": {
               "generatedName": "publishRevocationsRrid2Crid",
+              "nameOverride": "PublishRevocations",
               "title": "PublishRevocations",
               "value": {
                 "description": "Credential revocation ids by revocation registry id",
@@ -51281,6 +51755,7 @@
             "key": "@id",
             "schema": {
               "generatedName": "queriesId",
+              "nameOverride": "Queries",
               "title": "Queries",
               "value": {
                 "description": "Message identifier",
@@ -51304,6 +51779,7 @@
             "key": "@type",
             "schema": {
               "generatedName": "queriesType",
+              "nameOverride": "Queries",
               "title": "Queries",
               "value": {
                 "description": "Message type",
@@ -51328,6 +51804,7 @@
             "key": "queries",
             "schema": {
               "generatedName": "queriesQueries",
+              "nameOverride": "Queries",
               "title": "Queries",
               "value": {
                 "value": {
@@ -51372,6 +51849,7 @@
             "key": "@id",
             "schema": {
               "generatedName": "queryId",
+              "nameOverride": "Query",
               "title": "Query",
               "value": {
                 "description": "Message identifier",
@@ -51395,6 +51873,7 @@
             "key": "@type",
             "schema": {
               "generatedName": "queryType",
+              "nameOverride": "Query",
               "title": "Query",
               "value": {
                 "description": "Message type",
@@ -51419,6 +51898,7 @@
             "key": "comment",
             "schema": {
               "generatedName": "queryComment",
+              "nameOverride": "Query",
               "title": "Query",
               "value": {
                 "generatedName": "QueryComment",
@@ -51542,6 +52022,7 @@
             "key": "encoded",
             "schema": {
               "generatedName": "rawEncodedEncoded",
+              "nameOverride": "RawEncoded",
               "title": "RawEncoded",
               "value": {
                 "description": "Encoded value",
@@ -51567,6 +52048,7 @@
             "key": "raw",
             "schema": {
               "generatedName": "rawEncodedRaw",
+              "nameOverride": "RawEncoded",
               "title": "RawEncoded",
               "value": {
                 "description": "Raw value",
@@ -51606,6 +52088,7 @@
             "key": "@id",
             "schema": {
               "generatedName": "receiveInvitationRequestId",
+              "nameOverride": "ReceiveInvitationRequest",
               "title": "ReceiveInvitationRequest",
               "value": {
                 "description": "Message identifier",
@@ -51628,6 +52111,7 @@
             "key": "@type",
             "schema": {
               "generatedName": "receiveInvitationRequestType",
+              "nameOverride": "ReceiveInvitationRequest",
               "title": "ReceiveInvitationRequest",
               "value": {
                 "description": "Message type",
@@ -51651,6 +52135,7 @@
             "key": "did",
             "schema": {
               "generatedName": "receiveInvitationRequestDid",
+              "nameOverride": "ReceiveInvitationRequest",
               "title": "ReceiveInvitationRequest",
               "value": {
                 "description": "DID for connection invitation",
@@ -51674,6 +52159,7 @@
             "key": "imageUrl",
             "schema": {
               "generatedName": "receiveInvitationRequestImageUrl",
+              "nameOverride": "ReceiveInvitationRequest",
               "title": "ReceiveInvitationRequest",
               "value": {
                 "generatedName": "ReceiveInvitationRequestImageUrl",
@@ -51703,6 +52189,7 @@
             "key": "label",
             "schema": {
               "generatedName": "receiveInvitationRequestLabel",
+              "nameOverride": "ReceiveInvitationRequest",
               "title": "ReceiveInvitationRequest",
               "value": {
                 "description": "Optional label for connection invitation",
@@ -51725,6 +52212,7 @@
             "key": "recipientKeys",
             "schema": {
               "generatedName": "receiveInvitationRequestRecipientKeys",
+              "nameOverride": "ReceiveInvitationRequest",
               "title": "ReceiveInvitationRequest",
               "value": {
                 "description": "List of recipient keys",
@@ -51754,6 +52242,7 @@
             "key": "routingKeys",
             "schema": {
               "generatedName": "receiveInvitationRequestRoutingKeys",
+              "nameOverride": "ReceiveInvitationRequest",
               "title": "ReceiveInvitationRequest",
               "value": {
                 "description": "List of routing keys",
@@ -51783,6 +52272,7 @@
             "key": "serviceEndpoint",
             "schema": {
               "generatedName": "receiveInvitationRequestServiceEndpoint",
+              "nameOverride": "ReceiveInvitationRequest",
               "title": "ReceiveInvitationRequest",
               "value": {
                 "description": "Service endpoint at which to reach this agent",
@@ -51821,6 +52311,7 @@
             "key": "wallet_key",
             "schema": {
               "generatedName": "removeWalletRequestWalletKey",
+              "nameOverride": "RemoveWalletRequest",
               "title": "RemoveWalletRequest",
               "value": {
                 "description": "Master key used for key derivation. Only required for             unmanaged wallets.",
@@ -51915,6 +52406,7 @@
             "key": "credential_definition_id",
             "schema": {
               "generatedName": "revRegCreateRequestCredentialDefinitionId",
+              "nameOverride": "RevRegCreateRequest",
               "title": "RevRegCreateRequest",
               "value": {
                 "description": "Credential definition identifier",
@@ -51938,6 +52430,7 @@
             "key": "max_cred_num",
             "schema": {
               "generatedName": "revRegCreateRequestMaxCredNum",
+              "nameOverride": "RevRegCreateRequest",
               "title": "RevRegCreateRequest",
               "value": {
                 "description": "Revocation registry size",
@@ -51978,6 +52471,7 @@
             "key": "result",
             "schema": {
               "generatedName": "revRegIssuedResultResult",
+              "nameOverride": "RevRegIssuedResult",
               "title": "RevRegIssuedResult",
               "value": {
                 "description": "Number of credentials issued against revocation registry",
@@ -52017,6 +52511,7 @@
             "key": "result",
             "schema": {
               "generatedName": "revRegResultResult",
+              "nameOverride": "RevRegResult",
               "title": "RevRegResult",
               "value": {
                 "generatedName": "RevRegResultResult",
@@ -52089,6 +52584,7 @@
             "key": "accum_calculated",
             "schema": {
               "generatedName": "revRegWalletUpdatedResultAccumCalculated",
+              "nameOverride": "RevRegWalletUpdatedResult",
               "title": "RevRegWalletUpdatedResult",
               "value": {
                 "allOf": [],
@@ -52115,6 +52611,7 @@
             "key": "accum_fixed",
             "schema": {
               "generatedName": "revRegWalletUpdatedResultAccumFixed",
+              "nameOverride": "RevRegWalletUpdatedResult",
               "title": "RevRegWalletUpdatedResult",
               "value": {
                 "allOf": [],
@@ -52141,6 +52638,7 @@
             "key": "rev_reg_delta",
             "schema": {
               "generatedName": "revRegWalletUpdatedResultRevRegDelta",
+              "nameOverride": "RevRegWalletUpdatedResult",
               "title": "RevRegWalletUpdatedResult",
               "value": {
                 "allOf": [],
@@ -52183,6 +52681,7 @@
             "key": "rev_reg_ids",
             "schema": {
               "generatedName": "revRegsCreatedRevRegIds",
+              "nameOverride": "RevRegsCreated",
               "title": "RevRegsCreated",
               "value": {
                 "value": {
@@ -52244,6 +52743,7 @@
             "key": "comment",
             "schema": {
               "generatedName": "revokeRequestComment",
+              "nameOverride": "RevokeRequest",
               "title": "RevokeRequest",
               "value": {
                 "description": "Optional comment to include in revocation notification",
@@ -52265,6 +52765,7 @@
             "key": "connection_id",
             "schema": {
               "generatedName": "revokeRequestConnectionId",
+              "nameOverride": "RevokeRequest",
               "title": "RevokeRequest",
               "value": {
                 "description": "Connection ID to which the revocation notification will be sent; required if notify is true",
@@ -52288,6 +52789,7 @@
             "key": "cred_ex_id",
             "schema": {
               "generatedName": "revokeRequestCredExId",
+              "nameOverride": "RevokeRequest",
               "title": "RevokeRequest",
               "value": {
                 "description": "Credential exchange identifier",
@@ -52311,6 +52813,7 @@
             "key": "cred_rev_id",
             "schema": {
               "generatedName": "revokeRequestCredRevId",
+              "nameOverride": "RevokeRequest",
               "title": "RevokeRequest",
               "value": {
                 "description": "Credential revocation identifier",
@@ -52334,6 +52837,7 @@
             "key": "notify",
             "schema": {
               "generatedName": "revokeRequestNotify",
+              "nameOverride": "RevokeRequest",
               "title": "RevokeRequest",
               "value": {
                 "description": "Send a notification to the credential recipient",
@@ -52355,6 +52859,7 @@
             "key": "notify_version",
             "schema": {
               "generatedName": "revokeRequestNotifyVersion",
+              "nameOverride": "RevokeRequest",
               "title": "RevokeRequest",
               "value": {
                 "description": "Specify which version of the revocation notification should be sent",
@@ -52389,6 +52894,7 @@
             "key": "publish",
             "schema": {
               "generatedName": "revokeRequestPublish",
+              "nameOverride": "RevokeRequest",
               "title": "RevokeRequest",
               "value": {
                 "description": "(True) publish revocation to ledger immediately, or (default, False) mark it pending",
@@ -52410,6 +52916,7 @@
             "key": "rev_reg_id",
             "schema": {
               "generatedName": "revokeRequestRevRegId",
+              "nameOverride": "RevokeRequest",
               "title": "RevokeRequest",
               "value": {
                 "description": "Revocation registry identifier",
@@ -52433,6 +52940,7 @@
             "key": "thread_id",
             "schema": {
               "generatedName": "revokeRequestThreadId",
+              "nameOverride": "RevokeRequest",
               "title": "RevokeRequest",
               "value": {
                 "description": "Thread ID of the credential exchange message thread resulting in the credential now being revoked; required if notify is true",
@@ -52470,6 +52978,7 @@
             "key": "connection_id",
             "schema": {
               "generatedName": "routeRecordConnectionId",
+              "nameOverride": "RouteRecord",
               "title": "RouteRecord",
               "value": {
                 "schema": {
@@ -52490,6 +52999,7 @@
             "key": "created_at",
             "schema": {
               "generatedName": "routeRecordCreatedAt",
+              "nameOverride": "RouteRecord",
               "title": "RouteRecord",
               "value": {
                 "description": "Time of record creation",
@@ -52527,6 +53037,7 @@
             "key": "record_id",
             "schema": {
               "generatedName": "routeRecordRecordId",
+              "nameOverride": "RouteRecord",
               "title": "RouteRecord",
               "value": {
                 "schema": {
@@ -52547,6 +53058,7 @@
             "key": "role",
             "schema": {
               "generatedName": "routeRecordRole",
+              "nameOverride": "RouteRecord",
               "title": "RouteRecord",
               "value": {
                 "schema": {
@@ -52567,6 +53079,7 @@
             "key": "state",
             "schema": {
               "generatedName": "routeRecordState",
+              "nameOverride": "RouteRecord",
               "title": "RouteRecord",
               "value": {
                 "description": "Current record state",
@@ -52589,6 +53102,7 @@
             "key": "updated_at",
             "schema": {
               "generatedName": "routeRecordUpdatedAt",
+              "nameOverride": "RouteRecord",
               "title": "RouteRecord",
               "value": {
                 "description": "Time of last record update",
@@ -52612,6 +53126,7 @@
             "key": "wallet_id",
             "schema": {
               "generatedName": "routeRecordWalletId",
+              "nameOverride": "RouteRecord",
               "title": "RouteRecord",
               "value": {
                 "schema": {
@@ -52648,6 +53163,7 @@
             "key": "attrNames",
             "schema": {
               "generatedName": "schemaAttrNames",
+              "nameOverride": "Schema",
               "title": "Schema",
               "value": {
                 "description": "Schema attribute names",
@@ -52676,6 +53192,7 @@
             "key": "id",
             "schema": {
               "generatedName": "schemaId",
+              "nameOverride": "Schema",
               "title": "Schema",
               "value": {
                 "description": "Schema identifier",
@@ -52699,6 +53216,7 @@
             "key": "name",
             "schema": {
               "generatedName": "schemaName",
+              "nameOverride": "Schema",
               "title": "Schema",
               "value": {
                 "description": "Schema name",
@@ -52721,6 +53239,7 @@
             "key": "seqNo",
             "schema": {
               "generatedName": "schemaSeqNo",
+              "nameOverride": "Schema",
               "title": "Schema",
               "value": {
                 "description": "Schema sequence number",
@@ -52744,6 +53263,7 @@
             "key": "ver",
             "schema": {
               "generatedName": "schemaVer",
+              "nameOverride": "Schema",
               "title": "Schema",
               "value": {
                 "description": "Node protocol version",
@@ -52767,6 +53287,7 @@
             "key": "version",
             "schema": {
               "generatedName": "schemaVersion",
+              "nameOverride": "Schema",
               "title": "Schema",
               "value": {
                 "description": "Schema version",
@@ -52806,6 +53327,7 @@
             "key": "schema",
             "schema": {
               "generatedName": "schemaGetResultSchema",
+              "nameOverride": "SchemaGetResult",
               "title": "SchemaGetResult",
               "value": {
                 "generatedName": "SchemaGetResultSchema",
@@ -52845,6 +53367,7 @@
             "key": "required",
             "schema": {
               "generatedName": "schemaInputDescriptorRequired",
+              "nameOverride": "SchemaInputDescriptor",
               "title": "SchemaInputDescriptor",
               "value": {
                 "description": "Required",
@@ -52868,6 +53391,7 @@
             "key": "uri",
             "schema": {
               "generatedName": "schemaInputDescriptorUri",
+              "nameOverride": "SchemaInputDescriptor",
               "title": "SchemaInputDescriptor",
               "value": {
                 "description": "URI",
@@ -52978,6 +53502,7 @@
             "key": "schema",
             "schema": {
               "generatedName": "schemaSendResultSchema",
+              "nameOverride": "SchemaSendResult",
               "title": "SchemaSendResult",
               "value": {
                 "generatedName": "SchemaSendResultSchema",
@@ -53035,6 +53560,7 @@
             "key": "schema_ids",
             "schema": {
               "generatedName": "schemasCreatedResultSchemaIds",
+              "nameOverride": "SchemasCreatedResult",
               "title": "SchemasCreatedResult",
               "value": {
                 "value": {
@@ -53079,6 +53605,7 @@
             "key": "oneof_filter",
             "schema": {
               "generatedName": "schemasInputDescriptorFilterOneofFilter",
+              "nameOverride": "SchemasInputDescriptorFilter",
               "title": "SchemasInputDescriptorFilter",
               "value": {
                 "description": "oneOf",
@@ -53101,6 +53628,7 @@
             "key": "uri_groups",
             "schema": {
               "generatedName": "schemasInputDescriptorFilterUriGroups",
+              "nameOverride": "SchemasInputDescriptorFilter",
               "title": "SchemasInputDescriptorFilter",
               "value": {
                 "value": {
@@ -53182,6 +53710,7 @@
             "key": "content",
             "schema": {
               "generatedName": "sendMessageContent",
+              "nameOverride": "SendMessage",
               "title": "SendMessage",
               "value": {
                 "description": "Message content",
@@ -53243,6 +53772,7 @@
             "key": "routingKeys",
             "schema": {
               "generatedName": "serviceDecoratorRoutingKeys",
+              "nameOverride": "ServiceDecorator",
               "title": "ServiceDecorator",
               "value": {
                 "description": "List of routing keys",
@@ -53352,6 +53882,7 @@
             "key": "error",
             "schema": {
               "generatedName": "signResponseError",
+              "nameOverride": "SignResponse",
               "title": "SignResponse",
               "value": {
                 "description": "Error text",
@@ -53373,6 +53904,7 @@
             "key": "signed_doc",
             "schema": {
               "generatedName": "signResponseSignedDoc",
+              "nameOverride": "SignResponse",
               "title": "SignResponse",
               "value": {
                 "allOf": [],
@@ -53415,6 +53947,7 @@
             "key": "challenge",
             "schema": {
               "generatedName": "signatureOptionsChallenge",
+              "nameOverride": "SignatureOptions",
               "title": "SignatureOptions",
               "value": {
                 "schema": {
@@ -53437,6 +53970,7 @@
             "key": "domain",
             "schema": {
               "generatedName": "signatureOptionsDomain",
+              "nameOverride": "SignatureOptions",
               "title": "SignatureOptions",
               "value": {
                 "schema": {
@@ -53475,6 +54009,7 @@
             "key": "type",
             "schema": {
               "generatedName": "signatureOptionsType",
+              "nameOverride": "SignatureOptions",
               "title": "SignatureOptions",
               "value": {
                 "schema": {
@@ -53562,6 +54097,7 @@
             "key": "count",
             "schema": {
               "generatedName": "submissionRequirementsCount",
+              "nameOverride": "SubmissionRequirements",
               "title": "SubmissionRequirements",
               "value": {
                 "description": "Count Value",
@@ -53586,6 +54122,7 @@
             "key": "from",
             "schema": {
               "generatedName": "submissionRequirementsFrom",
+              "nameOverride": "SubmissionRequirements",
               "title": "SubmissionRequirements",
               "value": {
                 "description": "From",
@@ -53609,6 +54146,7 @@
             "key": "from_nested",
             "schema": {
               "generatedName": "submissionRequirementsFromNested",
+              "nameOverride": "SubmissionRequirements",
               "title": "SubmissionRequirements",
               "value": {
                 "value": {
@@ -53636,6 +54174,7 @@
             "key": "max",
             "schema": {
               "generatedName": "submissionRequirementsMax",
+              "nameOverride": "SubmissionRequirements",
               "title": "SubmissionRequirements",
               "value": {
                 "description": "Max Value",
@@ -53660,6 +54199,7 @@
             "key": "min",
             "schema": {
               "generatedName": "submissionRequirementsMin",
+              "nameOverride": "SubmissionRequirements",
               "title": "SubmissionRequirements",
               "value": {
                 "description": "Min Value",
@@ -53684,6 +54224,7 @@
             "key": "name",
             "schema": {
               "generatedName": "submissionRequirementsName",
+              "nameOverride": "SubmissionRequirements",
               "title": "SubmissionRequirements",
               "value": {
                 "description": "Name",
@@ -53707,6 +54248,7 @@
             "key": "purpose",
             "schema": {
               "generatedName": "submissionRequirementsPurpose",
+              "nameOverride": "SubmissionRequirements",
               "title": "SubmissionRequirements",
               "value": {
                 "description": "Purpose",
@@ -53730,6 +54272,7 @@
             "key": "rule",
             "schema": {
               "generatedName": "submissionRequirementsRule",
+              "nameOverride": "SubmissionRequirements",
               "title": "SubmissionRequirements",
               "value": {
                 "description": "Selection",
@@ -53782,6 +54325,7 @@
             "key": "mechanism",
             "schema": {
               "generatedName": "taaAcceptMechanism",
+              "nameOverride": "TAAAccept",
               "title": "TAAAccept",
               "value": {
                 "schema": {
@@ -53802,6 +54346,7 @@
             "key": "text",
             "schema": {
               "generatedName": "taaAcceptText",
+              "nameOverride": "TAAAccept",
               "title": "TAAAccept",
               "value": {
                 "schema": {
@@ -53822,6 +54367,7 @@
             "key": "version",
             "schema": {
               "generatedName": "taaAcceptVersion",
+              "nameOverride": "TAAAccept",
               "title": "TAAAccept",
               "value": {
                 "schema": {
@@ -53858,6 +54404,7 @@
             "key": "mechanism",
             "schema": {
               "generatedName": "taaAcceptanceMechanism",
+              "nameOverride": "TAAAcceptance",
               "title": "TAAAcceptance",
               "value": {
                 "schema": {
@@ -53878,6 +54425,7 @@
             "key": "time",
             "schema": {
               "generatedName": "taaAcceptanceTime",
+              "nameOverride": "TAAAcceptance",
               "title": "TAAAcceptance",
               "value": {
                 "schema": {
@@ -53917,6 +54465,7 @@
             "key": "aml_record",
             "schema": {
               "generatedName": "taaInfoAmlRecord",
+              "nameOverride": "TAAInfo",
               "title": "TAAInfo",
               "value": {
                 "generatedName": "TaaInfoAmlRecord",
@@ -53940,6 +54489,7 @@
             "key": "taa_accepted",
             "schema": {
               "generatedName": "taaInfoTaaAccepted",
+              "nameOverride": "TAAInfo",
               "title": "TAAInfo",
               "value": {
                 "generatedName": "TaaInfoTaaAccepted",
@@ -53963,6 +54513,7 @@
             "key": "taa_record",
             "schema": {
               "generatedName": "taaInfoTaaRecord",
+              "nameOverride": "TAAInfo",
               "title": "TAAInfo",
               "value": {
                 "generatedName": "TaaInfoTaaRecord",
@@ -53986,6 +54537,7 @@
             "key": "taa_required",
             "schema": {
               "generatedName": "taaInfoTaaRequired",
+              "nameOverride": "TAAInfo",
               "title": "TAAInfo",
               "value": {
                 "schema": {
@@ -54022,6 +54574,7 @@
             "key": "digest",
             "schema": {
               "generatedName": "taaRecordDigest",
+              "nameOverride": "TAARecord",
               "title": "TAARecord",
               "value": {
                 "schema": {
@@ -54042,6 +54595,7 @@
             "key": "text",
             "schema": {
               "generatedName": "taaRecordText",
+              "nameOverride": "TAARecord",
               "title": "TAARecord",
               "value": {
                 "schema": {
@@ -54062,6 +54616,7 @@
             "key": "version",
             "schema": {
               "generatedName": "taaRecordVersion",
+              "nameOverride": "TAARecord",
               "title": "TAARecord",
               "value": {
                 "schema": {
@@ -54098,6 +54653,7 @@
             "key": "result",
             "schema": {
               "generatedName": "taaResultResult",
+              "nameOverride": "TAAResult",
               "title": "TAAResult",
               "value": {
                 "generatedName": "TaaResultResult",
@@ -54137,6 +54693,7 @@
             "key": "message",
             "schema": {
               "generatedName": "tailsDeleteResponseMessage",
+              "nameOverride": "TailsDeleteResponse",
               "title": "TailsDeleteResponse",
               "value": {
                 "schema": {
@@ -54173,6 +54730,7 @@
             "key": "transaction_my_job",
             "schema": {
               "generatedName": "transactionJobsTransactionMyJob",
+              "nameOverride": "TransactionJobs",
               "title": "TransactionJobs",
               "value": {
                 "description": "My transaction related job",
@@ -54212,6 +54770,7 @@
             "key": "transaction_their_job",
             "schema": {
               "generatedName": "transactionJobsTransactionTheirJob",
+              "nameOverride": "TransactionJobs",
               "title": "TransactionJobs",
               "value": {
                 "description": "Their transaction related job",
@@ -54267,6 +54826,7 @@
             "key": "results",
             "schema": {
               "generatedName": "transactionListResults",
+              "nameOverride": "TransactionList",
               "title": "TransactionList",
               "value": {
                 "description": "List of transaction records",
@@ -54310,6 +54870,7 @@
             "key": "_type",
             "schema": {
               "generatedName": "transactionRecordType",
+              "nameOverride": "TransactionRecord",
               "title": "TransactionRecord",
               "value": {
                 "description": "Transaction type",
@@ -54332,6 +54893,7 @@
             "key": "connection_id",
             "schema": {
               "generatedName": "transactionRecordConnectionId",
+              "nameOverride": "TransactionRecord",
               "title": "TransactionRecord",
               "value": {
                 "description": "The connection identifier for thie particular transaction record",
@@ -54354,6 +54916,7 @@
             "key": "created_at",
             "schema": {
               "generatedName": "transactionRecordCreatedAt",
+              "nameOverride": "TransactionRecord",
               "title": "TransactionRecord",
               "value": {
                 "description": "Time of record creation",
@@ -54377,6 +54940,7 @@
             "key": "endorser_write_txn",
             "schema": {
               "generatedName": "transactionRecordEndorserWriteTxn",
+              "nameOverride": "TransactionRecord",
               "title": "TransactionRecord",
               "value": {
                 "description": "If True, Endorser will write the transaction after endorsing it",
@@ -54399,6 +54963,7 @@
             "key": "formats",
             "schema": {
               "generatedName": "transactionRecordFormats",
+              "nameOverride": "TransactionRecord",
               "title": "TransactionRecord",
               "value": {
                 "value": {
@@ -54437,6 +55002,7 @@
             "key": "messages_attach",
             "schema": {
               "generatedName": "transactionRecordMessagesAttach",
+              "nameOverride": "TransactionRecord",
               "title": "TransactionRecord",
               "value": {
                 "value": {
@@ -54467,6 +55033,7 @@
             "key": "meta_data",
             "schema": {
               "generatedName": "transactionRecordMetaData",
+              "nameOverride": "TransactionRecord",
               "title": "TransactionRecord",
               "value": {
                 "allOf": [],
@@ -54492,6 +55059,7 @@
             "key": "signature_request",
             "schema": {
               "generatedName": "transactionRecordSignatureRequest",
+              "nameOverride": "TransactionRecord",
               "title": "TransactionRecord",
               "value": {
                 "value": {
@@ -54522,6 +55090,7 @@
             "key": "signature_response",
             "schema": {
               "generatedName": "transactionRecordSignatureResponse",
+              "nameOverride": "TransactionRecord",
               "title": "TransactionRecord",
               "value": {
                 "value": {
@@ -54552,6 +55121,7 @@
             "key": "state",
             "schema": {
               "generatedName": "transactionRecordState",
+              "nameOverride": "TransactionRecord",
               "title": "TransactionRecord",
               "value": {
                 "description": "Current record state",
@@ -54574,6 +55144,7 @@
             "key": "thread_id",
             "schema": {
               "generatedName": "transactionRecordThreadId",
+              "nameOverride": "TransactionRecord",
               "title": "TransactionRecord",
               "value": {
                 "description": "Thread Identifier",
@@ -54596,6 +55167,7 @@
             "key": "timing",
             "schema": {
               "generatedName": "transactionRecordTiming",
+              "nameOverride": "TransactionRecord",
               "title": "TransactionRecord",
               "value": {
                 "allOf": [],
@@ -54621,6 +55193,7 @@
             "key": "trace",
             "schema": {
               "generatedName": "transactionRecordTrace",
+              "nameOverride": "TransactionRecord",
               "title": "TransactionRecord",
               "value": {
                 "description": "Record trace information, based on agent configuration",
@@ -54642,6 +55215,7 @@
             "key": "transaction_id",
             "schema": {
               "generatedName": "transactionRecordTransactionId",
+              "nameOverride": "TransactionRecord",
               "title": "TransactionRecord",
               "value": {
                 "description": "Transaction identifier",
@@ -54664,6 +55238,7 @@
             "key": "updated_at",
             "schema": {
               "generatedName": "transactionRecordUpdatedAt",
+              "nameOverride": "TransactionRecord",
               "title": "TransactionRecord",
               "value": {
                 "description": "Time of last record update",
@@ -54703,6 +55278,7 @@
             "key": "sent",
             "schema": {
               "generatedName": "txnOrCredentialDefinitionSendResultSent",
+              "nameOverride": "TxnOrCredentialDefinitionSendResult",
               "title": "TxnOrCredentialDefinitionSendResult",
               "value": {
                 "generatedName": "TxnOrCredentialDefinitionSendResultSent",
@@ -54726,6 +55302,7 @@
             "key": "txn",
             "schema": {
               "generatedName": "txnOrCredentialDefinitionSendResultTxn",
+              "nameOverride": "TxnOrCredentialDefinitionSendResult",
               "title": "TxnOrCredentialDefinitionSendResult",
               "value": {
                 "generatedName": "TxnOrCredentialDefinitionSendResultTxn",
@@ -54765,6 +55342,7 @@
             "key": "sent",
             "schema": {
               "generatedName": "txnOrPublishRevocationsResultSent",
+              "nameOverride": "TxnOrPublishRevocationsResult",
               "title": "TxnOrPublishRevocationsResult",
               "value": {
                 "generatedName": "TxnOrPublishRevocationsResultSent",
@@ -54788,6 +55366,7 @@
             "key": "txn",
             "schema": {
               "generatedName": "txnOrPublishRevocationsResultTxn",
+              "nameOverride": "TxnOrPublishRevocationsResult",
               "title": "TxnOrPublishRevocationsResult",
               "value": {
                 "generatedName": "TxnOrPublishRevocationsResultTxn",
@@ -54827,6 +55406,7 @@
             "key": "success",
             "schema": {
               "generatedName": "txnOrRegisterLedgerNymResponseSuccess",
+              "nameOverride": "TxnOrRegisterLedgerNymResponse",
               "title": "TxnOrRegisterLedgerNymResponse",
               "value": {
                 "description": "Success of nym registration operation",
@@ -54849,6 +55429,7 @@
             "key": "txn",
             "schema": {
               "generatedName": "txnOrRegisterLedgerNymResponseTxn",
+              "nameOverride": "TxnOrRegisterLedgerNymResponse",
               "title": "TxnOrRegisterLedgerNymResponse",
               "value": {
                 "generatedName": "TxnOrRegisterLedgerNymResponseTxn",
@@ -54888,6 +55469,7 @@
             "key": "sent",
             "schema": {
               "generatedName": "txnOrRevRegResultSent",
+              "nameOverride": "TxnOrRevRegResult",
               "title": "TxnOrRevRegResult",
               "value": {
                 "generatedName": "TxnOrRevRegResultSent",
@@ -54911,6 +55493,7 @@
             "key": "txn",
             "schema": {
               "generatedName": "txnOrRevRegResultTxn",
+              "nameOverride": "TxnOrRevRegResult",
               "title": "TxnOrRevRegResult",
               "value": {
                 "generatedName": "TxnOrRevRegResultTxn",
@@ -54950,6 +55533,7 @@
             "key": "sent",
             "schema": {
               "generatedName": "txnOrSchemaSendResultSent",
+              "nameOverride": "TxnOrSchemaSendResult",
               "title": "TxnOrSchemaSendResult",
               "value": {
                 "generatedName": "TxnOrSchemaSendResultSent",
@@ -54973,6 +55557,7 @@
             "key": "txn",
             "schema": {
               "generatedName": "txnOrSchemaSendResultTxn",
+              "nameOverride": "TxnOrSchemaSendResult",
               "title": "TxnOrSchemaSendResult",
               "value": {
                 "generatedName": "TxnOrSchemaSendResultTxn",
@@ -55012,6 +55597,7 @@
             "key": "image_url",
             "schema": {
               "generatedName": "updateWalletRequestImageUrl",
+              "nameOverride": "UpdateWalletRequest",
               "title": "UpdateWalletRequest",
               "value": {
                 "description": "Image url for this wallet. This image url is publicized            (self-attested) to other agents as part of forming a connection.",
@@ -55034,6 +55620,7 @@
             "key": "label",
             "schema": {
               "generatedName": "updateWalletRequestLabel",
+              "nameOverride": "UpdateWalletRequest",
               "title": "UpdateWalletRequest",
               "value": {
                 "description": "Label for this wallet. This label is publicized            (self-attested) to other agents as part of forming a connection.",
@@ -55056,6 +55643,7 @@
             "key": "wallet_dispatch_type",
             "schema": {
               "generatedName": "updateWalletRequestWalletDispatchType",
+              "nameOverride": "UpdateWalletRequest",
               "title": "UpdateWalletRequest",
               "value": {
                 "description": "Webhook target dispatch type for this wallet.             default - Dispatch only to webhooks associated with this wallet.             base - Dispatch only to webhooks associated with the base wallet.             both - Dispatch to both webhook targets.",
@@ -55095,6 +55683,7 @@
             "key": "wallet_webhook_urls",
             "schema": {
               "generatedName": "updateWalletRequestWalletWebhookUrls",
+              "nameOverride": "UpdateWalletRequest",
               "title": "UpdateWalletRequest",
               "value": {
                 "description": "List of Webhook URLs associated with this subwallet",
@@ -63462,6 +64051,7 @@
             "key": "contexts",
             "schema": {
               "generatedName": "vcRecordContexts",
+              "nameOverride": "VCRecord",
               "title": "VCRecord",
               "value": {
                 "value": {
@@ -63490,6 +64080,7 @@
             "key": "cred_tags",
             "schema": {
               "generatedName": "vcRecordCredTags",
+              "nameOverride": "VCRecord",
               "title": "VCRecord",
               "value": {
                 "key": {
@@ -63524,6 +64115,7 @@
             "key": "cred_value",
             "schema": {
               "generatedName": "vcRecordCredValue",
+              "nameOverride": "VCRecord",
               "title": "VCRecord",
               "value": {
                 "allOf": [],
@@ -63550,6 +64142,7 @@
             "key": "expanded_types",
             "schema": {
               "generatedName": "vcRecordExpandedTypes",
+              "nameOverride": "VCRecord",
               "title": "VCRecord",
               "value": {
                 "value": {
@@ -63577,6 +64170,7 @@
             "key": "given_id",
             "schema": {
               "generatedName": "vcRecordGivenId",
+              "nameOverride": "VCRecord",
               "title": "VCRecord",
               "value": {
                 "description": "Credential identifier",
@@ -63599,6 +64193,7 @@
             "key": "issuer_id",
             "schema": {
               "generatedName": "vcRecordIssuerId",
+              "nameOverride": "VCRecord",
               "title": "VCRecord",
               "value": {
                 "description": "Issuer identifier",
@@ -63621,6 +64216,7 @@
             "key": "proof_types",
             "schema": {
               "generatedName": "vcRecordProofTypes",
+              "nameOverride": "VCRecord",
               "title": "VCRecord",
               "value": {
                 "value": {
@@ -63648,6 +64244,7 @@
             "key": "record_id",
             "schema": {
               "generatedName": "vcRecordRecordId",
+              "nameOverride": "VCRecord",
               "title": "VCRecord",
               "value": {
                 "description": "Record identifier",
@@ -63670,6 +64267,7 @@
             "key": "schema_ids",
             "schema": {
               "generatedName": "vcRecordSchemaIds",
+              "nameOverride": "VCRecord",
               "title": "VCRecord",
               "value": {
                 "value": {
@@ -63697,6 +64295,7 @@
             "key": "subject_ids",
             "schema": {
               "generatedName": "vcRecordSubjectIds",
+              "nameOverride": "VCRecord",
               "title": "VCRecord",
               "value": {
                 "value": {
@@ -63740,6 +64339,7 @@
             "key": "results",
             "schema": {
               "generatedName": "vcRecordListResults",
+              "nameOverride": "VCRecordList",
               "title": "VCRecordList",
               "value": {
                 "value": {
@@ -63799,6 +64399,7 @@
             "key": "verkey",
             "schema": {
               "generatedName": "verifyRequestVerkey",
+              "nameOverride": "VerifyRequest",
               "title": "VerifyRequest",
               "value": {
                 "description": "Verkey to use for doc verification",
@@ -63836,6 +64437,7 @@
             "key": "error",
             "schema": {
               "generatedName": "verifyResponseError",
+              "nameOverride": "VerifyResponse",
               "title": "VerifyResponse",
               "value": {
                 "description": "Error text",
@@ -64139,6 +64741,7 @@
             "key": "results",
             "schema": {
               "generatedName": "walletListResults",
+              "nameOverride": "WalletList",
               "title": "WalletList",
               "value": {
                 "description": "List of wallet records",
@@ -64199,6 +64802,7 @@
             "key": "created_at",
             "schema": {
               "generatedName": "walletRecordCreatedAt",
+              "nameOverride": "WalletRecord",
               "title": "WalletRecord",
               "value": {
                 "description": "Time of record creation",
@@ -64250,6 +64854,7 @@
             "key": "settings",
             "schema": {
               "generatedName": "walletRecordSettings",
+              "nameOverride": "WalletRecord",
               "title": "WalletRecord",
               "value": {
                 "allOf": [],
@@ -64276,6 +64881,7 @@
             "key": "state",
             "schema": {
               "generatedName": "walletRecordState",
+              "nameOverride": "WalletRecord",
               "title": "WalletRecord",
               "value": {
                 "description": "Current record state",
@@ -64298,6 +64904,7 @@
             "key": "updated_at",
             "schema": {
               "generatedName": "walletRecordUpdatedAt",
+              "nameOverride": "WalletRecord",
               "title": "WalletRecord",
               "value": {
                 "description": "Time of last record update",
@@ -64353,6 +64960,7 @@
             "key": "ledger_id",
             "schema": {
               "generatedName": "writeLedgerRequestLedgerId",
+              "nameOverride": "WriteLedgerRequest",
               "title": "WriteLedgerRequest",
               "value": {
                 "schema": {
