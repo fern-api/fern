@@ -23,6 +23,7 @@ const INSTRUMENTATION_PATH = "packages/fern-docs/bundle/.next/server/instrumenta
 const NPMRC_NAME = ".npmrc";
 const PNPMFILE_CJS_NAME = ".pnpmfile.cjs";
 const PNPM_WORKSPACE_YAML_NAME = "pnpm-workspace.yaml";
+const COREPACK_MISSING_KEYID_ERROR_MESSAGE = 'Cannot find matching keyid: {"signatures":';
 
 export function getLocalStorageFolder(): AbsoluteFilePath {
     return join(AbsoluteFilePath.of(homedir()), RelativeFilePath.of(LOCAL_STORAGE_FOLDER));
@@ -238,7 +239,10 @@ export async function downloadBundle({
             } catch (error) {
                 if (error instanceof Error) {
                     // If error message contains "Cannot find matching keyid:", try to upgrade corepack
-                    if (typeof error?.message === "string" && error.message.includes("Cannot find matching keyid:")) {
+                    if (
+                        typeof error?.message === "string" &&
+                        error.message.includes(COREPACK_MISSING_KEYID_ERROR_MESSAGE)
+                    ) {
                         logger.debug("Encountered 'Cannot find matching keyid:', attempting to upgrade corepack");
                         try {
                             await loggingExeca(logger, "npm", ["install", "-g", "corepack@latest"], {
@@ -258,6 +262,8 @@ export async function downloadBundle({
                                 `Failed to install required package after updating corepack due to error: ${installError}`
                             );
                         }
+                    } else {
+                        throw contactFernSupportError(`Failed to install required package due to error: ${error}.`);
                     }
                 } else {
                     throw contactFernSupportError(`Failed to install required package due to error: ${error}.`);
