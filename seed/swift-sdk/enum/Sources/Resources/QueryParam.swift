@@ -9,6 +9,12 @@ public final class QueryParamClient: Sendable {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/query", 
+            queryParams: [
+                "operand": operand.rawValue, 
+                "maybeOperand": maybeOperand.map { .string($0) }, 
+                "operandOrColor": operandOrColor.rawValue, 
+                "maybeOperandOrColor": maybeOperandOrColor.map { .string($0) }
+            ], 
             requestOptions: requestOptions
         )
     }
@@ -17,6 +23,12 @@ public final class QueryParamClient: Sendable {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/query-list", 
+            queryParams: [
+                "operand": operand.rawValue, 
+                "maybeOperand": maybeOperand.map { .string($0) }, 
+                "operandOrColor": operandOrColor.rawValue, 
+                "maybeOperandOrColor": maybeOperandOrColor.map { .string($0) }
+            ], 
             requestOptions: requestOptions
         )
     }

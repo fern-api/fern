@@ -17,6 +17,10 @@ public final class ServiceClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/resource", 
+            queryParams: [
+                "page_limit": pageLimit, 
+                "beforeDate": beforeDate
+            ], 
             requestOptions: requestOptions
         )
     }

@@ -62,6 +62,13 @@ type MethodCall = {
     multiline?: true;
 };
 
+type MethodCallWithTrailingClosure = {
+    type: "method-call-with-trailing-closure";
+    target: Expression;
+    methodName: string;
+    closureBody: Expression;
+};
+
 type ContextualMethodCall = {
     type: "contextual-method-call";
     methodName: string;
@@ -93,6 +100,7 @@ type InternalExpression =
     | ClassInitialization
     | DictionaryLiteral
     | MethodCall
+    | MethodCallWithTrailingClosure
     | ContextualMethodCall
     | Try
     | Await
@@ -163,6 +171,14 @@ export class Expression extends AstNode {
                     arguments_: this.internalExpression.arguments_,
                     multiline: !!this.internalExpression.multiline
                 });
+                break;
+            case "method-call-with-trailing-closure":
+                this.internalExpression.target.write(writer);
+                writer.write(".");
+                writer.write(this.internalExpression.methodName);
+                writer.write(" { ");
+                this.internalExpression.closureBody.write(writer);
+                writer.write(" }");
                 break;
             case "contextual-method-call":
                 writer.write(".");
@@ -271,6 +287,10 @@ export class Expression extends AstNode {
 
     public static methodCall(params: Omit<MethodCall, "type">): Expression {
         return new this({ type: "method-call", ...params });
+    }
+
+    public static methodCallWithTrailingClosure(params: Omit<MethodCallWithTrailingClosure, "type">): Expression {
+        return new this({ type: "method-call-with-trailing-closure", ...params });
     }
 
     public static contextualMethodCall(params: Omit<ContextualMethodCall, "type">): Expression {

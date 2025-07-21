@@ -25,6 +25,9 @@ public final class OrganizationsClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/\(tenantId)/organizations/\(organizationId)/search", 
+            queryParams: [
+                "limit": limit.map { .string($0) }
+            ], 
             requestOptions: requestOptions
         )
     }

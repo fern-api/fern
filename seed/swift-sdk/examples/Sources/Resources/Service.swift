@@ -28,6 +28,10 @@ public final class ServiceClient: Sendable {
             headers: [
                 "X-API-Version": xApiVersion
             ], 
+            queryParams: [
+                "shallow": shallow.map { .string($0) }, 
+                "tag": tag.map { .string($0) }
+            ], 
             requestOptions: requestOptions
         )
     }

@@ -9,6 +9,10 @@ public final class PlaylistClient: Sendable {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/v2/playlist/\(serviceParam)/create", 
+            queryParams: [
+                "datetime": datetime, 
+                "optionalDatetime": optionalDatetime.map { .string($0) }
+            ], 
             requestOptions: requestOptions
         )
     }
@@ -17,6 +21,13 @@ public final class PlaylistClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/v2/playlist/\(serviceParam)/all", 
+            queryParams: [
+                "limit": limit.map { .string($0) }, 
+                "otherField": otherField, 
+                "multiLineDocs": multiLineDocs, 
+                "optionalMultipleField": optionalMultipleField.map { .string($0) }, 
+                "multipleField": multipleField
+            ], 
             requestOptions: requestOptions
         )
     }

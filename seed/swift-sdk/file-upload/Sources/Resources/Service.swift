@@ -25,6 +25,13 @@ public final class ServiceClient: Sendable {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/just-file-with-query-params", 
+            queryParams: [
+                "maybeString": maybeString.map { .string($0) }, 
+                "integer": integer, 
+                "maybeInteger": maybeInteger.map { .string($0) }, 
+                "listOfStrings": listOfStrings, 
+                "optionalListOfStrings": optionalListOfStrings.map { .string($0) }
+            ], 
             requestOptions: requestOptions
         )
     }

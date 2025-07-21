@@ -9,6 +9,12 @@ public final class UsersClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/users", 
+            queryParams: [
+                "page": page.map { .string($0) }, 
+                "per_page": perPage.map { .string($0) }, 
+                "order": order.map { .string($0) }, 
+                "starting_after": startingAfter.map { .string($0) }
+            ], 
             requestOptions: requestOptions
         )
     }
@@ -17,6 +23,9 @@ public final class UsersClient: Sendable {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/users", 
+            queryParams: [
+                "cursor": cursor.map { .string($0) }
+            ], 
             requestOptions: requestOptions
         )
     }
@@ -33,6 +42,12 @@ public final class UsersClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/users", 
+            queryParams: [
+                "page": page.map { .string($0) }, 
+                "per_page": perPage.map { .string($0) }, 
+                "order": order.map { .string($0) }, 
+                "starting_after": startingAfter.map { .string($0) }
+            ], 
             requestOptions: requestOptions
         )
     }
@@ -41,6 +56,12 @@ public final class UsersClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/users", 
+            queryParams: [
+                "page": page.map { .string($0) }, 
+                "per_page": perPage.map { .string($0) }, 
+                "order": order.map { .string($0) }, 
+                "starting_after": startingAfter.map { .string($0) }
+            ], 
             requestOptions: requestOptions
         )
     }
@@ -57,6 +78,11 @@ public final class UsersClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/users", 
+            queryParams: [
+                "page": page.map { .string($0) }, 
+                "limit": limit.map { .string($0) }, 
+                "order": order.map { .string($0) }
+            ], 
             requestOptions: requestOptions
         )
     }
@@ -65,6 +91,11 @@ public final class UsersClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/users", 
+            queryParams: [
+                "page": page.map { .string($0) }, 
+                "limit": limit.map { .string($0) }, 
+                "order": order.map { .string($0) }
+            ], 
             requestOptions: requestOptions
         )
     }
@@ -73,6 +104,9 @@ public final class UsersClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/users", 
+            queryParams: [
+                "cursor": cursor.map { .string($0) }
+            ], 
             requestOptions: requestOptions
         )
     }
@@ -81,6 +115,9 @@ public final class UsersClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/users", 
+            queryParams: [
+                "cursor": cursor.map { .string($0) }
+            ], 
             requestOptions: requestOptions
         )
     }
@@ -89,6 +126,9 @@ public final class UsersClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/users", 
+            queryParams: [
+                "starting_after": startingAfter.map { .string($0) }
+            ], 
             requestOptions: requestOptions
         )
     }
@@ -97,6 +137,9 @@ public final class UsersClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/users", 
+            queryParams: [
+                "offset": offset.map { .string($0) }
+            ], 
             requestOptions: requestOptions
         )
     }

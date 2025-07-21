@@ -9,6 +9,9 @@ public final class PackageClient: Sendable {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/", 
+            queryParams: [
+                "for": `for`
+            ], 
             requestOptions: requestOptions
         )
     }

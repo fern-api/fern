@@ -25,6 +25,10 @@ public final class ParamsClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/params", 
+            queryParams: [
+                "query": query, 
+                "number": number
+            ], 
             requestOptions: requestOptions
         )
     }
@@ -33,6 +37,10 @@ public final class ParamsClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/params", 
+            queryParams: [
+                "query": query, 
+                "number": number
+            ], 
             requestOptions: requestOptions
         )
     }
@@ -41,6 +49,9 @@ public final class ParamsClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/params/path-query/\(param)", 
+            queryParams: [
+                "query": query
+            ], 
             requestOptions: requestOptions
         )
     }
@@ -49,6 +60,9 @@ public final class ParamsClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/params/path-query/\(param)", 
+            queryParams: [
+                "query": query
+            ], 
             requestOptions: requestOptions
         )
     }

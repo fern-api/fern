@@ -9,6 +9,9 @@ public final class UsersClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/users", 
+            queryParams: [
+                "starting_after": startingAfter.map { .string($0) }
+            ], 
             requestOptions: requestOptions
         )
     }

@@ -9,6 +9,9 @@ public final class EventsClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/users/events", 
+            queryParams: [
+                "limit": limit.map { .string($0) }
+            ], 
             requestOptions: requestOptions
         )
     }

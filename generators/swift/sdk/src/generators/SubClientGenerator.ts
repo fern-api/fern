@@ -202,7 +202,41 @@ export class SubClientGenerator {
         }
 
         if (endpoint.queryParameters.length > 0) {
-            // TODO(kafkas): Add `queryParams`
+            arguments_.push(
+                swift.functionArgument({
+                    label: "queryParams",
+                    value: swift.Expression.dictionaryLiteral({
+                        entries: endpoint.queryParameters.map((queryParam) => {
+                            // TODO(kafkas): Fix this. It's a buggy implementation.
+
+                            const key = swift.Expression.rawStringValue(queryParam.name.name.originalName);
+                            const isEnumValue = queryParam.valueType.type === "named";
+                            let value;
+                            if (isOptionalType(queryParam.valueType)) {
+                                value = swift.Expression.methodCallWithTrailingClosure({
+                                    target: swift.Expression.reference(queryParam.name.name.camelCase.unsafeName),
+                                    methodName: "map",
+                                    // TODO: Make dynamic
+                                    closureBody: swift.Expression.rawValue(
+                                        isEnumValue ? ".string($0.rawValue)" : ".string($0)"
+                                    )
+                                });
+                            } else {
+                                if (isEnumValue) {
+                                    value = swift.Expression.memberAccess({
+                                        target: swift.Expression.reference(queryParam.name.name.camelCase.unsafeName),
+                                        memberName: "rawValue"
+                                    });
+                                } else {
+                                    value = swift.Expression.reference(queryParam.name.name.camelCase.unsafeName);
+                                }
+                            }
+                            return [key, value];
+                        }),
+                        multiline: true
+                    })
+                })
+            );
         }
 
         // TODO(kafkas): Add `body` if has body

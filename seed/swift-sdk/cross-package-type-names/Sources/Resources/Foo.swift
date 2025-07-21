@@ -9,6 +9,9 @@ public final class FooClient: Sendable {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/", 
+            queryParams: [
+                "optionalString": optionalString.rawValue
+            ], 
             requestOptions: requestOptions
         )
     }

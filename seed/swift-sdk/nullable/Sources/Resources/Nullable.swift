@@ -9,6 +9,13 @@ public final class NullableClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/users", 
+            queryParams: [
+                "usernames": usernames.map { .string($0) }, 
+                "avatar": avatar.map { .string($0) }, 
+                "activated": activated.map { .string($0) }, 
+                "tags": tags.map { .string($0) }, 
+                "extra": extra.map { .string($0) }
+            ], 
             requestOptions: requestOptions
         )
     }

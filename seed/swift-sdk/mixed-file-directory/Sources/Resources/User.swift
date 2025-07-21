@@ -9,6 +9,9 @@ public final class UserClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/users", 
+            queryParams: [
+                "limit": limit.map { .string($0) }
+            ], 
             requestOptions: requestOptions
         )
     }

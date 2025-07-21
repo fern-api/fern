@@ -9,6 +9,9 @@ public final class MetadataClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/users/events/metadata", 
+            queryParams: [
+                "id": id.rawValue
+            ], 
             requestOptions: requestOptions
         )
     }
