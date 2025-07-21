@@ -1,4 +1,5 @@
 import {
+    Class,
     CodeBlock,
     EnumWithAssociatedValues,
     EnumWithRawValues,
@@ -9,6 +10,10 @@ import {
     Property,
     Struct
 } from "./ast";
+
+export function class_(args: Class.Args): Class {
+    return new Class(args);
+}
 
 export function codeBlock(args: CodeBlock.Args): CodeBlock {
     return new CodeBlock(args);

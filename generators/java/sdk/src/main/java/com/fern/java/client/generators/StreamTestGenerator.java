@@ -73,9 +73,10 @@ public final class StreamTestGenerator extends AbstractFileGenerator {
                 .addCode("        $T.of($S, $S)\n", ClassName.get("java.util", "Map"), "message", "world")
                 .addCode(");\n")
                 .addStatement(
-                        "$T jsonStrings = messages.stream().map($T::mapToJson).toList()",
+                        "$T jsonStrings = messages.stream().map($T::mapToJson).collect($T.toList())",
                         ClassName.get("java.util", "List"),
-                        ClassName.get(className.packageName(), STREAM_TEST_CLASS_NAME))
+                        ClassName.get(className.packageName(), STREAM_TEST_CLASS_NAME),
+                        ClassName.get("java.util.stream", "Collectors"))
                 .addStatement(
                         "$T input = $T.join($S, jsonStrings)",
                         ClassName.get(String.class),
@@ -114,9 +115,10 @@ public final class StreamTestGenerator extends AbstractFileGenerator {
                 .addCode("        $T.of($S, $S)\n", ClassName.get("java.util", "Map"), "event", "end")
                 .addCode(");\n")
                 .addStatement(
-                        "$T sseStrings = events.stream().map($T::mapToSse).toList()",
+                        "$T sseStrings = events.stream().map($T::mapToSse).collect($T.toList())",
                         ClassName.get("java.util", "List"),
-                        ClassName.get(className.packageName(), STREAM_TEST_CLASS_NAME))
+                        ClassName.get(className.packageName(), STREAM_TEST_CLASS_NAME),
+                        ClassName.get("java.util.stream", "Collectors"))
                 .addStatement(
                         "$T input = $T.join($S, sseStrings)",
                         ClassName.get(String.class),

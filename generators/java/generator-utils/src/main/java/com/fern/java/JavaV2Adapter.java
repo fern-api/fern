@@ -45,6 +45,17 @@ public class JavaV2Adapter {
             }
 
             log(execClient, "Awaiting java v2 generator");
+            // Print the logs from the v2 process to System.out
+            try (BufferedReader stdOut = new BufferedReader(new InputStreamReader(v2.getInputStream()));
+                    BufferedReader stdErr = new BufferedReader(new InputStreamReader(v2.getErrorStream()))) {
+                String line;
+                while ((line = stdOut.readLine()) != null) {
+                    System.out.println("[Java V2 STDOUT] " + line);
+                }
+                while ((line = stdErr.readLine()) != null) {
+                    System.out.println("[Java V2 STDERR] " + line);
+                }
+            }
             int exitCode = v2.waitFor();
             log(execClient, "Got exit code from java v2 generator: " + exitCode);
             if (exitCode == 0) {
@@ -66,6 +77,7 @@ public class JavaV2Adapter {
     }
 
     private static void log(DefaultGeneratorExecClient execClient, String message) {
+        System.out.println(message);
         execClient.sendUpdate(GeneratorUpdate.log(
                 LogUpdate.builder().level(LogLevel.DEBUG).message(message).build()));
     }

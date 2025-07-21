@@ -1,9 +1,9 @@
 export function isLegalPropertyName(name: string): boolean {
-    // TODO: Implement this
+    // TODO(kafkas): Implement this
     return name.length > 0;
 }
 
 export function toLegalPropertyName(name: string): string {
-    // TODO: Implement this
+    // TODO(kafkas): Implement this
     return name;
 }

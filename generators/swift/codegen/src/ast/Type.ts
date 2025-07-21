@@ -210,7 +210,7 @@ export class Type extends AstNode {
     }
 
     public static dictionary(keyType: Type, valueType: Type): Type {
-        // TODO: keyType needs to conform to Hashable. We may want to enforce this as a constraint.
+        // TODO(kafkas): keyType needs to conform to Hashable. We may want to enforce this as a constraint.
         return new this({ type: "dictionary", keyType, valueType });
     }
 

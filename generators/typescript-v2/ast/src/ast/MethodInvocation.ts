@@ -15,7 +15,7 @@ export class MethodInvocation extends AstNode {
     private on: Reference;
     private method: string;
     private arguments_: AstNode[];
-    private async: boolean | undefined;
+    private ["async"]: boolean | undefined;
 
     constructor({ on, method, arguments_, async }: MethodInvocation.Args) {
         super();

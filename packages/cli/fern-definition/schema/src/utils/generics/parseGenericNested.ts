@@ -10,7 +10,7 @@ export function parseGenericNested(input: string): ParseGenericNested | undefine
 
     function parseToken(): ParseGenericNested | string | undefined {
         // Skip whitespace
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        // biome-ignore lint/style/noNonNullAssertion: allow
         while (index < input.length && /\s/.test(input[index]!)) {
             index++;
         }
@@ -31,7 +31,7 @@ export function parseGenericNested(input: string): ParseGenericNested | undefine
         }
 
         // Skip whitespace
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        // biome-ignore lint/style/noNonNullAssertion: allow
         while (index < input.length && /\s/.test(input[index]!)) {
             index++;
         }
@@ -50,7 +50,7 @@ export function parseGenericNested(input: string): ParseGenericNested | undefine
 
             while (index < input.length && input[index] !== ">") {
                 // Skip whitespace and commas
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                // biome-ignore lint/style/noNonNullAssertion: allow
                 while (index < input.length && /[\s,]/.test(input[index]!)) {
                     index++;
                 }

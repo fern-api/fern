@@ -3,13 +3,14 @@ import type { EnumWithRawValues } from "./EnumWithRawValues";
 import { Initializer } from "./Initializer";
 import { Method } from "./Method";
 import { Property } from "./Property";
+import { Protocol } from "./Protocol";
 import { AstNode, Writer } from "./core";
 
 export declare namespace Struct {
     interface Args {
         name: string;
         accessLevel?: AccessLevel;
-        conformances?: string[];
+        conformances?: Protocol[];
         properties: Property[];
         initializers?: Initializer[];
         nestedTypes?: (Struct | EnumWithRawValues)[];
@@ -76,16 +77,6 @@ export class Struct extends AstNode {
                 writer.newLine();
             });
         }
-        if (this.nestedTypes) {
-            writer.newLine();
-            this.nestedTypes.forEach((nestedType, nestedTypeIdx) => {
-                if (nestedTypeIdx > 0) {
-                    writer.newLine();
-                }
-                nestedType.write(writer);
-                writer.newLine();
-            });
-        }
         if (this.methods) {
             writer.newLine();
             this.methods.forEach((method, methodIdx) => {
@@ -93,6 +84,16 @@ export class Struct extends AstNode {
                     writer.newLine();
                 }
                 method.write(writer);
+                writer.newLine();
+            });
+        }
+        if (this.nestedTypes) {
+            writer.newLine();
+            this.nestedTypes.forEach((nestedType, nestedTypeIdx) => {
+                if (nestedTypeIdx > 0) {
+                    writer.newLine();
+                }
+                nestedType.write(writer);
                 writer.newLine();
             });
         }

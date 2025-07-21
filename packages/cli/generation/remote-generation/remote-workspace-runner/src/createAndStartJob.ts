@@ -358,10 +358,10 @@ async function startJob({
 
 // Fiddle is on the old version of error serialization. Until we upgrade the
 // java generator to support the new implementation, we manually migrate
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: allow explicit any
 function convertCreateJobError(error: any): FernFiddle.remoteGen.createJobV3.Error {
     if (error?.reason === "status-code") {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         const body = error.body as any;
         switch (body?._error) {
             case "IllegalApiNameError":

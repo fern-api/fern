@@ -18,33 +18,28 @@ describe("openapi-ir", async () => {
             continue;
         }
 
-        it(
-            fixture.name,
-            async () => {
-                const fixturePath = join(FIXTURES_DIR, RelativeFilePath.of(fixture.name), RelativeFilePath.of("fern"));
-                const context = createMockTaskContext();
-                const workspace = await loadAPIWorkspace({
-                    absolutePathToWorkspace: fixturePath,
-                    context,
-                    cliVersion: "0.0.0",
-                    workspaceName: fixture.name
-                });
-                if (!workspace.didSucceed) {
-                    throw new Error(
-                        `Failed to load OpenAPI fixture ${fixture.name}\n${JSON.stringify(workspace.failures)}`
-                    );
-                }
+        it(fixture.name, async () => {
+            const fixturePath = join(FIXTURES_DIR, RelativeFilePath.of(fixture.name), RelativeFilePath.of("fern"));
+            const context = createMockTaskContext();
+            const workspace = await loadAPIWorkspace({
+                absolutePathToWorkspace: fixturePath,
+                context,
+                cliVersion: "0.0.0",
+                workspaceName: fixture.name
+            });
+            if (!workspace.didSucceed) {
+                throw new Error(
+                    `Failed to load OpenAPI fixture ${fixture.name}\n${JSON.stringify(workspace.failures)}`
+                );
+            }
 
-                if (workspace.workspace instanceof OSSWorkspace) {
-                    const openApiIr = await (workspace.workspace as OSSWorkspace).getOpenAPIIr({ context });
-                    // eslint-disable-next-line jest/no-standalone-expect
-                    await expect(JSON.stringify(openApiIr, undefined, 2)).toMatchFileSnapshot(
-                        `./__snapshots__/openapi-ir/${fixture.name}.json`
-                    );
-                }
-            },
-            90_000
-        );
+            if (workspace.workspace instanceof OSSWorkspace) {
+                const openApiIr = await (workspace.workspace as OSSWorkspace).getOpenAPIIr({ context });
+                await expect(JSON.stringify(openApiIr, undefined, 2)).toMatchFileSnapshot(
+                    `./__snapshots__/openapi-ir/${fixture.name}.json`
+                );
+            }
+        }, 90_000);
     }
 });
 
@@ -65,25 +60,19 @@ describe("openapi-ir-in-memory", async () => {
         ) {
             continue;
         }
-        it(
-            fixture.name,
-            async () => {
-                const snapshotFilepath = `./__snapshots__/openapi-ir-in-memory/${fixture.name}.json`;
-                if (shouldSkipInMemory(fixture.name)) {
-                    await expect("Skipped; Swagger 2.0 is not supported in-memory").toMatchFileSnapshot(
-                        snapshotFilepath
-                    );
-                    return;
-                }
+        it(fixture.name, async () => {
+            const snapshotFilepath = `./__snapshots__/openapi-ir-in-memory/${fixture.name}.json`;
+            if (shouldSkipInMemory(fixture.name)) {
+                await expect("Skipped; Swagger 2.0 is not supported in-memory").toMatchFileSnapshot(snapshotFilepath);
+                return;
+            }
 
-                const fixtureFilePath = await getTestFixturePath(join(FIXTURES_DIR, RelativeFilePath.of(fixture.name)));
-                const document = loader.loadDocument({
-                    parsed: await readAndParseOpenAPI(fixtureFilePath)
-                });
-                await expect(JSON.stringify(document, undefined, 2)).toMatchFileSnapshot(snapshotFilepath);
-            },
-            90_000
-        );
+            const fixtureFilePath = await getTestFixturePath(join(FIXTURES_DIR, RelativeFilePath.of(fixture.name)));
+            const document = loader.loadDocument({
+                parsed: await readAndParseOpenAPI(fixtureFilePath)
+            });
+            await expect(JSON.stringify(document, undefined, 2)).toMatchFileSnapshot(snapshotFilepath);
+        }, 90_000);
     }
 });
 

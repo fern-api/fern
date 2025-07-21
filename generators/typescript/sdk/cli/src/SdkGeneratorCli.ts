@@ -173,6 +173,9 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             pathToSrc: persistedTypescriptProject.getSrcDirectory(),
             pathToRoot: rootDirectory
         });
+        await sdkGenerator.generatePublicExports({
+            pathToSrc: persistedTypescriptProject.getSrcDirectory()
+        });
         await writeTemplateFiles(rootDirectory, this.getTemplateVariables(customConfig));
         await this.postProcess(persistedTypescriptProject, customConfig);
 

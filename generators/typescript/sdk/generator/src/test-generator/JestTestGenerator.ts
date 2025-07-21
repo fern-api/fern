@@ -326,7 +326,7 @@ describe("test", () => {
                     return;
                 }
             },
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
+            // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
             _other: () => {}
         });
 
@@ -453,9 +453,9 @@ describe("${serviceName}", () => {
             
         ${
             isHeadersResponse
-                ? code`const headers = ${getTextOfTsNode(generatedExample)};
+                ? code`const headers = ${getTextOfTsNode(generatedExample.endpointInvocation)};
         expect(headers).toBeInstanceOf(Headers);`
-                : code`const response = ${getTextOfTsNode(generatedExample)};
+                : code`const response = ${getTextOfTsNode(generatedExample.endpointInvocation)};
         expect(response).toEqual(${expected});`
         }
     });
