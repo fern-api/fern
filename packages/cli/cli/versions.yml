@@ -1,8 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
-    - summary: |  
+    - summary: |
         `fern docs dev` server connection should no longer require frequent refresh.
       type: fix
+  irVersion: 58
+  createdAt: "2025-07-21"
+  version: 0.65.23
+
+- changelogEntry:
+    - summary: |
+        Add support for subpackage display names.
+      type: feat
   irVersion: 58
   createdAt: "2025-07-21"
   version: 0.65.22

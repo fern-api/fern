@@ -1426,6 +1426,7 @@
                     "safeName": "Ec2"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -1499,6 +1500,7 @@
                     "safeName": "S3"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
