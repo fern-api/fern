@@ -56,13 +56,15 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
 
         if (this.serviceId != null && this.service != null) {
             for (const endpoint of this.service.endpoints) {
-                const methods = this.context.endpointGenerator.generate({
+                const method = this.context.endpointGenerator.generate({
                     serviceId: this.serviceId,
                     service: this.service,
                     subpackage: this.subpackage,
                     endpoint
                 });
-                struct.addMethod(...methods);
+                if (method != null) {
+                    struct.addMethod(method);
+                }
             }
             if (this.service.endpoints.length > 0) {
                 struct.addField(

@@ -13,7 +13,6 @@ import {
     FileUploadRequest,
     HttpEndpoint,
     HttpMethod,
-    HttpService,
     IntermediateRepresentation,
     Name,
     Pagination,

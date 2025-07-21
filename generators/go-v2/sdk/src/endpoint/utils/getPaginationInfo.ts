@@ -25,7 +25,6 @@ export function getPaginationInfo({
     signature,
     endpoint,
     callerReference,
-    endpointRequest,
     errorDecoder
 }: {
     context: SdkGeneratorContext;
@@ -33,7 +32,6 @@ export function getPaginationInfo({
     signature: EndpointSignatureInfo;
     endpoint: HttpEndpoint;
     callerReference: go.AstNode;
-    endpointRequest: EndpointRequest | undefined;
     errorDecoder: go.CodeBlock | undefined;
 }): PaginationInfo {
     const pageType = getPageType({ context, pagination });
@@ -46,11 +44,11 @@ export function getPaginationInfo({
         prepareCall: getPrepareCall({
             context,
             pagination,
+            signature,
             pageType,
             pageRequestType,
             pagePropertyFormat,
             endpoint,
-            endpointRequest,
             errorDecoder
         }),
         readPageResponse: getReadPageResponse({
@@ -70,20 +68,20 @@ export function getPaginationInfo({
 function getPrepareCall({
     context,
     pagination,
+    signature,
     pageType,
     pageRequestType,
     pagePropertyFormat,
     endpoint,
-    endpointRequest,
     errorDecoder
 }: {
     context: SdkGeneratorContext;
     pagination: Pagination;
+    signature: EndpointSignatureInfo;
     pageType: go.Type;
     pageRequestType: go.Type;
     pagePropertyFormat: go.AstNode;
     endpoint: HttpEndpoint;
-    endpointRequest: EndpointRequest | undefined;
     errorDecoder: go.CodeBlock | undefined;
 }): go.AstNode {
     const pagePropertySetter = getPagePropertySetter({ pagination, pageType, pagePropertyFormat });
@@ -110,7 +108,7 @@ function getPrepareCall({
                             endpoint,
                             optionsReference: go.codeblock("options"),
                             url: go.codeblock("nextURL"),
-                            request: endpointRequest?.getRequestReference(),
+                            request: signature.request?.getRequestReference(),
                             response: go.codeblock(PAGE_REQUEST_RESPONSE_NAME),
                             errorCodes: errorDecoder != null ? go.codeblock("errorCodes") : undefined
                         })

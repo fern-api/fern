@@ -18,7 +18,6 @@ import {
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
 import { EndpointSignatureInfo } from "../EndpointSignatureInfo";
-import { PaginationInfo } from "../PaginationInfo";
 import { EndpointRequest } from "../request/EndpointRequest";
 import { getEndpointRequest } from "../utils/getEndpointRequest";
 import { getPaginationInfo } from "../utils/getPaginationInfo";
@@ -46,33 +45,30 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         service: HttpService;
         subpackage: Subpackage | undefined;
         endpoint: HttpEndpoint;
-    }): go.Method[] {
+    }): go.Method | undefined {
         if (!this.shouldGenerateEndpoint({ endpoint })) {
-            return [];
+            return undefined;
         }
         const signature = this.getEndpointSignatureInfo({ serviceId, service, endpoint });
-        const endpointRequest = getEndpointRequest({ context: this.context, endpoint, serviceId, service });
-        return [this.generateEndpoint({ service, endpoint, signature, subpackage, endpointRequest })];
+        return this.generateEndpoint({ service, endpoint, signature, subpackage });
     }
 
     private generateEndpoint({
         service,
         endpoint,
         signature,
-        subpackage,
-        endpointRequest
+        subpackage
     }: {
         service: HttpService;
         endpoint: HttpEndpoint;
         signature: EndpointSignatureInfo;
         subpackage: Subpackage | undefined;
-        endpointRequest: EndpointRequest | undefined;
     }): go.Method {
         return new go.Method({
             name: this.context.getMethodName(endpoint.name),
             parameters: signature.allParameters,
             return_: this.getReturnSignature({ endpoint, signature }),
-            body: this.getEndpointBody({ signature, endpoint, subpackage, endpointRequest }),
+            body: this.getEndpointBody({ signature, endpoint, subpackage }),
             typeReference: this.context.getClientClassReference({
                 fernFilepath: service.name.fernFilepath,
                 subpackage
@@ -97,13 +93,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     private getEndpointBody({
         signature,
         endpoint,
-        subpackage,
-        endpointRequest
+        subpackage
     }: {
         signature: EndpointSignatureInfo;
         endpoint: HttpEndpoint;
         subpackage: Subpackage | undefined;
-        endpointRequest: EndpointRequest | undefined;
     }): go.CodeBlock {
         const streamingResponse = this.context.getStreamingResponse(endpoint);
         if (streamingResponse != null) {
@@ -111,13 +105,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 signature,
                 endpoint,
                 subpackage,
-                endpointRequest,
                 streamingResponse
             });
         }
         const pagination = this.context.getPagination(endpoint);
         if (pagination != null) {
-            return this.getPaginationEndpointBody({ signature, endpoint, subpackage, endpointRequest, pagination });
+            return this.getPaginationEndpointBody({ signature, endpoint, subpackage, pagination });
         }
         return this.generateDelegatingEndpointBody({ endpoint, signature, subpackage });
     }
@@ -125,13 +118,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     private getStreamingEndpointBody({
         signature,
         endpoint,
-        endpointRequest,
         subpackage,
         streamingResponse
     }: {
         signature: EndpointSignatureInfo;
         endpoint: HttpEndpoint;
-        endpointRequest: EndpointRequest | undefined;
         subpackage: Subpackage | undefined;
         streamingResponse: StreamingResponse;
     }): go.CodeBlock {
@@ -144,7 +135,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     signature,
                     endpoint,
                     subpackage,
-                    endpointRequest,
                     errorDecoder,
                     rawClient: false
                 })
@@ -166,7 +156,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     streamerVariable,
                     optionsReference: go.codeblock("options"),
                     url: go.codeblock("endpointURL"),
-                    request: endpointRequest?.getRequestReference(),
+                    request: signature.request?.getRequestReference(),
                     errorCodes: errorDecoder != null ? go.codeblock("errorCodes") : undefined,
                     streamingResponse
                 })
@@ -177,13 +167,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     private getPaginationEndpointBody({
         signature,
         endpoint,
-        endpointRequest,
         subpackage,
         pagination
     }: {
         signature: EndpointSignatureInfo;
         endpoint: HttpEndpoint;
-        endpointRequest: EndpointRequest | undefined;
         subpackage: Subpackage | undefined;
         pagination: Pagination;
     }): go.CodeBlock {
@@ -194,7 +182,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             signature,
             callerReference: this.getCallerFieldReference({ subpackage }),
             endpoint,
-            endpointRequest,
             errorDecoder
         });
         return go.codeblock((writer) => {
@@ -203,7 +190,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     signature,
                     endpoint,
                     subpackage,
-                    endpointRequest,
                     errorDecoder,
                     rawClient: false,
                     encodeQuery: false
@@ -271,33 +257,30 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         service: HttpService;
         subpackage: Subpackage | undefined;
         endpoint: HttpEndpoint;
-    }): go.Method[] {
+    }): go.Method | undefined {
         if (!this.shouldGenerateRawEndpoint({ endpoint })) {
-            return [];
+            return undefined;
         }
         const signature = this.getEndpointSignatureInfo({ serviceId, service, endpoint });
-        const endpointRequest = getEndpointRequest({ context: this.context, endpoint, serviceId, service });
-        return [this.generateRawUnaryEndpoint({ service, endpoint, signature, subpackage, endpointRequest })];
+        return this.generateRawEndpoint({ service, endpoint, signature, subpackage });
     }
 
-    private generateRawUnaryEndpoint({
+    private generateRawEndpoint({
         service,
         endpoint,
         signature,
-        subpackage,
-        endpointRequest
+        subpackage
     }: {
         service: HttpService;
         endpoint: HttpEndpoint;
         signature: EndpointSignatureInfo;
         subpackage: Subpackage | undefined;
-        endpointRequest: EndpointRequest | undefined;
     }): go.Method {
         return new go.Method({
             name: this.context.getMethodName(endpoint.name),
             parameters: signature.allParameters,
             return_: this.getRawReturnSignature({ signature }),
-            body: this.getRawUnaryEndpointBody({ signature, endpoint, subpackage, endpointRequest }),
+            body: this.getRawUnaryEndpointBody({ signature, endpoint, subpackage }),
             typeReference: this.context.getRawClientClassReference({
                 fernFilepath: service.name.fernFilepath,
                 subpackage
@@ -309,13 +292,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     private getRawUnaryEndpointBody({
         signature,
         endpoint,
-        subpackage,
-        endpointRequest
+        subpackage
     }: {
         signature: EndpointSignatureInfo;
         endpoint: HttpEndpoint;
         subpackage: Subpackage | undefined;
-        endpointRequest: EndpointRequest | undefined;
     }): go.CodeBlock {
         const errorDecoder = this.buildErrorDecoder({ endpoint });
         return go.codeblock((writer) => {
@@ -324,7 +305,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     signature,
                     endpoint,
                     subpackage,
-                    endpointRequest,
                     errorDecoder,
                     rawClient: true
                 })
@@ -337,7 +317,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     clientReference: this.getCallerFieldReference({ rawClient: true }),
                     optionsReference: go.codeblock("options"),
                     url: go.codeblock("endpointURL"),
-                    request: endpointRequest?.getRequestReference(),
+                    request: signature.request?.getRequestReference(),
                     response: this.getResponseParameterReference({ endpoint }),
                     errorCodes: errorDecoder != null ? go.codeblock("errorCodes") : undefined
                 })
@@ -357,7 +337,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         signature,
         endpoint,
         subpackage,
-        endpointRequest,
         errorDecoder,
         rawClient,
         encodeQuery = true
@@ -365,7 +344,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         signature: EndpointSignatureInfo;
         endpoint: HttpEndpoint;
         subpackage: Subpackage | undefined;
-        endpointRequest: EndpointRequest | undefined;
         errorDecoder: go.CodeBlock | undefined;
         rawClient: boolean;
         encodeQuery?: boolean;
@@ -380,7 +358,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             const buildQueryParameters = this.buildQueryParameters({
                 signature,
                 endpoint,
-                endpointRequest,
                 rawClient,
                 encodeQuery
             });
@@ -398,7 +375,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 writer.writeNode(errorDecoder);
             }
 
-            const requestBody = endpointRequest?.getRequestBodyBlock();
+            const requestBody = signature.request?.getRequestBodyBlock();
             if (requestBody != null) {
                 writer.newLine();
                 writer.writeNode(requestBody);
@@ -480,16 +457,15 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     private buildQueryParameters({
         signature,
         endpoint,
-        endpointRequest,
         encodeQuery,
         rawClient
     }: {
         signature: EndpointSignatureInfo;
         endpoint: HttpEndpoint;
-        endpointRequest: EndpointRequest | undefined;
         encodeQuery: boolean;
         rawClient?: boolean;
     }): go.CodeBlock | undefined {
+        const endpointRequest = signature.request;
         if (endpointRequest == null || endpoint.queryParameters.length === 0) {
             return undefined;
         }
