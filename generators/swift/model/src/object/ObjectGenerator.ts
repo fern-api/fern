@@ -4,7 +4,7 @@ import { swift } from "@fern-api/swift-codegen";
 
 import { ObjectProperty, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
-import { generateSwiftTypeForTypeReference } from "../converters";
+import { getSwiftTypeForTypeReference } from "../converters";
 
 function isOptionalProperty(p: ObjectProperty) {
     return p.valueType.type === "container" && p.valueType.container.type === "optional";
@@ -81,7 +81,7 @@ export class ObjectGenerator {
                     swift.functionParameter({
                         argumentLabel: p.name.name.camelCase.unsafeName,
                         unsafeName: p.name.name.camelCase.unsafeName,
-                        type: generateSwiftTypeForTypeReference(p.valueType),
+                        type: getSwiftTypeForTypeReference(p.valueType),
                         optional: isOptionalProperty(p),
                         defaultValue: isOptionalProperty(p) ? swift.Expression.rawValue("nil") : undefined
                     })
@@ -145,7 +145,7 @@ export class ObjectGenerator {
                                 arguments_: [
                                     swift.functionArgument({
                                         value: swift.Expression.memberAccess({
-                                            target: generateSwiftTypeForTypeReference(p.valueType),
+                                            target: getSwiftTypeForTypeReference(p.valueType),
                                             memberName: "self"
                                         })
                                     }),
@@ -269,7 +269,7 @@ export class ObjectGenerator {
             unsafeName: property.name.name.camelCase.unsafeName,
             accessLevel: swift.AccessLevel.Public,
             declarationType: swift.DeclarationType.Let,
-            type: generateSwiftTypeForTypeReference(property.valueType),
+            type: getSwiftTypeForTypeReference(property.valueType),
             optional: isOptionalProperty(property)
         });
     }

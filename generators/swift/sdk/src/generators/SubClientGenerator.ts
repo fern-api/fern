@@ -2,7 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
-import { generateSwiftTypeForTypeReference } from "@fern-api/swift-model";
+import { getSwiftTypeForTypeReference } from "@fern-api/swift-model";
 
 import { HttpEndpoint, HttpMethod, HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
 
@@ -120,7 +120,21 @@ export class SubClientGenerator {
             }
         });
 
-        // TODO(kafkas): Implement
+        endpoint.queryParameters.forEach((queryParam) => {
+            params.push(
+                swift.functionParameter({
+                    argumentLabel: queryParam.name.name.camelCase.unsafeName,
+                    unsafeName: queryParam.name.name.camelCase.unsafeName,
+                    type: getSwiftTypeForTypeReference(queryParam.valueType),
+                    optional:
+                        queryParam.valueType.type === "container" && queryParam.valueType.container.type === "optional",
+                    defaultValue:
+                        queryParam.valueType.type === "container" && queryParam.valueType.container.type === "optional"
+                            ? swift.Expression.rawValue("nil")
+                            : undefined
+                })
+            );
+        });
 
         params.push(
             swift.functionParameter({
@@ -138,7 +152,7 @@ export class SubClientGenerator {
     private getMethodReturnTypeForEndpoint(endpoint: HttpEndpoint): swift.Type {
         return (
             endpoint.response?.body?._visit({
-                json: (resp) => generateSwiftTypeForTypeReference(resp.responseBodyType),
+                json: (resp) => getSwiftTypeForTypeReference(resp.responseBodyType),
                 fileDownload: () => swift.Type.custom("Any"),
                 text: () => swift.Type.custom("Any"),
                 bytes: () => swift.Type.custom("Any"),
