@@ -68,6 +68,29 @@ try {
 }
 ```
 
+## Custom Url
+
+Optionally, this SDK allows you to configure the client using your own custom URL.
+
+```php
+use Seed\SeedClient;
+
+$client = new SeedClient(options: [
+  'baseUrl' => 'https://custom-staging.com'
+]);
+```
+
+## Enums
+
+This SDK leverages PHP 8.1’s first-class enums to improve type safety and usability. In order to maintain forward compatibility with the API
+—- where new enum values may be introduced in the future -— we define enum properties as string and use value-of annotations to specify the corresponding enum type.
+#### Example Usage with a PHPDoc Annotation
+
+```php
+/** @param ?value-of<MultipleFilterSearchRequestOperator> $type */
+$type = Seed\Types\MultipleFilterSearchRequestOperator::And_->value;
+```
+
 ## Pagination
 
 List endpoints return a `Pager<T>` which lets you loop over all items and the SDK will automatically make multiple HTTP requests for you.

@@ -1,0 +1,48 @@
+types:
+  Type:
+    discriminated: false
+    union:
+      - BasicType
+      - ComplexType
+
+  Identifier:
+    properties:
+      type: Type
+      value: string
+      label: string
+  
+  BasicType:
+    enum:
+      - name: Primitive
+        value: primitive
+      - name: Literal
+        value: literal
+  
+  ComplexType:
+    enum:
+      - name: Object
+        value: object
+      - name: Union
+        value: union
+      - name: unknown
+        value: unknown
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    echo:
+      method: POST
+      path: ""
+      request: string
+      response: string
+      examples:
+        - request: Hello world!\n\nwith\n\tnewlines
+          response:
+            body: Hello world!\n\nwith\n\tnewlines
+
+    createType:
+      method: POST
+      path: ""
+      request: Type
+      response: Identifier

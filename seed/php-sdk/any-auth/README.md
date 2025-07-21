@@ -60,6 +60,18 @@ try {
 }
 ```
 
+## Custom Url
+
+Optionally, this SDK allows you to configure the client using your own custom URL.
+
+```php
+use Seed\SeedClient;
+
+$client = new SeedClient(options: [
+  'baseUrl' => 'https://custom-staging.com'
+]);
+```
+
 ## Advanced
 
 ### Custom Client

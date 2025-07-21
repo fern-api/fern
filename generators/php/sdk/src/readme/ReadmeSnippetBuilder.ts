@@ -3,7 +3,7 @@ import { php } from "@fern-api/php-codegen";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { EndpointId, FeatureId, FernFilepath, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { EndpointId, EnumTypeDeclaration, FeatureId, FernFilepath, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
@@ -14,6 +14,9 @@ interface EndpointWithFilepath {
 
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static EXCEPTION_HANDLING_FEATURE_ID: FernGeneratorCli.FeatureId = "EXCEPTION_HANDLING";
+    private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
+    private static CUSTOM_URL_FEATURE_ID: FernGeneratorCli.FeatureId = "CUSTOM_URL";
+    private static ENUMS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENUMS";
     private static PAGINATION_FEATURE_ID: FernGeneratorCli.FeatureId = "PAGINATION";
 
     private readonly context: SdkGeneratorContext;
@@ -46,10 +49,26 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[FernGeneratorCli.StructuredFeatureId.Retries] = this.buildRetrySnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutSnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.CustomClient] = this.buildCustomClientSnippets();
+
+        // Only include environments snippets if they exist
+        const environmentsSnippets = this.buildEnvironmentsSnippets();
+        if (environmentsSnippets.length > 0) {
+            snippets[ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID] = environmentsSnippets;
+        }
+
+        // Only include enums snippets if they exist
+        const enumsSnippets = this.buildEnumsSnippets();
+        if (enumsSnippets.length > 0) {
+            snippets[ReadmeSnippetBuilder.ENUMS_FEATURE_ID] = enumsSnippets;
+        }
+
         snippets[ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID] = this.buildExceptionHandlingSnippets();
         if (this.isPaginationEnabled) {
             snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationSnippets();
         }
+
+        snippets[ReadmeSnippetBuilder.CUSTOM_URL_FEATURE_ID] = this.buildCustomUrlSnippets();
+
         return snippets;
     }
 
@@ -147,6 +166,51 @@ ${this.context.getClientVariableName()} = new ${this.context.getRootClientClassN
 ]);
 `);
         return [snippet];
+    }
+
+    private buildEnvironmentsSnippets(): string[] {
+        // Check if environments are defined in the context
+        // If there's no environments configuration, return an empty array
+        if (!this.hasEnvironmentsConfigured()) {
+            return [];
+        }
+
+        // Get an environment example from the IR
+        const defaultEnvironment = this.defaultEnvironment();
+        if (!defaultEnvironment) {
+            return [];
+        }
+
+        const snippet = this.writeCode(`
+use ${this.context.getRootNamespace()}\\${this.context.getRootClientClassName()};
+use ${this.context.getRootNamespace()}\\Environments;
+
+${this.context.getClientVariableName()} = new ${this.context.getRootClientClassName()}(options: [
+  'baseUrl' => Environments::${defaultEnvironment}->value // Used by default
+]);
+`);
+        return [snippet];
+    }
+
+    /**
+     * Find a the default environment from the IR
+     * @returns Name of the default environment if found.
+     */
+    private defaultEnvironment(): string | undefined {
+        if (!this.context.ir.environments) {
+            return;
+        }
+
+        return this.context.ir.environments.defaultEnvironment;
+    }
+
+    /**
+     * Check if environments are configured in the API
+     * @returns boolean indicating if environments are available
+     */
+    private hasEnvironmentsConfigured(): boolean {
+        // Check if there are any environments defined in the IR
+        return this.context.ir.environments !== undefined && Object.keys(this.context.ir.environments).length > 0;
     }
 
     private buildPaginationSnippets(): string[] {
@@ -261,6 +325,70 @@ foreach ($items->getPages() as $page) {
 }
 \`\`\`
 `);
+    }
+
+    private buildCustomUrlSnippets(): string[] {
+        return [
+            this.writeCode(`
+use ${this.context.getRootNamespace()}\\${this.context.getRootClientClassName()};
+
+${this.context.getClientVariableName()} = new ${this.context.getRootClientClassName()}(options: [
+  'baseUrl' => 'https://custom-staging.com'
+]);`)
+        ];
+    }
+
+    /**
+     * Find a suitable enum type from the IR
+     * @returns Object with enum type name and first value, or null if not found
+     */
+    private findEnumExample(): { typeName: string; value: string } | null {
+        try {
+            const enumTypes = Object.entries(this.context.ir.types).filter(([_, type]) => type.shape.type === "enum");
+
+            if (enumTypes.length === 0) {
+                return null;
+            }
+
+            const enumTypeEntry = enumTypes[0] || [];
+            const enumType = enumTypeEntry[1];
+
+            if (!enumType || !enumType.name?.name?.pascalCase?.safeName) {
+                return null;
+            }
+
+            const enumTypeName = enumType.name.name.pascalCase.safeName;
+
+            const enumValues = (enumType.shape as EnumTypeDeclaration).values;
+
+            if (!enumValues || enumValues.length === 0 || !enumValues[0]?.name?.name?.pascalCase?.safeName) {
+                return null;
+            }
+
+            const enumValue = enumValues[0]?.name?.name?.pascalCase?.safeName as string;
+
+            return {
+                typeName: enumTypeName,
+                value: enumValue
+            };
+        } catch (error) {
+            return null;
+        }
+    }
+
+    private buildEnumsSnippets(): string[] {
+        const enumExample = this.findEnumExample();
+
+        if (!enumExample) {
+            return [];
+        }
+
+        return [
+            this.writeCode(`
+/** @param ?value-of<${enumExample.typeName}> $type */
+$type = ${this.context.getRootNamespace()}\\Types\\${enumExample.typeName}::${enumExample.value}->value;
+`)
+        ];
     }
 
     private getEndpointWithPagination(): EndpointWithFilepath | undefined {

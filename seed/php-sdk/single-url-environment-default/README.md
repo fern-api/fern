@@ -51,6 +51,32 @@ try {
 }
 ```
 
+## Environments
+
+This SDK allows you to configure different environments. You can use any of the predefined environments.
+#### Environments
+
+```php
+use Seed\SeedClient;
+use Seed\Environments;
+
+$client = new SeedClient(options: [
+  'baseUrl' => Environments::Production->value // Used by default
+]);
+```
+
+## Custom Url
+
+Optionally, this SDK allows you to configure the client using your own custom URL.
+
+```php
+use Seed\SeedClient;
+
+$client = new SeedClient(options: [
+  'baseUrl' => 'https://custom-staging.com'
+]);
+```
+
 ## Advanced
 
 ### Custom Client
