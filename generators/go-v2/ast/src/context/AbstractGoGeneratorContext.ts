@@ -228,7 +228,7 @@ export abstract class AbstractGoGeneratorContext<
                 }
                 break;
             }
-            case "container":
+            case "container": {
                 const containerType = typeReference.container;
                 switch (containerType.type) {
                     case "optional":
@@ -245,6 +245,7 @@ export abstract class AbstractGoGeneratorContext<
                         assertNever(containerType);
                 }
                 break;
+            }
             case "primitive":
                 return true;
             case "unknown":
