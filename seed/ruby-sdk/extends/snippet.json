@@ -1,0 +1,27 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/extends/extended-inline-request-body",
+                "method": "POST",
+                "identifierOverride": "endpoint_.extendedInlineRequestBody"
+            },
+            "snippet": {
+                "client": "require \"fern_extends\"\n\nextends = SeedExtendsClient::Client.new(base_url: \"https://api.example.com\")\nextends.extended_inline_request_body(unique: \"unique\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/extends/extended-inline-request-body",
+                "method": "POST",
+                "identifierOverride": "endpoint_.extendedInlineRequestBody"
+            },
+            "snippet": {
+                "client": "require \"fern_extends\"\n\nextends = SeedExtendsClient::Client.new(base_url: \"https://api.example.com\")\nextends.extended_inline_request_body(unique: \"unique\")",
+                "type": "ruby"
+            }
+        }
+    ],
+    "types": {}
+}
