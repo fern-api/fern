@@ -27,6 +27,7 @@ export {
     convertToFernHostRelativeFilePath
 } from "./osPathConverter";
 export { getAllFilesInDirectory } from "./getAllFilesInDirectory";
+export { getAllFilesInDirectoryRelative } from "./getAllFilesInDirectoryRelative";
 export { getFilename } from "./getFilename";
 export { isURL } from "./isUrl";
 export { isCI } from "./isCI";
