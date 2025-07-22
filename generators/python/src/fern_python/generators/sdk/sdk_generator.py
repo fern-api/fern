@@ -341,23 +341,6 @@ class SdkGenerator(AbstractGenerator):
         if not (generator_config.output.mode.get_as_union().type == "downloadFiles"):
             as_is_copier.copy_to_project(project=project)
 
-        snippet_template_source_file = context.source_file_factory.create_snippet()
-        self._maybe_write_snippet_templates(
-            context=context,
-            snippet_template_factory=SnippetTemplateFactory(
-                project=project,
-                context=context,
-                snippet_writer=snippet_writer,
-                imports_manager=snippet_template_source_file.get_imports_manager(),
-                ir=ir,
-                generated_root_client=generated_root_client,
-                generator_exec_wrapper=generator_exec_wrapper,
-            ),
-            project=project,
-            generator_exec_wrapper=generator_exec_wrapper,
-            generator_config=generator_config,
-            ir=ir,
-        )
 
         test_fac = SnippetTestFactory(
             project=project,
