@@ -1,0 +1,15 @@
+name: Ensure PR author is not fern-support
+
+on:
+  pull_request:
+
+jobs:
+  ensure-not-fern-support:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ensure user is not fern-support
+        run: |
+          if [ "${{ github.actor }}" = "fern-support" ]; then
+            echo "Error: fern-support user is not allowed to make PRs"
+            exit 1
+          fi
