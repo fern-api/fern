@@ -1,5 +1,6 @@
 import { NpmPackage } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
+import { template } from "lodash-es";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -9,16 +10,20 @@ import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder";
 export class ReadmeConfigBuilder {
     private endpointSnippets: FernGeneratorExec.Endpoint[];
     private readonly fileResponseType: "stream" | "binary-response";
+    private readonly fetchSupport: "node-fetch" | "native";
 
     constructor({
         endpointSnippets,
-        fileResponseType
+        fileResponseType,
+        fetchSupport
     }: {
         endpointSnippets: FernGeneratorExec.Endpoint[];
         fileResponseType: "stream" | "binary-response";
+        fetchSupport: "node-fetch" | "native";
     }) {
         this.endpointSnippets = endpointSnippets;
         this.fileResponseType = fileResponseType;
+        this.fetchSupport = fetchSupport;
     }
 
     public build({
@@ -52,9 +57,9 @@ export class ReadmeConfigBuilder {
             features.push({
                 id: feature.id,
                 advanced: feature.advanced,
-                description: feature.description,
+                description: feature.description ? this.processTemplateText(feature.description) : undefined,
                 snippets: snippetForFeature,
-                addendum: feature.addendum,
+                addendum: feature.addendum ? this.processTemplateText(feature.addendum) : undefined,
                 snippetsAreOptional: false
             });
         }
@@ -79,5 +84,18 @@ export class ReadmeConfigBuilder {
             });
         }
         return FernGeneratorCli.LanguageInfo.typescript({});
+    }
+
+    private processTemplateText(templateText: string | undefined): string {
+        const templateVariables = this.getTemplateVariables();
+        const compiledTemplate = template(templateText);
+        const content = compiledTemplate(templateVariables);
+        return content;
+    }
+
+    private getTemplateVariables(): Record<string, unknown> {
+        return {
+            fetchSupport: this.fetchSupport
+        };
     }
 }
