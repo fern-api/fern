@@ -11,9 +11,7 @@ import {
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 
-import { go } from "../";
-import { GoTypeReference, Type } from "../ast";
-import { BaseGoCustomConfigSchema } from "../custom-config/BaseGoCustomConfigSchema";
+import { BaseGoCustomConfigSchema, go } from "@fern-api/go-ast";
 import { AbstractGoGeneratorContext } from "./AbstractGoGeneratorContext";
 
 export declare namespace GoTypeMapper {
@@ -29,7 +27,7 @@ export class GoTypeMapper {
         this.context = context;
     }
 
-    public convert({ reference }: GoTypeMapper.Args): Type {
+    public convert({ reference }: GoTypeMapper.Args): go.Type {
         switch (reference.type) {
             case "container":
                 return this.convertContainer({
@@ -46,28 +44,28 @@ export class GoTypeMapper {
         }
     }
 
-    public convertToTypeReference(declaredTypeName: { typeId: TypeId; name: Name }): GoTypeReference {
+    public convertToTypeReference(declaredTypeName: { typeId: TypeId; name: Name }): go.TypeReference {
         return go.typeReference({
             name: this.context.getClassName(declaredTypeName.name),
             importPath: this.context.getLocationForTypeId(declaredTypeName.typeId).importPath
         });
     }
 
-    private convertContainer({ container }: { container: ContainerType }): Type {
+    private convertContainer({ container }: { container: ContainerType }): go.Type {
         switch (container.type) {
             case "list":
-                return Type.slice(this.convert({ reference: container.list }));
+                return go.Type.slice(this.convert({ reference: container.list }));
             case "map": {
                 const key = this.convert({ reference: container.keyType });
                 const value = this.convert({ reference: container.valueType });
-                return Type.map(key, value);
+                return go.Type.map(key, value);
             }
             case "set":
-                return Type.slice(this.convert({ reference: container.set }));
+                return go.Type.slice(this.convert({ reference: container.set }));
             case "optional":
-                return Type.optional(this.convert({ reference: container.optional }));
+                return go.Type.optional(this.convert({ reference: container.optional }));
             case "nullable":
-                return Type.optional(this.convert({ reference: container.nullable }));
+                return go.Type.optional(this.convert({ reference: container.nullable }));
             case "literal":
                 return this.convertLiteral({ literal: container.literal });
             default:
@@ -75,7 +73,7 @@ export class GoTypeMapper {
         }
     }
 
-    private convertPrimitive({ primitive }: { primitive: PrimitiveType }): Type {
+    private convertPrimitive({ primitive }: { primitive: PrimitiveType }): go.Type {
         return PrimitiveTypeV1._visit<go.Type>(primitive.v1, {
             integer: () => go.Type.int(),
             long: () => go.Type.int64(),
@@ -94,7 +92,7 @@ export class GoTypeMapper {
         });
     }
 
-    private convertLiteral({ literal }: { literal: Literal }): Type {
+    private convertLiteral({ literal }: { literal: Literal }): go.Type {
         switch (literal.type) {
             case "boolean":
                 return go.Type.bool();
@@ -105,7 +103,7 @@ export class GoTypeMapper {
         }
     }
 
-    private convertNamed({ named }: { named: DeclaredTypeName }): Type {
+    private convertNamed({ named }: { named: DeclaredTypeName }): go.Type {
         const typeDeclaration = this.context.getTypeDeclarationOrThrow(named.typeId);
         switch (typeDeclaration.shape.type) {
             case "alias":

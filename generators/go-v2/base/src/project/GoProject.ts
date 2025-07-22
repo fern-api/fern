@@ -2,7 +2,8 @@ import { mkdir } from "fs/promises";
 
 import { AbstractProject, File } from "@fern-api/base-generator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { AbstractGoGeneratorContext, BaseGoCustomConfigSchema } from "@fern-api/go-ast";
+import { BaseGoCustomConfigSchema } from "@fern-api/go-ast";
+import { AbstractGoGeneratorContext } from "../context/AbstractGoGeneratorContext";
 import { loggingExeca } from "@fern-api/logging-execa";
 
 /**

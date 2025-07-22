@@ -2,8 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 
 import { PrimitiveTypeV1, TypeReference } from "@fern-fern/ir-sdk/api";
 
-import { go } from "../";
-import { BaseGoCustomConfigSchema } from "../custom-config/BaseGoCustomConfigSchema";
+import { BaseGoCustomConfigSchema, go } from "@fern-api/go-ast";
 import { AbstractGoGeneratorContext } from "./AbstractGoGeneratorContext";
 
 export declare namespace GoValueFormatter {
