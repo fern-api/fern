@@ -3,6 +3,7 @@ import { describe, it, expect } from "vitest";
 import { ErrorDeclaration, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { ErrorGenerator } from "../error/ErrorGenerator";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import * as FernIr from "@fern-fern/ir-sdk/api";
 
 // Mock function to create IR with specific error definitions
 function createMockIR(errors: Record<string, ErrorDeclaration>): IntermediateRepresentation {
@@ -46,7 +47,7 @@ function createErrorDeclaration(name: string, statusCode: number, type: "text" |
                 : ({
                       type: "named",
                       typeId: `${name}Body`
-                  } as any)
+                  } as FernIr.TypeReference.Named)
     } as unknown as ErrorDeclaration;
 }
 
