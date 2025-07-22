@@ -52,7 +52,11 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
         const modelContext = new ModelGeneratorContext(
             context.ir,
             context.config,
-            {}, // Empty custom config for model
+            {
+                // Pass the client module name from SDK config to model config
+                clientModuleName: context.customConfig.clientModuleName,
+                typesModuleName: "Types"
+            },
             context.generatorNotificationService
         );
 
