@@ -4,7 +4,7 @@ import {
     GeneratorNotificationService
 } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
-import { RelativeFilePath } from "@fern-api/path-utils";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 
 import {
     ErrorDeclaration,
@@ -23,13 +23,11 @@ import {
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 
-import { go } from "..";
-import { IoReaderTypeReference, TimeTypeReference, UuidTypeReference } from "../ast/Type";
-import { BaseGoCustomConfigSchema } from "../custom-config/BaseGoCustomConfigSchema";
-import { resolveRootImportPath } from "../custom-config/resolveRootImportPath";
+import { BaseGoCustomConfigSchema, go, resolveRootImportPath } from "@fern-api/go-ast";
 import { GoTypeMapper } from "./GoTypeMapper";
 import { GoValueFormatter } from "./GoValueFormatter";
 import { GoZeroValueMapper } from "./GoZeroValueMapper";
+import { GoProject } from "../project/GoProject";
 
 export interface FileLocation {
     importPath: string;
@@ -40,6 +38,7 @@ export abstract class AbstractGoGeneratorContext<
     CustomConfig extends BaseGoCustomConfigSchema
 > extends AbstractGeneratorContext {
     private rootImportPath: string;
+    public readonly project: GoProject;
     public readonly goTypeMapper: GoTypeMapper;
     public readonly goValueFormatter: GoValueFormatter;
     public readonly goZeroValueMapper: GoZeroValueMapper;
@@ -51,6 +50,7 @@ export abstract class AbstractGoGeneratorContext<
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(config, generatorNotificationService);
+        this.project = new GoProject({ context: this });
         this.goTypeMapper = new GoTypeMapper(this);
         this.goValueFormatter = new GoValueFormatter(this);
         this.goZeroValueMapper = new GoZeroValueMapper(this);
@@ -268,28 +268,28 @@ export abstract class AbstractGoGeneratorContext<
 
     public getZeroTime(): go.TypeInstantiation {
         return go.TypeInstantiation.struct({
-            typeReference: TimeTypeReference,
+            typeReference: go.TimeTypeReference,
             fields: []
         });
     }
 
     public getZeroUuid(): go.TypeInstantiation {
         return go.TypeInstantiation.struct({
-            typeReference: UuidTypeReference,
+            typeReference: go.UuidTypeReference,
             fields: []
         });
     }
 
     public getUuidTypeReference(): go.TypeReference {
-        return UuidTypeReference;
+        return go.UuidTypeReference;
     }
 
     public getTimeTypeReference(): go.TypeReference {
-        return TimeTypeReference;
+        return go.TimeTypeReference;
     }
 
     public getIoReaderTypeReference(): go.TypeReference {
-        return IoReaderTypeReference;
+        return go.IoReaderTypeReference;
     }
 
     public isOptional(typeReference: TypeReference): boolean {

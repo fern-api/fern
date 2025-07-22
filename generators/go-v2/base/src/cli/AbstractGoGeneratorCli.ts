@@ -1,7 +1,7 @@
 import { AbstractGeneratorCli, parseIR } from "@fern-api/base-generator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { AbstractGoGeneratorContext } from "@fern-api/go-ast";
 import { BaseGoCustomConfigSchema } from "@fern-api/go-ast";
+import { AbstractGoGeneratorContext } from "../context/AbstractGoGeneratorContext";
 
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";

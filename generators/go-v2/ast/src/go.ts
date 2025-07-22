@@ -84,5 +84,8 @@ export {
     Type,
     TypeInstantiation,
     type StructField,
-    Writer
+    Writer,
+    TimeTypeReference,
+    UuidTypeReference,
+    IoReaderTypeReference
 } from "./ast";

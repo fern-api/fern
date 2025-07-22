@@ -1,8 +1,8 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { AbstractGoGeneratorContext, FileLocation, go } from "@fern-api/go-ast";
-import { GoProject } from "@fern-api/go-base";
+import { go } from "@fern-api/go-ast";
+import { AbstractGoGeneratorContext, FileLocation, GoProject } from "@fern-api/go-base";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { GithubOutputMode, OutputMode } from "@fern-fern/generator-exec-sdk/api";
@@ -31,7 +31,6 @@ import { ModuleConfig } from "./module/ModuleConfig";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
 
 export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomConfigSchema> {
-    public readonly project: GoProject;
     public readonly caller: Caller;
     public readonly streamer: Streamer;
     public readonly endpointGenerator: EndpointGenerator;
@@ -44,7 +43,6 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(ir, config, customConfig, generatorNotificationService);
-        this.project = new GoProject({ context: this });
         this.endpointGenerator = new EndpointGenerator(this);
         this.caller = new Caller(this);
         this.streamer = new Streamer(this);
