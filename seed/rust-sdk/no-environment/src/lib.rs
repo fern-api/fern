@@ -7,5 +7,5 @@ pub mod error;
 pub mod dummy;
 
 pub use client::NoEnvironmentClient;
-pub use error::Error;
+pub use error::ApiError;
 

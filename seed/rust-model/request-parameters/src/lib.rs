@@ -1,4 +1,4 @@
 //! Generated models by Fern
 
-pub mod type_user-user;
-pub mod type_user-nesteduser;
+pub mod user;
+pub mod nested_user;

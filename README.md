@@ -19,7 +19,17 @@
 
 </div>
 
-Fern is a toolkit that allows you to input your API Definition and output SDKs and API documentation. Fern is compatible with the OpenAPI specification (formerly Swagger).
+# 🌿 What is Fern?
+
+Fern is a platform that transforms your API definitions into production-ready SDKs and beautiful documentation in minutes. 
+
+With Fern, you can offer your users:
+
+- 🧩 **Type-safe SDKs** in multiple languages, including TypeScript, Python, Java, Go, Ruby, PHP, and C#
+- 📘 **Developer documentation** featuring an interactive UI and auto-generated API + SDK references
+- ✨ **AI Search** powered by an assistant trained on your docs, APIs, and SDKs that can instantly answer a developer's questions
+
+Fern supports leading API specifications including OpenAPI (REST, Webhooks), AsyncAPI (WebSockets), Protobuf (gRPC), and OpenRPC.
 
 <div align="center">
     <a href="/fern/images/overview-dark.png" target="_blank">
@@ -33,7 +43,7 @@ Fern is a toolkit that allows you to input your API Definition and output SDKs a
 
 ## 🌿 SDKs
 
-The Fern toolkit is available via a command line interface (CLI) and requires Node 18+. To install it, run:
+The Fern platform is available via a command line interface (CLI) and requires Node 18+. To install it, run:
 
 ```bash
 npm install -g fern-api
@@ -67,16 +77,16 @@ fern generate
 
 ## 🌿 API Documentation
 
-Fern can also build and host a documentation website with an auto-generated API reference. Write additional pages in markdown and have them versioned with git. Search, SEO, dark mode, and popular components are provided out-of-the-box. Plus, you can customize the colors, font, logo, and domain name.
+Fern can also build and host a documentation website with an auto-generated API reference. Write additional pages in markdown and have them versioned with git. 
+Search, SEO, dark mode, and popular components are provided out-of-the-box. Plus, you can customize the colors, font, logo, and domain name.
 
 Check out docs built with Fern:
 
-- [docs.vellum.ai](https://docs.vellum.ai)
-- [docs.superagent.sh](https://docs.superagent.sh/)
+- [elevenlabs.io/docs](https://elevenlabs.io/docs)
+- [launchdarkly.com/docs](https://launchdarkly.com/docs/home)
 - [docs.hume.ai](https://docs.hume.ai/)
-- [docs.deepgram.com](https://docs.deepgram.com/)
 
-Get started [here](https://github.com/fern-api/docs-starter-openapi).
+Get started [here](https://github.com/fern-api/docs-starter).
 
 ## 🌿 Generators
 
@@ -87,7 +97,7 @@ Postman Collections, Server boilerplate, etc.). To add a generator run `fern add
 
 | Generator ID                       | Latest Version                                                                                    | Entrypoint                                                                    |
 | ---------------------------------- | ------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| `fernapi/fern-typescript-sdk` | ![Typescript Generator Version](https://img.shields.io/docker/v/fernapi/fern-typescript-sdk) | [cli.ts](./generators/typescript/sdk/cli/src/nodeCli.ts)                      |
+| `fernapi/fern-typescript-sdk`      | ![Typescript Generator Version](https://img.shields.io/docker/v/fernapi/fern-typescript-sdk)      | [cli.ts](./generators/typescript/sdk/cli/src/nodeCli.ts)                      |
 | `fernapi/fern-python-sdk`          | ![Python Generator Version](https://img.shields.io/docker/v/fernapi/fern-python-sdk)              | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)           |
 | `fernapi/fern-java-sdk`            | ![Java Generator Version](https://img.shields.io/docker/v/fernapi/fern-java-sdk)                  | [Cli.java](./generators/java/sdk/src/main/java/com/fern/java/client/Cli.java) |
 | `fernapi/fern-ruby-sdk`            | ![Ruby Generator Version](https://img.shields.io/docker/v/fernapi/fern-ruby-sdk)                  | [cli.ts](./generators/ruby/sdk/src/cli.ts)                                    |

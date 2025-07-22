@@ -9,6 +9,6 @@ pub mod auth;
 pub mod user;
 
 pub use client::AnyAuthClient;
-pub use error::Error;
+pub use error::ApiError;
 
 pub use types::*;

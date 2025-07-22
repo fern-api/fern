@@ -17,6 +17,6 @@ pub mod v_2_problem;
 pub mod v_2_v_3_problem;
 
 pub use client::TraceClient;
-pub use error::Error;
+pub use error::ApiError;
 
 pub use types::*;

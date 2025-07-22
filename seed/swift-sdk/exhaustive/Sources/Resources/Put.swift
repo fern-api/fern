@@ -5,7 +5,12 @@ public final class PutClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func add(requestOptions: RequestOptions? = nil) async throws -> PutResponse {
-        fatalError("Not implemented.")
+    public func add(id: String, requestOptions: RequestOptions? = nil) async throws -> PutResponse {
+        return try await httpClient.performRequest(
+            method: .put,
+            path: "/\(id)",
+            requestOptions: requestOptions,
+            responseType: PutResponse.self
+        )
     }
 }

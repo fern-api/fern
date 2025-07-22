@@ -1,4 +1,4 @@
 //! Generated models by Fern
 
-pub mod type_unknown-myalias;
-pub mod type_unknown-myobject;
+pub mod my_alias;
+pub mod my_object;

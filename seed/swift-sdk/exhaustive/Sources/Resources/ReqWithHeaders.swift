@@ -5,7 +5,16 @@ public final class ReqWithHeadersClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getWithCustomHeader(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+    public func getWithCustomHeader(xTestEndpointHeader: String, request: String, requestOptions: RequestOptions? = nil) async throws -> Any {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/test-headers/custom-header",
+            headers: [
+                "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader
+            ],
+            body: request,
+            requestOptions: requestOptions,
+            responseType: Any.self
+        )
     }
 }

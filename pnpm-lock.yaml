@@ -2429,33 +2429,6 @@ importers:
         specifier: ^3.22.3
         version: 3.25.67
 
-  generators/rust/ast:
-    devDependencies:
-      '@fern-api/configs':
-        specifier: workspace:*
-        version: link:../../../packages/configs
-      '@trivago/prettier-plugin-sort-imports':
-        specifier: ^5.2.1
-        version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
-      '@types/node':
-        specifier: 18.15.3
-        version: 18.15.3
-      depcheck:
-        specifier: ^1.4.7
-        version: 1.4.7
-      eslint:
-        specifier: ^8.56.0
-        version: 8.57.1
-      prettier:
-        specifier: ^3.4.2
-        version: 3.5.3
-      typescript:
-        specifier: 5.7.2
-        version: 5.7.2
-      vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
-
   generators/rust/base:
     dependencies:
       '@fern-api/base-generator':
@@ -2496,6 +2469,25 @@ importers:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
 
+  generators/rust/codegen:
+    dependencies:
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../packages/configs
+    devDependencies:
+      '@types/node':
+        specifier: ^18.7.18
+        version: 18.15.3
+      depcheck:
+        specifier: ^1.4.6
+        version: 1.4.7
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+      vitest:
+        specifier: ^2.0.5
+        version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
+
   generators/rust/model:
     devDependencies:
       '@fern-api/base-generator':
@@ -2504,15 +2496,18 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../packages/configs
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/core-utils
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
-      '@fern-api/rust-ast':
-        specifier: workspace:*
-        version: link:../ast
       '@fern-api/rust-base':
         specifier: workspace:*
         version: link:../base
+      '@fern-api/rust-codegen':
+        specifier: workspace:*
+        version: link:../codegen
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
         version: 0.0.1045
@@ -2821,6 +2816,9 @@ importers:
       '@fern-api/swift-model':
         specifier: workspace:*
         version: link:../model
+      '@fern-api/test-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/test-utils
       '@fern-fern/generator-cli-sdk':
         specifier: 0.0.28
         version: 0.0.28

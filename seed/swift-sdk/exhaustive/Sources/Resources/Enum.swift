@@ -4,8 +4,4 @@ public final class EnumClient: Sendable {
     public init(config: ClientConfig) {
         self.httpClient = HTTPClient(config: config)
     }
-
-    public func getAndReturnEnum(requestOptions: RequestOptions? = nil) async throws -> WeatherReport {
-        fatalError("Not implemented.")
-    }
 }

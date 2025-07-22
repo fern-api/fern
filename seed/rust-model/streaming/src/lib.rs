@@ -1,3 +1,3 @@
 //! Generated models by Fern
 
-pub mod type_dummy-streamresponse;
+pub mod stream_response;
