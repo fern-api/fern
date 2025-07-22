@@ -7,7 +7,7 @@ public struct TerminatedResponse: Codable, Hashable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
+        self.additionalProperties = try decoder.decodeAdditionalProperties(knownKeys: [])
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
