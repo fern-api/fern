@@ -93,8 +93,13 @@ features:
   - id: RUNTIME_COMPATIBILITY
     advanced: true
     description: |
+      <% if (fetchSupport === "node-fetch") { %>
       The SDK defaults to `node-fetch` but will use the global fetch client if present. The SDK works in the following
       runtimes:
+      <% } else { %>
+      The SDK works in the following runtimes:
+      <% } %>
+
 
       - Node.js 18+
       - Vercel
