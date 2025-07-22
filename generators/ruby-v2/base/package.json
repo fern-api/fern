@@ -42,6 +42,7 @@
     "depcheck": "^1.4.7",
     "esbuild": "^0.25.0",
     "eslint": "^8.56.0",
+    "lodash-es": "^4.17.21",
     "prettier": "^3.4.2",
     "tsup": "^8.0.2",
     "typescript": "5.7.2",
