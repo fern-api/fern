@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.16.6
+  changelogEntry:
+    - summary: |
+        Add default header of { "accept": "application/json" } to all requests.
+      type: fix
+  createdAt: '2025-07-22'
+  irVersion: 58
+
 - version: 1.16.5
   changelogEntry:
     - summary: |
