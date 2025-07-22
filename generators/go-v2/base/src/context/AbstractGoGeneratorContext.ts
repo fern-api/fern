@@ -28,6 +28,9 @@ import { GoTypeMapper } from "./GoTypeMapper";
 import { GoValueFormatter } from "./GoValueFormatter";
 import { GoZeroValueMapper } from "./GoZeroValueMapper";
 import { GoProject } from "../project/GoProject";
+import { ModuleConfigWriter } from "../module/ModuleConfigWriter";
+import { ModuleConfig } from "..";
+import { GithubOutputMode, OutputMode } from "@fern-fern/generator-exec-sdk/api";
 
 export interface FileLocation {
     importPath: string;

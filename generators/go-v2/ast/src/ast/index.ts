@@ -8,6 +8,7 @@ export { FuncInvocation } from "./FuncInvocation";
 export { GoTypeReference } from "./GoTypeReference";
 export { Method } from "./Method";
 export { MethodInvocation } from "./MethodInvocation";
+export { MultiNode } from "./MultiNode";
 export { Parameter } from "./Parameter";
 export { Pointer } from "./Pointer";
 export { Selector } from "./Selector";

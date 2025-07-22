@@ -40,6 +40,6 @@ export class ModelGeneratorCLI extends AbstractGoGeneratorCli<ModelCustomConfigS
 
     protected async generate(context: ModelGeneratorContext): Promise<void> {
         generateModels(context);
-        await context.project.persist();
+        await context.project.persist({ tidy: true });
     }
 }
