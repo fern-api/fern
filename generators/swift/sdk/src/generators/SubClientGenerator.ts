@@ -1,11 +1,15 @@
+import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
-import { generateSwiftTypeForTypeReference } from "@fern-api/swift-model";
+import { getSwiftTypeForTypeReference } from "@fern-api/swift-model";
 
-import { HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, HttpMethod, HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { formatEndpointPathForSwift } from "./util/format-endpoint-path-for-swift";
+import { getQueryParamCaseName } from "./util/get-query-param-case-name";
+import { parseEndpointPath } from "./util/parse-endpoint-path";
 
 export declare namespace SubClientGenerator {
     interface Args {
@@ -75,9 +79,12 @@ export class SubClientGenerator {
             body: swift.CodeBlock.withStatements([
                 swift.Statement.propertyAssignment(
                     "httpClient",
-                    swift.Expression.classInitialization("HTTPClient", [
-                        swift.functionArgument({ label: "config", value: swift.Expression.reference("config") })
-                    ])
+                    swift.Expression.classInitialization({
+                        unsafeName: "HTTPClient",
+                        arguments_: [
+                            swift.functionArgument({ label: "config", value: swift.Expression.reference("config") })
+                        ]
+                    })
                 )
             ])
         });
@@ -88,38 +95,265 @@ export class SubClientGenerator {
             return swift.method({
                 unsafeName: endpoint.name.camelCase.unsafeName,
                 accessLevel: swift.AccessLevel.Public,
-                parameters: [
-                    swift.functionParameter({
-                        argumentLabel: "requestOptions",
-                        unsafeName: "requestOptions",
-                        type: swift.Type.custom("RequestOptions"),
-                        optional: true,
-                        defaultValue: swift.Expression.rawValue("nil")
-                    })
-                ],
+                parameters: this.getMethodParametersForEndpoint(endpoint),
                 async: true,
                 throws: true,
-                returnType:
-                    endpoint.response?.body?._visit({
-                        json: (resp) => generateSwiftTypeForTypeReference(resp.responseBodyType),
-                        fileDownload: () => swift.Type.custom("Any"),
-                        text: () => swift.Type.custom("Any"),
-                        bytes: () => swift.Type.custom("Any"),
-                        streaming: () => swift.Type.custom("Any"),
-                        streamParameter: () => swift.Type.custom("Any"),
-                        _other: () => swift.Type.custom("Any")
-                    }) ?? swift.Type.custom("Any"),
-                body: swift.CodeBlock.withStatements([
-                    swift.Statement.expressionStatement(
-                        swift.Expression.functionCall("fatalError", [
-                            swift.functionArgument({
-                                value: swift.Expression.rawStringValue("Not implemented.")
-                            })
-                        ])
-                    )
-                ])
+                returnType: this.getMethodReturnTypeForEndpoint(endpoint),
+                body: this.getMethodBodyForEndpoint(endpoint)
             });
         });
+    }
+
+    private getMethodParametersForEndpoint(endpoint: HttpEndpoint): swift.FunctionParameter[] {
+        const params: swift.FunctionParameter[] = [];
+
+        const { pathParts } = parseEndpointPath(endpoint);
+
+        pathParts.forEach((pathPart) => {
+            if (pathPart.type === "path-parameter") {
+                params.push(
+                    swift.functionParameter({
+                        argumentLabel: pathPart.unsafeNameCamelCase,
+                        unsafeName: pathPart.unsafeNameCamelCase,
+                        type: swift.Type.custom("String")
+                    })
+                );
+            }
+        });
+
+        endpoint.headers.forEach((header) => {
+            const swiftType = getSwiftTypeForTypeReference(header.valueType);
+            params.push(
+                swift.functionParameter({
+                    argumentLabel: header.name.name.camelCase.unsafeName,
+                    unsafeName: header.name.name.camelCase.unsafeName,
+                    type: swiftType,
+                    defaultValue: swiftType.isOptional ? swift.Expression.rawValue("nil") : undefined
+                })
+            );
+        });
+
+        endpoint.queryParameters.forEach((queryParam) => {
+            const swiftType = getSwiftTypeForTypeReference(queryParam.valueType);
+            params.push(
+                swift.functionParameter({
+                    argumentLabel: queryParam.name.name.camelCase.unsafeName,
+                    unsafeName: queryParam.name.name.camelCase.unsafeName,
+                    type: swiftType,
+                    defaultValue: swiftType.isOptional ? swift.Expression.rawValue("nil") : undefined
+                })
+            );
+        });
+
+        if (endpoint.requestBody) {
+            if (endpoint.requestBody.type === "reference") {
+                params.push(
+                    swift.functionParameter({
+                        argumentLabel: "request",
+                        unsafeName: "request",
+                        type: getSwiftTypeForTypeReference(endpoint.requestBody.requestBodyType)
+                    })
+                );
+            } else if (endpoint.requestBody.type === "inlinedRequestBody") {
+                // TODO(kafkas): Handle inlined request body types
+                params.push(
+                    swift.functionParameter({
+                        argumentLabel: "request",
+                        unsafeName: "request",
+                        type: swift.Type.any()
+                    })
+                );
+            } else {
+                // TODO(kafkas): Handle other request body types
+                params.push(
+                    swift.functionParameter({
+                        argumentLabel: "request",
+                        unsafeName: "request",
+                        type: swift.Type.any()
+                    })
+                );
+            }
+        }
+
+        params.push(
+            swift.functionParameter({
+                argumentLabel: "requestOptions",
+                unsafeName: "requestOptions",
+                type: swift.Type.optional(swift.Type.custom("RequestOptions")),
+                defaultValue: swift.Expression.rawValue("nil")
+            })
+        );
+
+        return params;
+    }
+
+    private getMethodReturnTypeForEndpoint(endpoint: HttpEndpoint): swift.Type {
+        if (!endpoint.response) {
+            return swift.Type.void();
+        }
+        return (
+            endpoint.response.body?._visit({
+                json: (resp) => getSwiftTypeForTypeReference(resp.responseBodyType),
+                fileDownload: () => swift.Type.custom("Any"),
+                text: () => swift.Type.custom("Any"),
+                bytes: () => swift.Type.custom("Any"),
+                streaming: () => swift.Type.custom("Any"),
+                streamParameter: () => swift.Type.custom("Any"),
+                _other: () => swift.Type.custom("Any")
+            }) ?? swift.Type.custom("Any")
+        );
+    }
+
+    private getMethodBodyForEndpoint(endpoint: HttpEndpoint): swift.CodeBlock {
+        // TODO(kafkas): Handle name collisions
+
+        const arguments_ = [
+            swift.functionArgument({
+                label: "method",
+                value: swift.Expression.enumCaseShorthand(this.getEnumCaseNameForHttpMethod(endpoint.method))
+            }),
+            // TODO(kafkas): Handle multi-url environments
+            swift.functionArgument({
+                label: "path",
+                value: swift.Expression.rawStringValue(formatEndpointPathForSwift(endpoint))
+            })
+        ];
+
+        if (endpoint.headers.length > 0) {
+            arguments_.push(
+                swift.functionArgument({
+                    label: "headers",
+                    value: swift.Expression.dictionaryLiteral({
+                        entries: endpoint.headers.map((header) => [
+                            swift.Expression.rawStringValue(header.name.name.originalName),
+                            swift.Expression.reference(header.name.name.camelCase.unsafeName)
+                        ]),
+                        multiline: true
+                    })
+                })
+            );
+        }
+
+        if (endpoint.queryParameters.length > 0) {
+            arguments_.push(
+                swift.functionArgument({
+                    label: "queryParams",
+                    value: swift.Expression.dictionaryLiteral({
+                        entries: endpoint.queryParameters.map((queryParam) => {
+                            const key = swift.Expression.rawStringValue(queryParam.name.name.originalName);
+                            const swiftType = getSwiftTypeForTypeReference(queryParam.valueType);
+                            if (swiftType.isOptional) {
+                                return [
+                                    key,
+                                    swift.Expression.methodCallWithTrailingClosure({
+                                        target: swift.Expression.reference(queryParam.name.name.camelCase.unsafeName),
+                                        methodName: "map",
+                                        closureBody: swift.Expression.contextualMethodCall({
+                                            methodName: getQueryParamCaseName(swiftType),
+                                            arguments_: [
+                                                swift.functionArgument({
+                                                    value: swiftType.isCustom
+                                                        ? swift.Expression.memberAccess({
+                                                              target: swift.Expression.reference("$0"),
+                                                              memberName: "rawValue"
+                                                          })
+                                                        : swift.Expression.reference("$0")
+                                                })
+                                            ]
+                                        })
+                                    })
+                                ];
+                            } else {
+                                return [
+                                    key,
+                                    swift.Expression.contextualMethodCall({
+                                        methodName: getQueryParamCaseName(swiftType),
+                                        arguments_: [
+                                            swift.functionArgument({
+                                                value: swiftType.isCustom
+                                                    ? swift.Expression.memberAccess({
+                                                          target: swift.Expression.reference(
+                                                              queryParam.name.name.camelCase.unsafeName
+                                                          ),
+                                                          memberName: "rawValue"
+                                                      })
+                                                    : swift.Expression.reference(
+                                                          queryParam.name.name.camelCase.unsafeName
+                                                      )
+                                            })
+                                        ]
+                                    })
+                                ];
+                            }
+                        }),
+                        multiline: true
+                    })
+                })
+            );
+        }
+
+        if (endpoint.requestBody) {
+            arguments_.push(
+                swift.functionArgument({
+                    label: "body",
+                    value: swift.Expression.reference("request")
+                })
+            );
+        }
+
+        arguments_.push(
+            swift.functionArgument({
+                label: "requestOptions",
+                value: swift.Expression.reference("requestOptions")
+            })
+        );
+
+        if (endpoint.response) {
+            arguments_.push(
+                swift.functionArgument({
+                    label: "responseType",
+                    value: swift.Expression.memberAccess({
+                        target: this.getMethodReturnTypeForEndpoint(endpoint),
+                        memberName: "self"
+                    })
+                })
+            );
+        }
+
+        return swift.CodeBlock.withStatements([
+            swift.Statement.return(
+                swift.Expression.try(
+                    swift.Expression.await(
+                        swift.Expression.methodCall({
+                            target: swift.Expression.reference("httpClient"),
+                            // TODO(kafkas): Changes based on content type
+                            methodName: "performRequest",
+                            arguments_,
+                            multiline: true
+                        })
+                    )
+                )
+            )
+        ]);
+    }
+
+    private getEnumCaseNameForHttpMethod(method: HttpMethod): string {
+        switch (method) {
+            case "GET":
+                return "get";
+            case "POST":
+                return "post";
+            case "PUT":
+                return "put";
+            case "DELETE":
+                return "delete";
+            case "PATCH":
+                return "patch";
+            case "HEAD":
+                return "head";
+            default:
+                assertNever(method);
+        }
     }
 
     private getSubpackages(): Subpackage[] {

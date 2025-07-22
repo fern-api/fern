@@ -6,6 +6,11 @@ public final class ServiceClient: Sendable {
     }
 
     public func getDirectThread(requestOptions: RequestOptions? = nil) async throws -> Response {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/",
+            requestOptions: requestOptions,
+            responseType: Response.self
+        )
     }
 }

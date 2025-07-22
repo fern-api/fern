@@ -31,18 +31,27 @@ type FunctionCall = {
     type: "function-call";
     unsafeName: string;
     arguments_?: FunctionArgument[];
+    multiline?: true;
 };
 
 type StructInitialization = {
     type: "struct-initialization";
     unsafeName: string;
     arguments_?: FunctionArgument[];
+    multiline?: true;
 };
 
 type ClassInitialization = {
     type: "class-initialization";
     unsafeName: string;
     arguments_?: FunctionArgument[];
+    multiline?: true;
+};
+
+type DictionaryLiteral = {
+    type: "dictionary-literal";
+    entries?: [Expression, Expression][];
+    multiline?: true;
 };
 
 type MethodCall = {
@@ -50,16 +59,30 @@ type MethodCall = {
     target: Expression;
     methodName: string;
     arguments_?: FunctionArgument[];
+    multiline?: true;
+};
+
+type MethodCallWithTrailingClosure = {
+    type: "method-call-with-trailing-closure";
+    target: Expression;
+    methodName: string;
+    closureBody: Expression;
 };
 
 type ContextualMethodCall = {
     type: "contextual-method-call";
     methodName: string;
     arguments_?: FunctionArgument[];
+    multiline?: true;
 };
 
 type Try = {
     type: "try";
+    expression: Expression;
+};
+
+type Await = {
+    type: "await";
     expression: Expression;
 };
 
@@ -75,10 +98,20 @@ type InternalExpression =
     | FunctionCall
     | StructInitialization
     | ClassInitialization
+    | DictionaryLiteral
     | MethodCall
+    | MethodCallWithTrailingClosure
     | ContextualMethodCall
     | Try
+    | Await
     | RawValue;
+
+type WriteCallableExpressionParams = {
+    writer: Writer;
+    target: string;
+    arguments_?: FunctionArgument[];
+    multiline: boolean;
+};
 
 export class Expression extends AstNode {
     private internalExpression: InternalExpression;
@@ -103,45 +136,65 @@ export class Expression extends AstNode {
                 writer.write(this.internalExpression.caseName);
                 break;
             case "function-call":
-                this.writeCallableExpression(
+                this.writeCallableExpression({
                     writer,
-                    escapeReservedKeyword(this.internalExpression.unsafeName),
-                    this.internalExpression.arguments_
-                );
+                    target: escapeReservedKeyword(this.internalExpression.unsafeName),
+                    arguments_: this.internalExpression.arguments_,
+                    multiline: !!this.internalExpression.multiline
+                });
                 break;
             case "struct-initialization":
-                this.writeCallableExpression(
+                this.writeCallableExpression({
                     writer,
-                    escapeReservedKeyword(this.internalExpression.unsafeName),
-                    this.internalExpression.arguments_
-                );
+                    target: escapeReservedKeyword(this.internalExpression.unsafeName),
+                    arguments_: this.internalExpression.arguments_,
+                    multiline: !!this.internalExpression.multiline
+                });
                 break;
             case "class-initialization":
-                this.writeCallableExpression(
+                this.writeCallableExpression({
                     writer,
-                    escapeReservedKeyword(this.internalExpression.unsafeName),
-                    this.internalExpression.arguments_
-                );
+                    target: escapeReservedKeyword(this.internalExpression.unsafeName),
+                    arguments_: this.internalExpression.arguments_,
+                    multiline: !!this.internalExpression.multiline
+                });
+                break;
+            case "dictionary-literal":
+                this.writeDictionaryLiteral(writer, this.internalExpression);
                 break;
             case "method-call":
                 this.internalExpression.target.write(writer);
                 writer.write(".");
-                this.writeCallableExpression(
+                this.writeCallableExpression({
                     writer,
-                    this.internalExpression.methodName,
-                    this.internalExpression.arguments_
-                );
+                    target: this.internalExpression.methodName,
+                    arguments_: this.internalExpression.arguments_,
+                    multiline: !!this.internalExpression.multiline
+                });
+                break;
+            case "method-call-with-trailing-closure":
+                this.internalExpression.target.write(writer);
+                writer.write(".");
+                writer.write(this.internalExpression.methodName);
+                writer.write(" { ");
+                this.internalExpression.closureBody.write(writer);
+                writer.write(" }");
                 break;
             case "contextual-method-call":
                 writer.write(".");
-                this.writeCallableExpression(
+                this.writeCallableExpression({
                     writer,
-                    this.internalExpression.methodName,
-                    this.internalExpression.arguments_
-                );
+                    target: this.internalExpression.methodName,
+                    arguments_: this.internalExpression.arguments_,
+                    multiline: !!this.internalExpression.multiline
+                });
                 break;
             case "try":
                 writer.write("try ");
+                this.internalExpression.expression.write(writer);
+                break;
+            case "await":
+                writer.write("await ");
                 this.internalExpression.expression.write(writer);
                 break;
             case "raw-value":
@@ -152,52 +205,106 @@ export class Expression extends AstNode {
         }
     }
 
-    private writeCallableExpression(writer: Writer, target: string, arguments_?: FunctionArgument[]): void {
+    private writeCallableExpression({ writer, target, arguments_, multiline }: WriteCallableExpressionParams): void {
         writer.write(target);
         writer.write("(");
+        if (multiline) {
+            writer.newLine();
+            writer.indent();
+        }
         arguments_?.forEach((argument: FunctionArgument, argumentIdx: number) => {
             if (argumentIdx > 0) {
-                writer.write(", ");
+                writer.write(",");
+                if (multiline) {
+                    writer.newLine();
+                } else {
+                    writer.write(" ");
+                }
             }
             argument.write(writer);
         });
+        if (multiline) {
+            writer.newLine();
+            writer.dedent();
+        }
         writer.write(")");
+    }
+
+    private writeDictionaryLiteral(writer: Writer, dictLiteral: DictionaryLiteral): void {
+        if (!dictLiteral.entries || dictLiteral.entries.length === 0) {
+            writer.write("[:]");
+            return;
+        }
+        writer.write("[");
+        const multiline = !!dictLiteral.multiline;
+        if (multiline) {
+            writer.newLine();
+            writer.indent();
+        }
+        dictLiteral.entries?.forEach(([key, value], entryIdx) => {
+            if (entryIdx > 0) {
+                writer.write(", ");
+                if (multiline) {
+                    writer.newLine();
+                }
+            }
+            key.write(writer);
+            writer.write(": ");
+            value.write(writer);
+        });
+        if (multiline) {
+            writer.newLine();
+            writer.dedent();
+        }
+        writer.write("]");
     }
 
     public static reference(unsafeName: string): Expression {
         return new this({ type: "reference", unsafeName });
     }
 
-    public static memberAccess(target: Expression | Type, memberName: string): Expression {
-        return new this({ type: "member-access", target, memberName });
+    public static memberAccess(params: Omit<MemberAccess, "type">): Expression {
+        return new this({ type: "member-access", ...params });
     }
 
     public static enumCaseShorthand(caseName: string): Expression {
         return new this({ type: "enum-case-shorthand", caseName });
     }
 
-    public static functionCall(unsafeName: string, arguments_?: FunctionArgument[]): Expression {
-        return new this({ type: "function-call", unsafeName, arguments_ });
+    public static functionCall(params: Omit<FunctionCall, "type">): Expression {
+        return new this({ type: "function-call", ...params });
     }
 
-    public static structInitialization(unsafeName: string, arguments_?: FunctionArgument[]): Expression {
-        return new this({ type: "struct-initialization", unsafeName, arguments_ });
+    public static structInitialization(params: Omit<StructInitialization, "type">): Expression {
+        return new this({ type: "struct-initialization", ...params });
     }
 
-    public static classInitialization(unsafeName: string, arguments_?: FunctionArgument[]): Expression {
-        return new this({ type: "class-initialization", unsafeName, arguments_ });
+    public static classInitialization(params: Omit<ClassInitialization, "type">): Expression {
+        return new this({ type: "class-initialization", ...params });
     }
 
-    public static methodCall(target: Expression, methodName: string, arguments_?: FunctionArgument[]): Expression {
-        return new this({ type: "method-call", target, methodName, arguments_ });
+    public static dictionaryLiteral(params: Omit<DictionaryLiteral, "type">): Expression {
+        return new this({ type: "dictionary-literal", ...params });
     }
 
-    public static contextualMethodCall(methodName: string, arguments_?: FunctionArgument[]): Expression {
-        return new this({ type: "contextual-method-call", methodName, arguments_ });
+    public static methodCall(params: Omit<MethodCall, "type">): Expression {
+        return new this({ type: "method-call", ...params });
+    }
+
+    public static methodCallWithTrailingClosure(params: Omit<MethodCallWithTrailingClosure, "type">): Expression {
+        return new this({ type: "method-call-with-trailing-closure", ...params });
+    }
+
+    public static contextualMethodCall(params: Omit<ContextualMethodCall, "type">): Expression {
+        return new this({ type: "contextual-method-call", ...params });
     }
 
     public static try(expression: Expression): Expression {
         return new this({ type: "try", expression });
+    }
+
+    public static await(expression: Expression): Expression {
+        return new this({ type: "await", expression });
     }
 
     public static rawStringValue(value: string): Expression {

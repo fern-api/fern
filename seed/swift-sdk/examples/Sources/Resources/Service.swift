@@ -5,19 +5,48 @@ public final class ServiceClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getMovie(requestOptions: RequestOptions? = nil) async throws -> Movie {
-        fatalError("Not implemented.")
+    public func getMovie(movieId: String, requestOptions: RequestOptions? = nil) async throws -> Movie {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/movie/\(movieId)",
+            requestOptions: requestOptions,
+            responseType: Movie.self
+        )
     }
 
-    public func createMovie(requestOptions: RequestOptions? = nil) async throws -> MovieId {
-        fatalError("Not implemented.")
+    public func createMovie(request: Movie, requestOptions: RequestOptions? = nil) async throws -> MovieId {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/movie",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: MovieId.self
+        )
     }
 
-    public func getMetadata(requestOptions: RequestOptions? = nil) async throws -> Metadata {
-        fatalError("Not implemented.")
+    public func getMetadata(xApiVersion: String, shallow: Bool? = nil, tag: String? = nil, requestOptions: RequestOptions? = nil) async throws -> Metadata {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/metadata",
+            headers: [
+                "X-API-Version": xApiVersion
+            ],
+            queryParams: [
+                "shallow": shallow.map { .bool($0) }, 
+                "tag": tag.map { .string($0) }
+            ],
+            requestOptions: requestOptions,
+            responseType: Metadata.self
+        )
     }
 
-    public func createBigEntity(requestOptions: RequestOptions? = nil) async throws -> Response {
-        fatalError("Not implemented.")
+    public func createBigEntity(request: BigEntity, requestOptions: RequestOptions? = nil) async throws -> Response {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/big-entity",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: Response.self
+        )
     }
 }
