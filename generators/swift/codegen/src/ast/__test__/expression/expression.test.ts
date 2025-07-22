@@ -24,7 +24,7 @@ describe("Expression", () => {
             });
 
             expect(functionCall.toString()).toMatchInlineSnapshot(
-                `"configure(host: \"localhost\", port: 8080, timeout: 30.0)"`
+                '"configure(host: "localhost", port: 8080, timeout: 30.0)"'
             );
         });
 
@@ -42,7 +42,7 @@ describe("Expression", () => {
 
             expect(functionCall.toString()).toMatchInlineSnapshot(`
               "configure(
-                  host: \"localhost\"
+                  host: "localhost"
               )"
             `);
         });
@@ -82,7 +82,7 @@ describe("Expression", () => {
             const dictionaryLiteral = swift.Expression.dictionaryLiteral({
                 entries: []
             });
-            expect(dictionaryLiteral.toString()).toMatchInlineSnapshot(`"[:]"`);
+            expect(dictionaryLiteral.toString()).toMatchInlineSnapshot('"[:]"');
         });
 
         it("should correctly write dictionary literal with no entries (multiline)", () => {
@@ -90,14 +90,14 @@ describe("Expression", () => {
                 entries: [],
                 multiline: true
             });
-            expect(dictionaryLiteral.toString()).toMatchInlineSnapshot(`"[:]"`);
+            expect(dictionaryLiteral.toString()).toMatchInlineSnapshot('"[:]"');
         });
 
         it("should correctly write dictionary literal with a single entry", () => {
             const dictionaryLiteral = swift.Expression.dictionaryLiteral({
                 entries: [[swift.Expression.rawStringValue("host"), swift.Expression.rawStringValue("localhost")]]
             });
-            expect(dictionaryLiteral.toString()).toMatchInlineSnapshot(`"["host": "localhost"]"`);
+            expect(dictionaryLiteral.toString()).toMatchInlineSnapshot('"["host": "localhost"]"');
         });
 
         it("should correctly write dictionary literal with a single entry (multiline)", () => {
@@ -120,7 +120,7 @@ describe("Expression", () => {
                 ]
             });
 
-            expect(dictionaryLiteral.toString()).toMatchInlineSnapshot(`"["host": "localhost", "port": 8080]"`);
+            expect(dictionaryLiteral.toString()).toMatchInlineSnapshot('"["host": "localhost", "port": 8080]"');
         });
 
         it("should correctly write dictionary literal with multiple entries (multiline)", () => {
