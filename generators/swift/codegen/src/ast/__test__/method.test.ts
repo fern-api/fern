@@ -67,7 +67,7 @@ describe("Method", () => {
                         type: Type.string()
                     })
                 ],
-                returnType: Type.custom("Void")
+                returnType: Type.void()
             });
 
             expect(method.toString()).toMatchInlineSnapshot(`

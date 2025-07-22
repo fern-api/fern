@@ -189,7 +189,7 @@ export class SubClientGenerator {
 
     private getMethodReturnTypeForEndpoint(endpoint: HttpEndpoint): swift.Type {
         if (!endpoint.response) {
-            return swift.Type.custom("Void");
+            return swift.Type.void();
         }
         return (
             endpoint.response.body?._visit({

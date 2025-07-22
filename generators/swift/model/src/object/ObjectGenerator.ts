@@ -186,7 +186,7 @@ export class ObjectGenerator {
                 })
             ],
             throws: true,
-            returnType: swift.Type.custom("Void"),
+            returnType: swift.Type.void(),
             body: swift.CodeBlock.withStatements([
                 swift.Statement.variableDeclaration(
                     "container",

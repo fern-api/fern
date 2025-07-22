@@ -72,6 +72,10 @@ type Custom = {
     name: string;
 };
 
+type Void = {
+    type: "void";
+};
+
 type Any = {
     type: "any";
 };
@@ -92,6 +96,7 @@ type InternalType =
     | Dictionary
     | Optional
     | Custom
+    | Void
     | Any;
 
 export class Type extends AstNode {
@@ -171,6 +176,9 @@ export class Type extends AstNode {
             case "custom":
                 writer.write(this.internalType.name);
                 break;
+            case "void":
+                writer.write("Void");
+                break;
             case "any":
                 writer.write("Any");
                 break;
@@ -242,6 +250,10 @@ export class Type extends AstNode {
 
     public static custom(name: string): Type {
         return new this({ type: "custom", name });
+    }
+
+    public static void(): Type {
+        return new this({ type: "void" });
     }
 
     public static any(): Type {
