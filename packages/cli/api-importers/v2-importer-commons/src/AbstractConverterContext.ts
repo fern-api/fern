@@ -561,7 +561,6 @@ export abstract class AbstractConverterContext<Spec extends object> {
                 allOfWriteOnly = allOfWriteOnly && allOfResult.writeOnly;
             }
 
-            // OR the original schema setting with the allOf result
             return {
                 readOnly: allOfReadOnly,
                 writeOnly: allOfWriteOnly
