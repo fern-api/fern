@@ -1,0 +1,14 @@
+types:
+  Person:
+    properties:
+      name: string
+      address: Address
+
+  Address:
+    properties:
+      line1: string
+      line2: optional<string>
+      city: string
+      state: string
+      zip: string
+      country: literal<"USA">

@@ -2,7 +2,6 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
 using OneOf;
-using SeedExamples.Commons;
 using SeedExamples.Core;
 using SeedExamples.File;
 using SeedExamples.Health;
@@ -34,22 +33,16 @@ public partial class SeedExamplesClient
             }
         }
         _client = new RawClient(clientOptions);
-        Commons = new CommonsClient(_client);
         File = new FileClient(_client);
         Health = new HealthClient(_client);
         Service = new ServiceClient(_client);
-        Types = new TypesClient(_client);
     }
-
-    public CommonsClient Commons { get; }
 
     public FileClient File { get; }
 
     public HealthClient Health { get; }
 
     public ServiceClient Service { get; }
-
-    public TypesClient Types { get; }
 
     /// <example><code>
     /// await client.EchoAsync("Hello world!\\n\\nwith\\n\\tnewlines");

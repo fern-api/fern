@@ -710,6 +710,23 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return protobufService.name.originalName;
     }
 
+    /**
+     * Recursively checks if a subpackage has endpoints.
+     * @param subpackage - The subpackage to check.
+     * @returns True if the subpackage has endpoints, false otherwise.
+     *
+     * @remarks
+     * The `hasEndpointInTree` member may not always be perfectly accurate.
+     *
+     * This method is a interim workaround that recursively checks all
+     * subpackages in order to determine if the subpackage has endpoints.
+     *
+     * There may be other cases that this method does not handle (GRPC, etc?)
+     */
+    public subPackageHasEndpoints(subpackage: Subpackage): boolean {
+        return subpackage.hasEndpointsInTree || subpackage.subpackages.some( (pkg) => this.subPackageHasEndpoints(this.getSubpackageOrThrow(pkg)) );
+    }
+
     #doesIrHaveCustomPagination: boolean | undefined;
 
     public shouldCreateCustomPagination(): boolean {
