@@ -24,6 +24,30 @@ types:
       basic: BasicAuthScheme
       header: HeaderAuthScheme
       oauth: OAuthScheme
+      inferred: InferredAuthScheme
+
+  InferredAuthScheme:
+    extends: commons.WithDocs
+    properties:
+      endpointReference: commons.EndpointReference
+      response: InferredAuthResponse
+
+  InferredAuthResponse:
+      properties:
+        tokenProperty: 
+          type: http.ResponseProperty
+          docs: Points to the location of the token in the HTTP response of the auth endpoint
+        requestAuthHeader: 
+          type: string
+          docs: |
+            The header name to put the token in for any authenticated HTTP request. 
+            Defaults to `Authorization`.
+        requestAuthScheme:
+          type: optional<nullable<string>>
+          docs: |
+            The authorization scheme which is placed in front of the token value. 
+            Defaults to `Bearer`, but can be set to `null` to unset the scheme.
+
   BearerAuthScheme:
     extends: commons.WithDocs
     properties:

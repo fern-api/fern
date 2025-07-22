@@ -2,6 +2,8 @@ export * from "./EnvironmentVariable";
 export * from "./ApiAuth";
 export * from "./AuthSchemesRequirement";
 export * from "./AuthScheme";
+export * from "./InferredAuthScheme";
+export * from "./InferredAuthResponse";
 export * from "./BearerAuthScheme";
 export * from "./OAuthScheme";
 export * from "./OAuthConfiguration";
