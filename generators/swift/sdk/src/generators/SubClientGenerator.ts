@@ -212,6 +212,7 @@ export class SubClientGenerator {
                 label: "method",
                 value: swift.Expression.enumCaseShorthand(this.getEnumCaseNameForHttpMethod(endpoint.method))
             }),
+            // TODO(kafkas): Handle multi-url environments
             swift.functionArgument({
                 label: "path",
                 value: swift.Expression.rawStringValue(formatEndpointPathForSwift(endpoint))
