@@ -1,24 +1,56 @@
+import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 
-import { ObjectProperty, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
+import {
+    InlinedRequestBodyProperty,
+    ObjectProperty,
+    ObjectTypeDeclaration,
+    TypeDeclaration
+} from "@fern-fern/ir-sdk/api";
 
 import { getSwiftTypeForTypeReference } from "../converters";
 
+type ObjectType = "schema" | "inlined-request";
+
 export class ObjectGenerator {
-    private readonly typeDeclaration: TypeDeclaration;
-    private readonly objectTypeDeclaration: ObjectTypeDeclaration;
+    private readonly name: string;
+    private readonly objectType: ObjectType;
+    private readonly properties: (ObjectProperty | InlinedRequestBodyProperty)[];
+    private readonly extendedProperties?: ObjectProperty[];
     private readonly additionalPropertiesInfo;
 
-    public constructor(typeDeclaration: TypeDeclaration, objectTypeDeclaration: ObjectTypeDeclaration) {
-        this.typeDeclaration = typeDeclaration;
-        this.objectTypeDeclaration = objectTypeDeclaration;
-        this.additionalPropertiesInfo = this.getAdditionalPropertiesInfo(objectTypeDeclaration);
+    public constructor(
+        name: string,
+        objectType: ObjectType,
+        properties: (ObjectProperty | InlinedRequestBodyProperty)[],
+        extendedProperties?: ObjectProperty[]
+    ) {
+        this.name = name;
+        this.objectType = objectType;
+        this.properties = properties;
+        this.extendedProperties = extendedProperties;
+        this.additionalPropertiesInfo = this.getAdditionalPropertiesInfo(properties);
     }
 
-    private getAdditionalPropertiesInfo(otd: ObjectTypeDeclaration) {
-        const propertyNames = new Set(otd.properties.map((p) => p.name.name.camelCase.unsafeName));
+    private get fileDirectory(): RelativeFilePath {
+        switch (this.objectType) {
+            case "schema":
+                return RelativeFilePath.of("Schemas");
+            case "inlined-request":
+                return RelativeFilePath.of("Requests");
+            default:
+                assertNever(this.objectType);
+        }
+    }
+
+    private get filename(): string {
+        return this.name + ".swift";
+    }
+
+    private getAdditionalPropertiesInfo(properties: (ObjectProperty | InlinedRequestBodyProperty)[]) {
+        const propertyNames = new Set(properties.map((p) => p.name.name.camelCase.unsafeName));
         let propertyName = "additionalProperties";
         while (propertyNames.has(propertyName)) {
             propertyName = "_" + propertyName;
@@ -33,29 +65,20 @@ export class ObjectGenerator {
         const swiftStruct = this.generateStructForTypeDeclaration();
         const fileContents = swiftStruct.toString();
         return new SwiftFile({
-            filename: this.getFilename(),
-            directory: this.getFileDirectory(),
+            filename: this.filename,
+            directory: this.fileDirectory,
             fileContents
         });
-    }
-
-    private getFilename(): string {
-        // TODO(kafkas): File names need to be unique across the generated output so we'll need to validate this
-        return this.typeDeclaration.name.name.pascalCase.unsafeName + ".swift";
-    }
-
-    private getFileDirectory(): RelativeFilePath {
-        return RelativeFilePath.of("Schemas");
     }
 
     private generateStructForTypeDeclaration(): swift.Struct {
         const codingKeysEnum = this.generateCodingKeysEnum();
         return swift.struct({
-            name: this.typeDeclaration.name.name.pascalCase.safeName,
+            name: this.name,
             accessLevel: swift.AccessLevel.Public,
             conformances: [swift.Protocol.Codable, swift.Protocol.Hashable],
             properties: [
-                ...this.objectTypeDeclaration.properties.map((p) => this.generateSwiftPropertyForProperty(p)),
+                ...this.properties.map((p) => this.generateSwiftPropertyForProperty(p)),
                 swift.property({
                     unsafeName: this.additionalPropertiesInfo.propertyName,
                     accessLevel: swift.AccessLevel.Public,
@@ -73,7 +96,7 @@ export class ObjectGenerator {
         return swift.initializer({
             accessLevel: swift.AccessLevel.Public,
             parameters: [
-                ...this.objectTypeDeclaration.properties.map((p) => {
+                ...this.properties.map((p) => {
                     const swiftType = getSwiftTypeForTypeReference(p.valueType);
                     return swift.functionParameter({
                         argumentLabel: p.name.name.camelCase.unsafeName,
@@ -90,7 +113,7 @@ export class ObjectGenerator {
                 })
             ],
             body: swift.CodeBlock.withStatements([
-                ...this.objectTypeDeclaration.properties.map((p) =>
+                ...this.properties.map((p) =>
                     swift.Statement.propertyAssignment(
                         p.name.name.camelCase.unsafeName,
                         swift.Expression.reference(p.name.name.camelCase.unsafeName)
@@ -116,7 +139,7 @@ export class ObjectGenerator {
                 })
             ],
             body: swift.CodeBlock.withStatements([
-                ...(this.objectTypeDeclaration.properties.length > 0
+                ...(this.properties.length > 0
                     ? [
                           swift.Statement.constantDeclaration(
                               "container",
@@ -135,7 +158,7 @@ export class ObjectGenerator {
                           )
                       ]
                     : []),
-                ...this.objectTypeDeclaration.properties.map((p) => {
+                ...this.properties.map((p) => {
                     const swiftType = getSwiftTypeForTypeReference(p.valueType);
                     return swift.Statement.propertyAssignment(
                         p.name.name.camelCase.unsafeName,
@@ -166,7 +189,7 @@ export class ObjectGenerator {
                             target: swift.Expression.reference("decoder"),
                             methodName: "decodeAdditionalProperties",
                             arguments_: [
-                                this.objectTypeDeclaration.properties.length === 0
+                                this.properties.length === 0
                                     ? swift.functionArgument({
                                           label: "knownKeys",
                                           value: swift.Expression.rawValue("[]")
@@ -197,7 +220,7 @@ export class ObjectGenerator {
             throws: true,
             returnType: swift.Type.void(),
             body: swift.CodeBlock.withStatements([
-                ...(this.objectTypeDeclaration.properties.length > 0
+                ...(this.properties.length > 0
                     ? [
                           swift.Statement.variableDeclaration(
                               "container",
@@ -232,7 +255,7 @@ export class ObjectGenerator {
                         })
                     )
                 ),
-                ...this.objectTypeDeclaration.properties.map((p) => {
+                ...this.properties.map((p) => {
                     const swiftType = getSwiftTypeForTypeReference(p.valueType);
                     return swift.Statement.expressionStatement(
                         swift.Expression.try(
@@ -260,13 +283,13 @@ export class ObjectGenerator {
     }
 
     private generateCodingKeysEnum(): swift.EnumWithRawValues | undefined {
-        if (this.objectTypeDeclaration.properties.length === 0) {
+        if (this.properties.length === 0) {
             return undefined;
         }
         return swift.enumWithRawValues({
             name: "CodingKeys",
             conformances: ["String", swift.Protocol.CodingKey, swift.Protocol.CaseIterable],
-            cases: this.objectTypeDeclaration.properties.map((property) => {
+            cases: this.properties.map((property) => {
                 return {
                     unsafeName: property.name.name.camelCase.unsafeName,
                     rawValue: property.name.name.originalName
@@ -275,7 +298,7 @@ export class ObjectGenerator {
         });
     }
 
-    private generateSwiftPropertyForProperty(property: ObjectProperty): swift.Property {
+    private generateSwiftPropertyForProperty(property: ObjectProperty | InlinedRequestBodyProperty): swift.Property {
         return swift.property({
             unsafeName: property.name.name.camelCase.unsafeName,
             accessLevel: swift.AccessLevel.Public,

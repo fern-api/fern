@@ -155,12 +155,11 @@ export class SubClientGenerator {
                     })
                 );
             } else if (endpoint.requestBody.type === "inlinedRequestBody") {
-                // TODO(kafkas): Handle inlined request body types
                 params.push(
                     swift.functionParameter({
                         argumentLabel: "request",
                         unsafeName: "request",
-                        type: swift.Type.any()
+                        type: swift.Type.custom(endpoint.requestBody.name.pascalCase.unsafeName)
                     })
                 );
             } else {
