@@ -23,8 +23,14 @@ Instantiate and use the client with the following:
 using SeedEnum;
 
 var client = new SeedEnumClient();
-await client.InlinedRequest.SendAsync(
-    new SendEnumInlinedRequest { Operand = Operand.GreaterThan, OperandOrColor = Color.Red }
+await client.Headers.SendAsync(
+    new SendEnumAsHeaderRequest
+    {
+        Operand = Operand.GreaterThan,
+        MaybeOperand = Operand.GreaterThan,
+        OperandOrColor = Color.Red,
+        MaybeOperandOrColor = null,
+    }
 );
 ```
 
@@ -37,7 +43,7 @@ will be thrown.
 using SeedEnum;
 
 try {
-    var response = await client.InlinedRequest.SendAsync(...);
+    var response = await client.Headers.SendAsync(...);
 } catch (SeedEnumApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
@@ -61,7 +67,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.InlinedRequest.SendAsync(
+var response = await client.Headers.SendAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -74,7 +80,7 @@ var response = await client.InlinedRequest.SendAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.InlinedRequest.SendAsync(
+var response = await client.Headers.SendAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
