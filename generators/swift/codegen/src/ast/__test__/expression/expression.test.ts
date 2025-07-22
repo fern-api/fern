@@ -116,18 +116,18 @@ describe("Expression", () => {
             const dictionaryLiteral = swift.Expression.dictionaryLiteral({
                 entries: [
                     [swift.Expression.rawStringValue("host"), swift.Expression.rawStringValue("localhost")],
-                    [swift.Expression.rawStringValue("port"), swift.Expression.rawValue("8080")]
+                    [swift.Expression.rawStringValue("port"), swift.Expression.rawStringValue("8080")]
                 ]
             });
 
-            expect(dictionaryLiteral.toString()).toMatchInlineSnapshot('"["host": "localhost", "port": 8080]"');
+            expect(dictionaryLiteral.toString()).toMatchInlineSnapshot(`"["host": "localhost", "port": "8080"]"`);
         });
 
         it("should correctly write dictionary literal with multiple entries (multiline)", () => {
             const dictionaryLiteral = swift.Expression.dictionaryLiteral({
                 entries: [
                     [swift.Expression.rawStringValue("host"), swift.Expression.rawStringValue("localhost")],
-                    [swift.Expression.rawStringValue("port"), swift.Expression.rawValue("8080")]
+                    [swift.Expression.rawStringValue("port"), swift.Expression.rawStringValue("8080")]
                 ],
                 multiline: true
             });
@@ -135,7 +135,7 @@ describe("Expression", () => {
             expect(dictionaryLiteral.toString()).toMatchInlineSnapshot(`
               "[
                   "host": "localhost", 
-                  "port": 8080
+                  "port": "8080"
               ]"
             `);
         });
