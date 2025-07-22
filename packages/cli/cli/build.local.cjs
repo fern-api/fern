@@ -13,7 +13,7 @@ async function main() {
         outDir: 'dist/local',
         sourcemap: true,
         env: {
-            AUTH0_DOMAIN: "fern-dev.us.auth0.com",
+            AUTH0_DOMAIN: "login.buildwithfern.com",
             AUTH0_CLIENT_ID: "4QiMvRvRUYpnycrVDK2M59hhJ6kcHYFQ",
             DEFAULT_FIDDLE_ORIGIN: "https://fiddle-coordinator-dev2.buildwithfern.com",
             DEFAULT_VENUS_ORIGIN: "https://venus-dev2.buildwithfern.com",
