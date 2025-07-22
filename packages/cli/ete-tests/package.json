@@ -52,7 +52,7 @@
     "@types/jest": "^29.5.14",
     "@types/js-yaml": "^4.0.8",
     "@types/node-fetch": "2.6.9",
-    "form-data": "4.0.1",
+    "form-data": "4.0.4",
     "jest-environment-jsdom": "^29.7.0",
     "vitest": "^2.1.9"
   }
