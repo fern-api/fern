@@ -8,6 +8,6 @@ pub mod types;
 pub mod custom_auth;
 
 pub use client::CustomAuthClient;
-pub use error::Error;
+pub use error::ApiError;
 
 pub use types::*;

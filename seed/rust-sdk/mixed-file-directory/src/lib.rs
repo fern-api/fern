@@ -11,6 +11,6 @@ pub mod user_events;
 pub mod user_events_metadata;
 
 pub use client::MixedFileDirectoryClient;
-pub use error::Error;
+pub use error::ApiError;
 
 pub use types::*;

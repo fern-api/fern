@@ -9,6 +9,6 @@ pub mod bigunion;
 pub mod union_;
 
 pub use client::UnionsClient;
-pub use error::Error;
+pub use error::ApiError;
 
 pub use types::*;

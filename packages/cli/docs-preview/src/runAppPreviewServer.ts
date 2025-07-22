@@ -468,6 +468,6 @@ export async function runAppPreviewServer({
     // await infinitely
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     await new Promise(() => {
-        // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
+        // intentionally empty
     });
 }

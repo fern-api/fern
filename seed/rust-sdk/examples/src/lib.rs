@@ -12,6 +12,6 @@ pub mod health_service;
 pub mod service;
 
 pub use client::ExamplesClient;
-pub use error::Error;
+pub use error::ApiError;
 
 pub use types::*;

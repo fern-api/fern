@@ -10,6 +10,6 @@ pub mod folder_d_service;
 pub mod foo;
 
 pub use client::AudiencesClient;
-pub use error::Error;
+pub use error::ApiError;
 
 pub use types::*;

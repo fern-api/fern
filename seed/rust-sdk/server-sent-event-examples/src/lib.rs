@@ -8,6 +8,6 @@ pub mod types;
 pub mod completions;
 
 pub use client::ServerSentEventsClient;
-pub use error::Error;
+pub use error::ApiError;
 
 pub use types::*;

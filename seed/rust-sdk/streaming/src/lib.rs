@@ -8,6 +8,6 @@ pub mod types;
 pub mod dummy;
 
 pub use client::StreamingClient;
-pub use error::Error;
+pub use error::ApiError;
 
 pub use types::*;

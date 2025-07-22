@@ -12,6 +12,6 @@ pub mod query;
 pub mod reference;
 
 pub use client::LiteralClient;
-pub use error::Error;
+pub use error::ApiError;
 
 pub use types::*;

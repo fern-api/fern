@@ -8,6 +8,6 @@ pub mod types;
 pub mod service;
 
 pub use client::FileUploadClient;
-pub use error::Error;
+pub use error::ApiError;
 
 pub use types::*;

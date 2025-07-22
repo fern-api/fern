@@ -12,6 +12,6 @@ pub mod folder;
 pub mod folder_service;
 
 pub use client::ApiClient;
-pub use error::Error;
+pub use error::ApiError;
 
 pub use types::*;

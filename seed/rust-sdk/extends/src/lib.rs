@@ -8,6 +8,6 @@ pub mod types;
 pub mod ;
 
 pub use client::ExtendsClient;
-pub use error::Error;
+pub use error::ApiError;
 
 pub use types::*;
