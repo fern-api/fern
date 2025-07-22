@@ -11,61 +11,40 @@ import (
 )
 
 type Client struct {
+	WithRawResponse *RawClient
+
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header
-
-	WithRawResponse *RawClient
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		baseURL: options.BaseURL,
+		WithRawResponse: NewRawClient(options),
+		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header:          options.ToHeader(),
-		WithRawResponse: NewRawClient(options),
+		header: options.ToHeader(),
 	}
 }
 
 func (c *Client) SendOptionalBody(
 	ctx context.Context,
-	request map[string]interface{},
+	request map[string]any,
 	opts ...option.RequestOption,
 ) (string, error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
-	)
-	endpointURL := baseURL + "/send-optional-body"
-	headers := internal.MergeHeaders(
-		c.header.Clone(),
-		options.ToHeader(),
-	)
-
-	var response string
-	if _, err := c.caller.Call(
+	response, err := c.WithRawResponse.SendOptionalBody(
 		ctx,
-		&internal.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodPost,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Request:         request,
-			Response:        &response,
-		},
-	); err != nil {
+		request,
+		opts...,
+	)
+	if err != nil {
 		return "", err
 	}
-	return response, nil
+	return response.Body, nil
 }

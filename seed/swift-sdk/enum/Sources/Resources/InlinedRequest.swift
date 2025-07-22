@@ -5,7 +5,13 @@ public final class InlinedRequestClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func send(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+    public func send(request: Any, requestOptions: RequestOptions? = nil) async throws -> Any {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/inlined",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: Any.self
+        )
     }
 }

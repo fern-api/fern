@@ -5,11 +5,22 @@ public final class ImdbClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func createMovie(requestOptions: RequestOptions? = nil) async throws -> MovieId {
-        fatalError("Not implemented.")
+    public func createMovie(request: CreateMovieRequest, requestOptions: RequestOptions? = nil) async throws -> MovieId {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/movies/create-movie",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: MovieId.self
+        )
     }
 
-    public func getMovie(requestOptions: RequestOptions? = nil) async throws -> Movie {
-        fatalError("Not implemented.")
+    public func getMovie(movieId: String, requestOptions: RequestOptions? = nil) async throws -> Movie {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/movies/\(movieId)",
+            requestOptions: requestOptions,
+            responseType: Movie.self
+        )
     }
 }

@@ -90,6 +90,17 @@ export class GoZeroValueMapper {
     }
 
     private convertNamed({ named }: { named: NamedType }): TypeInstantiation {
-        return go.TypeInstantiation.nil();
+        const typeDeclaration = this.context.getTypeDeclarationOrThrow(named.typeId);
+        switch (typeDeclaration.shape.type) {
+            case "alias":
+                return this.convert({ reference: typeDeclaration.shape.aliasOf });
+            case "object":
+            case "enum":
+            case "union":
+            case "undiscriminatedUnion":
+                return go.TypeInstantiation.nil();
+            default:
+                assertNever(typeDeclaration.shape);
+        }
     }
 }

@@ -5,7 +5,17 @@ public final class HeadersClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func send(requestOptions: RequestOptions? = nil) async throws -> SendResponse {
-        fatalError("Not implemented.")
+    public func send(endpointVersion: Any, async: Any, request: Any, requestOptions: RequestOptions? = nil) async throws -> SendResponse {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/headers",
+            headers: [
+                "endpointVersion": endpointVersion, 
+                "async": async
+            ],
+            body: request,
+            requestOptions: requestOptions,
+            responseType: SendResponse.self
+        )
     }
 }

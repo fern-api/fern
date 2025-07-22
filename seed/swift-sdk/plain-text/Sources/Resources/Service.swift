@@ -6,6 +6,11 @@ public final class ServiceClient: Sendable {
     }
 
     public func getText(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/text",
+            requestOptions: requestOptions,
+            responseType: Any.self
+        )
     }
 }

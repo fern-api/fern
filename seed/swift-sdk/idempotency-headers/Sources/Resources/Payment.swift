@@ -5,11 +5,22 @@ public final class PaymentClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func create(requestOptions: RequestOptions? = nil) async throws -> UUID {
-        fatalError("Not implemented.")
+    public func create(request: Any, requestOptions: RequestOptions? = nil) async throws -> UUID {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/payment",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: UUID.self
+        )
     }
 
-    public func delete(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+    public func delete(paymentId: String, requestOptions: RequestOptions? = nil) async throws -> Any {
+        return try await httpClient.performRequest(
+            method: .delete,
+            path: "/payment/\(paymentId)",
+            requestOptions: requestOptions,
+            responseType: Any.self
+        )
     }
 }

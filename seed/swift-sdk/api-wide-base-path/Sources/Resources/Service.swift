@@ -5,7 +5,12 @@ public final class ServiceClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func post(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+    public func post(pathParam: String, serviceParam: String, endpointParam: String, resourceParam: String, requestOptions: RequestOptions? = nil) async throws -> Any {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/test/\(pathParam)/\(serviceParam)/\(endpointParam)/\(resourceParam)",
+            requestOptions: requestOptions,
+            responseType: Any.self
+        )
     }
 }
