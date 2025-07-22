@@ -532,19 +532,19 @@ export abstract class AbstractConverterContext<Spec extends object> {
         return undefined;
     }
 
-    private getReadOnlyWriteOnlyFromSchema(schema: OpenAPIV3_1.SchemaObject): { readOnly: boolean; writeOnly: boolean } {
-        const originalReadOnly = Boolean(schema.readOnly);
-        const originalWriteOnly = Boolean(schema.writeOnly);
-        
+    private getReadOnlyWriteOnlyFromSchema(schema: OpenAPIV3_1.SchemaObject): {
+        readOnly: boolean;
+        writeOnly: boolean;
+    } {
         // Check allOf schemas for readOnly/writeOnly properties
         if (schema.allOf && schema.allOf.length > 0) {
             // Start with true and AND all allOf schemas together
             let allOfReadOnly = true;
             let allOfWriteOnly = true;
-            
+
             for (const allOfSchema of schema.allOf) {
                 let resolvedAllOfSchema = allOfSchema;
-                
+
                 // Resolve reference if needed
                 if (this.isReferenceObject(allOfSchema)) {
                     const resolved = this.resolveReference<OpenAPIV3_1.SchemaObject>({ reference: allOfSchema });
@@ -560,15 +560,15 @@ export abstract class AbstractConverterContext<Spec extends object> {
                 allOfReadOnly = allOfReadOnly && allOfResult.readOnly;
                 allOfWriteOnly = allOfWriteOnly && allOfResult.writeOnly;
             }
-            
-            // OR the original schema setting with the allOf result
-            return { 
-                readOnly: originalReadOnly || allOfReadOnly,
-                writeOnly: originalWriteOnly || allOfWriteOnly
-            };
-        }
 
-        return { readOnly: originalReadOnly, writeOnly: originalWriteOnly };
+            // OR the original schema setting with the allOf result
+            return {
+                readOnly: allOfReadOnly,
+                writeOnly: allOfWriteOnly
+            };
+        } else {
+            return { readOnly: Boolean(schema.readOnly), writeOnly: Boolean(schema.writeOnly) };
+        }
     }
 
     public getAudiences({
