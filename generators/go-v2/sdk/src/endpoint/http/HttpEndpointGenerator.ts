@@ -531,15 +531,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     continue;
                 }
                 const headerField = `${this.getRequestParameterName({ endpoint })}.${this.context.getFieldName(header.name.name)}`;
-                if (this.context.maybeEnum(header.valueType) != null) {
-                    writer.writeNode(
-                        this.addHeaderValue({
-                            wireValue: header.name.wireValue,
-                            value: go.codeblock(`string(${headerField})`)
-                        })
-                    );
-                    continue;
-                }
                 const format = this.context.goValueFormatter.convert({
                     reference: header.valueType,
                     value: go.codeblock(headerField)

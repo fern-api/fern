@@ -25,10 +25,10 @@ import {
 } from "@fern-fern/ir-sdk/api";
 
 import { BaseGoCustomConfigSchema, go, resolveRootImportPath } from "@fern-api/go-ast";
+import { GoProject } from "../project/GoProject";
 import { GoTypeMapper } from "./GoTypeMapper";
 import { GoValueFormatter } from "./GoValueFormatter";
 import { GoZeroValueMapper } from "./GoZeroValueMapper";
-import { GoProject } from "../project/GoProject";
 
 export interface FileLocation {
     importPath: string;
@@ -386,22 +386,44 @@ export abstract class AbstractGoGeneratorContext<
     }
 
     public maybeEnum(typeReference: TypeReference): EnumTypeDeclaration | undefined {
-        if (typeReference.type === "named") {
-            const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
-            if (declaration.shape.type === "enum") {
-                return declaration.shape;
+        switch (typeReference.type) {
+            case "named": {
+                const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                switch (declaration.shape.type) {
+                    case "enum":
+                        return declaration.shape;
+                    case "alias":
+                        return this.maybeEnum(declaration.shape.aliasOf);
+                    case "object":
+                    case "union":
+                    case "undiscriminatedUnion":
+                        return undefined;
+                    default:
+                        assertNever(declaration.shape);
+                }
             }
-            if (declaration.shape.type === "alias") {
-                return this.maybeEnum(declaration.shape.aliasOf);
+            case "container": {
+                const container = typeReference.container;
+                switch (container.type) {
+                    case "optional":
+                        return this.maybeEnum(container.optional);
+                    case "nullable":
+                        return this.maybeEnum(container.nullable);
+                    case "list":
+                    case "set":
+                    case "literal":
+                    case "map":
+                        return undefined;
+                    default:
+                        assertNever(container);
+                }
             }
+            case "primitive":
+            case "unknown":
+                return undefined;
+            default:
+                assertNever(typeReference);
         }
-        if (typeReference.type === "container" && typeReference.container.type === "optional") {
-            return this.maybeEnum(typeReference.container.optional);
-        }
-        if (typeReference.type === "container" && typeReference.container.type === "nullable") {
-            return this.maybeEnum(typeReference.container.nullable);
-        }
-        return undefined;
     }
 
     public maybePrimitive(typeReference: TypeReference): PrimitiveTypeV1 | undefined {

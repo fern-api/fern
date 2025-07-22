@@ -113,6 +113,12 @@ export class GoValueFormatter {
             isPrimitive = true;
         }
 
+        const enumType = this.context.maybeEnum(reference);
+        if (enumType != null) {
+            prefix = go.codeblock("string(");
+            suffix = go.codeblock(")");
+        }
+        
         return {
             formatted: this.format({ prefix, suffix, value }),
             zeroValue: this.context.goZeroValueMapper.convert({ reference }),
