@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.5.1
+  changelogEntry:
+    - summary: |
+        Coerce `Accept-Encoding` to string before adding to headers to fix compilation.
+      type: fix
+  createdAt: '2025-07-21'
+  irVersion: 58
+
 - version: 1.5.0
   changelogEntry:
     - summary: |

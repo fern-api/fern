@@ -879,7 +879,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     private setHeaderValue({ wireValue, value }: { wireValue: string; value: string }): go.CodeBlock {
         return go.codeblock((writer) => {
             writer.writeNewLineIfLastLineNot();
-            writer.write(`headers.Add("${wireValue}", "${value}")`);
+            writer.write(`headers.Add("${wireValue}", "string(${value})")`);
         });
     }
 
