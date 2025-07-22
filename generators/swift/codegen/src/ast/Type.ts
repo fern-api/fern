@@ -178,6 +178,7 @@ export class Type extends AstNode {
                 writer.write("?");
                 break;
             case "custom":
+                // TODO(kafkas): We may need to escape reserved words here. Confirm this.
                 writer.write(this.internalType.name);
                 break;
             case "void":
