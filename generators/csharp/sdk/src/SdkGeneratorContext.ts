@@ -724,7 +724,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
      * There may be other cases that this method does not handle (GRPC, etc?)
      */
     public subPackageHasEndpoints(subpackage: Subpackage): boolean {
-        return subpackage.hasEndpointsInTree || subpackage.subpackages.some( (pkg) => this.subPackageHasEndpoints(this.getSubpackageOrThrow(pkg)) );
+        return (
+            subpackage.hasEndpointsInTree ||
+            subpackage.subpackages.some((pkg) => this.subPackageHasEndpoints(this.getSubpackageOrThrow(pkg)))
+        );
     }
 
     #doesIrHaveCustomPagination: boolean | undefined;
