@@ -32,7 +32,12 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
         if (parsed != null) {
             return parsed;
         }
-        return {};
+        return {
+            superclass: {
+                name: "Model",
+                modules: ["Internal", "Types"]
+            }
+        };
     }
 
     protected async publishPackage(context: SdkGeneratorContext): Promise<void> {
@@ -55,7 +60,9 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
             {
                 // Pass the client module name from SDK config to model config
                 clientModuleName: context.customConfig.clientModuleName,
-                typesModuleName: "Types"
+                typesModuleName: "Types",
+                // Pass the superclass configuration from SDK config to model config
+                superclass: context.customConfig.superclass
             },
             context.generatorNotificationService
         );
