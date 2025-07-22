@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: Ensure user is not fern-support
         run: |
-          if [ "${{ github.actor }}" = "zachkirsch" ]; then
+          if [ "${{ github.actor }}" = "fern-support" ]; then
             echo "Error: fern-support user is not allowed to make PRs"
             exit 1
           fi
