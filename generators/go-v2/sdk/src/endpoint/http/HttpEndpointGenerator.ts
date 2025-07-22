@@ -531,6 +531,15 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     continue;
                 }
                 const headerField = `${this.getRequestParameterName({ endpoint })}.${this.context.getFieldName(header.name.name)}`;
+                if (!literal && !this.context.maybePrimitive(header.valueType)) {
+                    writer.writeNode(
+                        this.addHeaderValue({
+                            wireValue: header.name.wireValue,
+                            value: go.codeblock(`string(${headerField})`)
+                        })
+                    );
+                    continue;
+                }
                 const format = this.context.goValueFormatter.convert({
                     reference: header.valueType,
                     value: go.codeblock(headerField)
@@ -879,7 +888,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     private setHeaderValue({ wireValue, value }: { wireValue: string; value: string }): go.CodeBlock {
         return go.codeblock((writer) => {
             writer.writeNewLineIfLastLineNot();
-            writer.write(`headers.Add("${wireValue}", "string(${value})")`);
+            writer.write(`headers.Add("${wireValue}", "${value}")`);
         });
     }
 
