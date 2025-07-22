@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.5.1
+  changelogEntry:
+    - summary: Update README.md generation to be more accurate
+      type: chore
+  createdAt: "2025-07-22"
+  irVersion: 58
+
 - version: 2.5.0
   changelogEntry:
     - summary: |

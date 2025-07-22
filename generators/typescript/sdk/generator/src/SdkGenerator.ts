@@ -468,7 +468,8 @@ export class SdkGenerator {
             config: this.rawConfig,
             readmeConfigBuilder: new ReadmeConfigBuilder({
                 endpointSnippets: this.endpointSnippets,
-                fileResponseType: this.config.fileResponseType
+                fileResponseType: this.config.fileResponseType,
+                fetchSupport: this.config.fetchSupport
             }),
             ir: intermediateRepresentation
         });
