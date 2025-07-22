@@ -44,4 +44,4 @@ function createSampleGeneratorConfig(): FernGeneratorExec.config.GeneratorConfig
         writeUnitTests: false,
         generateOauthClients: false
     };
-} 
+}
