@@ -144,7 +144,7 @@ describe("Method", () => {
                         type: Type.optional(Type.bool())
                     })
                 ],
-                returnType: Type.custom("User?")
+                returnType: Type.optional(Type.custom("User"))
             });
 
             expect(method.toString()).toMatchInlineSnapshot(

@@ -115,7 +115,7 @@ export class SubClientGenerator {
                     swift.functionParameter({
                         argumentLabel: pathPart.unsafeNameCamelCase,
                         unsafeName: pathPart.unsafeNameCamelCase,
-                        type: swift.Type.custom("String")
+                        type: swift.Type.string()
                     })
                 );
             }
@@ -193,13 +193,13 @@ export class SubClientGenerator {
         return (
             endpoint.response.body?._visit({
                 json: (resp) => getSwiftTypeForTypeReference(resp.responseBodyType),
-                fileDownload: () => swift.Type.custom("Any"),
-                text: () => swift.Type.custom("Any"),
-                bytes: () => swift.Type.custom("Any"),
-                streaming: () => swift.Type.custom("Any"),
-                streamParameter: () => swift.Type.custom("Any"),
-                _other: () => swift.Type.custom("Any")
-            }) ?? swift.Type.custom("Any")
+                fileDownload: () => swift.Type.any(),
+                text: () => swift.Type.any(),
+                bytes: () => swift.Type.any(),
+                streaming: () => swift.Type.any(),
+                streamParameter: () => swift.Type.any(),
+                _other: () => swift.Type.any()
+            }) ?? swift.Type.any()
         );
     }
 
