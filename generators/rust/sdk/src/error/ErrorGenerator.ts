@@ -39,23 +39,23 @@ ${this.generateStatusCodeMapping()}
 
     private generateApiSpecificErrorVariants(): string {
         const variants: string[] = [];
-        
+
         // Generate error variants directly from IR error definitions
         for (const [errorId, errorDeclaration] of Object.entries(this.context.ir.errors)) {
             const variant = this.generateErrorVariantFromDeclaration(errorDeclaration);
             variants.push(variant);
         }
-        
-        return variants.join('\n');
+
+        return variants.join("\n");
     }
 
     private generateErrorVariantFromDeclaration(errorDeclaration: ErrorDeclaration): string {
         const errorName = this.getErrorVariantName(errorDeclaration);
         const fields = this.getContextRichFields(errorDeclaration);
         const errorMessage = this.getContextRichErrorMessage(errorDeclaration, fields);
-        
+
         return `    #[error("${errorMessage}")]
-    ${errorName} { ${fields.join(', ')} },`;
+    ${errorName} { ${fields.join(", ")} },`;
     }
 
     private getErrorVariantName(errorDeclaration: ErrorDeclaration): string {
@@ -69,22 +69,22 @@ ${this.generateStatusCodeMapping()}
 
     private getContextRichFields(errorDeclaration: ErrorDeclaration): string[] {
         const fields: string[] = [];
-        
+
         // Extract fields from the error type if it exists
         if (errorDeclaration.type != null) {
             const typeFields = this.extractFieldsFromType(errorDeclaration.type);
             fields.push(...typeFields);
         }
-        
+
         // Add semantic fields based on status code patterns
         const semanticFields = this.getSemanticFieldsForStatusCode(errorDeclaration.statusCode);
         fields.push(...semanticFields);
-        
+
         // Ensure we always have at least a message field
         if (fields.length === 0) {
             fields.push("message: String");
         }
-        
+
         // Remove duplicates while preserving order
         return Array.from(new Set(fields));
     }
@@ -92,7 +92,7 @@ ${this.generateStatusCodeMapping()}
     private extractFieldsFromType(typeRef: TypeReference): string[] {
         // This is a simplified type extraction - in a full implementation,
         // we would need to resolve the TypeReference through the type system
-        
+
         // For now, extract common patterns based on type structure
         // This would be enhanced when full Rust type mapping is implemented
         return ["message: String"];
@@ -125,15 +125,15 @@ ${this.generateStatusCodeMapping()}
     private getContextRichErrorMessage(errorDeclaration: ErrorDeclaration, fields: string[]): string {
         const errorName = this.getErrorVariantName(errorDeclaration);
         const statusCode = errorDeclaration.statusCode;
-        
+
         // Generate context-rich error messages based on status code and available fields
-        const hasField = fields.some(f => f.includes("field:"));
-        const hasResourceId = fields.some(f => f.includes("resource_id:"));
-        const hasRetryAfter = fields.some(f => f.includes("retry_after_seconds:"));
-        
+        const hasField = fields.some((f) => f.includes("field:"));
+        const hasResourceId = fields.some((f) => f.includes("resource_id:"));
+        const hasRetryAfter = fields.some((f) => f.includes("retry_after_seconds:"));
+
         switch (statusCode) {
             case 400:
-                return hasField 
+                return hasField
                     ? `${errorName}: Validation error in field '{{field:?}}': {{message}}`
                     : `${errorName}: Bad request - {{message}}`;
             case 401:
@@ -163,11 +163,11 @@ ${this.generateStatusCodeMapping()}
 
     private generateStatusCodeMapping(): string {
         const mappings: string[] = [];
-        
+
         for (const [errorId, errorDeclaration] of Object.entries(this.context.ir.errors)) {
             const errorName = this.getErrorVariantName(errorDeclaration);
             const statusCode = errorDeclaration.statusCode;
-            
+
             mappings.push(`            ${statusCode} => {
                 // Parse error body for ${errorName}
                 if let Some(body_str) = body {
@@ -187,19 +187,19 @@ ${this.generateDefaultFields(errorDeclaration)}
                 }
             },`);
         }
-        
-        return mappings.join('\n');
+
+        return mappings.join("\n");
     }
 
     private generateFieldParsing(errorDeclaration: ErrorDeclaration): string {
         const semanticFields = this.getSemanticFieldsForStatusCode(errorDeclaration.statusCode);
         const fieldParsing: string[] = [];
-        
+
         for (const field of semanticFields) {
-            const fieldParts = field.split(':');
+            const fieldParts = field.split(":");
             if (fieldParts.length === 0) continue;
             const trimmedFieldName = fieldParts[0]!.trim();
-            
+
             if (trimmedFieldName === "retry_after_seconds") {
                 fieldParsing.push(`                            ${trimmedFieldName}: parsed.get("${trimmedFieldName}")
                                 .and_then(|v| v.as_u64()),`);
@@ -209,21 +209,21 @@ ${this.generateDefaultFields(errorDeclaration)}
                                 .map(|s| s.to_string()),`);
             }
         }
-        
-        return fieldParsing.join('\n');
+
+        return fieldParsing.join("\n");
     }
 
     private generateDefaultFields(errorDeclaration: ErrorDeclaration): string {
         const semanticFields = this.getSemanticFieldsForStatusCode(errorDeclaration.statusCode);
         const defaultFields: string[] = [];
-        
+
         for (const field of semanticFields) {
-            const fieldParts = field.split(':');
+            const fieldParts = field.split(":");
             if (fieldParts.length === 0) continue;
             const trimmedFieldName = fieldParts[0]!.trim();
             defaultFields.push(`                    ${trimmedFieldName}: None,`);
         }
-        
-        return defaultFields.join('\n');
+
+        return defaultFields.join("\n");
     }
-} 
+}
