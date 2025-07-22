@@ -7,6 +7,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 
 import {
+    EnumTypeDeclaration,
     ErrorDeclaration,
     ErrorId,
     FernFilepath,
@@ -150,7 +151,6 @@ export abstract class AbstractGoGeneratorContext<
                     default:
                         assertNever(container);
                 }
-                break;
             }
             case "named": {
                 const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId).shape;
@@ -165,7 +165,6 @@ export abstract class AbstractGoGeneratorContext<
                     default:
                         assertNever(typeDeclaration);
                 }
-                break;
             }
             case "primitive":
             case "unknown":
@@ -192,7 +191,6 @@ export abstract class AbstractGoGeneratorContext<
                     default:
                         assertNever(container);
                 }
-                break;
             }
             case "named":
             case "primitive":
@@ -226,7 +224,6 @@ export abstract class AbstractGoGeneratorContext<
                     default:
                         assertNever(typeDeclaration);
                 }
-                break;
             }
             case "container": {
                 const containerType = typeReference.container;
@@ -244,7 +241,6 @@ export abstract class AbstractGoGeneratorContext<
                     default:
                         assertNever(containerType);
                 }
-                break;
             }
             case "primitive":
                 return true;
@@ -389,6 +385,25 @@ export abstract class AbstractGoGeneratorContext<
         return this.maybePrimitive(typeReference) === primitive;
     }
 
+    public maybeEnum(typeReference: TypeReference): EnumTypeDeclaration | undefined {
+        if (typeReference.type === "named") {
+            const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+            if (declaration.shape.type === "enum") {
+                return declaration.shape;
+            }
+            if (declaration.shape.type === "alias") {
+                return this.maybeEnum(declaration.shape.aliasOf);
+            }
+        }
+        if (typeReference.type === "container" && typeReference.container.type === "optional") {
+            return this.maybeEnum(typeReference.container.optional);
+        }
+        if (typeReference.type === "container" && typeReference.container.type === "nullable") {
+            return this.maybeEnum(typeReference.container.nullable);
+        }
+        return undefined;
+    }
+
     public maybePrimitive(typeReference: TypeReference): PrimitiveTypeV1 | undefined {
         switch (typeReference.type) {
             case "container": {
@@ -406,7 +421,6 @@ export abstract class AbstractGoGeneratorContext<
                     default:
                         assertNever(container);
                 }
-                break;
             }
             case "named": {
                 const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
@@ -432,7 +446,7 @@ export abstract class AbstractGoGeneratorContext<
         }
         return undefined;
     }
-    
+
     public getTypeDeclarationOrThrow(typeId: TypeId): TypeDeclaration {
         const typeDeclaration = this.getTypeDeclaration(typeId);
         if (typeDeclaration == null) {
