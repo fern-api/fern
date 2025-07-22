@@ -1,6 +1,19 @@
 {
     "endpoints": [
         {
+            "example_identifier": "dd901e0b",
+            "id": {
+                "method": "POST",
+                "path": "/headers",
+                "identifier_override": "endpoint_headers.send"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.enum.SeedEnumClient;\nimport com.seed.enum.resources.headers.requests.SendEnumAsHeaderRequest;\nimport com.seed.enum.types.Color;\nimport com.seed.enum.types.ColorOrOperand;\nimport com.seed.enum.types.Operand;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEnumClient client = SeedEnumClient\n            .builder()\n            .build();\n\n        client.headers().send(\n            SendEnumAsHeaderRequest\n                .builder()\n                .operand(Operand.GREATER_THAN)\n                .operandOrColor(\n                    ColorOrOperand.ofColor(Color.RED)\n                )\n                .maybeOperand(Operand.GREATER_THAN)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.enum.SeedEnumClient;\nimport com.seed.enum.resources.headers.requests.SendEnumAsHeaderRequest;\nimport com.seed.enum.types.Color;\nimport com.seed.enum.types.ColorOrOperand;\nimport com.seed.enum.types.Operand;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEnumClient client = SeedEnumClient\n            .builder()\n            .build();\n\n        client.headers().send(\n            SendEnumAsHeaderRequest\n                .builder()\n                .operand(Operand.GREATER_THAN)\n                .operandOrColor(\n                    ColorOrOperand.ofColor(Color.RED)\n                )\n                .maybeOperand(Operand.GREATER_THAN)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
             "example_identifier": "cb240506",
             "id": {
                 "method": "POST",

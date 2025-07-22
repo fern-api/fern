@@ -37,7 +37,7 @@ Instantiate and use the client with the following:
 package com.example.usage;
 
 import com.seed.enum.SeedEnumClient;
-import com.seed.enum.resources.inlinedrequest.requests.SendEnumInlinedRequest;
+import com.seed.enum.resources.headers.requests.SendEnumAsHeaderRequest;
 import com.seed.enum.types.Color;
 import com.seed.enum.types.ColorOrOperand;
 import com.seed.enum.types.Operand;
@@ -48,17 +48,14 @@ public class Example {
             .builder()
             .build();
 
-        client.inlinedRequest().send(
-            SendEnumInlinedRequest
+        client.headers().send(
+            SendEnumAsHeaderRequest
                 .builder()
                 .operand(Operand.GREATER_THAN)
                 .operandOrColor(
                     ColorOrOperand.ofColor(Color.RED)
                 )
                 .maybeOperand(Operand.GREATER_THAN)
-                .maybeOperandOrColor(
-                    ColorOrOperand.ofColor(Color.RED)
-                )
                 .build()
         );
     }
@@ -86,7 +83,7 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 import com.seed.enum.core.SeedEnumApiException;
 
 try {
-    client.inlinedRequest().send(...);
+    client.headers().send(...);
 } catch (SeedEnumApiException e) {
     // Do something with the API exception...
 }
@@ -149,7 +146,7 @@ SeedEnumClient client = SeedEnumClient
     .build();
 
 // Request level
-client.inlinedRequest().send(
+client.headers().send(
     ...,
     RequestOptions
         .builder()
