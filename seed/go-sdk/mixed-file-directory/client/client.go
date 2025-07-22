@@ -7,31 +7,31 @@ import (
 	internal "github.com/mixed-file-directory/fern/internal"
 	option "github.com/mixed-file-directory/fern/option"
 	organization "github.com/mixed-file-directory/fern/organization"
-	userclient "github.com/mixed-file-directory/fern/user/client"
+	client "github.com/mixed-file-directory/fern/user/client"
 	http "net/http"
 )
 
 type Client struct {
+	Organization *organization.Client
+	User         *client.Client
+
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header
-
-	Organization *organization.Client
-	User         *userclient.Client
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		baseURL: options.BaseURL,
+		Organization: organization.NewClient(opts...),
+		User:         client.NewClient(opts...),
+		baseURL:      options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header:       options.ToHeader(),
-		Organization: organization.NewClient(opts...),
-		User:         userclient.NewClient(opts...),
+		header: options.ToHeader(),
 	}
 }

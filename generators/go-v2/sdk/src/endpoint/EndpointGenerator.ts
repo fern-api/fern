@@ -24,7 +24,7 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
         service: HttpService;
         subpackage: Subpackage | undefined;
         endpoint: HttpEndpoint;
-    }): go.Method[] {
+    }): go.Method | undefined {
         return this.http.generate({
             serviceId,
             service,
@@ -43,7 +43,7 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
         service: HttpService;
         subpackage: Subpackage | undefined;
         endpoint: HttpEndpoint;
-    }): go.Method[] {
+    }): go.Method | undefined {
         return this.http.generateRaw({
             serviceId,
             service,

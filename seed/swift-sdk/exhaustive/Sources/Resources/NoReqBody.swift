@@ -6,10 +6,20 @@ public final class NoReqBodyClient: Sendable {
     }
 
     public func getWithNoRequestBody(requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/no-req-body",
+            requestOptions: requestOptions,
+            responseType: ObjectWithOptionalField.self
+        )
     }
 
     public func postWithNoRequestBody(requestOptions: RequestOptions? = nil) async throws -> String {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/no-req-body",
+            requestOptions: requestOptions,
+            responseType: String.self
+        )
     }
 }

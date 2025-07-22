@@ -9,7 +9,6 @@ export declare namespace FunctionParameter {
         /** Used within the function’s body. */
         unsafeName: string;
         type: Type;
-        optional?: boolean;
         defaultValue?: Expression;
     }
 }
@@ -18,15 +17,13 @@ export class FunctionParameter extends AstNode {
     public readonly argumentLabel?: string;
     public readonly unsafeName: string;
     public readonly type: Type;
-    public readonly optional?: boolean;
     public readonly defaultValue?: Expression;
 
-    constructor({ argumentLabel, unsafeName, type, optional, defaultValue }: FunctionParameter.Args) {
+    constructor({ argumentLabel, unsafeName, type, defaultValue }: FunctionParameter.Args) {
         super();
         this.argumentLabel = argumentLabel;
         this.unsafeName = unsafeName;
         this.type = type;
-        this.optional = optional;
         this.defaultValue = defaultValue;
     }
 
@@ -41,9 +38,6 @@ export class FunctionParameter extends AstNode {
         writer.write(this.unsafeName);
         writer.write(": ");
         this.type.write(writer);
-        if (this.optional) {
-            writer.write("?");
-        }
         if (this.defaultValue != null) {
             writer.write(" = ");
             this.defaultValue.write(writer);

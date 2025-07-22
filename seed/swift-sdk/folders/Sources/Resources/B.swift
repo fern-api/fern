@@ -6,6 +6,11 @@ public final class BClient: Sendable {
     }
 
     public func foo(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/",
+            requestOptions: requestOptions,
+            responseType: Any.self
+        )
     }
 }

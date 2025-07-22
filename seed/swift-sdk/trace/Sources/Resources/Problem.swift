@@ -5,19 +5,39 @@ public final class ProblemClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func createProblem(requestOptions: RequestOptions? = nil) async throws -> CreateProblemResponse {
-        fatalError("Not implemented.")
+    public func getLightweightProblems(requestOptions: RequestOptions? = nil) async throws -> [LightweightProblemInfoV2] {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/problems-v2/lightweight-problem-info",
+            requestOptions: requestOptions,
+            responseType: [LightweightProblemInfoV2].self
+        )
     }
 
-    public func updateProblem(requestOptions: RequestOptions? = nil) async throws -> UpdateProblemResponse {
-        fatalError("Not implemented.")
+    public func getProblems(requestOptions: RequestOptions? = nil) async throws -> [ProblemInfoV2] {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/problems-v2/problem-info",
+            requestOptions: requestOptions,
+            responseType: [ProblemInfoV2].self
+        )
     }
 
-    public func deleteProblem(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+    public func getLatestProblem(problemId: String, requestOptions: RequestOptions? = nil) async throws -> ProblemInfoV2 {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/problems-v2/problem-info/\(problemId)",
+            requestOptions: requestOptions,
+            responseType: ProblemInfoV2.self
+        )
     }
 
-    public func getDefaultStarterFiles(requestOptions: RequestOptions? = nil) async throws -> GetDefaultStarterFilesResponse {
-        fatalError("Not implemented.")
+    public func getProblemVersion(problemId: String, problemVersion: String, requestOptions: RequestOptions? = nil) async throws -> ProblemInfoV2 {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/problems-v2/problem-info/\(problemId)/version/\(problemVersion)",
+            requestOptions: requestOptions,
+            responseType: ProblemInfoV2.self
+        )
     }
 }

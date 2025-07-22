@@ -11,7 +11,6 @@ export declare namespace Property {
         static_?: boolean;
         declarationType: DeclarationType;
         type: Type;
-        optional?: boolean;
     }
 }
 
@@ -21,16 +20,14 @@ export class Property extends AstNode {
     public readonly static_?: boolean;
     public readonly declarationType: DeclarationType;
     public readonly type: Type;
-    public readonly optional?: boolean;
 
-    constructor({ unsafeName, accessLevel, static_, declarationType, type, optional }: Property.Args) {
+    constructor({ unsafeName, accessLevel, static_, declarationType, type }: Property.Args) {
         super();
         this.unsafeName = unsafeName;
         this.accessLevel = accessLevel;
         this.static_ = static_;
         this.declarationType = declarationType;
         this.type = type;
-        this.optional = optional;
     }
 
     public write(writer: Writer): void {
@@ -50,8 +47,5 @@ export class Property extends AstNode {
         }
         writer.write(": ");
         this.type.write(writer);
-        if (this.optional) {
-            writer.write("?");
-        }
     }
 }
