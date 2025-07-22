@@ -9,6 +9,19 @@
         {
             "example_identifier": "default",
             "id": {
+                "path": "/headers",
+                "method": "POST",
+                "identifier_override": "endpoint_headers.send"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.headers.send(\n    operand=\">\",\n    maybe_operand=\">\",\n    operand_or_color=\"red\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.headers.send(\n        operand=\">\",\n        maybe_operand=\">\",\n        operand_or_color=\"red\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
                 "path": "/inlined",
                 "method": "POST",
                 "identifier_override": "endpoint_inlined-request.send"
