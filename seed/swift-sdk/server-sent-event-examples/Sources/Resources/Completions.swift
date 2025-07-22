@@ -10,7 +10,8 @@ public final class CompletionsClient: Sendable {
             method: .post, 
             path: "/stream", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 }

@@ -10,7 +10,8 @@ public final class ContentTypeClient: Sendable {
             method: .post, 
             path: "/foo/bar", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 
@@ -19,7 +20,8 @@ public final class ContentTypeClient: Sendable {
             method: .post, 
             path: "/foo/baz", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 }

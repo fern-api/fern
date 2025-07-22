@@ -9,7 +9,8 @@ public final class OrganizationsClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/\(tenantId)/organizations/\(organizationId)", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Organization.self
         )
     }
 
@@ -17,7 +18,8 @@ public final class OrganizationsClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/\(tenantId)/organizations/\(organizationId)/users/\(userId)", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: User.self
         )
     }
 
@@ -28,7 +30,8 @@ public final class OrganizationsClient: Sendable {
             queryParams: [
                 "limit": limit.map { .string($0) }
             ], 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: [Organization].self
         )
     }
 }

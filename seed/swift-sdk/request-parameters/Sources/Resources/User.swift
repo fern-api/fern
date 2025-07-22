@@ -10,7 +10,8 @@ public final class UserClient: Sendable {
             method: .post, 
             path: "/user/username", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 
@@ -36,7 +37,8 @@ public final class UserClient: Sendable {
                 "longParam": .string(longParam), 
                 "bigIntParam": .string(bigIntParam)
             ], 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: User.self
         )
     }
 }

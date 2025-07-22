@@ -10,7 +10,8 @@ public final class PaymentClient: Sendable {
             method: .post, 
             path: "/payment", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: UUID.self
         )
     }
 
@@ -18,7 +19,8 @@ public final class PaymentClient: Sendable {
         return try await httpClient.performRequest(
             method: .delete, 
             path: "/payment/\(paymentId)", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 }

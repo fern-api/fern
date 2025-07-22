@@ -10,7 +10,8 @@ public final class OptionalClient: Sendable {
             method: .post, 
             path: "/send-optional-body", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: String.self
         )
     }
 }

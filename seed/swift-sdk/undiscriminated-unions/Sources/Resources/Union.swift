@@ -10,7 +10,8 @@ public final class UnionClient: Sendable {
             method: .post, 
             path: "/", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: MyUnion.self
         )
     }
 
@@ -18,7 +19,8 @@ public final class UnionClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/metadata", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Metadata.self
         )
     }
 
@@ -27,7 +29,8 @@ public final class UnionClient: Sendable {
             method: .put, 
             path: "/metadata", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Bool.self
         )
     }
 
@@ -36,7 +39,8 @@ public final class UnionClient: Sendable {
             method: .post, 
             path: "/call", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Bool.self
         )
     }
 
@@ -45,7 +49,8 @@ public final class UnionClient: Sendable {
             method: .post, 
             path: "/duplicate", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: UnionWithDuplicateTypes.self
         )
     }
 
@@ -54,7 +59,8 @@ public final class UnionClient: Sendable {
             method: .post, 
             path: "/nested", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: String.self
         )
     }
 }

@@ -9,7 +9,8 @@ public final class PathClient: Sendable {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/path/\(id)", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: SendResponse.self
         )
     }
 }

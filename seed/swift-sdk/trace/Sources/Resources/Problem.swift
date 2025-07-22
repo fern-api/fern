@@ -9,7 +9,8 @@ public final class ProblemClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/problems-v2/lightweight-problem-info", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: [LightweightProblemInfoV2].self
         )
     }
 
@@ -17,7 +18,8 @@ public final class ProblemClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/problems-v2/problem-info", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: [ProblemInfoV2].self
         )
     }
 
@@ -25,7 +27,8 @@ public final class ProblemClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/problems-v2/problem-info/\(problemId)", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: ProblemInfoV2.self
         )
     }
 
@@ -33,7 +36,8 @@ public final class ProblemClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/problems-v2/problem-info/\(problemId)/version/\(problemVersion)", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: ProblemInfoV2.self
         )
     }
 }

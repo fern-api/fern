@@ -10,7 +10,8 @@ public final class AdminClient: Sendable {
             method: .post, 
             path: "/admin/store-test-submission-status/\(submissionId)", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 
@@ -19,7 +20,8 @@ public final class AdminClient: Sendable {
             method: .post, 
             path: "/admin/store-test-submission-status-v2/\(submissionId)", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 
@@ -28,7 +30,8 @@ public final class AdminClient: Sendable {
             method: .post, 
             path: "/admin/store-workspace-submission-status/\(submissionId)", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 
@@ -37,7 +40,8 @@ public final class AdminClient: Sendable {
             method: .post, 
             path: "/admin/store-workspace-submission-status-v2/\(submissionId)", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 
@@ -46,7 +50,8 @@ public final class AdminClient: Sendable {
             method: .post, 
             path: "/admin/store-test-trace/submission/\(submissionId)/testCase/\(testCaseId)", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 
@@ -55,7 +60,8 @@ public final class AdminClient: Sendable {
             method: .post, 
             path: "/admin/store-test-trace-v2/submission/\(submissionId)/testCase/\(testCaseId)", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 
@@ -64,7 +70,8 @@ public final class AdminClient: Sendable {
             method: .post, 
             path: "/admin/store-workspace-trace/submission/\(submissionId)", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 
@@ -73,7 +80,8 @@ public final class AdminClient: Sendable {
             method: .post, 
             path: "/admin/store-workspace-trace-v2/submission/\(submissionId)", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 }

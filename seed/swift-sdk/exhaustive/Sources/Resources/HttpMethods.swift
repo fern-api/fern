@@ -9,7 +9,8 @@ public final class HttpMethodsClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/http-methods/\(id)", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: String.self
         )
     }
 
@@ -18,7 +19,8 @@ public final class HttpMethodsClient: Sendable {
             method: .post, 
             path: "/http-methods", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: ObjectWithOptionalField.self
         )
     }
 
@@ -27,7 +29,8 @@ public final class HttpMethodsClient: Sendable {
             method: .put, 
             path: "/http-methods/\(id)", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: ObjectWithOptionalField.self
         )
     }
 
@@ -36,7 +39,8 @@ public final class HttpMethodsClient: Sendable {
             method: .patch, 
             path: "/http-methods/\(id)", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: ObjectWithOptionalField.self
         )
     }
 
@@ -44,7 +48,8 @@ public final class HttpMethodsClient: Sendable {
         return try await httpClient.performRequest(
             method: .delete, 
             path: "/http-methods/\(id)", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Bool.self
         )
     }
 }

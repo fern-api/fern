@@ -9,7 +9,8 @@ public final class ServiceClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/apiKey", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: String.self
         )
     }
 
@@ -20,7 +21,8 @@ public final class ServiceClient: Sendable {
             headers: [
                 "X-Endpoint-Header": xEndpointHeader
             ], 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: String.self
         )
     }
 }

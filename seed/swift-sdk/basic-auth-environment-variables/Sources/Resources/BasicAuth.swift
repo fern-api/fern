@@ -9,7 +9,8 @@ public final class BasicAuthClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/basic-auth", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Bool.self
         )
     }
 
@@ -18,7 +19,8 @@ public final class BasicAuthClient: Sendable {
             method: .post, 
             path: "/basic-auth", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Bool.self
         )
     }
 }

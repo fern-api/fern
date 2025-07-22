@@ -10,7 +10,8 @@ public final class ContainerClient: Sendable {
             method: .post, 
             path: "/container/list-of-primitives", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: [String].self
         )
     }
 
@@ -19,7 +20,8 @@ public final class ContainerClient: Sendable {
             method: .post, 
             path: "/container/list-of-objects", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: [ObjectWithRequiredField].self
         )
     }
 
@@ -28,7 +30,8 @@ public final class ContainerClient: Sendable {
             method: .post, 
             path: "/container/set-of-primitives", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 
@@ -37,7 +40,8 @@ public final class ContainerClient: Sendable {
             method: .post, 
             path: "/container/set-of-objects", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 
@@ -46,7 +50,8 @@ public final class ContainerClient: Sendable {
             method: .post, 
             path: "/container/map-prim-to-prim", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 
@@ -55,7 +60,8 @@ public final class ContainerClient: Sendable {
             method: .post, 
             path: "/container/map-prim-to-object", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 
@@ -64,7 +70,8 @@ public final class ContainerClient: Sendable {
             method: .post, 
             path: "/container/opt-objects", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: ObjectWithRequiredField?.self
         )
     }
 }

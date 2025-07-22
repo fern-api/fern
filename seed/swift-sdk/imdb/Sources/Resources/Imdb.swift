@@ -10,7 +10,8 @@ public final class ImdbClient: Sendable {
             method: .post, 
             path: "/movies/create-movie", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: MovieId.self
         )
     }
 
@@ -18,7 +19,8 @@ public final class ImdbClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/movies/\(movieId)", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Movie.self
         )
     }
 }

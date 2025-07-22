@@ -9,7 +9,8 @@ public final class DummyClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/dummy", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: String.self
         )
     }
 }

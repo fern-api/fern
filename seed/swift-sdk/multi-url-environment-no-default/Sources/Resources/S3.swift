@@ -10,7 +10,8 @@ public final class S3Client: Sendable {
             method: .post, 
             path: "/s3/presigned-url", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: String.self
         )
     }
 }

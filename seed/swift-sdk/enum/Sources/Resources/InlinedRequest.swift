@@ -10,7 +10,8 @@ public final class InlinedRequestClient: Sendable {
             method: .post, 
             path: "/inlined", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 }

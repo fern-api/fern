@@ -10,7 +10,8 @@ public final class ComplexClient: Sendable {
             method: .post, 
             path: "/\(index)/conversations/search", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: PaginatedConversationResponse.self
         )
     }
 }

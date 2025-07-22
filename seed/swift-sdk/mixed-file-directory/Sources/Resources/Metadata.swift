@@ -12,7 +12,8 @@ public final class MetadataClient: Sendable {
             queryParams: [
                 "id": .string(id.rawValue)
             ], 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Metadata.self
         )
     }
 }

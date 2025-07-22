@@ -9,7 +9,8 @@ public final class ServiceClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Response.self
         )
     }
 }

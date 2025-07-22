@@ -9,7 +9,8 @@ public final class CClient: Sendable {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 }

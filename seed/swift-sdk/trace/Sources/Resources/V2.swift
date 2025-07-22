@@ -9,7 +9,8 @@ public final class V2Client: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 }

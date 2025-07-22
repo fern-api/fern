@@ -9,7 +9,8 @@ public final class BigunionClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/\(id)", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: BigUnion.self
         )
     }
 
@@ -18,7 +19,8 @@ public final class BigunionClient: Sendable {
             method: .patch, 
             path: "/", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Bool.self
         )
     }
 
@@ -27,7 +29,8 @@ public final class BigunionClient: Sendable {
             method: .patch, 
             path: "/many", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 }

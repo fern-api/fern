@@ -10,7 +10,8 @@ public final class DummyClient: Sendable {
             method: .post, 
             path: "/generate-stream", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 
@@ -19,7 +20,8 @@ public final class DummyClient: Sendable {
             method: .post, 
             path: "/generate", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: StreamResponse.self
         )
     }
 }

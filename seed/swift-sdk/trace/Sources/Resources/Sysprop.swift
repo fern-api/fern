@@ -9,7 +9,8 @@ public final class SyspropClient: Sendable {
         return try await httpClient.performRequest(
             method: .put, 
             path: "/sysprop/num-warm-instances/\(language)/\(numWarmInstances)", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 
@@ -17,7 +18,8 @@ public final class SyspropClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/sysprop/num-warm-instances", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 }

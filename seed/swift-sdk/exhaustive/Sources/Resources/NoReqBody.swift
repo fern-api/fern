@@ -9,7 +9,8 @@ public final class NoReqBodyClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/no-req-body", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: ObjectWithOptionalField.self
         )
     }
 
@@ -17,7 +18,8 @@ public final class NoReqBodyClient: Sendable {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/no-req-body", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: String.self
         )
     }
 }

@@ -9,7 +9,8 @@ public final class UserClient: Sendable {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/users", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: [User].self
         )
     }
 }

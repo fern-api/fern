@@ -12,7 +12,8 @@ public final class UserClient: Sendable {
             queryParams: [
                 "limit": limit.map { .string($0) }
             ], 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: [User].self
         )
     }
 }

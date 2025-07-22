@@ -20,7 +20,8 @@ public final class QueryClient: Sendable {
                 "alias_stream": .string(aliasStream.rawValue), 
                 "alias_optional_stream": aliasOptionalStream.map { .string($0) }
             ], 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: SendResponse.self
         )
     }
 }

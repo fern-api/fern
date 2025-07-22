@@ -10,7 +10,8 @@ public final class ServiceClient: Sendable {
             method: .post, 
             path: "/movie", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Response.self
         )
     }
 
@@ -19,7 +20,8 @@ public final class ServiceClient: Sendable {
             method: .post, 
             path: "/movie", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Response.self
         )
     }
 
@@ -28,7 +30,8 @@ public final class ServiceClient: Sendable {
             method: .post, 
             path: "/movie", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: StringResponse.self
         )
     }
 
@@ -37,7 +40,8 @@ public final class ServiceClient: Sendable {
             method: .post, 
             path: "/movie", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Response.self
         )
     }
 
@@ -46,7 +50,8 @@ public final class ServiceClient: Sendable {
             method: .post, 
             path: "/movie", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Response?.self
         )
     }
 
@@ -55,7 +60,8 @@ public final class ServiceClient: Sendable {
             method: .post, 
             path: "/movie", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: OptionalWithDocs.self
         )
     }
 
@@ -64,7 +70,8 @@ public final class ServiceClient: Sendable {
             method: .post, 
             path: "/movie", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: OptionalStringResponse.self
         )
     }
 }

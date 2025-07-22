@@ -16,7 +16,8 @@ public final class NullableClient: Sendable {
                 "tags": tags.map { .string($0) }, 
                 "extra": extra.map { .string($0) }
             ], 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: [User].self
         )
     }
 
@@ -25,7 +26,8 @@ public final class NullableClient: Sendable {
             method: .post, 
             path: "/users", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: User.self
         )
     }
 
@@ -34,7 +36,8 @@ public final class NullableClient: Sendable {
             method: .delete, 
             path: "/users", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Bool.self
         )
     }
 }

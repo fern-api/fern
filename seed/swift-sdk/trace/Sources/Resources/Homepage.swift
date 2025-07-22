@@ -9,7 +9,8 @@ public final class HomepageClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/homepage-problems", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: [ProblemId].self
         )
     }
 
@@ -18,7 +19,8 @@ public final class HomepageClient: Sendable {
             method: .post, 
             path: "/homepage-problems", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 }

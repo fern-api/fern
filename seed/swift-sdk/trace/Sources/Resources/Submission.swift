@@ -9,7 +9,8 @@ public final class SubmissionClient: Sendable {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/sessions/create-session/\(language)", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: ExecutionSessionResponse.self
         )
     }
 
@@ -17,7 +18,8 @@ public final class SubmissionClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/sessions/\(sessionId)", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: ExecutionSessionResponse?.self
         )
     }
 
@@ -25,7 +27,8 @@ public final class SubmissionClient: Sendable {
         return try await httpClient.performRequest(
             method: .delete, 
             path: "/sessions/stop/\(sessionId)", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 
@@ -33,7 +36,8 @@ public final class SubmissionClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/sessions/execution-sessions-state", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: GetExecutionSessionStateResponse.self
         )
     }
 }

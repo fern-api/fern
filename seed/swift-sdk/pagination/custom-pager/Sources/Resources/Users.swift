@@ -15,7 +15,8 @@ public final class UsersClient: Sendable {
                 "order": order.map { .string($0) }, 
                 "starting_after": startingAfter.map { .string($0) }
             ], 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: ListUsersPaginationResponse.self
         )
     }
 
@@ -26,7 +27,8 @@ public final class UsersClient: Sendable {
             queryParams: [
                 "cursor": cursor.map { .string($0) }
             ], 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: ListUsersMixedTypePaginationResponse.self
         )
     }
 
@@ -35,7 +37,8 @@ public final class UsersClient: Sendable {
             method: .post, 
             path: "/users", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: ListUsersPaginationResponse.self
         )
     }
 
@@ -49,7 +52,8 @@ public final class UsersClient: Sendable {
                 "order": order.map { .string($0) }, 
                 "starting_after": startingAfter.map { .string($0) }
             ], 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: ListUsersPaginationResponse.self
         )
     }
 
@@ -63,7 +67,8 @@ public final class UsersClient: Sendable {
                 "order": order.map { .string($0) }, 
                 "starting_after": startingAfter.map { .string($0) }
             ], 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: ListUsersPaginationResponse.self
         )
     }
 
@@ -72,7 +77,8 @@ public final class UsersClient: Sendable {
             method: .post, 
             path: "/users", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: ListUsersPaginationResponse.self
         )
     }
 
@@ -85,7 +91,8 @@ public final class UsersClient: Sendable {
                 "limit": limit.map { .string($0) }, 
                 "order": order.map { .string($0) }
             ], 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: ListUsersPaginationResponse.self
         )
     }
 
@@ -98,7 +105,8 @@ public final class UsersClient: Sendable {
                 "limit": limit.map { .string($0) }, 
                 "order": order.map { .string($0) }
             ], 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: ListUsersPaginationResponse.self
         )
     }
 
@@ -109,7 +117,8 @@ public final class UsersClient: Sendable {
             queryParams: [
                 "cursor": cursor.map { .string($0) }
             ], 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: ListUsersExtendedResponse.self
         )
     }
 
@@ -120,7 +129,8 @@ public final class UsersClient: Sendable {
             queryParams: [
                 "cursor": cursor.map { .string($0) }
             ], 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: ListUsersExtendedOptionalListResponse.self
         )
     }
 
@@ -131,7 +141,8 @@ public final class UsersClient: Sendable {
             queryParams: [
                 "starting_after": startingAfter.map { .string($0) }
             ], 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: UsernameCursor.self
         )
     }
 
@@ -142,7 +153,8 @@ public final class UsersClient: Sendable {
             queryParams: [
                 "offset": offset.map { .string($0) }
             ], 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: UsernameContainer.self
         )
     }
 }

@@ -10,7 +10,8 @@ public final class OrganizationClient: Sendable {
             method: .post, 
             path: "/organizations", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Organization.self
         )
     }
 }

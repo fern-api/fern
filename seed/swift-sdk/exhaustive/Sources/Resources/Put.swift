@@ -9,7 +9,8 @@ public final class PutClient: Sendable {
         return try await httpClient.performRequest(
             method: .put, 
             path: "/\(id)", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: PutResponse.self
         )
     }
 }

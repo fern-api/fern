@@ -10,7 +10,8 @@ public final class ServiceClient: Sendable {
             method: .post, 
             path: "/upload-content", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 }

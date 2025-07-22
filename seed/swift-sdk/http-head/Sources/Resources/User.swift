@@ -9,7 +9,8 @@ public final class UserClient: Sendable {
         return try await httpClient.performRequest(
             method: .head, 
             path: "/users", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 
@@ -20,7 +21,8 @@ public final class UserClient: Sendable {
             queryParams: [
                 "limit": .string(limit)
             ], 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: [User].self
         )
     }
 }

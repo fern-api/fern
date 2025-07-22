@@ -10,7 +10,8 @@ public final class ServiceClient: Sendable {
             method: .patch, 
             path: "/", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 }

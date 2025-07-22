@@ -10,7 +10,8 @@ public final class ServiceClient: Sendable {
             method: .post, 
             path: "/", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 
@@ -19,7 +20,8 @@ public final class ServiceClient: Sendable {
             method: .post, 
             path: "/just-file", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 
@@ -35,7 +37,8 @@ public final class ServiceClient: Sendable {
                 "optionalListOfStrings": optionalListOfStrings.map { .string($0) }
             ], 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 
@@ -44,7 +47,8 @@ public final class ServiceClient: Sendable {
             method: .post, 
             path: "/with-content-type", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 
@@ -53,7 +57,8 @@ public final class ServiceClient: Sendable {
             method: .post, 
             path: "/with-form-encoding", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 
@@ -62,7 +67,8 @@ public final class ServiceClient: Sendable {
             method: .post, 
             path: "/", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 
@@ -71,7 +77,8 @@ public final class ServiceClient: Sendable {
             method: .post, 
             path: "/optional-args", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: String.self
         )
     }
 
@@ -79,7 +86,8 @@ public final class ServiceClient: Sendable {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/snippet", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 }

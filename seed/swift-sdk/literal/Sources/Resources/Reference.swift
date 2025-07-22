@@ -10,7 +10,8 @@ public final class ReferenceClient: Sendable {
             method: .post, 
             path: "/reference", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: SendResponse.self
         )
     }
 }

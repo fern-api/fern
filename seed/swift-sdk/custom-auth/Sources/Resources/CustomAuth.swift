@@ -9,7 +9,8 @@ public final class CustomAuthClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/custom-auth", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Bool.self
         )
     }
 
@@ -18,7 +19,8 @@ public final class CustomAuthClient: Sendable {
             method: .post, 
             path: "/custom-auth", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Bool.self
         )
     }
 }

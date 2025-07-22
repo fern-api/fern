@@ -10,7 +10,8 @@ public final class NoAuthClient: Sendable {
             method: .post, 
             path: "/no-auth", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Bool.self
         )
     }
 }

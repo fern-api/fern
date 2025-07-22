@@ -10,7 +10,8 @@ public final class UserClient: Sendable {
             method: .post, 
             path: "/user", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: User.self
         )
     }
 }

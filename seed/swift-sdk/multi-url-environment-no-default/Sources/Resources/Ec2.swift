@@ -10,7 +10,8 @@ public final class Ec2Client: Sendable {
             method: .post, 
             path: "/ec2/boot", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 }

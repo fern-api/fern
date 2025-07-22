@@ -25,7 +25,8 @@ public final class UserClient: Sendable {
                 "excludeUser": .string(excludeUser.rawValue), 
                 "filter": .string(filter)
             ], 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: User.self
         )
     }
 }

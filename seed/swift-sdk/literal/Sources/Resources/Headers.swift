@@ -14,7 +14,8 @@ public final class HeadersClient: Sendable {
                 "async": async
             ], 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: SendResponse.self
         )
     }
 }

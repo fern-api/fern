@@ -9,7 +9,8 @@ public final class UrlsClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/urls/MixedCase", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: String.self
         )
     }
 
@@ -17,7 +18,8 @@ public final class UrlsClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/urls/no-ending-slash", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: String.self
         )
     }
 
@@ -25,7 +27,8 @@ public final class UrlsClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/urls/with-ending-slash", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: String.self
         )
     }
 
@@ -33,7 +36,8 @@ public final class UrlsClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/urls/with_underscores", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: String.self
         )
     }
 }

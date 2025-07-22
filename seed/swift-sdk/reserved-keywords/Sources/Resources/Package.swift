@@ -12,7 +12,8 @@ public final class PackageClient: Sendable {
             queryParams: [
                 "for": .string(`for`)
             ], 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 }

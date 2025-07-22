@@ -14,7 +14,8 @@ public final class PlaylistClient: Sendable {
                 "optionalDatetime": optionalDatetime.map { .string($0) }
             ], 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Playlist.self
         )
     }
 
@@ -29,7 +30,8 @@ public final class PlaylistClient: Sendable {
                 "optionalMultipleField": optionalMultipleField.map { .string($0) }, 
                 "multipleField": .string(multipleField)
             ], 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: [Playlist].self
         )
     }
 
@@ -37,7 +39,8 @@ public final class PlaylistClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/v2/playlist/\(serviceParam)/\(playlistId)", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Playlist.self
         )
     }
 
@@ -46,7 +49,8 @@ public final class PlaylistClient: Sendable {
             method: .put, 
             path: "/v2/playlist/\(serviceParam)/\(playlistId)", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Playlist?.self
         )
     }
 
@@ -54,7 +58,8 @@ public final class PlaylistClient: Sendable {
         return try await httpClient.performRequest(
             method: .delete, 
             path: "/v2/playlist/\(serviceParam)/\(playlistId)", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 }

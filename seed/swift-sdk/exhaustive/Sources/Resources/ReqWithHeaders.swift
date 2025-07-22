@@ -13,7 +13,8 @@ public final class ReqWithHeadersClient: Sendable {
                 "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader
             ], 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 }

@@ -9,7 +9,8 @@ public final class ServiceClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/movie/\(movieId)", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Movie.self
         )
     }
 
@@ -18,7 +19,8 @@ public final class ServiceClient: Sendable {
             method: .post, 
             path: "/movie", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: MovieId.self
         )
     }
 
@@ -33,7 +35,8 @@ public final class ServiceClient: Sendable {
                 "shallow": shallow.map { .string($0) }, 
                 "tag": tag.map { .string($0) }
             ], 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Metadata.self
         )
     }
 
@@ -42,7 +45,8 @@ public final class ServiceClient: Sendable {
             method: .post, 
             path: "/big-entity", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Response.self
         )
     }
 }

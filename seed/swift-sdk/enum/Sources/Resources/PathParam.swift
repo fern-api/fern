@@ -9,7 +9,8 @@ public final class PathParamClient: Sendable {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/path/\(operand)/\(operandOrColor)", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 }

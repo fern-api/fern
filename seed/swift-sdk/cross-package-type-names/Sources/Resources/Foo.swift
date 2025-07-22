@@ -13,7 +13,8 @@ public final class FooClient: Sendable {
                 "optionalString": .string(optionalString.rawValue)
             ], 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: ImportingType.self
         )
     }
 }

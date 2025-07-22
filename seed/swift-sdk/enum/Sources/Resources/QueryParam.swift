@@ -15,7 +15,8 @@ public final class QueryParamClient: Sendable {
                 "operandOrColor": .string(operandOrColor.rawValue), 
                 "maybeOperandOrColor": maybeOperandOrColor.map { .string($0) }
             ], 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 
@@ -29,7 +30,8 @@ public final class QueryParamClient: Sendable {
                 "operandOrColor": .string(operandOrColor.rawValue), 
                 "maybeOperandOrColor": maybeOperandOrColor.map { .string($0) }
             ], 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 }

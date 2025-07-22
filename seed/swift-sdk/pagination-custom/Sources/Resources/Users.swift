@@ -12,7 +12,8 @@ public final class UsersClient: Sendable {
             queryParams: [
                 "starting_after": startingAfter.map { .string($0) }
             ], 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: UsernameCursor.self
         )
     }
 }

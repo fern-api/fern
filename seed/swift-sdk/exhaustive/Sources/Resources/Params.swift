@@ -9,7 +9,8 @@ public final class ParamsClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/params/path/\(param)", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: String.self
         )
     }
 
@@ -17,7 +18,8 @@ public final class ParamsClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/params/path/\(param)", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: String.self
         )
     }
 
@@ -29,7 +31,8 @@ public final class ParamsClient: Sendable {
                 "query": .string(query), 
                 "number": .string(number)
             ], 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 
@@ -41,7 +44,8 @@ public final class ParamsClient: Sendable {
                 "query": .string(query), 
                 "number": .string(number)
             ], 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 
@@ -52,7 +56,8 @@ public final class ParamsClient: Sendable {
             queryParams: [
                 "query": .string(query)
             ], 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 
@@ -63,7 +68,8 @@ public final class ParamsClient: Sendable {
             queryParams: [
                 "query": .string(query)
             ], 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 
@@ -72,7 +78,8 @@ public final class ParamsClient: Sendable {
             method: .put, 
             path: "/params/path/\(param)", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: String.self
         )
     }
 
@@ -81,7 +88,8 @@ public final class ParamsClient: Sendable {
             method: .put, 
             path: "/params/path/\(param)", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: String.self
         )
     }
 }

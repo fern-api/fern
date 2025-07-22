@@ -9,7 +9,8 @@ public final class UnionClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/\(id)", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Shape.self
         )
     }
 
@@ -18,7 +19,8 @@ public final class UnionClient: Sendable {
             method: .patch, 
             path: "/", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Bool.self
         )
     }
 }

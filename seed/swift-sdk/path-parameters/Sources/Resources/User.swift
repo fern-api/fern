@@ -9,7 +9,8 @@ public final class UserClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/\(tenantId)/user/\(userId)", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: User.self
         )
     }
 
@@ -18,7 +19,8 @@ public final class UserClient: Sendable {
             method: .post, 
             path: "/\(tenantId)/user", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: User.self
         )
     }
 
@@ -27,7 +29,8 @@ public final class UserClient: Sendable {
             method: .patch, 
             path: "/\(tenantId)/user/\(userId)", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: User.self
         )
     }
 
@@ -38,7 +41,8 @@ public final class UserClient: Sendable {
             queryParams: [
                 "limit": limit.map { .string($0) }
             ], 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: [User].self
         )
     }
 }

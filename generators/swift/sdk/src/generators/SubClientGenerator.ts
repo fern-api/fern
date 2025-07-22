@@ -188,8 +188,11 @@ export class SubClientGenerator {
     }
 
     private getMethodReturnTypeForEndpoint(endpoint: HttpEndpoint): swift.Type {
+        if (!endpoint.response) {
+            return swift.Type.custom("Void");
+        }
         return (
-            endpoint.response?.body?._visit({
+            endpoint.response.body?._visit({
                 json: (resp) => getSwiftTypeForTypeReference(resp.responseBodyType),
                 fileDownload: () => swift.Type.custom("Any"),
                 text: () => swift.Type.custom("Any"),
@@ -306,7 +309,17 @@ export class SubClientGenerator {
             })
         );
 
-        // TODO(kafkas): Add `responseType`
+        if (endpoint.response) {
+            arguments_.push(
+                swift.functionArgument({
+                    label: "responseType",
+                    value: swift.Expression.memberAccess({
+                        target: this.getMethodReturnTypeForEndpoint(endpoint),
+                        memberName: "self"
+                    })
+                })
+            );
+        }
 
         return swift.CodeBlock.withStatements([
             swift.Statement.return(

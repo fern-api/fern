@@ -12,7 +12,8 @@ public final class EventsClient: Sendable {
             queryParams: [
                 "limit": limit.map { .string($0) }
             ], 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: [Event].self
         )
     }
 }

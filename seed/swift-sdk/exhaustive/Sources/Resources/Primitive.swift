@@ -10,7 +10,8 @@ public final class PrimitiveClient: Sendable {
             method: .post, 
             path: "/primitive/string", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: String.self
         )
     }
 
@@ -19,7 +20,8 @@ public final class PrimitiveClient: Sendable {
             method: .post, 
             path: "/primitive/integer", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Int.self
         )
     }
 
@@ -28,7 +30,8 @@ public final class PrimitiveClient: Sendable {
             method: .post, 
             path: "/primitive/long", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Int64.self
         )
     }
 
@@ -37,7 +40,8 @@ public final class PrimitiveClient: Sendable {
             method: .post, 
             path: "/primitive/double", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Double.self
         )
     }
 
@@ -46,7 +50,8 @@ public final class PrimitiveClient: Sendable {
             method: .post, 
             path: "/primitive/boolean", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Bool.self
         )
     }
 
@@ -55,7 +60,8 @@ public final class PrimitiveClient: Sendable {
             method: .post, 
             path: "/primitive/datetime", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Date.self
         )
     }
 
@@ -64,7 +70,8 @@ public final class PrimitiveClient: Sendable {
             method: .post, 
             path: "/primitive/date", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Date.self
         )
     }
 
@@ -73,7 +80,8 @@ public final class PrimitiveClient: Sendable {
             method: .post, 
             path: "/primitive/uuid", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: UUID.self
         )
     }
 
@@ -82,7 +90,8 @@ public final class PrimitiveClient: Sendable {
             method: .post, 
             path: "/primitive/base64", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: String.self
         )
     }
 }

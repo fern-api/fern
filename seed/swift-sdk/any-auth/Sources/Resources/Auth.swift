@@ -10,7 +10,8 @@ public final class AuthClient: Sendable {
             method: .post, 
             path: "/token", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: TokenResponse.self
         )
     }
 }

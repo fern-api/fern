@@ -10,7 +10,8 @@ public final class UnknownClient: Sendable {
             method: .post, 
             path: "/", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: [Any].self
         )
     }
 
@@ -19,7 +20,8 @@ public final class UnknownClient: Sendable {
             method: .post, 
             path: "/with-object", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: [Any].self
         )
     }
 }

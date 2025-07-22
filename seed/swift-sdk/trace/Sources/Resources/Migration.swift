@@ -12,7 +12,8 @@ public final class MigrationClient: Sendable {
             headers: [
                 "admin-key-header": adminKeyHeader
             ], 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: [Migration].self
         )
     }
 }

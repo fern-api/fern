@@ -9,7 +9,8 @@ public final class ServiceClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/resource/\(resourceId)", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Resource.self
         )
     }
 
@@ -21,7 +22,8 @@ public final class ServiceClient: Sendable {
                 "page_limit": .string(pageLimit), 
                 "beforeDate": .string(beforeDate)
             ], 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: [Resource].self
         )
     }
 }

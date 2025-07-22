@@ -10,7 +10,8 @@ public final class DummyClient: Sendable {
             method: .post, 
             path: "/generate", 
             body: request, 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: Any.self
         )
     }
 }

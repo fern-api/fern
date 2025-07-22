@@ -9,7 +9,8 @@ public final class PropertyBasedErrorClient: Sendable {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/property-based-error", 
-            requestOptions: requestOptions
+            requestOptions: requestOptions, 
+            responseType: String.self
         )
     }
 }
