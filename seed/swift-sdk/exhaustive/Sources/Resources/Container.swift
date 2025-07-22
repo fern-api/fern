@@ -53,7 +53,7 @@ public final class ContainerClient: Sendable {
         )
     }
 
-    public func getAndReturnOptional(requestOptions: RequestOptions? = nil) async throws -> ObjectWithRequiredField {
+    public func getAndReturnOptional(requestOptions: RequestOptions? = nil) async throws -> ObjectWithRequiredField? {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/container/opt-objects", 

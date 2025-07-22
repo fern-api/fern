@@ -10,7 +10,7 @@ public final class PackageClient: Sendable {
             method: .post, 
             path: "/", 
             queryParams: [
-                "for": `for`
+                "for": .string(`for`)
             ], 
             requestOptions: requestOptions
         )

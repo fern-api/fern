@@ -26,8 +26,8 @@ public final class ParamsClient: Sendable {
             method: .get, 
             path: "/params", 
             queryParams: [
-                "query": query, 
-                "number": number
+                "query": .string(query), 
+                "number": .string(number)
             ], 
             requestOptions: requestOptions
         )
@@ -38,8 +38,8 @@ public final class ParamsClient: Sendable {
             method: .get, 
             path: "/params", 
             queryParams: [
-                "query": query, 
-                "number": number
+                "query": .string(query), 
+                "number": .string(number)
             ], 
             requestOptions: requestOptions
         )
@@ -50,7 +50,7 @@ public final class ParamsClient: Sendable {
             method: .get, 
             path: "/params/path-query/\(param)", 
             queryParams: [
-                "query": query
+                "query": .string(query)
             ], 
             requestOptions: requestOptions
         )
@@ -61,7 +61,7 @@ public final class ParamsClient: Sendable {
             method: .get, 
             path: "/params/path-query/\(param)", 
             queryParams: [
-                "query": query
+                "query": .string(query)
             ], 
             requestOptions: requestOptions
         )

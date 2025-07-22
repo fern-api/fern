@@ -37,7 +37,7 @@ public final class ServiceClient: Sendable {
         )
     }
 
-    public func getOptionalMovie(requestOptions: RequestOptions? = nil) async throws -> Response {
+    public func getOptionalMovie(requestOptions: RequestOptions? = nil) async throws -> Response? {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/movie", 

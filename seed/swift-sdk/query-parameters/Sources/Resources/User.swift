@@ -10,20 +10,20 @@ public final class UserClient: Sendable {
             method: .get, 
             path: "/user", 
             queryParams: [
-                "limit": limit, 
-                "id": id, 
-                "date": date, 
-                "deadline": deadline, 
-                "bytes": bytes, 
-                "user": user.rawValue, 
-                "userList": userList, 
+                "limit": .string(limit), 
+                "id": .string(id), 
+                "date": .string(date), 
+                "deadline": .string(deadline), 
+                "bytes": .string(bytes), 
+                "user": .string(user.rawValue), 
+                "userList": .string(userList), 
                 "optionalDeadline": optionalDeadline.map { .string($0) }, 
-                "keyValue": keyValue, 
+                "keyValue": .string(keyValue), 
                 "optionalString": optionalString.map { .string($0) }, 
-                "nestedUser": nestedUser.rawValue, 
+                "nestedUser": .string(nestedUser.rawValue), 
                 "optionalUser": optionalUser.map { .string($0) }, 
-                "excludeUser": excludeUser.rawValue, 
-                "filter": filter
+                "excludeUser": .string(excludeUser.rawValue), 
+                "filter": .string(filter)
             ], 
             requestOptions: requestOptions
         )

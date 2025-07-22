@@ -10,7 +10,7 @@ public final class PlaylistClient: Sendable {
             method: .post, 
             path: "/v2/playlist/\(serviceParam)/create", 
             queryParams: [
-                "datetime": datetime, 
+                "datetime": .string(datetime), 
                 "optionalDatetime": optionalDatetime.map { .string($0) }
             ], 
             requestOptions: requestOptions
@@ -23,10 +23,10 @@ public final class PlaylistClient: Sendable {
             path: "/v2/playlist/\(serviceParam)/all", 
             queryParams: [
                 "limit": limit.map { .string($0) }, 
-                "otherField": otherField, 
-                "multiLineDocs": multiLineDocs, 
+                "otherField": .string(otherField), 
+                "multiLineDocs": .string(multiLineDocs), 
                 "optionalMultipleField": optionalMultipleField.map { .string($0) }, 
-                "multipleField": multipleField
+                "multipleField": .string(multipleField)
             ], 
             requestOptions: requestOptions
         )
@@ -40,7 +40,7 @@ public final class PlaylistClient: Sendable {
         )
     }
 
-    public func updatePlaylist(serviceParam: String, playlistId: String, requestOptions: RequestOptions? = nil) async throws -> Playlist {
+    public func updatePlaylist(serviceParam: String, playlistId: String, requestOptions: RequestOptions? = nil) async throws -> Playlist? {
         return try await httpClient.performRequest(
             method: .put, 
             path: "/v2/playlist/\(serviceParam)/\(playlistId)", 

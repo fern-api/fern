@@ -10,14 +10,14 @@ public final class QueryClient: Sendable {
             method: .post, 
             path: "/query", 
             queryParams: [
-                "prompt": prompt, 
+                "prompt": .string(prompt), 
                 "optional_prompt": optionalPrompt.map { .string($0) }, 
-                "alias_prompt": aliasPrompt.rawValue, 
+                "alias_prompt": .string(aliasPrompt.rawValue), 
                 "alias_optional_prompt": aliasOptionalPrompt.map { .string($0) }, 
-                "query": query, 
-                "stream": stream, 
+                "query": .string(query), 
+                "stream": .string(stream), 
                 "optional_stream": optionalStream.map { .string($0) }, 
-                "alias_stream": aliasStream.rawValue, 
+                "alias_stream": .string(aliasStream.rawValue), 
                 "alias_optional_stream": aliasOptionalStream.map { .string($0) }
             ], 
             requestOptions: requestOptions

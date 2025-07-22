@@ -10,7 +10,7 @@ public final class MetadataClient: Sendable {
             method: .get, 
             path: "/users/events/metadata", 
             queryParams: [
-                "id": id.rawValue
+                "id": .string(id.rawValue)
             ], 
             requestOptions: requestOptions
         )

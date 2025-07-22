@@ -15,7 +15,7 @@ public struct Type: Codable, Hashable {
     public let fourteen: Any
     public let fifteen: [[Int]]
     public let sixteen: [Any]
-    public let seventeen: [UUID]
+    public let seventeen: [UUID?]
     public let eighteen: Any
     public let nineteen: Name
     public let twenty: UInt
@@ -26,7 +26,7 @@ public struct Type: Codable, Hashable {
     public let twentyfive: Date?
     public let additionalProperties: [String: JSONValue]
 
-    public init(one: Int, two: Double, three: String, four: Bool, five: Int64, six: Date, seven: Date, eight: UUID, nine: String, ten: [Int], eleven: Any, twelve: Any, thirteen: Int64? = nil, fourteen: Any, fifteen: [[Int]], sixteen: [Any], seventeen: [UUID], eighteen: Any, nineteen: Name, twenty: UInt, twentyone: UInt64, twentytwo: Float, twentythree: String, twentyfour: Date? = nil, twentyfive: Date? = nil, additionalProperties: [String: JSONValue] = .init()) {
+    public init(one: Int, two: Double, three: String, four: Bool, five: Int64, six: Date, seven: Date, eight: UUID, nine: String, ten: [Int], eleven: Any, twelve: Any, thirteen: Int64? = nil, fourteen: Any, fifteen: [[Int]], sixteen: [Any], seventeen: [UUID?], eighteen: Any, nineteen: Name, twenty: UInt, twentyone: UInt64, twentytwo: Float, twentythree: String, twentyfour: Date? = nil, twentyfive: Date? = nil, additionalProperties: [String: JSONValue] = .init()) {
         self.one = one
         self.two = two
         self.three = three
@@ -73,7 +73,7 @@ public struct Type: Codable, Hashable {
         self.fourteen = try container.decode(Any.self, forKey: .fourteen)
         self.fifteen = try container.decode([[Int]].self, forKey: .fifteen)
         self.sixteen = try container.decode([Any].self, forKey: .sixteen)
-        self.seventeen = try container.decode([UUID].self, forKey: .seventeen)
+        self.seventeen = try container.decode([UUID?].self, forKey: .seventeen)
         self.eighteen = try container.decode(Any.self, forKey: .eighteen)
         self.nineteen = try container.decode(Name.self, forKey: .nineteen)
         self.twenty = try container.decode(UInt.self, forKey: .twenty)

@@ -27,9 +27,9 @@ public final class ServiceClient: Sendable {
             path: "/just-file-with-query-params", 
             queryParams: [
                 "maybeString": maybeString.map { .string($0) }, 
-                "integer": integer, 
+                "integer": .string(integer), 
                 "maybeInteger": maybeInteger.map { .string($0) }, 
-                "listOfStrings": listOfStrings, 
+                "listOfStrings": .string(listOfStrings), 
                 "optionalListOfStrings": optionalListOfStrings.map { .string($0) }
             ], 
             requestOptions: requestOptions

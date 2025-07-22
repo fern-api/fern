@@ -18,7 +18,7 @@ public final class UserClient: Sendable {
             method: .get, 
             path: "/users", 
             queryParams: [
-                "limit": limit
+                "limit": .string(limit)
             ], 
             requestOptions: requestOptions
         )

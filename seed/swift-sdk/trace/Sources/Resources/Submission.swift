@@ -13,7 +13,7 @@ public final class SubmissionClient: Sendable {
         )
     }
 
-    public func getExecutionSession(sessionId: String, requestOptions: RequestOptions? = nil) async throws -> ExecutionSessionResponse {
+    public func getExecutionSession(sessionId: String, requestOptions: RequestOptions? = nil) async throws -> ExecutionSessionResponse? {
         return try await httpClient.performRequest(
             method: .get, 
             path: "/sessions/\(sessionId)", 
