@@ -7,6 +7,7 @@ import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
+import { ErrorGenerator } from "./error/ErrorGenerator";
 
 export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -64,7 +65,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         });
 
         // Generate error.rs
-        const errorContent = this.generateErrorRs();
+        const errorContent = this.generateErrorRs(context);
         const errorFile = new RustFile({
             filename: "error.rs",
             directory: RelativeFilePath.of("src"),
@@ -126,14 +127,14 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 ${modules}
 
 pub use client::${context.getClientName()};
-pub use error::Error;
+pub use error::ApiError;
 ${hasTypes ? "\npub use types::*;" : ""}
 `;
     }
 
     private generateClientRs(context: SdkGeneratorContext): string {
         const clientName = context.getClientName();
-        return `use crate::error::Error;
+        return `use crate::error::ApiError;
 use reqwest::{Client, RequestBuilder};
 use serde::{Deserialize, Serialize};
 
@@ -162,21 +163,9 @@ impl ${clientName} {
 `;
     }
 
-    private generateErrorRs(): string {
-        return `use thiserror::Error;
-
-#[derive(Error, Debug)]
-pub enum Error {
-    #[error("HTTP error: {0}")]
-    Http(#[from] reqwest::Error),
-    
-    #[error("Serialization error: {0}")]
-    Serialization(#[from] serde_json::Error),
-    
-    #[error("API error: {message}")]
-    Api { message: String },
-}
-`;
+    private generateErrorRs(context: SdkGeneratorContext): string {
+        const errorGenerator = new ErrorGenerator(context);
+        return errorGenerator.generateErrorRs();
     }
 
     private async generateGitHub({ context }: { context: SdkGeneratorContext }): Promise<void> {

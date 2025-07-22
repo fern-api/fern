@@ -1,3 +1,3 @@
 //! Generated models by Fern
 
-pub mod type_errors:propertybasederrortestbody;
+pub mod property_based_error_test_body;

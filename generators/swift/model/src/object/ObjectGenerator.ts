@@ -1,14 +1,10 @@
-import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 
-import { ObjectProperty, ObjectTypeDeclaration, Type } from "@fern-fern/ir-sdk/api";
-import { PrimitiveTypeV1, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
+import { ObjectProperty, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
-function isOptionalProperty(p: ObjectProperty) {
-    return p.valueType.type === "container" && p.valueType.container.type === "optional";
-}
+import { getSwiftTypeForTypeReference } from "../converters";
 
 export class ObjectGenerator {
     private readonly typeDeclaration: TypeDeclaration;
@@ -49,9 +45,7 @@ export class ObjectGenerator {
     }
 
     private getFileDirectory(): RelativeFilePath {
-        return RelativeFilePath.of(
-            [...this.typeDeclaration.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName)].join("/")
-        );
+        return RelativeFilePath.of("Schemas");
     }
 
     private generateStructForTypeDeclaration(): swift.Struct {
@@ -59,7 +53,7 @@ export class ObjectGenerator {
         return swift.struct({
             name: this.typeDeclaration.name.name.pascalCase.safeName,
             accessLevel: swift.AccessLevel.Public,
-            conformances: ["Codable", "Hashable"],
+            conformances: [swift.Protocol.Codable, swift.Protocol.Hashable],
             properties: [
                 ...this.objectTypeDeclaration.properties.map((p) => this.generateSwiftPropertyForProperty(p)),
                 swift.property({
@@ -79,20 +73,20 @@ export class ObjectGenerator {
         return swift.initializer({
             accessLevel: swift.AccessLevel.Public,
             parameters: [
-                ...this.objectTypeDeclaration.properties.map((p) =>
-                    swift.functionParameter({
+                ...this.objectTypeDeclaration.properties.map((p) => {
+                    const swiftType = getSwiftTypeForTypeReference(p.valueType);
+                    return swift.functionParameter({
                         argumentLabel: p.name.name.camelCase.unsafeName,
                         unsafeName: p.name.name.camelCase.unsafeName,
-                        type: this.generateSwiftTypeForTypeReference(p.valueType),
-                        optional: isOptionalProperty(p),
-                        defaultValue: isOptionalProperty(p) ? swift.Expression.rawValue("nil") : undefined
-                    })
-                ),
+                        type: swiftType,
+                        defaultValue: swiftType.isOptional ? swift.Expression.rawValue("nil") : undefined
+                    });
+                }),
                 swift.functionParameter({
                     argumentLabel: this.additionalPropertiesInfo.propertyName,
                     unsafeName: this.additionalPropertiesInfo.propertyName,
                     type: this.additionalPropertiesInfo.swiftType,
-                    defaultValue: swift.Expression.contextualMethodCall("init")
+                    defaultValue: swift.Expression.contextualMethodCall({ methodName: "init" })
                 })
             ],
             body: swift.CodeBlock.withStatements([
@@ -122,53 +116,67 @@ export class ObjectGenerator {
                 })
             ],
             body: swift.CodeBlock.withStatements([
-                swift.Statement.constantDeclaration(
-                    "container",
-                    swift.Expression.try(
-                        swift.Expression.methodCall(swift.Expression.reference("decoder"), "container", [
-                            swift.functionArgument({
-                                label: "keyedBy",
-                                value: swift.Expression.rawValue("CodingKeys.self")
-                            })
-                        ])
-                    )
-                ),
-                ...this.objectTypeDeclaration.properties.map((p) =>
-                    swift.Statement.propertyAssignment(
+                ...(this.objectTypeDeclaration.properties.length > 0
+                    ? [
+                          swift.Statement.constantDeclaration(
+                              "container",
+                              swift.Expression.try(
+                                  swift.Expression.methodCall({
+                                      target: swift.Expression.reference("decoder"),
+                                      methodName: "container",
+                                      arguments_: [
+                                          swift.functionArgument({
+                                              label: "keyedBy",
+                                              value: swift.Expression.rawValue("CodingKeys.self")
+                                          })
+                                      ]
+                                  })
+                              )
+                          )
+                      ]
+                    : []),
+                ...this.objectTypeDeclaration.properties.map((p) => {
+                    const swiftType = getSwiftTypeForTypeReference(p.valueType);
+                    return swift.Statement.propertyAssignment(
                         p.name.name.camelCase.unsafeName,
                         swift.Expression.try(
-                            swift.Expression.methodCall(
-                                swift.Expression.reference("container"),
-                                isOptionalProperty(p) ? "decodeIfPresent" : "decode",
-                                [
+                            swift.Expression.methodCall({
+                                target: swift.Expression.reference("container"),
+                                methodName: swiftType.isOptional ? "decodeIfPresent" : "decode",
+                                arguments_: [
                                     swift.functionArgument({
-                                        value: swift.Expression.memberAccess(
-                                            this.generateSwiftTypeForTypeReference(p.valueType),
-                                            "self"
-                                        )
+                                        value: swift.Expression.memberAccess({
+                                            target: swift.Type.required(swiftType),
+                                            memberName: "self"
+                                        })
                                     }),
                                     swift.functionArgument({
                                         label: "forKey",
                                         value: swift.Expression.enumCaseShorthand(p.name.name.camelCase.unsafeName)
                                     })
                                 ]
-                            )
+                            })
                         )
-                    )
-                ),
+                    );
+                }),
                 swift.Statement.propertyAssignment(
                     this.additionalPropertiesInfo.propertyName,
                     swift.Expression.try(
-                        swift.Expression.methodCall(
-                            swift.Expression.reference("decoder"),
-                            "decodeAdditionalProperties",
-                            [
-                                swift.functionArgument({
-                                    label: "using",
-                                    value: swift.Expression.rawValue("CodingKeys.self")
-                                })
+                        swift.Expression.methodCall({
+                            target: swift.Expression.reference("decoder"),
+                            methodName: "decodeAdditionalProperties",
+                            arguments_: [
+                                this.objectTypeDeclaration.properties.length === 0
+                                    ? swift.functionArgument({
+                                          label: "knownKeys",
+                                          value: swift.Expression.rawValue("[]")
+                                      })
+                                    : swift.functionArgument({
+                                          label: "using",
+                                          value: swift.Expression.rawValue("CodingKeys.self")
+                                      })
                             ]
-                        )
+                        })
                     )
                 )
             ])
@@ -187,65 +195,77 @@ export class ObjectGenerator {
                 })
             ],
             throws: true,
-            returnType: swift.Type.custom("Void"),
+            returnType: swift.Type.void(),
             body: swift.CodeBlock.withStatements([
-                swift.Statement.variableDeclaration(
-                    "container",
-                    swift.Expression.try(
-                        swift.Expression.methodCall(swift.Expression.reference("encoder"), "container", [
-                            swift.functionArgument({
-                                label: "keyedBy",
-                                value: swift.Expression.rawValue("CodingKeys.self")
-                            })
-                        ])
-                    )
-                ),
+                ...(this.objectTypeDeclaration.properties.length > 0
+                    ? [
+                          swift.Statement.variableDeclaration(
+                              "container",
+                              swift.Expression.try(
+                                  swift.Expression.methodCall({
+                                      target: swift.Expression.reference("encoder"),
+                                      methodName: "container",
+                                      arguments_: [
+                                          swift.functionArgument({
+                                              label: "keyedBy",
+                                              value: swift.Expression.rawValue("CodingKeys.self")
+                                          })
+                                      ]
+                                  })
+                              )
+                          )
+                      ]
+                    : []),
                 swift.Statement.expressionStatement(
                     swift.Expression.try(
-                        swift.Expression.methodCall(
-                            swift.Expression.reference("encoder"),
-                            "encodeAdditionalProperties",
-                            [
+                        swift.Expression.methodCall({
+                            target: swift.Expression.reference("encoder"),
+                            methodName: "encodeAdditionalProperties",
+                            arguments_: [
                                 swift.functionArgument({
-                                    value: swift.Expression.memberAccess(
-                                        swift.Expression.rawValue("self"),
-                                        this.additionalPropertiesInfo.propertyName
-                                    )
+                                    value: swift.Expression.memberAccess({
+                                        target: swift.Expression.rawValue("self"),
+                                        memberName: this.additionalPropertiesInfo.propertyName
+                                    })
                                 })
                             ]
-                        )
+                        })
                     )
                 ),
-                ...this.objectTypeDeclaration.properties.map((p) =>
-                    swift.Statement.expressionStatement(
+                ...this.objectTypeDeclaration.properties.map((p) => {
+                    const swiftType = getSwiftTypeForTypeReference(p.valueType);
+                    return swift.Statement.expressionStatement(
                         swift.Expression.try(
-                            swift.Expression.methodCall(
-                                swift.Expression.reference("container"),
-                                isOptionalProperty(p) ? "encodeIfPresent" : "encode",
-                                [
+                            swift.Expression.methodCall({
+                                target: swift.Expression.reference("container"),
+                                methodName: swiftType.isOptional ? "encodeIfPresent" : "encode",
+                                arguments_: [
                                     swift.functionArgument({
-                                        value: swift.Expression.memberAccess(
-                                            swift.Expression.rawValue("self"),
-                                            p.name.name.camelCase.unsafeName
-                                        )
+                                        value: swift.Expression.memberAccess({
+                                            target: swift.Expression.rawValue("self"),
+                                            memberName: p.name.name.camelCase.unsafeName
+                                        })
                                     }),
                                     swift.functionArgument({
                                         label: "forKey",
                                         value: swift.Expression.enumCaseShorthand(p.name.name.camelCase.unsafeName)
                                     })
                                 ]
-                            )
+                            })
                         )
-                    )
-                )
+                    );
+                })
             ])
         });
     }
 
-    private generateCodingKeysEnum(): swift.EnumWithRawValues {
+    private generateCodingKeysEnum(): swift.EnumWithRawValues | undefined {
+        if (this.objectTypeDeclaration.properties.length === 0) {
+            return undefined;
+        }
         return swift.enumWithRawValues({
             name: "CodingKeys",
-            conformances: ["String", "CodingKey", "CaseIterable"],
+            conformances: ["String", swift.Protocol.CodingKey, swift.Protocol.CaseIterable],
             cases: this.objectTypeDeclaration.properties.map((property) => {
                 return {
                     unsafeName: property.name.name.camelCase.unsafeName,
@@ -260,49 +280,7 @@ export class ObjectGenerator {
             unsafeName: property.name.name.camelCase.unsafeName,
             accessLevel: swift.AccessLevel.Public,
             declarationType: swift.DeclarationType.Let,
-            type: this.generateSwiftTypeForTypeReference(property.valueType),
-            optional: isOptionalProperty(property)
+            type: getSwiftTypeForTypeReference(property.valueType)
         });
-    }
-
-    private generateSwiftTypeForTypeReference(typeReference: TypeReference): swift.Type {
-        switch (typeReference.type) {
-            case "container":
-                return typeReference.container._visit({
-                    // TODO(kafkas): Handle these cases
-                    literal: () => swift.Type.any(),
-                    map: () => swift.Type.any(),
-                    set: () => swift.Type.any(),
-                    nullable: () => swift.Type.any(),
-                    optional: (ref) => this.generateSwiftTypeForTypeReference(ref),
-                    list: (ref) => swift.Type.array(this.generateSwiftTypeForTypeReference(ref)),
-                    _other: () => swift.Type.any()
-                });
-            case "primitive":
-                // TODO(kafkas): Do we not look at typeReference.primitive.v2?
-                return PrimitiveTypeV1._visit(typeReference.primitive.v1, {
-                    string: () => swift.Type.string(),
-                    boolean: () => swift.Type.bool(),
-                    integer: () => swift.Type.int(),
-                    uint: () => swift.Type.uint(),
-                    uint64: () => swift.Type.uint64(),
-                    long: () => swift.Type.int64(),
-                    float: () => swift.Type.float(),
-                    double: () => swift.Type.double(),
-                    // TODO(kafkas): We may need to implement our own value type for this
-                    bigInteger: () => swift.Type.string(),
-                    date: () => swift.Type.date(),
-                    dateTime: () => swift.Type.date(),
-                    base64: () => swift.Type.string(),
-                    uuid: () => swift.Type.uuid(),
-                    _other: () => swift.Type.any()
-                });
-            case "named":
-                return swift.Type.custom(typeReference.name.pascalCase.unsafeName);
-            case "unknown":
-                return swift.Type.any();
-            default:
-                assertNever(typeReference);
-        }
     }
 }

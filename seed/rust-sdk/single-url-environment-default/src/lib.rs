@@ -7,5 +7,5 @@ pub mod error;
 pub mod dummy;
 
 pub use client::SingleUrlEnvironmentDefaultClient;
-pub use error::Error;
+pub use error::ApiError;
 

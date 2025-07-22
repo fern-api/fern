@@ -21,6 +21,6 @@ pub mod no_req_body;
 pub mod req_with_headers;
 
 pub use client::ExhaustiveClient;
-pub use error::Error;
+pub use error::ApiError;
 
 pub use types::*;

@@ -1,7 +1,7 @@
 //! Generated models by Fern
 
-pub mod type_service:organization;
-pub mod type_service:user;
-pub mod type_service:nesteduser;
-pub mod type_service:resourcestatus;
-pub mod type_service:resource;
+pub mod organization;
+pub mod user;
+pub mod nested_user;
+pub mod resource_status;
+pub mod resource;

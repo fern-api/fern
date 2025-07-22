@@ -1,9 +1,9 @@
 //! Generated models by Fern
 
-pub mod type_:memo;
-pub mod type_:baseresource;
-pub mod type_:resourcelist;
-pub mod type_:account;
-pub mod type_:patient;
-pub mod type_:practitioner;
-pub mod type_:script;
+pub mod memo;
+pub mod base_resource;
+pub mod resource_list;
+pub mod account;
+pub mod patient;
+pub mod practitioner;
+pub mod script;

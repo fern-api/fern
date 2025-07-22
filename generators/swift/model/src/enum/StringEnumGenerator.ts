@@ -1,4 +1,3 @@
-import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
@@ -30,16 +29,20 @@ export class StringEnumGenerator {
     }
 
     private getFileDirectory(): RelativeFilePath {
-        return RelativeFilePath.of(
-            [...this.typeDeclaration.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName)].join("/")
-        );
+        return RelativeFilePath.of("Schemas");
     }
 
     private generateEnumForTypeDeclaration(): swift.EnumWithRawValues {
         return swift.enumWithRawValues({
             name: this.typeDeclaration.name.name.pascalCase.unsafeName,
             accessLevel: swift.AccessLevel.Public,
-            conformances: ["String", "Codable", "Hashable", "Sendable", "CaseIterable"],
+            conformances: [
+                "String",
+                swift.Protocol.Codable,
+                swift.Protocol.Hashable,
+                swift.Protocol.Sendable,
+                swift.Protocol.CaseIterable
+            ],
             cases: this.enumTypeDeclaration.values.map((val) => ({
                 unsafeName: val.name.name.camelCase.unsafeName,
                 rawValue: val.name.wireValue

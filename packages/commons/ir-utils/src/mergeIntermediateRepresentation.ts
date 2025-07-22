@@ -92,6 +92,7 @@ function mergeSubpackages(
         } else {
             mergedSubpackages[subpackageId] = {
                 name: subpackage.name,
+                displayName: subpackage.displayName,
                 fernFilepath: subpackage.fernFilepath,
                 hasEndpointsInTree: mergedSubpackages[subpackageId].hasEndpointsInTree || subpackage.hasEndpointsInTree,
                 navigationConfig: mergedSubpackages[subpackageId].navigationConfig ?? subpackage.navigationConfig,

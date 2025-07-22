@@ -1,9 +1,9 @@
 //! Generated models by Fern
 
-pub mod type_:stringresponse;
-pub mod type_:optionalstringresponse;
-pub mod type_:withmetadata;
-pub mod type_service:withdocs;
-pub mod type_service:optionalwithdocs;
-pub mod type_service:movie;
-pub mod type_service:response;
+pub mod string_response;
+pub mod optional_string_response;
+pub mod with_metadata;
+pub mod with_docs;
+pub mod optional_with_docs;
+pub mod movie;
+pub mod response;

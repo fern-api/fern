@@ -8,6 +8,6 @@ pub mod types;
 pub mod nullable;
 
 pub use client::NullableClient;
-pub use error::Error;
+pub use error::ApiError;
 
 pub use types::*;

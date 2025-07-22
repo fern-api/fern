@@ -1,5 +1,3 @@
-import { CodeBlock } from "@fern-api/browser-compatible-base-generator";
-
 import { Comment } from "./Comment";
 import { Field } from "./Field";
 import { Method } from "./Method";
@@ -20,6 +18,8 @@ export declare namespace Struct {
     interface Constructor {
         parameters: Parameter[];
         body: AstNode;
+        /* Overrides the default name of the constructor. */
+        name?: string;
     }
 }
 
@@ -52,37 +52,47 @@ export class Struct extends AstNode {
     }
 
     public write(writer: Writer): void {
-        writer.writeNode(new Comment({ docs: this.docs }));
-        writer.write(`type ${this.name} struct {`);
-        if (this.fields.length === 0) {
-            writer.writeLine("}");
-        } else {
-            writer.newLine();
-            writer.indent();
-            for (const field of this.fields) {
-                writer.writeNode(field);
-                writer.newLine();
-            }
-            writer.dedent();
-            writer.writeLine("}");
-        }
-
+        this.writeType({ writer });
         if (this.constructor_ != null) {
             writer.newLine();
             this.writeConstructor({ writer, constructor: this.constructor_ });
         }
+        this.writeMethods({ writer });
+    }
 
-        if (this.methods.length > 0) {
-            for (const method of this.methods) {
-                writer.newLine();
-                writer.writeNode(method);
-                writer.newLine();
-            }
+    private writeType({ writer }: { writer: Writer }): void {
+        writer.writeNode(new Comment({ docs: this.docs }));
+        writer.write(`type ${this.name} struct {`);
+        if (this.fields.length === 0) {
+            writer.writeLine("}");
+            return;
         }
+        writer.newLine();
+        writer.indent();
+        const exportedFields = this.fields.filter((field) => this.isExported(field));
+        for (const field of exportedFields) {
+            writer.writeNode(field);
+            writer.newLine();
+        }
+        const unexportedFields = this.fields.filter((field) => !this.isExported(field));
+        if (exportedFields.length > 0 && unexportedFields.length > 0) {
+            // Exported fields are grouped separately from unexported fields.
+            writer.newLine();
+        }
+        for (const field of unexportedFields) {
+            writer.writeNode(field);
+            writer.newLine();
+        }
+        writer.dedent();
+        writer.writeLine("}");
     }
 
     private writeConstructor({ writer, constructor }: { writer: Writer; constructor: Struct.Constructor }): void {
-        writer.write(`func New${this.name}(`);
+        if (constructor.name != null) {
+            writer.write(`func ${constructor.name}(`);
+        } else {
+            writer.write(`func New${this.name}(`);
+        }
         constructor.parameters.forEach((parameter, index) => {
             if (index > 0) {
                 writer.write(", ");
@@ -96,5 +106,18 @@ export class Struct extends AstNode {
         writer.writeNewLineIfLastLineNot();
         writer.dedent();
         writer.writeLine("}");
+    }
+
+    private writeMethods({ writer }: { writer: Writer }): void {
+        for (const method of this.methods) {
+            writer.newLine();
+            writer.writeNode(method);
+            writer.newLine();
+        }
+    }
+
+    private isExported(field: Field): boolean {
+        const char = field.name.charAt(0);
+        return char === char.toUpperCase();
     }
 }

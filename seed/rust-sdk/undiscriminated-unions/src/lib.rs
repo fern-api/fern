@@ -8,6 +8,6 @@ pub mod types;
 pub mod union_;
 
 pub use client::UndiscriminatedUnionsClient;
-pub use error::Error;
+pub use error::ApiError;
 
 pub use types::*;

@@ -1,8 +1,8 @@
 //! Generated models by Fern
 
-pub mod type_nullable:email;
-pub mod type_nullable:userid;
-pub mod type_nullable:weirdnumber;
-pub mod type_nullable:user;
-pub mod type_nullable:status;
-pub mod type_nullable:metadata;
+pub mod email;
+pub mod user_id;
+pub mod weird_number;
+pub mod user;
+pub mod status;
+pub mod metadata;

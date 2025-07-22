@@ -1,19 +1,19 @@
 //! Generated models by Fern
 
-pub mod type_endpoints/put:error;
-pub mod type_endpoints/put:errorcategory;
-pub mod type_endpoints/put:errorcode;
-pub mod type_endpoints/put:putresponse;
-pub mod type_general-errors:badobjectrequestinfo;
-pub mod type_types/docs:objectwithdocs;
-pub mod type_types/enum:weatherreport;
-pub mod type_types/object:objectwithoptionalfield;
-pub mod type_types/object:objectwithrequiredfield;
-pub mod type_types/object:objectwithmapofmap;
-pub mod type_types/object:nestedobjectwithoptionalfield;
-pub mod type_types/object:nestedobjectwithrequiredfield;
-pub mod type_types/object:doubleoptional;
-pub mod type_types/object:optionalalias;
-pub mod type_types/union:animal;
-pub mod type_types/union:dog;
-pub mod type_types/union:cat;
+pub mod error;
+pub mod error_category;
+pub mod error_code;
+pub mod put_response;
+pub mod bad_object_request_info;
+pub mod object_with_docs;
+pub mod weather_report;
+pub mod object_with_optional_field;
+pub mod object_with_required_field;
+pub mod object_with_map_of_map;
+pub mod nested_object_with_optional_field;
+pub mod nested_object_with_required_field;
+pub mod double_optional;
+pub mod optional_alias;
+pub mod animal;
+pub mod dog;
+pub mod cat;

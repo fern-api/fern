@@ -23,7 +23,7 @@ importers:
         version: link:packages/commons/logging-execa
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
-        version: 0.0.1045(encoding@0.1.13)
+        version: 0.0.1045
       '@fern-fern/ir-v39-sdk':
         specifier: ^0.0.1
         version: 0.0.1
@@ -79,6 +79,9 @@ importers:
       chalk:
         specifier: ^5.3.0
         version: 5.4.1
+      cross-env:
+        specifier: ^7.0.3
+        version: 7.0.3
       cspell:
         specifier: ^8.17.2
         version: 8.19.4
@@ -145,6 +148,9 @@ importers:
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@types/node@18.15.3)(typescript@5.7.2)
+      tsx:
+        specifier: ^4.20.3
+        version: 4.20.3
       turbo:
         specifier: ^2.5.4
         version: 2.5.4
@@ -174,7 +180,7 @@ importers:
         version: link:../../packages/commons/logging-execa
       '@fern-fern/generator-cli-sdk':
         specifier: 0.0.28
-        version: 0.0.28(encoding@0.1.13)
+        version: 0.0.28
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
@@ -235,7 +241,7 @@ importers:
         version: link:../../packages/commons/path-utils
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
-        version: 0.0.1045(encoding@0.1.13)
+        version: 0.0.1045
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -284,7 +290,7 @@ importers:
         version: link:../../../packages/commons/logging-execa
       '@fern-fern/ir-sdk':
         specifier: ^58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
@@ -314,7 +320,7 @@ importers:
         version: 3.5.3
       tsup:
         specifier: ^8.0.2
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -332,7 +338,7 @@ importers:
         version: link:../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
         specifier: ^58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -426,7 +432,7 @@ importers:
         version: 1.0.10
       tsup:
         specifier: ^8.3.5
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -499,7 +505,7 @@ importers:
         version: link:../../../packages/commons/fs-utils
       '@fern-fern/ir-sdk':
         specifier: ^58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
@@ -526,7 +532,7 @@ importers:
         version: 3.5.3
       tsup:
         specifier: ^8.3.5
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -568,13 +574,13 @@ importers:
         version: link:../../../packages/cli/logger
       '@fern-fern/generator-cli-sdk':
         specifier: 0.0.28
-        version: 0.0.28(encoding@0.1.13)
+        version: 0.0.28
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
-        version: 0.0.1045(encoding@0.1.13)
+        version: 0.0.1045
       '@fern-fern/ir-sdk':
         specifier: ^58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
@@ -607,7 +613,7 @@ importers:
         version: 3.5.3
       tsup:
         specifier: ^8.3.5
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -622,10 +628,13 @@ importers:
         version: 3.25.67
 
   generators/go-v2/ast:
-    dependencies:
+    devDependencies:
       '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*
         version: link:../../browser-compatible-base
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../packages/configs
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
@@ -634,14 +643,7 @@ importers:
         version: link:../../../packages/commons/path-utils
       '@fern-fern/ir-sdk':
         specifier: ^58.2.0
-        version: 58.2.0(encoding@0.1.13)
-      zod:
-        specifier: ^3.22.3
-        version: 3.25.67
-    devDependencies:
-      '@fern-api/configs':
-        specifier: workspace:*
-        version: link:../../../packages/configs
+        version: 58.2.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
@@ -666,15 +668,24 @@ importers:
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
+      zod:
+        specifier: ^3.22.3
+        version: 3.25.67
 
   generators/go-v2/base:
     devDependencies:
       '@fern-api/base-generator':
         specifier: workspace:*
         version: link:../../base
+      '@fern-api/browser-compatible-base-generator':
+        specifier: workspace:*
+        version: link:../../browser-compatible-base
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../packages/configs
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/core-utils
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
@@ -686,7 +697,7 @@ importers:
         version: link:../../../packages/commons/logging-execa
       '@fern-fern/ir-sdk':
         specifier: ^58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
@@ -710,7 +721,7 @@ importers:
         version: 3.5.3
       tsup:
         specifier: ^8.0.2
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -770,7 +781,7 @@ importers:
         version: 1.0.10
       tsup:
         specifier: ^8.3.5
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -817,9 +828,24 @@ importers:
 
   generators/go-v2/model:
     devDependencies:
+      '@fern-api/base-generator':
+        specifier: workspace:*
+        version: link:../../base
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../packages/configs
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/core-utils
+      '@fern-api/go-ast':
+        specifier: workspace:*
+        version: link:../ast
+      '@fern-api/go-base':
+        specifier: workspace:*
+        version: link:../base
+      '@fern-fern/ir-sdk':
+        specifier: ^58.2.0
+        version: 58.2.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
@@ -843,7 +869,7 @@ importers:
         version: 3.5.3
       tsup:
         specifier: ^8.0.2
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -882,13 +908,13 @@ importers:
         version: link:../../../packages/cli/logger
       '@fern-fern/generator-cli-sdk':
         specifier: 0.0.28
-        version: 0.0.28(encoding@0.1.13)
+        version: 0.0.28
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
-        version: 0.0.1045(encoding@0.1.13)
+        version: 0.0.1045
       '@fern-fern/ir-sdk':
         specifier: ^58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
@@ -915,7 +941,7 @@ importers:
         version: 3.5.3
       tsup:
         specifier: ^8.0.2
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -933,7 +959,7 @@ importers:
         version: link:../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
         specifier: ^58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       zod:
         specifier: ^3.22.3
         version: 3.25.67
@@ -982,7 +1008,7 @@ importers:
         version: link:../ast
       '@fern-fern/ir-sdk':
         specifier: ^58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -997,7 +1023,7 @@ importers:
         version: 3.5.3
       tsup:
         specifier: ^8.0.2
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -1060,7 +1086,7 @@ importers:
         version: 1.0.10
       tsup:
         specifier: ^8.3.5
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -1099,13 +1125,13 @@ importers:
         version: link:../../../packages/cli/logger
       '@fern-fern/generator-cli-sdk':
         specifier: 0.0.30
-        version: 0.0.30(encoding@0.1.13)
+        version: 0.0.30
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
-        version: 0.0.1045(encoding@0.1.13)
+        version: 0.0.1045
       '@fern-fern/ir-sdk':
         specifier: ^58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -1126,7 +1152,7 @@ importers:
         version: 3.5.3
       tsup:
         specifier: ^8.0.2
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -1192,7 +1218,7 @@ importers:
         version: 3.5.3
       tsup:
         specifier: ^8.3.5
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -1225,7 +1251,7 @@ importers:
         version: link:../codegen
       '@fern-fern/ir-sdk':
         specifier: ^58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
@@ -1255,7 +1281,7 @@ importers:
         version: 3.5.3
       tsup:
         specifier: ^8.0.2
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -1280,7 +1306,7 @@ importers:
         version: link:../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
         specifier: ^58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
@@ -1361,7 +1387,7 @@ importers:
         version: 1.0.10
       tsup:
         specifier: ^8.3.5
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -1388,7 +1414,7 @@ importers:
         version: link:../codegen
       '@fern-fern/ir-sdk':
         specifier: ^58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
@@ -1415,7 +1441,7 @@ importers:
         version: 3.5.3
       tsup:
         specifier: ^8.3.5
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -1457,13 +1483,13 @@ importers:
         version: link:../model
       '@fern-fern/generator-cli-sdk':
         specifier: 0.0.28
-        version: 0.0.28(encoding@0.1.13)
+        version: 0.0.28
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
-        version: 0.0.1045(encoding@0.1.13)
+        version: 0.0.1045
       '@fern-fern/ir-sdk':
         specifier: ^58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
@@ -1496,7 +1522,7 @@ importers:
         version: 3.5.3
       tsup:
         specifier: ^8.3.5
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -1526,7 +1552,7 @@ importers:
         version: 53.9.0
       '@fern-fern/postman-sdk':
         specifier: 0.1.1
-        version: 0.1.1(encoding@0.1.13)
+        version: 0.1.1
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
@@ -1562,7 +1588,7 @@ importers:
         version: 3.5.3
       tsup:
         specifier: ^8.3.5
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -1628,7 +1654,7 @@ importers:
         version: link:../browser-compatible-base
       '@fern-fern/ir-sdk':
         specifier: 58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -1752,7 +1778,7 @@ importers:
         version: 1.0.10
       tsup:
         specifier: ^8.3.5
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -1788,7 +1814,7 @@ importers:
         version: 3.5.3
       tsup:
         specifier: ^8.3.5
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -1854,10 +1880,10 @@ importers:
         version: link:../base
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
-        version: 0.0.1045(encoding@0.1.13)
+        version: 0.0.1045
       '@fern-fern/ir-sdk':
         specifier: 58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
@@ -1881,7 +1907,7 @@ importers:
         version: 3.5.3
       tsup:
         specifier: ^8.3.5
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -1908,13 +1934,13 @@ importers:
         version: link:../base
       '@fern-fern/generator-cli-sdk':
         specifier: 0.0.28
-        version: 0.0.28(encoding@0.1.13)
+        version: 0.0.28
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
-        version: 0.0.1045(encoding@0.1.13)
+        version: 0.0.1045
       '@fern-fern/ir-sdk':
         specifier: 58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
@@ -1938,7 +1964,7 @@ importers:
         version: 3.5.3
       tsup:
         specifier: ^8.0.2
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -1959,7 +1985,7 @@ importers:
         version: link:../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
         specifier: ^58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       zod:
         specifier: ^3.22.3
         version: 3.25.67
@@ -2008,7 +2034,7 @@ importers:
         version: link:../ast
       '@fern-fern/ir-sdk':
         specifier: ^58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
@@ -2035,7 +2061,7 @@ importers:
         version: 3.5.3
       tsup:
         specifier: ^8.0.2
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -2092,7 +2118,7 @@ importers:
         version: 1.0.10
       tsup:
         specifier: ^8.3.5
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -2128,7 +2154,7 @@ importers:
         version: 3.5.3
       tsup:
         specifier: ^8.0.2
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -2152,10 +2178,10 @@ importers:
         version: link:../base
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
-        version: 0.0.1045(encoding@0.1.13)
+        version: 0.0.1045
       '@fern-fern/ir-sdk':
         specifier: ^58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
@@ -2179,7 +2205,7 @@ importers:
         version: 3.5.3
       tsup:
         specifier: ^8.0.2
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -2246,7 +2272,7 @@ importers:
         version: link:../../../packages/commons/fs-utils
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
-        version: 0.0.1045(encoding@0.1.13)
+        version: 0.0.1045
       '@fern-fern/ir-sdk':
         specifier: ^39
         version: 39.0.0
@@ -2313,7 +2339,7 @@ importers:
         version: link:../cli
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
-        version: 0.0.1045(encoding@0.1.13)
+        version: 0.0.1045
       '@fern-fern/ir-sdk':
         specifier: ^39
         version: 39.0.0
@@ -2346,7 +2372,7 @@ importers:
         version: 9.5.2(typescript@5.7.2)(webpack@5.99.9(esbuild@0.25.5))
       tsup:
         specifier: ^8.3.5
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -2382,7 +2408,7 @@ importers:
         version: link:../cli
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
-        version: 0.0.1045(encoding@0.1.13)
+        version: 0.0.1045
       '@fern-fern/ir-sdk':
         specifier: ^39
         version: 39.0.0
@@ -2412,7 +2438,7 @@ importers:
         version: 3.5.3
       tsup:
         specifier: ^8.3.5
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -2422,33 +2448,6 @@ importers:
       zod:
         specifier: ^3.22.3
         version: 3.25.67
-
-  generators/rust/ast:
-    devDependencies:
-      '@fern-api/configs':
-        specifier: workspace:*
-        version: link:../../../packages/configs
-      '@trivago/prettier-plugin-sort-imports':
-        specifier: ^5.2.1
-        version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
-      '@types/node':
-        specifier: 18.15.3
-        version: 18.15.3
-      depcheck:
-        specifier: ^1.4.7
-        version: 1.4.7
-      eslint:
-        specifier: ^8.56.0
-        version: 8.57.1
-      prettier:
-        specifier: ^3.4.2
-        version: 3.5.3
-      typescript:
-        specifier: 5.7.2
-        version: 5.7.2
-      vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
 
   generators/rust/base:
     dependencies:
@@ -2460,7 +2459,7 @@ importers:
         version: link:../../../packages/commons/fs-utils
       '@fern-fern/ir-sdk':
         specifier: 58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       zod:
         specifier: ^3.22.4
         version: 3.25.76
@@ -2490,6 +2489,25 @@ importers:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
 
+  generators/rust/codegen:
+    dependencies:
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../packages/configs
+    devDependencies:
+      '@types/node':
+        specifier: ^18.7.18
+        version: 18.15.3
+      depcheck:
+        specifier: ^1.4.6
+        version: 1.4.7
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+      vitest:
+        specifier: ^2.0.5
+        version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.89.2)(terser@5.43.1)
+
   generators/rust/model:
     devDependencies:
       '@fern-api/base-generator':
@@ -2498,21 +2516,27 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../packages/configs
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/core-utils
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
-      '@fern-api/rust-ast':
-        specifier: workspace:*
-        version: link:../ast
       '@fern-api/rust-base':
         specifier: workspace:*
         version: link:../base
+      '@fern-api/rust-codegen':
+        specifier: workspace:*
+        version: link:../codegen
+      '@fern-api/test-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/test-utils
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
-        version: 0.0.1045(encoding@0.1.13)
+        version: 0.0.1045
       '@fern-fern/ir-sdk':
         specifier: 58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
@@ -2536,7 +2560,7 @@ importers:
         version: 3.5.3
       tsup:
         specifier: ^8.0.2
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -2566,13 +2590,13 @@ importers:
         version: link:../base
       '@fern-fern/generator-cli-sdk':
         specifier: 0.0.28
-        version: 0.0.28(encoding@0.1.13)
+        version: 0.0.28
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
-        version: 0.0.1045(encoding@0.1.13)
+        version: 0.0.1045
       '@fern-fern/ir-sdk':
         specifier: 58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
@@ -2596,7 +2620,7 @@ importers:
         version: 3.5.3
       tsup:
         specifier: ^8.0.2
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -2629,7 +2653,7 @@ importers:
         version: link:../codegen
       '@fern-fern/ir-sdk':
         specifier: ^58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
@@ -2662,7 +2686,7 @@ importers:
         version: 3.3.1
       tsup:
         specifier: ^8.0.2
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -2732,7 +2756,7 @@ importers:
         version: link:../base
       '@fern-fern/ir-sdk':
         specifier: ^58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -2778,7 +2802,7 @@ importers:
         version: 3.3.1
       tsup:
         specifier: ^8.3.5
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -2815,15 +2839,18 @@ importers:
       '@fern-api/swift-model':
         specifier: workspace:*
         version: link:../model
+      '@fern-api/test-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/test-utils
       '@fern-fern/generator-cli-sdk':
         specifier: 0.0.28
-        version: 0.0.28(encoding@0.1.13)
+        version: 0.0.28
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
-        version: 0.0.1045(encoding@0.1.13)
+        version: 0.0.1045
       '@fern-fern/ir-sdk':
         specifier: ^58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
@@ -2859,7 +2886,7 @@ importers:
         version: 3.3.1
       tsup:
         specifier: ^8.3.5
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -2892,7 +2919,7 @@ importers:
         version: link:../../typescript-v2/formatter
       '@fern-fern/ir-sdk':
         specifier: ^58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
@@ -2922,7 +2949,7 @@ importers:
         version: 3.5.3
       tsup:
         specifier: ^8.0.2
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -2949,7 +2976,7 @@ importers:
         version: link:../base
       '@fern-fern/ir-sdk':
         specifier: ^58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
@@ -2976,7 +3003,7 @@ importers:
         version: 3.5.3
       tsup:
         specifier: ^8.3.5
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -3006,10 +3033,10 @@ importers:
         version: link:../model
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
-        version: 0.0.1045(encoding@0.1.13)
+        version: 0.0.1045
       '@fern-fern/ir-sdk':
         specifier: ^58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@fern-typescript/sdk-generator-cli':
         specifier: workspace:*
         version: link:../../typescript/sdk/cli
@@ -3039,7 +3066,7 @@ importers:
         version: 3.5.3
       tsup:
         specifier: ^8.3.5
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -3064,7 +3091,7 @@ importers:
         version: link:../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
         specifier: 58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
@@ -3118,7 +3145,7 @@ importers:
         version: 3.5.3
       tsup:
         specifier: ^8.0.2
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -3133,7 +3160,7 @@ importers:
         version: link:../../../packages/configs
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
-        version: 0.0.1045(encoding@0.1.13)
+        version: 0.0.1045
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
@@ -3160,7 +3187,7 @@ importers:
         version: 3.5.3
       tsup:
         specifier: ^8.0.2
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -3220,7 +3247,7 @@ importers:
         version: 1.0.10
       tsup:
         specifier: ^8.3.5
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -3275,10 +3302,10 @@ importers:
         version: link:../../../../packages/configs
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
-        version: 0.0.1045(encoding@0.1.13)
+        version: 0.0.1045
       '@fern-fern/ir-sdk':
         specifier: 58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@fern-typescript/abstract-generator-cli':
         specifier: workspace:*
         version: link:../../utils/abstract-generator-cli
@@ -3326,7 +3353,7 @@ importers:
         version: 9.5.2(typescript@5.7.2)(webpack@5.99.9)
       tsup:
         specifier: ^8.3.5
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -3344,7 +3371,7 @@ importers:
         version: link:../../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
         specifier: 58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@fern-typescript/abstract-schema-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-schema-generator
@@ -3390,7 +3417,7 @@ importers:
     dependencies:
       '@fern-fern/ir-sdk':
         specifier: 58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@fern-typescript/abstract-error-class-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-error-class-generator
@@ -3439,7 +3466,7 @@ importers:
         version: link:../../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
         specifier: 58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@fern-typescript/abstract-schema-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-schema-generator
@@ -3485,7 +3512,7 @@ importers:
     dependencies:
       '@fern-fern/ir-sdk':
         specifier: 58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -3525,7 +3552,7 @@ importers:
     dependencies:
       '@fern-fern/ir-sdk':
         specifier: 58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@fern-typescript/abstract-schema-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-schema-generator
@@ -3571,7 +3598,7 @@ importers:
     dependencies:
       '@fern-fern/ir-sdk':
         specifier: 58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -3623,7 +3650,7 @@ importers:
     dependencies:
       '@fern-fern/ir-sdk':
         specifier: 58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -3678,7 +3705,7 @@ importers:
         version: link:../../../../packages/cli/logger
       '@fern-fern/ir-sdk':
         specifier: 58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -3803,7 +3830,7 @@ importers:
     dependencies:
       '@fern-fern/ir-sdk':
         specifier: 58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -3852,7 +3879,7 @@ importers:
         version: link:../../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
         specifier: 58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -3898,7 +3925,7 @@ importers:
         version: link:../../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
         specifier: 58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -3941,7 +3968,7 @@ importers:
     dependencies:
       '@fern-fern/ir-sdk':
         specifier: 58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@fern-typescript/abstract-schema-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-schema-generator
@@ -3993,7 +4020,7 @@ importers:
         version: link:../../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
         specifier: 58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -4036,7 +4063,7 @@ importers:
     dependencies:
       '@fern-fern/ir-sdk':
         specifier: 58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@fern-typescript/abstract-schema-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-schema-generator
@@ -4088,7 +4115,7 @@ importers:
         version: 3.7.7
       node-fetch:
         specifier: 2.7.0
-        version: 2.7.0(encoding@0.1.13)
+        version: 2.7.0
       qs:
         specifier: 6.12.1
         version: 6.12.1
@@ -4176,7 +4203,7 @@ importers:
         version: link:../../../typescript-v2/base
       '@fern-fern/ir-sdk':
         specifier: 58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@fern-typescript/abstract-generator-cli':
         specifier: workspace:*
         version: link:../../utils/abstract-generator-cli
@@ -4218,7 +4245,7 @@ importers:
         version: 9.5.2(typescript@5.7.2)(webpack@5.99.9)
       tsup:
         specifier: ^8.3.5
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -4233,7 +4260,7 @@ importers:
         version: link:../../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
         specifier: 58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -4288,7 +4315,7 @@ importers:
     dependencies:
       '@fern-fern/ir-sdk':
         specifier: 58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -4337,7 +4364,7 @@ importers:
     dependencies:
       '@fern-fern/ir-sdk':
         specifier: 58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -4395,16 +4422,16 @@ importers:
         version: link:../../../typescript-v2/ast
       '@fern-fern/generator-cli-sdk':
         specifier: 0.0.28
-        version: 0.0.28(encoding@0.1.13)
+        version: 0.0.28
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
-        version: 0.0.1045(encoding@0.1.13)
+        version: 0.0.1045
       '@fern-fern/ir-sdk':
         specifier: 58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@fern-fern/snippet-sdk':
         specifier: ^0.0.6434
-        version: 0.0.6434(encoding@0.1.13)
+        version: 0.0.6434
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -4565,7 +4592,7 @@ importers:
         version: link:../../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
         specifier: 58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -4611,7 +4638,7 @@ importers:
         version: link:../../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
         specifier: 58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@fern-typescript/abstract-schema-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-schema-generator
@@ -4663,7 +4690,7 @@ importers:
     dependencies:
       '@fern-fern/ir-sdk':
         specifier: 58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@fern-typescript/abstract-error-class-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-error-class-generator
@@ -4712,7 +4739,7 @@ importers:
         version: link:../../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
         specifier: 58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@fern-typescript/abstract-schema-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-schema-generator
@@ -4758,7 +4785,7 @@ importers:
     dependencies:
       '@fern-fern/ir-sdk':
         specifier: 58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@fern-typescript/abstract-schema-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-schema-generator
@@ -4804,7 +4831,7 @@ importers:
     dependencies:
       '@fern-fern/ir-sdk':
         specifier: 58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@fern-typescript/abstract-schema-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-schema-generator
@@ -4902,10 +4929,10 @@ importers:
         version: link:../../../../packages/cli/logger
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
-        version: 0.0.1045(encoding@0.1.13)
+        version: 0.0.1045
       '@fern-fern/ir-sdk':
         specifier: 58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../commons
@@ -5000,7 +5027,7 @@ importers:
         version: link:../../../typescript-v2/base
       '@fern-fern/ir-sdk':
         specifier: 58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       decompress:
         specifier: ^4.2.1
         version: 4.2.1
@@ -5088,10 +5115,10 @@ importers:
         version: link:../../../../packages/cli/logger
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
-        version: 0.0.1045(encoding@0.1.13)
+        version: 0.0.1045
       '@fern-fern/ir-sdk':
         specifier: 58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../commons
@@ -5131,7 +5158,7 @@ importers:
     dependencies:
       '@fern-fern/ir-sdk':
         specifier: 58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../commons
@@ -5828,7 +5855,7 @@ importers:
         version: link:../task-context
       '@fern-api/venus-api-sdk':
         specifier: 0.14.3-1-g14981f0
-        version: 0.14.3-1-g14981f0(encoding@0.1.13)
+        version: 0.14.3-1-g14981f0
       jsonwebtoken:
         specifier: ^9.0.2
         version: 9.0.2
@@ -6000,16 +6027,16 @@ importers:
         version: link:../task-context
       '@fern-api/venus-api-sdk':
         specifier: 0.14.3-1-g14981f0
-        version: 0.14.3-1-g14981f0(encoding@0.1.13)
+        version: 0.14.3-1-g14981f0
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../workspace/loader
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
-        version: 0.0.584(encoding@0.1.13)
+        version: 0.0.584
       '@fern-fern/generators-sdk':
         specifier: 0.114.0-5745f9e74
-        version: 0.114.0-5745f9e74(encoding@0.1.13)
+        version: 0.114.0-5745f9e74
       '@inquirer/prompts':
         specifier: ^7.1.0
         version: 7.5.3(@types/node@18.15.3)
@@ -6117,7 +6144,7 @@ importers:
         version: 3.0.3
       tsup:
         specifier: ^8.3.5
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -6312,10 +6339,10 @@ importers:
         version: link:../../commons/path-utils
       '@fern-fern/fdr-cjs-sdk':
         specifier: 0.138.7-64da60a6a
-        version: 0.138.7-64da60a6a(encoding@0.1.13)
+        version: 0.138.7-64da60a6a
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
-        version: 0.0.584(encoding@0.1.13)
+        version: 0.0.584
       zod:
         specifier: ^3.22.3
         version: 3.25.67
@@ -6367,13 +6394,13 @@ importers:
         version: link:../task-context
       '@fern-fern/fdr-cjs-sdk':
         specifier: 0.138.7-64da60a6a
-        version: 0.138.7-64da60a6a(encoding@0.1.13)
+        version: 0.138.7-64da60a6a
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
-        version: 0.0.584(encoding@0.1.13)
+        version: 0.0.584
       '@fern-fern/generators-sdk':
         specifier: 0.114.0-5745f9e74
-        version: 0.114.0-5745f9e74(encoding@0.1.13)
+        version: 0.114.0-5745f9e74
       find-up:
         specifier: ^6.3.0
         version: 6.3.0
@@ -6452,7 +6479,7 @@ importers:
         version: link:../../task-context
       '@fern-fern/fdr-cjs-sdk':
         specifier: 0.138.7-64da60a6a
-        version: 0.138.7-64da60a6a(encoding@0.1.13)
+        version: 0.138.7-64da60a6a
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
@@ -6507,7 +6534,7 @@ importers:
         version: link:../../task-context
       '@fern-fern/fdr-cjs-sdk':
         specifier: 0.138.7-64da60a6a
-        version: 0.138.7-64da60a6a(encoding@0.1.13)
+        version: 0.138.7-64da60a6a
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
@@ -6559,7 +6586,7 @@ importers:
         version: link:../../task-context
       '@fern-fern/fdr-cjs-sdk':
         specifier: 0.138.7-64da60a6a
-        version: 0.138.7-64da60a6a(encoding@0.1.13)
+        version: 0.138.7-64da60a6a
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
@@ -6571,7 +6598,7 @@ importers:
         version: 3.2.0
       puppeteer:
         specifier: ^19.7.2
-        version: 19.11.1(encoding@0.1.13)(typescript@5.7.2)
+        version: 19.11.1(typescript@5.7.2)
       rehype-parse:
         specifier: ^9.0.0
         version: 9.0.1
@@ -6635,7 +6662,7 @@ importers:
         version: link:../task-context
       '@fern-fern/fdr-cjs-sdk':
         specifier: 0.138.7-64da60a6a
-        version: 0.138.7-64da60a6a(encoding@0.1.13)
+        version: 0.138.7-64da60a6a
       estree-walker:
         specifier: ^3.0.3
         version: 3.0.3
@@ -6726,7 +6753,7 @@ importers:
         version: link:../docs-resolver
       '@fern-api/fdr-sdk':
         specifier: 0.138.7-64da60a6a
-        version: 0.138.7-64da60a6a(encoding@0.1.13)(typescript@5.7.2)
+        version: 0.138.7-64da60a6a(typescript@5.7.2)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -6844,7 +6871,7 @@ importers:
         version: 0.0.65(typescript@5.7.2)
       '@fern-api/fdr-sdk':
         specifier: 0.138.7-64da60a6a
-        version: 0.138.7-64da60a6a(encoding@0.1.13)(typescript@5.7.2)
+        version: 0.138.7-64da60a6a(typescript@5.7.2)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -6871,7 +6898,7 @@ importers:
         version: 0.129.4-b6c699ad2
       '@fern-fern/fdr-cjs-sdk':
         specifier: 0.138.7-64da60a6a
-        version: 0.138.7-64da60a6a(encoding@0.1.13)
+        version: 0.138.7-64da60a6a
       '@open-rpc/meta-schema':
         specifier: ^1.14.9
         version: 1.14.9
@@ -6947,7 +6974,7 @@ importers:
         version: link:../../commons/logging-execa
       '@fern-fern/fdr-cjs-sdk':
         specifier: 0.138.7-64da60a6a
-        version: 0.138.7-64da60a6a(encoding@0.1.13)
+        version: 0.138.7-64da60a6a
       execa:
         specifier: ^5.1.1
         version: 5.1.1
@@ -6959,7 +6986,7 @@ importers:
         version: 4.1.0
       node-fetch:
         specifier: 2.7.0
-        version: 2.7.0(encoding@0.1.13)
+        version: 2.7.0
       openapi-types:
         specifier: ^12.1.3
         version: 12.1.3
@@ -7321,7 +7348,7 @@ importers:
         version: 1.0.10
       tsup:
         specifier: ^8.3.5
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -7583,7 +7610,7 @@ importers:
         version: 0.0.1
       '@fern-fern/ir-v57-sdk':
         specifier: 0.0.2
-        version: 0.0.2(encoding@0.1.13)
+        version: 0.0.2
       '@fern-fern/ir-v6-model':
         specifier: 0.0.33
         version: 0.0.33
@@ -7735,7 +7762,7 @@ importers:
         version: link:../../../../../generators/python-v2/dynamic-snippets
       '@fern-api/sdk':
         specifier: 0.12.3
-        version: 0.12.3(encoding@0.1.13)
+        version: 0.12.3
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../../task-context
@@ -7744,16 +7771,16 @@ importers:
         version: link:../../../../../generators/typescript-v2/dynamic-snippets
       '@fern-api/venus-api-sdk':
         specifier: 0.14.3-1-g14981f0
-        version: 0.14.3-1-g14981f0(encoding@0.1.13)
+        version: 0.14.3-1-g14981f0
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../../../workspace/loader
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
-        version: 0.0.584(encoding@0.1.13)
+        version: 0.0.584
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
-        version: 0.0.1045(encoding@0.1.13)
+        version: 0.0.1045
       chalk:
         specifier: ^5.3.0
         version: 5.4.1
@@ -7919,10 +7946,10 @@ importers:
         version: link:../../../workspace/loader
       '@fern-fern/fdr-cjs-sdk':
         specifier: 0.138.7-64da60a6a
-        version: 0.138.7-64da60a6a(encoding@0.1.13)
+        version: 0.138.7-64da60a6a
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
-        version: 0.0.584(encoding@0.1.13)
+        version: 0.0.584
       axios:
         specifier: ^1.8.2
         version: 1.10.0
@@ -8428,7 +8455,7 @@ importers:
         version: link:../task-context
       '@fern-fern/fdr-cjs-sdk':
         specifier: 0.138.7-64da60a6a
-        version: 0.138.7-64da60a6a(encoding@0.1.13)
+        version: 0.138.7-64da60a6a
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -8724,7 +8751,7 @@ importers:
         version: link:../../api-importers/v2-importer-commons
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
-        version: 0.0.584(encoding@0.1.13)
+        version: 0.0.584
       '@open-rpc/meta-schema':
         specifier: ^1.14.9
         version: 1.14.9
@@ -8754,7 +8781,7 @@ importers:
         version: 12.1.3
       swagger2openapi:
         specifier: 7.0.8
-        version: 7.0.8(encoding@0.1.13)
+        version: 7.0.8
       tar:
         specifier: ^6.2.1
         version: 6.2.1
@@ -8952,7 +8979,7 @@ importers:
         version: link:../../docs-resolver
       '@fern-api/fdr-sdk':
         specifier: 0.138.7-64da60a6a
-        version: 0.138.7-64da60a6a(encoding@0.1.13)(typescript@5.7.2)
+        version: 0.138.7-64da60a6a(typescript@5.7.2)
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../../fern-definition/schema
@@ -9479,7 +9506,7 @@ importers:
         version: link:../../cli/workspace/loader
       '@fern-fern/ir-sdk':
         specifier: ^58.2.0
-        version: 58.2.0(encoding@0.1.13)
+        version: 58.2.0
     devDependencies:
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
@@ -9512,19 +9539,19 @@ importers:
     dependencies:
       '@fern-api/venus-api-sdk':
         specifier: 0.14.3-1-g14981f0
-        version: 0.14.3-1-g14981f0(encoding@0.1.13)
+        version: 0.14.3-1-g14981f0
       '@fern-fern/fdr-cjs-sdk':
         specifier: 0.138.7-64da60a6a
-        version: 0.138.7-64da60a6a(encoding@0.1.13)
+        version: 0.138.7-64da60a6a
       '@fern-fern/fdr-test-sdk':
         specifier: ^0.0.5297
-        version: 0.0.5297(encoding@0.1.13)
+        version: 0.0.5297
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
-        version: 0.0.584(encoding@0.1.13)
+        version: 0.0.584
       '@fern-fern/generators-sdk':
         specifier: 0.114.0-5745f9e74
-        version: 0.114.0-5745f9e74(encoding@0.1.13)
+        version: 0.114.0-5745f9e74
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -9618,7 +9645,7 @@ importers:
         version: 3.5.3
       tsup:
         specifier: ^8.0.2
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -9672,13 +9699,13 @@ importers:
         version: link:../cli/workspace/loader
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
-        version: 0.0.584(encoding@0.1.13)
+        version: 0.0.584
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
-        version: 0.0.1045(encoding@0.1.13)
+        version: 0.0.1045
       '@fern-fern/generators-sdk':
         specifier: 0.114.0-5745f9e74
-        version: 0.114.0-5745f9e74(encoding@0.1.13)
+        version: 0.114.0-5745f9e74
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.2(@vue/compiler-sfc@3.5.17)(prettier@3.5.3)
@@ -9747,7 +9774,7 @@ importers:
         version: 3.0.3
       tsup:
         specifier: ^8.3.5
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -9816,7 +9843,7 @@ importers:
         version: 1.0.10
       tsup:
         specifier: ^8.3.5
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3)
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3)
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -13257,6 +13284,11 @@ packages:
   create-require@1.1.1:
     resolution: {integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==}
 
+  cross-env@7.0.3:
+    resolution: {integrity: sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==}
+    engines: {node: '>=10.14', npm: '>=6', yarn: '>=1'}
+    hasBin: true
+
   cross-fetch@3.1.5:
     resolution: {integrity: sha512-lvb1SBsI0Z7GDwmuid+mU3kWVBwTVUbe7S0H52yaaAdQOXq2YktTCZdlAcNKFzE6QtRz0snpw9bNiPeOIkkQvw==}
 
@@ -13593,9 +13625,6 @@ packages:
   encodeurl@2.0.0:
     resolution: {integrity: sha512-Q0n9HRi4m6JuGIV1eFlmvJB7ZEVxu93IrMyiMsGC0lrMJMWzRgx6WGquyfQgZVb31vhGgXnfmPNNXmxnOkRBrg==}
     engines: {node: '>= 0.8'}
-
-  encoding@0.1.13:
-    resolution: {integrity: sha512-ETBauow1T35Y/WZMkio9jiM0Z5xjHHmJ4XmjZOq1l/dXz3lr2sRn87nJy20RupqSh1F2m3HHPSp8ShIPQJrJ3A==}
 
   end-of-stream@1.4.5:
     resolution: {integrity: sha512-ooEGc6HP26xXq/N+GCGOT0JKCLDGrq2bQUZrQ7gyrJiZANJ/8YDTxTpQBXGMn+WbIQXNVpyWymm7KYVICQnyOg==}
@@ -14198,6 +14227,9 @@ packages:
   get-symbol-description@1.1.0:
     resolution: {integrity: sha512-w9UMqWwJxHNOvoNzSJ2oPF5wvYcvP7jUvYzhp67yEhTi17ZDBBC1z9pTdGuzjD+EFIqLSYRweZjqfiPzQ06Ebg==}
     engines: {node: '>= 0.4'}
+
+  get-tsconfig@4.10.1:
+    resolution: {integrity: sha512-auHyJ4AgMz7vgS8Hp3N6HXSmlMdUyhSUrfBF16w153rxtLIEOE+HGqaBppczZvnHLqQJfiHotCYpNhl0lUROFQ==}
 
   git-hooks-list@4.1.1:
     resolution: {integrity: sha512-cmP497iLq54AZnv4YRAEMnEyQ1eIn4tGKbmswqwmFV4GBnAqE8NLtWxxdXa++AalfgL5EBH4IxTPyquEuGY/jA==}
@@ -16324,6 +16356,9 @@ packages:
     resolution: {integrity: sha512-qYg9KP24dD5qka9J47d0aVky0N+b4fTU89LN9iDnjB5waksiC49rvMB0PrUJQGoTmH50XPiqOvAjDfaijGxYZw==}
     engines: {node: '>=8'}
 
+  resolve-pkg-maps@1.0.0:
+    resolution: {integrity: sha512-seS2Tj26TBVOC2NIc2rOe2y2ZO7efxITtLZcGSOnHHNOQ7CkiUBfw0Iw2ck6xkIhPwLhKNLS8BO+hEpngQlqzw==}
+
   resolve@1.22.10:
     resolution: {integrity: sha512-NPRy+/ncIMeDlTAsuqwKIiferiawhefFJtkNSW0qZJEqMEb+qBt/77B/jGeeek+F0uOeN05CDa6HXbbIgtVX4w==}
     engines: {node: '>= 0.4'}
@@ -17072,6 +17107,11 @@ packages:
     engines: {node: '>= 6'}
     peerDependencies:
       typescript: '>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta'
+
+  tsx@4.20.3:
+    resolution: {integrity: sha512-qjbnuR9Tr+FJOMBqJCW5ehvIo/buZq7vH7qD7JziU98h6l3qGy0a/yPFjwO+y0/T7GFpNgNAvEcPPVfyT8rrPQ==}
+    engines: {node: '>=18.0.0'}
+    hasBin: true
 
   turbo-darwin-64@2.5.4:
     resolution: {integrity: sha512-ah6YnH2dErojhFooxEzmvsoZQTMImaruZhFPfMKPBq8sb+hALRdvBNLqfc8NWlZq576FkfRZ/MSi4SHvVFT9PQ==}
@@ -19027,7 +19067,7 @@ snapshots:
 
   '@fern-api/dynamic-ir-sdk@58.2.0': {}
 
-  '@fern-api/fdr-sdk@0.138.7-64da60a6a(encoding@0.1.13)(typescript@5.7.2)':
+  '@fern-api/fdr-sdk@0.138.7-64da60a6a(typescript@5.7.2)':
     dependencies:
       '@fern-api/ui-core-utils': 0.138.7-64da60a6a
       '@ungap/structured-clone': 1.3.0
@@ -19038,7 +19078,7 @@ snapshots:
       form-data: 4.0.0
       httpsnippet-lite: 3.0.5
       js-base64: 3.7.7
-      node-fetch: 2.7.0(encoding@0.1.13)
+      node-fetch: 2.7.0
       qs: 6.12.0
       tinycolor2: 1.6.0
       ts-essentials: 10.1.1(typescript@5.7.2)
@@ -19052,13 +19092,13 @@ snapshots:
       '@fern-api/core-utils': 0.4.24-rc1
       chalk: 5.4.1
 
-  '@fern-api/sdk@0.12.3(encoding@0.1.13)':
+  '@fern-api/sdk@0.12.3':
     dependencies:
       '@fern-api/template-resolver': 0.7.5
       form-data: 4.0.0
       formdata-node: 6.0.3
       js-base64: 3.7.2
-      node-fetch: 2.7.0(encoding@0.1.13)
+      node-fetch: 2.7.0
       qs: 6.11.2
       url-join: 4.0.1
     transitivePeerDependencies:
@@ -19090,12 +19130,12 @@ snapshots:
       title: 3.5.3
       ua-parser-js: 1.0.40
 
-  '@fern-api/venus-api-sdk@0.14.3-1-g14981f0(encoding@0.1.13)':
+  '@fern-api/venus-api-sdk@0.14.3-1-g14981f0':
     dependencies:
       form-data: 4.0.1
       formdata-node: 6.0.3
       js-base64: 3.7.7
-      node-fetch: 2.7.0(encoding@0.1.13)
+      node-fetch: 2.7.0
       qs: 6.14.0
       readable-stream: 4.7.0
       url-join: 4.0.1
@@ -19104,73 +19144,73 @@ snapshots:
 
   '@fern-fern/docs-config@0.0.80': {}
 
-  '@fern-fern/fdr-cjs-sdk@0.138.7-64da60a6a(encoding@0.1.13)':
+  '@fern-fern/fdr-cjs-sdk@0.138.7-64da60a6a':
     dependencies:
       form-data: 4.0.1
       formdata-node: 6.0.3
       js-base64: 3.7.7
-      node-fetch: 2.7.0(encoding@0.1.13)
+      node-fetch: 2.7.0
       qs: 6.14.0
       readable-stream: 4.7.0
       url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
 
-  '@fern-fern/fdr-test-sdk@0.0.5297(encoding@0.1.13)':
+  '@fern-fern/fdr-test-sdk@0.0.5297':
     dependencies:
       form-data: 4.0.0
       js-base64: 3.7.2
-      node-fetch: 2.7.0(encoding@0.1.13)
+      node-fetch: 2.7.0
       qs: 6.11.2
       url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
 
-  '@fern-fern/fiddle-sdk@0.0.584(encoding@0.1.13)':
+  '@fern-fern/fiddle-sdk@0.0.584':
     dependencies:
       form-data: 4.0.0
       js-base64: 3.7.2
-      node-fetch: 2.7.0(encoding@0.1.13)
+      node-fetch: 2.7.0
       qs: 6.11.2
       url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
 
-  '@fern-fern/generator-cli-sdk@0.0.28(encoding@0.1.13)':
+  '@fern-fern/generator-cli-sdk@0.0.28':
     dependencies:
       form-data: 4.0.1
       formdata-node: 6.0.3
-      node-fetch: 2.7.0(encoding@0.1.13)
+      node-fetch: 2.7.0
       qs: 6.14.0
       readable-stream: 4.7.0
     transitivePeerDependencies:
       - encoding
 
-  '@fern-fern/generator-cli-sdk@0.0.30(encoding@0.1.13)':
+  '@fern-fern/generator-cli-sdk@0.0.30':
     dependencies:
       form-data: 4.0.1
       formdata-node: 6.0.3
-      node-fetch: 2.7.0(encoding@0.1.13)
+      node-fetch: 2.7.0
       qs: 6.14.0
       readable-stream: 4.7.0
     transitivePeerDependencies:
       - encoding
 
-  '@fern-fern/generator-exec-sdk@0.0.1045(encoding@0.1.13)':
+  '@fern-fern/generator-exec-sdk@0.0.1045':
     dependencies:
       form-data: 4.0.0
-      node-fetch: 2.7.0(encoding@0.1.13)
+      node-fetch: 2.7.0
       qs: 6.11.2
       url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
 
-  '@fern-fern/generators-sdk@0.114.0-5745f9e74(encoding@0.1.13)':
+  '@fern-fern/generators-sdk@0.114.0-5745f9e74':
     dependencies:
       form-data: 4.0.1
       formdata-node: 6.0.3
       js-base64: 3.7.2
-      node-fetch: 2.7.0(encoding@0.1.13)
+      node-fetch: 2.7.0
       qs: 6.11.2
       readable-stream: 4.7.0
       url-join: 4.0.1
@@ -19181,11 +19221,11 @@ snapshots:
 
   '@fern-fern/ir-sdk@53.9.0': {}
 
-  '@fern-fern/ir-sdk@58.2.0(encoding@0.1.13)':
+  '@fern-fern/ir-sdk@58.2.0':
     dependencies:
       form-data: 4.0.1
       formdata-node: 6.0.3
-      node-fetch: 2.7.0(encoding@0.1.13)
+      node-fetch: 2.7.0
       qs: 6.14.0
       readable-stream: 4.7.0
     transitivePeerDependencies:
@@ -19295,11 +19335,11 @@ snapshots:
 
   '@fern-fern/ir-v56-sdk@0.0.1': {}
 
-  '@fern-fern/ir-v57-sdk@0.0.2(encoding@0.1.13)':
+  '@fern-fern/ir-v57-sdk@0.0.2':
     dependencies:
       form-data: 4.0.1
       formdata-node: 6.0.3
-      node-fetch: 2.7.0(encoding@0.1.13)
+      node-fetch: 2.7.0
       qs: 6.14.0
       readable-stream: 4.7.0
     transitivePeerDependencies:
@@ -19315,21 +19355,21 @@ snapshots:
 
   '@fern-fern/legacy-docs-config@0.0.58': {}
 
-  '@fern-fern/postman-sdk@0.1.1(encoding@0.1.13)':
+  '@fern-fern/postman-sdk@0.1.1':
     dependencies:
       form-data: 4.0.1
       formdata-node: 6.0.3
-      node-fetch: 2.7.0(encoding@0.1.13)
+      node-fetch: 2.7.0
       qs: 6.11.2
       url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
 
-  '@fern-fern/snippet-sdk@0.0.6434(encoding@0.1.13)':
+  '@fern-fern/snippet-sdk@0.0.6434':
     dependencies:
       form-data: 4.0.0
       js-base64: 3.7.2
-      node-fetch: 2.7.0(encoding@0.1.13)
+      node-fetch: 2.7.0
       qs: 6.11.2
       url-join: 4.0.1
     transitivePeerDependencies:
@@ -21479,9 +21519,13 @@ snapshots:
 
   create-require@1.1.1: {}
 
-  cross-fetch@3.1.5(encoding@0.1.13):
+  cross-env@7.0.3:
     dependencies:
-      node-fetch: 2.6.7(encoding@0.1.13)
+      cross-spawn: 7.0.5
+
+  cross-fetch@3.1.5:
+    dependencies:
+      node-fetch: 2.6.7
     transitivePeerDependencies:
       - encoding
 
@@ -21839,11 +21883,6 @@ snapshots:
   encodeurl@1.0.2: {}
 
   encodeurl@2.0.0: {}
-
-  encoding@0.1.13:
-    dependencies:
-      iconv-lite: 0.6.3
-    optional: true
 
   end-of-stream@1.4.5:
     dependencies:
@@ -22713,6 +22752,10 @@ snapshots:
       call-bound: 1.0.4
       es-errors: 1.3.0
       get-intrinsic: 1.3.0
+
+  get-tsconfig@4.10.1:
+    dependencies:
+      resolve-pkg-maps: 1.0.0
 
   git-hooks-list@4.1.1: {}
 
@@ -24734,17 +24777,13 @@ snapshots:
     dependencies:
       http2-client: 1.3.5
 
-  node-fetch@2.6.7(encoding@0.1.13):
+  node-fetch@2.6.7:
     dependencies:
       whatwg-url: 14.2.0
-    optionalDependencies:
-      encoding: 0.1.13
 
-  node-fetch@2.7.0(encoding@0.1.13):
+  node-fetch@2.7.0:
     dependencies:
       whatwg-url: 14.2.0
-    optionalDependencies:
-      encoding: 0.1.13
 
   node-int64@0.4.0: {}
 
@@ -25088,12 +25127,13 @@ snapshots:
       postcss: 8.5.6
       ts-node: 10.9.2(@types/node@18.15.3)(typescript@5.7.2)
 
-  postcss-load-config@6.0.1(jiti@1.21.7)(postcss@8.5.6)(yaml@2.3.3):
+  postcss-load-config@6.0.1(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(yaml@2.3.3):
     dependencies:
       lilconfig: 3.1.3
     optionalDependencies:
       jiti: 1.21.7
       postcss: 8.5.6
+      tsx: 4.20.3
       yaml: 2.3.3
 
   postcss-media-query-parser@0.2.3: {}
@@ -25203,11 +25243,11 @@ snapshots:
 
   punycode@2.3.1: {}
 
-  puppeteer-core@19.11.1(encoding@0.1.13)(typescript@5.7.2):
+  puppeteer-core@19.11.1(typescript@5.7.2):
     dependencies:
       '@puppeteer/browsers': 0.5.0(typescript@5.7.2)
       chromium-bidi: 0.4.7(devtools-protocol@0.0.1107588)
-      cross-fetch: 3.1.5(encoding@0.1.13)
+      cross-fetch: 3.1.5
       debug: 4.3.4
       devtools-protocol: 0.0.1107588
       extract-zip: 2.0.1
@@ -25224,14 +25264,14 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  puppeteer@19.11.1(encoding@0.1.13)(typescript@5.7.2):
+  puppeteer@19.11.1(typescript@5.7.2):
     dependencies:
       '@puppeteer/browsers': 0.5.0(typescript@5.7.2)
       cosmiconfig: 8.1.3
       https-proxy-agent: 5.0.1
       progress: 2.0.3
       proxy-from-env: 1.1.0
-      puppeteer-core: 19.11.1(encoding@0.1.13)(typescript@5.7.2)
+      puppeteer-core: 19.11.1(typescript@5.7.2)
     transitivePeerDependencies:
       - bufferutil
       - encoding
@@ -25541,6 +25581,8 @@ snapshots:
   resolve-from@4.0.0: {}
 
   resolve-from@5.0.0: {}
+
+  resolve-pkg-maps@1.0.0: {}
 
   resolve@1.22.10:
     dependencies:
@@ -26209,10 +26251,10 @@ snapshots:
 
   svg-tags@1.0.0: {}
 
-  swagger2openapi@7.0.8(encoding@0.1.13):
+  swagger2openapi@7.0.8:
     dependencies:
       call-me-maybe: 1.0.2
-      node-fetch: 2.7.0(encoding@0.1.13)
+      node-fetch: 2.7.0
       node-fetch-h2: 2.3.0
       node-readfiles: 0.2.0
       oas-kit-common: 1.0.8
@@ -26515,7 +26557,7 @@ snapshots:
 
   tslib@2.8.1: {}
 
-  tsup@8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.7.2)(yaml@2.3.3):
+  tsup@8.5.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(typescript@5.7.2)(yaml@2.3.3):
     dependencies:
       bundle-require: 5.1.0(esbuild@0.25.5)
       cac: 6.7.14
@@ -26526,7 +26568,7 @@ snapshots:
       fix-dts-default-cjs-exports: 1.0.1
       joycon: 3.1.1
       picocolors: 1.1.1
-      postcss-load-config: 6.0.1(jiti@1.21.7)(postcss@8.5.6)(yaml@2.3.3)
+      postcss-load-config: 6.0.1(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.3)(yaml@2.3.3)
       resolve-from: 5.0.0
       rollup: 4.44.0
       source-map: 0.8.0-beta.0
@@ -26547,6 +26589,13 @@ snapshots:
     dependencies:
       tslib: 1.14.1
       typescript: 5.7.2
+
+  tsx@4.20.3:
+    dependencies:
+      esbuild: 0.25.5
+      get-tsconfig: 4.10.1
+    optionalDependencies:
+      fsevents: 2.3.3
 
   turbo-darwin-64@2.5.4:
     optional: true

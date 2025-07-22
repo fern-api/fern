@@ -67,7 +67,7 @@ describe("Method", () => {
                         type: Type.string()
                     })
                 ],
-                returnType: Type.custom("Void")
+                returnType: Type.void()
             });
 
             expect(method.toString()).toMatchInlineSnapshot(`
@@ -141,8 +141,7 @@ describe("Method", () => {
                     swift.functionParameter({
                         argumentLabel: "includingDeleted",
                         unsafeName: "deleted",
-                        type: Type.bool(),
-                        optional: true
+                        type: Type.optional(Type.bool())
                     })
                 ],
                 returnType: Type.custom("User?")
@@ -173,8 +172,7 @@ describe("Method", () => {
                     swift.functionParameter({
                         argumentLabel: "timeout",
                         unsafeName: "timeoutValue",
-                        type: Type.double(),
-                        optional: true
+                        type: Type.optional(Type.double())
                     })
                 ],
                 returnType: Type.dictionary(Type.string(), Type.any())
@@ -270,8 +268,7 @@ describe("Method", () => {
                     swift.functionParameter({
                         argumentLabel: "with",
                         unsafeName: "options",
-                        type: Type.array(Type.string()),
-                        optional: true
+                        type: Type.optional(Type.array(Type.string()))
                     })
                 ],
                 returnType: Type.string()
@@ -298,8 +295,7 @@ describe("Method", () => {
                     swift.functionParameter({
                         argumentLabel: "email",
                         unsafeName: "emailAddress",
-                        type: Type.string(),
-                        optional: true,
+                        type: Type.optional(Type.string()),
                         defaultValue: swift.Expression.rawValue("nil")
                     }),
                     swift.functionParameter({

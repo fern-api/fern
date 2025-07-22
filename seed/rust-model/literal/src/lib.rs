@@ -1,14 +1,14 @@
 //! Generated models by Fern
 
-pub mod type_:sendresponse;
-pub mod type_inlined:somealiasedliteral;
-pub mod type_inlined:atoplevelliteral;
-pub mod type_inlined:anestedliteral;
-pub mod type_inlined:discriminatedliteral;
-pub mod type_inlined:undiscriminatedliteral;
-pub mod type_query:aliastoprompt;
-pub mod type_query:aliastostream;
-pub mod type_reference:sendrequest;
-pub mod type_reference:containerobject;
-pub mod type_reference:nestedobjectwithliterals;
-pub mod type_reference:someliteral;
+pub mod send_response;
+pub mod some_aliased_literal;
+pub mod a_top_level_literal;
+pub mod a_nested_literal;
+pub mod discriminated_literal;
+pub mod undiscriminated_literal;
+pub mod alias_to_prompt;
+pub mod alias_to_stream;
+pub mod send_request;
+pub mod container_object;
+pub mod nested_object_with_literals;
+pub mod some_literal;

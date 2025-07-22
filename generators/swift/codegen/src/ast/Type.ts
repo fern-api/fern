@@ -58,6 +58,11 @@ type Dictionary = {
     valueType: Type;
 };
 
+type Optional = {
+    type: "optional";
+    valueType: Type;
+};
+
 /**
  * A reference to a custom type.
  */
@@ -65,6 +70,10 @@ type Custom = {
     type: "custom";
     /** The name of the custom type. */
     name: string;
+};
+
+type Void = {
+    type: "void";
 };
 
 type Any = {
@@ -85,7 +94,9 @@ type InternalType =
     | Tuple
     | Array_
     | Dictionary
+    | Optional
     | Custom
+    | Void
     | Any;
 
 export class Type extends AstNode {
@@ -94,6 +105,18 @@ export class Type extends AstNode {
     private constructor(internalType: InternalType) {
         super();
         this.internalType = internalType;
+    }
+
+    public get type(): InternalType["type"] {
+        return this.internalType.type;
+    }
+
+    public get isOptional(): boolean {
+        return this.internalType.type === "optional";
+    }
+
+    public get isCustom(): boolean {
+        return this.internalType.type === "custom";
     }
 
     public write(writer: Writer): void {
@@ -150,8 +173,15 @@ export class Type extends AstNode {
                 this.internalType.valueType.write(writer);
                 writer.write("]");
                 break;
+            case "optional":
+                this.internalType.valueType.write(writer);
+                writer.write("?");
+                break;
             case "custom":
                 writer.write(this.internalType.name);
+                break;
+            case "void":
+                writer.write("Void");
                 break;
             case "any":
                 writer.write("Any");
@@ -214,8 +244,20 @@ export class Type extends AstNode {
         return new this({ type: "dictionary", keyType, valueType });
     }
 
+    public static optional(valueType: Type): Type {
+        return new this({ type: "optional", valueType });
+    }
+
+    public static required(valueType: Type): Type {
+        return valueType.internalType.type === "optional" ? valueType.internalType.valueType : valueType;
+    }
+
     public static custom(name: string): Type {
         return new this({ type: "custom", name });
+    }
+
+    public static void(): Type {
+        return new this({ type: "void" });
     }
 
     public static any(): Type {

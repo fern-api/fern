@@ -48,13 +48,15 @@ export class RawClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSch
         );
 
         for (const endpoint of this.service.endpoints) {
-            const methods = this.context.endpointGenerator.generateRaw({
+            const method = this.context.endpointGenerator.generateRaw({
                 serviceId: this.serviceId,
                 service: this.service,
                 subpackage: this.subpackage,
                 endpoint
             });
-            struct.addMethod(...methods);
+            if (method != null) {
+                struct.addMethod(method);
+            }
         }
         return new GoFile({
             node: struct,
@@ -131,27 +133,37 @@ export class RawClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSch
 
     private getClassReference(): go.TypeReference {
         return this.subpackage != null
-            ? this.context.getRawClientClassReference({ service: this.service, subpackage: this.subpackage })
+            ? this.context.getRawClientClassReference({
+                  fernFilepath: this.service.name.fernFilepath,
+                  subpackage: this.subpackage
+              })
             : this.context.getRootRawClientClassReference();
     }
 
     private getPackageName(): string {
         return this.subpackage != null
-            ? this.context.getServiceClientPackageName({ service: this.service, subpackage: this.subpackage })
+            ? this.context.getClientPackageName({
+                  fernFilepath: this.service.name.fernFilepath,
+                  subpackage: this.subpackage
+              })
             : this.context.getRootClientPackageName();
     }
 
     private getDirectory(): RelativeFilePath {
         return this.subpackage != null
-            ? this.context.getServiceClientFileLocation({ service: this.service, subpackage: this.subpackage })
-                  .directory
+            ? this.context.getClientFileLocation({
+                  fernFilepath: this.service.name.fernFilepath,
+                  subpackage: this.subpackage
+              }).directory
             : this.context.getRootClientDirectory();
     }
 
     private getImportPath(): string {
         return this.subpackage != null
-            ? this.context.getServiceClientFileLocation({ service: this.service, subpackage: this.subpackage })
-                  .importPath
+            ? this.context.getClientFileLocation({
+                  fernFilepath: this.service.name.fernFilepath,
+                  subpackage: this.subpackage
+              }).importPath
             : this.context.getRootClientImportPath();
     }
 }

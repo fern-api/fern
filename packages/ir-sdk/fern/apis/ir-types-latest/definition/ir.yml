@@ -170,6 +170,7 @@ types:
     extends: Package
     properties:
       name: commons.Name
+      displayName: optional<commons.DisplayName>
   PackageNavigationConfig:
     properties:
       pointsTo: commons.SubpackageId

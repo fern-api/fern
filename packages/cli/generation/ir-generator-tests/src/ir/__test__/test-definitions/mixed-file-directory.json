@@ -8780,6 +8780,7 @@
                     "safeName": "Organization"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -8856,6 +8857,7 @@
                     "safeName": "User"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -8933,6 +8935,7 @@
                     "safeName": "Events"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -9049,6 +9052,7 @@
                     "safeName": "Metadata"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {

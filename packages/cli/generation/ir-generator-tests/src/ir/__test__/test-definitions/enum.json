@@ -7431,6 +7431,7 @@
                     "safeName": "InlinedRequest"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -7504,6 +7505,7 @@
                     "safeName": "PathParam"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -7577,6 +7579,7 @@
                     "safeName": "QueryParam"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -7650,6 +7653,7 @@
                     "safeName": "Unknown"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {

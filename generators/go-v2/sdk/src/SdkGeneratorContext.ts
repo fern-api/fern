@@ -1,21 +1,21 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { AbstractGoGeneratorContext, FileLocation, go } from "@fern-api/go-ast";
-import { GoProject } from "@fern-api/go-base";
+import { go } from "@fern-api/go-ast";
+import { AbstractGoGeneratorContext, FileLocation, GoProject } from "@fern-api/go-base";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { GithubOutputMode, OutputMode } from "@fern-fern/generator-exec-sdk/api";
 import {
     EnvironmentId,
     EnvironmentUrl,
-    FileUploadBodyProperty,
+    FernFilepath,
     FileUploadRequest,
     HttpEndpoint,
     HttpMethod,
-    HttpService,
     IntermediateRepresentation,
     Name,
+    Pagination,
     SdkRequestWrapper,
     ServiceId,
     StreamingResponse,
@@ -26,12 +26,13 @@ import { GoGeneratorAgent } from "./GoGeneratorAgent";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { EndpointGenerator } from "./endpoint/EndpointGenerator";
 import { Caller } from "./internal/Caller";
+import { Streamer } from "./internal/Streamer";
 import { ModuleConfig } from "./module/ModuleConfig";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
 
 export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomConfigSchema> {
-    public readonly project: GoProject;
     public readonly caller: Caller;
+    public readonly streamer: Streamer;
     public readonly endpointGenerator: EndpointGenerator;
     public readonly generatorAgent: GoGeneratorAgent;
 
@@ -42,9 +43,9 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(ir, config, customConfig, generatorNotificationService);
-        this.project = new GoProject({ context: this });
         this.endpointGenerator = new EndpointGenerator(this);
         this.caller = new Caller(this);
+        this.streamer = new Streamer(this);
         this.generatorAgent = new GoGeneratorAgent({
             logger: this.logger,
             config: this.config,
@@ -63,11 +64,30 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         return "Client";
     }
 
+    public getClientConstructorName(subpackage?: Subpackage): string {
+        if (subpackage == null) {
+            if (this.customConfig.clientConstructorName != null) {
+                return this.customConfig.clientConstructorName;
+            }
+            if (this.customConfig.clientName != null) {
+                return `New${this.customConfig.clientName}`;
+            }
+        }
+        if (subpackage != null && this.isFlatPackageLayout()) {
+            return `New${this.getClassName(subpackage.name)}Client`;
+        }
+        return "NewClient";
+    }
+
     public getClientFilename(subpackage?: Subpackage): string {
         if (subpackage != null && this.isFlatPackageLayout()) {
             return `${this.getFilename(subpackage.name)}.go`;
         }
         return "client.go";
+    }
+
+    public getRawClientConstructorName(subpackage?: Subpackage): string {
+        return `New${this.getRawClientClassName(subpackage)}`;
     }
 
     public getRawClientClassName(subpackage?: Subpackage): string {
@@ -93,6 +113,13 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
 
     public getReceiverName(name: Name): string {
         return name.camelCase.unsafeName.charAt(0);
+    }
+
+    public getRootClientReceiverName(): string {
+        if (this.customConfig.clientName != null) {
+            return this.customConfig.clientName.charAt(0).toLowerCase();
+        }
+        return "c";
     }
 
     public getDefaultBaseUrlTypeInstantiation(endpoint: HttpEndpoint): go.TypeInstantiation {
@@ -206,83 +233,76 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         });
     }
 
-    public getServiceClientClassReference({
-        service,
+    public getClientClassReference({
+        fernFilepath,
         subpackage
     }: {
-        service: HttpService;
+        fernFilepath: FernFilepath;
         subpackage?: Subpackage;
     }): go.TypeReference {
+        if (subpackage == null) {
+            return this.getRootClientClassReference();
+        }
         return go.typeReference({
             name: this.getClientClassName(subpackage),
-            importPath: this.getServiceClientFileLocation({ service, subpackage }).importPath
+            importPath: this.getClientFileLocation({ fernFilepath, subpackage }).importPath
         });
     }
 
     public getRawClientClassReference({
-        service,
+        fernFilepath,
         subpackage
     }: {
-        service: HttpService;
+        fernFilepath: FernFilepath;
         subpackage?: Subpackage;
     }): go.TypeReference {
+        if (subpackage == null) {
+            return this.getRootRawClientClassReference();
+        }
         return go.typeReference({
             name: this.getRawClientClassName(subpackage),
-            importPath: this.getServiceClientFileLocation({ service, subpackage }).importPath
+            importPath: this.getClientFileLocation({ fernFilepath, subpackage }).importPath
         });
     }
 
-    public getServiceClientPackageName({
-        service,
+    public getClientPackageName({
+        fernFilepath,
         subpackage
     }: {
-        service: HttpService;
+        fernFilepath: FernFilepath;
         subpackage?: Subpackage;
     }): string {
-        const fileLocation = this.getServiceClientFileLocation({ service, subpackage });
+        const fileLocation = this.getClientFileLocation({ fernFilepath, subpackage });
         if (fileLocation.importPath === this.getRootImportPath()) {
             return this.getRootPackageName();
         }
         return fileLocation.importPath.split("/").pop() ?? "";
     }
 
-    public getServiceClientFileLocation({
-        subpackage,
-        service
+    public getClientFileLocation({
+        fernFilepath,
+        subpackage
     }: {
+        fernFilepath: FernFilepath;
         subpackage?: Subpackage;
-        service: HttpService;
     }): FileLocation {
         if (this.isFlatPackageLayout()) {
-            return this.getPackageLocation(service.name.fernFilepath);
+            return this.getPackageLocation(fernFilepath);
         }
-        return this.getFileLocationForClient({ service, subpackage });
+        return this.getFileLocationForClient({ fernFilepath, subpackage });
     }
 
     public getSubpackageClientField({
-        service,
+        fernFilepath,
         subpackage
     }: {
-        service: HttpService;
+        fernFilepath: FernFilepath;
         subpackage: Subpackage;
     }): go.Field {
         return go.field({
             name: this.getClientClassName(subpackage),
-            type: go.Type.reference(this.getServiceClientClassReference({ service, subpackage }))
+            type: go.Type.reference(this.getClientClassReference({ fernFilepath, subpackage }))
         });
-    }
-
-    public shouldGenerateSubpackageClient(subpackage: Subpackage): boolean {
-        if (subpackage.service != null) {
-            return true;
-        }
-        for (const subpackageId of subpackage.subpackages) {
-            const subpackage = this.getSubpackageOrThrow(subpackageId);
-            if (this.shouldGenerateSubpackageClient(subpackage)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public getContextParameter(): go.Parameter {
@@ -365,6 +385,14 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         });
     }
 
+    public callGetenv(env: string): go.FuncInvocation {
+        return go.invokeFunc({
+            func: go.typeReference({ name: "Getenv", importPath: "os" }),
+            arguments_: [go.TypeInstantiation.string(env)],
+            multiline: false
+        });
+    }
+
     public callNewRequestOptions(argument: go.AstNode): go.FuncInvocation {
         return go.invokeFunc({
             func: go.typeReference({
@@ -399,27 +427,58 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
     }
 
     public callEncodeUrl(arguments_: go.AstNode[]): go.FuncInvocation {
-        return this.callInternalFunc("EncodeURL", arguments_);
+        return this.callInternalFunc({ name: "EncodeURL", arguments_ });
     }
 
     public callResolveBaseURL(arguments_: go.AstNode[]): go.FuncInvocation {
-        return this.callInternalFunc("ResolveBaseURL", arguments_);
+        return this.callInternalFunc({ name: "ResolveBaseURL", arguments_ });
     }
 
     public callMergeHeaders(arguments_: go.AstNode[]): go.FuncInvocation {
-        return this.callInternalFunc("MergeHeaders", arguments_);
+        return this.callInternalFunc({ name: "MergeHeaders", arguments_ });
     }
 
     public callNewErrorDecoder(arguments_: go.AstNode[]): go.FuncInvocation {
-        return this.callInternalFunc("NewErrorDecoder", arguments_, false);
+        return this.callInternalFunc({ name: "NewErrorDecoder", arguments_, multiline: false });
     }
 
     public callNewMultipartWriter(arguments_: go.AstNode[]): go.FuncInvocation {
-        return this.callInternalFunc("NewMultipartWriter", arguments_, false);
+        return this.callInternalFunc({ name: "NewMultipartWriter", arguments_, multiline: false });
+    }
+
+    public callWithDefaultContentType(contentType: string): go.FuncInvocation {
+        return this.callInternalFunc({
+            name: "WithDefaultContentType",
+            arguments_: [go.TypeInstantiation.string(contentType)],
+            multiline: false
+        });
+    }
+
+    public callNewStreamer({
+        arguments_,
+        streamPayload
+    }: {
+        arguments_: go.AstNode[];
+        streamPayload: go.Type;
+    }): go.FuncInvocation {
+        return this.callInternalFunc({
+            name: "NewStreamer",
+            arguments_,
+            multiline: false,
+            generics: [streamPayload]
+        });
     }
 
     public callQueryValues(arguments_: go.AstNode[]): go.FuncInvocation {
-        return this.callInternalFunc("QueryValues", arguments_, false);
+        return this.callInternalFunc({ name: "QueryValues", arguments_, multiline: false });
+    }
+
+    public getPageTypeReference(valueType: go.Type): go.TypeReference {
+        return go.typeReference({
+            name: "Page",
+            importPath: this.getCoreImportPath(),
+            generics: [valueType]
+        });
     }
 
     public getRawResponseTypeReference(valueType: go.Type): go.TypeReference {
@@ -455,24 +514,60 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         }
     }
 
+    public isEnabledPaginationEndpoint(endpoint: HttpEndpoint): boolean {
+        if (this.isPaginationWithRequestBodyEndpoint(endpoint)) {
+            // TODO: The original Go generator did not handle pagination endpoints with request body properties.
+            // To preserve compatibility, we generate a delegating endpoint for these cases.
+            //
+            // We'll need to add an opt-in feature flag to resolve this gap.
+            return false;
+        }
+        return this.isPaginationEndpoint(endpoint);
+    }
+
+    public isPaginationWithRequestBodyEndpoint(endpoint: HttpEndpoint): boolean {
+        const pagination = this.getPagination(endpoint);
+        if (pagination == null) {
+            return false;
+        }
+        switch (pagination.type) {
+            case "cursor":
+            case "offset":
+                return pagination.page.property.type === "body";
+            case "custom":
+                return false;
+            default:
+                assertNever(pagination);
+        }
+    }
+
     public isPaginationEndpoint(endpoint: HttpEndpoint): boolean {
-        return endpoint.pagination != null;
+        return this.getPagination(endpoint) != null;
+    }
+
+    public getPagination(endpoint: HttpEndpoint): Pagination | undefined {
+        return endpoint.pagination;
     }
 
     public isStreamingEndpoint(endpoint: HttpEndpoint): boolean {
+        return this.getStreamingResponse(endpoint) != null;
+    }
+
+    public getStreamingResponse(endpoint: HttpEndpoint): StreamingResponse | undefined {
         const responseBody = endpoint.response?.body;
         if (responseBody == null) {
-            return false;
+            return undefined;
         }
         switch (responseBody.type) {
+            case "streaming":
+                return responseBody.value;
+            case "streamParameter":
+                return responseBody.streamResponse;
             case "fileDownload":
             case "json":
             case "text":
             case "bytes":
-                return false;
-            case "streaming":
-            case "streamParameter":
-                return true;
+                return undefined;
             default:
                 assertNever(responseBody);
         }
@@ -482,7 +577,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         switch (streamingResponse.type) {
             case "json":
             case "sse":
-                return this.goTypeMapper.convert({ reference: streamingResponse.payload });
+                return go.Type.dereference(this.goTypeMapper.convert({ reference: streamingResponse.payload }));
             case "text":
                 return go.Type.string();
             default:
@@ -532,6 +627,16 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         return (
             (wrapper.onlyPathParameters ?? false) && !this.includePathParametersInWrappedRequest({ endpoint, wrapper })
         );
+    }
+
+    public shouldGenerateSubpackageClient(subpackage: Subpackage): boolean {
+        if (subpackage.service != null) {
+            return true;
+        }
+        return subpackage.subpackages.some((subpackageId) => {
+            const nestedSubpackage = this.getSubpackageOrThrow(subpackageId);
+            return nestedSubpackage.hasEndpointsInTree;
+        });
     }
 
     public includePathParametersInWrappedRequest({
@@ -586,21 +691,21 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
     }
 
     public getFileLocationForClient({
-        service,
+        fernFilepath,
         subpackage
     }: {
-        service: HttpService;
+        fernFilepath: FernFilepath;
         subpackage?: Subpackage;
     }): FileLocation {
         const parts = [];
         if (subpackage != null && subpackage.subpackages.length > 0 && subpackage.fernFilepath.file != null) {
             // This represents a nested root package, so we need to deposit
             // the client in a 'client' subpackage (e.g. user/client).
-            parts.push(...service.name.fernFilepath.allParts.map((part) => part.camelCase.safeName.toLowerCase()));
+            parts.push(...fernFilepath.allParts.map((part) => part.camelCase.safeName.toLowerCase()));
             parts.push("client");
         } else {
-            parts.push(...service.name.fernFilepath.packagePath.map((part) => part.camelCase.safeName.toLowerCase()));
-            parts.push(service.name.fernFilepath.file?.camelCase.safeName.toLowerCase() ?? "client");
+            parts.push(...fernFilepath.packagePath.map((part) => part.camelCase.safeName.toLowerCase()));
+            parts.push(fernFilepath.file?.camelCase.safeName.toLowerCase() ?? "client");
         }
         return {
             importPath: [this.getRootImportPath(), ...parts].join("/"),
@@ -608,11 +713,22 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         };
     }
 
-    private callInternalFunc(name: string, arguments_: go.AstNode[], multiline: boolean = true): go.FuncInvocation {
+    private callInternalFunc({
+        name,
+        arguments_,
+        generics,
+        multiline = true
+    }: {
+        name: string;
+        arguments_: go.AstNode[];
+        generics?: go.Type[];
+        multiline?: boolean;
+    }): go.FuncInvocation {
         return go.invokeFunc({
             func: go.typeReference({
                 name,
-                importPath: this.getInternalImportPath()
+                importPath: this.getInternalImportPath(),
+                generics
             }),
             arguments_,
             multiline

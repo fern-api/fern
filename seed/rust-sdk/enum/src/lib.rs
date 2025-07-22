@@ -10,6 +10,6 @@ pub mod path_param;
 pub mod query_param;
 
 pub use client::EnumClient;
-pub use error::Error;
+pub use error::ApiError;
 
 pub use types::*;

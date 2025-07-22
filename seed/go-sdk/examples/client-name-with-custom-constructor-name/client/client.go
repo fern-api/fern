@@ -6,7 +6,7 @@ import (
 	context "context"
 	fern "github.com/examples/fern"
 	core "github.com/examples/fern/core"
-	fileclient "github.com/examples/fern/file/client"
+	client "github.com/examples/fern/file/client"
 	healthclient "github.com/examples/fern/health/client"
 	internal "github.com/examples/fern/internal"
 	option "github.com/examples/fern/option"
@@ -15,31 +15,31 @@ import (
 )
 
 type Acme struct {
+	WithRawResponse *RawAcme
+	File            *client.Client
+	Health          *healthclient.Client
+	Service         *service.Client
+
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header
-
-	WithRawResponse *RawAcme
-	File            *fileclient.Client
-	Health          *healthclient.Client
-	Service         *service.Client
 }
 
 func New(opts ...option.RequestOption) *Acme {
 	options := core.NewRequestOptions(opts...)
 	return &Acme{
-		baseURL: options.BaseURL,
+		File:            client.NewClient(opts...),
+		Health:          healthclient.NewClient(opts...),
+		Service:         service.NewClient(opts...),
+		WithRawResponse: NewRawAcme(options),
+		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header:          options.ToHeader(),
-		WithRawResponse: NewRawAcme(options),
-		File:            fileclient.NewClient(opts...),
-		Health:          healthclient.NewClient(opts...),
-		Service:         service.NewClient(opts...),
+		header: options.ToHeader(),
 	}
 }
 
@@ -48,36 +48,15 @@ func (a *Acme) Echo(
 	request string,
 	opts ...option.RequestOption,
 ) (string, error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		a.baseURL,
-		"",
-	)
-	endpointURL := baseURL
-	headers := internal.MergeHeaders(
-		a.header.Clone(),
-		options.ToHeader(),
-	)
-
-	var response string
-	if _, err := a.caller.Call(
+	response, err := a.WithRawResponse.Echo(
 		ctx,
-		&internal.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodPost,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Request:         request,
-			Response:        &response,
-		},
-	); err != nil {
+		request,
+		opts...,
+	)
+	if err != nil {
 		return "", err
 	}
-	return response, nil
+	return response.Body, nil
 }
 
 func (a *Acme) CreateType(
@@ -85,34 +64,13 @@ func (a *Acme) CreateType(
 	request *fern.Type,
 	opts ...option.RequestOption,
 ) (*fern.Identifier, error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		a.baseURL,
-		"",
-	)
-	endpointURL := baseURL
-	headers := internal.MergeHeaders(
-		a.header.Clone(),
-		options.ToHeader(),
-	)
-
-	var response *fern.Identifier
-	if _, err := a.caller.Call(
+	response, err := a.WithRawResponse.CreateType(
 		ctx,
-		&internal.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodPost,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Request:         request,
-			Response:        &response,
-		},
-	); err != nil {
+		request,
+		opts...,
+	)
+	if err != nil {
 		return nil, err
 	}
-	return response, nil
+	return response.Body, nil
 }

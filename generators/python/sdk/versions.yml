@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.25.6
+  changelogEntry:
+    - summary: |
+        Removed snippet generation
+      type: feat
+  createdAt: '2025-07-22'
+  irVersion: 58
+
 - version: 4.25.5
   changelogEntry:
     - summary: |
@@ -12,7 +20,7 @@
 - version: 4.25.4
   changelogEntry:
     - summary: |
-        Updated python generator's construct_type function to handles undiscriminated unions with lists, sets, and dictionaries of objects.
+        Updated construct_type function to handles undiscriminated unions with lists, sets, and dictionaries of objects.
       type: fix
   createdAt: '2025-07-15'
   irVersion: 58

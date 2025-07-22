@@ -1,5 +1,5 @@
 //! Generated models by Fern
 
-pub mod type_imdb:movieid;
-pub mod type_imdb:movie;
-pub mod type_imdb:createmovierequest;
+pub mod movie_id;
+pub mod movie;
+pub mod create_movie_request;

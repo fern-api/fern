@@ -14,3 +14,4 @@ export { Selector } from "./Selector";
 export { Struct } from "./Struct";
 export { Type } from "./Type";
 export { TypeInstantiation, type StructField } from "./TypeInstantiation";
+export { TimeTypeReference, UuidTypeReference, IoReaderTypeReference } from "./Type";

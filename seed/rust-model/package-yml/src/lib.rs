@@ -1,3 +1,3 @@
 //! Generated models by Fern
 
-pub mod type_:echorequest;
+pub mod echo_request;

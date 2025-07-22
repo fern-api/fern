@@ -7,5 +7,5 @@ pub mod error;
 pub mod service;
 
 pub use client::AcceptClient;
-pub use error::Error;
+pub use error::ApiError;
 

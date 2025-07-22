@@ -7,5 +7,5 @@ pub mod error;
 pub mod service;
 
 pub use client::ContentTypesClient;
-pub use error::Error;
+pub use error::ApiError;
 

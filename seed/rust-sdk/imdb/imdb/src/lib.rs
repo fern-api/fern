@@ -8,6 +8,6 @@ pub mod types;
 pub mod imdb;
 
 pub use client::ImdbClient;
-pub use error::Error;
+pub use error::ApiError;
 
 pub use types::*;

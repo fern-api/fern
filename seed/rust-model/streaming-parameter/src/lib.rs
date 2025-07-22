@@ -1,4 +1,4 @@
 //! Generated models by Fern
 
-pub mod type_dummy:regularresponse;
-pub mod type_dummy:streamresponse;
+pub mod regular_response;
+pub mod stream_response;

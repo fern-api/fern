@@ -1,6 +1,6 @@
 //! Generated models by Fern
 
-pub mod type_:exampletype;
-pub mod type_:nestedtype;
-pub mod type_:docs;
-pub mod type_:json;
+pub mod example_type;
+pub mod nested_type;
+pub mod docs;
+pub mod json;

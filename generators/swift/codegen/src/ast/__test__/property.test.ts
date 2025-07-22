@@ -13,8 +13,7 @@ describe("Property", () => {
                 accessLevel: AccessLevel.Private,
                 static_: true,
                 declarationType: DeclarationType.Let,
-                type: Type.string(),
-                optional: true
+                type: Type.optional(Type.string())
             });
 
             expect(property.toString()).toBe("private static let fullProperty: String?");
@@ -72,8 +71,7 @@ describe("Property", () => {
                 accessLevel: AccessLevel.Public,
                 static_: true,
                 declarationType: DeclarationType.Var,
-                type: Type.array(Type.dictionary(Type.string(), Type.tuple([Type.int(), Type.bool()]))),
-                optional: true
+                type: Type.optional(Type.array(Type.dictionary(Type.string(), Type.tuple([Type.int(), Type.bool()]))))
             });
 
             expect(property.toString()).toBe("public static var complexProperty: [[String: (Int, Bool)]]?");
@@ -85,8 +83,7 @@ describe("Property", () => {
                 accessLevel: AccessLevel.Private,
                 static_: true,
                 declarationType: DeclarationType.Let,
-                type: Type.string(),
-                optional: true
+                type: Type.optional(Type.string())
             });
 
             expect(property.toString()).toBe("private static let `class`: String?");

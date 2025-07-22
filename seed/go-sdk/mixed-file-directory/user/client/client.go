@@ -8,32 +8,32 @@ import (
 	core "github.com/mixed-file-directory/fern/core"
 	internal "github.com/mixed-file-directory/fern/internal"
 	option "github.com/mixed-file-directory/fern/option"
-	eventsclient "github.com/mixed-file-directory/fern/user/events/client"
+	client "github.com/mixed-file-directory/fern/user/events/client"
 	http "net/http"
 )
 
 type Client struct {
+	WithRawResponse *RawClient
+	Events          *client.Client
+
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header
-
-	WithRawResponse *RawClient
-	Events          *eventsclient.Client
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		baseURL: options.BaseURL,
+		Events:          client.NewClient(opts...),
+		WithRawResponse: NewRawClient(options),
+		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header:          options.ToHeader(),
-		WithRawResponse: NewRawClient(options),
-		Events:          eventsclient.NewClient(opts...),
+		header: options.ToHeader(),
 	}
 }
 
@@ -43,40 +43,13 @@ func (c *Client) List(
 	request *fern.ListUsersRequest,
 	opts ...option.RequestOption,
 ) ([]*fern.User, error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
+	response, err := c.WithRawResponse.List(
+		ctx,
+		request,
+		opts...,
 	)
-	endpointURL := baseURL + "/users/"
-	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
 	}
-	if len(queryParams) > 0 {
-		endpointURL += "?" + queryParams.Encode()
-	}
-	headers := internal.MergeHeaders(
-		c.header.Clone(),
-		options.ToHeader(),
-	)
-
-	var response []*fern.User
-	if _, err := c.caller.Call(
-		ctx,
-		&internal.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodGet,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Response:        &response,
-		},
-	); err != nil {
-		return nil, err
-	}
-	return response, nil
+	return response.Body, nil
 }
