@@ -15,8 +15,6 @@ $client = new SeedClient(
 $client->queryParam->send(
     new SendEnumAsQueryParamRequest([
         'operand' => Operand::GreaterThan->value,
-        'maybeOperand' => Operand::GreaterThan->value,
         'operandOrColor' => Color::Red->value,
-        'maybeOperandOrColor' => Color::Red->value,
     ]),
 );

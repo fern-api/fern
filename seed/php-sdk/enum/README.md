@@ -25,17 +25,16 @@ Instantiate and use the client with the following:
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\InlinedRequest\Requests\SendEnumInlinedRequest;
+use Seed\Headers\Requests\SendEnumAsHeaderRequest;
 use Seed\Types\Operand;
 use Seed\Types\Color;
 
 $client = new SeedClient();
-$client->inlinedRequest->send(
-    new SendEnumInlinedRequest([
+$client->headers->send(
+    new SendEnumAsHeaderRequest([
         'operand' => Operand::GreaterThan->value,
         'maybeOperand' => Operand::GreaterThan->value,
         'operandOrColor' => Color::Red->value,
-        'maybeOperandOrColor' => Color::Red->value,
     ]),
 );
 
@@ -50,7 +49,7 @@ use Seed\Exceptions\SeedApiException;
 use Seed\Exceptions\SeedException;
 
 try {
-    $response = $client->inlinedRequest->send(...);
+    $response = $client->headers->send(...);
 } catch (SeedApiException $e) {
     echo 'API Exception occurred: ' . $e->getMessage() . "\n";
     echo 'Status Code: ' . $e->getCode() . "\n";
@@ -106,7 +105,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```php
-$response = $client->inlinedRequest->send(
+$response = $client->headers->send(
     ...,
     options: [
         'maxRetries' => 0 // Override maxRetries at the request level
@@ -119,7 +118,7 @@ $response = $client->inlinedRequest->send(
 The SDK defaults to a 30 second timeout. Use the `timeout` option to configure this behavior.
 
 ```php
-$response = $client->inlinedRequest->send(
+$response = $client->headers->send(
     ...,
     options: [
         'timeout' => 3.0 // Override timeout to 3 seconds
