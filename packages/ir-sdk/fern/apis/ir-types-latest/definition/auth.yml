@@ -41,35 +41,6 @@ types:
   OAuthConfiguration:
     union:
       clientCredentials: OAuthClientCredentials
-      apiKey: OAuthApiKey
-  OAuthApiKey:
-    properties:
-      apiKey: 
-        type: commons.Name
-        docs: Parameter name of the API key
-      apiKeyEnvVar: 
-        type: optional<EnvironmentVariable>
-        docs: The variable name where the API key could be retrieved from
-      scopes: optional<list<string>>
-      tokenEndpoint: OAuthApiKeyEndpoint
-      refreshEndpoint: optional<OAuthRefreshEndpoint>
-  OAuthApiKeyEndpoint:
-    properties:
-      endpointReference: commons.EndpointReference
-      requestProperties: OAuthApiKeyRequestProperties
-      responseProperties: OAuthApiKeyResponseProperties
-  OAuthApiKeyRequestProperties:
-    docs: The properties required to retrieve an OAuth token.
-    properties:
-      apiKey: http.RequestProperty
-      scopes: optional<http.RequestProperty>
-      customProperties: optional<list<http.RequestProperty>>
-  OAuthApiKeyResponseProperties:
-    docs: The properties to map to the corresponding OAuth token primitive.
-    properties:
-      accessToken: http.ResponseProperty
-      expiresIn: optional<http.ResponseProperty>
-      refreshToken: optional<http.ResponseProperty>
   OAuthClientCredentials:
     properties:
       clientIdEnvVar: optional<EnvironmentVariable>

@@ -6,7 +6,6 @@ import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { OAuthClientCredentials } from "./OAuthClientCredentials";
-import { OAuthApiKey } from "./OAuthApiKey";
 
 export const OAuthConfiguration: core.serialization.Schema<
     serializers.OAuthConfiguration.Raw,
@@ -14,15 +13,12 @@ export const OAuthConfiguration: core.serialization.Schema<
 > = core.serialization
     .union("type", {
         clientCredentials: OAuthClientCredentials,
-        apiKey: OAuthApiKey,
     })
     .transform<FernIr.OAuthConfiguration>({
         transform: (value) => {
             switch (value.type) {
                 case "clientCredentials":
                     return FernIr.OAuthConfiguration.clientCredentials(value);
-                case "apiKey":
-                    return FernIr.OAuthConfiguration.apiKey(value);
                 default:
                     return value as FernIr.OAuthConfiguration;
             }
@@ -31,13 +27,9 @@ export const OAuthConfiguration: core.serialization.Schema<
     });
 
 export declare namespace OAuthConfiguration {
-    export type Raw = OAuthConfiguration.ClientCredentials | OAuthConfiguration.ApiKey;
+    export type Raw = OAuthConfiguration.ClientCredentials;
 
     export interface ClientCredentials extends OAuthClientCredentials.Raw {
         type: "clientCredentials";
-    }
-
-    export interface ApiKey extends OAuthApiKey.Raw {
-        type: "apiKey";
     }
 }

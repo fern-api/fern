@@ -7,7 +7,6 @@ import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { QueryParameter } from "./QueryParameter";
 import { ObjectProperty } from "../../types/types/ObjectProperty";
-import { HttpHeader } from "./HttpHeader";
 
 export const RequestPropertyValue: core.serialization.Schema<
     serializers.RequestPropertyValue.Raw,
@@ -16,7 +15,6 @@ export const RequestPropertyValue: core.serialization.Schema<
     .union("type", {
         query: QueryParameter,
         body: ObjectProperty,
-        header: HttpHeader,
     })
     .transform<FernIr.RequestPropertyValue>({
         transform: (value) => {
@@ -25,8 +23,6 @@ export const RequestPropertyValue: core.serialization.Schema<
                     return FernIr.RequestPropertyValue.query(value);
                 case "body":
                     return FernIr.RequestPropertyValue.body(value);
-                case "header":
-                    return FernIr.RequestPropertyValue.header(value);
                 default:
                     return value as FernIr.RequestPropertyValue;
             }
@@ -35,7 +31,7 @@ export const RequestPropertyValue: core.serialization.Schema<
     });
 
 export declare namespace RequestPropertyValue {
-    export type Raw = RequestPropertyValue.Query | RequestPropertyValue.Body | RequestPropertyValue.Header;
+    export type Raw = RequestPropertyValue.Query | RequestPropertyValue.Body;
 
     export interface Query extends QueryParameter.Raw {
         type: "query";
@@ -43,9 +39,5 @@ export declare namespace RequestPropertyValue {
 
     export interface Body extends ObjectProperty.Raw {
         type: "body";
-    }
-
-    export interface Header extends HttpHeader.Raw {
-        type: "header";
     }
 }
