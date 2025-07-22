@@ -2,3 +2,141 @@
 **`(feat):`** Removed snippet generation
 
 
+## 4.18.2
+**`(fix):`** Fix README g
+
+
+## 4.18.1
+**`(fix):`** Update python-v2 generator invocation so that all relevant files like pyproject.toml and poetry.lock are pushed
+to the GitHub repository.
+
+
+## 4.18.0
+**`(fix):`** Add support for self-hosted mode, allowing users to push generated SDKs to their own GitHub repositories.
+This feature enables organizations to maintain private SDK repositories with custom configurations.
+
+
+## 4.17.1
+**`(fix):`** Fix an issue where response `headers` were not available in the strongly typed error classes.
+
+
+## 4.17.0
+**`(feat):`** Add support for retrieving response headers for each page of paginated responses, instead of just the first page.
+
+
+## 4.16.2
+**`(fix):`** Fixed an issue introduced in 4.14.0, where `bytes` and `text` responses were not handled correctly.
+
+
+## 4.16.1
+**`(internal):`** Fixes an internal release issue in `4.16.0`.
+
+
+## 4.16.0
+**`(feat):`** Add support for retrieving response headers from the generated `ApiError` class.
+
+
+## 4.15.0
+**`(feat):`** Add support for offset step pagination, where the offset position represents the element's index rather
+than the page number.
+
+
+**`(fix):`** Fixed an issue introduced in 4.14.0, where paginated endpoints were not returning the underlying data.
+
+
+## 4.14.6
+**`(fix):`** Fixed an issue where multipart/form-data content types are now explicitly sent when configured in the API definition.
+
+
+## 4.14.5
+**`(fix):`** Fixed an issue introduced in 4.14.0, where SSE streaming responses were not yielded correctly.
+
+
+## 4.14.4
+**`(fix):`** Fixed an issue where filename and plain text content-type parameters were being incorrectly serialized.
+
+
+## 4.14.3
+**`(fix):`** Add support for receiving raw responses from pagination endpoints.
+
+
+## 4.14.2
+**`(fix):`** Fix an issue where TypedDicts with circular references were not correctly serialized.
+This issue only affected users that enabled `use_typeddict_requests`.
+
+
+## 4.14.1
+**`(fix):`** The generated GitHub workflow now uses `ubuntu-latest` instead of `ubuntu-20.04`
+
+
+## 4.14.0
+**`(feat):`** Add support for receiving raw responses from streaming endpoints.
+
+
+**`(feat):`** Add support for excluding types from the generated `__init__.py` files.
+
+```yaml
+config:
+  exclude_types_from_init_exports: true
+```
+
+
+## 4.13.0
+**`(feat):`** Adds support for overriding literal global headers in the client constructor (e.g. `version`).
+
+```python
+client = Acme(
+  ...
+  version="1.0.0",
+)
+```
+
+
+## 4.12.1
+**`(fix):`** Fixes an issue where dictionary types defined within TypedDicts incorrectly used the
+`typing_extensions.NotRequired` type.
+
+
+**`(fix):`** Fixes an issue where optional `core.File` parameters would cause `mypy` failures.
+
+
+**`(fix):`** Fixes a regression introduced in 4.12.0, where the non raw response client endpoints
+did not respect the allowed method keywords (e.g. `list` was generated as `list_`).
+
+
+## 4.12.0
+**`(fix):`** Resolve issues with paginated endpoints generating incorrect endpoint return types.
+
+
+## 4.11.0
+**`(fix):`** Always represent nullable as Optional rather than NotRequired, only use
+NotRequired for optional in typeddicts.
+
+
+## 4.10.0
+**`(feat):`** Add support for using TypedDicts for file upload request parameters. This flag should
+be used in conjunction with the `use_typeddict_requests` flag like so:
+
+```yaml
+config:
+  use_typeddict_requests: true
+  use_typeddict_requests_for_file_upload: true
+```
+
+
+## 4.9.0
+**`(feat):`** Implement raw client support for accessing response headers and data in unary endpoints.
+
+
+## 4.8.0
+**`(feat):`** Add support for inlining path parameters
+
+
+## 4.7.0
+**`(feat):`** Add support for user-agent header
+
+
+## 4.3.20
+**`(fix):`** Update formatting across all generated files. There are no behavioral changes, but large diffs are expected.
+
+
