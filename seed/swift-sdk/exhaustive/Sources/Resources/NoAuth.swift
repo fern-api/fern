@@ -7,10 +7,10 @@ public final class NoAuthClient: Sendable {
 
     public func postWithNoAuth(request: Any, requestOptions: RequestOptions? = nil) async throws -> Bool {
         return try await httpClient.performRequest(
-            method: .post, 
-            path: "/no-auth", 
-            body: request, 
-            requestOptions: requestOptions, 
+            method: .post,
+            path: "/no-auth",
+            body: request,
+            requestOptions: requestOptions,
             responseType: Bool.self
         )
     }

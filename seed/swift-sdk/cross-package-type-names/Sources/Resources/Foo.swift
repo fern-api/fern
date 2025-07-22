@@ -7,13 +7,13 @@ public final class FooClient: Sendable {
 
     public func find(optionalString: OptionalString, request: Any, requestOptions: RequestOptions? = nil) async throws -> ImportingType {
         return try await httpClient.performRequest(
-            method: .post, 
-            path: "/", 
+            method: .post,
+            path: "/",
             queryParams: [
                 "optionalString": .string(optionalString.rawValue)
-            ], 
-            body: request, 
-            requestOptions: requestOptions, 
+            ],
+            body: request,
+            requestOptions: requestOptions,
             responseType: ImportingType.self
         )
     }

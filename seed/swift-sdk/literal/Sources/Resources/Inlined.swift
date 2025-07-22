@@ -7,10 +7,10 @@ public final class InlinedClient: Sendable {
 
     public func send(request: Any, requestOptions: RequestOptions? = nil) async throws -> SendResponse {
         return try await httpClient.performRequest(
-            method: .post, 
-            path: "/inlined", 
-            body: request, 
-            requestOptions: requestOptions, 
+            method: .post,
+            path: "/inlined",
+            body: request,
+            requestOptions: requestOptions,
             responseType: SendResponse.self
         )
     }

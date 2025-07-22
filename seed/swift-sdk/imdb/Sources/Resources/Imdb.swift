@@ -7,19 +7,19 @@ public final class ImdbClient: Sendable {
 
     public func createMovie(request: CreateMovieRequest, requestOptions: RequestOptions? = nil) async throws -> MovieId {
         return try await httpClient.performRequest(
-            method: .post, 
-            path: "/movies/create-movie", 
-            body: request, 
-            requestOptions: requestOptions, 
+            method: .post,
+            path: "/movies/create-movie",
+            body: request,
+            requestOptions: requestOptions,
             responseType: MovieId.self
         )
     }
 
     public func getMovie(movieId: String, requestOptions: RequestOptions? = nil) async throws -> Movie {
         return try await httpClient.performRequest(
-            method: .get, 
-            path: "/movies/\(movieId)", 
-            requestOptions: requestOptions, 
+            method: .get,
+            path: "/movies/\(movieId)",
+            requestOptions: requestOptions,
             responseType: Movie.self
         )
     }

@@ -7,10 +7,10 @@ public final class ReferenceClient: Sendable {
 
     public func send(request: SendRequest, requestOptions: RequestOptions? = nil) async throws -> SendResponse {
         return try await httpClient.performRequest(
-            method: .post, 
-            path: "/reference", 
-            body: request, 
-            requestOptions: requestOptions, 
+            method: .post,
+            path: "/reference",
+            body: request,
+            requestOptions: requestOptions,
             responseType: SendResponse.self
         )
     }

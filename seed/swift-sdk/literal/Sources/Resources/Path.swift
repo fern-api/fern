@@ -7,9 +7,9 @@ public final class PathClient: Sendable {
 
     public func send(id: String, requestOptions: RequestOptions? = nil) async throws -> SendResponse {
         return try await httpClient.performRequest(
-            method: .post, 
-            path: "/path/\(id)", 
-            requestOptions: requestOptions, 
+            method: .post,
+            path: "/path/\(id)",
+            requestOptions: requestOptions,
             responseType: SendResponse.self
         )
     }

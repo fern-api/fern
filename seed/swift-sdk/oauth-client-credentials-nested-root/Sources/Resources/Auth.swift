@@ -7,10 +7,10 @@ public final class AuthClient: Sendable {
 
     public func getToken(request: Any, requestOptions: RequestOptions? = nil) async throws -> TokenResponse {
         return try await httpClient.performRequest(
-            method: .post, 
-            path: "/token", 
-            body: request, 
-            requestOptions: requestOptions, 
+            method: .post,
+            path: "/token",
+            body: request,
+            requestOptions: requestOptions,
             responseType: TokenResponse.self
         )
     }

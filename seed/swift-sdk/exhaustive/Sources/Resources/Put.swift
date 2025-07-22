@@ -7,9 +7,9 @@ public final class PutClient: Sendable {
 
     public func add(id: String, requestOptions: RequestOptions? = nil) async throws -> PutResponse {
         return try await httpClient.performRequest(
-            method: .put, 
-            path: "/\(id)", 
-            requestOptions: requestOptions, 
+            method: .put,
+            path: "/\(id)",
+            requestOptions: requestOptions,
             responseType: PutResponse.self
         )
     }

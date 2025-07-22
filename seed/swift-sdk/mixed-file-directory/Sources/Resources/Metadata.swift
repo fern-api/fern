@@ -7,12 +7,12 @@ public final class MetadataClient: Sendable {
 
     public func getMetadata(id: Id, requestOptions: RequestOptions? = nil) async throws -> Metadata {
         return try await httpClient.performRequest(
-            method: .get, 
-            path: "/users/events/metadata", 
+            method: .get,
+            path: "/users/events/metadata",
             queryParams: [
                 "id": .string(id.rawValue)
-            ], 
-            requestOptions: requestOptions, 
+            ],
+            requestOptions: requestOptions,
             responseType: Metadata.self
         )
     }

@@ -7,13 +7,13 @@ public final class ReqWithHeadersClient: Sendable {
 
     public func getWithCustomHeader(xTestEndpointHeader: String, request: String, requestOptions: RequestOptions? = nil) async throws -> Any {
         return try await httpClient.performRequest(
-            method: .post, 
-            path: "/test-headers/custom-header", 
+            method: .post,
+            path: "/test-headers/custom-header",
             headers: [
                 "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader
-            ], 
-            body: request, 
-            requestOptions: requestOptions, 
+            ],
+            body: request,
+            requestOptions: requestOptions,
             responseType: Any.self
         )
     }

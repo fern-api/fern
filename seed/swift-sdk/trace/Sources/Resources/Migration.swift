@@ -7,12 +7,12 @@ public final class MigrationClient: Sendable {
 
     public func getAttemptedMigrations(adminKeyHeader: String, requestOptions: RequestOptions? = nil) async throws -> [Migration] {
         return try await httpClient.performRequest(
-            method: .get, 
-            path: "/migration-info/all", 
+            method: .get,
+            path: "/migration-info/all",
             headers: [
                 "admin-key-header": adminKeyHeader
-            ], 
-            requestOptions: requestOptions, 
+            ],
+            requestOptions: requestOptions,
             responseType: [Migration].self
         )
     }

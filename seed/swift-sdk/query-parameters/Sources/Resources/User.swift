@@ -7,8 +7,8 @@ public final class UserClient: Sendable {
 
     public func getUsername(limit: Int, id: UUID, date: Date, deadline: Date, bytes: String, user: User, userList: [User], optionalDeadline: Date? = nil, keyValue: Any, optionalString: String? = nil, nestedUser: NestedUser, optionalUser: User? = nil, excludeUser: User, filter: String, requestOptions: RequestOptions? = nil) async throws -> User {
         return try await httpClient.performRequest(
-            method: .get, 
-            path: "/user", 
+            method: .get,
+            path: "/user",
             queryParams: [
                 "limit": .int(limit), 
                 "id": .uuid(id), 
@@ -24,8 +24,8 @@ public final class UserClient: Sendable {
                 "optionalUser": optionalUser.map { .string($0) }, 
                 "excludeUser": .string(excludeUser.rawValue), 
                 "filter": .string(filter)
-            ], 
-            requestOptions: requestOptions, 
+            ],
+            requestOptions: requestOptions,
             responseType: User.self
         )
     }

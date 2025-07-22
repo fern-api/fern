@@ -7,10 +7,10 @@ public final class ServiceClient: Sendable {
 
     public func upload(request: Any, requestOptions: RequestOptions? = nil) async throws -> Any {
         return try await httpClient.performRequest(
-            method: .post, 
-            path: "/upload-content", 
-            body: request, 
-            requestOptions: requestOptions, 
+            method: .post,
+            path: "/upload-content",
+            body: request,
+            requestOptions: requestOptions,
             responseType: Any.self
         )
     }

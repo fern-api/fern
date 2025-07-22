@@ -7,9 +7,9 @@ public final class DummyClient: Sendable {
 
     public func getDummy(requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
-            method: .get, 
-            path: "/dummy", 
-            requestOptions: requestOptions, 
+            method: .get,
+            path: "/dummy",
+            requestOptions: requestOptions,
             responseType: String.self
         )
     }

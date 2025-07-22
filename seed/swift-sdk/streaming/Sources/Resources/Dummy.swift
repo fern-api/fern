@@ -7,20 +7,20 @@ public final class DummyClient: Sendable {
 
     public func generateStream(request: Any, requestOptions: RequestOptions? = nil) async throws -> Any {
         return try await httpClient.performRequest(
-            method: .post, 
-            path: "/generate-stream", 
-            body: request, 
-            requestOptions: requestOptions, 
+            method: .post,
+            path: "/generate-stream",
+            body: request,
+            requestOptions: requestOptions,
             responseType: Any.self
         )
     }
 
     public func generate(request: Any, requestOptions: RequestOptions? = nil) async throws -> StreamResponse {
         return try await httpClient.performRequest(
-            method: .post, 
-            path: "/generate", 
-            body: request, 
-            requestOptions: requestOptions, 
+            method: .post,
+            path: "/generate",
+            body: request,
+            requestOptions: requestOptions,
             responseType: StreamResponse.self
         )
     }

@@ -214,9 +214,11 @@ export class Expression extends AstNode {
         }
         arguments_?.forEach((argument: FunctionArgument, argumentIdx: number) => {
             if (argumentIdx > 0) {
-                writer.write(", ");
+                writer.write(",");
                 if (multiline) {
                     writer.newLine();
+                } else {
+                    writer.write(" ");
                 }
             }
             argument.write(writer);

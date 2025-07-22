@@ -7,9 +7,9 @@ public final class ServiceClient: Sendable {
 
     public func post(endpointParam: String, requestOptions: RequestOptions? = nil) async throws -> Any {
         return try await httpClient.performRequest(
-            method: .post, 
-            path: "/service/\(endpointParam)", 
-            requestOptions: requestOptions, 
+            method: .post,
+            path: "/service/\(endpointParam)",
+            requestOptions: requestOptions,
             responseType: Any.self
         )
     }

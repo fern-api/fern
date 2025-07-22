@@ -7,19 +7,19 @@ public final class ServiceClient: Sendable {
 
     public func endpoint(requestOptions: RequestOptions? = nil) async throws -> Any {
         return try await httpClient.performRequest(
-            method: .get, 
-            path: "/service", 
-            requestOptions: requestOptions, 
+            method: .get,
+            path: "/service",
+            requestOptions: requestOptions,
             responseType: Any.self
         )
     }
 
     public func unknownRequest(request: Any, requestOptions: RequestOptions? = nil) async throws -> Any {
         return try await httpClient.performRequest(
-            method: .post, 
-            path: "/service", 
-            body: request, 
-            requestOptions: requestOptions, 
+            method: .post,
+            path: "/service",
+            body: request,
+            requestOptions: requestOptions,
             responseType: Any.self
         )
     }

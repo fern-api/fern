@@ -7,9 +7,9 @@ public final class PropertyBasedErrorClient: Sendable {
 
     public func throwError(requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
-            method: .get, 
-            path: "/property-based-error", 
-            requestOptions: requestOptions, 
+            method: .get,
+            path: "/property-based-error",
+            requestOptions: requestOptions,
             responseType: String.self
         )
     }

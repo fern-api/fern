@@ -7,10 +7,10 @@ public final class CompletionsClient: Sendable {
 
     public func stream(request: Any, requestOptions: RequestOptions? = nil) async throws -> Any {
         return try await httpClient.performRequest(
-            method: .post, 
-            path: "/stream", 
-            body: request, 
-            requestOptions: requestOptions, 
+            method: .post,
+            path: "/stream",
+            body: request,
+            requestOptions: requestOptions,
             responseType: Any.self
         )
     }

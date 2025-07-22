@@ -7,18 +7,18 @@ public final class ServiceClient: Sendable {
 
     public func simple(requestOptions: RequestOptions? = nil) async throws -> Any {
         return try await httpClient.performRequest(
-            method: .post, 
-            path: "/snippet", 
-            requestOptions: requestOptions, 
+            method: .post,
+            path: "/snippet",
+            requestOptions: requestOptions,
             responseType: Any.self
         )
     }
 
     public func downloadFile(requestOptions: RequestOptions? = nil) async throws -> Any {
         return try await httpClient.performRequest(
-            method: .post, 
-            path: "/", 
-            requestOptions: requestOptions, 
+            method: .post,
+            path: "/",
+            requestOptions: requestOptions,
             responseType: Any.self
         )
     }

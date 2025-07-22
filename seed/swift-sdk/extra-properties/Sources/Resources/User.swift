@@ -7,10 +7,10 @@ public final class UserClient: Sendable {
 
     public func createUser(request: Any, requestOptions: RequestOptions? = nil) async throws -> User {
         return try await httpClient.performRequest(
-            method: .post, 
-            path: "/user", 
-            body: request, 
-            requestOptions: requestOptions, 
+            method: .post,
+            path: "/user",
+            body: request,
+            requestOptions: requestOptions,
             responseType: User.self
         )
     }

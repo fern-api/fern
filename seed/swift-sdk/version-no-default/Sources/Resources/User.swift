@@ -7,9 +7,9 @@ public final class UserClient: Sendable {
 
     public func getUser(userId: String, requestOptions: RequestOptions? = nil) async throws -> User {
         return try await httpClient.performRequest(
-            method: .get, 
-            path: "/users/\(userId)", 
-            requestOptions: requestOptions, 
+            method: .get,
+            path: "/users/\(userId)",
+            requestOptions: requestOptions,
             responseType: User.self
         )
     }

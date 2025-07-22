@@ -7,12 +7,12 @@ public final class PackageClient: Sendable {
 
     public func test(for: String, requestOptions: RequestOptions? = nil) async throws -> Any {
         return try await httpClient.performRequest(
-            method: .post, 
-            path: "/", 
+            method: .post,
+            path: "/",
             queryParams: [
                 "for": .string(`for`)
-            ], 
-            requestOptions: requestOptions, 
+            ],
+            requestOptions: requestOptions,
             responseType: Any.self
         )
     }

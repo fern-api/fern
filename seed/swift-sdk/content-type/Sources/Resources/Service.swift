@@ -7,10 +7,10 @@ public final class ServiceClient: Sendable {
 
     public func patch(request: Any, requestOptions: RequestOptions? = nil) async throws -> Any {
         return try await httpClient.performRequest(
-            method: .patch, 
-            path: "/", 
-            body: request, 
-            requestOptions: requestOptions, 
+            method: .patch,
+            path: "/",
+            body: request,
+            requestOptions: requestOptions,
             responseType: Any.self
         )
     }

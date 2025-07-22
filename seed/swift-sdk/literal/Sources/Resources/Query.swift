@@ -7,8 +7,8 @@ public final class QueryClient: Sendable {
 
     public func send(prompt: Any, optionalPrompt: Any? = nil, aliasPrompt: AliasToPrompt, aliasOptionalPrompt: AliasToPrompt? = nil, query: String, stream: Any, optionalStream: Any? = nil, aliasStream: AliasToStream, aliasOptionalStream: AliasToStream? = nil, requestOptions: RequestOptions? = nil) async throws -> SendResponse {
         return try await httpClient.performRequest(
-            method: .post, 
-            path: "/query", 
+            method: .post,
+            path: "/query",
             queryParams: [
                 "prompt": .unknown(prompt), 
                 "optional_prompt": optionalPrompt.map { .unknown($0) }, 
@@ -19,8 +19,8 @@ public final class QueryClient: Sendable {
                 "optional_stream": optionalStream.map { .unknown($0) }, 
                 "alias_stream": .string(aliasStream.rawValue), 
                 "alias_optional_stream": aliasOptionalStream.map { .string($0) }
-            ], 
-            requestOptions: requestOptions, 
+            ],
+            requestOptions: requestOptions,
             responseType: SendResponse.self
         )
     }

@@ -7,22 +7,22 @@ public final class ServiceClient: Sendable {
 
     public func getResource(resourceId: String, requestOptions: RequestOptions? = nil) async throws -> Resource {
         return try await httpClient.performRequest(
-            method: .get, 
-            path: "/resource/\(resourceId)", 
-            requestOptions: requestOptions, 
+            method: .get,
+            path: "/resource/\(resourceId)",
+            requestOptions: requestOptions,
             responseType: Resource.self
         )
     }
 
     public func listResources(pageLimit: Int, beforeDate: Date, requestOptions: RequestOptions? = nil) async throws -> [Resource] {
         return try await httpClient.performRequest(
-            method: .get, 
-            path: "/resource", 
+            method: .get,
+            path: "/resource",
             queryParams: [
                 "page_limit": .int(pageLimit), 
                 "beforeDate": .date(beforeDate)
-            ], 
-            requestOptions: requestOptions, 
+            ],
+            requestOptions: requestOptions,
             responseType: [Resource].self
         )
     }

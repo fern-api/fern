@@ -7,9 +7,9 @@ public final class ServiceClient: Sendable {
 
     public func nop(id: String, nestedId: String, requestOptions: RequestOptions? = nil) async throws -> Any {
         return try await httpClient.performRequest(
-            method: .get, 
-            path: "/\(id)//\(nestedId)", 
-            requestOptions: requestOptions, 
+            method: .get,
+            path: "/\(id)//\(nestedId)",
+            requestOptions: requestOptions,
             responseType: Any.self
         )
     }

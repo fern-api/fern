@@ -7,19 +7,19 @@ public final class HomepageClient: Sendable {
 
     public func getHomepageProblems(requestOptions: RequestOptions? = nil) async throws -> [ProblemId] {
         return try await httpClient.performRequest(
-            method: .get, 
-            path: "/homepage-problems", 
-            requestOptions: requestOptions, 
+            method: .get,
+            path: "/homepage-problems",
+            requestOptions: requestOptions,
             responseType: [ProblemId].self
         )
     }
 
     public func setHomepageProblems(request: [ProblemId], requestOptions: RequestOptions? = nil) async throws -> Any {
         return try await httpClient.performRequest(
-            method: .post, 
-            path: "/homepage-problems", 
-            body: request, 
-            requestOptions: requestOptions, 
+            method: .post,
+            path: "/homepage-problems",
+            body: request,
+            requestOptions: requestOptions,
             responseType: Any.self
         )
     }

@@ -7,19 +7,19 @@ public final class PaymentClient: Sendable {
 
     public func create(request: Any, requestOptions: RequestOptions? = nil) async throws -> UUID {
         return try await httpClient.performRequest(
-            method: .post, 
-            path: "/payment", 
-            body: request, 
-            requestOptions: requestOptions, 
+            method: .post,
+            path: "/payment",
+            body: request,
+            requestOptions: requestOptions,
             responseType: UUID.self
         )
     }
 
     public func delete(paymentId: String, requestOptions: RequestOptions? = nil) async throws -> Any {
         return try await httpClient.performRequest(
-            method: .delete, 
-            path: "/payment/\(paymentId)", 
-            requestOptions: requestOptions, 
+            method: .delete,
+            path: "/payment/\(paymentId)",
+            requestOptions: requestOptions,
             responseType: Any.self
         )
     }

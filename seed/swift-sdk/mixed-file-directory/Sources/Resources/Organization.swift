@@ -7,10 +7,10 @@ public final class OrganizationClient: Sendable {
 
     public func create(request: CreateOrganizationRequest, requestOptions: RequestOptions? = nil) async throws -> Organization {
         return try await httpClient.performRequest(
-            method: .post, 
-            path: "/organizations", 
-            body: request, 
-            requestOptions: requestOptions, 
+            method: .post,
+            path: "/organizations",
+            body: request,
+            requestOptions: requestOptions,
             responseType: Organization.self
         )
     }

@@ -7,20 +7,20 @@ public final class ContentTypeClient: Sendable {
 
     public func postJsonPatchContentType(request: ObjectWithOptionalField, requestOptions: RequestOptions? = nil) async throws -> Any {
         return try await httpClient.performRequest(
-            method: .post, 
-            path: "/foo/bar", 
-            body: request, 
-            requestOptions: requestOptions, 
+            method: .post,
+            path: "/foo/bar",
+            body: request,
+            requestOptions: requestOptions,
             responseType: Any.self
         )
     }
 
     public func postJsonPatchContentWithCharsetType(request: ObjectWithOptionalField, requestOptions: RequestOptions? = nil) async throws -> Any {
         return try await httpClient.performRequest(
-            method: .post, 
-            path: "/foo/baz", 
-            body: request, 
-            requestOptions: requestOptions, 
+            method: .post,
+            path: "/foo/baz",
+            body: request,
+            requestOptions: requestOptions,
             responseType: Any.self
         )
     }

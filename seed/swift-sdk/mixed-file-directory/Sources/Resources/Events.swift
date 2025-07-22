@@ -7,12 +7,12 @@ public final class EventsClient: Sendable {
 
     public func listEvents(limit: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> [Event] {
         return try await httpClient.performRequest(
-            method: .get, 
-            path: "/users/events", 
+            method: .get,
+            path: "/users/events",
             queryParams: [
                 "limit": limit.map { .int($0) }
-            ], 
-            requestOptions: requestOptions, 
+            ],
+            requestOptions: requestOptions,
             responseType: [Event].self
         )
     }

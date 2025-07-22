@@ -7,9 +7,9 @@ public final class ServiceClient: Sendable {
 
     public func getWithBearerToken(requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
-            method: .get, 
-            path: "/apiKey", 
-            requestOptions: requestOptions, 
+            method: .get,
+            path: "/apiKey",
+            requestOptions: requestOptions,
             responseType: String.self
         )
     }

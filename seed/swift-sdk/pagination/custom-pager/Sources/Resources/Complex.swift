@@ -7,10 +7,10 @@ public final class ComplexClient: Sendable {
 
     public func search(index: String, request: SearchRequest, requestOptions: RequestOptions? = nil) async throws -> PaginatedConversationResponse {
         return try await httpClient.performRequest(
-            method: .post, 
-            path: "/\(index)/conversations/search", 
-            body: request, 
-            requestOptions: requestOptions, 
+            method: .post,
+            path: "/\(index)/conversations/search",
+            body: request,
+            requestOptions: requestOptions,
             responseType: PaginatedConversationResponse.self
         )
     }

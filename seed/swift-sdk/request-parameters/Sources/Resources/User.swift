@@ -7,18 +7,18 @@ public final class UserClient: Sendable {
 
     public func createUsername(request: Any, requestOptions: RequestOptions? = nil) async throws -> Any {
         return try await httpClient.performRequest(
-            method: .post, 
-            path: "/user/username", 
-            body: request, 
-            requestOptions: requestOptions, 
+            method: .post,
+            path: "/user/username",
+            body: request,
+            requestOptions: requestOptions,
             responseType: Any.self
         )
     }
 
     public func getUsername(limit: Int, id: UUID, date: Date, deadline: Date, bytes: String, user: User, userList: [User], optionalDeadline: Date? = nil, keyValue: Any, optionalString: String? = nil, nestedUser: NestedUser, optionalUser: User? = nil, excludeUser: User, filter: String, longParam: Int64, bigIntParam: String, requestOptions: RequestOptions? = nil) async throws -> User {
         return try await httpClient.performRequest(
-            method: .get, 
-            path: "/user", 
+            method: .get,
+            path: "/user",
             queryParams: [
                 "limit": .int(limit), 
                 "id": .uuid(id), 
@@ -36,8 +36,8 @@ public final class UserClient: Sendable {
                 "filter": .string(filter), 
                 "longParam": .int64(longParam), 
                 "bigIntParam": .string(bigIntParam)
-            ], 
-            requestOptions: requestOptions, 
+            ],
+            requestOptions: requestOptions,
             responseType: User.self
         )
     }

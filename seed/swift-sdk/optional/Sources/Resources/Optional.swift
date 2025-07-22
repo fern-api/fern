@@ -7,10 +7,10 @@ public final class OptionalClient: Sendable {
 
     public func sendOptionalBody(request: Any?, requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
-            method: .post, 
-            path: "/send-optional-body", 
-            body: request, 
-            requestOptions: requestOptions, 
+            method: .post,
+            path: "/send-optional-body",
+            body: request,
+            requestOptions: requestOptions,
             responseType: String.self
         )
     }
