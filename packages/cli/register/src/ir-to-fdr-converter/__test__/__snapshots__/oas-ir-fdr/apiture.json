@@ -172,8 +172,7 @@
             "valueType": {
               "type": "id",
               "value": "fullAccountPermissions"
-            },
-            "propertyAccess": "READ_ONLY"
+            }
           },
           {
             "description": "If `true`, the customer has opted in to receive account statements electronically.",
@@ -444,8 +443,7 @@
                 "type": "id",
                 "value": "readOnlyResourceId"
               }
-            },
-            "propertyAccess": "READ_ONLY"
+            }
           },
           {
             "description": "The URL of the next page of accounts. If this URL is omitted, there are no more accounts.",
@@ -791,8 +789,7 @@
             "valueType": {
               "type": "id",
               "value": "readOnlyResourceId"
-            },
-            "propertyAccess": "READ_ONLY"
+            }
           },
           {
             "description": "The available balance: the funds available for use. This is the string representation of the exact decimal amount.",
@@ -803,8 +800,7 @@
                 "type": "id",
                 "value": "creditOrDebitValue"
               }
-            },
-            "propertyAccess": "READ_ONLY"
+            }
           },
           {
             "description": "The current balance. This is the balance at the end of the previous business day. This is the string representation of the exact decimal amount.",
@@ -815,8 +811,7 @@
                 "type": "id",
                 "value": "creditOrDebitValue"
               }
-            },
-            "propertyAccess": "READ_ONLY"
+            }
           },
           {
             "description": "The time when the balance values were last updated from the banking core.",
@@ -839,8 +834,7 @@
                 "type": "id",
                 "value": "creditOrDebitValue"
               }
-            },
-            "propertyAccess": "READ_ONLY"
+            }
           },
           {
             "description": "If `true`, the response is incomplete and the client may retry the operation after the `Retry-After` time in order to fetch balances for any incomplete accounts in the `items`. The retry operation should only pass in accounts that are `incomplete`.",
@@ -869,8 +863,7 @@
             "valueType": {
               "type": "id",
               "value": "readOnlyResourceId"
-            },
-            "propertyAccess": "READ_ONLY"
+            }
           },
           {
             "description": "The full name of the joint owner.",
@@ -1023,8 +1016,7 @@
             "valueType": {
               "type": "id",
               "value": "readOnlyResourceId"
-            },
-            "propertyAccess": "READ_ONLY"
+            }
           }
         ]
       }
@@ -2412,8 +2404,7 @@
             "valueType": {
               "type": "id",
               "value": "transferState"
-            },
-            "propertyAccess": "READ_ONLY"
+            }
           },
           {
             "description": "The date/time the transfer was processed.",
@@ -3012,8 +3003,7 @@
                 "type": "id",
                 "value": "readOnlyResourceId"
               }
-            },
-            "propertyAccess": "READ_ONLY"
+            }
           },
           {
             "description": "The timestamp when the problem occurred, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time `YYYY-MM-DDThh:mm:ss.sssZ` format, UTC.",
@@ -3147,8 +3137,7 @@
             "valueType": {
               "type": "id",
               "value": "readOnlyResourceId"
-            },
-            "propertyAccess": "READ_ONLY"
+            }
           },
           {
             "description": "The unique ID of this challenge instance. This is an opaque string. This is passed when starting a challenge factor or when validating the identity challenge responses.",
@@ -3156,8 +3145,7 @@
             "valueType": {
               "type": "id",
               "value": "readOnlyResourceId"
-            },
-            "propertyAccess": "READ_ONLY"
+            }
           },
           {
             "description": "A list of challenge factors. The user must complete one of these challenge factors. The `labels` in each factor identify one or more channels the user may use, such as a list of email addresses the system may use to send a one-time passcode to the user. ***Note**: The same channel may be used by multiple factors in the array of factors. For example, the user's primary mobile phone number may be used for both an `sms` factor and a `voice` factor.",
