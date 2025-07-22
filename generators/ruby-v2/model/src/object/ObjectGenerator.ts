@@ -25,7 +25,6 @@ export class ObjectGenerator extends FileGenerator<RubyFile, ModelCustomConfigSc
         return RelativeFilePath.of("lib");
     }
 
-    
     public doGenerate(): RubyFile {
         // Extract properties from the object declaration
         const properties = this.objectDeclaration.properties || [];
@@ -41,13 +40,16 @@ export class ObjectGenerator extends FileGenerator<RubyFile, ModelCustomConfigSc
         const clientModuleName = this.context.customConfig.clientModuleName || 
             fernFilepath.allParts[0]?.pascalCase.safeName || "Api";
         const typesModuleName = this.context.customConfig.typesModuleName || "Types";
-    
+
+        // Get superclass configuration with default
+        const superclassConfig = this.context.customConfig.superclass;
+
         // Create the class with superclass
         const classNode = ruby.class_({
             name: this.typeDeclaration.name.name.pascalCase.safeName,
             superclass: ruby.classReference({ 
-                name: "Model", 
-                modules: ["Internal", "Types"] 
+                name: superclassConfig.name, 
+                modules: superclassConfig.modules 
             }),
             docstring: this.typeDeclaration.docs ?? undefined,
             statements: statements
@@ -67,7 +69,7 @@ export class ObjectGenerator extends FileGenerator<RubyFile, ModelCustomConfigSc
     
         // Create a comment node for frozen_string_literal
         const frozenComment = ruby.comment({ docs: "frozen_string_literal: true" });
-    
+
         // Combine comment and module
         const fileContent = ruby.codeblock((writer) => {
             frozenComment.write(writer);
