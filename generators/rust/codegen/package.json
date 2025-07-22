@@ -1,0 +1,39 @@
+{
+  "name": "@fern-api/rust-codegen",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fern-api/fern.git",
+    "directory": "generators/rust/codegen"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "main": "lib/index.js",
+  "source": "src/index.ts",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "clean": "rm -rf ./lib && tsc --build --clean",
+    "compile": "tsc --build",
+    "depcheck": "depcheck",
+    "test": "vitest --passWithNoTests --run",
+    "test:update": "vitest --passWithNoTests --run -u"
+  },
+  "dependencies": {
+    "@fern-api/configs": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^18.7.18",
+    "depcheck": "^1.4.6",
+    "typescript": "5.7.2",
+    "vitest": "^2.0.5"
+  },
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    }
+  }
+} 

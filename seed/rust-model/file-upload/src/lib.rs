@@ -1,8 +1,8 @@
 //! Generated models by Fern
 
-pub mod type_service-id;
-pub mod type_service-myobjectwithoptional;
-pub mod type_service-myaliasobject;
-pub mod type_service-mycollectionaliasobject;
-pub mod type_service-myobject;
-pub mod type_service-objecttype;
+pub mod id;
+pub mod my_object_with_optional;
+pub mod my_alias_object;
+pub mod my_collection_alias_object;
+pub mod my_object;
+pub mod object_type;

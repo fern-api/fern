@@ -1,10 +1,10 @@
 //! Generated models by Fern
 
-pub mod type_commons-imported;
-pub mod type_folder-a/service-response;
-pub mod type_folder-b/common-foo;
-pub mod type_folder-c/common-foldercfoo;
-pub mod type_folder-d/service-response;
-pub mod type_foo-importingtype;
-pub mod type_foo-optionalstring;
-pub mod type_foo-filteredtype;
+pub mod imported;
+pub mod response;
+pub mod foo;
+pub mod folder_c_foo;
+pub mod response;
+pub mod importing_type;
+pub mod optional_string;
+pub mod filtered_type;
