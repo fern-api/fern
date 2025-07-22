@@ -1,4 +1,8 @@
+import { readFile } from "node:fs/promises";
+import { dirname, resolve } from "node:path";
+
 import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { RelativeFilePath, getAllFilesInDirectoryRelative, getFilename } from "@fern-api/fs-utils";
 import { AbstractSwiftGeneratorCli, SwiftFile } from "@fern-api/swift-base";
 import { generateInlinedRequestModels, generateModels } from "@fern-api/swift-model";
 
@@ -49,21 +53,17 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
-        const projectFiles = this.generateProjectFiles(context);
+        const projectFiles = await this.generateProjectFiles(context);
         context.project.addSourceFiles(...projectFiles);
         await context.project.persist();
     }
 
-    private generateProjectFiles(context: SdkGeneratorContext): SwiftFile[] {
+    private async generateProjectFiles(context: SdkGeneratorContext): Promise<SwiftFile[]> {
         const files: SwiftFile[] = [];
 
-        // Client.swift
-        const rootClientGenerator = new RootClientGenerator({
-            projectNamePascalCase: context.ir.apiName.pascalCase.unsafeName,
-            package_: context.ir.rootPackage,
-            context
-        });
-        files.push(rootClientGenerator.generate());
+        // Core/**/*.swift and Public/**/*.swift
+        const staticFiles = await this.generateStaticFiles();
+        files.push(...staticFiles);
 
         // Resources/**/*.swift
         Object.entries(context.ir.subpackages).forEach(([_, subpackage]) => {
@@ -77,14 +77,43 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
             files.push(subclientGenerator.generate());
         });
 
-        // Schemas/**/*.swift
-        const modelFiles = generateModels({ context });
-        files.push(...modelFiles);
-
         // Requests/**/*.swift
         const inlinedRequestFiles = generateInlinedRequestModels({ context });
         files.push(...inlinedRequestFiles);
 
+        // Schemas/**/*.swift
+        const modelFiles = generateModels({ context });
+        files.push(...modelFiles);
+
+        // Client.swift
+        const rootClientGenerator = new RootClientGenerator({
+            projectNamePascalCase: context.ir.apiName.pascalCase.unsafeName,
+            package_: context.ir.rootPackage,
+            context
+        });
+        files.push(rootClientGenerator.generate());
+
         return files;
+    }
+
+    private async generateStaticFiles(): Promise<SwiftFile[]> {
+        const pathToStaticDir = resolve(__dirname, "../static");
+        const relativeFilePathStrings = await getAllFilesInDirectoryRelative(pathToStaticDir);
+        return Promise.all(
+            relativeFilePathStrings.map(async (relativeFilePathString) => {
+                const relativeFilePath = RelativeFilePath.of(relativeFilePathString);
+                const filename = getFilename(relativeFilePath);
+                if (filename == null) {
+                    throw new Error(`Static file name is nullish for '${relativeFilePathString}'`);
+                }
+                const absoluteFilePath = resolve(pathToStaticDir, relativeFilePathString);
+                const fileContents = await readFile(absoluteFilePath, "utf-8");
+                return new SwiftFile({
+                    filename,
+                    directory: RelativeFilePath.of(dirname(relativeFilePathString)),
+                    fileContents
+                });
+            })
+        );
     }
 }
