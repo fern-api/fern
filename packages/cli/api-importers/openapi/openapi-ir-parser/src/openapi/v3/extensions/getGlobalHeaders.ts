@@ -30,7 +30,7 @@ export function getGlobalHeaders(document: OpenAPIV3.Document): GlobalHeader[] {
                           title: undefined,
                           namespace: undefined,
                           groupName: undefined,
-                          nameOverride: undefined
+                          overrideTypeName: undefined
                       })
                     : undefined
         });

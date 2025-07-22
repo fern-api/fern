@@ -11,7 +11,8 @@ export interface ArraySchemaWithExample
         FernOpenapiIr.WithDescription,
         FernOpenapiIr.WithAvailability,
         FernOpenapiIr.WithTitle,
-        FernOpenapiIr.WithInline {
+        FernOpenapiIr.WithInline,
+        FernOpenapiIr.WithCasing {
     value: FernOpenapiIr.SchemaWithExample;
     example: unknown[] | undefined;
 }

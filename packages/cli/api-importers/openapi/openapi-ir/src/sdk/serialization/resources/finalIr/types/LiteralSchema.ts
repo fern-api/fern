@@ -12,6 +12,7 @@ import { WithName } from "../../commons/types/WithName";
 import { WithDescription } from "../../commons/types/WithDescription";
 import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithTitle } from "../../commons/types/WithTitle";
+import { WithCasing } from "../../commons/types/WithCasing";
 
 export const LiteralSchema: core.serialization.ObjectSchema<
     serializers.LiteralSchema.Raw,
@@ -25,7 +26,8 @@ export const LiteralSchema: core.serialization.ObjectSchema<
     .extend(WithName)
     .extend(WithDescription)
     .extend(WithAvailability)
-    .extend(WithTitle);
+    .extend(WithTitle)
+    .extend(WithCasing);
 
 export declare namespace LiteralSchema {
     export interface Raw
@@ -34,7 +36,8 @@ export declare namespace LiteralSchema {
             WithName.Raw,
             WithDescription.Raw,
             WithAvailability.Raw,
-            WithTitle.Raw {
+            WithTitle.Raw,
+            WithCasing.Raw {
         value: LiteralSchemaValue.Raw;
     }
 }

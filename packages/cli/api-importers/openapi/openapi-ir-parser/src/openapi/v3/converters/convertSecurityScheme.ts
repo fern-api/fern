@@ -82,7 +82,7 @@ function getScopes(oauthSecurityScheme: OpenAPIV3.OAuth2SecurityScheme, source: 
         oauthSecurityScheme.flows.password?.scopes;
     if (scopes != null) {
         const schemaWithExample = convertEnum({
-            nameOverride: undefined,
+            overrideTypeName: undefined,
             generatedName: "OauthScope",
             title: undefined,
             enumValues: Object.keys(scopes),

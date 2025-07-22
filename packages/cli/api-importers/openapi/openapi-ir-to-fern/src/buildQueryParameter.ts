@@ -110,6 +110,7 @@ function getQueryParameterTypeReference({
                 value: buildTypeReference({
                     schema: Schema.optional({
                         nameOverride: schema.nameOverride,
+                        casing: schema.casing,
                         generatedName: schema.generatedName,
                         title: schema.title,
                         value: resolvedSchema.value,
@@ -190,6 +191,7 @@ function getQueryParameterTypeReference({
                         value: buildTypeReference({
                             schema: Schema.optional({
                                 nameOverride: schema.nameOverride,
+                                casing: schema.casing,
                                 generatedName: schema.generatedName,
                                 title: schema.title,
                                 value: secondSchema,
@@ -216,6 +218,7 @@ function getQueryParameterTypeReference({
                         value: buildTypeReference({
                             schema: Schema.optional({
                                 nameOverride: schema.nameOverride,
+                                casing: schema.casing,
                                 generatedName: schema.generatedName,
                                 title: schema.title,
                                 value: firstSchema,
@@ -269,6 +272,7 @@ function getQueryParameterTypeReference({
                     value: buildTypeReference({
                         schema: Schema.optional({
                             nameOverride: schema.nameOverride,
+                            casing: schema.casing,
                             generatedName: schema.generatedName,
                             title: schema.title,
                             value: resolvedSchema.value,
@@ -305,6 +309,7 @@ function getQueryParameterTypeReference({
                 value: buildTypeReference({
                     schema: Schema.optional({
                         nameOverride: schema.nameOverride,
+                        casing: schema.casing,
                         generatedName: schema.generatedName,
                         title: schema.title,
                         value: schema.value.value,
@@ -384,6 +389,7 @@ function getQueryParameterTypeReference({
                         value: buildTypeReference({
                             schema: Schema.optional({
                                 nameOverride: schema.nameOverride,
+                                casing: schema.casing,
                                 generatedName: schema.generatedName,
                                 title: schema.title,
                                 value: secondSchema,
@@ -411,6 +417,7 @@ function getQueryParameterTypeReference({
                             schema: Schema.optional({
                                 nameOverride: schema.nameOverride,
                                 generatedName: schema.generatedName,
+                                casing: schema.casing,
                                 title: schema.title,
                                 value: firstSchema,
                                 description: schema.description,
@@ -435,6 +442,7 @@ function getQueryParameterTypeReference({
                     schema: Schema.optional({
                         nameOverride: schema.nameOverride,
                         generatedName: schema.generatedName,
+                        casing: schema.casing,
                         title: schema.title,
                         value: oneOfSchema,
                         description: undefined,
@@ -481,6 +489,7 @@ function getQueryParameterTypeReference({
             value: buildTypeReference({
                 schema: Schema.optional({
                     nameOverride: schema.nameOverride,
+                    casing: schema.casing,
                     generatedName: schema.generatedName,
                     title: schema.title,
                     value: schema.value,

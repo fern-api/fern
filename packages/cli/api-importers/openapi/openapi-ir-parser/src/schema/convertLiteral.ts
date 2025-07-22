@@ -1,4 +1,5 @@
 import { Availability, LiteralSchemaValue, SchemaWithExample, SdkGroupName } from "@fern-api/openapi-ir";
+import { OverrideTypeName } from "../openapi/v3/extensions/getFernTypeNameExtension";
 
 function createLiteralSchemaValue(value: unknown): LiteralSchemaValue {
     if (typeof value === "string") {
@@ -12,7 +13,7 @@ function createLiteralSchemaValue(value: unknown): LiteralSchemaValue {
 }
 
 export function convertLiteral({
-    nameOverride,
+    overrideTypeName,
     generatedName,
     title,
     wrapAsNullable,
@@ -22,7 +23,7 @@ export function convertLiteral({
     namespace,
     groupName
 }: {
-    nameOverride: string | undefined;
+    overrideTypeName: OverrideTypeName | undefined;
     generatedName: string;
     title: string | undefined;
     value: unknown;
@@ -34,11 +35,13 @@ export function convertLiteral({
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
-            nameOverride,
+            nameOverride: overrideTypeName?.value,
+            casing: overrideTypeName?.casing,
             generatedName,
             title,
             value: SchemaWithExample.literal({
-                nameOverride,
+                nameOverride: overrideTypeName?.value,
+                casing: overrideTypeName?.casing,
                 generatedName,
                 title,
                 value: createLiteralSchemaValue(value),
@@ -55,7 +58,8 @@ export function convertLiteral({
         });
     }
     return SchemaWithExample.literal({
-        nameOverride,
+        nameOverride: overrideTypeName?.value,
+        casing: overrideTypeName?.casing,
         generatedName,
         title,
         value: createLiteralSchemaValue(value),

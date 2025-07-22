@@ -5,6 +5,8 @@ export * from "./TypeReferenceDetailedSchema";
 export * from "./TypeReferenceDeclarationWithNameSchema";
 export * from "./TypeReferenceDeclarationWithName";
 export * from "./BaseTypeDeclarationSchema";
+export * from "./TypeDeclarationName";
+export * from "./TypeDeclarationCasing";
 export * from "./AliasSchema";
 export * from "./ObjectSchema";
 export * from "./ObjectPropertySchema";

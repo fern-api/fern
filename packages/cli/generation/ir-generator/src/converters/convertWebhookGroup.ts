@@ -14,6 +14,7 @@ import { IdGenerator, isReferencedWebhookPayloadSchema } from "@fern-api/ir-util
 import { FernFileContext } from "../FernFileContext";
 import { ExampleResolver } from "../resolvers/ExampleResolver";
 import { TypeResolver } from "../resolvers/TypeResolver";
+import { getCasingOverrides } from "../utils/getCasingOverrides";
 import { parseTypeName } from "../utils/parseTypeName";
 import { convertAvailability } from "./convertDeclaration";
 import { convertHttpHeader } from "./services/convertHttpService";
@@ -87,7 +88,7 @@ function convertWebhookPayloadSchema({
         return WebhookPayload.inlinedPayload({
             name: file.casingsGenerator.generateName(payload.name),
             extends: getExtensionsAsList(payload.extends).map((extended) =>
-                parseTypeName({ typeName: extended, file })
+                parseTypeName({ typeName: extended, typeDeclaration: undefined, file })
             ),
             properties:
                 payload.properties != null
@@ -126,7 +127,10 @@ function convertInlinedRequestProperty({
         availability,
         name: file.casingsGenerator.generateNameAndWireValue({
             wireValue: propertyKey,
-            name: getPropertyName({ propertyKey, property: propertyDefinition }).name
+            name: getPropertyName({ propertyKey, property: propertyDefinition }).name,
+            opts: {
+                casingOverrides: getCasingOverrides(propertyDefinition)
+            }
         }),
         valueType: file.parseTypeReference(propertyDefinition)
     };

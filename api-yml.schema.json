@@ -838,6 +838,88 @@
         }
       ]
     },
+    "types.CasingOverridesSchema": {
+      "type": "object",
+      "properties": {
+        "camel": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pascal": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "snake": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "screaming-snake": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "types.TypeDeclarationCasing": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "casing": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/types.CasingOverridesSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "types.TypeDeclarationName": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/types.TypeDeclarationCasing"
+        }
+      ]
+    },
     "encoding.ProtobufTypeSchema": {
       "type": "object",
       "properties": {
@@ -1025,6 +1107,16 @@
         "type": {
           "type": "string"
         },
+        "name": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/types.TypeDeclarationName"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "default": {
           "oneOf": [
             {
@@ -1076,16 +1168,6 @@
           "oneOf": [
             {
               "$ref": "#/definitions/availability.AvailabilityUnionSchema"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "name": {
-          "oneOf": [
-            {
-              "type": "string"
             },
             {
               "type": "null"
@@ -1232,16 +1314,6 @@
             }
           ]
         },
-        "name": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "audiences": {
           "oneOf": [
             {
@@ -1257,6 +1329,16 @@
         },
         "type": {
           "type": "string"
+        },
+        "name": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/types.TypeDeclarationName"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [

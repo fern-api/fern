@@ -194,6 +194,7 @@ types:
       - commons.WithAvailability
       - commons.WithTitle
       - commons.WithInline
+      - commons.WithCasing
     properties:
       value: SchemaWithExample
       example: optional<list<unknown>>
@@ -208,6 +209,7 @@ types:
       - commons.WithEncoding
       - commons.WithTitle
       - commons.WithInline
+      - commons.WithCasing
     properties:
       key: PrimitiveSchemaWithExample
       value: SchemaWithExample
@@ -222,6 +224,7 @@ types:
       - commons.WithAvailability
       - commons.WithTitle
       - commons.WithInline
+      - commons.WithCasing
     properties:
       value: SchemaWithExample
 
@@ -234,6 +237,7 @@ types:
       - commons.WithAvailability
       - commons.WithTitle
       - commons.WithInline
+      - commons.WithCasing
     properties:
       value: SchemaWithExample
 
@@ -247,6 +251,7 @@ types:
       - commons.WithSource
       - commons.WithTitle
       - commons.WithInline
+      - commons.WithCasing
     properties:
       default: optional<finalIr.EnumValue>
       values: list<finalIr.EnumValue>
@@ -260,6 +265,7 @@ types:
       - commons.WithDescription
       - commons.WithAvailability
       - commons.WithTitle
+      - commons.WithCasing
     properties:
       example: unknown
 
@@ -273,6 +279,7 @@ types:
       - commons.WithSource
       - commons.WithTitle
       - commons.WithInline
+      - commons.WithCasing
     properties:
       allOf: list<finalIr.ReferencedSchema>
       properties: list<ObjectPropertyWithExample>
@@ -317,6 +324,7 @@ types:
       - commons.WithSource
       - commons.WithTitle
       - commons.WithInline
+      - commons.WithCasing
     properties:
       discriminantProperty: string
       commonProperties: list<CommonPropertyWithExample>
@@ -338,6 +346,7 @@ types:
       - commons.WithSource
       - commons.WithTitle
       - commons.WithInline
+      - commons.WithCasing
     properties:
       schemas: list<SchemaWithExample>
 
@@ -349,6 +358,7 @@ types:
       - commons.WithDescription
       - commons.WithAvailability
       - commons.WithTitle
+      - commons.WithCasing
     properties:
       schema: PrimitiveSchemaValueWithExample
 

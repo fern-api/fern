@@ -846,6 +846,88 @@
       ],
       "additionalProperties": false
     },
+    "fernDefinition.types.CasingOverridesSchema": {
+      "type": "object",
+      "properties": {
+        "camel": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pascal": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "snake": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "screaming-snake": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "fernDefinition.types.TypeDeclarationCasing": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "casing": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/fernDefinition.types.CasingOverridesSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "fernDefinition.types.TypeDeclarationName": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/fernDefinition.types.TypeDeclarationCasing"
+        }
+      ]
+    },
     "fernDefinition.encoding.ProtobufTypeSchema": {
       "type": "object",
       "properties": {
@@ -1033,6 +1115,16 @@
         "type": {
           "type": "string"
         },
+        "name": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/fernDefinition.types.TypeDeclarationName"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "default": {
           "oneOf": [
             {
@@ -1084,16 +1176,6 @@
           "oneOf": [
             {
               "$ref": "#/definitions/fernDefinition.availability.AvailabilityUnionSchema"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "name": {
-          "oneOf": [
-            {
-              "type": "string"
             },
             {
               "type": "null"

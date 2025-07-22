@@ -44,6 +44,7 @@ import { getExampleAsArray, getExampleAsBoolean, getExampleAsNumber, getExamples
 import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference";
 import { getGeneratedTypeName } from "./utils/getSchemaName";
 import { isReferenceObject } from "./utils/isReferenceObject";
+import { getFernTypeNameExtension, OverrideTypeName } from "../openapi/v3/extensions/getFernTypeNameExtension";
 
 export const SCHEMA_REFERENCE_PREFIX = "#/components/schemas/";
 export const SCHEMA_INLINE_REFERENCE_PREFIX = "#/components/responses/";
@@ -121,12 +122,13 @@ export function convertReferenceObject(
               new Set()
           )
         : SchemaWithExample.reference(
-              convertToReferencedSchema(schema, breadcrumbs, source, context.options.preserveSchemaIds)
+              convertToReferencedSchema(schema, breadcrumbs, source, context.options.preserveSchemaIds, context)
           );
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
             title: undefined,
             nameOverride: undefined,
+            casing: undefined,
             generatedName: getGeneratedTypeName(breadcrumbs, context.options.preserveSchemaIds),
             value: referenceSchema,
             description: undefined,
@@ -169,9 +171,11 @@ export function convertSchemaObject(
     if (typeof schema === "string") {
         schema = { type: schema } as OpenAPIV3.SchemaObject;
     }
-    const nameOverride =
-        getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME) ??
-        (context.options.useTitlesAsName ? getTitleAsName(schema.title) : undefined);
+    const overrideTypeName = getFernTypeNameExtension(
+        schema,
+        context.options.useTitlesAsName ? getTitleAsName(schema.title) : undefined,
+        context.logger
+    );
     const mixedGroupName =
         getExtension(schema, FernOpenAPIExtension.SDK_GROUP_NAME) ??
         getExtension<string[]>(schema, OpenAPIExtension.TAGS)?.[0];
@@ -206,7 +210,14 @@ export function convertSchemaObject(
         );
     }
 
-    const fernSchema = getFernTypeExtension({ schema, description, title, nameOverride, generatedName, availability });
+    const fernSchema = getFernTypeExtension({
+        schema,
+        description,
+        title,
+        overrideTypeName,
+        generatedName,
+        availability
+    });
     if (fernSchema != null) {
         return fernSchema;
     }
@@ -260,7 +271,7 @@ export function convertSchemaObject(
             // If enum is not a list of strings, just type as a string.
             // TODO(dsinghvi): Emit a warning we are doing this.
             return wrapPrimitive({
-                nameOverride,
+                overrideTypeName,
                 generatedName,
                 title,
                 primitive: PrimitiveSchemaValueWithExample.string({
@@ -283,7 +294,7 @@ export function convertSchemaObject(
 
         if (schema.enum.length === 1 && schema.enum[0] != null && fernEnum == null) {
             return convertLiteral({
-                nameOverride,
+                overrideTypeName,
                 generatedName,
                 title,
                 wrapAsNullable,
@@ -296,7 +307,7 @@ export function convertSchemaObject(
         }
 
         return convertEnum({
-            nameOverride,
+            overrideTypeName,
             generatedName,
             title,
             fernEnum,
@@ -327,7 +338,7 @@ export function convertSchemaObject(
                 };
             });
         return convertUndiscriminatedOneOf({
-            nameOverride,
+            overrideTypeName,
             generatedName,
             title,
             breadcrumbs,
@@ -348,7 +359,7 @@ export function convertSchemaObject(
         const literalValue = getExtension<boolean>(schema, FernOpenAPIExtension.BOOLEAN_LITERAL);
         if (literalValue != null) {
             return wrapLiteral({
-                nameOverride,
+                overrideTypeName,
                 generatedName,
                 title,
                 literal: LiteralSchemaValue.boolean(literalValue),
@@ -360,7 +371,7 @@ export function convertSchemaObject(
             });
         }
         return wrapPrimitive({
-            nameOverride,
+            overrideTypeName,
             generatedName,
             title,
             primitive: PrimitiveSchemaValueWithExample.boolean({
@@ -377,7 +388,7 @@ export function convertSchemaObject(
 
     if (schema.type === "number") {
         return convertNumber({
-            nameOverride,
+            overrideTypeName,
             generatedName,
             title,
             format: schema.format,
@@ -397,7 +408,7 @@ export function convertSchemaObject(
     }
     if (schema.type === "integer") {
         return convertInteger({
-            nameOverride,
+            overrideTypeName,
             generatedName,
             title,
             format: schema.format,
@@ -417,7 +428,7 @@ export function convertSchemaObject(
     }
     if ((schema.type as string) === "float") {
         return convertNumber({
-            nameOverride,
+            overrideTypeName,
             generatedName,
             title,
             format: "float",
@@ -438,7 +449,7 @@ export function convertSchemaObject(
     if (schema.type === "string") {
         if (schema.format === "date-time") {
             return wrapPrimitive({
-                nameOverride,
+                overrideTypeName,
                 generatedName,
                 title,
                 primitive: PrimitiveSchemaValueWithExample.datetime({
@@ -454,7 +465,7 @@ export function convertSchemaObject(
 
         if (schema.format === "date" && context.options.typeDatesAsStrings === false) {
             return wrapPrimitive({
-                nameOverride,
+                overrideTypeName,
                 generatedName,
                 title,
                 primitive: PrimitiveSchemaValueWithExample.date({
@@ -470,7 +481,8 @@ export function convertSchemaObject(
 
         if (schema.format === "json-string") {
             return SchemaWithExample.unknown({
-                nameOverride,
+                nameOverride: overrideTypeName?.value,
+                casing: overrideTypeName?.casing,
                 generatedName,
                 title,
                 description,
@@ -484,7 +496,7 @@ export function convertSchemaObject(
         const maybeConstValue = getProperty<string>(schema, "const");
         if (maybeConstValue != null) {
             return wrapLiteral({
-                nameOverride,
+                overrideTypeName,
                 generatedName,
                 title,
                 literal: LiteralSchemaValue.string(maybeConstValue),
@@ -497,7 +509,7 @@ export function convertSchemaObject(
         }
 
         return wrapPrimitive({
-            nameOverride,
+            overrideTypeName,
             generatedName,
             title,
             primitive: PrimitiveSchemaValueWithExample.string({
@@ -519,7 +531,7 @@ export function convertSchemaObject(
     // arrays
     if (schema.type === "array") {
         return convertArray({
-            nameOverride,
+            overrideTypeName,
             generatedName,
             title,
             breadcrumbs,
@@ -538,7 +550,7 @@ export function convertSchemaObject(
     // maps
     if (schema.additionalProperties != null && schema.additionalProperties !== false && hasNoProperties(schema)) {
         return convertAdditionalProperties({
-            nameOverride,
+            overrideTypeName,
             generatedName,
             title,
             breadcrumbs,
@@ -560,7 +572,7 @@ export function convertSchemaObject(
         const isDiscriminated = getExtension<boolean>(schema, FernOpenAPIExtension.IS_DISCRIMINATED);
         if (isDiscriminated === false) {
             return convertUndiscriminatedOneOf({
-                nameOverride,
+                overrideTypeName,
                 generatedName,
                 title,
                 breadcrumbs,
@@ -580,7 +592,7 @@ export function convertSchemaObject(
     if (schema.type === "object" && schema.discriminator != null && schema.discriminator.mapping != null) {
         if (!context.options.discriminatedUnionV2) {
             return convertDiscriminatedOneOf({
-                nameOverride,
+                overrideTypeName,
                 generatedName,
                 title,
                 breadcrumbs,
@@ -598,7 +610,7 @@ export function convertSchemaObject(
             });
         } else {
             return convertUndiscriminatedOneOfWithDiscriminant({
-                nameOverride,
+                overrideTypeName,
                 generatedName,
                 title,
                 description,
@@ -624,7 +636,7 @@ export function convertSchemaObject(
         ) {
             if (context.options.discriminatedUnionV2 || isUndiscriminated) {
                 return convertUndiscriminatedOneOfWithDiscriminant({
-                    nameOverride,
+                    overrideTypeName,
                     generatedName,
                     title,
                     description,
@@ -639,7 +651,7 @@ export function convertSchemaObject(
                 });
             } else {
                 return convertDiscriminatedOneOf({
-                    nameOverride,
+                    overrideTypeName,
                     generatedName,
                     title,
                     breadcrumbs,
@@ -659,7 +671,7 @@ export function convertSchemaObject(
         } else if (schema.oneOf.length === 1 && schema.oneOf[0] != null) {
             if (context.options.preserveSingleSchemaOneOf) {
                 return convertUndiscriminatedOneOf({
-                    nameOverride,
+                    overrideTypeName,
                     generatedName,
                     title,
                     breadcrumbs,
@@ -700,7 +712,7 @@ export function convertSchemaObject(
             const maybeAllEnumValues = getMaybeAllEnumValues({ schemas: schema.oneOf });
             if (maybeAllEnumValues != null) {
                 return convertEnum({
-                    nameOverride,
+                    overrideTypeName,
                     generatedName,
                     title,
                     fernEnum: undefined,
@@ -721,7 +733,7 @@ export function convertSchemaObject(
             const maybeDiscriminant = getDiscriminant({ schemas: schema.oneOf, context });
             if (maybeDiscriminant != null && !context.options.discriminatedUnionV2 && !isUndiscriminated) {
                 return convertDiscriminatedOneOfWithVariants({
-                    nameOverride,
+                    overrideTypeName,
                     generatedName,
                     title,
                     breadcrumbs,
@@ -745,7 +757,7 @@ export function convertSchemaObject(
                     return !isReferenceObject(schema) && (schema.type as string) === "null";
                 }).length > 0;
             return convertUndiscriminatedOneOf({
-                nameOverride,
+                overrideTypeName,
                 generatedName,
                 title,
                 breadcrumbs,
@@ -798,7 +810,7 @@ export function convertSchemaObject(
         });
         if (maybeDiscriminant != null && !context.options.discriminatedUnionV2) {
             return convertDiscriminatedOneOfWithVariants({
-                nameOverride,
+                overrideTypeName,
                 generatedName,
                 title,
                 breadcrumbs,
@@ -822,7 +834,7 @@ export function convertSchemaObject(
                 return !isReferenceObject(schema) && (schema.type as string) === "null";
             }).length > 0;
         return convertUndiscriminatedOneOf({
-            nameOverride,
+            overrideTypeName,
             generatedName,
             title,
             breadcrumbs,
@@ -896,7 +908,7 @@ export function convertSchemaObject(
         }
 
         return convertObject({
-            nameOverride,
+            overrideTypeName,
             generatedName,
             title,
             breadcrumbs,
@@ -920,7 +932,7 @@ export function convertSchemaObject(
     // handle vanilla object
     if (schema.type === "object" && hasNoOneOf(schema) && hasNoAllOf(schema) && hasNoProperties(schema)) {
         return wrapMap({
-            nameOverride,
+            overrideTypeName,
             generatedName,
             title,
             description,
@@ -928,6 +940,7 @@ export function convertSchemaObject(
             wrapAsNullable,
             keySchema: {
                 nameOverride: undefined,
+                casing: undefined,
                 generatedName: `${generatedName}Key`,
                 title: undefined,
                 description: undefined,
@@ -945,6 +958,7 @@ export function convertSchemaObject(
             },
             valueSchema: SchemaWithExample.unknown({
                 nameOverride: undefined,
+                casing: undefined,
                 generatedName: `${generatedName}Value`,
                 title: undefined,
                 description: undefined,
@@ -963,7 +977,8 @@ export function convertSchemaObject(
     if (schema.type == null) {
         const inferredValue = schema.example ?? schema.default;
         return SchemaWithExample.unknown({
-            nameOverride,
+            nameOverride: overrideTypeName?.value,
+            casing: overrideTypeName?.casing,
             generatedName,
             title,
             description,
@@ -1009,9 +1024,10 @@ export function convertToReferencedSchema(
     schema: OpenAPIV3.ReferenceObject,
     breadcrumbs: string[],
     source: Source,
-    preserveSchemaIds: boolean
+    preserveSchemaIds: boolean,
+    context: SchemaParserContext
 ): ReferencedSchema {
-    const nameOverride = getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME);
+    const overrideTypeName = getFernTypeNameExtension(schema, undefined, context.logger);
     const generatedName = getGeneratedTypeName(breadcrumbs, preserveSchemaIds);
     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     const description = (schema as any).description;
@@ -1025,7 +1041,8 @@ export function convertToReferencedSchema(
     return Schema.reference({
         // TODO(dsinghvi): references may contain files
         generatedName,
-        nameOverride,
+        nameOverride: overrideTypeName?.value,
+        casing: overrideTypeName?.casing,
         title: undefined,
         schema: schemaId,
         description: description ?? undefined,
@@ -1069,6 +1086,7 @@ function maybeInjectDescriptionOrGroupName(
     } else if (schema.type === "optional") {
         return SchemaWithExample.optional({
             nameOverride: schema.nameOverride,
+            casing: schema.casing,
             generatedName: schema.generatedName,
             title: schema.title,
             value: schema.value,
@@ -1081,6 +1099,7 @@ function maybeInjectDescriptionOrGroupName(
     } else if (schema.type === "nullable") {
         return SchemaWithExample.nullable({
             nameOverride: schema.nameOverride,
+            casing: schema.casing,
             generatedName: schema.generatedName,
             title: schema.title,
             value: schema.value,
@@ -1122,7 +1141,7 @@ export function wrapLiteral({
     groupName,
     description,
     availability,
-    nameOverride,
+    overrideTypeName,
     generatedName,
     title
 }: {
@@ -1132,17 +1151,19 @@ export function wrapLiteral({
     availability: Availability | undefined;
     namespace: string | undefined;
     groupName: SdkGroupName | undefined;
-    nameOverride: string | undefined;
+    overrideTypeName: OverrideTypeName | undefined;
     generatedName: string;
     title: string | undefined;
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
-            nameOverride,
+            nameOverride: overrideTypeName?.value,
+            casing: overrideTypeName?.casing,
             generatedName,
             title,
             value: SchemaWithExample.literal({
-                nameOverride,
+                nameOverride: overrideTypeName?.value,
+                casing: overrideTypeName?.casing,
                 generatedName,
                 title,
                 value: literal,
@@ -1159,7 +1180,8 @@ export function wrapLiteral({
         });
     }
     return SchemaWithExample.literal({
-        nameOverride,
+        nameOverride: overrideTypeName?.value,
+        casing: overrideTypeName?.casing,
         generatedName,
         title,
         value: literal,
@@ -1177,8 +1199,8 @@ export function wrapPrimitive({
     groupName,
     description,
     availability,
+    overrideTypeName,
     generatedName,
-    nameOverride,
     title
 }: {
     primitive: PrimitiveSchemaValueWithExample;
@@ -1187,18 +1209,20 @@ export function wrapPrimitive({
     groupName: SdkGroupName | undefined;
     description: string | undefined;
     availability: Availability | undefined;
-    nameOverride: string | undefined;
+    overrideTypeName: OverrideTypeName | undefined;
     generatedName: string;
     title: string | undefined;
 }): SchemaWithExample {
     groupName = typeof groupName === "string" ? [groupName] : groupName;
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
-            nameOverride,
+            nameOverride: overrideTypeName?.value,
+            casing: overrideTypeName?.casing,
             generatedName,
             title,
             value: SchemaWithExample.primitive({
-                nameOverride,
+                nameOverride: overrideTypeName?.value,
+                casing: overrideTypeName?.casing,
                 generatedName,
                 title,
                 schema: primitive,
@@ -1215,7 +1239,8 @@ export function wrapPrimitive({
         });
     }
     return SchemaWithExample.primitive({
-        nameOverride,
+        nameOverride: overrideTypeName?.value,
+        casing: overrideTypeName?.casing,
         generatedName,
         title,
         schema: primitive,

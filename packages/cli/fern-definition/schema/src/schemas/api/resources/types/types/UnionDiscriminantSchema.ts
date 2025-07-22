@@ -4,6 +4,7 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface UnionDiscriminantSchema extends FernDefinition.WithName {
+export interface UnionDiscriminantSchema {
     value: string;
+    name?: FernDefinition.TypeDeclarationName;
 }

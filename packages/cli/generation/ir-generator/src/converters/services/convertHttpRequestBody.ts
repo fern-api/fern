@@ -15,6 +15,7 @@ import {
 } from "@fern-api/ir-sdk";
 
 import { FernFileContext } from "../../FernFileContext";
+import { getCasingOverrides } from "../../utils/getCasingOverrides";
 import { parseTypeName } from "../../utils/parseTypeName";
 import { convertAvailability } from "../convertDeclaration";
 import { getExtensionsAsList, getPropertyName } from "../type-declarations/convertObjectTypeDeclaration";
@@ -106,9 +107,11 @@ export function convertHttpRequestBody({
         }
 
         return HttpRequestBody.inlinedRequestBody({
-            name: file.casingsGenerator.generateName(request.name),
+            name: file.casingsGenerator.generateName(request.name, {
+                casingOverrides: getCasingOverrides(request)
+            }),
             extends: getExtensionsAsList(request.body.extends).map((extended) =>
-                parseTypeName({ typeName: extended, file })
+                parseTypeName({ typeName: extended, typeDeclaration: undefined, file })
             ),
             contentType: request["content-type"],
             docs: request.docs,
@@ -190,7 +193,10 @@ function convertInlinedRequestProperty({
         availability,
         name: file.casingsGenerator.generateNameAndWireValue({
             wireValue: propertyKey,
-            name: getPropertyName({ propertyKey, property: propertyDefinition }).name
+            name: getPropertyName({ propertyKey, property: propertyDefinition }).name,
+            opts: {
+                casingOverrides: getCasingOverrides(propertyDefinition)
+            }
         }),
         valueType: file.parseTypeReference(propertyDefinition),
         v2Examples: {

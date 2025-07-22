@@ -13,6 +13,7 @@ import { WithDescription } from "../../commons/types/WithDescription";
 import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithSource } from "../../commons/types/WithSource";
 import { WithTitle } from "../../commons/types/WithTitle";
+import { WithCasing } from "../../commons/types/WithCasing";
 
 export const ReferencedSchema: core.serialization.ObjectSchema<
     serializers.ReferencedSchema.Raw,
@@ -27,7 +28,8 @@ export const ReferencedSchema: core.serialization.ObjectSchema<
     .extend(WithDescription)
     .extend(WithAvailability)
     .extend(WithSource)
-    .extend(WithTitle);
+    .extend(WithTitle)
+    .extend(WithCasing);
 
 export declare namespace ReferencedSchema {
     export interface Raw
@@ -37,7 +39,8 @@ export declare namespace ReferencedSchema {
             WithDescription.Raw,
             WithAvailability.Raw,
             WithSource.Raw,
-            WithTitle.Raw {
+            WithTitle.Raw,
+            WithCasing.Raw {
         schema: SchemaId.Raw;
     }
 }

@@ -14,6 +14,7 @@ import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithSource } from "../../commons/types/WithSource";
 import { WithTitle } from "../../commons/types/WithTitle";
 import { WithInline } from "../../commons/types/WithInline";
+import { WithCasing } from "../../commons/types/WithCasing";
 
 export const EnumSchema: core.serialization.ObjectSchema<serializers.EnumSchema.Raw, FernOpenapiIr.EnumSchema> =
     core.serialization
@@ -28,7 +29,8 @@ export const EnumSchema: core.serialization.ObjectSchema<serializers.EnumSchema.
         .extend(WithAvailability)
         .extend(WithSource)
         .extend(WithTitle)
-        .extend(WithInline);
+        .extend(WithInline)
+        .extend(WithCasing);
 
 export declare namespace EnumSchema {
     export interface Raw
@@ -39,7 +41,8 @@ export declare namespace EnumSchema {
             WithAvailability.Raw,
             WithSource.Raw,
             WithTitle.Raw,
-            WithInline.Raw {
+            WithInline.Raw,
+            WithCasing.Raw {
         default?: EnumValue.Raw | null;
         values: EnumValue.Raw[];
     }

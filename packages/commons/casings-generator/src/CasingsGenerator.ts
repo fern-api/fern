@@ -86,7 +86,6 @@ export function constructCasingsGenerator({
                     .map((part) => part.split(/(\d+)/).map(snakeCase).join(""))
                     .join("_");
             }
-
             return {
                 originalName: name,
                 camelCase: generateSafeAndUnsafeString(opts?.casingOverrides?.camel ?? camelCaseName),

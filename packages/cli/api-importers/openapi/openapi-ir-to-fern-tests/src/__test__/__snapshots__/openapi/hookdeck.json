@@ -1143,6 +1143,7 @@
             "properties": {
               "configs": {
                 "docs": "Decrypted Key/Value object of the associated configuration for that provider",
+                "name": "IntegrationConfigs",
                 "type": "IntegrationConfigs",
               },
               "created_at": {
@@ -1340,6 +1341,7 @@
               "delay": "IssueTriggerBackpressureDelay",
               "destinations": {
                 "docs": "A pattern to match on the destination name or array of destination IDs. Use `*` as wildcard.",
+                "name": "IssueTriggerBackpressureConfigsDestinations",
                 "type": "IssueTriggerBackpressureConfigsDestinations",
               },
             },
@@ -1389,6 +1391,7 @@
             "properties": {
               "connections": {
                 "docs": "A pattern to match on the connection name or array of connection IDs. Use `*` as wildcard.",
+                "name": "IssueTriggerDeliveryConfigsConnections",
                 "type": "IssueTriggerDeliveryConfigsConnections",
               },
               "strategy": "IssueTriggerStrategy",
@@ -1483,6 +1486,7 @@
               "log_level": "TransformationExecutionLogLevel",
               "transformations": {
                 "docs": "A pattern to match on the transformation name or array of transformation IDs. Use `*` as wildcard.",
+                "name": "IssueTriggerTransformationConfigsTransformations",
                 "type": "IssueTriggerTransformationConfigsTransformations",
               },
             },
@@ -2630,6 +2634,7 @@ types:
         docs: >-
           A pattern to match on the connection name or array of connection IDs.
           Use `*` as wildcard.
+        name: IssueTriggerDeliveryConfigsConnections
     source:
       openapi: ../openapi.yml
   TransformationExecutionLogLevel:
@@ -2662,6 +2667,7 @@ types:
         docs: >-
           A pattern to match on the transformation name or array of
           transformation IDs. Use `*` as wildcard.
+        name: IssueTriggerTransformationConfigsTransformations
     source:
       openapi: ../openapi.yml
   IssueTriggerBackpressureDelay:
@@ -2692,6 +2698,7 @@ types:
         docs: >-
           A pattern to match on the destination name or array of destination
           IDs. Use `*` as wildcard.
+        name: IssueTriggerBackpressureConfigsDestinations
     source:
       openapi: ../openapi.yml
   IssueTriggerReference:
@@ -3388,6 +3395,7 @@ types:
         docs: >-
           Decrypted Key/Value object of the associated configuration for that
           provider
+        name: IntegrationConfigs
       sources:
         docs: List of source IDs the integration is attached to
         type: list<string>
@@ -13176,6 +13184,7 @@ docs: An event is any request that Hookdeck receives from a source.
                   "properties": {
                     "configs": {
                       "docs": "Decrypted Key/Value object of the associated configuration for that provider",
+                      "name": "CreateIntegrationRequestConfigs",
                       "type": "CreateIntegrationRequestConfigs",
                     },
                     "features": {
@@ -13579,6 +13588,7 @@ service:
               docs: >-
                 Decrypted Key/Value object of the associated configuration for
                 that provider
+              name: CreateIntegrationRequestConfigs
             provider: root.IntegrationProvider
             features:
               docs: List of features to enable (see features list above)

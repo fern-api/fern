@@ -10,17 +10,17 @@ export const CasingOverrides: core.serialization.ObjectSchema<
     serializers.CasingOverrides.Raw,
     FernOpenapiIr.CasingOverrides
 > = core.serialization.objectWithoutOptionalProperties({
-    snake: core.serialization.string().optional(),
-    camel: core.serialization.string().optional(),
-    screamingSnake: core.serialization.string().optional(),
     pascal: core.serialization.string().optional(),
+    camel: core.serialization.string().optional(),
+    snake: core.serialization.string().optional(),
+    screamingSnake: core.serialization.string().optional(),
 });
 
 export declare namespace CasingOverrides {
     export interface Raw {
-        snake?: string | null;
-        camel?: string | null;
-        screamingSnake?: string | null;
         pascal?: string | null;
+        camel?: string | null;
+        snake?: string | null;
+        screamingSnake?: string | null;
     }
 }

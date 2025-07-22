@@ -8,6 +8,7 @@ import { PropertyResolver } from "../../resolvers/PropertyResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { convertReferenceHttpRequestBody } from "./convertHttpRequestBody";
 import { getRequestPropertyComponents } from "./convertProperty";
+import { getCasingOverrides } from "../../utils/getCasingOverrides";
 
 export const DEFAULT_REQUEST_PARAMETER_NAME = "request";
 export const DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER = "body";
@@ -63,7 +64,9 @@ function convertHttpSdkRequestShape({
             throw new Error("Name is missing for request wrapper");
         }
         return SdkRequestShape.wrapper({
-            wrapperName: file.casingsGenerator.generateName(request.name),
+            wrapperName: file.casingsGenerator.generateName(request.name, {
+                casingOverrides: getCasingOverrides(request)
+            }),
             bodyKey: file.casingsGenerator.generateName(DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER),
             includePathParameters: shouldIncludePathParametersInWrapper(request),
             onlyPathParameters: doesRequestHaveOnlyPathParameters({ request, file, typeResolver })

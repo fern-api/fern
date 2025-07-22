@@ -126,7 +126,7 @@ export function getReferencedTypesFromRawDeclaration({
         });
 
         for (const rawName of rawNames) {
-            const parsedTypeName = parseTypeName({ typeName: rawName, file });
+            const parsedTypeName = parseTypeName({ typeName: rawName, typeDeclaration: undefined, file });
             if (!seenTypeNames.hasTypeNameBeenSeen(parsedTypeName)) {
                 seenTypeNames.addTypeName(parsedTypeName);
 

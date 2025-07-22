@@ -210,6 +210,88 @@
         }
       ]
     },
+    "types.CasingOverridesSchema": {
+      "type": "object",
+      "properties": {
+        "camel": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pascal": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "snake": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "screaming-snake": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "types.TypeDeclarationCasing": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "casing": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/types.CasingOverridesSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "types.TypeDeclarationName": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/types.TypeDeclarationCasing"
+        }
+      ]
+    },
     "availability.AvailabilityStatusSchema": {
       "type": "string",
       "enum": [
@@ -389,6 +471,16 @@
         "type": {
           "type": "string"
         },
+        "name": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/types.TypeDeclarationName"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "default": {
           "oneOf": [
             {
@@ -440,16 +532,6 @@
           "oneOf": [
             {
               "$ref": "#/definitions/availability.AvailabilityUnionSchema"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "name": {
-          "oneOf": [
-            {
-              "type": "string"
             },
             {
               "type": "null"
@@ -541,6 +623,16 @@
             }
           ]
         },
+        "name": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/types.TypeDeclarationName"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "docs": {
           "oneOf": [
             {
@@ -601,52 +693,6 @@
           "oneOf": [
             {
               "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        }
-      },
-      "additionalProperties": false
-    },
-    "types.CasingOverridesSchema": {
-      "type": "object",
-      "properties": {
-        "camel": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "snake": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "pascal": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "screaming-snake": {
-          "oneOf": [
-            {
-              "type": "string"
             },
             {
               "type": "null"
@@ -754,6 +800,16 @@
             }
           ]
         },
+        "name": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/types.TypeDeclarationName"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "docs": {
           "oneOf": [
             {
@@ -812,18 +868,18 @@
     "types.UnionDiscriminantSchema": {
       "type": "object",
       "properties": {
+        "value": {
+          "type": "string"
+        },
         "name": {
           "oneOf": [
             {
-              "type": "string"
+              "$ref": "#/definitions/types.TypeDeclarationName"
             },
             {
               "type": "null"
             }
           ]
-        },
-        "value": {
-          "type": "string"
         }
       },
       "required": [
@@ -901,16 +957,6 @@
             }
           ]
         },
-        "name": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "audiences": {
           "oneOf": [
             {
@@ -926,6 +972,16 @@
         },
         "type": {
           "type": "string"
+        },
+        "name": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/types.TypeDeclarationName"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -988,16 +1044,6 @@
             }
           ]
         },
-        "name": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "availability": {
           "oneOf": [
             {
@@ -1032,6 +1078,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/types.SingleUnionTypeKey"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/types.TypeDeclarationName"
             },
             {
               "type": "null"
@@ -1091,6 +1147,16 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/types.TypeDeclarationName"
             },
             {
               "type": "null"
@@ -1273,6 +1339,16 @@
             }
           ]
         },
+        "name": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/types.TypeDeclarationName"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "docs": {
           "oneOf": [
             {
@@ -1362,6 +1438,16 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/types.TypeDeclarationName"
             },
             {
               "type": "null"
@@ -1529,6 +1615,16 @@
         "type": {
           "type": "string"
         },
+        "name": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/types.TypeDeclarationName"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "default": {
           "oneOf": [
             {
@@ -1580,16 +1676,6 @@
           "oneOf": [
             {
               "$ref": "#/definitions/availability.AvailabilityUnionSchema"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "name": {
-          "oneOf": [
-            {
-              "type": "string"
             },
             {
               "type": "null"
@@ -1641,6 +1727,16 @@
         "type": {
           "type": "string"
         },
+        "name": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/types.TypeDeclarationName"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "default": {
           "oneOf": [
             {
@@ -1692,16 +1788,6 @@
           "oneOf": [
             {
               "$ref": "#/definitions/availability.AvailabilityUnionSchema"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "name": {
-          "oneOf": [
-            {
-              "type": "string"
             },
             {
               "type": "null"
@@ -1786,6 +1872,16 @@
         "type": {
           "type": "string"
         },
+        "name": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/types.TypeDeclarationName"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "default": {
           "oneOf": [
             {
@@ -1837,16 +1933,6 @@
           "oneOf": [
             {
               "$ref": "#/definitions/availability.AvailabilityUnionSchema"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "name": {
-          "oneOf": [
-            {
-              "type": "string"
             },
             {
               "type": "null"

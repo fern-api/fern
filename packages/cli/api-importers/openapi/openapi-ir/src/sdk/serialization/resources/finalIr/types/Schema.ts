@@ -9,7 +9,7 @@ import { PrimitiveSchema } from "./PrimitiveSchema";
 import { EnumSchema } from "./EnumSchema";
 import { ReferencedSchema } from "./ReferencedSchema";
 import { LiteralSchema } from "./LiteralSchema";
-import { WithName } from "../../commons/types/WithName";
+import { UnknownSchema } from "./UnknownSchema";
 
 export const Schema: core.serialization.Schema<serializers.Schema.Raw, FernOpenapiIr.Schema> = core.serialization
     .union("type", {
@@ -25,7 +25,7 @@ export const Schema: core.serialization.Schema<serializers.Schema.Raw, FernOpena
             value: core.serialization.lazy(() => serializers.OneOfSchema),
         }),
         nullable: core.serialization.lazyObject(() => serializers.NullableSchema),
-        unknown: WithName,
+        unknown: UnknownSchema,
     })
     .transform<FernOpenapiIr.Schema>({
         transform: (value) => {
@@ -114,7 +114,7 @@ export declare namespace Schema {
         type: "nullable";
     }
 
-    export interface Unknown extends WithName.Raw {
+    export interface Unknown extends UnknownSchema.Raw {
         type: "unknown";
     }
 }

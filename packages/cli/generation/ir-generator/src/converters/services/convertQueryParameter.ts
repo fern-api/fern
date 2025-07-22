@@ -2,7 +2,9 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { QueryParameter } from "@fern-api/ir-sdk";
 
 import { FernFileContext } from "../../FernFileContext";
+import { getTypeDeclarationName } from "../../utils/getTypeDeclarationName";
 import { convertDeclaration } from "../convertDeclaration";
+import { getCasingOverrides } from "../../utils/getCasingOverrides";
 
 export function convertQueryParameter({
     file,
@@ -19,7 +21,10 @@ export function convertQueryParameter({
         ...convertDeclaration(queryParameter),
         name: file.casingsGenerator.generateNameAndWireValue({
             wireValue: queryParameterKey,
-            name
+            name,
+            opts: {
+                casingOverrides: getCasingOverrides(queryParameter)
+            }
         }),
         valueType,
         allowMultiple:
@@ -40,10 +45,9 @@ export function getQueryParameterName({
     queryParameterKey: string;
     queryParameter: RawSchemas.HttpQueryParameterSchema;
 }): { name: string; wasExplicitlySet: boolean } {
-    if (typeof queryParameter !== "string") {
-        if (queryParameter.name != null) {
-            return { name: queryParameter.name, wasExplicitlySet: true };
-        }
+    let name = getTypeDeclarationName(queryParameter);
+    if (name) {
+        return { name, wasExplicitlySet: true };
     }
     return { name: queryParameterKey, wasExplicitlySet: false };
 }

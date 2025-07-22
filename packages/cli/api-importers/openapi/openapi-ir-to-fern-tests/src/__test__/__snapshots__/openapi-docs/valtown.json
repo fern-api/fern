@@ -1903,6 +1903,7 @@ docs: Blobs
             "union": [
               {
                 "display-name": "EmailData",
+                "name": "EmailData",
                 "type": "EmailData",
               },
               {
@@ -1978,6 +1979,7 @@ docs: Blobs
     union:
       - display-name: EmailData
         type: EmailData
+        name: EmailData
       - type: list<EmailData>
     source:
       openapi: ../openapi.yml
@@ -3511,6 +3513,7 @@ docs: Search
               "args": {
                 "display-name": "StatementArg",
                 "docs": "List of arguments to be used in the given statement",
+                "name": "StatementArg",
                 "type": "StatementArg",
               },
               "sql": {
@@ -3632,6 +3635,7 @@ docs: Search
         display-name: StatementArg
         type: StatementArg
         docs: List of arguments to be used in the given statement
+        name: StatementArg
     source:
       openapi: ../openapi.yml
     inline: true

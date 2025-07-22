@@ -1679,6 +1679,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
             "properties": {
               "details": {
                 "docs": "Information regarding the bank account.",
+                "name": "CreateBankAccountOfpiDetails",
                 "type": "CreateBankAccountOfpiDetails",
               },
               "holder": {
@@ -1856,6 +1857,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
 
 **Note:** You can send through this value either as a string or an float. Regardless of the type you choose to send the `amount` as, Belvo returns a string with two decimal points, separated by a period ( `.`). For example, `1234.12`.
 ",
+                "name": "CreatePaymentLinkOfpiAmount",
                 "type": "CreatePaymentLinkOfpiAmount",
               },
               "callback_urls": {
@@ -1934,6 +1936,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
 
 **Note:** You can send this value either as a string or an integer. Regardless of the type you choose to send the `amount` as, Belvo returns a string with two decimal points, separated by a period ( `.`). For example, `350000.00`.
 ",
+                "name": "CreatePaymentLinkPseAmount",
                 "type": "CreatePaymentLinkPseAmount",
               },
               "callback_urls": {
@@ -19561,6 +19564,7 @@ types:
       details:
         type: CreateBankAccountOfpiDetails
         docs: Information regarding the bank account.
+        name: CreateBankAccountOfpiDetails
     source:
       openapi: ../openapi.yml
   PaymentsWay:
@@ -19899,6 +19903,7 @@ types:
           float. Regardless of the type you choose to send the `amount` as,
           Belvo returns a string with two decimal points, separated by a period
           ( `.`). For example, `1234.12`.
+        name: CreatePaymentLinkOfpiAmount
       customer:
         type: string
         docs: |
@@ -19965,6 +19970,7 @@ types:
           Regardless of the type you choose to send the `amount` as, Belvo
           returns a string with two decimal points, separated by a period (
           `.`). For example, `350000.00`.
+        name: CreatePaymentLinkPseAmount
       customer:
         type: string
         docs: |
@@ -48827,6 +48833,7 @@ A payment intent captures all payment information (such as the amount to be char
 
 **Note:** You can send through this value either as a string or an integer. Regardless of the type you choose to send the `amount` as, Belvo returns a string with two decimal points, separated by a period ( `.`). For example, `350000.00`.
 ",
+                      "name": "CreatePaymentIntentPseAmount",
                       "type": "CreatePaymentIntentPseAmount",
                     },
                     "customer": {
@@ -49487,6 +49494,7 @@ service:
                 an integer. Regardless of the type you choose to send the
                 `amount` as, Belvo returns a string with two decimal points,
                 separated by a period ( `.`). For example, `350000.00`.
+              name: CreatePaymentIntentPseAmount
             customer:
               type: string
               docs: |

@@ -3,8 +3,8 @@
  */
 
 export interface CasingOverrides {
-    snake: string | undefined;
-    camel: string | undefined;
-    screamingSnake: string | undefined;
     pascal: string | undefined;
+    camel: string | undefined;
+    snake: string | undefined;
+    screamingSnake: string | undefined;
 }

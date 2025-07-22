@@ -11,6 +11,7 @@ export interface ArraySchema
         FernOpenapiIr.WithDescription,
         FernOpenapiIr.WithAvailability,
         FernOpenapiIr.WithTitle,
-        FernOpenapiIr.WithInline {
+        FernOpenapiIr.WithInline,
+        FernOpenapiIr.WithCasing {
     value: FernOpenapiIr.Schema;
 }

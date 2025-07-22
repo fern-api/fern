@@ -13,7 +13,8 @@ export interface DiscriminatedOneOfSchemaWithExample
         FernOpenapiIr.WithEncoding,
         FernOpenapiIr.WithSource,
         FernOpenapiIr.WithTitle,
-        FernOpenapiIr.WithInline {
+        FernOpenapiIr.WithInline,
+        FernOpenapiIr.WithCasing {
     discriminantProperty: string;
     commonProperties: FernOpenapiIr.CommonPropertyWithExample[];
     schemas: Record<string, FernOpenapiIr.SchemaWithExample>;

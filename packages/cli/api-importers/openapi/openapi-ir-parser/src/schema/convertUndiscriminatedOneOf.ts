@@ -13,6 +13,7 @@ import {
     isSchemaEqual
 } from "@fern-api/openapi-ir";
 
+import { OverrideTypeName } from "../openapi/v3/extensions/getFernTypeNameExtension";
 import { SchemaParserContext } from "./SchemaParserContext";
 import { convertEnum } from "./convertEnum";
 import { convertReferenceObject, convertSchema } from "./convertSchemas";
@@ -31,7 +32,7 @@ export interface UndiscriminatedOneOfPrefixName {
 export type UndiscriminatedOneOfPrefix = UndiscriminatedOneOfPrefixName | UndiscriminatedOneOfPrefixNotFound;
 
 export function constructUndiscriminatedOneOf({
-    nameOverride,
+    overrideTypeName,
     generatedName,
     title,
     description,
@@ -44,7 +45,7 @@ export function constructUndiscriminatedOneOf({
     encoding,
     source
 }: {
-    nameOverride: string | undefined;
+    overrideTypeName: OverrideTypeName | undefined;
     generatedName: string;
     title: string | undefined;
     breadcrumbs: string[];
@@ -62,7 +63,7 @@ export function constructUndiscriminatedOneOf({
     const uniqueSubtypes = deduplicateSubtypes(subtypes);
     return processSubtypes({
         uniqueSubtypes,
-        nameOverride,
+        overrideTypeName,
         generatedName,
         title,
         wrapAsNullable,
@@ -77,7 +78,7 @@ export function constructUndiscriminatedOneOf({
 }
 
 export function convertUndiscriminatedOneOf({
-    nameOverride,
+    overrideTypeName,
     generatedName,
     title,
     breadcrumbs,
@@ -92,7 +93,7 @@ export function convertUndiscriminatedOneOf({
     source,
     subtypePrefixOverrides
 }: {
-    nameOverride: string | undefined;
+    overrideTypeName: OverrideTypeName | undefined;
     generatedName: string;
     title: string | undefined;
     breadcrumbs: string[];
@@ -119,6 +120,7 @@ export function convertUndiscriminatedOneOf({
             return schema.enum.map((enumValue) => {
                 return SchemaWithExample.literal({
                     nameOverride: undefined,
+                    casing: undefined,
                     generatedName: getGeneratedTypeName([generatedName, enumValue], context.options.preserveSchemaIds),
                     title: undefined,
                     value: LiteralSchemaValue.string(String(enumValue)),
@@ -144,7 +146,7 @@ export function convertUndiscriminatedOneOf({
     const uniqueSubtypes = deduplicateSubtypes(convertedSubtypes);
     return processSubtypes({
         uniqueSubtypes,
-        nameOverride,
+        overrideTypeName,
         generatedName,
         title,
         wrapAsNullable,
@@ -179,7 +181,7 @@ function deduplicateSubtypes(subtypes: SchemaWithExample[]): SchemaWithExample[]
 
 function processSubtypes({
     uniqueSubtypes,
-    nameOverride,
+    overrideTypeName,
     generatedName,
     title,
     wrapAsNullable,
@@ -192,7 +194,7 @@ function processSubtypes({
     source
 }: {
     uniqueSubtypes: SchemaWithExample[];
-    nameOverride: string | undefined;
+    overrideTypeName: OverrideTypeName | undefined;
     generatedName: string;
     title: string | undefined;
     wrapAsNullable: boolean;
@@ -221,7 +223,7 @@ function processSubtypes({
             }
         });
         return convertEnum({
-            nameOverride,
+            overrideTypeName,
             generatedName,
             title,
             wrapAsNullable,
@@ -244,7 +246,7 @@ function processSubtypes({
     }
 
     return wrapUndiscriminatedOneOf({
-        nameOverride,
+        overrideTypeName,
         generatedName,
         title,
         wrapAsNullable,
@@ -259,7 +261,7 @@ function processSubtypes({
 }
 
 export function convertUndiscriminatedOneOfWithDiscriminant({
-    nameOverride,
+    overrideTypeName,
     generatedName,
     title,
     description,
@@ -272,7 +274,7 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
     encoding,
     source
 }: {
-    nameOverride: string | undefined;
+    overrideTypeName: OverrideTypeName | undefined;
     generatedName: string;
     title: string | undefined;
     description: string | undefined;
@@ -305,6 +307,7 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
             subtypeReference.properties = {
                 [discriminator.propertyName]: SchemaWithExample.literal({
                     nameOverride: undefined,
+                    casing: undefined,
                     generatedName: getGeneratedTypeName(
                         [generatedName, discriminantValue],
                         context.options.preserveSchemaIds
@@ -358,7 +361,7 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
             }
         });
         return convertEnum({
-            nameOverride,
+            overrideTypeName,
             generatedName,
             title,
             wrapAsNullable,
@@ -381,7 +384,7 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
     }
 
     return wrapUndiscriminatedOneOf({
-        nameOverride,
+        overrideTypeName,
         generatedName,
         title,
         wrapAsNullable,
@@ -455,7 +458,7 @@ function getUniqueSubTypeNames({
 }
 
 export function wrapUndiscriminatedOneOf({
-    nameOverride,
+    overrideTypeName,
     generatedName,
     title,
     wrapAsNullable,
@@ -468,7 +471,7 @@ export function wrapUndiscriminatedOneOf({
     source
 }: {
     wrapAsNullable: boolean;
-    nameOverride: string | undefined;
+    overrideTypeName: OverrideTypeName | undefined;
     generatedName: string;
     title: string | undefined;
     description: string | undefined;
@@ -481,14 +484,16 @@ export function wrapUndiscriminatedOneOf({
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
-            nameOverride,
+            nameOverride: overrideTypeName?.value,
+            casing: overrideTypeName?.casing,
             generatedName,
             title,
             value: SchemaWithExample.oneOf(
                 OneOfSchemaWithExample.undiscriminated({
                     description,
                     availability,
-                    nameOverride,
+                    nameOverride: overrideTypeName?.value,
+                    casing: overrideTypeName?.casing,
                     generatedName,
                     title,
                     schemas: subtypes,
@@ -510,7 +515,8 @@ export function wrapUndiscriminatedOneOf({
         OneOfSchemaWithExample.undiscriminated({
             description,
             availability,
-            nameOverride,
+            nameOverride: overrideTypeName?.value,
+            casing: overrideTypeName?.casing,
             generatedName,
             title,
             schemas: subtypes,

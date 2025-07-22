@@ -31,7 +31,8 @@ export function parseInlineType({ type, file, _default, validation }: parseInlin
                 TypeReference.named({
                     ...parseTypeName({
                         typeName: namedType,
-                        file
+                        file,
+                        typeDeclaration: undefined
                     }),
                     default: undefined,
                     inline: undefined

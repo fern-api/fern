@@ -39,3 +39,4 @@ export { getResolvedPathOfImportedFile } from "./utils/getResolvedPathOfImported
 export { parseInlineType } from "./utils/parseInlineType";
 export { parseReferenceToEndpointName, type ReferenceToEndpointName } from "./utils/parseReferenceToEndpointName";
 export { parseReferenceToTypeName, type ReferenceToTypeName } from "./utils/parseReferenceToTypeName";
+export { getCasingOverrides } from "./utils/getCasingOverrides";

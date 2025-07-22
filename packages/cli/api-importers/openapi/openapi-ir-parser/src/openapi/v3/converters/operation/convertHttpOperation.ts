@@ -78,6 +78,7 @@ export function convertHttpOperation({
                     description: undefined,
                     generatedName: "",
                     nameOverride: undefined,
+                    casing: undefined,
                     namespace: undefined,
                     groupName: undefined,
                     availability: undefined,

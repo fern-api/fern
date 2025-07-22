@@ -11,6 +11,7 @@ import { WithName } from "../../commons/types/WithName";
 import { WithDescription } from "../../commons/types/WithDescription";
 import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithTitle } from "../../commons/types/WithTitle";
+import { WithCasing } from "../../commons/types/WithCasing";
 
 export const UnknownSchemaWithExample: core.serialization.ObjectSchema<
     serializers.UnknownSchemaWithExample.Raw,
@@ -24,7 +25,8 @@ export const UnknownSchemaWithExample: core.serialization.ObjectSchema<
     .extend(WithName)
     .extend(WithDescription)
     .extend(WithAvailability)
-    .extend(WithTitle);
+    .extend(WithTitle)
+    .extend(WithCasing);
 
 export declare namespace UnknownSchemaWithExample {
     export interface Raw
@@ -33,7 +35,8 @@ export declare namespace UnknownSchemaWithExample {
             WithName.Raw,
             WithDescription.Raw,
             WithAvailability.Raw,
-            WithTitle.Raw {
+            WithTitle.Raw,
+            WithCasing.Raw {
         example?: unknown;
     }
 }

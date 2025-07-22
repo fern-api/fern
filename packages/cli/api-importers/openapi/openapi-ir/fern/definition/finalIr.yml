@@ -525,7 +525,12 @@ types:
       literal: LiteralSchema
       oneOf: OneOfSchema
       nullable: NullableSchema
-      unknown: commons.WithName
+      unknown: UnknownSchema
+
+  UnknownSchema:
+    extends:
+      - commons.WithName
+      - commons.WithCasing
 
   PrimitiveSchema:
     extends:
@@ -535,6 +540,7 @@ types:
       - commons.WithDescription
       - commons.WithAvailability
       - commons.WithTitle
+      - commons.WithCasing
     properties:
       schema: PrimitiveSchemaValue
 
@@ -613,6 +619,7 @@ types:
       - commons.WithDescription
       - commons.WithAvailability
       - commons.WithTitle
+      - commons.WithCasing
     properties:
       value: LiteralSchemaValue
 
@@ -631,6 +638,7 @@ types:
       - commons.WithSource
       - commons.WithTitle
       - commons.WithInline
+      - commons.WithCasing
     properties:
       allOf: list<ReferencedSchema>
       properties: list<ObjectProperty>
@@ -684,6 +692,7 @@ types:
       - commons.WithAvailability
       - commons.WithTitle
       - commons.WithInline
+      - commons.WithCasing
     properties:
       value: Schema
 
@@ -697,6 +706,7 @@ types:
       - commons.WithEncoding
       - commons.WithTitle
       - commons.WithInline
+      - commons.WithCasing
     properties:
       key: PrimitiveSchema
       value: Schema
@@ -710,6 +720,7 @@ types:
       - commons.WithAvailability
       - commons.WithTitle
       - commons.WithInline
+      - commons.WithCasing
     properties:
       value: Schema
 
@@ -722,6 +733,7 @@ types:
       - commons.WithAvailability
       - commons.WithTitle
       - commons.WithInline
+      - commons.WithCasing
     properties:
       value: Schema
 
@@ -735,6 +747,7 @@ types:
       - commons.WithSource
       - commons.WithTitle
       - commons.WithInline
+      - commons.WithCasing
     properties:
       default: optional<EnumValue>
       values: list<EnumValue>
@@ -743,6 +756,7 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithAvailability
+      - commons.WithCasing
     properties:
       nameOverride:
         type: optional<string>
@@ -753,14 +767,6 @@ types:
       value:
         type: string
         docs: Value of the enum
-      casing: optional<CasingOverrides>
-
-  CasingOverrides:
-    properties:
-      snake: optional<string>
-      camel: optional<string>
-      screamingSnake: optional<string>
-      pascal: optional<string>
 
   ReferencedSchema:
     extends:
@@ -771,6 +777,7 @@ types:
       - commons.WithAvailability
       - commons.WithSource
       - commons.WithTitle
+      - commons.WithCasing
     properties:
       schema: commons.SchemaId
 
@@ -790,6 +797,7 @@ types:
       - commons.WithSource
       - commons.WithTitle
       - commons.WithInline
+      - commons.WithCasing
     properties:
       discriminantProperty: string
       commonProperties: list<CommonProperty>
@@ -811,5 +819,6 @@ types:
       - commons.WithSource
       - commons.WithTitle
       - commons.WithInline
+      - commons.WithCasing
     properties:
       schemas: list<Schema>

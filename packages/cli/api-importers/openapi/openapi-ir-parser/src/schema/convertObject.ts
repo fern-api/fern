@@ -16,6 +16,7 @@ import {
 
 import { getExtension } from "../getExtension";
 import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions";
+import { OverrideTypeName } from "../openapi/v3/extensions/getFernTypeNameExtension";
 import { SchemaParserContext } from "./SchemaParserContext";
 import { isAdditionalPropertiesAny } from "./convertAdditionalProperties";
 import { convertAvailability } from "./convertAvailability";
@@ -32,7 +33,7 @@ interface ReferencedAllOfInfo {
 }
 
 export function convertObject({
-    nameOverride,
+    overrideTypeName,
     generatedName,
     title,
     breadcrumbs,
@@ -50,7 +51,7 @@ export function convertObject({
     availability,
     source
 }: {
-    nameOverride: string | undefined;
+    overrideTypeName: OverrideTypeName | undefined;
     generatedName: string;
     title: string | undefined;
     breadcrumbs: string[];
@@ -104,6 +105,7 @@ export function convertObject({
                                         ...property,
                                         schema: SchemaWithExample.optional({
                                             nameOverride: undefined,
+                                            casing: undefined,
                                             generatedName: "",
                                             title: undefined,
                                             value: property.schema,
@@ -134,7 +136,8 @@ export function convertObject({
                     allOfElement,
                     [schemaId],
                     source,
-                    context.options.preserveSchemaIds
+                    context.options.preserveSchemaIds,
+                    context
                 ),
                 properties: getAllProperties({ schema: allOfElement, context, breadcrumbs, source, namespace })
             });
@@ -194,7 +197,8 @@ export function convertObject({
             const schema = isRequired
                 ? convertSchema(propertySchema, false, context, propertyBreadcrumbs, source, namespace)
                 : SchemaWithExample.optional({
-                      nameOverride,
+                      nameOverride: overrideTypeName?.value,
+                      casing: overrideTypeName?.casing,
                       generatedName,
                       title,
                       description: undefined,
@@ -248,7 +252,7 @@ export function convertObject({
     );
 
     return wrapObject({
-        nameOverride,
+        overrideTypeName,
         generatedName,
         title,
         wrapAsNullable,
@@ -269,7 +273,7 @@ export function convertObject({
 }
 
 export function wrapObject({
-    nameOverride,
+    overrideTypeName,
     generatedName,
     title,
     wrapAsNullable,
@@ -285,7 +289,7 @@ export function wrapObject({
     source,
     context
 }: {
-    nameOverride: string | undefined;
+    overrideTypeName: OverrideTypeName | undefined;
     generatedName: string;
     title: string | undefined;
     wrapAsNullable: boolean;
@@ -303,13 +307,15 @@ export function wrapObject({
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
-            nameOverride,
+            nameOverride: overrideTypeName?.value,
+            casing: overrideTypeName?.casing,
             generatedName,
             title,
             value: SchemaWithExample.object({
                 description,
                 properties,
-                nameOverride,
+                nameOverride: overrideTypeName?.value,
+                casing: overrideTypeName?.casing,
                 generatedName,
                 title,
                 allOf,
@@ -332,7 +338,8 @@ export function wrapObject({
     return SchemaWithExample.object({
         description,
         properties,
-        nameOverride,
+        nameOverride: overrideTypeName?.value,
+        casing: overrideTypeName?.casing,
         generatedName,
         title,
         allOf,

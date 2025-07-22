@@ -22,6 +22,7 @@ import { FernFileContext } from "../FernFileContext";
 import { ExampleResolver } from "../resolvers/ExampleResolver";
 import { TypeResolver } from "../resolvers/TypeResolver";
 import { VariableResolver } from "../resolvers/VariableResolver";
+import { getCasingOverrides } from "../utils/getCasingOverrides";
 import { getEndpointPathParameters } from "../utils/getEndpointPathParameters";
 import { parseTypeName } from "../utils/parseTypeName";
 import { convertAvailability, convertDeclaration } from "./convertDeclaration";
@@ -92,7 +93,10 @@ export function convertChannel({
                           ...convertDeclaration(queryParameter),
                           name: file.casingsGenerator.generateNameAndWireValue({
                               wireValue: queryParameterKey,
-                              name
+                              name,
+                              opts: {
+                                  casingOverrides: getCasingOverrides(queryParameter)
+                              }
                           }),
                           valueType,
                           allowMultiple:
@@ -136,7 +140,10 @@ export function convertChannel({
                                           queryParameterKey: wireKey,
                                           queryParameter: queryParameterDeclaration
                                       }).name,
-                                      wireValue: wireKey
+                                      wireValue: wireKey,
+                                      opts: {
+                                          casingOverrides: getCasingOverrides(queryParameterDeclaration)
+                                      }
                                   }),
                                   value: convertTypeReferenceExample({
                                       example: value,
@@ -228,7 +235,10 @@ function convertExampleWebSocketMessageBody({
             exampleProperties.push({
                 name: file.casingsGenerator.generateNameAndWireValue({
                     name: getPropertyName({ propertyKey: wireKey, property: inlinedRequestPropertyDeclaration }).name,
-                    wireValue: wireKey
+                    wireValue: wireKey,
+                    opts: {
+                        casingOverrides: getCasingOverrides(inlinedRequestPropertyDeclaration)
+                    }
                 }),
                 value: convertTypeReferenceExample({
                     example: propertyExample,
@@ -258,7 +268,10 @@ function convertExampleWebSocketMessageBody({
                 name: file.casingsGenerator.generateNameAndWireValue({
                     name: getPropertyName({ propertyKey: wireKey, property: originalTypeDeclaration.rawPropertyType })
                         .name,
-                    wireValue: wireKey
+                    wireValue: wireKey,
+                    opts: {
+                        casingOverrides: getCasingOverrides(originalTypeDeclaration.rawPropertyType)
+                    }
                 }),
                 value: convertTypeReferenceExample({
                     example: propertyExample,
@@ -304,12 +317,15 @@ function convertMessageSchema({
         return WebSocketMessageBody.inlinedBody({
             name: file.casingsGenerator.generateName(body.name),
             extends: getExtensionsAsList(body.extends ?? []).map((extended) =>
-                parseTypeName({ typeName: extended, file })
+                parseTypeName({ typeName: extended, typeDeclaration: undefined, file })
             ),
             properties: Object.entries(body.properties ?? {}).map(([key, property]) => ({
                 name: file.casingsGenerator.generateNameAndWireValue({
                     name: getPropertyName({ propertyKey: key, property }).name,
-                    wireValue: key
+                    wireValue: key,
+                    opts: {
+                        casingOverrides: getCasingOverrides(property)
+                    }
                 }),
                 value: file.parseTypeReference(property),
                 valueType: file.parseTypeReference(property),
@@ -380,9 +396,15 @@ function convertChannelPathParameters({
             const pathParameterDeclaration = rawEndpointPathParameters[key];
 
             if (pathParameterDeclaration != null) {
+                const casing =
+                    typeof pathParameterDeclaration !== "string" && "name" in pathParameterDeclaration
+                        ? getCasingOverrides(pathParameterDeclaration)
+                        : undefined;
                 pathParameters.push(
                     buildExamplePathParameter({
-                        name: file.casingsGenerator.generateName(key),
+                        name: file.casingsGenerator.generateName(key, {
+                            casingOverrides: casing
+                        }),
                         pathParameterDeclaration,
                         examplePathParameter
                     })
@@ -420,7 +442,10 @@ function convertHeaders({
                 headers.push({
                     name: file.casingsGenerator.generateNameAndWireValue({
                         name: getHeaderName({ headerKey: wireKey, header: headerDeclaration }).name,
-                        wireValue: wireKey
+                        wireValue: wireKey,
+                        opts: {
+                            casingOverrides: getCasingOverrides(headerDeclaration)
+                        }
                     }),
                     value: convertTypeReferenceExample({
                         example: exampleHeader,

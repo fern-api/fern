@@ -14,6 +14,7 @@ import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithEncoding } from "../../commons/types/WithEncoding";
 import { WithTitle } from "../../commons/types/WithTitle";
 import { WithInline } from "../../commons/types/WithInline";
+import { WithCasing } from "../../commons/types/WithCasing";
 
 export const MapSchema: core.serialization.ObjectSchema<serializers.MapSchema.Raw, FernOpenapiIr.MapSchema> =
     core.serialization
@@ -28,7 +29,8 @@ export const MapSchema: core.serialization.ObjectSchema<serializers.MapSchema.Ra
         .extend(WithAvailability)
         .extend(WithEncoding)
         .extend(WithTitle)
-        .extend(WithInline);
+        .extend(WithInline)
+        .extend(WithCasing);
 
 export declare namespace MapSchema {
     export interface Raw
@@ -39,7 +41,8 @@ export declare namespace MapSchema {
             WithAvailability.Raw,
             WithEncoding.Raw,
             WithTitle.Raw,
-            WithInline.Raw {
+            WithInline.Raw,
+            WithCasing.Raw {
         key: PrimitiveSchema.Raw;
         value: serializers.Schema.Raw;
     }

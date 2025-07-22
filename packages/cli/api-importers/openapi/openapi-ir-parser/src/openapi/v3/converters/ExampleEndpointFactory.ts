@@ -276,6 +276,7 @@ export class ExampleEndpointFactory {
                     ? convertSchemaToSchemaWithExample(globalHeader.schema)
                     : SchemaWithExample.primitive({
                           nameOverride: undefined,
+                          casing: undefined,
                           generatedName: "",
                           title: undefined,
                           description: undefined,
@@ -651,6 +652,7 @@ function convertMultipartRequestToSchema(request: RequestWithExample.Multipart):
                     conflict: {},
                     generatedName: property.key,
                     nameOverride: undefined,
+                    casing: undefined,
                     availability: undefined,
                     readonly: undefined,
                     writeonly: undefined,
@@ -663,6 +665,7 @@ function convertMultipartRequestToSchema(request: RequestWithExample.Multipart):
         fullExamples: undefined,
         description: request.description,
         nameOverride: undefined,
+        casing: undefined,
         generatedName: "",
         title: undefined,
         namespace: undefined,

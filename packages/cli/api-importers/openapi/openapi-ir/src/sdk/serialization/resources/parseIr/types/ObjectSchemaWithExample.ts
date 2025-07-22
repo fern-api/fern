@@ -16,6 +16,7 @@ import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithSource } from "../../commons/types/WithSource";
 import { WithTitle } from "../../commons/types/WithTitle";
 import { WithInline } from "../../commons/types/WithInline";
+import { WithCasing } from "../../commons/types/WithCasing";
 
 export const ObjectSchemaWithExample: core.serialization.ObjectSchema<
     serializers.ObjectSchemaWithExample.Raw,
@@ -35,7 +36,8 @@ export const ObjectSchemaWithExample: core.serialization.ObjectSchema<
     .extend(WithAvailability)
     .extend(WithSource)
     .extend(WithTitle)
-    .extend(WithInline);
+    .extend(WithInline)
+    .extend(WithCasing);
 
 export declare namespace ObjectSchemaWithExample {
     export interface Raw
@@ -46,7 +48,8 @@ export declare namespace ObjectSchemaWithExample {
             WithAvailability.Raw,
             WithSource.Raw,
             WithTitle.Raw,
-            WithInline.Raw {
+            WithInline.Raw,
+            WithCasing.Raw {
         allOf: ReferencedSchema.Raw[];
         properties: serializers.ObjectPropertyWithExample.Raw[];
         allOfPropertyConflicts: AllOfPropertyConflict.Raw[];

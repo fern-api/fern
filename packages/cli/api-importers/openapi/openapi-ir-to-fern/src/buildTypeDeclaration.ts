@@ -35,6 +35,7 @@ import { convertAvailability } from "./utils/convertAvailability";
 import { convertToEncodingSchema } from "./utils/convertToEncodingSchema";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
+import { toFdCasing } from "./utils/toFdCasing";
 
 export interface ConvertedTypeDeclaration {
     name: string | undefined;
@@ -300,9 +301,17 @@ export function buildObjectTypeDeclaration({
 
     objectTypeDeclaration.inline = getInline(schema, declarationDepth);
 
-    const name = schema.nameOverride ?? schema.generatedName;
+    let name = schema.nameOverride ?? schema.generatedName;
+    if (readOnlyPropertyPresent && context.respectReadonlySchemas && !shouldSkipReadonly) {
+        name = `${name}Read`;
+    }
+    if (schema.casing) {
+        objectTypeDeclaration.name = {
+            casing: toFdCasing(schema.casing)
+        };
+    }
     return {
-        name: readOnlyPropertyPresent && context.respectReadonlySchemas && !shouldSkipReadonly ? `${name}Read` : name,
+        name,
         schema: objectTypeDeclaration
     };
 }

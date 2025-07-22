@@ -10,6 +10,7 @@ export interface PrimitiveSchema
         FernOpenapiIr.WithName,
         FernOpenapiIr.WithDescription,
         FernOpenapiIr.WithAvailability,
-        FernOpenapiIr.WithTitle {
+        FernOpenapiIr.WithTitle,
+        FernOpenapiIr.WithCasing {
     schema: FernOpenapiIr.PrimitiveSchemaValue;
 }

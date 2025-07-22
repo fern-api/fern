@@ -39,7 +39,7 @@ export function convertGenericTypeDeclaration({
         });
         return Type.object({
             extends: getExtensionsAsList(resolvedBaseGeneric.declaration.extends).map((extended) =>
-                parseTypeName({ typeName: extended, file })
+                parseTypeName({ typeName: extended, typeDeclaration: undefined, file })
             ),
             properties: getObjectPropertiesFromRawObjectSchema({ properties: Object.fromEntries(newProperties) }, file),
             extraProperties: resolvedBaseGeneric.declaration["extra-properties"] ?? false,
