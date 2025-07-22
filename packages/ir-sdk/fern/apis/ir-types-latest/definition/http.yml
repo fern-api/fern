@@ -409,6 +409,7 @@ types:
     union:
       query: QueryParameter
       body: types.ObjectProperty
+      header: HttpHeader
 
   RequestProperty:
     docs: |

@@ -4,7 +4,10 @@
 
 import * as FernIr from "../../../index";
 
-export type RequestPropertyValue = FernIr.RequestPropertyValue.Query | FernIr.RequestPropertyValue.Body;
+export type RequestPropertyValue =
+    | FernIr.RequestPropertyValue.Query
+    | FernIr.RequestPropertyValue.Body
+    | FernIr.RequestPropertyValue.Header;
 
 export namespace RequestPropertyValue {
     export interface Query extends FernIr.QueryParameter, _Utils {
@@ -15,6 +18,10 @@ export namespace RequestPropertyValue {
         type: "body";
     }
 
+    export interface Header extends FernIr.HttpHeader, _Utils {
+        type: "header";
+    }
+
     export interface _Utils {
         _visit: <_Result>(visitor: FernIr.RequestPropertyValue._Visitor<_Result>) => _Result;
     }
@@ -22,6 +29,7 @@ export namespace RequestPropertyValue {
     export interface _Visitor<_Result> {
         query: (value: FernIr.QueryParameter) => _Result;
         body: (value: FernIr.ObjectProperty) => _Result;
+        header: (value: FernIr.HttpHeader) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -53,6 +61,19 @@ export const RequestPropertyValue = {
         };
     },
 
+    header: (value: FernIr.HttpHeader): FernIr.RequestPropertyValue.Header => {
+        return {
+            ...value,
+            type: "header",
+            _visit: function <_Result>(
+                this: FernIr.RequestPropertyValue.Header,
+                visitor: FernIr.RequestPropertyValue._Visitor<_Result>,
+            ) {
+                return FernIr.RequestPropertyValue._visit(this, visitor);
+            },
+        };
+    },
+
     _visit: <_Result>(
         value: FernIr.RequestPropertyValue,
         visitor: FernIr.RequestPropertyValue._Visitor<_Result>,
@@ -62,6 +83,8 @@ export const RequestPropertyValue = {
                 return visitor.query(value);
             case "body":
                 return visitor.body(value);
+            case "header":
+                return visitor.header(value);
             default:
                 return visitor._other(value as any);
         }

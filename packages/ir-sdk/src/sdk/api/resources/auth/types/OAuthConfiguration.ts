@@ -4,11 +4,15 @@
 
 import * as FernIr from "../../../index";
 
-export type OAuthConfiguration = FernIr.OAuthConfiguration.ClientCredentials;
+export type OAuthConfiguration = FernIr.OAuthConfiguration.ClientCredentials | FernIr.OAuthConfiguration.ApiKey;
 
 export namespace OAuthConfiguration {
     export interface ClientCredentials extends FernIr.OAuthClientCredentials, _Utils {
         type: "clientCredentials";
+    }
+
+    export interface ApiKey extends FernIr.OAuthApiKey, _Utils {
+        type: "apiKey";
     }
 
     export interface _Utils {
@@ -17,6 +21,7 @@ export namespace OAuthConfiguration {
 
     export interface _Visitor<_Result> {
         clientCredentials: (value: FernIr.OAuthClientCredentials) => _Result;
+        apiKey: (value: FernIr.OAuthApiKey) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -35,6 +40,19 @@ export const OAuthConfiguration = {
         };
     },
 
+    apiKey: (value: FernIr.OAuthApiKey): FernIr.OAuthConfiguration.ApiKey => {
+        return {
+            ...value,
+            type: "apiKey",
+            _visit: function <_Result>(
+                this: FernIr.OAuthConfiguration.ApiKey,
+                visitor: FernIr.OAuthConfiguration._Visitor<_Result>,
+            ) {
+                return FernIr.OAuthConfiguration._visit(this, visitor);
+            },
+        };
+    },
+
     _visit: <_Result>(
         value: FernIr.OAuthConfiguration,
         visitor: FernIr.OAuthConfiguration._Visitor<_Result>,
@@ -42,6 +60,8 @@ export const OAuthConfiguration = {
         switch (value.type) {
             case "clientCredentials":
                 return visitor.clientCredentials(value);
+            case "apiKey":
+                return visitor.apiKey(value);
             default:
                 return visitor._other(value as any);
         }
