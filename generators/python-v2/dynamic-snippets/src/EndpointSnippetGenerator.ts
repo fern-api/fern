@@ -1,5 +1,6 @@
 import { Scope } from "@fern-api/browser-compatible-base-generator";
 import { Severity } from "@fern-api/browser-compatible-base-generator";
+import { Options } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { python } from "@fern-api/python-ast";
@@ -24,36 +25,42 @@ export class EndpointSnippetGenerator {
 
     public async generateSnippet({
         endpoint,
-        request
+        request,
+        options
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         request: FernIr.dynamic.EndpointSnippetRequest;
+        options?: Options;
     }): Promise<string> {
-        const file = this.buildPythonFile({ endpoint, snippet: request });
+        const file = this.buildPythonFile({ endpoint, snippet: request, options });
         return file.toString();
     }
 
     public generateSnippetSync({
         endpoint,
-        request
+        request,
+        options
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         request: FernIr.dynamic.EndpointSnippetRequest;
+        options?: Options;
     }): string {
-        const file = this.buildPythonFile({ endpoint, snippet: request });
+        const file = this.buildPythonFile({ endpoint, snippet: request, options });
         return file.toString();
     }
 
     private buildPythonFile({
         endpoint,
-        snippet
+        snippet,
+        options
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
+        options?: Options;
     }): python.PythonFile {
         return python.file({
             path: SNIPPET_MODULE_PATH,
-            statements: [this.constructClient({ endpoint, snippet }), this.callMethod({ endpoint, snippet })]
+            statements: [this.constructClient({ endpoint, snippet }), this.callMethod({ endpoint, snippet, options })]
         });
     }
 
@@ -359,11 +366,30 @@ export class EndpointSnippetGenerator {
 
     private callMethod({
         endpoint,
-        snippet
+        snippet,
+        options
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
+        options?: Options;
     }): python.AstNode {
+        if (options?.captureResponse) {
+            const responseVarName = options.responseVariableName || "response";
+            return python.assign({
+                lhs: python.reference({ name: responseVarName }),
+                rhs: python.invokeMethod({
+                    on: python.reference({ name: CLIENT_VAR_NAME }),
+                    method: this.getMethod({ endpoint }),
+                    arguments_: this.getMethodArgs({ endpoint, snippet }).map((arg) =>
+                        python.methodArgument({
+                            name: arg.name,
+                            value: arg.value
+                        })
+                    ),
+                    multiline: true
+                })
+            });
+        }
         return python.invokeMethod({
             on: python.reference({ name: CLIENT_VAR_NAME }),
             method: this.getMethod({ endpoint }),
