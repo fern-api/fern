@@ -5,7 +5,7 @@ public final class InlinedClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func send(request: Any, requestOptions: RequestOptions? = nil) async throws -> SendResponse {
+    public func send(request: SendLiteralsInlinedRequest, requestOptions: RequestOptions? = nil) async throws -> SendResponse {
         return try await httpClient.performRequest(
             method: .post,
             path: "/inlined",
