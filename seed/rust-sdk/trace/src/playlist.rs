@@ -1,5 +1,5 @@
 use crate::client::TraceClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl TraceClient {
     // Playlist methods

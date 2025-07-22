@@ -1,5 +1,5 @@
 use crate::client::NoEnvironmentClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl NoEnvironmentClient {
     // Dummy methods

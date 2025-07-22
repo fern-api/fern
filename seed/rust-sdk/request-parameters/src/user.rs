@@ -1,5 +1,5 @@
 use crate::client::RequestParametersClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl RequestParametersClient {
     // User methods

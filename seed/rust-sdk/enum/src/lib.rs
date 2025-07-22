@@ -11,5 +11,4 @@ pub mod query_param;
 
 pub use client::EnumClient;
 pub use error::ApiError;
-
 pub use types::*;

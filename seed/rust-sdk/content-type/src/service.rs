@@ -1,5 +1,5 @@
 use crate::client::ContentTypesClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl ContentTypesClient {
     // Service methods

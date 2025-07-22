@@ -1,5 +1,5 @@
 use crate::client::ServerSentEventsClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl ServerSentEventsClient {
     // Completions methods

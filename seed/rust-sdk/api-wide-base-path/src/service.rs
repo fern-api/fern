@@ -1,5 +1,5 @@
 use crate::client::ApiWideBasePathClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl ApiWideBasePathClient {
     // Service methods

@@ -9,5 +9,4 @@ pub mod union_;
 
 pub use client::UndiscriminatedUnionsClient;
 pub use error::ApiError;
-
 pub use types::*;

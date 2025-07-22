@@ -1,5 +1,5 @@
 use crate::client::IdempotencyHeadersClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl IdempotencyHeadersClient {
     // Payment methods

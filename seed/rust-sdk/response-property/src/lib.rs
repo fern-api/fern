@@ -9,5 +9,4 @@ pub mod service;
 
 pub use client::ResponsePropertyClient;
 pub use error::ApiError;
-
 pub use types::*;

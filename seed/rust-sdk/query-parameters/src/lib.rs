@@ -9,5 +9,4 @@ pub mod user;
 
 pub use client::QueryParametersClient;
 pub use error::ApiError;
-
 pub use types::*;

@@ -1,5 +1,5 @@
 use crate::client::HttpHeadClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl HttpHeadClient {
     // User methods

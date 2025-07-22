@@ -13,5 +13,4 @@ pub mod reference;
 
 pub use client::LiteralClient;
 pub use error::ApiError;
-
 pub use types::*;

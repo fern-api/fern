@@ -1,5 +1,5 @@
 use crate::client::MultiLineDocsClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl MultiLineDocsClient {
     // User methods

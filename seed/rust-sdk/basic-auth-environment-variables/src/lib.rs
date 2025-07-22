@@ -9,5 +9,4 @@ pub mod basic_auth;
 
 pub use client::BasicAuthEnvironmentVariablesClient;
 pub use error::ApiError;
-
 pub use types::*;

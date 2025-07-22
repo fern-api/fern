@@ -1,5 +1,5 @@
 use crate::client::CrossPackageTypeNamesClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl CrossPackageTypeNamesClient {
     // FolderD Service methods

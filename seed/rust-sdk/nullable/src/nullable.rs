@@ -1,5 +1,5 @@
 use crate::client::NullableClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl NullableClient {
     // Nullable methods

@@ -1,5 +1,5 @@
 use crate::client::MixedFileDirectoryClient;
-use crate::error::Error;
+use crate::error::ApiError;
 
 impl MixedFileDirectoryClient {
     // User methods
