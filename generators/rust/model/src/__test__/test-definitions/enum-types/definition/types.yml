@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  Color:
+    enum:
+      - RED
+      - GREEN  
+      - BLUE
+  
+  Status:
+    enum:
+      - ACTIVE
+      - INACTIVE
+      - PENDING 

@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  UserId: string
+  UserEmail: string  
+  UserAge: integer
+  UserTags: list<string>
+  UserProfile:
+    properties:
+      user_id: UserId
+      email: UserEmail
+      age: optional<UserAge>
+      tags: UserTags 
