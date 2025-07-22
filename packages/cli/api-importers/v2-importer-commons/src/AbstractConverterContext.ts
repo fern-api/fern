@@ -533,11 +533,15 @@ export abstract class AbstractConverterContext<Spec extends object> {
     }
 
     private getReadOnlyWriteOnlyFromSchema(schema: OpenAPIV3_1.SchemaObject): { readOnly: boolean; writeOnly: boolean } {
-        let readOnly = Boolean(schema.readOnly);
-        let writeOnly = Boolean(schema.writeOnly);
-
+        const originalReadOnly = Boolean(schema.readOnly);
+        const originalWriteOnly = Boolean(schema.writeOnly);
+        
         // Check allOf schemas for readOnly/writeOnly properties
-        if (schema.allOf) {
+        if (schema.allOf && schema.allOf.length > 0) {
+            // Start with true and AND all allOf schemas together
+            let allOfReadOnly = true;
+            let allOfWriteOnly = true;
+            
             for (const allOfSchema of schema.allOf) {
                 let resolvedAllOfSchema = allOfSchema;
                 
@@ -552,12 +556,19 @@ export abstract class AbstractConverterContext<Spec extends object> {
 
                 // Recursively check for readOnly/writeOnly in allOf schemas
                 const allOfResult = this.getReadOnlyWriteOnlyFromSchema(resolvedAllOfSchema);
-                readOnly = readOnly || allOfResult.readOnly;
-                writeOnly = writeOnly || allOfResult.writeOnly;
+                // AND within allOf: all schemas must agree for the property to be true
+                allOfReadOnly = allOfReadOnly && allOfResult.readOnly;
+                allOfWriteOnly = allOfWriteOnly && allOfResult.writeOnly;
             }
+            
+            // OR the original schema setting with the allOf result
+            return { 
+                readOnly: originalReadOnly || allOfReadOnly,
+                writeOnly: originalWriteOnly || allOfWriteOnly
+            };
         }
 
-        return { readOnly, writeOnly };
+        return { readOnly: originalReadOnly, writeOnly: originalWriteOnly };
     }
 
     public getAudiences({
