@@ -8,6 +8,9 @@ generate the code for that specific version of Pydantic, as opposed to always ge
 - `exclude_unset` is now respected when passed in as an option to a model's `.dict` call.
 
 
+## 1.5.0-rc3
+**`(fix):`** Dependencies are sorted within the generated code to ensure that even without running isort the imports are deterministically sorted.
+
 ## 1.5.0-rc2
 **`(fix):`** The FastAPI server generation now adds model configuration back onto the union utils root model a change that was made when Pydantic V2 support was rolled out, believing
 it was not allowed in Pydantic V2.
