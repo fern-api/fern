@@ -39,7 +39,7 @@ public final class UserClient: Sendable {
             method: .get, 
             path: "/\(tenantId)/user/\(userId)/search", 
             queryParams: [
-                "limit": limit.map { .string($0) }
+                "limit": limit.map { .int($0) }
             ], 
             requestOptions: requestOptions, 
             responseType: [User].self

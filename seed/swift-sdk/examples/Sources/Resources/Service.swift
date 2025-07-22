@@ -32,7 +32,7 @@ public final class ServiceClient: Sendable {
                 "X-API-Version": xApiVersion
             ], 
             queryParams: [
-                "shallow": shallow.map { .string($0) }, 
+                "shallow": shallow.map { .bool($0) }, 
                 "tag": tag.map { .string($0) }
             ], 
             requestOptions: requestOptions, 

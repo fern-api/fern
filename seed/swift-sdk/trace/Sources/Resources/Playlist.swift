@@ -10,8 +10,8 @@ public final class PlaylistClient: Sendable {
             method: .post, 
             path: "/v2/playlist/\(serviceParam)/create", 
             queryParams: [
-                "datetime": .string(datetime), 
-                "optionalDatetime": optionalDatetime.map { .string($0) }
+                "datetime": .date(datetime), 
+                "optionalDatetime": optionalDatetime.map { .date($0) }
             ], 
             body: request, 
             requestOptions: requestOptions, 
@@ -24,7 +24,7 @@ public final class PlaylistClient: Sendable {
             method: .get, 
             path: "/v2/playlist/\(serviceParam)/all", 
             queryParams: [
-                "limit": limit.map { .string($0) }, 
+                "limit": limit.map { .int($0) }, 
                 "otherField": .string(otherField), 
                 "multiLineDocs": .string(multiLineDocs), 
                 "optionalMultipleField": optionalMultipleField.map { .string($0) }, 

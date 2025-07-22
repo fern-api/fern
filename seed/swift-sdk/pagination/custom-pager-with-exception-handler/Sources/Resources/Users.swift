@@ -10,8 +10,8 @@ public final class UsersClient: Sendable {
             method: .get, 
             path: "/users", 
             queryParams: [
-                "page": page.map { .string($0) }, 
-                "per_page": perPage.map { .string($0) }, 
+                "page": page.map { .int($0) }, 
+                "per_page": perPage.map { .int($0) }, 
                 "order": order.map { .string($0) }, 
                 "starting_after": startingAfter.map { .string($0) }
             ], 
@@ -47,8 +47,8 @@ public final class UsersClient: Sendable {
             method: .get, 
             path: "/users", 
             queryParams: [
-                "page": page.map { .string($0) }, 
-                "per_page": perPage.map { .string($0) }, 
+                "page": page.map { .int($0) }, 
+                "per_page": perPage.map { .int($0) }, 
                 "order": order.map { .string($0) }, 
                 "starting_after": startingAfter.map { .string($0) }
             ], 
@@ -62,8 +62,8 @@ public final class UsersClient: Sendable {
             method: .get, 
             path: "/users", 
             queryParams: [
-                "page": page.map { .string($0) }, 
-                "per_page": perPage.map { .string($0) }, 
+                "page": page.map { .double($0) }, 
+                "per_page": perPage.map { .double($0) }, 
                 "order": order.map { .string($0) }, 
                 "starting_after": startingAfter.map { .string($0) }
             ], 
@@ -87,8 +87,8 @@ public final class UsersClient: Sendable {
             method: .get, 
             path: "/users", 
             queryParams: [
-                "page": page.map { .string($0) }, 
-                "limit": limit.map { .string($0) }, 
+                "page": page.map { .int($0) }, 
+                "limit": limit.map { .int($0) }, 
                 "order": order.map { .string($0) }
             ], 
             requestOptions: requestOptions, 
@@ -101,8 +101,8 @@ public final class UsersClient: Sendable {
             method: .get, 
             path: "/users", 
             queryParams: [
-                "page": page.map { .string($0) }, 
-                "limit": limit.map { .string($0) }, 
+                "page": page.map { .int($0) }, 
+                "limit": limit.map { .int($0) }, 
                 "order": order.map { .string($0) }
             ], 
             requestOptions: requestOptions, 
@@ -115,7 +115,7 @@ public final class UsersClient: Sendable {
             method: .get, 
             path: "/users", 
             queryParams: [
-                "cursor": cursor.map { .string($0) }
+                "cursor": cursor.map { .uuid($0) }
             ], 
             requestOptions: requestOptions, 
             responseType: ListUsersExtendedResponse.self
@@ -127,7 +127,7 @@ public final class UsersClient: Sendable {
             method: .get, 
             path: "/users", 
             queryParams: [
-                "cursor": cursor.map { .string($0) }
+                "cursor": cursor.map { .uuid($0) }
             ], 
             requestOptions: requestOptions, 
             responseType: ListUsersExtendedOptionalListResponse.self
@@ -151,7 +151,7 @@ public final class UsersClient: Sendable {
             method: .get, 
             path: "/users", 
             queryParams: [
-                "offset": offset.map { .string($0) }
+                "offset": offset.map { .int($0) }
             ], 
             requestOptions: requestOptions, 
             responseType: UsernameContainer.self

@@ -10,7 +10,7 @@ public final class EventsClient: Sendable {
             method: .get, 
             path: "/users/events", 
             queryParams: [
-                "limit": limit.map { .string($0) }
+                "limit": limit.map { .int($0) }
             ], 
             requestOptions: requestOptions, 
             responseType: [Event].self

@@ -28,7 +28,7 @@ public final class OrganizationsClient: Sendable {
             method: .get, 
             path: "/\(tenantId)/organizations/\(organizationId)/search", 
             queryParams: [
-                "limit": limit.map { .string($0) }
+                "limit": limit.map { .int($0) }
             ], 
             requestOptions: requestOptions, 
             responseType: [Organization].self

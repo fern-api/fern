@@ -29,7 +29,7 @@ public final class ParamsClient: Sendable {
             path: "/params", 
             queryParams: [
                 "query": .string(query), 
-                "number": .string(number)
+                "number": .int(number)
             ], 
             requestOptions: requestOptions, 
             responseType: Any.self
@@ -42,7 +42,7 @@ public final class ParamsClient: Sendable {
             path: "/params", 
             queryParams: [
                 "query": .string(query), 
-                "number": .string(number)
+                "number": .int(number)
             ], 
             requestOptions: requestOptions, 
             responseType: Any.self

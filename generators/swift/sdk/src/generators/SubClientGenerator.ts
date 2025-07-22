@@ -3,12 +3,12 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { getSwiftTypeForTypeReference } from "@fern-api/swift-model";
-import { isOptionalType } from "@fern-api/swift-model";
 
 import { HttpEndpoint, HttpMethod, HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { formatEndpointPathForSwift } from "./util/format-endpoint-path-for-swift";
+import { getQueryParamCaseName } from "./util/get-query-param-case-name";
 import { parseEndpointPath } from "./util/parse-endpoint-path";
 
 export declare namespace SubClientGenerator {
@@ -239,10 +239,8 @@ export class SubClientGenerator {
                     label: "queryParams",
                     value: swift.Expression.dictionaryLiteral({
                         entries: endpoint.queryParameters.map((queryParam) => {
-                            // TODO(kafkas): Fix this. It's a buggy implementation.
                             const key = swift.Expression.rawStringValue(queryParam.name.name.originalName);
                             const swiftType = getSwiftTypeForTypeReference(queryParam.valueType);
-
                             if (swiftType.isOptional) {
                                 return [
                                     key,
@@ -250,7 +248,7 @@ export class SubClientGenerator {
                                         target: swift.Expression.reference(queryParam.name.name.camelCase.unsafeName),
                                         methodName: "map",
                                         closureBody: swift.Expression.contextualMethodCall({
-                                            methodName: "string", // TODO(kafkas): Make dynamic
+                                            methodName: getQueryParamCaseName(swiftType),
                                             arguments_: [
                                                 swift.functionArgument({
                                                     value: swiftType.isCustom
@@ -268,7 +266,7 @@ export class SubClientGenerator {
                                 return [
                                     key,
                                     swift.Expression.contextualMethodCall({
-                                        methodName: "string", // TODO(kafkas): Make dynamic
+                                        methodName: getQueryParamCaseName(swiftType),
                                         arguments_: [
                                             swift.functionArgument({
                                                 value: swiftType.isCustom

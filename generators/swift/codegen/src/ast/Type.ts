@@ -107,6 +107,10 @@ export class Type extends AstNode {
         this.internalType = internalType;
     }
 
+    public get type(): InternalType["type"] {
+        return this.internalType.type;
+    }
+
     public get isOptional(): boolean {
         return this.internalType.type === "optional";
     }

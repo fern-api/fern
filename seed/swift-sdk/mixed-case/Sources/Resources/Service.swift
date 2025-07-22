@@ -19,8 +19,8 @@ public final class ServiceClient: Sendable {
             method: .get, 
             path: "/resource", 
             queryParams: [
-                "page_limit": .string(pageLimit), 
-                "beforeDate": .string(beforeDate)
+                "page_limit": .int(pageLimit), 
+                "beforeDate": .date(beforeDate)
             ], 
             requestOptions: requestOptions, 
             responseType: [Resource].self
