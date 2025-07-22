@@ -197,8 +197,10 @@ ${this.generateDefaultFields(errorDeclaration)}
 
         for (const field of semanticFields) {
             const fieldParts = field.split(":");
-            if (fieldParts.length === 0) continue;
-            const trimmedFieldName = fieldParts[0]!.trim();
+            if (fieldParts.length === 0) {
+                continue;
+            }
+            const trimmedFieldName = fieldParts[0]?.trim();
 
             if (trimmedFieldName === "retry_after_seconds") {
                 fieldParsing.push(`                            ${trimmedFieldName}: parsed.get("${trimmedFieldName}")
@@ -219,8 +221,10 @@ ${this.generateDefaultFields(errorDeclaration)}
 
         for (const field of semanticFields) {
             const fieldParts = field.split(":");
-            if (fieldParts.length === 0) continue;
-            const trimmedFieldName = fieldParts[0]!.trim();
+            if (fieldParts.length === 0) {
+                continue;
+            }
+            const trimmedFieldName = fieldParts[0]?.trim();
             defaultFields.push(`                    ${trimmedFieldName}: None,`);
         }
 
