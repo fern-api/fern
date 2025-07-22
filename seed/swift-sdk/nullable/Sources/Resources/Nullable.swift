@@ -21,7 +21,7 @@ public final class NullableClient: Sendable {
         )
     }
 
-    public func createUser(request: Any, requestOptions: RequestOptions? = nil) async throws -> User {
+    public func createUser(request: CreateUserRequest, requestOptions: RequestOptions? = nil) async throws -> User {
         return try await httpClient.performRequest(
             method: .post,
             path: "/users",
@@ -31,7 +31,7 @@ public final class NullableClient: Sendable {
         )
     }
 
-    public func deleteUser(request: Any, requestOptions: RequestOptions? = nil) async throws -> Bool {
+    public func deleteUser(request: DeleteUserRequest, requestOptions: RequestOptions? = nil) async throws -> Bool {
         return try await httpClient.performRequest(
             method: .delete,
             path: "/users",
