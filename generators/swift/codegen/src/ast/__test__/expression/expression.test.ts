@@ -69,8 +69,8 @@ describe("Expression", () => {
 
             expect(functionCall.toString()).toMatchInlineSnapshot(`
               "configure(
-                  host: "localhost", 
-                  port: 8080, 
+                  host: "localhost",
+                  port: 8080,
                   timeout: 30.0
               )"
             `);
