@@ -162,10 +162,15 @@ export class ObjectGenerator {
                             target: swift.Expression.reference("decoder"),
                             methodName: "decodeAdditionalProperties",
                             arguments_: [
-                                swift.functionArgument({
-                                    label: "using",
-                                    value: swift.Expression.rawValue("CodingKeys.self")
-                                })
+                                this.objectTypeDeclaration.properties.length === 0
+                                    ? swift.functionArgument({
+                                          label: "knownKeys",
+                                          value: swift.Expression.rawValue("[]")
+                                      })
+                                    : swift.functionArgument({
+                                          label: "using",
+                                          value: swift.Expression.rawValue("CodingKeys.self")
+                                      })
                             ]
                         })
                     )
