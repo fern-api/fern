@@ -10012,6 +10012,7 @@
                     "safeName": "Commons"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -10089,6 +10090,7 @@
                     "safeName": "Metadata"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -10203,6 +10205,7 @@
                     "safeName": "File"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -10281,6 +10284,7 @@
                     "safeName": "Directory"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {

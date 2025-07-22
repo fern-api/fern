@@ -5,35 +5,83 @@ public final class AdminClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func updateTestSubmissionStatus(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+    public func updateTestSubmissionStatus(submissionId: String, request: TestSubmissionStatus, requestOptions: RequestOptions? = nil) async throws -> Any {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/admin/store-test-submission-status/\(submissionId)",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: Any.self
+        )
     }
 
-    public func sendTestSubmissionUpdate(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+    public func sendTestSubmissionUpdate(submissionId: String, request: TestSubmissionUpdate, requestOptions: RequestOptions? = nil) async throws -> Any {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/admin/store-test-submission-status-v2/\(submissionId)",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: Any.self
+        )
     }
 
-    public func updateWorkspaceSubmissionStatus(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+    public func updateWorkspaceSubmissionStatus(submissionId: String, request: WorkspaceSubmissionStatus, requestOptions: RequestOptions? = nil) async throws -> Any {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/admin/store-workspace-submission-status/\(submissionId)",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: Any.self
+        )
     }
 
-    public func sendWorkspaceSubmissionUpdate(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+    public func sendWorkspaceSubmissionUpdate(submissionId: String, request: WorkspaceSubmissionUpdate, requestOptions: RequestOptions? = nil) async throws -> Any {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/admin/store-workspace-submission-status-v2/\(submissionId)",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: Any.self
+        )
     }
 
-    public func storeTracedTestCase(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+    public func storeTracedTestCase(submissionId: String, testCaseId: String, request: Any, requestOptions: RequestOptions? = nil) async throws -> Any {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/admin/store-test-trace/submission/\(submissionId)/testCase/\(testCaseId)",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: Any.self
+        )
     }
 
-    public func storeTracedTestCaseV2(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+    public func storeTracedTestCaseV2(submissionId: String, testCaseId: String, request: [TraceResponseV2], requestOptions: RequestOptions? = nil) async throws -> Any {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/admin/store-test-trace-v2/submission/\(submissionId)/testCase/\(testCaseId)",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: Any.self
+        )
     }
 
-    public func storeTracedWorkspace(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+    public func storeTracedWorkspace(submissionId: String, request: Any, requestOptions: RequestOptions? = nil) async throws -> Any {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/admin/store-workspace-trace/submission/\(submissionId)",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: Any.self
+        )
     }
 
-    public func storeTracedWorkspaceV2(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+    public func storeTracedWorkspaceV2(submissionId: String, request: [TraceResponseV2], requestOptions: RequestOptions? = nil) async throws -> Any {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/admin/store-workspace-trace-v2/submission/\(submissionId)",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: Any.self
+        )
     }
 }

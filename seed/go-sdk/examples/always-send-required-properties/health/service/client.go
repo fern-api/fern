@@ -11,25 +11,25 @@ import (
 )
 
 type Client struct {
+	WithRawResponse *RawClient
+
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header
-
-	WithRawResponse *RawClient
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		baseURL: options.BaseURL,
+		WithRawResponse: NewRawClient(options),
+		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header:          options.ToHeader(),
-		WithRawResponse: NewRawClient(options),
+		header: options.ToHeader(),
 	}
 }
 
@@ -40,33 +40,12 @@ func (c *Client) Check(
 	id string,
 	opts ...option.RequestOption,
 ) error {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
-	)
-	endpointURL := internal.EncodeURL(
-		baseURL+"/check/%v",
-		id,
-	)
-	headers := internal.MergeHeaders(
-		c.header.Clone(),
-		options.ToHeader(),
-	)
-
-	if _, err := c.caller.Call(
+	_, err := c.WithRawResponse.Check(
 		ctx,
-		&internal.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodGet,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-		},
-	); err != nil {
+		id,
+		opts...,
+	)
+	if err != nil {
 		return err
 	}
 	return nil
@@ -77,33 +56,12 @@ func (c *Client) Ping(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (bool, error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
-	)
-	endpointURL := baseURL + "/ping"
-	headers := internal.MergeHeaders(
-		c.header.Clone(),
-		options.ToHeader(),
-	)
-
-	var response bool
-	if _, err := c.caller.Call(
+	response, err := c.WithRawResponse.Ping(
 		ctx,
-		&internal.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodGet,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Response:        &response,
-		},
-	); err != nil {
+		opts...,
+	)
+	if err != nil {
 		return false, err
 	}
-	return response, nil
+	return response.Body, nil
 }

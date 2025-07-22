@@ -6,10 +6,21 @@ public final class HomepageClient: Sendable {
     }
 
     public func getHomepageProblems(requestOptions: RequestOptions? = nil) async throws -> [ProblemId] {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/homepage-problems",
+            requestOptions: requestOptions,
+            responseType: [ProblemId].self
+        )
     }
 
-    public func setHomepageProblems(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+    public func setHomepageProblems(request: [ProblemId], requestOptions: RequestOptions? = nil) async throws -> Any {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/homepage-problems",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: Any.self
+        )
     }
 }

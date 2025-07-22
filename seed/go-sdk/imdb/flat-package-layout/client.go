@@ -10,16 +10,17 @@ import (
 )
 
 type Client struct {
+	Imdb *ImdbClient
+
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header
-
-	Imdb *ImdbClient
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
+		Imdb:    NewImdbClient(opts...),
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
@@ -28,6 +29,5 @@ func NewClient(opts ...option.RequestOption) *Client {
 			},
 		),
 		header: options.ToHeader(),
-		Imdb:   NewImdbClient(opts...),
 	}
 }

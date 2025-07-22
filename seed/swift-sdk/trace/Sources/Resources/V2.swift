@@ -6,6 +6,11 @@ public final class V2Client: Sendable {
     }
 
     public func test(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/",
+            requestOptions: requestOptions,
+            responseType: Any.self
+        )
     }
 }

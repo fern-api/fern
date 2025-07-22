@@ -5,31 +5,73 @@ public final class ServiceClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getMovie(requestOptions: RequestOptions? = nil) async throws -> Response {
-        fatalError("Not implemented.")
+    public func getMovie(request: String, requestOptions: RequestOptions? = nil) async throws -> Response {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/movie",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: Response.self
+        )
     }
 
-    public func getMovieDocs(requestOptions: RequestOptions? = nil) async throws -> Response {
-        fatalError("Not implemented.")
+    public func getMovieDocs(request: String, requestOptions: RequestOptions? = nil) async throws -> Response {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/movie",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: Response.self
+        )
     }
 
-    public func getMovieName(requestOptions: RequestOptions? = nil) async throws -> StringResponse {
-        fatalError("Not implemented.")
+    public func getMovieName(request: String, requestOptions: RequestOptions? = nil) async throws -> StringResponse {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/movie",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: StringResponse.self
+        )
     }
 
-    public func getMovieMetadata(requestOptions: RequestOptions? = nil) async throws -> Response {
-        fatalError("Not implemented.")
+    public func getMovieMetadata(request: String, requestOptions: RequestOptions? = nil) async throws -> Response {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/movie",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: Response.self
+        )
     }
 
-    public func getOptionalMovie(requestOptions: RequestOptions? = nil) async throws -> Response {
-        fatalError("Not implemented.")
+    public func getOptionalMovie(request: String, requestOptions: RequestOptions? = nil) async throws -> Response? {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/movie",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: Response?.self
+        )
     }
 
-    public func getOptionalMovieDocs(requestOptions: RequestOptions? = nil) async throws -> OptionalWithDocs {
-        fatalError("Not implemented.")
+    public func getOptionalMovieDocs(request: String, requestOptions: RequestOptions? = nil) async throws -> OptionalWithDocs {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/movie",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: OptionalWithDocs.self
+        )
     }
 
-    public func getOptionalMovieName(requestOptions: RequestOptions? = nil) async throws -> OptionalStringResponse {
-        fatalError("Not implemented.")
+    public func getOptionalMovieName(request: String, requestOptions: RequestOptions? = nil) async throws -> OptionalStringResponse {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/movie",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: OptionalStringResponse.self
+        )
     }
 }

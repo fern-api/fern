@@ -3,7 +3,7 @@ import { swift } from "@fern-api/swift-codegen";
 
 import { PrimitiveTypeV1, TypeReference } from "@fern-fern/ir-sdk/api";
 
-export function generateSwiftTypeForTypeReference(typeReference: TypeReference): swift.Type {
+export function getSwiftTypeForTypeReference(typeReference: TypeReference): swift.Type {
     switch (typeReference.type) {
         case "container":
             return typeReference.container._visit({
@@ -12,8 +12,8 @@ export function generateSwiftTypeForTypeReference(typeReference: TypeReference):
                 map: () => swift.Type.any(),
                 set: () => swift.Type.any(),
                 nullable: () => swift.Type.any(),
-                optional: (ref) => generateSwiftTypeForTypeReference(ref),
-                list: (ref) => swift.Type.array(generateSwiftTypeForTypeReference(ref)),
+                optional: (ref) => swift.Type.optional(getSwiftTypeForTypeReference(ref)),
+                list: (ref) => swift.Type.array(getSwiftTypeForTypeReference(ref)),
                 _other: () => swift.Type.any()
             });
         case "primitive":

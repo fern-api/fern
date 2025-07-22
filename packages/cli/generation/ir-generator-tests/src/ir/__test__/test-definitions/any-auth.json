@@ -3650,6 +3650,7 @@
                     "safeName": "Auth"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -3725,6 +3726,7 @@
                     "safeName": "User"
                 }
             },
+            "displayName": null,
             "fernFilepath": {
                 "allParts": [
                     {

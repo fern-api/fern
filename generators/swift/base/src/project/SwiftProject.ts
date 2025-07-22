@@ -36,6 +36,9 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
         const { absolutePathToSrcDirectory } = this;
         this.context.logger.debug(`mkdir ${absolutePathToSrcDirectory}`);
         await mkdir(absolutePathToSrcDirectory, { recursive: true });
-        await Promise.all(this.sourceFiles.map((file) => file.write(absolutePathToSrcDirectory)));
+        // TODO(kafkas): Use Promise.all() when we start handling name collisions
+        for (const file of this.sourceFiles) {
+            await file.write(absolutePathToSrcDirectory);
+        }
     }
 }

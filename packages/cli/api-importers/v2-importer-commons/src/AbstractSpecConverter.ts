@@ -529,6 +529,7 @@ export abstract class AbstractSpecConverter<
             if (this.ir.subpackages[subpackageId] == null) {
                 this.ir.subpackages[subpackageId] = {
                     name: this.context.casingsGenerator.generateName(name),
+                    displayName: undefined,
                     ...this.createPackage({ name })
                 };
             }

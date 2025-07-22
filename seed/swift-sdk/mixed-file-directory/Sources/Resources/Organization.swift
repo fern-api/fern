@@ -5,7 +5,13 @@ public final class OrganizationClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func create(requestOptions: RequestOptions? = nil) async throws -> Organization {
-        fatalError("Not implemented.")
+    public func create(request: CreateOrganizationRequest, requestOptions: RequestOptions? = nil) async throws -> Organization {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/organizations",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: Organization.self
+        )
     }
 }

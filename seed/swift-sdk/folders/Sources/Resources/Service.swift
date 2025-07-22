@@ -6,10 +6,21 @@ public final class ServiceClient: Sendable {
     }
 
     public func endpoint(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/service",
+            requestOptions: requestOptions,
+            responseType: Any.self
+        )
     }
 
-    public func unknownRequest(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+    public func unknownRequest(request: Any, requestOptions: RequestOptions? = nil) async throws -> Any {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/service",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: Any.self
+        )
     }
 }

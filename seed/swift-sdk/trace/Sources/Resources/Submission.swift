@@ -5,19 +5,39 @@ public final class SubmissionClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func createExecutionSession(requestOptions: RequestOptions? = nil) async throws -> ExecutionSessionResponse {
-        fatalError("Not implemented.")
+    public func createExecutionSession(language: String, requestOptions: RequestOptions? = nil) async throws -> ExecutionSessionResponse {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/sessions/create-session/\(language)",
+            requestOptions: requestOptions,
+            responseType: ExecutionSessionResponse.self
+        )
     }
 
-    public func getExecutionSession(requestOptions: RequestOptions? = nil) async throws -> ExecutionSessionResponse {
-        fatalError("Not implemented.")
+    public func getExecutionSession(sessionId: String, requestOptions: RequestOptions? = nil) async throws -> ExecutionSessionResponse? {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/sessions/\(sessionId)",
+            requestOptions: requestOptions,
+            responseType: ExecutionSessionResponse?.self
+        )
     }
 
-    public func stopExecutionSession(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+    public func stopExecutionSession(sessionId: String, requestOptions: RequestOptions? = nil) async throws -> Any {
+        return try await httpClient.performRequest(
+            method: .delete,
+            path: "/sessions/stop/\(sessionId)",
+            requestOptions: requestOptions,
+            responseType: Any.self
+        )
     }
 
     public func getExecutionSessionsState(requestOptions: RequestOptions? = nil) async throws -> GetExecutionSessionStateResponse {
-        fatalError("Not implemented.")
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/sessions/execution-sessions-state",
+            requestOptions: requestOptions,
+            responseType: GetExecutionSessionStateResponse.self
+        )
     }
 }

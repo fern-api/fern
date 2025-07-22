@@ -5,51 +5,156 @@ public final class UsersClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func listWithCursorPagination(requestOptions: RequestOptions? = nil) async throws -> ListUsersPaginationResponse {
-        fatalError("Not implemented.")
+    public func listWithCursorPagination(page: Int? = nil, perPage: Int? = nil, order: Order? = nil, startingAfter: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListUsersPaginationResponse {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/users",
+            queryParams: [
+                "page": page.map { .int($0) }, 
+                "per_page": perPage.map { .int($0) }, 
+                "order": order.map { .string($0) }, 
+                "starting_after": startingAfter.map { .string($0) }
+            ],
+            requestOptions: requestOptions,
+            responseType: ListUsersPaginationResponse.self
+        )
     }
 
-    public func listWithMixedTypeCursorPagination(requestOptions: RequestOptions? = nil) async throws -> ListUsersMixedTypePaginationResponse {
-        fatalError("Not implemented.")
+    public func listWithMixedTypeCursorPagination(cursor: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListUsersMixedTypePaginationResponse {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/users",
+            queryParams: [
+                "cursor": cursor.map { .string($0) }
+            ],
+            requestOptions: requestOptions,
+            responseType: ListUsersMixedTypePaginationResponse.self
+        )
     }
 
-    public func listWithBodyCursorPagination(requestOptions: RequestOptions? = nil) async throws -> ListUsersPaginationResponse {
-        fatalError("Not implemented.")
+    public func listWithBodyCursorPagination(request: Any, requestOptions: RequestOptions? = nil) async throws -> ListUsersPaginationResponse {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/users",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: ListUsersPaginationResponse.self
+        )
     }
 
-    public func listWithOffsetPagination(requestOptions: RequestOptions? = nil) async throws -> ListUsersPaginationResponse {
-        fatalError("Not implemented.")
+    public func listWithOffsetPagination(page: Int? = nil, perPage: Int? = nil, order: Order? = nil, startingAfter: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListUsersPaginationResponse {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/users",
+            queryParams: [
+                "page": page.map { .int($0) }, 
+                "per_page": perPage.map { .int($0) }, 
+                "order": order.map { .string($0) }, 
+                "starting_after": startingAfter.map { .string($0) }
+            ],
+            requestOptions: requestOptions,
+            responseType: ListUsersPaginationResponse.self
+        )
     }
 
-    public func listWithDoubleOffsetPagination(requestOptions: RequestOptions? = nil) async throws -> ListUsersPaginationResponse {
-        fatalError("Not implemented.")
+    public func listWithDoubleOffsetPagination(page: Double? = nil, perPage: Double? = nil, order: Order? = nil, startingAfter: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListUsersPaginationResponse {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/users",
+            queryParams: [
+                "page": page.map { .double($0) }, 
+                "per_page": perPage.map { .double($0) }, 
+                "order": order.map { .string($0) }, 
+                "starting_after": startingAfter.map { .string($0) }
+            ],
+            requestOptions: requestOptions,
+            responseType: ListUsersPaginationResponse.self
+        )
     }
 
-    public func listWithBodyOffsetPagination(requestOptions: RequestOptions? = nil) async throws -> ListUsersPaginationResponse {
-        fatalError("Not implemented.")
+    public func listWithBodyOffsetPagination(request: Any, requestOptions: RequestOptions? = nil) async throws -> ListUsersPaginationResponse {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/users",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: ListUsersPaginationResponse.self
+        )
     }
 
-    public func listWithOffsetStepPagination(requestOptions: RequestOptions? = nil) async throws -> ListUsersPaginationResponse {
-        fatalError("Not implemented.")
+    public func listWithOffsetStepPagination(page: Int? = nil, limit: Int? = nil, order: Order? = nil, requestOptions: RequestOptions? = nil) async throws -> ListUsersPaginationResponse {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/users",
+            queryParams: [
+                "page": page.map { .int($0) }, 
+                "limit": limit.map { .int($0) }, 
+                "order": order.map { .string($0) }
+            ],
+            requestOptions: requestOptions,
+            responseType: ListUsersPaginationResponse.self
+        )
     }
 
-    public func listWithOffsetPaginationHasNextPage(requestOptions: RequestOptions? = nil) async throws -> ListUsersPaginationResponse {
-        fatalError("Not implemented.")
+    public func listWithOffsetPaginationHasNextPage(page: Int? = nil, limit: Int? = nil, order: Order? = nil, requestOptions: RequestOptions? = nil) async throws -> ListUsersPaginationResponse {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/users",
+            queryParams: [
+                "page": page.map { .int($0) }, 
+                "limit": limit.map { .int($0) }, 
+                "order": order.map { .string($0) }
+            ],
+            requestOptions: requestOptions,
+            responseType: ListUsersPaginationResponse.self
+        )
     }
 
-    public func listWithExtendedResults(requestOptions: RequestOptions? = nil) async throws -> ListUsersExtendedResponse {
-        fatalError("Not implemented.")
+    public func listWithExtendedResults(cursor: UUID? = nil, requestOptions: RequestOptions? = nil) async throws -> ListUsersExtendedResponse {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/users",
+            queryParams: [
+                "cursor": cursor.map { .uuid($0) }
+            ],
+            requestOptions: requestOptions,
+            responseType: ListUsersExtendedResponse.self
+        )
     }
 
-    public func listWithExtendedResultsAndOptionalData(requestOptions: RequestOptions? = nil) async throws -> ListUsersExtendedOptionalListResponse {
-        fatalError("Not implemented.")
+    public func listWithExtendedResultsAndOptionalData(cursor: UUID? = nil, requestOptions: RequestOptions? = nil) async throws -> ListUsersExtendedOptionalListResponse {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/users",
+            queryParams: [
+                "cursor": cursor.map { .uuid($0) }
+            ],
+            requestOptions: requestOptions,
+            responseType: ListUsersExtendedOptionalListResponse.self
+        )
     }
 
-    public func listUsernames(requestOptions: RequestOptions? = nil) async throws -> UsernameCursor {
-        fatalError("Not implemented.")
+    public func listUsernames(startingAfter: String? = nil, requestOptions: RequestOptions? = nil) async throws -> UsernameCursor {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/users",
+            queryParams: [
+                "starting_after": startingAfter.map { .string($0) }
+            ],
+            requestOptions: requestOptions,
+            responseType: UsernameCursor.self
+        )
     }
 
-    public func listWithGlobalConfig(requestOptions: RequestOptions? = nil) async throws -> UsernameContainer {
-        fatalError("Not implemented.")
+    public func listWithGlobalConfig(offset: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> UsernameContainer {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/users",
+            queryParams: [
+                "offset": offset.map { .int($0) }
+            ],
+            requestOptions: requestOptions,
+            responseType: UsernameContainer.self
+        )
     }
 }
