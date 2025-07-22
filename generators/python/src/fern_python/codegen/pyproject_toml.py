@@ -234,6 +234,7 @@ pytest = "^7.4.0"
 pytest-asyncio = "^0.23.5"
 python-dateutil = "^2.9.0"
 types-python-dateutil = "^2.9.0.20240316"
+respx = "^0.22.0"
 {dev_deps}"""
 
     @dataclass(frozen=True)
