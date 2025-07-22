@@ -446,7 +446,7 @@ export abstract class AbstractGoGeneratorContext<
         }
         return undefined;
     }
-
+    
     public getTypeDeclarationOrThrow(typeId: TypeId): TypeDeclaration {
         const typeDeclaration = this.getTypeDeclaration(typeId);
         if (typeDeclaration == null) {
