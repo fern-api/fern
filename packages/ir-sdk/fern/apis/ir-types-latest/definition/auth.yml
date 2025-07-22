@@ -29,24 +29,26 @@ types:
   InferredAuthScheme:
     extends: commons.WithDocs
     properties:
-      endpointReference: commons.EndpointReference
-      response: InferredAuthResponse
+      authEndpoint: commons.EndpointReference
+      authenticatedRequestHeaders: list<InferredAuthenticatedRequestHeader>
 
-  InferredAuthResponse:
-      properties:
-        tokenProperty: 
-          type: http.ResponseProperty
-          docs: Points to the location of the token in the HTTP response of the auth endpoint
-        requestAuthHeader: 
-          type: string
-          docs: |
-            The header name to put the token in for any authenticated HTTP request. 
-            Defaults to `Authorization`.
-        requestAuthScheme:
-          type: optional<nullable<string>>
-          docs: |
-            The authorization scheme which is placed in front of the token value. 
-            Defaults to `Bearer`, but can be set to `null` to unset the scheme.
+  InferredAuthenticatedRequestHeader:
+    docs:
+      A header that will be set on HTTP requests when the inferred auth scheme is applied to an endpoint.
+      These are not headers for the authorization endpoint.
+    properties:
+      authResponseProperty: 
+        type: http.ResponseProperty
+        docs: The property to retrieve the header value from the auth response.
+      headerName: 
+        type: string
+        docs: |
+          The header name to put the token in for any authenticated HTTP request. 
+          Defaults to `Authorization`.
+      valuePrefix:
+        type: optional<string>
+        docs: |
+          Commonly used for setting the `Authorization` scheme, but could be used for other things.
 
   BearerAuthScheme:
     extends: commons.WithDocs

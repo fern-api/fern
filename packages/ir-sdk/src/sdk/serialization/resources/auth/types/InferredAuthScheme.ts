@@ -6,7 +6,7 @@ import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { EndpointReference } from "../../commons/types/EndpointReference";
-import { InferredAuthResponse } from "./InferredAuthResponse";
+import { InferredAuthenticatedRequestHeader } from "./InferredAuthenticatedRequestHeader";
 import { WithDocs } from "../../commons/types/WithDocs";
 
 export const InferredAuthScheme: core.serialization.ObjectSchema<
@@ -14,14 +14,14 @@ export const InferredAuthScheme: core.serialization.ObjectSchema<
     FernIr.InferredAuthScheme
 > = core.serialization
     .objectWithoutOptionalProperties({
-        endpointReference: EndpointReference,
-        response: InferredAuthResponse,
+        authEndpoint: EndpointReference,
+        authenticatedRequestHeaders: core.serialization.list(InferredAuthenticatedRequestHeader),
     })
     .extend(WithDocs);
 
 export declare namespace InferredAuthScheme {
     export interface Raw extends WithDocs.Raw {
-        endpointReference: EndpointReference.Raw;
-        response: InferredAuthResponse.Raw;
+        authEndpoint: EndpointReference.Raw;
+        authenticatedRequestHeaders: InferredAuthenticatedRequestHeader.Raw[];
     }
 }
