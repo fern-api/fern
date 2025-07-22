@@ -61,8 +61,7 @@ describe("Struct", () => {
                 swift.property({
                     unsafeName: "optionalProperty",
                     declarationType: DeclarationType.Var,
-                    type: Type.int(),
-                    optional: true
+                    type: Type.optional(Type.int())
                 }),
                 swift.property({
                     unsafeName: "privateProperty",
@@ -165,8 +164,7 @@ describe("Struct", () => {
                     unsafeName: "privateOptional",
                     accessLevel: AccessLevel.Private,
                     declarationType: DeclarationType.Var,
-                    type: Type.int(),
-                    optional: true
+                    type: Type.optional(Type.int())
                 }),
                 swift.property({
                     unsafeName: "fileprivateArray",

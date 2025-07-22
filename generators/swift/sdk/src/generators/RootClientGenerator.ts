@@ -99,36 +99,31 @@ export class RootClientGenerator {
                 swift.functionParameter({
                     argumentLabel: "token",
                     unsafeName: "token",
-                    type: swift.Type.string(),
-                    optional: true,
+                    type: swift.Type.optional(swift.Type.string()),
                     defaultValue: swift.Expression.rawValue("nil")
                 }),
                 swift.functionParameter({
                     argumentLabel: "headers",
                     unsafeName: "headers",
-                    type: swift.Type.dictionary(swift.Type.string(), swift.Type.string()),
-                    optional: true,
+                    type: swift.Type.optional(swift.Type.dictionary(swift.Type.string(), swift.Type.string())),
                     defaultValue: swift.Expression.rawValue("[:]")
                 }),
                 swift.functionParameter({
                     argumentLabel: "timeout",
                     unsafeName: "timeout",
-                    type: swift.Type.int(),
-                    optional: true,
+                    type: swift.Type.optional(swift.Type.int()),
                     defaultValue: swift.Expression.rawValue("nil")
                 }),
                 swift.functionParameter({
                     argumentLabel: "maxRetries",
                     unsafeName: "maxRetries",
-                    type: swift.Type.int(),
-                    optional: true,
+                    type: swift.Type.optional(swift.Type.int()),
                     defaultValue: swift.Expression.rawValue("nil")
                 }),
                 swift.functionParameter({
                     argumentLabel: "urlSession",
                     unsafeName: "urlSession",
-                    type: swift.Type.custom("URLSession"),
-                    optional: true,
+                    type: swift.Type.optional(swift.Type.custom("URLSession")),
                     defaultValue: swift.Expression.rawValue("nil")
                 })
             ],

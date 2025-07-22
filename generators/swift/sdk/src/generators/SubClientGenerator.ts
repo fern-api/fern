@@ -122,25 +122,25 @@ export class SubClientGenerator {
         });
 
         endpoint.headers.forEach((header) => {
+            const swiftType = getSwiftTypeForTypeReference(header.valueType);
             params.push(
                 swift.functionParameter({
                     argumentLabel: header.name.name.camelCase.unsafeName,
                     unsafeName: header.name.name.camelCase.unsafeName,
-                    type: swift.Type.custom("String"),
-                    optional: isOptionalType(header.valueType),
-                    defaultValue: isOptionalType(header.valueType) ? swift.Expression.rawValue("nil") : undefined
+                    type: swiftType,
+                    defaultValue: swiftType.isOptional ? swift.Expression.rawValue("nil") : undefined
                 })
             );
         });
 
         endpoint.queryParameters.forEach((queryParam) => {
+            const swiftType = getSwiftTypeForTypeReference(queryParam.valueType);
             params.push(
                 swift.functionParameter({
                     argumentLabel: queryParam.name.name.camelCase.unsafeName,
                     unsafeName: queryParam.name.name.camelCase.unsafeName,
-                    type: getSwiftTypeForTypeReference(queryParam.valueType),
-                    optional: isOptionalType(queryParam.valueType),
-                    defaultValue: isOptionalType(queryParam.valueType) ? swift.Expression.rawValue("nil") : undefined
+                    type: swiftType,
+                    defaultValue: swiftType.isOptional ? swift.Expression.rawValue("nil") : undefined
                 })
             );
         });
@@ -149,8 +149,7 @@ export class SubClientGenerator {
             swift.functionParameter({
                 argumentLabel: "requestOptions",
                 unsafeName: "requestOptions",
-                type: swift.Type.custom("RequestOptions"),
-                optional: true,
+                type: swift.Type.optional(swift.Type.custom("RequestOptions")),
                 defaultValue: swift.Expression.rawValue("nil")
             })
         );
@@ -208,30 +207,52 @@ export class SubClientGenerator {
                     value: swift.Expression.dictionaryLiteral({
                         entries: endpoint.queryParameters.map((queryParam) => {
                             // TODO(kafkas): Fix this. It's a buggy implementation.
-
                             const key = swift.Expression.rawStringValue(queryParam.name.name.originalName);
-                            const isEnumValue = queryParam.valueType.type === "named";
-                            let value;
-                            if (isOptionalType(queryParam.valueType)) {
-                                value = swift.Expression.methodCallWithTrailingClosure({
-                                    target: swift.Expression.reference(queryParam.name.name.camelCase.unsafeName),
-                                    methodName: "map",
-                                    // TODO: Make dynamic
-                                    closureBody: swift.Expression.rawValue(
-                                        isEnumValue ? ".string($0.rawValue)" : ".string($0)"
-                                    )
-                                });
-                            } else {
-                                if (isEnumValue) {
-                                    value = swift.Expression.memberAccess({
+                            const swiftType = getSwiftTypeForTypeReference(queryParam.valueType);
+
+                            if (swiftType.isOptional) {
+                                return [
+                                    key,
+                                    swift.Expression.methodCallWithTrailingClosure({
                                         target: swift.Expression.reference(queryParam.name.name.camelCase.unsafeName),
-                                        memberName: "rawValue"
-                                    });
-                                } else {
-                                    value = swift.Expression.reference(queryParam.name.name.camelCase.unsafeName);
-                                }
+                                        methodName: "map",
+                                        closureBody: swift.Expression.contextualMethodCall({
+                                            methodName: "string", // TODO(kafkas): Make dynamic
+                                            arguments_: [
+                                                swift.functionArgument({
+                                                    value: swiftType.isCustom
+                                                        ? swift.Expression.memberAccess({
+                                                              target: swift.Expression.reference("$0"),
+                                                              memberName: "rawValue"
+                                                          })
+                                                        : swift.Expression.reference("$0")
+                                                })
+                                            ]
+                                        })
+                                    })
+                                ];
+                            } else {
+                                return [
+                                    key,
+                                    swift.Expression.contextualMethodCall({
+                                        methodName: "string", // TODO(kafkas): Make dynamic
+                                        arguments_: [
+                                            swift.functionArgument({
+                                                value: swiftType.isCustom
+                                                    ? swift.Expression.memberAccess({
+                                                          target: swift.Expression.reference(
+                                                              queryParam.name.name.camelCase.unsafeName
+                                                          ),
+                                                          memberName: "rawValue"
+                                                      })
+                                                    : swift.Expression.reference(
+                                                          queryParam.name.name.camelCase.unsafeName
+                                                      )
+                                            })
+                                        ]
+                                    })
+                                ];
                             }
-                            return [key, value];
                         }),
                         multiline: true
                     })

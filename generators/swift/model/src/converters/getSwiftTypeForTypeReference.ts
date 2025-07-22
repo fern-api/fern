@@ -12,7 +12,7 @@ export function getSwiftTypeForTypeReference(typeReference: TypeReference): swif
                 map: () => swift.Type.any(),
                 set: () => swift.Type.any(),
                 nullable: () => swift.Type.any(),
-                optional: (ref) => getSwiftTypeForTypeReference(ref),
+                optional: (ref) => swift.Type.optional(getSwiftTypeForTypeReference(ref)),
                 list: (ref) => swift.Type.array(getSwiftTypeForTypeReference(ref)),
                 _other: () => swift.Type.any()
             });

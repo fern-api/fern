@@ -5,7 +5,6 @@ import { swift } from "@fern-api/swift-codegen";
 import { ObjectProperty, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { getSwiftTypeForTypeReference } from "../converters";
-import { isOptionalProperty } from "../helpers";
 
 export class ObjectGenerator {
     private readonly typeDeclaration: TypeDeclaration;
@@ -74,15 +73,15 @@ export class ObjectGenerator {
         return swift.initializer({
             accessLevel: swift.AccessLevel.Public,
             parameters: [
-                ...this.objectTypeDeclaration.properties.map((p) =>
-                    swift.functionParameter({
+                ...this.objectTypeDeclaration.properties.map((p) => {
+                    const swiftType = getSwiftTypeForTypeReference(p.valueType);
+                    return swift.functionParameter({
                         argumentLabel: p.name.name.camelCase.unsafeName,
                         unsafeName: p.name.name.camelCase.unsafeName,
-                        type: getSwiftTypeForTypeReference(p.valueType),
-                        optional: isOptionalProperty(p),
-                        defaultValue: isOptionalProperty(p) ? swift.Expression.rawValue("nil") : undefined
-                    })
-                ),
+                        type: swiftType,
+                        defaultValue: swiftType.isOptional ? swift.Expression.rawValue("nil") : undefined
+                    });
+                }),
                 swift.functionParameter({
                     argumentLabel: this.additionalPropertiesInfo.propertyName,
                     unsafeName: this.additionalPropertiesInfo.propertyName,
@@ -132,17 +131,18 @@ export class ObjectGenerator {
                         })
                     )
                 ),
-                ...this.objectTypeDeclaration.properties.map((p) =>
-                    swift.Statement.propertyAssignment(
+                ...this.objectTypeDeclaration.properties.map((p) => {
+                    const swiftType = getSwiftTypeForTypeReference(p.valueType);
+                    return swift.Statement.propertyAssignment(
                         p.name.name.camelCase.unsafeName,
                         swift.Expression.try(
                             swift.Expression.methodCall({
                                 target: swift.Expression.reference("container"),
-                                methodName: isOptionalProperty(p) ? "decodeIfPresent" : "decode",
+                                methodName: swiftType.isOptional ? "decodeIfPresent" : "decode",
                                 arguments_: [
                                     swift.functionArgument({
                                         value: swift.Expression.memberAccess({
-                                            target: getSwiftTypeForTypeReference(p.valueType),
+                                            target: swift.Type.required(swiftType),
                                             memberName: "self"
                                         })
                                     }),
@@ -153,8 +153,8 @@ export class ObjectGenerator {
                                 ]
                             })
                         )
-                    )
-                ),
+                    );
+                }),
                 swift.Statement.propertyAssignment(
                     this.additionalPropertiesInfo.propertyName,
                     swift.Expression.try(
@@ -219,12 +219,13 @@ export class ObjectGenerator {
                         })
                     )
                 ),
-                ...this.objectTypeDeclaration.properties.map((p) =>
-                    swift.Statement.expressionStatement(
+                ...this.objectTypeDeclaration.properties.map((p) => {
+                    const swiftType = getSwiftTypeForTypeReference(p.valueType);
+                    return swift.Statement.expressionStatement(
                         swift.Expression.try(
                             swift.Expression.methodCall({
                                 target: swift.Expression.reference("container"),
-                                methodName: isOptionalProperty(p) ? "encodeIfPresent" : "encode",
+                                methodName: swiftType.isOptional ? "encodeIfPresent" : "encode",
                                 arguments_: [
                                     swift.functionArgument({
                                         value: swift.Expression.memberAccess({
@@ -239,8 +240,8 @@ export class ObjectGenerator {
                                 ]
                             })
                         )
-                    )
-                )
+                    );
+                })
             ])
         });
     }
@@ -266,8 +267,7 @@ export class ObjectGenerator {
             unsafeName: property.name.name.camelCase.unsafeName,
             accessLevel: swift.AccessLevel.Public,
             declarationType: swift.DeclarationType.Let,
-            type: getSwiftTypeForTypeReference(property.valueType),
-            optional: isOptionalProperty(property)
+            type: getSwiftTypeForTypeReference(property.valueType)
         });
     }
 }

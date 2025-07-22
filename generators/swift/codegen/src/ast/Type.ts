@@ -58,6 +58,11 @@ type Dictionary = {
     valueType: Type;
 };
 
+type Optional = {
+    type: "optional";
+    valueType: Type;
+};
+
 /**
  * A reference to a custom type.
  */
@@ -85,6 +90,7 @@ type InternalType =
     | Tuple
     | Array_
     | Dictionary
+    | Optional
     | Custom
     | Any;
 
@@ -94,6 +100,14 @@ export class Type extends AstNode {
     private constructor(internalType: InternalType) {
         super();
         this.internalType = internalType;
+    }
+
+    public get isOptional(): boolean {
+        return this.internalType.type === "optional";
+    }
+
+    public get isCustom(): boolean {
+        return this.internalType.type === "custom";
     }
 
     public write(writer: Writer): void {
@@ -149,6 +163,10 @@ export class Type extends AstNode {
                 writer.write(": ");
                 this.internalType.valueType.write(writer);
                 writer.write("]");
+                break;
+            case "optional":
+                this.internalType.valueType.write(writer);
+                writer.write("?");
                 break;
             case "custom":
                 writer.write(this.internalType.name);
@@ -212,6 +230,14 @@ export class Type extends AstNode {
     public static dictionary(keyType: Type, valueType: Type): Type {
         // TODO(kafkas): keyType needs to conform to Hashable. We may want to enforce this as a constraint.
         return new this({ type: "dictionary", keyType, valueType });
+    }
+
+    public static optional(valueType: Type): Type {
+        return new this({ type: "optional", valueType });
+    }
+
+    public static required(valueType: Type): Type {
+        return valueType.internalType.type === "optional" ? valueType.internalType.valueType : valueType;
     }
 
     public static custom(name: string): Type {
