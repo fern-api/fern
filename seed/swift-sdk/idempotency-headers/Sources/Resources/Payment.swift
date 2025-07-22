@@ -5,10 +5,11 @@ public final class PaymentClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func create(requestOptions: RequestOptions? = nil) async throws -> UUID {
+    public func create(request: Any, requestOptions: RequestOptions? = nil) async throws -> UUID {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/payment", 
+            body: request, 
             requestOptions: requestOptions
         )
     }

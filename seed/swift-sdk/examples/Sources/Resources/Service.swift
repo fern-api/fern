@@ -13,10 +13,11 @@ public final class ServiceClient: Sendable {
         )
     }
 
-    public func createMovie(requestOptions: RequestOptions? = nil) async throws -> MovieId {
+    public func createMovie(request: Movie, requestOptions: RequestOptions? = nil) async throws -> MovieId {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/movie", 
+            body: request, 
             requestOptions: requestOptions
         )
     }
@@ -36,10 +37,11 @@ public final class ServiceClient: Sendable {
         )
     }
 
-    public func createBigEntity(requestOptions: RequestOptions? = nil) async throws -> Response {
+    public func createBigEntity(request: BigEntity, requestOptions: RequestOptions? = nil) async throws -> Response {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/big-entity", 
+            body: request, 
             requestOptions: requestOptions
         )
     }

@@ -5,10 +5,11 @@ public final class S3Client: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getPresignedUrl(requestOptions: RequestOptions? = nil) async throws -> String {
+    public func getPresignedUrl(request: Any, requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/s3/presigned-url", 
+            body: request, 
             requestOptions: requestOptions
         )
     }

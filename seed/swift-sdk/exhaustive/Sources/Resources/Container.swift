@@ -5,58 +5,65 @@ public final class ContainerClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getAndReturnListOfPrimitives(requestOptions: RequestOptions? = nil) async throws -> [String] {
+    public func getAndReturnListOfPrimitives(request: [String], requestOptions: RequestOptions? = nil) async throws -> [String] {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/container/list-of-primitives", 
+            body: request, 
             requestOptions: requestOptions
         )
     }
 
-    public func getAndReturnListOfObjects(requestOptions: RequestOptions? = nil) async throws -> [ObjectWithRequiredField] {
+    public func getAndReturnListOfObjects(request: [ObjectWithRequiredField], requestOptions: RequestOptions? = nil) async throws -> [ObjectWithRequiredField] {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/container/list-of-objects", 
+            body: request, 
             requestOptions: requestOptions
         )
     }
 
-    public func getAndReturnSetOfPrimitives(requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func getAndReturnSetOfPrimitives(request: Any, requestOptions: RequestOptions? = nil) async throws -> Any {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/container/set-of-primitives", 
+            body: request, 
             requestOptions: requestOptions
         )
     }
 
-    public func getAndReturnSetOfObjects(requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func getAndReturnSetOfObjects(request: Any, requestOptions: RequestOptions? = nil) async throws -> Any {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/container/set-of-objects", 
+            body: request, 
             requestOptions: requestOptions
         )
     }
 
-    public func getAndReturnMapPrimToPrim(requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func getAndReturnMapPrimToPrim(request: Any, requestOptions: RequestOptions? = nil) async throws -> Any {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/container/map-prim-to-prim", 
+            body: request, 
             requestOptions: requestOptions
         )
     }
 
-    public func getAndReturnMapOfPrimToObject(requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func getAndReturnMapOfPrimToObject(request: Any, requestOptions: RequestOptions? = nil) async throws -> Any {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/container/map-prim-to-object", 
+            body: request, 
             requestOptions: requestOptions
         )
     }
 
-    public func getAndReturnOptional(requestOptions: RequestOptions? = nil) async throws -> ObjectWithRequiredField? {
+    public func getAndReturnOptional(request: ObjectWithRequiredField?, requestOptions: RequestOptions? = nil) async throws -> ObjectWithRequiredField? {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/container/opt-objects", 
+            body: request, 
             requestOptions: requestOptions
         )
     }

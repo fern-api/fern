@@ -5,10 +5,11 @@ public final class DummyClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func generate(requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func generate(request: Any, requestOptions: RequestOptions? = nil) async throws -> Any {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/generate", 
+            body: request, 
             requestOptions: requestOptions
         )
     }

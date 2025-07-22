@@ -13,10 +13,11 @@ public final class CustomAuthClient: Sendable {
         )
     }
 
-    public func postWithCustomAuth(requestOptions: RequestOptions? = nil) async throws -> Bool {
+    public func postWithCustomAuth(request: Any, requestOptions: RequestOptions? = nil) async throws -> Bool {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/custom-auth", 
+            body: request, 
             requestOptions: requestOptions
         )
     }

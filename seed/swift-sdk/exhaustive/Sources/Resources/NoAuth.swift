@@ -5,10 +5,11 @@ public final class NoAuthClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func postWithNoAuth(requestOptions: RequestOptions? = nil) async throws -> Bool {
+    public func postWithNoAuth(request: Any, requestOptions: RequestOptions? = nil) async throws -> Bool {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/no-auth", 
+            body: request, 
             requestOptions: requestOptions
         )
     }

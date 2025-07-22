@@ -5,10 +5,11 @@ public final class Ec2Client: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func bootInstance(requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func bootInstance(request: Any, requestOptions: RequestOptions? = nil) async throws -> Any {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/ec2/boot", 
+            body: request, 
             requestOptions: requestOptions
         )
     }

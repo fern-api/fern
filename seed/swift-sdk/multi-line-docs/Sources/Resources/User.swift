@@ -13,10 +13,11 @@ public final class UserClient: Sendable {
         )
     }
 
-    public func createUser(requestOptions: RequestOptions? = nil) async throws -> User {
+    public func createUser(request: Any, requestOptions: RequestOptions? = nil) async throws -> User {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/users", 
+            body: request, 
             requestOptions: requestOptions
         )
     }

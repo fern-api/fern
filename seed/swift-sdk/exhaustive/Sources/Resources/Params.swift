@@ -67,18 +67,20 @@ public final class ParamsClient: Sendable {
         )
     }
 
-    public func modifyWithPath(param: String, requestOptions: RequestOptions? = nil) async throws -> String {
+    public func modifyWithPath(param: String, request: String, requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
             method: .put, 
             path: "/params/path/\(param)", 
+            body: request, 
             requestOptions: requestOptions
         )
     }
 
-    public func modifyWithInlinePath(param: String, requestOptions: RequestOptions? = nil) async throws -> String {
+    public func modifyWithInlinePath(param: String, request: String, requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
             method: .put, 
             path: "/params/path/\(param)", 
+            body: request, 
             requestOptions: requestOptions
         )
     }

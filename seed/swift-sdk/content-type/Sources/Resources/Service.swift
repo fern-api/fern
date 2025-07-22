@@ -5,10 +5,11 @@ public final class ServiceClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func patch(requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func patch(request: Any, requestOptions: RequestOptions? = nil) async throws -> Any {
         return try await httpClient.performRequest(
             method: .patch, 
             path: "/", 
+            body: request, 
             requestOptions: requestOptions
         )
     }

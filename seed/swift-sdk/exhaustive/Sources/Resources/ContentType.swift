@@ -5,18 +5,20 @@ public final class ContentTypeClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func postJsonPatchContentType(requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func postJsonPatchContentType(request: ObjectWithOptionalField, requestOptions: RequestOptions? = nil) async throws -> Any {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/foo/bar", 
+            body: request, 
             requestOptions: requestOptions
         )
     }
 
-    public func postJsonPatchContentWithCharsetType(requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func postJsonPatchContentWithCharsetType(request: ObjectWithOptionalField, requestOptions: RequestOptions? = nil) async throws -> Any {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/foo/baz", 
+            body: request, 
             requestOptions: requestOptions
         )
     }

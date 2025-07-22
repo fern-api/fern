@@ -13,10 +13,11 @@ public final class BasicAuthClient: Sendable {
         )
     }
 
-    public func postWithBasicAuth(requestOptions: RequestOptions? = nil) async throws -> Bool {
+    public func postWithBasicAuth(request: Any, requestOptions: RequestOptions? = nil) async throws -> Bool {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/basic-auth", 
+            body: request, 
             requestOptions: requestOptions
         )
     }

@@ -13,18 +13,20 @@ public final class BigunionClient: Sendable {
         )
     }
 
-    public func update(requestOptions: RequestOptions? = nil) async throws -> Bool {
+    public func update(request: BigUnion, requestOptions: RequestOptions? = nil) async throws -> Bool {
         return try await httpClient.performRequest(
             method: .patch, 
             path: "/", 
+            body: request, 
             requestOptions: requestOptions
         )
     }
 
-    public func updateMany(requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func updateMany(request: [BigUnion], requestOptions: RequestOptions? = nil) async throws -> Any {
         return try await httpClient.performRequest(
             method: .patch, 
             path: "/many", 
+            body: request, 
             requestOptions: requestOptions
         )
     }

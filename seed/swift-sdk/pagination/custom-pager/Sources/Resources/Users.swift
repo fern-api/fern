@@ -30,10 +30,11 @@ public final class UsersClient: Sendable {
         )
     }
 
-    public func listWithBodyCursorPagination(requestOptions: RequestOptions? = nil) async throws -> ListUsersPaginationResponse {
+    public func listWithBodyCursorPagination(request: Any, requestOptions: RequestOptions? = nil) async throws -> ListUsersPaginationResponse {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/users", 
+            body: request, 
             requestOptions: requestOptions
         )
     }
@@ -66,10 +67,11 @@ public final class UsersClient: Sendable {
         )
     }
 
-    public func listWithBodyOffsetPagination(requestOptions: RequestOptions? = nil) async throws -> ListUsersPaginationResponse {
+    public func listWithBodyOffsetPagination(request: Any, requestOptions: RequestOptions? = nil) async throws -> ListUsersPaginationResponse {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/users", 
+            body: request, 
             requestOptions: requestOptions
         )
     }

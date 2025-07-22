@@ -5,18 +5,20 @@ public final class DummyClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func generateStream(requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func generateStream(request: Any, requestOptions: RequestOptions? = nil) async throws -> Any {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/generate-stream", 
+            body: request, 
             requestOptions: requestOptions
         )
     }
 
-    public func generate(requestOptions: RequestOptions? = nil) async throws -> StreamResponse {
+    public func generate(request: Any, requestOptions: RequestOptions? = nil) async throws -> StreamResponse {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/generate", 
+            body: request, 
             requestOptions: requestOptions
         )
     }

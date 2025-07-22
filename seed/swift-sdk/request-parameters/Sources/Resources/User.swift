@@ -5,10 +5,11 @@ public final class UserClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func createUsername(requestOptions: RequestOptions? = nil) async throws -> Any {
+    public func createUsername(request: Any, requestOptions: RequestOptions? = nil) async throws -> Any {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/user/username", 
+            body: request, 
             requestOptions: requestOptions
         )
     }

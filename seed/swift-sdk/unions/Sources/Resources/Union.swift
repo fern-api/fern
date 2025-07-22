@@ -13,10 +13,11 @@ public final class UnionClient: Sendable {
         )
     }
 
-    public func update(requestOptions: RequestOptions? = nil) async throws -> Bool {
+    public func update(request: Shape, requestOptions: RequestOptions? = nil) async throws -> Bool {
         return try await httpClient.performRequest(
             method: .patch, 
             path: "/", 
+            body: request, 
             requestOptions: requestOptions
         )
     }

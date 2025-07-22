@@ -13,18 +13,20 @@ public final class UserClient: Sendable {
         )
     }
 
-    public func createUser(tenantId: String, requestOptions: RequestOptions? = nil) async throws -> User {
+    public func createUser(tenantId: String, request: User, requestOptions: RequestOptions? = nil) async throws -> User {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/\(tenantId)/user", 
+            body: request, 
             requestOptions: requestOptions
         )
     }
 
-    public func updateUser(tenantId: String, userId: String, requestOptions: RequestOptions? = nil) async throws -> User {
+    public func updateUser(tenantId: String, userId: String, request: User, requestOptions: RequestOptions? = nil) async throws -> User {
         return try await httpClient.performRequest(
             method: .patch, 
             path: "/\(tenantId)/user/\(userId)", 
+            body: request, 
             requestOptions: requestOptions
         )
     }

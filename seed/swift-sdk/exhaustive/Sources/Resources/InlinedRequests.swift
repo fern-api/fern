@@ -5,10 +5,11 @@ public final class InlinedRequestsClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func postWithObjectBodyandResponse(requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
+    public func postWithObjectBodyandResponse(request: Any, requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/req-bodies/object", 
+            body: request, 
             requestOptions: requestOptions
         )
     }

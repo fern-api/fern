@@ -13,26 +13,29 @@ public final class HttpMethodsClient: Sendable {
         )
     }
 
-    public func testPost(requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
+    public func testPost(request: ObjectWithRequiredField, requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/http-methods", 
+            body: request, 
             requestOptions: requestOptions
         )
     }
 
-    public func testPut(id: String, requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
+    public func testPut(id: String, request: ObjectWithRequiredField, requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
         return try await httpClient.performRequest(
             method: .put, 
             path: "/http-methods/\(id)", 
+            body: request, 
             requestOptions: requestOptions
         )
     }
 
-    public func testPatch(id: String, requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
+    public func testPatch(id: String, request: ObjectWithOptionalField, requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
         return try await httpClient.performRequest(
             method: .patch, 
             path: "/http-methods/\(id)", 
+            body: request, 
             requestOptions: requestOptions
         )
     }

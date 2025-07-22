@@ -5,10 +5,11 @@ public final class UnionClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func get(requestOptions: RequestOptions? = nil) async throws -> MyUnion {
+    public func get(request: MyUnion, requestOptions: RequestOptions? = nil) async throws -> MyUnion {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/", 
+            body: request, 
             requestOptions: requestOptions
         )
     }
@@ -21,34 +22,38 @@ public final class UnionClient: Sendable {
         )
     }
 
-    public func updateMetadata(requestOptions: RequestOptions? = nil) async throws -> Bool {
+    public func updateMetadata(request: MetadataUnion, requestOptions: RequestOptions? = nil) async throws -> Bool {
         return try await httpClient.performRequest(
             method: .put, 
             path: "/metadata", 
+            body: request, 
             requestOptions: requestOptions
         )
     }
 
-    public func call(requestOptions: RequestOptions? = nil) async throws -> Bool {
+    public func call(request: Request, requestOptions: RequestOptions? = nil) async throws -> Bool {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/call", 
+            body: request, 
             requestOptions: requestOptions
         )
     }
 
-    public func duplicateTypesUnion(requestOptions: RequestOptions? = nil) async throws -> UnionWithDuplicateTypes {
+    public func duplicateTypesUnion(request: UnionWithDuplicateTypes, requestOptions: RequestOptions? = nil) async throws -> UnionWithDuplicateTypes {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/duplicate", 
+            body: request, 
             requestOptions: requestOptions
         )
     }
 
-    public func nestedUnions(requestOptions: RequestOptions? = nil) async throws -> String {
+    public func nestedUnions(request: NestedUnionRoot, requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/nested", 
+            body: request, 
             requestOptions: requestOptions
         )
     }

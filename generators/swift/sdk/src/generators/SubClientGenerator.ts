@@ -145,6 +145,36 @@ export class SubClientGenerator {
             );
         });
 
+        if (endpoint.requestBody) {
+            if (endpoint.requestBody.type === "reference") {
+                params.push(
+                    swift.functionParameter({
+                        argumentLabel: "request",
+                        unsafeName: "request",
+                        type: getSwiftTypeForTypeReference(endpoint.requestBody.requestBodyType)
+                    })
+                );
+            } else if (endpoint.requestBody.type === "inlinedRequestBody") {
+                // TODO(kafkas): Handle inlined request body types
+                params.push(
+                    swift.functionParameter({
+                        argumentLabel: "request",
+                        unsafeName: "request",
+                        type: swift.Type.any()
+                    })
+                );
+            } else {
+                // TODO(kafkas): Handle other request body types
+                params.push(
+                    swift.functionParameter({
+                        argumentLabel: "request",
+                        unsafeName: "request",
+                        type: swift.Type.any()
+                    })
+                );
+            }
+        }
+
         params.push(
             swift.functionParameter({
                 argumentLabel: "requestOptions",
@@ -260,7 +290,14 @@ export class SubClientGenerator {
             );
         }
 
-        // TODO(kafkas): Add `body` if has body
+        if (endpoint.requestBody) {
+            arguments_.push(
+                swift.functionArgument({
+                    label: "body",
+                    value: swift.Expression.reference("request")
+                })
+            );
+        }
 
         arguments_.push(
             swift.functionArgument({

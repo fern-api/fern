@@ -5,10 +5,11 @@ public final class OrganizationClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func create(requestOptions: RequestOptions? = nil) async throws -> Organization {
+    public func create(request: CreateOrganizationRequest, requestOptions: RequestOptions? = nil) async throws -> Organization {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/organizations", 
+            body: request, 
             requestOptions: requestOptions
         )
     }

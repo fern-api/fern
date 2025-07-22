@@ -5,7 +5,7 @@ public final class PlaylistClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func createPlaylist(serviceParam: String, datetime: Date, optionalDatetime: Date? = nil, requestOptions: RequestOptions? = nil) async throws -> Playlist {
+    public func createPlaylist(serviceParam: String, datetime: Date, optionalDatetime: Date? = nil, request: PlaylistCreateRequest, requestOptions: RequestOptions? = nil) async throws -> Playlist {
         return try await httpClient.performRequest(
             method: .post, 
             path: "/v2/playlist/\(serviceParam)/create", 
@@ -13,6 +13,7 @@ public final class PlaylistClient: Sendable {
                 "datetime": .string(datetime), 
                 "optionalDatetime": optionalDatetime.map { .string($0) }
             ], 
+            body: request, 
             requestOptions: requestOptions
         )
     }
@@ -40,10 +41,11 @@ public final class PlaylistClient: Sendable {
         )
     }
 
-    public func updatePlaylist(serviceParam: String, playlistId: String, requestOptions: RequestOptions? = nil) async throws -> Playlist? {
+    public func updatePlaylist(serviceParam: String, playlistId: String, request: UpdatePlaylistRequest?, requestOptions: RequestOptions? = nil) async throws -> Playlist? {
         return try await httpClient.performRequest(
             method: .put, 
             path: "/v2/playlist/\(serviceParam)/\(playlistId)", 
+            body: request, 
             requestOptions: requestOptions
         )
     }
