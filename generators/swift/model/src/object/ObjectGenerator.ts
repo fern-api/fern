@@ -29,8 +29,7 @@ export class ObjectGenerator {
         this.additionalPropertiesInfo = this.getAdditionalPropertiesInfo(properties);
     }
 
-    // biome-ignore lint/suspicious/useGetterReturn: This getter intentionally does not return a value in the default case
-    private get fileDirectory(): RelativeFilePath {
+    private getFileDirectory(): RelativeFilePath {
         switch (this.objectType) {
             case "schema":
                 return RelativeFilePath.of("Schemas");
@@ -41,7 +40,7 @@ export class ObjectGenerator {
         }
     }
 
-    private get filename(): string {
+    private getFilename(): string {
         return this.name + ".swift";
     }
 
@@ -61,8 +60,8 @@ export class ObjectGenerator {
         const swiftStruct = this.generateStructForTypeDeclaration();
         const fileContents = swiftStruct.toString();
         return new SwiftFile({
-            filename: this.filename,
-            directory: this.fileDirectory,
+            filename: this.getFilename(),
+            directory: this.getFileDirectory(),
             fileContents
         });
     }
