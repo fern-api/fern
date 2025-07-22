@@ -29,6 +29,7 @@ export class ObjectGenerator {
         this.additionalPropertiesInfo = this.getAdditionalPropertiesInfo(properties);
     }
 
+    // biome-ignore lint/suspicious/useGetterReturn: This getter intentionally does not return a value in the default case
     private get fileDirectory(): RelativeFilePath {
         switch (this.objectType) {
             case "schema":
