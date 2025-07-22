@@ -17,6 +17,14 @@
 
 - changelogEntry:
     - summary: |  
+        Auto upgrade corepack within fern docs dev if corepack missing key error.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-07-21"
+  version: 0.65.22
+
+- changelogEntry:
+    - summary: |  
         Improve logging in fern docs dev.
       type: fix
   irVersion: 58

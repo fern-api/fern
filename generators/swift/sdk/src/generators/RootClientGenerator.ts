@@ -86,10 +86,10 @@ export class RootClientGenerator {
                     argumentLabel: "baseURL",
                     unsafeName: "baseURL",
                     type: swift.Type.string(),
-                    defaultValue: swift.Expression.memberAccess(
-                        swift.Expression.reference(`${this.projectNamePascalCase}Environment`),
-                        "default.rawValue"
-                    )
+                    defaultValue: swift.Expression.memberAccess({
+                        target: swift.Expression.reference(`${this.projectNamePascalCase}Environment`),
+                        memberName: "default.rawValue"
+                    })
                 }),
                 swift.functionParameter({
                     argumentLabel: "apiKey",
@@ -99,78 +99,79 @@ export class RootClientGenerator {
                 swift.functionParameter({
                     argumentLabel: "token",
                     unsafeName: "token",
-                    type: swift.Type.string(),
-                    optional: true,
+                    type: swift.Type.optional(swift.Type.string()),
                     defaultValue: swift.Expression.rawValue("nil")
                 }),
                 swift.functionParameter({
                     argumentLabel: "headers",
                     unsafeName: "headers",
-                    type: swift.Type.dictionary(swift.Type.string(), swift.Type.string()),
-                    optional: true,
+                    type: swift.Type.optional(swift.Type.dictionary(swift.Type.string(), swift.Type.string())),
                     defaultValue: swift.Expression.rawValue("[:]")
                 }),
                 swift.functionParameter({
                     argumentLabel: "timeout",
                     unsafeName: "timeout",
-                    type: swift.Type.int(),
-                    optional: true,
+                    type: swift.Type.optional(swift.Type.int()),
                     defaultValue: swift.Expression.rawValue("nil")
                 }),
                 swift.functionParameter({
                     argumentLabel: "maxRetries",
                     unsafeName: "maxRetries",
-                    type: swift.Type.int(),
-                    optional: true,
+                    type: swift.Type.optional(swift.Type.int()),
                     defaultValue: swift.Expression.rawValue("nil")
                 }),
                 swift.functionParameter({
                     argumentLabel: "urlSession",
                     unsafeName: "urlSession",
-                    type: swift.Type.custom("URLSession"),
-                    optional: true,
+                    type: swift.Type.optional(swift.Type.custom("URLSession")),
                     defaultValue: swift.Expression.rawValue("nil")
                 })
             ],
             body: swift.CodeBlock.withStatements([
                 swift.Statement.propertyAssignment(
                     this.configPropertyInfo.propertyName,
-                    swift.Expression.classInitialization("ClientConfig", [
-                        swift.functionArgument({
-                            label: "baseURL",
-                            value: swift.Expression.reference("baseURL")
-                        }),
-                        swift.functionArgument({
-                            label: "apiKey",
-                            value: swift.Expression.reference("apiKey")
-                        }),
-                        swift.functionArgument({
-                            label: "token",
-                            value: swift.Expression.reference("token")
-                        }),
-                        swift.functionArgument({
-                            label: "headers",
-                            value: swift.Expression.reference("headers")
-                        }),
-                        swift.functionArgument({
-                            label: "timeout",
-                            value: swift.Expression.reference("timeout")
-                        }),
-                        swift.functionArgument({
-                            label: "urlSession",
-                            value: swift.Expression.reference("urlSession")
-                        })
-                    ])
+                    swift.Expression.classInitialization({
+                        unsafeName: "ClientConfig",
+                        arguments_: [
+                            swift.functionArgument({
+                                label: "baseURL",
+                                value: swift.Expression.reference("baseURL")
+                            }),
+                            swift.functionArgument({
+                                label: "apiKey",
+                                value: swift.Expression.reference("apiKey")
+                            }),
+                            swift.functionArgument({
+                                label: "token",
+                                value: swift.Expression.reference("token")
+                            }),
+                            swift.functionArgument({
+                                label: "headers",
+                                value: swift.Expression.reference("headers")
+                            }),
+                            swift.functionArgument({
+                                label: "timeout",
+                                value: swift.Expression.reference("timeout")
+                            }),
+                            swift.functionArgument({
+                                label: "urlSession",
+                                value: swift.Expression.reference("urlSession")
+                            })
+                        ]
+                    })
                 ),
                 ...this.getSubpackages().map((subpackage) => {
                     return swift.Statement.propertyAssignment(
                         subpackage.name.camelCase.unsafeName,
-                        swift.Expression.classInitialization(this.getSubClientName(subpackage), [
-                            swift.functionArgument({
-                                label: "config",
-                                value: swift.Expression.reference(this.configPropertyInfo.propertyName)
-                            })
-                        ])
+                        swift.Expression.classInitialization({
+                            unsafeName: this.getSubClientName(subpackage),
+                            arguments_: [
+                                swift.functionArgument({
+                                    label: "config",
+                                    value: swift.Expression.reference(this.configPropertyInfo.propertyName)
+                                })
+                            ]
+                        })
                     );
                 })
             ])

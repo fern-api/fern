@@ -11,24 +11,24 @@ import (
 )
 
 type Client struct {
+	BasicAuth *basicauth.Client
+
 	baseURL string
 	caller  *internal.Caller
 	header  http.Header
-
-	BasicAuth *basicauth.Client
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		baseURL: options.BaseURL,
+		BasicAuth: basicauth.NewClient(opts...),
+		baseURL:   options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header:    options.ToHeader(),
-		BasicAuth: basicauth.NewClient(opts...),
+		header: options.ToHeader(),
 	}
 }

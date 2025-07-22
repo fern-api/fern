@@ -1,6 +1,7 @@
 import { Type } from "./Type";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
+import { writeGenerics } from "./utils/writeGenerics";
 
 export declare namespace GoTypeReference {
     interface Args {
@@ -33,16 +34,7 @@ export class GoTypeReference extends AstNode {
         const alias = writer.addImport(this.importPath);
         writer.write(`${alias}.${this.name}`);
         if (this.generics != null) {
-            writer.write("[");
-            this.generics.forEach((generic, idx) => {
-                if (idx > 0) {
-                    writer.write(", ");
-                }
-                if (generic != null) {
-                    generic.write(writer);
-                }
-            });
-            writer.write("]");
+            writeGenerics({ writer, generics: this.generics });
         }
     }
 }

@@ -45,7 +45,7 @@ export class GoValueFormatter {
 
         const optionalOrNullableType = this.context.maybeUnwrapOptionalOrNullable(reference);
         if (optionalOrNullableType != null) {
-            if (this.context.needsOptionalDereference(optionalOrNullableType)) {
+            if (this.context.needsOptionalDereference(reference)) {
                 prefix = go.codeblock("*");
             }
             isOptional = true;

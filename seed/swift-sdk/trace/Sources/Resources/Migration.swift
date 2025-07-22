@@ -5,7 +5,15 @@ public final class MigrationClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getAttemptedMigrations(requestOptions: RequestOptions? = nil) async throws -> [Migration] {
-        fatalError("Not implemented.")
+    public func getAttemptedMigrations(adminKeyHeader: String, requestOptions: RequestOptions? = nil) async throws -> [Migration] {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/migration-info/all",
+            headers: [
+                "admin-key-header": adminKeyHeader
+            ],
+            requestOptions: requestOptions,
+            responseType: [Migration].self
+        )
     }
 }

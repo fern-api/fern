@@ -5,7 +5,13 @@ public final class CompletionsClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func stream(requestOptions: RequestOptions? = nil) async throws -> Any {
-        fatalError("Not implemented.")
+    public func stream(request: Any, requestOptions: RequestOptions? = nil) async throws -> Any {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/stream",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: Any.self
+        )
     }
 }

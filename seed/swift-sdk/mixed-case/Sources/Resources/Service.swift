@@ -5,11 +5,25 @@ public final class ServiceClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getResource(requestOptions: RequestOptions? = nil) async throws -> Resource {
-        fatalError("Not implemented.")
+    public func getResource(resourceId: String, requestOptions: RequestOptions? = nil) async throws -> Resource {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/resource/\(resourceId)",
+            requestOptions: requestOptions,
+            responseType: Resource.self
+        )
     }
 
-    public func listResources(requestOptions: RequestOptions? = nil) async throws -> [Resource] {
-        fatalError("Not implemented.")
+    public func listResources(pageLimit: Int, beforeDate: Date, requestOptions: RequestOptions? = nil) async throws -> [Resource] {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/resource",
+            queryParams: [
+                "page_limit": .int(pageLimit), 
+                "beforeDate": .date(beforeDate)
+            ],
+            requestOptions: requestOptions,
+            responseType: [Resource].self
+        )
     }
 }
