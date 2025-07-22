@@ -25,6 +25,7 @@ export class ObjectGenerator extends FileGenerator<RubyFile, ModelCustomConfigSc
         return RelativeFilePath.of("lib");
     }
 
+    
     public doGenerate(): RubyFile {
         // Extract properties from the object declaration
         const properties = this.objectDeclaration.properties || [];
@@ -34,13 +35,44 @@ export class ObjectGenerator extends FileGenerator<RubyFile, ModelCustomConfigSc
             properties,
             context: this.context
         });
-
+    
+        // Get module names from IR data or config
+        const fernFilepath = this.typeDeclaration.name.fernFilepath;
+        const clientModuleName = this.context.customConfig.clientModuleName || 
+            fernFilepath.allParts[0]?.pascalCase.safeName || "Api";
+        const typesModuleName = this.context.customConfig.typesModuleName || "Types";
+    
+        // Create the class
+        const classNode = ruby.class_({
+            name: this.typeDeclaration.name.name.pascalCase.safeName,
+            docstring: this.typeDeclaration.docs ?? undefined,
+            statements: statements
+        });
+    
+        // Create the Types module
+        const typesModule = ruby.module({
+            name: typesModuleName,
+            statements: [classNode]
+        });
+    
+        // Create the client module
+        const clientModule = ruby.module({
+            name: clientModuleName,
+            statements: [typesModule]
+        });
+    
+        // Create a comment node for frozen_string_literal
+        const frozenComment = ruby.comment({ docs: "frozen_string_literal: true" });
+    
+        // Combine comment and module
+        const fileContent = ruby.codeblock((writer) => {
+            frozenComment.write(writer);
+            writer.newLine();
+            clientModule.write(writer);
+        });
+    
         return new RubyFile({
-            node: ruby.class_({
-                name: this.typeDeclaration.name.name.pascalCase.safeName,
-                docstring: this.typeDeclaration.docs ?? undefined,
-                statements: statements
-            }),
+            node: fileContent,
             directory: this.getFilepath(),
             filename: `${this.typeDeclaration.name.name.snakeCase.safeName}.rb`,
             customConfig: this.context.customConfig
