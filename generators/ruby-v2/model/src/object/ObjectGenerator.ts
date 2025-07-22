@@ -42,9 +42,13 @@ export class ObjectGenerator extends FileGenerator<RubyFile, ModelCustomConfigSc
             fernFilepath.allParts[0]?.pascalCase.safeName || "Api";
         const typesModuleName = this.context.customConfig.typesModuleName || "Types";
     
-        // Create the class
+        // Create the class with superclass
         const classNode = ruby.class_({
             name: this.typeDeclaration.name.name.pascalCase.safeName,
+            superclass: ruby.classReference({ 
+                name: "Model", 
+                modules: ["Internal", "Types"] 
+            }),
             docstring: this.typeDeclaration.docs ?? undefined,
             statements: statements
         });
