@@ -113,6 +113,7 @@ navigation:
             path: ./pages/api-definition/openapi/overrides.mdx
           - page: Sync your OpenAPI Specification
             icon: fa-regular fa-arrows-rotate
+            slug: sync-specification
             path: ./pages/api-definition/openapi/automation.mdx            
           - section: Integrate your Server Framework
             icon: fa-regular fa-server
@@ -841,4 +842,7 @@ redirects:
     permanent: true
   - source: /learn/docs/writing-content/visual-editor-beta
     destination: /learn/docs/writing-content/visual-editor
+    permanent: true
+  - source: /learn/api-definition/openapi/automatic-updates
+    destination: /learn/api-definition/openapi/sync-specification
     permanent: true
