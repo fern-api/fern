@@ -36,6 +36,7 @@ import {
     getTypeFromTypeReference,
     getValidationFromTypeReference
 } from "./utils/getTypeFromTypeReference";
+import { toFdCasing } from "./utils/toFdCasing";
 
 const MIN_INT_32 = -2147483648;
 const MAX_INT_32 = 2147483647;
@@ -235,7 +236,7 @@ function buildBooleanTypeReference({
         result.default = schema.default;
     }
     if (casing) {
-        result.name = { casing };
+        result.name = { casing: toFdCasing(casing) };
     }
     return result;
 }
@@ -263,7 +264,7 @@ function buildLongTypeReference({
         result.default = schema.default;
     }
     if (casing) {
-        result.name = { casing };
+        result.name = { casing: toFdCasing(casing) };
     }
     return result;
 }
@@ -295,7 +296,7 @@ function buildStringTypeReference({
         result.validation = validation;
     }
     if (casing) {
-        result.name = { casing };
+        result.name = { casing: toFdCasing(casing) };
     }
     return result;
 }
@@ -327,7 +328,7 @@ function buildIntegerTypeReference({
         result.validation = validation;
     }
     if (casing) {
-        result.name = { casing };
+        result.name = { casing: toFdCasing(casing) };
     }
     return result;
 }
@@ -352,7 +353,7 @@ function buildFloatTypeReference({
         result.docs = description;
     }
     if (casing) {
-        result.name = { casing };
+        result.name = { casing: toFdCasing(casing) };
     }
     return result;
 }
@@ -384,7 +385,7 @@ function buildDoubleTypeReference({
         result.validation = validation;
     }
     if (casing) {
-        result.name = { casing: casing };
+        result.name = { casing: toFdCasing(casing) };
     }
     return result;
 }
@@ -513,7 +514,7 @@ export function buildReferenceTypeReference({
         type: resolvedSchema.type === "nullable" ? `optional<${typeWithPrefix}>` : typeWithPrefix,
         ...(schema.description != null ? { docs: schema.description } : {}),
         ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {}),
-        ...(schema.casing ? { name: { casing: schema.casing } } : {})
+        ...(schema.casing ? { name: { casing: toFdCasing(schema.casing) } } : {})
     };
 }
 
@@ -547,7 +548,7 @@ export function buildArrayTypeReference({
     return {
         ...(schema.description != null ? { docs: schema.description } : {}),
         ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {}),
-        ...(schema.casing ? { name: { casing: schema.casing } } : {}),
+        ...(schema.casing ? { name: { casing: toFdCasing(schema.casing) } } : {}),
         type
     };
 }
@@ -594,7 +595,7 @@ export function buildMapTypeReference({
         result.availability = convertAvailability(schema.availability);
     }
     if (schema.casing) {
-        result.name = { casing: schema.casing };
+        result.name = { casing: toFdCasing(schema.casing) };
     }
     return result;
 }
@@ -667,7 +668,7 @@ export function buildNullableTypeReference({
         result.availability = convertAvailability(schema.availability);
     }
     if (schema.casing) {
-        result.name = { casing: schema.casing };
+        result.name = { casing: toFdCasing(schema.casing) };
     }
 
     // Nullable schemas are always treated as optional.
@@ -731,7 +732,7 @@ export function buildOptionalTypeReference({
         result.availability = convertAvailability(schema.availability);
     }
     if (schema.casing) {
-        result.name = { casing: schema.casing };
+        result.name = { casing: toFdCasing(schema.casing) };
     }
     return result;
 }
@@ -761,7 +762,7 @@ export function buildLiteralTypeReference(schema: LiteralSchema): RawSchemas.Typ
         type: value,
         ...(schema.description != null ? { docs: schema.description } : {}),
         ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {}),
-        ...(schema.casing ? { name: { casing: schema.casing } } : {})
+        ...(schema.casing ? { name: { casing: toFdCasing(schema.casing) } } : {})
     };
 }
 
@@ -801,7 +802,7 @@ export function buildEnumTypeReference({
         result.availability = convertAvailability(schema.availability);
     }
     if (schema.casing) {
-        result.name = { casing: schema.casing };
+        result.name = { casing: toFdCasing(schema.casing) };
     }
     return result;
 }
@@ -841,7 +842,7 @@ export function buildObjectTypeReference({
         type: prefixedType,
         ...(schema.description != null ? { docs: schema.description } : {}),
         ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {}),
-        ...(schema.casing ? { name: { casing: schema.casing } } : {})
+        ...(schema.casing ? { name: { casing: toFdCasing(schema.casing) } } : {})
     };
 }
 
@@ -881,7 +882,7 @@ export function buildOneOfTypeReference({
         type: prefixedType,
         ...(schema.description != null ? { docs: schema.description } : {}),
         ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {}),
-        ...(schema.casing ? { name: { casing: schema.casing } } : { name })
+        ...(schema.casing ? { name: { casing: toFdCasing(schema.casing) } } : { name })
     };
 }
 

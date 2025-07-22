@@ -45,7 +45,6 @@ import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference
 import { getGeneratedTypeName } from "./utils/getSchemaName";
 import { isReferenceObject } from "./utils/isReferenceObject";
 import { getFernTypeNameExtension, OverrideTypeName } from "../openapi/v3/extensions/getFernTypeNameExtension";
-import { Context } from "vm";
 
 export const SCHEMA_REFERENCE_PREFIX = "#/components/schemas/";
 export const SCHEMA_INLINE_REFERENCE_PREFIX = "#/components/responses/";

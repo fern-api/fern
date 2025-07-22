@@ -13,7 +13,7 @@
               "casing": {
                 "camel": "fooURLsBar",
                 "pascal": "FooURLsBar",
-                "screamingSnake": "FOO_URLS_BAR",
+                "screaming-snake": "FOO_URLS_BAR",
                 "snake": "foo_urls_bar",
               },
             },
@@ -41,7 +41,7 @@
               "casing": {
                 "camel": "openAISettings",
                 "pascal": "OpenAISettings",
-                "screamingSnake": "OPENAI_SETTINGS",
+                "screaming-snake": "OPENAI_SETTINGS",
                 "snake": "openai_settings",
               },
             },
@@ -75,7 +75,7 @@
         camel: openAISettings
         pascal: OpenAISettings
         snake: openai_settings
-        screamingSnake: OPENAI_SETTINGS
+        screaming-snake: OPENAI_SETTINGS
   FooURLsBar:
     properties:
       foo: optional<string>
@@ -86,7 +86,7 @@
         camel: fooURLsBar
         pascal: FooURLsBar
         snake: foo_urls_bar
-        screamingSnake: FOO_URLS_BAR
+        screaming-snake: FOO_URLS_BAR
   NormalSchema:
     properties:
       foo: optional<string>

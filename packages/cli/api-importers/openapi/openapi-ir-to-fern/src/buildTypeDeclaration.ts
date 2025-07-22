@@ -35,6 +35,7 @@ import { convertAvailability } from "./utils/convertAvailability";
 import { convertToEncodingSchema } from "./utils/convertToEncodingSchema";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
+import { toFdCasing } from "./utils/toFdCasing";
 
 export interface ConvertedTypeDeclaration {
     name: string | undefined;
@@ -306,7 +307,7 @@ export function buildObjectTypeDeclaration({
     }
     if (schema.casing) {
         objectTypeDeclaration.name = {
-            casing: schema.casing
+            casing: toFdCasing(schema.casing)
         };
     }
     return {

@@ -91,11 +91,7 @@ export function constructCasingsGenerator({
                 camelCase: generateSafeAndUnsafeString(opts?.casingOverrides?.camel ?? camelCaseName),
                 snakeCase: generateSafeAndUnsafeString(opts?.casingOverrides?.snake ?? snakeCaseName),
                 screamingSnakeCase: generateSafeAndUnsafeString(
-                    opts?.casingOverrides?.["screaming-snake"] ??
-                        // for some reason, `screamingSnake` is the real property name in the object, but the schema uses `screaming-snake`
-                        // TS-SDK serde bug?
-                        (opts?.casingOverrides as { screamingSnake?: string })?.screamingSnake ??
-                        snakeCaseName.toUpperCase()
+                    opts?.casingOverrides?.["screaming-snake"] ?? snakeCaseName.toUpperCase()
                 ),
                 pascalCase: generateSafeAndUnsafeString(opts?.casingOverrides?.pascal ?? pascalCaseName)
             };
