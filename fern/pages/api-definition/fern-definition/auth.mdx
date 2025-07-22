@@ -1,9 +1,17 @@
 ---
 title: Authentication
-subtitle: Model auth schemes such as bearer, basic, custom headers, and oauth. 
+subtitle: Model auth schemes such as bearer, basic, custom headers, and oauth.
 ---
 
-Configuring authentication schemes happens in the `api.yml` file. 
+Configuring authentication schemes happens in the `api.yml` file. NEW
+
+- ONE
+
+- TWO
+
+  - TWOPOINT.FIVE
+
+- THREE
 
 ```bash {5}
 fern/
@@ -14,7 +22,7 @@ fern/
   └─ imdb.yml # endpoints, types, and errors
 ```
 
-To add an authentication scheme, specify the authentication method under the `auth-schemes` section. 
+To add an authentication scheme, specify the authentication method under the `auth-schemes` section.
 
 ```yaml api.yml {1-2}
 auth-schemes:
@@ -34,7 +42,7 @@ auth-schemes:
 
 ## Bearer authentication
 
-Start by defining a `Bearer` authentication scheme in `api.yml`: 
+Start by defining a `Bearer` authentication scheme in `api.yml`:
 
 ```yaml api.yml
 auth: Bearer                  
@@ -43,8 +51,7 @@ auth-schemes:
     scheme: bearer
 ```
 
-This will generate an SDK where the user would have to provide 
-a mandatory argument called `token`. 
+This will generate an SDK where the user would have to provide a mandatory argument called `token`.
 
 ```ts index.ts
 const client = new Client({
@@ -52,8 +59,7 @@ const client = new Client({
 })
 ```
 
-If you want to control variable naming and the environment variable to scan, 
-use the configuration below: 
+If you want to control variable naming and the environment variable to scan, use the configuration below:
 
 ```yaml title="api.yml" {5-7}
 auth: Bearer                  
@@ -65,7 +71,7 @@ auth-schemes:
       env: PLANTSTORE_API_KEY
 ```
 
-The generated SDK would look like: 
+The generated SDK would look like:
 
 ```ts index.ts
 
@@ -80,7 +86,7 @@ client = new Client({
 
 ## Basic authentication
 
-Start by defining a `Basic` authentication scheme in `api.yml`: 
+Start by defining a `Basic` authentication scheme in `api.yml`:
 
 ```yaml api.yml
 auth: Basic                  
@@ -89,8 +95,7 @@ auth-schemes:
     scheme: basic
 ```
 
-This will generate an SDK where the user would have to provide 
-a mandatory arguments called `username` and `password`. 
+This will generate an SDK where the user would have to provide a mandatory arguments called `username` and `password`.
 
 ```ts index.ts
 const client = new Client({
@@ -99,8 +104,7 @@ const client = new Client({
 })
 ```
 
-If you want to control variable naming and environment variables to scan, 
-use the configuration below: 
+If you want to control variable naming and environment variables to scan, use the configuration below:
 
 ```yaml title="api.yml" {5-11}
 auth: Basic                  
@@ -115,7 +119,7 @@ auth-schemes:
       env: PLANTSTORE_CLIENT_SECRET
 ```
 
-The generated SDK would look like: 
+The generated SDK would look like:
 
 ```ts index.ts
 
@@ -131,7 +135,7 @@ client = new Client({
 
 ## Custom header (e.g. API key)
 
-You can also create your own authentication scheme with customized headers. 
+You can also create your own authentication scheme with customized headers.
 
 ```yaml title="api.yml" {3-5}
 auth: ApiKeyAuthScheme
@@ -141,8 +145,7 @@ auth-schemes:
     type: string
 ```
 
-This will generate an SDK where the user would have to provide 
-a mandatory argument called `apiKey`. 
+This will generate an SDK where the user would have to provide a mandatory argument called `apiKey`.
 
 ```ts index.ts
 const client = new Client({
@@ -150,8 +153,7 @@ const client = new Client({
 })
 ```
 
-If you want to control variable naming and environment variables to scan, 
-use the configuration below: 
+If you want to control variable naming and environment variables to scan, use the configuration below:
 
 ```yaml title="api.yml" {7-8}
 auth: ApiKeyAuthScheme
@@ -163,7 +165,7 @@ auth-schemes:
     env: PLANTSTORE_API_KEY
 ```
 
-The generated SDK would look like: 
+The generated SDK would look like:
 
 ```ts index.ts
 
@@ -178,7 +180,7 @@ client = new Client({
 
 ## OAuth client credentials
 
-If your API uses OAuth, you can specify an oauth scheme. Note that you'll need to define a token retrieval endpoint. 
+If your API uses OAuth, you can specify an oauth scheme. Note that you'll need to define a token retrieval endpoint.
 
 ```yaml api.yml
 name: api
@@ -201,14 +203,11 @@ auth-schemes:
 
 ```
 
-If the `expires-in` property is set, the generated OAuth token provider will automatically refresh the token when it expires.
-Otherwise, it's assumed that the access token is valid indefinitely.
+If the `expires-in` property is set, the generated OAuth token provider will automatically refresh the token when it expires. Otherwise, it's assumed that the access token is valid indefinitely.
 
-With this, all of the OAuth logic happens automatically in the generated SDKs. As long as you configure these settings, your
-client will automatically retrieve an access token and refresh it as needed.
+With this, all of the OAuth logic happens automatically in the generated SDKs. As long as you configure these settings, your client will automatically retrieve an access token and refresh it as needed.
 
-When using the docs playground, `token-header` and `token-prefix` can optionally be set to customize the header key name and 
-header value prefix, to match the expected format of the API auth scheme.
+When using the docs playground, `token-header` and `token-prefix` can optionally be set to customize the header key name and header value prefix, to match the expected format of the API auth scheme.
 
 For example, the following would produce a header `Fern-Authorization: Fern-Bearer <token>`:
 
