@@ -3,6 +3,37 @@ info:
   title: enum
   version: ''
 paths:
+  /headers:
+    post:
+      operationId: headers_send
+      tags:
+        - Headers
+      parameters:
+        - name: operand
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/Operand'
+        - name: maybeOperand
+          in: header
+          required: false
+          schema:
+            $ref: '#/components/schemas/Operand'
+            nullable: true
+        - name: operandOrColor
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/ColorOrOperand'
+        - name: maybeOperandOrColor
+          in: header
+          required: false
+          schema:
+            $ref: '#/components/schemas/ColorOrOperand'
+            nullable: true
+      responses:
+        '204':
+          description: ''
   /inlined:
     post:
       operationId: inlinedRequest_send
