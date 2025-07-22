@@ -12,9 +12,13 @@ public class Example2
             }
         );
 
-        await client.PathParam.SendAsync(
-            Operand.GreaterThan,
-            Color.Red
+        await client.InlinedRequest.SendAsync(
+            new SendEnumInlinedRequest{
+                Operand = Operand.GreaterThan,
+                MaybeOperand = Operand.GreaterThan,
+                OperandOrColor = Color.Red,
+                MaybeOperandOrColor = Color.Red
+            }
         );
     }
 

@@ -1,4 +1,53 @@
 # Reference
+## Headers
+<details><summary><code>client.Headers.<a href="/src/SeedEnum/Headers/HeadersClient.cs">SendAsync</a>(SendEnumAsHeaderRequest { ... })</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Headers.SendAsync(
+    new SendEnumAsHeaderRequest
+    {
+        Operand = Operand.GreaterThan,
+        MaybeOperand = Operand.GreaterThan,
+        OperandOrColor = Color.Red,
+        MaybeOperandOrColor = null,
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SendEnumAsHeaderRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## InlinedRequest
 <details><summary><code>client.InlinedRequest.<a href="/src/SeedEnum/InlinedRequest/InlinedRequestClient.cs">SendAsync</a>(SendEnumInlinedRequest { ... })</code></summary>
 <dl>
