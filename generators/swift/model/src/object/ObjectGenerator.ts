@@ -116,21 +116,25 @@ export class ObjectGenerator {
                 })
             ],
             body: swift.CodeBlock.withStatements([
-                swift.Statement.constantDeclaration(
-                    "container",
-                    swift.Expression.try(
-                        swift.Expression.methodCall({
-                            target: swift.Expression.reference("decoder"),
-                            methodName: "container",
-                            arguments_: [
-                                swift.functionArgument({
-                                    label: "keyedBy",
-                                    value: swift.Expression.rawValue("CodingKeys.self")
-                                })
-                            ]
-                        })
-                    )
-                ),
+                ...(this.objectTypeDeclaration.properties.length > 0
+                    ? [
+                          swift.Statement.constantDeclaration(
+                              "container",
+                              swift.Expression.try(
+                                  swift.Expression.methodCall({
+                                      target: swift.Expression.reference("decoder"),
+                                      methodName: "container",
+                                      arguments_: [
+                                          swift.functionArgument({
+                                              label: "keyedBy",
+                                              value: swift.Expression.rawValue("CodingKeys.self")
+                                          })
+                                      ]
+                                  })
+                              )
+                          )
+                      ]
+                    : []),
                 ...this.objectTypeDeclaration.properties.map((p) => {
                     const swiftType = getSwiftTypeForTypeReference(p.valueType);
                     return swift.Statement.propertyAssignment(
@@ -162,10 +166,15 @@ export class ObjectGenerator {
                             target: swift.Expression.reference("decoder"),
                             methodName: "decodeAdditionalProperties",
                             arguments_: [
-                                swift.functionArgument({
-                                    label: "using",
-                                    value: swift.Expression.rawValue("CodingKeys.self")
-                                })
+                                this.objectTypeDeclaration.properties.length === 0
+                                    ? swift.functionArgument({
+                                          label: "knownKeys",
+                                          value: swift.Expression.rawValue("[]")
+                                      })
+                                    : swift.functionArgument({
+                                          label: "using",
+                                          value: swift.Expression.rawValue("CodingKeys.self")
+                                      })
                             ]
                         })
                     )
@@ -188,21 +197,25 @@ export class ObjectGenerator {
             throws: true,
             returnType: swift.Type.void(),
             body: swift.CodeBlock.withStatements([
-                swift.Statement.variableDeclaration(
-                    "container",
-                    swift.Expression.try(
-                        swift.Expression.methodCall({
-                            target: swift.Expression.reference("encoder"),
-                            methodName: "container",
-                            arguments_: [
-                                swift.functionArgument({
-                                    label: "keyedBy",
-                                    value: swift.Expression.rawValue("CodingKeys.self")
-                                })
-                            ]
-                        })
-                    )
-                ),
+                ...(this.objectTypeDeclaration.properties.length > 0
+                    ? [
+                          swift.Statement.variableDeclaration(
+                              "container",
+                              swift.Expression.try(
+                                  swift.Expression.methodCall({
+                                      target: swift.Expression.reference("encoder"),
+                                      methodName: "container",
+                                      arguments_: [
+                                          swift.functionArgument({
+                                              label: "keyedBy",
+                                              value: swift.Expression.rawValue("CodingKeys.self")
+                                          })
+                                      ]
+                                  })
+                              )
+                          )
+                      ]
+                    : []),
                 swift.Statement.expressionStatement(
                     swift.Expression.try(
                         swift.Expression.methodCall({
