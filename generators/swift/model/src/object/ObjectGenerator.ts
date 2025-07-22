@@ -3,12 +3,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 
-import {
-    InlinedRequestBodyProperty,
-    ObjectProperty,
-    ObjectTypeDeclaration,
-    TypeDeclaration
-} from "@fern-fern/ir-sdk/api";
+import { InlinedRequestBodyProperty, ObjectProperty } from "@fern-fern/ir-sdk/api";
 
 import { getSwiftTypeForTypeReference } from "../converters";
 
