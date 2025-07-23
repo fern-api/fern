@@ -157,7 +157,8 @@ export class RootClientGenerator {
                                 label: "urlSession",
                                 value: swift.Expression.reference("urlSession")
                             })
-                        ]
+                        ],
+                        multiline: true
                     })
                 ),
                 ...this.getSubpackages().map((subpackage) => {
