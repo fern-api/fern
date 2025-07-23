@@ -32,7 +32,6 @@ jobs:
           cd docs/fern/products/sdks/overview/go/changelog
           echo "this is a test" > 2025-07-23.mdx
 
-            - name: Create Pull Request
       - name: create PR
         id: cpr
         uses: peter-evans/create-pull-request@v7
