@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
-module FolderC
+module FolderB
     module Types
         class Foo < Internal::Types::Model
-            field :bar_property, String, optional: true, nullable: true
+            field :foo, Array, optional: true, nullable: true
         end
     end
+end
+  end
 end

@@ -2,7 +2,7 @@
 
 require "securerandom"
 
-module <%= gemNamespace %>
+module <%= gem_namespace %>
   module Internal
     module Multipart
       # @api private

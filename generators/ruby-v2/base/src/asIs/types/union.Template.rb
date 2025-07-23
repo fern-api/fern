@@ -5,7 +5,7 @@ module <%= gem_namespace %>
     module Types
       # Define a union between two types
       module Union
-        include Type
+        include <%= gem_namespace %>::Internal::Types::Type
 
         def members
           @members ||= []

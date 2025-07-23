@@ -4,7 +4,7 @@ module <%= gem_namespace %>
   module Internal
     module Types
       module Boolean
-        extend <%= gem_namespace %>::Internal::Types::Union
+      extend <%= gem_namespace %>::Internal::Types::Union
 
         member TrueClass
         member FalseClass
