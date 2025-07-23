@@ -36,6 +36,7 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v7
         with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
           commit-message: "dak-test: update changelog"
           title: "dak-test: update changelog"
           branch: dak-test-update-changelog
