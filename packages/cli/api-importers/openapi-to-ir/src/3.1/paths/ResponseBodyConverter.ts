@@ -156,8 +156,8 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
         if (!isNaN(statusCodeNum) && statusCodeNum >= 200 && statusCodeNum < 300) {
             const mediaTypeObject: OpenAPIV3_1.MediaTypeObject = {
                 schema: {
-                    type: 'object',
-                    description: 'Empty response body',
+                    type: "object",
+                    description: "Empty response body"
                 }
             };
 
@@ -165,7 +165,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                 mediaTypeObject,
                 schemaId,
                 contentType: "application/json",
-                resolveSchema: true,
+                resolveSchema: true
             });
 
             if (convertedSchema != null) {
