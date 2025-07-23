@@ -8449,6 +8449,15 @@
         ]
       }
     },
+    "Collections_delete-collection_Response_204": {
+      "description": "Empty response body",
+      "name": "Collections_delete-collection_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "Delete-collectionRequestTooManyRequestsError": {
       "name": "Delete-collectionRequestTooManyRequestsError",
       "shape": {
@@ -8747,6 +8756,15 @@
             }
           }
         ]
+      }
+    },
+    "collections_delete_Response_204": {
+      "description": "Empty response body",
+      "name": "collections_delete_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     },
     "Delete-fieldRequestTooManyRequestsError": {
@@ -10693,6 +10711,15 @@
         ]
       }
     },
+    "collections_items_delete-item_Response_204": {
+      "description": "Empty response body",
+      "name": "collections_items_delete-item_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "Delete-itemRequestTooManyRequestsError": {
       "name": "Delete-itemRequestTooManyRequestsError",
       "shape": {
@@ -11210,6 +11237,15 @@
             }
           }
         ]
+      }
+    },
+    "collections_items_delete-item-live_Response_204": {
+      "description": "Empty response body",
+      "name": "collections_items_delete-item-live_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     },
     "Delete-item-liveRequestTooManyRequestsError": {
@@ -13857,6 +13893,15 @@
         ]
       }
     },
+    "pages_scripts_delete-custom-code_Response_204": {
+      "description": "Empty response body",
+      "name": "pages_scripts_delete-custom-code_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "Delete-page-custom-codeRequestTooManyRequestsError": {
       "name": "Delete-page-custom-codeRequestTooManyRequestsError",
       "shape": {
@@ -14354,6 +14399,15 @@
             }
           }
         ]
+      }
+    },
+    "sites_scripts_delete-custom-code_Response_204": {
+      "description": "Empty response body",
+      "name": "sites_scripts_delete-custom-code_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     },
     "Delete-site-custom-codeRequestTooManyRequestsError": {
@@ -16318,6 +16372,15 @@
         ]
       }
     },
+    "assets_delete_Response_204": {
+      "description": "Empty response body",
+      "name": "assets_delete_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "Delete-assetRequestTooManyRequestsError": {
       "name": "Delete-assetRequestTooManyRequestsError",
       "shape": {
@@ -18202,6 +18265,15 @@
             }
           }
         ]
+      }
+    },
+    "webhooks_delete_Response_204": {
+      "description": "Empty response body",
+      "name": "webhooks_delete_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     },
     "Remove-webhookRequestTooManyRequestsError": {
@@ -20981,6 +21053,15 @@
             }
           }
         ]
+      }
+    },
+    "users_delete_Response_204": {
+      "description": "Empty response body",
+      "name": "users_delete_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     },
     "SitesSiteIdUsersUserIdDeleteResponsesContentApplicationJsonSchemaOneOf0Code": {
@@ -57323,6 +57404,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "users_delete_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Request was successful. No Content is returned."
+          },
           "errorsV2": [
             {
               "type": {
@@ -57409,7 +57501,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -61288,6 +61385,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Collections_delete-collection_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Request was successful. No Content is returned."
+          },
           "errorsV2": [
             {
               "type": {
@@ -61360,7 +61468,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -61435,6 +61548,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "collections_delete_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Request was successful. No Content is returned."
+          },
           "errorsV2": [
             {
               "type": {
@@ -61508,7 +61632,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -64041,6 +64170,17 @@
             }
           ],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "collections_items_delete-item_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Request was successful"
+          },
           "errorsV2": [
             {
               "type": {
@@ -64114,7 +64254,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -64756,6 +64901,17 @@
             }
           ],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "collections_items_delete-item-live_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Request was successful"
+          },
           "errorsV2": [
             {
               "type": {
@@ -64829,7 +64985,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -65894,6 +66055,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "pages_scripts_delete-custom-code_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Request was successful. No Content is returned."
+          },
           "errorsV2": [
             {
               "type": {
@@ -65966,7 +66138,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -66481,6 +66658,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "sites_scripts_delete-custom-code_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Request was successful. No Content is returned."
+          },
           "errorsV2": [
             {
               "type": {
@@ -66553,7 +66741,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -68224,6 +68417,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "assets_delete_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Request was successful. No Content is returned."
+          },
           "errorsV2": [
             {
               "type": {
@@ -68296,7 +68500,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -69832,6 +70041,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "webhooks_delete_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Request was successful. No Content is returned."
+          },
           "errorsV2": [
             {
               "type": {
@@ -69904,7 +70124,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {

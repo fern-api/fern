@@ -17891,6 +17891,33 @@
         ]
       }
     },
+    "Data Events_createDataEvent_Response_202": {
+      "description": "Empty response body",
+      "name": "Data Events_createDataEvent_Response_202",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Data Events_dataEventSummaries_Response_200": {
+      "description": "Empty response body",
+      "name": "Data Events_dataEventSummaries_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Data Export_downloadDataExport_Response_200": {
+      "description": "Empty response body",
+      "name": "Data Export_downloadDataExport_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "Tags_createTag_Request": {
       "name": "Tags_createTag_Request",
       "shape": {
@@ -17929,6 +17956,15 @@
             "displayName": "Tag Users Request Payload"
           }
         ]
+      }
+    },
+    "Tags_deleteTag_Response_200": {
+      "description": "Empty response body",
+      "name": "Tags_deleteTag_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     },
     "Tickets_replyTicket_Request": {
@@ -29809,6 +29845,17 @@
               }
             }
           ],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Tags_deleteTag_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful"
+          },
           "errorsV2": [
             {
               "type": {
@@ -29910,7 +29957,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -37291,6 +37343,17 @@
               }
             }
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Data Events_createDataEvent_Response_202"
+              }
+            },
+            "statusCode": 202,
+            "description": "successful"
+          },
           "errorsV2": [
             {
               "type": {
@@ -37335,7 +37398,12 @@
                 "type": "json",
                 "value": null
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 202,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -37403,6 +37471,17 @@
               }
             }
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Data Events_dataEventSummaries_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "successful"
+          },
           "errorsV2": [
             {
               "type": {
@@ -37447,7 +37526,12 @@
                 "type": "json",
                 "value": {}
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -37864,6 +37948,17 @@
               }
             }
           ],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Data Export_downloadDataExport_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "successful"
+          },
           "errorsV2": [],
           "examples": [
             {
@@ -37874,7 +37969,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {

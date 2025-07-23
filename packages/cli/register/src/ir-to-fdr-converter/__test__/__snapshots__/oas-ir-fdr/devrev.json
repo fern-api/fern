@@ -7885,6 +7885,42 @@
           }
         ]
       }
+    },
+    "auth-tokens_delete_Response_200": {
+      "description": "Empty response body",
+      "name": "auth-tokens_delete_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "auth-tokens_selfDelete_Response_200": {
+      "description": "Empty response body",
+      "name": "auth-tokens_selfDelete_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "auth-connection_dev-org-auth-connections-delete_Response_200": {
+      "description": "Empty response body",
+      "name": "auth-connection_dev-org-auth-connections-delete_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "auth-connection_dev-org-auth-connections-toggle_Response_200": {
+      "description": "Empty response body",
+      "name": "auth-connection_dev-org-auth-connections-toggle_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
     }
   },
   "subpackages": {
@@ -8467,6 +8503,17 @@
               }
             }
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "auth-tokens_delete_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "Success."
+          },
           "errorsV2": [
             {
               "type": {
@@ -8572,7 +8619,12 @@
                 "type": "json",
                 "value": {}
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -9144,6 +9196,17 @@
               }
             }
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "auth-tokens_selfDelete_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "Success."
+          },
           "errorsV2": [
             {
               "type": {
@@ -9249,7 +9312,12 @@
                 "type": "json",
                 "value": {}
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -9728,6 +9796,17 @@
               }
             }
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "auth-connection_dev-org-auth-connections-delete_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "Success."
+          },
           "errorsV2": [
             {
               "type": {
@@ -9837,7 +9916,12 @@
                   "id": "string"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -10202,6 +10286,17 @@
               }
             }
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "auth-connection_dev-org-auth-connections-toggle_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "Success."
+          },
           "errorsV2": [
             {
               "type": {
@@ -10311,7 +10406,12 @@
                   "id": "string"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {

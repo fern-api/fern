@@ -11674,6 +11674,231 @@
           }
         ]
       }
+    },
+    "userManagement_deleteUser_Response_204": {
+      "description": "Empty response body",
+      "name": "userManagement_deleteUser_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "schemas_deleteSchema_Response_204": {
+      "description": "Empty response body",
+      "name": "schemas_deleteSchema_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "rules_deleteRuleRun_Response_204": {
+      "description": "Empty response body",
+      "name": "rules_deleteRuleRun_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "rules_deleteRule_Response_204": {
+      "description": "Empty response body",
+      "name": "rules_deleteRule_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "rules_triggerRule_Response_204": {
+      "description": "Empty response body",
+      "name": "rules_triggerRule_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "rules_putRuleRun_Response_204": {
+      "description": "Empty response body",
+      "name": "rules_putRuleRun_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "rules_deleteRuleEvents_Response_204": {
+      "description": "Empty response body",
+      "name": "rules_deleteRuleEvents_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "rules_deleteEvents_Response_204": {
+      "description": "Empty response body",
+      "name": "rules_deleteEvents_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "rules_putEvent_Response_204": {
+      "description": "Empty response body",
+      "name": "rules_putEvent_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "rules_deleteEvent_Response_204": {
+      "description": "Empty response body",
+      "name": "rules_deleteEvent_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "ping_getPing_Response_204": {
+      "description": "Empty response body",
+      "name": "ping_getPing_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "ping_getAppPing_Response_204": {
+      "description": "Empty response body",
+      "name": "ping_getAppPing_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "diagnostics_getDump_Response_204": {
+      "description": "Empty response body",
+      "name": "diagnostics_getDump_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "diagnostics_getGCDump_Response_204": {
+      "description": "Empty response body",
+      "name": "diagnostics_getGCDump_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "contents_deleteContent_Response_204": {
+      "description": "Empty response body",
+      "name": "contents_deleteContent_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "contents_getContentValidity_Response_204": {
+      "description": "Empty response body",
+      "name": "contents_getContentValidity_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "comments_putComment_Response_204": {
+      "description": "Empty response body",
+      "name": "comments_putComment_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "comments_deleteComment_Response_204": {
+      "description": "Empty response body",
+      "name": "comments_deleteComment_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "notifications_deleteComment_Response_204": {
+      "description": "Empty response body",
+      "name": "notifications_deleteComment_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "backups_deleteBackup_Response_204": {
+      "description": "Empty response body",
+      "name": "backups_deleteBackup_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "backups_postBackup_Response_204": {
+      "description": "Empty response body",
+      "name": "backups_postBackup_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "backups_postRestoreJob_Response_204": {
+      "description": "Empty response body",
+      "name": "backups_postRestoreJob_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "assets_deleteAssetFolder_Response_204": {
+      "description": "Empty response body",
+      "name": "assets_deleteAssetFolder_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "assets_deleteAsset_Response_204": {
+      "description": "Empty response body",
+      "name": "assets_deleteAsset_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "apps_deleteApp_Response_204": {
+      "description": "Empty response body",
+      "name": "apps_deleteApp_Response_204",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
     }
   },
   "subpackages": {
@@ -12304,6 +12529,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "userManagement_deleteUser_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "User deleted."
+          },
           "errorsV2": [
             {
               "type": {
@@ -12366,7 +12602,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -23983,6 +24224,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "schemas_deleteSchema_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Schema deleted."
+          },
           "errorsV2": [
             {
               "type": {
@@ -24033,7 +24285,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -26903,6 +27160,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "rules_deleteRuleRun_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Rule run cancelled."
+          },
           "errorsV2": [
             {
               "type": {
@@ -26940,7 +27208,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -27208,6 +27481,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "rules_deleteRule_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Rule deleted."
+          },
           "errorsV2": [
             {
               "type": {
@@ -27258,7 +27542,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -27682,6 +27971,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "rules_triggerRule_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Rule triggered."
+          },
           "errorsV2": [
             {
               "type": {
@@ -27732,7 +28032,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -27819,6 +28124,17 @@
             }
           ],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "rules_putRuleRun_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Rule started."
+          },
           "errorsV2": [
             {
               "type": {
@@ -27857,7 +28173,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -27929,6 +28250,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "rules_deleteRuleEvents_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Rule events cancelled."
+          },
           "errorsV2": [
             {
               "type": {
@@ -27967,7 +28299,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -28553,6 +28890,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "rules_deleteEvents_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Events cancelled."
+          },
           "errorsV2": [
             {
               "type": {
@@ -28590,7 +28938,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -28662,6 +29015,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "rules_putEvent_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Rule enqueued."
+          },
           "errorsV2": [
             {
               "type": {
@@ -28712,7 +29076,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -28784,6 +29153,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "rules_deleteEvent_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Rule deqeued."
+          },
           "errorsV2": [
             {
               "type": {
@@ -28834,7 +29214,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -29753,6 +30138,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "ping_getPing_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Service ping successful."
+          },
           "errorsV2": [
             {
               "type": {
@@ -29775,7 +30171,12 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -29830,6 +30231,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "ping_getAppPing_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Service ping successful."
+          },
           "errorsV2": [
             {
               "type": {
@@ -29854,7 +30266,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -30922,6 +31339,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "diagnostics_getDump_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Dump created successful."
+          },
           "errorsV2": [
             {
               "type": {
@@ -30957,7 +31385,12 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -30992,6 +31425,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "diagnostics_getGCDump_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Dump created successful."
+          },
           "errorsV2": [
             {
               "type": {
@@ -31027,7 +31471,12 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -33219,6 +33668,17 @@
             }
           ],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "contents_deleteContent_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Content deleted."
+          },
           "errorsV2": [
             {
               "type": {
@@ -33270,7 +33730,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -33709,6 +34174,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "contents_getContentValidity_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Content is valid."
+          },
           "errorsV2": [
             {
               "type": {
@@ -33760,7 +34236,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -36926,6 +37407,17 @@
             },
             "description": "The comment object that needs to updated."
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "comments_putComment_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Comment updated."
+          },
           "errorsV2": [
             {
               "type": {
@@ -36986,7 +37478,12 @@
                   "text": "string"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -37076,6 +37573,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "comments_deleteComment_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Comment deleted."
+          },
           "errorsV2": [
             {
               "type": {
@@ -37127,7 +37635,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -37366,6 +37879,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "notifications_deleteComment_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Comment deleted."
+          },
           "errorsV2": [
             {
               "type": {
@@ -37416,7 +37940,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -37615,6 +38144,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "backups_deleteBackup_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Backup deleted."
+          },
           "errorsV2": [
             {
               "type": {
@@ -37665,7 +38205,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -37976,6 +38521,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "backups_postBackup_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Backup started."
+          },
           "errorsV2": [
             {
               "type": {
@@ -38025,7 +38581,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -38164,6 +38725,17 @@
             },
             "description": "The backup to restore."
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "backups_postRestoreJob_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Restore operation started."
+          },
           "errorsV2": [
             {
               "type": {
@@ -38208,7 +38780,12 @@
                   "url": "string"
                 }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -39385,6 +39962,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "assets_deleteAssetFolder_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Asset folder deleted."
+          },
           "errorsV2": [
             {
               "type": {
@@ -39435,7 +40023,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -41413,6 +42006,17 @@
             }
           ],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "assets_deleteAsset_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "Asset deleted."
+          },
           "errorsV2": [
             {
               "type": {
@@ -41463,7 +42067,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
@@ -46334,6 +46943,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "apps_deleteApp_Response_204"
+              }
+            },
+            "statusCode": 204,
+            "description": "App deleted."
+          },
           "errorsV2": [
             {
               "type": {
@@ -46383,7 +47003,12 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 204,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
             }
           ],
           "protocol": {
